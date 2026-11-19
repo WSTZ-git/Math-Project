@@ -13,18 +13,18 @@
 用于分类的线性基函数模型是基于基函数 $\phi_j(\boldsymbol{x})$ 的线性组合（参见\cref{section:ch05-判别函数}），形式如下：
 
 \begin{definition}[线性基函数模型]\label{definition:ch06-线性基函数模型}
-设 $\{\phi_j(\boldsymbol{x})\}_{j=1}^{M}$ 是一组给定的非线性基函数，$w_0,w_1,\cdots,w_M$ 为可学习参数，$f(\cdot)$ 为输出激活函数。形如
+设 $D,M\in\mathbb{N}$，输入空间 $\mathcal{X}\subseteq\mathbb{R}^{D}$，输入 $\boldsymbol{x}\in\mathcal{X}$；设 $\phi_{1},\cdots,\phi_{M}:\mathcal{X}\to\mathbb{R}$ 为给定的基函数，$f:\mathbb{R}\to\mathbb{R}$ 为输出激活函数，$w_{0}\in\mathbb{R}$ 与 $\boldsymbol{w}=(w_{1},\cdots,w_{M})^{\mathsf T}\in\mathbb{R}^{M}$ 为参数。若对每个 $\boldsymbol{x}\in\mathcal{X}$，实值输出 $y(\boldsymbol{x},\boldsymbol{w})$ 由
 \begin{align}
 y(\boldsymbol{x},\boldsymbol{w})=f\!\left(\sum_{j=1}^{M}w_j\phi_j(\boldsymbol{x})+w_0\right)
 \label{align:ch06-线性基函数}
 \end{align}
-的模型称为\textbf{线性基函数模型}（linear basis function model），其中 $\boldsymbol{w}=(w_1,\cdots,w_M)^{\mathsf T}$。
+给出，则由该式定义、以 $\{\phi_j\}_{j=1}^{M}$ 为基函数、以 $f$ 为输出激活函数的模型称为\textbf{线性基函数模型}（linear basis function model）。
 \end{definition}
 
 其中 $f(\cdot)$ 是一个非线性输出激活函数。用于回归的线性模型具有相同的形式，但用恒等函数替换了 $f(\cdot)$（参见\cref{subsection:ch04-基函数}）。这些模型允许使用任意一组非线性基函数 $\{\phi_j(\boldsymbol{x})\}$，并且由于这些基函数的一般性，这样的模型原则上可以解决任何回归或分类问题。我们可以简单地这么理解，如果其中一个基函数对应希望的输入--输出转换，则可学习的线性层只需要将这个基函数的值复制到模型的输出即可。
 
-% SUPPLEMENT: parent=definition:ch06-线性基函数模型; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）\cref{definition:ch06-线性基函数模型}把“线性”限定在参数 $\boldsymbol{w}$ 上，而不限定在输入 $\boldsymbol{x}$ 上：只要 $f$ 与 $\{\phi_j\}$ 中至少有一个是非线性的，$y(\boldsymbol{x},\boldsymbol{w})$ 就是 $\boldsymbol{x}$ 的非线性函数。这一区分是理解本章的关键：模型的表达能力由固定基函数族 $\{\phi_j\}$ 决定，而训练只在这个固定族上做线性组合。也正因如此，参数估计是凸问题（最小二乘）或单峰问题（交叉熵），但表达能力被基函数族事先锁死。
+% SUPPLEMENT: parent=definition:ch06-线性基函数模型; kind=motivation; location=紧随其后的 remark
+\begin{remark}\cref{definition:ch06-线性基函数模型}把“线性”限定在参数 $\boldsymbol{w}$ 上，而不限定在输入 $\boldsymbol{x}$ 上：只要 $f$ 与 $\{\phi_j\}$ 中至少有一个是非线性的，$y(\boldsymbol{x},\boldsymbol{w})$ 就是 $\boldsymbol{x}$ 的非线性函数。这一区分是理解本章的关键：模型的表达能力由固定基函数族 $\{\phi_j\}$ 决定，而训练只在这个固定族上做线性组合。也正因如此，参数估计是凸问题（最小二乘）或单峰问题（交叉熵），但表达能力被基函数族事先锁死。
 \end{remark}
 
 更一般地，我们期望有一个足够大且丰富的基函数集合，从而能以任意精度拟合需要的函数。因此，看似这样的线性模型构成了解决机器学习问题的通用框架。遗憾的是，线性模型存在一些重大缺陷，因为它们假设基函数 $\phi_j(\boldsymbol{x})$ 是固定的且与训练数据无关。为了理解这些局限性，我们首先观察随着输入变量数量的增加线性模型的行为有何变化。
@@ -48,20 +48,25 @@ y(\boldsymbol{x},\boldsymbol{w})=w_0+\sum_{i=1}^{D}w_ix_i+\sum_{i=1}^{D}\sum_{j=
 随着 $D$ 的增大，独立系数的数量增长为 $\mathcal{O}(D^{3})$，而对于 $M$ 阶多项式，系数的数量增长为 $\mathcal{O}(D^{M})$（Bishop，2006）。我们看到，在高维空间中，多项式可以迅速变得笨重并且几乎不具有实用性。
 
 \begin{proposition}[多项式系数的数量]\label{proposition:ch06-多项式系数增长}
-$D$ 个变量的所有次数不超过 $M$ 的单项式所构成的线性模型，其独立系数（包括常数项）的个数为
+设 $D,M\in\mathbb{N}$。以 $\mathcal{A}_{D,M}$ 记 $\mathbb{R}^{D}$ 上次数不超过 $M$ 的实多项式之集，即一切形如
+\begin{align*}
+p(\boldsymbol{x})=\sum_{\boldsymbol{m}\in\mathbb{N}^{D},\ \|\boldsymbol{m}\|_{1}\leqslant M}w_{\boldsymbol{m}}\boldsymbol{x}^{\boldsymbol{m}},\qquad
+\boldsymbol{x}^{\boldsymbol{m}}=x_{1}^{m_{1}}\cdots x_{D}^{m_{D}}
+\end{align*}
+的映射 $p:\mathbb{R}^{D}\to\mathbb{R}$ 之集，其中 $w_{\boldsymbol{m}}\in\mathbb{R}$ 为系数，$\|\boldsymbol{m}\|_{1}=m_{1}+\cdots+m_{D}$。则 $\mathcal{A}_{D,M}$ 的独立系数（包括常数项 $w_{\boldsymbol{0}}$）的个数为
 \begin{align}
 \binom{D+M}{M}=\frac{(D+M)!}{D!\,M!}.
 \label{align:ch06-多项式系数个数}
 \end{align}
-特别地，当 $M=3$ 时该个数为 $(D+3)(D+2)(D+1)/6=\mathcal{O}(D^{3})$；对固定的 $M$，一般地有 $\mathcal{O}(D^{M})$。
+特别地，当 $M=3$ 时该个数为 $(D+3)(D+2)(D+1)/6=\mathcal{O}(D^{3})$；对固定的 $M$，该个数为 $\mathcal{O}(D^{M})$。
 \end{proposition}
 
 \begin{proof}
-（重构新增）次数不超过 $M$ 的单项式与“把 $M$ 个不可区分的球放入 $D+1$ 个盒子”的方案一一对应：$D$ 个盒子分别记录 $x_1,\cdots,x_D$ 的指数，第 $D+1$ 个盒子记录“剩余次数”，它使总次数补足到 $M$。由隔板法，方案数为 $\binom{(D+1)+M-1}{M}=\binom{D+M}{M}$，即\eqref{align:ch06-多项式系数个数}。当 $M=3$ 时，$\binom{D+3}{3}=(D+3)(D+2)(D+1)/6$；而对固定的 $M$，分子是 $D$ 的 $M$ 次多项式、分母是常数 $M!$，故为 $\mathcal{O}(D^{M})$。
+次数不超过 $M$ 的单项式与“把 $M$ 个不可区分的球放入 $D+1$ 个盒子”的方案一一对应：$D$ 个盒子分别记录 $x_1,\cdots,x_D$ 的指数，第 $D+1$ 个盒子记录“剩余次数”，它使总次数补足到 $M$。由隔板法，方案数为 $\binom{(D+1)+M-1}{M}=\binom{D+M}{M}$，即\eqref{align:ch06-多项式系数个数}。当 $M=3$ 时，$\binom{D+3}{3}=(D+3)(D+2)(D+1)/6$；而对固定的 $M$，分子是 $D$ 的 $M$ 次多项式、分母是常数 $M!$，故为 $\mathcal{O}(D^{M})$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch06-多项式系数增长; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）\cref{proposition:ch06-多项式系数增长}说明了“维度诅咒”的代数根源：需要估计的参数个数随维度 $D$ 呈多项式增长，而 $M$ 阶多项式在 $D$ 增大时迅速失去实用性。注意这里统计的是\emph{独立}系数：由于 $x_ix_j=x_jx_i$，若把\eqref{align:ch06-多项式多维}中的 $w_{ij}$ 与 $w_{ji}$ 视为同一个参数，二阶项只有 $D(D+1)/2$ 个而非 $D^{2}$ 个，但阶数不变。换言之，对称性只能把常数因子减半，不能改变指数增长的趋势。
+% SUPPLEMENT: parent=proposition:ch06-多项式系数增长; kind=motivation; location=紧随其后的 remark
+\begin{remark}\cref{proposition:ch06-多项式系数增长}说明了“维度诅咒”的代数根源：需要估计的参数个数随维度 $D$ 呈多项式增长，而 $M$ 阶多项式在 $D$ 增大时迅速失去实用性。注意这里统计的是\emph{独立}系数：由于 $x_ix_j=x_jx_i$，若把\eqref{align:ch06-多项式多维}中的 $w_{ij}$ 与 $w_{ji}$ 视为同一个参数，二阶项只有 $D(D+1)/2$ 个而非 $D^{2}$ 个，但阶数不变。换言之，对称性只能把常数因子减半，不能改变指数增长的趋势。
 \end{remark}
 
 高维空间中出现的这种巨大困难有时称为维度诅咒（Bellman，1961）。这是一个相当普遍的问题，不仅限于多项式回归。我们来考虑使用线性模型解决分类问题：\cref{figure:ch06-鸢尾花}展示了来自鸢尾花数据集的数据，其中包括来自三种鸢尾花的各 $50$ 个观测值。
@@ -111,15 +116,15 @@ c_{\boldsymbol{m}}, & \boldsymbol{x}\text{ 落在第 }\boldsymbol{m}\text{ 个�
 它表明如果我们将输入空间划分为规则的单元，那么这样的单元数量将随空间维度的增大呈指数级增长。呈指数级增长的单元数量带来的挑战是，我们需要指数级数量的训练数据来确保单元不是空的。我们已经在\cref{figure:ch06-网格分类}中看到，一些单元不包含任何训练点。因此，这些单元中的测试点将得不到分类。显然，我们无法在具有较多变量的输入空间中应用这种技术。这种方法对多项式回归示例和鸢尾花数据分类示例而言都是困难的，因为基函数的选择没有考虑要解决的问题。为了避免维度诅咒，我们需要在选择基函数时更加精细（参见\cref{subsection:ch06-数据依赖的基函数}）。
 
 \begin{proposition}[网格单元数的指数增长]\label{proposition:ch06-网格单元数}
-设输入空间为 $\mathbb{R}^{D}$ 中的单位立方体 $[0,1]^{D}$，用边长 $h$ 的规则网格划分，则所需单元数为 $h^{-D}$。若希望每个单元平均至少含有一个训练点、且训练点数为 $N$，则必须 $N\geqslant h^{-D}$，即 $N$ 必须随 $D$ 呈指数增长。
+设 $D\in\mathbb{N}$，输入空间为 $\mathbb{R}^{D}$ 中的单位立方体 $[0,1]^{D}$，$h\in(0,1)$ 且 $1/h\in\mathbb{N}$；用边长 $h$ 的规则网格把 $[0,1]^{D}$ 划分为 $h^{-D}$ 个互不相交的立方体单元，则单元数为 $h^{-D}$。设训练集含 $N$ 个点；若每个单元平均至少含有 $1$ 个训练点，即训练点数与单元数之比不小于 $1$，则 $N\geqslant h^{-D}$。于是对固定的 $h\in(0,1)$，所需训练点数 $N$ 随维数 $D$ 呈指数增长：$N\geqslant h^{-D}=\exp(-D\ln h)$，其中 $\ln h<0$。
 \end{proposition}
 
 \begin{proof}
-（重构新增）每个坐标轴被分成 $1/h$ 段，$D$ 个坐标轴的独立选择给出 $h^{-D}$ 个单元。若每个单元至少含一个训练点，则 $N\geqslant h^{-D}$。取 $h<1$ 固定，$h^{-D}=e^{-D\ln h}$ 随 $D$ 指数增长；例如 $h=0.1$、$D=10$ 时已需 $10^{10}$ 个训练点。
+每个坐标轴被分成 $1/h$ 段，$D$ 个坐标轴的独立选择给出 $h^{-D}$ 个单元。若每个单元至少含一个训练点，则 $N\geqslant h^{-D}$。取 $h<1$ 固定，$h^{-D}=e^{-D\ln h}$ 随 $D$ 指数增长；例如 $h=0.1$、$D=10$ 时已需 $10^{10}$ 个训练点。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch06-网格单元数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）\cref{proposition:ch06-网格单元数}给出了维度诅咒最朴素的定量形式，但它也提示了出路：真正起作用的不是数据空间的维度 $D$，而是数据实际占据的自由度。如果数据位于一个 $d$ 维流形上（$d\ll D$），那么把单元建在流形上而非整个空间上，所需单元数只随 $d$ 指数增长。这正是\cref{subsection:ch06-数据流形}与\cref{subsection:ch06-数据依赖的基函数}的出发点。
+% SUPPLEMENT: parent=proposition:ch06-网格单元数; kind=motivation; location=紧随其后的 remark
+\begin{remark}\cref{proposition:ch06-网格单元数}给出了维度诅咒最朴素的定量形式，但它也提示了出路：真正起作用的不是数据空间的维度 $D$，而是数据实际占据的自由度。如果数据位于一个 $d$ 维流形上（$d\ll D$），那么把单元建在流形上而非整个空间上，所需单元数只随 $d$ 指数增长。这正是\cref{subsection:ch06-数据流形}与\cref{subsection:ch06-数据依赖的基函数}的出发点。
 \end{remark}
 
 \subsection{高维空间}\label{subsection:ch06-高维空间}
@@ -139,11 +144,11 @@ V_D(r)=K_Dr^{D},
 \end{align}
 
 \begin{proposition}[高维超球体的薄壳效应]\label{proposition:ch06-超球体薄壳}
-设 $V_D(r)=K_Dr^{D}$ 为 $D$ 维超球体体积，则半径介于 $r=1-\varepsilon$ 与 $r=1$ 之间的薄壳占总体积的比例为 $1-(1-\varepsilon)^{D}$。对固定的 $\varepsilon\in(0,1)$，当 $D\to\infty$ 时该比例单调递增地趋于 $1$。
+设 $D\in\mathbb{N}$，$K_{D}>0$，$V_{D}(r)=K_{D}r^{D}$ 为 $\mathbb{R}^{D}$ 中半径 $r>0$ 的超球体的体积，$\varepsilon\in(0,1)$。则半径介于 $r=1-\varepsilon$ 与 $r=1$ 之间的球壳体积占半径 $1$ 的超球体体积的比例为 $1-(1-\varepsilon)^{D}$，即\eqref{align:ch06-薄壳体积占比}。对固定的 $\varepsilon\in(0,1)$，该比例关于 $D$ 单调递增，且当 $D\to\infty$ 时收敛到 $1$。
 \end{proposition}
 
 \begin{proof}
-（重构新增）由\eqref{align:ch06-超球体体积}，$V_D(1-\varepsilon)=K_D(1-\varepsilon)^{D}$，故
+由\eqref{align:ch06-超球体体积}，$V_D(1-\varepsilon)=K_D(1-\varepsilon)^{D}$，故
 \begin{align}
 \frac{V_D(1)-V_D(1-\varepsilon)}{V_D(1)}
 =\frac{K_D-K_D(1-\varepsilon)^{D}}{K_D}=1-(1-\varepsilon)^{D}.
@@ -151,8 +156,8 @@ V_D(r)=K_Dr^{D},
 因为 $0<1-\varepsilon<1$，序列 $(1-\varepsilon)^{D}$ 关于 $D$ 单调递减且趋于 $0$，所以比例 $1-(1-\varepsilon)^{D}$ 单调递增地趋于 $1$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch06-超球体薄壳; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）这个结论常被概括为“高维球的体积几乎全部集中在表面附近”。它的实践含义是：在高维空间中，\emph{体积}与\emph{概率质量}的直觉不再一致，均匀分布于球内的点几乎必然落在薄壳里。对机器学习而言，这意味着基于“局部邻域”的方法在高维下会失效：任何有限半径的邻域都只能覆盖极少的数据点。
+% SUPPLEMENT: parent=proposition:ch06-超球体薄壳; kind=motivation; location=紧随其后的 remark
+\begin{remark}这个结论常被概括为“高维球的体积几乎全部集中在表面附近”。它的实践含义是：在高维空间中，\emph{体积}与\emph{概率质量}的直觉不再一致，均匀分布于球内的点几乎必然落在薄壳里。对机器学习而言，这意味着基于“局部邻域”的方法在高维下会失效：任何有限半径的邻域都只能覆盖极少的数据点。
 \end{remark}
 
 \cref{figure:ch06-超球体壳层}显示了不同维度 $D$ 取值下体积占比关于 $\varepsilon$ 的函数。可以看到，对于较大的 $D$ 值，即使 $\varepsilon$ 值较小，这个占比也倾向于 $1$。因此，我们有了一个重要的发现：在高维空间中，超球体的大部分体积集中在靠近表面的薄壳中！
@@ -174,24 +179,26 @@ V_D(r)=K_Dr^{D},
 \end{figure}
 
 \begin{proposition}[高维 Gauss 的径向集中]\label{proposition:ch06-高维Gauss薄壳}
-设 $\boldsymbol{x}\sim\mathcal{N}(\boldsymbol{0},\sigma^{2}\boldsymbol{I})$ 取值于 $\mathbb{R}^{D}$，$r=\|\boldsymbol{x}\|$，则径向密度为
+设 $D\in\mathbb{N}$ 且 $D\geqslant2$，$\sigma>0$，$\boldsymbol{x}\sim\mathcal{N}(\boldsymbol{0},\sigma^{2}\boldsymbol{I}_{D})$ 为 $\mathbb{R}^{D}$ 上取值的随机向量，$r=\|\boldsymbol{x}\|_{2}$，$S_{D}>0$ 为 $\mathbb{R}^{D}$ 中单位球面的面积。则 $r$ 在 $[0,\infty)$ 上的概率密度为
 \begin{align}
-p(r)=\frac{S_Dr^{D-1}}{(2\pi\sigma^{2})^{D/2}}\exp\!\left(-\frac{r^{2}}{2\sigma^{2}}\right),
+p(r)=\frac{S_Dr^{D-1}}{(2\pi\sigma^{2})^{D/2}}\exp\!\left(-\frac{r^{2}}{2\sigma^{2}}\right).
 \label{align:ch06-高维Gauss径向密度}
 \end{align}
-其中 $S_D$ 是 $\mathbb{R}^{D}$ 中单位超球体的表面积。当 $D$ 较大时，$p(r)$ 在 $r\approx\sqrt{D}\sigma$ 处取得唯一最大值，且概率质量集中在该半径附近厚度为 $\mathcal{O}(\sigma)$ 的薄壳内。
+该密度在 $\hat{r}=\sqrt{D-1}\,\sigma$ 处取得唯一最大值，且 $\hat{r}=\sqrt{D}\sigma\,(1+\mathcal{O}(D^{-1}))$；在 $\hat{r}$ 处作二阶展开得 $p(\hat{r}+\varepsilon)=p(\hat{r})\exp\{-\varepsilon^{2}/\sigma^{2}\}(1+o(\varepsilon^{2}/\sigma^{2}))$，故概率质量集中在半径 $\hat{r}$ 附近厚度为 $\mathcal{O}(\sigma)$ 的球壳内。
 \end{proposition}
 
 \begin{proof}
-（重构新增）把 Gauss 密度在极坐标下积分掉方向变量即得\eqref{align:ch06-高维Gauss径向密度}（详细推导见\cref{exercise:ch06-03}）。为求驻点，对 $\ln p(r)$ 求导：
+把 Gauss 密度在极坐标下积分掉方向变量即得\eqref{align:ch06-高维Gauss径向密度}（详细推导见\cref{exercise:ch06-03}）。为求驻点，对 $\ln p(r)$ 求导：
 \begin{align*}
 \frac{\mathrm{d}}{\mathrm{d}r}\ln p(r)=\frac{D-1}{r}-\frac{r}{\sigma^{2}},
 \end{align*}
-令其为零得 $r^{2}=(D-1)\sigma^{2}$，故驻点为 $\hat r=\sqrt{D-1}\,\sigma\approx\sqrt{D}\sigma$；又因二阶导数在 $r>0$ 上为负，$\hat r$ 是唯一最大值点。在 $\hat r$ 附近作二阶展开可得 $p(\hat r+\varepsilon)\approx p(\hat r)\exp\{-3\varepsilon^{2}/(2\sigma^{2})\}$，即密度在尺度 $\sigma$ 上指数衰减，故概率质量集中在半径 $\hat r$ 附近厚度为 $\mathcal{O}(\sigma)$ 的薄壳内。
+令其为零得 $r^{2}=(D-1)\sigma^{2}$，故驻点为 $\hat r=\sqrt{D-1}\,\sigma\approx\sqrt{D}\sigma$；又因二阶导数在 $r>0$ 上为负，$\hat r$ 是唯一最大值点。在 $\hat r$ 附近作二阶展开：由 $\ln p$ 的二阶导数 $-(D-1)/r^{2}-1/\sigma^{2}$ 在 $r=\hat r$ 处等于 $-2/\sigma^{2}$，得 $\ln p(\hat r+\varepsilon)=\ln p(\hat r)-\varepsilon^{2}/\sigma^{2}+o(\varepsilon^{2})$，即 $p(\hat r+\varepsilon)=p(\hat r)\exp\{-\varepsilon^{2}/\sigma^{2}\}(1+o(1))$；故密度在尺度 $\sigma$ 上指数衰减，概率质量集中在半径 $\hat r$ 附近厚度为 $\mathcal{O}(\sigma)$ 的薄壳内。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch06-高维Gauss薄壳; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）\cref{proposition:ch06-高维Gauss薄壳}与\cref{proposition:ch06-超球体薄壳}是同一现象的两个侧面：前者说的是\emph{体积}集中在表面，后者说的是\emph{概率质量}集中在某个半径。二者并不矛盾——Gauss 密度在原点最高，但原点附近的体积元 $S_Dr^{D-1}\mathrm{d}r$ 在 $r$ 很小时几乎为零，两者相乘的峰值因此被推到 $r\approx\sqrt{D}\sigma$ 处。这提醒我们：在高维空间中，“密度最大的点”与“最可能出现的半径”是两个不同的概念。
+% SUPPLEMENT: parent=proposition:ch06-高维Gauss薄壳; kind=motivation; location=紧随其后的 remark
+\begin{remark}\cref{proposition:ch06-高维Gauss薄壳}与\cref{proposition:ch06-超球体薄壳}是同一现象的两个侧面：前者说的是\emph{体积}集中在表面，后者说的是\emph{概率质量}集中在某个半径。二者并不矛盾——Gauss 密度在原点最高，但原点附近的体积元 $S_Dr^{D-1}\mathrm{d}r$ 在 $r$ 很小时几乎为零，两者相乘的峰值因此被推到 $r\approx\sqrt{D}\sigma$ 处。这提醒我们：在高维空间中，“密度最大的点”与“最可能出现的半径”是两个不同的概念。
+
+原文问题说明：原文证明把 $\hat r$ 附近的二阶展开写作 $p(\hat r+\varepsilon)\approx p(\hat r)\exp\{-3\varepsilon^{2}/(2\sigma^{2})\}$。由 $\ln p$ 的二阶导数 $-(D-1)/r^{2}-1/\sigma^{2}$ 在 $r=\hat r$ 处等于 $-2/\sigma^{2}$，正确系数为 $\exp\{-\varepsilon^{2}/\sigma^{2}\}$，本命题与证明已按此式陈述；指数衰减的结论与薄壳厚度的量级不受影响。
 \end{remark}
 
 在本书中，我们广泛使用了涉及单个或两个变量的例子，因为这样特别容易图形化地展示这些空间。然而，读者应该注意，不是所有在低维空间中获得的直觉都可以推广到高维空间中。
@@ -227,11 +234,11 @@ p(r)=\frac{S_Dr^{D-1}}{(2\pi\sigma^{2})^{D/2}}\exp\!\left(-\frac{r^{2}}{2\sigma^
 其中的每幅图像都是高维空间中的一个点，其维度由像素数决定。因为对象可以在图像内不同的垂直和水平位置以不同的朝向出现，所以图像之间有三个可变自由度。一组图像将大致处在高维空间中的一个三维\textbf{流形}（manifold）上。由于对象位置或方向与像素强度之间存在复杂关系，这个流形是高度非线性的。
 
 \begin{definition}[数据流形]\label{definition:ch06-数据流形}
-设数据空间为 $\mathbb{R}^{D}$。若存在整数 $d\ll D$ 与映射 $\boldsymbol{g}:\mathbb{R}^{d}\to\mathbb{R}^{D}$，使得（至少局部地）每个数据点都可写成 $\boldsymbol{x}=\boldsymbol{g}(\boldsymbol{z})$，其中 $\boldsymbol{z}\in\mathbb{R}^{d}$，则称数据位于一个 $d$ 维\textbf{流形}（manifold）上，$d$ 称为该流形的\textbf{内在维度}（intrinsic dimension），$\boldsymbol{z}$ 称为\emph{流形坐标}。
+设 $D\in\mathbb{N}$，数据空间为 $\mathbb{R}^{D}$，数据集为 $\mathcal{X}=\{\boldsymbol{x}_{1},\cdots,\boldsymbol{x}_{N}\}\subset\mathbb{R}^{D}$，$d\in\mathbb{N}$ 且 $d<D$。若存在 $d$ 维 $C^{1}$ 子流形 $\mathcal{M}\subset\mathbb{R}^{D}$ 使 $\mathcal{X}\subseteq\mathcal{M}$，即对每个 $\boldsymbol{x}\in\mathcal{M}$ 存在开集 $U\subseteq\mathbb{R}^{d}$、点 $\boldsymbol{z}\in U$ 与单射 $\boldsymbol{g}:U\to\mathbb{R}^{D}$，满足 $\boldsymbol{g}(\boldsymbol{z})=\boldsymbol{x}$，$\boldsymbol{g}$ 连续可微且 Jacobi 矩阵 $\mathrm{D}\boldsymbol{g}(\boldsymbol{z})$ 的秩为 $d$，并使 $\mathcal{M}$ 在 $\boldsymbol{x}$ 附近与 $\boldsymbol{g}(U)$ 重合，则称数据位于一个 $d$ 维\textbf{流形}（manifold）上；$d$ 称为该流形的\textbf{内在维度}（intrinsic dimension），$\boldsymbol{z}$ 称为\emph{流形坐标}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch06-数据流形; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）\cref{definition:ch06-数据流形}的关键在于区分\emph{外在维度} $D$（像素数、采样点数）与\emph{内在维度} $d$（真正的自由度）。手写数字的例子中 $D$ 可以是 $10^{4}$ 量级而 $d=3$（水平位置、垂直位置、朝向）。流形假设并不要求数据严格落在流形上，只要求它集中在流形附近；实际数据总带有噪声，因此更准确的说法是“数据分布集中在低维流形的一个管状邻域内”。
+% SUPPLEMENT: parent=definition:ch06-数据流形; kind=motivation; location=紧随其后的 remark
+\begin{remark}\cref{definition:ch06-数据流形}的关键在于区分\emph{外在维度} $D$（像素数、采样点数）与\emph{内在维度} $d$（真正的自由度）。手写数字的例子中 $D$ 可以是 $10^{4}$ 量级而 $d=3$（水平位置、垂直位置、朝向）。流形假设并不要求数据严格落在流形上，只要求它集中在流形附近；实际数据总带有噪声，因此更准确的说法是“数据分布集中在低维流形的一个管状邻域内”。
 \end{remark}
 
 实际上，像素数量是图像生成过程的人为产物，因为像素数量是对连续世界的测量方式。以更高的分辨率捕获相同的图像会增加数据空间的维度 $D$，但并不改变图像仍然存在于三维流形上这一事实。如果我们能将局部化的基函数与数据流形相关联，而不是与整个高维数据空间相关联，则所需的基函数数量将随着流形的维度呈指数级增长，而不是随着数据空间的维度呈指数级增长。由于流形的维度通常比数据空间的维度低得多，这将是一个巨大的改进。实际上，神经网络学习了一组适应于数据流形的基函数。此外，对于特定的应用，并不是流形内的所有方向都是重要的。例如，如果我们只希望确定\cref{figure:ch06-手写数字}中对象的朝向而不是位置，那么在流形上将只有一个而不是三个相关的自由度。神经网络还能够学习流形上的哪些朝向与预测想要的输出是相关的。
@@ -254,18 +261,22 @@ p(r)=\frac{S_Dr^{D-1}}{(2\pi\sigma^{2})^{D/2}}\exp\!\left(-\frac{r^{2}}{2\sigma^
 由于高维空间中的数据可能被限制在低维流形上，因此我们不需要基函数密集地填充整个输入空间，而是可以使用与数据流形本身相关的基函数。一种做法是将每个训练集中的数据点都与一个基函数相关联，这确保了基函数自动适应于底层的数据流形。这种模型的一个例子是\textbf{径向基函数}（radial basis function）（Broomhead and Lowe，1988），其性质是每个基函数仅依赖于到中心向量的径向距离（通常是欧氏距离）。如果基中心选择为输入数据值 $\{\boldsymbol{x}_n\}$，那么对于每个数据点都有一个基函数 $\phi_n(\boldsymbol{x})$，它将建模整个数据流形。径向基函数的一个典型选择是
 
 \begin{align}
-\phi_n(\boldsymbol{x})=\exp\!\left(-\frac{\|\boldsymbol{x}-\boldsymbol{x}_n\|^{2}}{s^{2}}\right),
-\label{align:ch06-径向基函数}
+\phi_n(\boldsymbol{x})=\exp\!\left(-\frac{\|\boldsymbol{x}-\boldsymbol{x}_n\|^{2}}{s^{2}}\right).
 \end{align}
 
 其中 $s$ 是控制基函数宽度的参数。
 
 \begin{definition}[径向基函数]\label{definition:ch06-径向基函数}
-设 $\{\boldsymbol{x}_n\}_{n=1}^{N}\subset\mathbb{R}^{D}$ 为训练输入，$s>0$ 为宽度参数。称\eqref{align:ch06-径向基函数}定义的 $\phi_n(\boldsymbol{x})$ 为以 $\boldsymbol{x}_n$ 为中心的\textbf{径向基函数}（radial basis function, RBF）：它的取值只依赖于 $\boldsymbol{x}$ 到中心 $\boldsymbol{x}_n$ 的欧氏距离 $\|\boldsymbol{x}-\boldsymbol{x}_n\|$。
+设 $D,N\in\mathbb{N}$，训练输入 $\{\boldsymbol{x}_n\}_{n=1}^{N}\subset\mathbb{R}^{D}$，宽度参数 $s>0$。对每个 $n\in\{1,\cdots,N\}$，定义映射 $\phi_{n}:\mathbb{R}^{D}\to(0,1]$ 为
+\begin{align}
+\phi_n(\boldsymbol{x})=\exp\!\left(-\frac{\|\boldsymbol{x}-\boldsymbol{x}_n\|^{2}}{s^{2}}\right),
+\label{align:ch06-径向基函数}
+\end{align}
+其中 $\|\cdot\|$ 为 $\mathbb{R}^{D}$ 上的欧氏范数。则 $\phi_{n}$ 称为以 $\boldsymbol{x}_{n}$ 为中心、以 $s$ 为宽度参数的\textbf{径向基函数}（radial basis function, RBF）；对每个固定的 $\boldsymbol{x}\in\mathbb{R}^{D}$，$\phi_{n}(\boldsymbol{x})$ 只依赖于 $\boldsymbol{x}$ 与中心 $\boldsymbol{x}_{n}$ 的欧氏距离 $\|\boldsymbol{x}-\boldsymbol{x}_n\|$，与差向量的方向无关。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch06-径向基函数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）\cref{definition:ch06-径向基函数}把“基函数应随数据分布走”这一想法落实为最直接的构造：每个训练点放一个基函数。它的优点是不需要先验地选择基函数形状，缺点是基函数个数等于训练点个数 $N$，且每个测试点的预测需要计算 $N$ 个指数函数——计算量为 $\mathcal{O}(ND)$。更重要的是，当 $N$ 很大时，模型参数与样本数同阶，必须配合正则化才能避免过拟合。这正是支持向量机试图解决的问题。
+% SUPPLEMENT: parent=definition:ch06-径向基函数; kind=motivation; location=紧随其后的 remark
+\begin{remark}\cref{definition:ch06-径向基函数}把“基函数应随数据分布走”这一想法落实为最直接的构造：每个训练点放一个基函数。它的优点是不需要先验地选择基函数形状，缺点是基函数个数等于训练点个数 $N$，且每个测试点的预测需要计算 $N$ 个指数函数——计算量为 $\mathcal{O}(ND)$。更重要的是，当 $N$ 很大时，模型参数与样本数同阶，必须配合正则化才能避免过拟合。这正是支持向量机试图解决的问题。
 \end{remark}
 
 尽管可以很快建立起这样的模型，但这种技术的一个主要问题是，它对于大型数据集来说计算较为困难。此外，这样的模型还需要经过仔细的正则化以避免严重的过拟合问题。
@@ -273,16 +284,16 @@ p(r)=\frac{S_Dr^{D-1}}{(2\pi\sigma^{2})^{D/2}}\exp\!\left(-\frac{r^{2}}{2\sigma^
 有一种相关的方法，叫作\textbf{支持向量机}（Support Vector Machine, SVM）（Vapnik，1995；Schölkopf and Smola，2002；Bishop，2006），它通过再次定义以每个训练数据点为中心的基函数，在训练过程中自动选择这些基函数的一个子集。因此，最终模型中有效基函数的数量通常远少于训练点的数量，尽管它通常仍然相对较大，并且会随训练集大小的增加而增大。支持向量机不产生概率化的输出，因此无法自然地泛化到多类情况。像径向基函数和支持向量机这样的方法已被深度神经网络取代，后者在有效利用非常大的数据集方面要好得多。此外，正如我们稍后将看到的，神经网络能够学习深度层次化（hierarchical）的表示，这对于在更复杂的应用中实现高预测准确性至关重要。
 
 \begin{definition}[支持向量机]\label{definition:ch06-支持向量机}
-称如下分类器为\textbf{支持向量机}（SVM）：它以核函数 $k(\boldsymbol{x},\boldsymbol{x}_n)$（等价地，以每个训练点为中心的基函数）展开决策函数
+设 $D,N\in\mathbb{N}$，输入空间 $\mathcal{X}\subseteq\mathbb{R}^{D}$，训练集 $\{(\boldsymbol{x}_{n},t_{n})\}_{n=1}^{N}$ 满足 $\boldsymbol{x}_{n}\in\mathcal{X}$、$t_{n}\in\{-1,+1\}$；设 $k:\mathcal{X}\times\mathcal{X}\to\mathbb{R}$ 为对称半正定核函数，即 $k(\boldsymbol{x},\boldsymbol{x}')=k(\boldsymbol{x}',\boldsymbol{x})$，且对任意 $M\in\mathbb{N}$、$\{\boldsymbol{x}_{i}\}_{i=1}^{M}\subset\mathcal{X}$ 与 $\{c_{i}\}_{i=1}^{M}\subset\mathbb{R}$ 有 $\sum_{i=1}^{M}\sum_{j=1}^{M}c_{i}c_{j}k(\boldsymbol{x}_{i},\boldsymbol{x}_{j})\geqslant0$；设 $\mathcal{S}\subseteq\{1,\cdots,N\}$ 为非空有限指标集，$\alpha_{n}\in\mathbb{R}$ 满足 $\alpha_{n}>0$（$n\in\mathcal{S}$），$b\in\mathbb{R}$。若判别函数 $y:\mathcal{X}\to\mathbb{R}$ 具有形式
 \begin{align}
 y(\boldsymbol{x})=\sum_{n\in\mathcal{S}}\alpha_n t_n k(\boldsymbol{x},\boldsymbol{x}_n)+b,
 \label{align:ch06-支持向量机}
 \end{align}
-其中 $t_n\in\{-1,+1\}$ 为类标签，$\mathcal{S}$ 是训练过程中自动选出的训练点子集（支持向量），$\alpha_n>0$。
+则定义判别规则 $\boldsymbol{x}\mapsto\operatorname{sign}y(\boldsymbol{x})$ 的分类器称为\textbf{支持向量机}（support vector machine, SVM），$\{\boldsymbol{x}_{n}\}_{n\in\mathcal{S}}$ 称为支持向量。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch06-支持向量机; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）与\cref{definition:ch06-径向基函数}相比，\cref{definition:ch06-支持向量机}的基函数集合仍然以训练点为中心，但只有一部分系数 $\alpha_n$ 非零，这就是“自动选择子集”的含义。SVM 的判别式只给出类别（或到超平面的距离），不给出 $p(\mathcal{C}_k\mid\boldsymbol{x})$，因此难以直接用于需要概率输出的下游任务，也不能像 softmax 那样自然地给出多类后验——这两点是它被深度网络取代的重要原因之一。
+% SUPPLEMENT: parent=definition:ch06-支持向量机; kind=motivation; location=紧随其后的 remark
+\begin{remark}与\cref{definition:ch06-径向基函数}相比，\cref{definition:ch06-支持向量机}的基函数集合仍然以训练点为中心，但只有一部分系数 $\alpha_n$ 非零，这就是“自动选择子集”的含义。SVM 的判别式只给出类别（或到超平面的距离），不给出 $p(\mathcal{C}_k\mid\boldsymbol{x})$，因此难以直接用于需要概率输出的下游任务，也不能像 softmax 那样自然地给出多类后验——这两点是它被深度网络取代的重要原因之一。
 \end{remark}
 
 \end{document}

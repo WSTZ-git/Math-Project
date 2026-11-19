@@ -18,11 +18,16 @@
 此外，识别潜空间中与具有语义意义的变换相对应的方向也是可能的。例如，对人脸图像，某个方向可能对应面部朝向的变化，而其他方向可能对应光照变化或面部微笑程度的变化，这称为\textbf{解耦表示}（disentangled representation）。我们可以利用它们来合成具有特定属性的新图像。
 
 \begin{definition}[解耦表示]\label{definition:ch17-解耦表示}
-设 $z\mapsto g(z)$ 是训练好的生成器。若潜空间中存在若干方向 $v_1,\cdots,v_m$，使得沿每个 $v_i$ 移动时，生成的图像中只有第 $i$ 个语义属性（如面部朝向、光照、是否微笑）发生系统性变化，而其余属性近似保持不变，则称该潜空间给出了这些属性的\textbf{解耦表示}（disentangled representation），并称 $v_i$ 为该属性对应的\textbf{语义方向}。
+设 $M\geqslant1$，$D\geqslant1$，$m\geqslant1$，$g:\mathbb{R}^{M}\to\mathbb{R}^{D}$ 为训练好的生成器；设 $a_1,\cdots,a_m:\mathbb{R}^{D}\to\mathbb{R}$ 为给定的可测属性函数（由属性分类器或人工标注给出），$R>0$，$0<\delta<\varepsilon$。若存在单位向量 $v_1,\cdots,v_m\in\mathbb{R}^{M}$，使得对每个 $i\in\{1,\cdots,m\}$、每个满足 $\|z\|\leqslant R$ 的 $z\in\mathbb{R}^{M}$ 与每个 $t\in(0,\delta)$ 都有
+\begin{align*}
+\big|a_i(g(z+t v_i))-a_i(g(z))\big|\geqslant\varepsilon,\qquad
+\big|a_j(g(z+t v_i))-a_j(g(z))\big|\leqslant\delta\quad(j\neq i),
+\end{align*}
+即沿 $v_i$ 移动使第 $i$ 个属性的变化不小于 $\varepsilon$、而其余属性的变化不超过 $\delta$，则该潜空间称为给出了关于属性 $a_1,\cdots,a_m$ 的\textbf{解耦表示}（disentangled representation），并称 $v_i$ 为第 $i$ 个属性对应的\textbf{语义方向}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch17-解耦表示; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch17-解耦表示; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 解耦表示的用途是“可控生成”：找到语义方向之后，就可以固定其余坐标、只沿该方向移动，从而在保持其他属性不变的前提下改变目标属性。这在数据空间中往往做不到——像素级的向量加减会破坏图像的对齐与光照，\cref{figure:ch17-向量算术}最下一行正是这种失败的例子；而潜空间中的移动天然保持“像一张人脸”，因为整个潜空间都被生成器映到数据流形附近。
 
 条件方面要强调：解耦不是 GAN 训练目标的推论，而是额外的结构假设。\cref{proposition:ch17-最优判别器}只保证 $p_g=p_{\mathrm{data}}$，它并不惩罚潜坐标与语义属性之间的纠缠。若训练数据中“戴眼镜”与“男性”高度相关，那么这两个因素在潜空间中对应的方向几乎重合，任何沿其中一个方向的移动都会同时改变两者；只有数据中的相关性足够弱、或额外加入独立性正则时，才可能得到近似解耦的表示。此外，语义方向没有唯一性：不同的随机初始化会给出不同的基，它们能解释同一组属性，因此“找到方向”总是指相对于某个已训练模型而言。

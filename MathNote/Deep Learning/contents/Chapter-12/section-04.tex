@@ -28,11 +28,11 @@ Transformer 已成功应用于计算机视觉领域，并在许多任务中有�
 视觉 Transformer 的架构设计与卷积神经网络截然不同。虽然卷积神经网络中会产生强归纳偏置，但视觉 Transformer 中唯一的二维归纳偏置是用于 token 化输入的小块造成的。因此，视觉 Transformer 通常比卷积神经网络需要更多的训练数据，因为它必须从头开始学习图像的几何特性。不过，由于对输入的结构没有很强的假设，视觉 Transformer 通常能够收敛到更高的精度。这再次说明了归纳偏置与训练数据规模之间需要权衡（Sutton, 2019）。
 
 \begin{definition}[图像块 token 化]\label{definition:ch12-图像块分词}
-设图像 $\mathbf{x}\in\mathbb{R}^{H\times W\times C}$，小块边长为 $P$（$P$ 整除 $H,W$）。把图像划分为 $N=HW/P^{2}$ 个互不重叠的 $P\times P\times C$ 小块，并将每块展平为长度 $P^{2}C$ 的向量，得到矩阵 $\mathbf{x}_p\in\mathbb{R}^{N\times(P^{2}C)}$，再经可学习的线性投影映射到 $D$ 维，则称这一过程为图像的\textbf{块 token 化}。
+设图像 $\mathbf{x}\in\mathbb{R}^{H\times W\times C}$ 为高 $H$、宽 $W$、通道数 $C$ 的实张量，$H,W,C\geqslant1$；设小块边长 $P\geqslant1$ 满足 $P\mid H$ 与 $P\mid W$，于是块数 $N=HW/P^{2}\geqslant1$。把 $\mathbf{x}$ 划分为 $N$ 个互不重叠的 $P\times P\times C$ 小块，每块按固定次序展平为长度 $P^{2}C$ 的列向量，再按小块位置堆叠成矩阵 $\mathbf{x}_p\in\mathbb{R}^{N\times(P^{2}C)}$；设嵌入维数 $D\geqslant1$，$\mathbf{E}\in\mathbb{R}^{(P^{2}C)\times D}$ 为可学习的实投影矩阵。若令 $\mathbf{x}_p\mathbf{E}\in\mathbb{R}^{N\times D}$ 的第 $n$ 行作为第 $n$ 个 token 的嵌入，则把这一过程称为图像的块 token 化，称每个 $P\times P\times C$ 小块为一个图像块，称 $N$ 为所得的 token 数。$P$ 整除 $H$ 与 $W$ 是划分无剩余的必要条件。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch12-图像块分词; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch12-图像块分词; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 块 token 化的动机是复杂度：若以像素为 token，$N=HW$ 可达 $10^{5}$ 量级，注意力的 $O(N^{2}D)$ 代价无法承受（见\cref{proposition:ch12-计算复杂度}）；以 $16\times16$ 小块为单位，$224\times224$ 的图像得到 $N=196$ 个 token，复杂度降到可行范围。条件“$P$ 整除 $H,W$”保证划分无剩余，否则需要补齐。这一设计也解释了 ViT 的归纳偏置为何弱于卷积网络：卷积核天然编码了“局部性”与“平移等变”，而块 token 化只保留了“局部小块”这一条，其余几何关系必须由数据和位置编码学出来，因此需要更大规模的预训练数据。线性投影的维度 $D$ 与语言模型一致，使同一套 Transformer 层可以直接复用。
 \end{remark}
 
@@ -81,11 +81,15 @@ p(x_1,\cdots,x_N)=\prod_{n=1}^{N}p(x_n\mid x_1,\cdots,x_{n-1})
 由于有 $K$ 个码本向量，我们可以用一个独热编码的 $K$ 维向量来表示每个 $\mathbf{x}_n$，而且由于我们可以选择 $K$ 的值，因此我们可以通过使用较大的 $K$ 值来更准确地表示数据，或使用较小的 $K$ 值来更大程度地压缩数据，从而进行两者之间的权衡。
 
 \begin{definition}[向量量化]\label{definition:ch12-向量量化}
-设码本 $\mathcal{C}=\{\mathbf{c}_1,\cdots,\mathbf{c}_K\}\subset\mathbb{R}^{D}$。映射 $Q:\mathbb{R}^{D}\to\mathcal{C}$，$Q(\mathbf{x})=\arg\min_{\mathbf{c}\in\mathcal{C}}\|\mathbf{x}-\mathbf{c}\|$，称为\textbf{向量量化}（vector quantization）；每个数据点用它最近码本的索引表示，索引再经独热编码送入后续模型。
+设码本 $\mathcal{C}=\{\mathbf{c}_1,\cdots,\mathbf{c}_K\}\subset\mathbb{R}^{D}$，$K\geqslant1$，$D\geqslant1$，且 $\mathbf{c}_1,\cdots,\mathbf{c}_K$ 两两不同；设 $\|\cdot\|$ 为欧氏范数，并对每个 $\mathbf{x}\in\mathbb{R}^{D}$ 定义
+\begin{align*}
+Q(\mathbf{x})=\mathbf{c}_{k(\mathbf{x})},\qquad k(\mathbf{x})=\min\left\{k\in\{1,\cdots,K\}:\|\mathbf{x}-\mathbf{c}_k\|=\min_{1\leqslant j\leqslant K}\|\mathbf{x}-\mathbf{c}_j\|\right\},
+\end{align*}
+即取距 $\mathbf{x}$ 最近的码本向量，若最近者不唯一则取下标最小者。则上述取最小下标的约定使 $Q:\mathbb{R}^{D}\to\mathcal{C}$ 成为良定义的映射，并把 $Q$ 称为向量量化（vector quantization）；称 $k(\mathbf{x})$ 为 $\mathbf{x}$ 的量化索引，称 $\|\mathbf{x}-Q(\mathbf{x})\|$ 为量化误差。每个数据点由其量化索引表示，该索引经独热编码后送入后续模型。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch12-向量量化; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch12-向量量化; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 向量量化的作用是把“连续高维取值”变成“有限字典上的离散符号”，从而让 softmax 型语言模型可以直接用于像素。$K$ 的选择就是保真度与可学习性的权衡：$K$ 太小，量化误差大，重建图像失真；$K$ 太大，每个码本被数据覆盖的机会变小，softmax 参数难以估计（与\cref{proposition:ch12-词袋最大似然}中零频问题同源）。$\arg\min$ 不可微是这里的结构性障碍——梯度无法穿过“取最近邻”这一步，因此实践中需要用直通估计（straight-through estimator）把梯度近似地复制到编码器一侧。\eqref{align:ch12-向量量化}定义的是硬分配；若改用 softmax 给出各码本的概率，就得到软量化，这与注意力的软硬之分是同一思想。
 \end{remark}
 

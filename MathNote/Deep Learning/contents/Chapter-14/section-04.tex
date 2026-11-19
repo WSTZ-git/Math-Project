@@ -38,7 +38,7 @@
 假设变量 $z$ 在区间 $[0,1]$ 上均匀分布。证明变量 $y=b\tan(z)+c$ 具有\eqref{align:ch14-缩放cauchy}给出的 Cauchy 分布。
 \end{exercise}
 
-\begin{remark}（重构新增）\textbf{原文问题说明。}按题面字面，$z\in[0,1]$ 时 $\tan z$ 只在 $\left[0,\tan1\right]$ 上取值，$y$ 的密度是\emph{截断}的 Cauchy 密度，其支撑为 $\left[c,\,c+b\tan1\right]$，总质量集中在该区间内，不可能等于\eqref{align:ch14-缩放cauchy}（后者在整个 $\mathbb{R}$ 上为正）。因此题面的变换应理解为 $y=b\tan\left(\pi\left(z-\frac{1}{2}\right)\right)+c$，它与\eqref{align:ch14-缩放cauchy}一致；本解答按修正后的变换证明，并在末尾说明字面版本的结论。
+\begin{remark}\textbf{原文问题说明。}按题面字面，$z\in[0,1]$ 时 $\tan z$ 只在 $\left[0,\tan1\right]$ 上取值，$y$ 的密度是\emph{截断}的 Cauchy 密度，其支撑为 $\left[c,\,c+b\tan1\right]$，总质量集中在该区间内，不可能等于\eqref{align:ch14-缩放cauchy}（后者在整个 $\mathbb{R}$ 上为正）。因此题面的变换应理解为 $y=b\tan\left(\pi\left(z-\frac{1}{2}\right)\right)+c$，它与\eqref{align:ch14-缩放cauchy}一致；本解答按修正后的变换证明，并在末尾说明字面版本的结论。
 \begin{align*}
 y=b\tan\left(\pi\left(z-\frac{1}{2}\right)\right)+c.
 \end{align*}
@@ -87,7 +87,7 @@ y=b\tan\left(\pi\left(z-\frac{1}{2}\right)\right)+c.
 利用\eqref{align:ch14-ebm}，证明基于能量的模型的对数似然函数的梯度可以写成\eqref{align:ch14-grad-nll}的形式。
 \end{exercise}
 
-\begin{remark}（重构新增）\textbf{原文问题说明。}题面把待证目标标为原书第 14.52 式，但该编号给出的是对数似然本身，其梯度才是\eqref{align:ch14-grad-nll}。据原书上下文，题面所指应为\eqref{align:ch14-grad-nll}，本解答按此理解。
+\begin{remark}\textbf{原文问题说明。}题面把待证目标标为原书第 14.52 式，但该编号给出的是对数似然本身，其梯度才是\eqref{align:ch14-grad-nll}。据原书上下文，题面所指应为\eqref{align:ch14-grad-nll}，本解答按此理解。
 \end{remark}
 
 \begin{exercise}[$\star\star$]\label{exercise:ch14-18}

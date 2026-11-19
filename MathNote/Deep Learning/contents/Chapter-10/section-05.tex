@@ -9,11 +9,17 @@
 在图像分类问题中，整个图像被分配了单一类别标签。我们已经看到，如果检测多个对象并使用边界框记录它们的位置，则可以提供更详细的信息（参见\cref{section:ch10-目标检测}）。语义分割（semantic segmentation）可以让我们获得更详细的分析，其中图像的每个像素被分配给预设的类别之一。这意味着输出空间的维度与输入图像的维度相同，因此可以方便地表示为具有相同像素数量的图像。尽管输入图像通常具有 R、G、B 三个通道，但输出数组具有 $C$ 个通道（假设有 $C$ 个类别）以表示每个类别的概率。如果我们将每个类别与不同的（任意选择的）颜色关联起来，那么分割网络的预测可以表示为一幅图像，其中每个像素根据具有最高概率的类别着色，如\cref{figure:ch10-语义分割}所示。
 
 \begin{definition}[语义分割]\label{definition:ch10-语义分割}
-设图像有 $J\times K$ 个像素、预设类别集合的大小为 $C$。若网络对每个像素 $(j,k)$ 输出一个概率向量 $\mathbf{p}(j,k)\in[0,1]^{C}$（$\sum_{c=1}^{C}p_c(j,k)=1$），并把该像素判给概率最大的类别，则称这一任务为\textbf{语义分割}（semantic segmentation）。此时网络输出是一个 $J\times K\times C$ 的数组，其空间尺寸与输入相同，通道数为类别数。
+设输入图像为 $I\in\mathbb{R}^{J\times K\times 3}$，$J,K\geqslant1$，预设类别集合为
+$\{1,\dots,C\}$，$C\geqslant2$。若分割网络对每个像素 $(j,k)$ 输出概率向量
+$\mathbf{p}(j,k)=(p_1(j,k),\dots,p_C(j,k))\in[0,1]^{C}$，满足
+$\sum_{c=1}^{C}p_c(j,k)=1$，并按
+$\hat{c}(j,k)=\arg\max_{c}p_c(j,k)$（并列时取最小的 $c$）给该像素赋予类别，则这一任务
+称为\textbf{语义分割}（semantic segmentation）。此时网络输出为 $J\times K\times C$ 的
+数组，其空间尺寸与输入相同，通道数为类别数 $C$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-语义分割; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-语义分割; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 语义分割与目标检测的根本差别在于输出空间的形状：检测输出的是“少量框 + 类别”，分割输出的是“与输入同尺寸的逐像素标签”。因此分割网络的最后一层必须有 $C$ 个通道而不是 $C$ 个单元，且空间尺寸必须恢复——这正是后文所有上采样技术（\cref{definition:ch10-上采样}）存在的理由。定义要求概率向量归一化，是为了让“取最大”有明确含义；若某像素的分布接近均匀，则该像素的分类本质上是不确定的，实际系统常用置信度阈值把这部分像素标为“忽略”。注意定义是逐像素独立的，因此它不区分同一类别的不同实例（两只狗会得到同一个标签），这是“语义”分割与“实例”分割的分界。
 \end{remark}
 
@@ -45,11 +51,17 @@
 
 
 \begin{definition}[上采样与最大上采样]\label{definition:ch10-上采样}
-称把每个输入单元映射为一个 $R\times R$ 输出单元块、从而使输出单元数变为输入 $R^2$ 倍的运算为\textbf{上采样}（upsampling）。若每个输入值被复制到对应输出块的全部单元，则称\textbf{平均上采样}（平均池化的类比）；若每个输入值只写入对应输出块的一个单元、其余置零，则称\textbf{最大上采样}（max-unpooling）。若最大上采样写入的位置由对应下采样层记录的最大值位置决定，则称其为\textbf{带位置记录的最大上采样}。
+设输入特征图为 $A\in\mathbb{R}^{J\times K\times C}$，上采样因子为
+$R\in\mathbb{Z}_{\geqslant1}$。把 $A$ 的每个元素映射为输出特征图中的一个
+$R\times R$ 单元块，使输出特征图的空间尺寸为 $RJ\times RK$、通道数仍为 $C$，这一运算
+称为\textbf{上采样}（upsampling）。若每个输入值被复制到对应输出块的全部 $R^2$ 个单元，
+则该上采样称为\textbf{平均上采样}（平均池化的类比）；若每个输入值只写入对应输出块的
+一个单元、其余单元置零，则该上采样称为\textbf{最大上采样}（max-unpooling）。若写入
+位置由对应下采样层记录的最大值位置决定，则该上采样称为\textbf{带位置记录的最大上采样}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-上采样; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-上采样; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 上采样是下采样的“伴随”而不是“逆”：一般情形下它丢失了被池化丢弃的信息，只是把少量数值铺回原来的网格。定义中 $R\times R$ 的块结构对应池化窗口，因此上采样的输出尺寸恰好是池化输入的尺寸，这使二者可以逐层配对。平均上采样与最大上采样的差别只在写入模式：前者把所有位置填满，后者只填一个位置，于是输出是稀疏的。稀疏性本身不是缺陷，但“填哪个位置”携带信息——这正是位置记录版上采样存在的原因，它把池化时丢掉的空间位置从下采样层搬到上采样层，代价是需要额外保存索引。
 \end{remark}
 
@@ -68,10 +80,12 @@
 \end{figure}
 
 \begin{proposition}[上采样与池化的复合]\label{proposition:ch10-上采样复合}
-设池化窗口与上采样块均为 $R\times R$、步幅均为 $R$（互不重叠），输入特征图的尺寸是 $R$ 的整数倍。
+设输入特征图 $A\in\mathbb{R}^{J\times K\times C}$ 的元素非负，池化窗口与上采样块均为
+$R\times R$、步幅均为 $R$（互不重叠），其中 $R\in\mathbb{Z}_{\geqslant1}$，且 $J,K$
+均为 $R$ 的整数倍。则：
 \begin{enumerate}
   \item 若先做平均上采样再做平均池化，则复合运算为恒等映射；
-  \item 若先做最大上采样再做最大池化，且各输出块恰有一个非零元，则复合运算为恒等映射。
+  \item 若先做最大上采样再做最大池化，则复合运算为恒等映射。
 \end{enumerate}
 \end{proposition}
 \begin{proof}
@@ -80,24 +94,30 @@
 (2) 设输入单元值为 $v$，它被写入对应输出块的某一个单元，其余单元为零。对该块取最大值：若 $v\geqslant0$，最大值为 $v$；若 $v<0$，由于其余为零，最大值为 $0$ 而不是 $v$。因此要得到恒等映射，需 $v\geqslant0$（例如激活值经 ReLU 之后）。在此条件下逐块取最大即得 $v$，故复合为恒等映射。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-上采样复合; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-上采样复合; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个命题说明了上采样与池化“配对”的确切含义：它们互为逆运算是有条件的。第 (2) 条中的非负性条件常被忽略：若特征图允许负值，最大上采样后块内最大值是零而不是原来那个负数，信息已经丢失，复合不再恒等。这也解释了为什么最大上采样通常用在 ReLU 之后。两条结论都依赖“窗口不重叠、步幅等于窗口”的约定；若步幅小于窗口，块与块重叠，同一个输入单元会参与多个输出块，复合结果不再逐块独立。命题只讨论形状匹配的一对一情形，实际网络中上采样层与池化层之间往往还隔着若干卷积层，此时复合当然不再是恒等映射。
 \end{remark}
 
 前面讨论的上采样操作都是固定的函数，类似于平均池化和最大池化的下采样操作。我们也可以使用一种称为学习到的（learned）上采样操作，类比于用于下采样的跨步卷积。在跨步卷积中，输出图上的每个单元通过共享可学习权重与输入图上的一小块相连。当我们在输出数组中移动一步时，滤波器在输入数组上将移动两步或更多步，因此输出数组的维度小于输入数组的维度。对于上采样，我们使用一个滤波器将输入数组中的一个像素连接到输出数组中的一小块。然后选择架构，使得当在输入数组中移动一步时，在输出数组中移动两步或更多步（Dumoulin and Visin, 2016）。\cref{figure:ch10-转置卷积}说明了应用 $3\times 3$ 滤波器和输出步幅为 2 的情况。注意，存在多个滤波器位置重合的输出单元，在这种情况下，相应的输出值可以通过对来自各个滤波器位置的贡献进行求和或求平均来计算。这种上采样称为转置卷积（transpose convolution），因为如果将下采样卷积表示为矩阵形式，则相应的上采样卷积可以由转置矩阵给出（见\cref{exercise:ch10-13}）。注意，有时也称这种上采样为“反卷积”，但最好避免使用这个术语，因为在数学中，“反卷积”通常表示泛函分析中卷积的逆操作，概念完全不同。转置卷积又称“分数跨步卷积”，因为标准卷积的步幅是输出层步长与输入层步长的比值。例如，在\cref{figure:ch10-转置卷积}中，这个比值是 $0.5$。
 
 \begin{definition}[转置卷积]\label{definition:ch10-转置卷积}
-设某下采样（跨步）卷积层可写成矩阵形式 $\mathbf{y}=\mathbf{A}\mathbf{x}$，其中 $\mathbf{x}$ 与 $\mathbf{y}$ 分别是输入、输出按通道展开成的向量。对这个层的\textbf{转置卷积}（transpose convolution）是用同一组可学习权重、以转置矩阵作用在 $\mathbf{y}$ 上：
+设某下采样（跨步）卷积层是线性映射，其在按通道展开的坐标下由实矩阵
+$\mathbf{A}\in\mathbb{R}^{m\times n}$ 表示，即 $\mathbf{y}=\mathbf{A}\mathbf{x}$，其中
+$\mathbf{x}\in\mathbb{R}^{n}$ 为输入展开向量、$\mathbf{y}\in\mathbb{R}^{m}$ 为输出展开
+向量。对同一组可学习权重，以转置矩阵作用在 $\mathbf{y}$ 上的运算
 \begin{align}
-  \mathbf{x}'=\mathbf{A}^{\mathsf{T}}\mathbf{y}.
+  \mathbf{x}'=\mathbf{A}^{\mathsf{T}}\mathbf{y}
   \label{align:ch10-转置卷积}
 \end{align}
-等价地，转置卷积把输入数组中的每个元素通过一个滤波器连接到输出数组中的一小块，并使输出数组的相对步长是输入数组的 $1/S$。
+称为该下采样卷积层的\textbf{转置卷积}（transpose convolution），其中
+$\mathbf{x}'\in\mathbb{R}^{n}$。等价地，转置卷积把输入数组中的每个元素通过一个
+$M\times M$ 滤波器连接到输出数组中的一个 $M\times M$ 块，并使输出步幅与输入步幅之比
+为 $1/S$，其中 $S$ 为下采样卷积的步幅。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-转置卷积; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-转置卷积; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 转置卷积之所以叫“转置”，是因为\eqref{align:ch10-转置卷积}中的矩阵确实是下采样卷积矩阵的转置，而不是说它计算了卷积的逆。两者的差别是本质的：$\mathbf{A}$ 通常是“高瘦”的（输出维数小于输入维数），它不可逆，$\mathbf{A}^{\mathsf{T}}$ 只是把梯度方向上的伴随映射作用于 $\mathbf{y}$，因此转置卷积的输出尺寸虽与下采样输入相同，数值却不是下采样的逆。这正是文本强调不应称其为“反卷积”的原因：数学中的反卷积要求先有卷积算子并求其逆，而这里根本没有可逆性。定义中的“等价地”一句给出了实现视角：转置卷积可以看作用同一个滤波器在放大后的网格上做普通卷积，重叠位置的贡献相加，这解释了为什么它的输出会有棋盘状伪影。
 \end{remark}
 
@@ -109,19 +129,24 @@
 \end{figure}
 
 \begin{proposition}[转置卷积是下采样卷积的伴随算子]\label{proposition:ch10-转置卷积伴随}
-设下采样卷积层为线性映射 $\mathbf{A}:\mathbb{R}^{n}\to\mathbb{R}^{m}$，$\mathbf{y}=\mathbf{A}\mathbf{x}$。则对任意 $\mathbf{x}\in\mathbb{R}^{n}$、$\mathbf{z}\in\mathbb{R}^{m}$ 成立
+设 $m,n\geqslant1$，下采样卷积层在按通道展开的坐标下由实矩阵
+$\mathbf{A}\in\mathbb{R}^{m\times n}$ 表示，$\mathbf{y}=\mathbf{A}\mathbf{x}$，并以
+$\langle\cdot,\cdot\rangle$ 记 $\mathbb{R}^{n}$ 与 $\mathbb{R}^{m}$ 上的标准内积。则
+对任意 $\mathbf{x}\in\mathbb{R}^{n}$ 与 $\mathbf{z}\in\mathbb{R}^{m}$ 成立
 \begin{align}
   \langle \mathbf{A}\mathbf{x},\mathbf{z}\rangle=\langle \mathbf{x},\mathbf{A}^{\mathsf{T}}\mathbf{z}\rangle,
   \label{align:ch10-转置卷积伴随}
 \end{align}
-即 $\mathbf{A}^{\mathsf{T}}$ 是 $\mathbf{A}$ 关于标准内积的伴随算子；并且当 $\mathbf{A}$ 为满秩方阵时 $\mathbf{A}^{\mathsf{T}}$ 与 $\mathbf{A}^{-1}$ 一般不同。
+即 $\mathbf{A}^{\mathsf{T}}$ 是 $\mathbf{A}$ 关于标准内积的伴随算子。此外，若
+$\mathbf{A}$ 为可逆方阵（此时 $m=n$），则
+$\mathbf{A}^{\mathsf{T}}=\mathbf{A}^{-1}$ 当且仅当 $\mathbf{A}$ 为正交矩阵。
 \end{proposition}
 \begin{proof}
 按标准内积展开：$\langle \mathbf{A}\mathbf{x},\mathbf{z}\rangle=(\mathbf{A}\mathbf{x})^{\mathsf{T}}\mathbf{z}=\mathbf{x}^{\mathsf{T}}\mathbf{A}^{\mathsf{T}}\mathbf{z}=\langle \mathbf{x},\mathbf{A}^{\mathsf{T}}\mathbf{z}\rangle$，即\eqref{align:ch10-转置卷积伴随}。若 $\mathbf{A}$ 为满秩方阵，则 $\mathbf{A}^{\mathsf{T}}=\mathbf{A}^{-1}$ 当且仅当 $\mathbf{A}^{\mathsf{T}}\mathbf{A}=\mathbf{I}$，即 $\mathbf{A}$ 为正交阵；取 $\mathbf{A}=2\mathbf{I}$ 得 $\mathbf{A}^{\mathsf{T}}=2\mathbf{I}\neq\frac12\mathbf{I}=\mathbf{A}^{-1}$，故一般不同。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-转置卷积伴随; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-转置卷积伴随; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个命题给出转置卷积的严格身份：它是伴随，而不是逆。伴随的意义在反向传播中才显现——卷积层反向传播时，输入梯度正是用同一个矩阵的转置作用在输出梯度上，因此“转置卷积”这个名字来自它在前向中的形状与反向中的算子一致。命题第二句提醒：即便 $\mathbf{A}$ 可逆，$\mathbf{A}^{\mathsf{T}}$ 也只在 $\mathbf{A}$ 为正交阵时才等于 $\mathbf{A}^{-1}$，因此“转置卷积恢复了下采样的信息”这一说法只在极特殊的情形成立。条件“标准内积”不能省：若换用加权内积，伴随算子就要相应改写，转置矩阵不再正确。
 \end{remark}
 
@@ -130,11 +155,14 @@
 如果我们的网络架构没有池化层，即下采样和上采样纯粹使用卷积来完成，则称这样的网络为全卷积网络（fully convolutional network）（Long, Shelhamer, and Darrell, 2014）。全卷积网络可以接收任意大小的图像，并输出相同大小的分割图。这可以看作 $3\times 3$ 卷积的逆运算。
 
 \begin{definition}[全卷积网络]\label{definition:ch10-全卷积网络}
-若一个网络的所有层都是卷积层与转置卷积层（不含池化层与全连接层），从而下采样与上采样完全由卷积完成，则称其为\textbf{全卷积网络}（fully convolutional network）。全卷积网络对任意空间尺寸的输入都有定义，并输出与输入同空间尺寸的分割图。
+设 $L\geqslant1$。一个 $L$ 层前馈网络称为\textbf{全卷积网络}
+（fully convolutional network），若它的每一层都是卷积层或转置卷积层，既不含池化层也
+不含全连接层，即下采样与上采样完全由卷积与转置卷积完成。全卷积网络对任意空间尺寸
+$J\times K$（$J,K\geqslant1$）的输入都有定义，并输出与输入同空间尺寸的分割图。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-全卷积网络; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-全卷积网络; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 全卷积网络的关键性质是“对任意输入尺寸都有定义”：卷积核的参数量与输入尺寸无关（\cref{proposition:ch10-卷积层参数量}），因此在比训练图像更大的输入上，网络只是输出更大的特征图，而不需要改变任何参数。若网络中夹有全连接层，这一点立刻失效：全连接层的权重矩阵维数被输入尺寸固定，换尺寸就无法计算。定义排除池化层，是为了让“尺寸只由步幅决定”这一性质保持可控；实际上更常见的做法是保留池化但配合上采样，这就是\cref{definition:ch10-U-Net}的思路。最后一句“可看作 $3\times3$ 卷积的逆运算”只是形状层面的类比，不应按\cref{proposition:ch10-转置卷积伴随}的严格意义理解。
 \end{remark}
 
@@ -143,11 +171,20 @@
 我们已经看到，与跨步卷积和池化相关的下采样允许增加通道的数量，而不会使网络的规模变得过大。但这也会降低空间分辨率，导致信号流过网络时丢失位置信息。虽然这对于图像分类来说是可以接受的，但对于图像语义分割来说，丢失空间信息是一个大问题，因为我们想要分类每个像素。解决这个问题的一种方法是使用 U-Net 架构（Ronneberger, Fischer, and Brox, 2015），如\cref{figure:ch10-U-Net}所示，其名称来自示意图所示的 U 形结构。其核心概念是，对于每个下采样层，都有一个对应的上采样层，并且每个下采样层的输出被拼接到相应的上采样层，从而使这些上采样层能够获得更高分辨率的空间信息。注意，可以在 U-Net 架构的最后一层使用 $1\times 1$ 卷积将通道数量减少至类别数量，然后接一个 softmax 激活函数。
 
 \begin{definition}[U-Net]\label{definition:ch10-U-Net}
-称满足下列结构的语义分割网络为 \textbf{U-Net}：网络由一条下采样路径与一条上采样路径组成；对下采样路径中的每一层，上采样路径中存在一层与之空间尺寸相同、并通过\textbf{拼接}（concatenation）接收其输出的对应层；上采样路径逐层恢复空间分辨率，最后以 $1\times 1$ 卷积把通道数降到类别数 $C$，再接 softmax 激活函数。
+设 $C\geqslant2$ 为类别数。一个用于语义分割的网络称为 \textbf{U-Net}，若它满足：
+\begin{enumerate}
+  \item 网络由一条下采样路径与一条上采样路径组成；下采样路径的第 $l$ 层输出特征图的
+        空间尺寸为 $J_l\times K_l$、通道数为 $C_l$，上采样路径中存在一层其空间尺寸
+        与 $J_l\times K_l$ 相同；
+  \item 每个这样的对应层通过\textbf{拼接}（concatenation）接收下采样路径第 $l$ 层的
+        输出，即把两路特征图沿通道轴连接，通道数相加而空间尺寸不变；
+  \item 上采样路径逐层恢复空间分辨率，最后以 $1\times1$ 卷积把通道数降到 $C$，再接
+        softmax 激活函数。
+\end{enumerate}
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-U-Net; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-U-Net; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 U-Net 的定义把“对称”与“拼接”两件事都写进了对象。对称保证每个上采样阶段都有匹配尺寸的特征图可供拼接；拼接（而不是相加）则保留了浅层的高分辨率细节与深层的语义信息两条独立通道，让后续卷积自己学习如何融合——若改为相加，两路信息在进入网络前就被强行对齐，浅层的边缘信息容易被深层的语义响应淹没。定义中最后的 $1\times1$ 卷积不是装饰：它把任意多的通道数压到类别数，使输出可以直接与逐像素标签比较（参见\cref{definition:ch10-1x1卷积}）。注意 U-Net 不要求下采样只用池化，也可以用跨步卷积，只要尺寸对应关系成立。
 \end{remark}
 

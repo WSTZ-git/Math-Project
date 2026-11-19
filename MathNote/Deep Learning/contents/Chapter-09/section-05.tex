@@ -11,11 +11,16 @@
 这种现象的一种解释称为\textbf{破碎梯度}（shattered gradient）（Balduzzi et al.，2017）。我们已经看到，神经网络的表征能力随着网络深度呈指数级增长。使用 ReLU 激活函数，网络可以表示的线性区域的数量呈指数级增长。然而，这样做的一个后果是误差函数梯度中的不连续现象激增。\cref{figure:ch09-破碎梯度}在具有单输入变量和单输出变量的网络上对这一现象进行了说明。在这里，输出变量对输入变量的导数（网络的 Jacobian 矩阵）是输入变量的函数。从微积分的链式法则来看，这些导数决定了误差表面的梯度。我们看到，对于深度神经网络，网络浅层的权重参数即便发生极其微小的变化，也会产生显著的梯度变化。基于梯度的迭代式优化算法假设梯度在参数空间中平滑变化，因此这种“破碎梯度”效应会使训练对非常深的网络无效（参见\cref{section:ch06-深度网络}）。
 
 \begin{definition}[破碎梯度]\label{definition:ch09-破碎梯度}
-设网络的输出 $\boldsymbol{y}$ 对输入 $\boldsymbol{x}$ 的 Jacobian 矩阵记为 $\boldsymbol{J}(\boldsymbol{x})=\partial\boldsymbol{y}/\partial\boldsymbol{x}$。若 $\boldsymbol{J}(\boldsymbol{x})$ 作为 $\boldsymbol{x}$ 的函数在输入空间中存在大量不连续点，以致误差函数关于浅层参数的梯度随参数的微小变化而剧烈变化，则称这一现象为\textbf{破碎梯度}（shattered gradient）。
+设 $\mathcal{W}\subseteq\mathbb{R}^{P}$ 为非空开集，$g:\mathcal{W}\to\mathbb{R}^{P}$ 为误差函数关于参数的梯度。若 $g$ 在 $\mathcal{W}$ 上不是局部 Lipschitz 连续的，即存在 $\boldsymbol{w}_{0}\in\mathcal{W}$，使得对每个 $L>0$ 与每个 $\delta>0$，都存在 $\boldsymbol{w},\boldsymbol{w}'\in B(\boldsymbol{w}_{0},\delta)\cap\mathcal{W}$ 满足
+\begin{align*}
+\|g(\boldsymbol{w})-g(\boldsymbol{w}')\|>L\|\boldsymbol{w}-\boldsymbol{w}'\|,
+\end{align*}
+则这一现象称为 $g$ 在 $\boldsymbol{w}_{0}$ 处的\textbf{破碎梯度}（shattered gradient）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch09-破碎梯度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）\cref{definition:ch09-破碎梯度}描述的是误差曲面在参数空间中的“高频振荡”，而不是梯度消失或爆炸。三者的区别是：梯度消失/爆炸指梯度的\emph{幅度}随深度指数衰减或增长；破碎梯度指梯度的\emph{方向与符号}在相邻参数点之间剧烈跳变，幅度未必异常。ReLU 网络把输入空间划分成指数多个线性区域，跨越区域边界时 Jacobian 不连续，浅层参数的一点点移动就可能把某个输入点从“一侧”推到“另一侧”，从而改变该点的梯度贡献。基于梯度的优化隐含假设局部梯度能代表邻域内的下降方向；当这个假设失效时，步长再小也可能无效。
+% SUPPLEMENT: parent=definition:ch09-破碎梯度; kind=motivation; location=紧随其后的 remark
+\begin{remark}\cref{definition:ch09-破碎梯度}描述的是误差曲面在参数空间中的“高频振荡”，而不是梯度消失或爆炸。三者的区别是：梯度消失/爆炸指梯度的\emph{幅度}随深度指数衰减或增长；破碎梯度指梯度的\emph{方向与符号}在相邻参数点之间剧烈跳变，幅度未必异常。ReLU 网络把输入空间划分成指数多个线性区域，跨越区域边界时 Jacobian 不连续，浅层参数的一点点移动就可能把某个输入点从“一侧”推到“另一侧”，从而改变该点的梯度贡献。基于梯度的优化隐含假设局部梯度能代表邻域内的下降方向；当这个假设失效时，步长再小也可能无效。
+（原文问题说明）原文以“不连续点大量出现”“微小参数变化引起显著梯度变化”描述破碎梯度，未给出可判定的定量条件；上面的定义把“显著变化”形式化为梯度在某个参数点附近不是局部 Lipschitz 连续的。该形式化只刻画梯度的高频振荡，不涉及振荡幅度是否随网络深度指数增长。
 \end{remark}
 
 \begin{figure}[htbp]
@@ -53,11 +58,15 @@
 \end{align}
 
 \begin{definition}[残差连接与残差网络]\label{definition:ch09-残差连接}
-设某层的输入为 $\boldsymbol{z}$，该层实现的映射为 $\boldsymbol{F}$。若该层的输出取为 $\boldsymbol{z}'=\boldsymbol{F}(\boldsymbol{z})+\boldsymbol{z}$，则称 $\boldsymbol{F}(\boldsymbol{z})+\boldsymbol{z}$ 为\textbf{残差块}（residual block），$\boldsymbol{F}$ 为\textbf{残差函数}，恒等通路 $\boldsymbol{z}\mapsto\boldsymbol{z}$ 为\textbf{残差连接}（residual connection），它是\textbf{跳层连接}（skip-layer connection）的一种特殊形式。由多个残差块顺序堆叠而成的网络称为\textbf{残差网络}（residual network），也称 ResNet。
+设 $d\geqslant1$，$\boldsymbol{F}:\mathbb{R}^{d}\to\mathbb{R}^{d}$ 为某层实现的映射，该层输入为 $\boldsymbol{z}\in\mathbb{R}^{d}$。若该层输出取为
+\begin{align*}
+\boldsymbol{z}'=\boldsymbol{F}(\boldsymbol{z})+\boldsymbol{z},
+\end{align*}
+则映射 $\boldsymbol{z}\mapsto\boldsymbol{F}(\boldsymbol{z})+\boldsymbol{z}$ 称为\textbf{残差块}（residual block），$\boldsymbol{F}$ 称为\textbf{残差函数}，恒等映射 $\boldsymbol{z}\mapsto\boldsymbol{z}$ 称为\textbf{残差连接}（residual connection），它是\textbf{跳层连接}（skip-layer connection）的一种特殊形式。由多个残差块顺序堆叠而成的网络称为\textbf{残差网络}（residual network），也称 ResNet。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch09-残差连接; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）\cref{definition:ch09-残差连接}的关键是恒等通路不经过任何非线性变换：若 $\boldsymbol{F}$ 的输出接近零，整个块就接近恒等映射。这带来两个后果。其一是“深网络至少不劣于浅网络”：把新增的块设成恒等映射，深层网络的表示能力包含浅层网络，因此增加深度不会降低训练集上的最优误差。其二是梯度的“高速公路”：反向传播时梯度可以经由恒等通路直接流过，不必逐层乘以 Jacobian，从而缓解梯度消失。注意残差连接与\cref{definition:ch09-权重共享}是两类不同的结构先验：前者改变网络的函数形式（增加并行恒等通路），后者减少独立参数的数量。
+% SUPPLEMENT: parent=definition:ch09-残差连接; kind=motivation; location=紧随其后的 remark
+\begin{remark}\cref{definition:ch09-残差连接}的关键是恒等通路不经过任何非线性变换：若 $\boldsymbol{F}$ 的输出接近零，整个块就接近恒等映射。这带来两个后果。其一是“深网络至少不劣于浅网络”：把新增的块设成恒等映射，深层网络的表示能力包含浅层网络，因此增加深度不会降低训练集上的最优误差。其二是梯度的“高速公路”：反向传播时梯度可以经由恒等通路直接流过，不必逐层乘以 Jacobian，从而缓解梯度消失。注意残差连接与\cref{definition:ch09-权重共享}是两类不同的结构先验：前者改变网络的函数形式（增加并行恒等通路），后者减少独立参数的数量。
 \end{remark}
 
 每个函数和残差连接的组合，如 $\boldsymbol{F}_{1}(\boldsymbol{x})+\boldsymbol{x}$，称为残差块。残差网络也称 ResNet，由多层这样的块按顺序组成。通过残差连接修改后的网络如\cref{figure:ch09-残差网络}所示。如果非线性函数中的参数足够小，使函数输出接近于零，则残差块可以很容易地生成恒等变换。
@@ -85,18 +94,18 @@ Li 等人（2017）开发了一种直接可视化误差表面的方法，结果�
 \end{align}
 
 \begin{proposition}[残差网络的展开]\label{proposition:ch09-残差展开}
-在\eqref{align:ch09-残差1}至\eqref{align:ch09-残差3}中，输出可先写成\eqref{align:ch09-残差展开中间}，进而写成
+设 $d\geqslant1$，$\boldsymbol{F}_{1},\boldsymbol{F}_{2},\boldsymbol{F}_{3}:\mathbb{R}^{d}\to\mathbb{R}^{d}$，$\boldsymbol{x}\in\mathbb{R}^{d}$，并设 $\boldsymbol{z}_{1},\boldsymbol{z}_{2},\boldsymbol{y}$ 由\eqref{align:ch09-残差1}至\eqref{align:ch09-残差3}定义。则 $\boldsymbol{y}$ 可写成\eqref{align:ch09-残差展开中间}，即
 \begin{align}
 \boldsymbol{y}
 &=\boldsymbol{F}_{3}\!\left(\boldsymbol{F}_{2}\!\left(\boldsymbol{F}_{1}(\boldsymbol{x})+\boldsymbol{x}\right)+\boldsymbol{F}_{1}(\boldsymbol{x})+\boldsymbol{x}\right)\nonumber\\
 &\qquad+\boldsymbol{F}_{2}\!\left(\boldsymbol{F}_{1}(\boldsymbol{x})+\boldsymbol{x}\right)+\boldsymbol{F}_{1}(\boldsymbol{x})+\boldsymbol{x}.
 \label{align:ch09-残差展开}
 \end{align}
-即 $\boldsymbol{y}$ 是四个并行子网络的输出之和：深度为 $3$ 的 $\boldsymbol{F}_{3}\circ(\boldsymbol{F}_{2}+\mathrm{id})\circ(\boldsymbol{F}_{1}+\mathrm{id})$、深度为 $2$ 的 $\boldsymbol{F}_{2}\circ(\boldsymbol{F}_{1}+\mathrm{id})$、深度为 $1$ 的 $\boldsymbol{F}_{1}$ 以及恒等映射 $\boldsymbol{x}$。
+其中 $\mathrm{id}$ 为 $\mathbb{R}^{d}$ 上的恒等映射；右端是四个并行分支之和：含三个 $\boldsymbol{F}_{i}$ 因子的复合 $\boldsymbol{F}_{3}\circ(\boldsymbol{F}_{2}+\mathrm{id})\circ(\boldsymbol{F}_{1}+\mathrm{id})$、含两个因子的复合 $\boldsymbol{F}_{2}\circ(\boldsymbol{F}_{1}+\mathrm{id})$、含一个因子的 $\boldsymbol{F}_{1}$，以及恒等映射 $\boldsymbol{x}$。
 \end{proposition}
 
 \begin{proof}
-（重构新增）由\eqref{align:ch09-残差1}，$\boldsymbol{z}_{1}=\boldsymbol{F}_{1}(\boldsymbol{x})+\boldsymbol{x}$；由\eqref{align:ch09-残差2}，$\boldsymbol{z}_{2}=\boldsymbol{F}_{2}(\boldsymbol{z}_{1})+\boldsymbol{z}_{1}$。把 $\boldsymbol{z}_{1}$ 代入 $\boldsymbol{z}_{2}$ 得
+由\eqref{align:ch09-残差1}，$\boldsymbol{z}_{1}=\boldsymbol{F}_{1}(\boldsymbol{x})+\boldsymbol{x}$；由\eqref{align:ch09-残差2}，$\boldsymbol{z}_{2}=\boldsymbol{F}_{2}(\boldsymbol{z}_{1})+\boldsymbol{z}_{1}$。把 $\boldsymbol{z}_{1}$ 代入 $\boldsymbol{z}_{2}$ 得
 \begin{align*}
 \boldsymbol{z}_{2}=\boldsymbol{F}_{2}\!\left(\boldsymbol{F}_{1}(\boldsymbol{x})+\boldsymbol{x}\right)+\boldsymbol{F}_{1}(\boldsymbol{x})+\boldsymbol{x}.
 \end{align*}
@@ -108,8 +117,8 @@ Li 等人（2017）开发了一种直接可视化误差表面的方法，结果�
 这正是\eqref{align:ch09-残差展开}。逐项看，第一项是 $\boldsymbol{F}_{3}$ 作用于 $\boldsymbol{z}_{2}$，第二项是 $\boldsymbol{F}_{2}$ 作用于 $\boldsymbol{z}_{1}$，第三项是 $\boldsymbol{F}_{1}$ 作用于 $\boldsymbol{x}$，第四项是 $\boldsymbol{x}$ 本身，因此可读成四个深度不同的并行子网络之和。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch09-残差展开; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）\cref{proposition:ch09-残差展开}是一个纯代数恒等式，不是近似：它说明残差网络可以精确地写成“多个浅层子网络之和”。这解释了两件事。第一，普通深度网络是它的特例：令 $\boldsymbol{F}_{i}(\boldsymbol{z})=\boldsymbol{G}_{i}(\boldsymbol{z})-\boldsymbol{z}$，则残差网络退化为普通复合 $\boldsymbol{G}_{3}\circ\boldsymbol{G}_{2}\circ\boldsymbol{G}_{1}$。第二，误差曲面被“平均”得更平滑：每个子网络的深度都较小，其梯度不易破碎；把它们相加后，总梯度是各子网络梯度的和，浅层子网络的梯度不经过深层 Jacobian，从而为优化提供了更直接的方向。但要注意，这个展开并不意味着残差网络等价于一个浅层网络：$\boldsymbol{F}_{3}$ 仍然复合了 $\boldsymbol{F}_{2}$ 与 $\boldsymbol{F}_{1}$，参数在各子网络之间共享，因此表示能力并未退化为四个独立浅层网络的和。
+% SUPPLEMENT: parent=proposition:ch09-残差展开; kind=motivation; location=紧随其后的 remark
+\begin{remark}\cref{proposition:ch09-残差展开}是一个纯代数恒等式，不是近似：它说明残差网络可以精确地写成“多个浅层子网络之和”。这解释了两件事。第一，普通深度网络是它的特例：令 $\boldsymbol{F}_{i}(\boldsymbol{z})=\boldsymbol{G}_{i}(\boldsymbol{z})-\boldsymbol{z}$，则残差网络退化为普通复合 $\boldsymbol{G}_{3}\circ\boldsymbol{G}_{2}\circ\boldsymbol{G}_{1}$。第二，误差曲面被“平均”得更平滑：每个子网络的深度都较小，其梯度不易破碎；把它们相加后，总梯度是各子网络梯度的和，浅层子网络的梯度不经过深层 Jacobian，从而为优化提供了更直接的方向。但要注意，这个展开并不意味着残差网络等价于一个浅层网络：$\boldsymbol{F}_{3}$ 仍然复合了 $\boldsymbol{F}_{2}$ 与 $\boldsymbol{F}_{1}$，参数在各子网络之间共享，因此表示能力并未退化为四个独立浅层网络的和。
 \end{remark}
 
 \begin{figure}[htbp]
@@ -135,11 +144,15 @@ Li 等人（2017）开发了一种直接可视化误差表面的方法，结果�
 \end{align}
 
 \begin{definition}[投影跳层连接]\label{definition:ch09-投影跳层连接}
-当残差通路的输入与输出维数不一致时，引入可学习矩阵 $\boldsymbol{W}_{s}$，把\eqref{align:ch09-残差展开}中的恒等通路替换为线性映射 $\boldsymbol{z}_{i-1}\mapsto\boldsymbol{W}_{s}\boldsymbol{z}_{i-1}$，其中 $\boldsymbol{W}_{s}$ 的形状使 $\boldsymbol{W}_{s}\boldsymbol{z}_{i-1}$ 与 $\boldsymbol{F}_{i}(\boldsymbol{z}_{i-1})$ 同维。称 $\boldsymbol{W}_{s}$ 为\textbf{投影矩阵}，相应的连接为\textbf{投影跳层连接}（projection shortcut）。
+设 $d_{i-1},d_{i}\geqslant1$，第 $i$ 层的映射为 $\boldsymbol{F}_{i}:\mathbb{R}^{d_{i-1}}\to\mathbb{R}^{d_{i}}$，该层输入为 $\boldsymbol{z}_{i-1}\in\mathbb{R}^{d_{i-1}}$。若引入可学习矩阵 $\boldsymbol{W}_{s}\in\mathbb{R}^{d_{i}\times d_{i-1}}$，并令
+\begin{align*}
+\boldsymbol{z}_{i}=\boldsymbol{F}_{i}(\boldsymbol{z}_{i-1})+\boldsymbol{W}_{s}\boldsymbol{z}_{i-1},
+\end{align*}
+则 $\boldsymbol{W}_{s}$ 称为\textbf{投影矩阵}，该连接称为\textbf{投影跳层连接}（projection shortcut）。当 $d_{i-1}=d_{i}$ 且 $\boldsymbol{W}_{s}=\boldsymbol{I}_{d_{i}}$ 时，它退化为\cref{definition:ch09-残差连接}中的残差连接。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch09-投影跳层连接; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）\cref{definition:ch09-投影跳层连接}是残差连接在维数不匹配时的最小修改：用线性投影把跳层通路的向量映射到与残差同维，再相加。它引入的额外参数很少（一个矩阵），且当 $\boldsymbol{W}_{s}$ 取为单位阵的嵌入时退化为恒等连接。选择线性投影而不是非线性变换，是为了保持“恒等通路尽量简单”的初衷：投影只负责对齐坐标，不负责提取特征。在卷积网络中，$\boldsymbol{W}_{s}$ 通常实现为 $1\times1$ 卷积，用于在通道数变化时对齐通道维。
+% SUPPLEMENT: parent=definition:ch09-投影跳层连接; kind=motivation; location=紧随其后的 remark
+\begin{remark}\cref{definition:ch09-投影跳层连接}是残差连接在维数不匹配时的最小修改：用线性投影把跳层通路的向量映射到与残差同维，再相加。它引入的额外参数很少（一个矩阵），且当 $\boldsymbol{W}_{s}$ 取为单位阵的嵌入时退化为恒等连接。选择线性投影而不是非线性变换，是为了保持“恒等通路尽量简单”的初衷：投影只负责对齐坐标，不负责提取特征。在卷积网络中，$\boldsymbol{W}_{s}$ 通常实现为 $1\times1$ 卷积，用于在通道数变化时对齐通道维。
 \end{remark}
 
 到目前为止，我们还没有指定可学习非线性函数 $\boldsymbol{F}_{i}(\cdot)$ 的具体形式。最简单的选择是使用一个标准的前馈网络，它由可学习的线性变换层和固定的非线性激活函数（如 ReLU 函数）层交替构成。这为残差连接的放置提供了两种可能，如\cref{figure:ch09-残差位置}所示：在版本 (a) 中，被加的量总是非负的，因为它们是由 ReLU 层的输出给出的，因此为了允许被加的量可正可负，版本 (b) 更常用。

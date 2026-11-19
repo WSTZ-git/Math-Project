@@ -29,7 +29,7 @@
 如果使用参数向量$\boldsymbol{w}$控制的函数对$h(\boldsymbol{x})$进行建模，那么从Bayes学派的视角来看，模型中的不确定性可以通过$\boldsymbol{w}$上的后验分布来表示。但是频率学派会基于数据集$\mathcal{D}$对$\boldsymbol{w}$进行点估计，并试图通过以下思想实验（thought experiment）来解释该估计的不确定性。假设我们有大量的数据集，每个数据集的大小为$N$且都独立地从分布$p(t\mid\boldsymbol{x})$中产生。对于任何给定的数据集$\mathcal{D}$，都可以通过我们的算法得到预测函数$f(\boldsymbol{x};\mathcal{D})$。集合中的不同数据集将给出不同的函数以及平方损失值。一个特定学习算法的性能，可以通过对它在集合中每个数据集上的性能表现取平均值来评估。
 
 \begin{theorem}[偏差-方差分解]\label{theorem:ch04-偏差方差分解}
-设训练集$\mathcal{D}$的大小为$N$，其中的数据点独立地取自分布$p(t\mid\boldsymbol{x})$，$f(\boldsymbol{x};\mathcal{D})$表示在$\mathcal{D}$上训练得到的预测函数，$h(\boldsymbol{x})=\mathbb{E}[t\mid\boldsymbol{x}]$为\eqref{align:ch04-回归函数h}给出的回归函数。若所涉及的各积分均绝对收敛，则平方损失的期望可以分解为
+设输入空间$\mathcal{X}\subseteq\mathbb{R}^{D}$，$(\boldsymbol{x},t)$的联合密度为$p(\boldsymbol{x},t)$，$h(\boldsymbol{x})=\mathbb{E}[t\mid\boldsymbol{x}]$为\eqref{align:ch04-回归函数h}给出的回归函数。设训练集$\mathcal{D}=\{(\boldsymbol{x}_1,t_1),\cdots,(\boldsymbol{x}_N,t_N)\}$由$p(\boldsymbol{x},t)$独立同分布产生，$f(\cdot;\mathcal{D}):\mathcal{X}\to\mathbb{R}$为在$\mathcal{D}$上训练得到的预测函数，$\mathbb{E}_{\mathcal{D}}$表示对$\mathcal{D}$的联合分布取期望。若$\mathbb{E}[t^{2}]<\infty$、$\mathbb{E}_{\mathcal{D}}\bigl[f(\boldsymbol{x};\mathcal{D})^{2}\bigr]<\infty$，且下列各积分均绝对收敛，则平方损失的期望成立如下分解：
 \begin{align}
   \text{期望损失}=\text{平方偏差}+\text{方差}+\text{噪声},
   \label{align:ch04-偏差方差噪声}
@@ -46,7 +46,7 @@
 \end{theorem}
 
 \begin{proof}
-（重构新增）由\cref{proposition:ch04-期望损失分解}，\eqref{align:ch04-期望损失分解}已经把$\mathbb{E}[L]$写成两项之和，其中第二项恰为\eqref{align:ch04-不可约噪声}右端的积分，它不含$f$。因此只需处理第一项。
+由\cref{proposition:ch04-期望损失分解}，\eqref{align:ch04-期望损失分解}已经把$\mathbb{E}[L]$写成两项之和，其中第二项恰为\eqref{align:ch04-不可约噪声}右端的积分，它不含$f$。因此只需处理第一项。
 
 第一步，写出单个数据集上的被积函数。\eqref{align:ch04-期望损失分解}右侧第一项的被积函数，在一个特定的数据集$\mathcal{D}$上具有以下形式：
 \begin{align}
@@ -86,8 +86,8 @@
 把它与\eqref{align:ch04-期望损失分解}的第二项（即\eqref{align:ch04-不可约噪声}）相加，即得\eqref{align:ch04-偏差方差噪声}与\eqref{align:ch04-平方偏差}--\eqref{align:ch04-不可约噪声}。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch04-偏差方差分解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:ch04-偏差方差分解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{theorem:ch04-偏差方差分解}把期望损失拆成三个来源不同的部分，每一项的含义如下。
 
 \emph{平方偏差}\eqref{align:ch04-平方偏差}衡量“平均模型”与真实回归函数$h$的差距：它把$\mathcal{D}$的所有可能取值上的$f$先平均，再与$h$比较，因此刻画的是模型族的\emph{系统性}误差。若模型族足够丰富，存在某个$f$等于$h$，则平方偏差可降为零。

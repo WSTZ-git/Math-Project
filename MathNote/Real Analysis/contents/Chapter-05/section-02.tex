@@ -84,7 +84,11 @@ $g(x)$ 是 $[a,b]$ 上的可测函数. \cref{lemma:引理变限积分的平均�
 \begin{corollary}\label{corollary:可积函数的Lebesgue点}
 若 $f\in L([a,b])$, 则对 $[a,b]$ 中几乎处处的点 $x$, 都有
 \begin{align*}
-\lim_{h\rightarrow 0} \frac{1}{h}\int_0^h{\left| f\left( x+t \right) -f\left( x \right) \right|\mathrm{d}t}=0 \iff \lim_{h\rightarrow 0} \frac{1}{h}\int_0^h{f\left( x+t \right) \mathrm{d}t}=f\left( x \right) .
+\lim_{h\rightarrow 0} \frac{1}{h}\int_0^h{\left| f\left( x+t \right) -f\left( x \right) \right|\mathrm{d}t}=0,
+\end{align*}
+也即
+\begin{align*}
+\lim_{h\rightarrow 0} \frac{1}{h}\int_0^h{f\left( x+t \right) \mathrm{d}t}=f\left( x \right) .
 \end{align*}
 我们称满足上式的点 $x$ 为 $f(x)$ 的$\mathbf{Lebesgue}$\textbf{点}.
 \end{corollary}

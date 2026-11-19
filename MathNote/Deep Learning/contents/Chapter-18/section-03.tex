@@ -17,15 +17,15 @@
 其中 $t=1,\cdots,T$ 标记了网络中的层。注意，我们在每一层都使用了相同的函数，并且共享参数向量 $\bm{w}$，因为这允许我们在参数数量有限的情况下考虑任意多的层。想象一下，增加层数，同时确保在每一层引入的变化相应地变得更小。在极限情况下，隐藏单元激活向量变成了连续变量 $t$ 的函数 $\bm{z}(t)$，我们可以将这个向量通过网络的演化表示为一个微分方程（见\cref{exercise:ch18-05}）：
 
 \begin{definition}[神经 ODE]\label{definition:ch18-神经ode}
-形如
+设 $D,P\in\mathbb{N}$，$T>0$，$\bm{f}:\mathbb{R}^{D}\times\mathbb{R}^{P}\to\mathbb{R}^{D}$ 为给定映射，$\bm{w}\in\mathbb{R}^{P}$ 为参数；设 $\bm{z}:[0,T]\to\mathbb{R}^{D}$ 为未知的连续可微向量值函数。则以
 \begin{align}
   \frac{\mathrm{d}\bm{z}(t)}{\mathrm{d}t}=\bm{f}\big(\bm{z}(t),\bm{w}\big)\label{align:ch18-神经ode}
 \end{align}
-的方程称为\textbf{神经 ODE}（Chen et al., 2018），其中 $t$ 通常称为“时间”，$\bm{f}$ 是由神经网络给出的向量场，$\bm{w}$ 是它的参数。常微分方程的“常”指的是只有单一变量 $t$。
+为方程、以 $\bm{z}$ 为未知函数的常微分方程（组）称为\textbf{神经 ODE}（Chen et al., 2018）；其中自变量 $t$ 在区间 $[0,T]$ 上取值并称为时间，$\bm{f}(\cdot,\bm{w}):\mathbb{R}^{D}\to\mathbb{R}^{D}$ 称为向量场，$\bm{w}$ 为向量场的参数。常微分方程的“常”指自变量只有 $t$ 一个。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch18-神经ode; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch18-神经ode; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 动机：把\eqref{align:ch18-残差}的层数 $T$ 推向无穷、同时把每层的变化量缩到无穷小，离散的层索引就变成了连续的“时间”，逐层的加法变成了积分。这样做的收益是“深度”不再是一个整数超参数，而由数值求解器的步数自适应决定：求解器在函数变化剧烈处自动加密求值点，在平缓处放稀，相当于自动选择了非均匀的层间距。
 
 条件方面：\eqref{align:ch18-神经ode}要在整个区间 $[0,T]$ 上存在唯一解，需要对 $\bm{f}$ 加正则性假设（例如关于 $\bm{z}$ 局部 Lipschitz），这在 $\bm{f}$ 由常见网络给出、且参数有界时成立；若不加这类假设，解可能在某时刻爆破。此外，$\bm{f}$ 与 $t$ 无关这一写法是最简形式，允许显式依赖 $t$ 的 $\bm{f}(\bm{z}(t),t,\bm{w})$ 完全平行地适用（本节末尾会用到）。
@@ -36,25 +36,25 @@
 如果将网络的输入表示为向量 $\bm{z}(0)$，则输出 $\bm{z}(T)$ 可以通过积分微分方程来获得。
 
 \begin{proposition}[神经 ODE 的积分形式]\label{proposition:ch18-ode积分}
-设 $\bm{z}(t)$ 在 $[0,T]$ 上连续可微且满足\eqref{align:ch18-神经ode}，$\bm{f}$ 连续。则
+设 $D,P\in\mathbb{N}$，$T>0$，$\bm{f}:\mathbb{R}^{D}\times\mathbb{R}^{P}\to\mathbb{R}^{D}$ 连续，$\bm{w}\in\mathbb{R}^{P}$，$\bm{z}:[0,T]\to\mathbb{R}^{D}$ 在 $[0,T]$ 上连续可微且满足\eqref{align:ch18-神经ode}。则
 \begin{align}
   \bm{z}(T)=\bm{z}(0)+\int_{0}^{T}\bm{f}\big(\bm{z}(t),\bm{w}\big)\,\mathrm{d}t.\label{align:ch18-ode积分}
 \end{align}
-反之，若连续可微的 $\bm{z}$ 满足\eqref{align:ch18-ode积分}对一切 $T$ 成立，则它满足\eqref{align:ch18-神经ode}。
+反之，若 $\bm{z}:[0,T]\to\mathbb{R}^{D}$ 连续可微，且对每个 $T'\in(0,T]$ 都成立 $\bm{z}(T')=\bm{z}(0)+\int_{0}^{T'}\bm{f}(\bm{z}(t),\bm{w})\,\mathrm{d}t$，则 $\bm{z}$ 在 $[0,T]$ 上满足\eqref{align:ch18-神经ode}。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 由微积分基本定理，
 \begin{align*}
   \bm{z}(T)-\bm{z}(0)=\int_{0}^{T}\frac{\mathrm{d}\bm{z}(t)}{\mathrm{d}t}\,\mathrm{d}t=\int_{0}^{T}\bm{f}\big(\bm{z}(t),\bm{w}\big)\,\mathrm{d}t,
 \end{align*}
-其中第二个等号用了\eqref{align:ch18-神经ode}。这就给出\eqref{align:ch18-ode积分}。
+其中第二个等号用了\eqref{align:ch18-神经ode}。由此得到\eqref{align:ch18-ode积分}。
 
 反过来，若\eqref{align:ch18-ode积分}对一切 $T$ 成立，把 $T$ 换成变量 $t$ 并对 $t$ 求导，由 $\bm{f}$ 连续及微积分基本定理的逆命题，左端导数为 $\mathrm{d}\bm{z}(t)/\mathrm{d}t$，右端导数为 $\bm{f}(\bm{z}(t),\bm{w})$，即得\eqref{align:ch18-神经ode}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch18-ode积分; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch18-ode积分; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个命题说明“解 ODE”与“算一个积分”是同一件事：给定初值 $\bm{z}(0)$，输出 $\bm{z}(T)$ 就是向量场沿轨迹的累积。于是任何数值积分器（Euler、Runge--Kutta、自适应步长方法）都可以直接用来求 $\bm{z}(T)$，而不需要显式地“展开”任何层。
 
 条件方面：$\bm{f}$ 连续保证积分有意义；解的存在唯一性仍需 Lipschitz 条件。命题的逆命题要求\eqref{align:ch18-ode积分}对一切 $T$ 成立（而不只是某个固定的 $T$），否则只能在几乎处处意义下求导。这一点在实际中不成问题，因为求解器总是逐点推进的。
@@ -80,15 +80,15 @@
 为了将反向传播应用于神经 ODE，定义一个称为\textbf{伴随}（adjoint）的量（见\cref{exercise:ch18-06}）：
 
 \begin{definition}[伴随状态]\label{definition:ch18-伴随}
-设 $L$ 是依赖于 $\bm{z}(T)$ 的损失函数，$\bm{z}(t)$ 满足\eqref{align:ch18-神经ode}。对每个 $t\in[0,T]$，定义
+设 $D,P\in\mathbb{N}$，$T>0$，$\bm{w}\in\mathbb{R}^{P}$，$\bm{f}:\mathbb{R}^{D}\times\mathbb{R}^{P}\to\mathbb{R}^{D}$ 连续可微，$\bm{z}:[0,T]\to\mathbb{R}^{D}$ 是\eqref{align:ch18-神经ode}在 $[0,T]$ 上的解，$L:\mathbb{R}^{D}\to\mathbb{R}$ 在 $\bm{z}(T)$ 处可微。则对每个 $t\in[0,T]$，由
 \begin{align}
   \bm{a}(t)=\frac{\partial L}{\partial\bm{z}(t)},\label{align:ch18-伴随}
 \end{align}
-并称 $\bm{a}(t)$ 为\textbf{伴随}（adjoint）；特别地，$\bm{a}(T)$ 对应于损失函数关于输出向量的常规导数。
+确定的向量 $\bm{a}(t)\in\mathbb{R}^{D}$ 称为\textbf{伴随}（adjoint）；特别地 $\bm{a}(T)=\nabla_{\bm{z}}L(\bm{z}(T))$ 是损失函数关于输出向量的梯度。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch18-伴随; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch18-伴随; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 动机：在离散网络中，反向传播逐层保存的“误差信号”$\delta_j=\partial E/\partial a_j$ 正是这里伴随的离散对应物；\eqref{align:ch18-伴随}无非是把“损失对某一层激活的导数”沿时间轴连续化。这个量之所以有用，是因为一旦知道 $\bm{a}(t)$，参数梯度就可以写成它对 $\bm{f}$ 的加权积分，而不必逐个时间步地展开计算图。
 
 条件方面：$\bm{a}(t)$ 要求 $L$ 对 $\bm{z}(t)$ 可微，且 $\bm{z}(T)$ 对 $\bm{z}(t)$ 的依赖可微——后者由 $\bm{f}$ 的 Lipschitz/可微性保证。约定上，\eqref{align:ch18-伴随}中的 $\bm{a}(t)$ 按列向量（梯度）理解；而\eqref{align:ch18-伴随方程}的右端写成 $\bm{a}(t)^{\mathsf T}\nabla_{\bm{z}}\bm{f}$ 是按行向量排布的形式——把该式两边转置，就得到列向量形式 $\mathrm{d}\bm{a}/\mathrm{d}t=-(\nabla_{\bm{z}}\bm{f})^{\mathsf T}\bm{a}$，两种写法完全等价。
@@ -99,14 +99,14 @@
 $\bm{a}(t)$ 满足如下微分方程。
 
 \begin{proposition}[伴随方程]\label{proposition:ch18-伴随方程}
-设 $\bm{z}(t)$ 满足\eqref{align:ch18-神经ode}，$\bm{f}$ 连续可微，$\bm{a}(t)$ 由\eqref{align:ch18-伴随}定义。则 $\bm{a}(t)$ 满足
+设 $D,P\in\mathbb{N}$，$T>0$，$\bm{w}\in\mathbb{R}^{P}$，$\bm{f}:\mathbb{R}^{D}\times\mathbb{R}^{P}\to\mathbb{R}^{D}$ 连续可微，$\bm{z}:[0,T]\to\mathbb{R}^{D}$ 是\eqref{align:ch18-神经ode}在 $[0,T]$ 上的解，$\bm{a}(t)$ 由\eqref{align:ch18-伴随}定义。则 $\bm{a}:[0,T]\to\mathbb{R}^{D}$ 连续可微，且对每个 $t\in[0,T]$ 成立
 \begin{align}
   \frac{\mathrm{d}\bm{a}(t)}{\mathrm{d}t}=-\bm{a}(t)^{\mathsf T}\,\nabla_{\bm{z}}\bm{f}\big(\bm{z}(t),\bm{w}\big),\label{align:ch18-伴随方程}
 \end{align}
-其中 $(\nabla_{\bm{z}}\bm{f})_{ij}=\partial f_i/\partial z_j$ 是 $\bm{f}$ 关于 $\bm{z}$ 的 Jacobian 矩阵。
+其中 $\nabla_{\bm{z}}\bm{f}(\bm{z}(t),\bm{w})\in\mathbb{R}^{D\times D}$ 是向量场关于 $\bm{z}$ 的 Jacobian 矩阵，其 $(i,j)$ 元为 $\partial f_{i}/\partial z_{j}$，右端按行向量与 $D$ 阶方阵的乘积理解；该方程是反向初值问题，初值为 $\bm{a}(T)=\nabla_{\bm{z}}L(\bm{z}(T))$。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 记 $\bm{M}(t)=\partial\bm{z}(T)/\partial\bm{z}(t)$。由链式法则，$\bm{a}(t)=\bm{M}(t)^{\mathsf T}\bm{a}(T)$（$\bm{a}$ 按列向量理解）。由\eqref{align:ch18-ode积分}，
 \begin{align*}
   \bm{z}(T)=\bm{z}(t)+\int_{t}^{T}\bm{f}\big(\bm{z}(s),\bm{w}\big)\,\mathrm{d}s,
@@ -126,8 +126,8 @@ $\bm{a}(t)$ 满足如下微分方程。
 两边转置即得\eqref{align:ch18-伴随方程}（左端写成行向量 $\mathrm{d}\bm{a}(t)^{\mathsf T}/\mathrm{d}t$，右端为 $-\bm{a}(t)^{\mathsf T}\nabla_{\bm{z}}\bm{f}$）。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch18-伴随方程; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch18-伴随方程; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch18-伴随方程}就是“微积分链式法则的连续版本”：离散反传把它写成 $\bm{a}^{(t)}=\bm{a}^{(t+\varepsilon)}(\bm{I}+\varepsilon\nabla_{\bm{z}}\bm{f})$，移项取极限 $\varepsilon\to0$ 即得\eqref{align:ch18-伴随方程}（\cref{exercise:ch18-06}）。负号来自“时间倒流”：随着 $t$ 减小（向过去推进），伴随按 $-\bm{A}$ 演化。
 
 条件方面：需要 $\bm{f}$ 连续可微，才能保证 $\bm{A}(s)$ 存在且 $\bm{M}$ 可微；解的存在唯一性由 $\bm{A}$ 的有界性保证。注意\eqref{align:ch18-伴随方程}是一个反向初值问题：已知 $\bm{a}(T)$，向 $t=0$ 积分。因此它不是“正向”可解的，实践中总是从终点往回积。
@@ -140,14 +140,15 @@ $\bm{a}(t)$ 满足如下微分方程。
 反向传播的第三步通过计算激活值和梯度的适当乘积来计算损失函数对网络参数的导数。当一个网络中的多个连接共享一个参数值时，总导数由每个连接的导数相加而成（见\cref{exercise:ch09-07}）。对于神经 ODE，其中相同的参数向量 $\bm{w}$ 在整个网络中共享，求和变成了对 $t$ 的积分，形式如下（见\cref{exercise:ch18-07}）。
 
 \begin{proposition}[参数梯度]\label{proposition:ch18-参数梯度}
-设 $\bm{z}(t)$ 满足\eqref{align:ch18-神经ode}，$L=L(\bm{z}(T))$，$\bm{a}(t)$ 由\eqref{align:ch18-伴随}定义。则
+设 $D,P\in\mathbb{N}$，$T>0$，$\bm{w}\in\mathbb{R}^{P}$，$\bm{f}:\mathbb{R}^{D}\times\mathbb{R}^{P}\to\mathbb{R}^{D}$ 关于 $(\bm{z},\bm{w})$ 连续可微，$\bm{z}:[0,T]\to\mathbb{R}^{D}$ 是\eqref{align:ch18-神经ode}的解，$\bm{a}(t)$ 由\eqref{align:ch18-伴随}定义，$L:\mathbb{R}^{D}\to\mathbb{R}$ 在 $\bm{z}(T)$ 处连续可微，且初值 $\bm{z}(0)$ 与 $\bm{w}$ 无关。则 $L$ 关于 $\bm{w}$ 的梯度存在，且
 \begin{align}
   \nabla_{\bm{w}}L=-\int_{T}^{0}\bm{a}(t)^{\mathsf T}\nabla_{\bm{w}}\bm{f}\big(\bm{z}(t),\bm{w}\big)\,\mathrm{d}t
   =\int_{0}^{T}\bm{a}(t)^{\mathsf T}\nabla_{\bm{w}}\bm{f}\big(\bm{z}(t),\bm{w}\big)\,\mathrm{d}t .\label{align:ch18-参数梯度}
 \end{align}
+其中 $\nabla_{\bm{w}}\bm{f}(\bm{z}(t),\bm{w})\in\mathbb{R}^{D\times P}$ 是向量场关于 $\bm{w}$ 的 Jacobian 矩阵，被积函数 $\bm{a}(t)^{\mathsf T}\nabla_{\bm{w}}\bm{f}(\bm{z}(t),\bm{w})\in\mathbb{R}^{1\times P}$ 取值于行向量空间，两个积分由积分限翻转而相等。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 记 $\bm{P}(t)=\partial\bm{z}(t)/\partial\bm{w}$。对\eqref{align:ch18-ode积分}关于 $\bm{w}$ 求导（$\bm{z}(0)$ 与 $\bm{w}$ 无关）：
 \begin{align*}
   \frac{\mathrm{d}\bm{P}(t)}{\mathrm{d}t}=\nabla_{\bm{w}}\bm{f}\big(\bm{z}(t),\bm{w}\big)+\bm{A}(t)\bm{P}(t),\qquad \bm{P}(0)=\bm{0},
@@ -164,8 +165,8 @@ $\bm{a}(t)$ 满足如下微分方程。
 因为 $\bm{P}(0)=\bm{0}$ 且 $\bm{a}(T)\bm{P}(T)=\partial L/\partial\bm{z}(T)\cdot\partial\bm{z}(T)/\partial\bm{w}=\nabla_{\bm{w}}L$，即得\eqref{align:ch18-参数梯度}。反向积分形式 $-\int_{T}^{0}$ 与正向形式 $\int_{0}^{T}$ 只差一个积分限的翻转，数值上相同。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch18-参数梯度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch18-参数梯度; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch18-参数梯度}正是离散网络 $\nabla_{\bm{w}}L=\sum_{t}\bm{a}^{(t+\varepsilon)\mathsf T}\partial\bm{z}^{(t+\varepsilon)}/\partial\bm{w}$ 的连续极限：共享参数使“对每个连接求和”变成“对时间积分”，这也是伴随方法能一次算出全部参数梯度的原因——不需要对每个参数单独做一次反向传播。
 
 条件方面：需要 $\bm{f}$ 关于 $\bm{w}$ 可微、$\bm{a}$ 与 $\bm{P}$ 在 $[0,T]$ 上有界（由 $\bm{A}$ 有界保证）。$\bm{P}(0)=\bm{0}$ 用到了初值与 $\bm{w}$ 无关这一约定，若 $\bm{z}(0)$ 也依赖 $\bm{w}$，则要补上 $\bm{a}(0)\partial\bm{z}(0)/\partial\bm{w}$ 这一项。
@@ -178,17 +179,22 @@ $\bm{a}(t)$ 满足如下微分方程。
 与传统分层网络相比，使用伴随方法训练的神经 ODE 的一个好处是，不需要存储前向传播的中间结果，因此内存成本是恒定的。
 
 \begin{proposition}[伴随方法的存储与计算代价]\label{proposition:ch18-伴随代价}
-设用伴随方法训练\eqref{align:ch18-神经ode}。则梯度计算所需存储与离散层数（即求解器的步数）无关：只需保存端点 $\bm{z}(T)$ 与 $\bm{a}(T)$，即可按\eqref{align:ch18-伴随方程}与\eqref{align:ch18-参数梯度}反向求出梯度。代价是反向过程中需要重新积分\eqref{align:ch18-神经ode}以重建所需的 $\bm{z}(t)$，函数求值次数约为前向的常数倍；若损失依赖轨迹上的多个时刻，则需要对每一段分别求解，代价按段数线性增长。
+设 $D,P\in\mathbb{N}$，$T>0$，$\bm{f}:\mathbb{R}^{D}\times\mathbb{R}^{P}\to\mathbb{R}^{D}$ 连续可微且在 $[0,T]$ 上关于 $\bm{z}$ 满足 Lipschitz 条件；设用伴随方法计算\eqref{align:ch18-神经ode}的梯度，即按\eqref{align:ch18-伴随方程}与\eqref{align:ch18-参数梯度}反向求解。则下列结论成立：
+\begin{enumerate}[(i)]
+\item 梯度计算所需保存的状态与求解器的步数无关：只需保存端点 $\bm{z}(T)$ 与 $\bm{a}(T)$，存储量为 $\mathcal{O}(1)$ 个 $D$ 维向量，而与之对照的 $K$ 步离散网络需保存 $\mathcal{O}(K)$ 个 $D$ 维向量；
+\item 每次反向求解都要重新积分\eqref{align:ch18-神经ode}以重建所需的 $\bm{z}(t)$，故函数求值总次数是前向传播的有限常数倍，该常数与 $D$、$P$ 无关；
+\item 若损失依赖轨迹上的 $k$ 个时刻 $\bm{z}(t_{1}),\cdots,\bm{z}(t_{k})$（$0=t_{0}<t_{1}<\cdots<t_{k}=T$），则需在每段 $[t_{j},t_{j+1}]$ 上分别反向求解，存储量仍为 $\mathcal{O}(1)$ 个 $D$ 维向量，计算代价按 $k$ 线性增长。
+\end{enumerate}
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 先看存储。离散网络中，反向传播要逐层使用前向激活 $\bm{z}^{(t)}$，故必须把它们全部保存，存储量为 $\mathcal{O}(T/\varepsilon)$ 个 $D$ 维向量；而在连续情形，\eqref{align:ch18-伴随方程}与\eqref{align:ch18-参数梯度}只用到 $\bm{a}(t)$、$\bm{z}(t)$ 与 $\nabla_{\bm{w}}\bm{f}$，其中 $\bm{z}(t)$ 可以由 $\bm{z}(T)$ 出发反向积分\eqref{align:ch18-神经ode}重建（\eqref{align:ch18-ode积分}在 $[t,T]$ 上的形式），因此除端点外无需保存任何中间状态，存储量为 $\mathcal{O}(1)$ 个 $D$ 维向量。
 
 再看计算。反向一次积分同时求解 $\bm{z}$ 与 $\bm{a}$（把两者拼成增广状态），再积分一次累积\eqref{align:ch18-参数梯度}，总函数求值次数与前向同阶乘以一个小的常数，与层数无关。若 $L$ 依赖 $\bm{z}(t_1),\cdots,\bm{z}(t_k)$ 等多个时刻，则需在每段 $[t_j,t_{j+1}]$ 上分别做一次反向求解，代价乘以 $k$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch18-伴随代价; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch18-伴随代价; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条代价结论是神经 ODE 的主要卖点：传统深层网络的内存随深度线性增长，而伴随方法把它压成常数，使得“极深”（等价于很多求解步）的模型在内存上可行。代价是时间：反向时要重新积分，相当于用计算换内存；在最坏情形下总计算量约为前向的两倍到数倍。
 
 条件方面：结论只依赖“$\bm{z}(t)$ 可由端点重建”这一条，即\eqref{align:ch18-神经ode}的解对初值连续依赖且可反向积分；若向量场不满足 Lipschitz 条件，反向重建可能不稳定，这时需要额外技巧（如检查点法，把轨迹分段保存若干端点以限制误差累积）。

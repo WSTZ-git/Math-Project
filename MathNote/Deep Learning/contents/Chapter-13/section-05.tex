@@ -44,7 +44,7 @@
 其中 $\bm{1}_D$ 是一个 $D$ 维的列向量，其中的所有元素都是 $1$。
 \end{exercise}
 
-\begin{remark}（重构新增）
+\begin{remark}
 上面的推导与题面\eqref{align:ch13-习题矩阵形式}有两处记号差异，这里说明清楚，以免读者误以为推导有误。\par
 其一是转置。\eqref{align:ch13-更新算子}中权重以“左乘列向量”的形式出现（$\bm{W}_{\mathrm{self}}\bm{h}_n$），而把 $N$ 个节点堆成 $\bm{H}$ 之后，同一个线性映射必须写成右乘 $\bm{W}^{\mathsf T}$，否则维数不匹配。题面\eqref{align:ch13-习题矩阵形式}省略了转置，含义是：其中的 $\bm{W}_{\mathrm{self}}$、$\bm{W}_{\mathrm{neigh}}$ 取\eqref{align:ch13-更新算子}中矩阵的转置（等价地，把 $\bm{h}_n$ 当作行向量处理）。这不是数学错误，而是两套约定的混用；实现时只需固定一套。\par
 其二是维数。$\bm{A}\bm{H}\bm{W}_{\mathrm{neigh}}$ 与 $\bm{H}\bm{W}_{\mathrm{self}}$ 都是 $N\times D'$ 矩阵，而 $\bm{b}^{\mathsf T}$ 是 $1\times D'$ 的行向量，故左乘的全 $1$ 向量必须是 $N$ 维（即 $\bm{1}_N$）才能得到 $N\times D'$ 的矩阵；题面说“$\bm{1}_D$ 是一个 $D$ 维的列向量”相应地应理解为 $N$ 维，其中 $N$ 是节点数。若坚持用 $D$ 维向量，则该乘积为 $D\times D'$，与其余两项无法相加。\par

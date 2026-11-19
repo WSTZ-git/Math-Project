@@ -18,11 +18,15 @@
 \end{align}
 
 \begin{definition}[信息量]\label{definition:ch02-信息量}
-称由\eqref{align:ch02-信息量}定义的量 $h(x)$ 为事件 $x$ 发生的\textbf{信息量}。它以 2 为底的对数，单位称为\textbf{比特}（bit，即“二进制位”）；若改用自然对数，单位称为\textbf{纳特}（nat）。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$x\in\mathcal{F}$ 为满足 $p(x)=\mathbb{P}(x)>0$ 的事件。由
+\begin{align*}
+  h(x)=-\log_2 p(x)
+\end{align*}
+定义的量 $h(x)$ 称为事件 $x$ 发生的\textbf{信息量}（self-information），即\eqref{align:ch02-信息量}。对数以 2 为底时，$h(x)$ 的单位称为\textbf{比特}（bit，即“二进制位”）；若对数改用自然对数，则单位称为\textbf{纳特}（nat）。两种单位相差常数因子 $\ln 2$，即 $1$ 纳特 $=\log_2 e$ 比特。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-信息量; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-信息量; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 定义中的负号是必要的：$0<p(x)\leqslant1$ 时 $\log_2p(x)\leqslant0$，加负号后 $h(x)\geqslant0$，符合“信息量非负”的直觉。同时，$p(x)$ 越小 $h(x)$ 越大，恰好刻画了“越意外、信息越多”。
 
 底数的选取只影响单位而不影响比较：以 2 为底得比特，以 $e$ 为底得纳特，二者相差常数因子 $\ln2$，即 $1$ 纳特 $\approx1.44$ 比特。这一自由度在\eqref{align:ch02-信息量}中体现为“对数的底数选取是任意的”，但一旦选定就必须在整节中保持一致。
@@ -38,7 +42,11 @@
 \end{align}
 
 \begin{proposition}[独立事件的信息量可加]\label{proposition:ch02-信息量可加}
-设事件 $x$ 与 $y$ 统计独立，则 $h(x,y)=h(x)+h(y)$。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$x,y\in\mathcal{F}$ 为两个事件，$\mathbb{P}(x)>0$、$\mathbb{P}(y)>0$、$\mathbb{P}(x\cap y)>0$。若 $x$ 与 $y$ 独立，即 $\mathbb{P}(x\cap y)=\mathbb{P}(x)\mathbb{P}(y)$，则
+\begin{align*}
+  h(x\cap y)=h(x)+h(y),
+\end{align*}
+其中 $h$ 为由\eqref{align:ch02-信息量}定义的信息量；即两个独立事件同时发生的信息量等于各自信息量之和。
 \end{proposition}
 
 \begin{proof}
@@ -48,8 +56,8 @@
 \end{align*}
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-信息量可加; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-信息量可加; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 可加性是对“信息量”这一概念的基本要求：两个互不相关的事件所提供的总信息应当等于各自信息之和，否则“信息”就不能像长度、时间那样累加，编码长度的讨论也失去意义。
 
 这条性质与\eqref{align:ch02-信息量}的对数形式互为因果：正因为 $\log$ 把乘积变成和，定义才能同时满足“单调”与“独立可加”。\cref{exercise:ch02-21}进一步证明，在适当的连续性假设下，$-\log_2p$ 是唯一满足这两条要求的函数形式。
@@ -58,11 +66,15 @@
 这个重要的量称为随机变量 $x$ 的熵（entropy）。注意 $\lim_{\varepsilon\to0}(\varepsilon\ln\varepsilon)=0$，所以当遇到 $x$ 在某个取值下使 $p(x)=0$ 时，令 $p(x)\ln p(x)=0$。
 
 \begin{definition}[熵]\label{definition:ch02-熵}
-称由\eqref{align:ch02-离散熵}定义的量 $H[x]$ 为离散随机变量 $x$ 的\textbf{熵}（entropy），它是信息量 $h(x)$ 在分布 $p(x)$ 下的期望，即对 $x$ 的不确定性的度量。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X$ 为离散型随机变量，取值于有限集或可数集 $\mathcal{X}$，其概率质量函数为 $p_X(x)=\mathbb{P}(X=x)$（$x\in\mathcal{X}$）。当级数 $\sum_{x\in\mathcal{X}}p_X(x)\log_2 p_X(x)$ 收敛时，由
+\begin{align*}
+  H[X]=-\sum_{x\in\mathcal{X}}p_X(x)\log_2 p_X(x)
+\end{align*}
+定义的量称为 $X$ 的\textbf{熵}（entropy），即\eqref{align:ch02-离散熵}，其中约定 $p_X(x)=0$ 时 $p_X(x)\log_2 p_X(x)=0$；它等于信息量 $h(X=x)$ 关于分布 $p_X$ 的期望 $\mathbb{E}[-\log_2 p_X(X)]$。若该级数发散，则称 $X$ 的熵为 $+\infty$。对数以 2 为底时单位为比特，以 $e$ 为底时单位为纳特。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-熵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-熵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 熵是“平均惊讶程度”：它把每个取值的惊讶程度 $h(x)$ 按该取值出现的概率加权平均。因此熵只依赖分布的形状，不依赖取值的具体标签——把 $x$ 的取值重新命名不会改变熵，这一点与期望不同。
 
 \eqref{align:ch02-离散熵}中的约定 $0\ln0=0$ 不可省：否则 $p(x)=0$ 的取值会使求和无定义。该约定的合法性来自 $\lim_{\varepsilon\to0}\varepsilon\ln\varepsilon=0$，它保证了熵对分布是连续的——概率的微小改变只会引起熵的微小改变。
@@ -102,7 +114,7 @@
 \end{example}
 
 \begin{theorem}[无噪编码定理]\label{theorem:ch02-无噪编码定理}
-设离散随机变量 $x$ 取值 $x_1,\cdots,x_K$，概率为 $p_1,\cdots,p_K$，$H[x]=-\sum_k p_k\log_2p_k$。则对 $x$ 的任一前缀码，其平均码长 $L=\sum_k p_k l_k$ 满足 $L\geqslant H[x]$；且存在前缀码使 $L<H[x]+1$。
+设 $K\geqslant2$ 为整数，$X$ 为取值于有限集 $\{x_1,\cdots,x_K\}$ 的离散型随机变量，$p_k=\mathbb{P}(X=x_k)>0$（$k=1,\cdots,K$），$H[X]=-\sum_{k=1}^{K}p_k\log_2 p_k$ 为\eqref{align:ch02-离散熵}定义的熵。对 $X$ 的任一二元前缀码，记第 $k$ 个码字的长度为 $l_k\in\mathbb{N}$，平均码长为 $L=\sum_{k=1}^{K}p_k l_k$。则 $L\geqslant H[X]$；并且存在满足 Kraft 不等式 $\sum_{k=1}^{K}2^{-l_k}\leqslant1$ 的正整数 $l_1,\cdots,l_K$，使对应的二元前缀码满足 $L<H[X]+1$。
 \end{theorem}
 
 \begin{proof}
@@ -126,8 +138,8 @@
 再证上界：取 $l_k=\lceil-\log_2p_k\rceil$，则 $2^{-l_k}\leqslant p_k$，从而 $\sum_k2^{-l_k}\leqslant\sum_kp_k=1$，由 Kraft 不等式的逆定理存在以这些长度为码长的前缀码；而 $l_k<-\log_2p_k+1$，故 $L=\sum_kp_kl_k<H[x]+1$。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch02-无噪编码定理; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:ch02-无噪编码定理; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 定理把“熵”从一个启发式的量提升为一个可操作的下界：任何无损压缩方案的平均码长都不可能低于熵，而熵加 $1$ 比特之内总能达到。这也解释了\eqref{align:ch02-非均匀熵}与\eqref{align:ch02-平均编码长度}数值相同并非巧合。
 
 证明的关键是 Kraft 不等式，它把“前缀码存在”转化为“一组长度满足 $\sum2^{-l_k}\leqslant1$”。条件“前缀码”不可省：若允许非前缀码，则可能出现歧义解码（例如把 $0$ 与 $01$ 同时作为码字），此时下界不再成立。定理是 Shannon（1948）的经典结果，本书只引用其结论。
@@ -166,18 +178,26 @@ $W$ 表示多重数（multiplicity）。然后，熵被定义为多重数的对�
 \end{align}
 
 \begin{definition}[多重数、微观状态与宏观状态]\label{definition:ch02-多重数}
-设 $N$ 个物品被分配到若干箱子中，第 $i$ 个箱子中有 $n_i$ 个物品。称\eqref{align:ch02-多重数}给出的 $W$ 为该分配的\textbf{多重数}（multiplicity）。在物理学中，物品到箱子的具体分配称为\textbf{微观状态}（microstate），而仅由各箱物品数（用比例 $n_i/N$ 表示）决定的分配方式称为\textbf{宏观状态}（macrostate）；$W$ 表达给定宏观状态所包含的微观状态数量，也称该宏观状态的\textbf{权重}（weight）。
+设 $N\geqslant1$ 为整数，$M\geqslant1$ 为箱子数，$n_i\geqslant0$ 为第 $i$ 个箱子中的物品数（$i=1,\cdots,M$），且 $\sum_{i=1}^{M}n_i=N$。把 $N$ 个可区分物品分配到 $M$ 个箱子、使第 $i$ 个箱子恰有 $n_i$ 个物品的分配方式数为
+\begin{align*}
+  W=\frac{N!}{\prod_{i=1}^{M}n_i!},
+\end{align*}
+称 $W$ 为该分配的\textbf{多重数}（multiplicity），即\eqref{align:ch02-多重数}。在统计力学中，物品到箱子的具体分配称为\textbf{微观状态}（microstate），仅由各箱物品数 $(n_1,\cdots,n_M)$ 决定的分配方式称为\textbf{宏观状态}（macrostate）；$W$ 等于给定宏观状态所包含的微观状态数，称为该宏观状态的\textbf{权重}（weight）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-多重数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-多重数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 引入多重数的动机是把“熵”与“数数”联系起来：一个宏观状态可以由越多的微观状态实现（$W$ 越大），它就越“无序”，熵也越大。\eqref{align:ch02-熵与多重数}中的 $1/N$ 只是把总量归一为“每个物品的熵”，使 $H$ 与 $N$ 无关，从而在 $N\to\infty$ 时有极限。
 
 定义区分微观与宏观状态是必要的：同一宏观状态（同样的 $n_i$）对应许多微观状态（物品的具体归属），若把二者混同，$W$ 就无从定义。箱子数固定而 $N\to\infty$ 时，$n_i/N$ 趋于稳定的分布 $p_i$，这正是\eqref{align:ch02-熵与概率}的前提。
 \end{remark}
 
 \begin{proposition}[熵的统计力学表达式]\label{proposition:ch02-熵与多重数}
-在 $N\to\infty$ 且 $n_i/N\to p_i$ 固定的极限下，由\eqref{align:ch02-熵与多重数}定义的 $H$ 满足\eqref{align:ch02-熵与概率}，即 $H=-\sum_ip_i\ln p_i$。
+设 $M\geqslant1$ 固定，$N\geqslant1$，$n_i(N)\geqslant0$ 为整数且 $\sum_{i=1}^{M}n_i(N)=N$。设当 $N\to\infty$ 时 $n_i(N)/N\to p_i$（$i=1,\cdots,M$），其中 $p_i\geqslant0$、$\sum_{i=1}^{M}p_i=1$，并约定 $p_i=0$ 时 $p_i\ln p_i=0$。则由\eqref{align:ch02-熵与多重数}定义的 $H_N=\frac{1}{N}\ln W_N$ 满足
+\begin{align*}
+  \lim_{N\to\infty}H_N=-\sum_{i=1}^{M}p_i\ln p_i,
+\end{align*}
+即\eqref{align:ch02-熵与概率}。
 \end{proposition}
 
 \begin{proof}
@@ -195,8 +215,8 @@ $W$ 表示多重数（multiplicity）。然后，熵被定义为多重数的对�
 令 $N\to\infty$ 并用 $n_i/N\to p_i$，即得\eqref{align:ch02-熵与概率}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-熵与多重数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-熵与多重数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条推导说明信息论的熵与统计力学的熵是同一个量（相差一个常数因子，即 Boltzmann 常数）。它的关键是 Stirling 公式把阶乘换成对数，从而使乘积 $N!$ 化为求和——与\cref{proposition:ch02-信息量可加}中对数化积的技巧同源。
 
 条件“$n_i/N$ 保持固定”不可省：若各箱物品比例随 $N$ 变化，则\eqref{align:ch02-熵与概率}右端的极限不存在，$H$ 没有确定值。Stirling 公式本身的误差为 $O(\ln N)$，相对误差在 $N\to\infty$ 时趋于零，因此不影响极限。
@@ -237,7 +257,7 @@ $W$ 表示多重数（multiplicity）。然后，熵被定义为多重数的对�
 其中，$I_{ij}$ 是单位矩阵的元素。可以看到这些值都是负的，因此驻点确实是一个极大值。
 
 \begin{proposition}[均匀分布使熵最大]\label{proposition:ch02-均匀最大熵}
-设离散随机变量 $x$ 有 $M$ 个可能取值，则 $\sum_ip_i=1$、$p_i\geqslant0$ 的约束下，\eqref{align:ch02-离散熵}（以自然对数计）在 $p_i=1/M$（对一切 $i$）处取最大值，最大值为 $H=\ln M$。
+设 $M\geqslant2$ 为整数，$\Delta_M=\{(p_1,\cdots,p_M)\in[0,1]^{M}:\sum_{i=1}^{M}p_i=1\}$ 为概率单纯形，$H(p)=-\sum_{i=1}^{M}p_i\ln p_i$（约定 $0\ln0=0$）为以自然对数计的熵。则对每个 $p\in\Delta_M$ 有 $H(p)\leqslant\ln M$，且等号成立当且仅当 $p_1=\cdots=p_M=1/M$；即均匀分布是 $\Delta_M$ 上熵的唯一最大值点，最大值为 $\ln M$。该结论说明，在只给定取值个数 $M$ 而不限制其他矩时，均匀分布是最大熵分布；其证明可由 Jensen 不等式或 Lagrange 乘子法给出。
 \end{proposition}
 
 \begin{proof}
@@ -254,8 +274,8 @@ $W$ 表示多重数（multiplicity）。然后，熵被定义为多重数的对�
 最后验证它是极大值：由\eqref{align:ch02-熵二阶导}，Hessian 为对角矩阵，对角元 $-1/p_i<0$，故为负定，驻点即最大值点。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-均匀最大熵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-均匀最大熵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条结果给出了“熵最大”的精确含义：在只知道取值个数、不知道其他任何信息时，最不偏不倚的选择就是均匀分布。这与\cref{figure:ch02-两种熵}中右侧那个更平的直方图对应，也是“最大熵原理”在离散情形下的全部内容。
 
 条件的清单要看清：约束只有两条——归一化 $\sum p_i=1$ 与非负性 $p_i\geqslant0$。若再加约束（例如规定均值），最大值就会变成指数族分布而不是均匀分布（见\cref{subsection:ch02-最大熵}的连续版本）。二阶导验证不可省：一阶条件只给出驻点，\eqref{align:ch02-熵二阶导}才把它确认为最大值。
@@ -285,14 +305,15 @@ $W$ 表示多重数（multiplicity）。然后，熵被定义为多重数的对�
 \end{align}
 
 \begin{definition}[微分熵]\label{definition:ch02-微分熵}
-称\eqref{align:ch02-微分熵极限}右端的量 $-\int p(x)\ln p(x)\,\mathrm{d}x$ 为连续随机变量 $x$ 的\textbf{微分熵}（differential entropy）。对于定义在多个连续变量上的密度（统一用向量 $\mathbf{x}$ 表示），微分熵为
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X$ 为连续型随机变量，其概率密度为 $p_X:\mathbb{R}\to[0,\infty)$，且 $\int_{\mathbb{R}}|p_X(x)\ln p_X(x)|\,\mathrm{d}x<\infty$（约定 $p_X(x)=0$ 时 $p_X(x)\ln p_X(x)=0$）。由
 \begin{align*}
-  H[\mathbf{x}] = -\int p(\mathbf{x})\ln p(\mathbf{x})\,\mathrm{d}\mathbf{x} .
+  H[X]=-\int_{\mathbb{R}}p_X(x)\ln p_X(x)\,\mathrm{d}x
 \end{align*}
+定义的量称为 $X$ 的\textbf{微分熵}（differential entropy），即\eqref{align:ch02-微分熵极限}右端。对 $D$ 维连续型随机向量 $\mathbf{X}$，其微分熵为 $H[\mathbf{X}]=-\int_{\mathbb{R}^{D}}p_{\mathbf{X}}(\mathbf{x})\ln p_{\mathbf{X}}(\mathbf{x})\,\mathrm{d}\mathbf{x}$，其中 $p_{\mathbf{X}}$ 为 $\mathbf{X}$ 的联合密度。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-微分熵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-微分熵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 微分熵是把熵的定义“先离散化、再取极限”得到的：\eqref{align:ch02-离散化熵}右侧的第一项在 $\Delta\to0$ 时收敛，第二项 $-\ln\Delta$ 却发散，因此微分熵只保留了收敛的那部分。代价是它不再具有离散熵的直观含义（不是“比特数”），并且可以为负。
 
 这一点在\eqref{align:ch02-Gauss熵}中会看到：当 $\sigma^{2}<1/(2\pi e)$ 时微分熵为负。尽管有这一缺陷，微分熵在比较同一坐标系下的不同分布时仍然有用，也是 KL 散度与最大熵推导的基础。
@@ -342,7 +363,17 @@ $W$ 表示多重数（multiplicity）。然后，熵被定义为多重数的对�
 \end{align}
 
 \begin{theorem}[最大熵分布是 Gauss 分布]\label{theorem:ch02-最大熵Gauss}
-在约束\eqref{align:ch02-最大熵约束1}、\eqref{align:ch02-最大熵约束2}、\eqref{align:ch02-最大熵约束3}下，使微分熵最大的密度由\eqref{align:ch02-最大熵Gauss}给出，即均值为 $\mu$、方差为 $\sigma^{2}$ 的 Gauss 分布。
+设 $\mu\in\mathbb{R}$、$\sigma^{2}>0$。在满足
+\begin{align*}
+  \int_{\mathbb{R}}p(x)\,\mathrm{d}x=1,\qquad
+  \int_{\mathbb{R}}x\,p(x)\,\mathrm{d}x=\mu,\qquad
+  \int_{\mathbb{R}}(x-\mu)^{2}p(x)\,\mathrm{d}x=\sigma^{2}
+\end{align*}
+的非负 Borel 可测函数 $p:\mathbb{R}\to[0,\infty)$ 中（即\eqref{align:ch02-最大熵约束1}至\eqref{align:ch02-最大熵约束3}），微分熵 $H[p]=-\int_{\mathbb{R}}p(x)\ln p(x)\,\mathrm{d}x$ 在且仅在下述密度处取得最大值：
+\begin{align*}
+  p(x)=\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left(-\frac{(x-\mu)^{2}}{2\sigma^{2}}\right),
+\end{align*}
+即\eqref{align:ch02-最大熵Gauss}给出的均值为 $\mu$、方差为 $\sigma^{2}$ 的 Gauss 密度；最大值为 $\frac{1}{2}\ln(2\pi e\sigma^{2})$。
 \end{theorem}
 
 \begin{proof}
@@ -354,8 +385,8 @@ $W$ 表示多重数（multiplicity）。然后，熵被定义为多重数的对�
 即得\eqref{align:ch02-最大熵形式}。把\eqref{align:ch02-最大熵形式}代入三个约束：由\eqref{align:ch02-最大熵约束3}，$\lambda_3$ 必须为负（否则\eqref{align:ch02-最大熵约束1}的积分发散），记 $\lambda_3=-1/(2\sigma^{2})$，则\eqref{align:ch02-最大熵形式}成为 Gauss 分布的二次指数形式；再由\eqref{align:ch02-最大熵约束2}，线性项的中心为 $\mu$（即 $\lambda_2=\mu/\sigma^{2}$ 时均值为 $\mu$）；最后由\eqref{align:ch02-最大熵约束1}定出归一化常数，得\eqref{align:ch02-最大熵Gauss}。约束\eqref{align:ch02-最大熵约束3}同时给出二次项的系数，故方差确为 $\sigma^{2}$。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch02-最大熵Gauss; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:ch02-最大熵Gauss; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条定理解释了\cref{section:ch02-Gauss分布}开头那句话：Gauss 分布不是“形式任意”的，而是在只固定前两阶矩时最不偏不倚的选择。这也是为什么在许多模型中默认采用 Gauss 噪声——它在线索最少时引入了最少的额外假设。
 
 三个约束缺一不可：若去掉\eqref{align:ch02-最大熵约束3}，最大熵解不存在（可把方差推向无穷使熵任意增大）；若去掉\eqref{align:ch02-最大熵约束2}，解仍为 Gauss 但中心不确定；若去掉\eqref{align:ch02-最大熵约束1}，则连归一化都无法保证。定理的证明只用到变分法，但结果确实满足 $p(x)\geqslant0$，因此在最大化时无需额外施加非负约束。
@@ -371,7 +402,11 @@ $W$ 表示多重数（multiplicity）。然后，熵被定义为多重数的对�
 \end{align}
 
 \begin{proposition}[Gauss 分布的微分熵]\label{proposition:ch02-Gauss熵}
-设 $x\sim\mathcal{N}(x\mid\mu,\sigma^{2})$，则其微分熵由\eqref{align:ch02-Gauss熵}给出。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$\mu\in\mathbb{R}$、$\sigma^{2}>0$，$X$ 为连续型随机变量，其概率密度为 $\mathcal{N}(\cdot\mid\mu,\sigma^{2})$。则 $X$ 的微分熵存在且
+\begin{align*}
+  H[X]=\frac{1}{2}\left(1+\ln(2\pi\sigma^{2})\right),
+\end{align*}
+即\eqref{align:ch02-Gauss熵}；特别地，$H[X]$ 只依赖 $\sigma^{2}$ 而不依赖 $\mu$，且当 $\sigma^{2}<1/(2\pi e)$ 时 $H[X]<0$。
 \end{proposition}
 
 \begin{proof}
@@ -384,8 +419,8 @@ $W$ 表示多重数（multiplicity）。然后，熵被定义为多重数的对�
 其中第三个等号用了\eqref{align:ch02-最大熵约束3}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-Gauss熵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-Gauss熵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条结果把“熵”与“方差”直接联系起来：方差越大，熵越大，这与\cref{figure:ch02-两种熵}的直观一致。它也给出微分熵可以为负的明确阈值：当 $\sigma^{2}<1/(2\pi e)$ 时 $H[x]<0$，而与离散熵的非负性形成对照。
 
 推导依赖\eqref{align:ch02-最大熵约束3}（即二阶中心矩等于 $\sigma^{2}$），这一步同时用到了\cref{proposition:ch02-Gauss矩}的结论。注意公式只依赖 $\sigma^{2}$ 而不依赖 $\mu$：平移不改变熵，这与离散熵对标签重命名不变是同一回事。
@@ -403,11 +438,15 @@ $W$ 表示多重数（multiplicity）。然后，熵被定义为多重数的对�
 \end{align}
 
 \begin{definition}[Kullback-Leibler 散度]\label{definition:ch02-kl散度}
-称由\eqref{align:ch02-kl散度}定义的量为分布 $p(x)$ 与 $q(x)$ 之间的\textbf{相对熵}（relative entropy），又称 \textbf{Kullback-Leibler} 散度（Kullback-Leibler divergence），简称 \textbf{KL} 散度（Kullback and Leibler, 1951）。它度量用 $q$ 代替 $p$ 时所需的平均额外信息量。
+设 $(\mathcal{X},\mathcal{B},\nu)$ 为测度空间，$p,q$ 为关于 $\nu$ 的概率密度，即 $p,q\geqslant0$ 且 $\int_{\mathcal{X}}p\,\mathrm{d}\nu=\int_{\mathcal{X}}q\,\mathrm{d}\nu=1$。由
+\begin{align*}
+  \mathrm{KL}(p\|q)=\int_{\mathcal{X}}p(x)\ln\frac{p(x)}{q(x)}\,\mathrm{d}\nu(x)
+\end{align*}
+定义的量称为分布 $p$ 与 $q$ 之间的\textbf{相对熵}（relative entropy），又称 \textbf{Kullback-Leibler} 散度（Kullback-Leibler divergence），简称 \textbf{KL} 散度（Kullback and Leibler, 1951），即\eqref{align:ch02-kl散度}；当 $p$ 不关于 $q$ 绝对连续时约定 $\mathrm{KL}(p\|q)=+\infty$，当上述积分不存在时同样约定其值为 $+\infty$。离散情形取 $\nu$ 为计数测度并把积分换成求和，连续情形取 $\nu$ 为 Lebesgue 测度；其值度量用 $q$ 代替 $p$ 时所需的平均额外信息量（以纳特计）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-kl散度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-kl散度; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 KL 散度的定义来自“编码代价之差”：用真实分布 $p$ 编码的期望码长是 $-\int p\ln p$（即微分熵），用近似分布 $q$ 编码的期望码长是 $-\int p\ln q$，两者之差就是\eqref{align:ch02-kl散度}。因此它不是对称的：$q$ 在 $p$ 的支撑集上取小值会受到重罚，反之则不会。
 
 这种不对称性是 KL 散度的固有性质（$\mathrm{KL}(p\|q)\neq\mathrm{KL}(q\|p)$），使用时必须明确“谁是真值、谁是近似”。此外，\eqref{align:ch02-kl散度}要求 $p,q$ 都归一化，否则右端会多出与归一化常数有关的项；在变分推断中常见的 ELBO 就是在这种非归一化情形下使用的。
@@ -418,15 +457,15 @@ KL 散度的定义来自“编码代价之差”：用真实分布 $p$ 编码的
 Kullback-Leibler 散度满足 $\mathrm{KL}(p\|q)\geqslant0$，当且仅当 $p(x)=q(x)$ 时等式成立。为了进行证明，我们首先引入凸（convex）函数的概念。如\cref{figure:ch02-凸函数}所示，如果函数 $f(x)$ 具有每条弦都位于函数上方或与函数重合的性质，则称该函数是凸的。
 
 \begin{definition}[凸函数与凹函数]\label{definition:ch02-凸函数}
-若函数 $f$ 满足：对任意 $a,b$ 与任意 $0\leqslant\lambda\leqslant1$，
+设 $C\subseteq\mathbb{R}^{D}$ 为凸集，$f:C\to\mathbb{R}$ 为函数。若对任意 $a,b\in C$ 与任意 $\lambda\in[0,1]$ 都有
 \begin{align*}
-  f\big(\lambda a+(1-\lambda)b\big) \leqslant \lambda f(a)+(1-\lambda)f(b) ,
+  f\big(\lambda a+(1-\lambda)b\big)\leqslant\lambda f(a)+(1-\lambda)f(b),
 \end{align*}
-即每条弦都位于函数图像上方或与图像重合，则称 $f$ 是\textbf{凸的}（convex）。若上式对 $\lambda\in(0,1)$ 严格成立（除 $a=b$ 外），则称 $f$ 是\textbf{严格凸的}（strictly convex）。若 $-f$ 是凸的，则称 $f$ 是\textbf{凹的}（concave），相应地有严格凹函数。
+则 $f$ 称为 $C$ 上的\textbf{凸函数}（convex function），即\eqref{align:ch02-凸函数定义}；若对 $\lambda\in(0,1)$ 与 $a\neq b$ 上式严格成立，则 $f$ 称为\textbf{严格凸的}（strictly convex）；若 $-f$ 为凸函数，则 $f$ 称为\textbf{凹的}（concave），相应地定义严格凹函数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-凸函数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-凸函数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 凸性刻画的是“函数图像向下弯”：弦在图像上方意味着函数值的增长越来越快（二阶导非负）。这一性质的价值在于它保证局部极小就是全局极小，从而使优化问题变简单；在信息论中，它则是证明 KL 散度非负的关键。
 
 定义中的 $\lambda$ 可以解释为 $a,b$ 之间的插值权重：$\lambda a+(1-\lambda)b$ 遍历区间 $[a,b]$。注意凸性要求对\textbf{所有} $\lambda$ 成立，只在个别点成立不叫凸。若 $f$ 二阶可导，凸性等价于 $f''\geqslant0$（见\cref{exercise:ch02-32}），这也是实际检验时最常用的判据。
@@ -441,7 +480,7 @@ Kullback-Leibler 散度满足 $\mathrm{KL}(p\|q)\geqslant0$，当且仅当 $p(x)
 
 这等价于要求函数的二阶导数在任何地方都是正的（见\cref{exercise:ch02-32}）。凸函数的例子有 $x\ln x$（$x>0$）和 $x^{2}$。如果一个函数仅在 $\lambda=0$ 和 $\lambda=1$ 时 KL$(p\|q)=0$ 成立，则称其为严格凸的（strictly convex）。如果一个函数具有相反的性质，即每条弦都位于函数之下或与函数重合，则称其为凹的（concave），对应也存在严格凹的（strictly concave）函数。如果函数 $f(x)$ 是凸的，那么 $-f(x)$ 是凹的。
 
-\begin{remark}（重构新增）原文问题说明
+\begin{remark}原文问题说明
 上一段中“如果一个函数仅在 $\lambda=0$ 和 $\lambda=1$ 时 KL$(p\|q)=0$ 成立，则称其为严格凸的”一句，原书把“等号”误印成了 KL$(p\|q)=0$：严格凸的定义与 KL 散度无关，正确表述应为“若\eqref{align:ch02-凸函数定义}中的等号仅在 $\lambda=0$ 和 $\lambda=1$ 时成立，则称 $f$ 为严格凸的”。正文照录原文，特此说明；后文凡涉及严格凸性的论证均按上述正确表述使用。
 \end{remark}
 
@@ -474,7 +513,11 @@ Kullback-Leibler 散度满足 $\mathrm{KL}(p\|q)\geqslant0$，当且仅当 $p(x)
 \end{align}
 
 \begin{theorem}[Jensen 不等式]\label{theorem:ch02-jensen}
-设 $f$ 为凸函数，$\lambda_i\geqslant0$、$\sum_i\lambda_i=1$，则\eqref{align:ch02-jensen离散}成立；若 $x$ 为随机变量，则\eqref{align:ch02-jensen期望}与\eqref{align:ch02-jensen连续}成立，即 $f(\mathbb{E}[x])\leqslant\mathbb{E}[f(x)]$。
+设 $C\subseteq\mathbb{R}^{D}$ 为凸集，$f:C\to\mathbb{R}$ 为凸函数，$M\geqslant1$ 为整数，$x_1,\cdots,x_M\in C$，$\lambda_1,\cdots,\lambda_M\geqslant0$ 且 $\sum_{i=1}^{M}\lambda_i=1$。则
+\begin{align*}
+  f\left(\sum_{i=1}^{M}\lambda_i x_i\right)\leqslant\sum_{i=1}^{M}\lambda_i f(x_i),
+\end{align*}
+即\eqref{align:ch02-jensen离散}。设 $X$ 为取值于 $C$ 的随机向量且 $\mathbb{E}\|X\|<\infty$，则 $f(\mathbb{E}[X])\leqslant\mathbb{E}[f(X)]$，即\eqref{align:ch02-jensen期望}；当 $X$ 具有概率密度 $p$ 时，该式即\eqref{align:ch02-jensen连续}。
 \end{theorem}
 
 \begin{proof}
@@ -491,8 +534,8 @@ Kullback-Leibler 散度满足 $\mathrm{KL}(p\|q)\geqslant0$，当且仅当 $p(x)
 \eqref{align:ch02-jensen期望}是\eqref{align:ch02-jensen离散}在 $\lambda_i=p(x_i)$、$M\to\infty$ 时的写法；\eqref{align:ch02-jensen连续}则把求和换成积分，证明方式相同（把积分看作和的极限）。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch02-jensen; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:ch02-jensen; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 Jensen 不等式是信息论中几乎所有非负性结论的统一来源：KL 散度非负、互信息非负、最大熵的解是 Gauss 分布，都可由它推出。直观上，它说的是“先平均再取凸函数”不大于“先取凸函数再平均”。
 
 条件“$f$ 凸”不可省：对凹函数不等号反向（$f(\mathbb{E}[x])\geqslant\mathbb{E}[f(x)]$）。条件“$\lambda_i\geqslant0$、$\sum\lambda_i=1$”也不可省，它保证 $\sum\lambda_ix_i$ 是凸组合，从而落在 $f$ 的定义域内。若 $f$ 严格凸，等号仅在 $x$ 几乎必然为常数时成立。
@@ -506,7 +549,7 @@ Jensen 不等式是信息论中几乎所有非负性结论的统一来源：KL �
 \end{align}
 
 \begin{proposition}[KL 散度的非负性]\label{proposition:ch02-kl非负}
-设 $p,q$ 为概率密度，则 $\mathrm{KL}(p\|q)\geqslant0$，且等号成立当且仅当 $p(x)=q(x)$（几乎处处）。
+设 $(\mathcal{X},\mathcal{B},\nu)$ 为测度空间，$p,q$ 为关于 $\nu$ 的概率密度（即 $p,q\geqslant0$、$\int_{\mathcal{X}}p\,\mathrm{d}\nu=\int_{\mathcal{X}}q\,\mathrm{d}\nu=1$）。则 $\mathrm{KL}(p\|q)\geqslant0$，且等号成立当且仅当 $p=q$ 在 $\nu$-几乎处处意义下成立；若 $p$ 不关于 $q$ 绝对连续，则 $\mathrm{KL}(p\|q)=+\infty$。这里 $\mathrm{KL}(p\|q)$ 按\cref{definition:ch02-kl散度}的约定取值于 $[0,+\infty]$，因此 $p$ 不关于 $q$ 绝对连续的情形也包含在内。
 \end{proposition}
 
 \begin{proof}
@@ -520,8 +563,8 @@ Jensen 不等式是信息论中几乎所有非负性结论的统一来源：KL �
 若 $p=q$，被积函数 $\ln(q/p)=\ln1=0$，故 $\mathrm{KL}=0$。反之，若 $\mathrm{KL}=0$，则 Jensen 不等式取等号；由 $-\ln$ 严格凸，这要求 $u=q(x)/p(x)$ 在 $p(x)>0$ 处为常数，结合双方归一化得该常数为 $1$，即 $p=q$（几乎处处）。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-kl非负; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-kl非负; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 非负性是 KL 散度被称为“散度”的资格：它度量两个分布的不相似程度，且最小值 $0$ 只在两个分布相同时取到。证明只用了一步——把 $-\ln$ 的凸性代入 Jensen 不等式——却给出了整个信息论中最常用的不等式。
 
 条件“$p,q$ 都归一化”在证明的最后一个等号中用到（$\int q=1$）；若 $q$ 未归一化，则 $\mathrm{KL}(p\|q)\geqslant-\ln\int q$，可以为负。此外，若 $q(x)=0$ 而 $p(x)>0$ 在某个正测度集上成立，则 $\mathrm{KL}=+\infty$，此时不等式仍成立（广义实数意义下）。
@@ -541,7 +584,7 @@ Jensen 不等式是信息论中几乎所有非负性结论的统一来源：KL �
 式\eqref{align:ch02-kl样本近似}右侧的第二项与 $\boldsymbol{\theta}$ 无关，第一项是分布 $q(x\mid\boldsymbol{\theta})$ 使用训练集评估时 $\boldsymbol{\theta}$ 的负对数似然函数。因此可以看到，最小化这个 Kullback-Leibler 散度等同于最大化对数似然函数（见\cref{exercise:ch02-34}）。
 
 \begin{proposition}[KL 散度与对数似然]\label{proposition:ch02-kl与似然}
-设 $q(x\mid\boldsymbol{\theta})$ 为参数化密度，则关于 $\boldsymbol{\theta}$ 最小化 $\mathrm{KL}(p\|q)$ 等价于关于 $\boldsymbol{\theta}$ 最大化期望对数似然 $\mathbb{E}_p[\ln q(x\mid\boldsymbol{\theta})]$；在样本近似\eqref{align:ch02-kl样本近似}下等价于最大化 $\sum_n\ln q(x_n\mid\boldsymbol{\theta})$。
+设 $p$ 为固定的概率密度，$\{q(\cdot\mid\boldsymbol{\theta}):\boldsymbol{\theta}\in\Theta\}$ 为参数化概率密度族，$\Theta\subseteq\mathbb{R}^{P}$，且对每个 $\boldsymbol{\theta}\in\Theta$，$\mathrm{KL}(p\|q(\cdot\mid\boldsymbol{\theta}))$ 与 $\mathbb{E}_p[\ln q(X\mid\boldsymbol{\theta})]$ 均有定义。则关于 $\boldsymbol{\theta}$ 最小化 $\mathrm{KL}(p\|q(\cdot\mid\boldsymbol{\theta}))$ 等价于关于 $\boldsymbol{\theta}$ 最大化期望对数似然 $\mathbb{E}_p[\ln q(X\mid\boldsymbol{\theta})]$；给定从 $p$ 独立抽取的样本 $x_1,\cdots,x_N$ 时，后者可由样本平均 $\frac{1}{N}\sum_{n=1}^{N}\ln q(x_n\mid\boldsymbol{\theta})$ 近似，因而在\eqref{align:ch02-kl样本近似}意义下等价于最大化 $\sum_{n=1}^{N}\ln q(x_n\mid\boldsymbol{\theta})$。
 \end{proposition}
 
 \begin{proof}
@@ -552,8 +595,8 @@ Jensen 不等式是信息论中几乎所有非负性结论的统一来源：KL �
 右端第二项与 $\boldsymbol{\theta}$ 无关，故最小化左端等价于最大化第一项，即 $\mathbb{E}_p[\ln q(x\mid\boldsymbol{\theta})]$。再用\eqref{align:ch02-样本近似}把该期望换成样本平均 $\frac{1}{N}\sum_n\ln q(x_n\mid\boldsymbol{\theta})$，乘以常数 $N$ 不影响最优点，即得第二种表述。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-kl与似然; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-kl与似然; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条等价性是“最大似然 = 最小 KL”的精确版本，它把\cref{subsection:ch02-似然函数}中的似然方法与信息论联系起来：选择模型时，我们实际上是在让模型分布尽量靠近真实分布。
 
 条件“$p$ 固定”不可省：$p$ 决定了 KL 散度中不可优化的那一项，因此最小化只对 $\boldsymbol{\theta}$ 进行。若用有限样本近似\eqref{align:ch02-样本近似}，则所得解是最大似然解，它的抽样误差由 $N$ 控制——这也解释了为什么数据越多，学到的分布越接近真值。
@@ -569,11 +612,15 @@ Jensen 不等式是信息论中几乎所有非负性结论的统一来源：KL �
 \end{align}
 
 \begin{definition}[条件熵]\label{definition:ch02-条件熵}
-称由\eqref{align:ch02-条件熵}定义的量 $H[y\mid x]$ 为给定 $x$ 的条件下 $y$ 的\textbf{条件熵}（conditional entropy），它表示在已知 $x$ 后描述 $y$ 平均所需的额外信息量。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X,Y$ 为定义在其上的随机变量，$(X,Y)$ 具有联合密度 $p_{X,Y}$，$X$ 具有边缘密度 $p_X$。对使 $p_X(x)>0$ 的 $x$ 定义 $p_{Y\mid X}(y\mid x)=p_{X,Y}(x,y)/p_X(x)$，并约定 $p_X(x)=0$ 时 $p_{Y\mid X}(y\mid x)=0$，由
+\begin{align*}
+  H[Y\mid X]=-\iint_{\mathbb{R}^{2}}p_{X,Y}(x,y)\ln p_{Y\mid X}(y\mid x)\,\mathrm{d}y\,\mathrm{d}x
+\end{align*}
+定义的量称为给定 $X$ 的条件下 $Y$ 的\textbf{条件熵}（conditional entropy），即\eqref{align:ch02-条件熵}，它表示在已知 $X$ 后描述 $Y$ 平均所需的额外信息量；当上述积分存在时条件熵为实数，否则按广义实数取值。离散情形把积分换成对 $(x,y)$ 全部取值的求和。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-条件熵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-条件熵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 条件熵是“在已知 $x$ 之后还剩多少不确定性”，因此它必然不大于无条件熵（\cref{exercise:ch02-29}）。这个差别正是互信息（\cref{subsection:ch02-互信息}）要量化的东西。
 
 \eqref{align:ch02-条件熵}中的 $-\ln p(y\mid x)$ 用的是条件密度而不是联合密度，这是它与联合熵的唯一差别；求和（积分）仍然按联合分布 $p(x,y)$ 加权，因为实际观测到的 $(x,y)$ 就是按联合分布出现的。条件 $p(x)>0$ 不可省，否则 $p(y\mid x)$ 无定义。
@@ -589,7 +636,11 @@ $H[y\mid x]$ 称为给定 $x$ 的条件下 $y$ 的条件熵（conditional entrop
 其中 $H[x,y]$ 是 $p(x,y)$ 的微分熵，$H[x]$ 是边缘分布 $p(x)$ 的微分熵。因此，描述 $x$ 和 $y$ 所需的信息实际就是描述 $x$ 本身所需的信息再加上给定 $x$ 描述 $y$ 所需的额外信息。
 
 \begin{proposition}[熵的链式法则]\label{proposition:ch02-熵链式}
-设 $p(x,y)$ 为联合密度，$p(x)$、$p(y\mid x)$ 为相应的边缘与条件密度，则\eqref{align:ch02-熵链式}成立。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X,Y$ 为随机变量，$(X,Y)$ 具有联合密度 $p_{X,Y}$，$X$ 与 $Y$ 分别具有边缘密度 $p_X,p_Y$，且 $H[X]$、$H[Y\mid X]$、$H[X,Y]$ 均为有限实数。则
+\begin{align*}
+  H[X,Y]=H[Y\mid X]+H[X],
+\end{align*}
+即\eqref{align:ch02-熵链式}；等价地 $H[X,Y]=H[X\mid Y]+H[Y]$。
 \end{proposition}
 
 \begin{proof}
@@ -601,8 +652,8 @@ $H[y\mid x]$ 称为给定 $x$ 的条件下 $y$ 的条件熵（conditional entrop
 第一项即 $H[y\mid x]$。第二项中 $\ln p(x)$ 与 $y$ 无关，对 $y$ 积分得 $\int p(x)\ln p(x)\,\mathrm{d}x$ 的相反数，即 $H[x]$。故\eqref{align:ch02-熵链式}成立。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-熵链式; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-熵链式; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 链式法则把“联合的不确定性”分解为“$x$ 的不确定性”加“已知 $x$ 后 $y$ 剩余的不确定性”，这与乘积法则把联合概率分解为两步完全平行——事实上证明就是乘积法则取对数。
 
 它的直接推论是 $H[x,y]\leqslant H[x]+H[y]$（\cref{exercise:ch02-29}），等号当且仅当 $x,y$ 独立。条件“$p(x)>0$”用于保证 $p(y\mid x)$ 有定义；若某个 $x$ 取值的概率为零，该处对积分的贡献也为零，不影响结论。
@@ -618,11 +669,16 @@ $H[y\mid x]$ 称为给定 $x$ 的条件下 $y$ 的条件熵（conditional entrop
 \end{align}
 
 \begin{definition}[互信息]\label{definition:ch02-互信息}
-称由\eqref{align:ch02-互信息}定义的量 $I[x,y]$ 为变量 $x$ 与 $y$ 之间的\textbf{互信息}（mutual information），它是联合分布 $p(x,y)$ 与其边缘分布之积 $p(x)p(y)$ 之间的 KL 散度。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X,Y$ 为定义在其上的随机变量，$(X,Y)$ 具有联合密度 $p_{X,Y}$，其边缘密度为 $p_X,p_Y$。由
+\begin{align*}
+  I[X,Y]=\mathrm{KL}\big(p_{X,Y}\,\|\,p_Xp_Y\big)
+  =-\iint_{\mathbb{R}^{2}}p_{X,Y}(x,y)\ln\frac{p_X(x)p_Y(y)}{p_{X,Y}(x,y)}\,\mathrm{d}x\,\mathrm{d}y
+\end{align*}
+定义的量称为变量 $X$ 与 $Y$ 之间的\textbf{互信息}（mutual information），即\eqref{align:ch02-互信息}；它是联合密度 $p_{X,Y}$ 与边缘密度之积 $p_Xp_Y$ 之间的 KL 散度，当 $p_{X,Y}$ 不关于 $p_Xp_Y$ 绝对连续时约定 $I[X,Y]=+\infty$。离散情形把积分换成求和。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-互信息; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-互信息; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 互信息回答的是“两个变量有多不独立”：当且仅当 $p(x,y)=p(x)p(y)$ 时它为零，因此它比协方差更强——协方差只捕捉线性相关，而互信息捕捉任何形式的依赖（\cref{exercise:ch02-39}中的例子协方差为零但互信息不为零）。
 
 由 KL 散度的性质，$I[x,y]$ 非负且不对称中的“方向”并不存在（$I[x,y]=I[y,x]$，因为 $p(x)p(y)$ 对称），这与 KL 散度本身的不对称形成对比。定义要求 $p(x,y)$ 与 $p(x)p(y)$ 都可归一化，故 $p(x)>0$、$p(y)>0$ 在相应的支撑集上成立。
@@ -636,7 +692,11 @@ $I[x,y]$ 称为变量 $x$ 和 $y$ 之间的互信息（mutual information）。�
 \end{align}
 
 \begin{proposition}[互信息与熵的关系]\label{proposition:ch02-互信息与熵}
-设 $H[x]$、$H[x\mid y]$ 存在，则\eqref{align:ch02-互信息与熵}成立，且 $I[x,y]\geqslant0$，等号成立当且仅当 $x$ 与 $y$ 独立。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X,Y$ 为随机变量，$(X,Y)$ 具有联合密度 $p_{X,Y}$，边缘密度为 $p_X,p_Y$，且 $H[X]$、$H[Y]$、$H[X,Y]$、$H[X\mid Y]$、$H[Y\mid X]$ 均为有限实数。则
+\begin{align*}
+  I[X,Y]=H[X]-H[X\mid Y]=H[Y]-H[Y\mid X],
+\end{align*}
+即\eqref{align:ch02-互信息与熵}；并且 $I[X,Y]\geqslant0$，等号成立当且仅当 $X$ 与 $Y$ 独立。
 \end{proposition}
 
 \begin{proof}
@@ -651,8 +711,8 @@ $I[x,y]$ 称为变量 $x$ 和 $y$ 之间的互信息（mutual information）。�
 再由链式法则\eqref{align:ch02-熵链式}，$H[x,y]=H[x]+H[y\mid x]=H[y]+H[x\mid y]$，代入即得\eqref{align:ch02-互信息与熵}。非负性由 $I=\mathrm{KL}(p(x,y)\|p(x)p(y))\geqslant0$（\cref{proposition:ch02-kl非负}）得到，等号成立当且仅当 $p(x,y)=p(x)p(y)$，即独立。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-互信息与熵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-互信息与熵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch02-互信息与熵}把互信息写成“先验熵减去后验熵”：$H[x]$ 是观测 $y$ 之前对 $x$ 的不确定性，$H[x\mid y]$ 是观测之后剩余的不确定性，二者之差就是 $y$ 提供的关于 $x$ 的信息量。这与\cref{definition:ch02-先验后验}中先验、后验的关系完全平行。
 
 非负性说明“观测不会增加不确定性”（信息不会有害），等号成立当且仅当观测与 $x$ 独立。条件 $H[x]$ 存在不可省：若熵发散，则\eqref{align:ch02-互信息与熵}两端可能同时为无穷，差值无意义。

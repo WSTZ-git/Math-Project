@@ -26,16 +26,16 @@
 假设我们的目标只是尽可能减少误分类，则需要一条规则，以便将$\boldsymbol{x}$的每个值归入一个可用的类。该规则会将输入空间划分为若干决策区域$\mathcal{R}_k$，每个类拥有一个决策区域，从而$\mathcal{R}_k$中的所有点都会被归入$C_k$类。决策区域之间的边界称为决策边界或决策面。需要注意的是，每个决策区域不需要是连续的，但可包含若干不相交的区域。
 
 \begin{definition}[误分类率]\label{definition:ch05-误分类率}
-设决策区域为$\mathcal{R}_k$，$k=1,\cdots,K$，即约定$\boldsymbol{x}\in\mathcal{R}_k$时把$\boldsymbol{x}$归入$C_k$类。称
+设$D\geqslant1$，$K=2$，输入$\boldsymbol{x}\in\mathbb{R}^{D}$，类为$C_1,C_2$，$(\boldsymbol{x},C)$为取值于$\mathbb{R}^{D}\times\{C_1,C_2\}$的随机元，其联合分布由$p(\boldsymbol{x},C_k)$给出。设$\mathcal{R}_1,\mathcal{R}_2\subseteq\mathbb{R}^{D}$为可测集，$\mathcal{R}_1\cap\mathcal{R}_2=\varnothing$，$\mathcal{R}_1\cup\mathcal{R}_2=\mathbb{R}^{D}$，并约定$\boldsymbol{x}\in\mathcal{R}_k$时把$\boldsymbol{x}$归入$C_k$类。则
 \begin{align}
   p(\text{错误})=p(\boldsymbol{x}\in\mathcal{R}_1,C_2)+p(\boldsymbol{x}\in\mathcal{R}_2,C_1)
   \label{align:ch05-误分类概率}
 \end{align}
-为二分类情形下的误分类率（misclassification rate），即属于$C_1$类的输入向量被归入$C_2$类、或属于$C_2$类的输入向量被归入$C_1$类的概率。
+称为该决策规则在二分类情形下的\textbf{误分类率}（misclassification rate），即属于$C_1$类的输入向量被归入$C_2$类、或属于$C_2$类的输入向量被归入$C_1$类的概率，其中$p(\boldsymbol{x}\in\mathcal{R}_k,C_l)$表示$\boldsymbol{x}\in\mathcal{R}_k$且真实类为$C_l$的联合概率。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch05-误分类率; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch05-误分类率; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 定义中的两个事件$\{\boldsymbol{x}\in\mathcal{R}_1,C_2\}$与$\{\boldsymbol{x}\in\mathcal{R}_2,C_1\}$互不相交，因此概率可以直接相加；这正是\eqref{align:ch05-误分类概率}写成两项之和的原因。误分类率只区分“对”与“错”，不区分错误的方向与后果，因此它只适用于两类错误代价相同的情形（对比\cref{subsection:ch05-预期损失}中的损失矩阵）。此外，$\mathcal{R}_k$允许不连通不会影响定义：$\{\boldsymbol{x}\in\mathcal{R}_k\}$始终是一个可测集，概率仍按$p(\boldsymbol{x},C_k)$在该集合上的积分计算（见\cref{proposition:ch05-误分类规则}的证明）。
 \end{remark}
 
@@ -50,11 +50,11 @@
 我们可以自由选择将每个点$\boldsymbol{x}$归入两个类之一的决策规则。显然，为了将$p(\text{错误})$最小化，我们应该将每个点$\boldsymbol{x}$归入\eqref{align:ch05-误分类积分}中被积函数值较小的类。因此，对于给定的$\boldsymbol{x}$值，如果$p(\boldsymbol{x},C_1)>p(\boldsymbol{x},C_2)$，则归入$C_1$类。根据概率的乘积法则，可以得到$p(\boldsymbol{x},C_k)=p(C_k\mid\boldsymbol{x})p(\boldsymbol{x})$。由于$p(\boldsymbol{x})$是两个项的公因子，因此我们可以将这一结果重新表述为：如果将$\boldsymbol{x}$的每个值归入后验概率$p(C_k\mid\boldsymbol{x})$最大的类，则犯错的概率最小。
 
 \begin{proposition}[最小误分类率规则]\label{proposition:ch05-误分类规则}
-设$p(\boldsymbol{x})>0$。则使\eqref{align:ch05-误分类积分}中$p(\text{错误})$最小的决策规则为：对每个$\boldsymbol{x}$，把它归入使$p(C_k\mid\boldsymbol{x})$最大的类。任何其他规则所对应的误分类率都不小于该规则，且当两个后验概率对某个正概率集合上的$\boldsymbol{x}$不相等时，其他规则的误分类率严格更大。
+设$D\geqslant1$，$K=2$，$(\boldsymbol{x},C)$的联合分布由$p(\boldsymbol{x},C_k)$给出，$p(\boldsymbol{x})>0$对几乎一切$\boldsymbol{x}$成立，$p(\text{错误})$由\eqref{align:ch05-误分类积分}定义。则使$p(\text{错误})$最小的决策规则为：对每个$\boldsymbol{x}$，把它归入使后验概率$p(C_k\mid\boldsymbol{x})$最大的类。任何其他规则所对应的误分类率都不小于该规则；若两个后验概率在某个正概率集合上不相等，则其他规则的误分类率严格更大。
 \end{proposition}
 
 \begin{proof}
-（重构新增）把\eqref{align:ch05-误分类积分}的两个积分合并写为在整个输入空间上的积分。对每个$\boldsymbol{x}$，定义“错误指示”$e(\boldsymbol{x})$：若把$\boldsymbol{x}$归入$C_1$类，则$e(\boldsymbol{x})=p(\boldsymbol{x},C_2)$；若归入$C_2$类，则$e(\boldsymbol{x})=p(\boldsymbol{x},C_1)$。于是
+把\eqref{align:ch05-误分类积分}的两个积分合并写为在整个输入空间上的积分。对每个$\boldsymbol{x}$，定义“错误指示”$e(\boldsymbol{x})$：若把$\boldsymbol{x}$归入$C_1$类，则$e(\boldsymbol{x})=p(\boldsymbol{x},C_2)$；若归入$C_2$类，则$e(\boldsymbol{x})=p(\boldsymbol{x},C_1)$。于是
 
 \begin{align}
   p(\text{错误})=\int e(\boldsymbol{x})\,\mathrm{d}\boldsymbol{x}
@@ -63,8 +63,8 @@
 积分是逐点相加的，故要使积分最小，只需使被积函数对每个$\boldsymbol{x}$都最小。对给定的$\boldsymbol{x}$，把$\boldsymbol{x}$归入$C_1$类的代价是$p(\boldsymbol{x},C_2)$，归入$C_2$类的代价是$p(\boldsymbol{x},C_1)$，因此最优规则是选择二者中较小者所对应的类，即当$p(\boldsymbol{x},C_1)>p(\boldsymbol{x},C_2)$时归入$C_1$类，否则归入$C_2$类。由于$p(\boldsymbol{x},C_k)=p(C_k\mid\boldsymbol{x})p(\boldsymbol{x})$且$p(\boldsymbol{x})>0$，比较$p(\boldsymbol{x},C_1)$与$p(\boldsymbol{x},C_2)$等价于比较$p(C_1\mid\boldsymbol{x})$与$p(C_2\mid\boldsymbol{x})$。逐点最优性给出全局最优性，且当最优规则不唯一时（即两个后验概率相等的$\boldsymbol{x}$构成的集合具有正概率），任意别的规则都在该集合上取到更大的被积函数，故误分类率严格更大。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-误分类规则; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch05-误分类规则; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 命题的证明揭示了这类决策问题的共同结构：总风险是一个逐点代价的积分，因此“全局最优”可以化归为“逐点最优”。这一化归要求代价函数不依赖于其他$\boldsymbol{x}$的决策，即各点的决策相互独立；在\cref{subsection:ch05-预期损失}与\cref{subsection:ch05-拒绝选项}中我们会反复使用它。条件$p(\boldsymbol{x})>0$只是为了能约去公因子；若$p(\boldsymbol{x})=0$，该点出现的概率为零，其决策不影响误分类率。结论“选择后验概率最大的类”也解释了一个常见说法：Bayes 分类器就是最大后验分类器。注意该结论只对0-1损失成立；一旦两类错误的代价不同，最优规则就要由\cref{proposition:ch05-最小风险规则}给出。
 \end{remark}
 
@@ -87,15 +87,15 @@
 当决策区域$\mathcal{R}_k$使得每个$\boldsymbol{x}$被归入$p(\boldsymbol{x},C_k)$最大的类时，正确概率就会最高。同样，利用概率的乘积法则$p(\boldsymbol{x},C_k)=p(C_k\mid\boldsymbol{x})p(\boldsymbol{x})$，$p(\boldsymbol{x})$是所有项的公因子，每个$\boldsymbol{x}$都应被归入后验概率$p(C_k\mid\boldsymbol{x})$最大的类。
 
 \begin{proposition}[最大正确率规则]\label{proposition:ch05-正确率规则}
-设$p(\boldsymbol{x})>0$且$\sum_k p(C_k\mid\boldsymbol{x})=1$。则使\eqref{align:ch05-正确概率}中$p(\text{正确})$最大的决策规则为：对每个$\boldsymbol{x}$，把它归入使$p(C_k\mid\boldsymbol{x})$最大的类。
+设$K\geqslant2$，$(\boldsymbol{x},C)$的联合分布由$p(\boldsymbol{x},C_k)$给出，$p(\boldsymbol{x})>0$对几乎一切$\boldsymbol{x}$成立，且$\sum_{k=1}^{K}p(C_k\mid\boldsymbol{x})=1$。则使\eqref{align:ch05-正确概率}中$p(\text{正确})$最大的决策规则为：对每个$\boldsymbol{x}$，把它归入使$p(C_k\mid\boldsymbol{x})$最大的类；该规则的最大正确率为$\int\max_k p(\boldsymbol{x},C_k)\,\mathrm{d}\boldsymbol{x}$。
 \end{proposition}
 
 \begin{proof}
-（重构新增）由于对每个$\boldsymbol{x}$都有$\sum_k p(C_k\mid\boldsymbol{x})=1$，二分类情形下$p(\text{正确})=1-p(\text{错误})$，故最大化正确率与最小化误分类率等价，结论由\cref{proposition:ch05-误分类规则}得到。对一般的$K$，把\eqref{align:ch05-正确概率}写成$\int\sum_k p(\boldsymbol{x},C_k)\mathbb{I}\{\boldsymbol{x}\in\mathcal{R}_k\}\,\mathrm{d}\boldsymbol{x}$，其中$\mathbb{I}\{\cdot\}$为示性函数。被积函数对给定的$\boldsymbol{x}$等于$p(\boldsymbol{x},C_{k(\boldsymbol{x})})$，其中$C_{k(\boldsymbol{x})}$是$\boldsymbol{x}$被归入的类；它显然不超过$\max_k p(\boldsymbol{x},C_k)$，而取$k(\boldsymbol{x})=\arg\max_k p(\boldsymbol{x},C_k)$即可达到该上界。故逐点取最大后验的规则使正确率最大，且由$p(\boldsymbol{x})>0$，比较$p(\boldsymbol{x},C_k)$与比较$p(C_k\mid\boldsymbol{x})$等价。
+由于对每个$\boldsymbol{x}$都有$\sum_k p(C_k\mid\boldsymbol{x})=1$，二分类情形下$p(\text{正确})=1-p(\text{错误})$，故最大化正确率与最小化误分类率等价，结论由\cref{proposition:ch05-误分类规则}得到。对一般的$K$，把\eqref{align:ch05-正确概率}写成$\int\sum_k p(\boldsymbol{x},C_k)\mathbb{I}\{\boldsymbol{x}\in\mathcal{R}_k\}\,\mathrm{d}\boldsymbol{x}$，其中$\mathbb{I}\{\cdot\}$为示性函数。被积函数对给定的$\boldsymbol{x}$等于$p(\boldsymbol{x},C_{k(\boldsymbol{x})})$，其中$C_{k(\boldsymbol{x})}$是$\boldsymbol{x}$被归入的类；由最大值的定义，它不超过$\max_k p(\boldsymbol{x},C_k)$；取$k(\boldsymbol{x})=\arg\max_k p(\boldsymbol{x},C_k)$即可达到该上界。故逐点取最大后验的规则使正确率最大，且由$p(\boldsymbol{x})>0$，比较$p(\boldsymbol{x},C_k)$与比较$p(C_k\mid\boldsymbol{x})$等价。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-正确率规则; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch05-正确率规则; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 两个命题互为补充：\cref{proposition:ch05-误分类规则}从“最小化错误”出发，\cref{proposition:ch05-正确率规则}从“最大化正确”出发，而它们给出同一条规则，原因是$\sum_k p(C_k\mid\boldsymbol{x})=1$使正确与错误互补。证明中对示性函数逐点取上界的论证是这类问题的标准技巧，它与\cref{proposition:ch05-误分类规则}中“被积函数逐点最小”的论证是同一件事的两种说法。需要强调，逐点最优性依赖于$\mathcal{R}_k$可以任意取（即决策规则没有任何限制）；若对决策规则加约束（例如要求决策面为线性），则逐点最优一般无法实现，此时“最优”只能在该约束类中取，这正是线性判别式与 Bayes 分类器的差别。
 \end{remark}
 
@@ -106,7 +106,7 @@
 我们可以通过采用损失函数来将这些问题形式化，损失函数是对采取任何可供选择之决策或行动所造成损失的单一、总体衡量。因此，我们的目标是最大限度地减少总损失。请注意，有些学者考虑使用效用函数（utility function），并希望最大化效用函数的值。如果我们把效用简单地理解为损失的负数，那么这两个概念是等价的。
 
 \begin{definition}[损失矩阵]\label{definition:ch05-损失矩阵}
-设共有$K$个类。假设一个新的$\boldsymbol{x}$值实际上属于$C_k$类，而我们却将$\boldsymbol{x}$归入$C_j$类（其中$j$可能等于也可能不等于$k$），在此过程中遭受的损失记为$L_{kj}$，并称之为损失矩阵（loss matrix）的$(k,j)$元素。所有$L_{kj}$组成的$K\times K$矩阵$\boldsymbol{L}$称为损失矩阵，其行对应真实类，列对应决策所归入的类。
+设$K\geqslant2$，类为$C_1,\cdots,C_K$。设在真实类为$C_k$时把输入$\boldsymbol{x}$归入$C_j$类所遭受的损失为实数$L_{kj}$（$k,j=1,\cdots,K$；$j=k$的情形亦包含在内）。则由全部$L_{kj}$组成的$K$行$K$列实方阵$\boldsymbol{L}=(L_{kj})\in\mathbb{R}^{K\times K}$称为\textbf{损失矩阵}（loss matrix），其第$k$行对应真实类$C_k$，第$j$列对应决策所归入的类$C_j$；$L_{kj}$称为$\boldsymbol{L}$的$(k,j)$元素。
 \end{definition}
 
 例如，在癌症检查示例中，我们可能得到\cref{figure:ch05-损失矩阵}所示形式的一个损失矩阵。这个特定的损失矩阵表示，如果决策正确，就不会有任何损失；如果一个身体健康的人被误诊患有癌症，则会遭受1的损失；而如果一个癌症患者被误诊为身体健康，则会遭受100的损失。
@@ -122,24 +122,24 @@
   \label{figure:ch05-损失矩阵}
 \end{figure}
 
-% SUPPLEMENT: parent=definition:ch05-损失矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch05-损失矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 损失矩阵把“错误的类型”与“错误的代价”分开：误分类率只记录$j\neq k$的事件，而损失矩阵为每个$(k,j)$指定权重，因此它可以表达“漏诊比误诊严重100倍”这类非对称代价。矩阵不要求对称（本例中$L_{12}=1\neq L_{21}=100$），对角元通常取0，但也可以取非零值（例如检查本身有成本）。损失与效用只差一个符号：若把效用记为$U_{kj}=-L_{kj}$，则最小化预期损失等价于最大化预期效用。注意$L_{kj}$是决策者给定的，而不是从数据中学到的；\cref{proposition:ch05-最小风险规则}的结论会随$\boldsymbol{L}$的改变而改变，这一点在\cref{subsection:ch05-推理和决策}中作为“需要后验概率”的第一条理由出现。
 \end{remark}
 
 将损失函数最小化的解为最优解。然而，损失函数取决于真实类，而真实类是未知的。对于给定的输入向量$\boldsymbol{x}$，我们使用联合概率分布$p(\boldsymbol{x},C_k)$来表示真实类的不确定性。我们可以转而寻求将预期损失最小化。
 
 \begin{definition}[预期损失]\label{definition:ch05-预期损失}
-设决策区域为$\mathcal{R}_j$，即把$\mathcal{R}_j$中的点归入$C_j$类。称
+设$K\geqslant2$，$\boldsymbol{L}=(L_{kj})$为$K$行$K$列实方阵（即\cref{definition:ch05-损失矩阵}的损失矩阵），$\mathcal{R}_1,\cdots,\mathcal{R}_K\subseteq\mathbb{R}^{D}$为可测集且构成$\mathbb{R}^{D}$的划分，约定把$\mathcal{R}_j$中的点归入$C_j$类，$(\boldsymbol{x},C)$的联合分布由$p(\boldsymbol{x},C_k)$给出，且下述积分绝对收敛。则
 \begin{align}
   \mathbb{E}[L]=\sum_{k}\sum_{j}\int_{\mathcal{R}_j}L_{kj}\,p(\boldsymbol{x},C_k)\,\mathrm{d}\boldsymbol{x}
   \label{align:ch05-预期损失}
 \end{align}
-为决策规则$\{\mathcal{R}_j\}$的预期损失（expected loss）。
+称为决策规则$\{\mathcal{R}_j\}$的\textbf{预期损失}（expected loss），其中$p(\boldsymbol{x},C_k)$为$(\boldsymbol{x},C)$的联合密度（或概率质量函数）在$C=C_k$处的值。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch05-预期损失; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch05-预期损失; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch05-预期损失}是对两个离散变量$(C_k,\text{决策}j)$与连续变量$\boldsymbol{x}$取期望的结果：先固定$k$与$j$，在$\mathcal{R}_j$上对$p(\boldsymbol{x},C_k)$积分得到“真实类为$C_k$而被归入$C_j$”的概率，再乘以损失$L_{kj}$并对$(k,j)$求和。它与\cref{definition:ch05-误分类率}的关系是：取$L_{kj}=1-I_{kj}$（$I$为单位矩阵）时，$\mathbb{E}[L]$恰好等于误分类率（见\cref{exercise:ch05-07}）。因此预期损失是误分类率的加权推广，而\cref{definition:ch05-误分类率}只是它的一个特例。定义不要求$\mathcal{R}_j$连通，也不要求$L_{kj}\geqslant 0$；若某些$L_{kj}<0$，则“损失”实际上是收益，公式仍然成立。
 \end{remark}
 
@@ -151,15 +151,15 @@
 \end{align}
 
 \begin{proposition}[最小预期损失决策规则]\label{proposition:ch05-最小风险规则}
-设$p(\boldsymbol{x})>0$。则使\eqref{align:ch05-预期损失}中$\mathbb{E}[L]$最小的决策规则为：对每个$\boldsymbol{x}$，把它归入使\eqref{align:ch05-最小风险}取最小值的类$j$。
+设$K\geqslant2$，$\boldsymbol{L}=(L_{kj})\in\mathbb{R}^{K\times K}$，$(\boldsymbol{x},C)$的联合分布由$p(\boldsymbol{x},C_k)$给出，$p(\boldsymbol{x})>0$对几乎一切$\boldsymbol{x}$成立，$\mathbb{E}[L]$由\eqref{align:ch05-预期损失}定义且有限。则使$\mathbb{E}[L]$最小的决策规则为：对每个$\boldsymbol{x}$，把它归入使\eqref{align:ch05-最小风险}取最小值的类$j$；若最小值在多个$j$处取到，则可任取其一。
 \end{proposition}
 
 \begin{proof}
-（重构新增）对给定的$\boldsymbol{x}$，若把它归入$C_j$，则它对$\mathbb{E}[L]$的贡献（在被积函数意义下）为$\sum_k L_{kj}p(\boldsymbol{x},C_k)=p(\boldsymbol{x})\sum_k L_{kj}p(C_k\mid\boldsymbol{x})$。由于$p(\boldsymbol{x})>0$且各点的决策互不影响，最小化$\mathbb{E}[L]$等价于对每个$\boldsymbol{x}$独立地最小化$\sum_k L_{kj}p(C_k\mid\boldsymbol{x})$。故最优规则为逐点取$\arg\min_j\sum_k L_{kj}p(C_k\mid\boldsymbol{x})$。
+对给定的$\boldsymbol{x}$，若把它归入$C_j$，则它对$\mathbb{E}[L]$的贡献（在被积函数意义下）为$\sum_k L_{kj}p(\boldsymbol{x},C_k)=p(\boldsymbol{x})\sum_k L_{kj}p(C_k\mid\boldsymbol{x})$。由于$p(\boldsymbol{x})>0$且各点的决策互不影响，最小化$\mathbb{E}[L]$等价于对每个$\boldsymbol{x}$独立地最小化$\sum_k L_{kj}p(C_k\mid\boldsymbol{x})$。故最优规则为逐点取$\arg\min_j\sum_k L_{kj}p(C_k\mid\boldsymbol{x})$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-最小风险规则; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch05-最小风险规则; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch05-最小风险规则}把“最小化预期损失”化归为对每个$\boldsymbol{x}$计算$K$个数并取最小，其计算量为$O(K^{2})$（每类一次内积）。当$L_{kj}=1-I_{kj}$时，$\sum_k L_{kj}p(C_k\mid\boldsymbol{x})=1-p(C_j\mid\boldsymbol{x})$，最小化它等价于最大化后验概率，于是\cref{proposition:ch05-误分类规则}成为本命题的特例（见\cref{exercise:ch05-07}）。若某个$L_{kj}$很大，最优规则会倾向于避开把真实类$C_k$判为$C_j$的错误，即使这样做会增加总误分类数——这正是\cref{figure:ch05-损失矩阵}所刻画的情形。注意$p(\boldsymbol{x})$在比较中约去，因此本命题只要求后验概率，不要求输入密度，这也说明判别式模型足以支持最小风险决策。
 \end{remark}
 
@@ -168,7 +168,7 @@
 我们已经看到，分类误差产生于输入空间的区域，其中最大后验概率$p(C_k\mid\boldsymbol{x})$明显小于1，或等价地，联合分布$p(\boldsymbol{x},C_k)$存在相近的概率值。在这些区域，我们对归属关系相对不确定。在某些应用中，应避免对疑难案例做出决策，以期在做出分类决策的案例中获得较低的误差率。这就是所谓的拒绝选项（rejection option）。例如，在癌症检查示例中，我们使用自动系统对那些几乎不需要怀疑是否被正确分类的图像进行分类，而要求通过活检来对较为可疑的病例进行分类，这可能是较为合适的做法。
 
 \begin{definition}[拒绝选项与拒绝阈值]\label{definition:ch05-拒绝选项}
-给定阈值$\theta$，拒绝那些后验概率$p(C_k\mid\boldsymbol{x})$的最大值小于或等于$\theta$的输入变量$\boldsymbol{x}$，即当$\max_k p(C_k\mid\boldsymbol{x})\leqslant\theta$时不对$\boldsymbol{x}$做出分类决策。这样的决策方式称为拒绝选项（rejection option），$\theta$称为拒绝阈值。
+设$K\geqslant2$，$(\boldsymbol{x},C)$的联合分布由$p(\boldsymbol{x},C_k)$给出，$\theta\in[0,1]$为给定阈值。若决策规则约定：当$\max_k p(C_k\mid\boldsymbol{x})\leqslant\theta$时不对$\boldsymbol{x}$做出分类决策，否则把$\boldsymbol{x}$归入使$p(C_k\mid\boldsymbol{x})$最大的类，则这种决策方式称为\textbf{拒绝选项}（rejection option），$\theta$称为\textbf{拒绝阈值}。
 \end{definition}
 
 为此，我们可以引入这个阈值$\theta$。\cref{figure:ch05-拒绝选项}以二分类和一个连续输入变量$x$为例进行了说明。请注意，通过设置$\theta=1$，可以确保拒绝所有示例；而如果有$K$个类，那么设置$\theta<1/K$可以确保不拒绝任何示例。因此，被拒绝示例的比例受阈值$\theta$的控制。
@@ -180,8 +180,8 @@
   \label{figure:ch05-拒绝选项}
 \end{figure}
 
-% SUPPLEMENT: parent=definition:ch05-拒绝选项; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch05-拒绝选项; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 阈值的两个极端值可以由后验概率的基本性质验证：$\max_k p(C_k\mid\boldsymbol{x})\leqslant 1$恒成立，故$\theta=1$时所有$\boldsymbol{x}$都被拒绝；又$\sum_k p(C_k\mid\boldsymbol{x})=1$蕴含$\max_k p(C_k\mid\boldsymbol{x})\geqslant 1/K$，故当$\theta<1/K$时没有任何$\boldsymbol{x}$被拒绝。$\theta$越大，被拒绝的样本越多，被接受样本的误分类率越低，但拒绝率越高；这一权衡正是\cref{subsection:ch05-ROC曲线}中 ROC 曲线所刻画的权衡的另一表现形式（拒绝相当于把一部分样本从统计中剔除）。
 \end{remark}
 
@@ -216,14 +216,15 @@
 \end{enumerate}
 
 \begin{definition}[生成式模型与判别式模型]\label{definition:ch05-生成与判别模型}
+设输入空间为$\mathcal{X}\subseteq\mathbb{R}^{D}$，类为$C_1,\cdots,C_K$，$K\geqslant2$，$(\boldsymbol{x},C)$的联合分布由$p(\boldsymbol{x},C_k)$给出，且$p(\boldsymbol{x})>0$对几乎一切$\boldsymbol{x}$成立。
 \begin{enumerate}[(i)]
-  \item 对输入和输出的分布（即$p(\boldsymbol{x}\mid C_k)$与$p(C_k)$，或联合分布$p(\boldsymbol{x},C_k)$）进行显式或隐式建模，再经 Bayes 定理得到后验概率的方法，称为生成式模型（generative model）。
-  \item 直接对后验概率$p(C_k\mid\boldsymbol{x})$建模的方法，称为判别式模型（discriminative model）。
+  \item 若方法对类-条件密度$p(\boldsymbol{x}\mid C_k)$与先验$p(C_k)$（等价地，对联合分布$p(\boldsymbol{x},C_k)$）显式或隐式建模，再经 Bayes 定理得到后验概率$p(C_k\mid\boldsymbol{x})$，该方法称为\textbf{生成式模型}（generative model）。
+  \item 若方法直接对后验概率$p(C_k\mid\boldsymbol{x})$建模，该方法称为\textbf{判别式模型}（discriminative model）。
 \end{enumerate}
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch05-生成与判别模型; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch05-生成与判别模型; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这两种模型与\cref{definition:ch05-生成与判别概率模型}中的两个定义相对应，区别只在措辞：前者强调“是否对输入分布建模”，后者强调“对哪个条件分布建模”。方法(a)的生成式模型需要$p(\boldsymbol{x}\mid C_k)$，因而隐含地对$\boldsymbol{x}$的分布作了假设；方法(b)只需$p(C_k\mid\boldsymbol{x})$。方法(c)连后验概率也不要，它是\cref{definition:ch05-判别函数}的直接实现。三者所需的数据量与计算量依次递减，而可提供的信息也依次递减；下面的四条理由具体说明了丢失后验概率会带来哪些限制。
 \end{remark}
 
@@ -275,7 +276,7 @@
 \end{proposition}
 
 \begin{proof}
-（重构新增）由 Bayes 定理，$p(C_k\mid\boldsymbol{x}_{I},\boldsymbol{x}_{B})\propto p(\boldsymbol{x}_{I},\boldsymbol{x}_{B}\mid C_k)p(C_k)$，比例因子$p(\boldsymbol{x}_{I},\boldsymbol{x}_{B})$与$k$无关。代入\eqref{align:ch05-条件独立}得第二个正比关系。再由 Bayes 定理，$p(\boldsymbol{x}_{I}\mid C_k)=p(C_k\mid\boldsymbol{x}_{I})p(\boldsymbol{x}_{I})/p(C_k)$，$p(\boldsymbol{x}_{B}\mid C_k)=p(C_k\mid\boldsymbol{x}_{B})p(\boldsymbol{x}_{B})/p(C_k)$，两式相乘得
+由 Bayes 定理，$p(C_k\mid\boldsymbol{x}_{I},\boldsymbol{x}_{B})\propto p(\boldsymbol{x}_{I},\boldsymbol{x}_{B}\mid C_k)p(C_k)$，比例因子$p(\boldsymbol{x}_{I},\boldsymbol{x}_{B})$与$k$无关。代入\eqref{align:ch05-条件独立}得第二个正比关系。再由 Bayes 定理，$p(\boldsymbol{x}_{I}\mid C_k)=p(C_k\mid\boldsymbol{x}_{I})p(\boldsymbol{x}_{I})/p(C_k)$，$p(\boldsymbol{x}_{B}\mid C_k)=p(C_k\mid\boldsymbol{x}_{B})p(\boldsymbol{x}_{B})/p(C_k)$，两式相乘得
 
 \begin{align}
   p(\boldsymbol{x}_{I}\mid C_k)\,p(\boldsymbol{x}_{B}\mid C_k)=\frac{p(C_k\mid\boldsymbol{x}_{I})\,p(C_k\mid\boldsymbol{x}_{B})\,p(\boldsymbol{x}_{I})\,p(\boldsymbol{x}_{B})}{p(C_k)^{2}}
@@ -284,8 +285,8 @@
 再乘以$p(C_k)$，与$k$无关的因子$p(\boldsymbol{x}_{I})p(\boldsymbol{x}_{B})$和$p(C_k)^{-1}$可一并吸收进正比号，即得\eqref{align:ch05-后验组合}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-后验组合; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch05-后验组合; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 命题的关键是分母$p(C_k)$而不是常数：它说明两个“独立来源”的后验概率不能直接相乘当作联合后验，必须除以先验一次，否则重复计入了先验。这也解释了为什么在类别不平衡时，先验的补偿必须显式进行（见上面理由(3)）。条件独立假设的强度在于它只要求以$C_k$为条件独立，而不要求边缘独立；因此\eqref{align:ch05-后验组合}对$p(\boldsymbol{x}_{I},\boldsymbol{x}_{B})$是否分解不作任何断言。若去掉条件独立假设，\eqref{align:ch05-后验组合}一般不成立，需要显式建模两个来源的联合分布，这正是后续章节讨论的“数据组合模型”要解决的问题。
 \end{remark}
 
@@ -296,12 +297,12 @@
 让我们再次回到癌症检查示例（参见\cref{subsection:ch02-医学筛查示例}）。每个受测者都有一个是否患有癌症的“真实标签”以及分类器做出的预测。
 
 \begin{definition}[混淆矩阵与真/假阳性]\label{definition:ch05-混淆矩阵}
-设$N$是参加测试的总人数。如果分类器对某个特定的人预测出癌症，而这实际上是真实标签，那么称这种预测为真阳性（True Positive, TP）；但是，如果这个人未患癌症，则称这种预测为假阳性（False Positive, FP）。同样，如果分类器预测一个人未患癌症，而且预测是正确的，则称这种预测为真阴性（True Negative, TN），否则就称为假阴性（False Negative, FN）。假阳性也称第一类误差（type 1 error），而假阴性则称第二类误差（type 2 error）。设$N_{\mathrm{TP}}$是真阳性人数，$N_{\mathrm{FP}}$是假阳性人数，$N_{\mathrm{TN}}$是真阴性人数，$N_{\mathrm{FN}}$是假阴性人数，则它们满足
+设$K=2$，类为$C_1$与$C_2$，测试集含$N\geqslant1$个样本。记$N_{\mathrm{TP}},N_{\mathrm{FP}},N_{\mathrm{TN}},N_{\mathrm{FN}}$分别为真阳性、假阳性、真阴性与假阴性的样本数，它们均为非负整数。若分类器把真实类为$C_2$的样本判为$C_2$，则称该预测为\textbf{真阳性}（True Positive, TP）；若把真实类为$C_1$的样本判为$C_2$，则称该预测为\textbf{假阳性}（False Positive, FP）；若把真实类为$C_1$的样本判为$C_1$，则称该预测为\textbf{真阴性}（True Negative, TN）；若把真实类为$C_2$的样本判为$C_1$，则称该预测为\textbf{假阴性}（False Negative, FN）。假阳性也称第一类误差（type 1 error），假阴性也称第二类误差（type 2 error）。四个计数满足
 \begin{align}
   N=N_{\mathrm{TP}}+N_{\mathrm{FP}}+N_{\mathrm{TN}}+N_{\mathrm{FN}}
   \label{align:ch05-计数分解}
 \end{align}
-按行代表真实类、列代表根据决策准则所做的分类排成的$2\times2$表，称为混淆矩阵（confusion matrix）。
+按行代表真实类、按列代表预测类排成的二阶方阵称为\textbf{混淆矩阵}（confusion matrix），其$(k,j)$元素是真实类为$C_k$而被判为$C_j$的样本数。
 \end{definition}
 
 如\cref{figure:ch05-混淆矩阵}所示，这可以用混淆矩阵来表示。
@@ -317,13 +318,13 @@
   \label{figure:ch05-混淆矩阵}
 \end{figure}
 
-% SUPPLEMENT: parent=definition:ch05-混淆矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch05-混淆矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 混淆矩阵把“真实类”与“预测类”交叉列表，因此它保留了错误的方向信息，而单一的误分类率会把两类错误混在一起。四个计数之所以重要，是因为几乎所有常用的评价指标都是它们的函数（见\cref{definition:ch05-准确率}）。注意$N_{\mathrm{TP}}$与$N_{\mathrm{TN}}$的和是正确分类数，$N_{\mathrm{FP}}$与$N_{\mathrm{FN}}$的和是错误分类数，故\eqref{align:ch05-计数分解}只是把总人数按四种情形分解。矩阵的行和分别等于两个类的人数（$N_{\mathrm{TN}}+N_{\mathrm{FP}}$为真实正常人数），列和分别等于被判为两类的数量；这一事实在\cref{subsection:ch05-ROC曲线}中用于解释阈值变化对混淆矩阵的影响。
 \end{remark}
 
 \begin{definition}[准确率、精确率、召回率与假阳性率]\label{definition:ch05-准确率}
-沿用\cref{definition:ch05-混淆矩阵}的记号。用正确分类率来衡量的准确率（accuracy）为
+设$N\geqslant1$，$N_{\mathrm{TP}},N_{\mathrm{FP}},N_{\mathrm{TN}},N_{\mathrm{FN}}$为\cref{definition:ch05-混淆矩阵}中的四个非负整数计数，对应混淆矩阵为二阶方阵。若$N>0$，则\textbf{准确率}（accuracy）定义为正确分类的样本数在全部$N$个样本中所占的比例，即
 \begin{align}
   \text{准确率}=\frac{N_{\mathrm{TP}}+N_{\mathrm{TN}}}{N_{\mathrm{TP}}+N_{\mathrm{FP}}+N_{\mathrm{TN}}+N_{\mathrm{FN}}}
   \label{align:ch05-准确率}
@@ -339,10 +340,11 @@
   \text{假发现率}&=\frac{N_{\mathrm{FP}}}{N_{\mathrm{FP}}+N_{\mathrm{TP}}}
   \label{align:ch05-假发现率}
 \end{align}
+其中各分式只在分母非零时有定义：精确率与假发现率要求$N_{\mathrm{TP}}+N_{\mathrm{FP}}>0$，召回率要求$N_{\mathrm{TP}}+N_{\mathrm{FN}}>0$，假阳性率要求$N_{\mathrm{FP}}+N_{\mathrm{TN}}>0$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch05-准确率; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch05-准确率; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这些指标的分母各不相同，因而各自回答不同的问题：准确率以全体为分母，精确率以“被判为阳性者”为分母，召回率以“真实阳性者”为分母，假阳性率以“真实阴性者”为分母，假发现率以“被判为阳性者”为分母（故假发现率$=1-$精确率）。在类别严重失衡时，准确率会被多数类主导：若每1000人中只有1人患癌，把所有人都判为正常即可得到99.9\%的准确率，但召回率为0。正因为如此，才需要精确率与召回率这类分别以行和与列和为分母的指标。各分母都可能为零（例如没有预测为阳性的样本时精确率无定义），使用时应约定此时指标无意义而不是取0。另注意“假阳性率”与“假发现率”虽然都含“假阳性”，但分母不同，不能混用。
 \end{remark}
 
@@ -371,23 +373,23 @@
 
 \needspace{10\baselineskip}
 \begin{proposition}[区域面积与计数比例的关系]\label{proposition:ch05-面积恒等式}
-设$x$为单一输入变量，$\mathcal{R}_1=(-\infty,\hat{x})$，$\mathcal{R}_2=[\hat{x},\infty)$，$x_0<\hat{x}$为两条曲线$p(x,C_1)$与$p(x,C_2)$的交点，并按\cref{figure:ch05-区域划分}记$A=\int_{-\infty}^{x_0}p(x,C_1)\,\mathrm{d}x$，$C=\int_{x_0}^{\hat{x}}p(x,C_1)\,\mathrm{d}x$，$E=\int_{\hat{x}}^{\infty}p(x,C_1)\,\mathrm{d}x$，$B=\int_{x_0}^{\hat{x}}\{p(x,C_2)-p(x,C_1)\}\,\mathrm{d}x$，$D=\int_{\hat{x}}^{\infty}\{p(x,C_2)-p(x,C_1)\}\,\mathrm{d}x$。若$p(x,C_2)$在$(-\infty,x_0)$上的积分为零，则
+设$D=1$，$x\in\mathbb{R}$，$p(x,C_1)$与$p(x,C_2)$为连续概率密度，$\mathcal{R}_1=(-\infty,\hat{x})$，$\mathcal{R}_2=[\hat{x},\infty)$，$x_0<\hat{x}$为两条曲线$p(x,C_1)$与$p(x,C_2)$的交点，且当$x>x_0$时$p(x,C_2)>p(x,C_1)$，并按\cref{figure:ch05-区域划分}记$A=\int_{-\infty}^{x_0}p(x,C_1)\,\mathrm{d}x$，$C=\int_{x_0}^{\hat{x}}p(x,C_1)\,\mathrm{d}x$，$E=\int_{\hat{x}}^{\infty}p(x,C_1)\,\mathrm{d}x$，$B=\int_{x_0}^{\hat{x}}\{p(x,C_2)-p(x,C_1)\}\,\mathrm{d}x$，$D=\int_{\hat{x}}^{\infty}\{p(x,C_2)-p(x,C_1)\}\,\mathrm{d}x$。若$p(x,C_2)$在$(-\infty,x_0)$上的积分为零，则
 \begin{align}
   \frac{N_{\mathrm{TN}}}{N}=A+C,\qquad
   \frac{N_{\mathrm{FP}}}{N}=E,\qquad
   \frac{N_{\mathrm{FN}}}{N}=B+C,\qquad
   \frac{N_{\mathrm{TP}}}{N}=D+E
 \end{align}
-其中各比例按$N\to\infty$解释为概率。
+其中各比例按$N\to\infty$解释为概率，即$N_{\mathrm{TN}}/N$等频率依概率收敛到相应的概率。
 \end{proposition}
 
 \begin{proof}
-（重构新增）按定义，$N_{\mathrm{TN}}/N$是“真实类为$C_1$且被判为正常”的频率，当$N\to\infty$时趋于$\int_{\mathcal{R}_1}p(x,C_1)\,\mathrm{d}x$。而$\mathcal{R}_1=(-\infty,\hat{x})$被$x_0$分成两段，故该积分等于$A+C$（$A$对应$(-\infty,x_0)$，$C$对应$(x_0,\hat{x})$）。同理，$N_{\mathrm{FP}}/N$趋于真实类为$C_1$而被判为癌症的概率$\int_{\mathcal{R}_2}p(x,C_1)\,\mathrm{d}x=E$；$N_{\mathrm{FN}}/N$趋于真实类为$C_2$而被判为正常的概率$\int_{\mathcal{R}_1}p(x,C_2)\,\mathrm{d}x$，由$p(x,C_2)$在$(-\infty,x_0)$上积分为零，它等于$\int_{x_0}^{\hat{x}}p(x,C_2)\,\mathrm{d}x=B+C$；$N_{\mathrm{TP}}/N$趋于真实类为$C_2$而被判为癌症的概率$\int_{\hat{x}}^{\infty}p(x,C_2)\,\mathrm{d}x=D+E$。这里用到$\int_{x_0}^{\hat{x}}p(x,C_2)\,\mathrm{d}x=B+C$与$\int_{\hat{x}}^{\infty}p(x,C_2)\,\mathrm{d}x=D+E$，它们正是$B$、$C$、$D$、$E$的定义的直接变形。
+按定义，$N_{\mathrm{TN}}/N$是“真实类为$C_1$且被判为正常”的频率，当$N\to\infty$时趋于$\int_{\mathcal{R}_1}p(x,C_1)\,\mathrm{d}x$。而$\mathcal{R}_1=(-\infty,\hat{x})$被$x_0$分成两段，故该积分等于$A+C$（$A$对应$(-\infty,x_0)$，$C$对应$(x_0,\hat{x})$）。同理，$N_{\mathrm{FP}}/N$趋于真实类为$C_1$而被判为癌症的概率$\int_{\mathcal{R}_2}p(x,C_1)\,\mathrm{d}x=E$；$N_{\mathrm{FN}}/N$趋于真实类为$C_2$而被判为正常的概率$\int_{\mathcal{R}_1}p(x,C_2)\,\mathrm{d}x$，由$p(x,C_2)$在$(-\infty,x_0)$上积分为零，它等于$\int_{x_0}^{\hat{x}}p(x,C_2)\,\mathrm{d}x=B+C$；$N_{\mathrm{TP}}/N$趋于真实类为$C_2$而被判为癌症的概率$\int_{\hat{x}}^{\infty}p(x,C_2)\,\mathrm{d}x=D+E$。这里用到$\int_{x_0}^{\hat{x}}p(x,C_2)\,\mathrm{d}x=B+C$与$\int_{\hat{x}}^{\infty}p(x,C_2)\,\mathrm{d}x=D+E$，它们正是$B$、$C$、$D$、$E$的定义的直接变形。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-面积恒等式; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-四个恒等式合起来给出$N_{\mathrm{TN}}/N+N_{\mathrm{FP}}/N+N_{\mathrm{FN}}/N+N_{\mathrm{TP}}/N=(A+C+E)+(B+C+D+E)=p(C_1)+p(C_2)=1$，与\eqref{align:ch05-计数分解}一致；这里$A+C+E$是$p(x,C_1)$的全积分，$B+C+D+E$是$p(x,C_2)$在$(x_0,\infty)$上的积分，后者等于其全积分用了$p(x,C_2)$在$(-\infty,x_0)$上积分为零的假设。若该假设不成立，则$N_{\mathrm{FN}}$还须加上$p(x,C_2)$在$(-\infty,x_0)$上的质量，恒等式要作相应修改。证明的关键是：计数比例在$N\to\infty$时收敛到相应的概率，而概率可以按区域拆成积分。图中$B$与$C$之和恰是$p(x,C_2)$在$(x_0,\hat{x})$上的积分，这正是“$B$与$C$堆叠”画法的含义。
+% SUPPLEMENT: parent=proposition:ch05-面积恒等式; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+四个恒等式合起来给出$N_{\mathrm{TN}}/N+N_{\mathrm{FP}}/N+N_{\mathrm{FN}}/N+N_{\mathrm{TP}}/N=(A+C+E)+(B+C+D+E)=p(C_1)+p(C_2)=1$，与\eqref{align:ch05-计数分解}一致；这里$A+C+E$是$p(x,C_1)$的全积分，$B+C+D+E$是$p(x,C_2)$在$(x_0,\infty)$上的积分，后者等于其全积分用了$p(x,C_2)$在$(-\infty,x_0)$上积分为零的假设。若该假设不成立，则$N_{\mathrm{FN}}$还须加上$p(x,C_2)$在$(-\infty,x_0)$上的质量，恒等式要作相应修改。此外，条件$x>x_0$时$p(x,C_2)>p(x,C_1)$保证$B$与$D$非负，从而图中区域可解释为面积；若该条件不成立，$B$与$D$仍由积分定义，但不再是面积。证明的关键是：计数比例在$N\to\infty$时收敛到相应的概率，而概率可以按区域拆成积分。图中$B$与$C$之和恰是$p(x,C_2)$在$(x_0,\hat{x})$上的积分，这正是“$B$与$C$堆叠”画法的含义。
 \end{remark}
 
 \subsection{ROC 曲线}\label{subsection:ch05-ROC曲线}
@@ -395,7 +397,7 @@
 概率分类器会输出一个后验概率，通过设置阈值可以将其转换为决策。随着阈值的变化，我们可以通过增加第二类误差来减少第一类误差，反之亦然。为更好地理解这种权衡，绘制 ROC（Receiver Operating Characteristic，受试者工作特征）曲线（Fawcett, 2006）是非常有用的。
 
 \begin{definition}[ROC 曲线]\label{definition:ch05-ROC曲线}
-把分类器的决策阈值从$-\infty$移动到$\infty$，以假阳性率为横坐标、以真阳性率（召回率）为纵坐标，把阈值每取一个值时得到的点$(\text{假阳性率},\text{真阳性率})$连成的曲线，称为该分类器的 ROC 曲线（Receiver Operating Characteristic curve）。
+设二分类器对每个输入$\boldsymbol{x}$输出得分$s(\boldsymbol{x})\in\mathbb{R}$，决策规则为：当$s(\boldsymbol{x})\geqslant\tau$时判为阳性、否则判为阴性，其中$\tau\in\mathbb{R}$为阈值。若二阶混淆矩阵的四个计数满足$N_{\mathrm{FP}}+N_{\mathrm{TN}}>0$且$N_{\mathrm{TP}}+N_{\mathrm{FN}}>0$，则以假阳性率$N_{\mathrm{FP}}/(N_{\mathrm{FP}}+N_{\mathrm{TN}})$为横坐标、以真阳性率$N_{\mathrm{TP}}/(N_{\mathrm{TP}}+N_{\mathrm{FN}})$为纵坐标，当$\tau$从$-\infty$移动到$+\infty$时所得点集连成的曲线称为该分类器的\textbf{ROC 曲线}（Receiver Operating Characteristic curve）。
 \end{definition}
 
 \cref{figure:ch05-ROC曲线}是真阳性率与假阳性率的对比图。当我们把\cref{figure:ch05-区域划分}中的决策边界从$-\infty$移动到$\infty$时，通过绘制$y$轴上癌症检查正确率的累积比例与$x$轴上癌症检查错误率的累积比例的对比图，就能描绘并生成 ROC 曲线。请注意，特定的混淆矩阵代表 ROC 曲线上的一个点。最佳分类器将由 ROC 曲线图左上角的一个点表示。ROC 曲线图的左下角表示一个将每个点都归入正常类的简单分类器，该分类器虽无真阳性，但也无假阳性。同样，ROC 曲线图的右上角代表一个将所有点都归入癌症类的分类器，该分类器虽无假阴性，但也无真阴性。在\cref{figure:ch05-ROC曲线}中，无论选择哪种假阳性率，蓝色曲线表示的分类器都优于红色曲线表示的分类器。不过，这些曲线也有可能交叉，在这种情况下，具体选择哪条曲线更好则取决于操作点的选择。
@@ -407,8 +409,8 @@
   \label{figure:ch05-ROC曲线}
 \end{figure}
 
-% SUPPLEMENT: parent=definition:ch05-ROC曲线; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch05-ROC曲线; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 ROC 曲线的每一点都对应一个阈值，因此曲线整体刻画了分类器在所有可能的操作点上的性能，而不依赖于某一个具体阈值的选择。曲线必然经过$(0,0)$与$(1,1)$两点：阈值取$-\infty$时所有样本都被判为阳性，假阳性率与真阳性率都为1；阈值取$+\infty$时所有样本都被判为阴性，两者都为0（此处按“大于阈值判为阳性”的约定）。曲线位于对角线以上的分类器优于随机猜测；位于对角线以下则说明把决策反号即可改善。两条曲线交叉时不存在一致的优劣，必须结合具体的代价或先验来选择操作点，这也正是\cref{proposition:ch05-最小风险规则}中损失矩阵所起的作用。注意 ROC 曲线只适用于二分类；对多分类需要对每个类做一对多处理，随类数增加而迅速变得烦琐，这正是本节末尾讨论的局限。
 \end{remark}
 
@@ -417,44 +419,47 @@ ROC 曲线的每一点都对应一个阈值，因此曲线整体刻画了分类�
 有时，用一个数字来描述整条 ROC 曲线是非常有用的。一种方法是测量 ROC 曲线下面积（Area Under the Curve, AUC）。
 
 \begin{definition}[AUC 与 $F$ 分数]\label{definition:ch05-AUC与F分数}
-ROC 曲线下面积（Area Under the Curve, AUC）是指 ROC 曲线与横轴之间区域的面积，其取值在$0$与$1$之间。AUC 值为0.5代表随机猜测，而 AUC 值为1.0代表完美分类器。另一种用一个数字概括分类器性能的量是$F$分数，它是精确率和召回率的几何平均，由下式定义：
+设分类器的 ROC 曲线由\cref{definition:ch05-ROC曲线}给出。ROC 曲线下面积（Area Under the Curve, AUC）定义为 ROC 曲线与横轴之间区域的面积，记为$\mathrm{AUC}\in[0,1]$；$\mathrm{AUC}=1/2$对应随机猜测，$\mathrm{AUC}=1$对应完美分类器。设$N_{\mathrm{TP}},N_{\mathrm{FP}},N_{\mathrm{FN}}$为二阶混淆矩阵（见\cref{definition:ch05-混淆矩阵}）中的计数，精确率$P=N_{\mathrm{TP}}/(N_{\mathrm{TP}}+N_{\mathrm{FP}})$与召回率$R=N_{\mathrm{TP}}/(N_{\mathrm{TP}}+N_{\mathrm{FN}})$均有定义且$P+R>0$。则
 \begin{align}
   F\text{分数}&=\frac{2\times\text{精确率}\times\text{召回率}}{\text{精确率}+\text{召回率}}
   \label{align:ch05-F分数}\\
   &=\frac{2N_{\mathrm{TP}}}{2N_{\mathrm{TP}}+N_{\mathrm{FP}}+N_{\mathrm{FN}}}
   \label{align:ch05-F分数展开}
 \end{align}
+为\textbf{$F$分数}（$F$-score），它是精确率与召回率的调和平均。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch05-AUC与F分数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-AUC 的概率解释是：随机抽取一个正样本与一个负样本，分类器把正样本判得比负样本更“像正类”的概率（即正样本得分高于负样本得分的概率），因此 AUC 与阈值无关，适合比较分类器的整体排序能力。$F$分数实际上是精确率与召回率的调和平均：两数之积除以两数之和的两倍（正文按原书称为几何平均，但由\eqref{align:ch05-F分数}可见它是调和平均，这不影响其作为综合指标的用途），当两者之一为0时$F$分数为0，因此它惩罚“只擅长一件事”的分类器。AUC 与$F$分数回答的问题不同：前者衡量排序质量，后者衡量某个具体阈值下的综合性能，故不能互相替代。它们的取值范围都在$[0,1]$内，但$F$分数没有“0.5对应随机”这样的基准。
+% SUPPLEMENT: parent=definition:ch05-AUC与F分数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+AUC 的概率解释是：随机抽取一个正样本与一个负样本，分类器把正样本判得比负样本更“像正类”的概率（即正样本得分高于负样本得分的概率），因此 AUC 与阈值无关，适合比较分类器的整体排序能力。$F$分数实际上是精确率与召回率的调和平均：两数之积除以两数之和的两倍（原文措辞为“几何平均”，但由\eqref{align:ch05-F分数}可见它是调和平均；此处按调和平均表述，这不影响其作为综合指标的用途），当两者之一为0时$F$分数为0，因此它惩罚“只擅长一件事”的分类器。AUC 与$F$分数回答的问题不同：前者衡量排序质量，后者衡量某个具体阈值下的综合性能，故不能互相替代。它们的取值范围都在$[0,1]$内，但$F$分数没有“0.5对应随机”这样的基准。
 \end{remark}
 
 \begin{proposition}[$F$ 分数的显式形式]\label{proposition:ch05-F分数}
-由\cref{definition:ch05-准确率}中的精确率与召回率，\eqref{align:ch05-F分数}可化为\eqref{align:ch05-F分数展开}。
+设$N_{\mathrm{TP}},N_{\mathrm{FP}},N_{\mathrm{FN}}$为非负整数，$N_{\mathrm{TP}}>0$，精确率$P=N_{\mathrm{TP}}/(N_{\mathrm{TP}}+N_{\mathrm{FP}})$与召回率$R=N_{\mathrm{TP}}/(N_{\mathrm{TP}}+N_{\mathrm{FN}})$由\cref{definition:ch05-准确率}定义。则\eqref{align:ch05-F分数}可化为\eqref{align:ch05-F分数展开}。
 \end{proposition}
 
 \begin{proof}
-（重构新增）记$P=N_{\mathrm{TP}}/(N_{\mathrm{TP}}+N_{\mathrm{FP}})$，$R=N_{\mathrm{TP}}/(N_{\mathrm{TP}}+N_{\mathrm{FN}})$。则
+记$P=N_{\mathrm{TP}}/(N_{\mathrm{TP}}+N_{\mathrm{FP}})$，$R=N_{\mathrm{TP}}/(N_{\mathrm{TP}}+N_{\mathrm{FN}})$。则
 
 \begin{align}
   \frac{2PR}{P+R}=\frac{2\,\dfrac{N_{\mathrm{TP}}^{2}}{(N_{\mathrm{TP}}+N_{\mathrm{FP}})(N_{\mathrm{TP}}+N_{\mathrm{FN}})}}{\dfrac{N_{\mathrm{TP}}}{N_{\mathrm{TP}}+N_{\mathrm{FP}}}+\dfrac{N_{\mathrm{TP}}}{N_{\mathrm{TP}}+N_{\mathrm{FN}}}}
   =\frac{2N_{\mathrm{TP}}}{(N_{\mathrm{TP}}+N_{\mathrm{FN}})+(N_{\mathrm{TP}}+N_{\mathrm{FP}})}
 \end{align}
 
-其中第二个等号是分子分母同乘$(N_{\mathrm{TP}}+N_{\mathrm{FP}})(N_{\mathrm{TP}}+N_{\mathrm{FN}})/N_{\mathrm{TP}}$得到的（$N_{\mathrm{TP}}>0$）。整理分母即得\eqref{align:ch05-F分数展开}。若$N_{\mathrm{TP}}=0$，则$P=R=0$，按$F$分数的定义其值为0，而\eqref{align:ch05-F分数展开}的右端也为0，故公式仍然成立。
+其中第二个等号是分子分母同乘$(N_{\mathrm{TP}}+N_{\mathrm{FP}})(N_{\mathrm{TP}}+N_{\mathrm{FN}})/N_{\mathrm{TP}}$得到的（$N_{\mathrm{TP}}>0$）。整理分母即得\eqref{align:ch05-F分数展开}。若$N_{\mathrm{TP}}=0$且$N_{\mathrm{FP}}+N_{\mathrm{FN}}>0$，则\eqref{align:ch05-F分数展开}的右端为$0$；此时可按连续性约定$F=0$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-F分数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch05-F分数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 命题的推导只用了代数变形，但它说明了$F$分数的一个实用优点：无需分别计算精确率与召回率，直接用混淆矩阵的计数即可求出，从而避免了两个分母分别为零时的定义问题（只要$N_{\mathrm{TP}}>0$）。\eqref{align:ch05-F分数展开}还显示$F$分数对$N_{\mathrm{TP}}$的依赖是“双倍加权”的：分子与分母都含$2N_{\mathrm{TP}}$，因此$N_{\mathrm{TP}}$的增加会同时提高分子并使分母相对不变。当$N_{\mathrm{FP}}=N_{\mathrm{FN}}=0$时$F=1$；当$N_{\mathrm{TP}}=0$时$F=0$。
+
+原文问题说明：原文把\eqref{align:ch05-F分数}称为精确率与召回率的“几何平均”，但按同一式计算它是调和平均；两者一般不相等。正文已按调和平均表述，定义式本身不变。
 \end{remark}
 
 当然，我们也可以将\cref{figure:ch05-混淆矩阵}中的混淆矩阵与\cref{figure:ch05-损失矩阵}中的损失矩阵结合起来，从而通过将元素逐点相乘求和来计算预期损失。下面的命题把这一算法形式化。
 
 \begin{proposition}[由混淆矩阵与损失矩阵计算预期损失]\label{proposition:ch05-混淆损失}
-设$N_{kj}$表示真实类为$C_k$而被归入$C_j$的样本数，即\cref{definition:ch05-混淆矩阵}意义下混淆矩阵的$(k,j)$元素，$N=\sum_{k,j}N_{kj}$。则对该决策规则，当$N\to\infty$时预期损失\eqref{align:ch05-预期损失}可由
+设$K\geqslant2$，$\boldsymbol{L}=(L_{kj})\in\mathbb{R}^{K\times K}$为损失矩阵，$N_{kj}$为真实类为$C_k$而被归入$C_j$的样本数（即\cref{definition:ch05-混淆矩阵}意义下$K$阶混淆矩阵的$(k,j)$元素），$N=\sum_{k,j}N_{kj}\geqslant1$。设样本$(\boldsymbol{x}_n,C_n)$独立同分布地取自$p(\boldsymbol{x},C_k)$。则对该决策规则，随机变量$\frac{1}{N}\sum_{k,j}L_{kj}N_{kj}$依概率收敛到预期损失\eqref{align:ch05-预期损失}；因此当$N$充分大时，预期损失可由
 \begin{align}
   \mathbb{E}[L]=\frac{1}{N}\sum_{k}\sum_{j}L_{kj}\,N_{kj}
   \label{align:ch05-混淆损失}
@@ -463,11 +468,11 @@ AUC 的概率解释是：随机抽取一个正样本与一个负样本，分类�
 \end{proposition}
 
 \begin{proof}
-（重构新增）由\eqref{align:ch05-预期损失}，$\mathbb{E}[L]=\sum_{k}\sum_{j}L_{kj}\,P(\text{真实类为}C_k,\ \text{归入}C_j)$。在决策规则固定的条件下，$N_{kj}/N$是事件“真实类为$C_k$且被归入$C_j$”的频率，由大数定律，当$N\to\infty$时它依概率收敛到该事件的概率。代入即得\eqref{align:ch05-混淆损失}。
+由\eqref{align:ch05-预期损失}，$\mathbb{E}[L]=\sum_{k}\sum_{j}L_{kj}\,P(\text{真实类为}C_k,\ \text{归入}C_j)$。在决策规则固定的条件下，$N_{kj}/N$是事件“真实类为$C_k$且被归入$C_j$”的频率，由大数定律，当$N\to\infty$时它依概率收敛到该事件的概率。代入即得\eqref{align:ch05-混淆损失}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-混淆损失; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch05-混淆损失; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch05-混淆损失}说明：混淆矩阵一旦确定，任何损失矩阵下的预期损失都只是逐元素相乘再求和，无需重新训练分类器。这正是\cref{subsection:ch05-推理和决策}中“理由(1)：降低风险”的定量版本——保存后验概率（或混淆矩阵）就能应对损失矩阵的变化；反之，若只保存判别函数，损失矩阵一变就必须重新学习。该式也把 ROC 曲线与损失联系起来：ROC 曲线上的每一点对应一个混淆矩阵，因而对应一个预期损失；改变阈值就是在这些点之间移动（见\cref{figure:ch05-ROC曲线}）。注意该估计假设测试集与部署分布一致；若先验发生偏移，$N_{kj}$不再代表部署时的频率，需要按理由(3)的方法补偿。
 \end{remark}
 

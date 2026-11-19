@@ -17,16 +17,16 @@ p(\bm{x}\mid\bm{w})=\int p(\bm{x}\mid\bm{z},\bm{w})\,p(\bm{z})\,\mathrm{d}\bm{z}
 \end{enumerate}
 
 \begin{definition}[变分自编码器]\label{definition:ch19-变分自编码器}
-考虑一个生成式模型，其条件分布 $p(\bm{x}\mid\bm{z},\bm{w})$ 覆盖了由深度神经网络输出控制的 $D$ 维数据变量 $\bm{x}$，例如 $\bm{g}(\bm{z},\bm{w})$ 可以表示 Gauss 条件分布的均值。同时考虑 $M$ 维潜变量 $\bm{z}$ 的分布，它由零均值、单位方差的 Gauss 分布给出：
+设 $D,M,N\in\mathbb{N}$，数据空间为 $\mathbb{R}^{D}$，潜空间为 $\mathbb{R}^{M}$，模型参数为 $\bm{w}\in\mathbb{R}^{P}$；设 $p(\bm{x}\mid\bm{z},\bm{w})$（$\bm{x}\in\mathbb{R}^{D}$，$\bm{z}\in\mathbb{R}^{M}$）为给定潜变量时数据变量的条件密度，其均值由深度神经网络 $\bm{g}(\cdot,\bm{w}):\mathbb{R}^{M}\to\mathbb{R}^{D}$ 的输出控制；设 $M$ 维潜变量 $\bm{z}$ 的先验为各分量独立的标准 Gauss 分布
 \begin{align}
-p(\bm{z})=\mathcal{N}(\bm{z}\mid\bm{0},\bm{I}).
+p(\bm{z})=\mathcal{N}(\bm{z}\mid\bm{0},\bm{I}),
 \label{align:ch19-先验}
 \end{align}
-称以\eqref{align:ch19-边缘似然}为似然、以\eqref{align:ch19-先验}为先验，并用一个编码器网络近似后验 $p(\bm{z}\mid\bm{x},\bm{w})$ 的潜变量模型为\textbf{变分自编码器}（variational autoencoder，VAE）。
+其中 $\bm{0}\in\mathbb{R}^{M}$ 为零向量，$\bm{I}$ 为 $M$ 阶单位矩阵。若潜变量模型以\eqref{align:ch19-边缘似然}的边缘密度 $p(\bm{x}\mid\bm{w})$ 为似然、以上式的 $p(\bm{z})$ 为先验，并以参数为 $\bm{\phi}\in\mathbb{R}^{Q}$ 的编码器网络近似后验 $p(\bm{z}\mid\bm{x},\bm{w})$，则该模型称为\textbf{变分自编码器}（variational autoencoder，VAE）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-变分自编码器; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-变分自编码器; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-变分自编码器}的出发点是把\cref{chapter:ch16-连续潜变量}中的线性潜变量模型换成非线性模型：$p(\bm{x}\mid\bm{z},\bm{w})$ 不再由矩阵乘法给出，而由深度神经网络给出，因此先验仍然简单（\eqref{align:ch19-先验}），但边缘分布 $p(\bm{x}\mid\bm{w})$ 可以逼近非常复杂的形状。代价是\eqref{align:ch19-边缘似然}的积分不可解：被积函数关于 $\bm{z}$ 的依赖由神经网络决定，既没有闭式原函数，也不能像线性-Gauss 情形那样配方，这正是需要变分近似的根本原因。
 
 逐项说明条件：$D$ 是数据维数，$M$ 是潜空间维数，二者不必相等（通常 $M\ll D$）；先验取标准 Gauss 分布是一个建模选择，它使采样和 KL 项都有闭式表达，但并不是唯一选择，后文的“条件 VAE”就把先验换成 $p(\bm{z}\mid\bm{c})$。$p(\bm{x}\mid\bm{z},\bm{w})$ 的具体形式（Gauss、Bernoulli 等）决定了\eqref{align:ch19-elbo}中被积函数的具体表达式，而本章的推导只用到它的可微性，因此对输出分布的形式并不敏感（参见\cref{section:ch06-混合密度网络}）。
@@ -40,34 +40,35 @@ p(\bm{z})=\mathcal{N}(\bm{z}\mid\bm{0},\bm{I}).
 其中 $\mathcal{L}$ 与 $\operatorname{KL}$ 的定义如下：
 
 \begin{definition}[证据下界与 KL 散度]\label{definition:ch19-证据下界}
-设 $q(\bm{z})$ 是潜变量空间上的任意概率密度。称
+设 $D,M\in\mathbb{N}$，数据 $\bm{x}\in\mathbb{R}^{D}$，潜变量 $\bm{z}\in\mathbb{R}^{M}$，模型参数 $\bm{w}\in\mathbb{R}^{P}$；设 $p(\bm{x}\mid\bm{z},\bm{w})$ 与 $p(\bm{z})$ 分别为条件密度与先验密度，$q(\bm{z})$ 为 $\mathbb{R}^{M}$ 上使下列两个积分都存在且取有限值的概率密度。则由
 \begin{align}
 \mathcal{L}(\bm{w})=\int q(\bm{z})\ln\Big\{\frac{p(\bm{x}\mid\bm{z},\bm{w})\,p(\bm{z})}{q(\bm{z})}\Big\}\,\mathrm{d}\bm{z}
 \label{align:ch19-elbo}
 \end{align}
-为\textbf{证据下界}（evidence lower bound）或 ELBO，也称\textbf{变分下界}（variational lower bound）。Kullback-Leibler 散度（简称 KL 散度）$\operatorname{KL}(\cdot\,\|\,\cdot)$ 定义为
+定义的量 $\mathcal{L}(\bm{w})$ 称为\textbf{证据下界}（evidence lower bound）或 ELBO，也称\textbf{变分下界}（variational lower bound）；而由
 \begin{align}
-\operatorname{KL}\big(q(\bm{z})\,\|\,p(\bm{z}\mid\bm{x},\bm{w})\big)=-\int q(\bm{z})\ln\Big\{\frac{p(\bm{z}\mid\bm{x},\bm{w})}{q(\bm{z})}\Big\}\,\mathrm{d}\bm{z}.
+\operatorname{KL}\big(q(\bm{z})\,\|\,p(\bm{z}\mid\bm{x},\bm{w})\big)=-\int q(\bm{z})\ln\Big\{\frac{p(\bm{z}\mid\bm{x},\bm{w})}{q(\bm{z})}\Big\}\,\mathrm{d}\bm{z}
 \label{align:ch19-kl}
 \end{align}
+定义的量称为 $q(\bm{z})$ 与后验 $p(\bm{z}\mid\bm{x},\bm{w})$ 之间的 Kullback-Leibler 散度（简称 KL 散度），记号为 $\operatorname{KL}(\cdot\,\|\,\cdot)$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-证据下界; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-证据下界; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-证据下界}中的\eqref{align:ch19-elbo}之所以叫“下界”，马上会由\cref{proposition:ch19-ELBO分解}说明；之所以叫“证据”，是因为在 Bayes 语境中 $\ln p(\bm{x}\mid\bm{w})$ 被称为模型证据（model evidence）。它与\cref{subsection:ch02-KL散度}中的 KL 散度是同一个量，只换成了连续潜变量的积分写法：\eqref{align:ch19-kl}右端的负号使 $\operatorname{KL}\geqslant0$，这与\cref{subsection:ch02-KL散度}的约定一致，因此不能把负号理解成“负的散度”。
 
 这里的 $q(\bm{z})$ 是任意的：它既可以依赖 $\bm{x}$（后文取 $q(\bm{z}\mid\bm{x},\bm{\phi})$），也可以与 $\bm{x}$ 无关。下界对任意 $q$ 都成立，但对不同的 $q$ 松紧不同——$q$ 越接近真实后验 $p(\bm{z}\mid\bm{x},\bm{w})$，下界越紧。这既是变分推断的核心，也是 VAE 中“训练编码器”的目标：编码器的任务就是让 $q$ 逼近后验，从而把下界抬高到接近真实对数似然。最后，两个定义都要求相应的积分存在；若 $q$ 与 $p(\cdot\mid\bm{x},\bm{w})$ 不满足绝对连续性，$\operatorname{KL}$ 取 $+\infty$，\eqref{align:ch19-elbo分解}仍按扩展实数理解。
 \end{remark}
 
 \begin{proposition}[证据下界分解]\label{proposition:ch19-ELBO分解}
-设 $q(\bm{z})$ 是潜变量空间上的概率密度，且 $\ln p(\bm{x}\mid\bm{w})$ 有限。则\eqref{align:ch19-elbo分解}成立；又因 KL 散度满足 $\operatorname{KL}(q\,\|\,p)\geqslant0$，可以得到
+设 $D,M\in\mathbb{N}$，数据 $\bm{x}\in\mathbb{R}^{D}$，潜变量 $\bm{z}\in\mathbb{R}^{M}$，模型参数 $\bm{w}\in\mathbb{R}^{P}$；设 $q(\bm{z})$ 为 $\mathbb{R}^{M}$ 上的概率密度，$p(\bm{z}\mid\bm{x},\bm{w})$ 为后验密度，且 $\ln p(\bm{x}\mid\bm{w})$ 有限、\eqref{align:ch19-elbo}与\eqref{align:ch19-kl}中的积分均存在并取有限值。则\eqref{align:ch19-elbo分解}成立，即 $\ln p(\bm{x}\mid\bm{w})$ 等于证据下界 $\mathcal{L}(\bm{w})$ 与 $\operatorname{KL}(q(\bm{z})\,\|\,p(\bm{z}\mid\bm{x},\bm{w}))$ 之和；又因 KL 散度满足 $\operatorname{KL}(q\,\|\,p)\geqslant0$，从而
 \begin{align}
-\ln p(\bm{x}\mid\bm{w})\geqslant\mathcal{L},
+\ln p(\bm{x}\mid\bm{w})\geqslant\mathcal{L}(\bm{w}),
 \label{align:ch19-elbo下界}
 \end{align}
-即 $\mathcal{L}$ 是 $\ln p(\bm{x}\mid\bm{w})$ 的证据下界。
+即 $\mathcal{L}(\bm{w})$ 是 $\ln p(\bm{x}\mid\bm{w})$ 的证据下界，且\eqref{align:ch19-elbo下界}取等号当且仅当 $q(\bm{z})=p(\bm{z}\mid\bm{x},\bm{w})$ 关于 $\bm{z}$ 几乎处处成立。
 \end{proposition}
-\begin{proof}（重构新增）
+\begin{proof}
 由于 $p(\bm{x}\mid\bm{w})$ 与 $\bm{z}$ 无关，且 $\int q(\bm{z})\,\mathrm{d}\bm{z}=1$，有
 \begin{align*}
 \ln p(\bm{x}\mid\bm{w})&=\int q(\bm{z})\ln p(\bm{x}\mid\bm{w})\,\mathrm{d}\bm{z}\\
@@ -78,8 +79,8 @@ p(\bm{z})=\mathcal{N}(\bm{z}\mid\bm{0},\bm{I}).
 其中第三步把 $\ln\{p(\bm{x},\bm{z}\mid\bm{w})/p(\bm{z}\mid\bm{x},\bm{w})\}$ 拆成 $\ln\{p(\bm{x}\mid\bm{z},\bm{w})p(\bm{z})/q(\bm{z})\}-\ln\{p(\bm{z}\mid\bm{x},\bm{w})/q(\bm{z})\}$，两处都用了 Bayes 定理 $p(\bm{x},\bm{z}\mid\bm{w})=p(\bm{x}\mid\bm{z},\bm{w})p(\bm{z})=p(\bm{z}\mid\bm{x},\bm{w})p(\bm{x}\mid\bm{w})$。第四步按\eqref{align:ch19-elbo}与\eqref{align:ch19-kl}的定义。由于对任意两个概率密度有 $\operatorname{KL}\geqslant0$，由\eqref{align:ch19-elbo分解}立得\eqref{align:ch19-elbo下界}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch19-ELBO分解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch19-ELBO分解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch19-ELBO分解}给出了一条清晰的改进路径：对数似然固定，因此“抬高下界”与“缩小 KL”是同一件事。EM 算法之所以能让下界最终等于对数似然，是因为它取 $q$ 为精确后验，使 KL 恰为零；VAE 中 $q$ 被限制在一个神经网络参数化的分布族里，KL 一般不为零，这就留下了原书后文所说的“残差”。
 
 证明只用到 Bayes 定理与 $\int q=1$，因此结论对任意 $q$ 成立，并不要求 $q$ 是 Gauss 分布或因子分解的。条件“$\ln p(\bm{x}\mid\bm{w})$ 有限”用于避免 $\infty-\infty$；若 $q$ 在 $p(\bm{z}\mid\bm{x},\bm{w})=0$ 的区域为正，KL 为 $+\infty$，此时\eqref{align:ch19-elbo分解}应理解为扩展实数等式，下界自动失效。这也解释了为什么编码器的输出方差必须保持为正：若某个 $\sigma_j\to0$，KL 中的 $-\ln\sigma_j^{2}$ 会发散，下界随之失去意义。
@@ -122,11 +123,11 @@ p(\bm{z}_n\mid\bm{x}_n,\bm{w})=\frac{p(\bm{x}_n\mid\bm{z}_n,\bm{w})\,p(\bm{z}_n)
 在变分自编码器中，我们不再单独为每个数据点 $\bm{x}_n$ 计算一个后验分布 $p(\bm{z}_n\mid\bm{x}_n,\bm{w})$，而是通过训练一个称为编码器网络的神经网络来近似所有这些分布。
 
 \begin{definition}[摊销推理与编码器网络]\label{definition:ch19-摊销推理}
-用单个以 $\bm{x}$ 为输入、以 $\bm{\phi}$ 为参数的神经网络输出条件分布 $q(\bm{z}\mid\bm{x},\bm{\phi})$，并用它同时近似所有数据点的后验分布 $p(\bm{z}_n\mid\bm{x}_n,\bm{w})$，这种技术称为\textbf{摊销推理}（amortized inference），该神经网络称为\textbf{编码器网络}（encoder network），$\bm{\phi}$ 称为\textbf{编码器参数}。
+设 $D,M,N\in\mathbb{N}$，数据空间为 $\mathbb{R}^{D}$，潜空间为 $\mathbb{R}^{M}$，训练集为 $\{\bm{x}_{n}\}_{n=1}^{N}\subset\mathbb{R}^{D}$，参数 $\bm{\phi}\in\mathbb{R}^{Q}$；设 $\mathcal{Q}=\{q(\bm{z}\mid\bm{x},\bm{\phi}):\bm{\phi}\in\mathbb{R}^{Q}\}$ 为以 $\bm{x}\in\mathbb{R}^{D}$ 为条件、以 $\bm{\phi}$ 为参数的分布族，其中每个 $q(\cdot\mid\bm{x},\bm{\phi})$ 是 $\mathbb{R}^{M}$ 上的概率密度。若用单个神经网络 $\bm{x}\mapsto q(\cdot\mid\bm{x},\bm{\phi})$ 输出该族中的分布，以它同时近似全部数据点的后验 $p(\bm{z}_{n}\mid\bm{x}_{n},\bm{w})$，且参数 $\bm{\phi}$ 的个数与数据点个数 $N$ 无关，则这种技术称为\textbf{摊销推理}（amortized inference），该神经网络称为\textbf{编码器网络}（encoder network），$\bm{\phi}$ 称为\textbf{编码器参数}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-摊销推理; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-摊销推理; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-摊销推理}中“摊销”一词来自计算成本的分摊：逐个数据点优化 $q_n$ 的代价是每个数据点都要单独做一次优化，且每次更新 $\bm{w}$ 后旧结果全部作废；摊销推理把这份代价一次性“摊”到一个共享的编码器上——训练一次，之后对任何 $\bm{x}$ 只需一次前向传播就能得到近似后验。代价是表达能力受限：一个网络必须同时拟合所有数据点的后验，遇到多模态或强非 Gauss 的后验时只能给出平均意义上的近似（见\cref{figure:ch19-后验分布}中双模态的例子）。
 
 条件方面：$q$ 必须以 $\bm{x}$ 为条件（否则退化为与数据无关的先验，即后文的“后验崩塌”）；$\bm{\phi}$ 与解码器参数 $\bm{w}$ 相互独立，才能联合优化；摊销推理本身并不要求 $q$ 是 Gauss 分布，只要求它可采样、可求 KL 或可估计其梯度——第（3）点“重参数化”正是为此服务。
@@ -137,15 +138,16 @@ p(\bm{z}_n\mid\bm{x}_n,\bm{w})=\frac{p(\bm{x}_n\mid\bm{z}_n,\bm{w})\,p(\bm{z}_n)
 因此，VAE 包含两个参数独立但能联合训练的神经网络：一个编码器网络，用于将数据向量映射到潜空间；一个解码器网络，用于将潜空间向量映射回数据空间。这类似于简单的神经网络自编码器模型，所不同的是，我们在潜空间中定义了一个概率分布。我们将看到，编码器根据 Bayes 定理计算解码器的近似概率逆过程——即根据给定观测数据推断潜变量的分布。
 
 \begin{definition}[对角 Gauss 编码器]\label{definition:ch19-对角Gauss编码器}
-在变分自编码器中，编码器的一个典型选择是具有对角协方差矩阵的 Gauss 分布，其均值 $\mu_j$ 和方差 $\sigma_j^{2}$ 由一个以 $\bm{x}$ 作为输入的神经网络给出：
+设 $D,M\in\mathbb{N}$，数据 $\bm{x}\in\mathbb{R}^{D}$，编码器参数 $\bm{\phi}\in\mathbb{R}^{Q}$；设均值映射 $\bm{\mu}(\cdot,\bm{\phi}):\mathbb{R}^{D}\to\mathbb{R}^{M}$ 与方差映射 $\bm{\sigma}^{2}(\cdot,\bm{\phi}):\mathbb{R}^{D}\to(0,\infty)^{M}$ 均由神经网络给出，其第 $j$ 个分量分别记为 $\mu_{j}(\bm{x},\bm{\phi})$ 与 $\sigma_{j}^{2}(\bm{x},\bm{\phi})$，$j=1,\cdots,M$。若编码器输出的近似后验取 $M$ 个一维 Gauss 分布之积，即
 \begin{align}
-q(\bm{z}\mid\bm{x},\bm{\phi})=\prod_{j=1}^{M}\mathcal{N}\big(z_j\mid\mu_j(\bm{x},\bm{\phi}),\,\sigma_j^{2}(\bm{x},\bm{\phi})\big).
+q(\bm{z}\mid\bm{x},\bm{\phi})=\prod_{j=1}^{M}\mathcal{N}\big(z_j\mid\mu_j(\bm{x},\bm{\phi}),\,\sigma_j^{2}(\bm{x},\bm{\phi})\big),
 \label{align:ch19-编码器}
 \end{align}
+其中 $z_{j}$ 为 $\bm{z}\in\mathbb{R}^{M}$ 的第 $j$ 个分量，则称该编码器为\textbf{对角 Gauss 编码器}，称 $\operatorname{diag}(\sigma_{1}^{2}(\bm{x},\bm{\phi}),\cdots,\sigma_{M}^{2}(\bm{x},\bm{\phi}))$ 为其对角协方差矩阵，并称各 $\sigma_{j}(\bm{x},\bm{\phi})>0$ 为标准差。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-对角Gauss编码器; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-对角Gauss编码器; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-对角Gauss编码器}选择因子分解的 Gauss 分布有两个直接好处：其一，$q$ 与标准 Gauss 先验之间的 KL 有闭式\eqref{align:ch19-klGauss}，无需 Monte Carlo；其二，采样只需 $M$ 个独立的一维 Gauss 样本，重参数化\eqref{align:ch19-重参数化采样}逐分量成立。代价是排除了后验各分量之间的相关性，原书后文列出的“真实后验未必服从因子分解的 Gauss 分布”正是这一限制；\cref{exercise:ch19-03}给出了用下三角矩阵 $\bm{L}$ 引入一般协方差矩阵的推广。
 
 注意 $\mu_j(\bm{x},\bm{\phi})$ 取值于 $(-\infty,\infty)$，而 $\sigma_j^{2}(\bm{x},\bm{\phi})$ 必须非负，所以两者的输出单元不能用同一种激活函数：前者可以用线性单元，后者通常用指数函数 $\exp(\cdot)$ 以保证为正。用 $\exp$ 的代价是数值上可能溢出，实践中常改用 softplus 或对 $\ln\sigma_j^{2}$ 直接建模。
@@ -191,7 +193,7 @@ ELBO 优化与 EM 算法的一个关键区别是，对于给定的 $\bm{w}$ 值�
 \label{align:ch19-klGauss}
 \end{align}
 
-\begin{remark}（重构新增）原文问题说明：\eqref{align:ch19-klGauss}的右端按\eqref{align:ch19-kl}的符号约定并不等于左端的 KL 散度，而是它的相反数。由\cref{exercise:ch19-04}的直接计算，
+\begin{remark}原文问题说明：\eqref{align:ch19-klGauss}的右端按\eqref{align:ch19-kl}的符号约定并不等于左端的 KL 散度，而是它的相反数。由\cref{exercise:ch19-04}的直接计算，
 \begin{align*}
 \operatorname{KL}\big(\mathcal{N}(\mu,\sigma^{2})\,\|\,\mathcal{N}(0,1)\big)=\frac{1}{2}\Big(\mu^{2}+\sigma^{2}-1-\ln\sigma^{2}\Big)\geqslant0,
 \end{align*}
@@ -219,11 +221,17 @@ ELBO 优化与 EM 算法的一个关键区别是，对于给定的 $\bm{w}$ 值�
 我们可以使用重参数化技巧来解决这个问题。重新设计 Monte Carlo 采样过程，以便明确计算相对于 $\bm{\phi}$ 的导数。
 
 \begin{definition}[重参数化技巧]\label{definition:ch19-重参数化}
-设 $q(\bm{z}\mid\bm{x},\bm{\phi})$ 是由参数 $\bm{\phi}$ 指定的一族分布。若存在与 $\bm{\phi}$ 无关的随机变量 $\bm{\varepsilon}$（其分布 $p(\bm{\varepsilon})$ 与 $\bm{\phi}$ 无关）以及关于 $\bm{\phi}$ 可微的映射 $\bm{z}=h(\bm{\varepsilon};\bm{\phi})$，使得当 $\bm{\varepsilon}\sim p(\bm{\varepsilon})$ 时 $h(\bm{\varepsilon};\bm{\phi})$ 服从 $q(\bm{z}\mid\bm{x},\bm{\phi})$，则称用这种“先采样 $\bm{\varepsilon}$、再作确定性变换”的方式实现 $q$ 的采样为\textbf{重参数化}（reparameterization），并称之为\textbf{重参数化技巧}（reparameterization trick）。
+设 $D,M,K\in\mathbb{N}$，数据 $\bm{x}\in\mathbb{R}^{D}$，编码器参数 $\bm{\phi}\in\mathbb{R}^{Q}$，$\{q(\bm{z}\mid\bm{x},\bm{\phi}):\bm{\phi}\in\mathbb{R}^{Q}\}$ 为 $\mathbb{R}^{M}$ 上由 $\bm{\phi}$ 指定的一族概率密度；设 $(\Xi,\mathcal{G},\mathbb{P}_{\bm{\varepsilon}})$ 为概率空间，$\bm{\varepsilon}:\Xi\to\mathbb{R}^{K}$ 为其上的随机向量，$h:\mathbb{R}^{K}\times\mathbb{R}^{Q}\to\mathbb{R}^{M}$ 为映射。若下列条件成立：
+\begin{enumerate}[(i)]
+\item $\bm{\varepsilon}$ 的分布 $p(\bm{\varepsilon})$ 与 $\bm{\phi}$ 无关；
+\item 对每个固定的 $\bm{\varepsilon}\in\mathbb{R}^{K}$，映射 $\bm{\phi}\mapsto h(\bm{\varepsilon};\bm{\phi})$ 在 $\mathbb{R}^{Q}$ 上连续可微；
+\item 当 $\bm{\varepsilon}\sim p(\bm{\varepsilon})$ 时，随机向量 $h(\bm{\varepsilon};\bm{\phi})$ 的分布等于 $q(\bm{z}\mid\bm{x},\bm{\phi})$，
+\end{enumerate}
+则把 $q(\bm{z}\mid\bm{x},\bm{\phi})$ 的采样实现为“先抽取 $\bm{\varepsilon}\sim p(\bm{\varepsilon})$、再取 $\bm{z}=h(\bm{\varepsilon};\bm{\phi})$”的做法称为\textbf{重参数化}（reparameterization），该做法也称为\textbf{重参数化技巧}（reparameterization trick）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-重参数化; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-重参数化; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-重参数化}的要点是把“随机性”与“参数依赖性”分离：随机性全部交给与 $\bm{\phi}$ 无关的 $\bm{\varepsilon}$，而 $\bm{\phi}$ 只出现在确定性的变换 $h$ 中。这样样本 $\bm{z}^{(l)}=h(\bm{\varepsilon}^{(l)};\bm{\phi})$ 就是 $\bm{\phi}$ 的可微函数，梯度可以沿 $h$ 反传到编码器，而不必对采样过程本身求导——\cref{figure:ch19-重参数化阻断}中被切断的反向通路因此重新连通（见\cref{figure:ch19-重参数化流}）。
 
 适用条件是本质性的：$h$ 必须存在且可微。对连续分布，这通常可以做到（如 Gauss 用 $h(\varepsilon;\phi)=\mu+\sigma\varepsilon$）；对离散分布则不存在这样的可微变换，这正是重参数化技巧“仅限于连续变量上的分布”的原因。此外，$\bm{\varepsilon}$ 的分布必须与 $\bm{\phi}$ 无关，否则“分离随机性”就无从谈起；若 $q$ 的支撑随 $\bm{\phi}$ 变化（例如均匀分布的区间端点依赖 $\bm{\phi}$），$h$ 仍可构造，但需要显式处理端点。
@@ -232,14 +240,14 @@ ELBO 优化与 EM 算法的一个关键区别是，对于给定的 $\bm{w}$ 值�
 首先请注意，如果 $\bm{\varepsilon}$ 是一个均值为零且方差为单位方差的 Gauss 随机变量，那么：
 
 \begin{proposition}[重参数化采样的分布]\label{proposition:ch19-重参数化分布}
-设 $\varepsilon$ 具有均值为零、方差为单位方差的 Gauss 分布，$\mu\in\mathbb{R}$、$\sigma>0$。定义
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$\varepsilon:\Omega\to\mathbb{R}$ 服从均值 $0$、方差 $1$ 的 Gauss 分布，$\mu\in\mathbb{R}$，$\sigma>0$；令随机变量 $z:\Omega\to\mathbb{R}$ 由
 \begin{align}
-z=\sigma\varepsilon+\mu,
+z=\sigma\varepsilon+\mu
 \label{align:ch19-重参数化采样}
 \end{align}
-则 $z$ 具有均值为 $\mu$、方差为 $\sigma^{2}$ 的 Gauss 分布（见\cref{exercise:ch19-02}）。
+定义。则 $z$ 服从均值 $\mu$、方差 $\sigma^{2}$ 的 Gauss 分布 $\mathcal{N}(\mu,\sigma^{2})$，即对任意 $t\in\mathbb{R}$ 有 $\mathbb{P}(z\leqslant t)=\Phi\big((t-\mu)/\sigma\big)$，其中 $\Phi$ 为标准 Gauss 分布函数；特别地 $\mathbb{E}[z]=\mu$、$\operatorname{Var}(z)=\sigma^{2}$（见\cref{exercise:ch19-02}）。
 \end{proposition}
-\begin{proof}（重构新增）
+\begin{proof}
 记 $\varepsilon\sim\mathcal{N}(0,1)$ 的分布函数为 $\Phi$、密度为 $\varphi$。对任意 $t\in\mathbb{R}$，
 \begin{align*}
 F_z(t)=\mathbb{P}(z\leqslant t)=\mathbb{P}\Big(\varepsilon\leqslant\frac{t-\mu}{\sigma}\Big)=\Phi\Big(\frac{t-\mu}{\sigma}\Big),
@@ -251,8 +259,8 @@ f_z(t)=\frac{1}{\sigma}\varphi\Big(\frac{t-\mu}{\sigma}\Big)=\frac{1}{\sqrt{2\pi
 这正是 $\mathcal{N}(\mu,\sigma^{2})$ 的密度。又 $\mathbb{E}[z]=\sigma\mathbb{E}[\varepsilon]+\mu=\mu$，$\operatorname{Var}(z)=\sigma^{2}\operatorname{Var}(\varepsilon)=\sigma^{2}$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch19-重参数化分布; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch19-重参数化分布; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch19-重参数化分布}是重参数化技巧的算术基础：它保证“先采 $\varepsilon$ 再作线性变换”得到的样本与“直接从 $q$ 采样”同分布，因此可以放心地把样本写成 $\bm{\phi}$ 的可微函数。条件 $\sigma>0$ 不能去掉：若 $\sigma=0$，$z\equiv\mu$ 是退化分布，分布函数在 $t=\mu$ 处跳跃，上面的求导不再成立，此时应按退化分布理解（采样结果与 $\bm{\phi}$ 的依赖仍然可微，只是不再有密度）。多维情形逐分量成立，因为对角 Gauss 的各分量独立。
 
 原书把它留作\cref{exercise:ch19-02}，是为了让读者亲手验证“仿射变换保持 Gaussian 性”这一事实；更一般的线性变换 $z=\mu+L\varepsilon$ 的协方差是 $LL^{\mathsf T}$，见\cref{exercise:ch19-03}。
@@ -260,15 +268,15 @@ f_z(t)=\frac{1}{\sigma}\varphi\Big(\frac{t-\mu}{\sigma}\Big)=\frac{1}{\sqrt{2\pi
 
 $z$ 将具有均值为 $\mu$、方差为 $\sigma^{2}$ 的 Gauss 分布（见\cref{exercise:ch19-02}）。将其应用于\eqref{align:ch19-蒙特卡洛}中的采样过程，其中 $\mu$ 和 $\sigma$ 由编码器网络的输出 $\mu_j(\bm{x}_n,\bm{\phi})$ 和 $\sigma_j^{2}(\bm{x}_n,\bm{\phi})$ 确定，分别对应于\eqref{align:ch19-编码器}的均值和方差。我们不直接从潜变量 $\bm{z}_n$ 采样，而是对 $\bm{\varepsilon}$ 采样，并使用\eqref{align:ch19-重参数化采样}计算对应的 $\bm{z}_n$ 样本：
 \begin{align}
-z_{nj}^{(l)}=\mu_j(\bm{x}_n,\bm{\phi})\,\varepsilon_{nj}^{(l)}+\sigma_j^{2}(\bm{x}_n,\bm{\phi}).
+z_{nj}^{(l)}=\mu_j(\bm{x}_n,\bm{\phi})+\sigma_j(\bm{x}_n,\bm{\phi})\,\varepsilon_{nj}^{(l)}.
 \label{align:ch19-重参数化样本}
 \end{align}
 
-\begin{remark}（重构新增）原文问题说明：\eqref{align:ch19-重参数化样本}与\eqref{align:ch19-重参数化采样}不一致。按\eqref{align:ch19-重参数化采样}，第 $j$ 个分量应为
+\begin{remark}原文问题说明：\eqref{align:ch19-重参数化样本}与\eqref{align:ch19-重参数化采样}不一致。按\eqref{align:ch19-重参数化采样}，第 $j$ 个分量应为
 \begin{align*}
 z_{nj}^{(l)}=\mu_j(\bm{x}_n,\bm{\phi})+\sigma_j(\bm{x}_n,\bm{\phi})\,\varepsilon_{nj}^{(l)},
 \end{align*}
-即 $\mu_j$ 与 $\varepsilon_{nj}^{(l)}$ 是相加关系、乘在 $\varepsilon$ 上的是标准差 $\sigma_j$ 而不是方差 $\sigma_j^{2}$。\eqref{align:ch19-重参数化样本}若按字面理解，得到的 $z_{nj}$ 的方差将是 $\mu_j^{2}$ 而非 $\sigma_j^{2}$，与\eqref{align:ch19-编码器}所定义的 $q$ 不符；把它代入\eqref{align:ch19-完整损失}也会使 KL 项与重构项不再对应同一个分布。原书随后在\eqref{align:ch19-完整损失}下方给出的元素表达式 $z_{nj}^{(l)}=\sigma_{nj}\varepsilon^{(l)}+\mu_{nj}$（其中 $\sigma_{nj}=\sigma_j(\bm{x}_n,\bm{\phi})$）正是上面的正确形式，可作为内部一致的依据；算法 19.1 中同一行赋值也应按此更正。本译本保留原式以供对照，实际使用时应采用修正形式。
+即 $\mu_j$ 与 $\varepsilon_{nj}^{(l)}$ 是相加关系、乘在 $\varepsilon$ 上的是标准差 $\sigma_j$ 而不是方差 $\sigma_j^{2}$。\eqref{align:ch19-重参数化样本}若按字面理解，得到的 $z_{nj}$ 的方差将是 $\mu_j^{2}$ 而非 $\sigma_j^{2}$，与\eqref{align:ch19-编码器}所定义的 $q$ 不符；把它代入\eqref{align:ch19-完整损失}也会使 KL 项与重构项不再对应同一个分布。原书随后在\eqref{align:ch19-完整损失}下方给出的元素表达式 $z_{nj}^{(l)}=\sigma_{nj}\varepsilon^{(l)}+\mu_{nj}$（其中 $\sigma_{nj}=\sigma_j(\bm{x}_n,\bm{\phi})$）正是上面的正确形式，可作为内部一致的依据；算法 19.1 中同一行赋值也已采用该式。
 \end{remark}
 
 其中 $l=1,\cdots,L$ 是样本的索引。该方法显式建立 $\bm{\phi}$ 与采样值之间的依赖关系，使梯度计算可行，如\cref{figure:ch19-重参数化流}所示。
@@ -282,14 +290,22 @@ z_{nj}^{(l)}=\mu_j(\bm{x}_n,\bm{\phi})+\sigma_j(\bm{x}_n,\bm{\phi})\,\varepsilon
 
 重参数化技巧可以扩展到其他分布，但仅限于连续变量上的分布。有的估计器可以直接计算梯度而无须使用重参数化技巧（Williams，1992），但这些估计器的方差很大，因此重参数化技巧也可以看作一种有效的方差降低技术。
 
-\begin{proposition}[重参数化梯度估计的无偏性（重构新增）]\label{proposition:ch19-重参数化梯度}
-设 $q(\bm{z}\mid\bm{x},\bm{\phi})=\mathcal{N}\big(\bm{z}\mid\bm{\mu}(\bm{x},\bm{\phi}),\operatorname{diag}(\bm{\sigma}^{2}(\bm{x},\bm{\phi}))\big)$，$\bm{z}=\bm{\mu}(\bm{x},\bm{\phi})+\bm{\sigma}(\bm{x},\bm{\phi})\odot\bm{\varepsilon}$，$\bm{\varepsilon}\sim\mathcal{N}(\bm{0},\bm{I})$。设 $\ln p(\bm{x}\mid\bm{z},\bm{w})$ 关于 $\bm{z}$ 连续可微，且存在与 $\bm{\phi}$ 无关的可积控制函数 $g(\bm{\varepsilon})$ 使得 $\|\nabla_{\bm{\phi}}\ln p(\bm{x}\mid\bm{\mu}(\bm{x},\bm{\phi})+\bm{\sigma}(\bm{x},\bm{\phi})\odot\bm{\varepsilon},\bm{w})\|\leqslant g(\bm{\varepsilon})$，则
+\begin{proposition}[重参数化梯度估计的无偏性]\label{proposition:ch19-重参数化梯度}
+设 $D,M,L\in\mathbb{N}$，数据 $\bm{x}\in\mathbb{R}^{D}$，模型参数 $\bm{w}\in\mathbb{R}^{P}$，编码器参数 $\bm{\phi}\in\mathbb{R}^{Q}$；设均值映射 $\bm{\mu}(\bm{x},\cdot):\mathbb{R}^{Q}\to\mathbb{R}^{M}$ 与标准差映射 $\bm{\sigma}(\bm{x},\cdot):\mathbb{R}^{Q}\to(0,\infty)^{M}$ 关于 $\bm{\phi}$ 连续可微，近似后验为
+\begin{align*}
+q(\bm{z}\mid\bm{x},\bm{\phi})=\mathcal{N}\big(\bm{z}\mid\bm{\mu}(\bm{x},\bm{\phi}),\operatorname{diag}(\bm{\sigma}^{2}(\bm{x},\bm{\phi}))\big),
+\end{align*}
+并以 $\bm{z}=\bm{\mu}(\bm{x},\bm{\phi})+\bm{\sigma}(\bm{x},\bm{\phi})\odot\bm{\varepsilon}$、$\bm{\varepsilon}\sim\mathcal{N}(\bm{0},\bm{I}_{M})$ 生成 $\bm{z}$，其中 $\odot$ 表示按分量乘积。设 $\ln p(\bm{x}\mid\bm{z},\bm{w})$ 关于 $\bm{z}$ 连续可微，且存在与 $\bm{\phi}$ 无关的 $\mathbb{P}_{\bm{\varepsilon}}$-可积控制函数 $g:\mathbb{R}^{M}\to[0,\infty)$，使对一切 $\bm{\phi}\in\mathbb{R}^{Q}$ 与 $\bm{\varepsilon}\in\mathbb{R}^{M}$ 成立
+\begin{align*}
+\big\|\nabla_{\bm{\phi}}\ln p\big(\bm{x}\mid\bm{\mu}(\bm{x},\bm{\phi})+\bm{\sigma}(\bm{x},\bm{\phi})\odot\bm{\varepsilon},\bm{w}\big)\big\|\leqslant g(\bm{\varepsilon}).
+\end{align*}
+则 $\bm{\phi}\mapsto\mathbb{E}_{q(\bm{z}\mid\bm{x},\bm{\phi})}[\ln p(\bm{x}\mid\bm{z},\bm{w})]$ 在 $\mathbb{R}^{Q}$ 上可微，且其梯度为
 \begin{align*}
 \nabla_{\bm{\phi}}\mathbb{E}_{q(\bm{z}\mid\bm{x},\bm{\phi})}\big[\ln p(\bm{x}\mid\bm{z},\bm{w})\big]=\mathbb{E}_{\bm{\varepsilon}\sim\mathcal{N}(\bm{0},\bm{I})}\big[\nabla_{\bm{\phi}}\ln p\big(\bm{x}\mid\bm{\mu}(\bm{x},\bm{\phi})+\bm{\sigma}(\bm{x},\bm{\phi})\odot\bm{\varepsilon},\bm{w}\big)\big],
 \end{align*}
-即用 $\bm{\varepsilon}$ 的样本对右端作 Monte Carlo 平均，得到左端梯度的无偏估计。
+其中右端被求导的是沿路径 $\bm{\phi}\mapsto\bm{z}(\bm{\varepsilon};\bm{\phi})$ 的全导数；于是对右端用 $L$ 个独立样本 $\bm{\varepsilon}^{(1)},\cdots,\bm{\varepsilon}^{(L)}$ 作 Monte Carlo 平均，所得到的量是左端梯度的无偏估计。
 \end{proposition}
-\begin{proof}（重构新增）
+\begin{proof}
 记 $\bm{z}(\bm{\varepsilon};\bm{\phi})=\bm{\mu}(\bm{x},\bm{\phi})+\bm{\sigma}(\bm{x},\bm{\phi})\odot\bm{\varepsilon}$。由\cref{proposition:ch19-重参数化分布}（逐分量），当 $\bm{\varepsilon}\sim\mathcal{N}(\bm{0},\bm{I})$ 时 $\bm{z}(\bm{\varepsilon};\bm{\phi})\sim q(\bm{z}\mid\bm{x},\bm{\phi})$，故对任意可积的 $F$，
 \begin{align*}
 \mathbb{E}_{q(\bm{z}\mid\bm{x},\bm{\phi})}[F(\bm{z})]=\mathbb{E}_{\bm{\varepsilon}}[F(\bm{z}(\bm{\varepsilon};\bm{\phi}))].
@@ -303,8 +319,8 @@ z_{nj}^{(l)}=\mu_j(\bm{x}_n,\bm{\phi})+\sigma_j(\bm{x}_n,\bm{\phi})\,\varepsilon
 其中第二个等号是链式法则，第三个等号把对 $\bm{\phi}$ 的全导数写成 $\nabla_{\bm{\phi}}\ln p(\bm{x}\mid\bm{z}(\bm{\varepsilon};\bm{\phi}),\bm{w})$。用 $L$ 个独立样本平均即得无偏估计，其偏差为零、方差随 $L$ 增大而减小。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch19-重参数化梯度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch19-重参数化梯度; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch19-重参数化梯度}中的重参数化梯度，与得分函数估计器相比用的是“路径导数”：它把 $\bm{\phi}$ 的变化如何改变 $\bm{z}$、进而改变 $\ln p$ 这一整条路径都算了进去，而不是像\cref{exercise:ch19-01}那样把被积函数当作与 $\bm{\phi}$ 无关的 $G$ 再乘上 $\nabla_{\bm{\phi}}\ln q$。这就是原书所说“重参数化技巧更有效率、只需要更少的样本”的确切含义：路径导数利用了 $\ln p$ 关于 $\bm{z}$ 的梯度信息，而得分函数估计器完全没有用它，因而方差通常大得多。
 
 条件“控制函数可积”不能省：若 $\ln p$ 的梯度随 $\bm{\varepsilon}$ 增长过快，积分号下求导可能失败，此时右端的期望可能不存在，无偏性也就无从谈起。实际实现中，$\bm{\mu}$ 与 $\bm{\sigma}$ 由神经网络给出，只要求它们关于 $\bm{\phi}$ 可微，对网络本身的形式没有额外要求；这也是重参数化技巧能与任意深度网络结合的原因。
@@ -336,7 +352,7 @@ z_{nj}^{(l)}=\mu_j(\bm{x}_n,\bm{\phi})+\sigma_j(\bm{x}_n,\bm{\phi})\,\varepsilon
 \hspace*{1.5em}$\mathcal{L}\leftarrow0$\\
 \hspace*{1.5em}\textbf{for} $j\in\{1,\cdots,M\}$ \textbf{do}\\
 \hspace*{3em}$\varepsilon_{nj}\sim\mathcal{N}(0,1)$\\
-\hspace*{3em}$z_{nj}\leftarrow\mu_j(\bm{x}_n,\bm{\phi})\,\varepsilon_{nj}+\sigma_j^{2}(\bm{x}_n,\bm{\phi})$ \quad // 原文如此，见上文更正\\
+\hspace*{3em}$z_{nj}\leftarrow\mu_j(\bm{x}_n,\bm{\phi})+\sigma_j(\bm{x}_n,\bm{\phi})\,\varepsilon_{nj}$ \quad // 重参数化采样\\
 \hspace*{3em}$\mathcal{L}\leftarrow\mathcal{L}+\frac{1}{2}\big\{1+\ln\sigma_{nj}^{2}-\mu_{nj}^{2}-\sigma_{nj}^{2}\big\}$\\
 \hspace*{1.5em}\textbf{end for}\\
 \hspace*{1.5em}$\mathcal{L}\leftarrow\mathcal{L}+\ln p(\bm{x}_n\mid\bm{z}_n,\bm{w})$\\
@@ -355,11 +371,15 @@ VAE 有许多变种。当应用于图像数据时，编码器通常基于卷积�
 注意，\eqref{align:ch19-逐点elbo拆分}中的第一项鼓励编码器分布 $q(\bm{z}\mid\bm{x},\bm{\phi})$ 接近先验分布 $p(\bm{z})$，从而使解码器在生成模式下，通过从 $p(\bm{z})$ 采样，能够产生逼真的输出。在训练 VAE 时，可能会出现一个问题，即变分分布 $q(\bm{z}\mid\bm{x},\bm{\phi})$ 收敛到先验分布 $p(\bm{z})$，这意味着变分分布没有从输入 $\bm{x}$ 中学到有价值的信息。实际上，潜在编码被忽略了，因为它对输入 $\bm{x}$ 没有区分能力。
 
 \begin{definition}[后验崩塌]\label{definition:ch19-后验崩塌}
-在训练变分自编码器时，若变分分布 $q(\bm{z}\mid\bm{x},\bm{\phi})$ 收敛到先验分布 $p(\bm{z})$，从而不再从输入 $\bm{x}$ 中提取任何信息，则称这种现象为\textbf{后验崩塌}（posterior collapse）。此时 $\operatorname{KL}(q(\bm{z}\mid\bm{x},\bm{\phi})\|p(\bm{z}))$ 接近于零。
+设 $D,M\in\mathbb{N}$，数据空间为 $\mathbb{R}^{D}$，潜空间为 $\mathbb{R}^{M}$，编码器参数 $\bm{\phi}\in\mathbb{R}^{Q}$；设 $\{q(\bm{z}\mid\bm{x},\bm{\phi}):\bm{\phi}\in\mathbb{R}^{Q}\}$ 为以 $\bm{x}\in\mathbb{R}^{D}$ 为条件、以 $\bm{\phi}$ 为参数的近似后验族，$p(\bm{z})$ 为 $\mathbb{R}^{M}$ 上的先验密度。若训练终止时的近似后验对数据分布支撑上的每个 $\bm{x}$ 都满足
+\begin{align*}
+q(\bm{z}\mid\bm{x},\bm{\phi})=p(\bm{z})\quad\text{关于 }\bm{z}\text{ 几乎处处成立},
+\end{align*}
+等价地 $\operatorname{KL}\big(q(\bm{z}\mid\bm{x},\bm{\phi})\,\|\,p(\bm{z})\big)=0$，从而潜变量 $\bm{z}$ 在该族下与 $\bm{x}$ 独立，则变分自编码器的训练状态称为\textbf{后验崩塌}（posterior collapse）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-后验崩塌; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-后验崩塌; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-后验崩塌}的判别信号是“KL 项很小而重构项也不小”，这与“训练成功”时的“KL 小而重构项很小”容易混淆，区别在于解码器是否忽略 $\bm{z}$：若把 $\bm{z}$ 换成任意噪声而重建不变，说明编码已经崩塌。其原因可以从\eqref{align:ch19-逐点elbo拆分}读出：KL 项想要把 $q$ 拉向先验，重构项想要 $q$ 保留信息，当解码器本身足够强大（例如自回归解码器可以独自拟合数据）时，重构项对 $\bm{z}$ 的依赖变弱，KL 项就占了上风，最优解退化为 $q=p(\bm{z})$。
 
 这一现象的条件性在于：它不是优化失败，而是目标函数的偏好；因此增加网络容量或训练步数并不能消除它，需要修改目标（如 $\beta$-VAE 或对 KL 项退火）或限制解码器。此时若取一个输入做“编码—解码”，会得到看起来模糊不清的重建结果，因为解码器只依赖先验而不再依赖具体输入。
@@ -371,7 +391,7 @@ VAE 有许多变种。当应用于图像数据时，编码器通常基于卷积�
 
 这两个问题都可以通过在\eqref{align:ch19-逐点elbo拆分}的第一项前引入一个系数 $\beta$ 来解决，以控制 KL 散度的正则化效果，通常 $\beta>1$（Higgins et al.，2017）。如果重建结果很差，则可以增大 $\beta$；而如果生成的样本很差，则可以减小 $\beta$。$\beta$ 的值也可以根据退火调度来设置，即它从一个小的值开始，并在训练期间逐渐增大。
 
-\begin{remark}（重构新增）原文问题说明：这一段对 $\beta$ 的位置与调节方向的表述有两处需要澄清。第一，按\eqref{align:ch19-逐点elbo拆分}的书写顺序，鼓励 $q$ 接近先验的是\emph{第二}项（KL 项），而不是第一项；原书说“第一项”，沿用的是把 KL 项写在最前面的等价写法——\eqref{align:ch19-完整损失}中 KL 项确实排在前面。第二，若 $\beta$ 乘在 KL 项前（这正是 $\beta$-VAE 的标准做法，也与“控制 KL 散度的正则化效果”相符），则 $\beta$ 越大正则化越强、重构越差、生成越接近先验；因此正确的调节方向应是“重建差则减小 $\beta$，生成差则增大 $\beta$”，与原文相反。若把 $\beta$ 理解为乘在重构项前，则原文的方向是对的，但“控制 KL 散度的正则化效果”一句就不成立。两种读法不能同时成立，读者应以实际实现中 $\beta$ 所乘的项为准；本译本保留原文表述以便对照。
+\begin{remark}原文问题说明：这一段对 $\beta$ 的位置与调节方向的表述有两处需要澄清。第一，按\eqref{align:ch19-逐点elbo拆分}的书写顺序，鼓励 $q$ 接近先验的是\emph{第二}项（KL 项），而不是第一项；原书说“第一项”，沿用的是把 KL 项写在最前面的等价写法——\eqref{align:ch19-完整损失}中 KL 项确实排在前面。第二，若 $\beta$ 乘在 KL 项前（这正是 $\beta$-VAE 的标准做法，也与“控制 KL 散度的正则化效果”相符），则 $\beta$ 越大正则化越强、重构越差、生成越接近先验；因此正确的调节方向应是“重建差则减小 $\beta$，生成差则增大 $\beta$”，与原文相反。若把 $\beta$ 理解为乘在重构项前，则原文的方向是对的，但“控制 KL 散度的正则化效果”一句就不成立。两种读法不能同时成立，读者应以实际实现中 $\beta$ 所乘的项为准；本译本保留原文表述以便对照。
 \end{remark}
 
 最后请注意，虽然我们在本章中只讨论了一个表示 Gauss 输出分布均值的解码器网络 $\bm{g}(\bm{z},\bm{w})$，但我们可以扩展 VAE，让它包含代表 Gauss 分布方差的输出，或进一步让它表示其他更复杂分布的参数，以描绘更广泛多变的数据特征（参见\cref{section:ch06-混合密度网络}）。

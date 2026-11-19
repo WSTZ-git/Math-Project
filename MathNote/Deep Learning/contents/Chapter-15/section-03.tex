@@ -24,11 +24,11 @@
 现在假设对于 $\bm{X}$ 中的每个观测值，我们都被告知对应的隐变量 $\bm{Z}$ 的值，如\cref{figure:ch15-responsibility}(a) 所示。
 
 \begin{definition}[完整数据与不完整数据]\label{definition:ch15-完整数据}
-将被观测到的数据 $\bm{X}$ 与对应的隐变量 $\bm{Z}$ 合在一起称为\textbf{完整数据集}（complete data），记作 $\{\bm{X},\bm{Z}\}$；相应地，实际观测到的数据 $\bm{X}$ 称为\textbf{不完整数据}（incomplete data）。
+设 $N\geqslant1$，$D\geqslant1$，$K\geqslant1$，观测数据为矩阵 $\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)^{\mathsf T}\in\mathbb{R}^{N\times D}$，其第 $n$ 行为 $\bm{x}_n^{\mathsf T}$；设 $\bm{Z}\in\{0,1\}^{N\times K}$ 的第 $n$ 行为 1-of-$K$ 向量 $\bm{z}_n^{\mathsf T}$，即 $\sum_{k=1}^{K}z_{nk}=1$（$n=1,\cdots,N$），$\theta$ 为模型参数，$p(\bm{X},\bm{Z}\,|\,\theta)$ 为 $(\bm{X},\bm{Z})$ 的联合分布。则数对 $\{\bm{X},\bm{Z}\}$ 称为\textbf{完整数据集}（complete data），称其中被实际观测到的 $\bm{X}$ 为\textbf{不完整数据}（incomplete data），称 $\bm{Z}$ 为该模型的\textbf{隐变量}（未观测变量）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch15-完整数据; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch15-完整数据; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 “完整/不完整”这一对术语描述的不是数据量，而是\textbf{信息}：$\bm{X}$ 是实际拿到的部分，$\bm{Z}$ 是生成过程中存在但未被记录的部分。把它称为“数据集”是为了强调 $\{\bm{X},\bm{Z}\}$ 是一个可以写出联合似然 $p(\bm{X},\bm{Z}\,|\,\theta)$ 的对象。这一定义的作用在于区分两个优化问题：完整数据的最大似然（通常有闭式解，见\cref{proposition:ch15-完全数据对数似然}）与不完整数据的最大似然（对数内含有求和，通常没有闭式解）。EM 的全部技巧就是把后者换成前者在 $\bm{Z}$ 的后验下的期望。注意这里的“缺失”是就建模而言的：$\bm{Z}$ 并非“丢失的数据”，它在现实中可能根本不可观测（例如“该像素属于哪个分量”）。条件在于我们确实写出了联合分布 $p(\bm{X},\bm{Z}\,|\,\theta)$——若模型没有显式的隐变量结构，就无从谈完整数据。
 \end{remark}
 
@@ -39,20 +39,25 @@
 EM 算法通过选择参数的某个起始值 $\theta_0$ 来进行初始化。尽管这种期望的使用看起来有些武断，但是当我们在\cref{section:ch15-证据下界}对 EM 算法进行更深入的讨论时，我们将看到做出这个选择的动机。在 E 步骤中，我们使用当前的参数值 $\theta^{\text{old}}$ 来找出 $p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$ 给出的隐变量的后验分布。然后使用这个后验分布找出用于对一些通用参数值 $\theta$ 进行估计的完整数据对数似然函数的期望。
 
 \begin{definition}[$\mathcal{Q}$ 函数与 EM 的两步]\label{definition:ch15-Q函数}
-将这个期望记为 $\mathcal{Q}(\theta,\theta^{\text{old}})$，其由下式给出：
+设 $N\geqslant1$，$D\geqslant1$，$K\geqslant1$，观测数据 $\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)^{\mathsf T}\in\mathbb{R}^{N\times D}$ 固定，$\bm{Z}\in\{0,1\}^{N\times K}$ 为每行取 1-of-$K$ 值的离散隐变量（其取值集合有限，共 $K^{N}$ 个元素），参数 $\theta$ 属于参数空间 $\Theta\subseteq\mathbb{R}^{P}$，联合分布为 $p(\bm{X},\bm{Z}\,|\,\theta)$。设 $\theta^{\text{old}}\in\Theta$ 满足
+\begin{align*}
+p(\bm{X}\,|\,\theta^{\text{old}})=\sum_{\bm{Z}}p(\bm{X},\bm{Z}\,|\,\theta^{\text{old}})>0,
+\end{align*}
+从而后验分布 $p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})=p(\bm{X},\bm{Z}\,|\,\theta^{\text{old}})/p(\bm{X}\,|\,\theta^{\text{old}})$ 有定义。称完整数据对数似然在该后验分布下的期望为 $\mathcal{Q}$ 函数（$\mathcal{Q}$-function），记为 $\mathcal{Q}(\theta,\theta^{\text{old}})$，即
 \begin{align}
 \mathcal{Q}(\theta,\theta^{\text{old}})=\sum_{\bm{Z}}p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})\ln p(\bm{X},\bm{Z}\,|\,\theta).
 \label{align:ch15-q-function}
 \end{align}
-在 M 步骤中，我们通过最大化\eqref{align:ch15-q-function}所示的函数来确定修正后的参数估计：
+右端是有限集合上的加权和，故 $\mathcal{Q}(\theta,\theta^{\text{old}})$ 在 $[-\infty,+\infty)$ 中有定义，且其光滑性由 $\theta\mapsto\ln p(\bm{X},\bm{Z}\,|\,\theta)$ 的光滑性决定。在 M 步骤中，取 $\theta^{\text{new}}$ 为使 $\mathcal{Q}(\theta,\theta^{\text{old}})$ 在 $\Theta$ 上达到最大值的参数，即
 \begin{align}
-\theta^{\text{new}}=\arg\max_{\theta}\mathcal{Q}(\theta,\theta^{\text{old}}).
+\theta^{\text{new}}=\arg\max_{\theta\in\Theta}\mathcal{Q}(\theta,\theta^{\text{old}});
 \label{align:ch15-m-step}
 \end{align}
+若最大值点在 $\Theta$ 中不存在，则 M 步骤无定义，此时需先扩大 $\Theta$ 或修改算法。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch15-Q函数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch15-Q函数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 $\mathcal{Q}(\theta,\theta^{\text{old}})$ 有两个参数位，这一点是理解 EM 的关键：第二个位置 $\theta^{\text{old}}$ 只决定\emph{用哪个后验}来加权，在 M 步骤中是固定的常数；第一个位置 $\theta$ 才是被优化的变量。因此 $\mathcal{Q}$ 不是一个函数而是“一族”函数，每次 E 步骤换一个。定义中把对数放在\emph{联合}分布上（而不是边缘分布），正是为了避免求和出现在对数内部——这是定义\eqref{align:ch15-q-function}与前文不完整数据对数似然\eqref{align:ch15-general-nll}的唯一区别，也是 M 步骤“根据我们的假设是可行的”的原因。注意 $\mathcal{Q}$ 对 $\theta$ 的依赖只通过 $\ln p(\bm{X},\bm{Z}\,|\,\theta)$，所以权重的归一化（$\sum_{\bm{Z}}p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})=1$）保证了 $\mathcal{Q}$ 是 $\ln p(\bm{X},\bm{Z}\,|\,\theta)$ 的一个加权平均，从而 $\theta\mapsto\mathcal{Q}(\theta,\theta^{\text{old}})$ 的光滑性与 $\theta\mapsto\ln p(\bm{X},\bm{Z}\,|\,\theta)$ 相同。若 $\bm{Z}$ 连续，求和应换成对 $p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$ 的积分，其余不变。
 \end{remark}
 
@@ -106,11 +111,12 @@ p(\bm{X},\bm{Z}\,|\,\bm{\mu},\bm{\Sigma},\bm{\pi})=\prod_{n=1}^{N}\prod_{k=1}^{K
 \end{align}
 
 \begin{proposition}[完全数据的对数似然与混合系数的更新]\label{proposition:ch15-完全数据对数似然}
-设完整数据 $\{\bm{X},\bm{Z}\}$ 的似然由\eqref{align:ch15-complete-likelihood}给出，则其对数似然为\eqref{align:ch15-complete-nll}；固定 $\bm{\mu},\bm{\Sigma}$ 并在约束 $\sum_k\pi_k=1$ 下关于 $\bm{\pi}$ 最大化\eqref{align:ch15-complete-nll}，得到的解为
+设 $N\geqslant1$，$D\geqslant1$，$K\geqslant1$，$\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)^{\mathsf T}\in\mathbb{R}^{N\times D}$，$\bm{Z}\in\{0,1\}^{N\times K}$ 的每一行 $\bm{z}_n^{\mathsf T}$ 为 1-of-$K$ 向量，混合权重 $\pi_1,\cdots,\pi_K$ 满足\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}，$\bm{\mu}_k\in\mathbb{R}^{D}$，$\bm{\Sigma}_k$ 为 $D\times D$ 实对称正定矩阵（$k=1,\cdots,K$）。设完整数据的似然由\eqref{align:ch15-complete-likelihood}给出，则其对数似然为\eqref{align:ch15-complete-nll}。记 $N_k^{\text{c}}=\sum_{n=1}^{N}z_{nk}$；若 $N_k^{\text{c}}>0$（$k=1,\cdots,K$），则\eqref{align:ch15-complete-nll}作为 $\bm{\pi}$ 的函数在约束 $\pi_k>0$、$\sum_{k=1}^{K}\pi_k=1$ 下存在唯一最大值点，且该最大值点由
 \begin{align}
-\pi_k=\frac{1}{N}\sum_{n=1}^{N}z_{nk}.
+\pi_k=\frac{1}{N}\sum_{n=1}^{N}z_{nk}
 \label{align:ch15-pi-complete}
 \end{align}
+给出。
 \end{proposition}
 \begin{proof}
 对\eqref{align:ch15-complete-likelihood}取对数，乘积变为求和，幂次变为系数：
@@ -127,11 +133,11 @@ p(\bm{X},\bm{Z}\,|\,\bm{\mu},\bm{\Sigma},\bm{\pi})=\prod_{n=1}^{N}\prod_{k=1}^{K
 \begin{align*}
 1=\sum_{k=1}^{K}\pi_k=-\frac{1}{\lambda}\sum_{n=1}^{N}\sum_{k=1}^{K}z_{nk}=-\frac{N}{\lambda},
 \end{align*}
-故 $\lambda=-N$，代回即得\eqref{align:ch15-pi-complete}。
+故 $\lambda=-N$，代回即得\eqref{align:ch15-pi-complete}。右端满足 $\pi_k=N_k^{\text{c}}/N>0$ 与 $\sum_k\pi_k=N^{-1}\sum_n\sum_kz_{nk}=1$（最后一步用 $\sum_kz_{nk}=1$），故该点落在约束集的内部。又 $\sum_{k=1}^{K}N_k^{\text{c}}\ln\pi_k$ 在 $\pi_k>0$ 上严格凹（每个 $\ln\pi_k$ 严格凹且系数 $N_k^{\text{c}}>0$），故 \(\bm{\pi}\) 的驻点唯一，它就是约束下的唯一最大值点。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-完全数据对数似然; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-完全数据对数似然; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题说明了为什么“完整数据”情形容易处理：\eqref{align:ch15-complete-nll}中求和与对数已经交换了位置，$\ln$ 直接作用在每个 Gauss 分量上，而 Gauss 属于指数族，其最大似然有显式解。对比不完整数据的\eqref{align:ch15-gmm-nll}，两者的差别只在于 $z_{nk}$ 是否已知：已知时 $z_{nk}\in\{0,1\}$ 起到“选择器”的作用，未知时它被替换为责任 $\gamma(z_{nk})\in[0,1]$（见\cref{proposition:ch15-责任与期望}）。\eqref{align:ch15-pi-complete}的直观含义是“混合系数等于分配给该分量的数据点的比例”；由于 $z_{nk}$ 是硬标签，右端是严格的频率，而不是加权平均。条件 $\sum_kz_{nk}=1$ 在推导中用于把 $N$ 提出来；若某个数据点没有被分配到任何分量（$\sum_kz_{nk}\neq1$），该式需按实际计数修正。
 \end{remark}
 
@@ -145,18 +151,19 @@ p(\bm{Z}\,|\,\bm{X},\bm{\mu},\bm{\Sigma},\bm{\pi})\propto\prod_{n=1}^{N}\prod_{k
 可以看到这个分布在 $n$ 上是可分解的，所以在这个后验分布下，$\bm{z}_n$ 是独立的（见\cref{exercise:ch15-06}），这可以很容易地通过检查\cref{figure:ch15-gmm-plate}中的有向图并使用 d 分离准则来验证（参见\cref{section:ch11-条件独立性}）。
 
 \begin{proposition}[责任与完整数据对数似然的期望]\label{proposition:ch15-责任与期望}
-在后验\eqref{align:ch15-posterior}下，指示变量的期望为
+设 $N\geqslant1$，$D\geqslant1$，$K\geqslant1$，观测数据 $\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)^{\mathsf T}\in\mathbb{R}^{N\times D}$，$\bm{Z}\in\{0,1\}^{N\times K}$ 的每一行为 1-of-$K$ 向量，混合权重 $\pi_1,\cdots,\pi_K$ 满足\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}，$\bm{\mu}_k\in\mathbb{R}^{D}$，$\bm{\Sigma}_k$ 为 $D\times D$ 实对称正定矩阵，并设 $p(\bm{x}_n\,|\,\bm{\mu},\bm{\Sigma},\bm{\pi})=\sum_{j=1}^{K}\pi_j\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_j,\bm{\Sigma}_j)>0$（$n=1,\cdots,N$），使后验分布\eqref{align:ch15-posterior}有定义。设在该后验分布下 $\bm{z}_1,\cdots,\bm{z}_N$ 相互独立。则指示变量的期望为
 \begin{align}
 \mathbb{E}[z_{nk}]
 &=\frac{\sum_{\bm{z}_n}z_{nk}\prod_{k'}\left[\pi_{k'}\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_{k'},\bm{\Sigma}_{k'})\right]^{z_{nk'}}}{\sum_{\bm{z}_n}\prod_{j}\left[\pi_j\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_j,\bm{\Sigma}_j)\right]^{z_{nj}}}\nonumber\\
 &=\frac{\pi_k\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\bm{\Sigma}_k)}{\sum_{j=1}^{K}\pi_j\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_j,\bm{\Sigma}_j)}=\gamma(z_{nk}),
 \label{align:ch15-responsibility-em}
 \end{align}
-即第 $k$ 个 Gauss 分量对数据点 $\bm{x}_n$ 所要承担的责任。因此，完整数据对数似然函数的期望为
+即第 $k$ 个 Gauss 分量对数据点 $\bm{x}_n$ 所要承担的责任。由于 $\bm{z}_n$ 只取 $K$ 个值，右端为有限和，故 $\mathbb{E}[z_{nk}]$ 存在且等于该值。因此，完整数据对数似然函数的期望为
 \begin{align}
-\mathbb{E}_{\bm{Z}}\!\left[\ln p(\bm{X},\bm{Z}\,|\,\bm{\mu},\bm{\Sigma},\bm{\pi})\right]=\sum_{n=1}^{N}\sum_{k=1}^{K}\gamma(z_{nk})\!\left\{\ln\pi_k+\ln\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\bm{\Sigma}_k)\right\}.
+\mathbb{E}_{\bm{Z}}\!\left[\ln p(\bm{X},\bm{Z}\,|\,\bm{\mu},\bm{\Sigma},\bm{\pi})\right]=\sum_{n=1}^{N}\sum_{k=1}^{K}\gamma(z_{nk})\!\left\{\ln\pi_k+\ln\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\bm{\Sigma}_k)\right\},
 \label{align:ch15-q-gmm}
 \end{align}
+右端为 $NK$ 个有限项之和，故该期望存在且有限。
 \end{proposition}
 \begin{proof}
 由\eqref{align:ch15-posterior}，$\bm{z}_n$ 之间相互独立，故对 $\bm{Z}$ 求期望可逐 $n$ 进行，而每个 $n$ 只涉及 $\bm{z}_n$ 的 $K$ 种取值。对固定的 $n$，分子中只有 $z_{nk}=1$ 的那一项非零（其余项含因子 $z_{nk}=0$），且该项中只有 $k'=k$ 的因子存活，值为 $\pi_k\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\bm{\Sigma}_k)$；分母是全部 $K$ 项之和，即 $\sum_j\pi_j\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_j,\bm{\Sigma}_j)$（公共的归一化常数在分子分母中约去）。相除即得\eqref{align:ch15-responsibility-em}。
@@ -164,8 +171,8 @@ p(\bm{Z}\,|\,\bm{X},\bm{\mu},\bm{\Sigma},\bm{\pi})\propto\prod_{n=1}^{N}\prod_{k
 对\eqref{align:ch15-complete-nll}取期望，并把 $\mathbb{E}[z_{nk}]=\gamma(z_{nk})$ 代入（期望是线性的，$\bm{\mu},\bm{\Sigma},\bm{\pi}$ 在 E 步骤中固定），即得\eqref{align:ch15-q-gmm}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-责任与期望; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-责任与期望; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题是“E 步骤到底算什么”的精确回答：它算的是\emph{指示变量的后验期望}，也就是责任。式\eqref{align:ch15-q-gmm}与完整数据的\eqref{align:ch15-complete-nll}形式完全一样，唯一的改动是把不可观测的 $z_{nk}\in\{0,1\}$ 换成它的条件期望 $\gamma(z_{nk})\in[0,1]$——这正是“把硬标签换成软标签”的数学含义，也是 EM 与 K 均值在公式层面的唯一差别。命题的成立依赖于后验在 $n$ 上的可分解性（\eqref{align:ch15-posterior}），而后者又依赖于数据独立同分布这一假设；若数据点之间存在依赖（例如序列数据，见\cref{figure:ch15-hmm}），责任就不能逐点独立计算。此外，$\gamma(z_{nk})$ 依赖全部 $K$ 个分量的参数（分母对所有 $j$ 求和），所以 E 步骤必须对每个数据点遍历所有分量，代价是 $O(NK)$。
 \end{remark}
 
@@ -199,19 +206,21 @@ p(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k)=\frac{1}{(2\pi\varepsilon)^{D/2}}\exp\!\l
 考虑极限 $\varepsilon\rightarrow0$，\eqref{align:ch15-soft-responsibility}右侧的分母中包含了以 $j$ 索引的多个趋于零的项。假设使得 $\|\bm{x}_n-\bm{\mu}_j\|^{2}$ 最小的特定项（例如 $j=l$ 的项）将会最慢地趋于零并支配该平方和。因此，数据点 $\bm{x}_n$ 的责任 $\gamma(z_{nk})$ 除了第 $l$ 项外都会趋于零，第 $l$ 项的责任 $\gamma(z_{nl})$ 将趋于 $1$。注意，这独立于 $\pi_k$ 的值，只要没有任何 $\pi_k$ 为零即可。
 
 \begin{proposition}[EM 算法的 K 均值极限]\label{proposition:ch15-EM的K均值极限}
-设 $\varepsilon>0$，各向同性协方差由\eqref{align:ch15-isotropic}给出，责任由\eqref{align:ch15-soft-responsibility}给出，$\pi_k>0$。设 $l(n)$ 是\emph{唯一}使 $\|\bm{x}_n-\bm{\mu}_j\|^{2}$ 最小的分量（即无并列）。则当 $\varepsilon\rightarrow0^{+}$ 时，
+设 $D\geqslant1$，$N\geqslant1$，$K\geqslant1$，数据 $\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)^{\mathsf T}\in\mathbb{R}^{N\times D}$，均值 $\bm{\mu}_k\in\mathbb{R}^{D}$，混合权重 $\pi_1,\cdots,\pi_K$ 满足 $0<\pi_k\leqslant1$ 与 $\sum_{k=1}^{K}\pi_k=1$，$\varepsilon>0$，并设 $\bm{\Sigma}_k=\varepsilon\bm{I}_D$；各向同性密度由\eqref{align:ch15-isotropic}给出，责任由\eqref{align:ch15-soft-responsibility}给出。对每个 $n\in\{1,\cdots,N\}$，设 $l(n)\in\{1,\cdots,K\}$ 是使 $\|\bm{x}_n-\bm{\mu}_j\|^{2}$ 取最小值的\emph{唯一}指标，即 $j\neq l(n)$ 时 $\|\bm{x}_n-\bm{\mu}_j\|^{2}>\|\bm{x}_n-\bm{\mu}_{l(n)}\|^{2}$。则：
+\begin{enumerate}
+\item 对每个 $n\in\{1,\cdots,N\}$ 与 $k\in\{1,\cdots,K\}$，$\lim_{\varepsilon\to0^{+}}\gamma(z_{nk})=r_{nk}$，其中 $r_{nk}=1$（$k=l(n)$）、$r_{nk}=0$（$k\neq l(n)$）；
+\item 记 $N_k^{r}=\sum_{n:\,l(n)=k}1$；若 $N_k^{r}>0$，则\eqref{align:ch15-mu-update}的右端当 $\varepsilon\to0^{+}$ 时趋于 K 均值的均值更新\eqref{align:ch15-kmeans-mu}；
+\item 记 $C(\varepsilon,\bm{\pi})=\sum_{n=1}^{N}\sum_{k=1}^{K}\gamma(z_{nk})\ln\pi_k-\frac{ND}{2}\ln(2\pi\varepsilon)$，则对每个 $\varepsilon>0$ 有恒等式
 \begin{align*}
-\gamma(z_{nk})\longrightarrow r_{nk}=
-\begin{cases}
-1, & k=l(n),\\
-0, & k\neq l(n),
-\end{cases}
+2\varepsilon\Big(\mathbb{E}_{\bm{Z}}\!\left[\ln p(\bm{X},\bm{Z}\,|\,\bm{\mu},\bm{\Sigma},\bm{\pi})\right]-C(\varepsilon,\bm{\pi})\Big)=-\sum_{n=1}^{N}\sum_{k=1}^{K}\gamma(z_{nk})\|\bm{x}_n-\bm{\mu}_k\|^{2},
 \end{align*}
-且 $\bm{\mu}_k$ 的重估方程\eqref{align:ch15-mu-update}退化为 K 均值的均值更新\eqref{align:ch15-kmeans-mu}；完整数据对数似然期望\eqref{align:ch15-q-gmm}则趋于
+令 $\varepsilon\to0^{+}$ 得完整数据对数似然的期望满足
 \begin{align}
-\mathbb{E}_{\bm{Z}}\!\left[\ln p(\bm{X},\bm{Z}\,|\,\bm{\mu},\bm{\Sigma},\bm{\pi})\right]\longrightarrow-\frac{1}{2}\sum_{n=1}^{N}\sum_{k=1}^{K}r_{nk}\|\bm{x}_n-\bm{\mu}_k\|^{2}+\text{常数}.
+\mathbb{E}_{\bm{Z}}\!\left[\ln p(\bm{X},\bm{Z}\,|\,\bm{\mu},\bm{\Sigma},\bm{\pi})\right]\longrightarrow-\frac{1}{2}\sum_{n=1}^{N}\sum_{k=1}^{K}r_{nk}\|\bm{x}_n-\bm{\mu}_k\|^{2}+\text{常数},
 \label{align:ch15-kmeans-limit}
 \end{align}
+该式的含义是：左端与 $-\frac{1}{2}\sum_{n,k}r_{nk}\|\bm{x}_n-\bm{\mu}_k\|^{2}$ 之差乘上 $2\varepsilon$ 后趋于 $0$，而左端本身当 $\varepsilon\to0^{+}$ 时发散到 $+\infty$。
+\end{enumerate}
 \end{proposition}
 \begin{proof}
 记 $d_{nk}=\|\bm{x}_n-\bm{\mu}_k\|^{2}/2$，则\eqref{align:ch15-soft-responsibility}可写成
@@ -227,25 +236,25 @@ p(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k)=\frac{1}{(2\pi\varepsilon)^{D/2}}\exp\!\l
 \begin{align*}
 \ln\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\varepsilon\bm{I})=-\frac{D}{2}\ln(2\pi\varepsilon)-\frac{1}{2\varepsilon}\|\bm{x}_n-\bm{\mu}_k\|^{2}.
 \end{align*}
-代入\eqref{align:ch15-q-gmm}：
+代入\eqref{align:ch15-q-gmm}，并利用 $\sum_{k=1}^{K}\gamma(z_{nk})=1$，得对每个 $\varepsilon>0$ 成立的恒等式
 \begin{align*}
 \mathbb{E}_{\bm{Z}}[\ln p]
-=\sum_{n}\sum_{k}\gamma(z_{nk})\ln\pi_k-\frac{ND}{2}\ln(2\pi\varepsilon)-\frac{1}{2\varepsilon}\sum_{n}\sum_{k}\gamma(z_{nk})\|\bm{x}_n-\bm{\mu}_k\|^{2},
+=\sum_{n=1}^{N}\sum_{k=1}^{K}\gamma(z_{nk})\ln\pi_k-\frac{ND}{2}\ln(2\pi\varepsilon)-\frac{1}{2\varepsilon}\sum_{n=1}^{N}\sum_{k=1}^{K}\gamma(z_{nk})\|\bm{x}_n-\bm{\mu}_k\|^{2}.
 \end{align*}
-其中用到 $\sum_k\gamma(z_{nk})=1$。前两项都与 $\bm{\mu}$ 无关，可合并为 $\bm{\mu}$ 的一个函数 $C(\varepsilon,\bm{\pi})$，于是
+右端前两项之和记作 $C(\varepsilon,\bm{\pi})$，它与 $\bm{\mu}$ 无关，于是
 \begin{align*}
-\mathbb{E}_{\bm{Z}}[\ln p]=-\frac{1}{2\varepsilon}\sum_{n}\sum_{k}\gamma(z_{nk})\|\bm{x}_n-\bm{\mu}_k\|^{2}+C(\varepsilon,\bm{\pi}).
+2\varepsilon\big(\mathbb{E}_{\bm{Z}}[\ln p]-C(\varepsilon,\bm{\pi})\big)=-\sum_{n=1}^{N}\sum_{k=1}^{K}\gamma(z_{nk})\|\bm{x}_n-\bm{\mu}_k\|^{2}.
 \end{align*}
-两边乘以 $2\varepsilon$ 并令 $\varepsilon\to0$：$2\varepsilon\,C\to0$（因为 $C$ 只含 $\ln\varepsilon$ 与 $\ln\pi_k$），而 $\gamma(z_{nk})\to r_{nk}$，故
-\begin{align*}
-2\varepsilon\big(\mathbb{E}_{\bm{Z}}[\ln p]-C\big)\longrightarrow-\sum_{n}\sum_{k}r_{nk}\|\bm{x}_n-\bm{\mu}_k\|^{2}=-J.
-\end{align*}
-这就是\eqref{align:ch15-kmeans-limit}的精确含义：其中的“$\to$”应读作“在差一个与 $\bm{\mu}$ 无关的常数（该常数可以依赖 $\varepsilon$）的意义下趋于”，因为 $\mathbb{E}_{\bm{Z}}[\ln p]$ 本身随 $\varepsilon\to0$ 发散。
+令 $\varepsilon\to0^{+}$：由已证的 $\gamma(z_{nk})\to r_{nk}$ 与有限求和，右端趋于 $-\sum_{n}\sum_{k}r_{nk}\|\bm{x}_n-\bm{\mu}_k\|^{2}$，即得\eqref{align:ch15-kmeans-limit}所写的渐近式。另一方面，$-\frac{ND}{2}\ln(2\pi\varepsilon)\to+\infty$，故 $\mathbb{E}_{\bm{Z}}[\ln p]$ 本身发散到 $+\infty$；这正是\eqref{align:ch15-kmeans-limit}只能按“相差 $C(\varepsilon,\bm{\pi})$ 并乘 $2\varepsilon$ 后取极限”来读的原因。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-EM的K均值极限; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-EM的K均值极限; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题给出了“K 均值是 GMM 的非概率极限”的精确含义：当所有分量共享同一个方差 $\varepsilon$ 且 $\varepsilon\to0$ 时，责任从软分配退化为\eqref{align:ch15-kmeans-assign}的硬分配，均值更新退化为质心公式，而 $\mathcal{Q}$ 的主项正是 $-J/2$（乘上 $2\varepsilon$ 之后）。因此在这个极限下“最大化完整数据对数似然的期望”等价于“最小化 K 均值的误差度量 $J$”（\eqref{align:ch15-kmeans-loss}）。推导中有两处需要条件：其一，$\pi_k>0$ 必须成立，否则分母可能为零；其二，$l(n)$ 必须唯一：若出现并列，那些并列项的指数都不衰减，$\gamma(z_{nk})$ 的极限会按 $\pi$ 的比例分摊，而不再退化为 $0/1$——此时硬分配本身就失去了定义。这也说明 K 均值不估计协方差——协方差被固定为 $\varepsilon\bm{I}$ 且不参与优化，只估计均值；混合系数\eqref{align:ch15-pi-update}虽然仍按 $N_k/N$ 更新，但它已不再影响 $\gamma$ 的极限，因而在算法中不再起积极作用。
+\end{remark}
+
+\begin{remark}（原文问题说明）
+\eqref{align:ch15-kmeans-limit}按字面不是通常意义下的极限等式：其左端含因子 $-\frac{ND}{2}\ln(2\pi\varepsilon)$，当 $\varepsilon\to0^{+}$ 时发散到 $+\infty$，而右端有限。\cref{proposition:ch15-EM的K均值极限}已把该式的确切含义写成恒等式：相差一个仅依赖 $(\varepsilon,\bm{\pi})$ 的加性项、并乘 $2\varepsilon$ 之后再取极限。引用该式作数值比较时须按这一读法使用。
 \end{remark}
 
 最后，在极限 $\varepsilon\rightarrow0$ 下，用来给出完整数据对数似然函数期望的\eqref{align:ch15-q-gmm}（见\cref{exercise:ch15-12}），就可以变为\eqref{align:ch15-kmeans-limit}。因此，我们看到在这个极限下，完整数据对数似然函数的最大化期望等价于最小化 K 均值算法的误差度量 $J$，$J$ 由\eqref{align:ch15-kmeans-loss}给出。注意，K 均值算法不估计聚类的协方差，只估计聚类的均值。
@@ -255,16 +264,16 @@ p(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k)=\frac{1}{(2\pi\varepsilon)^{D/2}}\exp\!\l
 在本章中，目前主要关注的是由 Gauss 混合分布描述的连续变量模型。为了在不同的情境中阐述 EM 算法，现在讨论混合建模的另一个例子——由 Bernoulli 分布描述的离散二元变量混合模型。这个模型也称潜在类别分析模型（latent class analysis model）（Lazarsfeld and Henry, 1968; McLachlan and Peel, 2000）。
 
 \begin{definition}[多元 Bernoulli 分布]\label{definition:ch15-多元Bernoulli}
-考虑一组 $D$ 个二元变量 $x_i\in\{0,1\}$，$i=1,\cdots,D$，其中的每一个二元变量都服从参数为 $\mu_i$ 的 Bernoulli 分布，因此
+设 $D\geqslant1$，$\bm{x}=(x_1,\cdots,x_D)^{\mathsf T}\in\{0,1\}^{D}$，$\bm{\mu}=(\mu_1,\cdots,\mu_D)^{\mathsf T}\in[0,1]^{D}$。若 $\bm{x}$ 的概率质量函数由
 \begin{align}
-p(\bm{x}\,|\,\bm{\mu})=\prod_{i=1}^{D}\mu_i^{x_i}(1-\mu_i)^{1-x_i},
+p(\bm{x}\,|\,\bm{\mu})=\prod_{i=1}^{D}\mu_i^{x_i}(1-\mu_i)^{1-x_i}
 \label{align:ch15-bernoulli}
 \end{align}
-其中 $\bm{x}=(x_1,\cdots,x_D)^{\mathsf T}$，$\bm{\mu}=(\mu_1,\cdots,\mu_D)^{\mathsf T}$。可以看出，在给定 $\bm{\mu}$ 的情况下，各个变量 $x_i$ 是独立的。称\eqref{align:ch15-bernoulli}为参数为 $\bm{\mu}$ 的\textbf{多元 Bernoulli 分布}。
+给出（约定 $0^{0}=1$），则 $p(\bm{x}\,|\,\bm{\mu})$ 称为参数为 $\bm{\mu}$ 的\textbf{多元 Bernoulli 分布}。此时 $x_1,\cdots,x_D$ 在给定 $\bm{\mu}$ 下相互独立，$\mathbb{P}(x_i=1)=\mu_i$，且由二项式定理得 $\sum_{\bm{x}\in\{0,1\}^{D}}p(\bm{x}\,|\,\bm{\mu})=\prod_{i=1}^{D}(\mu_i+(1-\mu_i))=1$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch15-多元Bernoulli; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch15-多元Bernoulli; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个定义把 $D$ 个独立的 Bernoulli 变量打包成一个向量值分布。定义中的独立性假设（给定 $\bm{\mu}$ 时各 $x_i$ 独立）是\textbf{分量内部}的假设，它使联合概率分解为 $D$ 个一维因子的乘积，从而使对数似然变成 $D$ 项之和——这是混合模型能够逐维解释参数 $\mu_{ki}$ 的前提。参数空间为 $0\leqslant\mu_i\leqslant1$；若某个 $\mu_i$ 取到端点 $0$ 或 $1$，对应维度的似然退化为示性函数，取对数后为 $-\infty$（当观测与端点矛盾时）。注意单个多元 Bernoulli 只能描述“各维独立”的二值数据，无法刻画像素之间的相关性；下一段引入混合正是为了突破这一限制。
 \end{remark}
 
@@ -277,14 +286,14 @@ p(\bm{x}\,|\,\bm{\mu})=\prod_{i=1}^{D}\mu_i^{x_i}(1-\mu_i)^{1-x_i},
 \end{align}
 
 \begin{proposition}[Bernoulli 分布的均值与协方差]\label{proposition:ch15-Bernoulli矩}
-设 $\bm{x}$ 的分布由\eqref{align:ch15-bernoulli}给出，则\eqref{align:ch15-bernoulli-mean}与\eqref{align:ch15-bernoulli-cov}成立。
+设 $D\geqslant1$，$\bm{x}=(x_1,\cdots,x_D)^{\mathsf T}\in\{0,1\}^{D}$ 的概率质量函数由\eqref{align:ch15-bernoulli}给出，参数 $\bm{\mu}=(\mu_1,\cdots,\mu_D)^{\mathsf T}\in[0,1]^{D}$。则 $\mathbb{E}[\bm{x}]=\bm{\mu}$、$\operatorname{cov}[\bm{x}]=\operatorname{diag}\{\mu_1(1-\mu_1),\cdots,\mu_D(1-\mu_D)\}$，即\eqref{align:ch15-bernoulli-mean}与\eqref{align:ch15-bernoulli-cov}成立；这里 $\operatorname{cov}[\bm{x}]\in\mathbb{R}^{D\times D}$ 为实对称半正定矩阵，且由于 $x_i$ 有界，全部一阶与二阶矩存在。
 \end{proposition}
 \begin{proof}
 由\eqref{align:ch15-bernoulli}，各分量独立且 $p(x_i=1)=\mu_i$、$p(x_i=0)=1-\mu_i$，故 $\mathbb{E}[x_i]=\mu_i$，即\eqref{align:ch15-bernoulli-mean}。再由独立性，$i\neq j$ 时 $\operatorname{cov}[x_i,x_j]=0$；而 $\operatorname{var}[x_i]=\mathbb{E}[x_i^{2}]-\mu_i^{2}=\mu_i-\mu_i^{2}=\mu_i(1-\mu_i)$，即\eqref{align:ch15-bernoulli-cov}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-Bernoulli矩; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-Bernoulli矩; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这两条结果与\cref{proposition:ch03-Bernoulli矩}完全一致，只是逐分量并排写成向量形式。注意协方差矩阵是对角的，这直接反映了“给定 $\bm{\mu}$ 时各维独立”这一假设：单个 Bernoulli 乘积模型无法刻画变量之间的相关性。条件 $0\leqslant\mu_i\leqslant1$ 保证 $\operatorname{var}[x_i]=\mu_i(1-\mu_i)\geqslant0$；当 $\mu_i=0$ 或 $1$ 时该维退化，方差为零。这一“对角”性质正是下一段要引入混合的原因：混合之后的协方差\eqref{align:ch15-bmm-cov}一般不再是对角阵。
 \end{remark}
 
@@ -301,11 +310,11 @@ p(\bm{x}\,|\,\bm{\mu}_k)=\prod_{i=1}^{D}\mu_{ki}^{x_i}(1-\mu_{ki})^{1-x_i}.
 混合系数满足\eqref{align:ch15-pi-bounds}和\eqref{align:ch15-pi-sum}所示的条件。
 
 \begin{definition}[混合 Bernoulli 分布]\label{definition:ch15-混合Bernoulli分布}
-称由\eqref{align:ch15-bernoulli-mixture}与\eqref{align:ch15-bernoulli-component}给出的分布为 $K$ 个分量的\textbf{混合 Bernoulli 分布}（mixture of Bernoullis），其中 $\pi_k$ 为混合系数，$\bm{\mu}_k$ 为第 $k$ 个分量的参数。
+设 $D\geqslant1$，$K\geqslant1$，$\bm{x}\in\{0,1\}^{D}$，分量参数 $\bm{\mu}_k=(\mu_{k1},\cdots,\mu_{kD})^{\mathsf T}\in[0,1]^{D}$（$k=1,\cdots,K$），混合权重 $\pi_1,\cdots,\pi_K$ 满足\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}。若 $\bm{x}$ 的概率质量函数由\eqref{align:ch15-bernoulli-mixture}给出，其中第 $k$ 个分量由\eqref{align:ch15-bernoulli-component}给出、即 $p(\bm{x}\,|\,\bm{\mu}_k)=\prod_{i=1}^{D}\mu_{ki}^{x_i}(1-\mu_{ki})^{1-x_i}$，则称 $p(\bm{x}\,|\,\bm{\mu},\bm{\pi})$ 为 $K$ 个分量的\textbf{混合 Bernoulli 分布}（mixture of Bernoullis）；此时 $\pi_k$ 称为第 $k$ 个\textbf{混合系数}，$\bm{\mu}_k$ 称为第 $k$ 个分量的\textbf{参数}，且 $p(\bm{x}\,|\,\bm{\mu},\bm{\pi})$ 在 $\{0,1\}^{D}$ 上求和为 $1$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch15-混合Bernoulli分布; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch15-混合Bernoulli分布; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 混合层的作用是让各维之间产生相关性：每个分量内部各维仍独立，但不同分量在不同位置给出高概率，叠加后 $p(\bm{x}\,|\,\bm{\mu},\bm{\pi})$ 一般不再分解为逐维乘积（见\cref{proposition:ch15-Bernoulli混合矩}）。这与 Gauss 混合的构造完全平行，只是把分量密度从 $\mathcal{N}$ 换成\eqref{align:ch15-bernoulli-component}。它适用的数据是二值特征向量，如图像的黑白像素或文本的词袋表示；由于分量内部独立，它不能刻画“同一分量内像素之间的局部相关性”，若要刻画需改用更结构化的分量。约束\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}保证\eqref{align:ch15-bernoulli-mixture}是合法密度，理由与\cref{definition:ch15-Gauss混合分布}处相同。
 \end{remark}
 
@@ -319,7 +328,7 @@ p(\bm{x}\,|\,\bm{\mu}_k)=\prod_{i=1}^{D}\mu_{ki}^{x_i}(1-\mu_{ki})^{1-x_i}.
 其中 $\bm{\Sigma}_k=\operatorname{diag}\{\mu_{ki}(1-\mu_{ki})\}$。由于协方差矩阵 $\operatorname{cov}[\bm{x}]$ 不再是对角矩阵，这个混合分布能够捕捉变量之间的相关性，这与单个 Bernoulli 分布不同。
 
 \begin{proposition}[混合 Bernoulli 分布的均值与协方差]\label{proposition:ch15-Bernoulli混合矩}
-设 $p(\bm{x}\,|\,\bm{\mu},\bm{\pi})$ 由\eqref{align:ch15-bernoulli-mixture}给出，第 $k$ 个分量的均值与协方差为 $\bm{\mu}_k$ 与 $\bm{\Sigma}_k$。则\eqref{align:ch15-bmm-mean}与\eqref{align:ch15-bmm-cov}成立。
+设 $D\geqslant1$，$K\geqslant1$，$\bm{x}\in\{0,1\}^{D}$ 的概率质量函数由\eqref{align:ch15-bernoulli-mixture}给出，第 $k$ 个分量由\eqref{align:ch15-bernoulli-component}给出、参数为 $\bm{\mu}_k\in[0,1]^{D}$，混合权重 $\pi_1,\cdots,\pi_K$ 满足\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}；记 $\bm{\Sigma}_k=\operatorname{diag}\{\mu_{k1}(1-\mu_{k1}),\cdots,\mu_{kD}(1-\mu_{kD})\}$ 为第 $k$ 个分量的协方差矩阵。则\eqref{align:ch15-bmm-mean}与\eqref{align:ch15-bmm-cov}成立，即 $\mathbb{E}[\bm{x}]=\sum_{k=1}^{K}\pi_k\bm{\mu}_k$ 且 $\operatorname{cov}[\bm{x}]=\sum_{k=1}^{K}\pi_k(\bm{\Sigma}_k+\bm{\mu}_k\bm{\mu}_k^{\mathsf T})-\mathbb{E}[\bm{x}]\mathbb{E}[\bm{x}]^{\mathsf T}\in\mathbb{R}^{D\times D}$；右端为有限和，故全部一阶与二阶矩存在。
 \end{proposition}
 \begin{proof}
 引入潜变量 $\bm{z}$，则 $p(\bm{x}\,|\,\bm{\mu},\bm{\pi})=\sum_k p(\bm{z}_k=1)p(\bm{x}\,|\,\bm{z}_k=1)$。由全期望公式，
@@ -331,8 +340,8 @@ p(\bm{x}\,|\,\bm{\mu}_k)=\prod_{i=1}^{D}\mu_{ki}^{x_i}(1-\mu_{ki})^{1-x_i}.
 对协方差用全协方差公式：$\operatorname{cov}[\bm{x}]=\mathbb{E}\big[\operatorname{cov}[\bm{x}\,|\,\bm{z}]\big]+\operatorname{cov}\big[\mathbb{E}[\bm{x}\,|\,\bm{z}]\big]$。第一项为 $\sum_k\pi_k\bm{\Sigma}_k$；第二项为 $\sum_k\pi_k\bm{\mu}_k\bm{\mu}_k^{\mathsf T}-\mathbb{E}[\bm{x}]\mathbb{E}[\bm{x}]^{\mathsf T}$。相加即得\eqref{align:ch15-bmm-cov}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-Bernoulli混合矩; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-Bernoulli混合矩; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch15-bmm-cov}的两项各有含义：$\sum_k\pi_k\bm{\Sigma}_k$ 是“分量内部”的方差（各分量自身的对角阵），而 $\sum_k\pi_k\bm{\mu}_k\bm{\mu}_k^{\mathsf T}-\mathbb{E}[\bm{x}]\mathbb{E}[\bm{x}]^{\mathsf T}$ 是“分量之间”的方差（由各分量均值散布造成）。即使每个 $\bm{\Sigma}_k$ 都是对角的，第二项一般含有非对角元 $\sum_k\pi_k\mu_{ki}\mu_{kj}-\mathbb{E}[x_i]\mathbb{E}[x_j]$，因此总的协方差不再是——这就是混合模型能够刻画相关性的原因。这一分解与 Gauss 混合的对应公式（\cref{proposition:ch03-Gauss矩}一类的恒等式）同源，只是把连续情形换成了离散情形。注意 $\mu_{ki}\in[0,1]$ 保证了每个 $\bm{\Sigma}_k$ 半正定，从而 $\operatorname{cov}[\bm{x}]$ 半正定。
 \end{remark}
 
@@ -394,7 +403,7 @@ N_k&=\sum_{n=1}^{N}\gamma(z_{nk}),
 这代表了一个直观合理的结果，即分量 $k$ 的混合系数由数据集中被该分量解释的数据点的有效比例给出。
 
 \begin{proposition}[混合 Bernoulli 分布的 M 步骤]\label{proposition:ch15-Bernoulli混合EM}
-设 $N_k=\sum_n\gamma(z_{nk})>0$。则在约束 $\sum_k\pi_k=1$ 下关于 $(\bm{\mu},\bm{\pi})$ 最大化\eqref{align:ch15-bmm-q}的解由\eqref{align:ch15-bmm-mu}与\eqref{align:ch15-bmm-pi}给出，其中 $\bar{\bm{x}}_k$ 由\eqref{align:ch15-bmm-xbar}定义，且 $\bm{\mu}_k=\bar{\bm{x}}_k$ 在分量意义下成立。
+设 $N\geqslant1$，$D\geqslant1$，$K\geqslant1$，数据 $\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)^{\mathsf T}\in\{0,1\}^{N\times D}$，责任 $\gamma(z_{nk})\in[0,1]$ 由\eqref{align:ch15-bmm-responsibility}给出并在 M 步骤中视为固定常数，$N_k=\sum_{n=1}^{N}\gamma(z_{nk})>0$，$\bar{\bm{x}}_k$ 由\eqref{align:ch15-bmm-xbar}定义。设对每个 $k\in\{1,\cdots,K\}$ 与 $i\in\{1,\cdots,D\}$ 有 $0<\sum_{n=1}^{N}\gamma(z_{nk})x_{ni}<N_k$。则 $\mathcal{Q}$ 函数\eqref{align:ch15-bmm-q}在约束 $\mu_{ki}\in(0,1)$、$\pi_k>0$、$\sum_{k=1}^{K}\pi_k=1$ 下存在唯一最大值点，且该点由\eqref{align:ch15-bmm-mu}与\eqref{align:ch15-bmm-pi}给出，即 $\mu_{ki}=\sum_{n=1}^{N}\gamma(z_{nk})x_{ni}/N_k$、$\pi_k=N_k/N$；写成向量形式即 $\bm{\mu}_k=\bar{\bm{x}}_k$。
 \end{proposition}
 \begin{proof}
 关于 $\mu_{ki}$ 求导。\eqref{align:ch15-bmm-q}中与 $\mu_{ki}$ 有关的项为
@@ -411,11 +420,13 @@ N_k&=\sum_{n=1}^{N}\gamma(z_{nk}),
 \end{align*}
 整理即 $\mu_{ki}\sum_n\gamma(z_{nk})=\sum_n\gamma(z_{nk})x_{ni}$，故 $\mu_{ki}=\sum_n\gamma(z_{nk})x_{ni}/N_k$，即\eqref{align:ch15-bmm-mu}；写成向量形式就是 $\bm{\mu}_k=\bar{\bm{x}}_k$。
 
-关于 $\pi_k$，与\cref{proposition:ch15-完全数据对数似然}的证明完全相同：含 $\pi_k$ 的项只有 $\sum_n\gamma(z_{nk})\ln\pi_k$（把 $z_{nk}$ 换成其期望），用 Lagrange 乘子得 $\pi_k=N_k/N$，即\eqref{align:ch15-bmm-pi}。
+关于 $\pi_k$，\eqref{align:ch15-bmm-q}中含 $\pi_k$ 的项只有 $\sum_{n=1}^{N}\gamma(z_{nk})\ln\pi_k$。引入 Lagrange 乘子 $\lambda$，对 $\pi_k$ 求偏导并置零得 $N_k/\pi_k+\lambda=0$，即 $\pi_k=-N_k/\lambda$；对 $k$ 求和并用 $\sum_k\pi_k=1$ 与 $\sum_{k=1}^{K}N_k=\sum_{n=1}^{N}\sum_{k=1}^{K}\gamma(z_{nk})=N$，得 $1=-N/\lambda$，即 $\lambda=-N$，代回得 $\pi_k=N_k/N$，即\eqref{align:ch15-bmm-pi}。
+
+最后说明最大值点的唯一性。\eqref{align:ch15-bmm-q}关于 $(\bm{\mu},\bm{\pi})$ 可分成互不耦合的两部分：含 $\mu_{ki}$ 的部分为 $\sum_{n}\gamma(z_{nk})[x_{ni}\ln\mu_{ki}+(1-x_{ni})\ln(1-\mu_{ki})]$，其二是 $\sum_{k}N_k\ln\pi_k$ 加与参数无关的项。前者的二阶导数为 $-\sum_n\gamma(z_{nk})[x_{ni}/\mu_{ki}^{2}+(1-x_{ni})/(1-\mu_{ki})^{2}]<0$，故在每个坐标上严格凹；后者在 $\pi_k>0$、$\sum_k\pi_k=1$ 上严格凹（$N_k>0$ 时 $\sum_kN_k\ln\pi_k$ 的 Hessian 为 $-\operatorname{diag}\{N_k/\pi_k^{2}\}$ 在约束切空间上负定）。由假设 $0<\sum_n\gamma(z_{nk})x_{ni}<N_k$，上面求得的 $\mu_{ki}$ 与 $\pi_k$ 均为内点，且边界处目标函数趋于 $-\infty$，故该驻点就是唯一最大值点。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-Bernoulli混合EM; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-Bernoulli混合EM; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题与 Gauss 混合的\cref{proposition:ch15-GMM最大似然}结构完全同构：均值更新是“责任加权的平均”，混合系数更新是“责任的平均”。差别在于 Bernoulli 分量的均值和方差不是独立的——一旦 $\mu_{ki}$ 确定，方差就是 $\mu_{ki}(1-\mu_{ki})$，所以 M 步骤只需求 $\bm{\mu}$，不必求协方差。这也是混合 Bernoulli 比混合 Gauss 少一组参数的原因。条件 $N_k>0$ 不可省：若某个分量在 E 步骤后没有得到任何质量，则 $\mu_{ki}$ 的方程两边同时为零，分母 $N_k=0$ 使\eqref{align:ch15-bmm-mu}无定义；数值上应删除该分量或重新初始化。另外，$\mu_{ki}\in(0,1)$ 才使导数有意义（端点处 $\ln\mu_{ki}$ 或 $\ln(1-\mu_{ki})$ 发散），但若所有 $x_{ni}$ 在该分量上的加权全为 $1$，最优解会趋向端点 $1$，此时应按约束 $0\leqslant\mu_{ki}\leqslant1$ 取边界值。
 \end{remark}
 

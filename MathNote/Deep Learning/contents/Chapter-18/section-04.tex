@@ -23,7 +23,7 @@
 \end{align*}
 \end{theorem}
 
-\begin{proof}（重构新增）
+\begin{proof}
 记 $\bm{\varphi}_t$ 为\eqref{align:ch18-流ode}的流映射（$\bm{z}(0)\mapsto\bm{z}(t)$），并记
 \begin{align*}
   \bm{T}_t=\frac{\partial\bm{\varphi}_t}{\partial\bm{z}(0)},\qquad \bm{A}(t)=\frac{\partial\bm{f}}{\partial\bm{z}}\big(\bm{z}(t),\bm{w}\big).
@@ -53,8 +53,8 @@
 两端对 $t$ 求导（左端沿轨迹求全导数，$\ln p_0(\bm{z}(0))$ 与 $t$ 无关），即得\eqref{align:ch18-瞬时变量替换}。把\eqref{align:ch18-瞬时变量替换}从 $0$ 积分到 $T$ 即得定理中的累积形式。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch18-瞬时变量替换; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:ch18-瞬时变量替换; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条定理是连续流的核心，可以看成一维连续性方程 $\partial_t q+\partial_z(qf)=0$ 的积分形式，也可以看成离散流\eqref{align:ch18-change-var}的“无穷小版本”：在极短时间 $\delta t$ 内，流映射近似为 $\bm{z}+\delta t\,\bm{f}(\bm{z})$，其 Jacobian 是 $\bm{I}+\delta t\,\bm{A}$，由 $\det(\bm{I}+\delta t\bm{A})=1+\delta t\operatorname{tr}\bm{A}+\mathcal{O}(\delta t^{2})$ 得
 \begin{align*}
   \ln p\big(\bm{z}(t+\delta t)\big)-\ln p\big(\bm{z}(t)\big)\approx-\delta t\operatorname{tr}\bm{A}(t),
@@ -72,8 +72,8 @@
 设 $p(\bm{z}(0))$ 是输入向量上的基础分布，$\bm{z}(t)$ 满足\eqref{align:ch18-流ode}，$p(\bm{z}(t))$ 按\eqref{align:ch18-瞬时变量替换}演化。称由\eqref{align:ch18-流ode}定义的、把 $p(\bm{z}(0))$ 变换为 $p(\bm{z}(T))$ 的标准化流为\textbf{连续标准化流}（continuous normalizing flow），并把定理中的累积形式称为它的密度计算公式。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch18-连续标准化流; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch18-连续标准化流; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 连续标准化流把\cref{definition:ch18-标准化流}中的“有限个可逆层”换成了“一个连续时间的过程”：层数不再是整数，而是由求解器自适应选择的求值点；每层的对数行列式贡献被换成 $\operatorname{tr}\bm{A}(t)$ 在时间上的积分。因此它是离散标准化流的“无穷深”极限，也是\cref{proposition:ch18-分层流}中“各层对数行列式之和”的连续版本——求和变成了积分。
 
 条件方面：基础分布要简单、可采样、对数密度可算（例如标准 Gauss）；$\bm{f}$ 要满足\cref{theorem:ch18-瞬时变量替换}的正则性条件，使流映射是微分同胚，从而\eqref{align:ch18-流ode}确实定义了一个可逆变换。与离散流不同的是，这里不需要显式构造逆映射：反向只需把时间从 $T$ 积分回 $0$，同一个求解器即可完成。
@@ -96,7 +96,7 @@
 设 $D$ 为数据维数，$\bm{A}$ 为 $D\times D$ 矩阵。则：（i）计算 $\det\bm{A}$ 一般需要 $\mathcal{O}(D^{3})$ 次运算，而计算 $\operatorname{tr}(\bm{A})$ 只需 $\mathcal{O}(D)$ 次运算；（ii）若 $\bm{A}$ 是三角矩阵，则 $\det\bm{A}$ 是对角元之积，也只需 $\mathcal{O}(D)$ 次运算；（iii）形成 $\bm{A}=\partial\bm{f}/\partial\bm{z}$ 需要 $D$ 次 Jacobian-向量积，每次的代价与前向求值 $\bm{f}$ 同阶（记为 $\mathcal{O}(D)$），故精确计算 $\operatorname{tr}(\bm{A})$ 或三角矩阵的行列式共需 $\mathcal{O}(D^{2})$ 的成本；（iv）若改用\eqref{align:ch18-迹估计}的随机估计，只需 $M$ 次矩阵-向量积，代价为 $\mathcal{O}(MD)$，取 $M=1$ 时为 $\mathcal{O}(D)$。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 （i）一般矩阵的行列式用 LU 分解计算，分解本身是 $\mathcal{O}(D^{3})$，再乘对角元是 $\mathcal{O}(D)$；迹只是把 $D$ 个对角元相加，是 $\mathcal{O}(D)$。
 
 （ii）三角矩阵的 LU 分解不需要消元（行列式即对角元之积），故为 $\mathcal{O}(D)$。
@@ -106,8 +106,8 @@
 （iv）\eqref{align:ch18-迹估计}只需对每个样本计算 $\bm{\varepsilon}_m^{\mathsf T}\bm{A}\bm{\varepsilon}_m$，即一次向量-Jacobian 积再与 $\bm{\varepsilon}_m$ 内积，代价 $\mathcal{O}(D)$；$M$ 个样本共 $\mathcal{O}(MD)$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch18-密度代价; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch18-密度代价; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条结论解释了连续流相对于离散流的计算优势与代价。优势是：离散流要对每层算一次行列式，即便每层是三角的也要 $\mathcal{O}(D)$，层数一多就累积；连续流把“每层的行列式”换成“迹的时间积分”，而迹的精确计算只需 $\mathcal{O}(D^{2})$（主要开销是形成 Jacobian），与层数无关。代价是：迹仍然需要 $D$ 次 Jacobian-向量积，当 $D$ 很大时 $\mathcal{O}(D^{2})$ 仍不可忽视，于是有了下面的随机估计。
 
 条件方面：（i）中的 $\mathcal{O}(D^{3})$ 是一般稠密矩阵的代价，若 $\bm{A}$ 有特殊结构（三角、低秩、对角加低秩）则可大幅降低；（iii）中“每次 Jacobian-向量积与前向同阶”对逐层网络成立，对一般黑箱向量场则以实际求值代价为准。原文把“计算 Jacobian 的各个元素需要单独的前向传播”计为 $\mathcal{O}(D)$ 次运算，与这里的记账一致：$D$ 次求值，每次 $\mathcal{O}(D)$。
@@ -130,7 +130,7 @@
 因此对任意 $M\geqslant1$ 与独立同分布的 $\bm{\varepsilon}_1,\cdots,\bm{\varepsilon}_M$，\eqref{align:ch18-迹估计}右端的期望恰为 $\operatorname{tr}(\bm{A})$，即该估计量是无偏的。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 由二次型的展开，
 \begin{align*}
   \mathbb{E}\left[\bm{\varepsilon}^{\mathsf T}\bm{A}\bm{\varepsilon}\right]=\mathbb{E}\left[\sum_{i,j}A_{ij}\varepsilon_i\varepsilon_j\right]=\sum_{i,j}A_{ij}\,\mathbb{E}\left[\varepsilon_i\varepsilon_j\right].
@@ -144,8 +144,8 @@ $\bm{\varepsilon}$ 零均值、协方差为 $\bm{I}$，即 $\mathbb{E}[\varepsil
 与 $M$ 无关，故估计量无偏。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch18-迹估计无偏; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch18-迹估计无偏; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 无偏性只用到前两阶矩，与 $\bm{\varepsilon}$ 的具体分布无关；取 Gauss 只是为了让采样方便、并便于分析方差。这里不需要 $\bm{A}$ 对称，也不需要它正定——二次型的期望只依赖对角元，非对角元在 $\mathbb{E}[\varepsilon_i\varepsilon_j]=\delta_{ij}$ 处被消掉。
 
 \textbf{关于“单位协方差”。} 原文举例写作 $\mathcal{N}(0,1)$，而在 $D$ 维情形应理解为每个分量独立的标准 Gauss 分布，即 $\bm{\varepsilon}\sim\mathcal{N}(\bm{0},\bm{I})$；若各分量方差不等于 $1$，则 $\mathbb{E}[\bm{\varepsilon}^{\mathsf T}\bm{A}\bm{\varepsilon}]=\operatorname{tr}(\bm{A}\bm{\Sigma})$，不再是 $\operatorname{tr}(\bm{A})$，这会引入系统偏差。

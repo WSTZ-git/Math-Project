@@ -11,16 +11,20 @@
 为了方便起见，需要先约定一些符号来描述数据点到聚类的分配。
 
 \begin{definition}[K 均值聚类]\label{definition:ch15-K均值聚类}
-对每个数据点 $\bm{x}_n$ 引入一组二进制指示变量 $r_{nk}\in\{0,1\}$，其中 $k=1,\cdots,K$。这些指示变量描述了数据点 $\bm{x}_n$ 会被分配到哪个聚类：如果数据点 $\bm{x}_n$ 被分配到聚类 $k$，那么 $r_{nk}=1$，并且对于 $j\neq k$，$r_{nj}=0$。这是 1-of-$K$ 编码方案的一个例子。定义误差函数
+设 $N\geqslant1$，$K\geqslant1$，$D\geqslant1$，数据点 $\bm{x}_n\in\mathbb{R}^{D}$（$n=1,\cdots,N$），原型向量 $\bm{\mu}_k\in\mathbb{R}^{D}$（$k=1,\cdots,K$）；设指示变量 $r_{nk}\in\{0,1\}$ 满足
+\begin{align*}
+\sum_{k=1}^{K}r_{nk}=1,\qquad n=1,\cdots,N,
+\end{align*}
+即每个数据点恰被分配到一个聚类（1-of-$K$ 编码）：当 $\bm{x}_n$ 被分配到聚类 $k$ 时 $r_{nk}=1$，且对 $j\neq k$ 有 $r_{nj}=0$。定义误差函数
 \begin{align}
 J=\sum_{n=1}^{N}\sum_{k=1}^{K}r_{nk}\,\|\bm{x}_n-\bm{\mu}_k\|^{2},
 \label{align:ch15-kmeans-loss}
 \end{align}
-它代表每个数据点到分配给它的聚类向量 $\bm{\mu}_k$ 的距离平方和。寻找使\eqref{align:ch15-kmeans-loss}最小的分配 $\{r_{nk}\}$ 与原型向量 $\{\bm{\mu}_k\}$ 的过程，称为 K 均值聚类（K-means clustering）。
+其中 $\|\cdot\|$ 为 $\mathbb{R}^{D}$ 上的 Euclidean 范数；$J$ 是每个数据点到其所属原型向量的距离平方和。寻找使\eqref{align:ch15-kmeans-loss}最小的分配 $\{r_{nk}\}$ 与原型向量 $\{\bm{\mu}_k\}$ 的过程，称为 K 均值聚类（K-means clustering）；此时称 $\{r_{nk}\}$ 为\textbf{硬分配}，$\bm{\mu}_k$ 为第 $k$ 个聚类的\textbf{原型}（聚类中心）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch15-K均值聚类; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch15-K均值聚类; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 引入误差函数\eqref{align:ch15-kmeans-loss}的动机是把“聚类”这一几何直观翻译成一个可以优化的标量：$r_{nk}$ 只负责“归属”，$\bm{\mu}_k$ 只负责“位置”，而 $J$ 是每个点到其所属原型的距离平方的总和。之所以取平方而不用距离本身，是因为平方距离对 $\bm{\mu}_k$ 可微，从而 M 步骤能写成闭式解\eqref{align:ch15-kmeans-mu}；若改用欧几里得距离，M 步骤就退化为求几何中位数，一般没有闭式解。条件 $r_{nk}\in\{0,1\}$ 与“每个 $n$ 恰有一个 $k$ 使 $r_{nk}=1$”合起来说明分配是\textbf{硬}的：不允许一个点同时以 $0.4$ 和 $0.6$ 的权重属于两个聚类，这正是\cref{section:ch15-Gauss混合分布}要用概率模型放松的地方。$K$ 在这里被当作已知常数，这是 K 均值作为“给定 $K$ 的划分算法”的边界；如何选 $K$ 属于模型选择问题，不在\eqref{align:ch15-kmeans-loss}的优化范围内。此外，$J$ 对联合变量 $(\{r_{nk}\},\{\bm{\mu}_k\})$ 不是凸函数，所以\cref{proposition:ch15-K均值闭式更新}只能保证交替最小化的每一步最优，不能保证到达全局最优。
 \end{remark}
 
@@ -48,7 +52,12 @@ r_{nk}=
 \end{align}
 
 \begin{proposition}[K 均值算法的两步闭式更新]\label{proposition:ch15-K均值闭式更新}
-固定 $\{\bm{\mu}_k\}$ 时，使\eqref{align:ch15-kmeans-loss}最小的分配由\eqref{align:ch15-kmeans-assign}给出；固定 $\{r_{nk}\}$ 且第 $k$ 个聚类非空时，使\eqref{align:ch15-kmeans-loss}最小的原型向量由\eqref{align:ch15-kmeans-mu}唯一给出。因此交替执行“按最近中心分配”与“按分配求质心”这两个步骤，每一步都使 $J$ 单调不增。
+设 $N\geqslant1$，$K\geqslant1$，$D\geqslant1$，数据点 $\bm{x}_n\in\mathbb{R}^{D}$ 与原型向量 $\bm{\mu}_k\in\mathbb{R}^{D}$ 给定，$r_{nk}\in\{0,1\}$ 满足 $\sum_{k=1}^{K}r_{nk}=1$，误差函数 $J$ 由\eqref{align:ch15-kmeans-loss}给出。则：
+\begin{enumerate}
+\item 固定 $\{\bm{\mu}_k\}$ 时，使 $J$ 最小的分配由\eqref{align:ch15-kmeans-assign}给出，且 $J$ 的最小值为 $\sum_{n=1}^{N}\min_{k}\|\bm{x}_n-\bm{\mu}_k\|^{2}$；若对某个 $n$ 存在 $j\neq k$ 使 $\|\bm{x}_n-\bm{\mu}_j\|=\|\bm{x}_n-\bm{\mu}_k\|$ 且两者都最小，则最小分配不唯一，否则唯一；
+\item 固定 $\{r_{nk}\}$ 时，$J=\sum_{k=1}^{K}\sum_{n=1}^{N}r_{nk}\|\bm{x}_n-\bm{\mu}_k\|^{2}$ 关于各 $\bm{\mu}_k$ 的项互相分离；若第 $k$ 个聚类非空（$N_k=\sum_{n=1}^{N}r_{nk}>0$），则使 $J$ 最小的 $\bm{\mu}_k$ 由\eqref{align:ch15-kmeans-mu}唯一给出；若该聚类为空，则 $J$ 不依赖 $\bm{\mu}_k$。
+\end{enumerate}
+因此交替执行“按最近中心分配”与“按分配求质心”这两个步骤，每一步都使 $J$ 单调不增。
 \end{proposition}
 \begin{proof}
 记 $d_{nk}=\|\bm{x}_n-\bm{\mu}_k\|^2\geqslant0$。固定 $\{\bm{\mu}_k\}$ 时，
@@ -61,7 +70,7 @@ J=\sum_{n=1}^{N}d_{n,k(n)}\geqslant\sum_{n=1}^{N}\min_k d_{nk},
 \end{align*}
 且等号成立当且仅当每个 $n$ 都被分到使 $d_{nk}$ 最小的 $k$，即\eqref{align:ch15-kmeans-assign}。这给出了固定 $\{\bm{\mu}_k\}$ 时的最小点及其最小值的下界。
 
-固定 $\{r_{nk}\}$ 时，$J$ 关于不同 $\bm{\mu}_k$ 的项可以分离：
+固定 $\{r_{nk}\}$ 时，$J$ 关于不同 $\bm{\mu}_k$ 的项相互分离：
 \begin{align*}
 J=\sum_{k=1}^{K}\left(\sum_{n=1}^{N}r_{nk}\|\bm{x}_n-\bm{\mu}_k\|^{2}\right).
 \end{align*}
@@ -70,15 +79,15 @@ J=\sum_{k=1}^{K}\left(\sum_{n=1}^{N}r_{nk}\|\bm{x}_n-\bm{\mu}_k\|^{2}\right).
 于是 E 步骤用一次分配把 $J$ 降到固定中心下的最小点，M 步骤再用一次质心更新把 $J$ 降到固定分配下的最小点，两步都不会使 $J$ 增大。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-K均值闭式更新; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-K均值闭式更新; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题说明 K 均值算法是\textbf{分块坐标下降}（block coordinate descent）：把参数分成 $\{r_{nk}\}$ 与 $\{\bm{\mu}_k\}$ 两块，轮流对每块做精确最小化。需要注意三点。第一，每次精确最小化只保证 $J$ 不增，不保证到达全局最优——$J$ 对联合变量不是凸函数，不同的初始化会落入不同的局部极小值，这正是\cref{theorem:ch15-K均值收敛}只能断言“终止”而不能断言“终止于全局最优”的原因。第二，两个子问题的最优解都是\textbf{唯一}的（在给 $\{r_{nk}\}$ 配上确定性的择一规则之后），这一点是证明有限步收敛的关键：如果某个子问题的最优解不唯一，迭代就可能在同一目标值上无限游走。第三，E 步骤\eqref{align:ch15-kmeans-assign}中出现 $\arg\min$，当两个中心与 $\bm{x}_n$ 等距时最优分配不唯一，此时必须事先约定一条确定性规则（例如取下标最小的 $k$），否则“算法”本身没有良好定义。
 \end{remark}
 
 观察\eqref{align:ch15-kmeans-mu}的右侧，分母等于分配给聚类 $k$ 的数据点的数量，运算结果 $\bm{\mu}_k$ 可以简单地看作等于所有分配给聚类 $k$ 的数据点 $\bm{x}_n$ 的平均值。这种方法因而得名 K 均值算法（Lloyd, 1982），详见算法 15.1。因为 $\{r_{nk}\}$ 是离散的，并且每次迭代都不会导致误差函数增大，所以 K 均值算法一定可以在有限的步骤中收敛（见\cref{exercise:ch15-01}）。
 
 \begin{theorem}[K 均值算法的有限步终止]\label{theorem:ch15-K均值收敛}
-设数据点 $\{\bm{x}_n\}$ 给定，$K$ 固定。取定一条确定性的择一规则（在距离相同的中心中取下标最小者），并约定当某个聚类为空时其原型向量保持不变。则从任意初始原型向量 $\{\bm{\mu}_k\}$ 出发，K 均值算法在有限次迭代之后必有 $\{r_{nk}\}=\{r_{nk}^{(\text{old})}\}$，即算法终止。
+设 $N\geqslant1$，$K\geqslant1$，$D\geqslant1$，数据点 $\bm{x}_n\in\mathbb{R}^{D}$（$n=1,\cdots,N$）与聚类个数 $K$ 固定。取定一条确定性的择一规则（在距离相同的原型中取下标最小者），并约定当某个聚类为空时其原型向量保持不变。则从任意初始原型向量 $\{\bm{\mu}_k\}\subset\mathbb{R}^{D}$ 出发，按“分配步\eqref{align:ch15-kmeans-assign}＋质心步\eqref{align:ch15-kmeans-mu}”迭代的 K 均值算法在有限次迭代后必进入不动点：存在 $t_{0}\geqslant0$ 使所有的 $t\geqslant t_{0}$ 都有 $\{r_{nk}^{(t+1)}\}=\{r_{nk}^{(t)}\}$，即算法终止。
 \end{theorem}
 \begin{proof}
 把一次完整的迭代看成状态之间的映射：状态取为当前的分配 $\{r_{nk}\}$。给定分配后，原型向量被\eqref{align:ch15-kmeans-mu}唯一确定（空聚类的原型保持上一轮的值），故状态确实决定了整个算法的后续演化；记一次“E 步骤 + M 步骤”给出的新状态为 $F(r)$，并记 $g(r)$ 为在分配 $r$ 及其对应原型下误差函数的取值。
@@ -98,8 +107,8 @@ g\big(F(r)\big)=J\big(F(r),\ \bm{\mu}(F(r))\big)\leqslant J\big(F(r),\ \bm{\mu}(
 因此，若算法永不终止，则每次迭代都必须使 $g$ 严格减小。但分配 $\{r_{nk}\}$ 只有 $K^{N}$ 种可能取值，$g$ 至多取 $K^{N}$ 个不同的值，不可能严格下降无穷多次。矛盾。故算法必在有限步内终止。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch15-K均值收敛; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:ch15-K均值收敛; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条定理的结论只是“终止”，不是“终止于全局最优”：$J$ 沿迭代单调不增且有下界 $0$，所以迭代值收敛，但它收敛到的是局部极小值。定理的三条前提都不可省。其一，“确定性择一规则”保证了状态演化的确定性，否则等距情形可能使分配在两个同样好的解之间来回跳动，此时算法确实可能不终止。其二，“空聚类保持原型”的约定使 $g$ 仍是状态的函数；若允许空聚类随意重置，$g$ 的单调性论证就要重新检查。其三，$K$ 固定且有限，才使分配的总数 $K^{N}$ 有限——若把 $K$ 也当作待优化变量，状态空间不再有限，本证明失效。此外，“有限步”并不给出步数的实用上界：$K^{N}$ 随 $N$ 指数增长，实际收敛速度取决于初始化，这也解释了后面为什么常用多次随机重启来缓解局部极小值。
 \end{remark}
 
@@ -153,7 +162,7 @@ $\{r_{nk}\leftarrow0\}$ \quad // 将所有分配初始化为零\\
 \label{figure:ch15-kmeans-cost}
 \end{figure}
 
-\begin{remark}（重构新增）
+\begin{remark}
 \cref{figure:ch15-kmeans-cost}的横轴是“完整迭代（一轮 E 步骤加一轮 M 步骤）”的序号，纵轴是\eqref{align:ch15-kmeans-loss}的取值，因此曲线的阶梯结构直接反映了\cref{proposition:ch15-K均值闭式更新}的结论：$J$ 只在每次 E 步骤或 M 步骤之后取值，且从不上升。曲线在第三次 M 步骤后变平，对应\cref{theorem:ch15-K均值收敛}所说的“分配不再变化”；此时若继续迭代，$J$ 的值不再改变，因为分配与原型都已是不动点。图中特意采用较差的初始中心，是为了让读者看到 $J$ 明显下降的若干步；若初始中心已经接近最终的质心，曲线会在第一步之后几乎水平。
 \end{remark}
 
@@ -165,7 +174,7 @@ $\{r_{nk}\leftarrow0\}$ \quad // 将所有分配初始化为零\\
 其中 $N_k$ 是到目前为止用来更新 $\bm{\mu}_k$ 的数据点的数量。这允许每个数据点在使用一次后就被丢弃，然后处理下一个数据点。
 
 \begin{proposition}[顺序 K 均值更新]\label{proposition:ch15-顺序K均值}
-设 $\bm{\mu}_k^{\text{old}}$ 是把此前的 $N_k-1$ 个数据点分配给聚类 $k$ 后由\eqref{align:ch15-kmeans-mu}得到的均值，现有一个新数据点 $\bm{x}_n$ 被分配给聚类 $k$。则把 $\bm{x}_n$ 并入后由\eqref{align:ch15-kmeans-mu}给出的新均值为\eqref{align:ch15-kmeans-online}，其中 $N_k$ 是并入后聚类 $k$ 中数据点的总数。该更新没有作任何近似。
+设 $D\geqslant1$，$N\geqslant1$，$K\geqslant1$，数据点 $\bm{x}_1,\cdots,\bm{x}_N\in\mathbb{R}^{D}$；设 $\mathcal{S}\subseteq\{1,\cdots,N\}$ 是已分配给聚类 $k$ 的数据点下标集，$|\mathcal{S}|=N_k-1\geqslant1$，且 $\bm{\mu}_k^{\text{old}}=\frac{1}{N_k-1}\sum_{n'\in\mathcal{S}}\bm{x}_{n'}$ 是由\eqref{align:ch15-kmeans-mu}得到的均值。设新数据点 $\bm{x}_n$（$n\notin\mathcal{S}$）被分配给聚类 $k$。则把 $\bm{x}_n$ 并入后由\eqref{align:ch15-kmeans-mu}给出的新均值为\eqref{align:ch15-kmeans-online}，其中 $N_k$ 是并入后聚类 $k$ 中数据点的总数；该更新是恒等变形，不含任何近似。
 \end{proposition}
 \begin{proof}
 设并入前聚类 $k$ 中的数据点下标集合为 $\mathcal{S}$，$|\mathcal{S}|=N_k-1$，则由\eqref{align:ch15-kmeans-mu}，
@@ -184,8 +193,8 @@ $\{r_{nk}\leftarrow0\}$ \quad // 将所有分配初始化为零\\
 即\eqref{align:ch15-kmeans-online}。推导中只用到“旧均值等于旧集合的算术平均”这一事实，未作任何近似，故新的原型向量仍精确等于分配给它的所有数据向量的均值。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-顺序K均值; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-顺序K均值; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch15-kmeans-online}就是均值估计的 Robbins--Monro 型递推：新均值等于旧均值加上一个与“新数据带来的残差”成正比的修正，而 $1/N_k$ 充当一个随 $N_k$ 衰减的学习率。这也说明了它与\cref{section:ch07-梯度下降优化}中随机梯度下降的区别：这里的学习率由分配计数精确给出，并非人为设定，因此更新是精确的而不是近似的。条件在于“只增不减”——本命题讨论的是把一个新点并入某个聚类。若在线算法允许把一个已分配的点改派到别的聚类，那么除了给新聚类加上贡献，还必须从旧聚类减去该点的贡献；这正是\cref{subsection:ch15-顺序em}中顺序 EM 的更新\eqref{align:ch15-online-mu}比\eqref{align:ch15-kmeans-online}多出一个 $-\gamma^{\text{old}}(z_{mk})$ 项的原因。此外，这样得到的是“单遍、一次一个点”的算法，其最终原型依赖于数据点的处理顺序，一般不等于批量 K 均值的结果。
 \end{remark}
 
@@ -201,7 +210,7 @@ K 均值算法的一个显著特点是，在每次迭代中，每个数据点都
 上面讨论的图像分割问题也提供了聚类可以用于数据压缩的例证。假设原始图像有 $N$ 个像素，其中的每个像素都由 $\{R,G,B\}$ 值组成，每个值均以 8 位的精度存储。直接传输整个图像将耗费 $24N$ 比特。假设我们首先在图像数据上应用 K 均值算法，然后传输最接近的向量 $\bm{\mu}_k$ 的身份而不是传输原始的像素强度向量。因为有 $K$ 个这样的向量，所以每个像素需要 $\log_2K$ 比特。我们还必须传输 $K$ 个码本向量 $\{\bm{\mu}_k\}$，这需要 $24K$ 比特，因此传输整个图像所需的比特数是 $24K+N\log_2K$（向上取整）。\cref{figure:ch15-segmentation}中的原始图像有 $240\times180$ 像素 $=43\,200$ 像素，因此直接传输需要 $1\,036\,800$ 比特。相比之下，压缩后的图像分别需要传输 $43\,248$ 比特（$K=2$）、$86\,472$ 比特（$K=3$）和 $173\,040$ 比特（$K=10$）。与原始图像相比，它们分别代表了大约 $4.2\%$、$8.3\%$ 和 $16.7\%$ 的压缩比。当然，压缩程度和图像质量之间存在权衡关系。注意，在这个例子中，我们的目的是说明 K 均值算法的应用。如果我们的目标是生成一个好的图像压缩器，那么一个更有效的方法是，考虑小块的相邻像素，例如 $5\times5$ 的像素块，并利用自然图像中近邻像素之间存在的相关性。
 \end{example}
 
-\begin{remark}（重构新增）
+\begin{remark}
 这里的比特数可以逐项核对，关键在于“向上取整”落在 $\lceil\log_2K\rceil$ 上而不是落在乘积上：每个像素的标号必须用整数个比特存储，因此需要 $\lceil\log_2K\rceil$ 比特，而不是 $\log_2K$ 比特。$K=2,3,10$ 分别给出 $1,2,4$ 比特，于是
 \begin{align*}
 K=2:&\quad 24\times2+43\,200\times1=48+43\,200=43\,248,\\

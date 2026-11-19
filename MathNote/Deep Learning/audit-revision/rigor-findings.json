@@ -1,0 +1,121 @@
+[
+ {
+  "rule": "RIG-008",
+  "severity": "WARN",
+  "message": "定义环境没有“称为/定义为/是指/记为”等定义句式",
+  "file": "contents/chapter-05.tex",
+  "line": 28
+ },
+ {
+  "rule": "RIG-008",
+  "severity": "WARN",
+  "message": "定义环境没有“称为/定义为/是指/记为”等定义句式",
+  "file": "contents/chapter-05.tex",
+  "line": 39
+ },
+ {
+  "rule": "RIG-008",
+  "severity": "WARN",
+  "message": "定义环境没有“称为/定义为/是指/记为”等定义句式",
+  "file": "contents/appendix-B.tex",
+  "line": 60
+ },
+ {
+  "rule": "RIG-005",
+  "severity": "WARN",
+  "message": "陈述正文只有 25 个汉字/字符，通常不足以写全对象、假设与结论",
+  "file": "contents/appendix-B.tex",
+  "line": 89
+ },
+ {
+  "rule": "RIG-005",
+  "severity": "WARN",
+  "message": "陈述正文只有 74 个汉字/字符，通常不足以写全对象、假设与结论",
+  "file": "contents/appendix-B.tex",
+  "line": 108
+ },
+ {
+  "rule": "RIG-008",
+  "severity": "WARN",
+  "message": "定义环境没有“称为/定义为/是指/记为”等定义句式",
+  "file": "contents/appendix-B.tex",
+  "line": 108
+ },
+ {
+  "rule": "RIG-005",
+  "severity": "WARN",
+  "message": "陈述正文只有 68 个汉字/字符，通常不足以写全对象、假设与结论",
+  "file": "contents/appendix-B.tex",
+  "line": 122
+ },
+ {
+  "rule": "RIG-005",
+  "severity": "WARN",
+  "message": "陈述正文只有 35 个汉字/字符，通常不足以写全对象、假设与结论",
+  "file": "contents/appendix-B.tex",
+  "line": 192
+ },
+ {
+  "rule": "RIG-005",
+  "severity": "WARN",
+  "message": "陈述正文只有 50 个汉字/字符，通常不足以写全对象、假设与结论",
+  "file": "contents/appendix-C.tex",
+  "line": 48
+ },
+ {
+  "rule": "RIG-005",
+  "severity": "WARN",
+  "message": "陈述正文只有 54 个汉字/字符，通常不足以写全对象、假设与结论",
+  "file": "contents/appendix-C.tex",
+  "line": 69
+ },
+ {
+  "rule": "RIG-008",
+  "severity": "WARN",
+  "message": "定义环境没有“称为/定义为/是指/记为”等定义句式",
+  "file": "contents/appendix-C.tex",
+  "line": 91
+ },
+ {
+  "rule": "RIG-008",
+  "severity": "WARN",
+  "message": "定义环境没有“称为/定义为/是指/记为”等定义句式",
+  "file": "contents/appendix-C.tex",
+  "line": 105
+ },
+ {
+  "rule": "RIG-005",
+  "severity": "WARN",
+  "message": "陈述正文只有 67 个汉字/字符，通常不足以写全对象、假设与结论",
+  "file": "contents/appendix-C.tex",
+  "line": 121
+ },
+ {
+  "rule": "RIG-008",
+  "severity": "WARN",
+  "message": "定义环境没有“称为/定义为/是指/记为”等定义句式",
+  "file": "contents/appendix-C.tex",
+  "line": 192
+ },
+ {
+  "rule": "RIG-005",
+  "severity": "WARN",
+  "message": "陈述正文只有 77 个汉字/字符，通常不足以写全对象、假设与结论",
+  "file": "contents/appendix-C.tex",
+  "line": 263
+ },
+ {
+  "rule": "RIG-005",
+  "severity": "WARN",
+  "message": "陈述正文只有 65 个汉字/字符，通常不足以写全对象、假设与结论",
+  "file": "contents/Chapter-18/section-02.tex",
+  "line": 15
+ },
+ {
+  "rule": "RIG-008",
+  "severity": "WARN",
+  "message": "定义环境没有“称为/定义为/是指/记为”等定义句式",
+  "file": "contents/Chapter-18/section-02.tex",
+  "line": 95
+ }
+]

@@ -12,17 +12,17 @@
 我们可以将函数 $y(x)$ 视为如下运算：对于任何输入值 $x$，返回输出值 $y$。同样，我们也可以将泛函 $F[y]$ 视为接收函数 $y(x)$ 并返回输出值 $F$ 的运算。
 
 \begin{definition}[泛函]\label{definition:appB-泛函}
-设某个函数类中的每个函数 $y(x)$ 都按确定的规则对应一个数 $F$。这样的对应关系称为定义在该函数类上的\textbf{泛函}（functional），记作 $F[y]$：它接收函数 $y(x)$，并返回输出值 $F$。
+设 $I\subseteq\mathbb{R}$ 为区间，$\mathcal{Y}$ 为定义在 $I$ 上、取值于 $\mathbb{R}$ 的函数构成的非空函数类，$F:\mathcal{Y}\to\mathbb{R}$ 为映射。若对每个 $y\in\mathcal{Y}$，$F$ 按确定的规则给出唯一的实数 $F[y]$，则称 $F$ 为定义在 $\mathcal{Y}$ 上的\textbf{泛函}（functional），记作 $F[y]$；$\mathcal{Y}$ 称为 $F$ 的\textbf{容许函数类}，$F[y]$ 称为 $F$ 在 $y$ 处的值。泛函的输入是函数 $y$，输出是实数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appB-泛函; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appB-泛函; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 泛函与普通函数的区别只在“输入是什么”：函数的输入是一个数（或一个有限维向量），泛函的输入是一整条函数 $y(x)$。定义中“确定的规则”要求同一个函数总给出同一个数，这与函数定义中“每个 $x$ 只对应一个 $y$”的要求完全平行；方括号 $F[y]$ 只是用来提示自变量是函数而非数，并不是新的运算。函数类必须事先指定，因为同一条规则在不同函数类上可能给出不同的值域，甚至可能没有定义（例如要求函数可微时，折线就不能作为输入）。
 \end{remark}
 
 泛函的一个示例是在二维平面上计算绘制的曲线的长度，其中曲线的路径是由一个函数定义的。在机器学习中，一个广泛使用的泛函是连续变量 $x$ 的熵 $H[x]$。对于任意选择的概率密度函数 $p(x)$，它都会返回一个标量值以表示该密度下 $x$ 的熵。因此，$p(x)$ 的熵也可以类似地写作 $H[p]$。
 
-\begin{remark}（重构新增）
+\begin{remark}
 把这两个示例写成积分就可以看清它们为什么是泛函。若曲线由 $y(x)$ 给出、$x$ 从 $a$ 变到 $b$，则其长度为
 \begin{align*}
   L[y]=\int_{a}^{b}\sqrt{1+(y'(x))^{2}}\,\mathrm{d}x,
@@ -37,11 +37,11 @@
 传统微积分中的一个常见问题，就是找到一个 $x$ 值以使函数 $y(x)$ 最大化（或最小化）。类似地，在变分法中，我们也要寻求一个函数 $y(x)$，该函数能使泛函 $F[y]$ 最大化（或最小化）。也就是说，在所有可能的函数中，我们希望找到能使泛函 $F[y]$ 取最大值（或最小值）的特定函数。例如，我们可以使用变分法来证明两点之间直线最短，而最大熵分布是 Gauss 分布。
 
 \begin{definition}[变分法]\label{definition:appB-变分法}
-在给定的函数类中寻找使泛函 $F[y]$ 取极大值或极小值的函数 $y(x)$，这类问题称为变分问题；研究变分问题、并给出其解所满足的微分方程的数学分支，称为\textbf{变分法}（calculus of variations）。
+设 $I=[a,b]\subseteq\mathbb{R}$，$\mathcal{Y}$ 为 $I$ 上满足给定边界条件与正则性条件的非空函数类，$F:\mathcal{Y}\to\mathbb{R}$ 为泛函。若 $y_{*}\in\mathcal{Y}$ 满足 $F[y_{*}]\geqslant F[y]$（或 $F[y_{*}]\leqslant F[y]$）对一切 $y\in\mathcal{Y}$ 成立，则称 $y_{*}$ 为 $F$ 在 $\mathcal{Y}$ 上的极大点（或极小点）；求此类 $y_{*}$ 的问题称为\textbf{变分问题}。研究变分问题、并给出其驻点所满足的微分方程的数学分支，称为\textbf{变分法}（calculus of variations）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appB-变分法; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appB-变分法; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 变分法与普通微积分的形式差别只在“自变量空间”：普通微积分在实数轴上搜索 $x$，变分法在函数类中搜索整条曲线 $y(x)$，因此后者的候选对象有无穷多个自由度。也正因为如此，变分法通常不直接构造极值函数，而是先导出一个必要条件（Euler-Lagrange 方程，见\cref{theorem:appB-euler-lagrange}），把变分问题化为微分方程的边值问题。“两点之间直线最短”正是这一必要条件的解在给定边界下的唯一解，而“最大熵分布是 Gauss 分布”则是在归一化约束下求解相应的变分问题（参见\cref{chapter:appC-Lagrange乘子}）。
 \end{remark}
 
@@ -58,10 +58,12 @@
 
 当需要考虑对函数 $y(x)$ 进行微小改动 $\varepsilon\eta(x)$ 会使泛函 $F[y]$ 发生多大的改变时，就可以类似地定义泛函的导数，其中 $\eta(x)$ 是 $x$ 的任意函数，如\cref{figure:appB-泛函导数示意}所示。用 $\delta F/\delta y(x)$ 表示 $F[y]$ 相对于 $y(x)$ 的\textbf{泛函导数}（functional derivative），并用以下关系式加以定义：
 \begin{definition}[泛函导数]\label{definition:appB-泛函导数}
+设 $I=[a,b]\subseteq\mathbb{R}$，$\mathcal{Y}$ 为 $I$ 上满足给定边界条件的函数类，$F:\mathcal{Y}\to\mathbb{R}$ 为泛函，$y\in\mathcal{Y}$。若存在函数 $\frac{\delta F}{\delta y}:I\to\mathbb{R}$，使得对每个 $\eta\in C_{c}^{\infty}((a,b))$，当 $|\varepsilon|$ 充分小时 $y+\varepsilon\eta\in\mathcal{Y}$，且
 \begin{align}
-  F[y(x)+\varepsilon\eta(x)]=F[y(x)]+\varepsilon\int\frac{\delta F}{\delta y(x)}\eta(x)\,\mathrm{d}x+O(\varepsilon^{2})
+  F[y+\varepsilon\eta]=F[y]+\varepsilon\int_{a}^{b}\frac{\delta F}{\delta y}(x)\,\eta(x)\,\mathrm{d}x+O(\varepsilon^{2})
   \label{align:appB-泛函导数定义}
 \end{align}
+其中 $O(\varepsilon^{2})$ 的常数只依赖于 $\eta$ 的紧支撑集与有限阶导数，则称 $\frac{\delta F}{\delta y}$ 为 $F$ 在 $y$ 处的\textbf{泛函导数}（functional derivative）。
 \end{definition}
 
 \begin{figure}[htbp]
@@ -71,8 +73,8 @@
   \label{figure:appB-泛函导数示意}
 \end{figure}
 
-% SUPPLEMENT: parent=definition:appB-泛函导数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appB-泛函导数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appB-泛函导数定义}与\eqref{align:appB-导数展开}的形状完全相同，区别在于“求导变量”从一个数变成了一个函数：一阶项中的 $\varepsilon$ 系数不再是一个数，而是 $x$ 的函数 $\delta F/\delta y(x)$，它必须与扰动 $\eta(x)$ 逐点相乘后再积分。这里要求 $\eta(x)$ 是任意函数，正是为了让 $\delta F/\delta y(x)$ 被唯一确定：若只对某一个固定的 $\eta$ 检验，只能得到 $\int(\delta F/\delta y)\eta\,\mathrm{d}x$ 的信息，而得不到被积函数本身。定义中的 $O(\varepsilon^{2})$ 是对所有这样的 $\eta$ 一致成立的余项。
 \end{remark}
 
@@ -85,66 +87,77 @@
 由于\eqref{align:appB-平稳条件}必须对任意选择的 $\eta(x)$ 都成立，因此对于任意的 $x$，泛函的导数都必须为零。
 
 \begin{proposition}[变分法的基本引理]\label{proposition:appB-基本引理}
-若\eqref{align:appB-平稳条件}对积分区间内任意（足够光滑且在边界处为零的）函数 $\eta(x)$ 都成立，则对该区间内的每个 $x$ 都有 $\delta F/\delta y(x)=0$。
+设 $I=[a,b]\subseteq\mathbb{R}$，$g:I\to\mathbb{R}$ 连续。若
+\begin{align}
+  \int_{a}^{b}g(x)\eta(x)\,\mathrm{d}x=0
+  \label{align:appB-基本引理条件}
+\end{align}
+对一切 $\eta\in C_{c}^{\infty}((a,b))$ 成立，则 $g(x)=0$ 对一切 $x\in I$ 成立。
 \end{proposition}
 
 \begin{proof}
-为了说明这一点，选择一个扰动 $\eta(x)$，其在除了点 $\hat{x}$ 的邻域之外的任意位置都为零。在这种情况下，泛函的导数在 $x=\hat{x}$ 处必须为零。但是，由于对任意的 $\hat{x}$ 都必须满足此条件，因此对于任意的 $x$，泛函的导数都必须消除。
+反设存在 $x_{0}\in(a,b)$ 使 $g(x_{0})\neq0$。由 $g$ 连续，存在 $\delta>0$ 使 $[x_{0}-\delta,x_{0}+\delta]\subset(a,b)$ 且 $g$ 在该区间上不变号、$|g|\geqslant|g(x_{0})|/2$。取非负的 $\eta\in C_{c}^{\infty}((a,b))$，满足 $\eta(x)>0$ 在 $(x_{0}-\delta,x_{0}+\delta)$ 内、$\eta$ 在该区间外为零。则 $g\eta$ 在 $(x_{0}-\delta,x_{0}+\delta)$ 内不变号且不恒为零，故 $\int_{a}^{b}g\eta\,\mathrm{d}x\neq0$，与\eqref{align:appB-基本引理条件}矛盾。端点 $x_{0}=a,b$ 由 $g$ 的连续性取极限得到。故 $g\equiv0$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appB-基本引理; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appB-基本引理; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条引理是变分法的“局部化”机制：它把“对整个区间的积分恒为零”这样一个全局条件，转化为“被积函数在每一点为零”这样一个逐点条件。论证的关键在于 $\eta(x)$ 可以任意选取：只要在某点 $x=\hat{x}$ 处 $\delta F/\delta y(\hat{x})\neq0$，由连续性就存在 $\hat{x}$ 的一个小邻域使该导数在这一邻域内不变号，于是取只在这个邻域内非零、且与导数同号的 $\eta$，\eqref{align:appB-平稳条件}中的积分就严格为正，与假设矛盾。原书用“消除”一词表达的就是“为零”；引理只给出必要条件，因此满足它的函数是驻点而不是（必然的）极值点，这一点与普通微积分中“导数为零只是极值的必要条件”完全一致。
 \end{remark}
 
 考虑一个定义在函数 $G(y,y',x)$ 的积分之上的泛函，它同时还依赖于 $y(x)$ 及其导数 $y'(x)$，并且直接依赖于 $x$：
 \begin{definition}[积分型泛函]\label{definition:appB-积分型泛函}
+设 $I=[a,b]\subseteq\mathbb{R}$，$G:\mathbb{R}\times\mathbb{R}\times I\to\mathbb{R}$ 为 $C^{2}$ 函数，$y\in C^{2}(I)$，且 $y(a)=y_{a}$、$y(b)=y_{b}$ 为给定常数。称
 \begin{align}
-  F[y]=\int G(y(x),y'(x),x)\,\mathrm{d}x
+  F[y]=\int_{a}^{b}G\bigl(y(x),y'(x),x\bigr)\,\mathrm{d}x
   \label{align:appB-积分型泛函}
 \end{align}
-其中，假设 $y(x)$ 的值在积分的边界处（可能在无穷大处）为定值。
+为定义在固定端点函数类 $\mathcal{Y}=\{y\in C^{2}(I):y(a)=y_{a},\ y(b)=y_{b}\}$ 上的\textbf{积分型泛函}。被积函数 $G$ 只含 $y$、$y'$ 与 $x$，不含 $y''$ 及更高阶导数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appB-积分型泛函; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appB-积分型泛函; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这类泛函只通过 $y$、$y'$ 与 $x$ 三个自变量依赖曲线，因此称为一阶积分型泛函；被积函数 $G$ 不含 $y''$ 及更高阶导数，是下文推导能只用一次分部积分的前提。“$y(x)$ 在边界处为定值”这一条件（即端点固定）不可省：它保证在分部积分时边界项为零，从而把变分条件集中到积分内部（证明见\cref{theorem:appB-euler-lagrange}）。若端点也允许变动，就会出现额外的边界项，Euler-Lagrange 方程之外还要加上横截条件。
 \end{remark}
 
 \begin{theorem}[Euler-Lagrange 方程]\label{theorem:appB-euler-lagrange}
-设 $y(x)$ 使\eqref{align:appB-积分型泛函}中的泛函在端点固定的函数类中取驻点，即\eqref{align:appB-平稳条件}对任意在边界处为零的 $\eta(x)$ 成立，则 $y$ 满足
+设 $I=[a,b]$，$G\in C^{2}(\mathbb{R}\times\mathbb{R}\times I)$，$y\in C^{2}(I)$ 且 $y(a),y(b)$ 固定。若 $y$ 是\eqref{align:appB-积分型泛函}中泛函 $F$ 在固定端点函数类中的驻点，即对一切 $\eta\in C_{c}^{\infty}((a,b))$ 有
 \begin{align}
-  \frac{\partial G}{\partial y}-\frac{\mathrm{d}}{\mathrm{d}x}\Bigl(\frac{\partial G}{\partial y'}\Bigr)=0
+  \frac{\mathrm{d}}{\mathrm{d}\varepsilon}F[y+\varepsilon\eta]\Big|_{\varepsilon=0}=0,
+  \label{align:appB-驻点条件}
+\end{align}
+则 $y$ 在 $I$ 上满足
+\begin{align}
+  \frac{\partial G}{\partial y}\bigl(y(x),y'(x),x\bigr)-\frac{\mathrm{d}}{\mathrm{d}x}\Bigl(\frac{\partial G}{\partial y'}\bigl(y(x),y'(x),x\bigr)\Bigr)=0.
   \label{align:appB-euler-lagrange}
 \end{align}
 \end{theorem}
 
 \begin{proof}
-考虑函数 $y(x)$ 的变动，我们可以得到
+考虑函数 $y(x)$ 的变动，可以得到
 \begin{align}
-  F[y(x)+\varepsilon\eta(x)]=F[y(x)]+\varepsilon\int\Bigl\{\frac{\partial G}{\partial y}\eta(x)+\frac{\partial G}{\partial y'}\eta'(x)\Bigr\}\mathrm{d}x+O(\varepsilon^{2})
-  \label{align:appB-一阶变分}
+ F[y(x)+\varepsilon\eta(x)]=F[y(x)]+\varepsilon\int\Bigl\{\frac{\partial G}{\partial y}\eta(x)+\frac{\partial G}{\partial y'}\eta'(x)\Bigr\}\mathrm{d}x+O(\varepsilon^{2})
+ \label{align:appB-一阶变分}
 \end{align}
-（重构新增）这一步是把 $G(y+\varepsilon\eta,y'+\varepsilon\eta',x)$ 对 $\varepsilon$ 作一阶 Taylor 展开，展开点取 $\varepsilon=0$，其线性项正是 $\frac{\partial G}{\partial y}\eta+\frac{\partial G}{\partial y'}\eta'$；原书未写出该展开，这里补全。下面让我们以\eqref{align:appB-泛函导数定义}的形式来表示\eqref{align:appB-一阶变分}。为此，对\eqref{align:appB-一阶变分}右侧的第二个积分作分部积分，并注意 $\eta(x)$ 必须在积分的边界处消除（因为 $y(x)$ 在边界处为定值），从而得到
+这一步是把 $G(y+\varepsilon\eta,y'+\varepsilon\eta',x)$ 对 $\varepsilon$ 作一阶 Taylor 展开，展开点取 $\varepsilon=0$，其线性项正是 $\frac{\partial G}{\partial y}\eta+\frac{\partial G}{\partial y'}\eta'$；下面让以\eqref{align:appB-泛函导数定义}的形式来表示\eqref{align:appB-一阶变分}。为此，对\eqref{align:appB-一阶变分}右侧的第二个积分作分部积分，并注意 $\eta(x)$ 必须在积分的边界处消除（因为 $y(x)$ 在边界处为定值），从而得到
 \begin{align}
-  F[y(x)+\varepsilon\eta(x)]=F[y(x)]+\varepsilon\int\Bigl\{\frac{\partial G}{\partial y}-\frac{\mathrm{d}}{\mathrm{d}x}\Bigl(\frac{\partial G}{\partial y'}\Bigr)\Bigr\}\eta(x)\,\mathrm{d}x+O(\varepsilon^{2})
-  \label{align:appB-分部积分}
+ F[y(x)+\varepsilon\eta(x)]=F[y(x)]+\varepsilon\int\Bigl\{\frac{\partial G}{\partial y}-\frac{\mathrm{d}}{\mathrm{d}x}\Bigl(\frac{\partial G}{\partial y'}\Bigr)\Bigr\}\eta(x)\,\mathrm{d}x+O(\varepsilon^{2})
+ \label{align:appB-分部积分}
 \end{align}
 与\eqref{align:appB-泛函导数定义}进行比较，即可确定泛函的导数
 \begin{align*}
-  \frac{\delta F}{\delta y(x)}=\frac{\partial G}{\partial y}-\frac{\mathrm{d}}{\mathrm{d}x}\Bigl(\frac{\partial G}{\partial y'}\Bigr).
+ \frac{\delta F}{\delta y(x)}=\frac{\partial G}{\partial y}-\frac{\mathrm{d}}{\mathrm{d}x}\Bigl(\frac{\partial G}{\partial y'}\Bigr).
 \end{align*}
 由于要求消除泛函的导数，因此由\cref{proposition:appB-基本引理}即得\eqref{align:appB-euler-lagrange}。
 
-（重构新增）补全分部积分的细节：
+补全分部积分的细节：
 \begin{align*}
-  \int\frac{\partial G}{\partial y'}\eta'(x)\,\mathrm{d}x=\Bigl[\frac{\partial G}{\partial y'}\eta(x)\Bigr]_{\text{边界}}-\int\frac{\mathrm{d}}{\mathrm{d}x}\Bigl(\frac{\partial G}{\partial y'}\Bigr)\eta(x)\,\mathrm{d}x,
+ \int\frac{\partial G}{\partial y'}\eta'(x)\,\mathrm{d}x=\Bigl[\frac{\partial G}{\partial y'}\eta(x)\Bigr]_{\text{边界}}-\int\frac{\mathrm{d}}{\mathrm{d}x}\Bigl(\frac{\partial G}{\partial y'}\Bigr)\eta(x)\,\mathrm{d}x,
 \end{align*}
 其中边界项因 $\eta$ 在边界处为零而消失，正是这一步把 $\eta'$ 换成了 $\eta$，使得两个积分可以合并为\eqref{align:appB-分部积分}中同一个被积函数。这一步还要求 $\partial G/\partial y'$ 关于 $x$ 可微，才能对其作 $\frac{\mathrm{d}}{\mathrm{d}x}$ 运算。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:appB-euler-lagrange; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:appB-euler-lagrange; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 Euler-Lagrange 方程把“在函数空间中求驻点”这一无穷维问题化为一个二阶常微分方程（若 $G$ 只依赖 $y$ 与 $y'$，方程中最高出现 $y''$），从而可以用微分方程的边值理论求解。推导中三处条件各有用处：$G$ 只含一阶导数使分部积分只做一次；端点固定使边界项为零；$\eta$ 任意使\cref{proposition:appB-基本引理}可以把积分条件化为逐点条件。原书只给出结论，没有逐行写出 Taylor 展开与分部积分，上面已补全。方程给出的是必要条件：满足它的解可能是极大值、极小值或鞍点，判断极值类型需要考察二阶变分。
 \end{remark}
 
@@ -163,33 +176,33 @@ Euler-Lagrange 方程把“在函数空间中求驻点”这一无穷维问题�
 \end{example}
 
 \begin{solution}
-（重构新增）补全从\eqref{align:appB-例子泛函}到\eqref{align:appB-例子方程}的计算。由 $G=y^{2}+(y')^{2}$ 得
+补全从\eqref{align:appB-例子泛函}到\eqref{align:appB-例子方程}的计算。由 $G=y^{2}+(y')^{2}$ 得
 \begin{align*}
-  \frac{\partial G}{\partial y}=2y,\qquad \frac{\partial G}{\partial y'}=2y',
+ \frac{\partial G}{\partial y}=2y,\qquad \frac{\partial G}{\partial y'}=2y',
 \end{align*}
 故 $\frac{\mathrm{d}}{\mathrm{d}x}\bigl(\frac{\partial G}{\partial y'}\bigr)=2y''$。代入\eqref{align:appB-euler-lagrange}得 $2y-2y''=0$，约去因子 $2$ 即得\eqref{align:appB-例子方程}。该方程的通解为 $y(x)=A\mathrm{e}^{x}+B\mathrm{e}^{-x}$，其中常数 $A,B$ 由两端的边界值确定；当边界条件给定时，这两个条件恰好确定两个常数。
 \end{solution}
 
-\begin{remark}（重构新增）
+\begin{remark}
 这个例子说明 Euler-Lagrange 方程确实是一个微分方程：$G$ 中对 $y'$ 的平方项经 $\frac{\mathrm{d}}{\mathrm{d}x}$ 作用后产生 $y''$，而对 $y$ 的平方项只产生 $y$，两者相减于是得到线性的二阶方程。若把\eqref{align:appB-例子泛函}换成 $G=\frac{1}{2}\dot{y}^{2}-V(y)$（力学中的作用量），Euler-Lagrange 方程就给出 Newton 第二定律；这说明变分原理与经典力学的运动方程是同一件事的两种表述。
 \end{remark}
 
 考虑由积分定义的泛函，其积分采用 $G(y,x)$ 的形式，并且不依赖于 $y(x)$ 的导数。在这种情况下，只要 $x$ 的所有值都满足 $\partial G/\partial y(x)=0$，就能保证解的稳定性。
 
 \begin{proposition}[不含导数的泛函的驻点条件]\label{proposition:appB-不含导数}
-若\eqref{align:appB-积分型泛函}中的 $G$ 不依赖于 $y'$，即 $G=G(y,x)$，则变分问题的驻点由逐点条件
+设 $I=[a,b]$，$G\in C^{1}(\mathbb{R}\times I)$ 不依赖于 $y'$，$F[y]=\int_{a}^{b}G(y(x),x)\,\mathrm{d}x$，$y\in C^{1}(I)$ 且端点固定。若 $y$ 是 $F$ 的驻点，则
 \begin{align*}
-  \frac{\partial G}{\partial y(x)}=0
+  \frac{\partial G}{\partial y}\bigl(y(x),x\bigr)=0
 \end{align*}
-给出，其中 $x$ 取遍积分区间内的所有值。
+对一切 $x\in I$ 成立。
 \end{proposition}
 
 \begin{proof}
-（重构新增）原书只给出结论，这里补全。若 $G$ 不依赖 $y'$，则 $\partial G/\partial y'=0$，于是\eqref{align:appB-euler-lagrange}中的第二项 $\frac{\mathrm{d}}{\mathrm{d}x}\bigl(\frac{\partial G}{\partial y'}\bigr)$ 为零，方程化为 $\partial G/\partial y=0$；由\cref{proposition:appB-基本引理}，它对每个 $x$ 都成立。
+若 $G$ 不依赖 $y'$，则 $\partial G/\partial y'=0$，于是\eqref{align:appB-euler-lagrange}中的第二项 $\frac{\mathrm{d}}{\mathrm{d}x}\bigl(\frac{\partial G}{\partial y'}\bigr)$ 为零，方程化为 $\partial G/\partial y=0$；由\cref{proposition:appB-基本引理}，它对每个 $x$ 都成立。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appB-不含导数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appB-不含导数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 原书用“保证解的稳定性”来描述这一条件，其数学内容就是“驻点条件在每个 $x$ 处逐点成立”：因为方程中不含 $y'$，各点之间不再耦合，变分问题退化为对每个 $x$ 单独求 $G(\cdot,x)$ 的驻点。这一退化情形在实际中很常见（例如最大熵问题中 $G=-p\ln p$ 不含 $p'$），它也是把变分问题与逐点最优化联系起来的桥梁。注意此处仍需 $G$ 关于 $y$ 可微，否则 $\partial G/\partial y$ 无意义。
 \end{remark}
 

@@ -11,11 +11,11 @@
 神经网络模型最初受到人类和其他哺乳动物大脑信息处理机制的启发。大脑中处理信息的基本单元是称为神经元的电活性细胞，如\cref{figure:ch01-神经元示意图}所示。当神经元放电时，它会沿着轴突发送电脉冲，到达称为突触的连接点，这些连接点与其他神经元形成连接。在突触处会释放称为神经递质的化学信号，这些信号可以刺激或抑制后续神经元放电。
 
 \begin{definition}[神经元与突触]\label{definition:ch01-神经元与突触}
-大脑中处理信息的基本单元是称为\textbf{神经元}（neuron）的电活性细胞。神经元放电时会沿\textbf{轴突}（axon）发送电脉冲，到达称为\textbf{突触}（synapse）的连接点，这些连接点与其他神经元形成连接；在突触处释放的、可以刺激或抑制后续神经元放电的化学信号称为\textbf{神经递质}。
+神经元（neuron）、轴突（axon）、突触（synapse）与神经递质（neurotransmitter）是神经生物学的\textbf{非形式化术语}，本节只使用它们的如下理想化含义：脑内处理信息的基本单元称为\textbf{神经元}，它是以电信号传递信息的细胞；神经元放电时沿其突起发送电脉冲，该突起称为\textbf{轴突}；电脉冲到达、并与其他神经元形成连接的部位称为\textbf{突触}；在突触处释放、可提高或降低后继神经元放电可能性的化学物质称为\textbf{神经递质}。本书不把这些名称当作数学对象，后文只使用由它们抽象出的单元模型（见\cref{definition:ch01-人工神经网络}）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-神经元与突触; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-神经元与突触; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这里的描述是生物机制的极度简化：真实的神经元有复杂的树突整合、多种离子通道与时间动态，而本书只保留“加权输入—阈值放电—突触强度可变”这三件事。这样做的动机是：只有把生物细节剥离，才能得到一个可以用少数几个实数（权重）描述、并且可能通过数据调整的数学模型。
 需要注意“兴奋／抑制”的作用方向：突触强度可以为正（兴奋）也可以为负（抑制），因此后文的权重 $w_i$ 允许取负值，这是模型能够表示“此消彼长”关系的前提。至于“突触强度的变化是学习与记忆的机制”这一生物学论断，本书只用它作为引入可调参数的动机，并不把它当作需要证明的命题。
 \end{remark}
@@ -32,16 +32,24 @@
 神经元的这些属性已被抽象为简单的数学模型，即人工神经网络（Artificial Neural Network, ANN），它们成为计算学习方法的基础（McCulloch and Pitts, 1943）。诸多此类模型通过对其他神经元的输出的线性组合来描述单个神经元的特性，然后使用非线性函数进行转换。该过程可以用数学表达式表示为：
 
 \begin{definition}[人工神经网络]\label{definition:ch01-人工神经网络}
-把神经元的上述属性抽象成的数学模型称为\textbf{人工神经网络}（Artificial Neural Network, ANN）。其中每个单元接收 $M$ 个输入 $x_1,\cdots,x_M$，带有一组权重 $w_1,\cdots,w_M$ 与一个非线性函数 $f(\cdot)$，并按
+设 $M\in\mathbb{N}$，输入 $x=(x_1,\dots,x_M)\in\mathbb{R}^{M}$，权重 $w=(w_1,\dots,w_M)\in\mathbb{R}^{M}$，$f:\mathbb{R}\to\mathbb{R}$。由
 \begin{align}
   a &= \sum_{i=1}^{M} w_i x_i \label{align:ch01-神经元预激活}\\
   y &= f(a) \label{align:ch01-神经元激活}
 \end{align}
-计算其输出。其中 $x_1,\cdots,x_M$ 表示与向该神经元发送连接的其他神经元的活动相对应的 $M$ 个输入，$w_1,\cdots,w_M$ 是\textbf{权重}（weight），表示相关突触的强度；量 $a$ 称为\textbf{预激活}（pre-activation），非线性函数 $f(\cdot)$ 称为\textbf{激活函数}（activation function），输出 $y$ 称为\textbf{激活}（activation）。
+定义的映射 $u_{w,f}:\mathbb{R}^{M}\to\mathbb{R}$ 称为\textbf{单元}（unit）；$w_i\in\mathbb{R}$ 称为该单元的\textbf{权重}（weight），表示相应突触的强度；$a$ 称为\textbf{预激活}（pre-activation），$f$ 称为\textbf{激活函数}（activation function），$y$ 称为\textbf{激活}（activation）。若 $f$ 为仿射函数，则称该单元为\textbf{线性单元}，否则称为\textbf{非线性单元}。
+
+设 $L\in\mathbb{N}$，$n_{0},\dots,n_{L}\in\mathbb{N}$。第 $\ell$ 层（$\ell=1,\dots,L$）由 $n_{\ell}$ 个单元组成，其权重矩阵 $W^{(\ell)}\in\mathbb{R}^{n_{\ell}\times n_{\ell-1}}$ 为 $n_{\ell}$ 行 $n_{\ell-1}$ 列的实矩阵，激活函数 $f_{\ell}:\mathbb{R}\to\mathbb{R}$ 逐元素作用；层映射 $F_{\ell}:\mathbb{R}^{n_{\ell-1}}\to\mathbb{R}^{n_{\ell}}$ 定义为
+\begin{align*}
+  F_{\ell}(z)=\bigl(f_{\ell}(a_{\ell,1}),\dots,f_{\ell}(a_{\ell,n_{\ell}})\bigr)^{\mathsf{T}},
+  \qquad
+  a_{\ell,j}=\sum_{i=1}^{n_{\ell-1}}W^{(\ell)}_{ji}z_i .
+\end{align*}
+复合映射 $F=F_{L}\circ F_{L-1}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 称为 $L$ 层\textbf{人工神经网络}（Artificial Neural Network, ANN），$n_{0}$ 与 $n_{L}$ 分别称为输入维数与输出维数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-人工神经网络; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-人工神经网络; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个模型抓住了生物神经元的两件事：先对所有输入作加权求和（线性组合），再作一次非线性变换。前者对应“突触强度决定影响力”，后者对应“达不到阈值就不放电”。缺了非线性，多层叠加仍等价于单层线性模型（\cref{definition:ch01-线性模型}），网络就失去了表达能力；因此 $f$ 的非线性是整个结构的要害。
 条件上要注意式\eqref{align:ch01-神经元预激活}中没有偏置项：只有在补充一个恒为 $1$ 的输入并把对应权重当作阈值时，才能表示“总加权输入超过某个非零阈值才放电”的情形。此外权重 $w_i$ 可正可负，这正是前面所说兴奋性与抑制性突触的数学对应。
 \end{remark}
@@ -49,26 +57,28 @@
 可以看出，式\eqref{align:ch01-多项式模型}可视为这个模型的一个特例，其中输入 $x_i$ 由单一变量 $x$ 的各次幂构成，而激活函数 $f(\cdot)$ 退化为恒等函数 $f(a)=a$。
 
 \begin{proposition}[多项式函数是神经元模型的特例]\label{proposition:ch01-多项式是神经元特例}
-在\cref{definition:ch01-人工神经网络}中取
-\begin{align*}
-  x_i = x^{i}\quad (i=1,\cdots,M),\qquad f(a)=a,
-\end{align*}
-则该单元的输出为 $y=\sum_{i=1}^{M} w_i x^{i}$，即式\eqref{align:ch01-多项式模型}中常数项取 $w_0=0$ 时的多项式函数。若再补充一个恒等于 $1$ 的输入 $x_0\triangleq 1$ 并把 $w_0$ 取为该输入的权重，则式\eqref{align:ch01-多项式模型}的完整形式也是这个模型的特例。
+设 $M\in\mathbb{N}$，$\mathbf{w}=(w_0,w_1,\dots,w_M)\in\mathbb{R}^{M+1}$，$x\in\mathbb{R}$。在\cref{definition:ch01-人工神经网络}的记号下，取输入维数 $M$、输入 $(x_1,\dots,x_M)=(x,x^{2},\dots,x^{M})$、权重 $(w_1,\dots,w_M)$、激活函数 $f=\mathrm{id}_{\mathbb{R}}$。则
+\begin{enumerate}
+  \item 该单元的输出为 $y=\sum_{i=1}^{M}w_ix^{i}$，即式\eqref{align:ch01-多项式模型}中 $w_0=0$ 时的 $M$ 阶多项式函数；
+  \item 若把输入维数取为 $M+1$、输入取为 $(x_0,x_1,\dots,x_M)=(1,x,x^{2},\dots,x^{M})$、权重取为 $(w_0,w_1,\dots,w_M)$，则该单元的输出为 $y=\sum_{j=0}^{M}w_jx^{j}$，即式\eqref{align:ch01-多项式模型}中的一般 $M$ 阶多项式函数。
+\end{enumerate}
+因此多项式模型是人工神经网络在激活函数取恒等映射时的特例。
 \end{proposition}
 
-\begin{proof}（重构新增）
-把 $x_i=x^{i}$ 与 $f(a)=a$ 代入式\eqref{align:ch01-神经元预激活}与式\eqref{align:ch01-神经元激活}，得
+\begin{proof}
+按\cref{definition:ch01-人工神经网络}，单元的输出为 $y=f(a)$，其中 $a=\sum_{i=1}^{M}w_ix_i$。代入 $(x_1,\dots,x_M)=(x,x^{2},\dots,x^{M})$ 与 $f=\mathrm{id}_{\mathbb{R}}$，得
 \begin{align*}
-  a = \sum_{i=1}^{M} w_i x^{i},
-  \qquad
-  y = f(a) = a = \sum_{i=1}^{M} w_i x^{i},
+ a=\sum_{i=1}^{M}w_ix^{i},
+ \qquad
+ y=f(a)=a=\sum_{i=1}^{M}w_ix^{i},
 \end{align*}
-这正是式\eqref{align:ch01-多项式模型}中求和从 $j=1$ 开始的特殊情形，也就是 $w_0=0$ 的情形。
-若把输入编号推广为 $i=0,1,\cdots,M$ 并令 $x_0=1$，则和式变为 $\sum_{i=0}^{M} w_i x^{i}=w_0+\sum_{i=1}^{M} w_i x^{i}$，与式\eqref{align:ch01-多项式模型}完全一致，故完整的多项式函数同样是该模型的特例。
+这正是式\eqref{align:ch01-多项式模型}右端在 $w_0=0$ 时的表达式，第一条成立。
+若把输入维数取为 $M+1$、输入取为 $(1,x,x^{2},\dots,x^{M})$、权重取为 $(w_0,w_1,\dots,w_M)$，则 $a=\sum_{j=0}^{M}w_jx^{j}$，$y=a$，与式\eqref{align:ch01-多项式模型}右端完全一致，第二条成立。
+恒等映射是仿射函数，故按\cref{definition:ch01-人工神经网络}该单元为线性单元；把单个单元视为 $L=1$、$n_{0}=M+1$、$n_{1}=1$ 的网络即得所述特例。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch01-多项式是神经元特例; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch01-多项式是神经元特例; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题说明：多项式拟合并不是与神经网络并列的另一类方法，而是神经网络在“输入取幂次、激活取恒等”时的退化情形。因此\cref{section:ch01-一个教学示例}中关于过拟合、正则化与模型选择的全部讨论，都可以原样搬到神经网络上——那里出现的困难并不来自“神经网络”这一新结构，而来自“用有限数据拟合带参数的模型”这一共同处境。
 边界也要说清：命题只要求 $f$ 为恒等函数，此时单元退化为线性模型；一旦 $f$ 取非线性函数（如式\eqref{align:ch01-感知机激活}的阶跃函数），$y$ 就不再是输入的线性函数，多项式便不再是它的特例。这也解释了为什么后文的表达能力提升总是伴随着非线性激活的引入。
 \end{remark}
@@ -87,7 +97,7 @@
 人工神经网络的历史大致可以根据其复杂程度划分为三个不同的阶段，这种复杂性是通过处理的“层数”来衡量的。由式\eqref{align:ch01-神经元预激活}和式\eqref{align:ch01-神经元激活}描述的简单神经网络模型可以视为具有单层处理能力，对应\cref{figure:ch01-简单神经网络}中的单层连接结构。在神经计算的历史长河中，感知机模型（Rosenblatt, 1962）无疑占据着举足轻重的地位，其激活函数 $f(\cdot)$ 是以下形式的阶跃函数：
 
 \begin{definition}[感知机]\label{definition:ch01-感知机}
-在\cref{definition:ch01-人工神经网络}中取激活函数为阶跃函数
+设 $M\in\mathbb{N}$，输入 $x=(x_1,\dots,x_M)\in\mathbb{R}^{M}$，权重 $w=(w_1,\dots,w_M)\in\mathbb{R}^{M}$。在\cref{definition:ch01-人工神经网络}中取激活函数为阶跃函数
 \begin{align}
   f(a) =
   \begin{cases}
@@ -96,11 +106,11 @@
   \end{cases}
   \label{align:ch01-感知机激活}
 \end{align}
-所得的模型称为\textbf{感知机}（perceptron）（Rosenblatt, 1962）。
+则所得的单元称为\textbf{感知机}（perceptron）（Rosenblatt, 1962）。它的输出取值于 $\{0,1\}$，且 $f(a)=1$ 当且仅当预激活 $a=\sum_{i=1}^{M}w_ix_i$ 为正，即输入 $x$ 落在超平面 $\{x\in\mathbb{R}^{M}:w^{\mathsf{T}}x=0\}$ 的正侧。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-感知机; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-感知机; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 阶跃函数把连续的预激活 $a$ 压成两个取值，因而感知机是一个“硬”判别器：它只回答输入落在超平面 $a=0$ 的哪一侧，而不给出置信程度。这既符合“神经元要么放电要么不放电”的简化图像，也使它的判别区域恰好是半空间，这一点是后面“单层网络能力局限”的根源。
 代价是它几乎处处不可微：$f$ 在 $a\neq 0$ 处的导数恒为 $0$，在 $a=0$ 处不可导，因此无法用梯度信息来调整权重。Rosenblatt 的感知机学习算法靠的是“分错就按输入方向修正权重”这一离散规则，而不是梯度下降；这也解释了为什么\cref{subsection:ch01-反向传播}要把激活函数换成连续可微的函数。
 \end{remark}
@@ -116,7 +126,7 @@
 
 起初，大家惊叹于感知机能以类似大脑的方式从数据中学习。然而，这个模型也暴露出重大的局限性。Minsky and Papert（1969）分析了感知机的特性，并从数学上严格证明了单层网络的能力局限。他们还推测，这样的局限性将会扩展到具有多个可学习参数层的神经网络。尽管这一猜想后来被证明是极其错误的，但它在当时极大地打击了人们对神经网络模型的热情，并直接导致了 20 世纪 70 年代和 80 年代初学术界和工业界对神经网络领域缺乏足够的兴趣和资金投入。此外，由于缺乏有效的训练神经网络的算法，研究人员无法深入研究多层神经网络，因此像感知机这样的技术仅适用于单层模型。
 
-\begin{remark}（重构新增）
+\begin{remark}
 “单层网络的能力局限”可以用一个具体反例说清。由式\eqref{align:ch01-神经元预激活}与式\eqref{align:ch01-感知机激活}，感知机的判据是 $a=\sum_i w_i x_i$ 是否超过阈值，若把阈值写成一个恒为 $1$ 的输入的权重，则判别边界是输入空间中的一张超平面，因此单层感知机只能实现\textbf{线性可分}的分类。
 考察异或问题：输入 $(x_1,x_2)\in\{0,1\}^{2}$，要求 $y=1$ 当且仅当 $x_1\neq x_2$。设存在权重 $w_1,w_2$ 与阈值 $\theta$，使判别“$a>\theta$ 判为正类”完全正确。由 $(0,0)$ 属负类得 $0\leqslant\theta$；由 $(1,0)$ 与 $(0,1)$ 属正类得 $w_1>\theta\geqslant 0$、$w_2>\theta\geqslant 0$，从而 $w_1+w_2>2\theta\geqslant\theta$，即 $(1,1)$ 必被判为正类，与它属于负类矛盾。故单层感知机无法表示异或。
 这一反例说明 Minsky 与 Papert 所指的局限是真的，但他们的外推——认为多层网络同样受限于此——是错的：只要在输入与输出之间加入带非线性激活的隐藏层，异或就可以被表示（两个隐藏单元已足够）。这正是“深度”带来的表达能力，也是\cref{subsection:ch01-深度网络}的历史起点。
@@ -125,11 +135,11 @@
 请注意，尽管感知机已经从实际机器学习应用中消失，但这个术语仍然流传下来，因此现代神经网络有时也称为多层感知机（Multi Layer Perceptron, MLP）。
 
 \begin{definition}[多层感知机]\label{definition:ch01-多层感知机}
-把\cref{definition:ch01-人工神经网络}中的多个单元按层组织、使前一层的输出作为后一层的输入的模型，整体称为\textbf{多层感知机}（Multi Layer Perceptron, MLP）——这是现代神经网络在历史上的另一名称。
+设 $L\geqslant2$，$F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为\cref{definition:ch01-人工神经网络}所述的 $L$ 层网络，第 $\ell$ 层的权重矩阵 $W^{(\ell)}\in\mathbb{R}^{n_{\ell}\times n_{\ell-1}}$ 为 $n_{\ell}$ 行 $n_{\ell-1}$ 列的实矩阵，且第 $1,\dots,L-1$ 层的单元为\cref{definition:ch01-隐藏单元}所述的隐藏单元。若各层权重均可由训练数据调整，则 $F$ 称为\textbf{多层感知机}（Multi Layer Perceptron, MLP）。该名称沿用历史用法：现代的多层感知机不要求其单元取式\eqref{align:ch01-感知机激活}的阶跃函数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-多层感知机; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-多层感知机; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个名字容易引起误解：现代的多层感知机既不是 Rosenblatt 的感知机（Rosenblatt 的感知机单元取式\eqref{align:ch01-感知机激活}的阶跃函数），也不限于单层；它指的是由多层可调权重的单元堆叠而成、通常用反向传播训练的网络。“感知机”一词在这里只剩下“每个单元先加权求和再作非线性变换”这一层含义。
 之所以仍沿用旧名，是术语的历史惯性：\cref{subsection:ch01-单层网络}中单层模型失宠之后，多层版本沿用了同一名称以表明血统。阅读时只需记住：名字里的“感知机”不承诺任何能力上限，真正的限制来自层数、激活函数与训练算法。
 \end{remark}
@@ -141,11 +151,11 @@
 通过这些改进，我们现在得到了一个误差函数，它可以计算其关于网络模型中每一个参数的偏导数。现在我们可以着手考虑具有多层参数的网络结构了。\cref{figure:ch01-两层神经网络}展示了一个包含两层参数的简单网络模型。位于中间层的节点称为隐藏单元（hidden unit），因为它们的值不会出现在训练数据中，训练数据仅提供了模型的输入值和输出值。
 
 \begin{definition}[隐藏单元]\label{definition:ch01-隐藏单元}
-位于网络中间层、其取值既不出现在训练数据的输入中也不出现在训练数据的目标中的单元，称为\textbf{隐藏单元}（hidden unit）。
+设 $L\geqslant1$，$F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为\cref{definition:ch01-人工神经网络}所述的 $L$ 层网络，第 $0$ 层的值取为训练样本的输入 $x_n\in\mathbb{R}^{n_{0}}$，第 $L$ 层的值对应目标值 $t_n\in\mathbb{R}^{n_{L}}$。若一个单元位于第 $\ell$ 层且 $1\leqslant\ell\leqslant L-1$，则它称为\textbf{隐藏单元}（hidden unit）：其取值既不出现在训练数据的输入中，也不出现在训练数据的目标中。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-隐藏单元; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-隐藏单元; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 隐藏单元的存在是“深度”与“可学习特征”的连接点：训练数据只告诉网络输入是什么、输出应当是什么，中间层应当表示什么完全由训练过程自行决定。因此隐藏单元的值是模型内部的\textbf{隐变量}，而不是被观测的量。
 这一条件也带来解释上的困难：正因为隐藏单元没有对应的监督信号，我们无法直接检查“它学到的表示是否正确”，只能通过最终误差间接判断。后文\cref{definition:ch01-表示学习}正是要从这个角度理解隐藏层的作用。
 \end{remark}
@@ -160,11 +170,11 @@
 \cref{figure:ch01-两层神经网络}中的每一个隐藏单元和每一个输出单元均计算形如式\eqref{align:ch01-神经元预激活}和式\eqref{align:ch01-神经元激活}的函数值。对于一组给定的输入值，所有隐藏单元和输出单元的状态可以通过迭代地应用式\eqref{align:ch01-神经元预激活}和式\eqref{align:ch01-神经元激活}进行前向计算，在这个过程中，信息沿着箭头所指的方向在网络中逐层向前传递。由于这种信息流动的特点，此类模型也被称作前馈神经网络（feed-forward neural network）。
 
 \begin{definition}[前馈神经网络]\label{definition:ch01-前馈神经网络}
-若网络中每个单元只从其前一层的单元接收输入、并把输出送往其后一层的单元，信息沿单一方向逐层向前传递，则称这样的网络为\textbf{前馈神经网络}（feed-forward neural network）。
+设 $L\in\mathbb{N}$，$F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为 $L$ 层网络，它的单元与连接构成有向图 $G=(V,E)$：每个单元为一个顶点，从第 $\ell'$ 层单元指向第 $\ell$ 层单元的连接为一条有向边。若每条有向边都从第 $\ell'$ 层的单元指向第 $\ell$ 层的单元且 $\ell'<\ell$，即信号只沿层序向前传递、$G$ 中不存在有向回路，则 $F$ 称为\textbf{前馈神经网络}（feed-forward neural network）。此时给定输入 $x\in\mathbb{R}^{n_{0}}$ 后，各单元的值可按层序 $1,2,\dots,L$ 依次算出。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-前馈神经网络; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-前馈神经网络; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 “前馈”排除的是反馈连接：一旦某一层的输出被送回到更靠前的层，网络就具有了内部状态与时间动态，那属于循环网络，其计算与训练都要另行处理。前馈结构保证给定输入后各单元的值可以被依次算出，这正是前向计算能够“迭代地应用式\eqref{align:ch01-神经元预激活}与式\eqref{align:ch01-神经元激活}”的原因。
 这一结构条件在后文的误差反向传播中还会再用一次：正因为信息流是单向的，误差才可以沿相反方向逐层回传而不产生循环依赖。若存在反馈连接，反向传播就需要展开时间或改用其他算法。
 \end{remark}
@@ -172,11 +182,28 @@
 为了训练这样的神经网络，我们首先使用随机数生成器初始化参数，然后使用基于梯度的优化技术进行迭代更新。这需要计算误差函数的偏导数，此操作可以通过误差反向传播（error backpropagation）过程中高效地完成（参见\cref{section:ch08-梯度计算}）。在反向传播中，信息从输出端向后通过神经网络流向输入端（Rumelhart, Hinton and Williams, 1986）。在机器学习领域，有许多不同的优化算法利用了待优化的函数的梯度，其中最简单和最常用的是随机梯度下降（stochastic gradient descent）法（参见\cref{section:ch07-梯度下降优化}）。
 
 \begin{definition}[误差反向传播]\label{definition:ch01-误差反向传播}
-计算误差函数关于网络各参数偏导数的一种高效方式称为\textbf{误差反向传播}（error backpropagation）：在该过程中，信息从输出端向后通过神经网络流向输入端，逐层给出误差函数对各层参数的偏导数（Rumelhart, Hinton and Williams, 1986）。
+设 $F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为前馈神经网络，第 $\ell$ 层的权重矩阵 $W^{(\ell)}\in\mathbb{R}^{n_{\ell}\times n_{\ell-1}}$ 为实矩阵，偏置 $b^{(\ell)}\in\mathbb{R}^{n_{\ell}}$ 为 $n_{\ell}$ 维向量，激活函数 $f_{\ell}:\mathbb{R}\to\mathbb{R}$ 逐元素作用；记 $z^{(0)}=x\in\mathbb{R}^{n_{0}}$，
+\begin{align*}
+  a^{(\ell)}=W^{(\ell)}z^{(\ell-1)}+b^{(\ell)},\qquad
+  z^{(\ell)}=f_{\ell}\bigl(a^{(\ell)}\bigr)\quad(\ell=1,\dots,L).
+\end{align*}
+设目标 $t\in\mathbb{R}^{n_{L}}$，损失函数 $\ell:\mathbb{R}^{n_{L}}\times\mathbb{R}^{n_{L}}\to[0,\infty)$ 对其第一个变量可微，误差 $E=\ell(z^{(L)},t)$，各 $f_{\ell}$ 可微，并以 $\odot$ 表示逐元素乘积。若一个算法按
+\begin{align*}
+  \delta^{(L)}=\frac{\partial \ell}{\partial z^{(L)}}\bigl(z^{(L)},t\bigr)\odot f_{L}'\bigl(a^{(L)}\bigr),
+  \qquad
+  \delta^{(\ell)}=\Bigl(\bigl(W^{(\ell+1)}\bigr)^{\mathsf{T}}\delta^{(\ell+1)}\Bigr)\odot f_{\ell}'\bigl(a^{(\ell)}\bigr)
+\end{align*}
+（$\ell=L-1,\dots,1$）由后向前递推，并由
+\begin{align*}
+  \frac{\partial E}{\partial W^{(\ell)}}=\delta^{(\ell)}\bigl(z^{(\ell-1)}\bigr)^{\mathsf{T}},
+  \qquad
+  \frac{\partial E}{\partial b^{(\ell)}}=\delta^{(\ell)}
+\end{align*}
+给出误差对全部参数的偏导数，则该算法称为\textbf{误差反向传播}（error backpropagation）（Rumelhart, Hinton and Williams, 1986）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-误差反向传播; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-误差反向传播; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 反向传播的实质是链式法则的系统化使用：先算出误差对输出的导数，再逐层用“上一层导数 × 本层局部导数”向前推进。它的效率来自复用——同一条回传路径上的中间量被所有更靠前的参数共享，因此一次反向遍历就能得到全部参数的梯度，计算量与一次前向计算同阶，而不是与参数个数同阶。
 条件上，它要求每个单元的输出对其输入可微，这正是前面强调“用连续可微激活函数取代阶跃函数”的原因；若激活函数像式\eqref{align:ch01-感知机激活}那样几乎处处导数为零，回传的梯度会处处为零，参数就无法更新。此外反向传播只负责\textbf{算梯度}，如何用梯度更新参数是优化算法的事（参见\cref{section:ch07-梯度下降优化}）。
 \end{remark}
@@ -184,11 +211,11 @@
 能够训练具有多层权重的神经网络是一项重大突破，自 20 世纪 80 年代中期开始，这一突破再度引发了对该领域的研究热潮。这一时期，研究重心逐渐超越了单纯对神经生物学机制的模拟，而朝着构建更加严谨、更具原则性的理论基础的方向发展（Bishop, 1995b）。特别是，人们逐渐认识到，概率论和统计学中的核心思想在神经网络及机器学习领域扮演着至关重要的角色。一个关键的认识是，从数据中进行学习的过程不可避免地会引入一些背景假设，这些假设被称为先验知识（prior knowledge）或归纳偏置（inductive bias）。这些先验知识可以显式地融入模型设计之中，例如，可以设计一种特定的神经网络结构，使得皮肤病变的分类结果不依赖于图像中病变的具体位置；或者，它们也可以隐式地蕴含在模型的数学形式或其训练方法的选择中。
 
 \begin{definition}[先验知识与归纳偏置]\label{definition:ch01-先验知识与归纳偏置}
-从数据中进行学习的过程不可避免地会引入一些背景假设，这些假设称为\textbf{先验知识}（prior knowledge）或\textbf{归纳偏置}（inductive bias）。它们可以显式地融入模型设计（例如设计一种使分类结果不依赖病变位置的网络结构），也可以隐式地蕴含在模型的数学形式或其训练方法的选择中。
+设输入空间 $\mathcal{X}$，目标空间 $\mathcal{Y}$，假设空间 $\mathcal{H}\subseteq\mathcal{Y}^{\mathcal{X}}$，学习算法 $\mathcal{A}$ 以任意有限训练集 $D\subseteq\mathcal{X}\times\mathcal{Y}$ 为输入并输出 $\mathcal{A}(D)\in\mathcal{H}$。若存在真子集 $\mathcal{H}_{0}\subsetneq\mathcal{H}$ 使得对一切训练集 $D$ 有 $\mathcal{A}(D)\in\mathcal{H}_{0}$，则把 $\mathcal{A}$ 限制在 $\mathcal{H}_{0}$ 内的这一约定称为\textbf{归纳偏置}（inductive bias），由 $\mathcal{H}_{0}$ 体现的、训练数据之外的假设称为\textbf{先验知识}（prior knowledge）。若 $\mathcal{H}_{0}$ 由网络结构、误差函数或训练方法的选择直接给出，则称该偏置为\textbf{显式}的；若 $\mathcal{H}_{0}$ 由模型或算法的数学形式隐含地确定，则称该偏置为\textbf{隐式}的。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-先验知识与归纳偏置; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-先验知识与归纳偏置; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 为什么学习必然需要假设？因为有限个数据点可以被无穷多个函数同时拟合，若不对“哪些函数更可取”作出约定，就无法从无穷多个候选里挑出一个。先验知识正是这一约定的载体：它把假设空间从“所有函数”缩小到“我们愿意相信的函数”。
 这也决定了偏置的两面性：偏置与数据规律相符时，学习效率大幅提高（例如卷积网络的平移等变性之于图像）；不相符时，再多的数据也难以纠正。因此“引入偏置”不是缺点而是必需，问题只在于偏置是否恰当——这一点在权重衰减的讨论中会以另一种形式出现（参见\cref{section:ch09-权重衰减}）。
 \end{remark}
@@ -196,11 +223,11 @@
 反向传播算法和基于梯度的优化技术显著提升了神经网络解决实际问题的能力。然而，研究人员注意到，在具有多层结构的神经网络中，通常只有最后两层的权重参数能够学习到有效的信息。除了少数例外，特别是用于图像分析的卷积神经网络模型（LeCun et al., 1998）（详见\cref{section:ch10-计算机视觉}），具有两层以上结构的网络模型鲜有成功的应用。这意味着此类网络模型不能有效解决太复杂的问题。为了在各种实际应用中获得令人满意的性能，人们通常要设计预处理步骤，将原始输入变量变换到一个新的特征空间中，希望在这个新的空间中机器学习任务能更容易解决。这种预处理步骤有时也被称为特征提取（feature extraction）。尽管这种人工特征提取的方法有时见效，但一个更理想的解决方案显然是直接从数据中自动学习出这些特征，而不是依赖于人工设计。
 
 \begin{definition}[特征提取]\label{definition:ch01-特征提取}
-把原始输入变量变换到一个新的特征空间、以使机器学习任务在该空间中更容易解决的预处理步骤，称为\textbf{特征提取}（feature extraction）。
+设输入空间 $\mathcal{X}\subseteq\mathbb{R}^{D}$（$D\in\mathbb{N}$），特征空间 $\mathcal{Z}=\mathbb{R}^{d}$（$d\in\mathbb{N}$），$\phi:\mathcal{X}\to\mathcal{Z}$ 为与模型参数无关的固定映射，目标空间 $\mathcal{Y}$，后续模型 $g:\mathcal{Z}\to\mathcal{Y}$。若预测由复合映射 $x\mapsto g(\phi(x))$ 给出，则 $\phi$ 称为\textbf{特征提取}（feature extraction），$\phi(x)\in\mathcal{Z}$ 称为 $x$ 的\textbf{特征}，$d$ 称为特征的维数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-特征提取; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-特征提取; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 特征提取的动机是“换一个坐标系看问题”：原始输入（如像素）与任务目标之间的关系往往极其复杂，而在经过恰当变换的空间里，同一任务可能近似线性可分。历史上这一步由人手工设计，其质量直接决定了后续分类器的上限。
 它的局限也正是深度学习登场的原因：人工设计特征需要领域知识，且难以针对每个任务重新设计；更理想的做法是让模型自己学出这层变换，也就是把特征提取纳入可学习参数之中。条件上要注意，手工特征与学习到的表示并非互斥——前者可以作为后者的输入，或在数据极少时作为先验知识使用。
 \end{remark}
@@ -212,11 +239,11 @@
 神经网络发展的第三个阶段，也是当前阶段，始于 21 世纪的第二个十年。一系列的突破使具有多层权重的神经网络得以有效训练，从而消除了这些技术先前的能力限制。具有多层权重的网络称为深度神经网络，专注于这类网络的机器学习子领域称为深度学习（deep learning）（LeCun, Bengio and Hinton, 2015）。
 
 \begin{definition}[深度神经网络与深度学习]\label{definition:ch01-深度神经网络与深度学习}
-具有多层权重的网络称为\textbf{深度神经网络}（deep neural network），专注于这类网络的机器学习子领域称为\textbf{深度学习}（deep learning）。
+设 $F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为\cref{definition:ch01-人工神经网络}所述的 $L$ 层网络，第 $\ell$ 层的权重矩阵 $W^{(\ell)}\in\mathbb{R}^{n_{\ell}\times n_{\ell-1}}$ 为实矩阵（$\ell=1,\dots,L$），故可调权重的层数为 $L$。若 $L\geqslant3$，即网络至少含两个隐藏层与三层可调权重，则 $F$ 称为\textbf{深度神经网络}（deep neural network）；研究这类网络的设计与训练的机器学习分支称为\textbf{深度学习}（deep learning）（LeCun, Bengio and Hinton, 2015）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-深度神经网络与深度学习; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-深度神经网络与深度学习; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 “深”是相对的说法：\cref{definition:ch01-多层感知机}只要求有隐藏层，而“深度”强调的是隐藏层数量足够多、以致训练本身成为难点。因此深度学习的核心问题不是“如何定义深度”，而是“如何让很多层的权重同时被有效训练”——这正是\cref{subsection:ch01-反向传播}遗留、由本节后面的几项进展回答的问题。
 条件上，深度并不自动带来好处：层数增加会使误差信号在反传中逐层衰减、使优化更难，也会放大过拟合风险。后文提到的残差连接、大规模数据与正则化，正是为了让“深”在实践上可行而引入的配套手段。
 \end{remark}
@@ -241,11 +268,11 @@
 我们已经了解到，网络的深度对于神经网络实现卓越性能至关重要。要理解深度神经网络中隐藏层的作用，一种有效的视角是表示学习（representation learning，也称表征学习）（Bengio, Courville, and Vincent, 2012）。在这种视角下，网络能够学习把原始输入数据转换成某种新的、富有语义信息的表示形式，从而显著降低后续网络层需要解决的问题的难度。这些学习到的内部表示还可以通过迁移学习技术被重新利用来解决其他相关问题，正如前文在皮肤病变分类任务中所展示的那样。一个有趣的发现是，用于处理图像的神经网络模型所学习到的内部表示，与在哺乳动物视觉皮层中观察到的神经表征惊人地相似（详见\cref{section:ch10-可视化训练好的CNN}）。
 
 \begin{definition}[表示学习]\label{definition:ch01-表示学习}
-把原始输入数据转换成某种新的、富有语义信息的表示形式，以降低后续网络层需要解决的问题的难度——这一视角与做法称为\textbf{表示学习}（representation learning，也称表征学习）。
+设输入空间 $\mathcal{X}$，表示空间 $\mathcal{Z}=\mathbb{R}^{d}$（$d\in\mathbb{N}$），输出空间 $\mathcal{Y}$，$\phi_{\boldsymbol{\theta}_{1}}:\mathcal{X}\to\mathcal{Z}$ 与 $g_{\boldsymbol{\theta}_{2}}:\mathcal{Z}\to\mathcal{Y}$ 为参数化映射，参数 $\boldsymbol{\theta}_{1}\in\Theta_{1}$、$\boldsymbol{\theta}_{2}\in\Theta_{2}$ 由同一训练集上的同一误差函数联合确定，模型为 $y=g_{\boldsymbol{\theta}_{2}}\circ\phi_{\boldsymbol{\theta}_{1}}$。则 $\phi_{\boldsymbol{\theta}_{1}}(x)$ 称为输入 $x$ 的\textbf{表示}（representation），这一学习方式称为\textbf{表示学习}（representation learning，也称表征学习）。“富有语义信息”为非形式化描述，本定义以 $\boldsymbol{\theta}_{1}$ 与 $\boldsymbol{\theta}_{2}$ 的联合训练这一条件代替它。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-表示学习; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-表示学习; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 表示学习把“特征工程”从人工搬到模型内部：隐藏层输出的就是输入的一种新表示，而它随参数一起被学习。判断一种表示是否有用，标准不是它像不像原始数据，而是它是否让后续任务变得更简单——在理想情形下，让原本高度非线性的判别问题在新空间中接近线性可分（\cref{definition:ch01-线性模型}）。
 条件上，表示学习依赖“多层的复合”与“任务驱动的目标函数”：若没有足够深度，表示只能作一次简单变换；若没有明确的误差信号，所学表示就未必对目标任务有用。这也解释了为什么\cref{subsection:ch01-深度网络}所强调的规模化与表示学习是同一件事的两面：数据越多、模型越大，学到的表示才越通用。
 \end{remark}
@@ -253,11 +280,11 @@
 那些能够针对一系列下游任务进行适配或微调（fine-tuned）的大规模神经网络模型，称为基础模型（foundation model）。这些模型可以充分利用海量且多样化的数据集，从而构建出具有广泛适用性的通用模型（Bommasani et al., 2021）。
 
 \begin{definition}[基础模型]\label{definition:ch01-基础模型}
-能够针对一系列下游任务进行适配或微调（fine-tuned）的大规模神经网络模型，称为\textbf{基础模型}（foundation model）。
+设 $\mathcal{M}=\{p_{\boldsymbol{\theta}}:\boldsymbol{\theta}\in\Theta\}$ 为参数化模型族，$\boldsymbol{\theta}_{0}\in\Theta$ 为在预训练语料上确定的参数，$I$ 为下游任务集合，第 $\tau\in I$ 个任务的训练集为 $D_{\tau}$。若存在适配算子 $\mathcal{A}$，使对每个 $\tau\in I$ 都有 $\boldsymbol{\theta}_{\tau}=\mathcal{A}(\boldsymbol{\theta}_{0},D_{\tau})$，且以 $\boldsymbol{\theta}_{\tau}$ 为参数的模型可用于任务 $\tau$，则 $\mathcal{M}$ 连同 $(\boldsymbol{\theta}_{0},\mathcal{A})$ 称为\textbf{基础模型}（foundation model）（Bommasani et al., 2021）。“大规模”为非形式化修饰语：本定义只要求存在预训练参数 $\boldsymbol{\theta}_{0}$ 与可复用的适配算子 $\mathcal{A}$，模型规模与语料规模不进入定义。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-基础模型; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-基础模型; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 基础模型的要点是“一次训练、多处使用”：它先在海量且多样化的数据上得到一个通用模型，再通过适配或微调把它迁移到具体任务上（\cref{definition:ch01-预训练微调与迁移学习}）。因此它的价值不在某一项任务的精度，而在可被复用的广度。
 条件上，“大规模”与“多样化”缺一不可：规模保证模型有足够容量吸收数据中的规律，多样化保证这些规律不局限于单一分布，从而使迁移到下游任务时仍然有效。这也带来代价——训练与推理的计算成本、以及下游任务与预训练分布不匹配时的性能下降，都需要另行处理。
 \end{remark}
@@ -265,11 +292,15 @@
 除了规模化这一因素外，还有其他若干进展也同样为深度学习的成功做出了重要贡献。例如，在传统的简单神经网络中，训练信号随着其在深度网络中逐层反向传播而逐渐衰减（详见\cref{section:ch09-残差连接}）。为了解决这一难题，一种名为残差连接（residual connection）的技术被引入网络架构中（He et al., 2015a），它极大地提高了对数百层深度的网络的训练效率。
 
 \begin{definition}[残差连接]\label{definition:ch01-残差连接}
-在深度网络中，为缓解训练信号逐层反传时的衰减而引入的一类跨层连接技术，称为\textbf{残差连接}（residual connection）（He et al., 2015a）。
+设 $d\in\mathbb{N}$，$F_{\boldsymbol{\theta}}:\mathbb{R}^{d}\to\mathbb{R}^{d}$ 为参数为 $\boldsymbol{\theta}$ 的层映射。若网络的某一层按
+\begin{align*}
+  z\mapsto z+F_{\boldsymbol{\theta}}(z),\qquad z\in\mathbb{R}^{d},
+\end{align*}
+计算，即把该层输入与该层变换的输出逐元素相加并把和作为该层的输出，则这一跨层连接称为\textbf{残差连接}（residual connection）（He et al., 2015a），$F_{\boldsymbol{\theta}}$ 称为\textbf{残差函数}。若输入与输出的维数不同，即 $F_{\boldsymbol{\theta}}:\mathbb{R}^{d}\to\mathbb{R}^{d'}$ 且 $d\neq d'$，则须先用线性映射 $P\in\mathbb{R}^{d'\times d}$ 把 $z$ 变为 $Pz$，再计算 $Pz+F_{\boldsymbol{\theta}}(z)$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-残差连接; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-残差连接; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 残差连接的典型做法是让某一层的输出与该层的输入相加，使网络只需学习“在原有表示上需要改动多少”，而不必从头学出一个完整的变换。这样，即使中间各层的变换接近恒等，信息与梯度也能沿这条“直通”路径顺畅通过，深层网络的训练因此变得可行。
 条件上，跨层相加要求两条通路的维数一致（否则需要先做线性投影），这也是实际架构中残差块通常保持通道数不变的原因。它并不增加模型的表达能力上限，改变的是\textbf{可优化性}——这一点与\cref{subsection:ch01-模型复杂度}中“模型容量”与“能否训练好”的区分是同一回事。
 \end{remark}
@@ -277,11 +308,11 @@
 另一项具有里程碑意义的进展是自动微分（automatic differentiation）方法的提出，该方法能够基于描述网络前向传播过程的代码，自动生成用于执行反向传播以计算误差函数梯度的代码。研究人员只需要显式地编写相对简洁的前向传播函数代码，就能够快速地探索和尝试不同的神经网络架构，并快速尝试不同的架构和多种组件的不同组合。
 
 \begin{definition}[自动微分]\label{definition:ch01-自动微分}
-能够基于描述网络前向传播过程的代码，自动生成用于执行反向传播以计算误差函数梯度的代码的方法，称为\textbf{自动微分}（automatic differentiation）。
+设 $F:\mathbb{R}^{n}\to\mathbb{R}^{m}$（$n,m\in\mathbb{N}$）由有限个可微基本运算复合而成，其计算过程由有向无环图 $G=(V,E)$ 表示：每个顶点对应一个基本运算或一个输入变量，每条有向边表示数据依赖关系。若算法以 $G$ 与输入 $x\in\mathbb{R}^{n}$ 为输入，按链式法则在 $G$ 上反向遍历一次，输出全部偏导数 $\partial F_{i}/\partial x_{j}$（$i=1,\dots,m$，$j=1,\dots,n$）的值，则它称为\textbf{自动微分}（automatic differentiation）；若该反向遍历所需的运算量不超过前向计算运算量与某个与 $n$ 无关的常数之积，则称它为\textbf{反向模式}（reverse mode）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch01-自动微分; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch01-自动微分; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 自动微分既不是数值差分（用差商近似导数，精度与代价都受限），也不是符号求导（表达式会急剧膨胀），而是把\cref{definition:ch01-误差反向传播}的链式法则作用在程序本身上：前向计算被记录成一张计算图，反向遍历该图即得全部偏导数。
 它的实际意义在于把“求梯度”从手工推导变成框架的职责，使研究者只需写好前向传播，就能尝试不同的架构与组件组合。条件上，它要求前向过程可被记录（即由可微的基本运算构成）；若代码中含有不可微或不可追踪的操作，自动微分同样会失效，这与\cref{definition:ch01-误差反向传播}对可微性的要求一致。
 \end{remark}

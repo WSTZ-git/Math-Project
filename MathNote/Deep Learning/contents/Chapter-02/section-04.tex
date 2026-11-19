@@ -23,11 +23,19 @@
 \end{align}
 
 \begin{definition}[变量变换与密度变换]\label{definition:ch02-密度变换}
-设 $x=g(y)$ 是可微的变量替换，$f$ 为任一函数。称由\eqref{align:ch02-函数变换}定义的 $\tilde{f}$ 为 $f$ 在变量变换 $x=g(y)$ 下的\textbf{像函数}。若 $p_x$ 是 $x$ 的概率密度，则称按\eqref{align:ch02-密度变换}得到的 $p_y$ 为 $y$ 的\textbf{概率密度}；称\eqref{align:ch02-密度变换}为\textbf{密度变换}公式。
+设 $I,J\subseteq\mathbb{R}$ 为开区间，$g:I\to J$ 为连续可微的严格单调函数，且 $g'(y)\neq0$ 对每个 $y\in I$ 成立，$f:J\to\mathbb{R}$ 为任一函数。由
+\begin{align*}
+  \tilde{f}(y)=f\big(g(y)\big),\qquad y\in I,
+\end{align*}
+定义的函数 $\tilde{f}:I\to\mathbb{R}$ 称为 $f$ 在变量变换 $x=g(y)$ 下的\textbf{像函数}，即\eqref{align:ch02-函数变换}。设 $X$ 为连续型随机变量，概率密度为 $p_x:J\to[0,\infty)$，$Y=g^{-1}(X)$。定义
+\begin{align*}
+  p_y(y)=p_x\big(g(y)\big)\left|\frac{\mathrm{d}g}{\mathrm{d}y}(y)\right|,\qquad y\in I,
+\end{align*}
+则 $p_y$ 是 $Y$ 的概率密度（见\cref{proposition:ch02-一元密度变换}），称为 $Y$ 的\textbf{概率密度}；该式称为\textbf{密度变换}公式，即\eqref{align:ch02-密度变换}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-密度变换; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-密度变换; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 为什么函数直接复合、而密度必须乘一个导数因子？因为密度是“单位长度上的概率”，而长度的度量随变量改变：$x$ 上的区间长度 $\delta x$ 与 $y$ 上对应区间长度 $\delta y$ 之比是 $|\mathrm{d}x/\mathrm{d}y|$。\eqref{align:ch02-密度变换}正是把这个长度比补齐，使概率质量 $p_x\delta x$ 与 $p_y\delta y$ 相等。
 
 在规范化流（\cref{chapter:ch18-标准化流}）中，正是反复使用\eqref{align:ch02-密度变换}把简单密度（如标准 Gauss）变成复杂密度，因此这个公式是那类生成模型的全部数学基础。
@@ -36,26 +44,26 @@
 这里引入模数 $|\cdot|$ 是因为导数 $\mathrm{d}y/\mathrm{d}x$ 可能为负，而密度是通过两个长度的比值缩放的，该比例恒为正。
 
 \begin{proposition}[一元密度变换公式]\label{proposition:ch02-一元密度变换}
-设 $x=g(y)$ 是连续可微的严格单调函数，$g'(y)\neq0$，$p_x$ 为 $x$ 的密度，则由\eqref{align:ch02-密度变换}定义的 $p_y$ 是 $y$ 的合法概率密度，且对任意区间 $(a,b)$ 有
+设 $I,J\subseteq\mathbb{R}$ 为开区间，$g:I\to J$ 为连续可微的严格单调函数，且 $g'(y)\neq0$ 对每个 $y\in I$ 成立，$g^{-1}:J\to I$ 为其反函数。设 $X$ 为连续型随机变量，概率密度为 $p_x:J\to[0,\infty)$，$Y=g^{-1}(X)$，并令 $p_y:I\to[0,\infty)$ 由\eqref{align:ch02-密度变换}定义。则 $p_y$ 是 $Y$ 的概率密度，且对任意 $-\infty\leqslant a<b\leqslant+\infty$，
 \begin{align*}
-  \int_{a}^{b} p_y(y)\,\mathrm{d}y = p_x\big(x\in g((a,b))\big) .
+  \int_{a}^{b}p_y(y)\,\mathrm{d}y=\mathbb{P}\big(g^{-1}(X)\in(a,b)\big)=\mathbb{P}\big(X\in g((a,b))\big).
 \end{align*}
 \end{proposition}
 
 \begin{proof}
 概率质量守恒：$y$ 落在 $(y,y+\delta y)$ 内当且仅当 $x=g(y)$ 落在 $g$ 的像中对应的区间内，该区间的长度为 $|g'(y)|\delta y+o(\delta y)$。由\cref{definition:ch02-概率密度}，
 \begin{align*}
-  p_y(y)\delta y = p_x\big(g(y)\big)\big|g'(y)\big|\delta y + o(\delta y) ,
+ p_y(y)\delta y = p_x\big(g(y)\big)\big|g'(y)\big|\delta y + o(\delta y) ,
 \end{align*}
 两边除以 $\delta y$ 并令 $\delta y\to0$ 即得\eqref{align:ch02-密度变换}。非负性由 $p_x\geqslant0$ 与 $|g'|>0$ 得到；归一化由换元积分公式
 \begin{align*}
-  \int p_y(y)\,\mathrm{d}y = \int p_x\big(g(y)\big)\big|g'(y)\big|\,\mathrm{d}y = \int p_x(x)\,\mathrm{d}x = 1
+ \int p_y(y)\,\mathrm{d}y = \int p_x\big(g(y)\big)\big|g'(y)\big|\,\mathrm{d}y = \int p_x(x)\,\mathrm{d}x = 1
 \end{align*}
 得到。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-一元密度变换; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-一元密度变换; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 命题的实质是换元积分公式在概率语言中的重述：$\mathrm{d}x = g'(y)\,\mathrm{d}y$，而绝对值保证 $\mathrm{d}y$ 的系数为正。这也解释了为什么 $p_y$ 必然是密度——它自动继承非负性与归一化。
 
 条件“严格单调、$g'\neq0$”不可省：若 $g$ 不单调，同一个 $y$ 可能对应多个 $x$，此时必须把各支的贡献相加，公式变为 $p_y(y)=\sum_i p_x(g_i(y))|g_i'(y)|$。若在某点 $g'=0$，该点附近长度被压缩为零，密度变换公式失效。
@@ -71,15 +79,19 @@
 \end{align}
 
 \begin{proposition}[像函数的众数]\label{proposition:ch02-众数变换}
-设 $g$ 可微、$g'(\hat{y})\neq0$，$\hat{x}=g(\hat{y})$ 是 $f$ 的驻点，则 $\hat{y}$ 是 $\tilde{f}(y)=f(g(y))$ 的驻点，即\eqref{align:ch02-众数变换}成立；特别地，若 $f'(\hat{x})=0$ 且 $g'\neq0$，则 $f$ 的驻点与 $\tilde{f}$ 的驻点通过 $\hat{x}=g(\hat{y})$ 一一对应。
+设 $I,J\subseteq\mathbb{R}$ 为开区间，$g:I\to J$ 为可微的严格单调函数，且 $g'(y)\neq0$ 对每个 $y\in I$ 成立，$f:J\to\mathbb{R}$ 可微，$\tilde{f}(y)=f(g(y))$。若 $\hat{y}\in I$ 满足 $\hat{x}=g(\hat{y})$ 是 $f$ 的驻点，即 $f'(\hat{x})=0$，则 $\hat{y}$ 是 $\tilde{f}$ 的驻点，且
+\begin{align*}
+  \tilde{f}'(\hat{y})=f'\big(g(\hat{y})\big)\,g'(\hat{y})=0,
+\end{align*}
+即\eqref{align:ch02-众数变换}。反之，若 $\hat{y}\in I$ 是 $\tilde{f}$ 的驻点，则由 $g'(\hat{y})\neq0$ 得 $f'(g(\hat{y}))=0$，即 $\hat{x}=g(\hat{y})$ 是 $f$ 的驻点。因此 $f$ 的驻点与 $\tilde{f}$ 的驻点通过 $x=g(y)$ 一一对应。
 \end{proposition}
 
 \begin{proof}
 由链式法则，$\tilde{f}'(y)=f'(g(y))g'(y)$。在 $y=\hat{y}$ 处，$g(\hat{y})=\hat{x}$ 且 $f'(\hat{x})=0$，故 $\tilde{f}'(\hat{y})=0\cdot g'(\hat{y})=0$，即\eqref{align:ch02-众数变换}。反之若 $\tilde{f}'(\hat{y})=0$ 而 $g'(\hat{y})\neq0$，则必 $f'(g(\hat{y}))=0$，即 $g(\hat{y})$ 是 $f$ 的驻点。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-众数变换; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-众数变换; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条结论说明：对函数作变量变换时，极值点的位置会随变量一起变换，因此“函数 $f$ 在哪里取最大”与“像函数 $\tilde f$ 在哪里取最大”是同一个几何事实的两种坐标描述。
 
 条件 $g'(\hat{y})\neq0$ 不可省：若 $g'$ 在 $\hat y$ 处为零，则 $\tilde f'(\hat y)=0$ 可能由 $g'$ 而非 $f'$ 造成，此时 $\hat y$ 对应的 $x$ 未必是 $f$ 的驻点；这也正是下一段说明“密度的众数不随变量变换”的入口。
@@ -102,24 +114,28 @@
 \end{align}
 
 \begin{proposition}[密度的众数依赖于变量的选择]\label{proposition:ch02-密度众数依赖变量}
-设 $p_x$ 可微、$g$ 二阶可微，$s=\mathrm{sgn}\,g'(y)$，则 $p_y$ 的导数由\eqref{align:ch02-密度导数}给出。因此，即使 $\hat{x}$ 是 $p_x$ 的众数，$\hat{y}=g^{-1}(\hat{x})$ 一般也不是 $p_y$ 的众数，除非\eqref{align:ch02-密度导数}的右端第二项为零。
+设 $I,J\subseteq\mathbb{R}$ 为开区间，$g:I\to J$ 为二阶连续可微的严格单调函数，且 $g'(y)\neq0$ 对每个 $y\in I$ 成立，$p_x:J\to[0,\infty)$ 为连续可微的概率密度，$p_y$ 由\eqref{align:ch02-密度变换}定义，$s=\operatorname{sgn}g'(y)\in\{-1,1\}$。则 $p_y$ 可微，其导数由\eqref{align:ch02-密度导数}给出。若 $\hat{x}$ 是 $p_x$ 的众数且位于 $J$ 的内部，$\hat{y}=g^{-1}(\hat{x})$，则 $p_x'(\hat{x})=0$，从而
+\begin{align*}
+  p_y'(\hat{y})=s\,p_x(\hat{x})\,g''(\hat{y}).
+\end{align*}
+因此当 $p_x(\hat{x})>0$ 且 $g''(\hat{y})\neq0$ 时 $p_y'(\hat{y})\neq0$，$\hat{y}$ 不是 $p_y$ 的驻点，更不是 $p_y$ 的众数；仅当 $g''(\hat{y})=0$ 时 $\hat{y}$ 才是 $p_y$ 的驻点。
 \end{proposition}
 
 \begin{proof}
 由\eqref{align:ch02-密度变换带符号}，把 $p_y$ 写成两个因子之积 $p_x(g(y))\cdot s g'(y)$（$s$ 在 $g'$ 不变号处为常数）。由乘积法则与链式法则，
 \begin{align*}
-  p_y'(y) = \frac{\mathrm{d}}{\mathrm{d}y}\big[p_x(g(y))\big]\cdot s g'(y) + p_x(g(y))\cdot s g''(y)
-  = s\,p_x'(g(y))\{g'(y)\}^{2} + s\,p_x(g(y))\,g''(y) ,
+ p_y'(y) = \frac{\mathrm{d}}{\mathrm{d}y}\big[p_x(g(y))\big]\cdot s g'(y) + p_x(g(y))\cdot s g''(y)
+ = s\,p_x'(g(y))\{g'(y)\}^{2} + s\,p_x(g(y))\,g''(y) ,
 \end{align*}
 即\eqref{align:ch02-密度导数}。若 $\hat{x}=g(\hat{y})$ 是 $p_x$ 的众数，则 $p_x'(\hat{x})=0$，于是
 \begin{align*}
-  p_y'(\hat{y}) = s\,p_x(\hat{x})\,g''(\hat{y}) .
+ p_y'(\hat{y}) = s\,p_x(\hat{x})\,g''(\hat{y}) .
 \end{align*}
 只要 $g''(\hat{y})\neq0$ 且 $p_x(\hat{x})>0$，就有 $p_y'(\hat{y})\neq0$，故 $\hat y$ 不是 $p_y$ 的驻点。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-密度众数依赖变量; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-密度众数依赖变量; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条结论是本节的要害：众数不是概率密度的内禀性质，而是依赖于所用坐标的。原因就在\eqref{align:ch02-密度导数}的第二项——它是“体积元变化率”的导数，在非线性变换下不为零，把峰的位置推偏了。
 
 由此可知，用“最大后验”作点估计时，结果会随参数的参数化方式而变（例如对 $\sigma$ 还是对 $\sigma^{2}$ 求最大会得到不同的答案），这是 MAP 估计相对于后验均值的一个理论缺陷。条件 $g''=0$（线性变换）时第二项消失，众数才随变量同步变换。
@@ -162,7 +178,7 @@
 （3）从 $p_x$ 抽 $50\,000$ 个样本、按\eqref{align:ch02-逻辑斯谛}变换后作直方图，所得的峰与洋红色曲线一致，而与绿色曲线不一致。这从数值上确认了\eqref{align:ch02-密度变换}才是正确的密度变换公式。
 \end{example}
 
-\begin{remark}（重构新增）
+\begin{remark}
 这个例子把“函数怎么变”与“密度怎么变”的差别具体化了：绿色曲线只需要复合，洋红色曲线还需要乘上 $|\mathrm{d}x/\mathrm{d}y|$。若忽略这个因子（即把 $p_x(g(y))$ 当作 $p_y(y)$），则会得到一个积分不为 $1$ 的函数，它在 $y\to0$ 或 $y\to1$ 时会发散，因为它没有补偿 sigmoid 在两端把区间压缩的效应。
 
 这也说明“众数在哪个坐标系里取”必须事先约定；在\cref{chapter:ch18-标准化流}中，正因为密度的变换有这一因子，才能用变量变换把简单分布精确地变成复杂分布。
@@ -190,31 +206,42 @@
 \end{align}
 
 \begin{definition}[Jacobi 矩阵]\label{definition:ch02-Jacobi矩阵}
-设 $\mathbf{g}=(g_1,\cdots,g_D)^{\mathsf{T}}$ 为 $\mathbf{y}$ 的可微向量函数。称由\eqref{align:ch02-Jacobi矩阵}定义的 $D\times D$ 矩阵为 $\mathbf{g}$ 的\textbf{Jacobi 矩阵}（Jacobian matrix），其第 $(i,j)$ 个元素为 $J_{ij}=\partial g_i/\partial y_j$。
+设 $D\geqslant1$ 为整数，$U\subseteq\mathbb{R}^{D}$ 为开集，$\mathbf{g}=(g_1,\cdots,g_D)^{\mathsf{T}}:U\to\mathbb{R}^{D}$ 为可微向量函数，$\mathbf{y}=(y_1,\cdots,y_D)^{\mathsf{T}}\in U$。则 $D\times D$ 实矩阵
+\begin{align*}
+  \mathbf{J}_{\mathbf{g}}(\mathbf{y})=\left(\frac{\partial g_i}{\partial y_j}(\mathbf{y})\right)_{1\leqslant i,j\leqslant D}
+\end{align*}
+称为 $\mathbf{g}$ 在 $\mathbf{y}$ 处的\textbf{Jacobi 矩阵}（Jacobian matrix），其第 $(i,j)$ 个元素为 $J_{ij}=\partial g_i/\partial y_j$，即\eqref{align:ch02-Jacobi矩阵}；其行列式 $\det\mathbf{J}_{\mathbf{g}}(\mathbf{y})$ 称为 $\mathbf{g}$ 在 $\mathbf{y}$ 处的\textbf{Jacobi 行列式}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-Jacobi矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-Jacobi矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 Jacobi 矩阵是多元函数的“导数”：一维时它退化为 $g'(y)$，多维时它把 $D$ 个方向的偏导排列成矩阵，从而可以像标量一样取行列式、求逆。它在\eqref{align:ch02-多元密度变换}中体现为体积伸缩因子，在后文描述线性变换下协方差矩阵的变化规律时（\cref{section:ch03-多元Gauss分布}）也起同样作用。
 
 定义要求 $\mathbf{g}$ 的每个分量都可微，否则偏导数不存在；这也是\cref{proposition:ch02-多元密度变换}要求 $\mathbf{g}$ 连续可微的来源。
 \end{remark}
 
 \begin{proposition}[多元密度变换公式]\label{proposition:ch02-多元密度变换}
-设 $\mathbf{x}=\mathbf{g}(\mathbf{y})$ 是连续可微、一一的变换，且 $\det\mathbf{J}\neq0$，$p_x$ 为 $\mathbf{x}$ 的密度，则由\eqref{align:ch02-多元密度变换}定义的 $p_y$ 是 $\mathbf{y}$ 的合法概率密度。
+设 $D\geqslant1$ 为整数，$U,V\subseteq\mathbb{R}^{D}$ 为开集，$\mathbf{g}:U\to V$ 为连续可微的一一映射，其逆 $\mathbf{g}^{-1}:V\to U$ 连续可微，且 $\det\mathbf{J}_{\mathbf{g}}(\mathbf{y})\neq0$ 对每个 $\mathbf{y}\in U$ 成立。设 $\mathbf{X}$ 为 $D$ 维连续型随机向量，概率密度为 $p_x:V\to[0,\infty)$，$\mathbf{Y}=\mathbf{g}^{-1}(\mathbf{X})$，并令
+\begin{align*}
+  p_y(\mathbf{y})=p_x\big(\mathbf{g}(\mathbf{y})\big)\big|\det\mathbf{J}_{\mathbf{g}}(\mathbf{y})\big|,\qquad \mathbf{y}\in U,
+\end{align*}
+即\eqref{align:ch02-多元密度变换}。则 $p_y$ 是 $\mathbf{Y}$ 的概率密度，且对每个 Borel 集 $B\subseteq U$，
+\begin{align*}
+  \int_B p_y(\mathbf{y})\,\mathrm{d}\mathbf{y}=\mathbb{P}(\mathbf{Y}\in B)=\mathbb{P}\big(\mathbf{X}\in\mathbf{g}(B)\big).
+\end{align*}
 \end{proposition}
 
 \begin{proof}
 由多元换元积分公式，对任意可积函数 $h$，
 \begin{align*}
-  \int h(\mathbf{x})\,p_x(\mathbf{x})\,\mathrm{d}\mathbf{x}
-  = \int h\big(\mathbf{g}(\mathbf{y})\big)\,p_x\big(\mathbf{g}(\mathbf{y})\big)\,\big|\det\mathbf{J}\big|\,\mathrm{d}\mathbf{y} .
+ \int h(\mathbf{x})\,p_x(\mathbf{x})\,\mathrm{d}\mathbf{x}
+ = \int h\big(\mathbf{g}(\mathbf{y})\big)\,p_x\big(\mathbf{g}(\mathbf{y})\big)\,\big|\det\mathbf{J}\big|\,\mathrm{d}\mathbf{y} .
 \end{align*}
 取 $h\equiv1$ 并用 $\int p_x(\mathbf{x})\,\mathrm{d}\mathbf{x}=1$，得 $\int p_y(\mathbf{y})\,\mathrm{d}\mathbf{y}=1$，即 $p_y$ 归一化；非负性由 $p_x\geqslant0$ 与 $|\det\mathbf{J}|>0$ 得到。故 $p_y$ 是密度，且\eqref{align:ch02-多元密度变换}就是换元公式的被积函数替换关系。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-多元密度变换; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-多元密度变换; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 一维时的因子 $|\mathrm{d}x/\mathrm{d}y|$ 在多元时升级为 $|\det\mathbf{J}|$，它正是“体积元的伸缩比”：一个无穷小立方体在变换后体积放大 $|\det\mathbf{J}|$ 倍。取绝对值同样是为了保证密度非负，因为 $\det\mathbf{J}$ 可以为负（定向反转）。
 
 条件“$\mathbf{x}$ 与 $\mathbf{y}$ 维数相同、且 $\det\mathbf{J}\neq0$”不可省：维数不同时不存在方阵行列式，必须引入低维流形上的密度（参见\cref{subsection:ch16-非线性流形}）；$\det\mathbf{J}=0$ 时变换把正体积压成零体积，公式失效。
@@ -253,7 +280,7 @@ Jacobi 矩阵是多元函数的“导数”：一维时它退化为 $g'(y)$，�
 （3）右列：从 $\mathbf{x}$ 的 Gauss 分布中抽样并按同一变换映射，得到的样本散布与中间列的密度形状一致，从而在数值上验证了\eqref{align:ch02-多元密度变换}。
 \end{example}
 
-\begin{remark}（重构新增）
+\begin{remark}
 这个例子说明多维情形下密度的形变比一维更剧烈：一维只能拉伸或压缩，二维还可以产生“一个峰变成多个峰”的效果，因为 $\det\mathbf{J}$ 在平面上可以有很大的变化。这正是规范化流能够把单峰分布变成多峰分布、从而建模复杂数据的原因。
 
 需要注意\eqref{align:ch02-二维变换1}、\eqref{align:ch02-二维变换2}给出的映射是可逆的（$\tanh$ 与三次项都单调），否则\eqref{align:ch02-多元密度变换}不能直接使用，必须像一维非单调情形那样对各支求和。

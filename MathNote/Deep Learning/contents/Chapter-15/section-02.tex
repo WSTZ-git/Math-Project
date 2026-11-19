@@ -11,53 +11,59 @@
 回想一下\eqref{align:ch03-Gauss混合}，Gauss 混合分布可以写成 Gauss 分量的线性叠加形式。
 
 \begin{definition}[Gauss 混合分布]\label{definition:ch15-Gauss混合分布}
-设 $K\geqslant1$，$\bm{\mu}_k\in\mathbb{R}^{D}$，$\bm{\Sigma}_k$ 为 $D\times D$ 正定对称矩阵，$k=1,\cdots,K$。称
+设 $D\geqslant1$，$K\geqslant1$，$\bm{\mu}_k\in\mathbb{R}^{D}$ 为均值向量，$\bm{\Sigma}_k$ 为 $D\times D$ 实对称正定协方差矩阵，$k=1,\cdots,K$；设 $\pi_1,\cdots,\pi_K$ 为实参数。若 $\mathbb{R}^{D}$ 上的函数 $p$ 由
 \begin{align}
 p(\bm{x})=\sum_{k=1}^{K}\pi_k\,\mathcal{N}(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k)
 \label{align:ch15-gmm-marginal}
 \end{align}
-为 $K$ 个分量的 Gauss 混合分布（Gaussian mixture distribution，GMM），其中 $\mathcal{N}(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k)$ 称为第 $k$ 个\textbf{分量}，$\pi_k$ 称为第 $k$ 个\textbf{混合系数}。参数 $\{\pi_k\}$ 必须满足
+给出，其中 $\mathcal{N}(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k)$ 称为第 $k$ 个\textbf{分量}，$\pi_k$ 称为第 $k$ 个\textbf{混合系数}，且 $\pi_1,\cdots,\pi_K$ 满足
 \begin{align}
 0\leqslant\pi_k\leqslant1
 \label{align:ch15-pi-bounds}
 \end{align}
-和
+（$k=1,\cdots,K$）与
 \begin{align}
-\sum_{k=1}^{K}\pi_k=1.
+\sum_{k=1}^{K}\pi_k=1,
 \label{align:ch15-pi-sum}
 \end{align}
+则称 $p$ 为 $K$ 个分量的 Gauss 混合分布（Gaussian mixture distribution，GMM），称 $\bm{\pi}=(\pi_1,\cdots,\pi_K)^{\mathsf T}\in\mathbb{R}^{K}$ 为\textbf{混合权重}。此时 $\bm{\pi}$ 属于概率单纯形
+\begin{align*}
+\Delta^{K-1}=\left\{\bm{\pi}\in\mathbb{R}^{K}:\pi_k\geqslant0,\ k=1,\cdots,K,\ \sum_{k=1}^{K}\pi_k=1\right\},
+\end{align*}
+且 $p$ 是 $\mathbb{R}^{D}$ 上的概率密度：每个分量密度非负，由\eqref{align:ch15-pi-sum}得 $\int_{\mathbb{R}^{D}}p(\bm{x})\,\mathrm{d}\bm{x}=\sum_{k=1}^{K}\pi_k=1$。参数组 $(\bm{\pi},\bm{\mu}_1,\cdots,\bm{\mu}_K,\bm{\Sigma}_1,\cdots,\bm{\Sigma}_K)$ 的全体称为该模型的\textbf{参数空间}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch15-Gauss混合分布; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch15-Gauss混合分布; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 把若干 Gauss 密度加权相加，动机是让每个分量只负责一个“局部团块”，从而用简单的分量拼出多峰的复杂密度；\cref{section:ch15-K均值聚类}的 K 均值正是每个分量协方差都相同且趋于零时的极限情形（见\cref{subsection:ch15-em与kmeans}）。条件\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}的作用各不相同：前者保证每一项都非负，从而 $p(\bm{x})\geqslant0$；后者保证 $\int p(\bm{x})\,\mathrm{d}\bm{x}=\sum_k\pi_k=1$，即 $p$ 是合法的概率密度。二者缺一不可——只去掉非负性，$\pi_k$ 为负时积分仍可能为 $1$，但 $p$ 在某些区域会取负值。各 $\bm{\Sigma}_k$ 的正定性保证 $\mathcal{N}(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k)$ 良定义且可归一化。注意分量个数 $K$ 不是由\eqref{align:ch15-gmm-marginal}决定的参数，而是模型结构的一部分；$K$ 越大模型越灵活，但参数个数 $K-1+K(D+D(D+1)/2)$ 也随之线性增长，且似然函数会出现\cref{proposition:ch15-似然奇异性}所述的奇异性。
 \end{remark}
 
 让我们引入一个 $K$ 维的二进制随机向量 $\bm{z}$，它采用 1-of-$K$ 表示形式，其中一个元素等于 $1$，其他所有元素等于 $0$。因此 $z_k$ 的值满足 $z_k\in\{0,1\}$ 以及 $\sum_k z_k=1$，并且根据哪个元素非零，向量 $\bm{z}$ 有 $K$ 种可能的状态。将联合分布 $p(\bm{x},\bm{z})$ 定义为边缘分布 $p(\bm{z})$ 和条件分布 $p(\bm{x}\,|\,\bm{z})$ 的形式。
 
 \begin{definition}[1-of-$K$ 离散潜变量表示]\label{definition:ch15-离散潜变量}
-设 $\bm{z}=(z_1,\cdots,z_K)^{\mathsf T}$ 满足 $z_k\in\{0,1\}$ 与 $\sum_{k=1}^{K}z_k=1$。关于 $\bm{z}$ 的边缘分布由混合系数 $\pi_k$ 指定，即
+设 $K\geqslant1$，$D\geqslant1$，$\bm{x}\in\mathbb{R}^{D}$，$\bm{z}=(z_1,\cdots,z_K)^{\mathsf T}\in\{0,1\}^{K}$ 满足 $\sum_{k=1}^{K}z_k=1$；设混合权重 $\pi_1,\cdots,\pi_K$ 满足\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}，$\bm{\mu}_k\in\mathbb{R}^{D}$，$\bm{\Sigma}_k$ 为 $D\times D$ 实对称正定矩阵，$k=1,\cdots,K$。若 $\bm{z}$ 的边缘分布由
 \begin{align*}
-p(z_k=1)=\pi_k,
+p(z_k=1)=\pi_k,\qquad k=1,\cdots,K
 \end{align*}
-其中参数 $\{\pi_k\}$ 满足\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}。因为 $\bm{z}$ 使用 1-of-$K$ 表示形式，该分布也可以写成
-\begin{align}
-p(\bm{z})=\prod_{k=1}^{K}\pi_k^{z_k}.
-\label{align:ch15-prior-factorized}
-\end{align}
-给定 $\bm{z}$ 的特定值时 $\bm{x}$ 的条件分布也是一个 Gauss 分布：
+指定，且给定 $z_k=1$ 时 $\bm{x}$ 的条件分布为 Gauss 分布
 \begin{align*}
 p(\bm{x}\,|\,z_k=1)=\mathcal{N}(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k),
 \end{align*}
-它可以写成
+则 $\bm{z}$ 称为 $K$ 分量 Gauss 混合模型的 1-of-$K$ \textbf{离散潜变量}，并称
 \begin{align}
-p(\bm{x}\,|\,\bm{z})=\prod_{k=1}^{K}\mathcal{N}(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k)^{z_k}.
+p(\bm{z})=\prod_{k=1}^{K}\pi_k^{z_k}
+\label{align:ch15-prior-factorized}
+\end{align}
+为 $\bm{z}$ 的概率质量函数（右端只有满足 $z_k=1$ 的因子 $\pi_k$ 不等于 $1$，由\eqref{align:ch15-pi-sum}得 $\sum_{\bm{z}}p(\bm{z})=\sum_{k=1}^{K}\pi_k=1$），称
+\begin{align}
+p(\bm{x}\,|\,\bm{z})=\prod_{k=1}^{K}\mathcal{N}(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k)^{z_k}
 \label{align:ch15-conditional-x}
 \end{align}
+为给定 $\bm{z}$ 时 $\bm{x}$ 的\textbf{条件密度}。这里 $\bm{z}$ 的取值集合是 1-of-$K$ 向量全体，共 $K$ 个元素。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch15-离散潜变量; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch15-离散潜变量; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个定义把“混合分布”改写成一个两层的生成过程：先按 $p(\bm{z})$ 抽一个状态（即选出分量），再按对应的 Gauss 密度抽 $\bm{x}$。定义中的两条乘积式\eqref{align:ch15-prior-factorized}与\eqref{align:ch15-conditional-x}是该表示能工作的关键：由于 $\bm{z}$ 是 1-of-$K$ 向量，$\prod_k\pi_k^{z_k}$ 中只有第 $k$ 个（$z_k=1$ 的那个）因子存活，值恰为 $\pi_k$，其余因子都是 $\pi_j^{0}=1$；同理\eqref{align:ch15-conditional-x}中只有第 $k$ 个 Gauss 因子存活。这样就把“按状态取分支”写成了统一的乘积形式，从而可以直接取对数、求和与求导。注意 $z_k\in\{0,1\}$ 与 $\sum_kz_k=1$ 是硬约束：$\bm{z}$ 的取值只有 $K$ 个，而不是 $2^{K}$ 个，这正是“离散潜变量”中“离散”的含义。
 \end{remark}
 
@@ -76,7 +82,11 @@ p(\bm{x})=\sum_{\bm{z}}p(\bm{z})p(\bm{x}\,|\,\bm{z})=\sum_{k=1}^{K}\pi_k\mathcal
 \end{figure}
 
 \begin{proposition}[边缘化恢复混合分布]\label{proposition:ch15-边缘化}
-设 $p(\bm{z})$ 由\eqref{align:ch15-prior-factorized}给出，$p(\bm{x}\,|\,\bm{z})$ 由\eqref{align:ch15-conditional-x}给出，则联合分布 $p(\bm{x},\bm{z})=p(\bm{z})p(\bm{x}\,|\,\bm{z})$ 关于 $\bm{z}$ 的边缘分布恰为\eqref{align:ch15-gmm-marginal}。
+设 $K\geqslant1$，$D\geqslant1$，$\bm{x}\in\mathbb{R}^{D}$，$\bm{z}\in\{0,1\}^{K}$ 为满足 $\sum_{k=1}^{K}z_k=1$ 的 1-of-$K$ 向量，$\pi_1,\cdots,\pi_K$ 满足\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}，$\bm{\mu}_k\in\mathbb{R}^{D}$，$\bm{\Sigma}_k$ 为 $D\times D$ 实对称正定矩阵。设 $p(\bm{z})$ 由\eqref{align:ch15-prior-factorized}给出，$p(\bm{x}\,|\,\bm{z})$ 由\eqref{align:ch15-conditional-x}给出，且 $p(\bm{x},\bm{z})=p(\bm{z})p(\bm{x}\,|\,\bm{z})$ 是 $(\bm{x},\bm{z})$ 的联合密度。则 $\bm{x}$ 的边缘密度为
+\begin{align*}
+p(\bm{x})=\sum_{\bm{z}}p(\bm{z})p(\bm{x}\,|\,\bm{z})=\sum_{k=1}^{K}\pi_k\mathcal{N}(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k),
+\end{align*}
+求和只含 $\bm{z}$ 的 $K$ 个取值所对应的 $K$ 项；即 $p(\bm{x})$ 恰为\eqref{align:ch15-gmm-marginal}所定义的 $K$ 分量 Gauss 混合密度，且其混合权重仍为 $\pi_1,\cdots,\pi_K$。
 \end{proposition}
 \begin{proof}
 对 $\bm{z}$ 的所有 $K$ 种可能取值求和。由于 $\bm{z}$ 取遍 1-of-$K$ 向量，求和只有 $K$ 个非零项，且第 $k$ 项对应 $z_k=1$、其余 $z_j=0$。对这样的 $\bm{z}$，
@@ -91,8 +101,8 @@ p(\bm{x})=\sum_{\bm{z}}p(\bm{z})p(\bm{x}\,|\,\bm{z})=\sum_{k=1}^{K}\pi_k\mathcal
 即\eqref{align:ch15-gmm-marginal}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-边缘化; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-边缘化; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题说明了“引入潜变量没有改变模型”：$\bm{z}$ 只是把\eqref{align:ch15-gmm-marginal}中的求和换了一种说法，边缘分布仍然是同一个 Gauss 混合分布。它的价值在于把\textbf{求和}搬到了联合分布这一层，从而在完全数据情形下对数可以直接作用到每个分量（见\cref{subsection:ch15-Gauss混合em}）。证明只用到 $\bm{z}$ 的 1-of-$K$ 结构：求和项数等于 $K$ 而不是 $2^{K}$，这既保证了对 $\bm{z}$ 求和的可行性，也是后面 E 步骤只需计算 $K$ 个责任值的原因。若 $\bm{z}$ 的各分量独立（而非 1-of-$K$ 约束），边缘化将产生 $2^{K}$ 项，模型就不再是混合分布了。
 \end{remark}
 
@@ -105,11 +115,19 @@ p(\bm{x})=\sum_{\bm{z}}p(\bm{z})p(\bm{x}\,|\,\bm{z})=\sum_{k=1}^{K}\pi_k\mathcal
 \end{align}
 
 \begin{definition}[责任]\label{definition:ch15-责任}
-称\eqref{align:ch15-responsibility}中的 $\gamma(z_k)=p(z_k=1\,|\,\bm{x})$ 为第 $k$ 个分量对观测值 $\bm{x}$ 的\textbf{责任}（responsibility）。
+设 $K\geqslant1$，$D\geqslant1$，$\bm{x}\in\mathbb{R}^{D}$，混合权重 $\pi_1,\cdots,\pi_K$ 满足\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}，$\bm{\mu}_k\in\mathbb{R}^{D}$，$\bm{\Sigma}_k$ 为 $D\times D$ 实对称正定矩阵，$k=1,\cdots,K$，并设
+\begin{align*}
+p(\bm{x}\,|\,\bm{\pi},\bm{\mu},\bm{\Sigma})=\sum_{j=1}^{K}\pi_j\mathcal{N}(\bm{x}\,|\,\bm{\mu}_j,\bm{\Sigma}_j)>0.
+\end{align*}
+设 $\bm{z}$ 为\cref{definition:ch15-离散潜变量}中的 1-of-$K$ 潜变量。对 $k=1,\cdots,K$，令
+\begin{align*}
+\gamma(z_k)\equiv p(z_k=1\,|\,\bm{x})=\frac{\pi_k\mathcal{N}(\bm{x}\,|\,\bm{\mu}_k,\bm{\Sigma}_k)}{\sum_{j=1}^{K}\pi_j\mathcal{N}(\bm{x}\,|\,\bm{\mu}_j,\bm{\Sigma}_j)},
+\end{align*}
+则 $\gamma(z_k)$ 称为第 $k$ 个分量对观测值 $\bm{x}$ 的\textbf{责任}（responsibility），即\eqref{align:ch15-responsibility}所定义的量。由 Bayes 公式与\eqref{align:ch15-pi-sum}得 $\gamma(z_k)\in[0,1]$ 且 $\sum_{k=1}^{K}\gamma(z_k)=1$，故 $(\gamma(z_1),\cdots,\gamma(z_K))^{\mathsf T}\in\Delta^{K-1}$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch15-责任; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch15-责任; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 $\pi_k$ 可以视为 $z_k=1$ 的先验概率，$\gamma(z_k)$ 可以视为观测到 $\bm{x}$ 之后的相应后验概率。正如我们稍后将看到的，$\gamma(z_k)$ 也可以视为分量 $k$ 对“解释”观测值 $\bm{x}$ 所要承担的责任。从定义可以直接读出两条性质：$\gamma(z_k)\in[0,1]$ 且 $\sum_{k=1}^{K}\gamma(z_k)=1$，即责任是一个合法的“软分配”权重；这正是它与 K 均值中 $r_{nk}\in\{0,1\}$ 的硬分配的本质区别。责任依赖于 $\bm{x}$ 与全部分量参数的比较（分母对所有 $j$ 求和），因此它不是某个分量的“局部”属性；但当某个分量的密度远大于其他分量时，$\gamma(z_k)$ 会迅速趋近于 $1$，这正是\cref{subsection:ch15-em与kmeans}中 $\varepsilon\to0$ 极限下退化为硬分配的原因。名字“责任”的来历也在这里：$\gamma(z_k)$ 衡量的是“观测到 $\bm{x}$ 之后，把这一点归因于第 $k$ 个分量的可信程度”。
 \end{remark}
 
@@ -144,7 +162,7 @@ $\pi_k$ 可以视为 $z_k=1$ 的先验概率，$\gamma(z_k)$ 可以视为观测�
 \label{align:ch15-singularity}
 \end{align}
 
-\begin{remark}（重构新增：原文问题说明）
+\begin{remark}（原文问题说明）
 \eqref{align:ch15-singularity}印出的是\textbf{一元}情形（$D=1$）的取值：$D=1$ 时 $\mathcal{N}(x\,|\,x,\sigma_j^2)=(2\pi\sigma_j^2)^{-1/2}=\frac{1}{(2\pi)^{1/2}}\frac{1}{\sigma_j}$，正是右端的形状。但同一式左端写的是向量 $\bm{x}_n$ 与矩阵 $\bm{I}$，按此记号应为 $D$ 元密度
 \begin{align*}
 \mathcal{N}\big(\bm{x}_n\,|\,\bm{x}_n,\sigma_j^2\bm{I}\big)=\frac{1}{(2\pi\sigma_j^2)^{D/2}},
@@ -155,7 +173,7 @@ $\pi_k$ 可以视为 $z_k=1$ 的先验概率，$\gamma(z_k)$ 可以视为观测�
 考虑极限 $\sigma_j\rightarrow0$，我们会看到该项趋向于无穷大，所以对数似然函数也将趋向于无穷大。由此可见，最大化对数似然函数并不是一个良定义的问题，因为这种奇异性总是存在的，并且每当一个 Gauss 分量“坍缩”到一个特定的数据点时就会发生。
 
 \begin{proposition}[似然函数的奇异性]\label{proposition:ch15-似然奇异性}
-设 $K\geqslant1$，$\pi_j>0$，且数据集中至少含有一个点 $\bm{x}_n$。则对数似然\eqref{align:ch15-gmm-nll}在参数空间上没有上界：对任意 $M>0$，都存在参数使得 $\ln p(\bm{X}\,|\,\bm{\pi},\bm{\mu},\bm{\Sigma})>M$。
+设 $D\geqslant1$，$K\geqslant1$，$N\geqslant1$，观测数据 $\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)^{\mathsf T}\in\mathbb{R}^{N\times D}$ 固定，其对数似然 $\ln p(\bm{X}\,|\,\bm{\pi},\bm{\mu},\bm{\Sigma})$ 由\eqref{align:ch15-gmm-nll}给出，参数空间为所有满足 $\bm{\pi}\in\Delta^{K-1}$、$\bm{\mu}_k\in\mathbb{R}^{D}$、$\bm{\Sigma}_k$ 取 $D\times D$ 实对称正定矩阵（$k=1,\cdots,K$）的参数组。若某个混合系数满足 $\pi_j>0$，则对数似然在该参数空间上无上界：对任意 $M>0$，存在一个参数组使 $\ln p(\bm{X}\,|\,\bm{\pi},\bm{\mu},\bm{\Sigma})>M$。
 \end{proposition}
 \begin{proof}
 固定 $n$ 与分量 $j$，取 $\bm{\mu}_j=\bm{x}_n$、$\bm{\Sigma}_j=\sigma_j^2\bm{I}$，其余分量任意固定。由于每一项 $\pi_k\mathcal{N}(\cdot)\geqslant0$，有
@@ -171,8 +189,8 @@ p(\bm{x}_n\,|\,\bm{\pi},\bm{\mu},\bm{\Sigma})
 因此对任意 $M$ 都可取 $\sigma_j$ 足够小使对数似然超过 $M$，即无上界。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-似然奇异性; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-似然奇异性; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题说明“最大似然在 Gauss 混合模型中不是一个良定义的问题”：不是解不存在，而是目标函数没有上界，所谓“最大值”根本不存在（$\sup=+\infty$）。奇异性只要求某一个分量的均值精确落在某个数据点上、同时其协方差退化到零，因此它在参数空间中是一个低维但\textbf{稠密可达}的“坏集”：只要允许 $\bm{\Sigma}_k$ 任意小，优化过程就可能被吸引过去。条件“$\pi_j>0$”不可省——若某个混合系数严格为零，该分量对密度没有贡献，也就不会产生这个奇异项。对一般的（非各向同性）协方差矩阵，证明完全相同，只需把 $\sigma_j^2\bm{I}$ 换成一个行列式趋于零的正定矩阵，此时密度按 $\lvert\bm{\Sigma}_j\rvert^{-1/2}$ 发散。这一现象是最大似然过拟合的典型例子，处理办法见下文的启发式重置与参数先验（\cref{subsection:ch15-参数先验}）。
 \end{remark}
 
@@ -188,9 +206,15 @@ p(\bm{x}_n\,|\,\bm{\pi},\bm{\mu},\bm{\Sigma})
 在寻找最大似然解时还有一个问题，因为对于任何给定的最大似然解，一个包含 $K$ 个组分的 Gauss 混合模型将有总共 $K!$ 个等效解，对应于将 $K$ 组参数分配给 $K$ 个组分的 $K!$ 种方式。换句话说，对于参数值空间中的任何给定（非退化）点，都会存在额外的 $K!-1$ 个点。所有这些点都将产生完全相同的分布。这个问题称为可识别性（identifiability）问题（Casella and Berger, 2002），当我们希望解释模型发现的参数值时，这是一个重要问题。当我们讨论具有连续潜变量的模型（参见\cref{chapter:ch16-连续潜变量}）时，可识别性问题也会出现。然而，当我们寻找一个好的密度模型时，这个问题无关紧要，因为任何等效解都和其他解一样好。
 
 \begin{proposition}[交换对称性导致的 $K!$ 个等价解]\label{proposition:ch15-交换对称性}
-设 $\bm{\theta}=(\pi_1,\cdots,\pi_K,\bm{\mu}_1,\cdots,\bm{\mu}_K,\bm{\Sigma}_1,\cdots,\bm{\Sigma}_K)$ 给出\eqref{align:ch15-gmm-marginal}的一个参数组，且各分量互不相同（非退化）。对 $\{1,\cdots,K\}$ 的任一置换 $\sigma$，令 $\pi'_k=\pi_{\sigma(k)}$、$\bm{\mu}'_k=\bm{\mu}_{\sigma(k)}$、$\bm{\Sigma}'_k=\bm{\Sigma}_{\sigma(k)}$，则 $\bm{\theta}'$ 与 $\bm{\theta}$ 给出同一个密度。不同的置换给出不同的参数组，因此等价参数组恰有 $K!$ 个。
+设 $D\geqslant1$，$K\geqslant1$，$\bm{\theta}=(\pi_1,\cdots,\pi_K,\bm{\mu}_1,\cdots,\bm{\mu}_K,\bm{\Sigma}_1,\cdots,\bm{\Sigma}_K)$ 为\eqref{align:ch15-gmm-marginal}的一个参数组，即 $\pi_1,\cdots,\pi_K$ 满足\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}，$\bm{\mu}_k\in\mathbb{R}^{D}$，$\bm{\Sigma}_k$ 为 $D\times D$ 实对称正定矩阵，$k=1,\cdots,K$；并设三元组 $(\pi_k,\bm{\mu}_k,\bm{\Sigma}_k)$（$k=1,\cdots,K$）两两不同。对 $\{1,\cdots,K\}$ 的任一置换 $\sigma$（$\sigma$ 属于 $K$ 元对称群 $S_K$），令 $\pi'_k=\pi_{\sigma(k)}$、$\bm{\mu}'_k=\bm{\mu}_{\sigma(k)}$、$\bm{\Sigma}'_k=\bm{\Sigma}_{\sigma(k)}$（$k=1,\cdots,K$），并记 $\bm{\theta}'=(\pi'_1,\cdots,\pi'_K,\bm{\mu}'_1,\cdots,\bm{\mu}'_K,\bm{\Sigma}'_1,\cdots,\bm{\Sigma}'_K)$。则：
+\begin{enumerate}
+\item $\bm{\theta}'$ 是\eqref{align:ch15-gmm-marginal}的合法参数组，且对一切 $\bm{x}\in\mathbb{R}^{D}$，$\bm{\theta}'$ 与 $\bm{\theta}$ 给出的密度值相等；
+\item 映射 $\sigma\mapsto\bm{\theta}'$ 是 $S_K$ 到参数空间的单射，因此与 $\bm{\theta}$ 给出同一密度的参数组恰有 $K!=|S_K|$ 个，它们构成 $S_K$ 作用下的一条轨道。
+\end{enumerate}
 \end{proposition}
 \begin{proof}
+由于 $\{\pi'_k\}_{k=1}^{K}$ 与 $\{\pi_k\}_{k=1}^{K}$ 是同一多重集，\eqref{align:ch15-pi-bounds}与\eqref{align:ch15-pi-sum}对 $\bm{\pi}'$ 仍成立；$\bm{\mu}'_k$ 与 $\bm{\Sigma}'_k$ 只是原参数的重新排列，其维数与对称正定性不变，故 $\bm{\theta}'$ 为合法参数组。
+
 对任意 $\bm{x}$，
 \begin{align*}
 \sum_{k=1}^{K}\pi'_k\,\mathcal{N}(\bm{x}\,|\,\bm{\mu}'_k,\bm{\Sigma}'_k)
@@ -202,8 +226,8 @@ p(\bm{x}_n\,|\,\bm{\pi},\bm{\mu},\bm{\Sigma})
 再证不同的置换给出不同的参数组。置换群有 $K!$ 个元素；若 $\sigma\neq\sigma'$，则存在 $k$ 使 $\sigma(k)\neq\sigma'(k)$。若两参数组相同，则 $\pi_{\sigma(k)}=\pi_{\sigma'(k)}$、$\bm{\mu}_{\sigma(k)}=\bm{\mu}_{\sigma'(k)}$、$\bm{\Sigma}_{\sigma(k)}=\bm{\Sigma}_{\sigma'(k)}$；由非退化性（各分量互不相同，故分量由其参数三元组唯一标识），这迫使 $\sigma(k)=\sigma'(k)$，矛盾。因此这 $K!$ 个参数组两两不同。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-交换对称性; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-交换对称性; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题是“可识别性”讨论的核心：模型作为\textbf{密度}是可识别的（不同分量组合给出不同密度，在非退化点处），但作为\textbf{参数化}不可识别（同一个密度对应 $K!$ 个参数组）。$K!$ 来自对称群而非参数的连续自由度，所以它不是“近似解”而是\textbf{精确}的等价：两参数组给出的 $p(\bm{x})$ 处处相等。后果有两点。其一，任何以参数为对象的推断（例如“第 3 个分量对应哪个簇”）都必须先固定一个规范次序或事后重新排序，否则结论没有意义。其二，$K!$ 个等价解使似然函数的驻点成倍出现，但它们的最优值相同，故对“找好的密度模型”这一目标没有影响；这也解释了为什么 EM 算法可以收敛到其中任意一个。非退化条件不可省：若两个分量参数完全相同，则交换它们得到的是同一个参数组，$K!$ 的计数需要按重数修正。
 \end{remark}
 
@@ -256,10 +280,10 @@ N_k=\sum_{n=1}^{N}\gamma(z_{nk}).
 因此，第 $k$ 个 Gauss 分量的混合系数由该分量对解释数据点所要承担的平均责任给出。
 
 \begin{proposition}[Gauss 混合模型的最大似然方程]\label{proposition:ch15-GMM最大似然}
-设 $N_k=\sum_n\gamma(z_{nk})>0$，$\bm{\Sigma}_k$ 非奇异。则对数似然\eqref{align:ch15-gmm-nll}的任一驻点 $(\bm{\pi},\bm{\mu},\bm{\Sigma})$ 满足\eqref{align:ch15-mu-update}、\eqref{align:ch15-sigma-update}与\eqref{align:ch15-pi-update}，其中 $\gamma(z_{nk})$ 由\eqref{align:ch15-responsibility}定义。
+设 $D\geqslant1$，$K\geqslant1$，$N\geqslant1$，观测数据 $\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)^{\mathsf T}\in\mathbb{R}^{N\times D}$ 固定，对数似然 $\ln p(\bm{X}\,|\,\bm{\pi},\bm{\mu},\bm{\Sigma})$ 由\eqref{align:ch15-gmm-nll}给出，参数空间为所有满足 $\pi_k>0$、$\sum_{k=1}^{K}\pi_k=1$、$\bm{\mu}_k\in\mathbb{R}^{D}$、$\bm{\Sigma}_k$ 取 $D\times D$ 实对称正定矩阵（$k=1,\cdots,K$）的参数组；$\gamma(z_{nk})$ 由\eqref{align:ch15-responsibility}定义，$N_k=\sum_{n=1}^{N}\gamma(z_{nk})$。设 $(\bm{\pi},\bm{\mu},\bm{\Sigma})$ 是对数似然在约束 $\sum_{k=1}^{K}\pi_k=1$ 下的驻点，即存在 Lagrange 乘子 $\lambda\in\mathbb{R}$ 使各偏导数为零，且 $N_k>0$（$k=1,\cdots,K$）。则 $(\bm{\pi},\bm{\mu},\bm{\Sigma})$ 满足\eqref{align:ch15-mu-update}、\eqref{align:ch15-sigma-update}与\eqref{align:ch15-pi-update}，且 $\lambda=-N$。
 \end{proposition}
 \begin{proof}
-\textbf{（关于 $\bm{\mu}_k$）}记 $p_n=\sum_j\pi_j\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_j,\bm{\Sigma}_j)$。由 $\partial\ln p_n/\partial\bm{\mu}_k=\pi_k\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\bm{\Sigma}_k)\cdot\big(-\bm{\Sigma}_k^{-1}(\bm{x}_n-\bm{\mu}_k)\big)/p_n$，并注意 $\pi_k\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\bm{\Sigma}_k)/p_n=\gamma(z_{nk})$，得
+\textbf{（关于 $\bm{\mu}_k$）}记 $p_n=\sum_j\pi_j\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_j,\bm{\Sigma}_j)$。由 $\partial\ln p_n/\partial\bm{\mu}_k=\pi_k\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\bm{\Sigma}_k)\cdot\big(-\bm{\Sigma}_k^{-1}(\bm{x}_n-\bm{\mu}_k)\big)/p_n$ 与恒等式 $\pi_k\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\bm{\Sigma}_k)/p_n=\gamma(z_{nk})$，得
 \begin{align*}
 \frac{\partial\ln p(\bm{X}\,|\,\cdot)}{\partial\bm{\mu}_k}
 =-\sum_{n=1}^{N}\gamma(z_{nk})\,\bm{\Sigma}_k^{-1}(\bm{x}_n-\bm{\mu}_k).
@@ -282,15 +306,15 @@ N_k=\sum_{n=1}^{N}\gamma(z_{nk}).
 \begin{align*}
 0=\sum_{n=1}^{N}\frac{\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\bm{\Sigma}_k)}{p_n}+\lambda,
 \end{align*}
-即\eqref{align:ch15-pi-deriv}。两边乘 $\pi_k$，注意 $\pi_k\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\bm{\Sigma}_k)/p_n=\gamma(z_{nk})$，得 $\sum_n\gamma(z_{nk})+\lambda\pi_k=0$。对 $k$ 求和并用 $\sum_k\pi_k=1$ 与 $\sum_k\gamma(z_{nk})=1$：
+即\eqref{align:ch15-pi-deriv}。两边乘 $\pi_k$，由 $\pi_k\mathcal{N}(\bm{x}_n\,|\,\bm{\mu}_k,\bm{\Sigma}_k)/p_n=\gamma(z_{nk})$ 得 $\sum_n\gamma(z_{nk})+\lambda\pi_k=0$。对 $k$ 求和并用 $\sum_k\pi_k=1$ 与 $\sum_k\gamma(z_{nk})=1$：
 \begin{align*}
 \sum_{k=1}^{K}\sum_{n=1}^{N}\gamma(z_{nk})+\lambda\sum_{k=1}^{K}\pi_k=N+\lambda=0,
 \end{align*}
 故 $\lambda=-N$。代回得 $\pi_k=N_k/N$，即\eqref{align:ch15-pi-update}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-GMM最大似然; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-GMM最大似然; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题给出了 EM 算法在 GMM 上的 M 步骤的全部内容，但要注意它是一个\textbf{隐式}方程组：右端的 $\gamma(z_{nk})$ 通过\eqref{align:ch15-responsibility}依赖于 $\bm{\mu}_k,\bm{\Sigma}_k,\bm{\pi}_k$ 本身，所以\eqref{align:ch15-mu-update}、\eqref{align:ch15-sigma-update}、\eqref{align:ch15-pi-update}并不是参数的闭合解，而是一组“若把责任看作已知量则成立”的方程。这正是 EM 的出发点：把责任当作缺失数据代入，方程就变成显式的。$N_k$ 的解释是“有效点数”，它不必是整数；当责任退化为 $0/1$ 时 $N_k$ 就是第 $k$ 个聚类中数据点的个数，于是\eqref{align:ch15-mu-update}退化为 K 均值的均值更新\eqref{align:ch15-kmeans-mu}。推导中用到的两个条件——$\bm{\Sigma}_k$ 非奇异（否则 $\bm{\Sigma}_k^{-1}$ 无定义）与 $N_k>0$（否则均值无定义）——在数值实现中都要显式检查：前者由\cref{proposition:ch15-似然奇异性}说明可能失效，后者意味着某个分量“没有分到任何质量”，此时应删除该分量或重新初始化。
 \end{remark}
 
@@ -305,7 +329,7 @@ N_k=\sum_{n=1}^{N}\gamma(z_{nk}).
 \label{figure:ch15-em-iter}
 \end{figure}
 
-\begin{remark}（重构新增）
+\begin{remark}
 \cref{figure:ch15-em-iter}中每个分图左上角的 $L$ 表示已经完成的完整 EM 循环次数，而每个分量画出的两条轮廓线分别是一倍标准差与两倍标准差的等密度线。由于参数是在 E 步骤之后、M 步骤之前被固定的，图中每一轮“颜色（责任）—轮廓（参数）”的交替正好对应\cref{proposition:ch15-GMM最大似然}中方程组的迭代求根：先按当前参数算责任，再按责任算参数。注意 (f) 中两个分量仍有部分重叠，这说明 EM 收敛到的是对数似然的一个局部极大点，而不是把两个簇完全分开的“理想”解；初值若选得更差，收敛结果可能完全不同（见本节末的讨论）。
 \end{remark}
 

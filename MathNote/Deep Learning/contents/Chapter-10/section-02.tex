@@ -20,20 +20,35 @@
 其中 $\mathbf{x}$ 是感受野的像素值向量，我们假设使用了 ReLU 激活函数。由于每个输入像素都有一个权重相关联，因此权重本身会形成一个小的、称为滤波器（filter）的二维网格，有时也称核（kernel），其本身可以像图像一样可视化，如\cref{figure:ch10-感受野}(b) 所示。
 
 \begin{definition}[感受野]\label{definition:ch10-感受野}
-设某隐藏单元只接收图像中一个矩形区域内的像素值作为输入，则称该矩形区域为该单元的\textbf{感受野}（receptive field）。若感受野的尺寸为 $M\times M$，则它的像素值可排成向量 $\mathbf{x}\in\mathbb{R}^{M^2}$，该单元的输出由\eqref{align:ch10-隐藏单元输出}给出。
+设 $I\in\mathbb{R}^{J\times K}$ 为单通道灰度图像，$J,K\geqslant1$；设某隐藏单元由权重
+$\mathbf{w}\in\mathbb{R}^{M^2}$ 与偏置 $w_0\in\mathbb{R}$ 刻画，其中 $M$ 为满足
+$1\leqslant M\leqslant\min\{J,K\}$ 的正整数。若该单元的输出只依赖于 $I$ 中某个
+$M\times M$ 矩形区域内的像素值、而与该区域外的像素无关，则这一矩形区域称为该单元的
+\textbf{感受野}（receptive field）。固定该区域左上角的位置 $(j_0,k_0)$，其中
+$1\leqslant j_0\leqslant J-M+1$、$1\leqslant k_0\leqslant K-M+1$，把区域内像素按行优先
+顺序排成向量 $\mathbf{x}\in\mathbb{R}^{M^2}$，其第 $(l-1)M+m$ 个分量等于
+$I(j_0+l-1,\,k_0+m-1)$，$l,m=1,\dots,M$。则该单元的输出为
+$\mathrm{ReLU}(\mathbf{w}^{\mathsf{T}}\mathbf{x}+w_0)$，其中
+$\mathrm{ReLU}(t)=\max\{t,0\}$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-感受野; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-感受野; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 感受野是把“局部性”这一先验写进网络结构的最小装置：单元只看到图像的一小块，于是它的参数个数只取决于 $M$，与整幅图像的像素数无关。定义中“矩形区域”是必要的，因为只有这样像素才能按固定顺序排成向量并与权重一一对应；若感受野是任意形状的集合，权重共享与后续的等变性论证都不再成立。$M$ 的取值是一个建模选择：$M$ 太小则单元只能看到极短程的相关性，$M$ 太大则参数量与计算量随 $M^2$ 增长，且局部性先验被削弱。
 \end{remark}
 
 \begin{definition}[滤波器与核]\label{definition:ch10-滤波器}
-在\cref{definition:ch10-感受野}的记号下，把与感受野内各像素相关联的权重按空间位置排成 $M\times M$ 的二维网格，称该网格为\textbf{滤波器}（filter），也称\textbf{核}（kernel）；称 $w_0$ 为该单元的\textbf{偏置}参数。
+沿用\cref{definition:ch10-感受野}的记号：$M$ 为正整数，$\mathbf{w}\in\mathbb{R}^{M^2}$，
+$w_0\in\mathbb{R}$。把 $\mathbf{w}$ 的分量按行优先顺序重排为 $M\times M$ 的实方阵
+$\mathbf{W}\in\mathbb{R}^{M\times M}$，即 $W(l,m)=w_{(l-1)M+m}$，$l,m=1,\dots,M$，
+其中 $W(l,m)$ 是感受野内相对位置 $(l,m)$ 的像素所对应的权重。矩阵 $\mathbf{W}$ 称为
+\textbf{滤波器}（filter），也称为\textbf{核}（kernel）；$w_0$ 称为该单元的
+\textbf{偏置}（bias）。滤波器共有 $M^2$ 个权重，其取值不随感受野左上角
+$(j_0,k_0)$ 改变。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-滤波器; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-滤波器; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 滤波器与感受野是一对互补的概念：感受野描述“单元看图像的哪一块”，滤波器描述“单元怎样看这一块”。把权重排成与像素网格同形的矩阵，使我们可以把滤波器本身当作一幅小图像来可视化，\cref{figure:ch10-感受野}(b) 正是这样做的。这个定义还隐含了一个约定：滤波器的空间索引与感受野的空间索引使用同一套坐标，后面的卷积公式\eqref{align:ch10-二维卷积}才能写成平移内积的形式。注意 $w_0$ 不属于滤波器网格，它在同一特征图的所有位置上共享，但不参与空间结构的表达。
 \end{remark}
 
@@ -47,7 +62,18 @@
 假设\eqref{align:ch10-隐藏单元输出}中的 $\mathbf{w}$ 和 $w_0$ 是固定的，我们想知道对于哪一个输入图像小块 $\mathbf{x}$，这个隐藏单元将给出最大输出响应。为了回答这个问题，我们需要以某种方式约束 $\mathbf{x}$。假设它的范数 $\|\mathbf{x}\|^2$ 是固定的，那么对于某个系数 $\alpha$，使 $\mathbf{w}^{\mathsf{T}}\mathbf{x}$ 最大化并因此最大化隐藏单元响应的 $\mathbf{x}$ 的解的形式为 $\mathbf{x}=\alpha\mathbf{w}$（见\cref{exercise:ch10-01}）。也就是说，当检测到一个在整体缩放下像核图像的图像小块时，就会产生来自这个隐藏单元的最大输出响应。注意，只有当 $\mathbf{w}^{\mathsf{T}}\mathbf{x}$ 超过 $-w_0$ 的阈值时，ReLU 才会生成非零输出。因此该隐藏单元充当了特征检测器的角色，它会在找到与其卷积核匹配足够好的图像小块时发出信号。
 
 \begin{proposition}[最大响应方向]\label{proposition:ch10-最大响应方向}
-设 $\mathbf{w}\in\mathbb{R}^{n}$ 非零，$c>0$，在约束 $\|\mathbf{x}\|^2=c$ 下考虑函数 $f(\mathbf{x})=\mathbf{w}^{\mathsf{T}}\mathbf{x}$。则 $f$ 在约束集上的最大值在 $\mathbf{x}=\alpha\mathbf{w}$ 处取得，其中 $\alpha=\sqrt{c}/\|\mathbf{w}\|$；若 $\alpha$ 可取任意实数，则所有满足 $\mathbf{x}=\alpha\mathbf{w}$（$\alpha>0$）的点都是最大值点。
+设 $n\geqslant1$，$\mathbf{w}\in\mathbb{R}^{n}\setminus\{\mathbf{0}\}$，$c>0$，令
+$S_c=\{\mathbf{x}\in\mathbb{R}^{n}:\|\mathbf{x}\|^{2}=c\}$ 与
+$f(\mathbf{x})=\mathbf{w}^{\mathsf{T}}\mathbf{x}$。则下列结论成立：
+\begin{enumerate}
+  \item $f$ 在 $S_c$ 上的最大值为 $\sqrt{c}\,\|\mathbf{w}\|$，最大值点唯一，为
+        $\mathbf{x}^{\ast}=\dfrac{\sqrt{c}}{\|\mathbf{w}\|}\,\mathbf{w}$；
+  \item $f$ 在 $S_c$ 上的最小值为 $-\sqrt{c}\,\|\mathbf{w}\|$，最小值点唯一，为
+        $-\mathbf{x}^{\ast}$；
+  \item 对任意 $\alpha\in\mathbb{R}$，$\alpha\mathbf{w}\in S_c$ 当且仅当
+        $|\alpha|=\sqrt{c}/\|\mathbf{w}\|$，此时
+        $f(\alpha\mathbf{w})=\alpha\|\mathbf{w}\|^{2}$。
+\end{enumerate}
 \end{proposition}
 \begin{proof}
 由 Cauchy-Schwarz 不等式，对任意满足 $\|\mathbf{x}\|^2=c$ 的 $\mathbf{x}$ 有
@@ -58,11 +84,11 @@
 \begin{align*}
   \mathbf{w}^{\mathsf{T}}\mathbf{x}=\alpha\|\mathbf{w}\|^2=\sqrt{c}\,\|\mathbf{w}\|,
 \end{align*}
-故上界可取到。Cauchy-Schwarz 不等式的等号成立条件恰为 $\mathbf{x}$ 与 $\mathbf{w}$ 共线且同向，即 $\mathbf{x}=\alpha\mathbf{w}$，$\alpha>0$。当 $\alpha$ 可在实数中任取时，$\alpha>0$ 的共线点都取到同一个最大值 $\sqrt{c}\|\mathbf{w}\|$。证毕。
+故上界可取到。Cauchy-Schwarz 不等式的等号成立条件恰为 $\mathbf{x}$ 与 $\mathbf{w}$ 共线，即存在 $\alpha\in\mathbb{R}$ 使 $\mathbf{x}=\alpha\mathbf{w}$；代入约束 $\|\mathbf{x}\|^2=c$ 得 $|\alpha|=\sqrt{c}/\|\mathbf{w}\|$。其中 $\alpha>0$ 给出唯一的最大值点 $\mathbf{x}^{\ast}$，$\alpha<0$ 给出唯一的最小值点 $-\mathbf{x}^{\ast}$，对应最小值 $-\sqrt{c}\|\mathbf{w}\|$。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-最大响应方向; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-最大响应方向; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个命题说明了“隐藏单元是特征检测器”的精确含义：在输入能量固定的条件下，单元响应最大的输入小块恰是滤波器本身的一个正倍数。条件 $\|\mathbf{x}\|^2=c$ 不能去掉：若 $\mathbf{x}$ 可任意放大，$\mathbf{w}^{\mathsf{T}}\mathbf{x}$ 无上界，最大值不存在，“最匹配的小块”也就无从谈起。$\alpha>0$ 也不可换成 $\alpha\neq0$：$\mathbf{x}=-\alpha\mathbf{w}$ 给出的是最小响应，它对应“与核反相”的小块。命题只处理预激活 $\mathbf{w}^{\mathsf{T}}\mathbf{x}+w_0$；由于 ReLU 单调不减，最大化预激活与最大化 ReLU 输出等价。但“何时输出非零”由阈值决定：仅当 $\mathbf{w}^{\mathsf{T}}\mathbf{x}>-w_0$ 时才有非零响应，故偏置 $w_0$ 控制着检测器的触发门限，而不是匹配的方向。
 \end{remark}
 
@@ -85,31 +111,58 @@
   \label{align:ch10-二维卷积}
 \end{align}
 
-\begin{definition}[特征图]\label{definition:ch10-特征图}
-设一层中若干隐藏单元以相同方式作用于输入的不同空间位置，则称这些单元的激活值按空间位置排成的二维数组为该层的\textbf{特征图}（feature map）。特征图中所有单元共享同一组权重；若一层有多个特征图，则称每个特征图为该层的一个\textbf{通道}（channel）。
+\begin{definition}[特征图与通道]\label{definition:ch10-特征图}
+设某卷积层的输入为单通道图像 $I\in\mathbb{R}^{J\times K}$，该层含
+$C_{\mathrm{out}}$ 个滤波器 $\mathbf{W}^{(c)}\in\mathbb{R}^{M\times M}$ 与偏置
+$w_0^{(c)}\in\mathbb{R}$，$c=1,\dots,C_{\mathrm{out}}$，其中 $M\geqslant1$ 且
+$M\leqslant\min\{J,K\}$；填充宽度为 $P\in\mathbb{Z}_{\geqslant0}$，步幅为
+$S\in\mathbb{Z}_{\geqslant1}$。对 $c=1,\dots,C_{\mathrm{out}}$，第 $c$ 个输出通道是
+$J'\times K'$ 的数组 $C_c$，其中
+$J'=\lfloor(J+2P-M)/S\rfloor+1$、$K'=\lfloor(K+2P-M)/S\rfloor+1$；其元素 $C_c(i,j)$
+由滤波器 $\mathbf{W}^{(c)}$ 在位置 $(1+(i-1)S-P,\;1+(j-1)S-P)$ 处对填充后图像的
+$M\times M$ 窗口作加权求和、再加 $w_0^{(c)}$ 并施加 ReLU 得到。数组 $C_c$ 称为该层的
+一个\textbf{特征图}（feature map）；$C_1,\dots,C_{\mathrm{out}}$ 中的每一个都称为该层的
+一个\textbf{通道}（channel）。同一特征图内的所有位置共用同一组权重
+$\mathbf{W}^{(c)},w_0^{(c)}$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-特征图; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-特征图把“位置”与“内容”分开存放：数组的两个下标是位置，数组元素是内容。定义中“以相同方式作用”就是权重共享，它是等变性（\cref{proposition:ch10-平移等变性}）成立的结构性前提；如果不同位置使用不同权重，同一小块像素平移到新位置后响应会改变，等变性立即失效。把多个特征图称为通道，是为了与图像的 RGB 通道使用同一套张量语言，从而让\cref{definition:ch10-多维卷积}中的四阶滤波器张量有意义。注意特征图是“对一幅输入图像的一层输出”，不是网络的参数，也不参与训练。
+% SUPPLEMENT: parent=definition:ch10-特征图; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+特征图把“位置”与“内容”分开存放：数组的两个下标是位置，数组元素是内容。定义中“同一特征图内所有位置共用同一组权重”就是权重共享，它是等变性（\cref{proposition:ch10-平移等变性}）成立的结构性前提；如果不同位置使用不同权重，同一小块像素平移到新位置后响应会改变，等变性立即失效。把多个特征图称为通道，是为了与图像的 RGB 通道使用同一套张量语言，从而让\cref{definition:ch10-多维卷积}中的四阶滤波器张量有意义。注意特征图是“对一幅输入图像的一层输出”，不是网络的参数，也不参与训练。
 \end{remark}
 
-\begin{definition}[卷积（互相关）]\label{definition:ch10-卷积}
-设 $I$ 为 $J\times K$ 的图像，$K$ 为 $M\times M$ 的滤波器。称由\eqref{align:ch10-二维卷积}定义的数组 $C$ 为 $I$ 与 $K$ 的\textbf{卷积}，并记 $C=I*K$。严格地说，\eqref{align:ch10-二维卷积}实现的是\textbf{互相关}（cross-correlation）；机器学习文献惯例上仍称之为卷积。
+\begin{definition}[卷积与互相关]\label{definition:ch10-卷积}
+设 $I\in\mathbb{R}^{J_1\times J_2}$ 为单通道图像，$J_1,J_2\geqslant1$；
+$K\in\mathbb{R}^{M\times M}$ 为滤波器，$M$ 为正整数且 $M\leqslant\min\{J_1,J_2\}$。
+对整数 $j,k$，按式\eqref{align:ch10-二维卷积}定义
+$C(j,k)=\sum_{l}\sum_{m}I(j+l,\,k+m)K(l,m)$，其中 $l,m$ 取遍使
+$1\leqslant j+l\leqslant J_1$、$1\leqslant k+m\leqslant J_2$ 的全部整数，
+即只取滤波器完全落在图像内的位置。由 $1\leqslant j\leqslant J_1-M+1$、
+$1\leqslant k\leqslant J_2-M+1$ 处的 $C(j,k)$ 排成的
+$(J_1-M+1)\times(J_2-M+1)$ 数组 $C$ 称为 $I$ 与 $K$ 的\textbf{卷积}
+（convolution），记作 $C=I*K$。由于式\eqref{align:ch10-二维卷积}中 $I$ 的下标为
+$j+l$、$k+m$ 而不是 $j-l$、$k-m$，该式在数学上实现的是\textbf{互相关}
+（cross-correlation）；卷积网络文献按惯例仍称之为卷积。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-卷积; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-这个定义有两处需要说明。第一，求和范围由“滤波器完全落在图像内”决定，即 $l,m$ 取使 $1\leqslant j+l\leqslant J$、$1\leqslant k+m\leqslant K$ 的全部整数，故 $C$ 的尺寸比 $I$ 小（\cref{proposition:ch10-填充输出尺寸}将精确写出）。第二，互相关与数学上的卷积相差一次核翻转（见\cref{exercise:ch10-04}），但在卷积网络中滤波器是学习得到的，翻转与否只是把参数重新编号，不改变模型族，因此沿用“卷积”这一名称不会损失任何表达能力。真正重要的是公式中的两个性质：对 $l,m$ 求和使输出对输入的局部平移等变，系数 $K(l,m)$ 与 $j,k$ 无关使权重在所有位置共享。
+% SUPPLEMENT: parent=definition:ch10-卷积; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+这个定义有两处需要说明。第一，求和范围由“滤波器完全落在图像内”决定，即 $l,m$ 取使 $1\leqslant j+l\leqslant J_1$、$1\leqslant k+m\leqslant J_2$ 的全部整数，故 $C$ 的尺寸比 $I$ 小（\cref{proposition:ch10-填充输出尺寸}将精确写出）。第二，互相关与数学上的卷积相差一次核翻转（见\cref{exercise:ch10-04}），但在卷积网络中滤波器是学习得到的，翻转与否只是把参数重新编号，不改变模型族，因此沿用“卷积”这一名称不会损失任何表达能力。真正重要的是公式中的两个性质：对 $l,m$ 求和使输出对输入的局部平移等变，系数 $K(l,m)$ 与 $j,k$ 无关使权重在所有位置共享。
 \end{remark}
 
 \begin{proposition}[卷积的平移等变性]\label{proposition:ch10-平移等变性}
-设 $I$ 为图像，$K$ 为 $M\times M$ 滤波器，$C=I*K$ 由\eqref{align:ch10-二维卷积}给出，且不施加边界填充（即只对使滤波器完全落在图像内的位置定义 $C$）。对整数 $\delta_j,\delta_k$，定义平移算子 $(T_{\delta_j,\delta_k}I)(j,k)=I(j-\delta_j,k-\delta_k)$。则在两边都有定义的位置上成立
+设 $I:\mathbb{Z}^{2}\to\mathbb{R}$ 为有限支撑的图像（在支撑外取 $0$），
+$K\in\mathbb{R}^{M\times M}$ 为滤波器，$M\geqslant1$，$C=I*K$ 由
+\eqref{align:ch10-二维卷积}定义且不施加边界填充，即 $C$ 只在使滤波器完全落在 $I$ 的
+支撑内的位置有定义。对整数 $\delta_j,\delta_k$，定义平移算子
+$(T_{\delta_j,\delta_k}I)(j,k)=I(j-\delta_j,\,k-\delta_k)$，
+$(j,k)\in\mathbb{Z}^{2}$。则对使 $C$ 与 $T_{\delta_j,\delta_k}C$ 都有定义的全部
+$(j,k)$ 成立
 \begin{align}
   \bigl(T_{\delta_j,\delta_k}I\bigr)*K = T_{\delta_j,\delta_k}\bigl(I*K\bigr).
   \label{align:ch10-平移等变性}
 \end{align}
-即卷积与平移可交换：输入平移多少，特征图就在相同方向上平移多少。
+即输入沿方向 $(\delta_j,\delta_k)$ 平移时，特征图沿同一方向平移相同的量。
 \end{proposition}
 \begin{proof}
 记 $\tilde{I}=T_{\delta_j,\delta_k}I$，即 $\tilde{I}(j,k)=I(j-\delta_j,k-\delta_k)$。按\eqref{align:ch10-二维卷积}，
@@ -124,8 +177,8 @@
 故 $\bigl(\tilde{I}*K\bigr)(j,k)=\bigl(I*K\bigr)(j-\delta_j,k-\delta_k)=\bigl(T_{\delta_j,\delta_k}(I*K)\bigr)(j,k)$。由于 $j,k$ 任意，\eqref{align:ch10-平移等变性}成立。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-平移等变性; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-平移等变性; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 等变（equivariance）与不变（invariance）是两件不同的事，这个命题给出的是前者：输出随输入一起平移，而不是保持不变。条件“不施加边界填充”只是为了回避边界效应：在补零填充下，靠近边界的位置会看到人为的零，平移后看到的零的个数改变，等式只在离开边界足够远的位置成立。这正是卷积网络需要\cref{definition:ch10-填充}的原因之一，也是池化（\cref{definition:ch10-池化}）之后才能得到近似平移不变性的原因。命题对任意滤波器成立，与 $K$ 的取值无关，因此等变性是架构的性质而非学习的结果；网络中真正从数据中学到的是“检测什么特征”，而不是“是否等变”。
 \end{remark}
 
@@ -169,28 +222,37 @@
 \end{figure}
 
 \begin{definition}[填充、有效卷积与等大卷积]\label{definition:ch10-填充}
-在图像（或特征图）的每条边外侧各补上 $P$ 个取固定值的像素，称为\textbf{填充}（padding），$P$ 称为填充宽度。若 $P=0$，称相应的卷积为\textbf{有效}（valid）卷积；若 $P=(M-1)/2$（$M$ 为奇数），称相应的卷积为\textbf{等大}（same）卷积。填充值通常取 $0$，且取零之前先从每幅图像中减去像素强度的均值。
+设输入为 $I\in\mathbb{R}^{J\times K}$，滤波器为 $M\times M$，$P\in\mathbb{Z}_{\geqslant0}$。
+在 $I$ 的上、下、左、右四条边外侧各补上 $P$ 行或 $P$ 列取固定值 $v\in\mathbb{R}$ 的像素，
+所得 $(J+2P)\times(K+2P)$ 的数组称为 $I$ 的\textbf{填充}（padding），$P$ 称为
+\textbf{填充宽度}，$v$ 称为填充值。若 $P=0$，相应的卷积称为\textbf{有效}
+（valid）卷积；若 $M$ 为奇数且 $P=(M-1)/2$，相应的卷积称为\textbf{等大}
+（same）卷积。取 $v=0$ 的填充称为零填充；若先把每幅图像的像素强度减去该图像的均值
+再作零填充，则填充值与变换后图像的均值一致。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-填充; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-填充; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 填充的唯一目的是控制输出尺寸，但它同时改变了边界处看到的内容：位于边界附近的单元在原图上只有半个感受野，补零后它“看到”的是人为的零，这与图像内部单元看到的统计量并不一致。于是“先减去均值再补零”成为一个有实质内容的约定：若像素均值不为零而直接补零，边界单元会持续收到一个偏置信号，等变性\eqref{align:ch10-平移等变性}在边界附近被破坏得更严重。$P=(M-1)/2$ 只对奇数 $M$ 给出整数，这也是计算机视觉中滤波器尺寸常取奇数的原因之一；若 $M$ 为偶数，对称填充无法使输出与输入同尺寸。注意“等大卷积”不改变参数量，只是让空间分辨率得以在深层网络中保持。
 \end{remark}
 
 \begin{proposition}[填充卷积的输出尺寸]\label{proposition:ch10-填充输出尺寸}
-设输入为 $J\times K$，滤波器为 $M\times M$，填充宽度为 $P$，步幅为 $1$。则输出特征图的尺寸为
+设输入为 $J\times K$ 的数组，滤波器为 $M\times M$，填充宽度为
+$P\in\mathbb{Z}_{\geqslant0}$，步幅为 $1$，且 $J+2P\geqslant M$、$K+2P\geqslant M$。
+则填充后作卷积所得特征图的空间尺寸为
 \begin{align}
   (J+2P-M+1)\times(K+2P-M+1).
   \label{align:ch10-填充输出尺寸}
 \end{align}
-特别地，当 $M$ 为奇数且 $P=(M-1)/2$ 时输出尺寸等于输入尺寸 $J\times K$。
+特别地，若 $M$ 为奇数且 $P=(M-1)/2$，则输出尺寸等于输入尺寸 $J\times K$；
+若 $P=0$，则输出尺寸为 $(J-M+1)\times(K-M+1)$。
 \end{proposition}
 \begin{proof}
 填充后数组的边长为 $J+2P$ 与 $K+2P$。滤波器在水平方向可放置的位置数为 $(J+2P)-M+1$：第一个位置使滤波器的第 $1$ 列对齐填充数组的第 $1$ 列，最后一个位置使滤波器的第 $M$ 列对齐填充数组的第 $J+2P$ 列，中间每个整数偏移给出一个位置，故共有 $J+2P-M+1$ 个。竖直方向同理为 $K+2P-M+1$。每个位置对应输出特征图的一个元素，故\eqref{align:ch10-填充输出尺寸}成立。取 $P=(M-1)/2$ 得 $J+2P-M+1=J+(M-1)-M+1=J$，竖直方向同理。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-填充输出尺寸; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-填充输出尺寸; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个公式是后面所有尺寸计算的基石，使用时要注意三点。第一，它要求 $J+2P\geqslant M$，否则滤波器放不进填充后的数组，输出尺寸为零或负，卷积无定义。第二，公式对特征图同样适用，只需把 $J,K$ 换成上一层的输出尺寸，这正是逐层追踪网络形状的依据。第三，等大填充保持的是空间尺寸而不是信息量：边界处的输出仍由补出来的零参与计算，因此“输出与输入同尺寸”不等于“边界处理无损失”。
 \end{remark}
 
@@ -206,23 +268,32 @@
 其中 $\lfloor x\rfloor$ 表示将 $x$ 向下取整，得到小于或等于 $x$ 的最大整数。对于大图像和小尺寸滤波器，特征图将是原始图像大小的 $1/S$。
 
 \begin{definition}[跨步卷积与步幅]\label{definition:ch10-跨步卷积}
-在卷积中，若滤波器每次沿水平或竖直方向移动 $S$ 个像素而不是 $1$ 个像素，则称该运算为\textbf{跨步卷积}（strided convolution），称 $S$ 为\textbf{步幅}（stride）。若两个方向使用相同的步幅，则称步幅为 $S$。
+设卷积的输入为 $J\times K$ 的数组，滤波器为 $M\times M$，填充宽度为
+$P\in\mathbb{Z}_{\geqslant0}$。若滤波器在水平与竖直方向上每次移动
+$S$ 个像素而不是每次移动 $1$ 个像素，其中 $S\in\mathbb{Z}_{\geqslant1}$，则相应的运算
+称为\textbf{跨步卷积}（strided convolution），$S$ 称为\textbf{步幅}（stride）。
+若两个方向使用相同的步幅 $S$，则称该跨步卷积的步幅为 $S$；$S=1$ 时跨步卷积退化为
+\cref{definition:ch10-卷积}的卷积。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-跨步卷积; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-跨步卷积; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 步幅提供了一种与池化不同的下采样手段：它不引入任何额外的池化参数，而是在卷积本身中跳着取样。定义要求 $S$ 为正整数，因为滤波器位置必须落在像素网格上；$S=1$ 退化为普通卷积。步幅带来的代价是信息丢失的不可逆性：被跳过的位置完全不参与输出，这一点与池化相同，但跨步卷积同时仍在做特征变换，因此它在降分辨率的同时保留了“学到的”表示，而池化只做固定的聚合。步幅与填充是两套独立机制，前者控制采样密度，后者控制边界。
 \end{remark}
 
 \begin{proposition}[跨步卷积的输出尺寸]\label{proposition:ch10-跨步卷积输出尺寸}
-设输入为 $J\times K$，滤波器为 $M\times M$，填充宽度为 $P$，步幅为 $S$，且 $J+2P\geqslant M$、$K+2P\geqslant M$。则输出特征图的尺寸由\eqref{align:ch10-跨步卷积输出尺寸}给出。
+设输入为 $J\times K$ 的数组，滤波器为 $M\times M$，填充宽度为
+$P\in\mathbb{Z}_{\geqslant0}$，步幅为 $S\in\mathbb{Z}_{\geqslant1}$，且
+$J+2P\geqslant M$、$K+2P\geqslant M$。则跨步卷积的输出特征图的空间尺寸由\eqref{align:ch10-跨步卷积输出尺寸}给出，其中
+$\lfloor x\rfloor$ 表示不超过 $x$ 的最大整数，即水平与竖直方向的输出元素个数分别
+为 $\lfloor (J+2P-M)/S\rfloor+1$ 与 $\lfloor (K+2P-M)/S\rfloor+1$。
 \end{proposition}
 \begin{proof}
 考察水平方向。填充后数组长度为 $J+2P$。滤波器的左端位置依次为 $0,S,2S,\cdots$，第 $t$ 个位置（$t=0,1,2,\cdots$）要求滤波器完全落在数组内，即 $tS+M\leqslant J+2P$，等价于 $t\leqslant (J+2P-M)/S$。满足该不等式的非负整数 $t$ 的个数为 $\lfloor (J+2P-M)/S\rfloor+1$，这正是输出特征图的列数。竖直方向同理给出 $\lfloor (K+2P-M)/S\rfloor+1$ 行。两方向独立，故总元素个数为二者之积。当 $J,K\gg M$ 且 $P$ 相对 $J,K$ 可忽略时，该数约为 $J/S$ 与 $K/S$，即特征图边长约为原图的 $1/S$。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-跨步卷积输出尺寸; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-跨步卷积输出尺寸; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 向下取整是公式的要害：它说明当 $(J+2P-M)$ 不能被 $S$ 整除时，最后一段像素被丢弃，输出尺寸不是简单的除法。若把 $S$ 增大而不同时调整 $P$，可能出现某个位置被完全跳过、或边界像素从未被任何滤波器位置覆盖的情形，因此实际实现中常配合 $P$ 使 $J+2P-M$ 尽量被 $S$ 整除。条件 $J+2P\geqslant M$ 不可省，否则连第一个位置都放不下。公式对多层网络逐层使用即可追踪形状，这一点在\cref{proposition:ch10-有效感受野}中还会用到。
 \end{remark}
 
@@ -231,16 +302,23 @@
 到目前为止，我们已经考虑了单个灰度图像上的卷积。彩色图像有三个通道，对应于红色、绿色和蓝色。通过扩展滤波器的维度，我们可以轻松地扩展卷积以支持多个通道。具有 $J\times K$ 个像素和 $C$ 个通道的图像可以用维度为 $J\times K\times C$ 的张量来描述（参见\cref{section:ch06-深度网络}）。我们可以引入一个用维度为 $M\times M\times C$ 的张量来描述的滤波器，该张量对于 $C$ 个通道中的每一个通道，都有一个独立的 $M\times M$ 滤波器。假设对原始图像没有进行填充且步幅为 1，则同样可以得到大小为 $(J-M+1)\times (K-M+1)$ 的特征图，如\cref{figure:ch10-多维卷积}所示。
 
 \begin{definition}[多通道卷积与通道数]\label{definition:ch10-多维卷积}
-设输入张量为 $I\in\mathbb{R}^{J\times K\times C_{\mathrm{in}}}$，滤波器张量为 $W\in\mathbb{R}^{M\times M\times C_{\mathrm{in}}\times C_{\mathrm{out}}}$。对 $c=1,\cdots,C_{\mathrm{out}}$，定义第 $c$ 个输出通道为
+设输入张量为 $I\in\mathbb{R}^{J\times K\times C_{\mathrm{in}}}$，滤波器张量为
+$W\in\mathbb{R}^{M\times M\times C_{\mathrm{in}}\times C_{\mathrm{out}}}$，偏置为
+$b\in\mathbb{R}^{C_{\mathrm{out}}}$，其中 $J,K,M,C_{\mathrm{in}},C_{\mathrm{out}}$
+为正整数且 $M\leqslant\min\{J,K\}$。对 $c=1,\dots,C_{\mathrm{out}}$ 与
+$1\leqslant j\leqslant J-M+1$、$1\leqslant k\leqslant K-M+1$，令
 \begin{align}
   O_c(j,k)=\sum_{c'=1}^{C_{\mathrm{in}}}\sum_{l}\sum_{m} I_{c'}(j+l,\,k+m)\,W(l,m,c',c)+b_c,
   \label{align:ch10-多通道卷积}
 \end{align}
-其中 $b_c$ 为第 $c$ 个输出通道的偏置，$I_{c'}$ 表示输入的第 $c'$ 个通道。称 $C_{\mathrm{in}}$ 为输入通道数，$C_{\mathrm{out}}$ 为输出通道数，称 $O_1,\cdots,O_{C_{\mathrm{out}}}$ 为输出的各个通道。
+其中 $I_{c'}$ 表示输入张量的第 $c'$ 个通道，$l,m$ 取遍使 $I_{c'}(j+l,k+m)$ 有定义的
+全部整数。$C_{\mathrm{in}}$ 称为输入通道数，$C_{\mathrm{out}}$ 称为输出通道数，
+$O_1,\dots,O_{C_{\mathrm{out}}}$ 称为输出的各个\textbf{通道}（channel），每个 $O_c$ 是
+$(J-M+1)\times(K-M+1)$ 的实矩阵，$b_c$ 是第 $c$ 个输出通道的偏置。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-多维卷积; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-多维卷积; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个定义把“在每个输入通道上各有一个 $M\times M$ 滤波器”与“把各通道的结果相加”两件事合成一个张量运算：滤波器张量的最后一维 $C_{\mathrm{out}}$ 取不同值时，取到的是完全独立的一组 $C_{\mathrm{in}}$ 个二维滤波器。求和指标 $c'$ 遍历全部输入通道而不是某一个，因此单个输出通道看到的是所有输入通道的联合信息，这正是彩色图像第一层能检测“颜色-方向”组合特征的原因。若去掉对 $c'$ 的求和、只保留单通道，就退化为一维卷积在通道上的堆叠，各通道之间不再交互，表达能力显著下降。
 \end{remark}
 
@@ -261,34 +339,47 @@
 \end{figure}
 
 \begin{proposition}[卷积层参数量]\label{proposition:ch10-卷积层参数量}
-设一个卷积层的输入有 $C_{\mathrm{in}}$ 个通道，滤波器空间尺寸为 $M\times M$，输出有 $C_{\mathrm{out}}$ 个通道，每个输出通道带一个偏置。则该层的可学习参数总数为
+设一个卷积层的输入有 $C_{\mathrm{in}}$ 个通道、空间尺寸为 $J\times K$，滤波器空间
+尺寸为 $M\times M$，输出有 $C_{\mathrm{out}}$ 个通道，每个输出通道带一个偏置，
+填充宽度为 $P\in\mathbb{Z}_{\geqslant0}$、步幅为 $S\in\mathbb{Z}_{\geqslant1}$，
+输出特征图的空间尺寸为 $J'\times K'$，其中
+$J'=\lfloor(J+2P-M)/S\rfloor+1$、$K'=\lfloor(K+2P-M)/S\rfloor+1$。则该层的可学习
+参数总数为
 \begin{align}
-  \bigl(M^2C_{\mathrm{in}}+1\bigr)C_{\mathrm{out}}.
+  \bigl(M^2C_{\mathrm{in}}+1\bigr)C_{\mathrm{out}},
   \label{align:ch10-卷积层参数量}
 \end{align}
-该数目与输入的空间尺寸 $J\times K$ 无关；该层的连接数为 $M^2C_{\mathrm{in}}C_{\mathrm{out}}J'K'$，其中 $J'\times K'$ 为输出特征图的空间尺寸。
+该数目与输入的空间尺寸 $J\times K$ 无关；该层与输入之间的连接数为
+$M^2C_{\mathrm{in}}C_{\mathrm{out}}J'K'$。
 \end{proposition}
 \begin{proof}
 由\cref{definition:ch10-多维卷积}，第 $c$ 个输出通道用到权重 $W(\cdot,\cdot,\cdot,c)$，共 $M\cdot M\cdot C_{\mathrm{in}}=M^2C_{\mathrm{in}}$ 个，再加一个偏置 $b_c$，故每个输出通道有 $M^2C_{\mathrm{in}}+1$ 个参数。$C_{\mathrm{out}}$ 个输出通道的参数集互不相关，故总数为 $(M^2C_{\mathrm{in}}+1)C_{\mathrm{out}}$。该表达式不含 $J,K$，故与输入空间尺寸无关。连接数方面，输出特征图的每个元素通过 $M^2C_{\mathrm{in}}$ 条边连到输入，输出元素共 $J'K'C_{\mathrm{out}}$ 个，故连接总数为 $M^2C_{\mathrm{in}}C_{\mathrm{out}}J'K'$。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-卷积层参数量; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-卷积层参数量; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个命题量化了\cref{section:ch10-卷积滤波器}开头关于参数量的对比：第一层 $3\times 3$、$C_{\mathrm{in}}=3$、$C_{\mathrm{out}}=64$ 的卷积层只有 $(9\cdot3+1)\cdot64=1792$ 个参数，而同尺寸输入上的全连接层需要 $10^6\cdot 3\cdot 1000$ 量级的权重。注意“参数少”与“连接多”并不矛盾：连接数仍与空间尺寸成正比（乘上了 $J'K'$），减少的是独立自由度而非计算量。条件“每个输出通道带一个偏置”是本书采用的约定；若某些实现共享偏置或使用无偏置卷积，公式相应变为 $M^2C_{\mathrm{in}}C_{\mathrm{out}}$ 或 $M^2C_{\mathrm{in}}C_{\mathrm{out}}+C_{\mathrm{out}}$，这不影响数量级结论。
 \end{remark}
 
 设计卷积网络时的一个有用概念是 $1\times 1$ 卷积（Lin, Chen, and Yan, 2013），它是一个滤波器大小为单个像素的卷积层。滤波器有 $C$ 个权重（每个输入通道一个权重），外加一个偏置。$1\times 1$ 卷积通过将输出通道数设置为与输入通道数不同，可以简单地用来改变通道数（通常用来减少通道数），而不改变特征图的大小。因此，它是对跨步卷积或池化的补充，因为它减少了通道的数量而不是通道的维度。
 
 \begin{definition}[$1\times 1$ 卷积]\label{definition:ch10-1x1卷积}
-称空间尺寸为 $1\times 1$ 的卷积为 $1\times 1$ \textbf{卷积}，即对每个空间位置 $(j,k)$ 独立地施加同一个线性映射
+设输入张量为 $I\in\mathbb{R}^{J\times K\times C_{\mathrm{in}}}$，权重为
+$W\in\mathbb{R}^{1\times1\times C_{\mathrm{in}}\times C_{\mathrm{out}}}$，偏置为
+$b\in\mathbb{R}^{C_{\mathrm{out}}}$，其中 $J,K,C_{\mathrm{in}},C_{\mathrm{out}}$ 为正整数。
+对每个空间位置 $(j,k)$，$1\leqslant j\leqslant J$、$1\leqslant k\leqslant K$，
+与每个输出通道 $c=1,\dots,C_{\mathrm{out}}$，令
 \begin{align}
   O_c(j,k)=\sum_{c'=1}^{C_{\mathrm{in}}} W(1,1,c',c)\,I_{c'}(j,k)+b_c,\qquad c=1,\cdots,C_{\mathrm{out}}.
   \label{align:ch10-1x1卷积}
 \end{align}
+其中 $I_{c'}$ 为输入的第 $c'$ 个通道。这一空间尺寸为 $1\times1$ 的卷积称为
+$1\times1$ \textbf{卷积}；其输出 $O$ 与输入有相同的空间尺寸 $J\times K$ 与
+$C_{\mathrm{out}}$ 个通道。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-1x1卷积; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-1x1卷积; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 $1\times 1$ 卷积是“逐像素的全连接层”：它在每个空间位置上使用同一组权重，因而完全不看邻域，只做通道间的线性混合。它的参数量为 $(C_{\mathrm{in}}+1)C_{\mathrm{out}}$，与空间尺寸无关，因此常被用来在不改变分辨率的前提下压缩或扩展通道数，例如在 U-Net 的最后一层把通道数降到类别数（\cref{subsection:ch10-U-Net架构}）。把它与\cref{definition:ch10-多维卷积}比较可以看出，它只是 $M=1$ 的特例，并不是新的运算；把它单列出来是因为它在网络设计中承担“通道变换”这一独立职能。若在 $1\times 1$ 卷积后再接非线性激活，它就成为逐像素的两层感知机。
 \end{remark}
 
@@ -298,12 +389,24 @@ $1\times 1$ 卷积是“逐像素的全连接层”：它在每个空间位置�
 
 池化与卷积有相似之处，因为单元阵列排列在网格中，且其中的每个单元都从前一个特征图的感受野中获取输入。此外，池化同样需要选择滤波器大小和步幅。然而，池化与卷积的不同之处在于，池化单元的输出是其输入的简单、固定的函数，因此池化中没有可学习参数。池化的一个常见示例是最大池化（max-pooling）（Zhou and Chellappa, 1988），其中每个单元仅输出对于输入值的“取最大值”函数。\cref{figure:ch10-最大池化}所示的简单示例说明了这一过程。这里的步幅等于滤波器的宽度，因此感受野没有重叠。
 
-\begin{definition}[池化与最大池化]\label{definition:ch10-池化}
-设特征图为 $A$，池化窗口为 $M\times M$、步幅为 $S$。若池化单元的输出为窗口内全部输入值的最大值，则称该运算为\textbf{最大池化}（max-pooling）；若为窗口内全部输入值的平均值，则称\textbf{平均池化}（average pooling）。池化不含可学习参数，且通常对每个通道独立施加。
+\begin{definition}[池化、最大池化与平均池化]\label{definition:ch10-池化}
+设特征图张量为 $A\in\mathbb{R}^{J\times K\times C}$，池化窗口为 $M\times M$，步幅为
+$S\in\mathbb{Z}_{\geqslant1}$，其中 $M,J,K,C$ 为正整数且 $M\leqslant\min\{J,K\}$。
+对每个通道 $c=1,\dots,C$ 与每个窗口左上角位置 $(i,j)$，$i,j\in\{1,1+S,1+2S,\dots\}$，
+若 $i+M-1\leqslant J$、$j+M-1\leqslant K$，则窗口
+$R_{i,j}=\{i,\dots,i+M-1\}\times\{j,\dots,j+M-1\}$ 内全部输入构成一个池化单元，其输出为
+\begin{align*}
+  P_c(i,j)=\max_{(r,s)\in R_{i,j}} A(r,s,c)
+  \quad\text{或}\quad
+  P_c(i,j)=\frac{1}{M^2}\sum_{(r,s)\in R_{i,j}} A(r,s,c).
+\end{align*}
+前者称为\textbf{最大池化}（max-pooling），后者称为\textbf{平均池化}
+（average pooling），两种运算统称\textbf{池化}（pooling）。池化不含可学习参数，并对
+每个通道独立施加。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-池化; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-池化; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 池化把“特征是否存在”与“特征在哪里”分开：最大池化保留窗口内的最大响应（存在性与强度），但丢弃最大值的位置（位置信息）。这正是它在图像分类中有用、在语义分割中却造成麻烦的原因（\cref{subsection:ch10-U-Net架构}）。定义强调“对每个通道独立施加”，否则不同通道的响应会被混在一起，通道语义被破坏；也强调“无可学习参数”，因此池化不增加模型容量，只改变表示。窗口与步幅都等于 $M$ 时窗口互不重叠，输出尺寸恰为输入的 $1/M$；若步幅小于窗口，则窗口重叠，输出更大但仍小于输入。
 \end{remark}
 
@@ -319,22 +422,26 @@ $1\times 1$ 卷积是“逐像素的全连接层”：它在每个空间位置�
 我们可以将特征图中单元的激活解释为检测相应特征强度的度量，因此最大池化保留了有关特征是否存在以及特征强度的信息，但丢弃了一些位置信息。池化还有许多其他选择，例如平均池化（average pooling），其中池化函数计算特征图中相应感受野值的平均值。这些都引入了一定程度的局部平移不变性。
 
 \begin{proposition}[池化的输出尺寸与局部不变性]\label{proposition:ch10-池化输出尺寸}
-设特征图的空间尺寸为 $J\times K$，池化窗口为 $M\times M$、步幅为 $S$。则池化输出的空间尺寸为
+设特征图的空间尺寸为 $J\times K$，池化窗口为 $M\times M$，步幅为
+$S\in\mathbb{Z}_{\geqslant1}$，且 $M\leqslant\min\{J,K\}$。则池化输出的空间尺寸为
 \begin{align}
   \left\lfloor\frac{J-M}{S}\right\rfloor+1
   \;\times\;
   \left\lfloor\frac{K-M}{S}\right\rfloor+1 .
   \label{align:ch10-池化输出尺寸}
 \end{align}
-当 $S=M$ 时输出尺寸为 $\lfloor J/M\rfloor\times\lfloor K/M\rfloor$，即窗口互不重叠。此外，若输入在窗口内发生不超过窗口范围的平移，且窗口内最大值唯一，则最大池化的输出在相应窗口内保持不变。
+当 $S=M$ 时输出尺寸为 $\lfloor J/M\rfloor\times\lfloor K/M\rfloor$，窗口互不重叠。
+此外，设 $A\in\mathbb{R}^{J\times K}$ 为单通道特征图，$R$ 为一个池化窗口，且 $A$ 在 $R$
+内除一点 $p$ 外取值均为 $0$、$A(p)=v>0$。则对任意 $p'\in R$，把该正值移到 $p'$、
+其余位置仍取 $0$ 后，窗口 $R$ 上的最大池化输出都等于 $v$。
 \end{proposition}
 \begin{proof}
-尺寸公式与\cref{proposition:ch10-跨步卷积输出尺寸}在 $P=0$ 时的情形完全相同：窗口左端可放置的位置为 $0,S,2S,\cdots$，第 $t$ 个位置要求 $tS+M\leqslant J$，故 $t\leqslant (J-M)/S$，位置个数为 $\lfloor (J-M)/S\rfloor+1$。取 $S=M$ 得 $\lfloor (J-M)/M\rfloor+1=\lfloor J/M\rfloor$（当 $J$ 为 $M$ 的整数倍时等号成立，一般情形由取整给出）。关于不变性：设某窗口内的输入为 $a_1,\cdots,a_{M^2}$，最大值唯一且等于 $a^\ast$。若输入发生平移，只要平移后 $a^\ast$ 仍落在同一窗口内，该窗口的最大值仍是 $a^\ast$，故对应池化单元的输出不变。证毕。
+尺寸公式与\cref{proposition:ch10-跨步卷积输出尺寸}在 $P=0$ 时的情形完全相同：窗口左端可放置的位置为 $0,S,2S,\cdots$，第 $t$ 个位置要求 $tS+M\leqslant J$，故 $t\leqslant (J-M)/S$，位置个数为 $\lfloor (J-M)/S\rfloor+1$。取 $S=M$ 得 $\lfloor (J-M)/M\rfloor+1=\lfloor J/M\rfloor$（当 $J$ 为 $M$ 的整数倍时等号成立，一般情形由取整给出）。关于不变性：设 $A$ 在窗口 $R$ 内除一点 $p$ 外取值均为 $0$、$A(p)=v>0$。把 $A$ 在 $R$ 内的正值移到任意 $p'\in R$、其余位置仍取 $0$，则 $R$ 内取值的多重集仍为 $\{v,0,\dots,0\}$，其最大值为 $v$，故窗口 $R$ 上最大池化的输出不变。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-池化输出尺寸; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-池化只带来“局部”平移不变性，这一点必须与\cref{proposition:ch10-平移等变性}的全局等变性区分开：卷积使输出随输入平移，池化则把一个小范围内的平移“吸收”掉，但平移超过一个窗口后输出仍会改变。命题中“最大值唯一”的条件不能省：若窗口内有两个相等的最大值，平移可能使池化输出相同，也可能因取到不同位置的最大值而在后续层产生不同结果。$S<M$ 时窗口重叠，同一输入会参与多个输出，不变性变弱但信息损失减少，这是设计时的取舍。最后，池化不改变通道数，它降低的是空间分辨率。
+% SUPPLEMENT: parent=proposition:ch10-池化输出尺寸; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+池化只带来“局部”平移不变性，这一点必须与\cref{proposition:ch10-平移等变性}的全局等变性区分开：卷积使输出随输入平移，池化则把一个小范围内的平移“吸收”掉，但平移超过一个窗口后输出仍会改变。命题中的不变性只对“窗口内只有一个正峰”的情形成立：若窗口内还有别的非零值，平移会改变窗口内取值的多重集，最大池化的输出就可能改变；最大值不唯一时尤其如此。$S<M$ 时窗口重叠，同一输入会参与多个输出，不变性变弱但信息损失减少，这是设计时的取舍。最后，池化不改变通道数，它降低的是空间分辨率。
 \end{remark}
 
 \begin{example}[ $8$ 通道特征图的最大池化]\label{example:ch10-池化示例}
@@ -350,19 +457,22 @@ $1\times 1$ 卷积是“逐像素的全连接层”：它在每个空间位置�
 卷积框架的一个关键性质是局部性，特征图中的给定单元仅从前一层的一小块（即感受野）中获取信息。当我们构建一个每一层都是卷积层的深度神经网络时，后面层中单元的有效感受野会比前面层中单元的有效感受野大得多，如\cref{figure:ch10-有效感受野}所示。
 
 \begin{proposition}[有效感受野的递推]\label{proposition:ch10-有效感受野}
-考虑 $L$ 层卷积堆叠，第 $l$ 层的滤波器空间尺寸为 $M_l\times M_l$、步幅为 $S_l$。记第 $l$ 层单元在输入图像上的有效感受野边长为 $R_l$，并约定 $R_0=1$。则
+设 $L\geqslant1$，第 $l$ 层卷积的滤波器空间尺寸为 $M_l\times M_l$
+（$M_l\geqslant1$）、步幅为 $S_l\geqslant1$，$l=1,\dots,L$，并设输入图像足够大，
+使各层的感受野完全落在图像内。记 $R_l$ 为第 $l$ 层一个单元在输入图像上的有效
+感受野边长，约定 $R_0=1$，空乘积取 $1$。则
 \begin{align}
   R_l = R_{l-1} + (M_l-1)\prod_{i=1}^{l-1}S_i,\qquad l=1,\cdots,L,
   \label{align:ch10-感受野递推}
 \end{align}
-其中空乘积约定为 $1$。特别地，当所有 $S_l=1$、$M_l=M$ 时 $R_L=1+L(M-1)$，随深度线性增长。
+特别地，若所有 $S_l=1$、$M_l=M$，则 $R_L=1+L(M-1)$。
 \end{proposition}
 \begin{proof}
 对 $l$ 归纳。$l=1$ 时，第 $1$ 层单元直接连接输入的 $M_1\times M_1$ 小块，而 $R_0+(M_1-1)\cdot1=1+M_1-1=M_1$，成立。设\eqref{align:ch10-感受野递推}对 $l-1$ 成立。第 $l$ 层的一个单元连接第 $l-1$ 层中 $M_l\times M_l$ 个相邻单元，这些单元在第 $l-1$ 层坐标系中覆盖的长度为 $(M_l-1)S_{l-1}+1$（步幅为 $S_{l-1}$ 时，$M_l$ 个采样点跨过的距离为 $(M_l-1)S_{l-1}$，再加一个单元自身的宽度）。把这段长度换算到输入图像坐标，需要乘以第 $l-1$ 层之前的累计步幅 $\prod_{i=1}^{l-1}S_i$ 中的相应部分。更直接地，记 $P_{l-1}=\prod_{i=1}^{l-1}S_i$ 为输入到第 $l-1$ 层的累计步幅，则第 $l-1$ 层中相邻单元在输入上相距 $P_{l-1}$，故第 $l$ 层单元覆盖的输入范围为 $R_{l-1}+(M_l-1)P_{l-1}$，即\eqref{align:ch10-感受野递推}。所有 $S_l=1$ 时 $P_{l-1}=1$，逐层相加得 $R_L=1+\sum_{l=1}^{L}(M_l-1)=1+L(M-1)$。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-有效感受野; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-有效感受野; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个递推解释了\cref{figure:ch10-有效感受野}的现象，也解释了为什么“小滤波器堆叠”可以替代“大滤波器”：三层 $3\times 3$ 卷积（$S=1$）的感受野为 $1+3\cdot2=7$，与一层 $7\times 7$ 卷积相同，但参数为 $3\cdot 9C^2$ 而不是 $49C^2$，且中间多出两次非线性。条件“每层步幅为 $S_l$”必须逐层记录，因为一旦某层 $S_l>1$，后续每增加一层感受野的增量就被放大 $S_l$ 倍，这就是跨步卷积能快速扩大感受野的原因。公式给出的是理论上界：由于边界补零与滤波器权重可能为零，实际对输出有影响的输入区域（有效感受野）通常小于 $R_L$。$R_L$ 也不等于“一个单元能看见多少像素”的精确描述，它给出的是边长的紧上界。
 \end{remark}
 
@@ -408,7 +518,11 @@ ImageNet 中包含 1 000 个非重叠类别的图像子集构成了年度 ImageN
 \end{example}
 
 \begin{proposition}[VGG-16 的总参数量]\label{proposition:ch10-VGG16参数量}
-按\cref{figure:ch10-VGG16架构}的结构（13 个卷积层、3 个全连接层、池化层无可学习参数），VGG-16 的可学习参数总数为
+设 VGG-16 的结构为：输入为 $224\times224\times3$ 的张量；13 个 $3\times3$ 卷积层，
+其输出通道数依次为 $64,64,128,128,256,256,256,512,512,512,512,512,512$，每个卷积层
+带一个偏置，填充为等大填充、步幅为 $1$；卷积层之间由 $2\times2$、步幅 $2$ 的最大池化层
+分隔，池化层无参数；最后是 $4096$、$4096$、$1000$ 三个全连接层，每个全连接层带一个
+偏置。则 VGG-16 的可学习参数总数为
 \begin{align}
   N_{\mathrm{VGG16}}=138\,357\,544\approx1.38\times10^{8},
   \label{align:ch10-VGG16参数量}
@@ -424,8 +538,8 @@ ImageNet 中包含 1 000 个非重叠类别的图像子集构成了年度 ImageN
 全连接层部分为 $102\,764\,544+16\,781\,312+4\,097\,000=123\,642\,856$。故总数为 $14\,714\,688+123\,642\,856=138\,357\,544$。第一个全连接层所占比例为 $102\,764\,544/138\,357\,544\approx0.743$，即约 $74\%$。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-VGG16参数量; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-VGG16参数量; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个计算说明了一个反直觉的事实：VGG-16 的绝大多数参数并不在卷积层，而在最后三个全连接层，因为 $7\times7\times512$ 与 $4096$ 之间的全连接矩阵没有任何权重共享。由此可以理解后续架构（如 ResNet）为何用全局平均池化取代大全连接层：不是为了减少连接，而是为了减少独立自由度。计算时逐层核对三件事：输入通道数是否等于上一层的输出通道数、$3\times3$ 卷积是否保持空间尺寸（等大填充，$P=1$）、池化是否把边长减半。若把某个 $3\times3$ 卷积误当作 $5\times5$，或漏掉偏置，总数就会偏离 $1.38$ 亿；因此这个数字可以作为架构描述的校验和。注意题目所说的“权重数量（连接数）”与“独立可学习参数”是两个不同的量，前者还要乘以输出特征图的空间尺寸，后者与 $J,K$ 无关。
 \end{remark}
 

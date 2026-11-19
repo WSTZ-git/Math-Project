@@ -18,7 +18,7 @@ Metropolis-Hastings 算法通过使用提议分布创建候选样本的 Markov �
 \label{align:ch14-归一化}
 \end{align}
 
-\begin{remark}（重构新增）\textbf{原文问题说明。}原书\eqref{align:ch14-归一化}印作 $\int p(\bm{x}\mid\bm{w})p(\bm{x})\mathrm{d}\bm{x}=1$，但归一化要求针对的是条件密度本身，正确形式应为
+\begin{remark}\textbf{原文问题说明。}原书\eqref{align:ch14-归一化}印作 $\int p(\bm{x}\mid\bm{w})p(\bm{x})\mathrm{d}\bm{x}=1$，但归一化要求针对的是条件密度本身，正确形式应为
 \begin{align*}
 \int p(\bm{x}\mid\bm{w})\,\mathrm{d}\bm{x}=1.
 \end{align*}
@@ -37,27 +37,27 @@ Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}.
 \end{align}
 
 \begin{definition}[基于能量的模型]\label{definition:ch14-基于能量模型}
-设 $E(\bm{x},\bm{w})$ 是数据向量 $\bm{x}$ 与参数 $\bm{w}$ 的实值函数，称为能量函数，且
+设数据维数 $d\geqslant1$、参数维数 $P\geqslant1$，$\bm{x}\in\mathbb{R}^{d}$、$\bm{w}\in\mathbb{R}^{P}$，能量函数 $E:\mathbb{R}^{d}\times\mathbb{R}^{P}\to\mathbb{R}$ 为 Borel 可测函数，且
 \begin{align*}
-0<Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}<\infty.
+0<Z(\bm{w})=\int_{\mathbb{R}^{d}}\exp\{-E(\bm{x},\bm{w})\}\ \mathrm{d}\bm{x}<\infty
 \end{align*}
-则由\eqref{align:ch14-ebm}定义的分布族 $\left\{p(\bm{x}\mid\bm{w})\right\}$ 称为基于能量的模型（energy-based model，EBM），$Z(\bm{w})$ 称为配分函数（partition function）。
+对每个 $\bm{w}\in\mathbb{R}^{P}$ 成立。则由\eqref{align:ch14-ebm}定义的分布族 $\left\{p(\bm{x}\mid\bm{w}):\bm{w}\in\mathbb{R}^{P}\right\}$ 称为\textbf{基于能量的模型}（energy-based model，EBM），$Z(\bm{w})$ 称为\textbf{配分函数}（partition function）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch14-基于能量模型; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）基于能量的模型把「概率建模」化为「设计一个打分函数」：能量 $E$ 可以任意选取（例如用深度神经网络实现），只要指数可积，\eqref{align:ch14-ebm}就自动给出一个合法的概率分布。负号约定使「低能量＝高概率」，从而训练可以理解为「给数据点分配低能量、给模型样本分配高能量」。定义中 $0<Z(\bm{w})<\infty$ 的条件不可省：$Z=0$ 时密度无定义，$Z=\infty$ 时密度不可归一化，此时 $p$ 只是「未归一化的分数函数」而非概率分布。配分函数是全部困难的来源——它是对整个 $\bm{x}$ 空间（或全部离散状态）的积分，高维时无法精确计算，\cref{subsection:ch14-最大化似然}与\cref{subsection:ch14-langevin动力学}的全部技巧都是为了绕开它。最后，任何归一化的概率模型都可以写成\eqref{align:ch14-ebm}的形式（取 $E=-\ln p$），因此 EBM 是一个包含极广的框架，其代价是 $Z$ 通常不可解。
+% SUPPLEMENT: parent=definition:ch14-基于能量模型; kind=motivation; location=紧随其后的 remark
+\begin{remark}基于能量的模型把「概率建模」化为「设计一个打分函数」：能量 $E$ 可以任意选取（例如用深度神经网络实现），只要指数可积，\eqref{align:ch14-ebm}就自动给出一个合法的概率分布。负号约定使「低能量＝高概率」，从而训练可以理解为「给数据点分配低能量、给模型样本分配高能量」。定义中 $0<Z(\bm{w})<\infty$ 的条件不可省：$Z=0$ 时密度无定义，$Z=\infty$ 时密度不可归一化，此时 $p$ 只是「未归一化的分数函数」而非概率分布。配分函数是全部困难的来源——它是对整个 $\bm{x}$ 空间（或全部离散状态）的积分，高维时无法精确计算，\cref{subsection:ch14-最大化似然}与\cref{subsection:ch14-langevin动力学}的全部技巧都是为了绕开它。最后，任何归一化的概率模型都可以写成\eqref{align:ch14-ebm}的形式（取 $E=-\ln p$），因此 EBM 是一个包含极广的框架，其代价是 $Z$ 通常不可解。
 \end{remark}
 
 \begin{definition}[配分函数]\label{definition:ch14-配分函数}
-对能量函数 $E(\bm{x},\bm{w})$，称
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$d\geqslant1$、$P\geqslant1$，参数 $\bm{w}\in\mathbb{R}^{P}$，能量函数 $E(\bm{x},\bm{w})$ 为 $\mathbb{R}^{d}\times\mathbb{R}^{P}$ 上的实值函数。若 Lebesgue 积分
 \begin{align*}
-Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}
+Z(\bm{w})=\int_{\mathbb{R}^{d}}\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}
 \end{align*}
-为配分函数；离散变量情形下积分替换为求和 $Z(\bm{w})=\sum_{\bm{x}}\exp\{-E(\bm{x},\bm{w})\}$。
+满足 $0<Z(\bm{w})<\infty$，则把 $Z(\bm{w})$ 称为能量函数 $E(\cdot,\bm{w})$ 的配分函数（partition function）；当 $\bm{x}$ 只取可数个值时，积分替换为求和 $Z(\bm{w})=\sum_{\bm{x}}\exp\{-E(\bm{x},\bm{w})\}$，此时要求该级数绝对收敛且为正。$Z(\bm{w})$ 有限且为正是把 $\exp\{-E(\bm{x},\bm{w})\}/Z(\bm{w})$ 归一化为概率密度的充要条件。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch14-配分函数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）配分函数之名来自统计物理：$Z$ 是 Boltzmann 因子 $e^{-E}$ 对所有状态的总和，$\ln Z$ 对应自由能。它在数学上只起归一化作用，却出现在对数似然的梯度中（见\eqref{align:ch14-grad-nll}），因此无法像对待普通常数那样忽略。计算 $Z$ 的困难有两个来源：其一是积分区域是高维的，网格法的代价随维数指数增长；其二是 $E$ 通常由神经网络给出，没有解析结构。这两种困难正是本章后文用 Markov 链 Monte Carlo 与 Langevin 动力学近似 $Z$ 的梯度（而非 $Z$ 本身）的动机。注意 $Z$ 只依赖 $\bm{w}$ 而不依赖 $\bm{x}$，这一事实在\eqref{align:ch14-grad-expected}中被用来把 $-\nabla_{\bm{w}}\ln Z$ 移出关于 $\bm{x}$ 的期望。
+% SUPPLEMENT: parent=definition:ch14-配分函数; kind=motivation; location=紧随其后的 remark
+\begin{remark}配分函数之名来自统计物理：$Z$ 是 Boltzmann 因子 $e^{-E}$ 对所有状态的总和，$\ln Z$ 对应自由能。它在数学上只起归一化作用，却出现在对数似然的梯度中（见\eqref{align:ch14-grad-nll}），因此无法像对待普通常数那样忽略。计算 $Z$ 的困难有两个来源：其一是积分区域是高维的，网格法的代价随维数指数增长；其二是 $E$ 通常由神经网络给出，没有解析结构。这两种困难正是本章后文用 Markov 链 Monte Carlo 与 Langevin 动力学近似 $Z$ 的梯度（而非 $Z$ 本身）的动机。注意 $Z$ 只依赖 $\bm{w}$ 而不依赖 $\bm{x}$，这一事实在\eqref{align:ch14-grad-expected}中被用来把 $-\nabla_{\bm{w}}\ln Z$ 移出关于 $\bm{x}$ 的期望。
 \end{remark}
 
 能量函数通常使用深度神经网络进行建模，输入向量为 $\bm{x}$，标量输出为 $E(\bm{x},\bm{w})$，其中 $\bm{w}$ 代表网络中权重和偏置的集合。
@@ -83,15 +83,15 @@ Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}
 \end{align}
 
 \begin{proposition}[对数似然的梯度]\label{proposition:ch14-对数似然梯度}
-设 $p(\bm{x}\mid\bm{w})$ 由\eqref{align:ch14-ebm}给出，$E$ 关于 $\bm{w}$ 可微，且可在积分号下求导。则\eqref{align:ch14-grad-nll}成立。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$d\geqslant1$、$P\geqslant1$；设 $E:\mathbb{R}^{d}\times\mathbb{R}^{P}\to\mathbb{R}$ 关于 $\bm{w}$ 连续可微，$Z(\bm{w})=\int_{\mathbb{R}^{d}}\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}\in(0,\infty)$ 对每个 $\bm{w}$ 成立，$p(\bm{x}\mid\bm{w})$ 由\eqref{align:ch14-ebm}给出。若对 $\bm{w}$ 的每个分量 $w_{j}$ 有 $\int_{\mathbb{R}^{d}}\left|\partial_{w_{j}}\exp\{-E(\bm{x},\bm{w})\}\right|\,\mathrm{d}\bm{x}<\infty$（从而可在积分号下求导），且 $\mathbb{E}_{p(\bm{x}\mid\bm{w})}\left[\left|\partial E(\bm{x},\bm{w})/\partial w_{j}\right|\right]<\infty$，则 $p(\cdot\mid\bm{w})$ 关于 $\bm{w}$ 可微，且\eqref{align:ch14-grad-nll}成立。
 \end{proposition}
 
 \begin{proof}
 对\eqref{align:ch14-ebm}取对数得 $\ln p(\bm{x}\mid\bm{w})=-E(\bm{x},\bm{w})-\ln Z(\bm{w})$，对 $\bm{w}$ 求梯度即得\eqref{align:ch14-grad-nll}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch14-对数似然梯度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）这个恒等式本身只是「对数把乘积变和」的结果，它的意义在于把梯度分成两项：第一项 $-\nabla_{\bm{w}}E(\bm{x},\bm{w})$ 可以直接由自动微分算出；第二项 $-\nabla_{\bm{w}}\ln Z(\bm{w})$ 涉及配分函数，需要借助采样来估计（见\eqref{align:ch14-partition-grad}）。条件「可在积分号下求导」保证了 $\nabla_{\bm{w}}Z=\int\nabla_{\bm{w}}e^{-E}\,\mathrm{d}\bm{x}$，在 $E$ 关于 $\bm{w}$ 局部 Lipschitz、$e^{-E}$ 可积且有可积控制函数时成立，这是后续一切推导的前提。若该条件失效（例如 $E$ 的梯度无界），梯度与积分不可交换，公式需要重新论证。
+% SUPPLEMENT: parent=proposition:ch14-对数似然梯度; kind=motivation; location=紧随其后的 remark
+\begin{remark}这个恒等式本身只是「对数把乘积变和」的结果，它的意义在于把梯度分成两项：第一项 $-\nabla_{\bm{w}}E(\bm{x},\bm{w})$ 可以直接由自动微分算出；第二项 $-\nabla_{\bm{w}}\ln Z(\bm{w})$ 涉及配分函数，需要借助采样来估计（见\eqref{align:ch14-partition-grad}）。条件「可在积分号下求导」保证了 $\nabla_{\bm{w}}Z=\int\nabla_{\bm{w}}e^{-E}\,\mathrm{d}\bm{x}$，在 $E$ 关于 $\bm{w}$ 局部 Lipschitz、$e^{-E}$ 可积且有可积控制函数时成立，这是后续一切推导的前提。若该条件失效（例如 $E$ 的梯度无界），梯度与积分不可交换，公式需要重新论证。
 \end{remark}
 
 这是针对单个数据点 $\bm{x}$ 的似然函数，但实际上我们希望最大化训练数据集上的似然函数，该数据集是从某个未知分布 $p_{D}(\bm{x})$ 中抽样得到的。如果我们假设数据点是独立同分布的，那么我们可以考虑与 $p_{D}(\bm{x})$ 相关的似然对数期望的梯度，其由下式给出：
@@ -106,7 +106,7 @@ Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}
 \end{align}
 
 \begin{proposition}[配分函数对数的梯度]\label{proposition:ch14-配分函数梯度}
-在\cref{proposition:ch14-对数似然梯度}的条件下，\eqref{align:ch14-partition-grad}成立，即
+设与\cref{proposition:ch14-对数似然梯度}相同的假设成立：$E$ 关于 $\bm{w}$ 连续可微，$Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}\in(0,\infty)$，且对每个分量可在积分号下求导；设对每个 $j$ 有 $\mathbb{E}_{p(\bm{x}\mid\bm{w})}\left[\left|\partial E(\bm{x},\bm{w})/\partial w_{j}\right|\right]<\infty$。则 $\ln Z(\bm{w})$ 关于 $\bm{w}$ 可微，\eqref{align:ch14-partition-grad}成立，即
 \begin{align*}
 -\nabla_{\bm{w}}\ln Z(\bm{w})=\mathbb{E}_{p(\bm{x}\mid\bm{w})}\left[\nabla_{\bm{w}}E(\bm{x},\bm{w})\right].
 \end{align*}
@@ -124,8 +124,8 @@ Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}
 移项即得\eqref{align:ch14-partition-grad}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch14-配分函数梯度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）这个结果通常称为「对数配分函数的梯度等于能量的负梯度在模型分布下的期望」，它是全部对比散度方法的核心恒等式：右侧只涉及模型分布 $p(\bm{x}\mid\bm{w})$ 下的期望，而不涉及 $Z$ 本身，因此只要能从模型采样就能估计。证明中「积分号下求导」与「除以 $Z$」两步分别需要\cref{proposition:ch14-对数似然梯度}的条件与 $Z>0$；$Z=0$ 时对数无定义，$Z=\infty$ 时比值无意义，这正是\cref{definition:ch14-基于能量模型}要求 $0<Z<\infty$ 的原因。注意该式对任意 $\bm{w}$ 都成立，并不要求 $\bm{w}$ 已是最优参数。
+% SUPPLEMENT: parent=proposition:ch14-配分函数梯度; kind=motivation; location=紧随其后的 remark
+\begin{remark}这个结果通常称为「对数配分函数的梯度等于能量的负梯度在模型分布下的期望」，它是全部对比散度方法的核心恒等式：右侧只涉及模型分布 $p(\bm{x}\mid\bm{w})$ 下的期望，而不涉及 $Z$ 本身，因此只要能从模型采样就能估计。证明中「积分号下求导」与「除以 $Z$」两步分别需要\cref{proposition:ch14-对数似然梯度}的条件与 $Z>0$；$Z=0$ 时对数无定义，$Z=\infty$ 时比值无意义，这正是\cref{definition:ch14-基于能量模型}要求 $0<Z<\infty$ 的原因。注意该式对任意 $\bm{w}$ 都成立，并不要求 $\bm{w}$ 已是最优参数。
 \end{remark}
 
 \eqref{align:ch14-partition-grad}右侧的部分对应于模型分布 $p(\bm{x}\mid\bm{w})$ 的期望，它由下式给出（见\cref{exercise:ch14-18}）：
@@ -140,7 +140,7 @@ Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}
 \end{align}
 
 \begin{theorem}[对比散度梯度]\label{theorem:ch14-对比散度梯度}
-在\cref{proposition:ch14-配分函数梯度}的条件下，记 $p_{M}=p(\cdot\mid\bm{w})$，则对数似然期望的梯度由\eqref{align:ch14-对比散度梯度}给出。
+设与\cref{proposition:ch14-配分函数梯度}相同的假设成立：$E$ 关于 $\bm{w}$ 连续可微，$Z(\bm{w})\in(0,\infty)$，可在积分号下求导，且各分量的期望存在；设 $p_{D}$ 为数据分布，$\mathbb{E}_{p_{D}}\left[\left|\nabla_{\bm{w}}E(\bm{x},\bm{w})\right|\right]<\infty$；记 $p_{M}=p(\cdot\mid\bm{w})$。则对数似然的期望 $\mathbb{E}_{p_{D}}\left[\ln p(\bm{x}\mid\bm{w})\right]$ 关于 $\bm{w}$ 可微，其梯度由\eqref{align:ch14-对比散度梯度}给出，即等于数据分布下能量梯度的期望之负值与模型分布下能量梯度的期望之和。
 \end{theorem}
 
 \begin{proof}
@@ -152,8 +152,8 @@ Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}
 即\eqref{align:ch14-对比散度梯度}。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch14-对比散度梯度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）\eqref{align:ch14-对比散度梯度}把梯度写成两个期望之差：一项在数据分布下、一项在模型分布下，故称为「正相」与「负相」，其差也常称为对比散度。两相的作用相反：正相（第一项，带负号）降低数据点处的能量，从而提高数据点的概率；负相（第二项，带正号）提高模型样本处的能量，从而压低模型自身产生的样本的概率。当且仅当 $p_{M}=p_{D}$ 时两相相等、梯度为零，因此该式的驻点条件正是「模型分布与数据分布匹配」。这一形式要求能从 $p_{M}$ 采样——而 $p_{M}$ 恰恰含有未知的 $Z$，于是问题转化为「如何从 EBM 采样」，这正是\cref{subsection:ch14-langevin动力学}的主题。注意\eqref{align:ch14-对比散度梯度}是\emph{期望}的梯度，与单个数据点的梯度\eqref{align:ch14-grad-nll}不同，实际训练用 mini-batch 估计前者。
+% SUPPLEMENT: parent=theorem:ch14-对比散度梯度; kind=motivation; location=紧随其后的 remark
+\begin{remark}\eqref{align:ch14-对比散度梯度}把梯度写成两个期望之差：一项在数据分布下、一项在模型分布下，故称为「正相」与「负相」，其差也常称为对比散度。两相的作用相反：正相（第一项，带负号）降低数据点处的能量，从而提高数据点的概率；负相（第二项，带正号）提高模型样本处的能量，从而压低模型自身产生的样本的概率。当且仅当 $p_{M}=p_{D}$ 时两相相等、梯度为零，因此该式的驻点条件正是「模型分布与数据分布匹配」。这一形式要求能从 $p_{M}$ 采样——而 $p_{M}$ 恰恰含有未知的 $Z$，于是问题转化为「如何从 EBM 采样」，这正是\cref{subsection:ch14-langevin动力学}的主题。注意\eqref{align:ch14-对比散度梯度}是\emph{期望}的梯度，与单个数据点的梯度\eqref{align:ch14-grad-nll}不同，实际训练用 mini-batch 估计前者。
 \end{remark}
 
 \begin{figure}[htbp]
@@ -180,15 +180,15 @@ Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}
 \end{align}
 
 \begin{definition}[得分函数]\label{definition:ch14-得分函数}
-设 $p(\bm{x}\mid\bm{w})$ 关于 $\bm{x}$ 可微且为正，称
+设 $d\geqslant1$、$P\geqslant1$，参数 $\bm{w}\in\mathbb{R}^{P}$；设 $p(\bm{x}\mid\bm{w})$ 为 $\mathbb{R}^{d}$ 上关于 $\bm{x}$ 可微且处处为正的概率密度，从而 $\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{w})$ 对每个 $\bm{x}\in\mathbb{R}^{d}$ 存在。若
 \begin{align*}
-\bm{s}(\bm{x},\bm{w})=\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{w})
+\bm{s}(\bm{x},\bm{w})=\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{w}),
 \end{align*}
-为分布 $p(\cdot\mid\bm{w})$ 的得分函数（score function）。
+则把 $\bm{s}(\bm{x},\bm{w})\in\mathbb{R}^{d}$ 称为分布 $p(\cdot\mid\bm{w})$ 在 $\bm{x}$ 处的得分函数（score function），把映射 $\bm{x}\mapsto\bm{s}(\bm{x},\bm{w})$ 称为得分场。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch14-得分函数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）得分函数是「对数密度关于\emph{数据}的梯度」，与通常的「关于参数 $\bm{w}$ 的梯度」完全不同：前者指向「往哪个方向移动 $\bm{x}$ 能使密度增大」，后者指向「怎样调整参数能使似然增大」。这一区分是理解本节的钥匙：训练需要后者，而从模型采样需要前者。得分函数不依赖归一化常数，因为 $\nabla_{\bm{x}}\ln Z(\bm{w})=0$（$Z$ 与 $\bm{x}$ 无关），这使得它成为绕开配分函数的天然工具——它正是扩散模型中分数匹配方法的出发点。定义要求 $p>0$ 且可微，否则对数梯度无定义；在支撑集边界附近得分函数可能发散，这是数值实现时需要裁剪的原因之一。
+% SUPPLEMENT: parent=definition:ch14-得分函数; kind=motivation; location=紧随其后的 remark
+\begin{remark}得分函数是「对数密度关于\emph{数据}的梯度」，与通常的「关于参数 $\bm{w}$ 的梯度」完全不同：前者指向「往哪个方向移动 $\bm{x}$ 能使密度增大」，后者指向「怎样调整参数能使似然增大」。这一区分是理解本节的钥匙：训练需要后者，而从模型采样需要前者。得分函数不依赖归一化常数，因为 $\nabla_{\bm{x}}\ln Z(\bm{w})=0$（$Z$ 与 $\bm{x}$ 无关），这使得它成为绕开配分函数的天然工具——它正是扩散模型中分数匹配方法的出发点。定义要求 $p>0$ 且可微，否则对数梯度无定义；在支撑集边界附近得分函数可能发散，这是数值实现时需要裁剪的原因之一。
 \end{remark}
 
 值得强调的是，这是针对数据点 $\bm{x}$ 的梯度，而非通常意义上针对可学习参数 $\bm{w}$ 的梯度。将\eqref{align:ch14-ebm}代入\eqref{align:ch14-得分函数}，我们可以得到
@@ -199,15 +199,15 @@ Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}
 可以看到，配分函数不再出现，因为它与 $\bm{x}$ 无关。
 
 \begin{proposition}[得分函数与能量函数]\label{proposition:ch14-得分与能量}
-设 $p(\bm{x}\mid\bm{w})$ 由\eqref{align:ch14-ebm}给出，$E$ 关于 $\bm{x}$ 可微。则\eqref{align:ch14-得分能量}成立。
+设 $d\geqslant1$、$P\geqslant1$，能量函数 $E:\mathbb{R}^{d}\times\mathbb{R}^{P}\to\mathbb{R}$ 关于 $\bm{x}$ 连续可微，$Z(\bm{w})=\int_{\mathbb{R}^{d}}e^{-E(\bm{x},\bm{w})}\,\mathrm{d}\bm{x}\in(0,\infty)$ 与 $\bm{x}$ 无关，$p(\bm{x}\mid\bm{w})$ 由\eqref{align:ch14-ebm}给出且处处为正。则 $p(\cdot\mid\bm{w})$ 关于 $\bm{x}$ 可微，其得分函数与能量函数满足\eqref{align:ch14-得分能量}，即 $\bm{s}(\bm{x},\bm{w})=-\nabla_{\bm{x}}E(\bm{x},\bm{w})$ 对一切 $\bm{x}\in\mathbb{R}^{d}$ 成立。
 \end{proposition}
 
 \begin{proof}
 对 $\ln p(\bm{x}\mid\bm{w})=-E(\bm{x},\bm{w})-\ln Z(\bm{w})$ 关于 $\bm{x}$ 求梯度。由于 $Z(\bm{w})$ 与 $\bm{x}$ 无关，$\nabla_{\bm{x}}\ln Z(\bm{w})=\bm{0}$，故 $\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{w})=-\nabla_{\bm{x}}E(\bm{x},\bm{w})$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch14-得分与能量; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）这一恒等式说明 EBM 的得分函数就是能量的负梯度，因而「沿得分方向爬升」等价于「沿能量下降方向移动」，这正是下面 Langevin 动力学更新的直观来源。它同时解释了为什么归一化常数在基于得分的模型中彻底消失：$Z$ 只依赖 $\bm{w}$，对 $\bm{x}$ 求导即为零。反过来，这也意味着得分函数只确定 $p$ 的\emph{形状}而不确定其归一化，若要从得分恢复密度必须另做归一化（例如用 Langevin 采样得到样本后估计 $Z$）。条件「$E$ 关于 $\bm{x}$ 可微」是必要的，若 $E$ 含不可微项（如 $\ell_1$ 正则），得分函数在不可微点无定义，需要次梯度或平滑近似。
+% SUPPLEMENT: parent=proposition:ch14-得分与能量; kind=motivation; location=紧随其后的 remark
+\begin{remark}这一恒等式说明 EBM 的得分函数就是能量的负梯度，因而「沿得分方向爬升」等价于「沿能量下降方向移动」，这正是下面 Langevin 动力学更新的直观来源。它同时解释了为什么归一化常数在基于得分的模型中彻底消失：$Z$ 只依赖 $\bm{w}$，对 $\bm{x}$ 求导即为零。反过来，这也意味着得分函数只确定 $p$ 的\emph{形状}而不确定其归一化，若要从得分恢复密度必须另做归一化（例如用 Langevin 采样得到样本后估计 $Z$）。条件「$E$ 关于 $\bm{x}$ 可微」是必要的，若 $E$ 含不可微项（如 $\ell_1$ 正则），得分函数在不可微点无定义，需要次梯度或平滑近似。
 \end{remark}
 
 让我们从一个先验分布中开始抽取一个初始值 $\bm{x}^{(0)}$，然后执行以下 Markov 链步骤：
@@ -233,8 +233,8 @@ Z(\bm{w})=\int\exp\{-E(\bm{x},\bm{w})\}\,\mathrm{d}\bm{x}
 取 $\rho=p$，则 $-\bm{b}+\nabla_{\bm{x}}\ln p=-\nabla_{\bm{x}}\ln p+\nabla_{\bm{x}}\ln p=\bm{0}$，故 $\partial\rho/\partial t=0$，即 $p$ 是平稳解。另一方面，\eqref{align:ch14-langevin更新}正是该随机微分方程以步长 $\eta$ 做 Euler-Maruyama 离散、并把 $\sqrt{2\eta}\,\bm{\varepsilon}$ 解释为 $\sqrt{2}\left(\bm{W}_{(\tau+1)\eta}-\bm{W}_{\tau\eta}\right)$ 的结果。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch14-langevin平稳; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）证明只用到「Fokker-Planck 算子可以写成散度形式」这一事实：概率流 $\bm{J}=\rho\left(\bm{b}-\nabla\ln\rho\right)$ 在 $\rho=p$ 时恒为零，因此 $p$ 既是平稳分布、又满足细致平衡（扩散过程可逆）。两个条件不能省：$p>0$ 保证 $\ln p$ 处处有定义，$\nabla\ln p$ 的 Lipschitz 性保证随机微分方程有唯一强解且不会在有限时间爆炸；若 $p$ 有界支撑，边界处需要反射或吸收边界条件，平稳分布的形式会改变。命题只对连续时间的扩散过程给出严格结论；\eqref{align:ch14-langevin更新}作为离散化，只在 $\eta\to0$ 且 $\mathcal{T}\to\infty$ 的极限下收敛到 $p$，有限步长会带来 $O(\eta)$ 的偏差（这正是「必须仔细设计算法以确保无偏」的含义，也是实践中常对 Langevin 更新加 Metropolis 修正的原因）。此外，\eqref{align:ch14-langevin更新}中写的是 $p\!\left(\bm{x}^{(\tau)},\bm{w}\right)$，按\eqref{align:ch14-ebm}应理解为条件密度 $p\!\left(\bm{x}^{(\tau)}\mid\bm{w}\right)$；两者只差一个与 $\bm{x}$ 无关的因子，对 $\nabla_{\bm{x}}$ 无影响。
+% SUPPLEMENT: parent=proposition:ch14-langevin平稳; kind=motivation; location=紧随其后的 remark
+\begin{remark}证明只用到「Fokker-Planck 算子可以写成散度形式」这一事实：概率流 $\bm{J}=\rho\left(\bm{b}-\nabla\ln\rho\right)$ 在 $\rho=p$ 时恒为零，因此 $p$ 既是平稳分布、又满足细致平衡（扩散过程可逆）。两个条件不能省：$p>0$ 保证 $\ln p$ 处处有定义，$\nabla\ln p$ 的 Lipschitz 性保证随机微分方程有唯一强解且不会在有限时间爆炸；若 $p$ 有界支撑，边界处需要反射或吸收边界条件，平稳分布的形式会改变。命题只对连续时间的扩散过程给出严格结论；\eqref{align:ch14-langevin更新}作为离散化，只在 $\eta\to0$ 且 $\mathcal{T}\to\infty$ 的极限下收敛到 $p$，有限步长会带来 $O(\eta)$ 的偏差（这正是「必须仔细设计算法以确保无偏」的含义，也是实践中常对 Langevin 更新加 Metropolis 修正的原因）。此外，\eqref{align:ch14-langevin更新}中写的是 $p\!\left(\bm{x}^{(\tau)},\bm{w}\right)$，按\eqref{align:ch14-ebm}应理解为条件密度 $p\!\left(\bm{x}^{(\tau)}\mid\bm{w}\right)$；两者只差一个与 $\bm{x}$ 无关的因子，对 $\nabla_{\bm{x}}$ 无影响。
 \end{remark}
 
 \begin{quote}

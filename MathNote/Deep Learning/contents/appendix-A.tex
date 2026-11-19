@@ -16,177 +16,215 @@
 矩阵 $\bm{A}$ 由元素 $A_{ij}$ 组成，其中 $i$ 索引行，$j$ 索引列。
 
 \begin{definition}[恒等矩阵]\label{definition:appA-恒等矩阵}
-我们用 $\bm{I}_{N}$ 来表示 $N\times N$ 的恒等矩阵（也称单位矩阵）。当维度上没有歧义的时候，我们可以直接用 $\bm{I}$ 代表单位矩阵。
+设 $N\geqslant1$。$N$ 阶单位矩阵（恒等矩阵）定义为 $N\times N$ 矩阵 $\bm{I}_{N}$，其元素为 $(\bm{I}_{N})_{ij}=\delta_{ij}$，其中 $i,j=1,\cdots,N$，且当 $i=j$ 时 $\delta_{ij}=1$、当 $i\neq j$ 时 $\delta_{ij}=0$。对任意 $N\times N$ 矩阵 $\bm{A}$ 成立 $\bm{A}\bm{I}_{N}=\bm{I}_{N}\bm{A}=\bm{A}$，即单位矩阵是矩阵乘法的单位元。当阶数 $N$ 由上下文确定时，将 $\bm{I}_{N}$ 简记为 $\bm{I}$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-恒等矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-恒等矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 $\bm{I}_{N}$ 是矩阵乘法的单位元：对任意 $N\times N$ 矩阵 $\bm{A}$ 都有 $\bm{A}\bm{I}_{N}=\bm{I}_{N}\bm{A}=\bm{A}$，这正是“恒等”一词的含义。定义中保留下标 $N$ 并非多余：在下文的\eqref{align:appA-sylvester行列式}中会同时出现 $\bm{I}_{N}$ 与 $\bm{I}_{M}$，两者阶数不同，只有写清下标才能判断运算是否合法；而在\eqref{align:appA-逆定义}这类只涉及单个方阵的场合，$\bm{A}$ 的阶数已由上下文确定，于是简写为 $\bm{I}$。
 \end{remark}
 
 \begin{definition}[转置]\label{definition:appA-转置}
-转置矩阵 $\bm{A}^{\mathsf{T}}$ 包含元素 $(\bm{A}^{\mathsf{T}})_{ij}=A_{ji}$。
+设 $M,N\geqslant1$，$\bm{A}\in\mathbb{R}^{M\times N}$ 的元素为 $A_{ij}$，$i=1,\cdots,M$，$j=1,\cdots,N$。$\bm{A}$ 的转置 $\bm{A}^{\mathsf{T}}$ 定义为 $N\times M$ 矩阵，其元素满足 $(\bm{A}^{\mathsf{T}})_{ij}=A_{ji}$，$i=1,\cdots,N$，$j=1,\cdots,M$。转置对任意实矩阵都有定义，不要求 $\bm{A}$ 为方阵或可逆；对任意 $i,j$ 有 $(\bm{A}^{\mathsf{T}})_{ji}=A_{ij}$，故 $(\bm{A}^{\mathsf{T}})^{\mathsf{T}}=\bm{A}$。转置不改变矩阵的元素集合，只交换行与列的次序。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-转置; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-转置; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 转置把 $\bm{A}$ 的第 $i$ 行第 $j$ 列元素搬到第 $j$ 行第 $i$ 列，即把“行”与“列”的角色互换。这个定义只要求 $\bm{A}$ 是任意（不必方、不必可逆的）矩阵，所以转置总是存在且唯一；它也为\cref{definition:appA-对称矩阵}提供了表述工具——对称矩阵就是满足 $\bm{A}^{\mathsf{T}}=\bm{A}$ 的方阵。
 \end{remark}
 
-从转置的定义来看，我们有
+由转置的定义得
 \begin{proposition}[乘积的转置]\label{proposition:appA-乘积的转置}
+设 $K,L,M\geqslant1$，$\bm{A}\in\mathbb{R}^{K\times L}$，$\bm{B}\in\mathbb{R}^{L\times M}$。则乘积 $\bm{A}\bm{B}\in\mathbb{R}^{K\times M}$，且其转置满足
 \begin{align}
-  (\bm{A}\bm{B})^{\mathsf{T}}=\bm{B}^{\mathsf{T}}\bm{A}^{\mathsf{T}}
+  (\bm{A}\bm{B})^{\mathsf{T}}=\bm{B}^{\mathsf{T}}\bm{A}^{\mathsf{T}},
   \label{align:appA-转置乘积}
 \end{align}
+即乘积的转置等于各因子转置按相反顺序的乘积。这里 $\bm{A}$ 的列数等于 $\bm{B}$ 的行数，故乘积有意义。等式两端的矩阵阶数均为 $M\times K$，两个矩阵逐元素相等。
 \end{proposition}
 
 \begin{proof}
-（重构新增）原书只给出“通过写出索引来验证”的提示，下面补全。设 $\bm{A}$ 是 $K\times L$ 矩阵、$\bm{B}$ 是 $L\times M$ 矩阵，则 $\bm{A}\bm{B}$ 是 $K\times M$ 矩阵，且
+设 $\bm{A}$ 的元素为 $A_{il}$，$\bm{B}$ 的元素为 $B_{lj}$。由矩阵乘法定义，
 \begin{align*}
-  (\bm{A}\bm{B})_{ij}=\sum_{l=1}^{L}A_{il}B_{lj}.
+ (\bm{A}\bm{B})_{ij}=\sum_{l=1}^{L}A_{il}B_{lj},\qquad i=1,\cdots,K,\ j=1,\cdots,M.
 \end{align*}
-于是 $\bigl((\bm{A}\bm{B})^{\mathsf{T}}\bigr)_{ij}=(\bm{A}\bm{B})_{ji}=\sum_{l}A_{jl}B_{li}$。另一方面，
+于是
 \begin{align*}
-  (\bm{B}^{\mathsf{T}}\bm{A}^{\mathsf{T}})_{ij}=\sum_{l=1}^{L}(\bm{B}^{\mathsf{T}})_{il}(\bm{A}^{\mathsf{T}})_{lj}=\sum_{l=1}^{L}B_{li}A_{jl}=\sum_{l=1}^{L}A_{jl}B_{li},
+ \bigl((\bm{A}\bm{B})^{\mathsf{T}}\bigr)_{ij}=(\bm{A}\bm{B})_{ji}=\sum_{l=1}^{L}A_{jl}B_{li}.
 \end{align*}
-两者对一切 $i,j$ 相等，故\eqref{align:appA-转置乘积}成立。
+另一方面，由转置定义与矩阵乘法定义，
+\begin{align*}
+ (\bm{B}^{\mathsf{T}}\bm{A}^{\mathsf{T}})_{ij}=\sum_{l=1}^{L}(\bm{B}^{\mathsf{T}})_{il}(\bm{A}^{\mathsf{T}})_{lj}=\sum_{l=1}^{L}B_{li}A_{jl}=\sum_{l=1}^{L}A_{jl}B_{li}.
+\end{align*}
+两式对一切 $i=1,\cdots,K$、$j=1,\cdots,M$ 相等，故\eqref{align:appA-转置乘积}成立。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-乘积的转置; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-乘积的转置; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-转置乘积}表明转置把乘积的因子顺序颠倒。条件只有一条：$\bm{A}\bm{B}$ 必须可乘，即 $\bm{A}$ 的列数等于 $\bm{B}$ 的行数；若把因子顺序写反为 $\bm{A}^{\mathsf{T}}\bm{B}^{\mathsf{T}}$，则连乘法本身都可能没有定义。这条恒等式在\cref{proposition:appA-转置的逆}与\cref{proposition:appA-正交矩阵的性质}的证明中反复使用。
 \end{remark}
 
-$\bm{A}$ 的逆矩阵记为 $\bm{A}^{-1}$，满足
+逆矩阵的定义如下：
 \begin{definition}[逆矩阵]\label{definition:appA-逆矩阵}
+设 $N\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$。若存在 $\bm{B}\in\mathbb{R}^{N\times N}$ 使得
 \begin{align}
-  \bm{A}\bm{A}^{-1}=\bm{A}^{-1}\bm{A}=\bm{I}
+  \bm{A}\bm{B}=\bm{B}\bm{A}=\bm{I}_{N},
   \label{align:appA-逆定义}
 \end{align}
+则称 $\bm{B}$ 为 $\bm{A}$ 的逆矩阵，记作 $\bm{A}^{-1}$；此时 $\bm{A}$ 称为可逆矩阵。定义要求左逆与右逆同时存在且相等；只有方阵才可能与自身同阶相乘得到同阶单位矩阵。逆矩阵若存在则唯一：若 $\bm{B},\bm{C}\in\mathbb{R}^{N\times N}$ 都满足上式，则 $\bm{B}=\bm{B}\bm{I}_{N}=\bm{B}(\bm{A}\bm{C})=(\bm{B}\bm{A})\bm{C}=\bm{I}_{N}\bm{C}=\bm{C}$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-逆矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-定义要求 $\bm{A}\bm{A}^{-1}$ 与 $\bm{A}^{-1}\bm{A}$ 同时等于 $\bm{I}$，这隐含 $\bm{A}$ 是方阵：只有方阵与自身同阶相乘才得到同阶单位矩阵。因此“矩阵的逆存在”是本附录开篇所约定的前提之一；由\cref{proposition:appA-逆的行列式}可知，方阵可逆当且仅当 $|\bm{A}|\neq0$。若 $\bm{A}^{-1}$ 存在则必唯一：若有 $\bm{A}\bm{X}=\bm{I}$ 与 $\bm{Y}\bm{A}=\bm{I}$，则 $\bm{X}=\bm{Y}\bm{A}\bm{X}=\bm{Y}$，这一唯一性在下面几条恒等式的证明中要用到。
+% SUPPLEMENT: parent=definition:appA-逆矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+定义要求 $\bm{A}\bm{A}^{-1}$ 与 $\bm{A}^{-1}\bm{A}$ 同时等于 $\bm{I}$，这隐含 $\bm{A}$ 是方阵：只有方阵与自身同阶相乘才得到同阶单位矩阵。因此“矩阵的逆存在”是本附录开篇所约定的前提之一；由\cref{proposition:appA-逆的行列式}可知可逆方阵的行列式非零；反过来，行列式非零的方阵可逆是线性代数基本结论。若 $\bm{A}^{-1}$ 存在则必唯一：若有 $\bm{A}\bm{X}=\bm{I}$ 与 $\bm{Y}\bm{A}=\bm{I}$，则 $\bm{X}=\bm{Y}\bm{A}\bm{X}=\bm{Y}$，这一唯一性在下面几条恒等式的证明中要用到。
 \end{remark}
 
-因为 $\bm{A}\bm{B}\bm{B}^{-1}\bm{A}^{-1}=\bm{I}$，所以有
+乘积的逆由下述命题给出：
 \begin{proposition}[乘积的逆]\label{proposition:appA-乘积的逆}
+设 $N\geqslant1$，$\bm{A},\bm{B}\in\mathbb{R}^{N\times N}$ 为同阶可逆方阵。则 $\bm{A}\bm{B}$ 可逆，且
 \begin{align}
-  (\bm{A}\bm{B})^{-1}=\bm{B}^{-1}\bm{A}^{-1}
+  (\bm{A}\bm{B})^{-1}=\bm{B}^{-1}\bm{A}^{-1},
   \label{align:appA-逆乘积}
 \end{align}
+即乘积的逆等于各因子逆按相反顺序的乘积；该结论要求两个因子都可逆。等式两端均为 $N$ 阶方阵，且该结论对任意两个同阶可逆方阵成立。
 \end{proposition}
 
 \begin{proof}
-（重构新增）原书只写出 $\bm{A}\bm{B}\bm{B}^{-1}\bm{A}^{-1}=\bm{I}$ 这一步，下面补全双向验证。由结合律，
+由矩阵乘法的结合律，
 \begin{align*}
-  \bm{A}\bm{B}\bm{B}^{-1}\bm{A}^{-1}=\bm{A}(\bm{B}\bm{B}^{-1})\bm{A}^{-1}=\bm{A}\bm{I}\bm{A}^{-1}=\bm{A}\bm{A}^{-1}=\bm{I},
+ (\bm{A}\bm{B})(\bm{B}^{-1}\bm{A}^{-1})=\bm{A}(\bm{B}\bm{B}^{-1})\bm{A}^{-1}=\bm{A}\bm{I}_{N}\bm{A}^{-1}=\bm{A}\bm{A}^{-1}=\bm{I}_{N},
 \end{align*}
-同理 $\bm{B}^{-1}\bm{A}^{-1}\bm{A}\bm{B}=\bm{B}^{-1}(\bm{A}^{-1}\bm{A})\bm{B}=\bm{B}^{-1}\bm{B}=\bm{I}$。按\cref{definition:appA-逆矩阵}，$\bm{B}^{-1}\bm{A}^{-1}$ 同时是 $\bm{A}\bm{B}$ 的左逆与右逆，再由逆的唯一性即得\eqref{align:appA-逆乘积}。
+且
+\begin{align*}
+ (\bm{B}^{-1}\bm{A}^{-1})(\bm{A}\bm{B})=\bm{B}^{-1}(\bm{A}^{-1}\bm{A})\bm{B}=\bm{B}^{-1}\bm{I}_{N}\bm{B}=\bm{B}^{-1}\bm{B}=\bm{I}_{N}.
+\end{align*}
+按\cref{definition:appA-逆矩阵}，$\bm{B}^{-1}\bm{A}^{-1}$ 同时是 $\bm{A}\bm{B}$ 的左逆与右逆；由逆的唯一性得\eqref{align:appA-逆乘积}。
 \end{proof}
 
 并且有
 \begin{proposition}[转置的逆]\label{proposition:appA-转置的逆}
+设 $N\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$ 可逆。则 $\bm{A}^{\mathsf{T}}$ 可逆，且其逆由 $\bm{A}^{-1}$ 的转置给出：
 \begin{align}
-  (\bm{A}^{\mathsf{T}})^{-1}=(\bm{A}^{-1})^{\mathsf{T}}
+  (\bm{A}^{\mathsf{T}})^{-1}=(\bm{A}^{-1})^{\mathsf{T}}.
   \label{align:appA-逆转置}
 \end{align}
+该结论只要求 $\bm{A}$ 可逆，不要求 $\bm{A}$ 对称。等式两端均为 $N$ 阶方阵；求逆与转置的次序交换，但两个运算各自都要求矩阵为可逆方阵。
 \end{proposition}
 
 \begin{proof}
-这通过取\eqref{align:appA-逆定义}的转置并应用\eqref{align:appA-转置乘积}可以很容易得证。补全细节：对 $\bm{A}\bm{A}^{-1}=\bm{I}$ 两边取转置，由\eqref{align:appA-转置乘积}得 $(\bm{A}^{-1})^{\mathsf{T}}\bm{A}^{\mathsf{T}}=\bm{I}^{\mathsf{T}}=\bm{I}$；对 $\bm{A}^{-1}\bm{A}=\bm{I}$ 两边取转置得 $\bm{A}^{\mathsf{T}}(\bm{A}^{-1})^{\mathsf{T}}=\bm{I}$。于是 $(\bm{A}^{-1})^{\mathsf{T}}$ 是 $\bm{A}^{\mathsf{T}}$ 的逆，即\eqref{align:appA-逆转置}成立。
+对 $\bm{A}\bm{A}^{-1}=\bm{I}_{N}$ 两边取转置，由\eqref{align:appA-转置乘积}得
+\begin{align*}
+ (\bm{A}^{-1})^{\mathsf{T}}\bm{A}^{\mathsf{T}}=(\bm{A}\bm{A}^{-1})^{\mathsf{T}}=\bm{I}_{N}^{\mathsf{T}}=\bm{I}_{N}.
+\end{align*}
+对 $\bm{A}^{-1}\bm{A}=\bm{I}_{N}$ 两边取转置得
+\begin{align*}
+ \bm{A}^{\mathsf{T}}(\bm{A}^{-1})^{\mathsf{T}}=(\bm{A}^{-1}\bm{A})^{\mathsf{T}}=\bm{I}_{N}^{\mathsf{T}}=\bm{I}_{N}.
+\end{align*}
+因此 $(\bm{A}^{-1})^{\mathsf{T}}$ 是 $\bm{A}^{\mathsf{T}}$ 的逆，即\eqref{align:appA-逆转置}成立。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-乘积的逆; kind=motivation; location=紧随其后的 remark（重构新增）
-% SUPPLEMENT: parent=proposition:appA-转置的逆; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-乘积的逆; kind=motivation; location=紧随其后的 remark
+% SUPPLEMENT: parent=proposition:appA-转置的逆; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:appA-乘积的逆,proposition:appA-转置的逆}共同说明：求逆与转置、求逆与乘法可以按相反的顺序交换。两条恒等式都只假定所涉及的逆存在；特别地，\eqref{align:appA-逆乘积}要求 $\bm{A}$、$\bm{B}$ 都可逆，这比“$\bm{A}\bm{B}$ 可乘”更强。反过来，两个不可逆方阵的乘积是否可能可逆？不可能：由\eqref{align:appA-行列式乘积}，$|\bm{A}\bm{B}|=|\bm{A}|\,|\bm{B}|$，只要有一个因子行列式为零，乘积就不可逆。
 \end{remark}
 
 一个涉及矩阵的逆的有用恒等式如下：
 \begin{proposition}[矩阵求逆的一个恒等式]\label{proposition:appA-求逆恒等式}
+设 $N,M\geqslant1$，$\bm{P}\in\mathbb{R}^{N\times N}$，$\bm{R}\in\mathbb{R}^{M\times M}$，$\bm{B}\in\mathbb{R}^{M\times N}$。若 $\bm{P}$、$\bm{R}$、$\bm{P}^{-1}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B}$ 与 $\bm{B}\bm{P}\bm{B}^{\mathsf{T}}+\bm{R}$ 均可逆，则
 \begin{align}
-  (\bm{P}^{-1}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B})^{-1}\bm{B}^{\mathsf{T}}\bm{R}^{-1}=\bm{P}\bm{B}^{\mathsf{T}}(\bm{B}\bm{P}\bm{B}^{\mathsf{T}}+\bm{R})^{-1}
+  (\bm{P}^{-1}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B})^{-1}\bm{B}^{\mathsf{T}}\bm{R}^{-1}=\bm{P}\bm{B}^{\mathsf{T}}(\bm{B}\bm{P}\bm{B}^{\mathsf{T}}+\bm{R})^{-1}.
   \label{align:appA-求逆恒等式}
 \end{align}
+其中各逆矩阵的存在性已列入假设，等式两端的矩阵阶数分别为 $N\times M$。所有求逆运算的对象均为方阵，其可逆性已逐项列入假设。等式对任意满足上述可逆性条件的实矩阵成立。
 \end{proposition}
 
 \begin{proof}
-这很容易通过对\eqref{align:appA-求逆恒等式}的两边右乘 $(\bm{B}\bm{P}\bm{B}^{\mathsf{T}}+\bm{R})$ 得证。补全如下：右边右乘后显然等于 $\bm{P}\bm{B}^{\mathsf{T}}$；左边右乘后为
+记 $\bm{Q}=\bm{B}\bm{P}\bm{B}^{\mathsf{T}}+\bm{R}$。将\eqref{align:appA-求逆恒等式}的右端右乘 $\bm{Q}$，得 $\bm{P}\bm{B}^{\mathsf{T}}$。对左端右乘 $\bm{Q}$，利用分配律，
 \begin{align*}
-  (\bm{P}^{-1}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B})^{-1}\bm{B}^{\mathsf{T}}\bm{R}^{-1}(\bm{B}\bm{P}\bm{B}^{\mathsf{T}}+\bm{R}).
+ (\bm{P}^{-1}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B})^{-1}\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{Q}.
 \end{align*}
-注意 $\bm{B}^{\mathsf{T}}\bm{R}^{-1}(\bm{B}\bm{P}\bm{B}^{\mathsf{T}}+\bm{R})=\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B}\bm{P}\bm{B}^{\mathsf{T}}+\bm{B}^{\mathsf{T}}$，而
+由 $\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{Q}=\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B}\bm{P}\bm{B}^{\mathsf{T}}+\bm{B}^{\mathsf{T}}$ 以及
 \begin{align*}
-  (\bm{P}^{-1}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B})\bm{P}\bm{B}^{\mathsf{T}}=\bm{B}^{\mathsf{T}}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B}\bm{P}\bm{B}^{\mathsf{T}},
+ (\bm{P}^{-1}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B})\bm{P}\bm{B}^{\mathsf{T}}=\bm{B}^{\mathsf{T}}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B}\bm{P}\bm{B}^{\mathsf{T}},
 \end{align*}
-故括号内的矩阵等于 $(\bm{P}^{-1}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B})\bm{P}\bm{B}^{\mathsf{T}}$，与前面的逆因子相消后，左边右乘的结果也是 $\bm{P}\bm{B}^{\mathsf{T}}$。两边右乘同一个可逆矩阵 $(\bm{B}\bm{P}\bm{B}^{\mathsf{T}}+\bm{R})$ 后相等，故\eqref{align:appA-求逆恒等式}成立。
+括号内的矩阵等于 $(\bm{P}^{-1}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B})\bm{P}\bm{B}^{\mathsf{T}}$，与前面的逆因子相消，故左端右乘 $\bm{Q}$ 也等于 $\bm{P}\bm{B}^{\mathsf{T}}$。由于 $\bm{Q}$ 可逆，两端右乘 $\bm{Q}^{-1}$ 即得\eqref{align:appA-求逆恒等式}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-求逆恒等式; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-求逆恒等式; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-求逆恒等式}的价值在于“换一个阶数更小的矩阵求逆”。假设 $\bm{P}$ 的维度为 $N\times N$、$\bm{R}$ 的维度为 $M\times M$，则 $\bm{B}$ 的维度就是 $M\times N$：此时左边要对 $N\times N$ 矩阵 $\bm{P}^{-1}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B}$ 求逆，右边只对 $M\times M$ 矩阵 $\bm{B}\bm{P}\bm{B}^{\mathsf{T}}+\bm{R}$ 求逆。如果 $M\ll N$，那么计算\eqref{align:appA-求逆恒等式}右边的值要比计算其左边的值开销小得多。恒等式成立的条件是 $\bm{P}$、$\bm{R}$ 以及 $\bm{P}^{-1}+\bm{B}^{\mathsf{T}}\bm{R}^{-1}\bm{B}$ 均可逆；在应用中 $\bm{P}$、$\bm{R}$ 通常是协方差矩阵，可逆性由它们正定来保证（参见\cref{definition:appA-正定矩阵}）。
 \end{remark}
 
 有时也会出现如下特殊情况：
 \begin{proposition}[推入恒等式]\label{proposition:appA-推入恒等式}
+设 $N,M\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times M}$，$\bm{B}\in\mathbb{R}^{M\times N}$。若 $\bm{I}_{N}+\bm{A}\bm{B}$ 与 $\bm{I}_{M}+\bm{B}\bm{A}$ 均可逆，则
 \begin{align}
-  (\bm{I}+\bm{A}\bm{B})^{-1}\bm{A}=\bm{A}(\bm{I}+\bm{B}\bm{A})^{-1}
+  (\bm{I}_{N}+\bm{A}\bm{B})^{-1}\bm{A}=\bm{A}(\bm{I}_{M}+\bm{B}\bm{A})^{-1}.
   \label{align:appA-推入恒等式}
 \end{align}
+该恒等式不要求 $\bm{A}$ 或 $\bm{B}$ 为方阵，只要求两个括号内的矩阵可逆。等式两端都是 $N\times M$ 矩阵；$\bm{A}$ 与 $\bm{B}$ 的阶数允许不同，但两个括号内的矩阵必须分别为 $N$ 阶与 $M$ 阶可逆方阵。
 \end{proposition}
 
 \begin{proof}
-（重构新增）原书未给证明。注意 $(\bm{I}+\bm{A}\bm{B})\bm{A}=\bm{A}+\bm{A}\bm{B}\bm{A}=\bm{A}(\bm{I}+\bm{B}\bm{A})$。在 $\bm{I}+\bm{A}\bm{B}$ 与 $\bm{I}+\bm{B}\bm{A}$ 均可逆时，两边左乘 $(\bm{I}+\bm{A}\bm{B})^{-1}$、右乘 $(\bm{I}+\bm{B}\bm{A})^{-1}$，即得\eqref{align:appA-推入恒等式}。
+由分配律，
+\begin{align*}
+ (\bm{I}_{N}+\bm{A}\bm{B})\bm{A}=\bm{A}+\bm{A}\bm{B}\bm{A}=\bm{A}(\bm{I}_{M}+\bm{B}\bm{A}).
+\end{align*}
+由于 $\bm{I}_{N}+\bm{A}\bm{B}$ 与 $\bm{I}_{M}+\bm{B}\bm{A}$ 均可逆，对上式左乘 $(\bm{I}_{N}+\bm{A}\bm{B})^{-1}$、右乘 $(\bm{I}_{M}+\bm{B}\bm{A})^{-1}$，即得\eqref{align:appA-推入恒等式}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-推入恒等式; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-推入恒等式; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-推入恒等式}常被称为“推入（push-through）”恒等式：它把夹在中间的 $\bm{A}$ 从左侧“推”到右侧，代价是把 $\bm{A}\bm{B}$ 换成 $\bm{B}\bm{A}$。当 $\bm{A}$ 是 $N\times M$、$\bm{B}$ 是 $M\times N$ 时，$\bm{A}\bm{B}$ 是 $N\times N$ 而 $\bm{B}\bm{A}$ 是 $M\times M$，因此可以挑选阶数较小的那个求逆。它只要求两个括号内的矩阵可逆，不要求 $\bm{A}$、$\bm{B}$ 本身可逆或为方阵。
 \end{remark}
 
 另一个有用的关于矩阵的逆的恒等式如下：
 \begin{proposition}[Woodbury 恒等式]\label{proposition:appA-woodbury}
+设 $N,M\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$，$\bm{D}\in\mathbb{R}^{M\times M}$，$\bm{B}\in\mathbb{R}^{N\times M}$，$\bm{C}\in\mathbb{R}^{M\times N}$。若 $\bm{A}$、$\bm{D}$ 与 $\bm{D}+\bm{C}\bm{A}^{-1}\bm{B}$ 均可逆，则 $\bm{A}+\bm{B}\bm{D}^{-1}\bm{C}$ 可逆，且
 \begin{align}
-  (\bm{A}+\bm{B}\bm{D}^{-1}\bm{C})^{-1}=\bm{A}^{-1}-\bm{A}^{-1}\bm{B}(\bm{D}+\bm{C}\bm{A}^{-1}\bm{B})^{-1}\bm{C}\bm{A}^{-1}
+  (\bm{A}+\bm{B}\bm{D}^{-1}\bm{C})^{-1}=\bm{A}^{-1}-\bm{A}^{-1}\bm{B}(\bm{D}+\bm{C}\bm{A}^{-1}\bm{B})^{-1}\bm{C}\bm{A}^{-1}.
   \label{align:appA-woodbury}
 \end{align}
+其中 $\bm{A}+\bm{B}\bm{D}^{-1}\bm{C}$ 为 $N\times N$ 矩阵，$\bm{D}+\bm{C}\bm{A}^{-1}\bm{B}$ 为 $M\times M$ 矩阵。等式两端都是 $N$ 阶方阵；$\bm{A}$ 与 $\bm{D}$ 分别为 $N$ 阶与 $M$ 阶可逆方阵，$\bm{B}$ 与 $\bm{C}$ 的阶数由乘法相容性确定。
 \end{proposition}
 
 \begin{proof}
-原书指出：对\eqref{align:appA-woodbury}的两边同时乘以 $(\bm{A}+\bm{B}\bm{D}^{-1}\bm{C})$ 即可得证。补全如下：右边乘以 $(\bm{A}+\bm{B}\bm{D}^{-1}\bm{C})$ 得
+记 $\bm{E}=\bm{D}+\bm{C}\bm{A}^{-1}\bm{B}$。将\eqref{align:appA-woodbury}的右端右乘 $\bm{A}+\bm{B}\bm{D}^{-1}\bm{C}$，得
 \begin{align*}
-  \bm{A}^{-1}(\bm{A}+\bm{B}\bm{D}^{-1}\bm{C})-\bm{A}^{-1}\bm{B}(\bm{D}+\bm{C}\bm{A}^{-1}\bm{B})^{-1}\bm{C}\bm{A}^{-1}(\bm{A}+\bm{B}\bm{D}^{-1}\bm{C}).
+ \bm{A}^{-1}(\bm{A}+\bm{B}\bm{D}^{-1}\bm{C})-\bm{A}^{-1}\bm{B}\bm{E}^{-1}\bm{C}\bm{A}^{-1}(\bm{A}+\bm{B}\bm{D}^{-1}\bm{C}).
 \end{align*}
-第一项等于 $\bm{I}+\bm{A}^{-1}\bm{B}\bm{D}^{-1}\bm{C}$；第二项中 $\bm{C}\bm{A}^{-1}(\bm{A}+\bm{B}\bm{D}^{-1}\bm{C})=\bm{C}+\bm{C}\bm{A}^{-1}\bm{B}\bm{D}^{-1}\bm{C}=(\bm{D}+\bm{C}\bm{A}^{-1}\bm{B})\bm{D}^{-1}\bm{C}$，故第二项等于 $\bm{A}^{-1}\bm{B}\bm{D}^{-1}\bm{C}$。两项相减即得 $\bm{I}$，于是\eqref{align:appA-woodbury}右边确是 $(\bm{A}+\bm{B}\bm{D}^{-1}\bm{C})$ 的逆。
+第一项等于 $\bm{I}_{N}+\bm{A}^{-1}\bm{B}\bm{D}^{-1}\bm{C}$。第二项中，
+\begin{align*}
+ \bm{C}\bm{A}^{-1}(\bm{A}+\bm{B}\bm{D}^{-1}\bm{C})=\bm{C}+\bm{C}\bm{A}^{-1}\bm{B}\bm{D}^{-1}\bm{C}=\bm{E}\bm{D}^{-1}\bm{C},
+\end{align*}
+故第二项等于 $\bm{A}^{-1}\bm{B}\bm{E}^{-1}\bm{E}\bm{D}^{-1}\bm{C}=\bm{A}^{-1}\bm{B}\bm{D}^{-1}\bm{C}$。两项相减得 $\bm{I}_{N}$，故右端是 $\bm{A}+\bm{B}\bm{D}^{-1}\bm{C}$ 的逆，即\eqref{align:appA-woodbury}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-woodbury; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-woodbury; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这就是\textbf{Woodbury 恒等式}，它把“先加上低秩修正再求逆”换成“先对小矩阵求逆再作低秩修正”。它在某些情况下很有用，例如，当 $\bm{A}$ 很大且为对角矩阵时，$\bm{A}$ 的逆很容易求得，或者当 $\bm{B}$ 有很多行但列较少时（$\bm{C}$ 则相反），\eqref{align:appA-woodbury}右边的计算开销就比左边的计算开销小得多。成立条件为 $\bm{A}$、$\bm{D}$ 以及 $\bm{D}+\bm{C}\bm{A}^{-1}\bm{B}$ 均可逆，此时 $\bm{A}+\bm{B}\bm{D}^{-1}\bm{C}$ 也自动可逆；若 $\bm{A}$ 只是可逆而不对称，并不要求 $\bm{B}$、$\bm{C}$ 之间有任何对称关系。
 \end{remark}
 
 
 \begin{definition}[线性无关]\label{definition:appA-线性无关}
-如果当且仅当所有 $\alpha_i=0$ 时，$\sum_i\alpha_i\bm{a}_i=\bm{0}$ 才成立，则称向量组 $\{\bm{a}_1,\cdots,\bm{a}_M\}$ 是\textbf{线性无关}（linearly independent）的。
+设 $M\geqslant1$，$\bm{a}_1,\cdots,\bm{a}_M\in\mathbb{R}^{N}$。若对任意 $\alpha_1,\cdots,\alpha_M\in\mathbb{R}$，等式 $\sum_{i=1}^{M}\alpha_i\bm{a}_i=\bm{0}$ 成立当且仅当 $\alpha_1=\cdots=\alpha_M=0$，则这样的向量组 $\{\bm{a}_1,\cdots,\bm{a}_M\}$ 称为线性无关。等价地，向量组线性无关当且仅当齐次线性方程组 $\sum_{i=1}^{M}\alpha_i\bm{a}_i=\bm{0}$ 只有零解；线性无关组的任意子组仍线性无关。
 \end{definition}
 
 这意味着没有任何一个向量可以表示为其余向量的线性组合。
 
-% SUPPLEMENT: parent=definition:appA-线性无关; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-线性无关; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 “当且仅当”给出了两个方向：系数组全为零时组合必为零向量（这是平凡的），以及组合为零向量时系数只能全为零（这是实质条件）。后一方向正是“无法用一个向量去替代其余向量”的定量表述：若 $\bm{a}_M=\sum_{i<M}c_i\bm{a}_i$，则取 $\alpha_M=-1$、$\alpha_i=c_i$ 就得到一组不全为零的系数使组合为零，线性无关性随即失效。因此线性无关刻画的是向量组中“没有冗余成员”，这与后文矩阵的秩直接相关（参见\cref{definition:appA-矩阵的秩}）。
 \end{remark}
 
 \begin{definition}[矩阵的秩]\label{definition:appA-矩阵的秩}
-矩阵的秩等于线性无关行的最大数量（也可等价地说，矩阵的秩等于线性无关列的最大数量）。
+设 $M,N\geqslant1$，$\bm{A}\in\mathbb{R}^{M\times N}$。$\bm{A}$ 的行秩定义为 $\bm{A}$ 的线性无关行的最大数目，$\bm{A}$ 的列秩定义为 $\bm{A}$ 的线性无关列的最大数目。$\bm{A}$ 的秩定义为 $\bm{A}$ 的行秩，记作 $\operatorname{rank}(\bm{A})$；零矩阵的秩规定为 $0$。特别地，$N$ 阶方阵的行秩与列秩都不超过 $N$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-矩阵的秩; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-定义中括号内的等价说法并非显然：它断言“行秩等于列秩”。这个结论保证秩是矩阵本身的不变量，而不依赖于我们按行还是按列去数。定义的关键量是“最大数量”，即从所有线性无关的行子集中取元素个数最多的那一个；零矩阵的秩为零。秩在\cref{proposition:appA-秩与非零特征值}中会与特征值发生联系，但那里的联系需要额外条件。
+% SUPPLEMENT: parent=definition:appA-矩阵的秩; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+定义中的行秩与列秩相等，这是可证明的定理而不是定义的一部分。证明：设 $\operatorname{rank}(\bm{A})=r$，取 $\bm{A}$ 的 $r$ 个线性无关行构成矩阵 $\bm{R}\in\mathbb{R}^{r\times N}$。由 $r$ 的最大性，$\bm{A}$ 的每一行都是 $\bm{R}$ 的行的线性组合，故存在 $\bm{C}\in\mathbb{R}^{M\times r}$ 使 $\bm{A}=\bm{C}\bm{R}$。于是 $\bm{A}$ 的每一列都是 $\bm{C}$ 的列的线性组合，故列秩不超过 $\bm{C}$ 的列数 $r$，即列秩 $\leqslant$ 行秩。对 $\bm{A}^{\mathsf{T}}$ 重复该论证得行秩 $\leqslant$ 列秩，故两者相等。因此秩也可以等价地定义为列秩，它是矩阵本身的不变量。秩在\cref{proposition:appA-秩与非零特征值}中与特征值发生联系，但那里的联系需要可对角化假设。
 \end{remark}
 
 \section{迹和行列式}\label{section:appA-迹和行列式}
@@ -194,58 +232,62 @@ $\bm{A}$ 的逆矩阵记为 $\bm{A}^{-1}$，满足
 方阵有迹和行列式。
 
 \begin{definition}[迹]\label{definition:appA-迹}
-矩阵 $\bm{A}$ 的迹 $\mathrm{tr}(\bm{A})$ 定义为其主对角线上元素的和。
+设 $N\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$，其元素为 $A_{ij}$，$i,j=1,\cdots,N$。$\bm{A}$ 的迹定义为 $\mathrm{tr}(\bm{A})=\sum_{i=1}^{N}A_{ii}$，即 $\bm{A}$ 的主对角线上元素之和。迹只对 $N\times N$ 方阵有定义，其取值为实数；$\mathrm{tr}(\bm{A})$ 只使用主对角线上的 $N$ 个元素，与其余元素无关；若 $\bm{A}$ 不是方阵，则 $\mathrm{tr}(\bm{A})$ 没有定义。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-迹; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-迹; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 迹只对 $N\times N$ 的方阵有定义，它把整个矩阵压缩成一个标量，并且对矩阵的元素是线性的：$\mathrm{tr}(\alpha\bm{A}+\beta\bm{B})=\alpha\,\mathrm{tr}(\bm{A})+\beta\,\mathrm{tr}(\bm{B})$。正因为是线性的、又只取对角线，迹在求导运算中格外方便：\cref{proposition:appA-迹的矩阵导数}与\cref{proposition:appA-对数行列式的矩阵导数}都要把矩阵导数化为迹的形式。
 \end{remark}
 
-通过写出索引，我们可以得到
+通过写出指标可得
 \begin{proposition}[迹的循环性]\label{proposition:appA-迹的循环性}
+设 $K,L,M\geqslant1$，$\bm{A}\in\mathbb{R}^{K\times L}$，$\bm{B}\in\mathbb{R}^{L\times K}$。则 $\bm{A}\bm{B}$ 与 $\bm{B}\bm{A}$ 均为方阵，且
 \begin{align}
-  \mathrm{tr}(\bm{A}\bm{B})=\mathrm{tr}(\bm{B}\bm{A})
+  \mathrm{tr}(\bm{A}\bm{B})=\mathrm{tr}(\bm{B}\bm{A}).
   \label{align:appA-迹交换}
 \end{align}
-通过将\eqref{align:appA-迹交换}应用于三个矩阵的乘积，可以得到
+第一个等式中的迹都只对方阵有定义。进一步，若 $\bm{C}\in\mathbb{R}^{M\times K}$，则 $\bm{A}\bm{B}\bm{C}$、$\bm{C}\bm{A}\bm{B}$ 与 $\bm{B}\bm{C}\bm{A}$ 均为方阵，且
 \begin{align}
-  \mathrm{tr}(\bm{A}\bm{B}\bm{C})=\mathrm{tr}(\bm{C}\bm{A}\bm{B})=\mathrm{tr}(\bm{B}\bm{C}\bm{A})
+  \mathrm{tr}(\bm{A}\bm{B}\bm{C})=\mathrm{tr}(\bm{C}\bm{A}\bm{B})=\mathrm{tr}(\bm{B}\bm{C}\bm{A}).
   \label{align:appA-迹循环}
 \end{align}
+第二个等式中三个乘积均为方阵，其阶数分别为 $K$、$M$、$L$，而三者的迹相等。
 \end{proposition}
 
-这就是迹运算的循环（cyclic）性质。显然，这一性质可以扩展到任意数量的矩阵的乘积。
+这就是迹运算的循环（cyclic）性质；对更多因子的乘积，可反复应用\eqref{align:appA-迹交换}得到相应的轮换等式。
 
 \begin{proof}
-（重构新增）原书只说“通过写出索引”即可，下面补全。设 $\bm{A}$ 为 $K\times L$、$\bm{B}$ 为 $L\times K$，则 $\bm{A}\bm{B}$ 与 $\bm{B}\bm{A}$ 都是方阵，且
+设 $\bm{A}$ 的元素为 $A_{kl}$，$\bm{B}$ 的元素为 $B_{lk}$。由迹的定义与矩阵乘法，
 \begin{align*}
-  \mathrm{tr}(\bm{A}\bm{B})=\sum_{k=1}^{K}(\bm{A}\bm{B})_{kk}=\sum_{k=1}^{K}\sum_{l=1}^{L}A_{kl}B_{lk}=\sum_{l=1}^{L}\sum_{k=1}^{K}B_{lk}A_{kl}=\sum_{l=1}^{L}(\bm{B}\bm{A})_{ll}=\mathrm{tr}(\bm{B}\bm{A}),
+ \mathrm{tr}(\bm{A}\bm{B})=\sum_{k=1}^{K}(\bm{A}\bm{B})_{kk}=\sum_{k=1}^{K}\sum_{l=1}^{L}A_{kl}B_{lk}=\sum_{l=1}^{L}\sum_{k=1}^{K}B_{lk}A_{kl}=\sum_{l=1}^{L}(\bm{B}\bm{A})_{ll}=\mathrm{tr}(\bm{B}\bm{A}),
 \end{align*}
-即\eqref{align:appA-迹交换}。再把\eqref{align:appA-迹交换}用于矩阵 $\bm{A}\bm{B}$ 与 $\bm{C}$，得 $\mathrm{tr}(\bm{A}\bm{B}\bm{C})=\mathrm{tr}(\bm{C}\bm{A}\bm{B})$；把\eqref{align:appA-迹交换}用于 $\bm{B}$ 与 $\bm{C}\bm{A}$，得 $\mathrm{tr}(\bm{B}\bm{C}\bm{A})=\mathrm{tr}(\bm{C}\bm{A}\bm{B})$，于是\eqref{align:appA-迹循环}成立。
+即\eqref{align:appA-迹交换}。再对矩阵 $\bm{A}\bm{B}$ 与 $\bm{C}$ 应用\eqref{align:appA-迹交换}，得 $\mathrm{tr}(\bm{A}\bm{B}\bm{C})=\mathrm{tr}(\bm{C}\bm{A}\bm{B})$；对 $\bm{B}$ 与 $\bm{C}\bm{A}$ 应用\eqref{align:appA-迹交换}，得 $\mathrm{tr}(\bm{B}\bm{C}\bm{A})=\mathrm{tr}(\bm{C}\bm{A}\bm{B})$。两式合并即\eqref{align:appA-迹循环}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-迹的循环性; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-\eqref{align:appA-迹交换}要求 $\bm{A}\bm{B}$ 与 $\bm{B}\bm{A}$ 都有定义，这只要 $\bm{A}$ 的列数与 $\bm{B}$ 的行数相配即可，并不要求二者同阶；但显然要求两个乘积都是方阵，否则迹无从谈起。循环性只允许“轮换”因子顺序，一般不允许任意置换：例如 $\mathrm{tr}(\bm{A}\bm{B}\bm{C})\neq\mathrm{tr}(\bm{A}\bm{C}\bm{B})$。这条性质在\cref{proposition:appA-行列式与迹}中用把 $\bm{A}$ 对角化的方式计算 $\mathrm{tr}(\bm{A})$ 时是必需的。
+% SUPPLEMENT: parent=proposition:appA-迹的循环性; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+\eqref{align:appA-迹交换}要求 $\bm{A}\bm{B}$ 与 $\bm{B}\bm{A}$ 都有定义，这只要 $\bm{A}$ 的列数与 $\bm{B}$ 的行数相配即可，并不要求二者同阶；但要求两个乘积都是方阵，否则迹无从谈起。循环性只允许“轮换”因子顺序，一般不允许任意置换：例如 $\mathrm{tr}(\bm{A}\bm{B}\bm{C})\neq\mathrm{tr}(\bm{A}\bm{C}\bm{B})$。这条性质在\cref{proposition:appA-行列式与迹}中用把 $\bm{A}$ 对角化的方式计算 $\mathrm{tr}(\bm{A})$ 时是必需的。
 \end{remark}
 
 $N\times N$ 矩阵 $\bm{A}$ 的行列式 $|\bm{A}|$ 由下式定义：
 \begin{definition}[行列式]\label{definition:appA-行列式}
+设 $N\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$，其元素为 $A_{ij}$，$i,j=1,\cdots,N$。记 $S_N$ 为集合 $\{1,\cdots,N\}$ 的全部排列构成的集合。对 $\sigma\in S_N$，记 $\operatorname{inv}(\sigma)$ 为满足 $p<q$ 且 $\sigma(p)>\sigma(q)$ 的有序对 $(p,q)$ 的个数，并令 $\operatorname{sgn}(\sigma)=(-1)^{\operatorname{inv}(\sigma)}$。$\bm{A}$ 的行列式定义为
 \begin{align}
-  |\bm{A}|=\sum(\pm1)A_{1i_1}A_{2i_2}\cdots A_{Ni_N}
+  |\bm{A}|=\sum_{\sigma\in S_N}\operatorname{sgn}(\sigma)\prod_{k=1}^{N}A_{k,\sigma(k)},
   \label{align:appA-行列式定义}
 \end{align}
+其中求和遍历 $S_N$ 的全部 $N!$ 个排列，$\operatorname{sgn}(\sigma)$ 称为排列 $\sigma$ 的符号。
 \end{definition}
 
-其中，行列式对每行和每列中元素的乘积求和，并根据排列 $i_1i_2\cdots i_N$ 为偶数还是奇数来确定系数是 $+1$ 还是 $-1$。
+其中求和遍历 $\{1,\cdots,N\}$ 的全部排列 $\sigma$；由于 $\sigma$ 是双射，每一项恰好从每一行、每一列各取一个元素，系数 $\operatorname{sgn}(\sigma)$ 由 $\sigma$ 的逆序数奇偶性决定。
 
-% SUPPLEMENT: parent=definition:appA-行列式; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-\eqref{align:appA-行列式定义}中的求和遍历 $1,\cdots,N$ 的全部 $N!$ 个排列 $(i_1,\cdots,i_N)$：下标 $i_k$ 表示第 $k$ 行所取元素所在的列，因此每一项恰好从每一行、每一列各取一个元素。系数 $+1$ 或 $-1$ 由排列的奇偶性（逆序数的奇偶性）决定，这就是定义中“$\pm1$”的来源。定义只对 $N\times N$ 方阵有意义；由定义立刻可以看出 $|\bm{I}|=1$（只有恒等排列给出非零项且其系数为 $+1$），并且对角矩阵的行列式等于其主对角线上元素的乘积（非恒等排列至少有一个因子取自非对角位置，取值为零）。
+% SUPPLEMENT: parent=definition:appA-行列式; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+\eqref{align:appA-行列式定义}中的求和遍历 $\{1,\cdots,N\}$ 的全部 $N!$ 个排列 $\sigma$：元素 $A_{k,\sigma(k)}$ 取自第 $k$ 行第 $\sigma(k)$ 列，因此每一项恰好从每一行、每一列各取一个元素。系数 $\operatorname{sgn}(\sigma)=(-1)^{\operatorname{inv}(\sigma)}$ 由排列的逆序数奇偶性决定。定义只对 $N\times N$ 方阵有意义；由定义可得 $|\bm{I}_{N}|=1$（只有恒等排列给出非零项且其符号为 $+1$），并且对角矩阵的行列式等于其主对角线上元素的乘积（非恒等排列至少有一个因子取自非对角位置，取值为零）。
 \end{remark}
 
-注意 $|\bm{I}|=1$，且对角矩阵的行列式是由其主对角线上元素的乘积给出的。因此，对于 $2\times2$ 的矩阵，其行列式的形式如下：
+由定义，$|\bm{I}|=1$，且对角矩阵的行列式等于其主对角线上元素的乘积。因此，对于 $2\times2$ 的矩阵，其行列式的形式如下：
 \begin{align}
   |\bm{A}|=\begin{vmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{vmatrix}=a_{11}a_{22}-a_{12}a_{21}
   \label{align:appA-二阶行列式}
@@ -253,219 +295,296 @@ $N\times N$ 矩阵 $\bm{A}$ 的行列式 $|\bm{A}|$ 由下式定义：
 
 两个矩阵乘积的行列式由下式给出：
 \begin{proposition}[乘积的行列式]\label{proposition:appA-乘积的行列式}
+设 $N\geqslant1$，$\bm{A},\bm{B}\in\mathbb{R}^{N\times N}$ 为同阶实方阵。则乘积 $\bm{A}\bm{B}$ 的行列式满足
 \begin{align}
-  |\bm{A}\bm{B}|=|\bm{A}|\,|\bm{B}|
+  |\bm{A}\bm{B}|=|\bm{A}|\,|\bm{B}|,
   \label{align:appA-行列式乘积}
 \end{align}
+即行列式对矩阵乘法具有乘性。等式两端都是实数；该结论要求两个因子为同阶方阵，对任意 $N$ 阶实方阵成立，不要求 $\bm{A}$ 或 $\bm{B}$ 可逆。
 \end{proposition}
 
 \begin{proof}
-原书指出\eqref{align:appA-行列式乘积}可以从\eqref{align:appA-行列式定义}推导得出。下面补全思路：按\eqref{align:appA-行列式定义}把 $|\bm{A}\bm{B}|$ 展开为
+由\eqref{align:appA-行列式定义}，
 \begin{align*}
-  |\bm{A}\bm{B}|=\sum_{i_1,\cdots,i_N}(\pm1)\prod_{k=1}^{N}\Bigl(\sum_{j_k=1}^{N}A_{kj_k}B_{j_kk}\Bigr),
+ |\bm{A}\bm{B}|=\sum_{\sigma\in S_N}\operatorname{sgn}(\sigma)\prod_{k=1}^{N}(\bm{A}\bm{B})_{k,\sigma(k)}
+ =\sum_{\sigma\in S_N}\operatorname{sgn}(\sigma)\prod_{k=1}^{N}\sum_{j_k=1}^{N}A_{k,j_k}B_{j_k,\sigma(k)}.
 \end{align*}
-交换求和次序后，每一项是某排列 $(j_1,\cdots,j_N)$ 下的 $\prod_k B_{j_kk}$ 与 $\prod_k A_{kj_k}$ 之积；只有当 $j_1,\cdots,j_N$ 互不相同时乘积才可能非零（否则 $\prod_k B_{j_kk}$ 必含同一列的两个因子，这样的项在按列重组后系数相消），而这些项恰好按排列重组为 $|\bm{A}|\,|\bm{B}|$ 的展开式，符号也相乘一致。
+展开乘积并对每个 $k$ 的指标 $j_k$ 求和，得
+\begin{align*}
+ |\bm{A}\bm{B}|=\sum_{j_1,\cdots,j_N=1}^{N}\Bigl(\prod_{k=1}^{N}A_{k,j_k}\Bigr)\sum_{\sigma\in S_N}\operatorname{sgn}(\sigma)\prod_{k=1}^{N}B_{j_k,\sigma(k)}.
+\end{align*}
+若 $(j_1,\cdots,j_N)$ 中有两个指标相等，例如 $j_p=j_q$（$p\neq q$），则对换 $\sigma(p)$ 与 $\sigma(q)$ 给出 $S_N$ 上的一个无不动点对合，它把 $\operatorname{sgn}(\sigma)$ 变为 $-\operatorname{sgn}(\sigma)$，而乘积 $\prod_{k}B_{j_k,\sigma(k)}$ 不变，故内层和为 $0$。若 $j_1,\cdots,j_N$ 两两不同，则存在唯一的 $\tau\in S_N$ 使 $j_k=\tau(k)$，此时令 $\rho=\sigma\circ\tau^{-1}$，得
+\begin{align*}
+ \sum_{\sigma\in S_N}\operatorname{sgn}(\sigma)\prod_{k=1}^{N}B_{\tau(k),\sigma(k)}
+ =\operatorname{sgn}(\tau)\sum_{\rho\in S_N}\operatorname{sgn}(\rho)\prod_{l=1}^{N}B_{l,\rho(l)}
+ =\operatorname{sgn}(\tau)|\bm{B}|.
+\end{align*}
+代回得
+\begin{align*}
+ |\bm{A}\bm{B}|=\sum_{\tau\in S_N}\operatorname{sgn}(\tau)\Bigl(\prod_{k=1}^{N}A_{k,\tau(k)}\Bigr)|\bm{B}|=|\bm{A}|\,|\bm{B}|,
+\end{align*}
+即\eqref{align:appA-行列式乘积}。
 \end{proof}
 
 同样，逆矩阵的行列式由下式给出：
 \begin{proposition}[逆矩阵的行列式]\label{proposition:appA-逆的行列式}
+设 $N\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$ 可逆。则 $|\bm{A}|\neq0$，且
 \begin{align}
-  |\bm{A}^{-1}|=\frac{1}{|\bm{A}|}
+  |\bm{A}^{-1}|=\frac{1}{|\bm{A}|},
   \label{align:appA-行列式逆}
 \end{align}
+即逆矩阵的行列式等于原矩阵行列式的倒数。等式右端的分母非零；该结论说明可逆方阵的行列式非零，且逆矩阵的行列式由原行列式唯一确定。因此可逆方阵的行列式属于 $\mathbb{R}\setminus\{0\}$。
 \end{proposition}
 
 \begin{proof}
-这可以通过取\eqref{align:appA-逆定义}的行列式并应用\eqref{align:appA-行列式乘积}推导得出：由 $\bm{A}\bm{A}^{-1}=\bm{I}$ 得 $|\bm{A}|\,|\bm{A}^{-1}|=|\bm{I}|=1$，故 $|\bm{A}^{-1}|=1/|\bm{A}|$。这也说明 $\bm{A}$ 可逆的必要条件是 $|\bm{A}|\neq0$。
+由\eqref{align:appA-逆定义}有 $\bm{A}\bm{A}^{-1}=\bm{I}_{N}$。取行列式并用\eqref{align:appA-行列式乘积}得
+\begin{align*}
+ |\bm{A}|\,|\bm{A}^{-1}|=|\bm{I}_{N}|=1,
+\end{align*}
+其中 $|\bm{I}_{N}|=1$ 可由\eqref{align:appA-行列式定义}得到：只有恒等排列给出非零项，且其符号为 $+1$。因此 $|\bm{A}|\neq0$，且 $|\bm{A}^{-1}|=1/|\bm{A}|$，即\eqref{align:appA-行列式逆}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-乘积的行列式; kind=motivation; location=紧随其后的 remark（重构新增）
-% SUPPLEMENT: parent=proposition:appA-逆的行列式; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-\cref{proposition:appA-乘积的行列式,proposition:appA-逆的行列式}说明行列式把乘法变成乘法、把求逆变成取倒数，因此它是方阵可逆性的判别量：$|\bm{A}|=0$ 时 $\bm{A}$ 不可能有逆（否则与\eqref{align:appA-行列式逆}矛盾）。反过来，$|\bm{A}|\neq0$ 时 $\bm{A}$ 必可逆，这一点本书不证，属于线性代数基本结论。注意\eqref{align:appA-行列式乘积}要求两个因子都是同阶方阵，否则乘积的行列式没有定义。
+% SUPPLEMENT: parent=proposition:appA-乘积的行列式; kind=motivation; location=紧随其后的 remark
+% SUPPLEMENT: parent=proposition:appA-逆的行列式; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+\cref{proposition:appA-乘积的行列式,proposition:appA-逆的行列式}说明行列式把乘法变成乘法、把求逆变成取倒数，因此它是方阵可逆性的判别量：$|\bm{A}|=0$ 时 $\bm{A}$ 不可能有逆（否则与\eqref{align:appA-行列式逆}矛盾）。反过来，$|\bm{A}|\neq0$ 时 $\bm{A}$ 必可逆，这一方向属于线性代数基本结论，本附录不展开。\eqref{align:appA-行列式乘积}要求两个因子都是同阶方阵，否则乘积的行列式没有定义。
 \end{remark}
 
 如果 $\bm{A}$ 和 $\bm{B}$ 都是大小为 $N\times M$ 的矩阵，则有
 \begin{proposition}[Sylvester 行列式恒等式]\label{proposition:appA-sylvester}
+设 $N,M\geqslant1$，$\bm{A},\bm{B}\in\mathbb{R}^{N\times M}$。则
 \begin{align}
-  |\bm{I}_N+\bm{A}\bm{B}^{\mathsf{T}}|=|\bm{I}_M+\bm{A}^{\mathsf{T}}\bm{B}|
+  |\bm{I}_N+\bm{A}\bm{B}^{\mathsf{T}}|=|\bm{I}_M+\bm{A}^{\mathsf{T}}\bm{B}|,
   \label{align:appA-sylvester行列式}
 \end{align}
+其中左端为 $N$ 阶行列式，右端为 $M$ 阶行列式。等式两端都是有意义的行列式，且对任意 $N\times M$ 实矩阵 $\bm{A},\bm{B}$ 相等。该恒等式对任意正整数 $N,M$ 成立，不要求 $\bm{A}$ 或 $\bm{B}$ 为方阵。该等式也称为 Sylvester 行列式定理。
 \end{proposition}
 
 \begin{proof}
-（重构新增）原书未给证明。设 $\bm{A},\bm{B}$ 都是 $N\times M$ 矩阵，考虑 $(N+M)\times(N+M)$ 的分块矩阵
+考虑 $(N+M)\times(N+M)$ 分块矩阵
 \begin{align*}
-  \bm{M}=\begin{pmatrix}\bm{I}_N&\bm{A}\\-\bm{B}^{\mathsf{T}}&\bm{I}_M\end{pmatrix}.
+ \bm{M}=\begin{pmatrix}\bm{I}_{N}&\bm{A}\\-\bm{B}^{\mathsf{T}}&\bm{I}_{M}\end{pmatrix}.
 \end{align*}
-用分块下三角矩阵 $\begin{pmatrix}\bm{I}_N&\bm{0}\\\bm{B}^{\mathsf{T}}&\bm{I}_M\end{pmatrix}$ 左乘 $\bm{M}$，由分块乘法得
+用分块下三角矩阵
 \begin{align*}
-  \begin{pmatrix}\bm{I}_N&\bm{0}\\\bm{B}^{\mathsf{T}}&\bm{I}_M\end{pmatrix}\bm{M}=\begin{pmatrix}\bm{I}_N&\bm{A}\\\bm{0}&\bm{I}_M+\bm{B}^{\mathsf{T}}\bm{A}\end{pmatrix},
+ \bm{L}=\begin{pmatrix}\bm{I}_{N}&\bm{0}\\\bm{B}^{\mathsf{T}}&\bm{I}_{M}\end{pmatrix}
 \end{align*}
-右端是分块上三角矩阵，其行列式等于对角块行列式之积 $|\bm{I}_M+\bm{B}^{\mathsf{T}}\bm{A}|$；左乘因子的行列式为 $1$，故 $|\bm{M}|=|\bm{I}_M+\bm{B}^{\mathsf{T}}\bm{A}|$。同理，用分块上三角矩阵 $\begin{pmatrix}\bm{I}_N&\bm{0}\\\bm{B}^{\mathsf{T}}&\bm{I}_M\end{pmatrix}$ 右乘 $\bm{M}$ 得
+左乘 $\bm{M}$，由分块乘法得
 \begin{align*}
-  \bm{M}\begin{pmatrix}\bm{I}_N&\bm{0}\\\bm{B}^{\mathsf{T}}&\bm{I}_M\end{pmatrix}=\begin{pmatrix}\bm{I}_N+\bm{A}\bm{B}^{\mathsf{T}}&\bm{A}\\\bm{0}&\bm{I}_M\end{pmatrix},
+ \bm{L}\bm{M}=\begin{pmatrix}\bm{I}_{N}&\bm{A}\\\bm{0}&\bm{I}_{M}+\bm{B}^{\mathsf{T}}\bm{A}\end{pmatrix}.
 \end{align*}
-故 $|\bm{M}|=|\bm{I}_N+\bm{A}\bm{B}^{\mathsf{T}}|$。于是 $|\bm{I}_N+\bm{A}\bm{B}^{\mathsf{T}}|=|\bm{I}_M+\bm{B}^{\mathsf{T}}\bm{A}|$。最后，由\eqref{align:appA-行列式定义}可直接看出转置不改变行列式（排列 $\sigma$ 与 $\sigma^{-1}$ 的项一一对应且符号相同），故 $|\bm{I}_M+\bm{B}^{\mathsf{T}}\bm{A}|=|\bm{I}_M+\bm{A}^{\mathsf{T}}\bm{B}|$，即\eqref{align:appA-sylvester行列式}。
+右端为分块上三角矩阵，由分块三角矩阵的行列式公式，其行列式等于对角块行列式之积 $|\bm{I}_{M}+\bm{B}^{\mathsf{T}}\bm{A}|$；又 $|\bm{L}|=1$，故 $|\bm{M}|=|\bm{I}_{M}+\bm{B}^{\mathsf{T}}\bm{A}|$。对另一侧，用 $\bm{L}$ 右乘 $\bm{M}$，得
+\begin{align*}
+ \bm{M}\bm{L}=\begin{pmatrix}\bm{I}_{N}+\bm{A}\bm{B}^{\mathsf{T}}&\bm{A}\\\bm{0}&\bm{I}_{M}\end{pmatrix},
+\end{align*}
+故 $|\bm{M}|=|\bm{I}_{N}+\bm{A}\bm{B}^{\mathsf{T}}|$。于是
+\begin{align*}
+ |\bm{I}_{N}+\bm{A}\bm{B}^{\mathsf{T}}|=|\bm{I}_{M}+\bm{B}^{\mathsf{T}}\bm{A}|.
+\end{align*}
+最后证明转置不改变行列式。对任意 $N$ 阶方阵 $\bm{C}$，由\eqref{align:appA-行列式定义}，
+\begin{align*}
+ |\bm{C}^{\mathsf{T}}|=\sum_{\sigma\in S_N}\operatorname{sgn}(\sigma)\prod_{k=1}^{N}C_{\sigma(k),k}
+ =\sum_{\tau\in S_N}\operatorname{sgn}(\tau)\prod_{k=1}^{N}C_{k,\tau(k)}=|\bm{C}|,
+\end{align*}
+其中令 $\tau=\sigma^{-1}$，并利用 $\operatorname{sgn}(\sigma^{-1})=\operatorname{sgn}(\sigma)$。取 $\bm{C}=\bm{I}_{M}+\bm{B}^{\mathsf{T}}\bm{A}$，得 $|\bm{I}_{M}+\bm{B}^{\mathsf{T}}\bm{A}|=|\bm{I}_{M}+\bm{A}^{\mathsf{T}}\bm{B}|$，即\eqref{align:appA-sylvester行列式}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-sylvester; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-sylvester; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-sylvester行列式}的用途是：把 $N\times N$ 的行列式换成 $M\times M$ 的行列式，两边的值相同但计算量可以相差很多，其思想与\cref{proposition:appA-求逆恒等式}完全一致。条件只有“$\bm{A}$、$\bm{B}$ 都是 $N\times M$”：若两者阶数不同，或其中一个不是矩阵而是向量，公式中相应的 $\bm{I}$ 就必须换阶数（见\cref{proposition:appA-秩一行列式}）。
 \end{remark}
 
 一种有用的特殊情况如下：
 \begin{proposition}[秩1 行列式恒等式]\label{proposition:appA-秩一行列式}
+设 $N\geqslant1$，$\bm{a},\bm{b}\in\mathbb{R}^{N}$ 为列向量。则
 \begin{align}
-  |\bm{I}_N+\bm{a}\bm{b}^{\mathsf{T}}|=1+\bm{a}^{\mathsf{T}}\bm{b}
+  |\bm{I}_N+\bm{a}\bm{b}^{\mathsf{T}}|=1+\bm{a}^{\mathsf{T}}\bm{b},
   \label{align:appA-秩一行列式}
 \end{align}
-其中 $\bm{a}$ 和 $\bm{b}$ 都是 $N$ 维的列向量。
+其中 $\bm{a}\bm{b}^{\mathsf{T}}$ 为 $N$ 阶方阵，$\bm{a}^{\mathsf{T}}\bm{b}$ 为标量。等式右端为标量，左端为 $N$ 阶方阵的行列式。该恒等式对任意正整数 $N$ 与任意两个 $N$ 维实列向量成立。这是 Sylvester 行列式恒等式在 $M=1$ 时的特殊情形。
 \end{proposition}
 
 \begin{proof}
-（重构新增）把\eqref{align:appA-sylvester行列式}用于 $M=1$ 的情形：取 $\bm{A}=\bm{a}$、$\bm{B}=\bm{b}$（都是 $N\times1$ 矩阵），则 $\bm{A}\bm{B}^{\mathsf{T}}=\bm{a}\bm{b}^{\mathsf{T}}$ 是 $N\times N$ 矩阵，而 $\bm{A}^{\mathsf{T}}\bm{B}=\bm{a}^{\mathsf{T}}\bm{b}$ 是 $1\times1$ 矩阵。由\eqref{align:appA-sylvester行列式}得 $|\bm{I}_N+\bm{a}\bm{b}^{\mathsf{T}}|=|\bm{I}_1+\bm{a}^{\mathsf{T}}\bm{b}|=1+\bm{a}^{\mathsf{T}}\bm{b}$，即\eqref{align:appA-秩一行列式}。
+在\eqref{align:appA-sylvester行列式}中取 $M=1$，并令 $\bm{A}=\bm{a}\in\mathbb{R}^{N\times1}$、$\bm{B}=\bm{b}\in\mathbb{R}^{N\times1}$。则 $\bm{A}\bm{B}^{\mathsf{T}}=\bm{a}\bm{b}^{\mathsf{T}}$ 为 $N\times N$ 矩阵，$\bm{A}^{\mathsf{T}}\bm{B}=\bm{a}^{\mathsf{T}}\bm{b}$ 为 $1\times1$ 矩阵，故
+\begin{align*}
+ |\bm{I}_{N}+\bm{a}\bm{b}^{\mathsf{T}}|=|\bm{I}_{1}+\bm{a}^{\mathsf{T}}\bm{b}|=1+\bm{a}^{\mathsf{T}}\bm{b},
+\end{align*}
+即\eqref{align:appA-秩一行列式}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-秩一行列式; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-秩一行列式; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-秩一行列式}左端是一个 $N\times N$ 行列式，右端只是一个标量，因此它对任意大的 $N$ 都给出了闭式结果。它要求 $\bm{a}$、$\bm{b}$ 是同一维数的列向量（否则 $\bm{a}\bm{b}^{\mathsf{T}}$ 与 $\bm{a}^{\mathsf{T}}\bm{b}$ 之一无定义）。这个式子在概率模型中用于验证Gauss 分布的归一化常数——形如 $|\bm{I}+\bm{a}\bm{b}^{\mathsf{T}}|$ 的因子可以立刻化为一元表达式。
 \end{remark}
 
 \section{矩阵导数}\label{section:appA-矩阵导数}
 
-有时我们需要考虑向量和矩阵关于标量的导数。向量 $\bm{a}$ 关于标量 $x$ 的导数也是一个向量，其分量为
+有时需要考虑向量和矩阵关于标量的导数。向量 $\bm{a}$ 关于标量 $x$ 的导数也是一个向量，其分量为
 \begin{definition}[向量与矩阵关于标量的导数]\label{definition:appA-标量导数}
+设 $x\in\mathbb{R}$。若向量 $\bm{a}=(a_1,\cdots,a_N)^{\mathsf{T}}\in\mathbb{R}^{N}$ 的每个分量 $a_i$ 在 $x$ 处可导，则 $\bm{a}$ 关于 $x$ 的导数定义为
 \begin{align}
-  \Bigl(\frac{\partial\bm{a}}{\partial x}\Bigr)_i=\frac{\partial a_i}{\partial x}
+  \Bigl(\frac{\partial\bm{a}}{\partial x}\Bigr)_i=\frac{\partial a_i}{\partial x},\qquad i=1,\cdots,N,
   \label{align:appA-向量导数}
 \end{align}
-矩阵关于标量的导数也有类似的定义，即逐元素求导。
+即 $\partial\bm{a}/\partial x\in\mathbb{R}^{N}$。若实矩阵 $\bm{A}=(A_{ij})\in\mathbb{R}^{M\times N}$ 的每个元素 $A_{ij}$ 在 $x$ 处可导，则 $\bm{A}$ 关于 $x$ 的导数定义为逐元素求导所得的 $M\times N$ 矩阵，即 $(\partial\bm{A}/\partial x)_{ij}=\partial A_{ij}/\partial x$，其中 $i=1,\cdots,M$，$j=1,\cdots,N$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-标量导数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-标量导数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这里约定“对矩阵求导就是逐元素求导”，于是 $\partial\bm{A}/\partial x$ 与 $\bm{A}$ 同型。这条约定使下面的乘积法则能够逐分量地成立，也使\eqref{align:appA-逆的导数}这类矩阵恒等式可以通过对恒等式两边整体求导、再按矩阵乘法重组而得到。若采用“分子布局/分母布局”等其它约定，转置关系会随之改变，本附录统一采用上述逐元素约定。
 \end{remark}
 
 标量 $x$ 关于向量 $\bm{a}$ 的导数可以定义为
 \begin{definition}[标量关于向量的导数]\label{definition:appA-标量对向量导数}
+设 $N\geqslant1$，$x\in\mathbb{R}$，$\bm{a}=(a_1,\cdots,a_N)^{\mathsf{T}}\in\mathbb{R}^{N}$，且 $x$ 作为 $a_1,\cdots,a_N$ 的函数在 $\bm{a}$ 处对每个分量可偏导。$x$ 关于 $\bm{a}$ 的导数定义为
 \begin{align}
-  \Bigl(\frac{\partial x}{\partial\bm{a}}\Bigr)_i=\frac{\partial x}{\partial a_i}
+  \Bigl(\frac{\partial x}{\partial\bm{a}}\Bigr)_i=\frac{\partial x}{\partial a_i},\qquad i=1,\cdots,N,
   \label{align:appA-标量对向量导数}
 \end{align}
+即 $\partial x/\partial\bm{a}\in\mathbb{R}^{N}$。该导数与 $\bm{a}$ 同维，其第 $i$ 个分量是 $x$ 对第 $i$ 个变量的偏导数；当 $x$ 对某个分量不可偏导时，该导数不存在。
 \end{definition}
 
 类似地：
 \begin{definition}[向量关于向量的导数]\label{definition:appA-向量对向量导数}
+设 $M,N\geqslant1$，$\bm{a}=(a_1,\cdots,a_M)^{\mathsf{T}}\in\mathbb{R}^{M}$，$\bm{b}=(b_1,\cdots,b_N)^{\mathsf{T}}\in\mathbb{R}^{N}$，且每个 $a_i$ 在 $\bm{b}$ 处对每个 $b_j$ 可偏导。$\bm{a}$ 关于 $\bm{b}$ 的导数定义为 $M\times N$ 矩阵
 \begin{align}
-  \Bigl(\frac{\partial\bm{a}}{\partial\bm{b}}\Bigr)_{ij}=\frac{\partial a_i}{\partial b_j}
+  \Bigl(\frac{\partial\bm{a}}{\partial\bm{b}}\Bigr)_{ij}=\frac{\partial a_i}{\partial b_j},\qquad i=1,\cdots,M,\ j=1,\cdots,N,
   \label{align:appA-向量对向量导数}
 \end{align}
+即 $\partial\bm{a}/\partial\bm{b}\in\mathbb{R}^{M\times N}$。该导数以 $i$ 为行指标、$j$ 为列指标；当某个偏导数不存在时，该 $M\times N$ 实矩阵导数不存在。该矩阵也称为 Jacobi 矩阵。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-标量对向量导数; kind=motivation; location=紧随其后的 remark（重构新增）
-% SUPPLEMENT: parent=definition:appA-向量对向量导数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-标量对向量导数; kind=motivation; location=紧随其后的 remark
+% SUPPLEMENT: parent=definition:appA-向量对向量导数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:appA-标量对向量导数,definition:appA-向量对向量导数}给出的是“结果的每个分量对应哪个偏导数”的约定。注意 $\partial x/\partial\bm{a}$ 是与 $\bm{a}$ 同维的向量，而 $\partial\bm{a}/\partial\bm{b}$ 是 $i$ 为行、$j$ 为列的矩阵（Jacobi 矩阵的形状）；这个形状约定决定了\eqref{align:appA-迹元素导数}中下标 $i,j$ 的排列次序，也决定了\eqref{align:appA-迹矩阵导数}右端为何是 $\bm{B}^{\mathsf{T}}$ 而不是 $\bm{B}$。
 \end{remark}
 
 通过写出分量，易证
 \begin{proposition}[线性型的导数]\label{proposition:appA-线性型导数}
+设 $N\geqslant1$，$\bm{a},\bm{x}\in\mathbb{R}^{N}$。则
 \begin{align}
-  \frac{\partial}{\partial\bm{x}}(\bm{x}^{\mathsf{T}}\bm{a})=\frac{\partial}{\partial\bm{x}}(\bm{a}^{\mathsf{T}}\bm{x})=\bm{a}
+  \frac{\partial}{\partial\bm{x}}(\bm{x}^{\mathsf{T}}\bm{a})=\frac{\partial}{\partial\bm{x}}(\bm{a}^{\mathsf{T}}\bm{x})=\bm{a},
   \label{align:appA-线性型}
 \end{align}
+即线性函数 $\bm{x}^{\mathsf{T}}\bm{a}$ 关于 $\bm{x}$ 的梯度为常向量 $\bm{a}$。等式中的导数按\cref{definition:appA-标量对向量导数}定义，取值均为 $\mathbb{R}^{N}$ 中的向量；该结论对任意维数 $N$ 与任意常向量 $\bm{a}$ 成立，不要求 $\bm{a}$ 非零。
 \end{proposition}
 
 \begin{proof}
-（重构新增）原书只说“易证”，下面补全。由于 $\bm{x}^{\mathsf{T}}\bm{a}=\bm{a}^{\mathsf{T}}\bm{x}=\sum_j a_jx_j$，对第 $i$ 个分量求偏导得 $\partial\bigl(\sum_j a_jx_j\bigr)/\partial x_i=a_i$，故梯度向量的第 $i$ 个分量等于 $a_i$，即\eqref{align:appA-线性型}。
+由 $\bm{x}^{\mathsf{T}}\bm{a}=\bm{a}^{\mathsf{T}}\bm{x}=\sum_{j=1}^{N}a_jx_j$，对第 $i$ 个分量求偏导得
+\begin{align*}
+ \frac{\partial}{\partial x_i}(\bm{x}^{\mathsf{T}}\bm{a})=\frac{\partial}{\partial x_i}\Bigl(\sum_{j=1}^{N}a_jx_j\Bigr)=a_i,\qquad i=1,\cdots,N.
+\end{align*}
+按\cref{definition:appA-标量对向量导数}，梯度向量的第 $i$ 个分量等于 $a_i$，即\eqref{align:appA-线性型}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-线性型导数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-线性型导数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-线性型}说明线性函数的梯度是常向量，这是所有一阶展开的出发点：它表明 $\bm{x}^{\mathsf{T}}\bm{a}$ 的导数与 $\bm{x}$ 无关。该式对任意维数、任意 $\bm{a}$ 都成立，不需要任何可逆性或对称性假设。
 \end{remark}
 
 类似地：
 \begin{proposition}[矩阵乘积的导数]\label{proposition:appA-乘积法则}
+设 $M,N,P\geqslant1$，$I\subseteq\mathbb{R}$ 为区间，$\bm{A}:I\to\mathbb{R}^{M\times N}$ 与 $\bm{B}:I\to\mathbb{R}^{N\times P}$ 在 $x\in I$ 处可导。则 $\bm{A}\bm{B}$ 在 $x$ 处可导，且
 \begin{align}
-  \frac{\partial}{\partial x}(\bm{A}\bm{B})=\frac{\partial\bm{A}}{\partial x}\bm{B}+\bm{A}\frac{\partial\bm{B}}{\partial x}
+  \frac{\partial}{\partial x}(\bm{A}\bm{B})=\frac{\partial\bm{A}}{\partial x}\bm{B}+\bm{A}\frac{\partial\bm{B}}{\partial x}.
   \label{align:appA-乘积法则}
 \end{align}
+等式两端都是 $M\times P$ 矩阵；求导按元素进行，$\bm{A}$ 与 $\bm{B}$ 的阶数满足乘法相容条件，且两者都对同一个标量 $x$ 可导。右端的两个乘积均为 $M\times P$ 实矩阵。
 \end{proposition}
 
 \begin{proof}
-（重构新增）对 $(i,j)$ 分量用标量乘积法则：$(\bm{A}\bm{B})_{ij}=\sum_k A_{ik}B_{kj}$，故
+对 $(i,j)$ 分量用标量乘积法则。由 $(\bm{A}\bm{B})_{ij}=\sum_{k=1}^{N}A_{ik}B_{kj}$ 得
 \begin{align*}
-  \frac{\partial}{\partial x}(\bm{A}\bm{B})_{ij}=\sum_k\Bigl(\frac{\partial A_{ik}}{\partial x}B_{kj}+A_{ik}\frac{\partial B_{kj}}{\partial x}\Bigr),
+ \frac{\partial}{\partial x}(\bm{A}\bm{B})_{ij}=\sum_{k=1}^{N}\Bigl(\frac{\partial A_{ik}}{\partial x}B_{kj}+A_{ik}\frac{\partial B_{kj}}{\partial x}\Bigr),
 \end{align*}
-右端正是 $\bigl(\frac{\partial\bm{A}}{\partial x}\bm{B}+\bm{A}\frac{\partial\bm{B}}{\partial x}\bigr)_{ij}$，即\eqref{align:appA-乘积法则}。
+右端正是 $\bigl(\frac{\partial\bm{A}}{\partial x}\bm{B}+\bm{A}\frac{\partial\bm{B}}{\partial x}\bigr)_{ij}$，故\eqref{align:appA-乘积法则}成立。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-乘积法则; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-乘积法则; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-乘积法则}与标量乘积法则形式相同，但因子顺序不能交换（矩阵乘法不交换）。它要求 $\bm{A}\bm{B}$ 可乘，且 $\bm{A}$、$\bm{B}$ 都关于同一个 $x$ 可导。下面\eqref{align:appA-逆的导数}的推导正是把这条法则用于恒等式 $\bm{A}^{-1}\bm{A}=\bm{I}$。
 \end{remark}
 
 矩阵的逆关于标量 $x$ 的导数可以定义为
 \begin{proposition}[逆矩阵的导数]\label{proposition:appA-逆矩阵的导数}
+设 $N\geqslant1$，$I\subseteq\mathbb{R}$ 为区间，$\bm{A}:I\to\mathbb{R}^{N\times N}$ 在 $x\in I$ 处可导，且 $\bm{A}(x)$ 可逆。则 $\bm{A}^{-1}$ 在 $x$ 处可导，且
 \begin{align}
-  \frac{\partial}{\partial x}(\bm{A}^{-1})=-\bm{A}^{-1}\frac{\partial\bm{A}}{\partial x}\bm{A}^{-1}
+  \frac{\partial}{\partial x}(\bm{A}^{-1})=-\bm{A}^{-1}\frac{\partial\bm{A}}{\partial x}\bm{A}^{-1}.
   \label{align:appA-逆的导数}
 \end{align}
+等式两端都是 $N$ 阶方阵；结论要求 $\bm{A}(x)$ 在 $x$ 处可逆且可导，右端的两个因子都是 $\bm{A}^{-1}$。该公式对任意 $N$ 阶可逆可导矩阵值函数成立。
 \end{proposition}
 
 \begin{proof}
-这可以通过使用\eqref{align:appA-乘积法则}微分方程 $\bm{A}^{-1}\bm{A}=\bm{I}$，然后右乘 $\bm{A}^{-1}$ 得证。补全如下：对 $\bm{A}^{-1}\bm{A}=\bm{I}$ 两边关于 $x$ 求导，由\eqref{align:appA-乘积法则}得
+对恒等式 $\bm{A}\bm{A}^{-1}=\bm{I}_{N}$ 两边关于 $x$ 求导。由\eqref{align:appA-乘积法则}，
 \begin{align*}
-  \frac{\partial\bm{A}^{-1}}{\partial x}\bm{A}+\bm{A}^{-1}\frac{\partial\bm{A}}{\partial x}=\bm{0}
+ \frac{\partial\bm{A}}{\partial x}\bm{A}^{-1}+\bm{A}\frac{\partial\bm{A}^{-1}}{\partial x}=\bm{0},
 \end{align*}
-（右端 $\bm{I}$ 与 $x$ 无关，导数为零矩阵），两边右乘 $\bm{A}^{-1}$ 即得\eqref{align:appA-逆的导数}。
+其中右端 $\bm{I}_{N}$ 与 $x$ 无关，导数为零矩阵。两边左乘 $\bm{A}^{-1}$ 得
+\begin{align*}
+ \bm{A}^{-1}\frac{\partial\bm{A}}{\partial x}\bm{A}^{-1}+\frac{\partial\bm{A}^{-1}}{\partial x}=\bm{0},
+\end{align*}
+即\eqref{align:appA-逆的导数}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-逆矩阵的导数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-逆矩阵的导数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-逆的导数}要求 $\bm{A}$ 在讨论的 $x$ 处可逆且可导。它与标量恒等式 $(1/f)'=-f'/f^{2}$ 同构：负号与两侧的 $\bm{A}^{-1}$ 都来自“逆的逆”。这条式子是\cref{proposition:appA-对数行列式导数}与许多最大似然推导中求协方差矩阵导数的关键一步。
 \end{remark}
 
 类似地：
 \begin{proposition}[对数行列式关于标量的导数]\label{proposition:appA-对数行列式导数}
+设 $N\geqslant1$，$I\subseteq\mathbb{R}$ 为区间，$\bm{A}:I\to\mathbb{R}^{N\times N}$ 在 $x\in I$ 处可导，$\bm{A}(x)$ 可逆且 $|\bm{A}(x)|>0$。则
 \begin{align}
-  \frac{\partial}{\partial x}\ln|\bm{A}|=\mathrm{tr}\Bigl(\bm{A}^{-1}\frac{\partial\bm{A}}{\partial x}\Bigr)
+  \frac{\partial}{\partial x}\ln|\bm{A}|=\mathrm{tr}\Bigl(\bm{A}^{-1}\frac{\partial\bm{A}}{\partial x}\Bigr),
   \label{align:appA-对数行列式}
 \end{align}
+其中 $\ln$ 为自然对数。等式左端为标量，右端为迹；结论要求 $\bm{A}(x)$ 可逆且行列式为正，以保证对数有意义。右端的迹为标量，故等式两端同为标量。
 \end{proposition}
 
-我们稍后会证明这一点。
-
 \begin{proof}
-（重构新增）原书在此处没有给出证明，只说“稍后会证明”，并把按提示的验证留到本附录末尾（见\cref{proposition:appA-行列式与迹}之后的练习）。下面先给出一个只依赖行列式定义\eqref{align:appA-行列式定义}的直接证明。对 $|\bm{I}+\varepsilon\bm{M}|$ 按\eqref{align:appA-行列式定义}展开：只有恒等排列的项含 $\varepsilon$ 的零次与一次项 $\prod_k(1+\varepsilon M_{kk})=1+\varepsilon\,\mathrm{tr}(\bm{M})+O(\varepsilon^{2})$，而任何非恒等排列至少有两个下标不固定，其项为 $O(\varepsilon^{2})$。于是
+先证明：对任意 $N$ 阶方阵 $\bm{M}$，
 \begin{align*}
-  |\bm{I}+\varepsilon\bm{M}|=1+\varepsilon\,\mathrm{tr}(\bm{M})+O(\varepsilon^{2}).
+ |\bm{I}_{N}+\varepsilon\bm{M}|=1+\varepsilon\,\mathrm{tr}(\bm{M})+O(\varepsilon^{2})\qquad(\varepsilon\to0).
 \end{align*}
-取 $\bm{M}=\bm{A}^{-1}\partial\bm{A}/\partial x$，则 $\bm{A}+\varepsilon\partial\bm{A}/\partial x=\bm{A}\bigl(\bm{I}+\varepsilon\bm{A}^{-1}\partial\bm{A}/\partial x\bigr)$，由\eqref{align:appA-行列式乘积}得
+行列式对每个行向量是线性的。将 $\bm{I}_{N}+\varepsilon\bm{M}$ 的每一行按 $\bm{I}_{N}$ 的行与 $\bm{M}$ 的行展开，含 $\varepsilon$ 一次方的项恰有一行取自 $\bm{M}$、其余行取自 $\bm{I}_{N}$；这样的行列式等于 $\bm{M}$ 的对应对角元，故一次项系数为 $\sum_{k=1}^{N}M_{kk}=\mathrm{tr}(\bm{M})$。含 $\varepsilon^{2}$ 及更高次方的项归入 $O(\varepsilon^{2})$。
+由于 $\bm{A}(x)$ 可导且可逆，
 \begin{align*}
-  \ln|\bm{A}+\varepsilon\partial\bm{A}/\partial x|-\ln|\bm{A}|=\ln\Bigl(1+\varepsilon\,\mathrm{tr}\Bigl(\bm{A}^{-1}\frac{\partial\bm{A}}{\partial x}\Bigr)+O(\varepsilon^{2})\Bigr),
+ \bm{A}(x+\varepsilon)=\bm{A}(x)+\varepsilon\frac{\partial\bm{A}}{\partial x}+O(\varepsilon^{2})=\bm{A}(x)\Bigl(\bm{I}_{N}+\varepsilon\bm{A}(x)^{-1}\frac{\partial\bm{A}}{\partial x}+O(\varepsilon^{2})\Bigr).
 \end{align*}
-两边除以 $\varepsilon$ 并令 $\varepsilon\to0$，利用 $\ln(1+t)=t+O(t^{2})$ 即得\eqref{align:appA-对数行列式}。
+由\eqref{align:appA-行列式乘积}，
+\begin{align*}
+ |\bm{A}(x+\varepsilon)|=|\bm{A}(x)|\Bigl(1+\varepsilon\,\mathrm{tr}\Bigl(\bm{A}(x)^{-1}\frac{\partial\bm{A}}{\partial x}\Bigr)+O(\varepsilon^{2})\Bigr).
+\end{align*}
+因 $|\bm{A}(x)|>0$，对上式取对数并减去 $\ln|\bm{A}(x)|$，得
+\begin{align*}
+ \ln|\bm{A}(x+\varepsilon)|-\ln|\bm{A}(x)|=\ln\Bigl(1+\varepsilon\,\mathrm{tr}\Bigl(\bm{A}(x)^{-1}\frac{\partial\bm{A}}{\partial x}\Bigr)+O(\varepsilon^{2})\Bigr).
+\end{align*}
+两边除以 $\varepsilon$ 并令 $\varepsilon\to0$，利用 $\ln(1+t)=t+O(t^{2})$（$t\to0$），即得\eqref{align:appA-对数行列式}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-对数行列式导数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-\eqref{align:appA-对数行列式}把“行列式的对数”的导数化成了迹，从而把一个 $N$ 阶行列式的问题降为矩阵乘法的问题。条件是 $\bm{A}$ 可逆（否则 $\ln|\bm{A}|$ 无定义）。原书在本节末尾以练习的形式要求用谱分解再验证一次（见本节末尾的练习说明），两条路线给出同一结论，可以互相校验。
+% SUPPLEMENT: parent=proposition:appA-对数行列式导数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+\eqref{align:appA-对数行列式}把“行列式的对数”的导数化成了迹，从而把一个 $N$ 阶行列式的问题降为矩阵乘法的问题。条件是 $\bm{A}$ 可逆（否则 $\ln|\bm{A}|$ 无定义）。原文在本节末尾以练习的形式要求用谱分解再验证一次（见本节末尾的练习说明），两条路线给出同一结论，可以互相校验。
 \end{remark}
 
-如果我们选择 $x$ 作为 $\bm{A}$ 的元素之一，则有
+取 $x$ 为 $\bm{A}$ 的元素之一，则有
 \begin{proposition}[迹关于矩阵元素的导数]\label{proposition:appA-迹的矩阵导数}
+设 $M,N\geqslant1$，$\bm{A}\in\mathbb{R}^{M\times N}$，$\bm{B}\in\mathbb{R}^{N\times M}$。则 $\mathrm{tr}(\bm{A}\bm{B})$ 关于 $\bm{A}$ 的 $(i,j)$ 元素的偏导数为
 \begin{align}
-  \frac{\partial}{\partial A_{ij}}\mathrm{tr}(\bm{A}\bm{B})=B_{ji}
+  \frac{\partial}{\partial A_{ij}}\mathrm{tr}(\bm{A}\bm{B})=B_{ji},\qquad i=1,\cdots,M,\ j=1,\cdots,N.
   \label{align:appA-迹元素导数}
 \end{align}
+等式左端为标量，右端为 $\bm{B}$ 的 $(j,i)$ 元素；$i=1,\cdots,M$，$j=1,\cdots,N$，故 $\bm{A}$ 为 $M\times N$ 实矩阵、$\bm{B}$ 为 $N\times M$ 实矩阵。等式对任意正整数 $M,N$ 成立，且该偏导数在 $i,j$ 的整个范围内有定义。
 \end{proposition}
 
 \begin{proof}
-其可以通过使用索引表示法写出矩阵得到。补全如下：$\mathrm{tr}(\bm{A}\bm{B})=\sum_k(\bm{A}\bm{B})_{kk}=\sum_k\sum_l A_{kl}B_{lk}$，其中只有 $k=i$、$l=j$ 的那一项含 $A_{ij}$，且其系数为 $B_{ji}$，故\eqref{align:appA-迹元素导数}成立。
+由矩阵乘法与迹的定义，
+\begin{align*}
+ \mathrm{tr}(\bm{A}\bm{B})=\sum_{k=1}^{M}(\bm{A}\bm{B})_{kk}=\sum_{k=1}^{M}\sum_{l=1}^{N}A_{kl}B_{lk}.
+\end{align*}
+右端只有当 $(k,l)=(i,j)$ 的项含 $A_{ij}$，其系数为 $B_{ji}$，故 $\partial\mathrm{tr}(\bm{A}\bm{B})/\partial A_{ij}=B_{ji}$，即\eqref{align:appA-迹元素导数}。
 \end{proof}
 
 这个结论也可以写成如下更紧凑的形式：
@@ -474,50 +593,68 @@ $N\times N$ 矩阵 $\bm{A}$ 的行列式 $|\bm{A}|$ 由下式定义：
   \label{align:appA-迹矩阵导数}
 \end{align}
 
-% SUPPLEMENT: parent=proposition:appA-迹的矩阵导数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-迹的矩阵导数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-迹元素导数}与\eqref{align:appA-迹矩阵导数}是同一事实的两种写法：前者逐元素，后者按\cref{definition:appA-向量对向量导数}的形状约定把所有偏导数堆成一个与 $\bm{A}$ 同型的矩阵。右端出现转置正是“$B_{ji}$ 而非 $B_{ij}$”的直接后果。式中要求 $\bm{A}\bm{B}$ 为方阵（以便取迹），$\bm{A}$ 与 $\bm{B}$ 本身不必是方阵。
 \end{remark}
 
-通过使用这种表示法，我们可以得到以下性质：
+采用这种表示法可得以下性质：
 \begin{proposition}[矩阵导数的若干恒等式]\label{proposition:appA-矩阵导数恒等式}
+设 $M,N\geqslant1$。下列恒等式成立。对任意 $\bm{A},\bm{B}\in\mathbb{R}^{M\times N}$，
 \begin{align}
-  \frac{\partial}{\partial\bm{A}}\mathrm{tr}(\bm{A}^{\mathsf{T}}\bm{B})&=\bm{B}
-  \label{align:appA-矩阵导数性质1}\\
-  \frac{\partial}{\partial\bm{A}}\mathrm{tr}(\bm{A})&=\bm{I}
-  \label{align:appA-矩阵导数性质2}\\
-  \frac{\partial}{\partial\bm{A}}\mathrm{tr}(\bm{A}\bm{B}\bm{A}^{\mathsf{T}})&=\bm{A}(\bm{B}+\bm{B}^{\mathsf{T}})
+  \frac{\partial}{\partial\bm{A}}\mathrm{tr}(\bm{A}^{\mathsf{T}}\bm{B})&=\bm{B},
+  \label{align:appA-矩阵导数性质1}
+\end{align}
+对任意 $\bm{A}\in\mathbb{R}^{N\times N}$，
+\begin{align}
+  \frac{\partial}{\partial\bm{A}}\mathrm{tr}(\bm{A})&=\bm{I}_{N},
+  \label{align:appA-矩阵导数性质2}
+\end{align}
+对任意 $\bm{A}\in\mathbb{R}^{M\times N}$ 与 $\bm{B}\in\mathbb{R}^{N\times N}$，
+\begin{align}
+  \frac{\partial}{\partial\bm{A}}\mathrm{tr}(\bm{A}\bm{B}\bm{A}^{\mathsf{T}})&=\bm{A}(\bm{B}+\bm{B}^{\mathsf{T}}).
   \label{align:appA-矩阵导数性质3}
 \end{align}
+其中每式左端的导数均按\cref{definition:appA-向量对向量导数}的矩阵形状约定理解，涉及的矩阵均为实矩阵。
 \end{proposition}
 
 \begin{proof}
-这些性质同样可以通过写出矩阵的索引得证。补全如下：$\mathrm{tr}(\bm{A}^{\mathsf{T}}\bm{B})=\sum_{kl}A_{lk}B_{lk}$，对 $A_{ij}$ 求偏导只留下 $B_{ij}$，得\eqref{align:appA-矩阵导数性质1}。$\mathrm{tr}(\bm{A})=\sum_k A_{kk}$，对 $A_{ij}$ 求偏导得 $\delta_{ij}$，按矩阵形式即 $\bm{I}$，得\eqref{align:appA-矩阵导数性质2}。最后，$\mathrm{tr}(\bm{A}\bm{B}\bm{A}^{\mathsf{T}})=\sum_{klm}A_{km}B_{ml}A_{kl}$，对 $A_{ij}$ 求偏导时 $\bm{A}$ 出现两次，得
+三式都按分量计算。首先，$\mathrm{tr}(\bm{A}^{\mathsf{T}}\bm{B})=\sum_{k=1}^{M}\sum_{l=1}^{N}A_{kl}B_{kl}$，对 $A_{ij}$ 求偏导只留下 $B_{ij}$，得\eqref{align:appA-矩阵导数性质1}。其次，$\mathrm{tr}(\bm{A})=\sum_{k=1}^{N}A_{kk}$，对 $A_{ij}$ 求偏导得 $\delta_{ij}$，按矩阵形式即 $\bm{I}_{N}$，得\eqref{align:appA-矩阵导数性质2}。最后，
 \begin{align*}
-  \sum_{l}B_{jl}A_{il}+\sum_{m}A_{im}B_{mj}=(\bm{A}\bm{B}^{\mathsf{T}})_{ij}+(\bm{A}\bm{B})_{ij},
+ \mathrm{tr}(\bm{A}\bm{B}\bm{A}^{\mathsf{T}})=\sum_{k=1}^{M}\sum_{l=1}^{N}\sum_{m=1}^{N}A_{km}B_{ml}A_{kl},
 \end{align*}
-即\eqref{align:appA-矩阵导数性质3}。
+对 $A_{ij}$ 求偏导时 $\bm{A}$ 出现两次，得
+\begin{align*}
+ \frac{\partial}{\partial A_{ij}}\mathrm{tr}(\bm{A}\bm{B}\bm{A}^{\mathsf{T}})=\sum_{l=1}^{N}B_{jl}A_{il}+\sum_{m=1}^{N}A_{im}B_{mj}=(\bm{A}\bm{B}^{\mathsf{T}})_{ij}+(\bm{A}\bm{B})_{ij},
+\end{align*}
+即 $\bm{A}(\bm{B}+\bm{B}^{\mathsf{T}})$ 的 $(i,j)$ 元素，故\eqref{align:appA-矩阵导数性质3}成立。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-矩阵导数恒等式; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-矩阵导数恒等式; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 三条恒等式都要求公式中的迹有定义：\eqref{align:appA-矩阵导数性质1}要求 $\bm{A}$ 与 $\bm{B}$ 同型，\eqref{align:appA-矩阵导数性质2}要求 $\bm{A}$ 是方阵，\eqref{align:appA-矩阵导数性质3}要求 $\bm{A}\bm{B}\bm{A}^{\mathsf{T}}$ 为方阵。注意\eqref{align:appA-矩阵导数性质3}右端的 $\bm{B}+\bm{B}^{\mathsf{T}}$ 在 $\bm{B}$ 对称时化为 $2\bm{B}$；若漏掉 $\bm{B}^{\mathsf{T}}$，得到的矩阵连对称性都不满足，可用一维情形（$A=B=1$ 时左端导数为 $2AB=2$）快速核对。
 \end{remark}
 
-另外，我们还可得到
+另外还可得到
 \begin{proposition}[对数行列式关于矩阵的导数]\label{proposition:appA-对数行列式的矩阵导数}
+设 $N\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$ 为 $N$ 阶实矩阵，可逆且 $|\bm{A}|>0$。则 $\ln|\bm{A}|$ 作为 $\bm{A}$ 的元素的函数可微，且
 \begin{align}
-  \frac{\partial}{\partial\bm{A}}\ln|\bm{A}|=(\bm{A}^{-1})^{\mathsf{T}}
+  \frac{\partial}{\partial\bm{A}}\ln|\bm{A}|=(\bm{A}^{-1})^{\mathsf{T}}.
   \label{align:appA-对数行列式矩阵}
 \end{align}
+右端的转置按\cref{definition:appA-向量对向量导数}的矩阵形状约定产生。该结论要求 $\bm{A}$ 为 $N$ 阶实可逆矩阵，且行列式为正。
 \end{proposition}
 
 \begin{proof}
-\eqref{align:appA-对数行列式矩阵}可以由\eqref{align:appA-对数行列式}和\eqref{align:appA-迹矩阵导数}推导得出。取\eqref{align:appA-对数行列式}中的 $x=A_{ij}$，则 $\partial\bm{A}/\partial A_{ij}$ 是仅在 $(i,j)$ 处为 $1$、其余为 $0$ 的矩阵 $\bm{E}_{ij}$，于是 $\mathrm{tr}(\bm{A}^{-1}\bm{E}_{ij})=(\bm{A}^{-1})_{ji}$。按矩阵形式堆叠即得\eqref{align:appA-对数行列式矩阵}。
+固定 $i,j\in\{1,\cdots,N\}$，在\eqref{align:appA-对数行列式}中取 $x=A_{ij}$。此时 $\partial\bm{A}/\partial A_{ij}=\bm{E}_{ij}$，其中 $\bm{E}_{ij}$ 是仅在 $(i,j)$ 处为 $1$、其余元素为 $0$ 的 $N$ 阶方阵。于是
+\begin{align*}
+ \frac{\partial}{\partial A_{ij}}\ln|\bm{A}|=\mathrm{tr}(\bm{A}^{-1}\bm{E}_{ij})=(\bm{A}^{-1})_{ji},
+\end{align*}
+其中最后一个等号由 $\mathrm{tr}(\bm{A}^{-1}\bm{E}_{ij})=\sum_{k,l}(\bm{A}^{-1})_{kl}(\bm{E}_{ij})_{lk}=(\bm{A}^{-1})_{ji}$ 得到。按\cref{definition:appA-向量对向量导数}的矩阵形状约定堆叠所有偏导数，即得\eqref{align:appA-对数行列式矩阵}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-对数行列式的矩阵导数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-对数行列式的矩阵导数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-对数行列式矩阵}要求 $\bm{A}$ 可逆，其右端为转置是因为\cref{definition:appA-向量对向量导数}按“行指标在前”堆叠偏导数。若 $\bm{A}$ 对称（如协方差矩阵），则 $(\bm{A}^{-1})^{\mathsf{T}}=\bm{A}^{-1}$，转置可以省略。这个式子是推导多元Gauss 分布最大似然解时对 $\bm{\Sigma}$ 求导的核心工具。
 \end{remark}
 
@@ -525,224 +662,258 @@ $N\times N$ 矩阵 $\bm{A}$ 的行列式 $|\bm{A}|$ 由下式定义：
 
 对于大小为 $M\times M$ 的方阵 $\bm{A}$，其特征向量方程定义为
 \begin{definition}[特征向量与特征值]\label{definition:appA-特征向量}
+设 $M\geqslant1$，$\bm{A}\in\mathbb{C}^{M\times M}$，$i\in\{1,\cdots,M\}$。若存在非零向量 $\bm{u}_i\in\mathbb{C}^{M}$ 与标量 $\lambda_i\in\mathbb{C}$ 使得
 \begin{align}
-  \bm{A}\bm{u}_i=\lambda_i\bm{u}_i
+  \bm{A}\bm{u}_i=\lambda_i\bm{u}_i,
   \label{align:appA-特征方程定义}
 \end{align}
-其中 $i=1,\cdots,M$，$\bm{u}_i$ 是特征向量，$\lambda_i$ 是对应的特征值。
+则 $\bm{u}_i$ 称为 $\bm{A}$ 的特征向量，$\lambda_i$ 称为与 $\bm{u}_i$ 对应的特征值。特征向量只对 $M$ 阶方阵定义，且必须非零，否则任何 $\lambda_i$ 都满足方程；特征值可能为任意复数，包括 $0$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-特征向量; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-特征向量; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 特征向量方程要求 $\bm{A}$ 是方阵，且 $\bm{u}_i$ 必须是非零向量（否则任何 $\lambda$ 都满足方程，特征值就没有意义）。它的含义是：$\bm{A}$ 作用在 $\bm{u}_i$ 上不改变方向，只按因子 $\lambda_i$ 伸缩。因此\cref{definition:appA-特征向量}刻画的是矩阵所代表的线性变换的“不变方向”，这使得后文对对称矩阵的谱分解（\cref{theorem:appA-谱分解}）成为可能。
 \end{remark}
 
 这可以视为一组 $M$ 个同时满足的齐次线性方程，有解的条件是
 \begin{proposition}[特征方程]\label{proposition:appA-特征方程}
+设 $M\geqslant1$，$\bm{A}\in\mathbb{C}^{M\times M}$，$\lambda_i\in\mathbb{C}$。则 $\lambda_i$ 是 $\bm{A}$ 的特征值当且仅当
 \begin{align}
-  |\bm{A}-\lambda_i\bm{I}|=0
+  |\bm{A}-\lambda_i\bm{I}_M|=0.
   \label{align:appA-特征方程}
 \end{align}
+因此 $\bm{A}$ 的特征值恰为特征多项式 $p_{\bm{A}}(\lambda)=|\bm{A}-\lambda\bm{I}_M|$ 的 $M$ 个复根（计重数）。特征多项式是 $\lambda$ 的 $M$ 次多项式，其次数等于矩阵的阶；因此特征值共有 $M$ 个，且可能重复。
 \end{proposition}
 
 这就是特征方程。因为这是一个关于 $\lambda_i$ 的 $M$ 阶多项式，所以它必须有 $M$ 个解（尽管这些解不必都是不同的）。
 
 \begin{proof}
-（重构新增）原书未给证明。把\eqref{align:appA-特征方程定义}移项得 $(\bm{A}-\lambda_i\bm{I})\bm{u}_i=\bm{0}$，即 $\bm{u}_i$ 是齐次线性方程组 $(\bm{A}-\lambda_i\bm{I})\bm{x}=\bm{0}$ 的非零解。由线性代数基本结论，齐次方程有非零解当且仅当系数矩阵奇异，而方阵奇异当且仅当其行列式为零（参见\cref{proposition:appA-逆的行列式}），故\eqref{align:appA-特征方程}是存在非零解的必要条件，也是充分条件。按\eqref{align:appA-行列式定义}展开 $|\bm{A}-\lambda\bm{I}|$ 得到的是 $\lambda$ 的 $M$ 次多项式（特征多项式），由代数基本定理，它在复数域内恰有 $M$ 个根（计重数），故特征值总共 $M$ 个。
+由\eqref{align:appA-特征方程定义}，$\lambda_i$ 为特征值当且仅当存在非零向量 $\bm{u}_i$ 使 $(\bm{A}-\lambda_i\bm{I}_{M})\bm{u}_i=\bm{0}$，即齐次线性方程组 $(\bm{A}-\lambda_i\bm{I}_{M})\bm{x}=\bm{0}$ 有非零解。方阵有非零解当且仅当它奇异，即不可逆；由\cref{proposition:appA-逆的行列式}，可逆方阵的行列式非零；反之，行列式非零的方阵可逆是线性代数基本结论。因此方阵奇异当且仅当 $|\bm{A}-\lambda_i\bm{I}_{M}|=0$，即\eqref{align:appA-特征方程}。
+按\eqref{align:appA-行列式定义}，$|\bm{A}-\lambda\bm{I}_{M}|$ 是 $\lambda$ 的 $M$ 次多项式，称为 $\bm{A}$ 的特征多项式。由代数基本定理，它在 $\mathbb{C}$ 中恰有 $M$ 个根（计重数），故 $\bm{A}$ 的特征值总共有 $M$ 个。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-特征方程; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-特征方程; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-特征方程}把“求特征值”化归为“求多项式的根”，因此特征值可能重复、也可能为复数，这两点在本节后面都要用到：重复的特征值使特征向量不唯一（需要另行正交化），复数特征值则需要\cref{proposition:appA-实对称特征值为实}来排除。条件“$\bm{A}$ 为方阵”不可省，否则 $|\bm{A}-\lambda\bm{I}|$ 无定义。
 \end{remark}
 
-$\bm{A}$ 的秩等于非零特征值的数量。
+下面讨论矩阵的秩与其特征值的关系。
 
 \begin{proposition}[秩与非零特征值的个数]\label{proposition:appA-秩与非零特征值}
-$\bm{A}$ 的秩等于非零特征值的数量。
+设 $N\geqslant1$，$\bm{A}\in\mathbb{C}^{N\times N}$ 可对角化，即存在可逆矩阵 $\bm{U}\in\mathbb{C}^{N\times N}$ 与对角矩阵 $\bm{\Lambda}=\mathrm{diag}(\lambda_1,\cdots,\lambda_N)\in\mathbb{C}^{N\times N}$ 使得 $\bm{A}=\bm{U}\bm{\Lambda}\bm{U}^{-1}$。则 $\operatorname{rank}(\bm{A})$ 等于 $\lambda_1,\cdots,\lambda_N$ 中非零元的个数（计重数）。结论中的计数按重数进行；对角矩阵 $\bm{\Lambda}$ 的零对角元不影响秩，非零对角元的个数等于秩。
 \end{proposition}
 
-% SUPPLEMENT: parent=proposition:appA-秩与非零特征值; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）原文问题说明：
-原书此处直接断言“$\bm{A}$ 的秩等于非零特征值的数量”，这一断言对一般方阵并不成立。反例：$\bm{A}=\begin{pmatrix}0&1\\0&0\end{pmatrix}$ 的秩为 $1$（两行不成比例，且第一行非零），但它的特征多项式为 $\lambda^{2}=0$，两个特征值都是 $0$，非零特征值的个数为 $0\neq1$。问题的根源在于不可对角化的矩阵会把非零的“能量”放在 Jordan 块的非对角位置上，而特征值只反映对角部分。正确的表述是：若 $\bm{A}$ 可对角化（即存在可逆 $\bm{U}$ 使 $\bm{A}=\bm{U}\bm{\Lambda}\bm{U}^{-1}$），则 $\mathrm{rank}(\bm{A})=\mathrm{rank}(\bm{\Lambda})$，即秩等于非零特征值的个数。证明：可逆矩阵相乘不改变秩，故 $\mathrm{rank}(\bm{A})=\mathrm{rank}(\bm{\Lambda})$，而对角矩阵的秩显然等于其非零对角元的个数。特别地，实对称矩阵总可以正交对角化（\cref{theorem:appA-谱分解}），因此原书的断言在本附录真正使用的对称矩阵情形下是对的。
+\begin{proof}
+由 $\bm{A}=\bm{U}\bm{\Lambda}\bm{U}^{-1}$ 及 $\bm{U}$、$\bm{U}^{-1}$ 可逆，左乘或右乘可逆矩阵不改变行空间，故不改变行秩，于是 $\operatorname{rank}(\bm{A})=\operatorname{rank}(\bm{\Lambda})$。对角矩阵 $\bm{\Lambda}$ 的非零行恰为对应非零对角元的那些行；这些行分别只在第 $i$ 个坐标上非零，故它们线性无关。因此 $\operatorname{rank}(\bm{\Lambda})$ 等于 $\bm{\Lambda}$ 的非零对角元个数，即 $\lambda_1,\cdots,\lambda_N$ 中非零元的个数。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:appA-秩与非零特征值; kind=motivation; location=紧随证明之后的 remark
+\begin{remark}
+原文问题说明：
+原文此处直接断言“$\bm{A}$ 的秩等于非零特征值的数量”，这一断言对一般方阵并不成立。反例：$\bm{A}=\begin{pmatrix}0&1\\0&0\end{pmatrix}$ 的秩为 $1$（两行不成比例，且第一行非零），但它的特征多项式为 $\lambda^{2}=0$，两个特征值都是 $0$，非零特征值的个数为 $0\neq1$。问题的根源在于不可对角化的矩阵可在 Jordan 块的非对角位置承载非零的秩，而特征值只反映对角部分。原文缺少可对角化假设；上述命题给出修正后的正确陈述。特别地，实对称矩阵总可以正交对角化（\cref{theorem:appA-谱分解}），故对实对称矩阵原文断言成立。
 \end{remark}
 
 需要特别讨论的是对称矩阵，对称矩阵可能是协方差矩阵、核矩阵或 Hessian 矩阵。
 
 \begin{definition}[对称矩阵]\label{definition:appA-对称矩阵}
-对称矩阵具有性质 $A_{ij}=A_{ji}$，或等价地有 $\bm{A}^{\mathsf{T}}=\bm{A}$。
+设 $N\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$。若 $\bm{A}$ 的元素满足 $A_{ij}=A_{ji}$ 对一切 $i,j=1,\cdots,N$ 成立，等价地 $\bm{A}^{\mathsf{T}}=\bm{A}$，则 $\bm{A}$ 称为 $N$ 阶实对称矩阵。对称性只对 $N\times N$ 方阵有意义；实对称矩阵的元素均为实数，且其转置等于自身。因此只需给出上三角部分的元素，就能确定整个矩阵。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-对称矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-对称矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 对称性只对方阵才有意义，它是“转置不变”这一条件（参见\cref{definition:appA-转置}）。协方差矩阵、核矩阵与 Hessian 矩阵之所以对称，分别来自协方差的定义、核函数的对称性以及二阶偏导数可交换；因此本书中大量矩阵求逆与求导的公式都可以在对称情形下简化（例如\eqref{align:appA-对数行列式矩阵}中的转置可以去掉）。
 \end{remark}
 
 对称矩阵的逆矩阵也是对称矩阵。
 
 \begin{proposition}[对称矩阵的逆]\label{proposition:appA-对称矩阵的逆}
-对称矩阵的逆矩阵也是对称矩阵。
+设 $N\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$ 为实对称矩阵且可逆。则 $\bm{A}^{-1}$ 也是 $N$ 阶实对称矩阵，即 $(\bm{A}^{-1})^{\mathsf{T}}=\bm{A}^{-1}$。该结论要求 $\bm{A}$ 对称且可逆，两个条件缺一不可。等式两端都是 $N$ 阶实对称矩阵；逆矩阵存在时，其对称性由 $\bm{A}$ 的对称性与逆的唯一性共同保证。
 \end{proposition}
 
 \begin{proof}
-这可以通过取 $\bm{A}^{-1}\bm{A}=\bm{I}$ 的转置并利用 $\bm{A}\bm{A}^{-1}=\bm{I}$ 以及 $\bm{I}$ 的对称性得证。补全如下：由\eqref{align:appA-逆定义}有 $\bm{A}^{-1}\bm{A}=\bm{I}$，两边取转置并用\eqref{align:appA-转置乘积}得 $\bm{A}^{\mathsf{T}}(\bm{A}^{-1})^{\mathsf{T}}=\bm{I}^{\mathsf{T}}=\bm{I}$；又 $\bm{A}^{\mathsf{T}}=\bm{A}$，故 $\bm{A}(\bm{A}^{-1})^{\mathsf{T}}=\bm{I}$。与 $\bm{A}\bm{A}^{-1}=\bm{I}$ 比较并按逆的唯一性得 $(\bm{A}^{-1})^{\mathsf{T}}=\bm{A}^{-1}$，即 $\bm{A}^{-1}$ 对称。
+由 $\bm{A}^{-1}\bm{A}=\bm{I}_{N}$，两边取转置并用\eqref{align:appA-转置乘积}得
+\begin{align*}
+ \bm{A}^{\mathsf{T}}(\bm{A}^{-1})^{\mathsf{T}}=\bm{I}_{N}^{\mathsf{T}}=\bm{I}_{N}.
+\end{align*}
+因 $\bm{A}^{\mathsf{T}}=\bm{A}$，故 $\bm{A}(\bm{A}^{-1})^{\mathsf{T}}=\bm{I}_{N}$。与 $\bm{A}\bm{A}^{-1}=\bm{I}_{N}$ 比较，由逆的唯一性得 $(\bm{A}^{-1})^{\mathsf{T}}=\bm{A}^{-1}$，即 $\bm{A}^{-1}$ 对称。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-对称矩阵的逆; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-对称矩阵的逆; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条结论的条件是 $\bm{A}$ 对称且可逆；它保证在对称矩阵的谱分解中，$\bm{A}^{-1}$ 可以用同一组特征向量展开（参见\eqref{align:appA-逆求和形式}），从而 $\bm{A}$ 与 $\bm{A}^{-1}$ 的特征值互为倒数。
 \end{remark}
 
 通常，矩阵的特征值是复数，但对于对称矩阵，其特征值 $\lambda_i$ 是实数。
 
 \begin{proposition}[实对称矩阵的特征值为实数]\label{proposition:appA-实对称特征值为实}
-实对称矩阵的特征值 $\lambda_i$ 是实数。
+设 $M\geqslant1$，$\bm{A}\in\mathbb{R}^{M\times M}$ 为实对称矩阵，$\lambda\in\mathbb{C}$ 为 $\bm{A}$ 的特征值，$\bm{u}\in\mathbb{C}^{M}$ 为相应的非零特征向量。则 $\lambda\in\mathbb{R}$。结论对任意 $M$ 阶实对称矩阵与任意特征值成立；对应的特征向量允许为复向量，但特征值必为实数，其虚部为零。
 \end{proposition}
 
 \begin{proof}
-为了证明这一点，可以首先对\eqref{align:appA-特征方程定义}左乘 $(\bm{u}_i^{*})^{\mathsf{T}}$（其中 $*$ 表示复共轭），从而得到
+设 $\bm{A}\bm{u}_i=\lambda_i\bm{u}_i$，其中 $\bm{u}_i\neq\bm{0}$，并记 $\bm{u}_i^{*}=\overline{\bm{u}}_i$。左乘 $(\bm{u}_i^{*})^{\mathsf{T}}$ 得
 \begin{align}
-  (\bm{u}_i^{*})^{\mathsf{T}}\bm{A}\bm{u}_i=\lambda_i(\bm{u}_i^{*})^{\mathsf{T}}\bm{u}_i
-  \label{align:appA-共轭1}
+ (\bm{u}_i^{*})^{\mathsf{T}}\bm{A}\bm{u}_i=\lambda_i(\bm{u}_i^{*})^{\mathsf{T}}\bm{u}_i.
+ \label{align:appA-共轭1}
 \end{align}
-接下来取\eqref{align:appA-特征方程定义}的复共轭并左乘 $\bm{u}_i^{\mathsf{T}}$，从而得到
+对 $\bm{A}\bm{u}_i=\lambda_i\bm{u}_i$ 取复共轭；由于 $\bm{A}$ 为实矩阵，$\bm{A}\bm{u}_i^{*}=\lambda_i^{*}\bm{u}_i^{*}$。左乘 $\bm{u}_i^{\mathsf{T}}$ 得
 \begin{align}
-  \bm{u}_i^{\mathsf{T}}\bm{A}\bm{u}_i^{*}=\lambda_i^{*}\bm{u}_i^{\mathsf{T}}\bm{u}_i^{*}
-  \label{align:appA-共轭2}
+ \bm{u}_i^{\mathsf{T}}\bm{A}\bm{u}_i^{*}=\lambda_i^{*}\bm{u}_i^{\mathsf{T}}\bm{u}_i^{*}.
+ \label{align:appA-共轭2}
 \end{align}
-其中使用了 $\bm{A}^{*}=\bm{A}$，因为我们仅考虑实矩阵 $\bm{A}$。对\eqref{align:appA-共轭2}取转置并使用 $\bm{A}^{\mathsf{T}}=\bm{A}$，我们看到两个方程的左边相等，因此有 $\lambda_i^{*}=\lambda_i$，即 $\lambda_i$ 必须是实数。
-
-（重构新增）这里补全原书省略的除法。因 $(\bm{u}_i^{*})^{\mathsf{T}}\bm{A}\bm{u}_i$ 是标量，其转置等于自身。对\eqref{align:appA-共轭2}取转置，左端为
+对\eqref{align:appA-共轭2}取转置。其左端为
 \begin{align*}
-  \bigl(\bm{u}_i^{\mathsf{T}}\bm{A}\bm{u}_i^{*}\bigr)^{\mathsf{T}}=(\bm{u}_i^{*})^{\mathsf{T}}\bm{A}^{\mathsf{T}}\bm{u}_i=(\bm{u}_i^{*})^{\mathsf{T}}\bm{A}\bm{u}_i,
+ (\bm{u}_i^{\mathsf{T}}\bm{A}\bm{u}_i^{*})^{\mathsf{T}}=(\bm{u}_i^{*})^{\mathsf{T}}\bm{A}^{\mathsf{T}}\bm{u}_i=(\bm{u}_i^{*})^{\mathsf{T}}\bm{A}\bm{u}_i,
 \end{align*}
-右端为 $\lambda_i^{*}\bigl(\bm{u}_i^{\mathsf{T}}\bm{u}_i^{*}\bigr)^{\mathsf{T}}=\lambda_i^{*}(\bm{u}_i^{*})^{\mathsf{T}}\bm{u}_i$。与\eqref{align:appA-共轭1}比较得
+右端为 $\lambda_i^{*}(\bm{u}_i^{\mathsf{T}}\bm{u}_i^{*})^{\mathsf{T}}=\lambda_i^{*}(\bm{u}_i^{*})^{\mathsf{T}}\bm{u}_i$。与\eqref{align:appA-共轭1}比较得
 \begin{align*}
-  (\lambda_i-\lambda_i^{*})(\bm{u}_i^{*})^{\mathsf{T}}\bm{u}_i=0.
+ (\lambda_i-\lambda_i^{*})(\bm{u}_i^{*})^{\mathsf{T}}\bm{u}_i=0.
 \end{align*}
-而 $(\bm{u}_i^{*})^{\mathsf{T}}\bm{u}_i=\|\bm{u}_i\|^{2}>0$（因为 $\bm{u}_i\neq\bm{0}$），故 $\lambda_i=\lambda_i^{*}$，即 $\lambda_i$ 为实数。
+而 $(\bm{u}_i^{*})^{\mathsf{T}}\bm{u}_i=\|\bm{u}_i\|^{2}>0$（因 $\bm{u}_i\neq\bm{0}$），故 $\lambda_i=\lambda_i^{*}$，即 $\lambda_i$ 为实数。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-实对称特征值为实; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-实对称特征值为实; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 论证中“实矩阵”与“对称”两个条件各司其职：$\bm{A}^{*}=\bm{A}$ 用到了实性，$\bm{A}^{\mathsf{T}}=\bm{A}$ 用到了对称性；缺任一条结论都不成立（例如旋转矩阵 $\begin{pmatrix}0&-1\\1&0\end{pmatrix}$ 是实矩阵但特征值为 $\pm\mathrm{i}$）。核心计算是 $(\bm{u}^{*})^{\mathsf{T}}\bm{u}=\|\bm{u}\|^{2}>0$，它保证可以做除法；这也说明特征向量非零的约定在此处是必需的。
 \end{remark}
 
 实对称矩阵的特征向量 $\bm{u}_i$ 可以选择为正交归一化的向量（即正交的且为单位长度的向量），从而有
 \begin{proposition}[特征向量的正交归一性]\label{proposition:appA-特征向量正交}
+设 $M\geqslant1$，$\bm{A}\in\mathbb{R}^{M\times M}$ 为实对称矩阵。则存在 $\mathbb{R}^{M}$ 的一组标准正交基 $\bm{u}_1,\cdots,\bm{u}_M$ 与实数 $\lambda_1,\cdots,\lambda_M$，使得 $\bm{A}\bm{u}_i=\lambda_i\bm{u}_i$ 对 $i=1,\cdots,M$ 成立，且
 \begin{align}
-  \bm{u}_i^{\mathsf{T}}\bm{u}_j=I_{ij}
+  \bm{u}_i^{\mathsf{T}}\bm{u}_j=I_{ij},\qquad i,j=1,\cdots,M,
   \label{align:appA-正交归一}
 \end{align}
+其中 $I_{ij}$ 是单位矩阵 $\bm{I}_{M}$ 的 $(i,j)$ 元素，即 $\bm{u}_1,\cdots,\bm{u}_M$ 两两正交且长度均为 $1$。这组基由 $\bm{A}$ 的特征向量组成，故 $\bm{A}$ 在其中的矩阵为对角矩阵。
 \end{proposition}
 
 其中 $I_{ij}$ 是单位矩阵 $\bm{I}$ 的元素。
 
 \begin{proof}
-为了说明这一点，首先将\eqref{align:appA-特征方程定义}左乘 $\bm{u}_j^{\mathsf{T}}$，从而得到第一个方程
+先验证属于不同特征值的特征向量正交。设 $\bm{A}\bm{u}_i=\lambda_i\bm{u}_i$、$\bm{A}\bm{u}_j=\lambda_j\bm{u}_j$，其中 $\bm{u}_i,\bm{u}_j\neq\bm{0}$。左乘 $\bm{u}_j^{\mathsf{T}}$ 得
 \begin{align}
-  \bm{u}_j^{\mathsf{T}}\bm{A}\bm{u}_i=\lambda_i\bm{u}_j^{\mathsf{T}}\bm{u}_i
-  \label{align:appA-正交方程1}
+ \bm{u}_j^{\mathsf{T}}\bm{A}\bm{u}_i=\lambda_i\bm{u}_j^{\mathsf{T}}\bm{u}_i.
+ \label{align:appA-正交方程1}
 \end{align}
-然后交换索引，从而得到第二个方程：
+交换指标 $i,j$ 得
 \begin{align}
-  \bm{u}_i^{\mathsf{T}}\bm{A}\bm{u}_j=\lambda_j\bm{u}_i^{\mathsf{T}}\bm{u}_j
-  \label{align:appA-正交方程2}
+ \bm{u}_i^{\mathsf{T}}\bm{A}\bm{u}_j=\lambda_j\bm{u}_i^{\mathsf{T}}\bm{u}_j.
+ \label{align:appA-正交方程2}
 \end{align}
-取第二个方程的转置并利用对称性质 $\bm{A}^{\mathsf{T}}=\bm{A}$，最后将这两个方程相减，从而得到
+对\eqref{align:appA-正交方程2}取转置，利用 $\bm{A}^{\mathsf{T}}=\bm{A}$ 得 $\bm{u}_j^{\mathsf{T}}\bm{A}\bm{u}_i=\lambda_j\bm{u}_j^{\mathsf{T}}\bm{u}_i$。与\eqref{align:appA-正交方程1}相减得
 \begin{align}
-  (\lambda_i-\lambda_j)\bm{u}_i^{\mathsf{T}}\bm{u}_j=0
-  \label{align:appA-正交相减}
+ (\lambda_i-\lambda_j)\bm{u}_i^{\mathsf{T}}\bm{u}_j=0.
+ \label{align:appA-正交相减}
 \end{align}
-因此，对于 $\lambda_i\neq\lambda_j$，我们有 $\bm{u}_i^{\mathsf{T}}\bm{u}_j=0$，即 $\bm{u}_i$ 和 $\bm{u}_j$ 是正交的。如果这两个特征值相等，那么任何线性组合 $\alpha\bm{u}_i+\beta\bm{u}_j$ 都将是具有相同特征值的特征向量，因此我们可以任意选择一个线性组合，然后选择另一个线性组合并使其与第一个线性组合正交（可以证明退化的特征向量永远不是线性相关的）。因此，特征向量可以选择为正交向量，并通过归一化变为单位长度。由于有 $M$ 个特征值，而对应的 $M$ 个正交特征向量构成了一个完备集，因此任何 $M$ 维向量都可以表示为特征向量的线性组合。
+因此当 $\lambda_i\neq\lambda_j$ 时 $\bm{u}_i^{\mathsf{T}}\bm{u}_j=0$。
 
-（重构新增）上面“取转置”一步补全如下：对\eqref{align:appA-正交方程2}取转置，左端为 $(\bm{u}_i^{\mathsf{T}}\bm{A}\bm{u}_j)^{\mathsf{T}}=\bm{u}_j^{\mathsf{T}}\bm{A}^{\mathsf{T}}\bm{u}_i=\bm{u}_j^{\mathsf{T}}\bm{A}\bm{u}_i$，右端为 $\lambda_j\bm{u}_j^{\mathsf{T}}\bm{u}_i$（因 $\bm{u}_i^{\mathsf{T}}\bm{u}_j$ 是标量）。与\eqref{align:appA-正交方程1}相减即得\eqref{align:appA-正交相减}。当 $\lambda_i\neq\lambda_j$ 时 $\lambda_i-\lambda_j\neq0$，故 $\bm{u}_i^{\mathsf{T}}\bm{u}_j=0$；再对每个特征向量令 $\bm{u}_i\leftarrow\bm{u}_i/\|\bm{u}_i\|$，即得\eqref{align:appA-正交归一}。
+下面证明存在完整的标准正交特征基，对 $M$ 作归纳。当 $M=1$ 时，取 $\bm{u}_1=1$，$\lambda_1$ 为 $\bm{A}$ 的唯一元素，结论成立。
+设 $M\geqslant2$，且结论对 $M-1$ 阶实对称矩阵成立。由代数基本定理，特征多项式 $|\bm{A}-\lambda\bm{I}_{M}|$ 在 $\mathbb{C}$ 中至少有一个根 $\lambda_1$；由\cref{proposition:appA-实对称特征值为实}，$\lambda_1\in\mathbb{R}$。于是 $\bm{A}-\lambda_1\bm{I}_{M}$ 为实矩阵且行列式为零，其零空间含非零实向量 $\bm{v}$，即 $\bm{A}\bm{v}=\lambda_1\bm{v}$。令 $\bm{u}_1=\bm{v}/\|\bm{v}\|$，则 $\|\bm{u}_1\|=1$ 且 $\bm{A}\bm{u}_1=\lambda_1\bm{u}_1$。
+令 $W=\{\bm{x}\in\mathbb{R}^{M}:\bm{u}_1^{\mathsf{T}}\bm{x}=0\}$。则 $W$ 是 $\mathbb{R}^{M}$ 的 $M-1$ 维子空间。对 $\bm{x}\in W$，
+\begin{align*}
+ \bm{u}_1^{\mathsf{T}}(\bm{A}\bm{x})=(\bm{A}\bm{u}_1)^{\mathsf{T}}\bm{x}=\lambda_1\bm{u}_1^{\mathsf{T}}\bm{x}=0,
+\end{align*}
+故 $\bm{A}\bm{x}\in W$，即 $W$ 在 $\bm{A}$ 下不变。将 $\bm{A}$ 限制在 $W$ 上得到线性映射 $\bm{A}|_{W}:W\to W$。取 $W$ 的一组标准正交基，则 $\bm{A}|_{W}$ 在该基下的矩阵 $\bm{B}\in\mathbb{R}^{(M-1)\times(M-1)}$ 为实对称矩阵：对任意 $\bm{x},\bm{y}\in W$，$\bm{x}^{\mathsf{T}}\bm{A}\bm{y}=(\bm{A}\bm{x})^{\mathsf{T}}\bm{y}$，故 $\bm{B}^{\mathsf{T}}=\bm{B}$。由归纳假设，$W$ 存在由 $\bm{A}|_{W}$ 的特征向量构成的标准正交基 $\bm{u}_2,\cdots,\bm{u}_M$。这些向量也是 $\bm{A}$ 的特征向量，且与 $\bm{u}_1$ 正交。于是 $\bm{u}_1,\cdots,\bm{u}_M$ 构成 $\mathbb{R}^{M}$ 的标准正交基，每个 $\bm{u}_i$ 都是 $\bm{A}$ 的特征向量；由\cref{proposition:appA-实对称特征值为实}，对应的特征值 $\lambda_i$ 均为实数。故\eqref{align:appA-正交归一}成立。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-特征向量正交; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-\eqref{align:appA-正交归一}是本节后续所有结论的枢纽：它使特征向量矩阵 $\bm{U}$ 成为正交矩阵（\cref{definition:appA-正交矩阵}），从而 $\bm{U}^{\mathsf{T}}=\bm{U}^{-1}$，谱分解\eqref{align:appA-谱分解}才得以成立。论证中“特征值互不相同”是正交性的直接来源；当特征值重复时，需要原文提到的补充论证——重特征值对应的特征子空间维数等于重数（对称矩阵可正交对角化），在子空间内用 Gram-Schmidt 方法重新正交化即可，这一步本书未展开。
+% SUPPLEMENT: parent=proposition:appA-特征向量正交; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+\eqref{align:appA-正交归一}是本节后续所有结论的枢纽：它使特征向量矩阵 $\bm{U}$ 成为正交矩阵（\cref{definition:appA-正交矩阵}），从而 $\bm{U}^{\mathsf{T}}=\bm{U}^{-1}$，谱分解\eqref{align:appA-谱分解}才得以成立。特征值互不相同时，正交性由\eqref{align:appA-正交相减}直接得到；特征值重复时，证明按维数归纳，在特征子空间内取标准正交基，无需额外假设。
 \end{remark}
 
-我们可以将特征向量 $\bm{u}_i$ 作为 $M\times M$ 矩阵 $\bm{U}$ 的列，该矩阵由于正交归一性而满足
+将特征向量 $\bm{u}_i$ 作为 $M\times M$ 矩阵 $\bm{U}$ 的列，该矩阵由于正交归一性而满足
 \begin{definition}[正交矩阵]\label{definition:appA-正交矩阵}
+设 $N\geqslant1$，$\bm{U}\in\mathbb{R}^{N\times N}$，$\bm{I}_{N}$ 为 $N$ 阶单位矩阵。若
 \begin{align}
-  \bm{U}^{\mathsf{T}}\bm{U}=\bm{I}
+  \bm{U}^{\mathsf{T}}\bm{U}=\bm{I}_{N},
   \label{align:appA-正交矩阵}
 \end{align}
-这样的矩阵称为\textbf{正交矩阵}。
+则 $\bm{U}$ 称为 $N$ 阶正交矩阵。该定义只涉及方阵，且 $\bm{U}^{\mathsf{T}}\bm{U}$ 为 $N\times N$ 矩阵。按矩阵乘法的定义，该条件等价于 $\bm{U}$ 的 $N$ 个列向量两两正交且长度均为 $1$；其中的 $\bm{I}_{N}$ 是 $N$ 阶单位矩阵。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-正交矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-正交矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-正交矩阵}说明正交矩阵的列是正交归一的向量组，因而线性无关、$\bm{U}$ 必可逆。由\eqref{align:appA-行列式乘积}可得 $|\bm{U}|^{2}=1$，即 $|\bm{U}|=\pm1$。正交矩阵之所以重要，是因为它保持内积（\cref{proposition:appA-正交变换保内积}），从而对应坐标系的刚性旋转，这一点在\eqref{align:appA-对角化}的对角化过程中起决定作用。
 \end{remark}
 
-有趣的是，这个矩阵的行也是正交的，所以有 $\bm{U}\bm{U}^{\mathsf{T}}=\bm{I}$。
+这个矩阵的行也是正交归一的，故有 $\bm{U}\bm{U}^{\mathsf{T}}=\bm{I}$。
 
 \begin{proposition}[正交矩阵的行正交性与行列式]\label{proposition:appA-正交矩阵的性质}
-设 $\bm{U}$ 是满足\eqref{align:appA-正交矩阵}的方阵，则 $\bm{U}\bm{U}^{\mathsf{T}}=\bm{I}$，且 $|\bm{U}|=\pm1$。
+设 $N\geqslant1$，$\bm{U}\in\mathbb{R}^{N\times N}$ 为满足 $\bm{U}^{\mathsf{T}}\bm{U}=\bm{I}_{N}$ 的正交矩阵。则 $\bm{U}$ 可逆，$\bm{U}^{-1}=\bm{U}^{\mathsf{T}}$，$\bm{U}\bm{U}^{\mathsf{T}}=\bm{I}_{N}$，且 $|\bm{U}|=\pm1$。结论中的 $\bm{I}_{N}$ 为 $N$ 阶单位矩阵；正交矩阵必为可逆方阵，且其逆等于转置，行列式只能是 $1$ 或 $-1$。该命题对任意正整数 $N$ 成立，正交矩阵的列构成标准正交基。
 \end{proposition}
 
-为了证明这一点，请注意\eqref{align:appA-正交矩阵}意味着 $\bm{U}^{\mathsf{T}}\bm{U}\bm{U}^{-1}=\bm{U}^{-1}=\bm{U}^{\mathsf{T}}$，从而有 $\bm{U}\bm{U}^{-1}=\bm{U}\bm{U}^{\mathsf{T}}=\bm{I}$。使用\eqref{align:appA-行列式乘积}，我们还可以推导出 $|\bm{U}|^{2}=1$。
-
 \begin{proof}
-（重构新增）补全如下。由\eqref{align:appA-正交矩阵}知 $\bm{U}^{\mathsf{T}}\bm{U}=\bm{I}$，故 $\bm{U}$ 可逆且 $\bm{U}^{-1}=\bm{U}^{\mathsf{T}}$（因为 $\bm{U}^{\mathsf{T}}$ 同时是左逆与右逆）。于是
+由\eqref{align:appA-正交矩阵}，$\bm{U}^{\mathsf{T}}\bm{U}=\bm{I}_{N}$。$\bm{U}^{\mathsf{T}}\bm{U}=\bm{I}_{N}$ 表明 $\bm{U}$ 的零空间为 $\{\bm{0}\}$，故 $\bm{U}$ 作为 $N$ 阶方阵可逆，且 $\bm{U}^{-1}=\bm{U}^{\mathsf{T}}$。于是
 \begin{align*}
-  \bm{U}\bm{U}^{\mathsf{T}}=\bm{U}\bm{U}^{-1}=\bm{I}.
+ \bm{U}\bm{U}^{\mathsf{T}}=\bm{U}\bm{U}^{-1}=\bm{I}_{N}.
 \end{align*}
-再对\eqref{align:appA-正交矩阵}两边取行列式，由\eqref{align:appA-行列式乘积}与 $|\bm{I}|=1$ 得 $|\bm{U}^{\mathsf{T}}|\,|\bm{U}|=1$，而由\eqref{align:appA-行列式定义}可知 $|\bm{U}^{\mathsf{T}}|=|\bm{U}|$，故 $|\bm{U}|^{2}=1$，即 $|\bm{U}|=\pm1$。
+对 $\bm{U}^{\mathsf{T}}\bm{U}=\bm{I}_{N}$ 两边取行列式，由\eqref{align:appA-行列式乘积}与 $|\bm{I}_{N}|=1$ 得 $|\bm{U}^{\mathsf{T}}|\,|\bm{U}|=1$。由\eqref{align:appA-行列式定义}，转置不改变行列式（在定义式中令 $\sigma$ 取遍 $S_N$，并利用 $\operatorname{sgn}(\sigma^{-1})=\operatorname{sgn}(\sigma)$），故 $|\bm{U}^{\mathsf{T}}|=|\bm{U}|$，从而 $|\bm{U}|^{2}=1$，即 $|\bm{U}|=\pm1$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-正交矩阵的性质; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
-原书由 $|\bm{U}^{\mathsf{T}}\bm{U}|=1$ 推出 $|\bm{U}|=1$，严格来说只能得到 $|\bm{U}|=\pm1$：反射矩阵（例如 $\mathrm{diag}(1,-1)$）也是正交矩阵，但其行列式为 $-1$。只有再限定 $\bm{U}$ 为“旋转”（$\det\bm{U}=+1$）时才有 $|\bm{U}|=1$；本附录的谱分解只用到 $\bm{U}$ 的正交性，并不需要这个符号信息，因此不影响后文结论。$\bm{U}\bm{U}^{\mathsf{T}}=\bm{I}$ 的实质是“行也正交归一”，它与\eqref{align:appA-正交矩阵}合起来说明正交矩阵的逆就是其转置。
+% SUPPLEMENT: parent=proposition:appA-正交矩阵的性质; kind=motivation; location=紧随其后的 remark
+\begin{remark}
+原文由 $|\bm{U}^{\mathsf{T}}\bm{U}|=1$ 推出 $|\bm{U}|=1$，严格来说只能得到 $|\bm{U}|=\pm1$：反射矩阵（例如 $\mathrm{diag}(1,-1)$）也是正交矩阵，但其行列式为 $-1$。只有再限定 $\bm{U}$ 为“旋转”（$\det\bm{U}=+1$）时才有 $|\bm{U}|=1$；本附录的谱分解只用到 $\bm{U}$ 的正交性，并不需要这个符号信息，因此不影响后文结论。$\bm{U}\bm{U}^{\mathsf{T}}=\bm{I}$ 的实质是“行也正交归一”，它与\eqref{align:appA-正交矩阵}合起来说明正交矩阵的逆就是其转置。
 \end{remark}
 
 特征向量方程 [\eqref{align:appA-特征方程定义}] 可以用以下关于 $\bm{U}$ 的形式来表示：
 \begin{proposition}[特征向量方程的矩阵形式]\label{proposition:appA-特征值分解矩阵形式}
+设 $M\geqslant1$，$\bm{A}\in\mathbb{R}^{M\times M}$，$\bm{u}_1,\cdots,\bm{u}_M\in\mathbb{R}^{M}$ 为 $\bm{A}$ 的特征向量，$\lambda_1,\cdots,\lambda_M\in\mathbb{R}$ 为相应的特征值。令 $\bm{U}=(\bm{u}_1,\cdots,\bm{u}_M)\in\mathbb{R}^{M\times M}$，$\bm{\Lambda}=\mathrm{diag}(\lambda_1,\cdots,\lambda_M)\in\mathbb{R}^{M\times M}$。则
 \begin{align}
-  \bm{A}\bm{U}=\bm{U}\bm{\Lambda}
+  \bm{A}\bm{U}=\bm{U}\bm{\Lambda}.
   \label{align:appA-特征值矩阵形式}
 \end{align}
-其中 $\bm{\Lambda}$ 是 $M\times M$ 的对角矩阵，其对角元素由特征值 $\lambda_i$ 给出。
+等式两端都是 $M$ 阶方阵；$\bm{U}$ 的列按特征值 $\lambda_i$ 的顺序排列，$\bm{\Lambda}$ 为相应的实对角矩阵。该等式按列给出了 $M$ 个特征向量方程。
 \end{proposition}
 
 \begin{proof}
-（重构新增）原书未给证明。把\eqref{align:appA-特征方程定义}对 $i=1,\cdots,M$ 逐个写出并按列拼成矩阵：左端 $(\bm{A}\bm{u}_1,\cdots,\bm{A}\bm{u}_M)=\bm{A}\bm{U}$，右端 $(\lambda_1\bm{u}_1,\cdots,\lambda_M\bm{u}_M)=\bm{U}\bm{\Lambda}$（因为 $\bm{U}$ 的第 $i$ 列右乘对角元 $\lambda_i$ 正是 $\lambda_i\bm{u}_i$），故\eqref{align:appA-特征值矩阵形式}成立。
+把\eqref{align:appA-特征方程定义}对 $i=1,\cdots,M$ 逐个写出并按列拼成矩阵。左端为 $(\bm{A}\bm{u}_1,\cdots,\bm{A}\bm{u}_M)=\bm{A}\bm{U}$；右端为 $(\lambda_1\bm{u}_1,\cdots,\lambda_M\bm{u}_M)=\bm{U}\bm{\Lambda}$，因为 $\bm{U}$ 的第 $i$ 列右乘对角元 $\lambda_i$ 正是 $\lambda_i\bm{u}_i$。故\eqref{align:appA-特征值矩阵形式}成立。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-特征值分解矩阵形式; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-特征值分解矩阵形式; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-特征值矩阵形式}把 $M$ 个独立的特征向量方程打包成一个矩阵等式，从而可以用矩阵运算整体处理。它要求 $\bm{U}$ 的列恰好是全部 $M$ 个特征向量（并按同一顺序排列 $\lambda_i$）；若只取部分特征向量，等式只在相应的列上成立。下一节的谱分解正是由它两边左乘 $\bm{U}^{\mathsf{T}}$ 得到的。
 \end{remark}
 
-假设我们通过使用正交矩阵 $\bm{U}$ 转换列向量 $\bm{x}$ 得到了一个新的向量：
+设正交矩阵 $\bm{U}$ 作用在列向量 $\bm{x}$ 上，得到新的向量：
 \begin{proposition}[正交变换保持长度与夹角]\label{proposition:appA-正交变换保内积}
+设 $M\geqslant1$，$\bm{U}\in\mathbb{R}^{M\times M}$ 为正交矩阵，$\bm{x}\in\mathbb{R}^{M}$。令
 \begin{align}
-  \tilde{\bm{x}}=\bm{U}\bm{x}
+  \tilde{\bm{x}}=\bm{U}\bm{x}.
   \label{align:appA-正交变换}
 \end{align}
-则向量的长度保持不变，因为
+则 $\|\tilde{\bm{x}}\|=\|\bm{x}\|$，即
 \begin{align}
-  \tilde{\bm{x}}^{\mathsf{T}}\tilde{\bm{x}}=\bm{x}^{\mathsf{T}}\bm{U}^{\mathsf{T}}\bm{U}\bm{x}=\bm{x}^{\mathsf{T}}\bm{x}
+  \tilde{\bm{x}}^{\mathsf{T}}\tilde{\bm{x}}=\bm{x}^{\mathsf{T}}\bm{U}^{\mathsf{T}}\bm{U}\bm{x}=\bm{x}^{\mathsf{T}}\bm{x}.
   \label{align:appA-长度保持}
 \end{align}
-同样，任何两个此类向量之间的夹角也保持不变，因为
+对任意 $\bm{y}\in\mathbb{R}^{M}$，令 $\tilde{\bm{y}}=\bm{U}\bm{y}$，则内积保持不变：
 \begin{align}
-  \tilde{\bm{x}}^{\mathsf{T}}\tilde{\bm{y}}=\bm{x}^{\mathsf{T}}\bm{U}^{\mathsf{T}}\bm{U}\bm{y}=\bm{x}^{\mathsf{T}}\bm{y}
+  \tilde{\bm{x}}^{\mathsf{T}}\tilde{\bm{y}}=\bm{x}^{\mathsf{T}}\bm{U}^{\mathsf{T}}\bm{U}\bm{y}=\bm{x}^{\mathsf{T}}\bm{y}.
   \label{align:appA-夹角保持}
 \end{align}
+若 $\bm{x},\bm{y}\neq\bm{0}$，则 $\bm{x}$ 与 $\bm{y}$ 的夹角等于 $\tilde{\bm{x}}$ 与 $\tilde{\bm{y}}$ 的夹角。上述等式表明正交变换保持向量的长度与内积；当 $\bm{x}$ 或 $\bm{y}$ 为零向量时，夹角没有定义，故夹角结论只对非零向量陈述。
 \end{proposition}
 
 因此，向量乘以 $\bm{U}$ 可以解释为坐标系发生刚性旋转。
 
 \begin{proof}
-（重构新增）原书已给出两行计算，这里补全“夹角不变”的含义。由\eqref{align:appA-正交矩阵}，$\bm{U}^{\mathsf{T}}\bm{U}=\bm{I}$，故\eqref{align:appA-长度保持}与\eqref{align:appA-夹角保持}成立。长度是内积的特例（取 $\bm{y}=\bm{x}$），而夹角由 $\cos\theta=\bm{x}^{\mathsf{T}}\bm{y}/(\|\bm{x}\|\,\|\bm{y}\|)$ 给出，分子与分母在变换后都保持不变，故夹角不变。
+由\eqref{align:appA-正交矩阵}，$\bm{U}^{\mathsf{T}}\bm{U}=\bm{I}_{M}$。于是
+\begin{align*}
+ \tilde{\bm{x}}^{\mathsf{T}}\tilde{\bm{x}}=(\bm{U}\bm{x})^{\mathsf{T}}(\bm{U}\bm{x})=\bm{x}^{\mathsf{T}}\bm{U}^{\mathsf{T}}\bm{U}\bm{x}=\bm{x}^{\mathsf{T}}\bm{x},
+\end{align*}
+即 $\|\tilde{\bm{x}}\|=\|\bm{x}\|$，故\eqref{align:appA-长度保持}成立。对任意 $\bm{y}\in\mathbb{R}^{M}$，
+\begin{align*}
+ \tilde{\bm{x}}^{\mathsf{T}}\tilde{\bm{y}}=(\bm{U}\bm{x})^{\mathsf{T}}(\bm{U}\bm{y})=\bm{x}^{\mathsf{T}}\bm{U}^{\mathsf{T}}\bm{U}\bm{y}=\bm{x}^{\mathsf{T}}\bm{y},
+\end{align*}
+即\eqref{align:appA-夹角保持}。当 $\bm{x},\bm{y}\neq\bm{0}$ 时，$\|\tilde{\bm{x}}\|\,\|\tilde{\bm{y}}\|=\|\bm{x}\|\,\|\bm{y}\|\neq0$，故
+\begin{align*}
+ \cos\tilde{\theta}=\frac{\tilde{\bm{x}}^{\mathsf{T}}\tilde{\bm{y}}}{\|\tilde{\bm{x}}\|\,\|\tilde{\bm{y}}\|}
+ =\frac{\bm{x}^{\mathsf{T}}\bm{y}}{\|\bm{x}\|\,\|\bm{y}\|}=\cos\theta,
+\end{align*}
+其中 $\theta$ 与 $\tilde{\theta}$ 分别为 $\bm{x},\bm{y}$ 与 $\tilde{\bm{x}},\tilde{\bm{y}}$ 的夹角，故夹角相等。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-正交变换保内积; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-正交变换保内积; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-长度保持}与\eqref{align:appA-夹角保持}说明正交变换是等距变换，这正是“刚性旋转”的数学内容；反过来，保持所有内积的线性变换必为正交变换。这里的 $\bm{x}$ 是列向量，$\bm{U}$ 必须是方阵正交矩阵，否则 $\bm{U}^{\mathsf{T}}\bm{U}=\bm{I}$ 不成立，长度也不再保持。
 \end{remark}
 
@@ -751,79 +922,98 @@ $\bm{A}$ 的秩等于非零特征值的数量。
   \bm{U}^{\mathsf{T}}\bm{A}\bm{U}=\bm{\Lambda}
   \label{align:appA-对角化}
 \end{align}
-又因为 $\bm{\Lambda}$ 是对角矩阵，我们可以说矩阵 $\bm{A}$ 被矩阵 $\bm{U}$ 对角化了。
+又因为 $\bm{\Lambda}$ 是对角矩阵，称矩阵 $\bm{A}$ 被矩阵 $\bm{U}$ 对角化。
 
 \begin{theorem}[实对称矩阵的谱分解]\label{theorem:appA-谱分解}
-设 $\bm{A}$ 是 $M\times M$ 实对称矩阵，$\bm{u}_1,\cdots,\bm{u}_M$ 是它的正交归一特征向量（\cref{proposition:appA-特征向量正交}），$\bm{U}$ 以这些特征向量为列，$\bm{\Lambda}=\mathrm{diag}(\lambda_1,\cdots,\lambda_M)$。则左乘 $\bm{U}$ 并右乘 $\bm{U}^{\mathsf{T}}$，可以把 $\bm{A}$ 写成
+设 $M\geqslant1$，$\bm{A}\in\mathbb{R}^{M\times M}$ 为实对称矩阵。则存在 $M$ 阶正交矩阵 $\bm{U}\in\mathbb{R}^{M\times M}$ 与实对角矩阵 $\bm{\Lambda}=\mathrm{diag}(\lambda_1,\cdots,\lambda_M)\in\mathbb{R}^{M\times M}$，使得
 \begin{align}
-  \bm{A}=\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}}
+  \bm{A}=\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}},
   \label{align:appA-谱分解}
 \end{align}
+其中 $\bm{U}$ 的列 $\bm{u}_1,\cdots,\bm{u}_M$ 是 $\bm{A}$ 的两两正交的单位特征向量，$\lambda_1,\cdots,\lambda_M$ 是对应的特征值。该分解中的 $\bm{U}$ 为正交矩阵，故 $\bm{U}^{\mathsf{T}}=\bm{U}^{-1}$，且 $\bm{\Lambda}$ 的对角元为实数。
 \end{theorem}
 
 \begin{proof}
-（重构新增）由\eqref{align:appA-对角化}有 $\bm{U}^{\mathsf{T}}\bm{A}\bm{U}=\bm{\Lambda}$。两边左乘 $\bm{U}$、右乘 $\bm{U}^{\mathsf{T}}$，利用 $\bm{U}\bm{U}^{\mathsf{T}}=\bm{I}$（\cref{proposition:appA-正交矩阵的性质}）即得 $\bm{A}=\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}}$，即\eqref{align:appA-谱分解}。
+由\cref{proposition:appA-特征向量正交}，存在标准正交特征向量 $\bm{u}_1,\cdots,\bm{u}_M$ 与实数 $\lambda_1,\cdots,\lambda_M$。以它们为列构造 $\bm{U}\in\mathbb{R}^{M\times M}$，并令 $\bm{\Lambda}=\mathrm{diag}(\lambda_1,\cdots,\lambda_M)$。由\eqref{align:appA-特征值矩阵形式}，$\bm{A}\bm{U}=\bm{U}\bm{\Lambda}$。由\cref{proposition:appA-正交矩阵的性质}，$\bm{U}$ 为正交矩阵且 $\bm{U}^{-1}=\bm{U}^{\mathsf{T}}$，故 $\bm{A}=\bm{U}\bm{\Lambda}\bm{U}^{-1}=\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}}$，即\eqref{align:appA-谱分解}。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:appA-谱分解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:appA-谱分解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 谱分解是本节全部构造的汇合点：它同时用到\eqref{align:appA-正交归一}（保证 $\bm{U}^{-1}=\bm{U}^{\mathsf{T}}$）、\cref{proposition:appA-实对称特征值为实}（保证 $\bm{\Lambda}$ 是实对角阵）与\eqref{align:appA-特征值矩阵形式}（保证 $\bm{A}\bm{U}=\bm{U}\bm{\Lambda}$）。条件“实对称”三个字缺一不可：非对称矩阵未必有完整的特征向量组，因而不能正交对角化。\eqref{align:appA-谱分解}的意义在于把 $\bm{A}$ 的作用分解为“沿正交方向的独立伸缩”，因此 $\bm{A}$ 的幂、逆、行列式与迹都可以逐个特征值计算（见\cref{proposition:appA-逆谱分解}与\cref{proposition:appA-行列式与迹}）。
 \end{remark}
 
 取\eqref{align:appA-谱分解}的逆并利用\eqref{align:appA-逆乘积}以及 $\bm{U}^{-1}=\bm{U}^{\mathsf{T}}$，可以得到
 \begin{proposition}[逆矩阵的谱分解与求和形式]\label{proposition:appA-逆谱分解}
+设 $M\geqslant1$，$\bm{A}\in\mathbb{R}^{M\times M}$ 为实对称矩阵，$\bm{U}\in\mathbb{R}^{M\times M}$ 为正交矩阵，$\bm{\Lambda}=\mathrm{diag}(\lambda_1,\cdots,\lambda_M)$，且 $\bm{A}=\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}}$。若 $\bm{A}$ 可逆，则 $\lambda_i\neq0$（$i=1,\cdots,M$），且
 \begin{align}
-  \bm{A}^{-1}=\bm{U}\bm{\Lambda}^{-1}\bm{U}^{\mathsf{T}}
+  \bm{A}^{-1}=\bm{U}\bm{\Lambda}^{-1}\bm{U}^{\mathsf{T}}.
   \label{align:appA-逆谱分解}
 \end{align}
-以上两个方程也可以写成以下形式：
+并且
 \begin{align}
-  \bm{A}&=\sum_{i=1}^{M}\lambda_i\bm{u}_i\bm{u}_i^{\mathsf{T}}
+  \bm{A}&=\sum_{i=1}^{M}\lambda_i\bm{u}_i\bm{u}_i^{\mathsf{T}},
   \label{align:appA-求和形式}\\
-  \bm{A}^{-1}&=\sum_{i=1}^{M}\frac{1}{\lambda_i}\bm{u}_i\bm{u}_i^{\mathsf{T}}
+  \bm{A}^{-1}&=\sum_{i=1}^{M}\frac{1}{\lambda_i}\bm{u}_i\bm{u}_i^{\mathsf{T}},
   \label{align:appA-逆求和形式}
 \end{align}
+其中 $\bm{u}_1,\cdots,\bm{u}_M$ 是 $\bm{U}$ 的列，构成 $\mathbb{R}^{M}$ 的标准正交基。两式中的 $\bm{u}_i$ 为 $\bm{U}$ 的第 $i$ 列；逆谱分解要求所有特征值非零，求和形式中的每一项都是 $M$ 阶秩一方阵。
 \end{proposition}
 
 \begin{proof}
-（重构新增）原书未逐条证明，这里补全。对\eqref{align:appA-谱分解}取逆，由\eqref{align:appA-逆乘积}与 $\bm{U}^{-1}=\bm{U}^{\mathsf{T}}$ 得
+对\eqref{align:appA-谱分解}取逆，由\eqref{align:appA-逆乘积}与 $\bm{U}^{-1}=\bm{U}^{\mathsf{T}}$ 得
 \begin{align*}
-  \bm{A}^{-1}=(\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}})^{-1}=(\bm{U}^{\mathsf{T}})^{-1}\bm{\Lambda}^{-1}\bm{U}^{-1}=\bm{U}\bm{\Lambda}^{-1}\bm{U}^{\mathsf{T}},
+ \bm{A}^{-1}=(\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}})^{-1}=(\bm{U}^{\mathsf{T}})^{-1}\bm{\Lambda}^{-1}\bm{U}^{-1}=\bm{U}\bm{\Lambda}^{-1}\bm{U}^{\mathsf{T}},
 \end{align*}
-即\eqref{align:appA-逆谱分解}（要求所有 $\lambda_i\neq0$）。再把 $\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}}$ 按列展开：$(\bm{U}\bm{\Lambda})_{:,i}=\lambda_i\bm{u}_i$，故 $\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}}=\sum_i\lambda_i\bm{u}_i\bm{u}_i^{\mathsf{T}}$，即\eqref{align:appA-求和形式}；对 $\bm{\Lambda}^{-1}$ 重复同一展开得\eqref{align:appA-逆求和形式}。
+即\eqref{align:appA-逆谱分解}；其中 $\bm{\Lambda}^{-1}$ 存在是因为 $\bm{A}$ 可逆蕴含 $\lambda_i\neq0$（若 $\lambda_i=0$，则 $\bm{A}\bm{u}_i=\bm{0}$ 有非零解 $\bm{u}_i$，与 $\bm{A}$ 可逆矛盾）。
+再把 $\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}}$ 按列展开：$(\bm{U}\bm{\Lambda})_{:,i}=\lambda_i\bm{u}_i$，故
+\begin{align*}
+ \bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}}=\sum_{i=1}^{M}\lambda_i\bm{u}_i\bm{u}_i^{\mathsf{T}},
+\end{align*}
+即\eqref{align:appA-求和形式}；对 $\bm{\Lambda}^{-1}$ 重复同一展开得\eqref{align:appA-逆求和形式}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-逆谱分解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-逆谱分解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-逆谱分解}与\eqref{align:appA-求和形式}把“求逆”变成“对特征值取倒数再求和”，因此它们要求所有 $\lambda_i\neq0$，这与 $\bm{A}$ 可逆等价（参见\eqref{align:appA-行列式特征值}）。\eqref{align:appA-求和形式}的每一项 $\lambda_i\bm{u}_i\bm{u}_i^{\mathsf{T}}$ 都是秩一矩阵，它表明对称矩阵可以分解为 $M$ 个沿正交方向的秩一成分之和；这也解释了为什么 $\bm{A}$ 的二次型只由各方向上的 $\lambda_i$ 决定（参见\cref{proposition:appA-正定判据}）。
 \end{remark}
 
-如果我们取\eqref{align:appA-谱分解}的行列式并使用\eqref{align:appA-行列式乘积}，则可以得到
+取\eqref{align:appA-谱分解}的行列式并使用\eqref{align:appA-行列式乘积}，可得
 \begin{proposition}[行列式与迹的特征值表示]\label{proposition:appA-行列式与迹}
+设 $M\geqslant1$，$\bm{A}\in\mathbb{R}^{M\times M}$ 为实对称矩阵，$\lambda_1,\cdots,\lambda_M$ 为其特征值（计重数）。则
 \begin{align}
-  |\bm{A}|=\prod_{i=1}^{M}\lambda_i
+  |\bm{A}|=\prod_{i=1}^{M}\lambda_i,
   \label{align:appA-行列式特征值}
 \end{align}
-类似地，取\eqref{align:appA-谱分解}的迹，并利用迹运算的循环性质 [\eqref{align:appA-迹循环}] 以及 $\bm{U}^{\mathsf{T}}\bm{U}=\bm{I}$，我们可以得到
+且
 \begin{align}
-  \mathrm{tr}(\bm{A})=\sum_{i=1}^{M}\lambda_i
+  \mathrm{tr}(\bm{A})=\sum_{i=1}^{M}\lambda_i.
   \label{align:appA-迹特征值}
 \end{align}
+两式都按特征值的重数计数；右端的乘积与和都是实数，分别等于 $\bm{A}$ 的行列式与迹。该结论对任意 $M$ 阶实对称矩阵成立，不要求特征值互不相同。
 \end{proposition}
 
 \begin{proof}
-（重构新增）补全如下。对\eqref{align:appA-谱分解}取行列式，由\eqref{align:appA-行列式乘积}得 $|\bm{A}|=|\bm{U}|\,|\bm{\Lambda}|\,|\bm{U}^{\mathsf{T}}|$，而 $|\bm{U}^{\mathsf{T}}|=|\bm{U}|$ 且 $|\bm{U}|^{2}=1$（\cref{proposition:appA-正交矩阵的性质}），故 $|\bm{A}|=|\bm{\Lambda}|=\prod_i\lambda_i$，即\eqref{align:appA-行列式特征值}。对\eqref{align:appA-谱分解}取迹，由\eqref{align:appA-迹循环}得 $\mathrm{tr}(\bm{A})=\mathrm{tr}(\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}})=\mathrm{tr}(\bm{\Lambda}\bm{U}^{\mathsf{T}}\bm{U})=\mathrm{tr}(\bm{\Lambda})=\sum_i\lambda_i$，即\eqref{align:appA-迹特征值}。
+对\eqref{align:appA-谱分解}取行列式，由\eqref{align:appA-行列式乘积}得
+\begin{align*}
+ |\bm{A}|=|\bm{U}|\,|\bm{\Lambda}|\,|\bm{U}^{\mathsf{T}}|.
+\end{align*}
+由\cref{proposition:appA-正交矩阵的性质}，$|\bm{U}|^{2}=1$ 且 $|\bm{U}^{\mathsf{T}}|=|\bm{U}|$，故 $|\bm{A}|=|\bm{\Lambda}|=\prod_{i=1}^{M}\lambda_i$，即\eqref{align:appA-行列式特征值}。
+对\eqref{align:appA-谱分解}取迹，由\eqref{align:appA-迹循环}得
+\begin{align*}
+ \mathrm{tr}(\bm{A})=\mathrm{tr}(\bm{U}\bm{\Lambda}\bm{U}^{\mathsf{T}})=\mathrm{tr}(\bm{\Lambda}\bm{U}^{\mathsf{T}}\bm{U})=\mathrm{tr}(\bm{\Lambda})=\sum_{i=1}^{M}\lambda_i,
+\end{align*}
+即\eqref{align:appA-迹特征值}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-行列式与迹; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-行列式与迹; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:appA-行列式特征值}与\eqref{align:appA-迹特征值}把两个“整体”量（行列式、迹）化归为逐个特征值之积与之和，它们也说明：$\bm{A}$ 可逆当且仅当所有 $\lambda_i\neq0$。两式都只要求 $\bm{A}$ 可正交对角化（实对称即可），并不要求特征值互不相同；若特征值重复，按重数计入乘积与求和。
 \end{remark}
 
 作为一个练习，请读者利用\eqref{align:appA-正交归一}、\eqref{align:appA-求和形式}、\eqref{align:appA-逆求和形式}和\eqref{align:appA-行列式特征值}的结论验证\eqref{align:appA-对数行列式}。
 
-\begin{remark}（重构新增）
-下面按原书提示完成这个练习。设 $\bm{A}(x)$ 是对称可逆矩阵，其特征值与特征向量随 $x$ 可微。由\eqref{align:appA-行列式特征值}，$\ln|\bm{A}|=\sum_i\ln\lambda_i$，故
+\begin{remark}
+下面给出该练习的推导。设 $\bm{A}(x)$ 是对称可逆矩阵，其特征值与特征向量随 $x$ 可微。由\eqref{align:appA-行列式特征值}，$\ln|\bm{A}|=\sum_i\ln\lambda_i$，故
 \begin{align*}
   \frac{\partial}{\partial x}\ln|\bm{A}|=\sum_{i=1}^{M}\frac{1}{\lambda_i}\frac{\partial\lambda_i}{\partial x}.
 \end{align*}
@@ -841,30 +1031,30 @@ $\bm{A}$ 的秩等于非零特征值的数量。
 如果对于所有非零向量 $\bm{w}$，有 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}>0$，则称矩阵 $\bm{A}$ 为正定矩阵，记为 $\bm{A}>0$。
 
 \begin{definition}[正定矩阵]\label{definition:appA-正定矩阵}
-如果对于所有非零向量 $\bm{w}$，有 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}>0$，则称矩阵 $\bm{A}$ 为\textbf{正定矩阵}，记为 $\bm{A}>0$。
+设 $N\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$ 为实对称矩阵。若对任意非零向量 $\bm{w}\in\mathbb{R}^{N}$ 都有 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}>0$，则 $\bm{A}$ 称为 $N$ 阶实对称正定矩阵，记作 $\bm{A}>0$。正定性只对实对称矩阵定义；二次型 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}$ 的符号必须对所有非零方向一致为正，定义中出现的 $\bm{w}$ 为实向量。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-正定矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-正定矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 定义中的二次型 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}$ 只依赖于 $\bm{A}$ 的对称部分，因此正定性通常只对对称矩阵讨论；本附录的语境是协方差矩阵、核矩阵与 Hessian 矩阵，它们都是对称的。条件“对所有非零 $\bm{w}$”是量化条件，不能只检验个别方向：只要存在一个方向使二次型非正，$\bm{A}$ 就不是正定的。正定性保证 $\bm{A}$ 可逆且 $\bm{A}^{-1}$ 也正定，因此在\cref{proposition:appA-求逆恒等式}与\cref{proposition:appA-woodbury}中常用它来确保各逆矩阵存在。
 \end{remark}
 
 等价地，正定矩阵对于其所有特征值，有 $\lambda_i>0$（这可以通过将 $\bm{w}$ 分别设置为每个特征向量来验证，并注意到任意向量都可以表示为特征向量的线性组合而看出）。
 
 \begin{proposition}[正定矩阵的特征值判据]\label{proposition:appA-正定判据}
-设 $\bm{A}$ 是实对称矩阵，则 $\bm{A}$ 正定当且仅当其全部特征值满足 $\lambda_i>0$。
+设 $M\geqslant1$，$\bm{A}\in\mathbb{R}^{M\times M}$ 为实对称矩阵。则 $\bm{A}$ 为正定矩阵当且仅当其全部特征值 $\lambda_1,\cdots,\lambda_M$ 满足 $\lambda_i>0$（$i=1,\cdots,M$）。该判据把二次型对所有非零方向的符号条件化为有限个特征值的符号条件。判据中的特征值按重数计，且只需检验有限个实数。
 \end{proposition}
 
 \begin{proof}
-（重构新增）原书给出的是要点，下面补全两向论证。由\cref{theorem:appA-谱分解}，任意 $\bm{w}$ 可写成 $\bm{w}=\sum_i c_i\bm{u}_i$，其中 $c_i=\bm{u}_i^{\mathsf{T}}\bm{w}$，于是由\eqref{align:appA-正交归一}，
+由\cref{theorem:appA-谱分解}，存在标准正交特征向量 $\bm{u}_1,\cdots,\bm{u}_M$ 使任意 $\bm{w}\in\mathbb{R}^{M}$ 可写成 $\bm{w}=\sum_{i=1}^{M}c_i\bm{u}_i$，其中 $c_i=\bm{u}_i^{\mathsf{T}}\bm{w}$。由\eqref{align:appA-正交归一}，
 \begin{align*}
-  \bm{w}^{\mathsf{T}}\bm{A}\bm{w}=\sum_{i,j}c_ic_j\bm{u}_j^{\mathsf{T}}\bm{A}\bm{u}_i=\sum_{i,j}c_ic_j\lambda_i\bm{u}_j^{\mathsf{T}}\bm{u}_i=\sum_{i=1}^{M}\lambda_ic_i^{2}.
+ \bm{w}^{\mathsf{T}}\bm{A}\bm{w}=\sum_{i,j=1}^{M}c_ic_j\bm{u}_j^{\mathsf{T}}\bm{A}\bm{u}_i=\sum_{i,j=1}^{M}c_ic_j\lambda_i\bm{u}_j^{\mathsf{T}}\bm{u}_i=\sum_{i=1}^{M}\lambda_ic_i^{2}.
 \end{align*}
-若所有 $\lambda_i>0$，则对 $\bm{w}\neq\bm{0}$（即某个 $c_i\neq0$）有 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}>0$。反之，若 $\bm{A}$ 正定，取 $\bm{w}=\bm{u}_i\neq\bm{0}$ 得 $\bm{u}_i^{\mathsf{T}}\bm{A}\bm{u}_i=\lambda_i>0$。
+若所有 $\lambda_i>0$，则对 $\bm{w}\neq\bm{0}$（此时某个 $c_i\neq0$）有 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}>0$，故 $\bm{A}$ 正定。反之，若 $\bm{A}$ 正定，取 $\bm{w}=\bm{u}_i\neq\bm{0}$，得 $\bm{u}_i^{\mathsf{T}}\bm{A}\bm{u}_i=\lambda_i>0$。故 $\bm{A}$ 正定当且仅当全部 $\lambda_i>0$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:appA-正定判据; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:appA-正定判据; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 判据把“对所有方向检验二次型”这样一个不可穷举的条件，换成“检验 $M$ 个特征值”的可计算条件，这是谱分解最直接的用途。它依赖实对称性（否则特征向量不构成完备正交组，上面的展开不成立）。注意 $\lambda_i>0$ 是严格不等式：若某个 $\lambda_i=0$，则沿该特征方向的二次型为零，矩阵只是半正定的（\cref{definition:appA-半正定矩阵}）。
 \end{remark}
 
@@ -880,39 +1070,40 @@ $\bm{A}$ 的秩等于非零特征值的数量。
 \end{example}
 
 \begin{solution}
-（重构新增）补全特征值的计算。$\mathrm{tr}(\bm{A})=1+4=5$，$|\bm{A}|=1\cdot4-2\cdot3=-2$，故特征多项式为 $\lambda^{2}-5\lambda-2=0$，其根为
+特征值的计算如下。$\mathrm{tr}(\bm{A})=1+4=5$，$|\bm{A}|=1\cdot4-2\cdot3=-2$，故特征多项式为 $\lambda^{2}-5\lambda-2=0$，其根为
 \begin{align*}
-  \lambda=\frac{5\pm\sqrt{25+8}}{2}=\frac{5\pm\sqrt{33}}{2}.
+ \lambda=\frac{5\pm\sqrt{25+8}}{2}=\frac{5\pm\sqrt{33}}{2}.
 \end{align*}
 取 $\sqrt{33}\approx5.745$，得 $\lambda_1\approx5.372$、$\lambda_2\approx-0.372$。由于 $\lambda_2<0$，由\cref{proposition:appA-正定判据}该矩阵不是正定的。
 \end{solution}
 
-\begin{remark}（重构新增）
-这个反例提醒我们：正定性是关于二次型 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}$ 的符号的陈述，而不是关于矩阵元素符号的陈述。元素全为正只保证 $\bm{w}$ 的各分量同号时二次型为正，一旦 $\bm{w}$ 的分量异号，交叉项就可能占优。矩阵\eqref{align:appA-反例矩阵}本身也不是对称矩阵，其特征值只按\eqref{align:appA-特征方程}计算；即便如此，负特征值已足以否定正定性。
+\begin{remark}
+这个反例说明：正定性是关于二次型 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}$ 的符号的陈述，而不是关于矩阵元素符号的陈述。元素全为正只保证 $\bm{w}$ 的各分量同号时二次型为正，一旦 $\bm{w}$ 的分量异号，交叉项就可能占优。矩阵\eqref{align:appA-反例矩阵}本身也不是对称矩阵，其特征值只按\eqref{align:appA-特征方程}计算；即便如此，负特征值已足以否定正定性。
 \end{remark}
 
 如果对于所有的 $\bm{w}$，有 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}\geqslant0$，则称这个矩阵为半正定矩阵，记为 $\bm{A}\geqslant0$。
 
 \begin{definition}[半正定矩阵]\label{definition:appA-半正定矩阵}
-如果对于所有的 $\bm{w}$，有 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}\geqslant0$，则称这个矩阵为\textbf{半正定矩阵}，记为 $\bm{A}\geqslant0$，等价于 $\lambda_i\geqslant0$。
+设 $N\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$ 为实对称矩阵。若对任意向量 $\bm{w}\in\mathbb{R}^{N}$ 都有 $\bm{w}^{\mathsf{T}}\bm{A}\bm{w}\geqslant0$，则 $\bm{A}$ 称为 $N$ 阶实对称半正定矩阵，记作 $\bm{A}\geqslant0$。半正定性只对实对称矩阵定义；允许存在非零向量使二次型取零值。定义中的 $\bm{w}$ 取遍整个 $\mathbb{R}^{N}$，包括零向量。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-半正定矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-半正定矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 把\cref{definition:appA-正定矩阵}中的严格不等号换成非严格不等号即得半正定性，相应的特征值判据（\cref{proposition:appA-正定判据}的证明逐字适用）也由 $\lambda_i>0$ 变成 $\lambda_i\geqslant0$。允许零特征值意味着半正定矩阵可能奇异，因此 $\bm{A}\geqslant0$ 的矩阵未必可逆，\eqref{align:appA-逆求和形式}之类的公式对它没有意义。协方差矩阵总是半正定的，而它正定当且仅当数据不落在低维仿射子空间上。
 \end{remark}
 
 矩阵的条件数由下式给出：
 \begin{definition}[条件数]\label{definition:appA-条件数}
+设 $N\geqslant1$，$\bm{A}\in\mathbb{R}^{N\times N}$ 为实对称正定矩阵，$\lambda_{\max}$ 与 $\lambda_{\min}$ 分别为 $\bm{A}$ 的最大与最小特征值，且 $\lambda_{\max}\geqslant\lambda_{\min}>0$。$\bm{A}$ 的条件数定义为
 \begin{align}
-  \mathrm{CN}=\Bigl(\frac{\lambda_{\max}}{\lambda_{\min}}\Bigr)^{1/2}
+  \mathrm{CN}=\Bigl(\frac{\lambda_{\max}}{\lambda_{\min}}\Bigr)^{1/2},
   \label{align:appA-条件数}
 \end{align}
-其中 $\lambda_{\max}$ 是最大的特征值，$\lambda_{\min}$ 是最小的特征值。
+其中 $(\cdot)^{1/2}$ 表示正平方根。条件数只对可逆的实对称正定矩阵定义；由于 $\bm{A}$ 正定，$\lambda_{\max}$ 与 $\lambda_{\min}$ 均为正实数，故 $\mathrm{CN}\geqslant1$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:appA-条件数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:appA-条件数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 条件数衡量的是矩阵所代表的线性变换在不同方向上伸缩幅度的差异：$\mathrm{CN}=1$ 时各方向伸缩相同，问题最“良态”；$\mathrm{CN}$ 越大，求逆与解方程对误差越敏感。定义\eqref{align:appA-条件数}要求 $\bm{A}$ 对称正定（否则 $\lambda_{\min}$ 可能为零或为负，根号与比值失去意义），此时 $\lambda_{\max}/\lambda_{\min}$ 是 $\bm{A}$ 的最大与最小伸缩比，开平方后与“标准差之比”的量纲一致。本书在讨论病态问题时使用这一指标。
 \end{remark}
 

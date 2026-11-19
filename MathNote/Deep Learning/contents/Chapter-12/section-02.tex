@@ -28,8 +28,8 @@
 设字典含 $K$ 个词，嵌入空间的维度为 $D$，$\mathbf{E}\in\mathbb{R}^{D\times K}$。对第 $k$ 个词的独热编码 $\mathbf{x}\in\{0,1\}^{K}$（第 $k$ 个分量为 $1$、其余为 $0$），称 $\mathbf{v}=\mathbf{E}\mathbf{x}\in\mathbb{R}^{D}$ 为该词的\textbf{嵌入向量}，映射 $\mathbf{x}\mapsto\mathbf{E}\mathbf{x}$ 称为\textbf{词嵌入}（word embedding）；当 $D\ll K$ 时称为低维嵌入。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch12-词嵌入; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch12-词嵌入; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 词嵌入的动机直接来自独热编码的两个缺陷：维度随字典线性膨胀（$K$ 可达数十万），以及任意两个不同词的独热向量正交，因而内积恒为零，无法表达“相似”。把词映射到 $D$ 维（通常几百）的实向量，既压缩了维度，又使“相似”可以量化为内积或距离。由于 $\mathbf{E}\mathbf{x}$ 取的是 $\mathbf{E}$ 的第 $k$ 列，词嵌入本质上就是一张“查表”：每个词对应矩阵的一列，训练只更新这些列。这样做的代价是词与词之间不再有结构上的区别，全部信息都必须由数据学出来；好处是同一个词在任何位置都取同一个向量——这既是优点（参数共享、样本效率高），也是下一节 Transformer 要突破的限制（同一个词在不同上下文中应有不同表示）。
 \end{remark}
 
@@ -64,8 +64,8 @@
 设文本为字符序列。若用一个预处理步骤把该序列切分为若干子串（token）的序列，使得每个 token 取自一个预先确定的 token 字典，则称这一过程为\textbf{分词}（tokenization），所得子串序列称为该文本的 token 化表示。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch12-分词; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch12-分词; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 分词要解决的是“词级表示”与“字符级表示”之间的两难：词级字典无法覆盖未登录词与拼写变体，且把标点、代码等排除在外；字符级表示虽然完备，却丢掉了词的形态结构，并把序列拉得很长，使注意力的 $O(N^2)$ 代价迅速上升（见\cref{proposition:ch12-计算复杂度}）。分词取两者的折中：常见的完整词各占一个 token，生僻词则拆成若干有意义的片段，于是字典规模可控、序列长度可控、未登录词也能被表示。定义中“取自预先确定的字典”是本质条件：它保证了任何输入都能被编码为有限字典上的序列，从而使嵌入矩阵与输出 softmax 的维度固定。分词器与模型参数通常分开确定，分词方式一旦改变，嵌入层与输出层的维度都要随之改变，因此它属于模型设计的一部分而不是纯粹的数据预处理。
 \end{remark}
 
@@ -95,11 +95,11 @@ p(x_1,\cdots,x_N)=\prod_{n=1}^{N}p(x_n)
 变量之间共享分布 $p(x)$，且在不失通用性的前提下，共享分布 $p(x)$ 可以用一个简单的表格来表示，该表格列出了 $x$ 的每种可能状态（对应于词或 token 字典）出现的概率。只需要将这些概率中的每个概率设置为该词在训练集中出现的次数，就能得到该模型的最大似然解。这就是所谓的词袋（bag-of-words）模型，因为它完全忽略了词的排序。
 
 \begin{definition}[词袋模型]\label{definition:ch12-词袋模型}
-设 $x_1,\cdots,x_N$ 取自有限字典 $\mathcal{V}$，且各变量独立同分布。若联合分布取\eqref{align:ch12-词袋模型}的完全分解形式，则称该模型为\textbf{词袋模型}（bag-of-words model）。
+设 $N\geqslant1$，$x_1,\cdots,x_N$ 为取值于有限字典 $\mathcal{V}$ 的随机变量，$|\mathcal{V}|=K\geqslant1$，且各 $x_n$ 相互独立、同分布；设 $p(k)=\mathbb{P}(x_n=k)>0$ 对每个 $k\in\mathcal{V}$ 成立，且 $\sum_{k\in\mathcal{V}}p(k)=1$。若这 $N$ 个变量的联合分布取\eqref{align:ch12-词袋模型}的完全因子分解形式，即每个位置的边缘分布都由同一个 $p(k)$ 给出、与位置 $n$ 无关，则把该模型称为词袋模型（bag-of-words model），把 $p=(p(k))_{k\in\mathcal{V}}$ 称为该模型的参数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch12-词袋模型; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch12-词袋模型; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 词袋模型的假设“各词独立同分布”在语言中显然不成立——词序、搭配、句法全部被丢弃——但它换来的是参数量的急剧下降：联合分布从 $|\mathcal{V}|^{N}$ 个自由参数降为 $|\mathcal{V}|-1$ 个。这正是它在短文本分类（如情感分析）中长期可用的原因：当 $N$ 较大而 $|\mathcal{V}|$ 中等时，$|\mathcal{V}|^{N}$ 完全不可估计，而词袋的参数可以被数据充分覆盖。条件“同分布”还意味着同一个词在不同位置有相同的概率，这在形式上与\cref{definition:ch12-词嵌入}中“同一个词总映射到同一向量”的假设一致。需要注意，词袋模型仍然是一个概率模型，\eqref{align:ch12-词袋模型}只是分解假设，不是对文本生成机制的真实刻画；把它用于生成时会得到词序混乱的文本。
 \end{remark}
 
@@ -125,8 +125,8 @@ p(C_k\mid x_1,\cdots,x_N)\propto p(C_k)\prod_{n=1}^{N}p(x_n\mid C_k)
 把\eqref{align:ch12-词袋模型}取对数，得对数似然 $\sum_{k\in\mathcal{V}}n_k\ln p(k)$。在约束 $\sum_{k}p(k)=1$、$p(k)\geqslant0$ 下用 Lagrange 乘子 $L=\sum_k n_k\ln p(k)+\lambda\left(1-\sum_k p(k)\right)$，对 $p(k)$ 求偏导并令其为零，得 $n_k/p(k)=\lambda$，即 $p(k)=n_k/\lambda$；代入约束得 $\lambda=N$，故 $\hat{p}(k)=n_k/N$。又 $\ln$ 为凹函数，该驻点即为全局最大值。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch12-词袋最大似然; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch12-词袋最大似然; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个命题说明“用频率估计概率”不是随手的选择，而是词袋模型下的最大似然解——它与\eqref{align:ch12-词袋后验}的朴素Bayes分类器完全衔接：类-条件密度就是在类 $C_k$ 内部做同样的频率估计。证明中的约束条件是本质的：没有 $\sum_k p(k)=1$，目标函数无上界（把某个 $p(k)$ 推向无穷即可）。命题同时暴露了该方法的一个结构性缺陷：若某个词 $k$ 在训练集中未出现，则 $n_k=0$，最大似然解给出 $\hat{p}(k)=0$，于是任何含该词的新序列后验概率都为零，分类器被“一票否决”。这正需要文中所说的平滑来修补：在计数上加一（Laplace 平滑）等价于把 $n_k$ 换成 $n_k+1$，从而消除零概率。
 \end{remark}
 
@@ -141,15 +141,15 @@ p(x_1,\cdots,x_N)=\prod_{n=1}^{N}p(x_n\mid x_1,\cdots,x_{n-1})
 这可以用一个概率图模型（参见\cref{section:ch11-概率图模型}）来表示，其中序列里的每个节点都会从各自的前一个节点接收一个连接。我们可以用一个表格来表示\eqref{align:ch12-自回归语言模型}右侧的每一项，该表格中的条目也是通过训练集的简单频率计数估算出来的。然而，这些表格的大小会随着序列长度的增加呈指数增长（见\cref{exercise:ch12-12}），因此这种方法的成本会高得令人望而却步。
 
 \begin{proposition}[自回归分解]\label{proposition:ch12-自回归分解}
-对任意联合分布 $p(x_1,\cdots,x_N)$，恒有\eqref{align:ch12-自回归语言模型}成立，其中约定 $p(x_1\mid x_1,\cdots,x_0)\triangleq p(x_1)$。
+设 $N\geqslant1$，$x_1,\cdots,x_N$ 为取值于有限或可数集合 $\mathcal{X}$ 的离散随机变量，$p(x_1,\cdots,x_N)$ 为其联合概率质量函数，并对每个 $(x_1,\cdots,x_n)$ 有 $p(x_1,\cdots,x_{n-1})>0$。则对任意这样的联合分布，\eqref{align:ch12-自回归语言模型}恒成立，其中条件概率按 $p(x_n\mid x_1,\cdots,x_{n-1})=p(x_1,\cdots,x_n)/p(x_1,\cdots,x_{n-1})$ 定义，并约定 $p(x_1\mid x_1,\cdots,x_0)\triangleq p(x_1)$。该分解不使用任何独立性或同分布假设。
 \end{proposition}
 
 \begin{proof}
 由概率的乘积法则，$p(x_1,\cdots,x_N)=p(x_1)p(x_2\mid x_1)\cdots p(x_N\mid x_1,\cdots,x_{N-1})$。把首个因子写成 $p(x_1\mid\varnothing)$，即得\eqref{align:ch12-自回归语言模型}。该分解对任意联合分布成立，不依赖任何独立性假设，故“不失通用性”。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch12-自回归分解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch12-自回归分解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 该命题说明自回归分解本身不含任何建模假设——它是恒等式，因此“用自回归建模语言”并不损失表达能力，真正的假设在于如何参数化每个条件分布：用表格则参数随 $N$ 指数增长，用神经网络则参数固定。这就是\cref{subsection:ch12-递归神经网络}与 12.3 节转向参数化模型的理由。与词袋模型\eqref{align:ch12-词袋模型}相比，自回归分解保留了全部词序信息，代价是每个条件分布的自变量个数随位置增长。注意 $n=1$ 的项按约定为 $p(x_1)$，这不是笔误：把空条件视为“无信息”，正是链式法则的起点。
 \end{remark}
 
@@ -162,11 +162,15 @@ p(x_1,\cdots,x_N)=p(x_1)\,p(x_2\mid x_1)\prod_{n=3}^{N}p(x_n\mid x_{n-1},x_{n-2}
 在相应的图模型中，每个节点都有前两个节点的连接（参见\cref{section:ch11-概率图模型}）。此处，我们假设所有变量共享条件分布 $p(x_n\mid x_{n-L:n-1})$。同样，\eqref{align:ch12-n元模型}右侧的每个分布都可以用表格来表示，其值是从抽取自训练语料的连续词的三元组统计中估算出来的。
 
 \begin{definition}[$n$ 元模型]\label{definition:ch12-n元模型}
-在自回归分解\eqref{align:ch12-自回归语言模型}中，若对每个 $n$ 都有 $p(x_n\mid x_1,\cdots,x_{n-1})=p(x_n\mid x_{n-L},\cdots,x_{n-1})$，即条件分布只依赖最近的 $L$ 个词，则称所得模型为 $L$ 阶\textbf{$n$ 元模型}（$n$-gram model）；$L=1$ 时称二元（bi-gram）模型，$L=2$ 时称三元（tri-gram）模型。
+设 $L\geqslant1$ 为给定阶数，$N\geqslant1$，$x_1,\cdots,x_N$ 为取值于字典 $\mathcal{V}$ 的序列，$p$ 为其自回归分解\eqref{align:ch12-自回归语言模型}。若对每个 $n>L$ 都有
+\begin{align*}
+p(x_n\mid x_1,\cdots,x_{n-1})=p(x_n\mid x_{n-L},\cdots,x_{n-1}),
+\end{align*}
+即条件分布只依赖最近的 $L$ 个词、与更早的历史无关（当 $n\leqslant L$ 时以序列起点截断），则把按此分解所得的模型称为 $L$ 阶 $n$ 元模型（$n$-gram model）；$L=1$ 时称为二元（bi-gram）模型，$L=2$ 时称为三元（tri-gram）模型。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch12-n元模型; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch12-n元模型; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 $n$ 元模型用“截断历史”换取可估计性：条件分布的自变量从 $n-1$ 个减为固定的 $L$ 个，于是所有位置的 $p(x_n\mid x_{n-L:n-1})$ 共享同一张大小为 $|\mathcal{V}|^{L+1}$ 的表，可以用频率计数估计。这是一次典型的 Markov 假设，其代价是超过 $L$ 步的依赖被完全丢弃，而自然语言中长距离依赖恰恰普遍存在（例如代词与先行词）。$L$ 的选择因此是偏差-方差权衡：$L$ 太小则模型无法表达语法，$L$ 太大则表的大小指数增长、绝大多数条目在训练集中从未出现。这也解释了为什么后续要用参数化的神经网络代替查表——把“所有可能的 $L$ 元组”压缩为固定维度的参数。
 \end{remark}
 
@@ -190,17 +194,17 @@ $n$ 元模型等技术在序列长度上的缩放性很差，因为它们存储�
 \end{figure}
 
 \begin{definition}[递归神经网络]\label{definition:ch12-递归神经网络}
-设 $\mathbf{x}_1,\cdots,\mathbf{x}_N$ 为输入序列。若网络按
+设 $N\geqslant1$，输入序列 $\mathbf{x}_1,\cdots,\mathbf{x}_N\in\mathbb{R}^{D}$，输入维数 $D\geqslant1$，隐状态维数 $H\geqslant1$，输出维数 $K\geqslant1$，参数 $\mathbf{w}\in\mathbb{R}^{P}$，初始状态 $\mathbf{z}_0\in\mathbb{R}^{H}$ 固定；设 $\mathbf{f}:\mathbb{R}^{D}\times\mathbb{R}^{H}\to\mathbb{R}^{H}$ 与 $\mathbf{g}:\mathbb{R}^{H}\to\mathbb{R}^{K}$ 为以 $\mathbf{w}$ 为参数、在全部时间步上共享同一组参数的非线性映射。若网络按
 \begin{align}
 \mathbf{z}_n=\mathbf{f}\left(\mathbf{x}_n,\mathbf{z}_{n-1};\mathbf{w}\right),\qquad
 \mathbf{y}_n=\mathbf{g}\left(\mathbf{z}_n;\mathbf{w}\right)
 \label{align:ch12-递归网络}
 \end{align}
-逐时间步更新隐状态，其中 $\mathbf{f},\mathbf{g}$ 为以 $\mathbf{w}$ 为参数、在所有时间步上共享的非线性映射，$\mathbf{z}_0$ 为固定的初始状态，则称该架构为\textbf{递归神经网络}（Recurrent Neural Network, RNN）。
+逐时间步更新隐状态，则把该架构称为递归神经网络（Recurrent Neural Network, RNN），称 $\mathbf{z}_n$ 为第 $n$ 步的隐状态、$\mathbf{y}_n$ 为第 $n$ 步的输出。参数共享意味着 $\mathbf{w}$ 的维数 $P$ 与序列长度 $N$ 无关。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch12-递归神经网络; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch12-递归神经网络; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 递归神经网络用“状态”代替“历史”：不必为每个可能的词序列存一张表，只需把迄今为止的全部信息压缩进 $\mathbf{z}_n$，再用同一组参数 $\mathbf{w}$ 递推。因此参数量与序列长度无关，且能处理任意长度的序列——这两点正是 $n$ 元模型做不到的。参数在时间步之间共享还带来“平移等变”：同一个词出现在不同位置时由同一套权重处理，与卷积网络在空间上共享滤波器的思路一致。代价是信息必须逐时间步传递：从 $t$ 到 $t+k$ 要经过 $k$ 次复合，梯度也随之连乘 $k$ 次，这正是\cref{subsection:ch12-通过时间反向传播}中梯度消失/爆炸与瓶颈问题的来源。此外，递推的串行性使训练无法在时间维上并行，这是 Transformer 取代它的直接原因。
 \end{remark}
 
@@ -222,20 +226,20 @@ $n$ 元模型等技术在序列长度上的缩放性很差，因为它们存储�
 标准递归神经网络的另一个问题是，其无法很好地处理远距离依赖关系。这在自然语言中尤为突出，因为这种依赖关系非常普遍。在较长的文本段落中，不妨引入一个概念，这个概念对预测文本后面出现的词起着重要作用。在\cref{figure:ch12-递归翻译}所示的架构中，英文句子的整个概念必须在长度固定的单个隐向量 $\mathbf{z}^{*}$ 内被捕捉到，而如果序列较长，这个问题就会越来越严重。这就是所谓的瓶颈问题（bottleneck problem），因为任意长度的序列都必须总结为单个激活的隐向量，而网络只有在处理完整个输入序列后才能开始生成输出。
 
 \begin{proposition}[通过时间反向传播的梯度连乘]\label{proposition:ch12-BPTT}
-考虑\eqref{align:ch12-递归网络}的递归网络，设 $\mathbf{z}_n=\mathbf{f}(\mathbf{x}_n,\mathbf{z}_{n-1};\mathbf{w})$。则损失对早期状态的梯度满足
+设 $N\geqslant1$，$\mathbf{z}_1,\cdots,\mathbf{z}_N\in\mathbb{R}^{H}$ 为\eqref{align:ch12-递归网络}的隐状态，$\mathbf{z}_n=\mathbf{f}(\mathbf{x}_n,\mathbf{z}_{n-1};\mathbf{w})$，其中 $\mathbf{f}$ 对第二个自变量连续可微；设 $L(\mathbf{z}_1,\cdots,\mathbf{z}_N)$ 为实值损失函数，且下式出现的偏导数均存在。则对每个 $1\leqslant k<n\leqslant N$，损失对第 $k$ 步状态的梯度满足
 \begin{align}
 \frac{\partial L}{\partial\mathbf{z}_{k}}=\sum_{n>k}\frac{\partial L}{\partial\mathbf{z}_{n}}\prod_{j=k+1}^{n}\frac{\partial\mathbf{z}_{j}}{\partial\mathbf{z}_{j-1}},
 \label{align:ch12-BPTT梯度}
 \end{align}
-其中每个因子是 $\mathbf{f}$ 对 $\mathbf{z}_{j-1}$ 的 Jacobi 矩阵。
+其中每个因子 $\partial\mathbf{z}_{j}/\partial\mathbf{z}_{j-1}\in\mathbb{R}^{H\times H}$ 是 $\mathbf{f}$ 对 $\mathbf{z}_{j-1}$ 的 Jacobi 矩阵，连乘按矩阵乘法从 $j=k+1$ 到 $n$ 依次进行，求和遍历所有 $n>k$。每个因子均为 $H\times H$ 方阵，故连乘的阶数相容；当 $n=k+1$ 时连乘只剩一个因子。
 \end{proposition}
 
 \begin{proof}
 对 $L(\mathbf{z}_1,\cdots,\mathbf{z}_N)$ 用链式法则，把 $\mathbf{z}_k$ 到 $\mathbf{z}_n$ 的依赖拆成逐时间步的复合：由 $\mathbf{z}_{j}=\mathbf{f}(\mathbf{x}_j,\mathbf{z}_{j-1};\mathbf{w})$ 得 $\partial\mathbf{z}_{j}/\partial\mathbf{z}_{j-1}$ 为 Jacobi 矩阵。对每个 $n>k$ 沿唯一路径复合，再对所有 $n$ 求和（因为 $\mathbf{z}_k$ 通过每个后续状态影响损失），即得\eqref{align:ch12-BPTT梯度}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch12-BPTT; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch12-BPTT; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 该命题把“梯度消失/爆炸”从一个经验说法变成可检验的陈述：梯度是 $(n-k)$ 个 Jacobi 矩阵的连乘。若这些矩阵的谱半径一致小于 $1$，乘积随 $n-k$ 指数衰减；若一致大于 $1$，则指数增长。因此长序列上早期时间步几乎收不到有效梯度，这正是“难以学习远距离依赖”的定量含义。LSTM 与 GRU 的门控结构相当于把连乘中的一部分替换为接近恒等的路径（遗忘门接近 $1$ 时），从而缓解衰减；残差连接在 Transformer 中起的是同一作用——把连乘变成“恒等 + 小扰动”的和式展开。注意公式里的求和意味着 $\mathbf{z}_k$ 有多条路径到达损失，这与普通深度网络中同一变量被多处使用的处理完全一致。
 \end{remark}
 

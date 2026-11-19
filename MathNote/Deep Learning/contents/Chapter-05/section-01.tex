@@ -20,17 +20,17 @@
 其中，$\boldsymbol{w}$为权重向量，$w_0$为偏置参数（请勿与统计学意义上的偏差混淆）。如果$y(\boldsymbol{x})\geqslant 0$，输入向量$\boldsymbol{x}$将被归入$C_1$类，否则归入$C_2$类。因此，相应的决策边界由关系$y(\boldsymbol{x})=0$定义，对应于$D$维输入空间中的$(D-1)$维超平面。
 
 \begin{proposition}[决策面的几何性质]\label{proposition:ch05-决策面几何}
-设$\boldsymbol{w}\neq\boldsymbol{0}$，$y(\boldsymbol{x})=\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}+w_0$。
+设$D\geqslant1$，$\boldsymbol{w}\in\mathbb{R}^{D}\setminus\{\boldsymbol{0}\}$，$w_0\in\mathbb{R}$，$y:\mathbb{R}^{D}\to\mathbb{R}$由$y(\boldsymbol{x})=\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}+w_0$定义，$H=\{\boldsymbol{x}\in\mathbb{R}^{D}:y(\boldsymbol{x})=0\}$。则
 \begin{enumerate}[(i)]
-  \item 决策面$\{\boldsymbol{x}:y(\boldsymbol{x})=0\}$是$\mathbb{R}^{D}$中的一个$(D-1)$维超平面，且$\boldsymbol{w}$是它的一个法向量；
-  \item 原点到该决策面的带号距离为$-w_0/\lVert\boldsymbol{w}\rVert$，其中正号取在$\boldsymbol{w}$所指的方向上。
+  \item $H$是$\mathbb{R}^{D}$中的一个$(D-1)$维超平面，且$\boldsymbol{w}$是$H$的一个法向量；
+  \item 原点到$H$的带号距离为$-w_0/\lVert\boldsymbol{w}\rVert$，其中正号取在$\boldsymbol{w}$所指的方向上。
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-（原书论证）考虑两个点$\boldsymbol{x}_A$和$\boldsymbol{x}_B$，它们都位于决策面上。因为$y(\boldsymbol{x}_A)=y(\boldsymbol{x}_B)=0$，所以得出$\boldsymbol{w}^{\mathsf{T}}(\boldsymbol{x}_A-\boldsymbol{x}_B)=0$。由于$\boldsymbol{x}_A-\boldsymbol{x}_B$是决策面内的任意方向，故$\boldsymbol{w}$与位于决策面内的每个向量都正交，$\boldsymbol{w}$决定了决策面的朝向。
+设$\boldsymbol{x}_A,\boldsymbol{x}_B\in H$。由$y(\boldsymbol{x}_A)=y(\boldsymbol{x}_B)=0$得$\boldsymbol{w}^{\mathsf{T}}(\boldsymbol{x}_A-\boldsymbol{x}_B)=0$。由于$\boldsymbol{x}_A-\boldsymbol{x}_B$可取遍$H$的方向空间，$\boldsymbol{w}$与$H$的每个方向向量都正交，故$\boldsymbol{w}$是$H$的法向量。
 
-（重构新增）下面补足维数与距离两部分。记$H=\{\boldsymbol{x}:\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}+w_0=0\}$。若$\boldsymbol{w}\neq\boldsymbol{0}$，则$H$非空：取$\boldsymbol{x}_0=-w_0\boldsymbol{w}/\lVert\boldsymbol{w}\rVert^{2}$即可验证$y(\boldsymbol{x}_0)=0$。$H$是仿射子空间，其方向空间为$\{\boldsymbol{v}:\boldsymbol{w}^{\mathsf{T}}\boldsymbol{v}=0\}$，即$\boldsymbol{w}$的正交补；由于$\boldsymbol{w}\neq\boldsymbol{0}$，该正交补的维数为$D-1$，故$H$的维数为$D-1$。又对任意$\boldsymbol{x}\in H$，有$\boldsymbol{x}-\boldsymbol{x}_0\in\boldsymbol{w}^{\perp}$，故$\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}=\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}_0=-w_0$，于是
+记$H=\{\boldsymbol{x}\in\mathbb{R}^{D}:\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}+w_0=0\}$。因$\boldsymbol{w}\neq\boldsymbol{0}$，$H$非空：取$\boldsymbol{x}_0=-w_0\boldsymbol{w}/\lVert\boldsymbol{w}\rVert^{2}$即可验证$y(\boldsymbol{x}_0)=0$。$H$是仿射子空间，其方向空间为$\{\boldsymbol{v}:\boldsymbol{w}^{\mathsf{T}}\boldsymbol{v}=0\}$，即$\boldsymbol{w}$的正交补；由于$\boldsymbol{w}\neq\boldsymbol{0}$，该正交补的维数为$D-1$，故$H$的维数为$D-1$。又对任意$\boldsymbol{x}\in H$，有$\boldsymbol{x}-\boldsymbol{x}_0\in\boldsymbol{w}^{\perp}$，故$\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}=\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}_0=-w_0$，于是
 
 \begin{align}
   \frac{\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}}{\lVert\boldsymbol{w}\rVert}=-\frac{w_0}{\lVert\boldsymbol{w}\rVert}
@@ -39,8 +39,8 @@
 左端正是$\boldsymbol{x}$在$\boldsymbol{w}$方向上的投影长度，它与$\boldsymbol{x}\in H$的选取无关，因此它就是原点到决策面的法向距离，符号由$\boldsymbol{w}$的方向确定。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-决策面几何; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch05-决策面几何; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch05-决策面几何}的两个结论分别说明了参数的几何含义：$\boldsymbol{w}$只决定决策面的朝向（改变$\boldsymbol{w}$的方向会旋转超平面），而$w_0$只决定决策面的位置（改变$w_0$会平移超平面，且平移量为$-w_0/\lVert\boldsymbol{w}\rVert$）。条件$\boldsymbol{w}\neq\boldsymbol{0}$不可去掉：若$\boldsymbol{w}=\boldsymbol{0}$，则$y\equiv w_0$为常数，决策面或者为空集（$w_0\neq0$）或者为整个空间（$w_0=0$），此时既没有法向量也没有到原点的距离。结论(ii)中的“带号”不能省略：若只关心距离，则应为$|w_0|/\lVert\boldsymbol{w}\rVert$；带号版本在下一段讨论点到决策面的带号距离时是必要的。注意$\boldsymbol{w}$与$w_0$同时乘以一个正数不改变决策面，因此线性判别式的参数并不唯一，这一点在讨论最大似然的奇异性时还会出现（见\cref{proposition:ch05-线性可分最大似然}）。
 \end{remark}
 
@@ -56,12 +56,12 @@
 此外，请注意，$y(\boldsymbol{x})$的值为点$\boldsymbol{x}$到决策面的垂直距离$r$的带号测度。为了方便理解，考虑任意一个点$\boldsymbol{x}$，设$\boldsymbol{x}_{\perp}$是它在决策面上的正交投影。
 
 \begin{proposition}[点到决策面的带号距离]\label{proposition:ch05-带号距离}
-设$\boldsymbol{w}\neq\boldsymbol{0}$，$\boldsymbol{x}_{\perp}$是$\boldsymbol{x}$在决策面$y(\boldsymbol{x})=0$上的正交投影，$r$为$\boldsymbol{x}$沿$\boldsymbol{w}$方向到该决策面的带号距离。则
+设$D\geqslant1$，$\boldsymbol{w}\in\mathbb{R}^{D}\setminus\{\boldsymbol{0}\}$，$w_0\in\mathbb{R}$，$\boldsymbol{x}\in\mathbb{R}^{D}$，$H=\{\boldsymbol{z}\in\mathbb{R}^{D}:\boldsymbol{w}^{\mathsf{T}}\boldsymbol{z}+w_0=0\}$，$\boldsymbol{x}_{\perp}$为$\boldsymbol{x}$在$H$上的正交投影。则存在唯一的$r\in\mathbb{R}$使
 \begin{align}
   \boldsymbol{x}=\boldsymbol{x}_{\perp}+r\,\frac{\boldsymbol{w}}{\lVert\boldsymbol{w}\rVert}
   \label{align:ch05-正交分解}
 \end{align}
-并且
+即$r$为$\boldsymbol{x}$沿$\boldsymbol{w}$方向到$H$的带号距离，其符号由$\boldsymbol{x}-\boldsymbol{x}_{\perp}$与$\boldsymbol{w}$同向或反向决定，而$|r|$等于$\boldsymbol{x}$到$H$的欧氏距离。该分解表明，点$\boldsymbol{x}$相对超平面$H$的位置只由一个标量$r$刻画，并且
 \begin{align}
   r=\frac{y(\boldsymbol{x})}{\lVert\boldsymbol{w}\rVert}
   \label{align:ch05-带号距离}
@@ -69,7 +69,7 @@
 \end{proposition}
 
 \begin{proof}
-（重构新增）因为$\boldsymbol{x}_{\perp}$是$\boldsymbol{x}$在决策面上的正交投影，所以$\boldsymbol{x}-\boldsymbol{x}_{\perp}$与决策面正交。由\cref{proposition:ch05-决策面几何}(i)，决策面的法向量为$\boldsymbol{w}$，故$\boldsymbol{x}-\boldsymbol{x}_{\perp}$平行于$\boldsymbol{w}$，即存在实数$r$使\eqref{align:ch05-正交分解}成立；这里$r$的符号约定为沿$\boldsymbol{w}$方向为正，其绝对值就是$\boldsymbol{x}$到决策面的距离。
+因为$\boldsymbol{x}_{\perp}$是$\boldsymbol{x}$在决策面上的正交投影，所以$\boldsymbol{x}-\boldsymbol{x}_{\perp}$与决策面正交。由\cref{proposition:ch05-决策面几何}(i)，决策面的法向量为$\boldsymbol{w}$，故$\boldsymbol{x}-\boldsymbol{x}_{\perp}$平行于$\boldsymbol{w}$，即存在实数$r$使\eqref{align:ch05-正交分解}成立；这里$r$的符号约定为沿$\boldsymbol{w}$方向为正，其绝对值就是$\boldsymbol{x}$到决策面的距离。
 
 在\eqref{align:ch05-正交分解}的两边左乘$\boldsymbol{w}^{\mathsf{T}}$并加上$w_0$，利用$y(\boldsymbol{x})=\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}+w_0$以及$\boldsymbol{x}_{\perp}$位于决策面上即$y(\boldsymbol{x}_{\perp})=\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}_{\perp}+w_0=0$，可得
 
@@ -80,8 +80,8 @@
 由于$\boldsymbol{w}\neq\boldsymbol{0}$，两边除以$\lVert\boldsymbol{w}\rVert$即得\eqref{align:ch05-带号距离}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-带号距离; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch05-带号距离; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch05-带号距离}说明$y(\boldsymbol{x})$本身就是一个“带尺度”的距离：它等于真实距离乘以$\lVert\boldsymbol{w}\rVert$。因此$y(\boldsymbol{x})$的符号给出分类结果，而$y(\boldsymbol{x})=0$恰好是决策面。这个解释在\cref{subsection:ch05-连续输入}中很重要：当后验概率写成$p(C_1\mid\boldsymbol{x})=\sigma(y(\boldsymbol{x}))$时，$y$的绝对值越大，分类的置信度越高，但置信度与到决策面的几何距离之间相差因子$\lVert\boldsymbol{w}\rVert$。若$\lVert\boldsymbol{w}\rVert$很小，则离决策面很远的数据点也可能有很小的$|y|$，这说明“用$|y|$衡量置信度”依赖于参数的尺度，而参数的尺度又可以通过重新缩放任意改变。
 \end{remark}
 
@@ -95,11 +95,11 @@
 在此情况下，决策面是通过$(D+1)$维扩展输入空间原点的$D$维超平面。
 
 \begin{definition}[增广权重与增广输入]\label{definition:ch05-增广记号}
-在输入向量$\boldsymbol{x}\in\mathbb{R}^{D}$之前添加虚拟输入$x_0=1$，得到增广输入向量$\tilde{\boldsymbol{x}}=(x_0,\boldsymbol{x})=(1,\boldsymbol{x})\in\mathbb{R}^{D+1}$；相应地，在权重向量$\boldsymbol{w}$之前添加偏置$w_0$，得到增广权重向量$\tilde{\boldsymbol{w}}=(w_0,\boldsymbol{w})\in\mathbb{R}^{D+1}$。
+设输入维数$D\geqslant1$，输入向量$\boldsymbol{x}\in\mathbb{R}^{D}$，权重向量$\boldsymbol{w}\in\mathbb{R}^{D}$，偏置$w_0\in\mathbb{R}$。在$\boldsymbol{x}$之前添加虚拟输入$x_0=1$，得到的向量$\tilde{\boldsymbol{x}}=(x_0,\boldsymbol{x}^{\mathsf{T}})^{\mathsf{T}}=(1,\boldsymbol{x}^{\mathsf{T}})^{\mathsf{T}}\in\mathbb{R}^{D+1}$称为$\boldsymbol{x}$的\textbf{增广输入向量}；在$\boldsymbol{w}$之前添加$w_0$，得到的向量$\tilde{\boldsymbol{w}}=(w_0,\boldsymbol{w}^{\mathsf{T}})^{\mathsf{T}}\in\mathbb{R}^{D+1}$称为\textbf{增广权重向量}。二者满足$x_0=1$与$\tilde{\boldsymbol{w}}^{\mathsf{T}}\tilde{\boldsymbol{x}}=\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}+w_0$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch05-增广记号; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch05-增广记号; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 增广记号的作用是把仿射函数$y=\boldsymbol{w}^{\mathsf{T}}\boldsymbol{x}+w_0$写成线性函数$y=\tilde{\boldsymbol{w}}^{\mathsf{T}}\tilde{\boldsymbol{x}}$，从而使偏置与权重在求导、矩阵化时享有同一地位；\cref{subsection:ch05-最小二乘分类}中的设计矩阵$\tilde{\boldsymbol{X}}$正是由此得到的。其几何代价是：决策面在$\mathbb{R}^{D}$中是仿射的（不过原点），而在$\mathbb{R}^{D+1}$中是过原点的线性子空间，维数为$D$。由于虚拟输入恒为1，增广向量只张成$\mathbb{R}^{D+1}$中的一个$D$维仿射子集，因此$\tilde{\boldsymbol{w}}$并不唯一：任何与所有训练增广输入都正交的方向都可以加到$\tilde{\boldsymbol{w}}$上，而不改变训练点处的预测（但在新的$\boldsymbol{x}$处预测可能改变）。这一观察在讨论最小二乘解需要伪逆时还会用到（见\cref{proposition:ch05-最小二乘极小性}）。
 \end{remark}
 
@@ -149,21 +149,21 @@
 \end{align}
 
 \begin{proposition}[多类线性判别式的决策区域是凸的]\label{proposition:ch05-多类决策区域凸性}
-设$y_k(\boldsymbol{x})=\boldsymbol{w}_k^{\mathsf{T}}\boldsymbol{x}+w_{k0}$，$k=1,\cdots,K$，并令$\mathcal{R}_k=\{\boldsymbol{x}:y_k(\boldsymbol{x})>y_j(\boldsymbol{x})\ \text{对一切}\ j\neq k\}$。则每个$\mathcal{R}_k$都是凸集；若$\mathcal{R}_k\neq\varnothing$，则它还是单连通的。
+设$D\geqslant1$，$K\geqslant2$，$\boldsymbol{w}_k\in\mathbb{R}^{D}$，$w_{k0}\in\mathbb{R}$，$y_k(\boldsymbol{x})=\boldsymbol{w}_k^{\mathsf{T}}\boldsymbol{x}+w_{k0}$（$k=1,\cdots,K$），并令$\mathcal{R}_k=\{\boldsymbol{x}\in\mathbb{R}^{D}:y_k(\boldsymbol{x})>y_j(\boldsymbol{x})\ \text{对一切}\ j\neq k\}$。则每个$\mathcal{R}_k$都是凸集；若$\mathcal{R}_k\neq\varnothing$，则它还是单连通的，且是$\mathbb{R}^{D}$中的开集。凸性说明：若两个输入属于同一决策区域，则连接它们的线段仍属于该区域；单连通性由凸性推出。
 \end{proposition}
 
 \begin{proof}
-（原书论证）因为$\boldsymbol{x}_A$和$\boldsymbol{x}_B$都在决策区域$\mathcal{R}_k$内，所以在所有$j\neq k$的情况下，$y_k(\boldsymbol{x}_A)>y_j(\boldsymbol{x}_A)$且$y_k(\boldsymbol{x}_B)>y_j(\boldsymbol{x}_B)$。对\eqref{align:ch05-凸性线性}两端作同样的展开，并对每个$j\neq k$用这两个不等式，得
+设$\boldsymbol{x}_A,\boldsymbol{x}_B\in\mathcal{R}_k$。由$\mathcal{R}_k$的定义，对所有$j\neq k$有$y_k(\boldsymbol{x}_A)>y_j(\boldsymbol{x}_A)$且$y_k(\boldsymbol{x}_B)>y_j(\boldsymbol{x}_B)$。对\eqref{align:ch05-凸性线性}两端作同样的展开，并对每个$j\neq k$用这两个不等式，得
 
 \begin{align}
   y_k(\hat{\boldsymbol{x}})=\lambda y_k(\boldsymbol{x}_A)+(1-\lambda)y_k(\boldsymbol{x}_B)>\lambda y_j(\boldsymbol{x}_A)+(1-\lambda)y_j(\boldsymbol{x}_B)=y_j(\hat{\boldsymbol{x}})
 \end{align}
 
-（重构新增）其中中间的不等号对$\lambda\in[0,1]$成立：当$\lambda=0$或$\lambda=1$时它退化为端点处已证的严格不等式，当$0<\lambda<1$时两个严格不等式分别乘以正系数$\lambda$与$1-\lambda$后相加。于是$\hat{\boldsymbol{x}}\in\mathcal{R}_k$，即$\mathcal{R}_k$对任意两点之间的线段封闭，故为凸集。凸集是单连通的，因此$\mathcal{R}_k$单连且凸出。注意$\mathcal{R}_k$是有限个开半空间之交，故它还是开集；边界$\partial\mathcal{R}_k$由若干超平面片组成，这些超平面片正是形如\eqref{align:ch05-多类边界}的决策边界的部分。
+其中中间的不等号对$\lambda\in[0,1]$成立：当$\lambda=0$或$\lambda=1$时它退化为端点处已证的严格不等式，当$0<\lambda<1$时两个严格不等式分别乘以正系数$\lambda$与$1-\lambda$后相加。于是$\hat{\boldsymbol{x}}\in\mathcal{R}_k$，即$\mathcal{R}_k$对任意两点之间的线段封闭，故为凸集。凸集是单连通的，因此$\mathcal{R}_k$单连且凸出。注意$\mathcal{R}_k$是有限个开半空间之交，故它还是开集；边界$\partial\mathcal{R}_k$由若干超平面片组成，这些超平面片正是形如\eqref{align:ch05-多类边界}的决策边界的部分。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-多类决策区域凸性; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch05-多类决策区域凸性; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 凸性来自“取最大”这一运算与线性函数之间的相容性：$\mathcal{R}_k$是$K-1$个开半空间$\{\boldsymbol{x}:(\boldsymbol{w}_k-\boldsymbol{w}_j)^{\mathsf{T}}\boldsymbol{x}+(w_{k0}-w_{j0})>0\}$的交，而半空间是凸集。命题中的严格不等号意味着决策面上的点不属于任何$\mathcal{R}_k$，这些点可以任意归入相邻类之一而不改变决策区域的凸性。需要强调，凸性是这种“$K$个线性函数取最大”的判别式所特有的：若改用一对一或一对多组合，决策区域一般不是凸的，甚至可能出现\cref{figure:ch05-多分类歧义}所示的既不连通也不单值的区域。此外，$\mathcal{R}_k$可以为空：当某个类在参数上被其他类完全“压倒”时，没有任何输入会被归入该类。
 \end{remark}
 
@@ -181,7 +181,7 @@
 对于回归问题，多元目标变量$\boldsymbol{t}$只是我们希望预测其值的实数向量。在分类问题中，有多种使用目标值来表示类标签的方法。对于二分类问题，最方便的是单目标变量$t\in\{0,1\}$的二进制表示，所以$t=1$表示$C_1$类，$t=0$表示$C_2$类。我们可将$t$的值理解为该类是$C_1$类的概率，概率值仅取0和1的极值。对于多分类（$K>2$）问题，使用1-of-$K$编码方案较为方便，其也称独热编码方案。
 
 \begin{definition}[1-of-$K$编码方案]\label{definition:ch05-1ofK编码}
-设共有$K$个类。若把类标签编码为长度为$K$的向量$\boldsymbol{t}=(t_1,\cdots,t_K)^{\mathsf{T}}$，使得当且仅当样本属于$C_k$类时$t_k=1$而其余分量$t_j=0$（$j\neq k$），则称这种编码为1-of-$K$编码方案，也称独热（one-hot）编码方案。
+设$K\geqslant2$，类为$C_1,\cdots,C_K$。若把类标签编码为向量$\boldsymbol{t}=(t_1,\cdots,t_K)^{\mathsf{T}}\in\{0,1\}^{K}$，使得当且仅当样本属于$C_k$类时$t_k=1$而其余分量$t_j=0$（$j\neq k$），则这种编码称为1-of-$K$编码方案，也称独热（one-hot）编码方案；此时$\sum_{k=1}^{K}t_k=1$。编码向量只含一个$1$、其余分量为$0$，故它把每个类标签唯一地表示为$\mathbb{R}^{K}$中的一个顶点。
 \end{definition}
 
 例如，假设有$K=5$个类，则来自$C_2$类的数据点将得到目标向量
@@ -193,8 +193,8 @@
 
 同样，我们可以把$t_k$的值理解为该类是$C_k$类的概率，其中概率仅有0和1两种取值。
 
-% SUPPLEMENT: parent=definition:ch05-1ofK编码; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch05-1ofK编码; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 1-of-$K$编码的意义在于把“类别”这一离散对象嵌入$\mathbb{R}^{K}$，从而使线性模型$y_k(\boldsymbol{x})=\boldsymbol{w}_k^{\mathsf{T}}\boldsymbol{x}+w_{k0}$可以逐分量地作用于它。该编码有两个直接推论。其一，各分量之和恒为1（这正是\cref{proposition:ch05-预测保持约束}所讨论的线性约束的特例）。其二，把$t_k$读作“属于$C_k$的概率”只在真实标签意义上成立：$t_k\in\{0,1\}$，而模型输出$y_k(\boldsymbol{x})$是实值的，未必落在$[0,1]$内，故不能直接解释为概率（见\cref{subsection:ch05-最小二乘分类}）。若改用$t\in\{0,1\}$的二分类编码，则两种类别的地位不对称，编码依赖于任意选定的参照类；1-of-$K$编码避免了这种不对称，代价是参数个数增加为$K$倍。注意编码向量的分量个数$K$是固定的，不能把不同$K$的编码混用。
 \end{remark}
 
@@ -235,11 +235,11 @@
 其中$\tilde{\boldsymbol{X}}^{\dagger}$是矩阵$\tilde{\boldsymbol{X}}$的伪逆（参见\cref{subsection:ch04-最大似然}）。
 
 \begin{proposition}[最小二乘分类解的极小性]\label{proposition:ch05-最小二乘极小性}
-设$\tilde{\boldsymbol{X}}$为$N\times(D+1)$矩阵，$\boldsymbol{T}$为$N\times K$矩阵。若$\tilde{\boldsymbol{X}}^{\mathsf{T}}\tilde{\boldsymbol{X}}$可逆，则由\eqref{align:ch05-最小二乘解}给出的$\tilde{\boldsymbol{W}}$是\eqref{align:ch05-平方和分类误差}中$E_D$的唯一全局极小点。
+设$N\geqslant D+1$，$\tilde{\boldsymbol{X}}\in\mathbb{R}^{N\times(D+1)}$为增广设计矩阵，$\boldsymbol{T}\in\mathbb{R}^{N\times K}$，$\tilde{\boldsymbol{W}}\in\mathbb{R}^{(D+1)\times K}$，且$\tilde{\boldsymbol{X}}^{\mathsf{T}}\tilde{\boldsymbol{X}}$可逆（等价于$\tilde{\boldsymbol{X}}$列满秩）。则由\eqref{align:ch05-最小二乘解}给出的$\tilde{\boldsymbol{W}}$是\eqref{align:ch05-平方和分类误差}中$E_D:\mathbb{R}^{(D+1)\times K}\to[0,\infty)$的唯一全局极小点。
 \end{proposition}
 
 \begin{proof}
-（重构新增）记$\boldsymbol{R}=\tilde{\boldsymbol{X}}\tilde{\boldsymbol{W}}-\boldsymbol{T}$。由迹的性质$\operatorname{tr}(\boldsymbol{A}^{\mathsf{T}}\boldsymbol{A})=\sum_{ij}A_{ij}^{2}$知$E_D=\frac{1}{2}\lVert\tilde{\boldsymbol{X}}\tilde{\boldsymbol{W}}-\boldsymbol{T}\rVert_F^{2}$，其中$\lVert\cdot\rVert_F$为 Frobenius 范数。对$\tilde{\boldsymbol{W}}$求导（分母布局），利用$\mathrm{d}\,\operatorname{tr}(\boldsymbol{A}^{\mathsf{T}}\boldsymbol{A})=2\operatorname{tr}(\boldsymbol{A}^{\mathsf{T}}\mathrm{d}\boldsymbol{A})$，得
+记$\boldsymbol{R}=\tilde{\boldsymbol{X}}\tilde{\boldsymbol{W}}-\boldsymbol{T}$。由迹的性质$\operatorname{tr}(\boldsymbol{A}^{\mathsf{T}}\boldsymbol{A})=\sum_{ij}A_{ij}^{2}$知$E_D=\frac{1}{2}\lVert\tilde{\boldsymbol{X}}\tilde{\boldsymbol{W}}-\boldsymbol{T}\rVert_F^{2}$，其中$\lVert\cdot\rVert_F$为 Frobenius 范数。对$\tilde{\boldsymbol{W}}$求导（分母布局），利用$\mathrm{d}\,\operatorname{tr}(\boldsymbol{A}^{\mathsf{T}}\boldsymbol{A})=2\operatorname{tr}(\boldsymbol{A}^{\mathsf{T}}\mathrm{d}\boldsymbol{A})$，得
 
 \begin{align}
   \frac{\partial E_D}{\partial\tilde{\boldsymbol{W}}}=\tilde{\boldsymbol{X}}^{\mathsf{T}}(\tilde{\boldsymbol{X}}\tilde{\boldsymbol{W}}-\boldsymbol{T})
@@ -254,8 +254,8 @@
 而$\operatorname{tr}\{(\tilde{\boldsymbol{X}}\boldsymbol{\Delta})^{\mathsf{T}}(\tilde{\boldsymbol{X}}\boldsymbol{\Delta})\}=\lVert\tilde{\boldsymbol{X}}\boldsymbol{\Delta}\rVert_F^{2}\geqslant 0$。又$\tilde{\boldsymbol{X}}^{\mathsf{T}}\tilde{\boldsymbol{X}}$可逆蕴含$\tilde{\boldsymbol{X}}$列满秩，故$\tilde{\boldsymbol{X}}\boldsymbol{\Delta}=\boldsymbol{0}$仅当$\boldsymbol{\Delta}=\boldsymbol{0}$，即增量严格为正，故$\tilde{\boldsymbol{W}}_0$是唯一全局极小点。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-最小二乘极小性; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch05-最小二乘极小性; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 命题中的可逆性条件等价于$\tilde{\boldsymbol{X}}$列满秩，即$N\geqslant D+1$且增广输入向量线性无关；若该条件失败（例如样本数少于参数个数，或某些特征线性相关），则极小点不唯一，此时\eqref{align:ch05-最小二乘解}中的逆应换为 Moore--Penrose 伪逆$\tilde{\boldsymbol{X}}^{\dagger}$，它给出所有极小点中范数最小的那一个。\eqref{align:ch05-最小二乘解}的第二个等号$\tilde{\boldsymbol{X}}^{\dagger}=(\tilde{\boldsymbol{X}}^{\mathsf{T}}\tilde{\boldsymbol{X}})^{-1}\tilde{\boldsymbol{X}}^{\mathsf{T}}$只在列满秩时成立。还要注意，最小二乘的目标函数是$\boldsymbol{y}$与$\boldsymbol{t}$的平方误差，它并不是分类问题的似然：只有当$\boldsymbol{t}$的条件分布为 Gauss 分布时，最小化$E_D$才等价于最大似然（参见\cref{subsection:ch04-最大似然}）。这正是本节末将要讨论的局限性的来源。
 \end{remark}
 
@@ -281,11 +281,11 @@
 \end{align}
 
 \begin{proposition}[最小二乘预测保持目标向量的线性约束]\label{proposition:ch05-预测保持约束}
-设$\tilde{\boldsymbol{X}}^{\mathsf{T}}\tilde{\boldsymbol{X}}$可逆，$\tilde{\boldsymbol{W}}$由\eqref{align:ch05-最小二乘解}给出，且训练集的每个目标向量都满足\eqref{align:ch05-目标线性约束}。则对任意$\boldsymbol{x}$，\eqref{align:ch05-分类判别函数}给出的$\boldsymbol{y}(\boldsymbol{x})$满足\eqref{align:ch05-预测约束}。
+设$N\geqslant D+1$，$\tilde{\boldsymbol{X}}\in\mathbb{R}^{N\times(D+1)}$列满秩（从而$\tilde{\boldsymbol{X}}^{\mathsf{T}}\tilde{\boldsymbol{X}}$可逆），$\tilde{\boldsymbol{W}}\in\mathbb{R}^{(D+1)\times K}$由\eqref{align:ch05-最小二乘解}给出，$\boldsymbol{a}\in\mathbb{R}^{K}$，$b\in\mathbb{R}$，且训练集的每个目标向量都满足\eqref{align:ch05-目标线性约束}。则对任意$\boldsymbol{x}\in\mathbb{R}^{D}$，\eqref{align:ch05-分类判别函数}给出的$\boldsymbol{y}(\boldsymbol{x})\in\mathbb{R}^{K}$满足\eqref{align:ch05-预测约束}。
 \end{proposition}
 
 \begin{proof}
-（重构新增）记$\boldsymbol{1}=(1,\cdots,1)^{\mathsf{T}}\in\mathbb{R}^{N}$。条件\eqref{align:ch05-目标线性约束}对$n=1,\cdots,N$成立，等价于矩阵等式$\boldsymbol{T}\boldsymbol{a}+b\boldsymbol{1}=\boldsymbol{0}$。于是
+记$\boldsymbol{1}=(1,\cdots,1)^{\mathsf{T}}\in\mathbb{R}^{N}$。条件\eqref{align:ch05-目标线性约束}对$n=1,\cdots,N$成立，等价于矩阵等式$\boldsymbol{T}\boldsymbol{a}+b\boldsymbol{1}=\boldsymbol{0}$。于是
 $\boldsymbol{T}\boldsymbol{a}=-b\boldsymbol{1}$；转置得$\boldsymbol{a}^{\mathsf{T}}\boldsymbol{T}^{\mathsf{T}}=-b\boldsymbol{1}^{\mathsf{T}}$。由\eqref{align:ch05-分类判别函数}，
 
 \begin{align}
@@ -295,8 +295,8 @@ $\boldsymbol{T}\boldsymbol{a}=-b\boldsymbol{1}$；转置得$\boldsymbol{a}^{\mat
 另一方面，由$\tilde{\boldsymbol{X}}^{\dagger}=(\tilde{\boldsymbol{X}}^{\mathsf{T}}\tilde{\boldsymbol{X}})^{-1}\tilde{\boldsymbol{X}}^{\mathsf{T}}$以及$\tilde{\boldsymbol{X}}$的第一列（由虚拟输入$x_0=1$组成）为$\boldsymbol{1}$，有$\tilde{\boldsymbol{X}}^{\mathsf{T}}\boldsymbol{1}=\tilde{\boldsymbol{X}}^{\mathsf{T}}\tilde{\boldsymbol{X}}\boldsymbol{e}_1$，其中$\boldsymbol{e}_1=(1,0,\cdots,0)^{\mathsf{T}}$；两边左乘$(\tilde{\boldsymbol{X}}^{\mathsf{T}}\tilde{\boldsymbol{X}})^{-1}$得$\tilde{\boldsymbol{X}}^{\dagger}\boldsymbol{1}=\boldsymbol{e}_1$。故$\boldsymbol{1}^{\mathsf{T}}(\tilde{\boldsymbol{X}}^{\dagger})^{\mathsf{T}}\tilde{\boldsymbol{x}}=(\tilde{\boldsymbol{X}}^{\dagger}\boldsymbol{1})^{\mathsf{T}}\tilde{\boldsymbol{x}}=\tilde{\boldsymbol{x}}_1=1$。代入上式得$\boldsymbol{a}^{\mathsf{T}}\boldsymbol{y}(\boldsymbol{x})=-b$，即\eqref{align:ch05-预测约束}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch05-预测保持约束; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch05-预测保持约束; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 证明中用到了“某个基函数恒为1”这一条件，它保证了$\tilde{\boldsymbol{X}}$的第一列为$\boldsymbol{1}$，从而使常数项$b$可以被表示出来；这正是原书在\cref{exercise:ch05-03}中要求“假设其中一个基函数$\phi_0(\boldsymbol{x})=1$”的原因。若没有这一列，则$\tilde{\boldsymbol{X}}^{\dagger}\boldsymbol{1}$不再是$\boldsymbol{e}_1$，结论一般不成立。该命题的一个重要特例是1-of-$K$编码：此时每个$\boldsymbol{t}_n$都满足$\boldsymbol{1}^{\mathsf{T}}\boldsymbol{t}_n=1$，取$\boldsymbol{a}=\boldsymbol{1}$、$b=-1$即得$\sum_k y_k(\boldsymbol{x})=1$。但如正文所述，仅有求和为1并不能保证$y_k(\boldsymbol{x})\in(0,1)$，因此这些输出仍不能解释为概率。
 \end{remark}
 

@@ -8,7 +8,7 @@
 
 在神经网络的前向传播过程中，对计算得到的变量进行归一化处理，可以避免网络处理过大或过小的值。尽管原则上神经网络的权重和偏置可以适应各种不同的输入和隐藏变量的值，但在实践中，归一化对于确保有效的训练至关重要。根据归一化操作所针对的对象不同，我们将归一化技术分为三种类型：数据归一化、批量归一化和层归一化。
 
-\begin{remark}（重构新增）
+\begin{remark}
 本节标题在原书中印作“正则化”，但全节讨论的对象是\textbf{归一化}（normalization）：重标度输入变量、隐藏单元预激活以及单个样本内部隐藏单元取值的尺度。中文里“规范化”“归一化”“正则化”常被混用，而这三者在本书中含义不同：归一化指对变量作平移与伸缩的预处理，正则化（regularization）指在误差函数中加入惩罚项或采取早停等手段以控制模型复杂性（见\hyperref[chapter:ch09-正则化]{正则化一章}）。正文保留原书标题以便与目录对应，读者应按下文实际内容理解其含义。
 \end{remark}
 
@@ -33,25 +33,25 @@
 这样，缩放的值 $\tilde{x}_{ni}$ 具有零均值和单位方差（见\cref{exercise:ch07-14}）。
 
 \begin{definition}[数据归一化]\label{definition:ch07-数据归一化}
-对第 $i$ 个连续型输入变量，按\eqref{align:ch07-输入均值}与\eqref{align:ch07-输入方差}在训练集上计算其均值 $\mu_i$ 与标准差 $\sigma_i$，再按\eqref{align:ch07-输入标准化}把每个输入值变换为 $\tilde{x}_{ni}$，这种预处理称为\textbf{数据归一化}（data normalization）。
+设训练集含 $N$ 个样本、每个样本有 $D$ 个连续型输入变量，第 $i$ 个变量在训练集上的取值为 $x_{1i},\cdots,x_{Ni}\in\mathbb{R}$（$i=1,\cdots,D$），并按\eqref{align:ch07-输入均值}与\eqref{align:ch07-输入方差}计算其训练集均值 $\mu_{i}$ 与标准差 $\sigma_{i}>0$。若按\eqref{align:ch07-输入标准化}把每个取值变换为 $\tilde{x}_{ni}=(x_{ni}-\mu_{i})/\sigma_{i}$，且同一组 $\mu_{i},\sigma_{i}$ 用于一切后续数据集，则该预处理称为对第 $i$ 个输入变量的\textbf{数据归一化}（data normalization，亦称标准化）；变换是仿射且可逆的，其像集具有零样本均值与单位样本方差。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch07-数据归一化; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch07-数据归一化; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 数据归一化的动机可以从误差曲面的几何直接读出：若两个输入变量的尺度相差 $10^{3}$ 倍，则误差函数对相应权重的敏感度也相差 $10^{3}$ 倍，黑塞矩阵的两个特征值随之相差 $10^{6}$ 倍，条件数急剧增大，梯度下降沿小曲率方向前进极慢（见\cref{definition:ch07-条件数}）。把每个输入缩放到单位方差，相当于在输入坐标上作一次对角伸缩，使各方向曲率量级接近，从而改善条件数。条件方面：$\sigma_i>0$ 必须成立，若某个输入变量在训练集上为常数（$\sigma_i=0$），变换无定义，实践中应删除该变量或给它一个非零的默认尺度。另一个容易忽视的要点是，$\mu_i$ 与 $\sigma_i$ 只能由训练集计算，并原样用于开发集、验证集与测试集；若对每个数据集各自标准化，就相当于让测试数据“偷看”自己的统计量，破坏了训练与测试条件一致的前提。
 \end{remark}
 
 请注意，必须使用相同的 $\mu_i$ 值和 $\sigma_i$ 值来预处理任何开发集、验证集或测试集数据，以确保对所有输入都以相同方式进行缩放。\cref{figure:ch07-数据归一化}对数据归一化进行了说明。
 
 \begin{proposition}[标准化变量的矩]\label{proposition:ch07-标准化矩}
-设 $x_{n}$（$n=1,\cdots,N$）为某个输入变量的 $N$ 个观测值，$\mu$ 与 $\sigma^{2}$ 由\eqref{align:ch07-输入均值}与\eqref{align:ch07-输入方差}定义且 $\sigma>0$，并令 $\tilde{x}_{n}=(x_{n}-\mu)/\sigma$。则
+设 $N\in\mathbb{N}$ 且 $N\geqslant2$，$x_{1},\cdots,x_{N}\in\mathbb{R}$ 为某个连续型输入变量的 $N$ 个观测值，$\mu=\frac{1}{N}\sum_{n=1}^{N}x_{n}$ 与 $\sigma^{2}=\frac{1}{N}\sum_{n=1}^{N}(x_{n}-\mu)^{2}$ 为\eqref{align:ch07-输入均值}与\eqref{align:ch07-输入方差}定义的样本均值与样本方差，且 $\sigma>0$（即 $x_{1},\cdots,x_{N}$ 不全相等）；令 $\tilde{x}_{n}=(x_{n}-\mu)/\sigma$ 为标准化后的取值。则标准化变量的样本均值与样本二阶矩满足
 \begin{align}
 \frac{1}{N}\sum_{n=1}^{N}\tilde{x}_{n}=0,\qquad
 \frac{1}{N}\sum_{n=1}^{N}\tilde{x}_{n}^{2}=1.
 \label{align:ch07-标准化矩}
 \end{align}
 \end{proposition}
-\begin{proof}（重构新增）
+\begin{proof}
 由定义及求和的线性性，
 \begin{align*}
 \frac{1}{N}\sum_{n=1}^{N}\tilde{x}_{n}
@@ -67,8 +67,8 @@
 \end{align*}
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch07-标准化矩; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch07-标准化矩; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 命题的结论是“样本矩”意义下的：所用的均值与方差都是对同一批 $N$ 个观测值按 $1/N$ 平均得到的，而不是总体矩，因此不需要任何概率假设。这一点与\cref{exercise:ch07-08}不同，那里讨论的是样本均值作为总体均值估计量的期望误差。条件 $\sigma>0$ 是本质的：若 $\sigma=0$，所有 $x_n$ 相同，变换把全部点映射为 $0/0$，归一化失去意义。把\eqref{align:ch07-标准化矩}与\eqref{align:ch07-输入标准化}合起来看，归一化后的数据落在以原点为中心、各方向尺度相当的区域内，这既改善了误差曲面的条件数，也使后续的权重初始化尺度（\cref{proposition:ch07-初始化方差}）具有统一含义。
 \end{remark}
 
@@ -116,11 +116,11 @@
 其中 $\beta_i$ 和 $\gamma_i$ 是可学习的自适应参数，它们与网络的权重和偏置一起通过梯度下降法进行联合学习。
 
 \begin{definition}[批量归一化]\label{definition:ch07-批量归一化}
-设某一层第 $i$ 个隐藏单元在一个大小为 $K$ 的小批量上的预激活为 $a_{1i},\cdots,a_{Ki}$。按\eqref{align:ch07-批均值}与\eqref{align:ch07-批方差}计算小批量均值与小批量方差，按\eqref{align:ch07-批标准化}得到标准化预激活 $\hat{a}_{ni}$，再按\eqref{align:ch07-批缩放}用可学习参数 $\gamma_i$、$\beta_i$ 重新缩放，这一整组变换称为\textbf{批量归一化}（batch normalization）。
+设某层第 $i$ 个隐藏单元在一个大小为 $K\in\mathbb{N}$ 的小批量上取预激活 $a_{1i},\cdots,a_{Ki}\in\mathbb{R}$，$\delta>0$ 为稳定化常数，$\gamma_{i}\in\mathbb{R}$ 与 $\beta_{i}\in\mathbb{R}$ 为可学习参数。按\eqref{align:ch07-批均值}与\eqref{align:ch07-批方差}计算小批量均值 $\mu_{i}$ 与方差 $\sigma_{i}^{2}\geqslant0$，按\eqref{align:ch07-批标准化}得到标准化预激活 $\hat{a}_{ni}=(a_{ni}-\mu_{i})/\sqrt{\sigma_{i}^{2}+\delta}$，再按\eqref{align:ch07-批缩放}令 $\tilde{a}_{ni}=\gamma_{i}\hat{a}_{ni}+\beta_{i}$ 作重新缩放。这一整组把小批量预激活映为 $\tilde{a}_{1i},\cdots,\tilde{a}_{Ki}$ 的变换称为\textbf{批量归一化}（batch normalization）；当 $\sigma_{i}>0$ 时 $\hat{a}_{1i},\cdots,\hat{a}_{Ki}$ 的样本均值为零、样本方差为 $\sigma_{i}^{2}/(\sigma_{i}^{2}+\delta)$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch07-批量归一化; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch07-批量归一化; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 批量归一化把“归一化”从输入层推广到每个隐藏层，其关键创新不是标准化本身，而是两点。其一，统计量按小批量计算，因此每步迭代都在更新，不需要遍历整个数据集。其二，标准化之后立即用可学习参数 $\gamma_i,\beta_i$ 重新缩放，使该层仍能表示任意均值与尺度的分布——若不加这一步，归一化会强行把预激活限制在单位尺度上，削减该层的表达能力。条件方面：$K$ 不能太小，否则 $\mu_i$、$\sigma_i^{2}$ 的估计噪声很大（见\cref{subsection:ch07-层归一化}）；$\delta>0$ 保证 $\sigma_i^{2}=0$（该单元在小批量上取常值）时除数不为零；$\gamma_i$、$\beta_i$ 与网络权重一同训练，因此批量归一化层本身也是可微的，可以像普通层一样反向传播。需要注意，训练阶段用当前小批量的统计量，推理阶段则用训练期间累积的移动平均值（\eqref{align:ch07-移动均值}、\eqref{align:ch07-移动标准差}），二者必须区分，否则同一模型在训练与测试时的行为不一致。
 \end{remark}
 
@@ -147,12 +147,14 @@
 尽管批量归一化在实践中非常有效，但其内在原理目前还不明确。批量归一化提出的原因是，人们观察到，网络中较早层权重的更新会改变后续层所看到的数值分布，这种现象称为\textbf{内部协变量偏移}（internal covariate shift）。然而，后来的研究（Santurkar et al., 2018）表明，协变量偏移并不是一个关键因素，批量归一化所带来的训练改进，实际上在于它平滑了误差函数的崎岖程度。\footnote{如果误差函数的图形看上去很崎岖，即存在很多尖锐的高峰和深谷，梯度下降算法就很可能会陷入局部最低点，而无法找到真正的全局最低点。——译者注}
 
 \begin{definition}[内部协变量偏移]\label{definition:ch07-内部协变量偏移}
-在深层网络训练过程中，较早层权重的更新使后续层所接收到的输入数值分布不断发生变化，这种现象称为\textbf{内部协变量偏移}（internal covariate shift）。
+设 $L$ 层前馈网络按\eqref{align:ch06-深层递推}计算，第 $l$ 层的输入为 $\boldsymbol{z}^{(l-1)}$，其分布由前面各层的参数决定；设训练按迭代 $\tau=1,2,\cdots$ 更新参数。若存在 $l\in\{2,\cdots,L\}$ 使 $\boldsymbol{z}^{(l-1)}$ 在训练过程中的分布随 $\tau$ 改变，即对某个可测集 $A$ 有 $\mathbb{P}\bigl(\boldsymbol{z}^{(l-1)}\in A\bigr)$ 依赖于 $\tau$，则这一现象称为第 $l$ 层的\textbf{内部协变量偏移}（internal covariate shift）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch07-内部协变量偏移; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch07-内部协变量偏移; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个概念描述的是一个真实存在的现象：第 $l$ 层的输入是第 $l-1$ 层的输出，而第 $l-1$ 层的参数在训练中不断更新，因此第 $l$ 层面对的输入分布（均值、方差、高阶矩）随时间漂移，它必须一边适应任务一边适应不断移动的输入分布。原书随即指出，把批量归一化的效果归因于消除协变量偏移并不成立（Santurkar et al., 2018）：实验表明，即使人为注入协变量偏移，批量归一化仍然有效；更可信的解释是它使误差曲面更平滑、 Lipschitz 常数更小，从而允许更大的学习率。这段讨论的价值在于提醒读者，一个方法的经验成功与其最初提出的理论解释可能是两回事；条件“较早层参数在更新”是现象成立的前提，若网络各层独立训练（例如逐层预训练后冻结），则不存在这种漂移。
+
+原文问题说明：原书对该现象只有定性描述。本定义用“存在可测集 $A$ 使 $\mathbb{P}(\boldsymbol{z}^{(l-1)}\in A)$ 随迭代步数改变”把它形式化，这是为使定义可判定而补充的约定；它把“分布变化”限定为对迭代步数的依赖，而不涉及变化的大小或方向，因此只刻画现象的存在性，不度量其严重程度。
 \end{remark}
 
 \subsection{层归一化}\label{subsection:ch07-层归一化}
@@ -173,11 +175,11 @@
 其中，对 $i=1,\cdots,M$ 的求和是针对该层中的所有隐藏单元进行的。
 
 \begin{definition}[层归一化]\label{definition:ch07-层归一化}
-对第 $n$ 个数据点，设该层 $M$ 个隐藏单元的预激活为 $a_{n1},\cdots,a_{nM}$。按\eqref{align:ch07-层均值}与\eqref{align:ch07-层方差}在该数据点内部跨隐藏单元计算均值与方差，按\eqref{align:ch07-层标准化}得到标准化预激活，并如同\eqref{align:ch07-批缩放}那样用每个隐藏单元各自的可学习参数 $\gamma_i$、$\beta_i$ 重新缩放，这组变换称为\textbf{层归一化}（layer normalization）。
+设第 $n$ 个数据点在某一层 $M\in\mathbb{N}$ 个隐藏单元上的预激活为 $a_{n1},\cdots,a_{nM}\in\mathbb{R}$，$\delta>0$ 为稳定化常数，$\gamma_{i},\beta_{i}\in\mathbb{R}$（$i=1,\cdots,M$）为该层每个隐藏单元各自的可学习参数。按\eqref{align:ch07-层均值}与\eqref{align:ch07-层方差}在该数据点内部跨隐藏单元计算均值 $\mu_{n}$ 与方差 $\sigma_{n}^{2}$，按\eqref{align:ch07-层标准化}得到 $\hat{a}_{ni}=(a_{ni}-\mu_{n})/\sqrt{\sigma_{n}^{2}+\delta}$，再如同\eqref{align:ch07-批缩放}那样令 $\tilde{a}_{ni}=\gamma_{i}\hat{a}_{ni}+\beta_{i}$ 重新缩放。这一组对每个数据点独立进行、不跨样本求统计量的变换称为\textbf{层归一化}（layer normalization）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch07-层归一化; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch07-层归一化; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 层归一化与批量归一化的区别只在“沿哪个方向求统计量”：批量归一化对固定的隐藏单元跨小批量求均值与方差（\eqref{align:ch07-批均值}、\eqref{align:ch07-批方差}），层归一化对固定的数据点跨隐藏单元求均值与方差（\eqref{align:ch07-层均值}、\eqref{align:ch07-层方差}）。这一转置带来三个直接后果。其一，层归一化不依赖批量规模，$K=1$ 时仍可正常工作，因此适合批量很小的场景。其二，它不需要跨设备同步统计量，适合模型并行。其三，训练与推理使用完全相同的归一化函数，无须存储移动平均值，这消除了\eqref{align:ch07-移动均值}、\eqref{align:ch07-移动标准差}在训练与推理之间的不一致。代价是：它假设同一层内不同隐藏单元的尺度应当可比，若各单元的量纲本就不同（例如最后一层的多个输出对应不同物理量），层归一化可能不合适。条件 $\delta>0$ 与批量归一化相同，用于处理 $\sigma_n^{2}=0$ 的退化情形。
 \end{remark}
 

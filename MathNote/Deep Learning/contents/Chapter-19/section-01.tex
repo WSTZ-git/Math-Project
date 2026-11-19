@@ -13,16 +13,16 @@
 首先考虑\cref{figure:ch19-线性自编码器}所示形式的多层感知机，它有 $D$ 个输入单元、$D$ 个输出单元和 $M$ 个隐藏单元，其中 $M<D$。用来训练网络的目标向量就是输入向量本身，因此该网络试图将每个输入向量映射到其自身。由于隐藏单元的数量少于输入单元的数量，它通常无法完美地重构所有输入向量；因此，我们先定义一个误差函数，用来衡量输入向量及其重建之间的不匹配程度，然后通过最小化这个误差函数来确定网络参数 $\bm{w}$。
 
 \begin{definition}[线性自编码器]\label{definition:ch19-线性自编码器}
-若\cref{definition:ch19-自编码器}所定义网络的隐藏单元采用线性激活函数，则称它为\textbf{线性自编码器}（linear autoencoder）。它的训练通过最小化如下形式的平方和误差函数来实现：
+设 $D,M,N\in\mathbb{N}$，$1\leqslant M<D$，训练集为 $\{\bm{x}_{n}\}_{n=1}^{N}\subset\mathbb{R}^{D}$。设\cref{definition:ch19-自编码器}所定义的自编码器有 $D$ 个输入单元、$D$ 个输出单元与 $M$ 个隐藏单元，其隐藏单元采用线性激活函数，即存在 $M\times D$ 实矩阵 $\bm{A}$ 与 $D\times M$ 实矩阵 $\bm{B}$，使输入 $\bm{x}\in\mathbb{R}^{D}$ 的隐藏激活与重建分别为 $\bm{z}(\bm{x})=\bm{A}\bm{x}\in\mathbb{R}^{M}$ 与 $\bm{y}(\bm{x},\bm{w})=\bm{B}\bm{A}\bm{x}\in\mathbb{R}^{D}$，参数向量记为 $\bm{w}=(\bm{A},\bm{B})$。若该网络通过最小化平方和误差函数
 \begin{align}
 E(\bm{w})=\frac{1}{2}\sum_{n=1}^{N}\big\|\bm{y}(\bm{x}_n,\bm{w})-\bm{x}_n\big\|^{2},
 \label{align:ch19-平方和误差}
 \end{align}
-其中 $\bm{y}(\bm{x}_n,\bm{w})$ 是网络对输入 $\bm{x}_n$ 的重建。
+训练，则称它为\textbf{线性自编码器}（linear autoencoder）；其中 $\bm{y}(\bm{x}_{n},\bm{w})\in\mathbb{R}^{D}$ 是网络对输入 $\bm{x}_{n}$ 的重建，$\|\cdot\|$ 是 $\mathbb{R}^{D}$ 上的 Euclid 范数，$N\geqslant1$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-线性自编码器; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-线性自编码器; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-线性自编码器}中的式\eqref{align:ch19-平方和误差}取 $\frac{1}{2}$ 的因子并不是数学上的需要，而是为了让求导后消去平方项的系数 $2$，使梯度形式更干净；把它换成任意正常数只会整体缩放误差曲面，不改变极小点。这里把“线性”加在\emph{隐藏单元}上而不是加在输出单元上，是因为输出单元本来就是线性的（否则 $\bm{y}(\bm{x}_n,\bm{w})$ 无法与 $\bm{x}_n$ 直接比较）：真正决定模型容量的是隐藏层。条件 $M<D$ 是这一节的核心约束，它使 $\bm{B}\bm{A}$ 的秩不超过 $M$，从而排除了 $\bm{B}\bm{A}=\bm{I}$ 这种把输入原样复制的平凡解；若去掉它，取 $\bm{A}=\bm{I}$、$\bm{B}=\bm{I}$ 就有 $E(\bm{w})=0$，训练失去意义。注意误差中并没有显式地减去数据均值，这一点在\cref{theorem:ch19-线性AE与PCA}之后的注记中还会讨论。
 \end{remark}
 
@@ -34,18 +34,22 @@ E(\bm{w})=\frac{1}{2}\sum_{n=1}^{N}\big\|\bm{y}(\bm{x}_n,\bm{w})-\bm{x}_n\big\|^
 \end{figure}
 
 \begin{theorem}[线性自编码器的最优解与主成分分析]\label{theorem:ch19-线性AE与PCA}
-设训练数据 $\bm{x}_1,\cdots,\bm{x}_N\in\mathbb{R}^{D}$，记 $\bm{S}=\sum_{n=1}^{N}\bm{x}_n\bm{x}_n^{\mathsf T}$。设 $\bm{S}$ 的特征值为 $\lambda_1\geqslant\lambda_2\geqslant\cdots\geqslant\lambda_D\geqslant0$，对应的单位正交特征向量为 $\bm{u}_1,\cdots,\bm{u}_D$。设线性自编码器的隐藏层宽为 $M<D$，隐藏层与输出层都是线性的，即存在 $\bm{A}\in\mathbb{R}^{M\times D}$ 与 $\bm{B}\in\mathbb{R}^{D\times M}$，使得
+设 $D,M,N\in\mathbb{N}$，$1\leqslant M<D$，$N\geqslant1$；设训练数据为 $\bm{x}_{1},\cdots,\bm{x}_{N}\in\mathbb{R}^{D}$，由它们确定的 $D$ 阶实对称半正定矩阵为
 \begin{align*}
-\bm{z}(\bm{x})=\bm{A}\bm{x},\qquad \bm{y}(\bm{x})=\bm{B}\bm{A}\bm{x}.
+\bm{S}=\sum_{n=1}^{N}\bm{x}_n\bm{x}_n^{\mathsf T}\in\mathbb{R}^{D\times D},
 \end{align*}
-则：
+其特征值按 $\lambda_1\geqslant\lambda_2\geqslant\cdots\geqslant\lambda_D\geqslant0$ 排列，对应的特征向量 $\bm{u}_{1},\cdots,\bm{u}_{D}\in\mathbb{R}^{D}$ 为单位正交向量组，即 $\bm{S}\bm{u}_{i}=\lambda_{i}\bm{u}_{i}$ 且 $\bm{u}_{i}^{\mathsf T}\bm{u}_{j}=\delta_{ij}$（$1\leqslant i,j\leqslant D$）。设线性自编码器的隐藏层宽为 $M$，隐藏层与输出层都是线性的，即存在 $M\times D$ 实矩阵 $\bm{A}$ 与 $D\times M$ 实矩阵 $\bm{B}$，使输入 $\bm{x}\in\mathbb{R}^{D}$ 的隐藏激活与重建分别为
+\begin{align*}
+\bm{z}(\bm{x})=\bm{A}\bm{x},\qquad \bm{y}(\bm{x})=\bm{B}\bm{A}\bm{x},
+\end{align*}
+误差函数 $E$ 由\eqref{align:ch19-平方和误差}给出。则下列结论成立：
 \begin{enumerate}[(i)]
-\item 误差函数\eqref{align:ch19-平方和误差}的全局最小值唯一，且等于 $\frac{1}{2}\sum_{i=M+1}^{D}\lambda_i$；
-\item 当 $\lambda_M>\lambda_{M+1}$ 且 $\bm{S}$ 正定时，该最小值当且仅当 $\bm{B}\bm{A}$ 是到 $\operatorname{span}\{\bm{u}_1,\cdots,\bm{u}_M\}$ 的正交投影时取到；
-\item 此时网络执行一个投影操作，把数据映射到由数据的前 $M$ 个主成分所张成的 $M$ 维子空间上，通向隐藏单元的权重向量（即 $\bm{A}$ 的各行）构成该主子空间的一组基；这些向量不必是正交或归一化的。
+\item $E$ 在参数空间 $\mathbb{R}^{M\times D}\times\mathbb{R}^{D\times M}$ 上的全局最小值存在，等于 $\frac{1}{2}\sum_{i=M+1}^{D}\lambda_i$，且该值只由 $\lambda_{M+1},\cdots,\lambda_{D}$ 确定；
+\item 若 $\lambda_{M}>\lambda_{M+1}$ 且 $\bm{S}$ 正定，则参数 $(\bm{A},\bm{B})$ 取到该全局最小值，当且仅当 $\bm{B}\bm{A}$ 是 $\mathbb{R}^{D}$ 到 $\operatorname{span}\{\bm{u}_1,\cdots,\bm{u}_M\}$ 的正交投影；
+\item 在 (ii) 的条件下，网络执行一个投影操作，把每个 $\bm{x}\in\mathbb{R}^{D}$ 映射到由数据的前 $M$ 个主成分张成的 $M$ 维子空间上；此时 $\bm{A}$ 的各行线性无关，构成该主子空间的一组基，且这些行向量不必正交或归一化。
 \end{enumerate}
 \end{theorem}
-\begin{proof}（重构新增）
+\begin{proof}
 记 $\bm{P}=\bm{B}\bm{A}$，则 $\operatorname{rank}\bm{P}\leqslant M$，且
 \begin{align*}
 E(\bm{w})=\frac{1}{2}\sum_{n=1}^{N}\big\|\bm{x}_n-\bm{P}\bm{x}_n\big\|^{2}.
@@ -76,8 +80,8 @@ E\geqslant\frac{1}{2}\Big(\operatorname{tr}\bm{S}-\sum_{i=1}^{r}\lambda_i\Big)=\
 （4）等号情形的刻画。由（1）（2），当 $\bm{S}$ 正定且 $\lambda_M>\lambda_{M+1}$ 时，$E$ 取到最小值必须有 $r=M$、$\operatorname{range}(\bm{Q})=\operatorname{span}\{\bm{u}_1,\cdots,\bm{u}_M\}$ 且 $\bm{P}\bm{x}_n=\bm{Q}\bm{x}_n$ 对一切 $n$ 成立；$\bm{S}$ 正定意味着 $\{\bm{x}_n\}$ 张成 $\mathbb{R}^{D}$，故 $\bm{P}=\bm{Q}$。此时 $\operatorname{range}(\bm{A}^{\mathsf T})=\operatorname{range}(\bm{P})=\operatorname{span}\{\bm{u}_1,\cdots,\bm{u}_M\}$，所以 $\bm{A}$ 的各行线性无关并构成主子空间的一组基；而 $\bm{A}$ 只受“行空间等于主子空间”这一条件约束，各行一般既不正交也未归一化。最后，使 $E$ 取到最小值的参数 $(\bm{A},\bm{B})$ 并不唯一：对任意可逆的 $\bm{R}\in\mathbb{R}^{M\times M}$，把 $\bm{A}$ 换成 $\bm{R}\bm{A}$、$\bm{B}$ 换成 $\bm{B}\bm{R}^{-1}$ 时 $\bm{B}\bm{A}$ 不变，故误差不变。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch19-线性AE与PCA; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:ch19-线性AE与PCA; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{theorem:ch19-线性AE与PCA}解释了为什么“线性自编码器不提供超出 PCA 的东西”：两者的目标函数是同一个平方和误差，而 PCA 的主成分正是该误差在秩约束下的最优解，所以训练一个线性自编码器等价于用迭代法计算主成分，结论与 Bourlard and Kamp（1988）、Baldi and Hornik（1989）一致。
 
 逐项说明条件的作用与边界：
@@ -100,11 +104,11 @@ E\geqslant\frac{1}{2}\Big(\operatorname{tr}\bm{S}-\sum_{i=1}^{r}\lambda_i\Big)=\
 然而，如果在网络中加入额外的非线性层，情况就有所不同了。
 
 \begin{definition}[深度自编码器]\label{definition:ch19-深度自编码器}
-称\cref{figure:ch19-深度自编码器}所示形式的四层自联想网络为\textbf{深度自编码器}（deep autoencoder）：它的输出单元仍然是线性的，第二层中的 $M$ 个单元也可以是线性的，而第一层和第三层具有非线性激活函数；它仍然通过最小化损失函数\eqref{align:ch19-平方和误差}来训练。
+设 $D,M,N\in\mathbb{N}$，$1\leqslant M<D$，输入空间与输出空间均为 $\mathbb{R}^{D}$，训练集为 $\{\bm{x}_{n}\}_{n=1}^{N}\subset\mathbb{R}^{D}$。设\cref{figure:ch19-深度自编码器}所示的四层自联想网络依次由含 $D$ 个单元的第一层、含 $M$ 个单元的第二层、含 $D$ 个单元的第三层与含 $D$ 个单元的输出层构成；第一层与第三层的激活函数 $\phi_{1},\phi_{3}:\mathbb{R}\to\mathbb{R}$ 均为非线性函数，第二层与输出层的激活函数为恒等映射，网络整体确定的映射记为 $\bm{y}(\cdot,\bm{w}):\mathbb{R}^{D}\to\mathbb{R}^{D}$，其中 $\bm{w}\in\mathbb{R}^{P}$ 为全部权重与偏置构成的参数向量。若一个四层自联想网络满足上述结构、其输出单元线性、且以\eqref{align:ch19-平方和误差}为训练损失，则称它为\textbf{深度自编码器}（deep autoencoder）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-深度自编码器; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-深度自编码器; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-深度自编码器}中“两层非线性夹一层线性”的结构不是随意的：若第一层也是线性的，则整个网络仍是 $\bm{B}\bm{A}\bm{x}$ 的形式，\cref{theorem:ch19-线性AE与PCA}立即适用，非线性层就白加了；若第二层也非线性，则中间的 $M$ 个单元只是又一层非线性特征，“$M$ 维子空间的坐标”这一几何解释便不再适用，但网络作为非线性降维器仍然成立。因此“第一层、第三层非线性、第二层线性”恰好保证了 $F_1$ 可以是任意非线性映射而 $F_2$ 在其参数化下仍把 $M$ 维潜空间嵌入 $\mathbb{R}^{D}$。
 
 条件的代价在于优化：\eqref{align:ch19-平方和误差}不再是 $\bm{w}$ 的二次函数，全局最小值一般无法用闭式解或凸优化得到，只能依赖局部搜索，因而存在收敛到次优局部极小值的风险；此外潜空间维数 $M$ 必须在训练之前人为指定，不能像概率 PCA 那样由数据自动确定（参见\cref{section:ch16-概率潜变量}）。
@@ -133,38 +137,38 @@ E\geqslant\frac{1}{2}\Big(\operatorname{tr}\bm{S}-\sum_{i=1}^{r}\lambda_i\Big)=\
 与其限制网络中某个隐藏层的节点数量，不如考虑另一种约束内部表示的方法：使用正则化器鼓励稀疏表示，从而降低有效维度。一个简单的选择是 $L_1$ 正则化器，它能促进数据的稀疏性，相应的正则化误差函数如下（参见\cref{subsection:ch09-广义权重衰减}）：
 
 \begin{definition}[稀疏自编码器]\label{definition:ch19-稀疏自编码器}
-在自编码器的误差函数中加入对隐藏单元激活值的 $L_1$ 惩罚，得到\textbf{正则化误差函数}
+设自编码器的参数为 $\bm{w}\in\mathbb{R}^{P}$，训练集为 $\{\bm{x}_{n}\}_{n=1}^{N}\subset\mathbb{R}^{D}$，未正则化的误差函数为 $E:\mathbb{R}^{P}\to\mathbb{R}$；设隐藏层含 $K\in\mathbb{N}$ 个单元，第 $k$ 个单元在输入 $\bm{x}\in\mathbb{R}^{D}$ 处的激活值为 $z_{k}(\bm{x},\bm{w})\in\mathbb{R}$，正则化系数 $\lambda>0$。对固定的训练样本 $\bm{x}_{n}$，由
 \begin{align}
 \tilde{E}(\bm{w})=E(\bm{w})+\lambda\sum_{k=1}^{K}|z_k|,
 \label{align:ch19-稀疏正则}
 \end{align}
-其中 $z_k$ 是隐藏层中第 $k$ 个单元的激活值，$K$ 是隐藏层单元数，$\lambda>0$ 是正则化系数。用\eqref{align:ch19-稀疏正则}训练的自编码器称为\textbf{稀疏自编码器}（sparse autoencoder）。
+定义的函数 $\tilde{E}:\mathbb{R}^{P}\to\mathbb{R}$ 称为该样本上的\textbf{正则化误差函数}，式中 $z_{k}$ 取为 $z_{k}(\bm{x}_{n},\bm{w})$，求和遍历隐藏层的全部 $K$ 个单元；训练目标是各样本正则化误差之和最小，若自编码器以此为目标训练，则称它为\textbf{稀疏自编码器}（sparse autoencoder）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-稀疏自编码器; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-稀疏自编码器; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-稀疏自编码器}最容易被忽略的一点是：正则化施加在\emph{单元激活值} $z_k$ 上，而不是像通常的权重衰减那样施加在网络参数 $\bm{w}$ 上（参见\cref{subsection:ch09-广义权重衰减}）。两者作用的对象不同，效果也不同：对 $\bm{w}$ 的 $L_1$ 惩罚压缩的是权重，而对 $z_k$ 的 $L_1$ 惩罚直接推动隐藏层在给定输入下只有少数单元被激活，从而“降低有效维度”而不必真的删掉单元。这也是它被称为“另一种约束内部表示的方法”的原因——它不是通过减少单元数 $M$ 来限制容量，而是在 $M$ 不变的前提下让表示变稀疏。
 
 $\lambda$ 控制稀疏性与重建精度之间的取舍：$\lambda$ 太小则\eqref{align:ch19-稀疏正则}退化为原来的平方和误差，稀疏性无从产生；$\lambda$ 太大则网络倾向于令所有 $z_k$ 都接近于零，重建误差随之上升。注意 $|z_k|$ 在 $z_k=0$ 处不可微，实践中要么使用自动微分框架的次梯度约定，要么把 $|z_k|$ 换成光滑近似（如 $\sqrt{z_k^{2}+\varepsilon}$）；原书只说明“导数可以像往常一样使用自动微分来计算”，并未讨论这一细节。最后，\eqref{align:ch19-稀疏正则}对 $z_k$ 的依赖使得误差不再只是 $\bm{w}$ 的二次函数，即使在“线性”自编码器中也不能再用\cref{theorem:ch19-线性AE与PCA}的谱分解方法求闭式解。
 \end{remark}
 
-其中 $E(\bm{w})$ 是未正则化的误差函数，求和操作是在隐藏层中所有单元的激活值上进行的。注意，正则化通常应用于网络的参数，而在这里它被用于单元激活值。所需的用于梯度下降训练的导数可以像往常一样使用自动微分来计算。
+正则化通常应用于网络的参数，而在这里它被用于单元激活值。所需的用于梯度下降训练的导数可以像往常一样使用自动微分来计算。
 
 \subsection{去噪自编码器}\label{subsection:ch19-去噪自编码器}
 
 我们已经看到了在简单的自编码器中限制潜空间层的维度的重要性，这样能避免模型直接学习恒等映射。去噪自编码器（denoising autoencoder）（Vincent，2008）也能迫使模型发现数据内部有趣的结构。
 
 \begin{definition}[去噪自编码器]\label{definition:ch19-去噪自编码器}
-\textbf{去噪自编码器}（denoising autoencoder）的训练方式如下：用噪声破坏每个输入向量 $\bm{x}_n$，得到一个修改后的向量 $\tilde{\bm{x}}_n$，然后把它输入自编码器，产生输出 $\bm{y}(\tilde{\bm{x}}_n,\bm{w})$；网络通过最小化平方和损失函数
+设 $D,N\in\mathbb{N}$，训练集为 $\{\bm{x}_{n}\}_{n=1}^{N}\subset\mathbb{R}^{D}$；设损坏机制为随机映射 $\mathcal{C}:\mathbb{R}^{D}\times\Xi\to\mathbb{R}^{D}$，其中 $(\Xi,\mathcal{G},\mathbb{P}_{\xi})$ 为噪声的概率空间，$\tilde{\bm{x}}_{n}=\mathcal{C}(\bm{x}_{n},\xi_{n})$ 是第 $n$ 个输入向量被噪声破坏后得到的向量，$\xi_{1},\cdots,\xi_{N}$ 为噪声的实现；设自编码器确定的映射为 $\bm{y}(\cdot,\bm{w}):\mathbb{R}^{D}\to\mathbb{R}^{D}$，$\bm{w}\in\mathbb{R}^{P}$ 为参数向量。若该网络通过最小化平方和损失函数
 \begin{align}
 E(\bm{w})=\sum_{n=1}^{N}\big\|\bm{y}(\tilde{\bm{x}}_n,\bm{w})-\bm{x}_n\big\|^{2}
 \label{align:ch19-去噪损失}
 \end{align}
-来训练，其目的是重建原始的无噪声输入向量 $\bm{x}_n$。
+或其关于噪声分布 $\mathbb{P}_{\xi}$ 的期望来训练，以由损坏输入 $\tilde{\bm{x}}_{n}$ 重建无噪声输入 $\bm{x}_{n}$，则该网络称为\textbf{去噪自编码器}（denoising autoencoder）；式中 $\|\cdot\|$ 是 $\mathbb{R}^{D}$ 上的 Euclid 范数，求和遍历全部 $N$ 个训练样本。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-去噪自编码器; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-去噪自编码器; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-去噪自编码器}的损失\eqref{align:ch19-去噪损失}与\eqref{align:ch19-平方和误差}相比有两处实质差别：输入换成了被损坏的 $\tilde{\bm{x}}_n$，而目标仍是干净的 $\bm{x}_n$。正是这一“输入—目标不对称”阻止了恒等映射：网络若原样复制输入，只能得到 $\tilde{\bm{x}}_n$，与目标 $\bm{x}_n$ 的差恰是噪声，因此要把损失降下来，网络必须学会\emph{去掉}损坏。这也解释了为什么它不需要像线性自编码器那样靠 $M<D$ 来排除平凡解——即使 $M\geqslant D$，恒等映射也不再是最优的。原书这里没有写 $\frac{1}{2}$ 的因子（与\eqref{align:ch19-平方和误差}不同），这不影响极小点，只影响梯度尺度。
 
 定义中“噪声”的具体形式由使用者选择，原书随后给出两种：随机置零（掩蔽噪声，比例 $v$）与加性 Gauss 噪声。前者对应后文的掩蔽自编码器，后者使\eqref{align:ch19-去噪损失}的最优解与得分匹配联系起来（Vincent，2011）。需要注意，\eqref{align:ch19-去噪损失}的期望是对噪声分布取的，而定义中写的是单个样本上的求和；只有在噪声实现固定时它才是一个确定的数，实际的训练目标应理解为对该式的期望。
@@ -175,15 +179,15 @@ E(\bm{w})=\sum_{n=1}^{N}\big\|\bm{y}(\tilde{\bm{x}}_n,\bm{w})-\bm{x}_n\big\|^{2}
 更正式地讲，去噪自编码器的训练与得分匹配（score matching）（Vincent，2011）相关，得分由 $s(\bm{x})=\nabla_{\bm{x}}\ln p(\bm{x})$ 定义。
 
 \begin{definition}[得分]\label{definition:ch19-得分}
-设 $p(\bm{x})$ 是数据空间上的概率密度，且 $\ln p$ 关于 $\bm{x}$ 可微。称向量场
+设 $D\in\mathbb{N}$，$p:\mathbb{R}^{D}\to[0,\infty)$ 为 $\mathbb{R}^{D}$ 上关于 Lebesgue 测度的概率密度，即 $p$ 可测且 $\int_{\mathbb{R}^{D}}p(\bm{x})\,\mathrm{d}\bm{x}=1$；设 $U\subseteq\mathbb{R}^{D}$ 为非空开集，$p$ 在 $U$ 上处处取正值，且 $\ln p$ 在 $U$ 上连续可微。则由
 \begin{align*}
-s(\bm{x})=\nabla_{\bm{x}}\ln p(\bm{x})
+s(\bm{x})=\nabla_{\bm{x}}\ln p(\bm{x}),\qquad \bm{x}\in U,
 \end{align*}
-为 $p$ 的\textbf{得分}（score）。
+确定的向量场 $s:U\to\mathbb{R}^{D}$ 称为 $p$ 的\textbf{得分}（score）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-得分; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-得分; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-得分}所说的得分，是“对数密度增长最快的方向”，它指向数据密度更高的区域，因而与去噪有直观联系：去噪自编码器学习的是把损坏点拉回流形的向量场，而得分场也指向高密度区域，两者在流形附近方向一致。这一联系的确切形式（Vincent，2011）是：当噪声为方差很小的加性 Gauss 噪声时，最小化\eqref{align:ch19-去噪损失}的最优去噪函数 $\bm{y}^{*}$ 满足 $\bm{y}^{*}(\tilde{\bm{x}})-\tilde{\bm{x}}=\sigma^{2}\nabla_{\tilde{\bm{x}}}\ln p(\tilde{\bm{x}})$，即去噪方向恰好是得分乘以噪声方差，因此训练去噪自编码器等价于（在适当意义下）估计得分。原书只给出直观解释而未陈述这一定理，故本节不把它写成命题；\cref{section:ch20-得分匹配}讨论扩散模型时会回到这一关系。
 
 条件方面：$\ln p$ 必须可微，这要求 $p$ 在其支撑内部为正；若数据分布在低维流形上，$\mathbb{R}^{D}$ 中的密度并不存在（只能相对于流形上的测度定义），此时得分的定义需要按流形上的密度理解，这也是原书\cref{figure:ch19-去噪流形}只画“指向流形”的箭头而不写公式的原因。
@@ -203,11 +207,11 @@ s(\bm{x})=\nabla_{\bm{x}}\ln p(\bm{x})
 我们已经看到，借助随机遮盖输入子集的自监督学习方式，像 BERT 这样的 Transformer 模型能学习到自然语言的深层次内部表示（参见\cref{section:ch12-自然语言}）。人们很自然会问，类似的方法能应用于自然图像吗？
 
 \begin{definition}[掩蔽自编码器]\label{definition:ch19-掩蔽自编码器}
-\textbf{掩蔽自编码器}（masked autoencoder）（He，2021）利用深度神经网络，根据输入图像的损坏版本重建图像；这里的损坏（corruption）形式是掩蔽或删除输入图像的一部分。
+设 $D,L,M\in\mathbb{N}$，图像空间为 $\mathcal{X}\subset\mathbb{R}^{D}$，每幅图像被划分为 $L$ 个互不重叠的补丁；设 $\mathcal{S}\subset\{1,\cdots,L\}$ 为非空掩蔽集，掩蔽算子 $\mathcal{M}_{\mathcal{S}}:\mathcal{X}\to\mathbb{R}^{D}$ 删除 $\bm{x}\in\mathcal{X}$ 中索引属于 $\mathcal{S}$ 的补丁，得到损坏图像 $\tilde{\bm{x}}=\mathcal{M}_{\mathcal{S}}(\bm{x})$。设编码器 $f_{\bm{\theta}}:\mathbb{R}^{D}\to\mathbb{R}^{M}$ 与解码器 $g_{\bm{\psi}}:\mathbb{R}^{M}\to\mathcal{X}$ 均为深度神经网络，$M$ 为内部表示的维数，$\bm{\theta},\bm{\psi}$ 为参数向量。若以 $\bm{y}=g_{\bm{\psi}}(f_{\bm{\theta}}(\tilde{\bm{x}}))\in\mathcal{X}$ 对原图像 $\bm{x}$ 在掩蔽补丁上的平方误差为训练损失，则该自编码器称为\textbf{掩蔽自编码器}（masked autoencoder）（He，2021）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch19-掩蔽自编码器; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch19-掩蔽自编码器; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch19-掩蔽自编码器}是\cref{definition:ch19-去噪自编码器}的一个特例：损坏算子不再是加性噪声或随机置零，而是“删除一个补丁块”。这个特例之所以重要，是因为它把“去噪”与 Transformer 的 token 序列表示对接起来——被保留的补丁成为编码器的输入 token，被删除的补丁不再需要计算，于是编码器的计算量随掩蔽比例线性下降。这也解释了原书随后强调的“掩蔽的区块简单地被省略”与 BERT 用固定掩蔽符号替换的区别。
 
 条件方面：损坏算子必须与后续任务无关（否则网络可以学会“猜出”掩蔽模式而不是图像结构）；掩蔽比例要足够高才能迫使网络学习全局结构，但过高会使可用信息不足；此外解码器必须能处理被恢复的完整 token 序列，这要求位置编码在掩蔽后仍能对齐原图网格。

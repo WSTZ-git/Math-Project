@@ -14,11 +14,15 @@
 \end{align}
 
 \begin{definition}[Gauss 分布]\label{definition:ch02-Gauss分布}
-称由\eqref{align:ch02-单变量Gauss}给出的概率密度为均值 $\mu$、方差 $\sigma^{2}$ 的 \textbf{Gauss} 分布（Gaussian distribution），也称\textbf{正态}分布（normal distribution）。其中 $\mu$ 称为\textbf{均值}（mean），$\sigma^{2}$ 称为\textbf{方差}（variance），方差的平方根 $\sigma$ 称为\textbf{标准差}（standard deviation），方差的倒数 $\beta=1/\sigma^{2}$ 称为\textbf{精度}（precision）。
+设 $\mu\in\mathbb{R}$、$\sigma^{2}>0$，定义
+\begin{align*}
+  \mathcal{N}(x\mid\mu,\sigma^{2})=\frac{1}{(2\pi\sigma^{2})^{1/2}}\exp\left\{-\frac{1}{2\sigma^{2}}(x-\mu)^{2}\right\},\qquad x\in\mathbb{R}.
+\end{align*}
+则 $\mathcal{N}(\cdot\mid\mu,\sigma^{2})$ 称为均值 $\mu$、方差 $\sigma^{2}$ 的 \textbf{Gauss} 分布（Gaussian distribution）的\textbf{概率密度}，也称\textbf{正态}分布（normal distribution）的密度，即\eqref{align:ch02-单变量Gauss}。其中 $\mu$ 称为\textbf{均值}（mean），$\sigma^{2}$ 称为\textbf{方差}（variance），$\sigma=\sqrt{\sigma^{2}}$ 称为\textbf{标准差}（standard deviation），$\beta=1/\sigma^{2}$ 称为\textbf{精度}（precision）。该函数在 $\mathbb{R}$ 上非负、Borel 可测，其非负性与归一化由\cref{proposition:ch02-Gauss归一化}给出。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-Gauss分布; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-Gauss分布; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 Gauss 分布之所以成为全书的主角，是因为它在两个意义上都是“最自然”的选择：给定均值和方差，它是使\cref{section:ch02-信息论}中微分熵最大的分布（\cref{subsection:ch02-最大熵}），也是独立随机变量之和在适当缩放下的极限分布（中心极限定理，参见\cref{section:ch03-多元Gauss分布}）。因此它既可作为“信息最少”的先验，也可作为“大量微小扰动叠加”的模型。
 
 参数 $\mu$ 与 $\sigma^{2}$ 的地位不同：$\mu$ 决定位置，$\sigma^{2}$ 决定宽度，且 $\sigma^{2}>0$ 不可省（否则\eqref{align:ch02-单变量Gauss}无定义）。精度 $\beta$ 只是 $\sigma^{2}$ 的另一种写法，但在后文推导共轭先验时它比 $\sigma^{2}$ 更方便——这正是“你很快就会看到这个术语的由来”所指。
@@ -50,25 +54,29 @@ Gauss 分布之所以成为全书的主角，是因为它在两个意义上都�
 因此，\eqref{align:ch02-单变量Gauss}满足概率密度有效的两个要求。
 
 \begin{proposition}[Gauss 分布的正性与归一化]\label{proposition:ch02-Gauss归一化}
-设 $\sigma^{2}>0$，则\eqref{align:ch02-单变量Gauss}定义的 $\mathcal{N}(x\mid\mu,\sigma^{2})$ 满足\eqref{align:ch02-Gauss正性}与\eqref{align:ch02-Gauss归一化}，因而确实是概率密度。
+设 $\mu\in\mathbb{R}$、$\sigma^{2}>0$，$\mathcal{N}(x\mid\mu,\sigma^{2})$ 由\eqref{align:ch02-单变量Gauss}定义。则对每个 $x\in\mathbb{R}$ 有 $\mathcal{N}(x\mid\mu,\sigma^{2})>0$，即\eqref{align:ch02-Gauss正性}，并且
+\begin{align*}
+  \int_{-\infty}^{\infty}\mathcal{N}(x\mid\mu,\sigma^{2})\,\mathrm{d}x=1,
+\end{align*}
+即\eqref{align:ch02-Gauss归一化}。因此 $\mathcal{N}(\cdot\mid\mu,\sigma^{2})$ 是 $\mathbb{R}$ 上的概率密度，并由 $\mathbb{P}(B)=\int_B\mathcal{N}(x\mid\mu,\sigma^{2})\,\mathrm{d}x$（$B$ 为 Borel 集）定义均值 $\mu$、方差 $\sigma^{2}$ 的 Gauss 概率分布。
 \end{proposition}
 
 \begin{proof}
 正性由指数函数恒正、系数 $(2\pi\sigma^{2})^{-1/2}>0$ 直接得到。归一化：作换元 $u=(x-\mu)/\sigma$，得 $\mathrm{d}x=\sigma\,\mathrm{d}u$，于是
 \begin{align*}
-  \int_{-\infty}^{\infty}\mathcal{N}(x\mid\mu,\sigma^{2})\,\mathrm{d}x
-  = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-u^{2}/2}\,\mathrm{d}u .
+ \int_{-\infty}^{\infty}\mathcal{N}(x\mid\mu,\sigma^{2})\,\mathrm{d}x
+ = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-u^{2}/2}\,\mathrm{d}u .
 \end{align*}
 记 $I=\int_{-\infty}^{\infty}e^{-u^{2}/2}\,\mathrm{d}u$，则
 \begin{align*}
-  I^{2} = \int_{-\infty}^{\infty}\!\!\int_{-\infty}^{\infty} e^{-(u^{2}+v^{2})/2}\,\mathrm{d}u\,\mathrm{d}v
-  = \int_{0}^{2\pi}\!\!\int_{0}^{\infty} e^{-r^{2}/2}\,r\,\mathrm{d}r\,\mathrm{d}\theta = 2\pi ,
+ I^{2} = \int_{-\infty}^{\infty}\!\!\int_{-\infty}^{\infty} e^{-(u^{2}+v^{2})/2}\,\mathrm{d}u\,\mathrm{d}v
+ = \int_{0}^{2\pi}\!\!\int_{0}^{\infty} e^{-r^{2}/2}\,r\,\mathrm{d}r\,\mathrm{d}\theta = 2\pi ,
 \end{align*}
 其中第二个等号用了极坐标 $(u,v)=(r\cos\theta,r\sin\theta)$、$\mathrm{d}u\,\mathrm{d}v=r\,\mathrm{d}r\,\mathrm{d}\theta$。故 $I=\sqrt{2\pi}$，代回得积分值为 $1$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-Gauss归一化; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-Gauss归一化; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 归一化常数 $(2\pi\sigma^{2})^{-1/2}$ 不是人为挑选的，而是被\eqref{align:ch02-Gauss归一化}唯一确定的：若把系数改成别的数，密度下的面积就不再是 $1$。证明中的关键一步是把二重积分化为极坐标，这一步之所以可行，是因为 $e^{-(u^{2}+v^{2})/2}$ 只依赖 $r$。
 
 条件 $\sigma^{2}>0$ 在整个证明中不可省：$\sigma=0$ 时换元 $u=(x-\mu)/\sigma$ 无意义，而且此时分布退化为集中在 $\mu$ 处的 $\delta$ 函数（\cref{definition:ch02-狄拉克delta}），不再是普通密度。此外，$\mu$ 在归一化中不起作用——平移不改变面积，这也预示了后文 $\mu$ 只影响位置而不影响形状。
@@ -91,23 +99,27 @@ Gauss 分布之所以成为全书的主角，是因为它在两个意义上都�
 \end{align}
 
 \begin{proposition}[Gauss 分布的一阶矩与二阶矩]\label{proposition:ch02-Gauss矩}
-设 $x\sim\mathcal{N}(x\mid\mu,\sigma^{2})$，则\eqref{align:ch02-Gauss均值}与\eqref{align:ch02-Gauss二阶矩}成立，即 $\mathbb{E}[x]=\mu$、$\mathbb{E}[x^{2}]=\mu^{2}+\sigma^{2}$。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$\mu\in\mathbb{R}$、$\sigma^{2}>0$，$X:\Omega\to\mathbb{R}$ 为随机变量，其概率密度为 $\mathcal{N}(\cdot\mid\mu,\sigma^{2})$。则 $\mathbb{E}[|X|]<\infty$、$\mathbb{E}[X^{2}]<\infty$，且
+\begin{align*}
+  \mathbb{E}[X]=\mu,\qquad \mathbb{E}[X^{2}]=\mu^{2}+\sigma^{2},
+\end{align*}
+即\eqref{align:ch02-Gauss均值}与\eqref{align:ch02-Gauss二阶矩}；即 $X$ 的一阶矩为 $\mu$、二阶矩为 $\mu^{2}+\sigma^{2}$。这两个矩由\cref{proposition:ch02-Gauss归一化}中的标准正态积分确定，因而与 $\mu$ 的平移和 $\sigma$ 的缩放一致。
 \end{proposition}
 
 \begin{proof}
 作换元 $u=(x-\mu)/\sigma$，则 $x=\mu+\sigma u$、$\mathrm{d}x=\sigma\,\mathrm{d}u$，且 $\mathcal{N}(x\mid\mu,\sigma^{2})\,\mathrm{d}x=\varphi(u)\,\mathrm{d}u$，其中 $\varphi(u)=(2\pi)^{-1/2}e^{-u^{2}/2}$ 为标准正态密度。由 $\varphi$ 是偶函数，$\int u\,\varphi(u)\,\mathrm{d}u=0$，故
 \begin{align*}
-  \mathbb{E}[x] = \int(\mu+\sigma u)\,\varphi(u)\,\mathrm{d}u = \mu\int\varphi(u)\,\mathrm{d}u + \sigma\int u\,\varphi(u)\,\mathrm{d}u = \mu .
+ \mathbb{E}[x] = \int(\mu+\sigma u)\,\varphi(u)\,\mathrm{d}u = \mu\int\varphi(u)\,\mathrm{d}u + \sigma\int u\,\varphi(u)\,\mathrm{d}u = \mu .
 \end{align*}
 再由 $\int u^{2}\varphi(u)\,\mathrm{d}u=1$（分部积分：$\int u^{2}\varphi(u)\,\mathrm{d}u=\int\varphi(u)\,\mathrm{d}u=1$），
 \begin{align*}
-  \mathbb{E}[x^{2}] = \int(\mu+\sigma u)^{2}\varphi(u)\,\mathrm{d}u
-  = \mu^{2} + 2\mu\sigma\int u\varphi(u)\,\mathrm{d}u + \sigma^{2}\int u^{2}\varphi(u)\,\mathrm{d}u = \mu^{2}+\sigma^{2} .
+ \mathbb{E}[x^{2}] = \int(\mu+\sigma u)^{2}\varphi(u)\,\mathrm{d}u
+ = \mu^{2} + 2\mu\sigma\int u\varphi(u)\,\mathrm{d}u + \sigma^{2}\int u^{2}\varphi(u)\,\mathrm{d}u = \mu^{2}+\sigma^{2} .
 \end{align*}
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-Gauss矩; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-Gauss矩; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这两条矩公式表明参数的名字名副其实：$\mu$ 就是一阶矩，$\sigma^{2}$ 则由二阶矩与一阶矩之差给出（见\cref{proposition:ch02-Gauss方差}）。它们也是“矩”这一术语的来源——$k$ 阶矩就是 $x^{k}$ 的期望。
 
 证明只用到标准正态密度的两个积分 $\int\varphi=1$、$\int u^{2}\varphi=1$，而这两个积分又依赖\cref{proposition:ch02-Gauss归一化}中的 $I=\sqrt{2\pi}$。条件 $\sigma^{2}>0$ 仍是换元的前提；若 $\sigma^{2}$ 未知而需要从数据估计，则得到的是\eqref{align:ch02-均值最大似然}中的 $\mu_{\mathrm{ML}}$ 而不是 $\mu$ 本身。
@@ -121,18 +133,22 @@ Gauss 分布之所以成为全书的主角，是因为它在两个意义上都�
 \end{align}
 
 \begin{proposition}[Gauss 分布的方差]\label{proposition:ch02-Gauss方差}
-设 $x\sim\mathcal{N}(x\mid\mu,\sigma^{2})$，则\eqref{align:ch02-Gauss方差}成立，即 $\mathrm{var}[x]=\sigma^{2}$。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$\mu\in\mathbb{R}$、$\sigma^{2}>0$，$X:\Omega\to\mathbb{R}$ 为随机变量，其概率密度为 $\mathcal{N}(\cdot\mid\mu,\sigma^{2})$。则 $\mathrm{var}[X]$ 存在且
+\begin{align*}
+  \mathrm{var}[X]=\mathbb{E}[X^{2}]-\mathbb{E}[X]^{2}=\sigma^{2},
+\end{align*}
+即\eqref{align:ch02-Gauss方差}。该结论表明参数 $\sigma^{2}$ 等于 $X$ 的方差，而不只是密度的形状参数。
 \end{proposition}
 
 \begin{proof}
 把\cref{proposition:ch02-Gauss矩}给出的 $\mathbb{E}[x^{2}]=\mu^{2}+\sigma^{2}$ 与 $\mathbb{E}[x]=\mu$ 代入方差展开式\eqref{align:ch02-方差展开}：
 \begin{align*}
-  \mathrm{var}[x] = \mathbb{E}[x^{2}] - \mathbb{E}[x]^{2} = (\mu^{2}+\sigma^{2}) - \mu^{2} = \sigma^{2} .
+ \mathrm{var}[x] = \mathbb{E}[x^{2}] - \mathbb{E}[x]^{2} = (\mu^{2}+\sigma^{2}) - \mu^{2} = \sigma^{2} .
 \end{align*}
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-Gauss方差; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-Gauss方差; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条结果说明 Gauss 分布的两个参数恰好就是它的前两阶矩，因此“均值—方差”这一对参数已经完全刻画了分布的位置与宽度；这也是后文用 $\mathcal{N}(x\mid\mu,\sigma^{2})$ 直接以矩为参数书写的原因。
 
 推导依赖\eqref{align:ch02-方差展开}，而后者要求二阶矩存在——对 Gauss 分布而言这总是成立。需要注意，$\mathrm{var}[x]$ 与 $\sigma^{2}$ 相等并不是定义，而是计算的结果；若把\eqref{align:ch02-单变量Gauss}中的 $\sigma^{2}$ 换成其他常数，方差就会随之改变。
@@ -141,11 +157,11 @@ Gauss 分布之所以成为全书的主角，是因为它在两个意义上都�
 $\sigma^{2}$ 称为方差参数，分布的最大值称为众数。对于 Gauss 分布，众数与均值重合（见\cref{exercise:ch02-14}）。
 
 \begin{definition}[众数]\label{definition:ch02-众数}
-称概率密度（或概率质量函数）取最大值的点为该分布的\textbf{众数}（mode）。
+设 $X$ 为随机变量，其分布由概率密度 $p_X:\mathbb{R}\to[0,\infty)$（$X$ 为连续型）或概率质量函数 $p_X:\mathbb{R}\to[0,1]$（$X$ 为离散型）给出。若 $x^{*}\in\mathbb{R}$ 满足 $p_X(x^{*})\geqslant p_X(x)$ 对每个 $x\in\mathbb{R}$ 成立，则 $x^{*}$ 称为该分布的\textbf{众数}（mode）。众数可能不唯一，也可能不存在；当众数存在且唯一时，该分布称为单峰的。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-众数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-众数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 众数描述分布的“峰在哪里”，它与均值、中位数一起构成位置的三类刻画；三者对对称分布重合，对偏斜分布则分开。Gauss 分布的众数与均值重合，正是因为它关于 $\mu$ 对称且单峰。
 
 众数的定义要求最大值确实取到；对某些密度（例如在开区间上单调的密度）最大值不存在，此时众数无定义。这与均值要求积分收敛是两类不同的存在性条件，不可混用。
@@ -163,11 +179,11 @@ $\sigma^{2}$ 称为方差参数，分布的最大值称为众数。对于 Gauss 
 \end{align}
 
 \begin{definition}[独立同分布与似然函数]\label{definition:ch02-似然函数}
-若一组随机变量 $x_1,\cdots,x_N$ 相互独立，且每个都服从同一个分布 $p(x)$，则称它们是\textbf{独立同分布}的（independent and identically distributed，i.i.d.）。此时它们的联合分布为 $\prod_{n=1}^{N}p(x_n)$。若把\eqref{align:ch02-Gauss似然}右端视为参数 $\mu,\sigma^{2}$ 的函数（数据固定），则称之为 \textbf{Gauss} 分布的\textbf{似然函数}（likelihood function）。
+设 $N\geqslant1$ 为整数，$x_1,\cdots,x_N$ 为随机变量。若它们相互独立，且存在概率分布 $p$ 使每个 $x_n$ 都服从 $p$，则这组随机变量称为\textbf{独立同分布}的（independent and identically distributed，i.i.d.）。设参数空间 $\Theta\subseteq\mathbb{R}^{P}$（$P\geqslant1$），对每个 $\boldsymbol{\theta}\in\Theta$ 给定概率密度或概率质量函数 $p(\cdot\mid\boldsymbol{\theta})$。若 $x_1,\cdots,x_N$ 相互独立且每个 $x_n$ 的分布为 $p(\cdot\mid\boldsymbol{\theta})$，则数据 $\mathbf{x}=(x_1,\cdots,x_N)$ 在参数 $\boldsymbol{\theta}$ 下的联合密度为 $p(\mathbf{x}\mid\boldsymbol{\theta})=\prod_{n=1}^{N}p(x_n\mid\boldsymbol{\theta})$。固定数据 $\mathbf{x}$ 后，函数 $\boldsymbol{\theta}\mapsto p(\mathbf{x}\mid\boldsymbol{\theta})$ 称为该模型的\textbf{似然函数}（likelihood function）；当 $p(\cdot\mid\mu,\sigma^{2})=\mathcal{N}(\cdot\mid\mu,\sigma^{2})$ 时，\eqref{align:ch02-Gauss似然}给出 Gauss 分布的似然函数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-似然函数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-似然函数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 “独立同分布”这一假设使联合概率从一般的 $p(x_1,\cdots,x_N)$ 退化为 $N$ 个相同因子的乘积，这是似然函数能够写出显式形式的唯一原因；没有它，\eqref{align:ch02-Gauss似然}无从成立。
 
 似然函数与概率密度在数学上是同一个表达式，区别只在于“谁固定、谁变化”：作为 $x$ 的函数它是密度（对 $x$ 积分为 $1$），作为 $\mu,\sigma^{2}$ 的函数它是似然（对 $\mu,\sigma^{2}$ 的积分不必为 $1$，见\cref{subsection:ch02-模型参数}）。这一区别是频率学派与 Bayes 学派分歧的技术根源之一。
@@ -185,15 +201,15 @@ $\sigma^{2}$ 称为方差参数，分布的最大值称为众数。对于 Gauss 
 一种常见的使用观测数据集确定概率分布中参数的方法就是最大似然（maximum likelihood）法，其目的是找到使似然函数最大化的参数值。这个准则似乎有些奇怪，因为从我们之前对概率论的讨论来看，在给定数据的情况下最大化参数的几率，似乎比在给定参数的情况下最大化数据的概率更加自然。事实上，这两个准则是相关的。
 
 \begin{definition}[最大似然估计]\label{definition:ch02-最大似然估计}
-设数据 $\mathbf{x}=(x_1,\cdots,x_N)$ 的似然函数为 $p(\mathbf{x}\mid\boldsymbol{\theta})$。称使该似然函数取最大值的参数值
+设 $\Theta\subseteq\mathbb{R}^{P}$（$P\geqslant1$）为非空参数空间，数据 $\mathbf{x}=(x_1,\cdots,x_N)$ 的似然函数为 $p(\mathbf{x}\mid\boldsymbol{\theta})$，$\boldsymbol{\theta}\in\Theta$。若 $\boldsymbol{\theta}_{\mathrm{ML}}\in\Theta$ 满足
 \begin{align*}
-  \boldsymbol{\theta}_{\mathrm{ML}} = \arg\max_{\boldsymbol{\theta}} p(\mathbf{x}\mid\boldsymbol{\theta})
+  p(\mathbf{x}\mid\boldsymbol{\theta}_{\mathrm{ML}})=\max_{\boldsymbol{\theta}\in\Theta}p(\mathbf{x}\mid\boldsymbol{\theta}),
 \end{align*}
-为参数 $\boldsymbol{\theta}$ 的\textbf{最大似然估计}（maximum likelihood estimate），简称最大似然解。
+则 $\boldsymbol{\theta}_{\mathrm{ML}}$ 称为参数 $\boldsymbol{\theta}$ 的\textbf{最大似然估计}（maximum likelihood estimate），简称最大似然解；若上述最大值不在 $\Theta$ 内取到，则最大似然估计不存在，此时只有上确界。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-最大似然估计; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-最大似然估计; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 最大似然准则的动机是：在已经观测到 $\mathbf{x}$ 的前提下，取“使这组数据最可能出现”的参数值作为估计，是把“数据已发生”这一事实反过来用于推断参数的最直接方式。
 
 需要强调，$\boldsymbol{\theta}_{\mathrm{ML}}$ 是数据的函数，因而本身是随机变量：换一组数据就会得到不同的估计。这正是\cref{subsection:ch02-最大似然的偏差}讨论偏差时的出发点。另外，最大值若不存在（例如似然在参数空间边界上取到上确界而不取到），则最大似然解不存在，此时只能说“最大似然估计在极限意义下取到”。
@@ -207,23 +223,27 @@ $\sigma^{2}$ 称为方差参数，分布的最大值称为众数。对于 Gauss 
 \end{align}
 
 \begin{proposition}[Gauss 分布的对数似然]\label{proposition:ch02-对数似然}
-设数据 $\mathbf{x}$ 独立同分布于 $\mathcal{N}(x\mid\mu,\sigma^{2})$，则对数似然由\eqref{align:ch02-对数似然}给出。
+设 $N\geqslant1$ 为整数，$\mu\in\mathbb{R}$、$\sigma^{2}>0$，$x_1,\cdots,x_N$ 为相互独立且都服从 $\mathcal{N}(\cdot\mid\mu,\sigma^{2})$ 的随机变量，$\mathbf{x}=(x_1,\cdots,x_N)$。则 $\mathbf{x}$ 的联合密度为\eqref{align:ch02-Gauss似然}，其对数似然为
+\begin{align*}
+  \ln p(\mathbf{x}\mid\mu,\sigma^{2})=-\frac{1}{2\sigma^{2}}\sum_{n=1}^{N}(x_n-\mu)^{2}-\frac{N}{2}\ln\sigma^{2}-\frac{N}{2}\ln(2\pi),
+\end{align*}
+即\eqref{align:ch02-对数似然}。
 \end{proposition}
 
 \begin{proof}
 对\eqref{align:ch02-Gauss似然}取对数，把乘积化为求和：
 \begin{align*}
-  \ln p(\mathbf{x}\mid\mu,\sigma^{2}) = \sum_{n=1}^{N}\ln\mathcal{N}(x_n\mid\mu,\sigma^{2}) .
+ \ln p(\mathbf{x}\mid\mu,\sigma^{2}) = \sum_{n=1}^{N}\ln\mathcal{N}(x_n\mid\mu,\sigma^{2}) .
 \end{align*}
 对每一项用\eqref{align:ch02-单变量Gauss}，
 \begin{align*}
-  \ln\mathcal{N}(x_n\mid\mu,\sigma^{2}) = -\frac{1}{2}\ln(2\pi\sigma^{2}) - \frac{1}{2\sigma^{2}}(x_n-\mu)^{2} .
+ \ln\mathcal{N}(x_n\mid\mu,\sigma^{2}) = -\frac{1}{2}\ln(2\pi\sigma^{2}) - \frac{1}{2\sigma^{2}}(x_n-\mu)^{2} .
 \end{align*}
 把 $N$ 项相加，常数项 $-\frac{N}{2}\ln(2\pi)$ 与 $-\frac{N}{2}\ln\sigma^{2}$ 合并，即得\eqref{align:ch02-对数似然}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-对数似然; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-对数似然; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 取对数的合法性来自 $\ln$ 严格单调：$p\mapsto\ln p$ 保持大小关系，故最大值点不变。但要注意“等价”只对最大化成立，最大值本身会变（对数似然的最大值与似然的极大值不相等），因此不能把对数似然的数值当作概率使用。
 
 把乘积化为求和，除了避免下溢，还使求导变得可行：\eqref{align:ch02-对数似然}右端对 $\mu$ 与 $\sigma^{2}$ 的偏导数都很容易写出，这正是下面两式能够显式求解的原因。条件 $x_n\in\mathbb{R}$ 与 $\sigma^{2}>0$ 保证对数内的量有意义。
@@ -244,29 +264,34 @@ $\sigma^{2}$ 称为方差参数，分布的最大值称为众数。对于 Gauss 
 \end{align}
 
 \begin{theorem}[Gauss 分布的最大似然解]\label{theorem:ch02-Gauss最大似然}
-设数据 $\mathbf{x}=(x_1,\cdots,x_N)$ 独立同分布于 $\mathcal{N}(x\mid\mu,\sigma^{2})$，则对数似然\eqref{align:ch02-对数似然}的驻点由\eqref{align:ch02-均值最大似然}与\eqref{align:ch02-方差最大似然}给出，且该驻点是全局最大值点。
+设 $N\geqslant2$ 为整数，$\mu\in\mathbb{R}$、$\sigma^{2}>0$，$x_1,\cdots,x_N$ 为相互独立且都服从 $\mathcal{N}(\cdot\mid\mu,\sigma^{2})$ 的观测值，且 $x_1,\cdots,x_N$ 不全相等。记 $\Theta=\mathbb{R}\times(0,\infty)$，对数似然 $L(\mu,\sigma^{2})=\ln p(\mathbf{x}\mid\mu,\sigma^{2})$ 由\eqref{align:ch02-对数似然}给出。则 $L$ 在 $\Theta$ 上的唯一驻点为
+\begin{align*}
+  \mu_{\mathrm{ML}}=\frac{1}{N}\sum_{n=1}^{N}x_n,\qquad
+  \sigma_{\mathrm{ML}}^{2}=\frac{1}{N}\sum_{n=1}^{N}(x_n-\mu_{\mathrm{ML}})^{2},
+\end{align*}
+即\eqref{align:ch02-均值最大似然}与\eqref{align:ch02-方差最大似然}，且该驻点是 $L$ 在 $\Theta$ 上的全局最大值点。
 \end{theorem}
 
 \begin{proof}
 记 $L(\mu,\sigma^{2})=\ln p(\mathbf{x}\mid\mu,\sigma^{2})$。先对 $\mu$ 求偏导并令其为零：
 \begin{align*}
-  \frac{\partial L}{\partial\mu} = \frac{1}{\sigma^{2}}\sum_{n=1}^{N}(x_n-\mu) = 0
-  \quad\Longrightarrow\quad
-  \sum_{n=1}^{N}x_n = N\mu ,
+ \frac{\partial L}{\partial\mu} = \frac{1}{\sigma^{2}}\sum_{n=1}^{N}(x_n-\mu) = 0
+ \quad\Longrightarrow\quad
+ \sum_{n=1}^{N}x_n = N\mu ,
 \end{align*}
-即 $\mu=\frac{1}{N}\sum_n x_n$，这就是\eqref{align:ch02-均值最大似然}。又 $\partial^{2}L/\partial\mu^{2}=-N/\sigma^{2}<0$，故该驻点关于 $\mu$ 是最大值点。
+即 $\mu=\frac{1}{N}\sum_n x_n$，此即\eqref{align:ch02-均值最大似然}。又 $\partial^{2}L/\partial\mu^{2}=-N/\sigma^{2}<0$，故该驻点关于 $\mu$ 是最大值点。
 
 再对 $\sigma^{2}$ 求偏导并令其为零：
 \begin{align*}
-  \frac{\partial L}{\partial\sigma^{2}} = \frac{1}{2\sigma^{4}}\sum_{n=1}^{N}(x_n-\mu)^{2} - \frac{N}{2\sigma^{2}} = 0
-  \quad\Longrightarrow\quad
-  \sigma^{2} = \frac{1}{N}\sum_{n=1}^{N}(x_n-\mu)^{2} .
+ \frac{\partial L}{\partial\sigma^{2}} = \frac{1}{2\sigma^{4}}\sum_{n=1}^{N}(x_n-\mu)^{2} - \frac{N}{2\sigma^{2}} = 0
+ \quad\Longrightarrow\quad
+ \sigma^{2} = \frac{1}{N}\sum_{n=1}^{N}(x_n-\mu)^{2} .
 \end{align*}
 由于 $\mu$ 的解与 $\sigma^{2}$ 的解解耦（$\partial L/\partial\sigma^{2}$ 中出现的 $\mu$ 已是上面求得的值），把 $\mu=\mu_{\mathrm{ML}}$ 代入即得\eqref{align:ch02-方差最大似然}。最后，$L$ 关于 $(\mu,\ln\sigma^{2})$ 是凹函数（其 Hessian 为负定），故驻点必为全局最大值点。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch02-Gauss最大似然; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:ch02-Gauss最大似然; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 定理的结论有两点值得注意。其一，$\mu$ 的解与 $\sigma^{2}$ 的解是解耦的：可以先用\eqref{align:ch02-均值最大似然}算出 $\mu_{\mathrm{ML}}$，再把它代入\eqref{align:ch02-方差最大似然}，而不必解联立方程。其二，$\sigma_{\mathrm{ML}}^{2}$ 的分母是 $N$ 而不是 $N-1$，这正是\cref{subsection:ch02-最大似然的偏差}要讨论的偏差来源。
 
 证明中用 $\ln\sigma^{2}$（而非 $\sigma^{2}$）作自变量使 Hessian 为负定，从而把“驻点”升级为“最大值点”；若直接对 $\sigma^{2}$ 求二阶导，需要额外验证。条件 $N\geqslant1$ 与 $\sigma^{2}>0$ 不可省：$N=1$ 时\eqref{align:ch02-方差最大似然}给出 $\sigma_{\mathrm{ML}}^{2}=0$，分布退化。
@@ -291,44 +316,48 @@ $\sigma^{2}$ 称为方差参数，分布的最大值称为众数。对于 Gauss 
 \end{align}
 
 \begin{definition}[偏差]\label{definition:ch02-偏差}
-设 $\hat{\theta}$ 是参数 $\theta$ 的一个估计。若 $\mathbb{E}[\hat{\theta}]\neq\theta$，则称 $\hat{\theta}$ 是\textbf{有偏的}（biased），并称 $\mathbb{E}[\hat{\theta}]-\theta$ 为它的\textbf{偏差}（bias）；若 $\mathbb{E}[\hat{\theta}]=\theta$，则称它是\textbf{无偏的}（unbiased）。
+设 $\Theta\subseteq\mathbb{R}^{P}$（$P\geqslant1$）为参数空间，$\theta\in\Theta$ 为参数，$\hat{\theta}$ 为基于数据的估计量，且 $\mathbb{E}[|\hat{\theta}|]<\infty$。若 $\mathbb{E}[\hat{\theta}]\neq\theta$，则 $\hat{\theta}$ 称为\textbf{有偏的}（biased），$\mathbb{E}[\hat{\theta}]-\theta$ 称为它的\textbf{偏差}（bias）；若 $\mathbb{E}[\hat{\theta}]=\theta$，则 $\hat{\theta}$ 称为\textbf{无偏的}（unbiased）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-偏差; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-偏差; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 偏差描述的是“平均而言偏不偏”，而不是“某一次估计准不准”：一个估计可以有偏但方差很小，也可以无偏但方差很大。\eqref{align:ch02-方差有偏}说明 $\sigma_{\mathrm{ML}}^{2}$ 系统性地偏小，偏差为 $-\sigma^{2}/N$，它与 $N$ 成反比，因此大样本下可以忽略。
 
 需要区分偏差与\cref{subsection:ch02-最大似然的偏差}中“最大似然低估方差”的直观原因：方差的估计是相对于 $\mu_{\mathrm{ML}}$ 而不是真实的 $\mu$ 计算的，而 $\mu_{\mathrm{ML}}$ 恰好是使 $\sum_n(x_n-\mu)^{2}$ 最小的那个点（见\cref{exercise:ch02-15}），因此用它中心化必然使平方和偏小。
 \end{remark}
 
 \begin{proposition}[最大似然估计的期望]\label{proposition:ch02-最大似然期望}
-设 $x_1,\cdots,x_N$ 独立同分布于 $\mathcal{N}(x\mid\mu,\sigma^{2})$，$\mu_{\mathrm{ML}},\sigma_{\mathrm{ML}}^{2}$ 由\eqref{align:ch02-均值最大似然}与\eqref{align:ch02-方差最大似然}给出，则\eqref{align:ch02-均值无偏}与\eqref{align:ch02-方差有偏}成立。
+设 $N\geqslant1$ 为整数，$\mu\in\mathbb{R}$、$\sigma^{2}>0$，$x_1,\cdots,x_N$ 为相互独立且都服从 $\mathcal{N}(\cdot\mid\mu,\sigma^{2})$ 的随机变量，$\mu_{\mathrm{ML}}$ 与 $\sigma_{\mathrm{ML}}^{2}$ 由\eqref{align:ch02-均值最大似然}与\eqref{align:ch02-方差最大似然}给出。则 $\mathbb{E}[\mu_{\mathrm{ML}}]=\mu$ 且
+\begin{align*}
+  \mathbb{E}\left[\sigma_{\mathrm{ML}}^{2}\right]=\frac{N-1}{N}\sigma^{2},
+\end{align*}
+即\eqref{align:ch02-均值无偏}与\eqref{align:ch02-方差有偏}；因此 $\mu_{\mathrm{ML}}$ 是 $\mu$ 的无偏估计，而 $\sigma_{\mathrm{ML}}^{2}$ 是 $\sigma^{2}$ 的有偏估计，其偏差为 $-\sigma^{2}/N$。
 \end{proposition}
 
 \begin{proof}
 先算二阶混合矩：由独立性，当 $n\neq m$ 时 $\mathbb{E}[x_nx_m]=\mu^{2}$；当 $n=m$ 时 $\mathbb{E}[x_n^{2}]=\mu^{2}+\sigma^{2}$。把两者统一写成
 \begin{align*}
-  \mathbb{E}[x_nx_m] = \mu^{2} + I_{nm}\sigma^{2},\qquad
-  I_{nm} = \begin{cases}1, & n=m,\\ 0, & n\neq m.\end{cases}
+ \mathbb{E}[x_nx_m] = \mu^{2} + I_{nm}\sigma^{2},\qquad
+ I_{nm} = \begin{cases}1, & n=m,\\ 0, & n\neq m.\end{cases}
 \end{align*}
 于是由\eqref{align:ch02-均值最大似然}与期望的线性性，$\mathbb{E}[\mu_{\mathrm{ML}}]=\frac{1}{N}\sum_n\mathbb{E}[x_n]=\mu$，即\eqref{align:ch02-均值无偏}。
 
 再算 $\mathbb{E}[\mu_{\mathrm{ML}}^{2}]$。由 $\mathrm{var}[\mu_{\mathrm{ML}}]=\frac{1}{N^{2}}\sum_{n}\mathrm{var}[x_n]=\sigma^{2}/N$（独立性使交叉项消失）与\cref{proposition:ch02-方差展开}，
 \begin{align*}
-  \mathbb{E}\left[\mu_{\mathrm{ML}}^{2}\right] = \mathrm{var}\left[\mu_{\mathrm{ML}}\right] + \mu^{2} = \frac{\sigma^{2}}{N} + \mu^{2} .
+ \mathbb{E}\left[\mu_{\mathrm{ML}}^{2}\right] = \mathrm{var}\left[\mu_{\mathrm{ML}}\right] + \mu^{2} = \frac{\sigma^{2}}{N} + \mu^{2} .
 \end{align*}
 而 $\mathbb{E}[x_n\mu_{\mathrm{ML}}]=\frac{1}{N}\sum_m\mathbb{E}[x_nx_m]=\frac{1}{N}\big(N\mu^{2}+\sigma^{2}\big)=\mu^{2}+\frac{\sigma^{2}}{N}$。把\eqref{align:ch02-方差最大似然}展开并逐项取期望：
 \begin{align*}
-  \mathbb{E}\left[\sigma_{\mathrm{ML}}^{2}\right]
-  &= \frac{1}{N}\sum_{n=1}^{N}\left(\mathbb{E}[x_n^{2}] - 2\mathbb{E}[x_n\mu_{\mathrm{ML}}] + \mathbb{E}[\mu_{\mathrm{ML}}^{2}]\right) \\
-  &= \frac{1}{N}\sum_{n=1}^{N}\left((\mu^{2}+\sigma^{2}) - 2\left(\mu^{2}+\frac{\sigma^{2}}{N}\right) + \left(\mu^{2}+\frac{\sigma^{2}}{N}\right)\right) \\
-  &= \frac{1}{N}\sum_{n=1}^{N}\sigma^{2}\left(1-\frac{1}{N}\right) = \frac{N-1}{N}\sigma^{2} ,
+ \mathbb{E}\left[\sigma_{\mathrm{ML}}^{2}\right]
+ &= \frac{1}{N}\sum_{n=1}^{N}\left(\mathbb{E}[x_n^{2}] - 2\mathbb{E}[x_n\mu_{\mathrm{ML}}] + \mathbb{E}[\mu_{\mathrm{ML}}^{2}]\right) \\
+ &= \frac{1}{N}\sum_{n=1}^{N}\left((\mu^{2}+\sigma^{2}) - 2\left(\mu^{2}+\frac{\sigma^{2}}{N}\right) + \left(\mu^{2}+\frac{\sigma^{2}}{N}\right)\right) \\
+ &= \frac{1}{N}\sum_{n=1}^{N}\sigma^{2}\left(1-\frac{1}{N}\right) = \frac{N-1}{N}\sigma^{2} ,
 \end{align*}
 即\eqref{align:ch02-方差有偏}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-最大似然期望; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-最大似然期望; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 证明的关键是 $I_{nm}$：它把“同一点”与“不同点”的二阶矩统一成一个公式，从而使 $\mathbb{E}[x_n\mu_{\mathrm{ML}}]$ 与 $\mathbb{E}[\mu_{\mathrm{ML}}^{2}]$ 都能一次算出。这个技巧在\cref{exercise:ch02-16}中原样出现。
 
 结论中的 $(N-1)/N$ 因子解释了为什么样本方差通常除以 $N-1$：除以 $N$ 会低估 $\sigma^{2}$，而\eqref{align:ch02-无偏方差} 的修正恰好抵消这一因子。条件“独立同分布”不可省：若 $x_n$ 之间有相关性，$\mathrm{var}[\mu_{\mathrm{ML}}]$ 不再是 $\sigma^{2}/N$，上述计算需改写。
@@ -365,23 +394,27 @@ $\sigma^{2}$ 称为方差参数，分布的最大值称为众数。对于 Gauss 
 \end{align}
 
 \begin{proposition}[方差的无偏估计]\label{proposition:ch02-无偏方差}
-设 $x_1,\cdots,x_N$ 独立同分布于 $\mathcal{N}(x\mid\mu,\sigma^{2})$，$\tilde{\sigma}^{2}$ 由\eqref{align:ch02-真值方差估计}定义，则由\eqref{align:ch02-无偏方差}定义的估计满足 $\mathbb{E}[\tilde{\sigma}^{2}]=\sigma^{2}$，即\eqref{align:ch02-真值方差无偏}成立。
+设 $N\geqslant2$ 为整数，$\mu\in\mathbb{R}$、$\sigma^{2}>0$，$x_1,\cdots,x_N$ 为相互独立且都服从 $\mathcal{N}(\cdot\mid\mu,\sigma^{2})$ 的随机变量，$\mu_{\mathrm{ML}}$ 由\eqref{align:ch02-均值最大似然}给出。则由\eqref{align:ch02-真值方差估计}右端定义的统计量满足
+\begin{align*}
+  \mathbb{E}\left[\frac{1}{N}\sum_{n=1}^{N}(x_n-\mu)^{2}\right]=\sigma^{2},
+\end{align*}
+即\eqref{align:ch02-真值方差无偏}；由\eqref{align:ch02-无偏方差}右端定义的统计量也满足同样的期望 $\sigma^{2}$，因而是 $\sigma^{2}$ 的无偏估计。
 \end{proposition}
 
 \begin{proof}
 对\eqref{align:ch02-真值方差估计}取期望，并用 $\mathbb{E}[(x_n-\mu)^{2}]=\mathrm{var}[x_n]=\sigma^{2}$：
 \begin{align*}
-  \mathbb{E}\left[\tilde{\sigma}^{2}\right] = \frac{1}{N}\sum_{n=1}^{N}\mathbb{E}\left[(x_n-\mu)^{2}\right] = \frac{1}{N}\cdot N\sigma^{2} = \sigma^{2} .
+ \mathbb{E}\left[\tilde{\sigma}^{2}\right] = \frac{1}{N}\sum_{n=1}^{N}\mathbb{E}\left[(x_n-\mu)^{2}\right] = \frac{1}{N}\cdot N\sigma^{2} = \sigma^{2} .
 \end{align*}
 这证明了\eqref{align:ch02-真值方差无偏}。再由\eqref{align:ch02-方差有偏}，
 \begin{align*}
-  \mathbb{E}\left[\frac{N}{N-1}\sigma_{\mathrm{ML}}^{2}\right] = \frac{N}{N-1}\cdot\frac{N-1}{N}\sigma^{2} = \sigma^{2},
+ \mathbb{E}\left[\frac{N}{N-1}\sigma_{\mathrm{ML}}^{2}\right] = \frac{N}{N-1}\cdot\frac{N-1}{N}\sigma^{2} = \sigma^{2},
 \end{align*}
 故\eqref{align:ch02-无偏方差}中的估计是无偏的。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-无偏方差; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-无偏方差; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 两条估计的差别只在于中心：\eqref{align:ch02-真值方差估计}用真实的 $\mu$，\eqref{align:ch02-无偏方差}用 $\mu_{\mathrm{ML}}$ 但把分母改为 $N-1$。后者的代价是除以 $N-1$ 会使估计在 $N$ 很小时方差较大，因此“无偏”并不等于“更好”——这是偏差—方差权衡（参见\cref{section:ch04-偏差方差权衡}）的一个简单实例。
 
 条件 $N\geqslant2$ 不可省：$N=1$ 时 $N-1=0$，\eqref{align:ch02-无偏方差}无定义，这与“单个观测无法估计方差”的直觉一致。
@@ -431,19 +464,19 @@ $\sigma^{2}$ 称为方差参数，分布的最大值称为众数。对于 Gauss 
 \end{align}
 
 \begin{proposition}[Gauss 噪声下的最大似然等价于最小平方和误差]\label{proposition:ch02-最大似然等价平方和}
-设 $t_n=y(x_n,\mathbf{w})+\varepsilon_n$，其中 $\varepsilon_n$ 独立同分布于 $\mathcal{N}(0,\sigma^{2})$，则关于 $\mathbf{w}$ 最大化\eqref{align:ch02-回归对数似然}等价于关于 $\mathbf{w}$ 最小化\eqref{align:ch02-平方和误差}。
+设 $N\geqslant1$ 为整数，$\sigma^{2}>0$，$\mathbf{w}\in\mathbb{R}^{P}$（$P\geqslant1$），$y(\cdot,\mathbf{w}):\mathbb{R}\to\mathbb{R}$ 为给定模型，$t_n=y(x_n,\mathbf{w})+\varepsilon_n$，其中 $\varepsilon_n$ 相互独立且都服从 $\mathcal{N}(0,\sigma^{2})$。则对固定的 $\sigma^{2}$，关于 $\mathbf{w}$ 最大化对数似然\eqref{align:ch02-回归对数似然}与关于 $\mathbf{w}$ 最小化平方和误差\eqref{align:ch02-平方和误差}具有相同的 $\arg\max$ 与 $\arg\min$ 集合；特别地，若其中一个最值点存在，则另一个也在同一点取到。
 \end{proposition}
 
 \begin{proof}
 \eqref{align:ch02-回归对数似然}右端只有第一项依赖 $\mathbf{w}$，且它以负号出现、系数为正。因此关于 $\mathbf{w}$ 最大化该式等价于关于 $\mathbf{w}$ 最小化
 \begin{align*}
-  \frac{1}{2\sigma^{2}}\sum_{n=1}^{N}\big\{y(x_n,\mathbf{w})-t_n\big\}^{2} .
+ \frac{1}{2\sigma^{2}}\sum_{n=1}^{N}\big\{y(x_n,\mathbf{w})-t_n\big\}^{2} .
 \end{align*}
 再乘以正常数 $2\sigma^{2}$（不改变最小值点）即得\eqref{align:ch02-平方和误差}。反过来，最小化\eqref{align:ch02-平方和误差}的点也使\eqref{align:ch02-回归对数似然}取最大，因为二者只相差一个正常数因子与一个与 $\mathbf{w}$ 无关的常数。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-最大似然等价平方和; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-最大似然等价平方和; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条等价性是全书把“误差函数”与“概率模型”联系起来的枢纽：平方和误差并不是人为选定的，它等价于“噪声服从 Gauss 分布”这一假设下的最大似然。因此，凡是使用平方损失的地方，都可以解读为隐含地假定了 Gauss 噪声。
 
 证明只用到一个事实：$\sigma^{2}$ 固定时，\eqref{align:ch02-回归对数似然}中依赖 $\mathbf{w}$ 的部分就是平方和。若 $\sigma^{2}$ 也随 $\mathbf{w}$ 变化（例如异方差噪声），这一等价性不再成立；若噪声服从 Laplace 分布，对应的则是绝对误差而非平方误差（见\cref{definition:ch02-Laplace分布}）。
@@ -459,20 +492,24 @@ $\sigma^{2}$ 称为方差参数，分布的最大值称为众数。对于 Gauss 
 \end{align}
 
 \begin{proposition}[噪声方差的最大似然解]\label{proposition:ch02-回归方差}
-在\cref{proposition:ch02-最大似然等价平方和}的条件下，关于 $\sigma^{2}$ 最大化\eqref{align:ch02-回归对数似然}得到的解由\eqref{align:ch02-回归方差}给出。
+在\cref{proposition:ch02-最大似然等价平方和}的条件下，设 $\mathbf{w}_{\mathrm{ML}}$ 为平方和误差\eqref{align:ch02-平方和误差}的最小值点，并记 $S(\mathbf{w})=\sum_{n=1}^{N}\{y(x_n,\mathbf{w})-t_n\}^{2}$。若 $S(\mathbf{w}_{\mathrm{ML}})>0$，则关于 $\sigma^{2}$ 最大化\eqref{align:ch02-回归对数似然}在参数空间 $(0,\infty)$ 内的唯一解为
+\begin{align*}
+  \sigma_{\mathrm{ML}}^{2}=\frac{1}{N}\sum_{n=1}^{N}\big\{y(x_n,\mathbf{w}_{\mathrm{ML}})-t_n\big\}^{2},
+\end{align*}
+即\eqref{align:ch02-回归方差}；若 $S(\mathbf{w}_{\mathrm{ML}})=0$，则对数似然在 $\sigma^{2}\to0$ 时趋于上确界，最大值不在 $(0,\infty)$ 内取到。
 \end{proposition}
 
 \begin{proof}
 记 $S(\mathbf{w})=\sum_{n=1}^{N}\{y(x_n,\mathbf{w})-t_n\}^{2}$。对\eqref{align:ch02-回归对数似然}关于 $\sigma^{2}$ 求偏导并令其为零：
 \begin{align*}
-  \frac{\partial}{\partial\sigma^{2}}\left(-\frac{S(\mathbf{w})}{2\sigma^{2}}-\frac{N}{2}\ln\sigma^{2}\right)
-  = \frac{S(\mathbf{w})}{2\sigma^{4}} - \frac{N}{2\sigma^{2}} = 0 ,
+ \frac{\partial}{\partial\sigma^{2}}\left(-\frac{S(\mathbf{w})}{2\sigma^{2}}-\frac{N}{2}\ln\sigma^{2}\right)
+ = \frac{S(\mathbf{w})}{2\sigma^{4}} - \frac{N}{2\sigma^{2}} = 0 ,
 \end{align*}
 解得 $\sigma^{2}=S(\mathbf{w})/N$。由于 $\mathbf{w}$ 与 $\sigma^{2}$ 的解解耦（与\cref{theorem:ch02-Gauss最大似然}的情形相同），把 $\mathbf{w}=\mathbf{w}_{\mathrm{ML}}$ 代入即得\eqref{align:ch02-回归方差}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-回归方差; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-回归方差; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条结果说明：在拟合好均值函数之后，噪声方差的最大似然估计就是残差的均方值。它与\eqref{align:ch02-方差最大似然}形式完全一致，只是把 $x_n$ 换成了 $y(x_n,\mathbf{w}_{\mathrm{ML}})$，因此在样本量小时同样存在 $(N-1)/N$ 型的低估。
 
 使用它时要注意 $\mathbf{w}_{\mathrm{ML}}$ 必须先确定：若把 $\mathbf{w}$ 与 $\sigma^{2}$ 的方程联立，虽然解相同，但推导会更繁琐。此外，\eqref{align:ch02-回归方差}只在 $\sigma^{2}>0$ 时有意义；若残差全为零（模型完全插值），则 $\sigma_{\mathrm{ML}}^{2}=0$，分布退化。
@@ -488,11 +525,15 @@ $\sigma^{2}$ 称为方差参数，分布的最大值称为众数。对于 Gauss 
 \end{align}
 
 \begin{definition}[预测分布]\label{definition:ch02-预测分布}
-设已由训练数据确定参数，则给定新输入 $x$ 后目标变量 $t$ 的\textbf{预测分布}（predictive distribution）是条件密度 $p(t\mid x,\mathcal{D})$。当参数取最大似然值、模型由\eqref{align:ch02-条件Gauss}给定时，预测分布由\eqref{align:ch02-回归预测分布}给出。
+设训练数据为 $\mathcal{D}$，新输入为 $x\in\mathbb{R}$，目标变量为 $t\in\mathbb{R}$。给定模型 $p(t\mid x,\boldsymbol{\theta})$ 与参数的后验分布 $p(\boldsymbol{\theta}\mid\mathcal{D})$，则条件分布
+\begin{align*}
+  p(t\mid x,\mathcal{D})=\int p(t\mid x,\boldsymbol{\theta})\,p(\boldsymbol{\theta}\mid\mathcal{D})\,\mathrm{d}\boldsymbol{\theta}
+\end{align*}
+称为给定 $x$ 后 $t$ 的\textbf{预测分布}（predictive distribution）。当参数取最大似然值 $\mathbf{w}_{\mathrm{ML}},\sigma_{\mathrm{ML}}^{2}$、模型 $p(t\mid x,\mathbf{w},\sigma^{2})=\mathcal{N}(t\mid y(x,\mathbf{w}),\sigma^{2})$ 由\eqref{align:ch02-条件Gauss}给定时，预测分布为\eqref{align:ch02-回归预测分布}，即 $p(t\mid x,\mathbf{w}_{\mathrm{ML}},\sigma_{\mathrm{ML}}^{2})=\mathcal{N}(t\mid y(x,\mathbf{w}_{\mathrm{ML}}),\sigma_{\mathrm{ML}}^{2})$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-预测分布; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-预测分布; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 预测分布与点估计的差别在于它保留了不确定性：\eqref{align:ch02-回归预测分布}不仅给出“预测值 $y(x,\mathbf{w}_{\mathrm{ML}})$”，还给出围绕它的整个 Gauss 分布，其宽度由 $\sigma_{\mathrm{ML}}^{2}$ 决定。这样才可能回答“预测有多可靠”这类问题。
 
 \eqref{align:ch02-回归预测分布}只反映了噪声带来的不确定性（偶然不确定性），没有反映参数 $\mathbf{w}$ 本身的不确定性（认知不确定性）；后者需要把 $\mathbf{w}$ 的后验也积分掉，正是\cref{subsection:ch02-Bayes机器学习}中\eqref{align:ch02-Bayes预测}的做法。

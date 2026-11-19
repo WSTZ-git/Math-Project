@@ -9,11 +9,15 @@
 尽管 GAN 可以产生高质量的结果，但由于对抗学习的特点，其并不容易训练成功（见\cref{exercise:ch17-02}）。此外，与标准的损失函数最小化不同，由于目标函数的值在训练过程中可能上升也可能下降，因此并没有一个明确的进展指标。
 
 \begin{definition}[模式崩溃]\label{definition:ch17-模式崩溃}
-在 GAN 的训练过程中，生成器网络的权重可能发生适应性调整，导致所有潜变量样本 $z$ 都被映射到有效输出的一个子集上；在极端情况下，输出可能只对应一个或少数几个输出值 $x$，判别器网络随后将这些实例的值设置为 $0.5$ 并停止训练。称这一现象为\textbf{模式崩溃}（mode collapse）。
+设 $M\geqslant1$，$D\geqslant1$，$p(z)$ 为潜空间 $\mathbb{R}^{M}$ 上的分布，$g(\cdot,w):\mathbb{R}^{M}\to\mathbb{R}^{D}$ 为生成器，$p_g$ 为其生成分布，$p_{\mathrm{data}}$ 为真实数据在 $\mathbb{R}^{D}$ 上的分布。设 $\{z^{(i)}\}_{i=1}^{n}$ 为从 $p(z)$ 独立抽取的 $n$ 个样本，$\varepsilon>0$，$S\subseteq\mathbb{R}^{D}$ 为 Borel 集。若
+\begin{align*}
+\frac{1}{n}\sum_{i=1}^{n}\mathbf{1}\big[g(z^{(i)},w)\in S\big]\geqslant1-\varepsilon,\qquad p_{\mathrm{data}}(S)\leqslant\varepsilon,
+\end{align*}
+即生成样本以比例 $1-\varepsilon$ 集中到真实数据几乎不占质量的集合 $S$ 上，则这一现象称为该生成器的\textbf{模式崩溃}（mode collapse），$\varepsilon$ 称为\textbf{崩溃程度}。若进一步 $\varepsilon=0$ 且 $S$ 为单点集，则称其发生完全模式崩溃（生成器把全部潜变量样本映射到同一个输出）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch17-模式崩溃; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch17-模式崩溃; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 模式崩溃的根源在于生成器的目标只要求“骗过判别器”，而不要求“覆盖数据分布”：若 $p_g$ 把全部质量堆在 $p_{\mathrm{data}}$ 的某个峰上，判别器在该峰附近无法区分真假，生成器的损失就已经很小，尽管其余的模式完全没有被生成。用\cref{proposition:ch17-最优判别器}的语言说，此时 $p_g$ 与 $p_{\mathrm{data}}$ 的 Jensen-Shannon 散度并不为零，但在有限容量的参数化下，生成器可以停在一个使判别器“局部失效”的驻点上。
 
 条件方面：模式崩溃是优化与参数化的联合现象，而不是目标函数在无限容量下的性质——\cref{proposition:ch17-最优判别器}表明，若生成器能在全部概率分布上优化，最优解恰是 $p_g=p_{\mathrm{data}}$，不会崩溃。此外，判别器输出被置为 $0.5$ 意味着它对真实样本与合成样本给出相同的概率，这既可能来自 $p_g$ 与 $p_{\mathrm{data}}$ 的局部重合，也可能来自判别器自身的容量不足，两者在训练中很难区分，这也是 GAN 缺乏可靠进展指标的一个具体表现。
@@ -57,15 +61,19 @@
 为确保生成分布 $p_g(x)$ 向数据分布 $p_{\mathrm{data}}(x)$ 靠拢，更直接的方法是修改误差标准，以反映这两个分布在数据空间中的距离。这可以使用\textbf{Wasserstein 距离}（也称推土机距离）来衡量。设想生成分布 $p_g(x)$ 是一堆土，我们需要分批运输这堆土以构建数据分布 $p_{\mathrm{data}}(x)$。Wasserstein 距离就是移动的土壤总量和平均移动距离的积。在重排这堆土以构建 $p_{\mathrm{data}}(x)$ 的许多方式中，能产生最小平均移动距离的方式被用于定义度量。
 
 \begin{definition}[Wasserstein 距离]\label{definition:ch17-Wasserstein距离}
-设 $p$ 与 $q$ 是 $\mathbb{R}^D$ 上的概率分布，$\Pi(p,q)$ 表示边缘分布分别为 $p$ 与 $q$ 的全部联合分布的集合。称
+设 $D\geqslant1$，$p$ 与 $q$ 是 $\mathbb{R}^{D}$ 上的概率分布，且满足 $\int_{\mathbb{R}^{D}}\|x\|\,\mathrm{d}p(x)<\infty$ 与 $\int_{\mathbb{R}^{D}}\|y\|\,\mathrm{d}q(y)<\infty$；记 $\Pi(p,q)$ 为边缘分布分别为 $p$ 与 $q$ 的全部联合分布的集合，即 $\gamma\in\Pi(p,q)$ 当且仅当 $\gamma$ 是 $\mathbb{R}^{D}\times\mathbb{R}^{D}$ 上的概率分布且对一切 Borel 集 $A\subseteq\mathbb{R}^{D}$ 有 $\gamma(A\times\mathbb{R}^{D})=p(A)$、$\gamma(\mathbb{R}^{D}\times A)=q(A)$。则
 \begin{align*}
 W(p,q)=\inf_{\gamma\in\Pi(p,q)}\mathbb{E}_{(x,y)\sim\gamma}\big[\|x-y\|\big]
 \end{align*}
-为 $p$ 与 $q$ 之间的\textbf{Wasserstein 距离}（Wasserstein distance），也称\textbf{推土机距离}（earth mover distance）；$\gamma$ 称为从 $p$ 到 $q$ 的一个\textbf{传输方案}（transport plan）。
+称为 $p$ 与 $q$ 之间的\textbf{Wasserstein 距离}（Wasserstein distance），也称\textbf{推土机距离}（earth mover distance）；$\gamma\in\Pi(p,q)$ 称为从 $p$ 到 $q$ 的一个\textbf{传输方案}（transport plan）。由 $\gamma=p\otimes q\in\Pi(p,q)$ 与三角不等式得
+\begin{align*}
+W(p,q)\leqslant\int_{\mathbb{R}^{D}}\|x\|\,\mathrm{d}p(x)+\int_{\mathbb{R}^{D}}\|y\|\,\mathrm{d}q(y)<\infty,
+\end{align*}
+故该下确界有限。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch17-Wasserstein距离; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch17-Wasserstein距离; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 定义中的 $\gamma$ 就是“运输方案”：$\gamma(A\times B)$ 表示从区域 $A$ 运往区域 $B$ 的土壤量，边缘条件 $\gamma(A\times\mathbb{R}^D)=p(A)$、$\gamma(\mathbb{R}^D\times B)=q(B)$ 保证出发点与目的地的土量分别与 $p$、$q$ 相符。由于总质量已被归一化为 $1$，“移动的土壤总量与平均移动距离的积”就是平均移动距离本身，即 $\mathbb{E}_\gamma[\|x-y\|]$；取 $\inf$ 对应原书所说的“能产生最小平均移动距离的方式”。
 
 与 Jensen-Shannon 散度相比，Wasserstein 距离的最大好处是它在两个分布的支撑集互不相交时仍然提供有意义的数值：若 $p$ 与 $q$ 的支撑集之间的距离为 $d>0$，则 $W(p,q)\geqslant d>0$，而 $\operatorname{JSD}(p\|q)$ 恒等于 $\ln 4$（与两个支撑集的距离无关），其梯度为零。这解释了为什么\cref{proposition:ch17-最优判别器}意义下的 GAN 在训练初期（$p_g$ 与 $p_{\mathrm{data}}$ 几乎不重叠）没有可用的梯度信号，而以 $W$ 为目标的模型不会遇到这一问题。
@@ -83,22 +91,22 @@ E_{\mathrm{WGAN}\text{-}\mathrm{GP}}(w,\phi)={}&-\frac{1}{N_{\mathrm{real}}}\sum
 \end{align}
 其中的 $\eta$ 控制了惩罚项的相对重要性。
 
-\begin{remark}（重构新增）
+\begin{remark}
 \eqref{align:ch17-WGAN-GP}的结构可以逐项读出：第一项对真实样本要求 $\ln d(x_n,\phi)$ 尽量大，同时用 $\big(\|\nabla_{x_n}d\|^{2}-1\big)^{2}$ 把判别器在真实样本处的梯度范数拉向 $1$；第二项对合成样本要求 $\ln d$ 尽量小；外层的 $[\cdot]_+$ 是 hinge（只惩罚超过零的部分），使损失在达到间隔后不再继续下降。
 
 需要指出原文的一处技术细节：标准的梯度惩罚项写作 $\big(\|\nabla_{\hat{x}}d(\hat{x},\phi)\|-1\big)^2$，其中 $\hat{x}$ 在真实样本与合成样本之间随机插值；\eqref{align:ch17-WGAN-GP}把范数写成了平方 $\|\cdot\|^{2}$，并把取样点取在真实样本 $x_n$ 上。二者都是对“判别器应为 1-Lipschitz”这一约束的可计算松弛，只是松弛的位置不同：前者约束梯度范数等于 $1$，后者约束梯度范数的平方等于 $1$，由于 $\|\nabla d\|\geqslant0$，两式的零点都恰是 $\|\nabla d\|=1$，故在最优点处二者一致。此外，$\eta$ 在原文中控制惩罚项的权重，其作用与 Lagrange 乘子相同：$\eta$ 越大，约束越被强制满足，但训练也越不稳定。
 \end{remark}
 
 \begin{proposition}[Kantorovich-Rubinstein 对偶]\label{proposition:ch17-KR对偶}
-设 $\mathcal{X}$ 是 $\mathbb{R}^D$ 中的紧集，$\|\cdot\|$ 是 $\mathbb{R}^D$ 上的范数，$p,q$ 是 $\mathcal{X}$ 上的概率分布。则
+设 $D\geqslant1$，$\mathcal{X}\subseteq\mathbb{R}^{D}$ 为非空紧集，$\|\cdot\|$ 是 $\mathbb{R}^{D}$ 上的范数，$p,q$ 是 $\mathcal{X}$ 上的 Borel 概率分布（视为 $\mathbb{R}^{D}$ 上的分布），$W(p,q)$ 为\cref{definition:ch17-Wasserstein距离}中的 Wasserstein 距离。记 $\operatorname{Lip}_1$ 为 $\mathcal{X}$ 上全部满足 $\left|f(x)-f(y)\right|\leqslant\|x-y\|$（$x,y\in\mathcal{X}$）的实值函数（即 1-Lipschitz 函数）的集合。则
 \begin{align}
 W(p,q)=\sup_{f\in\operatorname{Lip}_1}\Big\{\mathbb{E}_{x\sim p}\big[f(x)\big]-\mathbb{E}_{y\sim q}\big[f(y)\big]\Big\},
 \label{align:ch17-KR对偶}
 \end{align}
-其中 $\operatorname{Lip}_1$ 表示 $\mathcal{X}$ 上全部满足 $|f(x)-f(y)|\leqslant\|x-y\|$ 的实值函数（称为 1-Lipschitz 函数）的集合。
+即 $p$ 与 $q$ 的 Wasserstein 距离等于全部 1-Lipschitz 检验函数上两个期望之差的上确界，且两端均为有限实数。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 先证“$\geqslant$”。设 $f$ 是 1-Lipschitz 函数，$\gamma\in\Pi(p,q)$ 是任一传输方案。则
 \begin{align*}
 \mathbb{E}_{x\sim p}\big[f(x)\big]-\mathbb{E}_{y\sim q}\big[f(y)\big]
@@ -126,11 +134,11 @@ f_i-f_k\leqslant\big(C_{ij^*}-b_{j^*}\big)-\big(C_{kj^*}-b_{j^*}\big)=C_{ij^*}-C
 \end{align*}
 于是 $W(p,q)\leqslant\sup$，与前一方向合并即得\eqref{align:ch17-KR对偶}。
 
-对一般的紧集 $\mathcal{X}$，上述论证可以这样移植。取 $\mathcal{X}$ 的有限 $\varepsilon$-网 $\{x_1,\cdots,x_m\}$ 与投影 $\pi:\mathcal{X}\to\{x_1,\cdots,x_m\}$，使 $\|x-\pi(x)\|\leqslant\varepsilon$ 对一切 $x$ 成立，并记 $p^{\varepsilon},q^{\varepsilon}$ 为 $p,q$ 在 $\pi$ 下的像。任取 $(p,q)$ 的传输方案 $\gamma$，其像 $(\pi(x),\pi(y))_{\sharp}\gamma$ 是 $(p^{\varepsilon},q^{\varepsilon})$ 的传输方案，且 $\|x-y\|\leqslant\|\pi(x)-\pi(y)\|+2\varepsilon$，故 $W(p,q)\leqslant W(p^{\varepsilon},q^{\varepsilon})+2\varepsilon$。另一方面，$\mathcal{X}$ 上的 1-Lipschitz 函数限制在网上仍为 1-Lipschitz，且 $|f(x)-f(\pi(x))|\leqslant\varepsilon$，故 $\mathbb{E}_{p^{\varepsilon}}[f]-\mathbb{E}_{q^{\varepsilon}}[f]\leqslant\mathbb{E}_{p}[f]-\mathbb{E}_{q}[f]+2\varepsilon$。把离散情形的结论用于 $p^{\varepsilon},q^{\varepsilon}$ 并令 $\varepsilon\to0$，即得 $W(p,q)\leqslant\sup$。这一论证的一般形式就是 Kantorovich-Rubinstein 定理，它也可由 Hahn-Banach 定理在 $C(\mathcal{X})$ 上直接导出。
+对一般的紧集 $\mathcal{X}$，上述论证按如下方式移植到一般的紧集。取 $\mathcal{X}$ 的有限 $\varepsilon$-网 $\{x_1,\cdots,x_m\}$ 与投影 $\pi:\mathcal{X}\to\{x_1,\cdots,x_m\}$，使 $\|x-\pi(x)\|\leqslant\varepsilon$ 对一切 $x$ 成立，并记 $p^{\varepsilon},q^{\varepsilon}$ 为 $p,q$ 在 $\pi$ 下的像。任取 $(p,q)$ 的传输方案 $\gamma$，其像 $(\pi(x),\pi(y))_{\sharp}\gamma$ 是 $(p^{\varepsilon},q^{\varepsilon})$ 的传输方案，且 $\|x-y\|\leqslant\|\pi(x)-\pi(y)\|+2\varepsilon$，故 $W(p,q)\leqslant W(p^{\varepsilon},q^{\varepsilon})+2\varepsilon$。另一方面，$\mathcal{X}$ 上的 1-Lipschitz 函数限制在网上仍为 1-Lipschitz，且 $|f(x)-f(\pi(x))|\leqslant\varepsilon$，故 $\mathbb{E}_{p^{\varepsilon}}[f]-\mathbb{E}_{q^{\varepsilon}}[f]\leqslant\mathbb{E}_{p}[f]-\mathbb{E}_{q}[f]+2\varepsilon$。把离散情形的结论用于 $p^{\varepsilon},q^{\varepsilon}$ 并令 $\varepsilon\to0$，即得 $W(p,q)\leqslant\sup$。这一论证的一般形式就是 Kantorovich-Rubinstein 定理，它也可由 Hahn-Banach 定理在 $C(\mathcal{X})$ 上直接导出。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch17-KR对偶; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch17-KR对偶; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch17-KR对偶}是 Wasserstein GAN 的全部理论依据：它把一个“在联合分布上求下确界”的传输问题换成了“在一个函数类上求上确界”的问题，而后者可以直接用神经网络参数化——取 $f=d(\cdot,\phi)$，就得到
 \begin{align*}
 \max_{\phi}\Big\{\mathbb{E}_{x\sim p_{\mathrm{data}}}\big[d(x,\phi)\big]-\mathbb{E}_{z\sim p(z)}\big[d(g(z,w),\phi)\big]\Big\},

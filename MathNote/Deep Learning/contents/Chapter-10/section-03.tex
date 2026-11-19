@@ -27,11 +27,18 @@
 \eqref{align:ch10-Gabor坐标旋转1}和\eqref{align:ch10-Gabor坐标旋转2}表示坐标系旋转角度 $\theta$，因此\eqref{align:ch10-Gabor滤波器}中的 $\sin(\cdot)$ 项表示朝向极角 $\theta$ 方向的正弦空间振荡，频率为 $\omega$，相位角为 $\phi$。\eqref{align:ch10-Gabor滤波器}中的指数因子旨在创建一个衰减包络，将滤波器置于点 $(x_0,y_0)$ 的邻域内，衰减速率由 $\alpha$ 和 $\beta$ 控制。\eqref{align:ch10-Gabor滤波器}定义的 Gabor 滤波器示例如\cref{figure:ch10-Gabor滤波器}所示。
 
 \begin{definition}[Gabor 滤波器]\label{definition:ch10-Gabor滤波器}
-称由\eqref{align:ch10-Gabor滤波器}--\eqref{align:ch10-Gabor坐标旋转2}定义的二元函数 $G:\mathbb{R}^2\to\mathbb{R}$ 为 \textbf{Gabor 滤波器}，其中 $A>0$ 为振幅，$\alpha,\beta>0$ 为包络在 $\tilde{x},\tilde{y}$ 方向上的衰减速率，$\omega>0$ 为空间频率，$\phi$ 为相位角，$\theta$ 为朝向角，$(x_0,y_0)$ 为滤波器的中心位置，$(\tilde{x},\tilde{y})$ 是绕 $(x_0,y_0)$ 旋转 $\theta$ 后的局部坐标。
+设 $A>0$，$\alpha>0$，$\beta>0$，$\omega>0$，$\phi,\theta\in\mathbb{R}$，
+$(x_0,y_0)\in\mathbb{R}^{2}$。对 $(x,y)\in\mathbb{R}^{2}$，令 $(\tilde{x},\tilde{y})$
+由\eqref{align:ch10-Gabor坐标旋转1}与\eqref{align:ch10-Gabor坐标旋转2}定义，并令
+$G(x,y)$ 由\eqref{align:ch10-Gabor滤波器}定义。则二元函数
+$G:\mathbb{R}^{2}\to\mathbb{R}$ 称为\textbf{Gabor 滤波器}（Gabor filter），其中 $A$
+称为振幅，$\alpha,\beta$ 称为包络在 $\tilde{x},\tilde{y}$ 方向上的衰减速率，$\omega$
+称为空间频率，$\phi$ 称为相位角，$\theta$ 称为朝向角，$(x_0,y_0)$ 称为滤波器的中心，
+$(\tilde{x},\tilde{y})$ 称为绕 $(x_0,y_0)$ 旋转 $\theta$ 后的局部坐标。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-Gabor滤波器; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-Gabor滤波器; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 Gabor 滤波器是“Gauss包络乘正弦条纹”，这个形式的两部分各自对应一个可验证的性质。正弦因子 $\sin(\omega\tilde{x}+\phi)$ 沿 $\tilde{x}$ 方向振荡、沿 $\tilde{y}$ 方向不变，因此它是一个方向选择性滤波器：只有与朝向 $\theta$ 垂直的边缘才会产生强响应，这正是简单细胞的朝向选择性。Gauss因子 $\exp(-\alpha\tilde{x}^2-\beta\tilde{y}^2)$ 使响应局限在 $(x_0,y_0)$ 附近，因此它是位置选择性的；$\alpha\neq\beta$ 时包络是椭圆的，允许滤波器在振荡方向上延伸更长（更窄的频带）。参数条件 $\alpha,\beta>0$ 不可省，否则包络发散、函数不再可积；$\omega>0$ 只是约定振荡的“正方向”，改变 $\omega$ 的符号等价于把 $\phi$ 平移 $\pi$。\eqref{align:ch10-Gabor坐标旋转2}中的负号保证 $(\tilde{x},\tilde{y})$ 是右手正交坐标，若写成正号则旋转方向相反，滤波器的朝向会与 $\theta$ 差一个镜像。
 \end{remark}
 
@@ -45,11 +52,20 @@ Gabor 滤波器是“Gauss包络乘正弦条纹”，这个形式的两部分各
 Hubel 和 Wiesel 还发现了“复杂细胞”的存在，这些细胞会响应更复杂的刺激，并且该刺激似乎是通过组合和处理简单细胞的输出得到的。这些响应对输入中的微小变化（例如位置偏移）表现出一定程度的不变性，类似于深度卷积网络中的池化单元。哺乳动物视觉处理系统的更深层对视觉输入的变换具有更具体的响应和更大的不变性。这种细胞称为“祖母细胞”，因为不论场景的位置、大小、照明或其他变换如何，当且仅当视觉输入与某些特定的概念（如祖母的头像）相对应时，这种细胞才能在理论上做出响应。这项工作直接启发了一种称为新认知机（neocognitron）（Fukushima, 1980）的深度神经网络的早期形式，它是卷积神经网络的先驱。新认知机支持多层处理，包括了具有共享权重的局部感受野和紧接着的局部平均或最大池化，以确保位置不变性。然而，新认知机缺乏端到端的训练过程，而依赖于无监督聚类算法进行贪婪的逐层学习。
 
 \begin{definition}[新认知机]\label{definition:ch10-新认知机}
-称满足下列条件的多层网络为\textbf{新认知机}（neocognitron）：每一层由若干二维单元片组成，每个单元只连接前一层的一个局部感受野，同一片内的单元共享权重；每个卷积型的层之后紧跟一个局部平均或局部最大池化层，以获得位置不变性；各层以无监督聚类算法逐层贪婪训练，而非端到端地最小化统一损失。
+设 $L\geqslant1$。一个 $L$ 层前馈网络称为\textbf{新认知机}（neocognitron），若它满足
+下列条件：
+\begin{enumerate}
+  \item 每一层由若干二维单元片组成，第 $l$ 层第 $c$ 片的每个单元只连接第 $l-1$ 层的一个
+        $M_l\times M_l$ 局部感受野，$M_l\geqslant1$，且同一片内所有单元共享同一组权重；
+  \item 每个卷积型层之后紧跟一个局部平均或局部最大池化层，池化窗口与步幅由该层给定，
+        池化层不含可学习参数；
+  \item 各层以无监督聚类算法逐层贪婪训练：第 $l$ 层的参数在第 $1,\dots,l-1$ 层参数
+        固定之后单独确定，训练目标不是端到端最小化统一损失。
+\end{enumerate}
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-新认知机; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-新认知机; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 新认知机在结构上已经具备现代 CNN 的三要素：局部感受野、权重共享、池化；它缺少的是训练方式——贪婪逐层聚类无法把“分类错误”这一全局目标反传到前面的层，因此每一层学到的表示只能局部最优。定义把“逐层贪婪训练”写进对象本身，是为了说明它与 CNN 的差别不在前向结构而在学习规则。这也解释了为什么在反向传播（\cref{chapter:ch08-反向传播}）与大规模数据都具备之后，同样的结构才真正发挥作用。把池化紧接在卷积之后这一安排，正是后文\cref{subsection:ch10-池化}所沿用的模式。
 \end{remark}
 
@@ -99,11 +115,22 @@ Hubel 和 Wiesel 还发现了“复杂细胞”的存在，这些细胞会响应
 其中 $A^{(k)}$ 是包含元素 $a_{ij}^{(k)}$ 的矩阵。生成的数组与最终卷积层具有相同的维度，例如\cref{figure:ch10-VGG16架构}所示的 VGG-16 模型的维度为 $14\times 14$，并且可以用“热力图”的形式叠加在原始图像上，如\cref{figure:ch10-显著性图}所示。
 
 \begin{definition}[显著性图与 Grad-CAM]\label{definition:ch10-显著性图}
-设 $a^{(c)}$ 为类别 $c$ 在 softmax 之前的预激活，$a_{ij}^{(k)}$ 为最后一个卷积层第 $k$ 个通道在位置 $(i,j)$ 处的预激活。称按\eqref{align:ch10-GradCAM通道权重}算出的 $\alpha_k$ 为通道 $k$ 对类别 $c$ 的\textbf{权重}，称按\eqref{align:ch10-GradCAM}算出的矩阵 $L$ 为类别 $c$ 的 \textbf{Grad-CAM 显著性图}（saliency map）。
+设最后一个卷积层有 $C$ 个通道，第 $k$ 个通道的空间尺寸为 $H\times W$，
+$a_{ij}^{(k)}\in\mathbb{R}$ 为该通道在位置 $(i,j)$ 处的预激活，
+$i=1,\dots,H$、$j=1,\dots,W$、$k=1,\dots,C$；设 $a^{(c)}\in\mathbb{R}$ 为类别 $c$ 在
+softmax 之前的预激活，$M_k=HW$，并设 $a^{(c)}$ 对每个 $a_{ij}^{(k)}$ 都可微。对
+$k=1,\dots,C$，按
+\eqref{align:ch10-GradCAM通道权重}定义
+$\alpha_k=\frac{1}{M_k}\sum_{i=1}^{H}\sum_{j=1}^{W}
+\partial a^{(c)}/\partial a_{ij}^{(k)}$，$\alpha_k$ 称为通道 $k$ 对类别 $c$ 的
+\textbf{权重}。按\eqref{align:ch10-GradCAM}定义 $H\times W$ 的实矩阵
+$L=\sum_{k=1}^{C}\alpha_k A^{(k)}$，其中 $A^{(k)}\in\mathbb{R}^{H\times W}$ 以
+$a_{ij}^{(k)}$ 为元素；$L$ 称为类别 $c$ 的 \textbf{Grad-CAM 显著性图}
+（saliency map）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-显著性图; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-显著性图; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 显著性图的定义把“哪些像素重要”转化为“哪些通道重要、以及这些通道在哪里激活”。\eqref{align:ch10-GradCAM通道权重}对空间位置取平均，是为了让权重与位置无关（否则热力图会退化成一堆逐点导数）；\eqref{align:ch10-GradCAM}再用该权重把各通道的激活图加权求和，于是 $L$ 与最后一个卷积层同尺寸。定义中要求 $a^{(c)}$ 是 softmax 之前的预激活而不是概率，因为概率经 softmax 归一化后所有类别的梯度相互耦合，单看某一类的概率导数会混入其他类的信息。注意 $L$ 可以取负值：负值表示该位置对类别 $c$ 起反作用，实际可视化时常截断为 $\max(L,0)$ 再归一化，这只是显示上的处理，不改变定义。
 \end{remark}
 
@@ -124,21 +151,47 @@ Hubel 和 Wiesel 还发现了“复杂细胞”的存在，这些细胞会响应
 这里的 $t$ 是 $\mathbf{x}$ 的真实标签，误差 $E(\mathbf{x},t)$ 举例来说可以是 $\mathbf{x}$ 的负对数似然。使用反向传播可以有效地计算所需梯度（参见\cref{chapter:ch08-反向传播}）。在神经网络的常规训练中，可以通过调整网络参数来最小化误差，而\eqref{align:ch10-快速梯度符号}定义的修改会改变图像（同时保持训练好的网络参数固定），从而导致误差增加。通过保持 $\varepsilon$ 为较小的值，可以确保人眼无法察觉图像的变化。值得注意的是，这可以使网络以较高的置信度将图像分类错误，如\cref{figure:ch10-对抗攻击}中的示例所示。
 
 \begin{definition}[对抗攻击与快速梯度符号法]\label{definition:ch10-对抗攻击}
-设已训练好的分类器在输入 $\mathbf{x}$ 上的误差为 $E(\mathbf{x},t)$，$t$ 为真实标签。若以人类难以察觉的幅度修改输入，使分类器输出错误类别，则称这种修改为\textbf{对抗攻击}（adversarial attack），修改后的输入称为\textbf{对抗样本}。若修改按\eqref{align:ch10-快速梯度符号}进行（$\varepsilon>0$ 为步长，$\mathrm{sign}$ 为逐元素符号函数），则称该方法为\textbf{快速梯度符号法}（fast gradient sign method）。
+设分类器为 $f:\mathbb{R}^{D}\to\{1,\dots,K\}$，输入为 $\mathbf{x}\in\mathbb{R}^{D}$，
+真实标签为 $t\in\{1,\dots,K\}$，误差函数为 $E(\cdot,t):\mathbb{R}^{D}\to\mathbb{R}$，
+扰动预算为 $\varepsilon>0$。若 $\boldsymbol{\delta}\in\mathbb{R}^{D}$ 满足
+$\|\boldsymbol{\delta}\|_{\infty}\leqslant\varepsilon$ 且
+$f(\mathbf{x}+\boldsymbol{\delta})\neq t$，则 $\boldsymbol{\delta}$ 称为该分类器在
+$\mathbf{x}$ 处的 $\varepsilon$-\textbf{对抗扰动}，$\mathbf{x}+\boldsymbol{\delta}$
+称为\textbf{对抗样本}（adversarial example），构造 $\boldsymbol{\delta}$ 的过程称为
+\textbf{对抗攻击}（adversarial attack）。若 $E(\cdot,t)$ 在 $\mathbf{x}$ 处可微，且
+$\boldsymbol{\delta}$ 取
+\begin{align*}
+  \boldsymbol{\delta}=\varepsilon\,\mathrm{sign}\bigl(\nabla_{\mathbf{x}}E(\mathbf{x},t)\bigr),
+\end{align*}
+其中 $\mathrm{sign}$ 为逐元素符号函数（约定 $\mathrm{sign}(0)=0$），则称该扰动方法为
+\textbf{快速梯度符号法}（fast gradient sign method）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-对抗攻击; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-对抗攻击; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 对抗攻击的定义强调两件事：扰动幅度要小（否则不算“攻击”而只是换了一张图），以及攻击目标是让分类器出错而不是让误差函数本身取到某个指定值。\eqref{align:ch10-快速梯度符号}之所以用符号函数而不用梯度本身，是因为在梯度各分量大小悬殊时，逐分量取符号可以把有限的总扰动预算 $\varepsilon$ 平均分配到所有像素上，从而使误差的一阶增量最大（见\cref{proposition:ch10-快速梯度符号}）。这也解释了为什么扰动看起来像均匀噪声：它把预算用满了，却几乎不改变图像的低频结构。注意 $\varepsilon$ 必须相对于像素取值范围足够小，且修改后通常还要把像素投影回合法区间 $[0,255]$。
 \end{remark}
 
 \begin{proposition}[快速梯度符号法的一阶效应]\label{proposition:ch10-快速梯度符号}
-设 $E$ 在 $\mathbf{x}$ 的一个邻域内可微，$\mathbf{g}=\nabla_{\mathbf{x}}E(\mathbf{x},t)$，$\boldsymbol{\delta}$ 为满足 $\|\boldsymbol{\delta}\|_{\infty}\leqslant\varepsilon$ 的扰动。则一阶近似下
+设 $D\geqslant1$，记 $\|\cdot\|_{1}$ 与 $\|\cdot\|_{\infty}$ 分别为
+$\mathbb{R}^{D}$ 上的 $\ell_{1}$ 范数与 $\ell_{\infty}$ 范数；
+$E(\cdot,t):\mathbb{R}^{D}\to\mathbb{R}$ 在
+$\mathbf{x}\in\mathbb{R}^{D}$ 的某个邻域内可微，
+$\mathbf{g}=\nabla_{\mathbf{x}}E(\mathbf{x},t)\in\mathbb{R}^{D}$，$\varepsilon>0$，
+并设 $\boldsymbol{\delta}\in\mathbb{R}^{D}$ 满足
+$\|\boldsymbol{\delta}\|_{\infty}\leqslant\varepsilon$。则当
+$\|\boldsymbol{\delta}\|\to0$ 时
 \begin{align}
-  E(\mathbf{x}+\boldsymbol{\delta},t)\approx E(\mathbf{x},t)+\mathbf{g}^{\mathsf{T}}\boldsymbol{\delta},
+  E(\mathbf{x}+\boldsymbol{\delta},t)=E(\mathbf{x},t)
+  +\mathbf{g}^{\mathsf{T}}\boldsymbol{\delta}+o(\|\boldsymbol{\delta}\|),
   \label{align:ch10-FGSM一阶}
 \end{align}
-且在约束 $\|\boldsymbol{\delta}\|_{\infty}\leqslant\varepsilon$ 下，$\mathbf{g}^{\mathsf{T}}\boldsymbol{\delta}$ 的最大值在 $\boldsymbol{\delta}=\varepsilon\,\mathrm{sign}(\mathbf{g})$ 处取得，最大值为 $\varepsilon\|\mathbf{g}\|_1$。
+其中余项对固定的 $\mathbf{x}$ 成立；并且在约束
+$\|\boldsymbol{\delta}\|_{\infty}\leqslant\varepsilon$ 下，
+$\mathbf{g}^{\mathsf{T}}\boldsymbol{\delta}$ 的最大值为
+$\varepsilon\|\mathbf{g}\|_{1}$，该最大值在
+$\boldsymbol{\delta}=\varepsilon\,\mathrm{sign}(\mathbf{g})$ 处取得，其中
+$\mathrm{sign}$ 逐元素作用、$\mathrm{sign}(0)=0$。
 \end{proposition}
 \begin{proof}
 由可微性，$E(\mathbf{x}+\boldsymbol{\delta},t)=E(\mathbf{x},t)+\mathbf{g}^{\mathsf{T}}\boldsymbol{\delta}+o(\|\boldsymbol{\delta}\|)$，即\eqref{align:ch10-FGSM一阶}。对任意满足 $|\delta_i|\leqslant\varepsilon$ 的 $\boldsymbol{\delta}$，
@@ -148,8 +201,8 @@ Hubel 和 Wiesel 还发现了“复杂细胞”的存在，这些细胞会响应
 取 $\delta_i=\varepsilon\,\mathrm{sign}(g_i)$（约定 $\mathrm{sign}(0)=0$）时 $|\delta_i|\leqslant\varepsilon$ 且 $g_i\delta_i=\varepsilon|g_i|$，故等号成立。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-快速梯度符号; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-快速梯度符号; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个命题说明快速梯度符号法不是启发式技巧，而是在无穷范数预算下对一阶误差增量最优的扰动。两个条件都不能丢：$\|\boldsymbol{\delta}\|_{\infty}\leqslant\varepsilon$ 规定了“人眼不可察觉”的度量，若换成二范数约束，最优扰动就变成沿梯度方向而非逐像素取符号；$E$ 可微则是线性化的前提，在 ReLU 的折点处梯度不连续，一阶近似只在局部有效。命题只保证误差的一阶增量最大，不保证分类一定翻转：若 $\varepsilon\|\mathbf{g}\|_1$ 小于当前正确类与错误类之间的间隔，攻击就不会成功，这也是“增大 $\varepsilon$ 提高成功率、但增大到可见”这一取舍的来源。
 \end{remark}
 
@@ -181,25 +234,36 @@ Hubel 和 Wiesel 还发现了“复杂细胞”的存在，这些细胞会响应
 其中 $a_{ijk}(I)$ 是当输入图像为 $I$ 时，所选网络层中通道 $k$ 的第 $i$ 行和第 $j$ 列单元的预激活，求和操作则涉及该层中所有的单元和通道。为了生成平滑的图像，可以使用空间平滑和像素裁剪形式的某些正则化。如果需要更强的增强效果，可以多次重复此过程。将 DeepDream 技术应用于图像的示例如\cref{figure:ch10-DeepDream}所示。有趣的是，即使卷积网络被训练以区分对象类别，但它们似乎至少能够捕获从这些类生成图像所需的一些信息。这种技术可以应用于照片，或者我们也可以将随机噪声作为输入，从而完全由训练好的网络生成图像。尽管 DeepDream 技术提供了一些关于训练好的网络运行的见解，但它主要用于生成艺术风格的有趣图像。
 
 \begin{definition}[DeepDream]\label{definition:ch10-DeepDream}
-设训练好的网络在输入 $I$ 上给出某层预激活 $a_{ijk}(I)$，$F$ 由\eqref{align:ch10-DeepDream目标}定义。从图像 $I_0$ 出发，按下式迭代
+设训练好的网络对输入 $I\in\mathbb{R}^{H\times W\times C}$ 在第 $l$ 层给出预激活
+$a_{ijk}(I)\in\mathbb{R}$，$i=1,\dots,H_l$、$j=1,\dots,W_l$、$k=1,\dots,C_l$，目标函数
+$F$ 由\eqref{align:ch10-DeepDream目标}定义。从图像
+$I_0\in\mathbb{R}^{H\times W\times C}$ 出发，按
 \begin{align}
-  I_{\tau+1}=I_{\tau}+\eta\,\nabla_{I}F(I_{\tau}),\qquad \tau=0,1,2,\cdots,
-  \label{align:ch10-DeepDream更新}
+I_{\tau+1}=I_{\tau}+\eta\nabla_IF(I_{\tau}),
+\label{align:ch10-DeepDream更新}
 \end{align}
-其中 $\eta>0$ 为步长，并对结果施加空间平滑与像素裁剪。称这一过程为 \textbf{DeepDream}。
+迭代，$\tau=0,1,2,\dots$，其中 $\eta>0$ 为步长，并在每一步之后施加空间平滑算子、
+再把像素值截断到图像的合法取值区间。这一迭代
+过程称为 \textbf{DeepDream}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-DeepDream; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-DeepDream; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 DeepDream 的定义把“让某个单元更兴奋”写成一个无约束的梯度上升问题，其目标函数\eqref{align:ch10-DeepDream目标}是所选层全部预激活的平方和，因此它不针对单一类别，而是放大该层已经学到的所有模式。平方的作用是让大幅激活主导目标（大响应的梯度也大），从而在合成图中产生夸张的纹理。定义中必须包含正则化：若不约束，梯度上升会把像素推到区间外并生成高频棋盘状结构，图像不再像自然图像；空间平滑与裁剪正是把迭代限制在“看起来像图像”的集合内。该过程不更新网络参数，只更新输入，这一点与训练有本质区别。
 \end{remark}
 
 \begin{proposition}[DeepDream 的上升方向]\label{proposition:ch10-DeepDream上升}
-设 $F$ 在 $I$ 处可微，$\nabla_IF(I)\neq\mathbf{0}$。则对充分小的 $\eta>0$，沿\eqref{align:ch10-DeepDream更新}更新后目标函数严格增加：
+设 $D\geqslant1$，把图像空间与 $\mathbb{R}^{D}$ 等同，并把目标函数视为
+$F:\mathbb{R}^{D}\to\mathbb{R}$。设 $F$ 在
+$I\in\mathbb{R}^{D}$ 处可微，$\mathbf{g}=\nabla_IF(I)$ 满足
+$\mathbf{g}\neq\mathbf{0}$。则存在 $\eta_0>0$，使得对任意
+$\eta\in(0,\eta_0)$ 有
 \begin{align}
   F\bigl(I+\eta\nabla_IF(I)\bigr)>F(I).
   \label{align:ch10-DeepDream上升}
 \end{align}
+其中 $\eta$ 为步长。只要步长足够小且梯度非零，沿梯度方向的一步更新必使目标函数严格
+增加，且该结论对每个 $\eta\in(0,\eta_0)$ 都成立。
 \end{proposition}
 \begin{proof}
 由可微性，$F(I+\eta\mathbf{g})=F(I)+\eta\,\mathbf{g}^{\mathsf{T}}\mathbf{g}+o(\eta\|\mathbf{g}\|)$，其中 $\mathbf{g}=\nabla_IF(I)$。于是
@@ -209,8 +273,8 @@ DeepDream 的定义把“让某个单元更兴奋”写成一个无约束的梯�
 故存在 $\eta_0>0$，使 $0<\eta<\eta_0$ 时差商为正，即 $F(I+\eta\mathbf{g})>F(I)$。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-DeepDream上升; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-DeepDream上升; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个命题说明 DeepDream 的每一步都在局部增加目标函数，前提是步长足够小且梯度非零。梯度为零时命题不适用：此时 $I$ 已是驻点，继续迭代不会带来一阶改进，实际算法会停止或需要更大的步长跳出。命题只保证“局部增加”，不保证 $F$ 有上界：\eqref{align:ch10-DeepDream目标}是预激活的平方和，若网络输出无界则 $F$ 无上界，迭代会不断放大像素，这正是需要正则化的数学理由。把该结论与\cref{proposition:ch10-快速梯度符号}对比可以看出两者是同一事实的两面：一个沿梯度上升以最大化目标，一个沿符号梯度上升以在无穷范数预算内最大化误差。
 \end{remark}
 

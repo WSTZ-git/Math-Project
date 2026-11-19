@@ -41,10 +41,14 @@
 解决这个问题的一种方法是限制函数 $\bm{g}(\bm{z},\bm{w})$ 是可逆的，这要求 $\bm{z}$ 和 $\bm{x}$ 具有相同的维度。我们将在介绍标准化流（normalizing flow）的技术时更详细地探索这种方法（参见\cref{chapter:ch18-标准化流}）。
 
 \begin{proposition}[流形上的分布是奇异的]\label{proposition:ch16-流形奇异}
-设 $\bm{g}:\mathbb{R}^{M}\rightarrow\mathbb{R}^{D}$ 是连续可微映射，$M<D$，且潜变量 $\bm{z}$ 的分布有密度。若取无噪声的确定性变换 $\bm{x}=\bm{g}(\bm{z})$，则 $\bm{x}$ 的分布关于 $\mathbb{R}^{D}$ 上的 Lebesgue 测度是奇异的：不存在密度函数 $p_x(\bm{x})$ 使得 $\bm{x}$ 的分布等于 $p_x$ 的积分。因此\eqref{align:ch16-变量变换}在 $M<D$ 时不能作为密度的定义式。
+设 $1\leqslant M<D$，$\bm{g}:\mathbb{R}^{M}\rightarrow\mathbb{R}^{D}$ 为连续可微映射，$\bm{z}$ 为 $\mathbb{R}^{M}$ 中分布关于 Lebesgue 测度有密度 $p_z$ 的随机向量，$\bm{x}=\bm{g}(\bm{z})$ 为无噪声的确定性变换。则：
+\begin{enumerate}
+\item $\bm{x}$ 的分布关于 $\mathbb{R}^{D}$ 上的 Lebesgue 测度是奇异的，即不存在 $\mathbb{R}^{D}$ 上的非负可测函数 $p_x$ 使 $\mathbb{P}(\bm{x}\in B)=\int_{B}p_x(\bm{x})\,\mathrm{d}\bm{x}$ 对一切 Borel 集 $B\subseteq\mathbb{R}^{D}$ 成立；
+\item \eqref{align:ch16-变量变换}中的 $\det\bm{J}(\bm{x})$ 要求 Jacobi 矩阵为方阵，而 $M<D$ 时 $\bm{g}$ 的 Jacobi 矩阵为 $D\times M$ 长方阵，其行列式无定义，故\eqref{align:ch16-变量变换}在 $M<D$ 时不能作为密度的定义式。
+\end{enumerate}
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 $\bm{g}$ 在 $\mathbb{R}^{M}$ 的每个紧集上 Lipschitz，故 $\bm{g}(\mathbb{R}^{M})$ 可表为可数个紧集之并的像，而每个这样的像的 Hausdorff 维数不超过 $M$，从而 $\mathbb{R}^{D}$ 中的 Lebesgue 测度为零。形式地，对任意 $\varepsilon>0$，可用可数个边长之和任意小的立方体覆盖 $\bm{g}(\mathbb{R}^{M})$，故其 Lebesgue 测度为零。于是
 \begin{align*}
   P\left(\bm{x}\in\bm{g}(\mathbb{R}^{M})\right)=1,\qquad \left|\bm{g}(\mathbb{R}^{M})\right|_{D}=0 .
@@ -54,8 +58,8 @@ $\bm{g}$ 在 $\mathbb{R}^{M}$ 的每个紧集上 Lipschitz，故 $\bm{g}(\mathbb
 另一方面，\eqref{align:ch16-变量变换}中的 $\det\bm{J}(\bm{x})$ 要求 $\bm{J}$ 是方阵，即 $\bm{z}$ 与 $\bm{x}$ 同维；当 $M<D$ 时 $\bm{J}(\bm{x})$ 是 $M\times D$ 的长方阵，行列式没有定义，\eqref{align:ch16-变量变换}本身无法写成一个数。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch16-流形奇异; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch16-流形奇异; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个命题解释了为什么“纯流形模型”无法直接用最大似然训练：数据在 $\mathbb{R}^{D}$ 中占据一个零测集，似然要么无定义，要么在流形外处处为零、在流形上无界，基于梯度的优化得不到有用的信号。原文所说的“这个框架将零概率密度赋予那些不完全位于流形上的任何数据向量”正是这一现象的非正式表述。
 
 条件的作用：结论依赖 $M<D$ 与 $\bm{g}$ 的正则性（连续可微已足够）。若 $M=D$ 且 $\bm{g}$ 可逆、Jacobi处处非奇异，则\eqref{align:ch16-变量变换}成立并给出 $\mathbb{R}^{D}$ 上的合法密度，这正是标准化流所要求的结构（见\cref{chapter:ch18-标准化流}）。解决办法有两个方向：其一，保持 $M<D$ 但显式加入噪声，使边缘分布在所有方向上都有正的密度（这正是\eqref{align:ch16-非线性条件}的做法）；其二，令 $M=D$ 并约束 $\bm{g}$ 可逆。
@@ -69,16 +73,16 @@ $\bm{g}$ 在 $\mathbb{R}^{M}$ 的每个紧集上 Lipschitz，故 $\bm{g}(\mathbb
 其中神经网络 $\bm{g}(\bm{z},\bm{w})$ 的输出单元激活函数是线性的，并且 $\bm{g}\in\mathbb{R}^{D}$。生成式模型由 $\bm{z}$ 上的潜变量分布和 $\bm{x}$ 上的条件分布指定，并且可以用\cref{figure:ch16-非线性图模型}所示的简单图模型来表示。
 
 \begin{definition}[非线性潜变量模型]\label{definition:ch16-非线性潜变量模型}
-设 $\bm{z}$ 是 $M$ 维连续潜变量，$\bm{g}(\cdot,\bm{w})$ 是由深度神经网络定义的、从潜空间到数据空间的非线性函数，$\bm{w}$ 为网络参数。若
+设 $M\geqslant1$，$D\geqslant1$，$\bm{z}$ 为 $M$ 维连续潜变量，其分布关于 Lebesgue 测度有密度 $p_z(\bm{z})$；设 $\bm{g}(\cdot,\bm{w}):\mathbb{R}^{M}\to\mathbb{R}^{D}$ 为由深度神经网络定义的连续映射，$\bm{w}\in\mathcal{W}\subseteq\mathbb{R}^{P}$ 为网络参数，$\sigma^2>0$。若 $(\bm{x},\bm{z})$ 的联合分布由
 \begin{align*}
   p(\bm{z})=p_z(\bm{z}),\qquad
-  p(\bm{x}|\bm{z},\bm{w})=\mathcal{N}\left(\bm{x}\left|\bm{g}(\bm{z},\bm{w}),\sigma^2\bm{I}\right.\right),
+  p(\bm{x}|\bm{z},\bm{w})=\mathcal{N}\left(\bm{x}\left|\bm{g}(\bm{z},\bm{w}),\sigma^2\bm{I}_D\right.\right)
 \end{align*}
-则称该模型为非线性潜变量模型（nonlinear latent variable model）。
+给出，则该模型称为\textbf{非线性潜变量模型}（nonlinear latent variable model）；此时 $p_z$ 称为\textbf{潜变量先验}，$\bm{g}(\cdot,\bm{w})$ 称为\textbf{解码器}（生成网络）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch16-非线性潜变量模型; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch16-非线性潜变量模型; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 非线性潜变量模型把\cref{section:ch16-概率潜变量}的线性映射 $\bm{W}\bm{z}+\bm{\mu}$ 换成神经网络 $\bm{g}(\bm{z},\bm{w})$，从而允许潜空间到数据空间的映射弯曲：如\cref{figure:ch16-潜空间到数据空间}所示，二维潜空间中的平面区域被映成三维空间中的一张曲面，数据沿曲面分布而不是填满整个空间。这就是“低维流形”这一归纳偏置的来源。
 
 条件方面：条件协方差取 $\sigma^2\bm{I}$ 有两个作用——它使边缘密度在整个 $\mathbb{R}^{D}$ 上为正（于是似然处处有定义，回避了\cref{proposition:ch16-流形奇异}的奇异问题），并且它是各向同性的，因而不引入额外的方向偏好；$\sigma^2$ 同时充当“流形厚度”的尺度。若把 $\sigma^2$ 取得很小，模型会逼近真正的流形模型，但似然会变得非常尖锐（见\cref{subsection:ch16-非线性似然函数}的讨论）。
@@ -178,7 +182,7 @@ $\bm{g}$ 在 $\mathbb{R}^{M}$ 的每个紧集上 Lipschitz，故 $\bm{g}(\mathbb
   \item 扩散模型（diffusion model）（见\cref{chapter:ch20-扩散模型}）使用一个网络学习如何通过一系列去噪步骤将先验分布的样本转换为数据分布的样本。这在许多应用中带来了先进的性能，缺点是由于多次经历网络的去噪过程，采样成本可能较高。
 \end{enumerate}
 
-\begin{remark}（重构新增）
+\begin{remark}
 这 4 种方法可以按“如何绕开\cref{proposition:ch16-流形奇异}造成的困难”来统一理解。若坚持 $M<D$，就必须处理边缘似然中的积分：GAN 干脆放弃似然、改用判别网络提供信号；VAE 用一个近似后验把积分化为可算的下界；若坚持精确似然，则必须让映射可逆，于是取 $M=D$ 并约束网络结构，这就是标准化流；扩散模型则换了一个思路，不去近似一次性的映射，而是把生成分解为许多个小的去噪步骤，每一步都是可逆的 Gaussian 扰动。四者的取舍可以归纳为：精确似然（流）、近似似然（VAE）、无似然（GAN）、多步可逆变换（扩散）。
 
 这一分类不是数学定理，而是对建模策略的归纳，因此不必逐条验证条件；它的用处在于给出选择模型的判据：若训练稳定性优先，VAE 或流更合适；若样本质量优先且可以承受不稳定，GAN 更合适；若追求当前最好的生成质量且能接受采样开销，扩散模型更合适。

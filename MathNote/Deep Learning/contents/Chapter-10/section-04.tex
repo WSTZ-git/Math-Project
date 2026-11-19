@@ -15,11 +15,20 @@
 考虑明确图像中对象位置的问题。一种广泛使用的方法是定义一个边界框（bounding box），它是一个紧密贴合对象边界的矩形，如\cref{figure:ch10-边界框}所示。边界框可以由其中心坐标以及宽度和高度定义，形式为向量 $\mathbf{b}=(b_x,b_y,b_w,b_h)$。这里 $\mathbf{b}$ 中的元素可以以像素为单位指定，也可以用连续数字表示。按照惯例，图像的左上角对应坐标 $(0,0)$，右下角对应坐标 $(1,1)$。
 
 \begin{definition}[边界框]\label{definition:ch10-边界框}
-称图像中一个紧密贴合对象边界的矩形为\textbf{边界框}（bounding box），并用向量 $\mathbf{b}=(b_x,b_y,b_w,b_h)$ 描述它，其中 $(b_x,b_y)$ 为框中心坐标，$b_w$ 与 $b_h$ 为宽度与高度。若采用归一化坐标，则图像左上角为 $(0,0)$、右下角为 $(1,1)$，此时 $b_x,b_y,b_w,b_h\in[0,1]$；若采用像素坐标，则各分量以像素为单位。
+设图像的归一化坐标以左上角为 $(0,0)$、右下角为 $(1,1)$。四元组
+$\mathbf{b}=(b_x,b_y,b_w,b_h)\in\mathbb{R}^{4}$ 称为\textbf{边界框}
+（bounding box），若 $b_w>0$、$b_h>0$，且它所描述的矩形区域为
+\begin{align*}
+  B(\mathbf{b})=\Bigl\{(x,y)\in[0,1]^{2}:
+  |x-b_x|\leqslant\frac{b_w}{2},\;
+  |y-b_y|\leqslant\frac{b_h}{2}\Bigr\},
+\end{align*}
+其中 $(b_x,b_y)$ 称为框中心，$b_w$ 与 $b_h$ 称为宽度与高度。若采用像素坐标，则把
+$[0,1]^{2}$ 换成图像的像素下标矩形，四个分量的单位改为像素，其余约定不变。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-边界框; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-边界框; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 把边界框参数化为“中心 + 宽高”而不是“左上角 + 右下角”，是为了让四个分量在尺度变换下具有统一的行为：平移只改变 $b_x,b_y$，缩放同时改变四个分量，回归时不会出现“一个角动、另一个角不动”的耦合。定义中两种坐标制的并存也有实际后果：归一化坐标使不同分辨率的图像可以共用同一套回归目标，像素坐标则便于与图像数组直接对齐；二者之间的换算是固定的线性变换，不改变框的几何。矩形“紧密贴合”只是语义要求，实际标注总会留下余量，因此预测框与真值框几乎不可能完全重合，这正是需要\cref{definition:ch10-交并比}的原因。
 \end{remark}
 
@@ -37,16 +46,18 @@
 我们需要一种有意义的方式来衡量训练好的网络在预测边界框方面的性能。在图像分类中，网络的输出是类别标签的概率分布，我们可以通过查看测试集上真实类别标签的对数似然来衡量性能。然而，在对象定位中，我们需要某种方法来衡量边界框相对于某些真值的准确性，其中后者可以通过像人工标注这样的方式获得。预测框与目标框的重合程度可以用作这种度量的基础，但重叠区域的面积会取决于图像中对象的大小。此外，如果预测的边界框超出实际的边界框，则应该受到惩罚。一种能够较好地解决这两个问题的度量方法称为交并比（Intersection-over-Union, IoU），它是这两个边界框的交集区域面积与并集区域面积的比值，如\cref{figure:ch10-交并比}所示。注意，IoU 度量的取值范围是 $0\sim 1$。如果 IoU 度量超过某个阈值（通常为 $0.5$），则可以将预测标记为正确。注意，IoU 通常不直接用作训练的损失函数，因为想要通过梯度下降优化它很困难，因此通常使用中心对象来训练，而 IoU 分数主要用作评价指标。
 
 \begin{definition}[交并比]\label{definition:ch10-交并比}
-设 $B$ 与 $B'$ 是两幅同坐标系下的边界框，记 $|B|$ 为框 $B$ 所围区域的面积。称
+设 $B$ 与 $B'$ 是同一坐标系中的两个边界框，$|B|$ 表示框 $B$ 所围区域的面积。若
+$|B\cup B'|>0$，则
 \begin{align}
   \mathrm{IoU}(B,B')=\frac{|B\cap B'|}{|B\cup B'|}
   \label{align:ch10-交并比}
 \end{align}
-为 $B$ 与 $B'$ 的\textbf{交并比}（Intersection-over-Union, IoU），并约定当分母为零（两框面积均为零）时该值无定义。
+称为 $B$ 与 $B'$ 的\textbf{交并比}（Intersection-over-Union, IoU）；当
+$|B\cup B'|=0$（两框面积均为零）时该值无定义。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-交并比; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-交并比; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 IoU 的设计回应了两个具体问题：用比值而不是交集面积，消除了对象大小对度量的影响（大对象天然有大交集）；用并集作分母而不是用真值框面积，使“预测框超出真值框”受到惩罚（超出部分增大并集、压低比值）。定义中“同坐标系”不能省：若一个是归一化坐标、另一个是像素坐标，比值会算出无意义的数。分母为零的退化情形必须排除，否则出现 $0/0$。IoU 不是损失函数的好选择，原因在定义之外：它是分段有理函数，在两框不相交时梯度为零，无法告诉模型“该往哪个方向移动框”，这也是实际训练常用平滑替代损失（如 $1-\mathrm{IoU}$ 的可微变体或平方和误差）而只在评价时用 IoU 的原因。
 \end{remark}
 
@@ -58,14 +69,19 @@ IoU 的设计回应了两个具体问题：用比值而不是交集面积，消�
 \end{figure}
 
 \begin{proposition}[交并比的取值范围与退化情形]\label{proposition:ch10-IoU性质}
-设 $B,B'$ 为面积非零的边界框。则 $0\leqslant\mathrm{IoU}(B,B')\leqslant1$，且 $\mathrm{IoU}(B,B')=1$ 当且仅当 $B=B'$（忽略零面积的边界重叠）；当 $B\cap B'$ 的内部为空时 $\mathrm{IoU}(B,B')=0$。此外，若把两框同时平移同一向量，则 IoU 不变。
+设 $B,B'$ 为同一坐标系中面积非零的边界框，$|B|>0$、$|B'|>0$，
+$\mathrm{IoU}(B,B')$ 由\eqref{align:ch10-交并比}定义。则
+$0\leqslant\mathrm{IoU}(B,B')\leqslant1$，且 $\mathrm{IoU}(B,B')=1$ 当且仅当
+$|B\triangle B'|=0$；若 $|B\cap B'|=0$，则 $\mathrm{IoU}(B,B')=0$。此外，对任意平移
+向量 $\mathbf{t}\in\mathbb{R}^{2}$，若 $B+\mathbf{t}$ 与 $B'+\mathbf{t}$ 都落在图像域内，
+则 $\mathrm{IoU}(B+\mathbf{t},B'+\mathbf{t})=\mathrm{IoU}(B,B')$。
 \end{proposition}
 \begin{proof}
 由 $B\cap B'\subseteq B\cup B'$ 及面积单调性，$0\leqslant|B\cap B'|\leqslant|B\cup B'|$，而分母 $|B\cup B'|>0$，故 $0\leqslant\mathrm{IoU}\leqslant1$。若 $\mathrm{IoU}=1$，则 $|B\cap B'|=|B\cup B'|$，而 $B\cap B'\subseteq B\cup B'$，故二者至多相差一个零面积集，即 $B=B'$（忽略边界）。反之 $B=B'$ 时交集等于并集，比值为 $1$。若两框内部不相交，则 $|B\cap B'|=0$，故 IoU 为 $0$。平移不变性：设 $T$ 为平移，则 $T(B\cap B')=T(B)\cap T(B')$、$T(B\cup B')=T(B)\cup T(B')$，且平移保持面积，故比值不变。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-IoU性质; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-IoU性质; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个命题给出的是 IoU 作为度量的最低要求：有界、只在完全重合时取上界、不相交时取下界、对位置平移不敏感（它只关心相对重合）。注意“当且仅当 $B=B'$”排除了仅边界接触的情形，因为边界面积为零、不影响比值，这说明 IoU 对“贴合但不重叠”和“完全分离”给出相同的分数 $0$，这是它作为评价指标的粗糙之处。平移不变性有实际用途：它说明 IoU 不依赖于对象在图像中的绝对位置，因此可以跨图像比较。命题没有说 IoU 对旋转或缩放不变，事实上矩形框在旋转下不再是矩形，定义本身就不再适用。
 \end{remark}
 
@@ -74,11 +90,20 @@ IoU 的设计回应了两个具体问题：用比值而不是交集面积，消�
 一种进行目标检测和目标定位的方法是，首先创建一个训练集，其中既包括所要检测对象的紧密裁剪的样本，也包括不包含任何对象（“背景”类别）的图像类似裁剪区域的样本。这个训练集用于训练分类器，例如一个深度 CNN，其输出表示输入窗口中存在特定对象类别的概率。然后，训练好的模型通过在图像上“扫描”输入窗口来检测新图像中的对象，并针对每个位置，将图像的结果集合用作分类器的输入。这称为滑动窗口（sliding window）。当以较高概率检测到对象时，窗口位置就是相应的边界框。
 
 \begin{definition}[滑动窗口]\label{definition:ch10-滑动窗口}
-设已用“目标窗口/背景窗口”训练好一个窗口分类器 $f$（输出窗口内存在各类对象的概率）。在图像上按固定步幅依次放置尺寸固定的输入窗口，对每个窗口计算 $f$，并把概率超过阈值的窗口位置作为检测结果，称此检测方法为\textbf{滑动窗口}（sliding window）。窗口的尺寸与步幅统称为该方法的尺度参数。
+设图像为 $I\in\mathbb{R}^{J\times K\times C}$，窗口尺寸为 $M\times N$，水平与竖直步幅
+分别为 $s_x,s_y\in\mathbb{Z}_{\geqslant1}$，其中 $M\leqslant J$、$N\leqslant K$；窗口
+分类器为 $f:\mathbb{R}^{M\times N\times C}\to[0,1]^{C_{\mathrm{cls}}}$，且已用目标窗口
+与背景窗口训练。检测阈值为 $\tau\in[0,1]$。对每个位置
+$(u,v)$，$u=0,1,\dots,\lfloor(J-M)/s_x\rfloor$、
+$v=0,1,\dots,\lfloor(K-N)/s_y\rfloor$，取窗口
+$W_{u,v}=\{(u s_x+i,\,v s_y+j):1\leqslant i\leqslant M,\;1\leqslant j\leqslant N\}$，
+计算 $f$ 在 $I$ 于 $W_{u,v}$ 上的取值，并把 $f$ 的相应分量超过 $\tau$ 的窗口位置作为
+检测结果。这一检测方法称为\textbf{滑动窗口}（sliding window），$M,N$、$s_x,s_y$ 与
+$\tau$ 称为该方法的尺度参数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-滑动窗口; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-滑动窗口; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 滑动窗口把“检测”化归为“逐窗口分类”，因此它不需要新的学习算法，只需要一个已经训练好的分类器；代价是计算：窗口位置数约为 $(J/s)\times(K/s)$，每个位置都要跑一次完整前向传播。定义中的步幅是一个显式的取舍参数：步幅小则定位精度高但计算量大，步幅大则相反。阈值则控制查全与查准的平衡。注意定义要求分类器在“背景”类上训练过，否则网络会对不含对象的窗口也给出高置信度的某一类，产生大量假阳性。后文\cref{subsection:ch10-滑动窗口}的卷积化实现之所以能大幅降低计算量，是因为它把所有这些窗口的前向传播合并成了一次卷积，而不是因为改变了定义。
 \end{remark}
 
@@ -127,17 +152,23 @@ IoU 的设计回应了两个具体问题：用比值而不是交集面积，消�
 通过在图像上扫描训练好的卷积网络，可以检测图像中同一类别对象的多个实例，以及来自其他类别对象的实例。然而，这也倾向于在相似位置产生同一对象的多个检测结果，如\cref{figure:ch10-非最大抑制}所示。可以使用非最大抑制（non-max suppression）来解决这个问题，对于每个对象类别，非最大抑制的工作方式如下：首先在整个图像上运行滑动窗口，并计算每个位置存在该对象类别的概率；然后消除所有概率低于某个阈值（例如 $0.7$）的边界框，得到类似于\cref{figure:ch10-非最大抑制}所示的结果——具有最高概率的框被认为是有效检测，并且将相应的边界框记录作为预测结果；接下来，将任何与有效检测的边界框的 IoU 超过某个阈值（例如 $0.5$）的其他框丢弃，从而消除针对同一对象的多个邻近检测结果；最后在剩余的框中，将具有最高概率的框选为另一个有效检测，并且重复上述消除步骤。将这个过程持续下去，直至所有边界框要么丢弃，要么选为有效检测。
 
 \begin{definition}[非最大抑制]\label{definition:ch10-非最大抑制}
-给定同一类别的一组候选边界框及其得分（例如属于该类别的概率），以及得分阈值 $p$ 与重合阈值 $\iota$，\textbf{非最大抑制}（non-max suppression）按如下步骤给出保留集合 $\mathcal{K}$：
+设同一类别有候选边界框 $B_1,\dots,B_n$ 及其得分 $s_1,\dots,s_n\in[0,1]$，给定得分
+阈值 $\tau\in[0,1]$ 与重合阈值 $\iota\in[0,1]$。按下述步骤得到的集合
+$\mathcal{K}\subseteq\{1,\dots,n\}$ 所对应的检测方法称为\textbf{非最大抑制}
+（non-max suppression）：
 \begin{enumerate}
-  \item 丢弃所有得分低于 $p$ 的候选框；
-  \item 在剩余框中取得分最高者 $B^\ast$，将其加入 $\mathcal{K}$ 并从候选集中删除；
-  \item 删除候选集中所有与 $B^\ast$ 的 IoU 超过 $\iota$ 的框；
+  \item 删除所有满足 $s_i<\tau$ 的候选框；
+  \item 在剩余候选中取得分最高者 $B_{i^{\ast}}$，若得分并列则取下标最小者，把
+        $i^{\ast}$ 加入 $\mathcal{K}$ 并从候选集中删除；
+  \item 删除候选集中所有满足
+        $\mathrm{IoU}(B_j,B_{i^{\ast}})>\iota$ 的框 $B_j$；
   \item 重复第 2、3 步，直至候选集为空。
 \end{enumerate}
+$\mathcal{K}$ 中的框称为保留下来的检测结果。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-非最大抑制; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-非最大抑制; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 非最大抑制处理的是滑动窗口方法的固有冗余：同一对象会被多个位置、多个尺度同时检出，且这些框高度重合。算法用两个阈值把两类错误分开：$p$ 控制“要不要这个检测”（低于 $p$ 的直接丢弃，减少假阳性），$\iota$ 控制“两个检测是否指同一对象”（IoU 高则视为重复）。两个阈值的作用不同，不能合并：把 $\iota$ 调大可以保留密集排列的不同对象（如人群），把 $\iota$ 调小则更激进地合并。定义对每个类别独立执行，因为不同类别的框可以合法地重合。算法必然终止：每一步至少删除一个框，候选集有限。注意它不保证找到全局最优的框组合，只是一个贪心过程。
 \end{remark}
 
@@ -155,11 +186,18 @@ IoU 的设计回应了两个具体问题：用比值而不是交集面积，消�
 滑动窗口方法的一个缺点是，如果想要非常精确地定位对象，则需要考虑大量的只有细微间隔的窗口位置，这将使计算成本变得很高。一种更高效的方法是将滑动窗口与直接边界框预测结合起来（Sermanet et al., 2013）。在这种情况下，可以连续输出预测边界框相对于窗口位置的位置，以便对预测位置进行一些微调。
 
 \begin{definition}[区域提议]\label{definition:ch10-区域提议}
-称一个低成本的预处理过程为\textbf{区域提议}（region proposal），若它从图像中给出少量候选区域，使得真实对象以高概率落在其中，从而可以把昂贵的分类与定位网络只作用于这些区域。若提议过程本身由一个卷积网络实现并与检测网络联合训练，则称相应的检测框架为 \textbf{faster R-CNN}；若提议由外部算法给出、只对区域做分类与框回归，则称 \textbf{fast R-CNN}。
+设图像为 $I\in\mathbb{R}^{J\times K\times C}$，检测网络为 $g$，滑动窗口位置总数为
+$N_{\mathrm{win}}$。一个映射 $R:I\mapsto\{B_1,\dots,B_m\}$ 称为\textbf{区域提议}
+（region proposal），若每个 $B_r$ 是 $I$ 中按\cref{definition:ch10-边界框}定义的边界框，
+$m<N_{\mathrm{win}}$，且存在重合阈值 $\rho\in(0,1]$，使对图像中每个真实对象框
+$B^{\ast}$ 都存在某个 $B_r$ 满足 $\mathrm{IoU}(B_r,B^{\ast})\geqslant\rho$。若提议由
+外部算法给出、检测网络只对提议区域作分类与框回归，则相应的检测框架称为
+\textbf{fast R-CNN}；若提议本身由卷积网络实现并与检测网络联合训练，则相应的检测框架
+称为 \textbf{faster R-CNN}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-区域提议; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-区域提议; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 区域提议的要点是“用便宜的计算换掉昂贵的穷举”：滑动窗口对所有位置一视同仁，而区域提议先用颜色、边缘或浅层特征排除明显不含对象的区域。定义区分 fast 与 faster 的关键在于提议是否可学习：前者把提议当作固定输入，检测网络无法通过提议的错误反向传播；后者把提议网络也纳入训练，两个网络共享特征，因此可以端到端优化。这不是命名上的细节，而是训练目标是否一致的问题：提议与检测若分开训练，二者的召回率与定位精度可能相互错配。
 \end{remark}
 

@@ -20,16 +20,16 @@
 假设真实值为$t$，我们为预测选择了一个值$f(\boldsymbol{x})$，从而得到某种形式的惩罚或成本。惩罚是由损失（loss）决定的，用$L(t,f(\boldsymbol{x}))$表示。当然，由于我们不知道$t$的真实值，因此我们并不最小化$L$本身，而是最小化平均或期望的损失。
 
 \begin{definition}[损失函数与期望损失]\label{definition:ch04-损失函数}
-设$L(t,f(\boldsymbol{x}))$为预测值$f(\boldsymbol{x})$与真实值$t$之差的\textbf{损失函数}（也称成本函数）。由于$t$未知，我们最小化的不是$L$本身，而是以联合分布$p(\boldsymbol{x},t)$为权重的平均或期望损失
+设输入空间$\mathcal{X}\subseteq\mathbb{R}^{D}$，目标空间$\mathcal{T}\subseteq\mathbb{R}$，预测函数$f:\mathcal{X}\to\mathcal{T}$，损失函数$L:\mathcal{T}\times\mathcal{T}\to[0,\infty)$，$(\boldsymbol{x},t)$为取值于$\mathcal{X}\times\mathcal{T}$的随机向量，其联合分布有密度$p(\boldsymbol{x},t)$。若$\mathbb{E}\bigl[L(t,f(\boldsymbol{x}))\bigr]$存在（即该积分有限），则以联合分布$p(\boldsymbol{x},t)$为权重的平均损失
 \begin{align}
-  \mathbb{E}[L]=\iint L(t,f(\boldsymbol{x}))\,p(\boldsymbol{x},t)\,\mathrm{d}\boldsymbol{x}\,\mathrm{d}t,
+  \mathbb{E}[L]=\iint L(t,f(\boldsymbol{x}))\,p(\boldsymbol{x},t)\,\mathrm{d}\boldsymbol{x}\,\mathrm{d}t
   \label{align:ch04-期望损失}
 \end{align}
-其中，我们以输入变量和目标变量的联合分布$p(\boldsymbol{x},t)$作为权重对它们的分布进行加权平均。
+称为$f$的\textbf{期望损失}，其中积分在$\mathcal{X}\times\mathcal{T}$上进行；此时称$L$为预测值$f(\boldsymbol{x})$与真实值$t$之间的\textbf{损失函数}（也称成本函数）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch04-损失函数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch04-损失函数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch04-损失函数}把“预测得好不好”这件事拆成了两个独立的成分：损失函数$L$刻画\emph{错多少算多严重}，联合分布$p(\boldsymbol{x},t)$刻画\emph{什么样的$({\boldsymbol{x}},t)$更常出现}。\eqref{align:ch04-期望损失}把二者以加权平均的方式合成一个标量，从而使“选择$f$”变成一个可以优化的目标。
 
 这一形式化的代价是：最小化$\mathbb{E}[L]$要求知道$p(\boldsymbol{x},t)$，而实际只掌握训练数据和\cref{section:ch04-决策理论}开头给出的预测分布。因此\eqref{align:ch04-期望损失}在理论上定义了“最优”，在下文中只作为推导最优决策规则的出发点，并不直接作为可计算的训练目标。
@@ -54,7 +54,7 @@
 \end{align}
 
 \begin{proposition}[平方损失的最优决策规则]\label{proposition:ch04-最优决策规则}
-设$\mathbb{E}[L]$由\eqref{align:ch04-平方损失期望}给出，$f$在所有满足所需可积性的函数中选取。则$\mathbb{E}[L]$的驻点满足\eqref{align:ch04-损失变分}，且最优解为条件平均
+设输入空间$\mathcal{X}\subseteq\mathbb{R}^{D}$，$(\boldsymbol{x},t)$有联合密度$p(\boldsymbol{x},t)$，$p(\boldsymbol{x})>0$对几乎一切$\boldsymbol{x}\in\mathcal{X}$成立，$\mathbb{E}[t^{2}]<\infty$，$\mathbb{E}[L]$由\eqref{align:ch04-平方损失期望}给出，$f$取遍满足$\mathbb{E}[f(\boldsymbol{x})^{2}]<\infty$的可测函数。则$\mathbb{E}[L]$的变分导数由\eqref{align:ch04-损失变分}给出，且全局最小值点（在$p(\boldsymbol{x})>0$上几乎处处意义下）为条件平均
 \begin{align}
   f^*(\boldsymbol{x})=\frac{1}{p(\boldsymbol{x})}\int t\,p(\boldsymbol{x},t)\,\mathrm{d}t=\int t\,p(t\mid\boldsymbol{x})\,\mathrm{d}t=\mathbb{E}_t[t\mid\boldsymbol{x}],
   \label{align:ch04-回归函数}
@@ -63,7 +63,7 @@
 \end{proposition}
 
 \begin{proof}
-（重构新增）第一步，写出变分条件。令$f$作扰动$f+\varepsilon\eta$，由\eqref{align:ch04-平方损失期望}，
+第一步，写出变分条件。令$f$作扰动$f+\varepsilon\eta$，由\eqref{align:ch04-平方损失期望}，
 \begin{align*}
   \mathbb{E}[L]&=\iint\bigl\{f(\boldsymbol{x})+\varepsilon\eta(\boldsymbol{x})-t\bigr\}^2p(\boldsymbol{x},t)\,\mathrm{d}\boldsymbol{x}\,\mathrm{d}t\\
   &=\mathbb{E}[L]\big|_{f}+\varepsilon\iint2\{f(\boldsymbol{x})-t\}\eta(\boldsymbol{x})p(\boldsymbol{x},t)\,\mathrm{d}\boldsymbol{x}\,\mathrm{d}t+O(\varepsilon^2),
@@ -94,8 +94,8 @@
 第四步，说明这是最小值而非最大值。由\eqref{align:ch04-平方损失分解}（其证明见\cref{proposition:ch04-期望损失分解}），$\mathbb{E}[L]$等于一个只依赖于$f$的非负项加上一个与$f$无关的常数项，而该非负项在$f=f^*$处取零，故$f^*$给出全局最小值。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch04-最优决策规则; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch04-最优决策规则; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch04-最优决策规则}的结论\eqref{align:ch04-回归函数}是本章从“概率”走向“决策”的关键一步：一旦损失取平方，最优预测就与$p(t\mid\boldsymbol{x})$的全部信息无关，只依赖它的\emph{一阶矩}。
 
 这解释了为什么在\cref{definition:ch04-加性Gauss噪声}这样的模型下，\cref{subsection:ch04-最大似然}给出的$y(\boldsymbol{x},\boldsymbol{w}_{\mathrm{ML}})$恰好就是最优决策——因为Gauss分布的均值就是它的唯一参数。但它同时暴露了平方损失的局限：若$p(t\mid\boldsymbol{x})$是多峰的，条件均值可能落在两个峰之间的低密度区，此时$f^*$虽然在期望意义下最优，却几乎不可能是一个“典型”的$t$值。
@@ -104,11 +104,11 @@
 \end{remark}
 
 \begin{definition}[回归函数]\label{definition:ch04-回归函数}
-\eqref{align:ch04-回归函数}给出的条件平均$\mathbb{E}_t[t\mid\boldsymbol{x}]$称为\textbf{回归函数}（regression function）。
+设$(\boldsymbol{x},t)$为取值于$\mathbb{R}^{D}\times\mathbb{R}$的随机向量，$\mathbb{E}|t|<\infty$，$p(\boldsymbol{x})$为$\boldsymbol{x}$的边缘密度。对满足$p(\boldsymbol{x})>0$的$\boldsymbol{x}$，\eqref{align:ch04-回归函数}给出的条件平均$\mathbb{E}_t[t\mid\boldsymbol{x}]$称为$t$关于$\boldsymbol{x}$的\textbf{回归函数}（regression function）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch04-回归函数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch04-回归函数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 回归函数$\mathbb{E}_t[t\mid\boldsymbol{x}]$只依赖条件分布$p(t\mid\boldsymbol{x})$，不依赖任何特定的损失函数，因此可以作为“给定$\boldsymbol{x}$时$t$的典型值”的通用刻画。\cref{proposition:ch04-最优决策规则}说明，在平方损失下它同时是最优预测；而在其他损失下最优预测可能是别的泛函（$q=1$时为条件中位数，$q\to0$时为条件众数，见\cref{definition:ch04-Minkowski损失}与\cref{exercise:ch04-12}）。
 
 区分“回归函数”与“模型$y(\boldsymbol{x},\boldsymbol{w})$”是本章的一个基本区分：前者由数据生成机制$p(t\mid\boldsymbol{x})$决定，是拟合的对象；后者是拟合的工具，其参数$\boldsymbol{w}$由有限数据估计得到。二者的差距正是\cref{section:ch04-偏差方差权衡}要量化的偏差。
@@ -142,16 +142,16 @@
 其中，为了保持符号整洁，我们使用$\mathbb{E}[t\mid\boldsymbol{x}]$来表示$\mathbb{E}_t[t\mid\boldsymbol{x}]$。代入损失函数\eqref{align:ch04-平方损失期望}并对$t$进行积分后，交叉项消失了，得到如下形式的损失函数的表达式：
 
 \begin{proposition}[平方损失的期望损失分解]\label{proposition:ch04-期望损失分解}
-设$\mathbb{E}[L]$由\eqref{align:ch04-平方损失期望}给出，且$p(\boldsymbol{x},t)$使所涉及的积分绝对收敛。则
+设$(\boldsymbol{x},t)$有联合密度$p(\boldsymbol{x},t)$，$\mathbb{E}[t^{2}]<\infty$，$\mathbb{E}[f(\boldsymbol{x})^{2}]<\infty$，$p(\boldsymbol{x})$为边缘密度，$\mathbb{E}[L]$由\eqref{align:ch04-平方损失期望}给出，且所涉及的积分绝对收敛。则
 \begin{align}
   \mathbb{E}[L]=\int\bigl\{f(\boldsymbol{x})-\mathbb{E}[t\mid\boldsymbol{x}]\bigr\}^2p(\boldsymbol{x})\,\mathrm{d}\boldsymbol{x}+\int\mathrm{var}[t\mid\boldsymbol{x}]\,p(\boldsymbol{x})\,\mathrm{d}\boldsymbol{x}
   \label{align:ch04-平方损失分解}
 \end{align}
-其中$\mathrm{var}[t\mid\boldsymbol{x}]\triangleq\mathbb{E}\bigl[\{t-\mathbb{E}[t\mid\boldsymbol{x}]\}^2\mid\boldsymbol{x}\bigr]$为给定$\boldsymbol{x}$时$t$的条件方差。
+其中$\mathrm{var}[t\mid\boldsymbol{x}]\triangleq\mathbb{E}\bigl[\{t-\mathbb{E}[t\mid\boldsymbol{x}]\}^2\mid\boldsymbol{x}\bigr]$为给定$\boldsymbol{x}$时$t$的条件方差。等式右端第一项只依赖$f$，第二项与$f$无关，故最小化$\mathbb{E}[L]$等价于最小化第一项。
 \end{proposition}
 
 \begin{proof}
-（重构新增）第一步，把\eqref{align:ch04-平方项展开}代回\eqref{align:ch04-平方损失期望}。三项分别记为$A$、$B$、$C$：
+第一步，把\eqref{align:ch04-平方项展开}代回\eqref{align:ch04-平方损失期望}。三项分别记为$A$、$B$、$C$：
 \begin{align*}
   \mathbb{E}[L]=\iint\{f(\boldsymbol{x})-\mathbb{E}[t\mid\boldsymbol{x}]\}^2p(\boldsymbol{x},t)\,\mathrm{d}\boldsymbol{x}\,\mathrm{d}t
   +\iint B\,p(\boldsymbol{x},t)\,\mathrm{d}\boldsymbol{x}\,\mathrm{d}t
@@ -183,8 +183,8 @@
 把第二步、第三步、第四步的结果代回第一步即得\eqref{align:ch04-平方损失分解}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch04-期望损失分解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch04-期望损失分解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch04-期望损失分解}把\eqref{align:ch04-平方损失分解}的右端分成“可约”与“不可约”两部分，这一点对理解本章其余部分至关重要。
 
 第一项只依赖于$f$，且非负，因此最小值为$0$，在$f(\boldsymbol{x})=\mathbb{E}[t\mid\boldsymbol{x}]$处取到——这正是\cref{proposition:ch04-最优决策规则}的另一种证法。第二项$\int\mathrm{var}[t\mid\boldsymbol{x}]p(\boldsymbol{x})\,\mathrm{d}\boldsymbol{x}$完全不含$f$，故任何预测函数都无法把它变小，它代表数据本身的内在噪声，是损失函数不可约的最小值。
@@ -199,16 +199,16 @@
 平方损失函数并不是回归中唯一可选的损失函数。平方损失的一种泛化形式称为Minkowski损失，其期望由下式给出：
 
 \begin{definition}[Minkowski损失]\label{definition:ch04-Minkowski损失}
-设$q>0$。称
+设$q>0$，输入空间$\mathcal{X}\subseteq\mathbb{R}^{D}$，$f:\mathcal{X}\to\mathbb{R}$可测，$(\boldsymbol{x},t)$的联合密度为$p(\boldsymbol{x},t)$，且$\mathbb{E}\bigl[|f(\boldsymbol{x})-t|^{q}\bigr]<\infty$。则
 \begin{align}
   \mathbb{E}[L_q]=\iint|f(\boldsymbol{x})-t|^q\,p(\boldsymbol{x},t)\,\mathrm{d}\boldsymbol{x}\,\mathrm{d}t
   \label{align:ch04-Minkowski损失}
 \end{align}
-为\textbf{Minkowski损失}的期望，它是平方损失的一种泛化形式。
+称为$f$的$q$阶\textbf{Minkowski损失}的期望，它是平方损失的一种泛化形式（$q=2$时即为平方损失）。该期望是对$(\boldsymbol{x},t)$的联合分布取的，并要求其值有限；当$q\geqslant1$时$|f(\boldsymbol{x})-t|^{q}$是$f(\boldsymbol{x})-t$的凸函数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch04-Minkowski损失; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch04-Minkowski损失; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch04-Minkowski损失}以一个参数$q$统一了一族损失：$q=2$时\eqref{align:ch04-Minkowski损失}退化为\eqref{align:ch04-平方损失期望}，$q=1$时给出绝对误差，$q>2$时对大误差的惩罚更重，$q<1$时对大误差的惩罚反而变轻。
 
 $q$的作用可以从\cref{figure:ch04-损失曲线}直接读出：$q$越小，曲线在$f=t$处的尖点越尖锐、在两侧越平坦，因此$q\to0$的极限只关心“$t$是否恰等于$f$”，这正是众数出现的机制；$q$越大，曲线越平坦而两侧越陡，因此对离群点越敏感。

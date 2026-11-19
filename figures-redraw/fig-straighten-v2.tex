@@ -1,0 +1,46 @@
+\documentclass[tikz,border=8pt]{standalone}
+\usepackage{amsmath,amssymb}
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Serif CJK SC}
+\usetikzlibrary{arrows.meta}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,>=Stealth,line cap=round,line join=round]
+% ---------- left panel: x-coordinates ----------
+\draw[thick] (3.2,3.8) circle (2.2);
+\node at (3.2,6.35) {$B_z(0,r)$};
+\begin{scope}
+  \clip (3.5,3.5) ellipse (1.55 and 1.0);
+  \fill[gray!35] (1.0,6.0) -- (6.0,6.0) -- (5.8,4.1)
+    -- plot[smooth] coordinates {(4.5,3.55) (3.3,3.25) (2.2,3.35) (0.8,3.9)}
+    -- cycle;
+\end{scope}
+\draw[thick] (3.5,3.5) ellipse (1.55 and 1.0);
+\draw[thick] plot[smooth] coordinates {(0.8,3.9) (2.2,3.35) (3.3,3.25) (4.5,3.55) (5.8,4.1)};
+\fill (3.3,3.25) circle (2.2pt);
+\node[below] at (3.3,3.0) {$x_0$};
+\node at (3.35,4.05) {$W\cap U$};
+\node at (4.15,3.0) {$W$};
+\node at (1.15,4.35) {$\partial U$};
+\node at (0.5,6.75) {x坐标系};
+% ---------- right panel: y-coordinates ----------
+\draw[thick] plot[smooth cycle] coordinates
+  {(10.6,3.8) (11.2,5.4) (12.5,5.9) (13.8,5.3) (14.4,3.8) (13.8,2.3) (12.5,1.7) (11.2,2.3)};
+\node at (12.5,6.35) {$\Phi_1(B_z(0,r))$};
+\begin{scope}
+  \clip (12.5,3.4) circle (1.45);
+  \fill[gray!35] (11.0,3.4) rectangle (14.0,5.2);
+\end{scope}
+\draw[thick] (12.5,3.4) circle (1.45);
+\draw[thick] (10.7,3.4) -- (14.3,3.4);
+\fill (12.5,3.4) circle (2.2pt);
+\node[above right] at (12.55,3.45) {$O$};
+\node at (12.5,4.1) {$B^+$};
+\node at (12.5,2.65) {$B$};
+\node at (14.9,6.75) {y坐标系};
+% ---------- maps ----------
+\draw[thick,->] (4.65,5.48) to[out=55,in=125] node[above] {$\Phi_1$} (11.2,5.4);
+\draw[thick,->] (5.02,3.85) to[out=25,in=155] node[above] {$\Phi$} (11.18,3.85);
+\draw[thick,->] (11.18,2.8) to[out=205,in=335] node[below] {$\Psi$} (5.05,2.8);
+\draw[thick,->] (12.5,1.75) to[out=250,in=290] node[below] {$\Psi_1$} (3.2,1.65);
+\end{tikzpicture}
+\end{document}

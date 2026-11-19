@@ -33,29 +33,29 @@
 其中参数 $\eta$（$\eta>0$）被定义为学习率（learning rate）。在完成每次权重更新后，需要基于新的权重向量 $\mathbf{w}^{(\tau)}$ 重新计算梯度，并重复上述过程。在每一次迭代过程中，权重向量都朝着当前位置处误差函数下降最快的方向进行更新。
 
 \begin{definition}[学习率]\label{definition:ch07-学习率}
-在权重更新规则\eqref{align:ch07-批量梯度下降}中，决定每一步沿负梯度方向移动幅度的正参数 $\eta>0$ 称为\textbf{学习率}（learning rate）。
+设 $W\in\mathbb{N}$，$\Omega\subseteq\mathbb{R}^{W}$ 为非空开集，$E:\Omega\to\mathbb{R}$ 一阶连续可微，权重更新按\eqref{align:ch07-批量梯度下降}进行。其中决定每一步沿负梯度方向移动幅度的正参数 $\eta>0$ 称为\textbf{学习率}（learning rate）；$\eta$ 的量纲使乘积 $\eta\nabla E(\mathbf{w}^{(\tau-1)})$ 与 $\mathbf{w}$ 具有相同的量纲。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch07-学习率; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch07-学习率; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 学习率是梯度下降中唯一不由误差函数本身决定的正参数，因而也是最重要的超参数。它的量纲必须与“梯度乘以参数”的量纲相消，所以固定 $\eta$ 的做法隐含了一种尺度约定：当误差函数整体乘以常数、或参数被重新缩放时，合适的 $\eta$ 会随之改变，这正是\cref{subsection:ch07-数据归一化}要讨论输入归一化的原因之一。$\eta$ 过小会使每一步的下降量被二阶项淹没，收敛缓慢；$\eta$ 过大会使迭代在极小值两侧来回跳跃甚至发散。本章\cref{section:ch07-收敛}将在二次近似下给出定量边界 $\eta<2/\lambda_{\max}$，其中 $\lambda_{\max}$ 是黑塞矩阵的最大特征值，这个边界说明了“学习率必须与曲率匹配”的确切含义。
 \end{remark}
 
 \begin{definition}[梯度下降与最速下降]\label{definition:ch07-梯度下降}
-按\eqref{align:ch07-批量梯度下降}沿当前位置的负梯度方向迭代更新权重向量的方法称为\textbf{梯度下降}（gradient descent），也称\textbf{最速下降}（steepest descent）。
+设 $W\in\mathbb{N}$，$\Omega\subseteq\mathbb{R}^{W}$ 为非空开集，$E:\Omega\to\mathbb{R}$ 一阶连续可微，$\mathbf{w}^{(0)}\in\Omega$ 为初始权重，学习率 $\eta>0$。若对 $\tau=1,2,\cdots$ 按\eqref{align:ch07-批量梯度下降}迭代，即每一步沿当前位置 $\mathbf{w}^{(\tau-1)}$ 的负梯度方向移动长度 $\eta\|\nabla E(\mathbf{w}^{(\tau-1)})\|$，且迭代保持在 $\Omega$ 内，则该迭代方法称为\textbf{梯度下降}（gradient descent），也称\textbf{最速下降}（steepest descent）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch07-梯度下降; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch07-梯度下降; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 “最速下降”这一名称来自如下事实：在所有单位长度的方向 $\mathbf{d}$ 中，方向导数 $\mathbf{d}^{\mathsf T}\nabla E$ 在 $\mathbf{d}=-\nabla E/\|\nabla E\|$ 处取到最小值，因此负梯度方向是局部下降最快的方向。但“局部最快”不等于“全局最优路径”：\cref{figure:ch07-山谷}所示的狭长山谷中，负梯度方向几乎垂直于通向极小值的方向，于是梯度下降会在山谷两侧来回振荡而沿谷底前进极慢。理解这一点是理解动量法、Adam 等改进算法的前提：它们改动的都不是“下降方向最快”这一局部性质，而是对该局部性质的累积与修正。
 \end{remark}
 
 \begin{definition}[批处理方法]\label{definition:ch07-批处理}
-每次计算误差函数或其梯度都遍历全部训练样本的技术称为\textbf{批处理}（batch）方法。
+设训练集为 $\{(\mathbf{x}_{n},t_{n})\}_{n=1}^{N}$，整体误差函数为 $E(\mathbf{w})=\sum_{n=1}^{N}E_{n}(\mathbf{w})$。若每次计算误差函数值或其梯度 $\nabla E(\mathbf{w})$ 都遍历全部 $N$ 个训练样本、且所得梯度是整体梯度的精确值，则该计算方式称为\textbf{批处理}（batch）方法；相应地，每一步更新使用全部样本的梯度下降称为批梯度下降。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch07-批处理; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch07-批处理; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 由于误差函数是基于整个训练集定义的（见\eqref{align:ch07-误差分解}），批处理是\eqref{align:ch07-批量梯度下降}最直接的实现方式，它给出的梯度是误差函数梯度的精确值，不含随机误差。代价是单次迭代的计算量与训练集规模 $N$ 成正比：当 $N$ 达到 $10^{6}$ 量级时，一次参数更新就要处理上百万个样本，这在数据规模增长时很快变得不可接受。批处理的这一缺点直接催生了后面的随机梯度下降与小批量方法；反过来，当数据集很小或需要精确梯度（例如做数值诊断）时，批处理仍是首选。
 \end{remark}
 
@@ -74,11 +74,11 @@ E(\mathbf{w}) = \sum_{n=1}^{N}E_n(\mathbf{w}).
 其中索引 $n$ 在每次迭代后循环递增。
 
 \begin{definition}[随机梯度下降]\label{definition:ch07-随机梯度下降}
-按\eqref{align:ch07-随机梯度下降}每次仅用单个数据点的误差函数 $E_n$ 计算梯度并更新权重的方法称为\textbf{随机梯度下降}（Stochastic Gradient Descent, SGD）。其中索引 $n$ 按 $1,2,\cdots,N$ 循环递增；对整个训练集进行一次完整的遍历称为一个\textbf{训练轮次}（epoch）；当数据以流的形式持续生成时，这种技术也称为\textbf{在线梯度下降}（online gradient descent）。
+设训练集为 $\{(\mathbf{x}_{n},t_{n})\}_{n=1}^{N}$，整体误差函数分解为 $E(\mathbf{w})=\sum_{n=1}^{N}E_{n}(\mathbf{w})$，各 $E_{n}$ 一阶连续可微，学习率 $\eta>0$，初始权重 $\mathbf{w}^{(0)}\in\mathbb{R}^{W}$。若第 $\tau$ 步按下标 $n=n(\tau)$ 仅用单个数据点的误差函数 $E_{n}$ 计算梯度，即按\eqref{align:ch07-随机梯度下降}更新权重，则该方法称为\textbf{随机梯度下降}（Stochastic Gradient Descent, SGD）。其中索引 $n$ 按 $1,2,\cdots,N$ 循环递增，或每步从 $\{1,\cdots,N\}$ 中独立均匀抽取；对整个训练集的一次完整遍历称为一个\textbf{训练轮次}（epoch）；当数据以流的形式持续生成、$N$ 未知时，该技术也称为\textbf{在线梯度下降}（online gradient descent）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch07-随机梯度下降; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch07-随机梯度下降; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 随机梯度下降的合理性在于 $\nabla E_n$ 是 $\nabla E$ 的无偏估计：若 $n$ 从 $\{1,\cdots,N\}$ 中均匀抽取，则 $\mathbb{E}[\nabla E_n(\mathbf{w})]=\frac{1}{N}\sum_n\nabla E_n(\mathbf{w})=\nabla E(\mathbf{w})$。因此单步梯度虽然带有随机噪声，但其期望指向真实梯度方向，噪声在迭代平均中会被部分抵消。这一性质依赖“数据点独立同分布”这一前提（见\eqref{align:ch07-误差分解}上方）；若数据高度相关，单点梯度会产生系统性偏差，此时必须先打乱数据（见\cref{subsection:ch07-小批量方法}）。另外，单个数据点对应的误差函数 $E_n$ 与整体误差函数 $E$ 的驻点一般不同，正是这一差异使 SGD 的噪声具有逃离较浅局部极小值的作用，这一点与批处理梯度下降有本质区别。
 \end{remark}
 
@@ -109,7 +109,7 @@ $n\leftarrow 1$\\
 考虑一个极端的例子：复制某数据集的每一个数据点，把它的规模扩大一倍。此时比较批处理梯度下降与随机梯度下降完成同样多“有效”更新所需的工作量。
 \end{example}
 \begin{solution}
-设原数据集含 $N$ 个数据点，复制后含 $2N$ 个。复制不改变数据的经验分布，因此整体误差函数满足 $E_{\text{新}}(\mathbf{w})=2E_{\text{旧}}(\mathbf{w})$，其梯度也恰好是原来的两倍。对批处理梯度下降，把学习率取为原来的一半即可保持更新量不变，然而评估一次批梯度所需遍历的样本数由 $N$ 变成 $2N$，单次更新的计算量随之加倍，故完成同样多迭代的总计算量加倍。对随机梯度下降，每次更新只用到单个数据点，更新规则\eqref{align:ch07-随机梯度下降}与 $N$ 无关；若把遍历顺序安排为在每个原始数据点及其副本上各更新一次，则相邻两次更新的梯度相同（因为 $E_n$ 被复制），其效果等价于把原数据集上的那一步重复执行两次，而单步代价不变。也就是说，SGD 完全不受数据冗余的影响，它把重复数据带来的额外计算“浪费”在重复的信息上，而不是浪费在计算批梯度上。
+设原数据集含 $N$ 个数据点，复制后含 $2N$ 个。复制不改变数据的经验分布，因此整体误差函数满足 $E_{\text{新}}(\mathbf{w})=2E_{\text{旧}}(\mathbf{w})$，其梯度也恰好是原来的两倍。对批处理梯度下降，把学习率取为原来的一半即可保持更新量不变，然而评估一次批梯度所需遍历的样本数由 $N$ 变成 $2N$，单次更新的计算量随之加倍，故完成同样多迭代的总计算量加倍。对随机梯度下降，每次更新只用到单个数据点，更新规则\eqref{align:ch07-随机梯度下降}与 $N$ 无关；若把遍历顺序安排为在每个原始数据点及其副本上各更新一次，则相邻两次更新的梯度相同（因为 $E_n$ 被复制），其效果等价于把原数据集上的那一步重复执行两次，而单步代价不变。故随机梯度下降的单步代价与数据冗余无关，重复数据带来的额外计算并不增加每一步的开销。
 \end{solution}
 
 随机梯度下降的另一个重要特性是其具备逃离局部极小值的能力，因为整个数据集的误差函数的驻点，通常并不会是每个单独数据点对应误差函数的驻点。
@@ -119,11 +119,11 @@ $n\leftarrow 1$\\
 随机梯度下降的一个缺点是，基于单个数据点计算出的梯度，可能大大偏离整个数据集上误差函数的梯度。为了兼顾计算效率和估计精度，我们折衷一下，每次迭代时使用一小批数据点（称为小批量，mini-batch）来估计梯度。在确定小批量的合适大小时，需要注意，利用 $N$ 个样本估计均值的误差为 $\sigma/\sqrt{N}$（参见\cref{exercise:ch07-08}），其中 $\sigma$ 为生成这些数据的分布的标准差。这表明，通过增加小批量的规模来提升梯度估计精度的收益是递减的。例如，将小批量的规模增加 100 倍，估计误差仅能降低到原先的十分之一。选择小批量规模时还需要考虑的另一个因素是，充分利用运行代码的底层硬件架构。例如，在某些硬件平台上，小批量的规模如果是 2 的幂次（如 64、128、256 等）就可以获得更好的性能。
 
 \begin{definition}[小批量]\label{definition:ch07-小批量}
-在每次迭代中从整个训练集中随机抽取的、用于估计整体误差函数梯度的一小组数据点称为\textbf{小批量}（mini-batch）。
+设训练集含 $N$ 个数据点，整体误差函数为 $E(\mathbf{w})=\sum_{n=1}^{N}E_{n}(\mathbf{w})$，批量规模 $B\in\mathbb{N}$ 满足 $1\leqslant B\leqslant N$。若第 $\tau$ 步从 $\{1,\cdots,N\}$ 中随机抽取 $B$ 个指标构成集合 $\mathcal{B}_{\tau}$（无放回均匀抽取），并以小批量误差 $E_{\mathcal{B}_{\tau}}(\mathbf{w})=\sum_{n\in\mathcal{B}_{\tau}}E_{n}(\mathbf{w})$ 的梯度代替整体梯度、按 $\mathbf{w}^{(\tau)}=\mathbf{w}^{(\tau-1)}-\eta\nabla E_{\mathcal{B}_{\tau}}(\mathbf{w}^{(\tau-1)})$ 更新权重，则 $\mathcal{B}_{\tau}$ 所含的数据点称为一个\textbf{小批量}（mini-batch），$B$ 称为批量规模（batch size）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch07-小批量; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch07-小批量; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 小批量方法在批处理与单点 SGD 之间插值：批量规模 $B=1$ 时退化为\eqref{align:ch07-随机梯度下降}，$B=N$ 时退化为批处理。它的两个极端分别对应“梯度噪声大、但单步代价低”和“梯度精确、但单步代价高”，而 $B$ 取中间值时，梯度估计的方差按 $1/B$ 下降，单步代价按 $B$ 增长，二者的乘积大致不变——这正是“收益递减”的确切含义：把 $B$ 扩大 100 倍只能把标准差降到 $1/10$。定义中“随机抽取”不是可有可无的措辞：若数据按类别或时间排序，连续取出的 $B$ 个样本会高度相关，梯度估计将产生系统偏差，因此实践中必须先打乱数据，并在每个训练轮次重新打乱。
 \end{remark}
 
@@ -162,11 +162,11 @@ $n\leftarrow 1$\\
 尽管如此，在参数初始化过程中一个关键的考虑因素是对称性破缺（symmetry breaking）。考虑网络中的一组隐藏单元或输出单元，它们都接收相同的输入信号。如果这些单元的所有参数都被赋予了相同的值，例如全部初始化为零，那么这些单元的参数在训练过程中将始终步调一致地进行更新，并且每个单元都计算出相同的函数，导致功能上的冗余。为了解决这一问题，可以从某个预先定义的分布中随机采样来初始化参数，以打破这种对称性。在计算资源允许的情况下，可以采用不同的随机初始化策略来多次训练网络，最终选择在独立验证集上性能最佳的模型。
 
 \begin{definition}[对称性破缺]\label{definition:ch07-对称性破缺}
-在参数初始化时，通过给本可互换的单元赋予互不相同的随机参数值，使这些单元在训练中不再保持同步更新的做法，称为\textbf{对称性破缺}（symmetry breaking）。
+设网络中含一组单元 $\{u_{1},\cdots,u_{K}\}$，它们接收相同的输入信号且结构上可互换，即把任一单元的参数向量与另一单元的相交换不改变网络函数。若参数初始化时对这些单元赋予互不相同的随机参数值，使它们的预激活、梯度与参数在训练中不再保持相同，则该初始化做法称为\textbf{对称性破缺}（symmetry breaking）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch07-对称性破缺; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch07-对称性破缺; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 对称性的根源是网络函数对隐藏单元的置换不变（见\cref{subsection:ch06-权重空间的对称性}）：若同一层的两个单元具有完全相同的输入连接与参数，则它们的输出相同，反向传播传给它们的梯度也相同，于是无论训练多久二者始终保持相同。此时这两个单元在功能上等价于一个单元，网络的表达能力被白白浪费。随机初始化只是打破对称性的一种手段，其要点是“各不相同”而非“接近零”：初始化值过大同样会破坏训练，因为过大的预激活会使 sigmoid、tanh 等饱和激活函数的导数趋近于零（参见\cref{subsection:ch07-批量归一化}关于梯度消失的讨论）。初始化尺度与激活函数、网络深度之间的定量关系由下面的 He 初始化给出。
 \end{remark}
 
@@ -190,13 +190,13 @@ z_i^{(l)} = \mathrm{ReLU}\bigl(a_i^{(l)}\bigr),
 \end{align}
 
 \begin{proposition}[He 初始化的方差传播]\label{proposition:ch07-初始化方差}
-设第 $l-1$ 层的预激活 $a_j^{(l-1)}$ 相互独立、分布关于原点对称，并满足 $\mathbb{E}[a_j^{(l-1)}]=0$、$\mathrm{var}[a_j^{(l-1)}]=\lambda^{2}$；设 $z_j^{(l-1)}=\mathrm{ReLU}(a_j^{(l-1)})$ 相互独立、与权重独立，权重 $\{w_{ij}^{(l)}\}$ 相互独立且服从 $\mathcal{N}(0,\varepsilon^{2})$，第 $l$ 层的预激活由\eqref{align:ch07-前向计算}给出。则\eqref{align:ch07-初始化均值}与\eqref{align:ch07-初始化方差}成立；特别地，若要求第 $l$ 层的预激活也具有方差 $\lambda^{2}$，则初始化分布的标准差应取
+设 $l\geqslant2$、$M\in\mathbb{N}$；第 $l-1$ 层的预激活 $\{a_{j}^{(l-1)}\}_{j=1}^{M}$ 相互独立，其公共分布关于原点对称，且 $\mathbb{E}[a_{j}^{(l-1)}]=0$、$\mathrm{var}[a_{j}^{(l-1)}]=\lambda^{2}<\infty$；设 $z_{j}^{(l-1)}=\mathrm{ReLU}(a_{j}^{(l-1)})$，且 $\{z_{j}^{(l-1)}\}$ 相互独立并与权重独立；设权重 $\{w_{ij}^{(l)}\}_{j=1}^{M}$ 相互独立、同服从 $\mathcal{N}(0,\varepsilon^{2})$ 且与 $\{z_{j}^{(l-1)}\}$ 独立，第 $l$ 层的预激活由\eqref{align:ch07-前向计算}给出。则\eqref{align:ch07-初始化均值}与\eqref{align:ch07-初始化方差}成立；特别地，若要求第 $l$ 层的预激活也具有方差 $\lambda^{2}$，即 $\mathrm{var}[a_{i}^{(l)}]=\lambda^{2}$，则初始化分布的标准差应取
 \begin{align}
 \varepsilon = \sqrt{\frac{2}{M}}.
 \label{align:ch07-初始化尺度}
 \end{align}
 \end{proposition}
-\begin{proof}（重构新增）
+\begin{proof}
 由 $\mathbb{E}[w_{ij}^{(l)}]=0$ 及独立性，
 \begin{align*}
 \mathbb{E}\bigl[a_i^{(l)}\bigr] = \sum_{j=1}^{M}\mathbb{E}\bigl[w_{ij}^{(l)}\bigr]\mathbb{E}\bigl[z_j^{(l-1)}\bigr] = 0,
@@ -214,8 +214,8 @@ z_i^{(l)} = \mathrm{ReLU}\bigl(a_i^{(l)}\bigr),
 其中最后一步用到 $\mathbb{E}[a]=0$。于是 $\mathrm{var}[a_i^{(l)}]=M\varepsilon^{2}\lambda^{2}/2$，即\eqref{align:ch07-初始化方差}。令其等于 $\lambda^{2}$ 并解出 $\varepsilon$，即得\eqref{align:ch07-初始化尺度}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch07-初始化方差; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch07-初始化方差; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 推导中每一步的条件都不可省。独立性保证方差可以逐项相加，且交叉项 $\mathbb{E}[w_{ij}z_jw_{ik}z_k]=\mathbb{E}[w_{ij}]\mathbb{E}[w_{ik}]\mathbb{E}[z_jz_k]$ 因零均值而消失；$\mathbb{E}[w_{ij}^{(l)}]=0$ 使 $\mathbb{E}[wz]=0$，从而 $\mathrm{var}(wz)=\mathbb{E}[w^{2}]\mathbb{E}[z^{2}]$；$a_j^{(l-1)}$ 的分布关于原点对称则是因子 $1/2$ 的来源——ReLU 把负半边截成零，恰有一半的概率质量被保留，故 $\mathbb{E}[\mathrm{ReLU}(a)^{2}]=\mathbb{E}[a^{2}]/2$。若把激活函数换成 tanh 或恒等映射，该因子变为 $1$，相应的尺度是 $\sqrt{1/M}$ 型（Glorot 初始化的取值即介于 $\sqrt{1/M}$ 与 $\sqrt{2/M}$ 之间，由前后层单元数决定）。原书把 $\lambda^{2}$ 归于第 $l-1$ 层单元的输出 $z_j^{(l-1)}$；由于 ReLU 输出的二阶矩只有预激活二阶矩的一半，因子 $1/2$ 只有在把 $\lambda^{2}$ 理解为预激活方差时才成立，这里按后一理解陈述，二者在 $\mathbb{E}[z]\approx0$ 的近似下一致。结论的实际意义是：若每层都按\eqref{align:ch07-初始化尺度}初始化，则前向传播中预激活的方差逐层保持不变；若 $\varepsilon$ 偏小，方差逐层衰减到零，信号无法传到深层；若 $\varepsilon$ 偏大，方差逐层放大，最终饱和或溢出。这正是“既不衰减也不爆炸”的定量表述，也是后面\cref{subsection:ch07-批量归一化}讨论梯度消失与梯度爆炸的出发点。需要注意，推导假定各层之间严格独立同分布，真实网络中这一假定只是近似，因此\eqref{align:ch07-初始化尺度}应视为尺度选择的指导而非精确公式。
 \end{remark}
 

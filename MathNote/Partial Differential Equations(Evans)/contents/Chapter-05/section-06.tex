@@ -1112,6 +1112,42 @@ D^{\alpha}\overline{u}\in C^{0,1-\frac{n}{q}}(\mathbb{R}^{n})\subset C^{0,\gamma
 上述常数 $CC_0$ 由每一步的常数复合而成, 只依赖于 $k$、$p$、$n$、$\gamma$ 与 $U$.
 \end{proof}
 
-各种一般的Sobolev型不等式也可利用Fourier变换证明：见习题 20。
+\begin{theorem}[$W^{\infty,p}(U)$ 的光滑性]\label{theorem:ch05-Winfty光滑性}
+设 $U\subseteq\mathbb{R}^n$ 为非空开集，$1\leqslant p\leqslant\infty$。
+\begin{enumerate}[(1)]
+\item $W^{\infty,p}(U)\subseteq C^\infty(U)$。
+
+\item 若 $U$ 有界且 $\partial U$ 为 $C^1$，则
+\begin{align*}
+W^{\infty,p}(U)=C^\infty(\overline U)
+\end{align*}
+作为集合；即 $W^{\infty,p}(U)$ 的每个等价类都有 $C^\infty(\overline U)$ 的代表，且 $C^\infty(\overline U)\subseteq W^{\infty,p}(U)$。
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+
+(1) 任取 $u\in W^{\infty,p}(U)$ 与 $x_0\in U$。取 $r>0$，使得
+\begin{align*}
+B\triangleq B(x_0,r)\subset\subset U.
+\end{align*}
+固定 $m\geqslant0$。取整数 $k$ 满足
+\begin{align*}
+k>\frac np,\qquad k-\left[\frac np\right]-1\geqslant m.
+\end{align*}
+这样的 $k$ 存在；当 $p=\infty$ 时 $\frac np=0$，取 $k\geqslant m+1$ 即可。因为 $u\in W^{\infty,p}(U)\subseteq W^{k,p}(U)$，故 $u|_B\in W^{k,p}(B)$。$B$ 是有界开集且 $\partial B$ 为 $C^\infty$，由\hyperref[theorem:ch05-一般Sobolev不等式]{一般Sobolev不等式}知
+\begin{align*}
+u|_B\in C^{k-\left[\frac np\right]-1,\gamma}(\overline B)\subseteq C^m(\overline B).
+\end{align*}
+因此 $u\in C^m(B)$。由 $m$ 的任意性，$u\in C^\infty(B)$。再由 $x_0$ 的任意性，$u\in C^\infty(U)$。
+
+(2) 先证 $C^\infty(\overline U)\subseteq W^{\infty,p}(U)$。任取 $v\in C^\infty(\overline U)$。对任意多重指标 $\alpha$，$D^\alpha v$ 在紧集 $\overline U$ 上连续，故有界；又 $|U|<\infty$，所以 $D^\alpha v\in L^p(U)$（当 $p=\infty$ 时，有界即属于 $L^\infty(U)$）。因此 $v$ 的各阶弱导数都存在且属于 $L^p(U)$，即 $v\in W^{\infty,p}(U)$。
+
+再证 $W^{\infty,p}(U)\subseteq C^\infty(\overline U)$。任取 $u\in W^{\infty,p}(U)$ 与 $m\geqslant0$。取 $k$ 同上。因为 $u\in W^{k,p}(U)$，由\cref{theorem:ch05-一般Sobolev不等式}（应用于 $U$），
+\begin{align*}
+u\in C^{k-\left[\frac np\right]-1,\gamma}(\overline U)\subseteq C^m(\overline U).
+\end{align*}
+由 $m$ 的任意性，$u\in C^\infty(\overline U)$。不同 $m$ 得到的代表在 $U$ 上几乎处处等于 $u$，故彼此几乎处处相等；又它们都连续，因此在 $\overline U$ 上处处相等，于是给出同一个 $C^\infty(\overline U)$ 代表。结合上面的反向包含，即得 $W^{\infty,p}(U)=C^\infty(\overline U)$。
+\end{proof}
+
 
 \end{document}

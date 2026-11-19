@@ -40,11 +40,15 @@ I swam across the river to get to the other bank.
 我们既可以使用“I swam across”作为输入序列，关联目标为“the”；也可以使用“I swam across the”作为输入序列，关联目标为“river”，以此类推。不过，为了并行处理这些数据，我们必须确保网络无法通过提前查看序列来“作弊”，否则它只会学到将下一个输入直接复制到输出。这样的话，它就无法生成新的序列，因为根据定义，测试时后续 token 不可用。为了解决这个问题，我们做了两件事。首先，我们将输入序列向右移动一步，使输入 $\mathbf{x}_n$ 对应于输出 $\mathbf{y}_{n+1}$，目标为 $\mathbf{x}_{n+1}$，并在输入序列的第一个位置预置一个额外的 token，标记为 $\langle\mathrm{start}\rangle$。其次，请注意，Transformer 中的 token 是独立处理的，除非它们用于计算注意力权重，此时它们会通过点积成对地相互作用。因此，我们在每个注意层中引入了遮掩注意力（masked attention），有时也称因果注意力（causal attention）。在此过程中，我们将每个 token 对于序列中之后的所有 token 的注意力权重设为零。具体来说，只需要将\eqref{align:ch12-缩放点积注意力}定义的注意力矩阵 $\mathrm{Attention}(\mathbf{Q},\mathbf{K},\mathbf{V})$ 的所有相应元素置零，然后对其余元素进行归一化，使每一行的总和再次为 $1$ 即可。为达成这一目标，在实际操作中，可将相应的预激活值设置为 $-\infty$。这样一来，softmax 函数对相关输出的计算结果为零，并能对非零输出进行归一化处理。遮掩注意力矩阵的结构如\cref{figure:ch12-遮掩注意力}所示。
 
 \begin{definition}[遮掩自注意力]\label{definition:ch12-遮掩自注意力}
-设 $\mathbf{Q},\mathbf{K},\mathbf{V}$ 由\eqref{align:ch12-查询键值定义}给出。若对每个 $n$ 只允许位置 $m\leqslant n$ 的键参与注意力，即把 $m>n$ 的 softmax 预激活值置为 $-\infty$，其余按\eqref{align:ch12-缩放点积注意力}归一化，则称所得注意力为\textbf{遮掩自注意力}（masked self-attention）。
+设序列长度 $N\geqslant1$，查询与键的维数 $D_q=D_k\geqslant1$，值的维数 $D_v\geqslant1$；设 $\mathbf{Q},\mathbf{K},\mathbf{V}$ 由\eqref{align:ch12-查询键值定义}给出，即 $\mathbf{Q}\in\mathbb{R}^{N\times D_q}$、$\mathbf{K}\in\mathbb{R}^{N\times D_k}$、$\mathbf{V}\in\mathbb{R}^{N\times D_v}$，得分矩阵 $\mathbf{Q}\mathbf{K}^{\mathsf{T}}\in\mathbb{R}^{N\times N}$ 的 $(n,m)$ 元为 $\mathbf{q}_n^{\mathsf{T}}\mathbf{k}_m/\sqrt{D_k}$。取掩码矩阵 $\mathbf{M}\in\{0,-\infty\}^{N\times N}$ 为 $M_{nm}=0$ 当 $m\leqslant n$、$M_{nm}=-\infty$ 当 $m>n$；若以 $\mathbf{q}_n^{\mathsf{T}}\mathbf{k}_m/\sqrt{D_k}+M_{nm}$ 代替原来的得分，再按\eqref{align:ch12-缩放点积注意力}逐行归一化，即
+\begin{align*}
+a_{nm}=\frac{\exp\left(\mathbf{q}_n^{\mathsf{T}}\mathbf{k}_m/\sqrt{D_k}+M_{nm}\right)}{\sum_{m'=1}^{N}\exp\left(\mathbf{q}_n^{\mathsf{T}}\mathbf{k}_{m'}/\sqrt{D_k}+M_{nm'}\right)},
+\end{align*}
+则 $a_{nm}=0$ 对一切 $m>n$ 成立且 $\sum_{m=1}^{n}a_{nm}=1$，即第 $n$ 个输出只由位置 $m\leqslant n$ 的值向量组合而成。把由此得到的注意力称为遮掩自注意力（masked self-attention），把 $\mathbf{M}$ 称为因果掩码。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch12-遮掩自注意力; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch12-遮掩自注意力; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 遮掩的作用是“在训练时模拟推理时的信息约束”：推理时位置 $n$ 只能看到前 $n$ 个 token，因此训练时也不许它看后面的内容，否则模型会退化为“复制下一个输入”的恒等映射。用 $-\infty$ 而不是 $0$ 来屏蔽是有讲究的：若把未归一化的权重置零，softmax 的分母仍包含这些项，归一化后每行之和不再是原先的 $1$，且被屏蔽项会分走概率质量；置 $-\infty$ 后 $\exp(-\infty)=0$，这些项在分子与分母中同时精确消失，归一化自动只在可见集合上进行。由于屏蔽模式只依赖位置而不依赖数据，它可以在每个注意力头、每一层复用同一张下三角掩码。定义中“$m\leqslant n$”包含自身，这是必要的：位置 $n$ 的表示必须能看见自己。
 \end{remark}
 
@@ -94,8 +98,8 @@ y_i=\frac{\exp\left(a_i/T\right)}{\sum_j\exp\left(a_j/T\right)}
 设 logits 为 $a_1,\cdots,a_K$。若按\eqref{align:ch12-温度softmax}把 softmax 的输出 $y_i$ 作为第 $i$ 个 token 的采样概率，则称参数 $T>0$ 为\textbf{温度}，相应过程称为\textbf{温度采样}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch12-温度采样; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch12-温度采样; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 温度把“确定性”与“随机性”放进同一个连续参数里：$T$ 越小，logits 的差异被放大，分布越尖锐；$T$ 越大，差异被压平，分布越均匀。$T=1$ 时恢复原始 softmax，因此它不改变模型的训练，只改变推理时的采样行为。它的实际作用是对长尾的抑制程度可调：$T<1$ 时低概率 token 的采样机会急剧下降，$T>1$ 时则会引入更多罕见词。注意定义要求 $T>0$：$T=0$ 时公式无定义，应理解为极限，而不是直接代入。温度采样与 top-$K$、top-$p$ 并不冲突，实际系统常先截断再调温。
 \end{remark}
 
@@ -107,8 +111,8 @@ y_i=\frac{\exp\left(a_i/T\right)}{\sum_j\exp\left(a_j/T\right)}
 写 $y_i=\exp\left((a_i-a_{i^*})/T\right)\big/\sum_j\exp\left((a_j-a_{i^*})/T\right)$。对 $i\neq i^*$ 有 $a_i-a_{i^*}<0$，当 $T\to0^{+}$ 时该指数趋于 $0$；分子与分母中 $i^*$ 项均趋于 $1$，故 $y_{i^*}\to1$，其余趋于 $0$。当 $T\to\infty$ 时所有 $(a_i-a_{i^*})/T\to0$，故 $y_i\to1/K$。$T=1$ 时\eqref{align:ch12-温度softmax}就是 softmax 的定义。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch12-温度极限; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch12-温度极限; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 该命题说明贪婪搜索不是独立于采样之外的算法，而是温度采样在 $T\to0$ 时的极限，这解释了为什么 $T$ 很小时生成文本接近确定、重复率高，而 $T$ 很大时言辞紊乱：分布被拉平后，长尾 token 与合理 token 的概率差距消失。$T\to\infty$ 的均匀极限给出了最坏情形的参照：此时模型输出与输入完全无关，退化为随机打字。这两个极限也提示调温的合理区间是 $0<T\leqslant1$ 附近。
 \end{remark}
 
@@ -149,8 +153,8 @@ I $\langle\mathrm{mask}\rangle$ across the river to get to the $\langle\mathrm{m
 损失是各被选中位置负对数似然之和，只有这些位置的目标已知，其余位置的输出不进入损失。由期望的线性性，位置 $n$ 被选中的概率为 $q$，故它进入损失的期望次数为 $q$；$N$ 个位置合计为 $qN$ 个有效标签，而自回归模型在同一序列上有 $N$ 个标签。文中取 $q=15\%$，即得结论。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch12-掩码损失; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch12-掩码损失; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 该命题给出文中“编码器模型效率较低”的定量解释：同一段文本，自回归训练能提供 $N$ 个监督信号（每个位置都预测下一个 token），而掩码训练只提供约 $qN=0.15N$ 个。这也是编码器模型无法直接用于生成的原因——它从未学习“给定前缀续写”的条件分布。80/10/10 的替换规则则是为了缓解训练与微调的不匹配：若永远只用 $\langle\mathrm{mask}\rangle$，模型将只学会“看到 mask 就填词”，而微调时输入中根本没有 mask；保留 10\% 原词、10\% 随机词，使模型对“输入可能被污染”具有鲁棒性。
 \end{remark}
 
@@ -159,18 +163,18 @@ I $\langle\mathrm{mask}\rangle$ across the river to get to the $\langle\mathrm{m
 为完整起见，我们简要讨论一下第三类 Transformer 模型，此类 Transformer 模型将编码器与解码器做了结合，正如 Vaswani et al.（2017）在最初的 Transformer 论文中所讨论的那样。请参阅将句子从英语翻译成荷兰语的任务。如前所述，我们可以使用解码器型 Transformer 逐个生成与荷兰语输出相对应的 token 序列（参见\cref{subsection:ch12-解码器型Transformer}）。主要区别在于，该输出需要以与英文句子相对应的整个输入序列为条件。编码器型 Transformer 可用于将输入 token 序列映射为合适的内部表示，我们用 $\mathbf{Z}$ 表示。为了将 $\mathbf{Z}$ 纳入输出序列的生成过程，我们使用了一种经过修正的注意力机制，称为交叉注意力（cross attention）。交叉注意力与自注意力相似，只是虽然查询向量来自正在生成的序列（在本例中指的是荷兰语输出序列），但键向量和值向量来自 $\mathbf{Z}$ 所代表的序列，如\cref{figure:ch12-交叉注意力}所示。回到我们对视频流服务的类比，这就好比用户将其查询向量发送给不同的流媒体公司，流媒体公司会将其与自己的键向量集作比较，以找到最佳匹配，然后以电影的形式返回相关的值向量。将编码器和解码器组件结合起来，即得到\cref{figure:ch12-序列到序列}所示的模型架构。该模型可以使用成对的输入句子和输出句子进行训练。
 
 \begin{definition}[交叉注意力]\label{definition:ch12-交叉注意力}
-设编码器输出为 $\mathbf{Z}\in\mathbb{R}^{N'\times D}$，解码器当前层的表示为 $\mathbf{X}\in\mathbb{R}^{N\times D}$。若查询由解码器一侧给出而键、值由编码器一侧给出，即
+设编码器输出序列长度 $N'\geqslant1$，解码器当前序列长度 $N\geqslant1$，两者的嵌入维数同为 $D\geqslant1$；设编码器输出 $\mathbf{Z}\in\mathbb{R}^{N'\times D}$ 为 $N'$ 行 $D$ 列的实矩阵，解码器当前层的表示 $\mathbf{X}\in\mathbb{R}^{N\times D}$ 为 $N$ 行 $D$ 列的实矩阵；设 $D_q=D_k\geqslant1$、$D_v\geqslant1$，$\mathbf{W}^{(q)}\in\mathbb{R}^{D\times D_q}$、$\mathbf{W}^{(k)}\in\mathbb{R}^{D\times D_k}$、$\mathbf{W}^{(v)}\in\mathbb{R}^{D\times D_v}$ 为可学习实矩阵。若查询由解码器一侧给出而键、值由编码器一侧给出，即
 \begin{align}
 \mathbf{Q}=\mathbf{X}\mathbf{W}^{(q)},\qquad
 \mathbf{K}=\mathbf{Z}\mathbf{W}^{(k)},\qquad
 \mathbf{V}=\mathbf{Z}\mathbf{W}^{(v)},
 \label{align:ch12-交叉注意力}
 \end{align}
-再按\eqref{align:ch12-缩放点积注意力}计算输出，则称该注意力为\textbf{交叉注意力}（cross attention）。
+其中 $\mathbf{Q}\in\mathbb{R}^{N\times D_q}$、$\mathbf{K}\in\mathbb{R}^{N'\times D_k}$、$\mathbf{V}\in\mathbb{R}^{N'\times D_v}$，再按\eqref{align:ch12-缩放点积注意力}计算输出，则把该注意力称为交叉注意力（cross attention）。交叉注意力要求 $D_q=D_k$，但查询序列长度 $N$ 与键值序列长度 $N'$ 不必相等；由此得到的输出为 $N$ 行 $D_v$ 列的实矩阵，其第 $n$ 行只依赖解码器的第 $n$ 个位置与编码器的全部 $N'$ 个位置。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch12-交叉注意力; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch12-交叉注意力; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 交叉注意力与自注意力的唯一差别在于 $(\mathbf{Q},\mathbf{K},\mathbf{V})$ 的来源：自注意力三者同源，故 $N\times N$ 的注意力矩阵刻画“序列内部各位置的关系”；交叉注意力中 $\mathbf{Q}$ 来自解码器（长度 $N$）、$\mathbf{K},\mathbf{V}$ 来自编码器（长度 $N'$），注意力矩阵为 $N\times N'$，刻画“输出每个位置应读取输入的哪些部分”。这正是机器翻译中“对齐”的软实现：生成第 $n$ 个荷兰语词时，模型可以按权重读取英语句子的任意位置。条件 $D_q=D_k$ 仍然必要，但两侧序列长度可以不同，这也是它与自注意力在形状上最显著的区别。编码器只计算一次 $\mathbf{Z}$，所有解码层复用它，因此交叉注意力不增加编码成本。
 \end{remark}
 

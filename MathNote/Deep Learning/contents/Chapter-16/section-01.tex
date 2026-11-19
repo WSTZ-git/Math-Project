@@ -59,11 +59,11 @@ PCA 可以定义为最大化投影数据方差的线性投影（Hotelling, 1933�
 因此，当我们将 $\bm{u}_1$ 设置为具有最大特征值 $\lambda_1$ 的特征向量时，方差将达到最大。
 
 \begin{definition}[主成分与主子空间]\label{definition:ch16-主成分}
-设 $\bm{S}$ 是数据集的 $D\times D$ 协方差矩阵，其特征值为 $\lambda_1\geqslant\lambda_2\geqslant\cdots\geqslant\lambda_D$，对应的单位特征向量为 $\bm{u}_1,\cdots,\bm{u}_D$。称对应于最大特征值的特征向量 $\bm{u}_1$ 为第一主成分（first principal component）。一般地，在 $\bm{u}_1,\cdots,\bm{u}_{M-1}$ 已经选定之后，称在所有与它们正交的单位向量中使投影方差 $\bm{u}^{\mathsf T}\bm{S}\bm{u}$ 取最大值的 $\bm{u}_M$ 为第 $M$ 个主成分，称由前 $M$ 个主成分张成的 $M$ 维线性子空间为主子空间（principal subspace）。
+设 $D\geqslant1$，$N\geqslant1$，数据点 $\bm{x}_n\in\mathbb{R}^{D}$（$n=1,\cdots,N$），样本协方差矩阵 $\bm{S}=\frac{1}{N}\sum_{n=1}^{N}(\bm{x}_n-\bar{\bm{x}})(\bm{x}_n-\bar{\bm{x}})^{\mathsf T}\in\mathbb{R}^{D\times D}$ 实对称半正定，其特征值 $\lambda_1\geqslant\lambda_2\geqslant\cdots\geqslant\lambda_D\geqslant0$，对应的单位特征向量 $\bm{u}_1,\cdots,\bm{u}_D$ 两两正交。则对应于最大特征值 $\lambda_1$ 的单位特征向量 $\bm{u}_1$ 称为\textbf{第一主成分}（first principal component）。一般地，设整数 $M$ 满足 $2\leqslant M\leqslant D$，在 $\bm{u}_1,\cdots,\bm{u}_{M-1}$ 已选定之后，使投影方差 $\bm{u}^{\mathsf T}\bm{S}\bm{u}$ 在集合 $\{\bm{u}\in\mathbb{R}^{D}:\|\bm{u}\|=1,\ \bm{u}^{\mathsf T}\bm{u}_j=0,\ j=1,\cdots,M-1\}$ 上取最大值的向量 $\bm{u}_M$ 称为\textbf{第 $M$ 个主成分}（该最大值点存在：可行集是单位球面与 $(M-1)$ 维子空间正交补的交，为非空紧集，而 $\bm{u}\mapsto\bm{u}^{\mathsf T}\bm{S}\bm{u}$ 连续）；由前 $M$ 个主成分张成的 $M$ 维线性子空间称为\textbf{主子空间}（principal subspace）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch16-主成分; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch16-主成分; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 PCA 要解决的问题是：在 $D$ 维数据空间中找出一个 $M$ 维线性子空间，使得把数据压缩到该子空间上所丢失的信息尽可能少。这里把“信息”量化为投影后数据的方差，理由是：若某个方向上的投影几乎没有变化，那么沿该方向的坐标对区分数据点毫无贡献，删去它不会损失可分性；反之，投影方差大的方向保留了数据的主要变动。因此“最大化投影方差”是对“保留最多信息”的一种可计算的具体化。
 
 定义中的几个条件各有作用。第一，归一化约束 $\bm{u}_1^{\mathsf T}\bm{u}_1=1$ 不是数学上的限制而是必要的：若不加约束，$\bm{u}_1^{\mathsf T}\bm{S}\bm{u}_1$ 可以沿任一使二次型取正的方向无限增大，最大化问题没有解；归一化把可行集变成紧集（单位球面），从而最大值一定取到。第二，$M$ 被当作给定常数，是因为主成分的个数是模型选择问题，本书后面会用 Bayes 方法从数据中确定它；此处先假定已知，以免与优化问题混在一起。第三，协方差矩阵 $\bm{S}$ 对称半正定，故其特征值非负且可取正交特征向量组，这是\eqref{align:ch16-特征方程}有实解并可按大小排序的前提。此外，$\bm{S}$ 采用除以 $N$ 的约定，除以 $N-1$ 的无偏估计只与之相差一个常数因子，不影响特征向量的结论。
@@ -72,14 +72,14 @@ PCA 要解决的问题是：在 $D$ 维数据空间中找出一个 $M$ 维线性
 我们可以通过逐步的方式定义更多的主成分，方法就是选取一个新方向，使其在所有与已考虑方向正交的方向中最大化投影后的方差。考虑 $M$ 维投影空间的一般情况，投影数据方差最大化的最优线性投影由数据协方差矩阵 $\bm{S}$ 对应于最大特征值 $\lambda_1,\cdots,\lambda_M$ 的 $M$ 个特征向量 $\bm{u}_1,\cdots,\bm{u}_M$ 定义（见\cref{exercise:ch16-01}）。这可以很容易地使用数学归纳法来证明。
 
 \begin{proposition}[最大方差表述的最优性]\label{proposition:ch16-最大方差}
-设 $\bm{S}$ 为 $D\times D$ 对称半正定矩阵，其特征值按 $\lambda_1\geqslant\cdots\geqslant\lambda_D\geqslant0$ 排列，对应的单位特征向量为 $\bm{u}_1,\cdots,\bm{u}_D$ 且两两正交。对任意 $1\leqslant M\leqslant D$，在全体满足 $\bm{u}_i^{\mathsf T}\bm{u}_j=\delta_{ij}$ 的 $D$ 维向量组 $\{\bm{u}_1,\cdots,\bm{u}_M\}$ 上，投影数据的方差之和
+设 $D\geqslant1$，$\bm{S}\in\mathbb{R}^{D\times D}$ 为实对称半正定矩阵，其特征值按 $\lambda_1\geqslant\cdots\geqslant\lambda_D\geqslant0$ 排列，对应的单位特征向量 $\bm{u}_1,\cdots,\bm{u}_D$ 两两正交（实对称矩阵的谱定理保证这样的特征向量组存在）。设整数 $M$ 满足 $1\leqslant M\leqslant D$。则二次型之和
 \begin{align*}
   \sum_{i=1}^{M}\bm{u}_i^{\mathsf T}\bm{S}\bm{u}_i
 \end{align*}
-的最大值等于 $\sum_{i=1}^{M}\lambda_i$，且当且仅当 $\{\bm{u}_1,\cdots,\bm{u}_M\}$ 张成由前 $M$ 个特征向量张成的子空间时取到。
+在集合 $\{(\bm{u}_1,\cdots,\bm{u}_M)\in(\mathbb{R}^{D})^{M}:\bm{u}_i^{\mathsf T}\bm{u}_j=\delta_{ij},\ 1\leqslant i,j\leqslant M\}$ 上的最大值存在，且等于 $\sum_{i=1}^{M}\lambda_i$。取到最大值的充要条件是：$\{\bm{u}_1,\cdots,\bm{u}_M\}$ 张成的 $M$ 维子空间包含于 $\bm{S}$ 的对应于特征值 $\lambda_1,\cdots,\lambda_M$ 的特征子空间之中。特别地，当 $\lambda_M>\lambda_{M+1}$（$M<D$）或 $M=D$ 时，取到最大值的充要条件是该子空间恰为 $\bm{u}_1,\cdots,\bm{u}_M$ 张成的子空间。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 对 $M$ 作归纳。$M=1$ 的情形已由\eqref{align:ch16-特征方程}与\eqref{align:ch16-特征值方差}给出：单位球面是紧集，$\bm{u}^{\mathsf T}\bm{S}\bm{u}$ 连续，故最大值存在；在约束 $\bm{u}^{\mathsf T}\bm{u}=1$ 下用乘子 $\lambda$，驻点满足 $\bm{S}\bm{u}=\lambda\bm{u}$，代回得目标值 $\lambda$，故最大值是最大特征值 $\lambda_1$，在 $\bm{u}=\bm{u}_1$（或其反向）处取到。
 
 设结论对 $M-1$ 成立，即 $\bm{u}_1,\cdots,\bm{u}_{M-1}$ 必须张成前 $M-1$ 个特征向量张成的子空间 $\mathcal{U}_{M-1}$，此时方差之和为 $\sum_{i=1}^{M-1}\lambda_i$。现在固定这一部分，只对 $\bm{u}_M$ 优化，约束为
@@ -94,16 +94,20 @@ PCA 要解决的问题是：在 $D$ 维数据空间中找出一个 $M$ 维线性
 \begin{align*}
   2\bm{S}\bm{u}_M-2\lambda\bm{u}_M+\sum_{j=1}^{M-1}\mu_j\bm{u}_j=\bm{0}.
 \end{align*}
-左乘 $\bm{u}_k^{\mathsf T}$（$k\leqslant M-1$），利用 $\bm{u}_M^{\mathsf T}\bm{u}_k=0$ 与 $\bm{u}_j^{\mathsf T}\bm{u}_k=\delta_{jk}$，得 $2\bm{u}_k^{\mathsf T}\bm{S}\bm{u}_M+\mu_k=0$。由于 $\bm{u}_k$ 是 $\bm{S}$ 的特征向量，$\bm{u}_k^{\mathsf T}\bm{S}\bm{u}_M=\lambda_k\bm{u}_k^{\mathsf T}\bm{u}_M=0$，故 $\mu_k=0$。于是驻点方程退化为 $\bm{S}\bm{u}_M=\lambda\bm{u}_M$：$\bm{u}_M$ 是 $\bm{S}$ 的特征向量，且与 $\mathcal{U}_{M-1}$ 正交，因此它必是 $\bm{u}_M,\cdots,\bm{u}_D$ 之一，相应的目标值为其特征值。在剩下的特征值 $\lambda_M\geqslant\cdots\geqslant\lambda_D$ 中取最大者，即得 $\bm{u}_M=\bm{u}_{M+1}$ 之前的那一个，也就是 $\bm{u}_M$，目标值为 $\lambda_M$。故 $M$ 时的最大值为 $\sum_{i=1}^{M}\lambda_i$。
+左乘 $\bm{u}_k^{\mathsf T}$（$k\leqslant M-1$），利用 $\bm{u}_M^{\mathsf T}\bm{u}_k=0$ 与 $\bm{u}_j^{\mathsf T}\bm{u}_k=\delta_{jk}$，得 $2\bm{u}_k^{\mathsf T}\bm{S}\bm{u}_M+\mu_k=0$。由于 $\bm{u}_k$ 是 $\bm{S}$ 的特征向量，$\bm{u}_k^{\mathsf T}\bm{S}\bm{u}_M=\lambda_k\bm{u}_k^{\mathsf T}\bm{u}_M=0$，故 $\mu_k=0$。于是驻点方程退化为 $\bm{S}\bm{u}_M=\lambda\bm{u}_M$：$\bm{u}_M$ 是 $\bm{S}$ 的特征向量，且与 $\mathcal{U}_{M-1}$ 正交，因此它必是 $\bm{u}_M,\cdots,\bm{u}_D$ 之一，相应的目标值为其特征值。在剩下的特征值 $\lambda_M\geqslant\cdots\geqslant\lambda_D$ 中取最大者，即得 $\bm{u}_M$，相应的目标值为 $\lambda_M$。故 $M$ 时的最大值为 $\sum_{i=1}^{M}\lambda_i$。
 
 唯一性：若某个最优解张成的子空间与 $\mathcal{U}_M$ 不同，则它对应的特征值之和不可能是最大的 $M$ 个（除非出现重特征值，此时不同的特征向量组合张成同一子空间，命题所说的“张成”仍然成立）。因此最优解在子空间意义下唯一。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch16-最大方差; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch16-最大方差; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 本命题把“逐步选取正交方向”这一构造提升为全局最优性断言：不必逐个求解 $M$ 次约束优化，只需对 $\bm{S}$ 作一次特征分解，取最大的 $M$ 个特征值对应的特征向量即可。证明的关键是：在已取定前 $M-1$ 个方向后，新方向对旧方向的乘子全部为零，因为旧方向本身就是 $\bm{S}$ 的特征向量、与任何候选新方向正交；这一点使问题逐层解耦。
 
-条件的作用如下。$\bm{S}$ 的对称性是“特征向量可取为正交组”的来源；半正定性保证 $\lambda_i\geqslant0$，从而“取最大的特征值”等价于“取最大的方差”。若 $\bm{S}$ 有重特征值，则对应的特征向量不唯一，但张成的子空间唯一，命题的结论仍成立；此时主成分子空间仍然良定义，只是单个主成分的方向不唯一。若去掉正交约束，问题会退化：各 $\bm{u}_i$ 都取同一个最大特征向量时方差之和为 $M\lambda_1$，这并没有给出 $M$ 个不同的方向，故正交约束是必要的。
+条件的作用如下。$\bm{S}$ 的对称性是“特征向量可取为正交组”的来源；半正定性保证 $\lambda_i\geqslant0$，从而“取最大的特征值”等价于“取最大的方差”。若 $\bm{S}$ 有重特征值，则取到最大值的子空间一般不唯一：只要该子空间落在前 $M$ 个特征值（计重数）对应的特征子空间内即可，命题已按这一形式写出充要条件；当 $\lambda_M>\lambda_{M+1}$ 时主子空间才唯一，此时单个主成分的方向仍可差一个符号。若去掉正交约束，问题会退化：各 $\bm{u}_i$ 都取同一个最大特征向量时方差之和为 $M\lambda_1$，这并没有给出 $M$ 个不同的方向，故正交约束是必要的。
+\end{remark}
+
+\begin{remark}（原文问题说明）
+原文把取到最大值的条件写成“当且仅当 $\{\bm{u}_1,\cdots,\bm{u}_M\}$ 张成由前 $M$ 个特征向量张成的子空间”。当 $\lambda_M=\lambda_{M+1}$ 时这一条件过强：任取前 $M$ 个特征值对应的特征子空间中的 $M$ 维子空间都取到最大值 $\sum_{i=1}^{M}\lambda_i$，却未必张成 $\bm{u}_1,\cdots,\bm{u}_M$ 张成的子空间（例如把 $\bm{u}_M$ 换成与它同特征值的 $\bm{u}_{M+1}$）。命题中已改写为“子空间包含于前 $M$ 个特征值对应的特征子空间”，并把“$\lambda_M>\lambda_{M+1}$（或 $M=D$）”单列为子空间唯一的充分条件。
 \end{remark}
 
 综上，PCA 涉及计算数据集的均值 $\bar{\bm{x}}$ 和数据协方差矩阵 $\bm{S}$，然后找到 $\bm{S}$ 对应于最大特征值的 $M$ 个特征向量。关于寻找特征向量和特征值的算法，以及与特征向量分解相关的附加定理，可以在 Golub and Van Loan (1996) 中找到。请注意，计算一个 $D\times D$ 大小矩阵的完整特征向量分解的计算成本是 $\mathcal{O}(D^3)$。如果打算将数据投影到前 $M$ 个主成分上，则只需要找到前 $M$ 个特征值和特征向量。这可以通过使用更有效的方法来完成，比如幂方法（Golub and Van Loan, 1996），复杂度为 $\mathcal{O}(MD^2)$，当然也可以使用 EM 算法（见\cref{subsection:ch16-PCA的EM算法}）。
@@ -169,7 +173,7 @@ PCA 要解决的问题是：在 $D$ 维数据空间中找出一个 $M$ 维线性
 将 $\tilde{J}$ 关于 $\bm{u}_2$ 的导数设为零，得到 $\bm{S}\bm{u}_2=\lambda_2\bm{u}_2$，即 $\bm{u}_2$ 是 $\bm{S}$ 的一个特征向量，具有特征值 $\lambda_2$。因此，任何特征向量都将定义误差度量的驻点。要找到 $J$ 在最小值点的值，可以将方程对 $\bm{u}_2$ 的解回代到误差度量中，得到 $J=\lambda_2$。因此，我们可以通过选择 $\bm{u}_2$ 为对应于两个特征值中较小的那个特征向量来获得 $J$ 的最小值。我们应该选择让主成分子空间与具有较大特征值的特征向量对齐。这个结果符合我们的直觉，即为了最小化平均平方投影距离，应该选择主成分子空间，使其通过数据点的平均值并与最大方差的方向对齐。只要特征值相等，任何选择的主方向都将产生相同的 $J$ 值。
 \end{example}
 
-\begin{remark}（重构新增）
+\begin{remark}
 这个二维例子把一般情形中的两个量分离清楚了：$J$ 的驻点条件与最大方差表述的驻点条件是同一个特征方程，区别只在于目标函数是 $\bm{u}^{\mathsf T}\bm{S}\bm{u}$ 还是它的相反数，因此驻点集合相同，而“取最大”与“取最小”的差别就体现为选最大还是最小的特征值。这正是两种表述等价的直观来源。当两个特征值相等时，$\bm{S}$ 是单位矩阵的倍数，所有方向的投影误差都相同，$J$ 与方向无关，这与“任何选择的主方向都产生相同的 $J$”一致。
 \end{remark}
 
@@ -193,10 +197,15 @@ PCA 要解决的问题是：在 $D$ 维数据空间中找出一个 $M$ 维线性
 \end{align}
 
 \begin{proposition}[最小误差表述与最大方差表述的等价性]\label{proposition:ch16-最小误差}
-设 $\bm{S}$ 为 $D\times D$ 对称半正定矩阵，特征值按 $\lambda_1\geqslant\cdots\geqslant\lambda_D\geqslant0$ 排列。在 $\tilde{\bm{x}}_n$ 由\eqref{align:ch16-近似}给出、$\{\bm{u}_i\}$ 满足\eqref{align:ch16-正交基}的条件下，误差度量 $J$ 的最小值为 $\sum_{i=M+1}^{D}\lambda_i$，且最小值在 $\bm{u}_1,\cdots,\bm{u}_M$ 张成前 $M$ 个特征向量张成的子空间时取到；换言之，最小误差表述与\cref{proposition:ch16-最大方差}的最大方差表述给出同一个主子空间。
+设 $N\geqslant1$，$D\geqslant1$，整数 $M$ 满足 $1\leqslant M<D$；数据 $\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)^{\mathsf T}\in\mathbb{R}^{N\times D}$，样本均值 $\bar{\bm{x}}=\frac{1}{N}\sum_{n=1}^{N}\bm{x}_n$，样本协方差矩阵 $\bm{S}=\frac{1}{N}\sum_{n=1}^{N}(\bm{x}_n-\bar{\bm{x}})(\bm{x}_n-\bar{\bm{x}})^{\mathsf T}\in\mathbb{R}^{D\times D}$ 实对称半正定，其特征值 $\lambda_1\geqslant\cdots\geqslant\lambda_D\geqslant0$，对应的单位特征向量 $\bm{u}_1,\cdots,\bm{u}_D$ 两两正交。设 $\{\bm{u}_i\}_{i=1}^{D}$ 为 $\mathbb{R}^{D}$ 的完备正交规范基，即满足\eqref{align:ch16-正交基}；近似 $\tilde{\bm{x}}_n$ 由\eqref{align:ch16-近似}给出，其中 $z_{ni}\in\mathbb{R}$（$1\leqslant i\leqslant M$）、$b_i\in\mathbb{R}$（$M+1\leqslant i\leqslant D$），误差度量 $J$ 由\eqref{align:ch16-重建误差}定义。则 $J$ 在全体 $(\{z_{ni}\},\{b_i\},\{\bm{u}_i\})$ 上的最小值存在且等于 $\sum_{i=M+1}^{D}\lambda_i$，且最小值当且仅当下列两条同时成立时取到：
+\begin{enumerate}
+\item $z_{ni}=\bm{x}_n^{\mathsf T}\bm{u}_i$（$1\leqslant i\leqslant M$）与 $b_i=\bar{\bm{x}}^{\mathsf T}\bm{u}_i$（$M+1\leqslant i\leqslant D$）；
+\item $\{\bm{u}_{M+1},\cdots,\bm{u}_D\}$ 张成的子空间包含于 $\bm{S}$ 的对应于特征值 $\lambda_{M+1},\cdots,\lambda_D$ 的特征子空间之中。
+\end{enumerate}
+特别地，当 $\lambda_M>\lambda_{M+1}$ 时主子空间唯一，即 $\bm{u}_1,\cdots,\bm{u}_M$ 张成的子空间；换言之，最小误差表述与\cref{proposition:ch16-最大方差}的最大方差表述给出同一个主子空间。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 第一步，关于系数的最优化。把\eqref{align:ch16-近似}代入\eqref{align:ch16-重建误差}，并利用\eqref{align:ch16-正交基}展开范数：
 \begin{align*}
   J=\frac{1}{N}\sum_{n=1}^{N}\left\{\sum_{i=1}^{M}\left(z_{ni}-\bm{x}_n^{\mathsf T}\bm{u}_i\right)^2+\sum_{i=M+1}^{D}\left(b_i-\bm{x}_n^{\mathsf T}\bm{u}_i\right)^2\right\}.
@@ -212,13 +221,13 @@ PCA 要解决的问题是：在 $D$ 维数据空间中找出一个 $M$ 维线性
 \begin{align*}
   \bm{S}\tilde{\bm{U}}=\tilde{\bm{U}}\bm{H}.
 \end{align*}
-由于 $\bm{H}$ 对称，存在正交矩阵 $\bm{V}$ 使 $\bm{V}^{\mathsf T}\bm{H}\bm{V}=\bm{\Lambda}'$ 为对角矩阵。右乘 $\bm{V}$ 得 $\bm{S}(\tilde{\bm{U}}\bm{V})=(\tilde{\bm{U}}\bm{V})\bm{\Lambda}'$。又 $\tilde{\bm{U}}\bm{V}$ 的列仍两两正交且为单位向量，故不妨设 $\tilde{\bm{U}}$ 的列就是 $\bm{S}$ 的特征向量；此时 $\bm{H}=\tilde{\bm{U}}^{\mathsf T}\bm{S}\tilde{\bm{U}}=\bm{\Lambda}'$，$J=\operatorname{tr}(\bm{H})$ 等于所选 $D-M$ 个特征值之和。
+由于 $\bm{H}$ 对称，存在正交矩阵 $\bm{V}$ 使 $\bm{V}^{\mathsf T}\bm{H}\bm{V}=\bm{\Lambda}'$ 为对角矩阵。右乘 $\bm{V}$ 得 $\bm{S}(\tilde{\bm{U}}\bm{V})=(\tilde{\bm{U}}\bm{V})\bm{\Lambda}'$。又 $\tilde{\bm{U}}\bm{V}$ 的列仍两两正交且为单位向量，故不失一般性可设 $\tilde{\bm{U}}$ 的列就是 $\bm{S}$ 的特征向量；此时 $\bm{H}=\tilde{\bm{U}}^{\mathsf T}\bm{S}\tilde{\bm{U}}=\bm{\Lambda}'$，$J=\operatorname{tr}(\bm{H})$ 等于所选 $D-M$ 个特征值之和。
 
-第三步，取最小的 $D-M$ 个特征值 $\lambda_{M+1},\cdots,\lambda_D$ 即得 $J=\sum_{i=M+1}^{D}\lambda_i$，这就是 $J$ 的最小值；相应地，主子空间由剩下的 $M$ 个特征向量 $\bm{u}_1,\cdots,\bm{u}_M$ 张成，即前 $M$ 个最大特征值对应的特征向量张成的子空间。把它与\cref{proposition:ch16-最大方差}对照：那里最大化的正是 $\sum_{i=1}^{M}\bm{u}_i^{\mathsf T}\bm{S}\bm{u}_i$，而这里 $J=\sum_{i=M+1}^{D}\bm{u}_i^{\mathsf T}\bm{S}\bm{u}_i=\operatorname{tr}(\bm{S})-\sum_{i=1}^{M}\bm{u}_i^{\mathsf T}\bm{S}\bm{u}_i$（因为 $\{\bm{u}_i\}$ 是完备正交基，$\operatorname{tr}(\bm{S})=\sum_{i=1}^{D}\bm{u}_i^{\mathsf T}\bm{S}\bm{u}_i$）。由于 $\operatorname{tr}(\bm{S})$ 与基的选取无关，最小化 $J$ 与最大化前 $M$ 项之和是同一个问题，两者的最优子空间相同。
+第三步，取最小的 $D-M$ 个特征值 $\lambda_{M+1},\cdots,\lambda_D$ 即得 $J=\sum_{i=M+1}^{D}\lambda_i$，此即 $J$ 的最小值；相应地，主子空间由剩下的 $M$ 个特征向量 $\bm{u}_1,\cdots,\bm{u}_M$ 张成，即前 $M$ 个最大特征值对应的特征向量张成的子空间。把它与\cref{proposition:ch16-最大方差}对照：那里最大化的正是 $\sum_{i=1}^{M}\bm{u}_i^{\mathsf T}\bm{S}\bm{u}_i$，而这里 $J=\sum_{i=M+1}^{D}\bm{u}_i^{\mathsf T}\bm{S}\bm{u}_i=\operatorname{tr}(\bm{S})-\sum_{i=1}^{M}\bm{u}_i^{\mathsf T}\bm{S}\bm{u}_i$（因为 $\{\bm{u}_i\}$ 是完备正交基，$\operatorname{tr}(\bm{S})=\sum_{i=1}^{D}\bm{u}_i^{\mathsf T}\bm{S}\bm{u}_i$）。由于 $\operatorname{tr}(\bm{S})$ 与基的选取无关，最小化 $J$ 与最大化前 $M$ 项之和是同一个问题，两者的最优子空间相同。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch16-最小误差; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch16-最小误差; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 本命题说明 PCA 的两种经典表述——Hotelling 的最大方差表述与 Pearson 的最小误差表述——在最优化意义下完全等价，因此可以按计算上的方便任选其一。证明中真正起作用的结构是：$\{\bm{u}_i\}$ 是完备正交基，于是迹可分解为两部分，而被丢弃的那部分恰是 $J$。这条恒等式 $\operatorname{tr}(\bm{S})=\sum_{i}\bm{u}_i^{\mathsf T}\bm{S}\bm{u}_i$ 依赖正交归一条件\eqref{align:ch16-正交基}；若基不正交，交叉项不会消失，$J$ 就不再等于 $\operatorname{tr}(\bm{S})$ 减去保留部分，两种表述的等价性也随之失效。
 
 需要强调的是，“$J$ 的最小值为 $\sum_{i=M+1}^{D}\lambda_i$”这一结论中特征值必须按降序排列；若把最小的特征值排在前面，公式本身仍然成立，但“主子空间由前 $M$ 个特征向量张成”的说法就要改成“由最大的 $M$ 个特征值对应的特征向量张成”。此外，$\lambda_i$ 是投影误差的逐方向贡献，因此\eqref{align:ch16-误差最小值}也给出了选择 $M$ 的定量依据：当 $\lambda_{M+1},\cdots,\lambda_D$ 相对于 $\lambda_1,\cdots,\lambda_M$ 很小时，取 $M$ 维主子空间的误差可以忽略。
@@ -271,7 +280,7 @@ PCA 的另一个应用是数据压缩，我们用手写数字图像数据集来�
   \label{figure:ch16-PCA重建}
 \end{figure}
 
-\begin{remark}（重构新增）
+\begin{remark}
 压缩与重建是同一件事的两种说法：编码器把 $\bm{x}_n$ 映射为 $M$ 维码字 $\bm{z}_n=(\bm{x}_n-\bar{\bm{x}})^{\mathsf T}\bm{U}_M$，解码器用\eqref{align:ch16-重建}把它映回 $\tilde{\bm{x}}_n$。由于 $\bm{U}_M$ 的列正交归一，编码器是线性映射且不放大误差；又由\eqref{align:ch16-误差最小值}，重建的均方误差恰是被丢弃特征值之和，与码字分量无关。因此“保留 $M$ 个主成分”就是在给定码长的前提下使均方误差最小，而误差随 $M$ 的下降速度完全由特征值谱决定：谱衰减得越快，用很小的 $M$ 就能达到很小的误差，\cref{figure:ch16-特征值谱}给出的正是这一衰减曲线。
 \end{remark}
 
@@ -302,15 +311,15 @@ PCA 的另一个应用是数据预处理，其目标不是降低维度，而是�
 \end{align}
 
 \begin{definition}[白化]\label{definition:ch16-白化}
-设 $\bm{S}=\bm{U}\bm{L}\bm{U}^{\mathsf T}$ 为数据协方差矩阵的特征分解，其中 $\bm{U}$ 正交、$\bm{L}$ 为对角矩阵且对角元 $\lambda_i>0$。称线性变换
+设 $D\geqslant1$，$\bm{x}$ 为 $\mathbb{R}^{D}$ 中均值 $\mathbb{E}[\bm{x}]=\bar{\bm{x}}$、协方差矩阵 $\operatorname{cov}[\bm{x}]=\bm{S}\in\mathbb{R}^{D\times D}$ 的随机向量，$\bm{S}$ 实对称正定，其特征分解为 $\bm{S}=\bm{U}\bm{L}\bm{U}^{\mathsf T}$，其中 $\bm{U}$ 为 $D\times D$ 正交矩阵，$\bm{L}=\operatorname{diag}\{\lambda_1,\cdots,\lambda_D\}$ 的对角元满足 $\lambda_i>0$。则线性变换
 \begin{align*}
   \bm{x}\mapsto\bm{y}=\bm{L}^{-1/2}\bm{U}^{\mathsf T}(\bm{x}-\bar{\bm{x}})
 \end{align*}
-为白化（whitening），也称球化（sphering）；变换后的数据集 $\{\bm{y}_n\}$ 称为白化数据。
+称为\textbf{白化}（whitening），也称\textbf{球化}（sphering）；变换后的随机向量 $\bm{y}$ 称为白化数据。此时 $\mathbb{E}[\bm{y}]=\bm{0}$ 且 $\operatorname{cov}[\bm{y}]=\bm{L}^{-1/2}\bm{U}^{\mathsf T}\bm{S}\bm{U}\bm{L}^{-1/2}=\bm{I}_D$，即各分量零均值、单位方差且两两不相关。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch16-白化; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch16-白化; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 白化把“标准化”从逐坐标的缩放推广为整体的线性变换。逐坐标标准化只令每个分量的方差为 $1$，并不消除分量之间的相关性（\eqref{align:ch16-相关系数}中的非对角元一般不为零）；白化则同时做到零均值、单位协方差，即各分量不相关且方差相同，因此数据的协方差形状被“揉成”一个球。
 
 定义要求所有 $\lambda_i>0$。若某个 $\lambda_i=0$，$\bm{L}^{-1/2}$ 不存在，说明数据落在低维子空间里，此时只能在非零特征值对应的方向上白化，其余方向应删去（降维），这正是\cref{subsection:ch16-高维数据}讨论的情形。白化的代价是它依赖 $\bm{S}$ 的完整特征分解，复杂度为 $\mathcal{O}(D^3)$；当 $D$ 很大时通常先降维再白化。
@@ -363,7 +372,7 @@ PCA 的另一个应用是数据预处理，其目标不是降低维度，而是�
 
 总之，要应用这种方法，我们需要首先计算 $\bm{X}\bm{X}^{\mathsf T}$，然后找到它的特征向量和特征值，最后使用\eqref{align:ch16-高维归一化}在原始数据空间中计算特征向量。
 
-\begin{remark}（重构新增）
+\begin{remark}
 这一小节要解决的问题是“样本数少于维数”时 PCA 的可行性，包含两层困难。其一是统计上的：$N$ 个数据点至多张成 $N-1$ 维的子空间，因此当 $M\geqslant N$ 时，超出 $N-1$ 的那些“主成分”对应的方差恒为零，继续增加主成分数没有意义；这解释了为什么要求 $M\leqslant N-1$。其二是计算上的：$\bm{S}$ 是 $D\times D$ 矩阵，当 $D$ 达到百万量级时既无法存下也无法分解。
 
 \eqref{align:ch16-高维对偶}—\eqref{align:ch16-高维v}给出的对偶技巧把问题从 $D\times D$ 转到 $N\times N$：$\bm{X}\bm{X}^{\mathsf T}$ 与 $\bm{X}^{\mathsf T}\bm{X}$ 的非零特征值完全相同（这是 $\bm{A}\bm{B}$ 与 $\bm{B}\bm{A}$ 的非零谱相同这一事实的特例），因此只需对 $N\times N$ 矩阵作特征分解，代价从 $\mathcal{O}(D^3)$ 降到 $\mathcal{O}(N^3)$。\eqref{align:ch16-高维归一化}中的因子 $(N\lambda_i)^{-1/2}$ 来自 $\|\bm{X}^{\mathsf T}\bm{v}_i\|^2=\bm{v}_i^{\mathsf T}\bm{X}\bm{X}^{\mathsf T}\bm{v}_i=N\lambda_i\bm{v}_i^{\mathsf T}\bm{v}_i=N\lambda_i$，这一步用了 $\bm{v}_i$ 已是单位向量以及\eqref{align:ch16-高维v}；若 $\lambda_i=0$ 则该方向无从归一化，这与“零方差方向”是同一件事。

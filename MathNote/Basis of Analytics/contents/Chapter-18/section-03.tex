@@ -54,65 +54,113 @@ e^{x^2-x}&\geqslant 1+x^2-x=\frac{1+x^3}{1+x}\geqslant \frac{1}{1+x},\forall x>0
 \end{enumerate}
 \end{proof}
 
-\begin{proposition}[经典初等不等式]\label{proposition:经典初等不等式}
+\begin{proposition}[凸性不等式]\label{proposition:凸性不等式}
 \begin{enumerate}[(1)]
-\item\label{proposition:经典初等不等式-1} $\left| x^{\alpha}-y^{\alpha} \right|\leqslant \left| x-y \right|^{\alpha},\quad \forall x,y\geqslant 0,\,\,0<\alpha \leqslant 1.$
+\item\label{proposition:凸性不等式-1} $\left| x^{\alpha}-y^{\alpha} \right|\leqslant \left| x-y \right|^{\alpha},\quad \forall x,y\geqslant 0,\,\,0<\alpha \leqslant 1.$
 
-\item\label{proposition:经典初等不等式-2} 设\(a,b\geqslant0\),则
+\item\label{proposition:凸性不等式-2} 设 \(a,b\geqslant0\)，则
 \begin{align}\label{equation-12.777}
 \begin{cases}
 a^p + b^p\leqslant(a + b)^p\leqslant2^{p - 1}(a^p + b^p),& p\geqslant1,p\leqslant0\\
 a^p + b^p\geqslant(a + b)^p\geqslant2^{p - 1}(a^p + b^p),& 0 < p < 1
-\end{cases}
+\end{cases}.
+\end{align}
+
+\item\label{proposition:凸性不等式-3} 设 $N\geqslant1$，$a_1,\cdots,a_N\geqslant0$，$p\geqslant1$，则
+\begin{align}\label{equation-12.778}
+\left(\sum\limits_{j=1}^{N}a_j\right)^{p}
+\leqslant
+N^{p-1}\sum\limits_{j=1}^{N}a_j^{p}.
 \end{align}
 \end{enumerate}
 \end{proposition}
 \begin{note}
-不等式左右是奇次对称的，我们可以设\(t = \frac{a}{b}\in[0,1]\)，于是\eqref{equation-12.777}两边同时除以$b^p$得
-\[
+不等式左右是奇次对称的，我们可以设 $t = \frac{a}{b}\in[0,1]$，于是\eqref{equation-12.777}两边同时除以 $b^p$ 得
+\begin{align*}
 \begin{cases}
 t^p + 1\leqslant(t + 1)^p\leqslant2^{p - 1}(t^p + 1),& p\geqslant1,p\leqslant0\\
 t^p + 1\geqslant(t + 1)^p\geqslant2^{p - 1}(t^p + 1),& 0 < p < 1
 \end{cases}.
-\]
+\end{align*}
 \end{note}
 \begin{proof}
 \begin{enumerate}[(1)]
-\item {\color{blue}证法一:}不妨设$x\geqslant y>0$,令$t=\frac{x}{y}$,$u=t-1$,则
-\[
-\left| x^{\alpha}-y^{\alpha} \right|\leqslant \left| x-y \right|^{\alpha}\Longleftrightarrow t^{\alpha}-1\leqslant \left( t-1 \right)^{\alpha}\Longleftrightarrow \left( u+1 \right)^{\alpha}\leqslant u^{\alpha}+1.
-\]
+\item {\color{blue}证法一:}不妨设 $x\geqslant y>0$，令 $t=\frac{x}{y}$，$u=t-1$，则
+\begin{align*}
+\left| x^{\alpha}-y^{\alpha} \right|\leqslant \left| x-y \right|^{\alpha}
+\Longleftrightarrow t^{\alpha}-1\leqslant \left( t-1 \right)^{\alpha}
+\Longleftrightarrow \left( u+1 \right)^{\alpha}\leqslant u^{\alpha}+1.
+\end{align*}
 再由\hyperref[theorem:Bernoulli不等式]{Bernoulli不等式}知上式成立.
 
 {\color{blue}证法二:}不妨设 $y \geqslant x \geqslant 0$，则只须证 $y^{\alpha} - x^{\alpha} \leqslant \left( y - x \right)^{\alpha}$。则只须证 $\left( \frac{y}{x} \right)^{\alpha} - 1 \leqslant \left( \frac{y}{x} - 1 \right)^{\alpha}$。故只须证
-\[
-t^{\alpha} - 1 \leqslant \left( t - 1 \right)^{\alpha}, \forall t \geqslant 1.
-\]
+\begin{align*}
+t^{\alpha} - 1 \leqslant \left( t - 1 \right)^{\alpha},\quad \forall t \geqslant 1.
+\end{align*}
 令 $g\left( t \right) = t^{\alpha} - 1 - \left( t - 1 \right)^{\alpha}$，则
-\(
+\begin{align*}
 g'\left( t \right) = \alpha t^{\alpha - 1} - \alpha \left( t - 1 \right)^{\alpha - 1} \leqslant 0.
-\)
+\end{align*}
 从而 $g\left( t \right) \leqslant g\left( 1 \right) = 0$，$\forall t \geqslant 1$。故
-\(
-t^{\alpha} - 1 \leqslant \left( t - 1 \right)^{\alpha},\forall t \geqslant 1.
-\)
+\begin{align*}
+t^{\alpha} - 1 \leqslant \left( t - 1 \right)^{\alpha},\quad \forall t \geqslant 1.
+\end{align*}
 
-\item 考虑\(f(t)\triangleq\frac{(t + 1)^p}{1 + t^p},t\in[0,1]\)，我们有
-\[
+\item 考虑 $f(t)\triangleq\frac{(t + 1)^p}{1 + t^p}$，$t\in[0,1]$，我们有
+\begin{align*}
 f'(t)=p(t + 1)^{p - 1}\frac{1 - t^{p - 1}}{(1 + t^p)^2}
 \begin{cases}
 \geqslant0,& p\geqslant1,p\leqslant0\\
 <0,& 0 < p < 1
-\end{cases}
-\]
+\end{cases},
+\end{align*}
 于是
-\[
+\begin{align*}
 \begin{cases}
 2^{p - 1}=f(1)\geqslant f(t)\geqslant f(0)=1,& p\geqslant1,p\leqslant0\\
 2^{p - 1}=f(1)\leqslant f(t)\leqslant f(0)=1,& 0 < p < 1
-\end{cases}
-\]
+\end{cases}.
+\end{align*}
 这就完成了证明.
+
+\item {\color{blue}证法一:}因为 $p\geqslant1$，函数 $\varphi(t)\triangleq t^p$ 在 $[0,\infty)$ 上是凸函数（$p>1$ 时 $\varphi''(t)=p(p-1)t^{p-2}\geqslant0$）。由\hyperref[theorem:Jensen不等式1111]{Jensen不等式}，得
+\begin{align*}
+\varphi\left(\frac{a_1+\cdots+a_N}{N}\right)
+\leqslant
+\frac{\varphi(a_1)+\cdots+\varphi(a_N)}{N}.
+\end{align*}
+即
+\begin{align*}
+\left(\frac{\sum\limits_{j=1}^{N}a_j}{N}\right)^p
+\leqslant
+\frac{\sum\limits_{j=1}^{N}a_j^p}{N}.
+\end{align*}
+两边乘以 $N^p$，得
+\begin{align*}
+\left(\sum\limits_{j=1}^{N}a_j\right)^p
+\leqslant
+N^{p-1}\sum\limits_{j=1}^{N}a_j^p.
+\end{align*}
+
+{\color{blue}证法二:}当 $p=1$ 时，\eqref{equation-12.778} 为等式。下设 $p>1$，令
+\begin{align*}
+q\triangleq\frac{p}{p-1},
+\end{align*}
+则 $\frac1p+\frac1q=1$。由\hyperref[theorem:离散的Hölder不等式]{Hölder不等式}，得
+\begin{align*}
+\sum\limits_{j=1}^{N}a_j
+&=\sum\limits_{j=1}^{N}a_j\cdot1\leqslant
+\left(\sum\limits_{j=1}^{N}a_j^{p}\right)^{\frac1p}
+\left(\sum\limits_{j=1}^{N}1^{q}\right)^{\frac1q}=
+N^{\frac{p-1}{p}}
+\left(\sum\limits_{j=1}^{N}a_j^{p}\right)^{\frac1p}.
+\end{align*}
+两边取 $p$ 次方，即得
+\begin{align*}
+\left(\sum\limits_{j=1}^{N}a_j\right)^{p}
+\leqslant
+N^{p-1}\sum\limits_{j=1}^{N}a_j^{p}.
+\end{align*}
 \end{enumerate}
 \end{proof}
 

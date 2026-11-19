@@ -11,11 +11,11 @@
 然而在许多应用中，我们希望从条件分布 $p(\bm{x}\mid\bm{c})$ 中进行采样，其中条件变量 $\bm{c}$ 可以是一个类标签或是描述目标图像内容的文字。这也构成了诸如图像超分辨率、图像修复、视频生成等许多其他应用的基础。实现这一点的最简单方法是将 $\bm{c}$ 视为去噪神经网络 $\bm{g}(\bm{z},\bm{w},t,\bm{c})$ 的一个额外输入，然后使用匹配的 $\{\bm{x}_n,\bm{c}_n\}$ 对来训练网络。这种方法的主要问题是，网络可能会对条件变量赋予的权重不足，甚至忽略条件变量，因此我们需要一种方式来控制给予条件变量多少权重，并与样本多样性进行权衡。这种用以匹配条件信息的约束机制称为\textbf{引导}（guidance）。根据是否使用单独的分类器，引导主要有两种。
 
 \begin{definition}[引导与引导尺度]\label{definition:ch20-引导}
-设条件扩散模型的得分函数为 $\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{c})$。称在采样阶段人为放大条件项、以调节“条件信息权重”的机制为\textbf{引导}（guidance），其中用来控制条件项权重的超参数 $\lambda\geqslant0$ 称为\textbf{引导尺度}（guidance scale）。
+设 $D\in\mathbb{N}$，数据向量 $\bm{x}\in\mathbb{R}^{D}$，条件变量 $\bm{c}$ 取值于集合 $\mathcal{C}$；设无条件密度 $p(\bm{x})$ 与条件密度 $p(\bm{x}\mid\bm{c})$ 关于 $\bm{x}$ 可微，采样阶段实际使用的得分为 $\operatorname{score}(\bm{x},\bm{c},\lambda)=\nabla_{\bm{x}}\ln p(\bm{x})+\lambda\,\nabla_{\bm{x}}\ln p(\bm{c}\mid\bm{x})$，其中 $\lambda\geqslant0$ 为实参数。则在采样阶段把条件项 $\nabla_{\bm{x}}\ln p(\bm{c}\mid\bm{x})$ 乘以 $\lambda$ 以调节条件信息权重的机制称为\textbf{引导}（guidance），$\lambda$ 称为\textbf{引导尺度}（guidance scale）；$\lambda=1$ 时该得分等于条件密度 $p(\bm{x}\mid\bm{c})$ 的得分，$\lambda=0$ 时该得分等于无条件密度 $p(\bm{x})$ 的得分。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch20-引导; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch20-引导; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 引导要解决的问题是“条件不够强”：仅把 $\bm{c}$ 作为额外输入训练时，网络在训练集上可以完全忽略 $\bm{c}$ 而仍然取得不差的损失（因为无条件模型本身就是条件模型的一个特例），于是采样结果与 $\bm{c}$ 无关。引导通过在采样阶段人为放大条件项来补偿这一点，因此它改变的是\emph{采样}的分布，而不是训练的目标。\par
 定义中的 $\lambda$ 是一个纯粹的采样超参数，不参与训练：同一组网络权重可以用不同的 $\lambda$ 生成不同“贴合度”的样本。这也意味着引导后的得分一般不再是某个归一化密度的得分（$\lambda\neq1$ 时它对应的是退火后的“尖锐化”分布），这一点在解释 $\lambda>1$ 的副作用时必须记住。\par
 条件 $\lambda\geqslant0$ 只是约定；数学上 $\lambda<0$ 也有定义，但会主动\emph{远离}条件，实践中没有用处。下文会看到 $\lambda=0$ 与 $\lambda=1$ 是两个有明确概率含义的端点。
@@ -26,15 +26,16 @@
 假设我们有一个训练好的分类器 $p(\bm{c}\mid\bm{x})$，下面从得分函数的角度考虑扩散模型。使用 Bayes 定理，我们可以将条件扩散模型的得分函数写成以下形式。
 
 \begin{proposition}[分类器引导的得分分解]\label{proposition:ch20-分类器引导}
-设 $p(\bm{x}\mid\bm{c})$、$p(\bm{x})$ 与 $p(\bm{c}\mid\bm{x})$ 为正的光滑密度，且 $p(\bm{c})$ 不依赖 $\bm{x}$。则
+设 $D\in\mathbb{N}$，数据向量 $\bm{x}\in\mathbb{R}^{D}$，条件变量 $\bm{c}$ 取值于有限集 $\mathcal{C}$；设对每个 $\bm{c}\in\mathcal{C}$，$p(\bm{x})$ 与 $p(\bm{x}\mid\bm{c})$ 都是 $\mathbb{R}^{D}$ 上处处为正的连续可微概率密度，$p(\bm{c}\mid\bm{x})$ 关于 $\bm{x}$ 连续可微且处处为正，先验 $p(\bm{c})$ 不依赖 $\bm{x}$。则对任意 $\bm{x}\in\mathbb{R}^{D}$ 与 $\bm{c}\in\mathcal{C}$，
 \begin{align}
 \nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{c})&=\nabla_{\bm{x}}\ln\Big\{\frac{p(\bm{c}\mid\bm{x})\,p(\bm{x})}{p(\bm{c})}\Big\}\nonumber\\
-&=\nabla_{\bm{x}}\ln p(\bm{x})+\nabla_{\bm{x}}\ln p(\bm{c}\mid\bm{x}).
+&=\nabla_{\bm{x}}\ln p(\bm{x})+\nabla_{\bm{x}}\ln p(\bm{c}\mid\bm{x}),
 \label{align:ch20-条件得分}
 \end{align}
+即条件得分等于无条件得分与分类器得分 $\nabla_{\bm{x}}\ln p(\bm{c}\mid\bm{x})$ 之和。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 由 Bayes 定理，$p(\bm{x}\mid\bm{c})=p(\bm{c}\mid\bm{x})p(\bm{x})/p(\bm{c})$。两边取对数得
 \begin{align*}
 \ln p(\bm{x}\mid\bm{c})=\ln p(\bm{c}\mid\bm{x})+\ln p(\bm{x})-\ln p(\bm{c}),
@@ -42,8 +43,8 @@
 再对 $\bm{x}$ 求梯度。由于 $p(\bm{c})$ 不依赖 $\bm{x}$，$\nabla_{\bm{x}}\ln p(\bm{c})=\bm{0}$，故\eqref{align:ch20-条件得分}成立。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch20-分类器引导; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch20-分类器引导; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch20-条件得分}把“条件生成”拆成“无条件生成 + 分类器梯度”两部分：第一项是常见的无条件得分函数，第二项推动去噪过程朝着最大化给定标签 $\bm{c}$ 在分类器模型下的概率的方向前进（Dhariwal and Nichol, 2021）。因此只要有任意一个训练好的无条件扩散模型和一个分类器，就能做条件采样，无需重新训练扩散模型——这是分类器引导最吸引人的地方。\par
 $p(\bm{c})$ 不依赖 $\bm{x}$ 是推导的关键，也是“分类器只需给出似然比”的体现：分类器的绝对概率校准不影响引导方向，只有它对 $\bm{x}$ 的梯度起作用。$p(\bm{x}\mid\bm{c})$ 与 $p(\bm{c}\mid\bm{x})$ 都必须为正且可微，否则对数梯度无定义；在实践中这意味着分类器要在含噪样本上也有意义，而后文正是针对这一点提出批评。\par
 \end{remark}
@@ -66,14 +67,15 @@ $p(\bm{c})$ 不依赖 $\bm{x}$ 是推导的关键，也是“分类器只需给�
 用\eqref{align:ch20-条件得分}替换\eqref{align:ch20-分类器引导}中的 $\nabla_{\bm{x}}\ln p(\bm{c}\mid\bm{x})$，即可得到如下结论（见\cref{exercise:ch20-20}）。
 
 \begin{proposition}[无分类器引导（CFG）]\label{proposition:ch20-无分类器引导}
-设条件得分与无条件得分分别为 $\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{c})$ 与 $\nabla_{\bm{x}}\ln p(\bm{x})$，且二者都存在。则对任意 $\lambda$，
+设 $D\in\mathbb{N}$，数据向量 $\bm{x}\in\mathbb{R}^{D}$，条件变量 $\bm{c}$ 取值于有限集 $\mathcal{C}$，$\lambda\in\mathbb{R}$；设对每个 $\bm{c}\in\mathcal{C}$，条件密度 $p(\bm{x}\mid\bm{c})$ 与无条件密度 $p(\bm{x})$ 都是 $\mathbb{R}^{D}$ 上处处为正的连续可微概率密度，得分 $\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{c})$ 与 $\nabla_{\bm{x}}\ln p(\bm{x})$ 处处存在，且先验 $p(\bm{c})$ 不依赖 $\bm{x}$。则对任意 $\bm{x}\in\mathbb{R}^{D}$ 与 $\bm{c}\in\mathcal{C}$，由\eqref{align:ch20-分类器引导}定义的采样得分可写成
 \begin{align}
-\operatorname{score}(\bm{x},\bm{c},\lambda)=\lambda\,\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{c})+(1-\lambda)\,\nabla_{\bm{x}}\ln p(\bm{x}).
+\operatorname{score}(\bm{x},\bm{c},\lambda)=\lambda\,\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{c})+(1-\lambda)\,\nabla_{\bm{x}}\ln p(\bm{x}),
 \label{align:ch20-无分类器引导}
 \end{align}
+即采样得分是条件得分与无条件得分的仿射组合，两系数之和为 $1$。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 由\eqref{align:ch20-条件得分}得 $\nabla_{\bm{x}}\ln p(\bm{c}\mid\bm{x})=\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{c})-\nabla_{\bm{x}}\ln p(\bm{x})$。代入\eqref{align:ch20-分类器引导}：
 \begin{align*}
 \operatorname{score}&=\nabla_{\bm{x}}\ln p(\bm{x})+\lambda\big(\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{c})-\nabla_{\bm{x}}\ln p(\bm{x})\big)\\
@@ -82,8 +84,8 @@ $p(\bm{c})$ 不依赖 $\bm{x}$ 是推导的关键，也是“分类器只需给�
 即\eqref{align:ch20-无分类器引导}。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch20-无分类器引导; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch20-无分类器引导; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch20-无分类器引导}只用到条件模型自身的两个得分——条件得分与无条件得分——因此不需要任何外部分类器：训练时以一定概率把 $\bm{c}$ 置空，同一个网络就同时学会了二者。这是“无分类器”一词的确切含义。\par
 对 $0<\lambda<1$，\eqref{align:ch20-无分类器引导}是条件对数密度 $\ln p(\bm{x}\mid\bm{c})$ 与无条件对数密度 $\ln p(\bm{x})$ 的凸组合，因而对应一个介于二者之间的“插值”分布；$\lambda=1$ 给出纯条件模型，$\lambda=0$ 给出纯无条件模型。对 $\lambda>1$，来自无条件得分项的系数 $1-\lambda$ 变为负值，模型主动降低那些忽略条件信息的样本的概率，而更倾向于生成考虑条件信息的样本。\par
 注意 $\lambda\neq1$ 时\eqref{align:ch20-无分类器引导}一般不是某个归一化密度的得分（除非该插值恰好可积并归一化），所以“$\lambda>1$ 提高贴合度”是以偏离真实条件分布为代价的；这也解释了它为什么会让样本多样性下降。

@@ -443,7 +443,7 @@ f(x_n+\eta) -f(x_n) =\int_{x_n}^{x_n+\eta} f'(x) \mathrm{d}x \geqslant \int_{x_n
 \end{align*}
 即$f$在$(0,1)$一致连续。
 
-\item 考虑$f(x)\triangleq x^\beta$，由\refpro{proposition:经典初等不等式}得$f$是$\beta$阶Hölder连续函数。
+\item 考虑$f(x)\triangleq x^\beta$，由\refpro{proposition:凸性不等式}得$f$是$\beta$阶Hölder连续函数。
 若$f$也是$\alpha$阶Hölder连续函数，则由Lagrange中值定理知,存在$\theta_n\in(\frac{1}{4n},\frac{1}{2n}),$使得
 \begin{align*}
 &\lim_{n\rightarrow \infty} \frac{|f(\frac{1}{2n})-f(\frac{1}{4n})|}{\bigl| \frac{1}{2n}-\frac{1}{4n} \bigr| ^{\alpha}}=\lim_{n\rightarrow \infty} \frac{\bigl| (\frac{1}{2n})^{\beta}-(\frac{1}{4n})^{\beta} \bigr|}{\bigl| \frac{1}{4n} \bigr| ^{\alpha}}=\lim_{n\rightarrow \infty} \left[ (4n)^{\alpha}\cdot \frac{1}{4n}\cdot \beta \theta _{n}^{\beta -1} \right] 
@@ -464,7 +464,7 @@ f_\alpha(x)\triangleq x^\alpha,$则$ f_\alpha'(x)=\alpha x^{\alpha-1},\alpha\in(
 \begin{align*}
 \left|\frac{f'(x)}{f_\alpha'(x)}\right|\leqslant c_\alpha,\forall x\in(0,1].
 \end{align*}
-于是对$0<x<y\leqslant1$，我们运用\refpro{proposition:经典初等不等式}有
+于是对$0<x<y\leqslant1$，我们运用\refpro{proposition:凸性不等式}有
 \begin{align*}
 |f(y)-f(x)|&=\left| \int_x^y f'(t)\mathrm{d}t \right|\leqslant \int_x^y |f'(t)|\mathrm{d}t\leqslant c_{\alpha}\int_x^y |f_\alpha'(t)|\mathrm{d}t \\
 &=c_{\alpha}\int_x^y f_\alpha'(t)\mathrm{d}t=c_{\alpha}|f_\alpha(y)-f_\alpha(x)|=c_{\alpha}\left| y^{\alpha}-x^{\alpha} \right| \\

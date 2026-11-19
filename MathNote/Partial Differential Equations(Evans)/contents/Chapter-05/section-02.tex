@@ -1680,6 +1680,474 @@ u\in W^{k,p}(U),\qquad D^{\alpha}u=u_{\alpha}\quad (|\alpha|\leqslant k).
 故\eqref{align:ch05-完备性结论}式成立。由于对一切 $|\alpha|\leqslant k$ 都有 $D^{\alpha}u_{m}\to D^{\alpha}u$ 于 $L^{p}(U)$，可见 $u_{m}\to u$ 于 $W^{k,p}(U)$，即得所需。
 \end{proof}
 
+\begin{proposition}[无穷阶 Sobolev 空间]\label{proposition:ch05-Winftyp}
+设 \(U\subseteq\mathbb{R}^{n}\) 为非空开集，\(1\leqslant p\leqslant\infty\)，令
+\[
+W^{\infty,p}(U)\triangleq\bigcap_{k=0}^{\infty}W^{k,p}(U),
+\]
+其中 \(W^{0,p}(U)=L^{p}(U)\)。在 \(W^{\infty,p}(U)\) 上规定
+\begin{align}
+u_m\to u
+\iff
+\|u_m-u\|_{W^{k,p}(U)}\to0,\quad \forall k\geqslant0,\label{eqHJNZMZNZMZZZ}
+\end{align}
+并取由这族范数 \(\|\cdot\|_{W^{k,p}(U)}\) 给出的拓扑。则
+\begin{enumerate}[(1)]
+\item\label{proposition:ch05-Winftyp-1} \(W^{\infty,p}(U)\) 是 Fréchet 空间，即完备的度量空间，其度量可取
+\[
+d(u,v)\triangleq
+\sum_{k=0}^{\infty}2^{-k}
+\frac{\|u-v\|_{W^{k,p}(U)}}{1+\|u-v\|_{W^{k,p}(U)}}.
+\]
+
+\item\label{proposition:ch05-Winftyp-2} \(W^{\infty,p}(U)\) 上不存在一个完备的范数，因此它一般不是 Banach 空间。
+
+\item\label{proposition:ch05-Winftyp-3} 对每个 \(k\geqslant0\)，
+\[
+W^{\infty,p}(U)\subseteq W^{k,p}(U).
+\]
+因此它是固定 \(p\) 的 Sobolev 链
+\[
+W^{0,p}(U)\supseteq W^{1,p}(U)\supseteq W^{2,p}(U)\supseteq\cdots
+\]
+中最小的空间。
+
+若 \(U\) 有界且 \(q\geqslant p\)，则
+\[
+W^{\infty,q}(U)\subseteq W^{\infty,p}(U).
+\]
+特别地，
+\[
+W^{\infty,\infty}(U)\subseteq W^{\infty,p}(U),\qquad 1\leqslant p<\infty.
+\]
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+
+(1)在 \(W^{\infty,p}(U)\) 上取
+\[
+d(u,v)\triangleq
+\sum_{k=0}^{\infty}2^{-k}
+\frac{\|u-v\|_{W^{k,p}(U)}}{1+\|u-v\|_{W^{k,p}(U)}}.
+\]
+首先证明$d$是良定义的.对每个 $k\geqslant0$，
+\[
+0\leqslant\frac{\|u-v\|_{W^{k,p}(U)}}{1+\|u-v\|_{W^{k,p}(U)}}<1,
+\]
+故
+\[
+0\leqslant2^{-k}\frac{\|u-v\|_{W^{k,p}(U)}}{1+\|u-v\|_{W^{k,p}(U)}}<2^{-k},
+\]
+而 $\sum_{k=0}^{\infty}2^{-k}<\infty$，所以 $d(u,v)$ 收敛。
+
+显然 $d$ 有正定性.事实上,$d(u,v)\geqslant0$，且由于级数各项非负，$d(u,v)=0$ 当且仅当
+\[
+\frac{\|u-v\|_{W^{k,p}(U)}}{1+\|u-v\|_{W^{k,p}(U)}}=0,\qquad\forall k\geqslant0,
+\]
+即 $\|u-v\|_{W^{k,p}(U)}=0$ 对一切 $k$ 成立。特别地取 $k=0$，得
+\[
+\|u-v\|_{L^p(U)}=0,
+\]
+故 $u=v$ 几乎处处成立。
+
+由范数的对称性，显然 $d(u,v)=d(v,u)$。
+下面证明三角不等式。对任意 $u,v,w\in W^{\infty,p}(U)$，则
+\begin{align*}
+d(u,w)
+&=\sum_{k=0}^{\infty}2^{-k}
+\frac{\|u-w\|_{W^{k,p}(U)}}{1+\|u-w\|_{W^{k,p}(U)}}\leqslant\sum_{k=0}^{\infty}2^{-k}
+\frac{\|u-v\|_{W^{k,p}(U)}+\|v-w\|_{W^{k,p}(U)}}
+{1+\|u-v\|_{W^{k,p}(U)}+\|v-w\|_{W^{k,p}(U)}}\\
+&=\sum_{k=0}^{\infty}2^{-k}
+\frac{\|u-v\|_{W^{k,p}(U)}}
+{1+\|u-v\|_{W^{k,p}(U)}+\|v-w\|_{W^{k,p}(U)}}+\sum_{k=0}^{\infty}2^{-k}
+\frac{\|v-w\|_{W^{k,p}(U)}}
+{1+\|u-v\|_{W^{k,p}(U)}+\|v-w\|_{W^{k,p}(U)}}\\
+&\leqslant\sum_{k=0}^{\infty}2^{-k}
+\frac{\|u-v\|_{W^{k,p}(U)}}{1+\|u-v\|_{W^{k,p}(U)}}
++\sum_{k=0}^{\infty}2^{-k}
+\frac{\|v-w\|_{W^{k,p}(U)}}{1+\|v-w\|_{W^{k,p}(U)}}\\
+&=d(u,v)+d(v,w).
+\end{align*}
+故 $d$ 满足三角不等式。
+综上，$d$ 是 $W^{\infty,p}(U)$ 上的一个度量,且
+\begin{align}
+d(u_m,u)\to0
+\iff
+\|u_m-u\|_{W^{k,p}(U)}\to0,\quad \forall k\geqslant0.\label{eq::VJJKNSDLFJKDJFw8384y4873444}
+\end{align}
+事实上，若 \(d(u_m,u)\to0\)，则对每个固定的 \(k\)，第 \(k\) 项趋于零，故
+\[
+\|u_m-u\|_{W^{k,p}}\to0.
+\]
+反过来，若对每个 \(k\) 都有 \(\|u_m-u\|_{W^{k,p}}\to0\)，则对任意 \(\varepsilon>0\)，先取 \(K\) 使
+\[
+\sum_{k>K}2^{-k}<\frac{\varepsilon}{2},
+\]
+再对 \(k=0,\cdots,K\), 取 \(M\) 使当 \(m\geqslant M\) 时
+\[
+\frac{\|u_m-u\|_{W^{k,p}}}{1+\|u_m-u\|_{W^{k,p}}}
+<\frac{\varepsilon}{2(K+1)}.
+\]
+于是
+\begin{align*}
+d(u_m,u)\leqslant \frac{\varepsilon}{2\left( K+1 \right)}\sum_{k=0}^K{2^{-k}}+\sum_{k=K+1}^{\infty}{2^{-k}}<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon .
+\end{align*}
+
+下面证明完备性。设 \(\{u_m\}\) 是 \(W^{\infty,p}(U)\) 中的 Cauchy 列。对每个固定的 \(k\)，由
+\[
+2^{-k}\frac{\|u_m-u_l\|_{W^{k,p}}}{1+\|u_m-u_l\|_{W^{k,p}}}
+\leqslant d(u_m,u_l)
+\]
+可知 \(\{u_m\}\) 是 \(W^{k,p}(U)\) 中的 Cauchy 列。由\cref{theorem:ch05-WkpBanach}，\(W^{k,p}(U)\) 是 Banach 空间，故存在
+\[
+u^{(k)}\in W^{k,p}(U)
+\]
+使得
+\[
+u_m\to u^{(k)}\quad\text{于 }W^{k,p}(U).
+\]
+由于 \(W^{k,p}(U)\subseteq L^{p}(U)\)，这些极限在 \(L^{p}(U)\) 中相同，故存在 \(u\in L^{p}(U)\)，使得
+\[
+u(x)=u^{(k)}(x),\,\text{a.e.}\,x\in U,\quad \forall k\geqslant0.
+\]
+于是 \(u\in W^{k,p}(U)\) 对一切 \(k\) 成立，即
+\[
+u\in W^{\infty,p}(U).
+\]
+并且对每个 \(k\)，
+\[
+u_m\to u\quad\text{于 }W^{k,p}(U).
+\]
+由\eqref{eq::VJJKNSDLFJKDJFw8384y4873444}式，
+\[
+d(u_m,u)\to0.
+\]
+故 \(W^{\infty,p}(U)\) 完备，从而是 Fréchet 空间。
+
+(2)记$X\triangleq W^{\infty,p}(U)$.
+反设存在这样的范数 \(\|\cdot\|\)，使得
+\begin{align}
+\|u_m-u\|\to0
+\iff
+\|u_m-u\|_{W^{k,p}(U)}\to0,\quad \forall k\geqslant0.\label{eqNJNZNJASKDJIW}
+\end{align}
+
+\noindent$\mathbf{Step}\bm{1}$.{\heiti 证明单位球包含某个 \(W^{k,p}\)-球.}
+
+我们断言：存在 \(k\geqslant0\) 和 \(\varepsilon>0\)，使得
+\begin{align}
+\|u\|_{W^{k,p}}<\varepsilon
+\Longrightarrow
+\|u\|<1.\label{nineiwjwikklaew1}
+\end{align}
+
+反设\eqref{nineiwjwikklaew1}式不成立。则对任意 \(k\geqslant0\) 和 \(\varepsilon>0\)，都存在 \(u\in X\)，使得
+\begin{align}
+\|u\|_{W^{k,p}}<\varepsilon,
+\qquad
+\|u\|\geqslant1.
+\label{nineiwjwikklaew2}
+\end{align}
+
+对每个 \(n\)，由
+\[
+W^{n,p}(U)\subseteq W^{k,p}(U),\qquad k=0,1,\cdots,n,
+\]
+存在常数 \(C_{k,n}>0\)，使得
+\[
+\|u\|_{W^{k,p}}\leqslant C_{k,n}\|u\|_{W^{n,p}}.
+\]
+取 \(\delta_n>0\) 足够小，使得
+\[
+C_{k,n}\delta_n<\frac1n,\qquad k=0,1,\dots,n.
+\]
+由\eqref{nineiwjwikklaew2}式，取 \(k=n\)、\(\varepsilon=\delta_n\)，存在 \(u_n\in X\)，使得
+\[
+\|u_n\|_{W^{n,p}}<\delta_n,
+\qquad
+\|u_n\|\geqslant1.
+\]
+于是对每个 \(k\leqslant n\)，
+\[
+\|u_n\|_{W^{k,p}}
+\leqslant C_{k,n}\|u_n\|_{W^{n,p}}
+<C_{k,n}\delta_n
+<\frac1n.
+\]
+固定 \(k\)，当 \(n\geqslant k\) 时，有
+\[
+\|u_n\|_{W^{k,p}}<\frac1n\to0.
+\]
+因此
+\[
+u_n\to0\quad\text{于 }W^{k,p}(U),\qquad \forall k.
+\]
+由\eqref{eqNJNZNJASKDJIW}式，得到
+\[
+\|u_n\|\to0.
+\]
+这与 \(\|u_n\|\geqslant1\) 矛盾！故\eqref{nineiwjwikklaew1}式成立。
+
+\noindent$\mathbf{Step}\bm{2}$.{\heiti 证明 \(W^{k,p}\)-球在 \(W^{k+1,p}\) 中有界.}
+
+由\eqref{nineiwjwikklaew1}式，存在 \(k\geqslant0\) 和 \(\varepsilon>0\)，使得
+\begin{align}
+E\triangleq\{u\in X:\|u\|_{W^{k,p}}<\varepsilon\}
+\subseteq
+\{u\in X:\|u\|<1\}.
+\label{nineiwjwikklaew3}
+\end{align}
+
+下面证明存在 \(M>0\)，使得
+\begin{align}
+\|u\|_{W^{k+1,p}}\leqslant M\|u\|,\qquad \forall u\in X.
+\label{nineiwjwikklaew4}
+\end{align}
+若不然，则对每个 \(M>0\)，存在 \(u\in X\)，使得
+\begin{align*}
+\|u\|_{W^{k+1,p}}>M\|u\|.
+\end{align*}
+取 \(M=n\)，得到 \(v_n\in X\)，满足
+\begin{align*}
+\|v_n\|_{W^{k+1,p}}>n\|v_n\|.
+\end{align*}
+若 \(\|v_n\|=0\)，则 \(v_n=0\)，从而
+\begin{align*}
+\|v_n\|_{W^{k+1,p}}=0,
+\end{align*}
+与上式矛盾!故 \(\|v_n\|>0\)。
+取实数 \(c_n\)，使得
+\begin{align*}
+n<c_n<\frac{\|v_n\|_{W^{k+1,p}}}{\|v_n\|},
+\end{align*}
+并令
+\begin{align*}
+u_n\triangleq\frac{v_n}{c_n\|v_n\|}.
+\end{align*}
+则
+\begin{align*}
+\|u_n\|=\frac1{c_n}<\frac1n,
+\end{align*}
+且
+\begin{align*}
+\|u_n\|_{W^{k+1,p}}
+=\frac{\|v_n\|_{W^{k+1,p}}}{c_n\|v_n\|}>1.
+\end{align*}
+于是
+\begin{align*}
+\|u_n\|\to0,
+\qquad
+\|u_n\|_{W^{k+1,p}}>1.
+\end{align*}
+由\eqref{eqNJNZNJASKDJIW}式，有
+\[
+\|u_n\|_{W^{k+1,p}}\to 0,
+\]
+与 \(\|u_n\|_{W^{k+1,p}}\geqslant1\) 矛盾!故\eqref{nineiwjwikklaew4}式成立。
+于是对 \(u\in E\)，由\eqref{nineiwjwikklaew3}\eqref{nineiwjwikklaew4}式得
+\[
+\|u\|_{W^{k+1,p}}
+\leqslant M\|u\|
+<M.
+\]
+所以 \(E\) 在 \(W^{k+1,p}(U)\) 中有界。
+
+\noindent$\mathbf{Step}\bm{3}$.{\heiti 用高频振荡序列导出矛盾.}
+
+取 \(x_0\in U\) 和 \(r>0\)，使得
+\[
+B(x_0,r)\subseteq U.
+\]
+取非零函数
+\[
+\varphi\in C_c^{\infty}(B(x_0,r)).
+\]
+对 \(N=1,2,\cdots\)，定义
+\[
+u_N(x)\triangleq N^{-k-\frac12}\varphi(x)\sin(Nx_1).
+\]
+则 \(u_N\in C_c^{\infty}(U)\subseteq X\)。
+
+对任意 \(|\beta|\leqslant k\)，由\hyperref[theorem:ch05-弱导数性质-4]{Leibniz公式}，得
+\begin{align*}
+D^{\beta}u_N
+&=
+N^{-k-\frac12}
+\sum_{\alpha\leqslant\beta}
+\binom{\beta}{\alpha}
+D^{\beta-\alpha}\varphi\,
+D^{\alpha}\bigl(\sin(Nx_1)\bigr),
+\end{align*}
+其中 \(\alpha\leqslant\beta\) 表示逐分量 \(\alpha_j\leqslant\beta_j\)。
+若 \(\alpha\) 在 \(x_2,\cdots,x_n\) 方向上有非零分量，则
+\begin{align*}
+D^{\alpha}\bigl(\sin(Nx_1)\bigr)=0.
+\end{align*}
+因此只需考虑
+\begin{align*}
+\alpha=(\alpha_1,0,\dots,0)
+\end{align*}
+的项。此时
+\begin{align*}
+D^{\alpha}\bigl(\sin(Nx_1)\bigr)
+&=
+N^{|\alpha|}
+\sin\left(Nx_1+\frac{\pi|\alpha|}{2}\right),
+\end{align*}
+故
+\begin{align*}
+\left|D^{\alpha}\bigl(\sin(Nx_1)\bigr)\right|
+\leqslant N^{|\alpha|}.
+\end{align*}
+于是
+\begin{align*}
+|D^{\beta}u_N(x)|
+&\leqslant
+N^{-k-\frac12}
+\sum_{\substack{\alpha\leqslant\beta\\
+\alpha_2=\cdots=\alpha_n=0}}
+\binom{\beta}{\alpha}
+\left\|D^{\beta-\alpha}\varphi\right\|_{L^\infty(\mathbb{R}^n)}
+N^{|\alpha|}.
+\end{align*}
+令
+\begin{align*}
+C_{\beta}
+\triangleq
+\sum_{\substack{\alpha\leqslant\beta\\
+\alpha_2=\cdots=\alpha_n=0}}
+\binom{\beta}{\alpha}
+\left\|D^{\beta-\alpha}\varphi\right\|_{L^\infty(\mathbb{R}^n)}.
+\end{align*}
+则 \(C_{\beta}\) 只依赖于 \(\beta\) 和 \(\varphi\)，不依赖于 \(N\) 和 \(x\)。
+由于 \(|\alpha|\leqslant|\beta|\)，当 \(N\geqslant1\) 时，
+\begin{align*}
+N^{-k-\frac12}N^{|\alpha|}
+\leqslant
+N^{-k-\frac12}N^{|\beta|}.
+\end{align*}
+因此
+\begin{align*}
+|D^{\beta}u_N(x)|
+\leqslant
+C_{\beta}N^{-k-\frac12}N^{|\beta|}.
+\end{align*}
+又因为 \(|\beta|\leqslant k\)，所以
+$|\beta|-k-\frac12\leqslant-\frac12.$
+从而
+\begin{align*}
+|D^{\beta}u_N(x)|
+\leqslant
+C_{\beta}N^{-\frac12}.
+\end{align*}
+特别地，对每个固定的 \(k\)，存在只依赖于 \(k,\beta,\varphi\) 而不依赖于 \(N\) 的常数 \(C_{\beta}\)，使得
+\begin{align*}
+\sup_{x\in U}|D^{\beta}u_N(x)|
+\leqslant
+C_{\beta}N^{-\frac12},
+\qquad
+\forall\,|\beta|\leqslant k.
+\end{align*}
+因此
+\[
+\|u_N\|_{W^{k,p}}\leqslant C N^{-\frac12}\to0.
+\]
+特别地，当 \(N\) 充分大时，
+\[
+\|u_N\|_{W^{k,p}}<\varepsilon,
+\]
+故 \(u_N\in E\)。
+
+另一方面，取
+\[
+\beta=(k+1,0,\cdots,0).
+\]
+则 \(D^{\beta}u_N\) 中含有主项
+\[
+N^{\frac12}D^{\beta}\varphi(x)\sin(Nx_1)\,\text{或}\,N^{\frac12}D^{\beta}\varphi(x)\cos(Nx_1),
+\]
+其余项至多 \(O(N^{-\frac12})\)。因此存在 \(c>0\)，使得对充分大的 \(N\)（必要时取子列），
+\[
+\|D^{\beta}u_N\|_{L^p}\geqslant cN^{\frac12}.
+\]
+故
+\[
+\|u_N\|_{W^{k+1,p}}\geqslant cN^{\frac12}\to\infty.
+\]
+这与 $\mathbf{Step2}$中的结论:\(E\) 在 \(W^{k+1,p}\) 中有界矛盾！
+因此不存在这样的范数 \(\|\cdot\|\)。
+
+(3)由定义，对每个 \(k\geqslant0\)，
+\[
+W^{\infty,p}(U)=\bigcap_{j=0}^{\infty}W^{j,p}(U)
+\subseteq W^{k,p}(U).
+\]
+因此它是固定 \(p\) 的 Sobolev 链中最小的空间。
+
+若 \(U\) 有界且 \(q\geqslant p\)，则由\cref{Real Analysis-proposition:Lp空间包含关系}知
+\[
+L^{q}(U)\subseteq L^{p}(U).
+\]
+对 \(u\in W^{\infty,q}(U)\) 和任意多重指标 \(\alpha\)，
+\[
+D^{\alpha}u\in L^{q}(U)\subseteq L^{p}(U),
+\]
+故
+\[
+u\in W^{\infty,p}(U).
+\]
+因此
+\[
+W^{\infty,q}(U)\subseteq W^{\infty,p}(U).
+\]
+特别地，取 \(q=\infty\)，得到
+\[
+W^{\infty,\infty}(U)\subseteq W^{\infty,p}(U),
+\qquad 1\leqslant p<\infty.
+\]
+\end{proof}
+
+\begin{proposition}[$W^{\infty,p}_0(U)$ 的稠密性]\label{proposition:ch05-Winfty0稠密}
+设 $U\subseteq\mathbb{R}^n$ 为非空开集，$1\leqslant p\leqslant\infty$，令
+\begin{align*}
+W^{\infty,p}_0(U)\triangleq\bigcap_{k=0}^{\infty}W^{k,p}_0(U).
+\end{align*}
+则 $C_c^\infty(U)$ 在 $W^{\infty,p}_0(U)$ 中稠密（按 $W^{\infty,p}$ 的 Fréchet 拓扑）。等价地，
+\begin{align*}
+W^{\infty,p}_0(U)=\overline{C_c^\infty(U)},
+\end{align*}
+其中闭包在$W^{\infty,p}(U)$中取.
+\end{proposition}
+\begin{proof}
+
+首先，对每个 $k\geqslant0$，由 $W^{k,p}_0(U)$ 的定义，$C_c^\infty(U)\subseteq W^{k,p}_0(U)$。故
+\begin{align*}
+C_c^\infty(U)\subseteq W^{\infty,p}_0(U).
+\end{align*}
+
+其次证明 $W^{\infty,p}_0(U)$ 在 $W^{\infty,p}(U)$ 中闭。设 $u_j\in W^{\infty,p}_0(U)$，$u\in W^{\infty,p}(U)$，且 $u_j\to u$ 于 $W^{\infty,p}(U)$。由\eqref{eqHJNZMZNZMZZZ}式，对每个 $k\geqslant0$，$u_j\to u$ 于 $W^{k,p}(U)$。因为 $W^{k,p}_0(U)$ 在 $W^{k,p}(U)$ 中闭，故 $u\in W^{k,p}_0(U)$。由 $k$ 的任意性，$u\in W^{\infty,p}_0(U)$。因此 $W^{\infty,p}_0(U)$ 是 $W^{\infty,p}(U)$ 中的闭集，从而
+\begin{align*}
+\overline{C_c^\infty(U)}\subseteq W^{\infty,p}_0(U).
+\end{align*}
+
+最后证明反向包含。任取 $u\in W^{\infty,p}_0(U)$。对每个正整数 $m$，因为 $u\in W^{m,p}_0(U)$，而 $W^{m,p}_0(U)$ 是 $C_c^\infty(U)$ 在 $W^{m,p}(U)$ 中的闭包，故存在 $u_m\in C_c^\infty(U)$，使得
+\begin{align*}
+\|u_m-u\|_{W^{m,p}(U)}<\frac1m.
+\end{align*}
+固定 $k\geqslant0$。当 $m\geqslant k$ 时，
+\begin{align*}
+\|u_m-u\|_{W^{k,p}(U)}
+\leqslant\|u_m-u\|_{W^{m,p}(U)}
+<\frac1m\longrightarrow0.
+\end{align*}
+因此 $u_m\to u$ 于 $W^{k,p}(U)$ 对一切 $k\geqslant0$ 成立；由\eqref{eqHJNZMZNZMZZZ}式，$u_m\to u$ 于 $W^{\infty,p}(U)$。所以 $u$ 属于 $C_c^\infty(U)$ 在 $W^{\infty,p}(U)$ 中的闭包。故
+\begin{align*}
+W^{\infty,p}_0(U)\subseteq\overline{C_c^\infty(U)}.
+\end{align*}
+综上，$W^{\infty,p}_0(U)=\overline{C_c^\infty(U)}$。
+\end{proof}
+
 \begin{proposition}[$H^k(U)$ 都是Hilbert空间]\label{proposition:ch05-Hk-Hilbert-a7d3}
 设 $U\subseteq\mathbb{R}^n$ 为非空开集, $k$ 为非负整数.  则 $H^k(U)\triangleq W^{k,2}(U)$ 关于内积
 \begin{align*}

@@ -19,8 +19,10 @@
 \colorlet{coverlinecolor}{customcolor}
 
 % ================= 隐藏/显示 证明、解答、笔记 的全局开关 =================
-% 验收要求：必须为 false，证明、解答与注记全部可见。
+% 默认隐藏内容，且不需要点按钮（保留原本的空白占位）。
+% 如果想恢复原本带按钮的交互效果，只需把下面第一行“\HideEnvContenttrue”注释掉，把第二行“\HideEnvContentfalse”取消注释即可。
 \newif\ifHideEnvContent
+% \HideEnvContenttrue
 \HideEnvContentfalse
 % =========================================================================
 

@@ -16,8 +16,8 @@
 设 $S\subseteq\mathbb{R}^{D}$，$\bm{f}:S\rightarrow\mathbb{R}^{D}$ 是一映射。若对每个 $\bm{x}\in\bm{f}(S)$ 都存在唯一的 $\bm{z}\in S$ 使得 $\bm{f}(\bm{z})=\bm{x}$，则称 $\bm{f}$ 在 $S$ 上是\textbf{可逆的}（invertible），并称 $\bm{f}$ 是 $S$ 与 $\bm{f}(S)$ 之间的\textbf{双射}（bijection），即每个 $\bm{x}$ 值都对应唯一的 $\bm{z}$ 值，反之亦然。此时把 $\bm{x}$ 映到上述唯一 $\bm{z}$ 的映射称为 $\bm{f}$ 的\textbf{逆映射}，记为 $\bm{f}^{-1}$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch18-双射; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch18-双射; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 定义里的“唯一”二字是全部要害：变量变换公式要用 $\bm{x}$ 唯一地决定 $\bm{z}$，才能给 $p_x(\bm{x})$ 赋一个确定的值。若映射是多对一的，同一个 $\bm{x}$ 会来自多个 $\bm{z}$，密度就无从定义；\cref{chapter:ch17-生成对抗网络}中的生成对抗网络正是放弃了这一要求（允许网络不可逆、允许潜空间维度低于数据空间），代价是失去可计算的似然函数。标准化流则反过来：保留可逆性以换取精确似然。
 
 逐项看条件。其一，定义域与值域的维数必须相同（这里都是 $D$），否则 Jacobian 矩阵不是方阵、行列式没有定义，\cref{proposition:ch18-变量变换}根本无法写出。其二，“双射”是一个整体性的要求，它比“Jacobian 处处非奇异”更强：由反函数定理，$\mathcal{C}^{1}$ 且 Jacobian 非奇异只保证局部可逆，而流模型需要的是在整个数据空间上存在全局逆映射 $\bm{g}$。其三，$\bm{f}$ 与 $\bm{g}$ 互为逆映射这一条在下一段的推导中被反复使用：它把事件 $\{\bm{x}\in A\}$ 与 $\{\bm{z}\in\bm{g}(A)\}$ 等同起来。
@@ -40,7 +40,7 @@
 \end{align}
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 设 $A\subseteq\mathbb{R}^{D}$ 为任意 Borel 集。由于 $\bm{f}$ 与 $\bm{g}$ 互为逆映射，事件 $\{\bm{x}\in A\}$ 与事件 $\{\bm{z}\in\bm{g}(A)\}$ 是同一个事件，于是概率质量守恒给出
 \begin{align*}
   \int_{A}p_x(\bm{x})\,\mathrm{d}\bm{x}=\int_{\bm{g}(A)}p_z(\bm{z})\,\mathrm{d}\bm{z}.
@@ -52,8 +52,8 @@
 上式对一切 Borel 集 $A$ 成立，故两个被积函数几乎处处相等，即得\eqref{align:ch18-change-var}，其中 $\bm{J}(\bm{x})=\partial\bm{g}/\partial\bm{x}$ 的元素正是\eqref{align:ch18-Jacobian元素}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch18-变量变换; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch18-变量变换; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个公式的直观内容是一维情形 $p_x(x)=p_z(g(x))|g'(x)|$ 的多元推广：$\bm{f}$ 把 $\bm{z}$ 空间中的一个无穷小体积元拉伸或压缩了 $|\det\bm{J}|$ 倍，概率质量必须守恒，所以密度要乘以这个因子的倒数，而 $\bm{J}=\partial\bm{z}/\partial\bm{x}$ 恰好就是该因子的倒数（见\cref{exercise:ch18-01}）。这也是“非体积保持”（non-volume-preserving）这一名称的来源：一般的光滑双射并不保持体积，唯当 $|\det\bm{J}|\equiv1$ 时才保持（如\cref{exercise:ch18-03}中的平移）。
 
 条件的作用。第一，双射与同维数是公式有意义的前提（见\cref{definition:ch18-双射}的注记）。第二，$\bm{g}$ 的连续可微性保证 Jacobian 存在、变量代换定理可用；仅有可微还不够，还需要 $\bm{g}(A)$ 可测等测度论条件，这些在最常见的 $\mathcal{C}^{1}$ 双射情形下自动成立。第三，$\det\bm{J}\neq0$ 保证密度不退化：若某点处 $\det\bm{J}=0$，则该点附近 $\bm{f}$ 把 $D$ 维体积压成低维集合，$p_x$ 在那里会出现奇异性，这正是\cref{proposition:ch16-流形奇异}所描述的退化情形。
@@ -88,7 +88,7 @@
 从而 $\ln\left|\det\bm{J}\right|$ 等于三个层各自对数行列式之和。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 先证\eqref{align:ch18-分层逆}。把\eqref{align:ch18-分层复合}的右端逐层代入：由 $\bm{g}^{A}$ 是 $\bm{f}^{A}$ 的逆、$\bm{g}^{B}$ 是 $\bm{f}^{B}$ 的逆、$\bm{g}^{C}$ 是 $\bm{f}^{C}$ 的逆，依次有
 \begin{align*}
   \bm{g}^{A}(\bm{x})=\bm{f}^{B}\big(\bm{f}^{C}(\bm{z})\big),\qquad
@@ -110,8 +110,8 @@
 取对数即得 $\ln|\det\bm{J}|=\ln|\det\bm{J}^{C}|+\ln|\det\bm{J}^{B}|+\ln|\det\bm{J}^{A}|$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch18-分层流; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch18-分层流; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 动机很直接：若把整个 $\bm{f}$ 当成一个黑箱，算 $\det\bm{J}$ 要 $\mathcal{O}(D^{3})$；改成分层结构后，只需每层各算一次行列式再相乘，总代价是各层代价之和，而每层都可以设计得让行列式便宜（例如三角矩阵，只需 $\mathcal{O}(D)$）。这一条是整章的结构性基础：耦合流与自回归流都是在“让每层 Jacobian 成为三角矩阵”这一思路上做文章。
 
 条件方面：每一层都必须可逆（否则复合不可逆），且都要在相应的中间点连续可微；$\bm{J}=\bm{J}^{C}\bm{J}^{B}\bm{J}^{A}$ 中的三个矩阵在不同的点上取值，不能误认为同一个点处的常数矩阵。另外，层数增加并不改变“可逆性由每层保证”这一逻辑，但对数行列式的累计是相加的，这正是深度流模型仍可训练的原因。
@@ -122,11 +122,15 @@
 \eqref{align:ch18-分层Jacobian}的右侧为三个矩阵的乘积，而乘积的行列式是行列式的乘积。因此，整体 Jacobian 矩阵的对数行列式将是每层对应对数行列式之和（参见\hyperref[chapter:appA-线性代数]{附录\ref*{chapter:appA-线性代数}}）。
 
 \begin{definition}[标准化流]\label{definition:ch18-标准化流}
-设 $p_z$ 是潜变量 $\bm{z}$ 上的简单分布（基础分布），$\bm{f}(\cdot,\bm{w})$ 是由深度神经网络给出的可逆映射。若数据分布 $p_x$ 由\cref{proposition:ch18-变量变换}的变量变换公式从 $p_z$ 与 $\bm{f}$ 确定，则称这种对灵活分布进行建模的方法为\textbf{标准化流}（normalizing flow），并称复合成 $\bm{f}$ 的每个可逆映射为一层流。
+设维数 $D\geqslant1$，潜变量空间为 $\mathbb{R}^{D}$，$p_z$ 为 $\mathbb{R}^{D}$ 上的概率密度（称为基础分布）；设参数 $\bm{w}\in\mathcal{W}$，$\bm{f}(\cdot,\bm{w}):\mathbb{R}^{D}\to\mathbb{R}^{D}$ 为 $C^{1}$ 双射，其 Jacobian 矩阵 $\bm{J}_{\bm{f}}(\bm{z})=\partial\bm{f}(\bm{z},\bm{w})/\partial\bm{z}$ 满足 $\det\bm{J}_{\bm{f}}(\bm{z})\neq0$ 对一切 $\bm{z}\in\mathbb{R}^{D}$ 成立。若数据分布 $p_x$ 由\cref{proposition:ch18-变量变换}的变量变换公式
+\begin{align*}
+  p_x(\bm{x})=p_z\bigl(\bm{f}^{-1}(\bm{x},\bm{w})\bigr)\bigl|\det\bm{J}_{\bm{f}^{-1}}(\bm{x})\bigr|
+\end{align*}
+从 $p_z$ 与 $\bm{f}$ 确定，则称这种对灵活分布进行建模的方法为\textbf{标准化流}（normalizing flow），并称复合成 $\bm{f}$ 的每个可逆映射为一层流。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch18-标准化流; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch18-标准化流; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 “流”这个名称来自直观图像：通过一系列映射来转换概率分布的过程，在某种程度上类似于流体的流动——密度沿着流线被搬运、被拉伸压缩，而质量始终守恒。逆映射方向的效果则相反：它把复杂的数据分布“标准化”成简单形式，通常就是 Gauss 分布，这正是名称中“标准化”的含义。
 
 这个定义与\cref{chapter:ch19-自编码器}的变分自编码器、\cref{chapter:ch17-生成对抗网络}的生成对抗网络构成对照：三者都用一个神经网络把简单分布搬到数据空间，差别在于对“可逆”与“似然精确”的取舍。标准化流要求可逆，代价是潜空间与数据空间必须同维、网络结构受限；回报是似然函数可以被精确计算，而且采样只需一次前向传播。

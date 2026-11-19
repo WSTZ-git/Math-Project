@@ -23,11 +23,21 @@
 图像内容和风格的概念由这两项的函数形式隐含定义。然后，我们可以通过从随机初始化的图像开始，并使用梯度下降最小化 $E(G)$ 来得到 $G$。
 
 \begin{definition}[神经风格迁移]\label{definition:ch10-风格迁移}
-设 $C$ 为内容图像、$S$ 为风格图像，$E_{\mathrm{content}}$ 与 $E_{\mathrm{style}}$ 为给定的内容误差与风格误差，$E$ 由\eqref{align:ch10-风格迁移总误差}定义。称从随机初始化的图像出发、用梯度下降最小化 $E(G)$ 而得到的图像 $G$ 为以 $C$ 为内容、$S$ 为风格的\textbf{神经风格迁移}结果，称这一过程为神经风格迁移（neural style transfer）。
+设内容图像 $C\in\mathbb{R}^{H\times W\times3}$、风格图像
+$S\in\mathbb{R}^{H_{S}\times W_{S}\times3}$，并设一个固定的预训练卷积网络在若干层上
+给出预激活 $a_{ijk}(\cdot)$。设内容误差 $E_{\mathrm{content}}(G,C)$ 由
+\eqref{align:ch10-内容误差}定义，风格误差 $E_{\mathrm{style}}(G,S)$ 由
+\eqref{align:ch10-风格误差}或\eqref{align:ch10-多层风格误差}定义，总误差 $E(G)$ 由
+\eqref{align:ch10-风格迁移总误差}定义。若 $G_{0}\in\mathbb{R}^{H\times W\times3}$ 为
+随机初始化的图像，$\eta>0$ 为步长，且迭代
+$G_{\tau+1}=G_{\tau}-\eta\nabla_{G}E(G_{\tau})$，$\tau=0,1,2,\dots$，得到 $E$ 的局部
+极小点 $G^{\ast}\in\mathbb{R}^{H\times W\times3}$，则 $G^{\ast}$ 称为以 $C$ 为内容、
+$S$ 为风格的\textbf{神经风格迁移}结果，这一过程称为神经风格迁移（neural style
+transfer）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-风格迁移; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-风格迁移; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个定义的关键在于它并不定义“内容”与“风格”这两个词本身，而是通过两个误差项的函数形式隐含地定义它们：凡是被 $E_{\mathrm{content}}$ 约束的，就是内容；凡是被 $E_{\mathrm{style}}$ 约束的，就是风格。因此换一种误差项的函数形式，就等于换了一种对“风格”的理解，这不是实现细节而是模型定义的一部分。定义要求从随机图像出发并使用梯度下降，说明 $G$ 是优化变量而不是网络参数：网络本身是固定的特征提取器（通常是预训练的 VGG），被优化的是像素。这个选择带来一个实践上的后果：每生成一幅图都要重新求解一次优化问题，速度远慢于训练一个前馈生成网络。
 \end{remark}
 
@@ -56,16 +66,23 @@
 其中，$l$ 表示卷积层。系数 $\lambda_l$ 不仅确定了不同层之间的相对权重，也确定了相对于内容误差项的权重。这些权重系数是由主观判断经验性地调整的。
 
 \begin{definition}[风格矩阵（Gram 矩阵）]\label{definition:ch10-Gram矩阵}
-设某卷积层有 $K$ 个通道、每个通道的空间尺寸为 $I\times J$，$a_{ijk}$ 为通道 $k$ 在位置 $(i,j)$ 的预激活。称由\eqref{align:ch10-Gram矩阵}定义的 $K\times K$ 矩阵 $F(G)=(F_{kk'}(G))$ 为输入图像 $G$ 在该层的\textbf{风格矩阵}（style matrix），亦称 \textbf{Gram 矩阵}。
+设某卷积层有 $K$ 个通道、每个通道的空间尺寸为 $I\times J$，
+$a_{ijk}\in\mathbb{R}$ 为通道 $k$ 在位置 $(i,j)$ 的预激活，$i=1,\dots,I$、
+$j=1,\dots,J$、$k=1,\dots,K$。由\eqref{align:ch10-Gram矩阵}定义的 $K\times K$ 实矩阵
+$F(G)=(F_{kk'}(G))$ 称为输入图像 $G$ 在该层的\textbf{风格矩阵}（style matrix），亦称
+\textbf{Gram 矩阵}，其元素为
+$F_{kk'}(G)=\sum_{i=1}^{I}\sum_{j=1}^{J}a_{ijk}(G)\,a_{ijk'}(G)$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch10-Gram矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch10-Gram矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 风格矩阵把“某层特征图”压缩成一个 $K\times K$ 的通道间相关矩阵，其代价是彻底丢弃空间信息：$F_{kk'}$ 对全部位置求和，因此两幅图只要通道间的共现统计相同，风格矩阵就相同，哪怕图案排布完全不同。这正是“风格”与“内容”的分界：内容误差\eqref{align:ch10-内容误差}逐位置比较，风格误差\eqref{align:ch10-风格误差}只比较统计量。定义中“对位置求和”而不是取平均，使 $F$ 的数值随特征图尺寸增大而增大，故\eqref{align:ch10-风格误差}前的归一化因子 $(2IJK)^2$ 不是装饰：没有它，不同层的误差量级会随分辨率剧烈变化，$\lambda_l$ 就无法跨层比较。
 \end{remark}
 
 \begin{proposition}[Gram 矩阵的基本性质]\label{proposition:ch10-Gram矩阵性质}
-设 $A\in\mathbb{R}^{IJ\times K}$ 的列是各通道展平后的向量，则 $F=A^{\mathsf{T}}A$。于是
+设某卷积层有 $K$ 个通道、空间尺寸为 $I\times J$，$A\in\mathbb{R}^{IJ\times K}$ 的列
+是各通道预激活展平后的向量，$F=(F_{kk'})$ 由\eqref{align:ch10-Gram矩阵}定义。则
+$F=A^{\mathsf{T}}A$，且
 \begin{enumerate}
   \item $F$ 对称：$F^{\mathsf{T}}=F$；
   \item $F$ 半正定：对任意 $\mathbf{v}\in\mathbb{R}^{K}$ 有 $\mathbf{v}^{\mathsf{T}}F\mathbf{v}\geqslant0$，且等号成立当且仅当 $A\mathbf{v}=\mathbf{0}$；
@@ -76,8 +93,8 @@
 把 $F_{kk'}=\sum_{i,j}a_{ijk}a_{ijk'}$ 写成向量内积，正是 $A$ 的第 $k$ 列与第 $k'$ 列的内积，故 $F=A^{\mathsf{T}}A$。(1) $F^{\mathsf{T}}=(A^{\mathsf{T}}A)^{\mathsf{T}}=A^{\mathsf{T}}A=F$。(2) $\mathbf{v}^{\mathsf{T}}F\mathbf{v}=\mathbf{v}^{\mathsf{T}}A^{\mathsf{T}}A\mathbf{v}=\|A\mathbf{v}\|^2\geqslant0$，而 $\|A\mathbf{v}\|^2=0$ 当且仅当 $A\mathbf{v}=\mathbf{0}$。(3) 由 $\operatorname{rank}(A^{\mathsf{T}}A)=\operatorname{rank}(A)$ 及 $\operatorname{rank}(A)\leqslant\min\{IJ,K\}$ 即得。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch10-Gram矩阵性质; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch10-Gram矩阵性质; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这三个性质各有用途。对称性使 $F$ 只有 $K(K+1)/2$ 个独立元素，风格误差实际比较的自由度比 $K^2$ 少。半正定性保证了 $F$ 可以看作某个特征分布的协方差矩阵，因此“风格距离”在统计意义上是有依据的；但要注意 $F$ 通常奇异（当 $IJ>K$ 时秩至多为 $K$，更常见的是通道间高度相关），所以不能直接求逆，任何用到 $F^{-1}$ 的写法都需要正则化。秩的上界说明风格矩阵能表达的相关性受通道数限制：通道太少时，丰富的纹理统计无法被完整编码。第 (2) 条的等号条件在数值上意味着：若某线性组合 $A\mathbf{v}$ 在全部位置上为零，则 $F$ 在该方向上退化，这通常出现在某通道恒为零（例如 ReLU 之后整片失活）的情形。
 \end{remark}
 

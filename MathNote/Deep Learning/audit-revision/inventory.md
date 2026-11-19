@@ -1,0 +1,272 @@
+# Environment inventory
+
+Total: 2344
+
+- remark: 832
+- definition: 414
+- exercise: 352
+- proof: 348
+- proposition: 315
+- example: 40
+- theorem: 33
+- solution: 9
+- corollary: 1
+
+## Per file
+- contents/Chapter-01/section-01.tex: definition=8, remark=4
+- contents/Chapter-01/section-02.tex: definition=11, example=1, proof=3, proposition=3, remark=15
+- contents/Chapter-01/section-03.tex: definition=14, proof=1, proposition=1, remark=16
+- contents/Chapter-02/section-01.tex: definition=6, example=2, proof=8, proposition=6, remark=16, theorem=2
+- contents/Chapter-02/section-02.tex: definition=13, proof=6, proposition=5, remark=19, theorem=1
+- contents/Chapter-02/section-03.tex: definition=6, proof=9, proposition=8, remark=15, theorem=1
+- contents/Chapter-02/section-04.tex: definition=2, example=2, proof=4, proposition=4, remark=8
+- contents/Chapter-02/section-05.tex: definition=8, example=1, proof=11, proposition=8, remark=20, theorem=3
+- contents/Chapter-02/section-06.tex: definition=3, proof=6, proposition=5, remark=9, theorem=1
+- contents/Chapter-02/section-07.tex: exercise=41
+- contents/Chapter-03/section-01.tex: definition=6, proof=5, proposition=5, remark=12
+- contents/Chapter-03/section-02.tex: definition=7, proof=14, proposition=14, remark=23
+- contents/Chapter-03/section-03.tex: definition=3, proof=3, proposition=2, remark=7, theorem=1
+- contents/Chapter-03/section-04.tex: definition=4, proof=6, proposition=6, remark=10
+- contents/Chapter-03/section-05.tex: definition=4, proof=4, proposition=4, remark=10
+- contents/Chapter-03/section-06.tex: exercise=38
+- contents/Chapter-04/section-01.tex: definition=8, proof=9, proposition=9, remark=18
+- contents/Chapter-04/section-02.tex: definition=3, proof=2, proposition=2, remark=5
+- contents/Chapter-04/section-03.tex: example=1, proof=1, remark=1, theorem=1
+- contents/Chapter-04/section-04.tex: exercise=12, remark=1
+- contents/Chapter-05/section-01.tex: definition=2, proof=5, proposition=5, remark=7
+- contents/Chapter-05/section-02.tex: definition=9, proof=7, proposition=7, remark=16
+- contents/Chapter-05/section-03.tex: definition=5, proof=5, proposition=5, remark=10
+- contents/Chapter-05/section-04.tex: definition=8, proof=10, proposition=10, remark=18
+- contents/Chapter-05/section-05.tex: exercise=24
+- contents/Chapter-06/section-01.tex: definition=4, example=2, proof=4, proposition=4, remark=8
+- contents/Chapter-06/section-02.tex: definition=8, proof=5, proposition=3, remark=13, theorem=2
+- contents/Chapter-06/section-03.tex: definition=18, example=1, proof=3, proposition=3, remark=21
+- contents/Chapter-06/section-04.tex: definition=3, proof=10, proposition=10, remark=14
+- contents/Chapter-06/section-05.tex: definition=4, example=1, proof=6, proposition=6, remark=11
+- contents/Chapter-06/section-06.tex: exercise=21
+- contents/Chapter-07/section-01.tex: definition=4, proof=5, proposition=4, remark=9, theorem=1
+- contents/Chapter-07/section-02.tex: definition=6, example=1, proof=1, proposition=1, remark=7, solution=1
+- contents/Chapter-07/section-03.tex: corollary=1, definition=7, proof=3, proposition=1, remark=11, theorem=1
+- contents/Chapter-07/section-04.tex: definition=4, proof=1, proposition=1, remark=6
+- contents/Chapter-07/section-05.tex: exercise=14
+- contents/Chapter-08/section-01.tex: definition=6, example=1, proof=4, proposition=3, remark=11, solution=1, theorem=1
+- contents/Chapter-08/section-02.tex: definition=6, example=1, proof=1, proposition=1, remark=9
+- contents/Chapter-08/section-03.tex: exercise=18
+- contents/Chapter-09/section-01.tex: definition=6, proof=1, remark=7, theorem=1
+- contents/Chapter-09/section-02.tex: definition=4, proof=5, proposition=4, remark=10, theorem=1
+- contents/Chapter-09/section-03.tex: definition=4, proof=1, remark=5, theorem=1
+- contents/Chapter-09/section-04.tex: definition=3, proof=3, proposition=3, remark=6
+- contents/Chapter-09/section-05.tex: definition=3, proof=1, proposition=1, remark=4
+- contents/Chapter-09/section-06.tex: definition=3, proof=4, proposition=3, remark=7, theorem=1
+- contents/Chapter-09/section-07.tex: exercise=18
+- contents/Chapter-10/section-01.tex: definition=1, remark=1
+- contents/Chapter-10/section-02.tex: definition=9, example=2, proof=8, proposition=8, remark=17
+- contents/Chapter-10/section-03.tex: definition=5, proof=2, proposition=2, remark=7
+- contents/Chapter-10/section-04.tex: definition=5, proof=1, proposition=1, remark=6
+- contents/Chapter-10/section-05.tex: definition=5, proof=2, proposition=2, remark=7
+- contents/Chapter-10/section-06.tex: definition=2, proof=1, proposition=1, remark=3
+- contents/Chapter-10/section-07.tex: exercise=13
+- contents/Chapter-11/section-01.tex: definition=9, example=1, proof=4, proposition=4, remark=15
+- contents/Chapter-11/section-02.tex: definition=6, example=4, proof=7, proposition=5, remark=18, theorem=2
+- contents/Chapter-11/section-03.tex: definition=4, proof=3, proposition=3, remark=8
+- contents/Chapter-11/section-04.tex: exercise=19
+- contents/Chapter-12/section-01.tex: definition=6, proof=6, proposition=6, remark=13
+- contents/Chapter-12/section-02.tex: definition=5, proof=3, proposition=3, remark=8
+- contents/Chapter-12/section-03.tex: definition=3, proof=2, proposition=2, remark=5
+- contents/Chapter-12/section-04.tex: definition=2, remark=2
+- contents/Chapter-12/section-05.tex: exercise=16, remark=16
+- contents/Chapter-13/section-01.tex: definition=5, remark=5
+- contents/Chapter-13/section-02.tex: definition=12, example=2, proof=5, proposition=4, remark=17, theorem=1
+- contents/Chapter-13/section-03.tex: definition=5, proof=1, proposition=1, remark=6
+- contents/Chapter-13/section-04.tex: definition=5, proof=1, proposition=1, remark=6
+- contents/Chapter-13/section-05.tex: exercise=10, remark=1
+- contents/Chapter-14/section-01.tex: definition=4, example=3, proof=9, proposition=9, remark=13, solution=3
+- contents/Chapter-14/section-02.tex: definition=11, example=1, proof=7, proposition=7, remark=18, solution=1
+- contents/Chapter-14/section-03.tex: definition=3, proof=5, proposition=4, remark=9, theorem=1
+- contents/Chapter-14/section-04.tex: exercise=18, remark=2
+- contents/Chapter-15/section-01.tex: definition=1, example=2, proof=3, proposition=2, remark=6, theorem=1
+- contents/Chapter-15/section-02.tex: definition=3, proof=4, proposition=4, remark=9
+- contents/Chapter-15/section-03.tex: definition=4, proof=6, proposition=6, remark=10
+- contents/Chapter-15/section-04.tex: definition=1, proof=7, proposition=6, remark=9, theorem=1
+- contents/Chapter-15/section-05.tex: exercise=24, remark=1
+- contents/Chapter-16/section-01.tex: definition=2, example=1, proof=2, proposition=2, remark=7
+- contents/Chapter-16/section-02.tex: definition=4, example=1, proof=5, proposition=4, remark=10, theorem=1
+- contents/Chapter-16/section-03.tex: proof=2, proposition=2, remark=3
+- contents/Chapter-16/section-04.tex: definition=1, example=1, proof=1, proposition=1, remark=3
+- contents/Chapter-16/section-05.tex: exercise=26
+- contents/Chapter-17/section-01.tex: definition=4, proof=1, proposition=1, remark=5
+- contents/Chapter-17/section-02.tex: definition=2, example=1, proof=1, proposition=1, remark=4
+- contents/Chapter-17/section-03.tex: definition=1, proof=1, proposition=1, remark=2
+- contents/Chapter-17/section-04.tex: definition=1, example=1, remark=1
+- contents/Chapter-17/section-05.tex: exercise=3, remark=1
+- contents/Chapter-18/section-01.tex: definition=2, example=1, proof=3, proposition=3, remark=6
+- contents/Chapter-18/section-02.tex: definition=2, proof=3, proposition=3, remark=5
+- contents/Chapter-18/section-03.tex: definition=2, proof=4, proposition=4, remark=6
+- contents/Chapter-18/section-04.tex: definition=1, proof=3, proposition=2, remark=4, theorem=1
+- contents/Chapter-18/section-05.tex: exercise=11
+- contents/Chapter-19/section-01.tex: definition=6, example=1, proof=1, remark=7, theorem=1
+- contents/Chapter-19/section-02.tex: definition=6, proof=3, proposition=3, remark=12
+- contents/Chapter-19/section-03.tex: exercise=6
+- contents/Chapter-20/section-01.tex: definition=2, proof=2, proposition=2, remark=4
+- contents/Chapter-20/section-02.tex: definition=1, example=1, proof=6, proposition=5, remark=8, theorem=1
+- contents/Chapter-20/section-03.tex: definition=2, proof=3, proposition=3, remark=5
+- contents/Chapter-20/section-04.tex: definition=1, proof=2, proposition=2, remark=3
+- contents/Chapter-20/section-05.tex: exercise=20
+- contents/appendix-A.tex: definition=16, example=1, proof=29, proposition=29, remark=45, solution=1, theorem=1
+- contents/appendix-B.tex: definition=4, example=1, proof=3, proposition=2, remark=9, solution=1, theorem=1
+- contents/appendix-C.tex: definition=5, example=1, proof=7, proposition=5, remark=13, solution=1, theorem=2
+- contents/chapter-02.tex: definition=2, remark=2
+- contents/chapter-05.tex: definition=4, remark=4
+- contents/chapter-14.tex: definition=1, remark=1
+- contents/chapter-18.tex: definition=2, proof=2, proposition=2, remark=4
+- contents/chapter-19.tex: definition=1, remark=1
+
+## Weak candidates (short bodies or no assumption words)
+- contents/Chapter-01/section-01.tex:79 [definition] definition:ch01-无监督学习 chars=103 assumption=True
+- contents/Chapter-01/section-01.tex:108 [definition] definition:ch01-大语言模型 chars=96 assumption=True
+- contents/Chapter-01/section-02.tex:15 [definition] definition:ch01-泛化能力 chars=103 assumption=True
+- contents/Chapter-01/section-02.tex:173 [definition] definition:ch01-过拟合 chars=96 assumption=True
+- contents/Chapter-01/section-02.tex:345 [definition] definition:ch01-超参数 chars=89 assumption=True
+- contents/Chapter-01/section-02.tex:357 [proposition] proposition:ch01-超参数不可联合优化 chars=320 assumption=False
+- contents/Chapter-01/section-03.tex:143 [definition] definition:ch01-隐藏单元 chars=70 assumption=True
+- contents/Chapter-01/section-03.tex:162 [definition] definition:ch01-前馈神经网络 chars=103 assumption=True
+- contents/Chapter-01/section-03.tex:198 [definition] definition:ch01-特征提取 chars=80 assumption=True
+- contents/Chapter-01/section-03.tex:214 [definition] definition:ch01-深度神经网络与深度学习 chars=94 assumption=True
+- contents/Chapter-01/section-03.tex:243 [definition] definition:ch01-表示学习 chars=102 assumption=True
+- contents/Chapter-01/section-03.tex:255 [definition] definition:ch01-基础模型 chars=75 assumption=True
+- contents/Chapter-01/section-03.tex:267 [definition] definition:ch01-残差连接 chars=90 assumption=True
+- contents/Chapter-01/section-03.tex:279 [definition] definition:ch01-自动微分 chars=89 assumption=True
+- contents/Chapter-02/section-01.tex:175 [proposition] proposition:ch02-乘积法则离散 chars=67 assumption=True
+- contents/Chapter-02/section-01.tex:195 [definition] definition:ch02-简写记号 chars=139 assumption=False
+- contents/Chapter-02/section-01.tex:246 [theorem] theorem:ch02-Bayes定理 chars=45 assumption=True
+- contents/Chapter-02/section-01.tex:272 [proposition] proposition:ch02-Bayes分母 chars=91 assumption=True
+- contents/Chapter-02/section-02.tex:48 [proposition] proposition:ch02-密度性质 chars=107 assumption=True
+- contents/Chapter-02/section-02.tex:74 [definition] definition:ch02-累积分布函数 chars=119 assumption=True
+- contents/Chapter-02/section-02.tex:85 [proposition] proposition:ch02-累积分布导数 chars=82 assumption=True
+- contents/Chapter-02/section-02.tex:377 [definition] definition:ch02-方差 chars=101 assumption=True
+- contents/Chapter-02/section-02.tex:395 [proposition] proposition:ch02-方差展开 chars=53 assumption=True
+- contents/Chapter-02/section-02.tex:451 [proposition] proposition:ch02-独立协方差为零 chars=53 assumption=True
+- contents/Chapter-02/section-03.tex:123 [proposition] proposition:ch02-Gauss方差 chars=103 assumption=True
+- contents/Chapter-02/section-03.tex:143 [definition] definition:ch02-众数 chars=43 assumption=True
+- contents/Chapter-02/section-03.tex:209 [proposition] proposition:ch02-对数似然 chars=91 assumption=True
+- contents/Chapter-02/section-03.tex:461 [proposition] proposition:ch02-回归方差 chars=114 assumption=False
+- contents/Chapter-02/section-05.tex:40 [proposition] proposition:ch02-信息量可加 chars=40 assumption=True
+- contents/Chapter-02/section-05.tex:60 [definition] definition:ch02-熵 chars=114 assumption=True
+- contents/Chapter-02/section-05.tex:344 [theorem] theorem:ch02-最大熵Gauss chars=161 assumption=False
+- contents/Chapter-02/section-05.tex:373 [proposition] proposition:ch02-Gauss熵 chars=76 assumption=True
+- contents/Chapter-02/section-05.tex:508 [proposition] proposition:ch02-kl非负 chars=74 assumption=True
+- contents/Chapter-02/section-05.tex:591 [proposition] proposition:ch02-熵链式 chars=75 assumption=True
+- contents/Chapter-02/section-05.tex:638 [proposition] proposition:ch02-互信息与熵 chars=96 assumption=True
+- contents/Chapter-02/section-06.tex:21 [definition] definition:ch02-误差函数 chars=112 assumption=True
+- contents/Chapter-02/section-06.tex:69 [proposition] proposition:ch02-后验正比 chars=96 assumption=False
+- contents/Chapter-02/section-06.tex:94 [proposition] proposition:ch02-证据 chars=64 assumption=True
+- contents/Chapter-02/section-06.tex:164 [proposition] proposition:ch02-负对数后验分解 chars=109 assumption=False
+- contents/Chapter-03/section-03.tex:86 [definition] definition:ch03-周期分布 chars=114 assumption=True
+- contents/Chapter-03/section-04.tex:54 [definition] definition:ch03-sigmoid chars=85 assumption=True
+- contents/Chapter-03/section-04.tex:249 [proposition] proposition:ch03-尺度变换 chars=53 assumption=True
+- contents/Chapter-03/section-05.tex:36 [proposition] proposition:ch03-直方图归一 chars=118 assumption=True
+- contents/Chapter-04/section-02.tex:106 [definition] definition:ch04-回归函数 chars=102 assumption=True
+- contents/Chapter-05/section-01.tex:97 [definition] definition:ch05-增广记号 chars=256 assumption=False
+- contents/Chapter-05/section-02.tex:434 [proposition] proposition:ch05-F分数 chars=87 assumption=False
+- contents/Chapter-05/section-03.tex:26 [definition] definition:ch05-logistic-sigmoid chars=88 assumption=True
+- contents/Chapter-05/section-03.tex:61 [definition] definition:ch05-logit chars=119 assumption=True
+- contents/Chapter-05/section-04.tex:104 [proposition] proposition:ch05-sigmoid导数 chars=107 assumption=True
+- contents/Chapter-05/section-04.tex:169 [proposition] proposition:ch05-交叉熵凸性 chars=118 assumption=True
+- contents/Chapter-05/section-04.tex:403 [proposition] proposition:ch05-probit与erf chars=119 assumption=True
+- contents/Chapter-05/section-04.tex:438 [proposition] proposition:ch05-尾部衰减 chars=345 assumption=False
+- contents/Chapter-06/section-01.tex:50 [proposition] proposition:ch06-多项式系数增长 chars=207 assumption=False
+- contents/Chapter-06/section-02.tex:243 [definition] definition:ch06-hard-tanh chars=96 assumption=True
+- contents/Chapter-06/section-03.tex:260 [definition] definition:ch06-监督对比学习 chars=94 assumption=True
+- contents/Chapter-06/section-03.tex:345 [definition] definition:ch06-张量 chars=116 assumption=True
+- contents/Chapter-06/section-04.tex:73 [proposition] proposition:ch06-平方和误差 chars=241 assumption=False
+- contents/Chapter-06/section-04.tex:98 [proposition] proposition:ch06-噪声方差估计 chars=135 assumption=False
+- contents/Chapter-06/section-04.tex:253 [proposition] proposition:ch06-多标签交叉熵 chars=86 assumption=True
+- contents/Chapter-06/section-05.tex:169 [proposition] proposition:ch06-混合系数导数 chars=65 assumption=False
+- contents/Chapter-06/section-05.tex:195 [proposition] proposition:ch06-均值导数 chars=85 assumption=True
+- contents/Chapter-06/section-05.tex:223 [proposition] proposition:ch06-方差导数 chars=73 assumption=True
+- contents/Chapter-06/section-05.tex:263 [proposition] proposition:ch06-条件均值 chars=99 assumption=True
+- contents/Chapter-07/section-01.tex:187 [proposition] proposition:ch07-正定判据 chars=112 assumption=True
+- contents/Chapter-07/section-02.tex:35 [definition] definition:ch07-学习率 chars=93 assumption=True
+- contents/Chapter-07/section-02.tex:44 [definition] definition:ch07-梯度下降 chars=116 assumption=True
+- contents/Chapter-07/section-02.tex:53 [definition] definition:ch07-批处理 chars=48 assumption=True
+- contents/Chapter-07/section-02.tex:121 [definition] definition:ch07-小批量 chars=65 assumption=True
+- contents/Chapter-07/section-02.tex:164 [definition] definition:ch07-对称性破缺 chars=88 assumption=True
+- contents/Chapter-07/section-04.tex:149 [definition] definition:ch07-内部协变量偏移 chars=90 assumption=True
+- contents/Chapter-08/section-01.tex:66 [definition] definition:ch08-前向传播 chars=178 assumption=False
+- contents/Chapter-08/section-01.tex:344 [proposition] proposition:ch08-数值微分复杂度 chars=124 assumption=False
+- contents/Chapter-08/section-02.tex:78 [definition] definition:ch08-自动微分法 chars=203 assumption=False
+- contents/Chapter-09/section-02.tex:195 [proposition] proposition:ch09-一致性正则项 chars=310 assumption=False
+- contents/Chapter-09/section-04.tex:88 [proposition] proposition:ch09-软共享梯度 chars=717 assumption=False
+- contents/Chapter-09/section-04.tex:169 [proposition] proposition:ch09-混合系数梯度 chars=339 assumption=False
+- contents/Chapter-09/section-05.tex:87 [proposition] proposition:ch09-残差展开 chars=709 assumption=False
+- contents/Chapter-11/section-01.tex:373 [definition] definition:ch11-板块 chars=114 assumption=False
+- contents/Chapter-11/section-01.tex:446 [definition] definition:ch11-推理 chars=106 assumption=True
+- contents/Chapter-11/section-02.tex:198 [definition] definition:ch11-后代 chars=99 assumption=True
+- contents/Chapter-12/section-02.tex:143 [proposition] proposition:ch12-自回归分解 chars=109 assumption=True
+- contents/Chapter-13/section-02.tex:89 [definition] definition:ch13-节点嵌入 chars=104 assumption=True
+- contents/Chapter-13/section-04.tex:11 [definition] definition:ch13-过度平滑 chars=69 assumption=True
+- contents/Chapter-13/section-04.tex:24 [definition] definition:ch13-残差更新 chars=166 assumption=False
+- contents/Chapter-13/section-04.tex:63 [definition] definition:ch13-图dropout chars=95 assumption=False
+- contents/Chapter-14/section-02.tex:329 [proposition] proposition:ch14-gibbs是mh特例 chars=185 assumption=False
+- contents/Chapter-14/section-03.tex:85 [proposition] proposition:ch14-对数似然梯度 chars=110 assumption=True
+- contents/Chapter-14/section-03.tex:108 [proposition] proposition:ch14-配分函数梯度 chars=209 assumption=False
+- contents/Chapter-14/section-03.tex:142 [theorem] theorem:ch14-对比散度梯度 chars=104 assumption=False
+- contents/Chapter-14/section-03.tex:201 [proposition] proposition:ch14-得分与能量 chars=96 assumption=True
+- contents/Chapter-15/section-01.tex:50 [proposition] proposition:ch15-K均值闭式更新 chars=241 assumption=False
+- contents/Chapter-15/section-03.tex:41 [definition] definition:ch15-Q函数 chars=377 assumption=False
+- contents/Chapter-15/section-03.tex:147 [proposition] proposition:ch15-责任与期望 chars=779 assumption=False
+- contents/Chapter-15/section-03.tex:279 [proposition] proposition:ch15-Bernoulli矩 chars=116 assumption=True
+- contents/Chapter-15/section-04.tex:230 [proposition] proposition:ch15-MAP-EM chars=224 assumption=False
+- contents/Chapter-19/section-01.tex:157 [definition] definition:ch19-去噪自编码器 chars=304 assumption=False
+- contents/Chapter-19/section-01.tex:205 [definition] definition:ch19-掩蔽自编码器 chars=103 assumption=False
+- contents/Chapter-19/section-02.tex:139 [definition] definition:ch19-对角Gauss编码器 chars=255 assumption=False
+- contents/appendix-A.tex:18 [definition] definition:appA-恒等矩阵 chars=83 assumption=True
+- contents/appendix-A.tex:27 [definition] definition:appA-转置 chars=68 assumption=False
+- contents/appendix-A.tex:37 [proposition] proposition:appA-乘积的转置 chars=97 assumption=False
+- contents/appendix-A.tex:62 [definition] definition:appA-逆矩阵 chars=73 assumption=False
+- contents/appendix-A.tex:75 [proposition] proposition:appA-乘积的逆 chars=73 assumption=False
+- contents/appendix-A.tex:91 [proposition] proposition:appA-转置的逆 chars=84 assumption=False
+- contents/appendix-A.tex:109 [proposition] proposition:appA-求逆恒等式 chars=187 assumption=False
+- contents/appendix-A.tex:134 [proposition] proposition:appA-推入恒等式 chars=96 assumption=False
+- contents/appendix-A.tex:151 [proposition] proposition:appA-woodbury chars=152 assumption=False
+- contents/appendix-A.tex:183 [definition] definition:appA-矩阵的秩 chars=42 assumption=False
+- contents/appendix-A.tex:196 [definition] definition:appA-迹 chars=51 assumption=True
+- contents/appendix-A.tex:206 [proposition] proposition:appA-迹的循环性 chars=250 assumption=False
+- contents/appendix-A.tex:234 [definition] definition:appA-行列式 chars=81 assumption=False
+- contents/appendix-A.tex:255 [proposition] proposition:appA-乘积的行列式 chars=64 assumption=False
+- contents/appendix-A.tex:271 [proposition] proposition:appA-逆的行列式 chars=63 assumption=False
+- contents/appendix-A.tex:289 [proposition] proposition:appA-sylvester chars=104 assumption=False
+- contents/appendix-A.tex:352 [definition] definition:appA-标量对向量导数 chars=110 assumption=False
+- contents/appendix-A.tex:360 [definition] definition:appA-向量对向量导数 chars=119 assumption=False
+- contents/appendix-A.tex:374 [proposition] proposition:appA-线性型导数 chars=155 assumption=False
+- contents/appendix-A.tex:391 [proposition] proposition:appA-乘积法则 chars=152 assumption=False
+- contents/appendix-A.tex:412 [proposition] proposition:appA-逆矩阵的导数 chars=128 assumption=False
+- contents/appendix-A.tex:433 [proposition] proposition:appA-对数行列式导数 chars=137 assumption=False
+- contents/appendix-A.tex:460 [proposition] proposition:appA-迹的矩阵导数 chars=95 assumption=False
+- contents/appendix-A.tex:483 [proposition] proposition:appA-矩阵导数恒等式 chars=293 assumption=False
+- contents/appendix-A.tex:508 [proposition] proposition:appA-对数行列式的矩阵导数 chars=100 assumption=False
+- contents/appendix-A.tex:527 [definition] definition:appA-特征向量 chars=119 assumption=True
+- contents/appendix-A.tex:541 [proposition] proposition:appA-特征方程 chars=57 assumption=False
+- contents/appendix-A.tex:561 [proposition] proposition:appA-秩与非零特征值 chars=22 assumption=False
+- contents/appendix-A.tex:572 [definition] definition:appA-对称矩阵 chars=60 assumption=True
+- contents/appendix-A.tex:583 [proposition] proposition:appA-对称矩阵的逆 chars=15 assumption=True
+- contents/appendix-A.tex:598 [proposition] proposition:appA-实对称特征值为实 chars=26 assumption=True
+- contents/appendix-A.tex:632 [proposition] proposition:appA-特征向量正交 chars=67 assumption=False
+- contents/appendix-A.tex:668 [definition] definition:appA-正交矩阵 chars=85 assumption=True
+- contents/appendix-A.tex:683 [proposition] proposition:appA-正交矩阵的性质 chars=96 assumption=True
+- contents/appendix-A.tex:721 [proposition] proposition:appA-正交变换保内积 chars=397 assumption=False
+- contents/appendix-A.tex:774 [proposition] proposition:appA-逆谱分解 chars=277 assumption=False
+- contents/appendix-A.tex:802 [proposition] proposition:appA-行列式与迹 chars=251 assumption=False
+- contents/appendix-A.tex:843 [definition] definition:appA-正定矩阵 chars=101 assumption=True
+- contents/appendix-A.tex:854 [proposition] proposition:appA-正定判据 chars=58 assumption=True
+- contents/appendix-B.tex:14 [definition] definition:appB-泛函 chars=113 assumption=True
+- contents/appendix-B.tex:39 [definition] definition:appB-变分法 chars=116 assumption=True
+- contents/appendix-B.tex:60 [definition] definition:appB-泛函导数 chars=148 assumption=False
+- contents/appendix-B.tex:87 [proposition] proposition:appB-基本引理 chars=105 assumption=True
+- contents/appendix-B.tex:101 [definition] definition:appB-积分型泛函 chars=105 assumption=True
+- contents/appendix-C.tex:26 [definition] definition:appC-约束曲面 chars=86 assumption=True
+- contents/appendix-C.tex:87 [definition] definition:appC-乘子 chars=103 assumption=True
+- contents/appendix-C.tex:183 [definition] definition:appC-激活约束 chars=105 assumption=True
+- contents/chapter-05.tex:24 [definition] definition:ch05-判别函数 chars=118 assumption=True
+- contents/chapter-05.tex:55 [definition] definition:ch05-线性判别式 chars=58 assumption=True
+- contents/chapter-14.tex:11 [definition] definition:ch14-采样 chars=118 assumption=True

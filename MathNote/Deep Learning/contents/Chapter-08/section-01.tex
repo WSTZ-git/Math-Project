@@ -53,37 +53,41 @@ z_j=h(a_j).
 请注意，\eqref{align:ch08-预激活}中参与求和的一个或多个变量 $z_i$ 可以是一个输入变量。同样，\eqref{align:ch08-激活}中的单元 $j$ 也可以是一个输出变量。
 
 \begin{definition}[计算图]\label{definition:ch08-计算图}
-把前馈网络中的每个单元画成一个节点，把每条权重为 $w_{ji}$ 的连接画成从节点 $i$ 指向节点 $j$ 的有向边，所得的有向无环图称为该网络的\textbf{计算图}（computational graph）。在计算图中，节点 $i$ 的激活值 $z_i$ 沿边的方向送入节点 $j$ 并参与\eqref{align:ch08-预激活}的求和，因此\eqref{align:ch08-预激活}与\eqref{align:ch08-激活}就是信息沿边正向流动一次的结果；反过来，若把误差函数对某个节点的预激活的导数看作该节点携带的信号，那么这个信号可以沿边反向送回它的全部前驱节点。
+设计算图 $G=(V,E)$ 为有向图，其中顶点集 $V$ 是前馈网络全部单元（输入单元、隐藏单元与输出单元）的集合，边集 $E\subseteq V\times V$ 是全部带权连接，边 $(i,j)\in E$ 的权重为 $w_{ji}\in\mathbb{R}$。若 $G$ 不含非空有向环，则 $G$ 连同这些权重称为该网络的\textbf{计算图}（computational graph）。在计算图中，对每个非输入单元 $j$，其预激活与激活分别为 $a_j=\sum_{i:(i,j)\in E}w_{ji}z_i$ 与 $z_j=h_j(a_j)$，其中 $z_i$ 为单元 $i$ 的激活值（对输入单元取 $z_i=x_i$），$h_j$ 为单元 $j$ 的激活函数；由于 $G$ 无环，可按 $G$ 的任一拓扑序依次求值。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch08-计算图; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch08-计算图; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 计算图之所以值得单独定义，是因为它把“网络里谁影响谁”这件事从公式中剥离出来，只留下节点与有向边。有了它，前向传播与反向传播就不是两套彼此独立的公式，而是同一张图上的两次遍历：一次顺着边的方向求值，一次逆着边的方向累积导数。定义要求图是有向无环图，这保证两次遍历都能按拓扑序进行、不会出现“节点依赖自己”的循环，因而每个节点的量都能由它的前驱（或后继）先算出来；若网络中存在反馈连接，遍历顺序就不再存在，必须改用迭代求解。定义还隐含要求每个节点上的激活函数可微，否则反向遍历时 $\partial z_j/\partial a_j$ 不存在（\eqref{align:ch08-激活}的导数即 $h'(a_j)$）。求值轨迹（参见\cref{section:ch08-自动微分法}）是计算图的一个特例：那里的节点是初等运算而不是网络单元，但“沿边正向求值、反向累积”的结构完全相同，这正是自动微分能够统一处理前向模式与逆模式的原因。
 \end{remark}
 
 对于训练集中的每个数据点，我们假设已经向网络提供了相应的输入向量，并通过连续应用\eqref{align:ch08-预激活}和\eqref{align:ch08-激活}计算出了网络中所有隐藏单元和输出单元的激活值。
 
 \begin{definition}[前向传播]\label{definition:ch08-前向传播}
-从输入单元出发，沿\cref{definition:ch08-计算图}中边的方向依次对每个单元计算\eqref{align:ch08-预激活}与\eqref{align:ch08-激活}，从而得到网络中所有隐藏单元和输出单元的激活值，这一过程叫作\textbf{前向传播}（forward propagation），因为它可以被视为信息通过网络的前向流动。
+设网络的计算图 $G=(V,E)$ 由\cref{definition:ch08-计算图}给出，输入为 $\mathbf{x}\in\mathbb{R}^{D}$，输入单元满足 $z_i=x_i$（$i=1,\cdots,D$），其余每个单元 $j$ 的激活函数 $h_j$ 给定。若按 $G$ 的拓扑序依次计算 $a_j=\sum_{i:(i,j)\in E}w_{ji}z_i$ 与 $z_j=h_j(a_j)$，从而得到全部隐藏单元和输出单元的激活值，则这一计算过程称为\textbf{前向传播}（forward propagation）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch08-前向传播; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch08-前向传播; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 前向传播是唯一需要真正“跑一遍网络”的步骤：它把输入 $\mathbf{x}$ 变成输出 $\mathbf{y}$，同时把所有中间激活值 $z_j$ 留在内存中。定义中的“沿边的方向”不是修辞：由于计算图无环，每个单元的预激活只依赖它前驱的激活值，因此可以逐个单元地求值，而不必解联立方程。需要注意，前向传播本身并不涉及误差函数，也不产生任何导数；它只是为反向传播准备好两样东西——各单元的预激活 $a_j$（用于计算 $h'(a_j)$）和各单元的输入 $z_i$（用于计算权重梯度）。这也解释了为什么反向传播的存储开销与前向传播相当：\eqref{align:ch08-权重梯度}需要 $z_i$，\eqref{align:ch08-隐藏误差}需要 $a_j$，二者都必须保留到反向阶段。
 \end{remark}
 
 下面让我们来计算 $E_n$ 相对于权重 $w_{ji}$ 的导数。各单元的输出将取决于特定输入数据点 $n$。不过，为了使符号简洁，我们将省略网络变量的下标 $n$。首先要注意的是，$E_n$ 对 $w_{ji}$ 的依赖仅体现在输入 $a_j$ 对单元 $j$ 的求和上。
 
 \begin{proposition}[偏导数的链式法则]\label{proposition:ch08-链式法则}
-设误差函数 $E$ 关于所有权重可微，并且 $E$ 对权重的依赖全部通过有限个中间变量 $a_1,\cdots,a_J$（即各单元的预激活）传递。若权重 $w_{ji}$ 只出现在\eqref{align:ch08-预激活}中 $a_j$ 的表达式里，而对其他 $a_l$（$l\neq j$）没有影响，则
+设 $J\geqslant1$，$F:\mathbb{R}^{J}\to\mathbb{R}$ 在点 $\mathbf{a}=(a_1,\cdots,a_J)\in\mathbb{R}^{J}$ 处可微，$a_l:\mathbb{R}^{P}\to\mathbb{R}$（$l=1,\cdots,J$）在点 $\mathbf{w}\in\mathbb{R}^{P}$ 处可微，并令 $E(\mathbf{w})=F\bigl(a_1(\mathbf{w}),\cdots,a_J(\mathbf{w})\bigr)$。若权重 $w_{ji}$ 只通过 $a_j$ 影响 $E$，即对每个 $l\neq j$ 有 $\partial a_l/\partial w_{ji}=0$，则
 \begin{align}
-\frac{\partial E}{\partial w_{ji}}=\frac{\partial E}{\partial a_j}\frac{\partial a_j}{\partial w_{ji}}.
+\frac{\partial E}{\partial w_{ji}}(\mathbf{w})=\frac{\partial F}{\partial a_j}\bigl(\mathbf{a}\bigr)\,\frac{\partial a_j}{\partial w_{ji}}(\mathbf{w}).
 \label{align:ch08-链式法则}
 \end{align}
-若某个权重同时出现在多个预激活的表达式中，则右端应改为对这些预激活求和。
+若 $w_{ji}$ 通过多个预激活 $a_l$ 影响 $E$，则右端应改为对全部满足 $\partial a_l/\partial w_{ji}\neq0$ 的 $l$ 求和，即
+\begin{align*}
+\frac{\partial E}{\partial w_{ji}}(\mathbf{w})=\sum_{l=1}^{J}\frac{\partial F}{\partial a_l}\bigl(\mathbf{a}\bigr)\,\frac{\partial a_l}{\partial w_{ji}}(\mathbf{w}).
+\end{align*}
+以上两式中的偏导数均在其余参数固定时求得，$\mathbf{w}$ 为全部参数构成的向量。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 固定除 $w_{ji}$ 之外的全部权重，把 $E$ 看成 $w_{ji}$ 的一元函数。由\eqref{align:ch08-预激活}，$a_j$ 是 $w_{ji}$ 的可微函数，而其余 $a_l$ 与 $w_{ji}$ 无关，于是复合函数
 \begin{align*}
 g(t)=E\bigl(a_1,\cdots,a_{j-1},a_j(t),a_{j+1},\cdots,a_J\bigr)
@@ -95,24 +99,24 @@ g'(w_{ji})=\frac{\partial E}{\partial a_j}\Big|_{\mathbf{a}}\cdot\frac{\mathrm{d
 另一方面，$g'(w_{ji})$ 按定义就是 $E$ 沿坐标 $w_{ji}$ 的偏导数 $\partial E/\partial w_{ji}$，而 $\mathrm{d}a_j/\mathrm{d}w_{ji}$ 就是偏导数 $\partial a_j/\partial w_{ji}$，故\eqref{align:ch08-链式法则}成立。若 $w_{ji}$ 同时影响若干个 $a_l$，则 $g$ 是多个一元函数的复合，一元链式法则给出的是各项之和，即右端对全部受影响的 $a_l$ 求和。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch08-链式法则; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch08-链式法则; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条法则的内容可以概括为“上游导数乘局部导数”：$\partial E/\partial a_j$ 描述误差函数对单元 $j$ 输出的敏感程度，$\partial a_j/\partial w_{ji}=z_i$ 描述权重对单元 $j$ 预激活的敏感程度，两者相乘即得权重对误差函数的影响。它的条件必须逐条看清。第一，$E$ 与 $a_j$ 都必须可微；对于 ReLU 这类在原点不可微的激活函数，法则在折点处失效，实践中只能取某一侧的导数（次梯度）。第二，命题要求 $w_{ji}$ 只影响一个预激活；深度网络中同一权重通常只属于一条连接，所以这一条自动满足，但若做权重共享（如卷积核在多个位置复用），同一权重就会出现在多个 $a_j$ 中，此时必须求和而不能只取一项，这是实现共享参数网络时最容易出错的地方。第三，法则只用到“局部”信息，不要求知道 $E$ 的全局形式——正是这一点使反向传播可以对任意拓扑的网络逐个单元地递推，而不必展开整个复合函数。
 \end{remark}
 
 接下来引入一个有用的符号。
 
 \begin{definition}[误差项]\label{definition:ch08-误差项}
-称单元 $j$ 的预激活对误差函数的偏导数为该单元的\textbf{误差}（error），记作
+设网络的计算图由\cref{definition:ch08-计算图}给出，$E_n$ 为第 $n$ 个数据点的误差函数，$a_j$ 为单元 $j$ 的预激活。若 $E_n$ 关于 $a_j$ 可微，则称偏导数 $\partial E_n/\partial a_j$ 为单元 $j$ 的\textbf{误差}（error），记作
 \begin{align}
 \delta_j\triangleq\frac{\partial E_n}{\partial a_j},
 \label{align:ch08-误差}
 \end{align}
-其中 $\delta_j$ 通常简称为误差，缘由后续将很快揭晓。
+并称 $\delta_j$ 为单元 $j$ 的\textbf{误差项}。对输出单元，$\delta_k$ 由误差函数与输出激活函数共同决定；对隐藏单元，$\delta_j$ 由\cref{theorem:ch08-反向传播方程}中的递推式给出。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch08-误差项; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch08-误差项; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 把 $\delta_j$ 定义在预激活 $a_j$ 而不是激活值 $z_j$ 上，是一个刻意的选择：$a_j$ 是权重线性进入单元的位置，$\partial a_j/\partial w_{ji}=z_i$ 与单元自身无关，因此所有“与单元有关”的信息都被集中到 $\delta_j$ 里，权重梯度就简化为 $\delta_j z_i$ 这样一个纯粹的乘积。这也解释了“误差”这个名称：对输出单元，$\delta_k=y_k-t_k$ 恰是预测值与目标值之差；对隐藏单元，$\delta_j$ 是把下游各单元的误差按权重 $w_{kj}$ 加权后、再乘上本单元激活函数的斜率 $h'(a_j)$ 得到的量，它不是某个可直接观测的“误差”，而是误差信号反向流经该单元时的强度。注意 $\delta_j$ 与 $\partial E_n/\partial z_j$ 只相差一个因子：$\delta_j=h'(a_j)\,\partial E_n/\partial z_j$，当 $h'(a_j)=0$（例如 tanh 饱和）时该单元对上游完全没有影响，这正是梯度消失现象的来源。
 \end{remark}
 
@@ -125,26 +129,26 @@ g'(w_{ji})=\frac{\partial E}{\partial a_j}\Big|_{\mathbf{a}}\cdot\frac{\mathrm{d
 将\eqref{align:ch08-误差}和\eqref{align:ch08-局部导数}代入\eqref{align:ch08-链式法则}，即得到权重 $w_{ji}$ 的梯度。与它并列，输出单元的误差由误差函数的具体形式直接给出，隐藏单元的误差则可以对\eqref{align:ch08-误差}再用一次链式法则而递归地得到。整理起来，就得到反向传播的四个基本方程。
 
 \begin{theorem}[反向传播的四个基本方程]\label{theorem:ch08-反向传播方程}
-在\eqref{align:ch08-预激活}--\eqref{align:ch08-激活}的前馈网络、\eqref{align:ch08-误差}的误差项与\eqref{align:ch08-局部导数}的记号下，给定一个输入数据点，误差函数的全部一阶导数可由下列四个方程求得。
+设网络的计算图 $G=(V,E)$ 由\cref{definition:ch08-计算图}给出，$E_n$ 为第 $n$ 个数据点的误差函数，$\delta_j=\partial E_n/\partial a_j$ 为\cref{definition:ch08-误差项}中的误差项。若 $E_n$ 关于全部预激活 $a_j$ 可微，且每个激活函数 $h_j$ 在相应的预激活 $a_j$ 处可微，则 $E_n$ 关于全部权重与偏置的一阶偏导数可由下列四个方程求得：
 \begin{enumerate}[(i)]
-\item\label{item:ch08-输出误差}（输出单元的误差）若输出单元采用与误差函数相匹配的规范连接函数作为激活函数（参见\cref{subsection:ch05-规范连接函数}），则输出单元 $k$ 的误差为
+\item\label{item:ch08-输出误差}（输出单元的误差）若输出单元 $k$ 的激活函数 $h_k$ 与误差函数 $E_n$ 构成规范连接对，即 $E_n$ 是相应指数族模型对数似然的负值（参见\cref{subsection:ch05-规范连接函数}），则输出单元 $k$ 的误差为
 \begin{align}
 \delta_k=y_k-t_k,
 \label{align:ch08-输出误差}
 \end{align}
-其中 $y_k$ 是输出单元的激活值，$t_k$ 是相应的目标值；
-\item\label{item:ch08-隐藏误差}（隐藏单元的误差）隐藏单元 $j$ 的误差由它向其发送连接的所有单元 $k$ 的误差反向传播得到：
+其中 $y_k=h_k(a_k)$ 是输出单元的激活值，$t_k$ 是相应的目标值；
+\item\label{item:ch08-隐藏误差}（隐藏单元的误差）隐藏单元 $j$ 的误差由它向其发送连接的全部单元 $k$ 的误差反向传播得到：
 \begin{align}
-\delta_j=h'(a_j)\sum_{k}w_{kj}\delta_k,
+\delta_j=h_j'(a_j)\sum_{k:(j,k)\in E}w_{kj}\delta_k,
 \label{align:ch08-隐藏误差}
 \end{align}
-其中求和遍及所有满足“单元 $j$ 向单元 $k$ 发送连接”的单元 $k$，这些单元既可以是其他隐藏单元，也可以是输出单元；
-\item\label{item:ch08-权重梯度}（权重的梯度）权重 $w_{ji}$ 的梯度为
+其中求和遍及所有满足 $(j,k)\in E$ 的单元 $k$，这些单元既包括其他隐藏单元，也包括输出单元；
+\item\label{item:ch08-权重梯度}（权重的梯度）对每条边 $(i,j)\in E$，权重 $w_{ji}$ 的梯度为
 \begin{align}
 \frac{\partial E_n}{\partial w_{ji}}=\delta_j z_i;
 \label{align:ch08-权重梯度}
 \end{align}
-\item\label{item:ch08-偏置梯度}（偏置的梯度）若把单元 $j$ 的偏置 $b_j$ 显式地写入预激活，即 $a_j=\sum_i w_{ji}z_i+b_j$，则
+\item\label{item:ch08-偏置梯度}（偏置的梯度）若把单元 $j$ 的偏置 $b_j$ 显式地写入预激活，即 $a_j=\sum_{i:(i,j)\in E}w_{ji}z_i+b_j$，则
 \begin{align}
 \frac{\partial E_n}{\partial b_j}=\delta_j.
 \label{align:ch08-偏置梯度}
@@ -153,41 +157,42 @@ g'(w_{ji})=\frac{\partial E}{\partial a_j}\Big|_{\mathbf{a}}\cdot\frac{\mathrm{d
 \end{theorem}
 
 \begin{proof}
-下面按推导的先后次序逐条验证这四个方程。
+逐条验证这四个方程。
 
-\textbf{权重的梯度\eqref{align:ch08-权重梯度}。}由\cref{proposition:ch08-链式法则}与\eqref{align:ch08-局部导数}，
+\textbf{权重的梯度\eqref{align:ch08-权重梯度}。}对边 $(i,j)\in E$，由\cref{proposition:ch08-链式法则}与\eqref{align:ch08-局部导数}，
 \begin{align*}
 \frac{\partial E_n}{\partial w_{ji}}=\frac{\partial E_n}{\partial a_j}\frac{\partial a_j}{\partial w_{ji}}=\delta_j z_i .
 \end{align*}
+这里用到了计算图无环这一事实：$z_i$ 由边 $(i,j)$ 之前的单元算出，其表达式中不含 $w_{ji}$，故对 $w_{ji}$ 求偏导时 $z_i$ 视为常数，$\partial a_j/\partial w_{ji}=z_i$。
 
-\textbf{输出单元的误差\eqref{align:ch08-输出误差}。}以平方和误差\eqref{align:ch08-单层误差}与线性输出 $y_k=a_k$ 为例，
+\textbf{输出单元的误差\eqref{align:ch08-输出误差}。}规范连接对的定义保证 $\partial E_n/\partial a_k=y_k-t_k$，其一般验证见\cref{subsection:ch05-规范连接函数}。当输出单元为线性激活 $y_k=a_k$、误差函数为平方和误差\eqref{align:ch08-单层误差}时，可直接计算：
 \begin{align*}
 \delta_k=\frac{\partial E_n}{\partial a_k}=\frac{\partial}{\partial a_k}\left[\frac{1}{2}\sum_{l}\left(y_l-t_l\right)^{2}\right]=\left(y_k-t_k\right)\frac{\partial y_k}{\partial a_k}=y_k-t_k .
 \end{align*}
-一般地，只要输出单元的激活函数取为与误差函数相匹配的规范连接函数，同样的计算给出同一结果：此时 $\partial E_n/\partial a_k$ 恰好等于“输出值减目标值”。交叉熵与 sigmoid、交叉熵与 softmax 这两种常用组合满足这一条件，具体的验证参见\cref{subsection:ch05-规范连接函数}。
+交叉熵与 sigmoid、交叉熵与 softmax 这两种常用组合也满足规范连接对的条件，因此同样有 $\delta_k=y_k-t_k$。
 
-\textbf{隐藏单元的误差\eqref{align:ch08-隐藏误差}。}隐藏单元 $j$ 的预激活 $a_j$ 并不直接出现在误差函数中，它只能通过它所影响的那些预激活 $a_k$（即满足“$j$ 向 $k$ 发送连接”的全部 $k$）去影响 $E_n$。因此对\eqref{align:ch08-误差}再用一次链式法则：
+\textbf{隐藏单元的误差\eqref{align:ch08-隐藏误差}。}设 $j$ 为隐藏单元，$E_n$ 通过 $a_j$ 的全部子节点 $a_k$（即满足 $(j,k)\in E$ 的 $k$）依赖于 $a_j$，而对 $a_j$ 没有其他依赖途径。由多元复合函数求导的链式法则，
 \begin{align*}
-\delta_j=\frac{\partial E_n}{\partial a_j}=\sum_{k}\frac{\partial E_n}{\partial a_k}\frac{\partial a_k}{\partial a_j}=\sum_{k}\delta_k\frac{\partial a_k}{\partial a_j},
+\delta_j=\frac{\partial E_n}{\partial a_j}=\sum_{k:(j,k)\in E}\frac{\partial E_n}{\partial a_k}\frac{\partial a_k}{\partial a_j}=\sum_{k:(j,k)\in E}\delta_k\frac{\partial a_k}{\partial a_j}.
 \end{align*}
-这里用到了这样一个事实：只有通过改变变量 $a_k$ 的值，$a_j$ 的变化才会引起误差函数的变化。再由\eqref{align:ch08-预激活}与\eqref{align:ch08-激活}，$a_k=\sum_{l}w_{kl}h(a_l)$，于是
+由 $a_k=\sum_{l:(l,k)\in E}w_{kl}h_l(a_l)+b_k$，在对 $a_j$ 求偏导时只有含 $h_j(a_j)$ 的项非零，故
 \begin{align*}
-\frac{\partial a_k}{\partial a_j}=w_{kj}h'(a_j),
+\frac{\partial a_k}{\partial a_j}=w_{kj}h_j'(a_j),
 \end{align*}
 代回上式即得
 \begin{align*}
-\delta_j=h'(a_j)\sum_{k}w_{kj}\delta_k .
+\delta_j=h_j'(a_j)\sum_{k:(j,k)\in E}w_{kj}\delta_k .
 \end{align*}
 
-\textbf{偏置的梯度\eqref{align:ch08-偏置梯度}（重构新增）。}原书把偏置吸收为激活值恒为 $1$ 的额外输入，没有单列这一方程；若把偏置显式写入预激活，则 $\partial a_j/\partial b_j=1$，于是
+\textbf{偏置的梯度\eqref{align:ch08-偏置梯度}。}若把偏置显式写入预激活，则由 $a_j=\sum_{i:(i,j)\in E}w_{ji}z_i+b_j$ 得 $\partial a_j/\partial b_j=1$，于是
 \begin{align*}
 \frac{\partial E_n}{\partial b_j}=\frac{\partial E_n}{\partial a_j}\frac{\partial a_j}{\partial b_j}=\delta_j .
 \end{align*}
-若按原书的约定令 $z_0=1$、$b_j=w_{j0}$，则\eqref{align:ch08-权重梯度}在 $z_i=1$ 时也给出\eqref{align:ch08-偏置梯度}，两种写法完全一致。
+若把偏置吸收为激活值恒为 $1$ 的额外输入，即令 $z_0=1$、$b_j=w_{j0}$，则\eqref{align:ch08-权重梯度}在 $z_i=1$ 时也给出\eqref{align:ch08-偏置梯度}，两种写法一致。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch08-反向传播方程; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:ch08-反向传播方程; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 四个方程可以分成“算误差”与“算梯度”两组：\eqref{align:ch08-输出误差}与\eqref{align:ch08-隐藏误差}负责从输出层出发、逆着计算图逐层求出每个单元的 $\delta$；\eqref{align:ch08-权重梯度}与\eqref{align:ch08-偏置梯度}负责把已经求出的 $\delta$ 就地转换为参数的梯度。这样分组的意义在于复用：同一个 $\delta_j$ 既用于 $j$ 的全部入边权重 $\{w_{ji}\}_i$，也用于偏置 $b_j$，还参与前驱单元的 $\delta$ 的递推，因此不必对每个参数单独做一次前向传播。条件的边界要分清。\eqref{align:ch08-隐藏误差}只要求 $h$ 在 $a_j$ 处可微；若 $h$ 是 ReLU 且在 $a_j=0$ 处不可微，需要约定一个次梯度值，这会使结果依赖于实现约定。\eqref{align:ch08-输出误差}的形式依赖于输出激活函数与误差函数的匹配（规范连接函数）；若换成不匹配的组合，例如 sigmoid 输出配平方和误差，$\delta_k$ 中会多出一个因子 $h'(a_k)$，平方和误差在输出饱和时收敛极慢，这正是分类问题普遍改用交叉熵的原因。\eqref{align:ch08-偏置梯度}只是\eqref{align:ch08-权重梯度}在常数输入下的特例，它说明偏置与权重的梯度在计算上没有本质区别。最后，两个“梯度”方程给出的都是单个数据点的梯度；对整个数据集求和（\eqref{align:ch08-批量梯度}）即得总误差的梯度，但求和必须在 $\delta$ 已经算好之后进行，不能先把各数据点的 $\delta$ 平均掉再反传，否则得到的是平均误差的梯度而不是梯度之和。
 \end{remark}
 
@@ -295,7 +300,7 @@ y_k=\sum_{j=0}^{M}w_{kj}^{(2)}z_j,
 它们分别是\eqref{align:ch08-权重梯度}作用于第一层连接（输入端激活值为 $x_i$）与第二层连接（输入端激活值为 $z_j$）的结果。
 \end{solution}
 
-\begin{remark}（重构新增）
+\begin{remark}
 这个例子之所以选 tanh 与线性输出，是因为这两处导数都能写成闭合而极简的形式：tanh 的导数可以用自身表示（\eqref{align:ch08-tanh导数}），于是反向传播时不必再存储 $a_j$，直接用前向阶段留下的 $z_j$ 即可；线性输出的导数为 $1$，于是输出端不需要额外乘因子，$\delta_k$ 就直接等于残差 $y_k-t_k$。这也说明网络中真正决定反向传播实现细节的只有两件事：每个单元的 $h'(a_j)$ 如何计算，以及输出单元与误差函数是否匹配。条件方面，\eqref{align:ch08-示例前向1}--\eqref{align:ch08-示例前向3}把偏置写成了下标为 $0$ 的权重，因此求和从 $0$ 开始，$w_{j0}^{(1)}$ 与 $w_{k0}^{(2)}$ 就是原来的偏置参数；若按\eqref{align:ch08-偏置梯度}显式处理偏置，则求和应从 $1$ 开始并另外加上 $b_j$，两种写法给出相同的梯度。
 \end{remark}
 
@@ -306,15 +311,15 @@ y_k=\sum_{j=0}^{M}w_{kj}^{(2)}z_j,
 在 $W$ 足够大的情况下，计算误差函数导数（给定输入数据点）需要 $\mathcal{O}(W)$ 次运算。这是因为除连接非常稀疏的网络外，权重的数量通常远大于单元的数量，因此前向传播的大部分计算量来自\eqref{align:ch08-预激活}中的求和操作，而计算激活函数的工作量却很小。\eqref{align:ch08-预激活}中参与求和的每一项都需要进行一次乘法和一次加法运算，因此总计算成本为 $\mathcal{O}(W)$。
 
 \begin{proposition}[反向传播的计算复杂度]\label{proposition:ch08-反向传播复杂度}
-设网络中有 $W$ 个权重与偏置，且有 $U$ 个单元。若 $W$ 足够大（典型情形是 $W$ 远大于 $U$），则给定一个输入数据点，用反向传播计算误差函数关于全部 $W$ 个参数的一阶导数所需的运算次数为 $\mathcal{O}(W)$，即与一次前向传播同一量级。
+设网络的计算图 $G=(V,E)$ 含 $W=|E|$ 条边（每条边对应一个权重或偏置）与 $U=|V|$ 个单元，且 $W\geqslant1$。按单位代价算术模型计数：每条边的一次乘加与每个单元的一次激活函数求值各记 $O(1)$ 次运算。则给定一个输入数据点，一次前向传播需要 $O(W+U)$ 次运算；用反向传播计算误差函数关于全部 $W$ 个参数的一阶偏导数也需要 $O(W+U)$ 次运算。特别地，当 $W\geqslant U$ 时两者均为 $O(W)$，即反向传播与一次前向传播同一量级。
 \end{proposition}
 
 \begin{proof}
 一次前向传播的开销由\eqref{align:ch08-预激活}的求和主导：每条连接贡献一次乘法与一次加法，故前向传播需要 $\mathcal{O}(W)$ 次运算；激活函数只对每个单元作用一次，合计 $\mathcal{O}(U)$，在 $W$ 远大于 $U$ 时可并入 $\mathcal{O}(W)$。反向传播分两步。第一步按\eqref{align:ch08-隐藏误差}求各单元的 $\delta$：每个隐单元要对它发出的每条连接做一次乘加，合计仍是每条连接一次，故为 $\mathcal{O}(W)$；第二步按\eqref{align:ch08-权重梯度}与\eqref{align:ch08-偏置梯度}把每个 $\delta$ 乘以对应的 $z_i$，每个参数一次乘法，共 $\mathcal{O}(W)$。三步相加仍为 $\mathcal{O}(W)$，其中常数因子约为前向传播的 $2$ 至 $3$ 倍。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch08-反向传播复杂度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch08-反向传播复杂度; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \enlargethispage{2\baselineskip}
 这条结论是反向传播全部实用价值的来源：它说明“一次前向 + 一次反向”就能拿到全部 $W$ 个偏导数，平均到每个参数只花常数次运算。若改用有限差分法逐个扰动参数，同样的信息需要 $W$ 次前向传播，代价是 $\mathcal{O}(W^{2})$（\cref{proposition:ch08-数值微分复杂度}）。结论中的“$W$ 足够大”不是修辞：当网络极稀疏、$W$ 与 $U$ 同阶甚至更小时，激活函数的 $\mathcal{O}(U)$ 开销不能再被忽略，此时 $\mathcal{O}(W)$ 的写法应理解为 $\mathcal{O}(W+U)$。另外，这里的计数只统计算术运算，不统计访存：实际实现中反向传播常常受内存带宽限制，实测加速比往往低于运算次数的比值，这也是工程上要尽量让中间结果留在高速缓存中的原因。
 \end{remark}
@@ -342,15 +347,15 @@ y_k=\sum_{j=0}^{M}w_{kj}^{(2)}z_j,
 数值微分法的主要问题是失去了非常理想的 $\mathcal{O}(W)$ 缩放。每次前向传播需要执行 $\mathcal{O}(W)$ 个步骤，而网络中有 $W$ 个权重，每个权重都必须单独扰动，因此总计算成本为 $\mathcal{O}(W^{2})$。
 
 \begin{proposition}[数值微分的计算复杂度]\label{proposition:ch08-数值微分复杂度}
-用有限差分法\eqref{align:ch08-有限差分}或中心差分法\eqref{align:ch08-中心差分}计算误差函数关于全部 $W$ 个参数的梯度，需要 $\mathcal{O}(W^{2})$ 次运算，即比反向传播贵一个因子 $W$。
+设误差函数在单个数据点上的求值需要 $O(W)$ 次运算，其中 $W$ 为网络中权重与偏置的总数，且每次求值只改变一个参数、其余参数保持不变。则用有限差分\eqref{align:ch08-有限差分}或中心差分\eqref{align:ch08-中心差分}计算 $E_n$ 关于全部 $W$ 个参数的一阶偏导数需要 $O(W^{2})$ 次运算；当 $W\geqslant1$ 时这比\cref{proposition:ch08-反向传播复杂度}的 $O(W)$ 多一个因子 $W$。
 \end{proposition}
 
 \begin{proof}
 有限差分\eqref{align:ch08-有限差分}每估计一个参数的偏导数需要两次误差函数求值（一次在原参数处、一次在扰动后的参数处），中心差分\eqref{align:ch08-中心差分}需要两次扰动求值；无论哪一种，对全部 $W$ 个参数逐一处理都要进行 $\Theta(W)$ 次误差函数求值。每次求值都是一次前向传播，代价为 $\mathcal{O}(W)$，故总代价为 $\mathcal{O}(W)\times\mathcal{O}(W)=\mathcal{O}(W^{2})$。中心差分只把常数因子提高约一倍，不改变量级。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch08-数值微分复杂度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch08-数值微分复杂度; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 $\mathcal{O}(W^{2})$ 与 $\mathcal{O}(W)$ 的差别不是常数因子，而是量级：当 $W$ 达到 $10^{6}$ 时，两者相差一百万倍，因此把数值微分当作训练算法在实际中不可行。还要注意近似精度与舍入误差的权衡：\eqref{align:ch08-有限差分}的截断误差为 $\mathcal{O}(\varepsilon)$，\eqref{align:ch08-中心差分}为 $\mathcal{O}(\varepsilon^{2})$，减小 $\varepsilon$ 似乎总能提高精度；但 $\varepsilon$ 小到一定程度后，$E_n(w_{ji}+\varepsilon)-E_n(w_{ji})$ 是两个相近数之差，舍入误差被 $\varepsilon$ 放大，总误差随 $\varepsilon$ 减小反而上升——\cref{figure:ch08-数值微分误差}中红色曲线与蓝色曲线在极小 $\varepsilon$ 处的噪声线正是这一现象。因此中心差分除了公式本身的二阶精度，还能把“精度开始劣化”的 $\varepsilon$ 推得更小。它真正的用途不是训练，而是检验：把反向传播或自动微分得到的导数与中心差分的结果比较，可以在不重写反向代码的前提下发现实现错误，这也是本书建议的调试手段。
 \end{remark}
 
@@ -361,16 +366,16 @@ $\mathcal{O}(W^{2})$ 与 $\mathcal{O}(W)$ 的差别不是常数因子，而是�
 我们已经了解了如何通过网络反向传播误差来获得误差函数相对于权重的导数。反向传播也可用于计算其他导数。在此，我们对Jacobi矩阵进行求值，其元素由网络输出相对于输入的导数给出。
 
 \begin{definition}[Jacobi矩阵]\label{definition:ch08-Jacobi矩阵}
-设网络输出 $y_k$ 与输入 $x_i$ 均可微，则称由网络输出相对于输入的导数构成的矩阵
+设 $\mathcal{X}\subseteq\mathbb{R}^{D}$ 为输入空间，网络所表示的映射为 $\mathbf{y}=(y_1,\cdots,y_K):\mathcal{X}\to\mathbb{R}^{K}$，且在点 $\mathbf{x}\in\mathcal{X}$ 处每个分量 $y_k$ 关于每个输入分量 $x_i$ 的偏导数存在。则称 $K\times D$ 矩阵
 \begin{align}
-J_{ki}=\frac{\partial y_k}{\partial x_i}
+J_{ki}=\frac{\partial y_k}{\partial x_i}(\mathbf{x}),\qquad k=1,\cdots,K,\ i=1,\cdots,D,
 \label{align:ch08-Jacobi}
 \end{align}
-为网络所表示函数的\textbf{Jacobi矩阵}（Jacobian matrix），其中每个导数都是在所有其他输入值保持不变的情况下求得的。
+为映射 $\mathbf{y}$ 在 $\mathbf{x}$ 处的\textbf{Jacobi 矩阵}（Jacobian matrix），记作 $\mathbf{J}(\mathbf{x})$。其中每个偏导数均在其余输入分量保持不变时求得；$\mathbf{J}(\mathbf{x})$ 的第 $k$ 行是 $y_k$ 的梯度转置，第 $i$ 列是全部输出对 $x_i$ 的偏导数构成的列向量。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch08-Jacobi矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch08-Jacobi矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 Jacobi矩阵回答的是与梯度不同的问题：梯度问“参数怎样变能使误差下降”，Jacobi矩阵问“输入怎样变会使输出怎样变”。它是一个 $K\times D$ 的矩阵（$K$ 为输出维数、$D$ 为输入维数），而不是一个与参数同维的向量，因此“反向传播能算Jacobi矩阵”并不是同义反复——它需要把误差反向传播的程序改造成对每个输出单元分别反向一次的循环。定义要求 $y_k$ 对 $x_i$ 可微，这排除了含硬阈值或取整操作的网络；定义还强调“其他输入保持不变”，即 $J_{ki}$ 是偏导数而不是全导数，若输入之间存在相关性（例如做了归一化），改变 $x_i$ 时其他输入并不会真的保持不变，此时用\eqref{align:ch08-Jacobi扰动}解释灵敏度必须谨慎。由于网络映射是非线性的，$J$ 依赖于具体的输入点，必须在每个新输入处重新计算。
 \end{remark}
 
@@ -454,16 +459,16 @@ J_{ki}=\frac{\partial y_k}{\partial x_i}=\sum_{j}\frac{\partial y_k}{\partial a_
 方便起见，我们通常将所有权重和偏置参数视为单个向量（用 $\mathbf{w}$ 表示）的元素 $w_i$。
 
 \begin{definition}[黑塞矩阵]\label{definition:ch08-黑塞矩阵}
-设误差函数 $E(\mathbf{w})$ 关于参数向量 $\mathbf{w}=(w_1,\cdots,w_W)^{\mathsf T}$ 二阶可微。此时二阶导数构成\textbf{黑塞矩阵}（Hessian matrix）$\mathbf{H}$ 的元素
+设 $\mathcal{W}\subseteq\mathbb{R}^{W}$ 为参数空间，误差函数 $E:\mathcal{W}\to\mathbb{R}$ 在点 $\mathbf{w}=(w_1,\cdots,w_W)^{\mathsf T}\in\mathcal{W}$ 的某邻域内二阶连续可微。则称 $W\times W$ 实矩阵
 \begin{align}
-H_{ij}=\frac{\partial^{2}E}{\partial w_i\partial w_j},
+H_{ij}=\frac{\partial^{2}E}{\partial w_i\partial w_j}(\mathbf{w}),\qquad i,j=1,\cdots,W,
 \label{align:ch08-黑塞}
 \end{align}
-其中 $i,j\in\{1,\cdots,W\}$，$W$ 是权重和偏置的总数。
+为 $E$ 在 $\mathbf{w}$ 处的\textbf{黑塞矩阵}（Hessian matrix），记作 $\mathbf{H}(\mathbf{w})$ 或 $\nabla^{2}E(\mathbf{w})$。由二阶偏导数的连续性，$\mathbf{H}(\mathbf{w})$ 为对称矩阵，即 $H_{ij}=H_{ji}$；它未必正定。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch08-黑塞矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch08-黑塞矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 黑塞矩阵把误差曲面在一点处的全部二阶信息打包成一个 $W\times W$ 的对称矩阵：对角元 $H_{ii}$ 是沿坐标方向的曲率，非对角元 $H_{ij}$ 刻画两个方向之间的耦合。它与\cref{definition:ch08-Jacobi矩阵}的区别在于对谁求导：Jacobi矩阵对输入求导，黑塞矩阵对参数求二阶导，因此后者的规模由参数个数决定，在深度网络中可达 $10^{6}\times10^{6}$，显式存储都不可能，更不用说求逆。定义要求 $E$ 二阶可微，这保证 $H_{ij}=H_{ji}$；若只二阶可微而不连续，混合偏导数可能不相等，$\mathbf{H}$ 就不对称，基于 $\mathbf{H}$ 的优化算法（Newton 法、共轭梯度）所依赖的性质也随之失效。$\mathbf{H}$ 的用途有三类：判断驻点的类型（正定、负定、不定分别对应极小、极大、鞍点）、构造二次近似以加速优化、以及在Bayes近似中充当后验精度的度量。
 \end{remark}
 
@@ -490,16 +495,16 @@ E=\frac{1}{2}\sum_{n=1}^{N}\left(y_n-t_n\right)^{2},
 忽略\eqref{align:ch08-黑塞展开}右侧的二阶导数项，即可得到 Levenberg--Marquardt 近似法，也叫作外积近似法，因为黑塞矩阵是由向量的外积之和构成的。
 
 \begin{definition}[外积近似（Levenberg--Marquardt 近似）]\label{definition:ch08-外积近似}
-对形如\eqref{align:ch08-平方和误差}的平方和误差函数，略去\eqref{align:ch08-黑塞展开}中的二阶导数项，用一阶导数（梯度）的外积之和作为黑塞矩阵的近似：
+设网络只有一个输出单元且为线性激活，$a_n$ 为第 $n$ 个数据点处该输出单元的预激活（从而 $y_n=a_n$），误差函数取\eqref{align:ch08-平方和误差}的平方和形式，且 $a_n$ 关于参数向量 $\mathbf{w}\in\mathbb{R}^{W}$ 二阶可微。记 $\nabla a_n=\nabla_{\mathbf{w}}a_n(\mathbf{w})\in\mathbb{R}^{W}$ 为列向量，则 $\nabla a_n\nabla a_n^{\mathsf T}$ 为 $W\times W$ 外积。略去\eqref{align:ch08-黑塞展开}中的二阶导数项，用一阶导数（梯度）的外积之和
 \begin{align}
-\mathbf{H}\approx\sum_{n=1}^{N}\nabla a_n\nabla a_n^{\mathsf T}.
+\mathbf{H}\approx\sum_{n=1}^{N}\nabla a_n\nabla a_n^{\mathsf T}
 \label{align:ch08-外积近似}
 \end{align}
-这一近似称为\textbf{外积近似}（outer product approximation），也称 Levenberg--Marquardt 近似。
+作为黑塞矩阵的近似，这一近似称为\textbf{外积近似}（outer product approximation），也称 Levenberg--Marquardt 近似。右端为 $W\times W$ 对称半正定矩阵。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch08-外积近似; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch08-外积近似; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 外积近似用“梯度的外积”代替“二阶导数”，好处是只依赖一阶信息：一阶导数已由反向传播在 $\mathcal{O}(W)$ 内算出，再对每个数据点做一次外积，就得到 $\mathbf{H}$ 的全部元素，总代价 $\mathcal{O}(W^{2})$，与显式求二阶导的代价同阶但常数小得多；而且每个外积 $\nabla a_n\nabla a_n^{\mathsf T}$ 都是半正定的秩一矩阵，故近似后的 $\mathbf{H}$ 自动半正定，这使基于它的迭代（如 Levenberg--Marquardt 的阻尼步）不会因负曲率而失稳。代价是它丢掉了二阶项，因此近似的好坏取决于 $|y_n-t_n|$ 是否足够小：网络训练充分时残差接近零，近似成立；网络远未训练好时残差很大，二阶项不可忽略，此时用外积近似可能严重低估曲率（见\cref{exercise:ch08-09}的讨论）。还要注意，\eqref{align:ch08-外积近似}写的是 $\nabla a_n$ 而不是 $\nabla y_n$，这是因为在平方和误差的标准配置中输出单元是线性的，$y_n=a_n$，两者相同；若输出单元带非线性激活，则必须换回 $\nabla y_n$。
 \end{remark}
 

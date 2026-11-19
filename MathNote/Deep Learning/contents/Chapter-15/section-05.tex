@@ -45,7 +45,7 @@ p(\bm{Z}\,|\,\bm{X},\bm{\mu},\bm{\Sigma},\bm{\pi})=\prod_{n=1}^{N}p(\bm{z}_n\,|\
 \begin{exercise}\label{exercise:ch15-09}
 （$\star\star$）证明如果我们在关于 $\bm{\Sigma}_k$ 最大化\eqref{align:ch15-q-gmm}的同时保持 $\gamma(z_{nk})$ 固定，我们将获得\eqref{align:ch15-mu-update}给出的闭式解。
 \end{exercise}
-\begin{remark}（重构新增：原文问题说明）
+\begin{remark}（原文问题说明）
 本题印为“关于 $\bm{\Sigma}_k$ 最大化”，却断言得到\eqref{align:ch15-mu-update}——后者是\emph{均值}的更新式。二者必有一处笔误：关于 $\bm{\Sigma}_k$ 求极值应得到协方差更新\eqref{align:ch15-sigma-update}（这恰是下一题 15.10 的内容），而得到\eqref{align:ch15-mu-update}的应是关于 $\bm{\mu}_k$ 求极值。这里保持原文照译，并在解答中把两种读法都完整推导一遍：按“关于 $\bm{\mu}_k$”读，结论\eqref{align:ch15-mu-update}成立；按“关于 $\bm{\Sigma}_k$”读，得到的是\eqref{align:ch15-sigma-update}。读者应以“关于 $\bm{\mu}_k$”为准。
 \end{remark}
 

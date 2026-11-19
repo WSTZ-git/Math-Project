@@ -21,42 +21,64 @@
 图由节点（也称顶点）构成，这些节点由边来连接。在图模型中，每个节点代表一个随机变量，而连接则表示这些变量之间的概率关系。然后，图就可以记录所有随机变量的联合分布是如何分解成多个因子（每个因子都仅依赖变量的一个子集）的乘积的。本章将重点讨论图模型，在图模型中，图的连接具有箭头指示的特定方向。
 
 \begin{definition}[有向图模型]\label{definition:ch11-有向图模型}
-设$G=(\mathcal{V},\mathcal{E})$是一个有向图，其中节点集$\mathcal{V}=\{1,\cdots,K\}$中的每个节点$k$对应一个随机变量$x_k$，边集$\mathcal{E}$由有序对$(j,k)$组成。若$(j,k)\in\mathcal{E}$，则称节点$j$是节点$k$的\textbf{父节点}，节点$k$是节点$j$的\textbf{子节点}，并记$\mathrm{pa}(k)=\{j:(j,k)\in\mathcal{E}\}$为节点$k$的父节点集。若一个联合分布可以写成每个节点的条件分布的乘积，其中每个条件分布以该节点的父节点所对应的变量为条件，则称该分布由$G$表示，并称$G$为\textbf{有向图模型}（directed graphical model），也称\textbf{Bayes网络}。
+设 $G=(\mathcal{V},\mathcal{E})$ 是一个有向无环图，节点集
+$\mathcal{V}=\{1,\dots,K\}$，$K\geqslant1$，每个节点 $k$ 对应一个随机变量 $x_k$，
+其取值落在可测空间 $(\mathcal{X}_k,\mathcal{B}_k)$ 中；边集 $\mathcal{E}$ 由有序对
+$(j,k)$ 组成。若 $(j,k)\in\mathcal{E}$，则称节点 $j$ 是节点 $k$ 的\textbf{父节点}，
+节点 $k$ 是节点 $j$ 的\textbf{子节点}，并记
+$\mathrm{pa}(k)=\{j:(j,k)\in\mathcal{E}\}$ 为节点 $k$ 的父节点集。若联合分布
+$p(x_1,\dots,x_K)$ 具有形式
+\begin{align*}
+  p(x_1,\dots,x_K)=\prod_{k=1}^{K}p\bigl(x_k\mid \mathbf{x}_{\mathrm{pa}(k)}\bigr),
+\end{align*}
+其中 $p(x_k\mid \mathbf{x}_{\mathrm{pa}(k)})$ 是给定父变量取值时 $x_k$ 的条件分布，
+则联合分布 $p$ 由 $G$ 表示，且 $G$ 连同这些条件分布称为\textbf{有向图模型}
+（directed graphical model），也称\textbf{Bayes 网络}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch11-有向图模型; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch11-有向图模型; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch11-有向图模型}给出了全章的核心对象：一个有向图加上每个节点的一个条件分布。定义中的求和约定是“节点即变量”，即不区分节点与它所对应的随机变量，日后写$p(x_k)$与写“节点$k$的边缘分布”是同一件事。定义没有限制变量的类型（离散、连续、向量值均可），这正是图模型的适用范围很广的原因；它要求的只是“存在一种按父节点组织的条件分解”。\eqref{align:ch11-有向图联合分布}中的条件分布$p(x_k\mid \mathrm{pa}(k))$称为局部因子，它们是把图翻译成代数表达式的唯一载体。
 \end{remark}
 
 图模型的另一大类是Markov随机场（Markov random field），也称无向图模型（undirected graphical model），其中的连接不带箭头，无方向意义。有向图适用于表达随机变量之间的因果关系，而无向图更适合表达随机变量之间的软约束。有向图和无向图都可以看作一种叫作因子图（factor graph）表示法的特例。
 
 \begin{definition}[无向图模型]\label{definition:ch11-无向图模型}
-设$G=(\mathcal{V},\mathcal{E})$是一个无向图，其中每条边$\{j,k\}\in\mathcal{E}$没有方向。若一个联合分布可以写成定义在图的团（clique）上的非负函数$\psi_C$的乘积，即
+设 $G=(\mathcal{V},\mathcal{E})$ 是一个无向图，节点集 $\mathcal{V}=\{1,\dots,K\}$，
+每个节点 $k$ 对应随机变量 $x_k$，每条边 $\{j,k\}\in\mathcal{E}$ 没有方向。设
+$\mathcal{C}$ 为 $G$ 的全部极大团的集合，并对每个 $C\in\mathcal{C}$ 给定非负可测函数
+$\psi_C$，其自变量为 $\mathbf{x}_C=(x_k)_{k\in C}$。若联合分布具有形式
 \begin{align}
   p(\mathbf{x}) = \frac{1}{Z}\prod_{C\in\mathcal{C}}\psi_C(\mathbf{x}_C),\qquad
   Z=\int\prod_{C\in\mathcal{C}}\psi_C(\mathbf{x}_C)\,\mathrm{d}\mathbf{x},
   \label{align:ch11-无向图分解}
 \end{align}
-其中$\mathcal{C}$是图中所有极大团的集合，$Z$是归一化常数（配分函数），则称$G$为\textbf{无向图模型}（undirected graphical model）或\textbf{Markov随机场}（Markov random field）。
+且 $0<Z<\infty$，则 $G$ 连同因子族 $\{\psi_C\}$ 称为\textbf{无向图模型}
+（undirected graphical model）或\textbf{Markov 随机场}（Markov random field）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch11-无向图模型; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch11-无向图模型; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 无向图模型与有向图模型的差别不只是“箭头的有无”。有向分解\eqref{align:ch11-有向图联合分布}自动归一化（每个局部因子都是条件分布），而无向分解\eqref{align:ch11-无向图分解}中的因子$\psi_C$只是非负函数，必须额外除以配分函数$Z$才能成为概率分布。$Z$一般没有解析形式，需要对所有变量积分或求和，这在\cref{subsection:ch11-离散变量}的参数计数与\cref{chapter:ch14-采样}的采样方法中都会成为核心困难。另一方面，无向图能表达“软约束”：$\psi_C$大表示该团上的取值组合更受偏好，而不必指明谁是“因”、谁是“果”。
 \end{remark}
 
 \begin{definition}[因子图]\label{definition:ch11-因子图}
-\textbf{因子图}（factor graph）是一个二分图，它有两类节点：变量节点（对应随机变量$x_k$）与因子节点（对应联合分布分解式中的每个因子$f_s$）。若因子$f_s$依赖于变量$x_k$，则在因子节点$s$与变量节点$k$之间连一条无向边。因子图表示的联合分布为
+设 $\{f_s\}_{s\in\mathcal{S}}$ 是一族非负函数，$f_s$ 的自变量是随机变量组
+$\mathbf{x}_{\mathcal{N}(s)}=(x_k)_{k\in\mathcal{N}(s)}$，其中
+$\mathcal{N}(s)\subseteq\{1,\dots,K\}$ 为有限非空指标集。以
+$\{x_1,\dots,x_K\}$ 为变量节点、以 $\{f_s\}_{s\in\mathcal{S}}$ 为因子节点、以
+“$k\in\mathcal{N}(s)$”为连边条件所构成的二分图称为该函数族的\textbf{因子图}
+（factor graph）。若联合分布具有形式
 \begin{align}
   p(\mathbf{x}) = \frac{1}{Z}\prod_{s}f_s(\mathbf{x}_{\mathcal{N}(s)}),
   \label{align:ch11-因子图分解}
 \end{align}
-其中$\mathcal{N}(s)$是因子节点$s$的邻接变量节点集。
+其中 $Z=\int\prod_{s}f_s(\mathbf{x}_{\mathcal{N}(s)})\,\mathrm{d}\mathbf{x}$ 满足
+$0<Z<\infty$，则称该因子图表示分布 $p$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch11-因子图; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch11-因子图; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 因子图的价值在于它把“图的形状”和“因子的划分”彻底解耦：有向图和无向图都能无损地转写成因子图，而反过来不一定。例如有向图中的父子关系$p(x_k\mid \mathrm{pa}(k))$在因子图里就是一个以$x_k$与$\mathrm{pa}(k)$为邻接的因子节点，父节点与子节点的地位因此变得对称。这种对称性正是信念传播等消息传递算法的前提：算法只需在变量节点与因子节点之间交替传递消息，不必关心原图是有向还是无向。\cref{definition:ch11-有向图模型}与\cref{definition:ch11-无向图模型}中“因子”一词的用法在因子图框架下得到统一。
 \end{remark}
 
@@ -113,16 +135,20 @@
 现在，我们可以用一般性术语来说明给定有向图与相应变量分布之间的关系。
 
 \begin{proposition}[有向图分解定理]\label{proposition:ch11-有向图分解}
-设$G$是一个有$K$个节点的有向无环图，节点$k$对应变量$x_k$，且每个条件分布$p(x_k\mid \mathrm{pa}(k))$给定。则由$G$定义的联合分布为
+设 $K\geqslant1$，$G$ 是一个有 $K$ 个节点的有向无环图，节点编号为拓扑序，节点 $k$
+对应变量 $x_k$，并设每个条件分布
+$p(x_k\mid \mathbf{x}_{\mathrm{pa}(k)})$ 都已归一化（离散情形对 $x_k$ 求和为 $1$，
+连续情形积分为 $1$）。则由 $G$ 定义的联合分布为
 \begin{align}
   p(\mathbf{x}) = \prod_{k=1}^{K}p\bigl(x_k\mid \mathrm{pa}(k)\bigr),
   \label{align:ch11-有向图联合分布}
 \end{align}
-其中$\mathrm{pa}(k)$表示节点$x_k$的父节点集。只要各个条件分布被归一化，\eqref{align:ch11-有向图联合分布}的右端就总是被正确归一化的。
+其中 $\mathrm{pa}(k)$ 表示节点 $x_k$ 的父节点集。只要各个条件分布被归一化，
+\eqref{align:ch11-有向图联合分布}的右端就总是被正确归一化的。
 \end{proposition}
 
 \begin{proof}
-（重构新增）设节点编号是拓扑序，即每个节点的编号大于其父节点的编号（存在性见\cref{exercise:ch11-02}）。对$k$归纳证明：前$k$个变量的联合分布为$\prod_{i=1}^{k}p(x_i\mid \mathrm{pa}(i))$。$k=1$时，节点$1$没有父节点，$p(x_1)=p(x_1\mid \varnothing)$，成立。设结论对$k-1$成立。由乘积法则，
+设节点编号是拓扑序，即每个节点的编号大于其父节点的编号（存在性见\cref{exercise:ch11-02}）。对$k$归纳证明：前$k$个变量的联合分布为$\prod_{i=1}^{k}p(x_i\mid \mathrm{pa}(i))$。$k=1$时，节点$1$没有父节点，$p(x_1)=p(x_1\mid \varnothing)$，成立。设结论对$k-1$成立。由乘积法则，
 \begin{align}
   p(x_1,\cdots,x_k) = p(x_k\mid x_1,\cdots,x_{k-1})\,p(x_1,\cdots,x_{k-1}).
 \end{align}
@@ -131,19 +157,24 @@
 归一化：设每个条件分布满足$\int p(x_k\mid \mathrm{pa}(k))\,\mathrm{d}x_k=1$（离散情形为求和）。按$k=K,K-1,\cdots,1$的顺序依次对$x_K,x_{K-1},\cdots,x_1$积分。当对$x_K$积分时，因子$p(x_K\mid \mathrm{pa}(K))$是唯一含$x_K$的因子，其积分为$1$，其余因子与$x_K$无关而被提出积分号；同理逐步消去全部变量，最终结果为$1$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch11-有向图分解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch11-有向图分解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch11-有向图分解}是本章的“分解定理”，它把图与分布的联系固定下来：图给出因子的组织方式，条件分布给出因子的具体数值。证明中“拓扑序”这一条件不可省略：若节点编号不是拓扑序，则父亲可能出现在孩子之后，条件分布$p(x_k\mid\mathrm{pa}(k))$无法用前$k-1$个变量表达，归纳无法进行。归一化结论依赖每个因子都是归一化的条件分布；若某个因子只是非负函数，则乘积的积分一般不等于$1$，这正是无向图必须引入配分函数的原因。还需要强调：\eqref{align:ch11-有向图联合分布}只是说“由图定义的分布具有这种形式”，并不排除同一个分布被多个不同的图表示，这一点在\cref{subsection:ch11-作为过滤器的图}中会以过滤器的语言重新表述。
 \end{remark}
 
 我们现在所讨论的有向图有一个重要的限制条件，即禁止存在有向环（directed cycle）。换句话说，图中不存在闭环路径，这意味着我们不能沿着箭头的方向从一个节点移动到另一个节点，最后回到起始节点。
 
 \begin{definition}[有向无环图]\label{definition:ch11-有向无环图}
-若一个有向图中不存在有向环，即不存在节点序列$v_1,v_2,\cdots,v_n$使得$(v_i,v_{i+1})\in\mathcal{E}$（$i=1,\cdots,n-1$）且$(v_n,v_1)\in\mathcal{E}$，则称该图为\textbf{有向无环图}（Directed Acyclic Graph），简称DAG。
+设 $G=(\mathcal{V},\mathcal{E})$ 是一个有向图，节点集 $\mathcal{V}=\{1,\dots,K\}$，
+$K\geqslant1$，边集 $\mathcal{E}\subseteq\mathcal{V}\times\mathcal{V}$。若 $G$ 中不
+存在长度 $n\geqslant1$ 的有向环，即不存在节点序列 $v_1,v_2,\dots,v_n\in\mathcal{V}$
+使 $(v_i,v_{i+1})\in\mathcal{E}$（$i=1,\dots,n-1$）且 $(v_n,v_1)\in\mathcal{E}$，也就是
+说沿箭头方向从某个节点出发、经过若干条边后回到该节点，则 $G$ 称为\textbf{有向
+无环图}（directed acyclic graph），简称 \textbf{DAG}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch11-有向无环图; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch11-有向无环图; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 无环性是\cref{proposition:ch11-有向图分解}能够成立的前提，也是“父节点”“祖先”“后代”这些概念不会自我指涉的保证。若无环性被破坏，例如$x_1\to x_2\to x_1$，则$p(x_1\mid x_2)$与$p(x_2\mid x_1)$互相定义，乘积一般不再是归一化的联合分布，甚至可能不存在满足二者的分布。DAG的等价刻画是“存在节点排序使每条边都从小号指向大号”（\cref{exercise:ch11-02}），这个刻画在实现中就是拓扑排序，它同时给出了按顺序采样和按顺序边缘化的可行算法。
 \end{remark}
 
@@ -181,16 +212,20 @@
 \end{figure}
 
 \begin{proposition}[离散图模型的参数计数]\label{proposition:ch11-离散参数计数}
-设$M$个离散变量各有$K$种状态，联合分布按有向图分解为局部条件分布，且每个条件分布用一般条件概率表给出。
+设 $M\geqslant1$，$K\geqslant2$，$M$ 个离散变量 $x_1,\dots,x_M$ 各有 $K$ 种状态，
+联合分布按有向无环图分解为局部条件分布
+$p(x_i\mid \mathbf{x}_{\mathrm{pa}(i)})$，且每个条件分布用一般条件概率表给出，即对
+父变量的每种取值单独给出一个概率向量。则下列计数成立：
 \begin{enumerate}[(i)]
-  \item 若图为全连接图，则参数总数为$K^M-1$；
-  \item 若图中没有连接，则参数总数为$M(K-1)$；
-  \item 若图为一条节点链$x_1\to x_2\to\cdots\to x_M$，则参数总数为$K-1+(M-1)K(K-1)$。
+  \item 若图为全连接图，则参数总数为 $K^M-1$；
+  \item 若图中没有连接，则参数总数为 $M(K-1)$；
+  \item 若图为一条节点链 $x_1\to x_2\to\cdots\to x_M$，则参数总数为
+        $K-1+(M-1)K(K-1)$。
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-（重构新增）三种情形都按“每个节点的条件分布需多少个自由参数”相加得到，全局归一化约束只消耗一个自由度。
+三种情形都按“每个节点的条件分布需多少个自由参数”相加得到，全局归一化约束只消耗一个自由度。
 
 (i) 全连接图中每个节点的父节点是全部较低编号节点，故联合分布是一般的$K^M$格点分布，除归一化约束外其余$K^M-1$个参数自由。
 
@@ -199,8 +234,8 @@
 (iii) 节点$1$的分布$p(x_1)$有$K-1$个参数；对其余每个节点，条件分布$p(x_i\mid x_{i-1})$是对$x_{i-1}$的$K$个取值分别给出的、长度为$K$的概率向量，每个向量有$K-1$个自由参数，故为$K(K-1)$。于是总数为$K-1+(M-1)K(K-1)$。当$M=2$时它等于$K-1+K(K-1)=K^2-1$，与(i)一致，这符合“两个节点的全连接图就是一条链”的事实。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch11-离散参数计数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch11-离散参数计数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch11-离散参数计数}量化了“图结构即先验假设”这一说法：连接越少，参数越少，分布类越小。(i)与(iii)的对比尤其重要：全连接图的参数随$M$指数增长，节点链却只随$M$线性增长。注意(iii)中的常数$K-1$来自第一个节点没有父节点，这个“边界项”不能省略；也正因为如此，(iii)在$M=1$时才退化为$K-1$而不是$0$。这些计数都假设条件分布用完整条件概率表表示，如果改用参数化形式（如\eqref{align:ch11-逻辑斯谛条件分布}），计数会完全不同，这一点在\cref{subsection:ch11-离散变量}末尾会看到。
 \end{remark}
 
@@ -216,11 +251,19 @@
 共享参数（也称捆绑参数）是减少模型中独立参数数量的另一种方法。例如，在\cref{figure:ch11-离散节点链}中，我们可以安排在$i=2,\cdots,M$的情况下，所有条件分布$p(x_i\mid x_{i-1})$都受同一组$K(K-1)$个参数的控制，从而得到\cref{figure:ch11-共享参数链}所示的模型。再加上控制$x_1$分布的$K-1$个参数，总共需要指定$K^2-1$个参数来定义联合分布。
 
 \begin{definition}[共享参数]\label{definition:ch11-共享参数}
-若图中若干节点的条件分布$p(x_k\mid \mathrm{pa}(k))$被约束为同一个参数化函数的不同取值，即它们共用同一组参数（而不各自拥有独立的参数），则称这些参数是\textbf{共享参数}（也称\textbf{捆绑参数}，tied parameters）。共享参数不改变图的结构，只改变因子的参数化方式。
+设有向图模型的局部因子为 $p(x_k\mid \mathbf{x}_{\mathrm{pa}(k)})$，
+$k=1,\dots,K$。若存在参数向量 $\boldsymbol{\theta}$ 与函数族
+$g_k(\cdot;\boldsymbol{\theta})$，使得对指标集 $\mathcal{K}\subseteq\{1,\dots,K\}$ 中
+的每个 $k$ 都有
+$p(x_k\mid \mathbf{x}_{\mathrm{pa}(k)})
+=g_k(x_k,\mathbf{x}_{\mathrm{pa}(k)};\boldsymbol{\theta})$，即这些因子共用同一组参数
+$\boldsymbol{\theta}$ 而不各自拥有独立的参数，则 $\boldsymbol{\theta}$ 称为
+\textbf{共享参数}，也称\textbf{捆绑参数}（tied parameters）。共享参数不改变图的
+结构，只改变因子的参数化方式。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch11-共享参数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch11-共享参数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 共享参数与“删除连接”是两种互相独立的简化手段：前者减少每个因子的自由参数，后者减少因子的个数。\cref{figure:ch11-共享参数链}中把$M-1$个转移分布捆绑在一起，使参数从$K-1+(M-1)K(K-1)$降到$K^2-1$，与$M$无关，这正是“参数不随序列长度增长”的原型，\cref{chapter:ch12-Transformer与注意力机制}的循环网络与Transformer的权重共享思想都由此而来。需要留意，共享参数后联合分布仍然对每个$M$良定义，但不同位置的条件分布不再能分别拟合，这是一种更强的归纳偏置；\cref{definition:ch11-共享参数}只描述参数化的约束，并不改变\cref{proposition:ch11-有向图分解}的分解形式。
 \end{remark}
 
@@ -245,7 +288,7 @@
   \label{figure:ch11-多父节点单子节点}
 \end{figure}
 
-\begin{remark}（重构新增）
+\begin{remark}
 \eqref{align:ch11-逻辑斯谛条件分布}与\cref{proposition:ch11-离散参数计数}形成对照：同一个图（\cref{figure:ch11-多父节点单子节点}）配完整条件概率表需要$2^M$个参数，配逻辑斯谛参数化则只需$M+1$个。代价是条件分布被限制为一类“单峰、单调”的形状：$p(y=1\mid \mathbf{x})$只能随$\mathbf{w}^{\mathsf{T}}\mathbf{x}$单调变化，无法表示异或（XOR）那样的非单调依赖。因此参数化是一个建模折中，而不是纯粹的近似：图结构表达的是条件独立假设，参数化表达的是函数形式假设。\cref{subsection:ch11-离散变量}最后提到的“协方差矩阵的对角限制”与此完全平行：那里限制的是二阶矩的形状，这里限制的是一阶响应的形状。
 \end{remark}
 
@@ -253,17 +296,20 @@
 
 让我们回到图模型，其中节点代表具有Gauss分布的连续变量。每个分布都以图中父节点的状态为条件。这种依赖关系可以有多种形式，这里我们重点讨论一种特定的选择，即每个Gauss分布的均值是Gauss父变量状态的某个线性函数。这就产生了另一类模型——线性Gauss模型，其中包括许多具有实际意义的案例，如概率主成分分析（见\cref{section:ch16-概率潜变量}）、因子分析和线性动态系统等（Roweis and Ghahramani, 1999）。
 
-\begin{definition}[线性Gauss模型]\label{definition:ch11-线性Gauss模型}
-设$G$是一个有$D$个节点的有向无环图，节点$i$代表连续随机变量$x_i$。若每个节点的条件分布为均值线性依赖于父节点取值的Gauss分布，即
+\begin{definition}[线性 Gauss 模型]\label{definition:ch11-线性Gauss模型}
+设 $G$ 是一个有 $D$ 个节点的有向无环图，节点 $i$ 代表连续随机变量
+$x_i\in\mathbb{R}$，$i=1,\dots,D$，节点编号为拓扑序。设 $w_{ij}\in\mathbb{R}$
+（$j\in\mathrm{pa}(i)$）、$b_i\in\mathbb{R}$、$v_i>0$。若每个节点的条件分布为
 \begin{align}
   p\bigl(x_i\mid \mathrm{pa}(i)\bigr) = \mathcal{N}\left(x_i\,\Bigm|\, \sum_{j\in \mathrm{pa}(i)}w_{ij}x_j+b_i,\ v_i\right),
   \label{align:ch11-线性Gauss条件}
 \end{align}
-其中$w_{ij}$和$b_i$是控制均值的参数，$v_i$是$x_i$条件分布的方差，则称该图模型为\textbf{线性Gauss模型}（linear Gaussian model）。
+即均值线性依赖于父节点取值、方差 $v_i$ 与父节点取值无关，则该图模型称为
+\textbf{线性 Gauss 模型}（linear Gaussian model）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch11-线性Gauss模型; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch11-线性Gauss模型; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch11-线性Gauss模型}把“连续变量+线性依赖+Gauss噪声”三件事捆在一起。它的动机是：Gauss分布在线性变换与边缘化下封闭，因此整张图的联合分布仍是Gauss分布，从而可以用均值和协方差两个量完全描述（\cref{proposition:ch11-线性Gauss矩}）。条件中“均值线性”不可换成任意非线性函数，否则联合分布不再是Gauss，矩递推随即失效；方差$v_i$不依赖于父节点取值，这是“同方差”假设，若允许$v_i$随$\mathrm{pa}(i)$变化，模型就变成异方差回归，仍可用但递推公式需改写。节点编号必须是拓扑序，否则$j\in\mathrm{pa}(i)$可能大于$i$，递推无法从低到高进行。
 \end{remark}
 
@@ -283,11 +329,11 @@
   \mathrm{cov}[x_i,x_j] &= \sum_{k\in\mathrm{pa}(i)}w_{ik}\,\mathrm{cov}[x_k,x_j]+I_{ij}v_i,
   \label{align:ch11-协方差递推}
 \end{align}
-其中$I_{ij}$是单位矩阵的元素（$i=j$时为1，否则为0）。因此$\mathbb{E}[\mathbf{x}]$与协方差矩阵可以从最低编号的节点开始递推求得。
+其中$I_{ij}$是单位矩阵的元素（$i=j$时为1，否则为0）。因此$\mathbb{E}[\mathbf{x}]$与协方差矩阵从最低编号的节点开始递推求得。
 \end{proposition}
 
 \begin{proof}
-（重构新增）把\eqref{align:ch11-线性Gauss条件}写成显式的生成式：
+把\eqref{align:ch11-线性Gauss条件}写成显式的生成式：
 \begin{align}
   x_i = \sum_{j\in\mathrm{pa}(i)}w_{ij}x_j+b_i+\varepsilon_i,\qquad \varepsilon_i\sim\mathcal{N}(0,v_i),
 \end{align}
@@ -302,8 +348,8 @@
 由于节点编号是拓扑序，$j<i$时$x_j$只依赖$\{\varepsilon_k:k\leqslant j\}$，与$\varepsilon_i$独立，故$\mathbb{E}[\varepsilon_i\tilde{x}_j]=0$；$j=i$时$\mathbb{E}[\varepsilon_i\tilde{x}_i]=\mathbb{E}[\varepsilon_i^{2}]=v_i$。两句合起来正是$I_{ij}v_i$。递推的可用性：\eqref{align:ch11-协方差递推}的右端只涉及编号更小的$k$，而协方差矩阵对称，故按$i=1,2,\cdots,D$的顺序逐行计算即可。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch11-线性Gauss矩; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch11-线性Gauss矩; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 原书把该递推式的右端印作$\mathrm{cov}[x_i,x_k]$（本译本按推导结果写作$\mathrm{cov}[x_k,x_j]$），与左端的下标不一致，也和下面\eqref{align:ch11-三变量协方差}的矩阵不符。上面的证明给出正确的递推：右端应为$\mathrm{cov}[x_k,x_j]$，因为对$x_i$取协方差时展开的是$x_i$对父节点的线性组合，被乘的$\tilde{x}_j$保持不变。用\cref{example:ch11-三变量线性Gauss}的$3$变量链可以逐项验证：$\Sigma_{22}=w_{21}\mathrm{cov}[x_1,x_2]+v_2=w_{21}^{2}v_1+v_2$，只有用$\mathrm{cov}[x_1,x_2]$（即$\mathrm{cov}[x_k,x_j]$）才能得到\eqref{align:ch11-三变量协方差}中印出的结果。条件$I_{ij}v_i$中的$v_i$（而不是$v_j$）也由证明确定：噪声$\varepsilon_i$属于第$i$个方程。这个例子说明，递推公式的每一个下标都必须由推导决定，不能凭对称性猜测。
 \end{remark}
 
@@ -322,7 +368,7 @@
 \end{align}
 \end{example}
 
-\begin{remark}（重构新增）
+\begin{remark}
 \cref{example:ch11-三变量线性Gauss}展示了两件事。第一，缺少连接$x_1\to x_3$的效果是$\Sigma_{31}=w_{32}w_{21}v_1$，即$x_1$对$x_3$的影响必须经由$x_2$传递，系数是两个权重的乘积；若存在直接的$x_1\to x_3$连接，则$\Sigma_{31}$中还要加上$w_{31}v_1$一项。第二，协方差矩阵的元素个数虽然很多，但都由$v_1,v_2,v_3,w_{21},w_{32}$这$5$个参数决定，而不是一般的$3\times3$对称矩阵所需的$6$个参数，这正是“图结构约束协方差”的具体含义。注意$\Sigma$是正定的（两个$w$取任何实数都成立），这来自生成式$x=(I-W)^{-1}(\mathbf{b}+\boldsymbol{\varepsilon})$的结构，无需额外假设。
 \end{remark}
 
@@ -371,11 +417,14 @@
 当开始处理更复杂的模型时，要像\cref{figure:ch11-二元分类器有向图}那样明确写出$t_1,\cdots,t_N$形式的多个节点就会变得很不方便。因此，我们引入了一种图形符号，以便更简洁地表示这样的多个节点。
 
 \begin{definition}[板块表示法]\label{definition:ch11-板块}
-\textbf{板块}（plate）是一种图形缩写：把一组同类的、仅在索引上不同的节点画成一个代表性节点，并用一个方框把它包围起来，方框角上标注索引集合的大小（如$N$），表示方框内的图形被重复$N$次，每次取一个不同的索引值。
+设一个图模型含有 $N$ 个同构节点，它们仅在索引 $n=1,\dots,N$ 上不同，且每个节点连同
+其入射边与局部因子都按同一模式连接到其余变量。把该模式画成一个代表性节点，并用一个
+标有 $N$ 的方框把它包围，以表示方框内的图形被独立重复 $N$ 次、每次取一个不同的索引
+值，这一图形缩写称为\textbf{板块}（plate）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch11-板块; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch11-板块; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 板块不是一种新的数学对象，而是一种严格的书写约定：\cref{figure:ch11-板块表示}与\cref{figure:ch11-二元分类器有向图}表示同一个分布\eqref{align:ch11-二元分类联合}，只是前者把$N$个同构的因子折叠成一个。它的作用是让“数据独立同分布”这一假设在图上一眼可见：方框内的$t_n$之间没有连接，正因为它们在给定$\mathbf{w}$后条件独立。反之，如果数据之间存在依赖（例如序列数据），就必须在方框内画出节点之间的边，或者放弃板块而显式地画出整条链。理解这一点是阅读后续章节中变分自编码器、扩散模型等“带板块”的图的前提。
 \end{remark}
 
@@ -411,16 +460,19 @@
 请注意，$\mathbf{w}$的值是无法观测到的，因此$\mathbf{w}$是一个潜（latent）变量（也称隐变量）。这些变量在本书讨论的许多模型中都发挥了至关重要的作用。
 
 \begin{definition}[三类变量]\label{definition:ch11-三类变量}
-在有向图模型中有3种变量，用3种画法区分：
+在有向图模型中，按是否随机与是否观测，变量分为三类，并分别采用三种画法：
 \begin{enumerate}[(i)]
-  \item \textbf{未观测到的随机变量}（也称潜在变量或隐藏变量），用红色圆圈表示；
-  \item \textbf{观测到的随机变量}，即已被设置为特定值的随机变量，用蓝色阴影的红圈表示；
-  \item \textbf{非随机参数}，用浮动变量（不带圆圈）表示。
+  \item 未观测到的随机变量，也称潜在变量或隐藏变量，画为红色圆圈，称为
+        \textbf{隐变量}（latent variable）；
+  \item 观测到的随机变量，即已被设定为特定值的随机变量，画为带蓝色阴影的红圈，称为
+        \textbf{观测变量}（observed variable）；
+  \item 非随机参数，画为不带圆圈的浮动变量，称为\textbf{确定性参数}
+        （deterministic parameter）。
 \end{enumerate}
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch11-三类变量; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch11-三类变量; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch11-三类变量}的区分决定了哪些量需要积分、哪些量可以当作常数。随机变量（无论是否观测）都参与联合分布与边缘化；参数不参与积分，它们是条件分布的“旋钮”，在频率学派的意义下由最大化似然而定，在Bayes意义下则可以先给它们一个先验而升级为随机变量（此时\cref{figure:ch11-参数与观测值图}中的$\lambda$就成为随机节点）。这种“升级”正是\cref{chapter:ch15-离散潜变量}与\cref{chapter:ch16-连续潜变量}中从最大似然过渡到变分推断的入口。需要注意，同一符号在不同语境下可能扮演不同角色：\cref{figure:ch11-观测变量阴影图}中$t_n$被观测，于是它的分布退化为一个点质量，图中表现为阴影。
 \end{remark}
 
@@ -444,33 +496,46 @@
 当概率模型中的随机变量设定为与观测值相等时，其他未观测到的随机变量的分布也会相应地改变。
 
 \begin{definition}[推理]\label{definition:ch11-推理}
-\textbf{推理}（inference）是指：在概率模型中某些随机变量被设定为观测值之后，计算其余未观测变量的条件分布（后验分布）的过程。在图中，这相当于把被观测节点加上阴影，然后重新计算未加阴影节点的分布。
+设概率模型给出随机变量 $\mathbf{z}=(\mathbf{z}_{\mathrm{o}},
+\mathbf{z}_{\mathrm{h}})$ 的联合分布 $p(\mathbf{z})$，其中
+$\mathbf{z}_{\mathrm{o}}$ 为被设定为观测值的变量、$\mathbf{z}_{\mathrm{h}}$ 为其余
+未观测变量，且观测值 $\mathbf{z}_{\mathrm{o}}=\mathbf{z}_{\mathrm{o}}^{\ast}$ 满足
+$p(\mathbf{z}_{\mathrm{o}}^{\ast})>0$。在给定
+$\mathbf{z}_{\mathrm{o}}=\mathbf{z}_{\mathrm{o}}^{\ast}$ 的条件下计算
+$\mathbf{z}_{\mathrm{h}}$ 的条件分布
+$p(\mathbf{z}_{\mathrm{h}}\mid \mathbf{z}_{\mathrm{o}}
+=\mathbf{z}_{\mathrm{o}}^{\ast})$，这一计算过程称为\textbf{推理}（inference），所得
+条件分布称为\textbf{后验分布}（posterior distribution）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch11-推理; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch11-推理; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch11-推理}把“学习”与“推理”分开：学习是确定参数（或参数的后验），推理是在给定参数与观测后求隐变量或预测量的分布。推理的计算复杂度完全由图的结构决定：树状图上存在线性时间的精确算法（消息传递），有环图一般只能近似。定义中“设定为观测值”在数学上是把联合分布在对应变量处取值并重新归一化，因此后验分布与先验分布同属一个分布族的情形（共轭）是特例而非常态；\cref{chapter:ch15-离散潜变量}与\cref{chapter:ch16-连续潜变量}的变分推断正是为了绕开无法解析计算的后验。
 \end{remark}
 
 我们可以通过Bayes定理的图形解释来说明这一点。假设我们把两个变量$x$和$y$的联合分布$p(x,y)$分解成因子的乘积，形式为$p(x,y)=p(x)\,p(y\mid x)$。这可以用\cref{figure:ch11-Bayes定理图示}(a)中的有向图来表示。假设我们观测到了$y$的值，如\cref{figure:ch11-Bayes定理图示}(b)中的阴影节点所示。我们可以把边缘分布$p(x)$看作潜变量$x$的一个先验概率，而我们的目标就是推断出相应的后验概率。
 
-\begin{proposition}[两个变量的Bayes更新]\label{proposition:ch11-Bayes更新}
-设联合分布分解为$p(x,y)=p(x)\,p(y\mid x)$，$p(x)$称为先验。则边缘分布与后验分布分别为
+\begin{proposition}[两个变量的 Bayes 更新]\label{proposition:ch11-Bayes更新}
+设随机变量 $x$ 取值于有限或可数集 $\mathcal{X}$，$y$ 取值于集合 $\mathcal{Y}$，
+联合分布分解为 $p(x,y)=p(x)\,p(y\mid x)$，其中 $p(x)$ 称为 $x$ 的\textbf{先验}
+（prior）。设观测值 $y$ 满足 $p(y)>0$。则边缘分布与后验分布分别为
 \begin{align}
   p(y) &= \sum_{x'}p(y\mid x')\,p(x'),
   \label{align:ch11-边缘分布}\\
   p(x\mid y) &= \frac{p(y\mid x)\,p(x)}{p(y)},
   \label{align:ch11-Bayes后验}
 \end{align}
-其中\eqref{align:ch11-边缘分布}右端的$x'$是与$x$同取值域的求和哑变量。于是联合分布也可以用$p(x\mid y)$与$p(y)$表示为$p(x,y)=p(x\mid y)\,p(y)$，对应的图是把箭头反向后的$x\leftarrow y$。
+其中\eqref{align:ch11-边缘分布}右端的 $x'$ 遍历 $\mathcal{X}$，是与 $x$ 同取值域的
+求和哑变量。于是联合分布也等于 $p(x\mid y)\,p(y)$，对应的图是把 $x\to y$ 的箭头反向
+为 $x\leftarrow y$ 后的图。
 \end{proposition}
 
 \begin{proof}
-（重构新增）由加和法则，$p(y)=\sum_{x'}p(y,x')=\sum_{x'}p(y\mid x')p(x')$，即\eqref{align:ch11-边缘分布}。由乘积法则$p(x,y)=p(y\mid x)p(x)$，又$p(x,y)=p(x\mid y)p(y)$，两式相除（设$p(y)>0$）即得\eqref{align:ch11-Bayes后验}。把\eqref{align:ch11-Bayes后验}代回$p(x\mid y)p(y)=p(y\mid x)p(x)=p(x,y)$，可见用$(p(x\mid y),p(y))$同样能重构联合分布，而这一分解对应的分解式正是$x\leftarrow y$方向上的$p(y)\,p(x\mid y)$。
+由加和法则，$p(y)=\sum_{x'}p(y,x')=\sum_{x'}p(y\mid x')p(x')$，即\eqref{align:ch11-边缘分布}。由乘积法则$p(x,y)=p(y\mid x)p(x)$，又$p(x,y)=p(x\mid y)p(y)$，两式相除（设$p(y)>0$）即得\eqref{align:ch11-Bayes后验}。把\eqref{align:ch11-Bayes后验}代回$p(x\mid y)p(y)=p(y\mid x)p(x)=p(x,y)$，可见用$(p(x\mid y),p(y))$同样能重构联合分布，而这一分解对应的分解式正是$x\leftarrow y$方向上的$p(y)\,p(x\mid y)$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch11-Bayes更新; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch11-Bayes更新; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch11-Bayes更新}是全书最简单的推理例子，但它已经包含了推理的全部要素：先验、似然、证据（分母）与后验。分母$p(y)$只依赖于观测值，对$x$是常数，因此实践中常写成$p(x\mid y)\propto p(y\mid x)p(x)$，把归一化留到最后。条件$p(y)>0$不能省略：若观测到的事件概率为零，后验无定义，这正是“零概率观测”在连续模型中必须用密度而非概率处理的原因。图中箭头反向这一事实说明：图的结构描述的是分解方式，而不是因果方向；Bayes定理允许我们在同一个联合分布上换一种分解，从而换一张图（\cref{figure:ch11-Bayes定理图示}(c)）。
 \end{remark}
 

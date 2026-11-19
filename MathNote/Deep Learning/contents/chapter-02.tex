@@ -9,7 +9,7 @@
 几乎所有机器学习应用场景，都需要处理不确定性。例如，区分皮肤病变是良性还是恶性的图像分类系统，在实际中不可能万无一失。不确定性可以分为两种。第一种是认知不确定性（epistemic uncertainty），也称系统不确定性（systematic uncertainty）。这种不确定性源自有限的数据集大小。随着观测数据的增多，例如更多良性和恶性皮肤病变图像样本，系统可以更好地预测新样本的类别。然而，即使数据集无限大，也仍然无法达到完美的准确率，因为存在第二种不确定性——偶然不确定性（aleatoric uncertainty），也称内在（intrinsic）不确定性或随机（stochastic）不确定性，有时简称噪声（noise）。一般来说，噪声源自人们只能观察到关于世界的部分信息。因此，一种从源头减小这种不确定性的方法是收集不同类型的数据。\cref{figure:ch02-不确定性示例}用扩展到二维的正弦曲线为例说明了这个问题（参见\cref{section:ch01-一个教学示例}）。
 
 \begin{definition}[认知不确定性与偶然不确定性]\label{definition:ch02-两类不确定性}
-设某学习系统由规模为 $N$ 的数据集训练得到，其预测结果所携带的不确定性可以划分为两类。若这种不确定性源自数据集的规模有限，即随着观测数据的增多（$N$ 增大）它可以被减小，则称之为\textbf{认知不确定性}（epistemic uncertainty），也称系统不确定性（systematic uncertainty）。若这种不确定性即使 $N\to\infty$ 也不会消失，而源自人们只能观测到关于世界的部分信息，则称之为\textbf{偶然不确定性}（aleatoric uncertainty），也称内在（intrinsic）不确定性或随机（stochastic）不确定性，有时简称噪声（noise）。
+设某学习系统由规模为 $N$ 的数据集训练得到，其预测结果所携带的不确定性划分为两类。若这种不确定性源自数据集的规模有限，即随观测数据规模 $N$ 的增大而减小，则称为\textbf{认知不确定性}（epistemic uncertainty），也称系统不确定性（systematic uncertainty）。若这种不确定性即使 $N\to\infty$ 也不会消失，而源自观测者只能获得关于世界的部分信息，则称为\textbf{偶然不确定性}（aleatoric uncertainty），也称内在（intrinsic）不确定性或随机（stochastic）不确定性，有时简称噪声（noise）。
 \end{definition}
 
 \begin{figure}[htbp]
@@ -19,8 +19,8 @@
   \label{figure:ch02-不确定性示例}
 \end{figure}
 
-% SUPPLEMENT: parent=definition:ch02-两类不确定性; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-两类不确定性; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这一区分的作用是给“不确定性还能不能继续减小”提供一个判据，而不是给不确定性贴标签。\cref{figure:ch02-不确定性示例}正说明了这一点：图 (b) 只观测到 $x_1$、$x_2$ 被边缘化掉，因而数据点散布很宽；图 (c) 把 $x_2$ 固定为 $\pi/2$ 之后，散布明显收窄。两者之间的差别属于认知不确定性，只要补测 $x_2$ 就能消除；而即使补充再多同一水平的数据，图 (c) 中的数据点仍然围绕曲线 $y(x_1,\pi/2)$ 波动，这一部分波动无法通过增加样本消除，属于偶然不确定性。
 
 条件“$N$ 增大可减小”是判别认知不确定性的关键：它要求不确定性来自对总体分布的估计不足，而不是来自总体的内在随机性。反过来，若一个量的不确定性与数据量无关（例如同一患者重复测量的生理波动），那么无论怎样扩大数据集都不会改善，只能通过引入新的观测变量（也就是本节所说的“收集不同类型的数据”）来缓解。
@@ -45,8 +45,8 @@
 称一个事件是\textbf{可重复的}，若它能在相同的条件下被反复试验。把可重复事件 $E$ 在 $n$ 次试验中出现的次数记为 $n_E$。若极限 $\lim_{n\to\infty} n_E/n$ 存在，则把它定义为 $E$ 的\textbf{概率}；以这种“长期频率”的方式解释概率的立场称为\textbf{频率学派}（frequentist）观点。与之相对，把概率解释为对命题成立这一事件的不确定性程度的量化、从而允许对不可重复的命题赋予概率的立场，称为 \textbf{Bayes 学派}（Bayesian）观点。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-概率的两种解释; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-概率的两种解释; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 两种解释的差别不在于公式，而在于“概率从何而来”。频率学派的定义依赖极限 $\lim_{n\to\infty}n_E/n$ 的存在，因此必须先有一个可重复的试验机制；\cref{figure:ch02-弯曲硬币}的硬币满足这个条件，$60\%$ 与 $40\%$ 是抛掷次数趋于无穷时的比值。Bayes 学派则把这个极限当作特例：当命题确实对应可重复事件时，先验信息足够弱，后验概率会收敛到频率，二者一致；当命题不可重复（“这枚硬币的凸面是正面”）时，频率定义失效，而“用概率量化不确定性”仍然有意义。
 
 需要强调的是，Bayes 观点并不与频率观点矛盾，它只是在更大的范围里给概率指派含义；这也是本书后文（例如\cref{section:ch02-Bayes概率}）反复使用的立场。条件“$n_E/n$ 的极限存在”在频率解释中不可省：若试验条件每次都在变化，长期频率可能不存在，此时只能采用 Bayes 解释。

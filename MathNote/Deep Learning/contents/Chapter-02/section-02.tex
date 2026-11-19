@@ -16,11 +16,15 @@
 \end{align}
 
 \begin{definition}[概率密度]\label{definition:ch02-概率密度}
-设 $x$ 为实值连续随机变量。若存在非负函数 $p(x)$，使得当 $\delta x\to0$ 时 $x$ 落在区间 $(x,x+\delta x)$ 内的概率为 $p(x)\delta x$，则称 $p(x)$ 为 $x$ 的\textbf{概率密度}（probability density）。此时 $x$ 落在区间 $(a,b)$ 内的概率由\eqref{align:ch02-区间概率}给出。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X:\Omega\to\mathbb{R}$ 为随机变量。若存在非负 Borel 可测函数 $p_X:\mathbb{R}\to[0,\infty)$，使得对每个 Borel 集 $B\subseteq\mathbb{R}$ 都有
+\begin{align*}
+  \mathbb{P}(X\in B)=\int_B p_X(x)\,\mathrm{d}x,
+\end{align*}
+则这样的 $X$ 称为\textbf{连续型随机变量}，$p_X$ 称为 $X$ 的\textbf{概率密度}（probability density）；此时对任意 $-\infty\leqslant a<b\leqslant+\infty$，$X$ 落在区间 $(a,b)$ 内的概率由\eqref{align:ch02-区间概率}给出，即 $\mathbb{P}(a<X<b)=\int_a^b p_X(x)\,\mathrm{d}x$。密度只在几乎处处意义下唯一：若两个非负 Borel 可测函数只在 Lebesgue 零测集上不同，则它们给出同一个分布。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-概率密度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-概率密度; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 引入密度的动机是：连续变量取任一确定值的概率为零，因此不能像离散情形那样用 $p(X=x_i)$ 来描述分布，只能用“落在一个小区间里的概率与区间长度之比”来描述。\cref{definition:ch02-概率密度}正是把这个比值固定在 $x$ 处的极限值上，于是 $p(x)$ 本身不是概率，$p(x)\delta x$ 才是概率。
 
 条件“$\delta x\to0$”不可省：若只对某个固定的 $\delta x$ 定义，则得到的依赖于区间划分，不构成 $x$ 的函数。也正因为 $p(x)$ 是密度而非概率，它可以大于 $1$（例如 $\mathcal{N}(0,0.01)$ 在 $x=0$ 处约为 $3.99$），只有\eqref{align:ch02-区间概率}的积分才是概率。
@@ -46,7 +50,12 @@
 \end{align}
 
 \begin{proposition}[概率密度的两个基本性质]\label{proposition:ch02-密度性质}
-设 $p(x)$ 是\cref{definition:ch02-概率密度}意义下的概率密度，则它满足非负性\eqref{align:ch02-密度非负}与归一化条件\eqref{align:ch02-密度归一化}。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X$ 为连续型随机变量，$p_X:\mathbb{R}\to[0,\infty)$ 为其概率密度，且已取为非负 Borel 可测函数。则
+\begin{enumerate}
+  \item $p_X(x)\geqslant0$ 对每个 $x\in\mathbb{R}$ 成立，即\eqref{align:ch02-密度非负}；
+  \item $\int_{-\infty}^{+\infty}p_X(x)\,\mathrm{d}x=1$，即\eqref{align:ch02-密度归一化}；
+  \item 对任意 $-\infty\leqslant a<b\leqslant+\infty$，有 $\mathbb{P}(a<X<b)=\int_a^b p_X(x)\,\mathrm{d}x$；特别地，$\mathbb{P}(X=x)=0$ 对每个 $x\in\mathbb{R}$ 成立。
+\end{enumerate}
 \end{proposition}
 
 \begin{proof}
@@ -55,8 +64,8 @@
 归一化：事件“$x$ 取实轴上的某个值”是必然事件，其概率为 $1$。把实轴分成互不重叠的小区间并求和，再令区间长度趋于零，由\eqref{align:ch02-区间概率}即得 $\int_{-\infty}^{\infty}p(x)\,\mathrm{d}x=1$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-密度性质; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-密度性质; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这两条性质正好对应概率公理中的两条：非负性保证不会算出负的概率，归一化保证全体可能取值的概率之和为 $1$。它们也是判断一个给定函数能否作为概率密度的唯一标准——\eqref{align:ch02-密度非负}与\eqref{align:ch02-密度归一化}同时成立即可。
 
 归一化条件不可省：若只要求 $p\geqslant0$，则 $p(x)\equiv1$ 也会被当作密度，但它的积分发散，无法给出概率。原书把这类无法归一化的分布称为\textbf{反常}（improper）分布；在 Bayes 推断中，先验常常只在形式上给定、其归一化常数留到分母中处理，此时用的正是“未归一化的密度”。
@@ -72,30 +81,38 @@
 且满足 $P'(x)=p(x)$。
 
 \begin{definition}[累积分布函数]\label{definition:ch02-累积分布函数}
-称由\eqref{align:ch02-累积分布}定义的函数 $P(z)$ 为随机变量 $x$ 的\textbf{累积分布函数}（cumulative distribution function），它给出 $x$ 不超过 $z$ 的概率。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X:\Omega\to\mathbb{R}$ 为随机变量。由
+\begin{align*}
+  F_X(z)=\mathbb{P}(X\leqslant z),\qquad z\in\mathbb{R},
+\end{align*}
+定义的函数 $F_X:\mathbb{R}\to[0,1]$ 称为 $X$ 的\textbf{累积分布函数}（cumulative distribution function）。该函数单调不减、在每点右连续，且 $\lim_{z\to-\infty}F_X(z)=0$、$\lim_{z\to+\infty}F_X(z)=1$；若 $X$ 具有概率密度 $p_X$，则 $F_X(z)=\int_{-\infty}^{z}p_X(x)\,\mathrm{d}x$ 对每个 $z\in\mathbb{R}$ 成立，即\eqref{align:ch02-累积分布}。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-累积分布函数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-累积分布函数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 累积分布函数把“概率是多少”回答成“概率累积到哪里”：$P(z)$ 是密度在 $(-\infty,z]$ 上的积分，因此它单调不减、取值于 $[0,1]$，且 $z\to-\infty$ 时趋于 $0$、$z\to+\infty$ 时趋于 $1$。这三个性质正好是概率测度的三条公理在实轴上的体现。
 
 与密度相比，$P$ 的好处是它总存在（任何随机变量都有分布函数），而密度不一定存在（例如离散变量或奇异分布）。\eqref{align:ch02-累积分布}用积分定义 $P$，因此隐含要求密度 $p$ 可积；对只有分布函数而没有密度的情形，本节的定义需要推广为 Stieltjes 积分。
 \end{remark}
 
 \begin{proposition}[累积分布函数的导数]\label{proposition:ch02-累积分布导数}
-设概率密度 $p$ 在点 $x$ 处连续，$P$ 由\eqref{align:ch02-累积分布}定义，则 $P$ 在 $x$ 处可导且 $P'(x)=p(x)$。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X$ 为连续型随机变量，其概率密度 $p_X:\mathbb{R}\to[0,\infty)$ 在点 $x_0\in\mathbb{R}$ 处连续，$F_X$ 为 $X$ 的累积分布函数，即 $F_X(z)=\mathbb{P}(X\leqslant z)$。则 $F_X$ 在 $x_0$ 处可导，且
+\begin{align*}
+  F_X'(x_0)=p_X(x_0).
+\end{align*}
+若 $p_X$ 在 $\mathbb{R}$ 上处处连续，则 $F_X$ 在 $\mathbb{R}$ 上连续可微且 $F_X'=p_X$；结论中的导数均为通常的实变量导数。
 \end{proposition}
 
 \begin{proof}
 由\eqref{align:ch02-累积分布}与\eqref{align:ch02-区间概率}，对 $h>0$，
 \begin{align*}
-  \frac{P(x+h)-P(x)}{h} = \frac{1}{h}\int_{x}^{x+h}p(t)\,\mathrm{d}t .
+ \frac{P(x+h)-P(x)}{h} = \frac{1}{h}\int_{x}^{x+h}p(t)\,\mathrm{d}t .
 \end{align*}
 当 $h\to0$ 时，右端是 $p$ 在 $[x,x+h]$ 上的平均值；由 $p$ 在 $x$ 处连续，该平均值趋于 $p(x)$。$h<0$ 的情形同理。故 $P'(x)=p(x)$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-累积分布导数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-累积分布导数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条性质说明“密度”与“分布函数”是同一对象的两种描述：$P$ 是 $p$ 的积分，$p$ 是 $P$ 的导数。它的用途是把“求区间概率”转化为“求端点处的分布函数值之差”，即 $p(x\in(a,b))=P(b)-P(a)$，这在解析计算中往往更方便（例如\cref{section:ch03-周期变量}中处理周期变量时）。
 
 条件“$p$ 在 $x$ 处连续”不可省：若 $p$ 在 $x$ 处有跳跃，$P$ 在该点不可导，只能断言 $P$ 在此处左、右导数分别等于 $p$ 的左、右极限。此外 $P$ 总是单调不减且 $\lim_{z\to-\infty}P(z)=0$、$\lim_{z\to+\infty}P(z)=1$，这两条由\eqref{align:ch02-密度非负}与\eqref{align:ch02-密度归一化}直接得到。
@@ -116,11 +133,15 @@
 其中积分是在整个 $\mathbf{x}$ 的空间上进行的。更一般地，我们还可以考虑同时包含离散变量和连续变量的联合概率分布。
 
 \begin{definition}[联合概率密度]\label{definition:ch02-联合密度}
-设 $\mathbf{x}=(x_1,\cdots,x_D)^{\mathsf{T}}$ 为 $D$ 维连续随机向量。若存在非负函数 $p(\mathbf{x})$，使得 $\mathbf{x}$ 落在包含点 $\mathbf{x}$ 的无穷小体积 $\delta\mathbf{x}$ 中的概率为 $p(\mathbf{x})\delta\mathbf{x}$，则称 $p(\mathbf{x})$ 为 $\mathbf{x}$ 的\textbf{联合概率密度}，并要求它满足\eqref{align:ch02-联合密度非负}与\eqref{align:ch02-联合密度归一化}。
+设 $D\geqslant1$ 为整数，$(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$\mathbf{X}=(X_1,\cdots,X_D)^{\mathsf{T}}:\Omega\to\mathbb{R}^{D}$ 为随机向量。若存在非负 Borel 可测函数 $p_{\mathbf{X}}:\mathbb{R}^{D}\to[0,\infty)$，使得对每个 Borel 集 $B\subseteq\mathbb{R}^{D}$ 都有
+\begin{align*}
+  \mathbb{P}(\mathbf{X}\in B)=\int_B p_{\mathbf{X}}(\mathbf{x})\,\mathrm{d}\mathbf{x},
+\end{align*}
+则这样的 $\mathbf{X}$ 称为\textbf{连续型随机向量}，$p_{\mathbf{X}}$ 称为 $\mathbf{X}$ 的\textbf{联合概率密度}；此时 $p_{\mathbf{X}}$ 满足\eqref{align:ch02-联合密度非负}与\eqref{align:ch02-联合密度归一化}，其中后者的积分在整个 $\mathbb{R}^{D}$ 上进行。联合密度只在 $\mathbb{R}^{D}$ 上的 Lebesgue 零测集上改动时不变。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-联合密度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-联合密度; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 联合密度是把\cref{definition:ch02-概率密度}逐维推广的结果：一维时 $\delta x$ 是长度，$D$ 维时 $\delta\mathbf{x}$ 是体积，因此 $p(\mathbf{x})$ 的量纲是“概率／体积”。\eqref{align:ch02-联合密度归一化}中的积分必须在整个 $\mathbf{x}$ 空间上进行，这是它与一维情形的唯一差别。
 
 当 $D$ 很大时，联合密度所需的参数个数随 $D$ 迅速增长，直接建模不可行；这正是后文引入\cref{section:ch03-多元Gauss分布}中参数化形式（以及\cref{section:ch03-指数族分布}中指数族）的动机。
@@ -153,20 +174,25 @@
 \end{align}
 
 \begin{theorem}[连续形式的加和法则、乘积法则与 Bayes 定理]\label{theorem:ch02-连续形式法则}
-设 $x,y$ 为实值连续随机变量，其联合密度存在，则\eqref{align:ch02-连续加和法则}、\eqref{align:ch02-连续乘积法则}、\eqref{align:ch02-连续Bayes}与\eqref{align:ch02-Bayes分母连续}成立（其中\eqref{align:ch02-连续Bayes}要求 $p(x)>0$）。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X,Y$ 为定义在其上的实值随机变量，$(X,Y)$ 关于 $\mathbb{R}^{2}$ 上的 Lebesgue 测度具有联合密度 $p_{X,Y}:\mathbb{R}^{2}\to[0,\infty)$，且 $X$ 与 $Y$ 分别具有概率密度 $p_X$ 与 $p_Y$。对 $p_Y(y)>0$ 定义 $p_{X\mid Y}(x\mid y)=p_{X,Y}(x,y)/p_Y(y)$，对 $p_X(x)>0$ 定义 $p_{Y\mid X}(y\mid x)=p_{X,Y}(x,y)/p_X(x)$，并约定分母为零时相应的条件密度取 $0$。则：
+\begin{enumerate}
+  \item 加和法则 $p_X(x)=\int_{\mathbb{R}}p_{X,Y}(x,y)\,\mathrm{d}y$ 对几乎所有的 $x\in\mathbb{R}$ 成立，即\eqref{align:ch02-连续加和法则}；
+  \item 乘积法则 $p_{X,Y}(x,y)=p_{Y\mid X}(y\mid x)\,p_X(x)$ 对几乎所有的 $(x,y)\in\mathbb{R}^{2}$ 成立，即\eqref{align:ch02-连续乘积法则}；
+  \item 对几乎所有的 $(x,y)\in\mathbb{R}^{2}$ 满足 $p_X(x)>0$ 与 $p_Y(y)>0$，Bayes 定理 $p_{Y\mid X}(y\mid x)=p_{X\mid Y}(x\mid y)\,p_Y(y)/p_X(x)$ 成立，即\eqref{align:ch02-连续Bayes}；并且 $p_X(x)=\int_{\mathbb{R}}p_{X\mid Y}(x\mid y)\,p_Y(y)\,\mathrm{d}y$ 对几乎所有的 $x\in\mathbb{R}$ 成立，即\eqref{align:ch02-Bayes分母连续}。
+\end{enumerate}
 \end{theorem}
 
 \begin{proof}
 把实轴划分为宽度为 $\Delta$ 的区间，将 $x$ 在第 $i$ 个区间、$y$ 在第 $j$ 个区间内的事件分别记为 $X=i$、$Y=j$。由\eqref{align:ch02-区间概率}，$\mathbb{P}(X=i)\approx p(x_i)\Delta$、$\mathbb{P}(X=i,Y=j)\approx p(x_i,y_j)\Delta^2$，其中 $x_i,y_j$ 为相应区间的代表点。这些离散事件满足\eqref{align:ch02-加和法则}与\eqref{align:ch02-乘积法则}，即
 \begin{align*}
-  \mathbb{P}(X=i) = \sum_{j}\mathbb{P}(X=i,Y=j),\qquad
-  \mathbb{P}(X=i,Y=j) = \mathbb{P}(Y=j\mid X=i)\,\mathbb{P}(X=i) .
+ \mathbb{P}(X=i) = \sum_{j}\mathbb{P}(X=i,Y=j),\qquad
+ \mathbb{P}(X=i,Y=j) = \mathbb{P}(Y=j\mid X=i)\,\mathbb{P}(X=i) .
 \end{align*}
 把上述近似代入并约去公共因子 $\Delta$，得 $p(x_i)\approx\sum_j p(x_i,y_j)\Delta$ 与 $p(x_i,y_j)\approx p(y_j\mid x_i)p(x_i)$。令 $\Delta\to0$，求和过渡为积分，即得\eqref{align:ch02-连续加和法则}与\eqref{align:ch02-连续乘积法则}。再把\cref{theorem:ch02-Bayes定理}的推导逐字重复（把求和换成积分）即得\eqref{align:ch02-连续Bayes}与\eqref{align:ch02-Bayes分母连续}。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch02-连续形式法则; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:ch02-连续形式法则; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条定理的作用是宣布：前两节关于离散变量的全部法则，在连续情形下形式完全不变，只需把求和换成积分。因此后文讨论 Gauss 分布、密度变换与信息论时，可以不再区分离散与连续，只按需要选择求和或积分。
 
 证明中的关键是“先离散化、再取极限”，而这个过渡的严格化需要测度论（Feller, 1966），超出了本书的范围；本书只要求上述法则在所用密度足够正则（例如分段连续）时成立。\eqref{align:ch02-连续Bayes}中的条件 $p(x)>0$ 不可省，理由与离散情形相同：分母出现在除法中。
@@ -184,11 +210,11 @@
 \end{align}
 
 \begin{definition}[均匀分布]\label{definition:ch02-均匀分布}
-设 $c<d$。称由\eqref{align:ch02-均匀分布}给出的概率密度为区间 $(c,d)$ 上的\textbf{均匀分布}（uniform distribution），即在 $(c,d)$ 内取常数、在区间外取零的密度。若某个密度在有限区间外为零、在区间内为常数，但其归一化常数尚未确定，则称相应的分布为\textbf{反常}（improper）分布。
+设 $c<d$ 为实数，定义 $p:\mathbb{R}\to[0,\infty)$ 为 $p(x)=1/(d-c)$（$c<x<d$）、$p(x)=0$（$x\notin(c,d)$）。则这样的 $p$ 称为区间 $(c,d)$ 上的\textbf{均匀分布}（uniform distribution）的\textbf{概率密度}，即\eqref{align:ch02-均匀分布}。该函数非负、Borel 可测，且 $\int_{\mathbb{R}}p(x)\,\mathrm{d}x=1$；在端点 $x=c,d$ 处改变取值不改变相应的概率分布。若一个非负 Borel 可测函数在某个有限区间外为零、在区间内为常数，但它在整个 $\mathbb{R}$ 上的积分不等于 $1$，则这样的函数称为\textbf{反常密度}，相应的形式分布称为\textbf{反常}（improper）分布。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-均匀分布; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-均匀分布; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 均匀分布是“在已知取值范围、而对取值本身一无所知”时最自然的密度：它把全部概率质量平均分配到区间上，是\cref{section:ch02-信息论}中最大熵原理在“支撑集有界”约束下给出的解。
 
 常数 $1/(d-c)$ 完全由归一化确定，不可任意选取：若取其他常数，\eqref{align:ch02-密度归一化}便不成立。定义中对“反常分布”的说明提醒我们，常数密度在整条实轴上无法归一化，因此均匀分布必须限定在有限区间内；这也是后文使用无信息先验时需要格外小心的地方。
@@ -202,7 +228,7 @@
 \end{align}
 
 \begin{definition}[指数分布]\label{definition:ch02-指数分布}
-设 $\lambda>0$。称由\eqref{align:ch02-指数分布}给出的概率密度为参数 $\lambda$ 的\textbf{指数分布}（exponential distribution），其支撑集为 $x\geqslant0$。
+设 $\lambda>0$ 为实数，定义 $p:\mathbb{R}\to[0,\infty)$ 为 $p(x)=\lambda e^{-\lambda x}$（$x\geqslant0$）、$p(x)=0$（$x<0$）。则这样的 $p$ 称为参数 $\lambda$ 的\textbf{指数分布}（exponential distribution）的\textbf{概率密度}，即\eqref{align:ch02-指数分布}。该函数非负、Borel 可测，其支撑集为 $[0,+\infty)$，且 $\int_{\mathbb{R}}p(x)\,\mathrm{d}x=1$；在 $x=0$ 处的取值不影响相应的概率分布。
 \end{definition}
 
 指数分布有一种变体叫作 Laplace 分布（Laplace distribution），其允许将峰值移动到位置 $\mu$，由下式给出：
@@ -213,12 +239,16 @@
 \end{align}
 
 \begin{definition}[Laplace 分布]\label{definition:ch02-Laplace分布}
-设 $\gamma>0$。称由\eqref{align:ch02-Laplace分布}给出的概率密度为参数 $\mu,\gamma$ 的 \textbf{Laplace} 分布（Laplace distribution），其中 $\mu$ 决定峰值的位置（对称中心），$\gamma$ 决定峰值的宽度。
+设 $\mu\in\mathbb{R}$、$\gamma>0$，定义 $p:\mathbb{R}\to[0,\infty)$ 为
+\begin{align*}
+  p(x)=\frac{1}{2\gamma}\exp\left(-\frac{|x-\mu|}{\gamma}\right),\qquad x\in\mathbb{R}.
+\end{align*}
+则这样的 $p$ 称为参数 $\mu,\gamma$ 的 \textbf{Laplace} 分布（Laplace distribution）的\textbf{概率密度}，即\eqref{align:ch02-Laplace分布}。该函数非负、Borel 可测，关于 $x=\mu$ 对称，在 $x=\mu$ 处取最大值 $1/(2\gamma)$，且 $\int_{\mathbb{R}}p(x)\,\mathrm{d}x=1$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-指数分布; kind=motivation; location=紧随其后的 remark（重构新增）
-% SUPPLEMENT: parent=definition:ch02-Laplace分布; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-指数分布; kind=motivation; location=紧随其后的 remark
+% SUPPLEMENT: parent=definition:ch02-Laplace分布; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch02-均匀分布}、\cref{definition:ch02-指数分布}、\cref{definition:ch02-Laplace分布}这三个密度构成一个便于对照的序列：均匀分布在有界区间上“最平”，指数分布在半直线上单调衰减，Laplace 分布则以 $\mu$ 为中心、两侧对称地指数衰减。三者都由归一化常数唯一确定，而常数恰好等于“密度曲线下的面积”的倒数，因此\eqref{align:ch02-指数分布}中的 $\lambda$ 与\eqref{align:ch02-Laplace分布}中的 $2\gamma$ 都不是自由的。
 
 条件 $\lambda>0$、$\gamma>0$ 不可省：若 $\lambda\leqslant0$，\eqref{align:ch02-指数分布}在 $x\to+\infty$ 时不衰减，积分为无穷；$\gamma$ 的情形同理。Laplace 分布中的绝对值 $|x-\mu|$ 保证两侧对称，若去掉绝对值，所得函数在 $\mu$ 处不连续且不再是关于 $\mu$ 对称的密度。指数分布可以看作 Laplace 分布在 $\mu=0$ 处只保留右半支的结果（此时归一化常数变为 $\lambda$ 而非 $1/(2\gamma)$）。
@@ -241,17 +271,22 @@
 \end{align}
 
 \begin{definition}[Dirac $\delta$ 函数]\label{definition:ch02-狄拉克delta}
-称满足“在除 $x=\mu$ 外的任意位置均为零、且积分为 $1$”的对象 $\delta(x-\mu)$ 为 \textbf{Dirac} $\delta$ 函数（Dirac delta function）。它可以视为位于 $x=\mu$ 处的无限窄且无限高的峰，并具有单位面积的性质，即
+设 $\mu\in\mathbb{R}$。对每个 Borel 集 $B\subseteq\mathbb{R}$，定义
 \begin{align*}
-  \delta(x-\mu) = 0 \ (x\neq\mu), \qquad \int_{-\infty}^{\infty}\delta(x-\mu)\,\mathrm{d}x = 1 .
+  \delta_\mu(B)=\begin{cases}1, & \mu\in B,\\ 0, & \mu\notin B.\end{cases}
 \end{align*}
+则 $\delta_\mu$ 是 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上的概率测度，称为位于 $\mu$ 的 \textbf{Dirac} 测度；习惯上把 $\delta_\mu$ 形式地写作 $\delta(x-\mu)$，并称其为 \textbf{Dirac} $\delta$ 函数（Dirac delta function），其含义只通过积分
+\begin{align*}
+  \int_{-\infty}^{\infty}f(x)\,\delta(x-\mu)\,\mathrm{d}x=f(\mu)
+\end{align*}
+对每个 Borel 可测函数 $f:\mathbb{R}\to\mathbb{R}$ 来确定。$\delta_\mu$ 不是关于 Lebesgue 测度的概率密度：不存在在 $x\neq\mu$ 处为零、在 $x=\mu$ 处取有限值且在整个 $\mathbb{R}$ 上积分为 $1$ 的实值函数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-狄拉克delta; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-狄拉克delta; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 $\delta$ 函数把“概率质量集中在一点”这一极端情形也纳入了密度的语言：它的“密度”在 $\mu$ 处无穷大，但任何包含 $\mu$ 的区间上的积分都等于 $1$。正因为如此，离散分布与连续分布可以在同一个积分记号下统一处理，这是\cref{definition:ch02-经验分布}与后文混合模型的基础。
 
-严格说来 $\delta$ 不是函数而是分布（广义函数），因此它不能像普通密度那样逐点求值，只能出现在积分号下。使用时必须保证积分区间包含 $\mu$，否则\eqref{align:ch02-狄拉克}的积分为零而非 $1$。
+原文问题说明：原文把 $\delta$ 定义为一个在 $x\neq\mu$ 处为零、且在整个 $\mathbb{R}$ 上积分为 $1$ 的对象，但这样的实值函数不存在；严格说来 $\delta$ 是测度（或广义函数），因此不能像普通密度那样逐点求值，只能出现在积分号下。使用时必须保证积分区间包含 $\mu$，否则积分值为零而非 $1$。
 \end{remark}
 
 最后，如果我们有一个 $x$ 的有限观测值集合 $\mathcal{D}=\{x_1,\cdots,x_N\}$，则可以使用 Dirac $\delta$ 函数来构造经验分布（empirical distribution），由下式给出：
@@ -264,11 +299,15 @@ $\delta$ 函数把“概率质量集中在一点”这一极端情形也纳入�
 它由以每个数据点为中心的 Dirac $\delta$ 函数组成。根据要求，由\eqref{align:ch02-经验分布}定义的概率密度积分为 $1$（见\cref{exercise:ch02-06}）。
 
 \begin{definition}[经验分布]\label{definition:ch02-经验分布}
-设 $\mathcal{D}=\{x_1,\cdots,x_N\}$ 为一组观测值。称由\eqref{align:ch02-经验分布}给出的密度为这组数据的\textbf{经验分布}（empirical distribution），它把概率质量 $1/N$ 平均分配给每个观测点。
+设 $N\geqslant1$ 为整数，$x_1,\cdots,x_N\in\mathbb{R}$ 为观测值，$\mathcal{D}=\{x_1,\cdots,x_N\}$。定义 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上的概率测度
+\begin{align*}
+  \mathbb{P}_{\mathcal{D}}=\frac{1}{N}\sum_{n=1}^{N}\delta_{x_n},
+\end{align*}
+其中 $\delta_{x_n}$ 为位于 $x_n$ 的 Dirac 测度。则 $\mathbb{P}_{\mathcal{D}}$ 称为数据集 $\mathcal{D}$ 的\textbf{经验分布}（empirical distribution）；它给每个观测值 $x_n$ 赋予质量 $1/N$（重复出现的值按重数累加），其形式密度为\eqref{align:ch02-经验分布}，即 $p(x\mid\mathcal{D})=\frac{1}{N}\sum_{n=1}^{N}\delta(x-x_n)$。对每个 Borel 集 $B\subseteq\mathbb{R}$ 有 $\mathbb{P}_{\mathcal{D}}(B)=\frac{1}{N}\#\{n:x_n\in B\}$，特别地 $\mathbb{P}_{\mathcal{D}}(\mathbb{R})=1$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-经验分布; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-经验分布; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 经验分布是“不对数据作任何分布假设”的建模方式：它只记录观测到了什么，而不假设数据来自某个参数族。因此它天然是\cref{subsection:ch02-分布的示例}末尾所说的反常密度的对立面——它一定是归一化的，但作为估计它并不光滑，且在观测点之外没有任何概率质量。
 
 它的重要性在于把“对分布求期望”化为“对样本求平均”：由\cref{proposition:ch02-期望的样本近似}，$\mathbb{E}[f]\approx\frac{1}{N}\sum_n f(x_n)$。这也解释了为什么可以用样本均值估计期望，以及为什么样本量 $N$ 越大估计越可靠。
@@ -291,11 +330,15 @@ $\delta$ 函数把“概率质量集中在一点”这一极端情形也纳入�
 \end{align}
 
 \begin{definition}[期望]\label{definition:ch02-期望}
-设 $f$ 为随机变量 $x$ 的函数。称 $f(x)$ 在分布 $p(x)$ 下的加权平均为 $f(x)$ 的\textbf{期望}（expectation），记作 $\mathbb{E}[f]$；离散情形由\eqref{align:ch02-离散期望}定义，连续情形由\eqref{align:ch02-连续期望}定义（要求相应的和或积分绝对收敛）。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X:\Omega\to\mathbb{R}$ 为随机变量，$f:\mathbb{R}\to\mathbb{R}$ 为 Borel 可测函数，且 $\mathbb{E}[|f(X)|]<\infty$。由
+\begin{align*}
+  \mathbb{E}[f(X)]=\int_{\Omega}f(X(\omega))\,\mathrm{d}\mathbb{P}(\omega)
+\end{align*}
+定义的量称为 $f(X)$ 的\textbf{期望}（expectation）。当 $X$ 为离散型、取值于 $\{x_1,x_2,\cdots\}$ 且 $p_X(x_i)=\mathbb{P}(X=x_i)$ 时，若 $\sum_i p_X(x_i)|f(x_i)|<\infty$，则 $\mathbb{E}[f(X)]=\sum_i p_X(x_i)f(x_i)$，即\eqref{align:ch02-离散期望}；当 $X$ 为连续型、概率密度为 $p_X$ 时，若 $\int_{\mathbb{R}}p_X(x)|f(x)|\,\mathrm{d}x<\infty$，则 $\mathbb{E}[f(X)]=\int_{\mathbb{R}}p_X(x)f(x)\,\mathrm{d}x$，即\eqref{align:ch02-连续期望}。若 $\mathbb{E}[|f(X)|]=\infty$，则称 $f(X)$ 的期望不存在。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-期望; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-期望; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 期望把“一个分布”压成一个数，因而是描述分布位置的最基本信息；它的定义方式（以概率为权重求和或积分）与中学的算术平均一致，只是权重由 $1/N$ 换成了 $p(x)$。\eqref{align:ch02-离散期望}与\eqref{align:ch02-连续期望}的差别仅在求和与积分，这正是\cref{theorem:ch02-连续形式法则}所保证的“形式不变”。
 
 条件“绝对收敛”不可省：若 $\sum_x p(x)|f(x)|$ 发散，则期望可能依赖于求和次序而不唯一（例如 Cauchy 分布的均值），此时称期望不存在。本书讨论的分布都保证相应的和或积分收敛。
@@ -309,25 +352,25 @@ $\delta$ 函数把“概率质量集中在一点”这一极端情形也纳入�
 \end{align}
 
 \begin{proposition}[期望的样本近似]\label{proposition:ch02-期望的样本近似}
-设 $x_1,\cdots,x_N$ 是来自分布 $p(x)$ 的样本，$\mathcal{D}=\{x_1,\cdots,x_N\}$，则关于经验分布\eqref{align:ch02-经验分布}的期望恰为样本平均，即
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X$ 为随机变量，$f:\mathbb{R}\to\mathbb{R}$ 为 Borel 可测函数且 $\mathbb{E}[|f(X)|]<\infty$。设 $N\geqslant1$ 为整数，$x_1,\cdots,x_N$ 为 $X$ 的 $N$ 个独立同分布观测值，$\mathcal{D}=\{x_1,\cdots,x_N\}$，$\mathbb{P}_{\mathcal{D}}=\frac{1}{N}\sum_{n=1}^{N}\delta_{x_n}$ 为经验分布。则
 \begin{align*}
-  \int f(x)\,p(x\mid\mathcal{D})\,\mathrm{d}x = \frac{1}{N}\sum_{n=1}^{N} f(x_n) ,
+  \int_{\mathbb{R}}f(x)\,\mathrm{d}\mathbb{P}_{\mathcal{D}}(x)=\frac{1}{N}\sum_{n=1}^{N}f(x_n),
 \end{align*}
-从而当 $N\to\infty$ 时它依概率收敛到 $\mathbb{E}[f]$，这就是\eqref{align:ch02-样本近似}。
+即关于经验分布的期望恰为样本平均；并且当 $N\to\infty$ 时，样本平均依概率收敛到 $\mathbb{E}[f(X)]$，从而\eqref{align:ch02-样本近似}在极限意义下成立。
 \end{proposition}
 
 \begin{proof}
 把\eqref{align:ch02-经验分布}代入并交换求和与积分（有限和，合法）：
 \begin{align*}
-  \int f(x)\,p(x\mid\mathcal{D})\,\mathrm{d}x
-  = \frac{1}{N}\sum_{n=1}^{N}\int f(x)\,\delta(x-x_n)\,\mathrm{d}x
-  = \frac{1}{N}\sum_{n=1}^{N} f(x_n) ,
+ \int f(x)\,p(x\mid\mathcal{D})\,\mathrm{d}x
+ = \frac{1}{N}\sum_{n=1}^{N}\int f(x)\,\delta(x-x_n)\,\mathrm{d}x
+ = \frac{1}{N}\sum_{n=1}^{N} f(x_n) ,
 \end{align*}
 最后一步用到 $\delta$ 函数的定义。再由大数定律，样本平均依概率收敛到 $\mathbb{E}[f]$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-期望的样本近似; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-期望的样本近似; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条结果把“积分”变成了“求和”，是 Monte Carlo 方法的雏形：只要能从 $p(x)$ 中采样，就可以用样本平均近似任意函数的期望，而不必解析地计算积分。\eqref{align:ch02-样本近似}中的“$\approx$”在 $N\to\infty$ 时变为精确，误差的量级通常为 $O(N^{-1/2})$。
 
 条件“样本来自 $p(x)$”不可省：若样本来自另一个分布 $q(x)$，则上式计算的是 $\mathbb{E}_q[f]$ 而非 $\mathbb{E}_p[f]$，两者的差别需要重要性采样来修正（参见\cref{section:ch14-基本采样}）。
@@ -357,11 +400,16 @@ $\mathbb{E}_{x}[f\mid y]$ 也是关于 $y$ 的函数。对于连续变量，条�
 \end{align}
 
 \begin{definition}[条件期望]\label{definition:ch02-条件期望}
-设 $p(y)>0$。称 $f(x)$ 在给定 $y$ 的条件分布 $p(x\mid y)$ 下的平均值为 $f$ 关于 $x$ 的\textbf{条件期望}（conditional expectation），记作 $\mathbb{E}_x[f\mid y]$，离散情形由\eqref{align:ch02-条件期望}定义，连续情形由\eqref{align:ch02-条件期望连续}定义。类似地，$\mathbb{E}_x[f(x,y)]$ 表示 $f$ 关于 $x$ 的边缘分布的平均，见\eqref{align:ch02-偏期望}。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X,Y$ 为定义在其上的随机变量，$f:\mathbb{R}^{2}\to\mathbb{R}$ 为 Borel 可测函数，且 $\mathbb{E}[|f(X,Y)|]<\infty$。
+\begin{enumerate}
+  \item 若 $X$ 为离散型、取值于 $\{x_1,x_2,\cdots\}$，$Y$ 为离散型且其取值 $y$ 满足 $p_Y(y)>0$，其中 $p_{X\mid Y}(x_i\mid y)=p(X=x_i\mid Y=y)$，则和式 $\sum_{i}p_{X\mid Y}(x_i\mid y)f(x_i,y)$ 称为 $f$ 关于 $X$ 在给定 $Y=y$ 下的\textbf{条件期望}（conditional expectation），记作 $\mathbb{E}_X[f(X,Y)\mid Y=y]$，即\eqref{align:ch02-条件期望}；
+  \item 若 $(X,Y)$ 具有联合密度 $p_{X,Y}$，$y\in\mathbb{R}$ 满足 $p_Y(y)>0$，则积分 $\int_{\mathbb{R}}p_{X\mid Y}(x\mid y)f(x,y)\,\mathrm{d}x$ 称为 $f$ 关于 $X$ 在给定 $Y=y$ 下的\textbf{条件期望}，即\eqref{align:ch02-条件期望连续}，其中 $p_{X\mid Y}(x\mid y)=p_{X,Y}(x,y)/p_Y(y)$。
+\end{enumerate}
+此外，积分 $\mathbb{E}_X[f(X,Y)]=\int_{\mathbb{R}}f(x,Y)\,p_X(x)\,\mathrm{d}x$ 称为 $f$ 关于 $X$ 的边缘期望，即\eqref{align:ch02-偏期望}；它是 $Y$ 的函数。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-条件期望; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-条件期望; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 下标 $x$ 指出“对哪个变量求平均”，结果是剩余变量的函数；这一记号使“先对 $x$ 平均、再对 $y$ 平均”这类双重平均得以无歧义地书写，后文\cref{exercise:ch02-11}中的全期望公式与方差分解都要用到它。
 
 条件期望与普通期望的差别在于所用的分布：\eqref{align:ch02-条件期望}用的是 $p(x\mid y)$ 而不是 $p(x)$，因此结果依赖 $y$。定义要求 $p(y)>0$，否则\eqref{align:ch02-条件期望}中的条件分布无定义——这与\cref{definition:ch02-条件概率}的要求一致。
@@ -375,11 +423,15 @@ $f(x)$ 的方差（variance）定义为
 \end{align}
 
 \begin{definition}[方差]\label{definition:ch02-方差}
-称由\eqref{align:ch02-方差}定义的量为 $f(x)$ 的\textbf{方差}（variance），它度量 $f(x)$ 围绕其均值 $\mathbb{E}[f(x)]$ 的分散程度。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X:\Omega\to\mathbb{R}$ 为随机变量，$f:\mathbb{R}\to\mathbb{R}$ 为 Borel 可测函数，且 $\mathbb{E}[f(X)^{2}]<\infty$。由
+\begin{align*}
+  \mathrm{var}[f(X)]=\mathbb{E}\left[\big(f(X)-\mathbb{E}[f(X)]\big)^{2}\right]
+\end{align*}
+定义的量称为 $f(X)$ 的\textbf{方差}（variance），它度量 $f(X)$ 围绕其均值 $\mathbb{E}[f(X)]$ 的分散程度，即\eqref{align:ch02-方差}。当 $f$ 为恒等映射时，记 $\mathrm{var}[X]=\mathbb{E}[X^{2}]-\mathbb{E}[X]^{2}$，即\eqref{align:ch02-变量方差}。方差为非负数；$\mathrm{var}[f(X)]=0$ 当且仅当 $f(X)$ 以概率 $1$ 等于常数 $\mathbb{E}[f(X)]$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-方差; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-方差; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 方差是“二阶”的分散性度量：它先取偏差、再平方、最后平均，因此对大偏差的惩罚比对小偏差重。选择平方而非绝对值，是为了让方差可以展开成期望的代数式（见\cref{proposition:ch02-方差展开}），从而便于计算。
 
 \eqref{align:ch02-方差}中的期望是对 $x$ 的分布取的，因此方差是一个数（不是函数）。方差恒非负；方差为零当且仅当 $f(x)$ 以概率 $1$ 取常数。
@@ -393,19 +445,23 @@ $f(x)$ 的方差（variance）定义为
 \end{align}
 
 \begin{proposition}[方差的展开式]\label{proposition:ch02-方差展开}
-设 $\mathbb{E}[f(x)^2]$ 存在，则\eqref{align:ch02-方差展开}成立。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X$ 为随机变量，$f:\mathbb{R}\to\mathbb{R}$ 为 Borel 可测函数，且 $\mathbb{E}[f(X)^{2}]<\infty$。记 $\mu=\mathbb{E}[f(X)]$。由 Cauchy–Schwarz 不等式，$\mathbb{E}[|f(X)|]<\infty$，故 $\mu$ 与 $\mathrm{var}[f(X)]$ 均为有限实数，并且
+\begin{align*}
+  \mathrm{var}[f(X)]=\mathbb{E}\left[f(X)^{2}\right]-\left(\mathbb{E}[f(X)]\right)^{2},
+\end{align*}
+即\eqref{align:ch02-方差展开}。
 \end{proposition}
 
 \begin{proof}
 记 $\mu=\mathbb{E}[f(x)]$，它是不依赖于 $x$ 的常数。把\eqref{align:ch02-方差}中的平方展开：
 \begin{align*}
-  \mathbb{E}\left[(f-\mu)^2\right] = \mathbb{E}\left[f^2 - 2\mu f + \mu^2\right] = \mathbb{E}[f^2] - 2\mu\,\mathbb{E}[f] + \mu^2 ,
+ \mathbb{E}\left[(f-\mu)^2\right] = \mathbb{E}\left[f^2 - 2\mu f + \mu^2\right] = \mathbb{E}[f^2] - 2\mu\,\mathbb{E}[f] + \mu^2 ,
 \end{align*}
 其中用到期望的线性性。代入 $\mathbb{E}[f]=\mu$ 得 $\mathbb{E}[f^2]-2\mu^2+\mu^2 = \mathbb{E}[f^2]-\mu^2$，即\eqref{align:ch02-方差展开}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-方差展开; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-方差展开; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 此外，\eqref{align:ch02-方差}前正文中的 $\mathbb{E}[f(y)]$ 应为 $\mathbb{E}[f(x)]$（原书笔误，$y$ 在该句中并未出现），这不影响\eqref{align:ch02-方差}的表述。展开式的实际价值在于把“先算偏差再平方”换成“两个矩相减”，计算上少一次中心化；它也是后文证明方差可加性（\cref{exercise:ch02-10}）与协方差公式（\eqref{align:ch02-协方差矩阵}）的工具。
 
 条件“$\mathbb{E}[f^2]$ 存在”不可省：若二阶矩不存在，\eqref{align:ch02-方差展开}右端两项可能同时为无穷，相减没有意义。另外该式的推导只用到期望的线性性，不要求 $x$ 离散或连续。
@@ -427,11 +483,15 @@ $f(x)$ 的方差（variance）定义为
 \end{align}
 
 \begin{definition}[协方差]\label{definition:ch02-协方差}
-称由\eqref{align:ch02-协方差}第一行定义的量为随机变量 $x$ 与 $y$ 的\textbf{协方差}（covariance），记作 $\mathrm{cov}[x,y]$，它度量这两个变量一起变化的程度。当 $x=y$ 时 $\mathrm{cov}[x,x]=\mathrm{var}[x]$。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X,Y:\Omega\to\mathbb{R}$ 为随机变量，且 $\mathbb{E}[X^{2}]<\infty$、$\mathbb{E}[Y^{2}]<\infty$。由
+\begin{align*}
+  \mathrm{cov}[X,Y]=\mathbb{E}\left[\big(X-\mathbb{E}[X]\big)\big(Y-\mathbb{E}[Y]\big)\right]
+\end{align*}
+定义的量称为 $X$ 与 $Y$ 的\textbf{协方差}（covariance），它度量这两个变量一起变化的程度，即\eqref{align:ch02-协方差}的第一行；由期望的线性性，它也等于 $\mathbb{E}[XY]-\mathbb{E}[X]\mathbb{E}[Y]$，即\eqref{align:ch02-协方差}的第二行。当 $X=Y$ 时 $\mathrm{cov}[X,X]=\mathrm{var}[X]$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-协方差; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）原文问题说明
+% SUPPLEMENT: parent=definition:ch02-协方差; kind=motivation; location=紧随其后的 remark
+\begin{remark}原文问题说明
 \eqref{align:ch02-协方差}的第二行在原书中印作 $\mathbb{E}_{x,y}[xy]\,\mathbb{E}[x]\,\mathbb{E}[y]$，其中缺少减号。由第一行展开即可验证正确的等式为
 \begin{align*}
   \mathbb{E}_{x,y}\big[\{x-\mathbb{E}[x]\}\{y-\mathbb{E}[y]\}\big]
@@ -440,7 +500,7 @@ $f(x)$ 的方差（variance）定义为
 推导与\cref{proposition:ch02-方差展开}完全相同（把 $f$ 换成 $x$、把平方换成乘积）。若按原书字形理解，$\mathrm{cov}[x,y]$ 将等于三个非负数之积，与“协方差可以为负”这一基本事实矛盾，故此处按修正后的形式排版；下文\eqref{align:ch02-协方差矩阵}与\cref{proposition:ch02-独立协方差为零}均使用修正形式。
 \end{remark}
 
-\begin{remark}（重构新增）
+\begin{remark}
 协方差回答的是“两个变量是否同向变化”：当 $x$ 偏大时 $y$ 也偏大，乘积项为正，协方差为正；反向变化则为负。它与方差的关系 $\mathrm{cov}[x,x]=\mathrm{var}[x]$ 说明方差只是协方差在对角线上的特例，因此\eqref{align:ch02-协方差矩阵}可以把两者放进同一个矩阵。
 
 $\mathrm{cov}[x,y]$ 的数值依赖 $x,y$ 的量纲，因此它的大小不能直接比较不同问题中的相关性强弱；这一点由相关系数（除以两个标准差）来弥补。定义要求二阶矩存在，理由与\cref{proposition:ch02-方差展开}相同。
@@ -449,20 +509,20 @@ $\mathrm{cov}[x,y]$ 的数值依赖 $x,y$ 的量纲，因此它的大小不能�
 如果 $x$ 和 $y$ 是独立的，那么它们的协方差为零（见\cref{exercise:ch02-09}）。
 
 \begin{proposition}[独立变量的协方差为零]\label{proposition:ch02-独立协方差为零}
-若随机变量 $x$ 与 $y$ 独立，且二者的二阶矩存在，则 $\mathrm{cov}[x,y]=0$。
+设 $(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X,Y$ 为定义在其上的随机变量，且 $\mathbb{E}[X^{2}]<\infty$、$\mathbb{E}[Y^{2}]<\infty$。若 $X$ 与 $Y$ 独立，则 $\mathbb{E}[XY]=\mathbb{E}[X]\mathbb{E}[Y]$，从而 $\mathrm{cov}[X,Y]=0$；反之不成立，即 $\mathrm{cov}[X,Y]=0$ 不能推出 $X$ 与 $Y$ 独立。这里 $\mathbb{E}[X^{2}]<\infty$ 与 $\mathbb{E}[Y^{2}]<\infty$ 由 Cauchy–Schwarz 不等式保证 $\mathbb{E}[XY]$ 存在，从而使协方差有定义；结论中的蕴含方向是单向的。
 \end{proposition}
 
 \begin{proof}
 由独立性，$p(x,y)=p(x)p(y)$，故
 \begin{align*}
-  \mathbb{E}_{x,y}[xy] = \int\!\!\int xy\,p(x)p(y)\,\mathrm{d}x\,\mathrm{d}y
-  = \left(\int x\,p(x)\,\mathrm{d}x\right)\left(\int y\,p(y)\,\mathrm{d}y\right) = \mathbb{E}[x]\,\mathbb{E}[y] .
+ \mathbb{E}_{x,y}[xy] = \int\!\!\int xy\,p(x)p(y)\,\mathrm{d}x\,\mathrm{d}y
+ = \left(\int x\,p(x)\,\mathrm{d}x\right)\left(\int y\,p(y)\,\mathrm{d}y\right) = \mathbb{E}[x]\,\mathbb{E}[y] .
 \end{align*}
 代入\eqref{align:ch02-协方差}的第二行即得 $\mathrm{cov}[x,y]=0$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch02-独立协方差为零; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch02-独立协方差为零; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条结论说明“独立”比“不相关”更强：独立可以推出协方差为零，反之不成立（\cref{exercise:ch02-39}给出了协方差为零但彼此依赖的反例）。因此在建模时，看到协方差为零不能直接断定变量无关。
 
 证明中把二重积分拆成两个单重积分，关键仍是 $p(x,y)=p(x)p(y)$；若只知 $\mathrm{cov}[x,y]=0$，则 $\mathbb{E}[xy]=\mathbb{E}[x]\mathbb{E}[y]$ 成立，但推不出联合分布可分解。
@@ -479,11 +539,15 @@ $\mathrm{cov}[x,y]$ 的数值依赖 $x,y$ 的量纲，因此它的大小不能�
 如果考虑向量 $\mathbf{x}$ 的分量彼此之间的协方差，则可以使用稍微简单一点的符号来表示：$\mathrm{cov}[\mathbf{x}]=\mathrm{cov}[\mathbf{x},\mathbf{x}]$。
 
 \begin{definition}[协方差矩阵]\label{definition:ch02-协方差矩阵}
-设 $\mathbf{x},\mathbf{y}$ 为随机向量。称由\eqref{align:ch02-协方差矩阵}定义的矩阵为 $\mathbf{x}$ 与 $\mathbf{y}$ 的\textbf{协方差矩阵}；当 $\mathbf{x}=\mathbf{y}$ 时简记 $\mathrm{cov}[\mathbf{x}]=\mathrm{cov}[\mathbf{x},\mathbf{x}]$，其第 $(i,j)$ 个元素是 $\mathrm{cov}[x_i,x_j]$。
+设 $D,E\geqslant1$ 为整数，$(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$\mathbf{x}=(x_1,\cdots,x_D)^{\mathsf{T}}:\Omega\to\mathbb{R}^{D}$ 与 $\mathbf{y}=(y_1,\cdots,y_E)^{\mathsf{T}}:\Omega\to\mathbb{R}^{E}$ 为随机向量，且 $\mathbb{E}[\|\mathbf{x}\|^{2}]<\infty$、$\mathbb{E}[\|\mathbf{y}\|^{2}]<\infty$。则 $D\times E$ 实矩阵
+\begin{align*}
+  \mathrm{cov}[\mathbf{x},\mathbf{y}]=\mathbb{E}\left[\big(\mathbf{x}-\mathbb{E}[\mathbf{x}]\big)\big(\mathbf{y}-\mathbb{E}[\mathbf{y}]\big)^{\mathsf{T}}\right]
+\end{align*}
+称为 $\mathbf{x}$ 与 $\mathbf{y}$ 的\textbf{协方差矩阵}，其第 $(i,j)$ 个元素为 $\mathrm{cov}[x_i,y_j]$，即\eqref{align:ch02-协方差矩阵}；当 $\mathbf{x}=\mathbf{y}$ 时简记 $\mathrm{cov}[\mathbf{x}]=\mathrm{cov}[\mathbf{x},\mathbf{x}]$，它是 $D\times D$ 实对称半正定矩阵，其第 $(i,j)$ 个元素为 $\mathrm{cov}[x_i,x_j]$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch02-协方差矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch02-协方差矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 矩阵形式把 $\binom{D}{2}+D$ 个标量协方差打包成一个 $D\times D$ 矩阵，使得“线性变换下的协方差”可以用矩阵乘法表达（见\cref{section:ch03-多元Gauss分布}）。$\mathrm{cov}[\mathbf{x}]$ 必然是对称半正定矩阵，这一事实在\cref{section:ch03-多元Gauss分布}中决定多元 Gauss 分布的合法性。
 
 \eqref{align:ch02-协方差矩阵}中的转置不可省：$\mathbf{x}\mathbf{y}^{\mathsf{T}}$ 是 $D\times D$ 矩阵，而 $\mathbf{x}^{\mathsf{T}}\mathbf{y}$ 是标量，二者含义完全不同。原书字形的第二行同样漏写了减号，修正方式与\eqref{align:ch02-协方差}相同，即第二行应为 $\mathbb{E}[\mathbf{x}\mathbf{y}^{\mathsf{T}}]-\mathbb{E}[\mathbf{x}]\,\mathbb{E}[\mathbf{y}^{\mathsf{T}}]$。

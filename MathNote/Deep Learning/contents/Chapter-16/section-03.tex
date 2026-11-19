@@ -25,15 +25,19 @@
 \end{align}
 
 \begin{proposition}[证据下界分解]\label{proposition:ch16-ELBO分解}
-设 $q(\bm{z})$ 是潜变量上的任意一个概率密度，且\eqref{align:ch16-ELBO定义}与\eqref{align:ch16-KL}中的积分绝对收敛。则\eqref{align:ch16-ELBO分解}成立，其中 $\mathcal{L}(q,\bm{w})$ 由\eqref{align:ch16-ELBO定义}给出、$\operatorname{KL}$ 由\eqref{align:ch16-KL}给出；并且
+设 $\bm{x}\in\mathbb{R}^{D}$ 为观测变量、$\bm{z}\in\mathbb{R}^{M}$ 为连续潜变量，$\bm{w}\in\mathcal{W}\subseteq\mathbb{R}^{P}$ 为参数；设 $p(\bm{x},\bm{z}|\bm{w})$ 为 $(\bm{x},\bm{z})$ 的联合概率密度，$p(\bm{x}|\bm{w})=\int_{\mathbb{R}^{M}}p(\bm{x},\bm{z}|\bm{w})\,\mathrm{d}\bm{z}>0$，$p(\bm{z}|\bm{x},\bm{w})=p(\bm{x},\bm{z}|\bm{w})/p(\bm{x}|\bm{w})$ 为后验密度；设 $q(\bm{z})$ 为 $\mathbb{R}^{M}$ 上的概率密度，且\eqref{align:ch16-ELBO定义}与\eqref{align:ch16-KL}中的积分绝对收敛。则分解\eqref{align:ch16-ELBO分解}成立，即
+\begin{align*}
+  \ln p(\bm{x}|\bm{w})=\mathcal{L}(q,\bm{w})+\operatorname{KL}\left(q(\bm{z})\|p(\bm{z}|\bm{x},\bm{w})\right),
+\end{align*}
+其中 $\mathcal{L}(q,\bm{w})$ 由\eqref{align:ch16-ELBO定义}给出、$\operatorname{KL}$ 由\eqref{align:ch16-KL}给出；并且
 \begin{align}
   \ln p(\bm{x}|\bm{w})\geqslant\mathcal{L}(q,\bm{w}),
   \label{align:ch16-ELBO不等式}
 \end{align}
-等号成立当且仅当 $q(\bm{z})=p(\bm{z}|\bm{x},\bm{w})$（几乎处处）。
+等号成立当且仅当 $q(\bm{z})=p(\bm{z}|\bm{x},\bm{w})$ 关于 $\mathbb{R}^{M}$ 上的 Lebesgue 测度几乎处处成立。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 由概率的乘积法则，$p(\bm{x},\bm{z}|\bm{w})=p(\bm{z}|\bm{x},\bm{w})p(\bm{x}|\bm{w})$。于是
 \begin{align*}
   \mathcal{L}(q,\bm{w})+\operatorname{KL}\left(q\|p(\cdot|\bm{x},\bm{w})\right)
@@ -41,13 +45,13 @@
   &=\int q(\bm{z})\ln\frac{p(\bm{x},\bm{z}|\bm{w})}{p(\bm{z}|\bm{x},\bm{w})}\mathrm{d}\bm{z}
   =\int q(\bm{z})\ln p(\bm{x}|\bm{w})\,\mathrm{d}\bm{z}=\ln p(\bm{x}|\bm{w}),
 \end{align*}
-其中最后一步用了 $\int q(\bm{z})\mathrm{d}\bm{z}=1$，且 $\ln p(\bm{x}|\bm{w})$ 与 $\bm{z}$ 无关。这就证明了\eqref{align:ch16-ELBO分解}。
+其中最后一步用了 $\int q(\bm{z})\mathrm{d}\bm{z}=1$，且 $\ln p(\bm{x}|\bm{w})$ 与 $\bm{z}$ 无关。此即\eqref{align:ch16-ELBO分解}。
 
 再由 Kullback-Leibler 散度的非负性（\cref{proposition:ch02-kl非负}），$\operatorname{KL}\geqslant0$，故\eqref{align:ch16-ELBO不等式}成立。等号成立当且仅当两个密度几乎处处相等，即 $q(\bm{z})=p(\bm{z}|\bm{x},\bm{w})$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch16-ELBO分解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch16-ELBO分解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这个分解是整章的枢纽：它把一个难以直接计算的量 $\ln p(\bm{x}|\bm{w})$ 拆成“可算的下界”与“非负的差距”两部分，而差距恰是 $q$ 与真实后验之间的 Kullback-Leibler 散度。因此，想让下界接近真值，就要让 $q$ 接近后验；想提高似然，就要提高下界。EM 算法的两个步骤正是分别对应这两件事。
 
 条件方面：分解本身只要求 $q$ 是概率密度且相关积分绝对收敛，对 $q$ 的形式没有任何限制，因此可以取任意易处理的分布族来做变分近似（这正是变分推断的出发点）。等号成立的条件“$q$ 等于后验”说明下界是紧的，但它一般无法达到：只有当后验恰好落在所选分布族内时才可能。
@@ -121,14 +125,14 @@ $\operatorname{KL}(q(\bm{z})\|p(\bm{z}|\bm{x},\bm{w}))$ 是一种 Kullback-Leibl
 概率 PCA 的 EM 算法将首先初始化参数，然后交替地在 E 步骤中使用\eqref{align:ch16-E步z}和\eqref{align:ch16-E步zz}计算潜空间后验分布的充分统计量，并在 M 步骤中使用\eqref{align:ch16-M步W}和\eqref{align:ch16-M步sigma}修正参数值。
 
 \begin{proposition}[概率 PCA 的 EM 算法的单调性]\label{proposition:ch16-EM单调性}
-设 $\bm{\theta}=(\bm{W},\sigma^2)$，并记 $\ln p(\bm{X}|\bm{\theta})$ 为数据对数似然。在\cref{subsection:ch16-EM算法}的 EM 迭代中，若第 $t$ 轮参数为 $\bm{\theta}^{(t)}$，则对每一轮 $t$ 都有
+设 $N\geqslant1$，$D>M\geqslant1$，数据 $\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)^{\mathsf T}\in\mathbb{R}^{N\times D}$ 固定，模型为\cref{definition:ch16-概率PCA}的概率 PCA，参数 $\bm{\theta}=(\bm{W},\sigma^2)\in\mathbb{R}^{D\times M}\times(0,\infty)$，$\ln p(\bm{X}|\bm{\theta})$ 为数据对数似然，$\mathcal{L}(q,\bm{\theta})$ 由\eqref{align:ch16-ELBO定义}定义（其中 $q$ 为潜变量矩阵 $\bm{Z}=(\bm{z}_1,\cdots,\bm{z}_N)$ 的概率密度）。设 EM 迭代的第 $t$ 轮参数为 $\bm{\theta}^{(t)}$，E 步骤取 $q^{(t)}(\bm{Z})=p(\bm{Z}|\bm{X},\bm{\theta}^{(t)})$，M 步骤取 $\bm{\theta}^{(t+1)}=\arg\max_{\bm{\theta}}\mathcal{L}(q^{(t)},\bm{\theta})$，并设该最大值点存在。则对每一轮 $t$ 都有
 \begin{align*}
   \ln p\left(\bm{X}\left|\bm{\theta}^{(t+1)}\right.\right)\geqslant\ln p\left(\bm{X}\left|\bm{\theta}^{(t)}\right.\right),
 \end{align*}
-即对数似然函数沿 EM 迭代单调不减；若 $\bm{\theta}^{(t+1)}=\bm{\theta}^{(t)}$，则对数似然不再增加，迭代已到达驻点。
+即对数似然函数沿 EM 迭代单调不减；若 $\bm{\theta}^{(t+1)}=\bm{\theta}^{(t)}$，则对数似然不再增加，迭代已到达驻点，即 $\bm{\theta}^{(t)}$ 是 $\ln p(\bm{X}|\cdot)$ 的驻点。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 记第 $t$ 轮 E 步骤选定的变分分布为 $q^{(t)}(\bm{Z})=p(\bm{Z}|\bm{X},\bm{\theta}^{(t)})$，第 $t$ 轮 M 步骤把 $\bm{\theta}$ 更新为 $\bm{\theta}^{(t+1)}=\arg\max_{\bm{\theta}}\mathcal{L}(q^{(t)},\bm{\theta})$。由\cref{proposition:ch16-ELBO分解}，
 \begin{align*}
   \ln p(\bm{X}|\bm{\theta})=\mathcal{L}(q,\bm{\theta})+\operatorname{KL}\left(q(\bm{Z})\|p(\bm{Z}|\bm{X},\bm{\theta})\right),\qquad \operatorname{KL}\geqslant0.
@@ -150,8 +154,8 @@ $\operatorname{KL}(q(\bm{z})\|p(\bm{z}|\bm{x},\bm{w}))$ 是一种 Kullback-Leibl
 若 $\bm{\theta}^{(t+1)}=\bm{\theta}^{(t)}$，则上面两处不等号都取等号：第二处取等号说明 $\operatorname{KL}(q^{(t)}\|p(\bm{Z}|\bm{X},\bm{\theta}^{(t)}))=0$，第一处取等号说明 $\bm{\theta}^{(t)}$ 已是 $\mathcal{L}(q^{(t)},\cdot)$ 的最大值点。由 $\mathcal{L}$ 与 $\ln p$ 在 $\bm{\theta}^{(t)}$ 处的值相等，$\bm{\theta}^{(t)}$ 也是 $\ln p(\bm{X}|\cdot)$ 的驻点。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch16-EM单调性; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch16-EM单调性; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 单调性是说 EM “不会把似然弄差”，这是 EM 能作为通用算法使用的最基本保证。证明本身只用 ELBO 分解与非负性，没有用到概率 PCA 的具体公式，因此对任何满足正则性条件的潜变量模型都成立；概率 PCA 的特殊之处只在于 E 步骤与 M 步骤都有闭式解，所以每次迭代都可以精确执行。
 
 条件方面：证明要求 M 步骤的解存在（\eqref{align:ch16-M步W}中的矩阵 $\sum_n\mathbb{E}[\bm{z}_n\bm{z}_n^{\mathsf T}]$ 可逆）。这个矩阵等于 $N(\sigma^2\bm{M}^{-1}+\text{后验均值的外积})$，由 $\sigma^2>0$ 保证正定，故可逆；若 $\sigma^2=0$（即\cref{subsection:ch16-PCA的EM算法}的极限情形），需要另行论证，那里用的是“类 EM”的表述。另外，单调性只保证收敛到驻点，不保证收敛到全局最大值；概率 PCA 的全局最大值由\cref{theorem:ch16-最大似然解}给出，EM 的极限点是否为其一取决于初值。
@@ -216,7 +220,7 @@ M 步骤[\eqref{align:ch16-M步W}]变为
 \end{align}
 其中 $\operatorname{diag}$ 运算符会将矩阵的所有非对角元素设置为零。
 
-\begin{remark}（重构新增）
+\begin{remark}
 因子分析的 M 步骤与概率 PCA 的唯一差别在 $\bm{\Psi}$ 的更新：概率 PCA 对所有方向共用标量 $\sigma^2$，所以只能取一个全局平均；因子分析允许每个坐标有自己的噪声方差，于是 $\bm{\Psi}_{\text{new}}$ 取残差协方差 $\bm{S}-\bm{W}_{\text{new}}\frac{1}{N}\sum_n\mathbb{E}[\bm{z}_n](\bm{x}_n-\bar{\bm{x}})^{\mathsf T}$ 的对角部分，非对角元被强制置零。这也解释了为什么因子分析没有闭式解：$\bm{\Psi}$ 与 $\bm{W}$ 的更新互相依赖，只能交替进行。
 
 条件方面：$\bm{\Psi}$ 必须保持正定，因此 $\operatorname{diag}\{\cdot\}$ 中若出现非正的对角元，算法会失效，实践中需要加下界或改用其他优化方法。E 步骤中 $\bm{G}$ 的定义依赖 $\bm{\Psi}^{-1}$，这正是“对角”这一假设的价值所在：对角矩阵求逆只需 $\mathcal{O}(D)$，而 $\bm{G}$ 只涉及 $M\times M$ 矩阵的逆，从而整个算法的复杂度与 $D$ 呈线性关系。

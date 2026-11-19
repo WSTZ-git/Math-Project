@@ -32,18 +32,22 @@ p(\bm{X}\,|\,\theta)=\sum_{\bm{Z}}p(\bm{X},\bm{Z}\,|\,\theta).
 \end{align}
 
 \begin{definition}[证据下界与 $\operatorname{KL}$ 散度]\label{definition:ch15-证据下界}
-设 $q(\bm{Z})$ 是隐变量上的任一分布，$q(\bm{Z})>0$ 处取值有限。称\eqref{align:ch15-elbo}中的 $\mathcal{L}(q,\theta)$ 为\textbf{证据下界}（ELBO），称\eqref{align:ch15-kl}中的 $\operatorname{KL}\!\left(q\,\|\,p\right)$ 为 $q(\bm{Z})$ 与后验 $p(\bm{Z}\,|\,\bm{X},\theta)$ 之间的 \textbf{Kullback--Leibler 散度}。
+设 $\bm{X}$ 为观测变量、$\bm{Z}$ 为取值于有限集合的离散隐变量，$\theta\in\Theta$ 为参数，$p(\bm{X},\bm{Z}\,|\,\theta)$ 为 $(\bm{X},\bm{Z})$ 的联合概率质量函数，且 $p(\bm{X}\,|\,\theta)=\sum_{\bm{Z}}p(\bm{X},\bm{Z}\,|\,\theta)>0$。设 $q(\bm{Z})$ 为 $\bm{Z}$ 的任一概率质量函数。若\eqref{align:ch15-elbo}中的 $\mathcal{L}(q,\theta)$ 与\eqref{align:ch15-kl}中的 $\operatorname{KL}(q\,\|\,p)$ 均按 $q(\bm{Z})=0$ 时被加项取 $0$ 的约定计算，则 $\mathcal{L}(q,\theta)$ 称为\textbf{证据下界}（Evidence Lower BOund，ELBO），$\operatorname{KL}(q\,\|\,p)$ 称为 $q(\bm{Z})$ 与后验 $p(\bm{Z}\,|\,\bm{X},\theta)$ 之间的\textbf{Kullback--Leibler 散度}；两者分别取实数值或 $+\infty$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch15-证据下界; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch15-证据下界; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 定义\eqref{align:ch15-elbo}与\eqref{align:ch15-kl}的形式看起来不对称，这一点值得专门说明：$\mathcal{L}$ 里出现的是\textbf{联合}分布 $p(\bm{X},\bm{Z}\,|\,\theta)$，而 $\operatorname{KL}$ 里出现的是\textbf{条件}分布 $p(\bm{Z}\,|\,\bm{X},\theta)$；两者相差的正是 $\ln p(\bm{X}\,|\,\theta)$（见\cref{proposition:ch15-ELBO分解}）。名称“证据下界”来自两件事：“证据”指 $\ln p(\bm{X}\,|\,\theta)$（模型证据），“下界”指对任意 $q$ 都有 $\mathcal{L}(q,\theta)\leqslant\ln p(\bm{X}\,|\,\theta)$（见\cref{proposition:ch15-ELBO下界}）。$\mathcal{L}$ 既是分布 $q(\bm{Z})$ 的\textbf{泛函}（输入是一个函数而不是有限维向量），又是参数 $\theta$ 的普通函数；这种“一半变分、一半参数”的双重身份是变分推断的典型结构，也是后面交替优化 $q$ 与 $\theta$ 的原因。定义只要求 $q$ 是归一化分布，并不要求它属于某个参数族——这一点使 ELBO 比“用一族参数化分布逼近后验”的变分近似更一般。
 \end{remark}
 
 注意 $\mathcal{L}(q,\theta)$ 既是分布 $q(\bm{Z})$ 的泛函，也是参数 $\theta$ 的函数。仔细研究\eqref{align:ch15-elbo}和\eqref{align:ch15-kl}的形式，并特别注意它们在符号上的差异，$\mathcal{L}(q,\theta)$ 包含 $\bm{X}$ 和 $\bm{Z}$ 的联合分布，而 $\operatorname{KL}(q\,\|\,p)$ 包含给定 $\bm{X}$ 的 $\bm{Z}$ 的条件分布（见\cref{exercise:ch15-21}）。
 
 \begin{proposition}[ELBO 分解]\label{proposition:ch15-ELBO分解}
-对任意归一化分布 $q(\bm{Z})$ 与任意参数 $\theta$，分解\eqref{align:ch15-elbo-decomp}成立，其中 $\mathcal{L}$ 与 $\operatorname{KL}$ 分别由\eqref{align:ch15-elbo}与\eqref{align:ch15-kl}定义。
+设 $\bm{X}$ 为观测变量、$\bm{Z}$ 为取值于有限集合的离散隐变量，$\theta\in\Theta$，$p(\bm{X},\bm{Z}\,|\,\theta)$ 为联合概率质量函数，$p(\bm{X}\,|\,\theta)>0$，$p(\bm{Z}\,|\,\bm{X},\theta)=p(\bm{X},\bm{Z}\,|\,\theta)/p(\bm{X}\,|\,\theta)$ 为后验；设 $q(\bm{Z})$ 为 $\bm{Z}$ 的概率质量函数。则恒等式
+\begin{align*}
+\ln p(\bm{X}\,|\,\theta)=\mathcal{L}(q,\theta)+\operatorname{KL}\!\left(q\,\|\,p(\bm{Z}\,|\,\bm{X},\theta)\right)
+\end{align*}
+成立，即分解\eqref{align:ch15-elbo-decomp}成立，其中 $\mathcal{L}$ 与 $\operatorname{KL}$ 分别由\eqref{align:ch15-elbo}与\eqref{align:ch15-kl}定义。该恒等式在 $[-\infty,+\infty]$ 中成立：当 $q(\bm{Z})>0$ 而 $p(\bm{Z}\,|\,\bm{X},\theta)=0$ 时两端同为 $-\infty$。
 \end{proposition}
 \begin{proof}
 利用概率的乘积法则，
@@ -65,13 +69,13 @@ p(\bm{X}\,|\,\theta)=\sum_{\bm{Z}}p(\bm{X},\bm{Z}\,|\,\theta).
 移项即\eqref{align:ch15-elbo-decomp}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-ELBO分解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-ELBO分解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题也解释了“为什么必须用联合分布”：拆开 $\ln p(\bm{X},\bm{Z}\,|\,\theta)$ 后会多出一项 $\ln p(\bm{Z}\,|\,\bm{X},\theta)$，而 $-\sum_{\bm{Z}}q\ln\{p(\bm{Z}\,|\,\bm{X},\theta)/q\}$ 恰好就是 $\operatorname{KL}$ 的定义，于是联合分布中“多出来的那部分”被 $\operatorname{KL}$ 精确吸收，剩下的正好是 $\ln p(\bm{X}\,|\,\theta)$。这个证明只用到两条性质：乘积法则\eqref{align:ch15-product-rule}与 $q$ 的归一化。前者是恒等式，后者是定义要求；若 $q$ 未归一化，分解中会多出 $-\sum_{\bm{Z}}q(\bm{Z})$ 这一项，下界结论就不再成立。注意分解对\emph{任意} $q$ 成立（不需要 $q$ 接近后验），这正是它可以作为“变分优化目标”的前提。
 \end{remark}
 
 \begin{proposition}[ELBO 是证据的下界]\label{proposition:ch15-ELBO下界}
-对任意 $q(\bm{Z})$，$\operatorname{KL}\!\left(q\,\|\,p\right)\geqslant0$，且等号成立当且仅当 $q(\bm{Z})=p(\bm{Z}\,|\,\bm{X},\theta)$ 处处成立。因此
+设 $\bm{X}$ 为观测变量、$\bm{Z}$ 为取值于有限集合的离散隐变量，$\theta\in\Theta$，$p(\bm{X}\,|\,\theta)>0$，$p(\bm{Z}\,|\,\bm{X},\theta)$ 为后验；设 $q(\bm{Z})$ 为 $\bm{Z}$ 的任一概率质量函数，并设 $q$ 的支撑包含于后验的支撑，即 $q(\bm{Z})>0$ 时必有 $p(\bm{Z}\,|\,\bm{X},\theta)>0$。则 $\operatorname{KL}(q\,\|\,p)\geqslant0$，且等号成立当且仅当对一切满足 $q(\bm{Z})>0$ 的 $\bm{Z}$ 有 $q(\bm{Z})=p(\bm{Z}\,|\,\bm{X},\theta)$。因此
 \begin{align*}
 \mathcal{L}(q,\theta)\leqslant\ln p(\bm{X}\,|\,\theta),
 \end{align*}
@@ -88,8 +92,8 @@ p(\bm{X}\,|\,\theta)=\sum_{\bm{Z}}p(\bm{X},\bm{Z}\,|\,\theta).
 故 $\operatorname{KL}(q\,\|\,p)\geqslant0$。等号成立当且仅当对每个 $q(\bm{Z})>0$ 的 $\bm{Z}$ 都有 $p(\bm{Z}\,|\,\bm{X},\theta)/q(\bm{Z})=1$，即 $q=p(\bm{Z}\,|\,\bm{X},\theta)$。再由\cref{proposition:ch15-ELBO分解}，$\mathcal{L}=\ln p(\bm{X}\,|\,\theta)-\operatorname{KL}\leqslant\ln p(\bm{X}\,|\,\theta)$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-ELBO下界; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-ELBO下界; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 下界成立的关键是 $\ln$ 的凹性（等价地 $\ln t\leqslant t-1$ 或 Jensen 不等式），而不是任何关于模型的假设，因此它对任意 $q$ 与任意 $\theta$ 都成立。等号条件给出了 E 步骤的动机：固定 $\theta$ 时，使下界最大的 $q$ 就是后验——这正好解释了\cref{subsection:ch15-em回顾}中“E 步骤选 $q$ 为后验”的做法并非武断，而是让下界在 $\theta^{\text{old}}$ 处与对数似然\textbf{相切}（\cref{figure:ch15-elbo-decomp}）。这里也可以从信息论角度重述：$\operatorname{KL}(q\,\|\,p)$ 度量的是用 $q$ 近似后验时“多付出的编码长度”，而 $\mathcal{L}$ 是“边际似然减去这部分多余的编码长度”。注意 $\operatorname{KL}$ 不是对称的，也不是距离；本命题只用到 $\operatorname{KL}\geqslant0$ 这一条性质。
 \end{remark}
 
@@ -143,11 +147,16 @@ EM 算法也可以从参数空间的角度来观察，如\cref{figure:ch15-param
 \end{figure}
 
 \begin{theorem}[EM 算法的单调性]\label{theorem:ch15-EM单调性}
-设 $q(\bm{Z})=p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$，$\theta^{\text{new}}$ 由 M 步骤\eqref{align:ch15-m-step}给出。则
+设 $\bm{X}$ 为观测数据、$\bm{Z}$ 为取值于有限集合的离散隐变量，参数空间 $\Theta\subseteq\mathbb{R}^{P}$，联合概率质量函数为 $p(\bm{X},\bm{Z}\,|\,\theta)$，$\theta^{\text{old}}\in\Theta$ 满足 $p(\bm{X}\,|\,\theta^{\text{old}})>0$，$q(\bm{Z})=p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$ 为 E 步骤的后验，$\theta^{\text{new}}\in\Theta$ 由 M 步骤\eqref{align:ch15-m-step}给出，即 $\theta^{\text{new}}$ 使 $\mathcal{Q}(\theta,\theta^{\text{old}})$ 在 $\Theta$ 上取到最大值。则
 \begin{align*}
 \ln p(\bm{X}\,|\,\theta^{\text{new}})\geqslant\ln p(\bm{X}\,|\,\theta^{\text{old}}),
 \end{align*}
-即一个完整的 EM 循环不会减小不完整数据的对数似然。更准确地说，等号成立当且仅当 $\theta^{\text{new}}$ 与 $\theta^{\text{old}}$ 给出同一个后验分布（特别地，当 $\theta^{\text{old}}$ 已是驻点、$\theta^{\text{new}}=\theta^{\text{old}}$ 时参数保持不变）。
+即一个完整的 EM 循环不减小不完整数据的对数似然。进一步，等号成立当且仅当同时满足
+\begin{enumerate}
+\item $\mathcal{Q}(\theta^{\text{new}},\theta^{\text{old}})=\mathcal{Q}(\theta^{\text{old}},\theta^{\text{old}})$；
+\item $p(\bm{Z}\,|\,\bm{X},\theta^{\text{new}})=p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$ 对一切 $\bm{Z}$ 成立，
+\end{enumerate}
+特别地，若 $\theta^{\text{old}}$ 使 $\mathcal{Q}(\cdot,\theta^{\text{old}})$ 取到最大值，则 $\theta^{\text{new}}=\theta^{\text{old}}$ 满足上述两条件，参数与对数似然都不变。
 \end{theorem}
 \begin{proof}
 记 $q^\star=p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$。由\cref{proposition:ch15-ELBO分解}与\cref{proposition:ch15-ELBO下界}，对任意 $\theta$，
@@ -166,11 +175,13 @@ EM 算法也可以从参数空间的角度来观察，如\cref{figure:ch15-param
 \begin{align*}
 \ln p(\bm{X}\,|\,\theta^{\text{new}})\geqslant\mathcal{L}(q^\star,\theta^{\text{new}})\geqslant\ln p(\bm{X}\,|\,\theta^{\text{old}}),
 \end{align*}
-即所需结论。若 $\theta^{\text{new}}=\theta^{\text{old}}$，则 $q^\star=p(\bm{Z}\,|\,\bm{X},\theta^{\text{new}})$，第二次不等式的散度为零，两式都取等号，对数似然不变。
+即所需结论。
+
+最后核对等号条件。若 $\ln p(\bm{X}\,|\,\theta^{\text{new}})=\ln p(\bm{X}\,|\,\theta^{\text{old}})$，则上面两个不等号都必须取等号：第二个等号给出 $\mathcal{L}(q^\star,\theta^{\text{new}})=\mathcal{L}(q^\star,\theta^{\text{old}})$，由 $\mathcal{L}(q^\star,\theta)=\mathcal{Q}(\theta,\theta^{\text{old}})+\text{const}$（常数与 $\theta$ 无关）得 $\mathcal{Q}(\theta^{\text{new}},\theta^{\text{old}})=\mathcal{Q}(\theta^{\text{old}},\theta^{\text{old}})$；第一个等号给出 $\operatorname{KL}(q^\star\,\|\,p(\bm{Z}\,|\,\bm{X},\theta^{\text{new}}))=0$，由\cref{proposition:ch15-ELBO下界}的等号条件得 $p(\bm{Z}\,|\,\bm{X},\theta^{\text{new}})=q^\star=p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$。反之，若这两条成立，则 $\mathcal{L}(q^\star,\theta^{\text{new}})=\mathcal{L}(q^\star,\theta^{\text{old}})=\ln p(\bm{X}\,|\,\theta^{\text{old}})$，且因 $q^\star$ 等于新后验而有 $\ln p(\bm{X}\,|\,\theta^{\text{new}})=\mathcal{L}(q^\star,\theta^{\text{new}})$，故对数似然相等。
 \end{proof}
 
-% SUPPLEMENT: parent=theorem:ch15-EM单调性; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=theorem:ch15-EM单调性; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条定理是 EM 算法“一定不会变差”的严格依据，它的证明只用了两件事：ELBO 分解（\cref{proposition:ch15-ELBO分解}）与 $\operatorname{KL}\geqslant0$（\cref{proposition:ch15-ELBO下界}）。注意不等式的方向：M 步骤增大的是\emph{下界} $\mathcal{L}$，而对数似然的增大\emph{至少}同样多，因为 $\operatorname{KL}$ 从 $0$ 变成一个非负数，把下界的增量“放大”了。由此可以读出 EM 的两个极限行为：若 $\theta^{\text{old}}$ 已是 $\ln p(\bm{X}\,|\,\cdot)$ 的驻点，则 M 步骤无法再增大 $\mathcal{Q}$，$\theta^{\text{new}}=\theta^{\text{old}}$，算法停在不动点；由于 $\ln p(\bm{X}\,|\,\theta)$ 有上界（在离散情形下不超过 $0$，因为它是概率的对数），单调不降的序列必收敛，但收敛到的可能只是局部极大点。定理的结论是“不减小”，不是“严格增大”，也不是“收敛到全局最优”。此外，证明假定了 $\mathcal{Q}$ 的最大点存在；若 $\mathcal{Q}$ 无上界（例如\cref{proposition:ch15-似然奇异性}的奇异方向），则 M 步骤本身无定义，这正是需要正则化的原因。
 \end{remark}
 
@@ -188,14 +199,22 @@ p(\bm{Z}\,|\,\bm{X},\theta)
 \end{align}
 
 \begin{proposition}[后验在数据点上的因子分解]\label{proposition:ch15-后验因子分解}
-设数据独立同分布，即 $p(\bm{X},\bm{Z}\,|\,\theta)=\prod_{n=1}^{N}p(\bm{x}_n,\bm{z}_n\,|\,\theta)$。则\eqref{align:ch15-iid-posterior}成立，即后验分布可以针对不同的数据点进行因子分解。
+设 $N\geqslant1$，观测数据 $\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)$，隐变量 $\bm{Z}=(\bm{z}_1,\cdots,\bm{z}_N)$，$\theta\in\Theta$，联合概率质量函数满足独立同分布分解
+\begin{align*}
+p(\bm{X},\bm{Z}\,|\,\theta)=\prod_{n=1}^{N}p(\bm{x}_n,\bm{z}_n\,|\,\theta),
+\end{align*}
+且 $p(\bm{X}\,|\,\theta)=\prod_{n=1}^{N}p(\bm{x}_n\,|\,\theta)>0$。则后验分布满足
+\begin{align*}
+p(\bm{Z}\,|\,\bm{X},\theta)=\prod_{n=1}^{N}p(\bm{z}_n\,|\,\bm{x}_n,\theta),
+\end{align*}
+即\eqref{align:ch15-iid-posterior}成立：后验关于数据点因子分解，从而 $\bm{z}_1,\cdots,\bm{z}_N$ 在该后验下相互独立。
 \end{proposition}
 \begin{proof}
 把乘积代入 Bayes 公式：
 \begin{align*}
 p(\bm{Z}\,|\,\bm{X},\theta)=\frac{\prod_{n}p(\bm{x}_n,\bm{z}_n\,|\,\theta)}{\sum_{\bm{Z}}\prod_{n}p(\bm{x}_n,\bm{z}_n\,|\,\theta)}.
 \end{align*}
-分母中求和是对 $\bm{Z}=(\bm{z}_1,\cdots,\bm{z}_N)$ 的所有取值求和；由于被求和的乘积对 $n$ 可分离，求和可以逐 $n$ 拆开：
+分母中求和是对 $\bm{Z}=(\bm{z}_1,\cdots,\bm{z}_N)$ 的所有取值求和；由于被求和的乘积对 $n$ 可分离，求和按 $n$ 逐项拆开：
 \begin{align*}
 \sum_{\bm{Z}}\prod_{n=1}^{N}p(\bm{x}_n,\bm{z}_n\,|\,\theta)=\prod_{n=1}^{N}\left(\sum_{\bm{z}_n}p(\bm{x}_n,\bm{z}_n\,|\,\theta)\right)=\prod_{n=1}^{N}p(\bm{x}_n\,|\,\theta).
 \end{align*}
@@ -206,8 +225,8 @@ p(\bm{Z}\,|\,\bm{X},\theta)=\prod_{n=1}^{N}\frac{p(\bm{x}_n,\bm{z}_n\,|\,\theta)
 即\eqref{align:ch15-iid-posterior}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-后验因子分解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-后验因子分解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题是从“独立同分布”到“E 步骤可以逐点并行计算”的桥梁：后验一旦分解为 $\prod_n$，则 $\mathcal{Q}$ 中的期望也分解为 $N$ 个独立的小期望，每个只涉及 $\bm{z}_n$，于是责任 $\gamma(z_{nk})$ 只需用 $\bm{x}_n$ 与全部分量参数计算，不需要其他数据点的信息。证明中分母的拆分是关键一步，它只在独立性假设下成立；若数据点之间有依赖（如\cref{figure:ch15-hmm}的 Markov 链结构），后验不能这样分解，E 步骤就必须做前向—后向之类的前序计算。对于 Gauss 混合模型，这条结论简单地表明每个混合分量对特定数据点 $\bm{x}_n$ 所要承担的责任仅依赖于 $\bm{x}_n$ 的值以及混合分量的参数 $\theta$，而不依赖于其他数据点的值。注意“独立同分布”包含两层含义：独立使乘积分解成立，同分布使各因子形式相同；证明只用到前者。
 \end{remark}
 
@@ -228,7 +247,11 @@ p(\bm{Z}\,|\,\bm{X},\theta)=\prod_{n=1}^{N}\frac{p(\bm{x}_n,\bm{z}_n\,|\,\theta)
 其中 $\ln p(\bm{X})$ 是一个常数。
 
 \begin{proposition}[MAP-EM 的两步]\label{proposition:ch15-MAP-EM}
-在引入参数先验 $p(\theta)$ 的模型中，交替优化\eqref{align:ch15-map-elbo}右端的下界：关于 $q$ 的最优解与标准 EM 的 E 步骤相同，即 $q(\bm{Z})=p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$；关于 $\theta$ 的最优解由最大化 $\mathcal{Q}(\theta,\theta^{\text{old}})+\ln p(\theta)$ 给出。
+设 $\bm{X}$ 为观测数据、$\bm{Z}$ 为取值于有限集合的离散隐变量，参数空间 $\Theta\subseteq\mathbb{R}^{P}$，联合概率质量函数 $p(\bm{X},\bm{Z}\,|\,\theta)$ 与参数先验密度 $p(\theta)$ 给定，$p(\theta)>0$、$\int_{\Theta}p(\theta)\,\mathrm{d}\theta=1$，且 $p(\bm{X})=\int_{\Theta}p(\bm{X}\,|\,\theta)p(\theta)\,\mathrm{d}\theta>0$，从而后验 $p(\theta\,|\,\bm{X})=p(\bm{X}\,|\,\theta)p(\theta)/p(\bm{X})$ 有定义；设 $q(\bm{Z})$ 为 $\bm{Z}$ 的概率质量函数。则对\eqref{align:ch15-map-elbo}右端的下界 $\mathcal{L}(q,\theta)+\ln p(\theta)$ 交替优化时：
+\begin{enumerate}
+\item 固定 $\theta=\theta^{\text{old}}$，该下界关于 $q$ 在 $q(\bm{Z})=p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$ 处取到最大值，与最大似然情形的 E 步骤相同；
+\item 固定 $q$，关于 $\theta$ 最大化该下界等价于最大化 $\mathcal{Q}(\theta,\theta^{\text{old}})+\ln p(\theta)$，其中 $\mathcal{Q}$ 由\eqref{align:ch15-q-function}定义。
+\end{enumerate}
 \end{proposition}
 \begin{proof}
 由\eqref{align:ch15-map}与\eqref{align:ch15-elbo-decomp}，
@@ -240,8 +263,8 @@ p(\bm{Z}\,|\,\bm{X},\theta)=\prod_{n=1}^{N}\frac{p(\bm{x}_n,\bm{z}_n\,|\,\theta)
 关于 $\theta$ 优化时，$q$ 固定，$\operatorname{KL}\geqslant0$ 可丢弃（丢弃后得到\eqref{align:ch15-map-elbo}的下界）；又由\eqref{align:ch15-elbo-after-e}，$\mathcal{L}(q,\theta)=\mathcal{Q}(\theta,\theta^{\text{old}})+\text{const}$，常数与 $\theta$ 无关。因此关于 $\theta$ 最大化\eqref{align:ch15-map-elbo}的下界等价于最大化 $\mathcal{Q}(\theta,\theta^{\text{old}})+\ln p(\theta)$。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-MAP-EM; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-MAP-EM; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题说明 MAP-EM 只在 M 步骤上做了修改：E 步骤不变，M 步骤的目标多了一个 $\ln p(\theta)$。这个附加项的作用是\textbf{正则化}：它在 $\theta$ 的先验概率小的地方给出很大的负值，从而把最优解从\cref{proposition:ch15-似然奇异性}那种“方差趋于零”的退化方向推开，因此具有消除 Gauss 混合模型似然函数奇异性的作用（参见\cref{chapter:ch09-正则化}）。条件在于 $p(\theta)$ 必须是正常的（可归一化的）先验，否则 $\ln p(\theta)$ 无界，M 步骤可能无解；此外，若先验在某些参数区域为零，则最优点被限制在该区域的闭包内，此时 M 步骤可能落在边界上。注意这里最大化的不是后验本身而是它的一个下界，因此 MAP-EM 同样只保证后验单调不减，不保证到达全局最大。
 \end{remark}
 
@@ -254,11 +277,11 @@ EM 算法将最大化似然函数这个潜在的困难问题分解为两个阶�
 广义 EM（Generalized EM，GEM）算法解决了难以处理的 M 步骤问题。GEM 算法不对 $\theta$ 最大化 $\mathcal{L}(q,\theta)$，而是寻求以这样一种方式改变参数：增大其值。因为 $\mathcal{L}(q,\theta)$ 是对数似然函数的下界，所以 GEM 算法的每一个完整循环都保证了能够增大对数似然函数的值（除非参数已经对应于局部最大值）。
 
 \begin{proposition}[GEM 的单调性]\label{proposition:ch15-GEM单调性}
-设 $q(\bm{Z})=p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$ 为 E 步骤的后验，而 M 步骤只要求新参数 $\theta^{\text{new}}$ 满足
+设 $\bm{X}$ 为观测数据、$\bm{Z}$ 为取值于有限集合的离散隐变量，参数空间 $\Theta$，联合概率质量函数 $p(\bm{X},\bm{Z}\,|\,\theta)$，$\theta^{\text{old}}\in\Theta$ 满足 $p(\bm{X}\,|\,\theta^{\text{old}})>0$，$q(\bm{Z})=p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$ 为 E 步骤的后验，$\mathcal{L}$ 由\eqref{align:ch15-elbo}定义。设 M 步骤给出的 $\theta^{\text{new}}\in\Theta$ 只满足
 \begin{align*}
-\mathcal{L}(q,\theta^{\text{new}})\geqslant\mathcal{L}(q,\theta^{\text{old}})
+\mathcal{L}(q,\theta^{\text{new}})\geqslant\mathcal{L}(q,\theta^{\text{old}}),
 \end{align*}
-（不要求取到最大）。则仍有 $\ln p(\bm{X}\,|\,\theta^{\text{new}})\geqslant\ln p(\bm{X}\,|\,\theta^{\text{old}})$。
+即不要求 $\theta^{\text{new}}$ 最大化 $\mathcal{L}(q,\cdot)$。则 $\ln p(\bm{X}\,|\,\theta^{\text{new}})\geqslant\ln p(\bm{X}\,|\,\theta^{\text{old}})$；且等号成立时必有 $p(\bm{Z}\,|\,\bm{X},\theta^{\text{new}})=p(\bm{Z}\,|\,\bm{X},\theta^{\text{old}})$ 对一切 $\bm{Z}$ 成立。
 \end{proposition}
 \begin{proof}
 与\cref{theorem:ch15-EM单调性}的证明相同，只是把“$\theta^{\text{new}}$ 最大化 $\mathcal{L}(q,\cdot)$”这一步换成假设的不等式：
@@ -267,14 +290,14 @@ EM 算法将最大化似然函数这个潜在的困难问题分解为两个阶�
 \end{align*}
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-GEM单调性; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-GEM单调性; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 GEM 的要点是：单调性只需要“下界不降”，不需要“下界最大”。这带来很大的自由度——M 步骤可以用一步梯度上升、一步 Newton 迭代，或者坐标式的分块优化来近似最大化 $\mathcal{L}$，只要保证 $\mathcal{L}$ 不减小即可。代价是收敛变慢：每步的增量可能很小，且不再有“一步到位”的最优性。利用 GEM 的一种方式是在 M 步骤中使用基于梯度的迭代优化算法。另一种形式的 GEM 算法称为期望条件最大化算法（expectation conditional maximization algorithm），涉及在每个 M 步骤中进行多个约束优化（Meng and Rubin, 1993）：参数可能划分为几组，M 步骤则拆分为多个步骤，每个步骤涉及优化一个组，同时固定其他组。这一做法的正确性正是本命题：每个子步骤只增大 $\mathcal{L}$，于是整个循环仍单调。条件在于子步骤必须真的使 $\mathcal{L}$ 不降（例如用精确的线搜索或足够小的步长），若用固定的粗糙近似而实际使 $\mathcal{L}$ 下降，单调性就不再成立。
 \end{remark}
 
 我们同样可以通过对 $q(\bm{Z})$ 进行部分优化而非完全优化来推广 EM 算法的 E 步骤（Neal and Hinton, 1999）。正如我们所见，对于任何给定的 $\theta$ 值，$\mathcal{L}(q,\theta)$ 关于 $q(\bm{Z})$ 有一个唯一的最大值，对应于后验分布 $q_\star(\bm{Z})=p(\bm{Z}\,|\,\bm{X},\theta)$，并且对于这个选择的 $q(\bm{Z})$，下界 $\mathcal{L}(q,\theta)$ 等于对数似然函数 $\ln p(\bm{X}\,|\,\theta)$。因此，任何收敛到 $\mathcal{L}(q,\theta)$ 全局最大值的算法都能找到一个同时也是对数似然函数 $\ln p(\bm{X}\,|\,\theta)$ 全局最大值的 $\theta$ 值。只要 $p(\bm{X},\bm{Z}\,|\,\theta)$ 是 $\theta$ 的连续函数，那么根据连续性，$\mathcal{L}(q,\theta)$ 的任何局部最大值也将是 $\ln p(\bm{X}\,|\,\theta)$ 的局部最大值。
 
-\begin{remark}（重构新增）
+\begin{remark}
 这段讨论给出了“部分 E 步骤”合法性的理由，也说明了广义 EM 与标准 EM 的\textbf{区别}所在：标准 EM 要求 E 步骤取到 $\mathcal{L}$ 关于 $q$ 的\emph{精确}最大（即后验），而 Neal--Hinton 的增量版本只要求 E 步骤使 $\mathcal{L}$ 增大；同理，GEM 只要求 M 步骤使 $\mathcal{L}$ 增大。两者的共同点是“每步都不让下界下降”，因此\cref{proposition:ch15-GEM单调性}的论证对它们同时适用，这就是它们都被称为“广义 EM”的原因。代价是：标准 EM 的 E 步骤使下界与对数似然在 $\theta^{\text{old}}$ 处相切（散度为零），而部分优化的 E 步骤一般没有这一性质，下界可能严格低于对数似然，收敛因此变慢。连续性条件不可省：它保证 $\mathcal{L}$ 的局部最大点也是 $\ln p$ 的局部最大点；若 $p$ 关于 $\theta$ 不连续，$\mathcal{L}$ 的最大点可能落在 $\ln p$ 的跳跃处，结论失效。
 \end{remark}
 
@@ -292,7 +315,11 @@ N_k^{\text{new}}=N_k^{\text{old}}+\gamma^{\text{new}}(z_{mk})-\gamma^{\text{old}
 \end{align}
 
 \begin{proposition}[顺序 EM 的均值更新]\label{proposition:ch15-顺序EM更新}
-设 $N_k^{\text{old}}=\sum_n\gamma^{\text{old}}(z_{nk})$、$N_k^{\text{new}}=\sum_n\gamma^{\text{new}}(z_{nk})$，且两个责任向量只在第 $m$ 个数据点处不同（即对 $n\neq m$ 有 $\gamma^{\text{new}}(z_{nk})=\gamma^{\text{old}}(z_{nk})$）。则\eqref{align:ch15-online-n}与\eqref{align:ch15-online-mu}成立，且更新后的均值精确等于用新责任加权的平均。
+设 $D\geqslant1$，$N\geqslant1$，$K\geqslant1$，数据 $\bm{X}=(\bm{x}_1,\cdots,\bm{x}_N)^{\mathsf T}\in\mathbb{R}^{N\times D}$，$\gamma^{\text{old}}(z_{nk}),\gamma^{\text{new}}(z_{nk})\in[0,1]$ 为两组责任值并满足 $\sum_{k=1}^{K}\gamma^{\text{old}}(z_{nk})=\sum_{k=1}^{K}\gamma^{\text{new}}(z_{nk})=1$（$n=1,\cdots,N$）；记
+\begin{align*}
+N_k^{\text{old}}=\sum_{n=1}^{N}\gamma^{\text{old}}(z_{nk}),\qquad N_k^{\text{new}}=\sum_{n=1}^{N}\gamma^{\text{new}}(z_{nk}),
+\end{align*}
+并设 $N_k^{\text{old}}>0$、$N_k^{\text{new}}>0$（$k=1,\cdots,K$），$\bm{\mu}_k^{\text{old}}=\frac{1}{N_k^{\text{old}}}\sum_{n=1}^{N}\gamma^{\text{old}}(z_{nk})\bm{x}_n$。设存在 $m\in\{1,\cdots,N\}$ 使 $n\neq m$ 时 $\gamma^{\text{new}}(z_{nk})=\gamma^{\text{old}}(z_{nk})$（$k=1,\cdots,K$）。则\eqref{align:ch15-online-n}与\eqref{align:ch15-online-mu}成立，其中 $\bm{\mu}_k^{\text{new}}=\frac{1}{N_k^{\text{new}}}\sum_{n=1}^{N}\gamma^{\text{new}}(z_{nk})\bm{x}_n$；即新均值恰等于以新责任为权重的加权平均，更新公式不含任何近似。
 \end{proposition}
 \begin{proof}
 对 $n\neq m$ 的责任相同，故
@@ -313,8 +340,8 @@ N_k^{\text{new}}\big(\bm{\mu}_k^{\text{new}}-\bm{\mu}_k^{\text{old}}\big)=\big[\
 除以 $N_k^{\text{new}}$ 即得\eqref{align:ch15-online-mu}。由于推导只用到\eqref{align:ch15-mu-update}，没有作任何近似，新均值精确等于以新责任为权重的加权平均。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch15-顺序EM更新; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch15-顺序EM更新; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 顺序 EM 与\cref{proposition:ch15-顺序K均值}的增量更新是同一件事的两种写法：后者只“加入”一个新点（$\gamma^{\text{old}}=0$），前者允许“改派”一个已有点（旧责任非零，故要减去旧贡献）。这正是\eqref{align:ch15-online-mu}比分段 K 均值的\eqref{align:ch15-kmeans-online}多出 $-\gamma^{\text{old}}(z_{mk})$ 项的原因。命题的前提“只有第 $m$ 个数据点的责任改变”必须成立：若一次更新改动了多个点的责任，就必须把每个变化量都累加上去，否则\eqref{align:ch15-online-n}不成立。协方差和混合系数的相应结果是类似的，只需把充分统计量换成 $\sum_n\gamma(z_{nk})\bm{x}_n\bm{x}_n^{\mathsf T}$ 与 $\sum_n\gamma(z_{nk})$；推导与上面完全相同，只是把 $\bm{x}_m$ 换成 $\bm{x}_m\bm{x}_m^{\mathsf T}$。
 \end{remark}
 

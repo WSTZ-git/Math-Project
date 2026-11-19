@@ -18,11 +18,11 @@
 \end{align}
 
 \begin{definition}[线性回归模型]\label{definition:ch04-线性回归模型}
-在\eqref{align:ch04-线性模型}中，$\boldsymbol{x}=(x_1,\cdots,x_D)^{\mathsf{T}}$是输入变量，$\boldsymbol{w}=(w_0,\cdots,w_D)^{\mathsf{T}}$是从训练数据中学习的参数向量。形如\eqref{align:ch04-线性模型}的模型称为\textbf{线性回归}（linear regression）模型。
+设输入维数$D\geqslant1$，输入向量$\boldsymbol{x}=(x_1,\cdots,x_D)^{\mathsf{T}}\in\mathbb{R}^{D}$，参数向量$\boldsymbol{w}=(w_0,w_1,\cdots,w_D)^{\mathsf{T}}\in\mathbb{R}^{D+1}$。若预测函数$y:\mathbb{R}^{D}\times\mathbb{R}^{D+1}\to\mathbb{R}$具有\eqref{align:ch04-线性模型}的形式，其中$w_0$称为偏置参数、$w_1,\cdots,w_D$称为权重，则称该模型为\textbf{线性回归}（linear regression）模型。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch04-线性回归模型; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch04-线性回归模型; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch04-线性回归模型}把“回归”这一任务限定在参数线性的一族函数上，这一点是本章全部解析结果的来源。$y$关于参数$w_0,\cdots,w_D$是线性的，因此平方和误差关于$\boldsymbol{w}$是二次函数，其驻点由一组线性方程（正规方程）刻画，从而有唯一的闭式解\eqref{align:ch04-最小二乘解}。
 
 需要强调的是，\eqref{align:ch04-线性模型}中“线性”一词指的是对参数$\boldsymbol{w}$线性，而不是对输入$\boldsymbol{x}$线性；\cref{definition:ch04-基函数}将明确这一点。若$y$对$\boldsymbol{w}$不是线性的，则误差函数的驻点方程不再是线性方程组，\eqref{align:ch04-最小二乘解}乃至本章后续的所有闭式结论都将失效。
@@ -30,7 +30,7 @@
 
 这种模型的关键性质在于它不仅是参数$w_0,\cdots,w_D$的线性函数，而且也是输入变量$x_i$的线性函数。然而，正是其作为输入变量$x_i$的线性函数这一特性，给模型带来了显著的限制。
 
-\begin{remark}（重构新增）
+\begin{remark}
 “对输入也线性”这一附加性质带来了\cref{definition:ch04-线性回归模型}的两重限制。其一，模型无法表示输入之间的交互作用：若真实规律含有$x_1x_2$项，则任何$w_0+w_1x_1+w_2x_2$都无法逼近。其二，当输入维数$D$较大时，可用的模型族仍然只有$D+1$个自由度，表达能力与维数无关地停留在同一水平上。
 
 正是为了摆脱第一重限制，下面用固定非线性基函数的线性组合来替换输入本身；而“对参数线性”这一条被完整保留下来，从而全部解析性质得以保持。这一“特征变换$+$参数线性”的折中，是本章其余各节共同的前提。
@@ -44,16 +44,16 @@
 \end{align}
 
 \begin{definition}[基函数与偏置参数]\label{definition:ch04-基函数}
-\eqref{align:ch04-基函数模型}中的固定函数$\phi_j(\boldsymbol{x})$称为\textbf{基函数}（basis function）。若用$M-1$表示索引$j$的最大值，则模型中参数的总数为$M$。参数$w_0$代表数据中一个任意的固定偏移量，有时称为\textbf{偏置参数}（bias）（注意不要与统计学意义上的偏差弄混淆，参见\cref{section:ch04-偏差方差权衡}）。通过定义一个额外的虚拟基函数$\phi_0(\boldsymbol{x})=1$，\eqref{align:ch04-基函数模型}可以统一为
+设输入空间为$\mathcal{X}\subseteq\mathbb{R}^{D}$，$M\geqslant1$，并设$\phi_j:\mathcal{X}\to\mathbb{R}$（$j=0,\cdots,M-1$）为给定函数。\eqref{align:ch04-基函数模型}中的固定函数$\phi_j(\boldsymbol{x})$称为\textbf{基函数}（basis function）；索引$j$取$0,\cdots,M-1$，故模型中参数的总数为$M$。参数$w_0$代表数据中一个任意的固定偏移量，称为\textbf{偏置参数}（bias），它与统计学意义上的偏差不同（参见\cref{section:ch04-偏差方差权衡}）。通过定义虚拟基函数$\phi_0(\boldsymbol{x})=1$，\eqref{align:ch04-基函数模型}统一为
 \begin{align}
   y(\boldsymbol{x},\boldsymbol{w})=\sum_{j=0}^{M-1}w_j\phi_j(\boldsymbol{x})=\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x})
   \label{align:ch04-基函数向量}
 \end{align}
-其中$\boldsymbol{w}=(w_0,\cdots,w_{M-1})^{\mathsf{T}}$，$\boldsymbol{\phi}=(\phi_0,\cdots,\phi_{M-1})^{\mathsf{T}}$。形如\eqref{align:ch04-基函数向量}、关于参数$\boldsymbol{w}$为线性的模型称为\textbf{线性模型}（linear model）。
+其中$\boldsymbol{w}=(w_0,\cdots,w_{M-1})^{\mathsf{T}}\in\mathbb{R}^{M}$，$\boldsymbol{\phi}(\boldsymbol{x})=(\phi_0(\boldsymbol{x}),\cdots,\phi_{M-1}(\boldsymbol{x}))^{\mathsf{T}}\in\mathbb{R}^{M}$。形如\eqref{align:ch04-基函数向量}、关于参数$\boldsymbol{w}$为线性的模型称为\textbf{线性模型}（linear model）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch04-基函数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch04-基函数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch04-基函数}逐项规定了本章模型的三个组成部分，每一项都在后文被实际使用。
 
 第一，基函数$\phi_j$必须是\emph{固定}的，即在看到数据之前就已选定；它不含可学习参数，因此不进入$E_D(\boldsymbol{w})$的优化变量。正是这一条使\eqref{align:ch04-基函数向量}关于$\boldsymbol{w}$保持线性。
@@ -117,20 +117,20 @@
 我们已经通过最小化平方和误差函数解决了多项式拟合数据的问题，并且我们还发现，平方和误差函数可以用Gauss噪声模型假设下的最大似然解来导出（参见\cref{subsection:ch02-线性回归}）。下面我们将更详细地介绍最小二乘法，以及它与最大似然的关系。
 
 \begin{definition}[加性Gauss噪声模型]\label{definition:ch04-加性Gauss噪声}
-设目标变量$t$由具有加性Gauss噪声的确定性函数$y(\boldsymbol{x},\boldsymbol{w})$给出，即
+设输入空间为$\mathbb{R}^{D}$，参数$\boldsymbol{w}\in\mathbb{R}^{M}$，噪声方差$\sigma^{2}>0$，$y(\cdot,\boldsymbol{w}):\mathbb{R}^{D}\to\mathbb{R}$为确定性函数。设$\varepsilon$为与输入$\boldsymbol{x}$独立、服从$\mathcal{N}(0,\sigma^{2})$的随机变量，目标变量$t$由具有加性Gauss噪声的确定性函数$y(\boldsymbol{x},\boldsymbol{w})$给出，即
 \begin{align}
   t=y(\boldsymbol{x},\boldsymbol{w})+\varepsilon
   \label{align:ch04-加性噪声}
 \end{align}
-其中$\varepsilon$是方差为$\sigma^2$的零均值Gauss随机变量。于是$t$的条件分布为
+其中$\varepsilon$是均值为$0$、方差为$\sigma^{2}$的Gauss随机变量。若$t$由\eqref{align:ch04-加性噪声}给出，则该模型称为\textbf{加性Gauss噪声模型}；此时$t$的条件分布为
 \begin{align}
   p(t\mid\boldsymbol{x},\boldsymbol{w},\sigma^2)=\mathcal{N}\bigl(t\mid y(\boldsymbol{x},\boldsymbol{w}),\sigma^2\bigr)
   \label{align:ch04-条件Gauss}
 \end{align}
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch04-加性Gauss噪声; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch04-加性Gauss噪声; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch04-加性Gauss噪声}的两条假设——噪声可加、噪声为Gauss且同方差——是本节全部结论的前提，缺一不可。
 
 “可加”意味着$t$的均值恰为$y(\boldsymbol{x},\boldsymbol{w})$，即模型只平移分布而不改变其形状；“零均值”保证$y$就是条件期望，否则$y$会系统性地偏离$\mathbb{E}[t\mid\boldsymbol{x}]$，\eqref{align:ch04-平方和误差}的最小值点也将随之偏移；\eqref{align:ch04-条件Gauss}中的方差$\sigma^2$与$\boldsymbol{x}$无关（同方差），这一点是\eqref{align:ch04-回归似然}能写成连乘、并使$\boldsymbol{w}$与$\sigma^2$的优化相互分离的关键。
@@ -148,7 +148,7 @@
 其中用到了\eqref{align:ch04-基函数向量}。取似然函数的对数，并使用Gauss分布的标准形式（参见\cref{section:ch02-Gauss分布}），我们有
 
 \begin{proposition}[回归问题的对数似然]\label{proposition:ch04-对数似然}
-设$X=\{\boldsymbol{x}_1,\cdots,\boldsymbol{x}_N\}$，$\boldsymbol{t}=(t_1,\cdots,t_N)^{\mathsf{T}}$，且各观测按\eqref{align:ch04-条件Gauss}独立产生。则对数似然为
+设输入数据$X=\{\boldsymbol{x}_1,\cdots,\boldsymbol{x}_N\}\subset\mathbb{R}^{D}$，目标向量$\boldsymbol{t}=(t_1,\cdots,t_N)^{\mathsf{T}}\in\mathbb{R}^{N}$，参数$\boldsymbol{w}\in\mathbb{R}^{M}$，$\sigma^{2}>0$。设给定$X$与$(\boldsymbol{w},\sigma^{2})$时各$t_n$相互独立，且$t_n$的条件分布由\eqref{align:ch04-条件Gauss}给出。则对数似然为
 \begin{align}
   \ln p(\boldsymbol{t}\mid X,\boldsymbol{w},\sigma^2)
   =-\frac{N}{2}\ln\sigma^2-\frac{N}{2}\ln(2\pi)-\frac{1}{\sigma^2}E_D(\boldsymbol{w})
@@ -159,10 +159,11 @@
   E_D(\boldsymbol{w})=\frac{1}{2}\sum_{n=1}^{N}\bigl\{t_n-\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)\bigr\}^2
   \label{align:ch04-平方和误差}
 \end{align}
+其中$\boldsymbol{\phi}(\boldsymbol{x}_n)=(\phi_0(\boldsymbol{x}_n),\cdots,\phi_{M-1}(\boldsymbol{x}_n))^{\mathsf{T}}\in\mathbb{R}^{M}$，$E_D:\mathbb{R}^{M}\to[0,\infty)$。
 \end{proposition}
 
 \begin{proof}
-（重构新增）记$\mu_n\triangleq\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)$。Gauss密度为
+记$\mu_n\triangleq\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)$。Gauss密度为
 \begin{align*}
   \mathcal{N}(t\mid\mu,\sigma^2)=\frac{1}{(2\pi\sigma^2)^{1/2}}\exp\left\{-\frac{(t-\mu)^2}{2\sigma^2}\right\},
 \end{align*}
@@ -180,19 +181,19 @@
 其中最后一步用了$\ln(2\pi\sigma^2)=\ln(2\pi)+\ln\sigma^2$。右端最后一项的求和正是\eqref{align:ch04-平方和误差}中的$E_D(\boldsymbol{w})$，代入即得\eqref{align:ch04-回归对数似然}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch04-对数似然; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch04-对数似然; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch04-对数似然}把“独立同分布假设”兑换成了一个具体的代数结构：对数似然是$-\ln\sigma^2$项、常数项与$-(1/\sigma^2)E_D(\boldsymbol{w})$三项之和。这一结构说明，参数$\boldsymbol{w}$只通过$E_D$进入似然，因此$\boldsymbol{w}$的最优值与$\sigma^2$无关；反之$\sigma^2$的最优值依赖$\boldsymbol{w}$。这种“单向耦合”正是下面可以依次求$\boldsymbol{w}_{\mathrm{ML}}$与$\sigma^2_{\mathrm{ML}}$的原因。
 
 若数据点不独立（例如时间序列），乘积\eqref{align:ch04-回归似然}就不能分解为逐点之积，$E_D(\boldsymbol{w})$也不再是充分统计量。
 \end{remark}
 
 \begin{proposition}[最大似然等价于最小二乘]\label{proposition:ch04-最大似然与最小二乘}
-在\cref{proposition:ch04-对数似然}的条件下，对任意固定的$\sigma^2>0$，使对数似然\eqref{align:ch04-回归对数似然}最大的$\boldsymbol{w}$与使平方和误差\eqref{align:ch04-平方和误差}最小的$\boldsymbol{w}$相同。
+在\cref{proposition:ch04-对数似然}的条件下，设$\boldsymbol{t}=(t_1,\cdots,t_N)^{\mathsf{T}}\in\mathbb{R}^{N}$，$\boldsymbol{w}\in\mathbb{R}^{M}$，$\sigma^{2}>0$。则对任意固定的$\sigma^2>0$，使对数似然\eqref{align:ch04-回归对数似然}最大的$\boldsymbol{w}$与使平方和误差\eqref{align:ch04-平方和误差}最小的$\boldsymbol{w}$相同。
 \end{proposition}
 
 \begin{proof}
-（重构新增）固定$\sigma^2>0$时，\eqref{align:ch04-回归对数似然}中的前两项$-\frac{N}{2}\ln\sigma^2$与$-\frac{N}{2}\ln(2\pi)$都不含$\boldsymbol{w}$，因此
+固定$\sigma^2>0$时，\eqref{align:ch04-回归对数似然}中的前两项$-\frac{N}{2}\ln\sigma^2$与$-\frac{N}{2}\ln(2\pi)$都不含$\boldsymbol{w}$，因此
 \begin{align*}
   \ln p(\boldsymbol{t}\mid X,\boldsymbol{w},\sigma^2)=C-\frac{1}{\sigma^2}E_D(\boldsymbol{w}),
 \end{align*}
@@ -203,8 +204,8 @@
 即两个目标函数在同一自变量处取到各自的极值，故两者argmin相同。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch04-最大似然与最小二乘; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch04-最大似然与最小二乘; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch04-最大似然与最小二乘}说明了\eqref{align:ch04-平方和误差}之所以被广泛使用，并不是因为它是一个“自然”的误差度量，而是因为它在Gauss噪声假设下恰是负对数似然（相差常数与正因子）。
 
 反过来看，这条等价性也界定了平方和的适用边界：一旦噪声不是Gauss，平方和就不再是最大似然的产物，其最小化点也不再是条件均值。此外，等价性只对$\boldsymbol{w}$成立，对$\sigma^2$并不成立——$\sigma^2$的最大似然估计是有偏的，见\cref{proposition:ch04-方差最大似然}的注记。
@@ -231,12 +232,12 @@
 这称为最小二乘问题的正规方程（normal equation）。
 
 \begin{definition}[设计矩阵]\label{definition:ch04-设计矩阵}
-设$M$为基函数的个数。由
+设输入数据$\boldsymbol{x}_1,\cdots,\boldsymbol{x}_N\in\mathbb{R}^{D}$，$N\geqslant1$，$M\geqslant1$，基函数$\phi_j:\mathbb{R}^{D}\to\mathbb{R}$（$j=0,\cdots,M-1$）。由
 \begin{align}
   \Phi_{nj}=\phi_j(\boldsymbol{x}_n),\qquad n=1,\cdots,N,\quad j=0,\cdots,M-1
   \label{align:ch04-设计矩阵元}
 \end{align}
-定义的$N\times M$矩阵称为\textbf{设计矩阵}（design matrix），即
+定义的$N$行$M$列实矩阵$\boldsymbol{\Phi}\in\mathbb{R}^{N\times M}$称为\textbf{设计矩阵}（design matrix），即
 \begin{align}
   \boldsymbol{\Phi}=
   \begin{pmatrix}
@@ -250,15 +251,15 @@
 它的第$n$行是$\boldsymbol{\phi}(\boldsymbol{x}_n)^{\mathsf{T}}$，第$j$列是基函数$\phi_j$在全部数据点上的取值。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch04-设计矩阵; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch04-设计矩阵; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch04-设计矩阵}的作用是把“对$N$个数据点求和”这一逐点运算一次性打包成矩阵乘法，从而使\eqref{align:ch04-正规方程}可以写成$\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}\boldsymbol{w}=\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{t}$。
 
 矩阵$\boldsymbol{\Phi}$的规模为$N\times M$，两个方向的行列数分别对应“数据点的个数”与“基函数的个数”。这两个数的相对大小决定了\cref{subsection:ch04-最小二乘几何}中的几何图像（$M<N$时存在$M$维子空间），也决定了$\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}$是否可逆：当$M>N$时$\boldsymbol{\Phi}$的列必定线性相关，$\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}$奇异，\eqref{align:ch04-最小二乘解}中的逆不存在，此时必须改用伪逆\eqref{align:ch04-伪逆}或引入正则化项（见\cref{subsection:ch04-正则化最小二乘}）。
 \end{remark}
 
 \begin{proposition}[最大似然解]\label{proposition:ch04-最大似然解}
-设$\boldsymbol{\Phi}$是\cref{definition:ch04-设计矩阵}给出的$N\times M$设计矩阵，$\boldsymbol{t}=(t_1,\cdots,t_N)^{\mathsf{T}}$，并设各列$\phi_0,\cdots,\phi_{M-1}$线性无关（从而$\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}$可逆）。则使对数似然\eqref{align:ch04-回归对数似然}最大的参数向量为
+设$\boldsymbol{\Phi}\in\mathbb{R}^{N\times M}$是\cref{definition:ch04-设计矩阵}给出的设计矩阵，$\boldsymbol{t}=(t_1,\cdots,t_N)^{\mathsf{T}}\in\mathbb{R}^{N}$，$\boldsymbol{w}\in\mathbb{R}^{M}$，$\sigma^{2}>0$，并设$\boldsymbol{\Phi}$列满秩，即$\operatorname{rank}\boldsymbol{\Phi}=M$。这等价于$M$个列向量在$\mathbb{R}^{N}$中线性无关，也等价于$\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}$为$M\times M$正定矩阵（从而可逆）；此时必有$M\leqslant N$。则使对数似然\eqref{align:ch04-回归对数似然}最大的参数向量存在、唯一，且为
 \begin{align}
   \boldsymbol{w}_{\mathrm{ML}}=(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi})^{-1}\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{t}
   \label{align:ch04-最小二乘解}
@@ -266,7 +267,7 @@
 \end{proposition}
 
 \begin{proof}
-（重构新增）由\cref{proposition:ch04-最大似然与最小二乘}，只需最小化$E_D(\boldsymbol{w})$，即解\eqref{align:ch04-似然梯度}为零的方程。
+由\cref{proposition:ch04-最大似然与最小二乘}，只需最小化$E_D(\boldsymbol{w})$，即解\eqref{align:ch04-似然梯度}为零的方程。
 
 第一步，把\eqref{align:ch04-似然梯度}中的每一项写成矩阵形式。由于$t_n-\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)$是标量，\eqref{align:ch04-似然梯度}右端的第$n$项等于$\bigl(t_n-\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)\bigr)\boldsymbol{\phi}(\boldsymbol{x}_n)^{\mathsf{T}}$；而$\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)\boldsymbol{\phi}(\boldsymbol{x}_n)^{\mathsf{T}}=\boldsymbol{w}^{\mathsf{T}}\bigl(\boldsymbol{\phi}(\boldsymbol{x}_n)\boldsymbol{\phi}(\boldsymbol{x}_n)^{\mathsf{T}}\bigr)$。令梯度为零并乘以非零常数$\sigma^2$，得\eqref{align:ch04-正规方程}。
 
@@ -295,8 +296,8 @@
 它在列线性无关的假设下正定，故$E_D$是严格凸二次函数，\eqref{align:ch04-最小二乘解}是其唯一全局最小值点；由\cref{proposition:ch04-最大似然与最小二乘}，它也是对数似然的唯一最大值点。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch04-最大似然解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch04-最大似然解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch04-最大似然解}的结论\eqref{align:ch04-最小二乘解}成立的前提有三条，需要分别核对。
 
 其一，$\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}$必须可逆。这只依赖于“$M$个基函数向量在$\mathbb{R}^N$中线性无关”，而不要求$N\geqslant M$以外的任何条件；当$M>N$时该条件必然失败。此时\eqref{align:ch04-最小二乘解}无意义，最小二乘问题仍有无穷多个解（均给出相同的拟合值），通常取范数最小者，即由伪逆\eqref{align:ch04-伪逆}给出。
@@ -309,16 +310,16 @@
 \end{remark}
 
 \begin{definition}[Moore-Penrose伪逆]\label{definition:ch04-伪逆}
-矩阵
+设$\boldsymbol{\Phi}\in\mathbb{R}^{N\times M}$为列满秩实矩阵，即$\operatorname{rank}\boldsymbol{\Phi}=M$（此时$\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}$为$M\times M$可逆方阵）。则$M$行$N$列矩阵
 \begin{align}
   \boldsymbol{\Phi}^{\dagger}\equiv(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi})^{-1}\boldsymbol{\Phi}^{\mathsf{T}}
   \label{align:ch04-伪逆}
 \end{align}
-称为矩阵$\boldsymbol{\Phi}$的Moore-Penrose伪逆（Moore-Penrose pseudo-inverse）（Rao and Mitra, 1971; Golub and Van Loan, 1996）。这可以看作矩阵逆的概念被推广到非方阵的情况。如果$\boldsymbol{\Phi}$是方阵且可逆，则利用性质$(\boldsymbol{A}\boldsymbol{B})^{-1}=\boldsymbol{B}^{-1}\boldsymbol{A}^{-1}$可得$\boldsymbol{\Phi}^{\dagger}=\boldsymbol{\Phi}^{-1}$。
+称为矩阵$\boldsymbol{\Phi}$的Moore-Penrose伪逆（Moore-Penrose pseudo-inverse）（Rao and Mitra, 1971; Golub and Van Loan, 1996）。它将矩阵逆的概念推广到非方阵的情形。若$\boldsymbol{\Phi}$为可逆方阵，则由性质$(\boldsymbol{A}\boldsymbol{B})^{-1}=\boldsymbol{B}^{-1}\boldsymbol{A}^{-1}$得$\boldsymbol{\Phi}^{\dagger}=\boldsymbol{\Phi}^{-1}$。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch04-伪逆; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch04-伪逆; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch04-伪逆}把“求解线性方程组”改写成了“乘以一个固定的矩阵”，这是本节在计算上最有价值的一步：一旦设计矩阵确定，$\boldsymbol{\Phi}^{\dagger}$就可以预先算好，对任意新的目标向量$\boldsymbol{t}$只需一次矩阵乘法。
 
 称其为“推广”的依据是：当$\boldsymbol{\Phi}$为可逆方阵时，$\boldsymbol{\Phi}^{\dagger}=(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi})^{-1}\boldsymbol{\Phi}^{\mathsf{T}}=\boldsymbol{\Phi}^{-1}(\boldsymbol{\Phi}^{\mathsf{T}})^{-1}\boldsymbol{\Phi}^{\mathsf{T}}=\boldsymbol{\Phi}^{-1}$，即伪逆退化为通常的逆。当$\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}$奇异时，上式中的逆不存在，此时Moore-Penrose伪逆需改用奇异值分解来定义；本节的公式\eqref{align:ch04-伪逆}只覆盖列满秩的情形。
@@ -332,13 +333,13 @@
 \end{align}
 
 \begin{proposition}[偏置参数的显式解]\label{proposition:ch04-偏置解}
-设$E_D$由\eqref{align:ch04-显式偏置误差}给出，并定义
+设$N\geqslant1$，$\boldsymbol{x}_1,\cdots,\boldsymbol{x}_N\in\mathbb{R}^{D}$，$t_1,\cdots,t_N\in\mathbb{R}$，$M\geqslant1$，$\phi_j:\mathbb{R}^{D}\to\mathbb{R}$（$j=0,\cdots,M-1$），参数$\boldsymbol{w}=(w_0,\cdots,w_{M-1})^{\mathsf{T}}\in\mathbb{R}^{M}$，$E_D:\mathbb{R}^{M}\to[0,\infty)$由\eqref{align:ch04-显式偏置误差}给出，并定义
 \begin{align}
   \bar{t}=\frac{1}{N}\sum_{n=1}^{N}t_n,\qquad
   \bar{\phi}_j=\frac{1}{N}\sum_{n=1}^{N}\phi_j(\boldsymbol{x}_n)
   \label{align:ch04-均值定义}
 \end{align}
-为训练集上目标值与基函数值的平均值。则使上述误差函数关于$w_0$的导数为$0$的$w_0$为
+为训练集上目标值与基函数值的平均值。则对任意固定的$w_1,\cdots,w_{M-1}\in\mathbb{R}$，使$\partial E_D/\partial w_0=0$的$w_0$存在、唯一，且为
 \begin{align}
   w_0=\bar{t}-\sum_{j=1}^{M-1}w_j\bar{\phi}_j
   \label{align:ch04-偏置解}
@@ -346,7 +347,7 @@
 \end{proposition}
 
 \begin{proof}
-（重构新增）记$r_n\triangleq t_n-w_0-\sum_{j=1}^{M-1}w_j\phi_j(\boldsymbol{x}_n)$，则\eqref{align:ch04-显式偏置误差}为$E_D=\frac{1}{2}\sum_n r_n^2$。
+记$r_n\triangleq t_n-w_0-\sum_{j=1}^{M-1}w_j\phi_j(\boldsymbol{x}_n)$，则\eqref{align:ch04-显式偏置误差}为$E_D=\frac{1}{2}\sum_n r_n^2$。
 
 第一步，求导。由链式法则，
 \begin{align*}
@@ -372,8 +373,8 @@
 第四步，验证这是最小值。$\partial^2E_D/\partial w_0^2=N>0$，故$E_D$作为$w_0$的函数是开口向上的二次函数，\eqref{align:ch04-偏置解}给出其唯一最小值点。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch04-偏置解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch04-偏置解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch04-偏置解}给出的\eqref{align:ch04-偏置解}是本章中唯一一个“只需一次求导就能读出全部含义”的结论：$w_0$补偿了目标值的样本均值$\bar{t}$与基函数加权均值$\sum_jw_j\bar{\phi}_j$之间的差。
 
 这条公式解释了为什么在\cref{definition:ch04-基函数}中把$w_0$单独拿出来讨论是合理的：其余参数$w_1,\cdots,w_{M-1}$的最小值完全不受$w_0$影响（在\eqref{align:ch04-显式偏置误差}中先对$w_0$最优化，等价于把数据与基函数都中心化），因此$w_0$可以被“消去”，只留下一个$M-1$维的优化问题。
@@ -386,15 +387,16 @@
 我们还可以使对数似然函数\eqref{align:ch04-回归对数似然}关于方差$\sigma^2$最大化。
 
 \begin{proposition}[方差的最大似然解]\label{proposition:ch04-方差最大似然}
-设$\boldsymbol{w}_{\mathrm{ML}}$由\eqref{align:ch04-最小二乘解}给出。则对数似然\eqref{align:ch04-回归对数似然}关于$\sigma^2$的最大值点为
+设$N\geqslant1$，$t_n\in\mathbb{R}$，$\boldsymbol{\phi}(\boldsymbol{x}_n)\in\mathbb{R}^{M}$，$\boldsymbol{w}_{\mathrm{ML}}$由\eqref{align:ch04-最小二乘解}给出，并记$E_D(\boldsymbol{w}_{\mathrm{ML}})=\frac{1}{2}\sum_{n=1}^{N}\{t_n-\boldsymbol{w}_{\mathrm{ML}}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)\}^{2}$。若$E_D(\boldsymbol{w}_{\mathrm{ML}})>0$，则对数似然\eqref{align:ch04-回归对数似然}作为$\sigma^{2}\in(0,\infty)$的函数在
 \begin{align}
   \sigma^2_{\mathrm{ML}}=\frac{1}{N}\sum_{n=1}^{N}\bigl\{t_n-\boldsymbol{w}_{\mathrm{ML}}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)\bigr\}^2
   \label{align:ch04-方差ML}
 \end{align}
+处取唯一最大值。
 \end{proposition}
 
 \begin{proof}
-（重构新增）把\eqref{align:ch04-回归对数似然}看作$\sigma^2$的函数（$\boldsymbol{w}$固定），记$s\triangleq\sigma^2$，$E_D\triangleq E_D(\boldsymbol{w})$，则
+把\eqref{align:ch04-回归对数似然}看作$\sigma^2$的函数（$\boldsymbol{w}$固定），记$s\triangleq\sigma^2$，$E_D\triangleq E_D(\boldsymbol{w})$，则
 \begin{align*}
   L(s)=-\frac{N}{2}\ln s-\frac{N}{2}\ln(2\pi)-\frac{E_D}{s}.
 \end{align*}
@@ -416,13 +418,15 @@
 第四步，代入$\boldsymbol{w}=\boldsymbol{w}_{\mathrm{ML}}$。对数似然对$\boldsymbol{w}$与$\sigma^2$的驻点条件互相独立（见\cref{proposition:ch04-对数似然}后的注记），故把\eqref{align:ch04-最小二乘解}代入上式即得\eqref{align:ch04-方差ML}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch04-方差最大似然; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch04-方差最大似然; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch04-方差最大似然}的结论\eqref{align:ch04-方差ML}说明：方差的最大似然估计就是“回归函数周围目标值的残差方差”。
 
 需要强调两点。第一，\eqref{align:ch04-方差ML}中的分母是$N$而不是$N-M$，因此$\sigma^2_{\mathrm{ML}}$是$\sigma^2$的有偏估计，它系统性地偏小；无偏估计应把分母改为$N-M$，因为拟合时已经用掉了$M$个自由度。第二，只有当$\boldsymbol{w}$取最大似然值时才可以把\eqref{align:ch04-方差ML}代回似然，否则$\sigma^2$的最优值应使用相应的残差平方和。
 
 这两点与\eqref{align:ch04-最小二乘解}的有偏性无关：$\boldsymbol{w}_{\mathrm{ML}}$本身是无偏的（在\cref{definition:ch04-加性Gauss噪声}的模型下$\mathbb{E}[\boldsymbol{w}_{\mathrm{ML}}]=\boldsymbol{w}$），只有$\sigma^2_{\mathrm{ML}}$有偏。
+
+若$E_D(\boldsymbol{w}_{\mathrm{ML}})=0$，则$L(s)=-\frac{N}{2}\ln s-\frac{N}{2}\ln(2\pi)$在$s>0$上严格递减且$s\to0^{+}$时趋于$+\infty$，最大值不存在。因此命题中$E_D(\boldsymbol{w}_{\mathrm{ML}})>0$的假设不可去掉；原文未讨论这一退化情形。
 \end{remark}
 
 可以看到，方差参数的最大似然值是由回归函数周围目标值的残差方差给出的。
@@ -441,7 +445,7 @@
 从\cref{figure:ch04-最小二乘几何}中可以直观地看出，这个解对应于$\boldsymbol{t}$在子空间$\mathcal{S}$中的正交投影。由于$\boldsymbol{y}$的解是由$\boldsymbol{\Phi}\boldsymbol{w}_{\mathrm{ML}}$给出的，我们通过正交投影的形式可以很容易地验证这一点（见\cref{exercise:ch04-04}）。
 
 \begin{proposition}[最小二乘解的正交投影解释]\label{proposition:ch04-正交投影}
-设$\boldsymbol{\Phi}$列满秩，$\mathcal{S}=\{\boldsymbol{\Phi}\boldsymbol{w}:\boldsymbol{w}\in\mathbb{R}^{M}\}$为$\boldsymbol{\Phi}$的列所张成的子空间，$\boldsymbol{w}_{\mathrm{ML}}$由\eqref{align:ch04-最小二乘解}给出。则$\boldsymbol{y}=\boldsymbol{\Phi}\boldsymbol{w}_{\mathrm{ML}}$是$\boldsymbol{t}$在$\mathcal{S}$上的正交投影，即
+设$\boldsymbol{\Phi}\in\mathbb{R}^{N\times M}$列满秩（$\operatorname{rank}\boldsymbol{\Phi}=M$，从而$M\leqslant N$），$\boldsymbol{t}\in\mathbb{R}^{N}$，$\boldsymbol{w}\in\mathbb{R}^{M}$，$\mathcal{S}=\{\boldsymbol{\Phi}\boldsymbol{w}:\boldsymbol{w}\in\mathbb{R}^{M}\}\subseteq\mathbb{R}^{N}$为$\boldsymbol{\Phi}$的列所张成的子空间，$\boldsymbol{w}_{\mathrm{ML}}$由\eqref{align:ch04-最小二乘解}给出。则$\boldsymbol{y}=\boldsymbol{\Phi}\boldsymbol{w}_{\mathrm{ML}}$是$\boldsymbol{t}$在$\mathcal{S}$上的正交投影，即
 \begin{align}
   \boldsymbol{y}=\boldsymbol{\Phi}(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi})^{-1}\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{t},
   \qquad
@@ -457,7 +461,7 @@
 \end{proposition}
 
 \begin{proof}
-（重构新增）记$\boldsymbol{P}\triangleq\boldsymbol{\Phi}(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi})^{-1}\boldsymbol{\Phi}^{\mathsf{T}}$，则$\boldsymbol{y}=\boldsymbol{P}\boldsymbol{t}$。分四步。
+记$\boldsymbol{P}\triangleq\boldsymbol{\Phi}(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi})^{-1}\boldsymbol{\Phi}^{\mathsf{T}}$，则$\boldsymbol{y}=\boldsymbol{P}\boldsymbol{t}$。分四步。
 
 第一步，$\boldsymbol{y}\in\mathcal{S}$。由定义$\boldsymbol{y}=\boldsymbol{\Phi}\boldsymbol{w}_{\mathrm{ML}}$，而$\boldsymbol{w}_{\mathrm{ML}}\in\mathbb{R}^{M}$，故$\boldsymbol{y}$是$\boldsymbol{\Phi}$各列的线性组合。
 
@@ -486,8 +490,8 @@
 取$\boldsymbol{w}=\boldsymbol{w}_{\mathrm{ML}}$即$E_D(\boldsymbol{w}_{\mathrm{ML}})=\frac{1}{2}\|\boldsymbol{t}-\boldsymbol{y}\|^2$；由第三步，这恰是$E_D$在$\mathcal{S}$上的最小值。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch04-正交投影; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch04-正交投影; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch04-正交投影}把\eqref{align:ch04-最小二乘解}这个纯代数的公式翻译成了一个几何命题：最小二乘就是在$M$维子空间$\mathcal{S}$中找离$\boldsymbol{t}$最近的点。
 
 三条假设各有作用。$\mathcal{S}$的定义依赖“$\boldsymbol{\Phi}$的列张成子空间”，这只需要$\boldsymbol{\Phi}$的列数有限；而$\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}$可逆（列满秩）则保证$\mathcal{S}$中的表示$\boldsymbol{y}=\boldsymbol{\Phi}\boldsymbol{w}$与$\boldsymbol{w}$一一对应，从而$\boldsymbol{P}$是到$\mathcal{S}$上的\emph{正交}投影而不是斜投影。若列不满秩，$\boldsymbol{y}$仍然唯一（它就是投影），但$\boldsymbol{w}$不唯一。
@@ -502,11 +506,11 @@
 \subsection{序贯学习}\label{subsection:ch04-序贯学习}
 
 \begin{definition}[批量学习与序贯学习]\label{definition:ch04-批量与序贯学习}
-若学习算法一次性处理整个训练集来确定参数，则称为\textbf{批量学习}（batch learning）；若算法一个个地考虑数据点，并在考虑每个数据点时更新模型参数，则称为\textbf{序贯学习}（sequential learning），也称\textbf{在线算法}（on-line algorithm）。
+设输入空间为$\mathcal{X}\subseteq\mathbb{R}^{D}$，目标空间为$\mathcal{T}\subseteq\mathbb{R}$，参数空间为$\Theta\subseteq\mathbb{R}^{P}$，训练集为$\mathcal{D}_N=\{(\boldsymbol{x}_n,t_n)\}_{n=1}^{N}\in(\mathcal{X}\times\mathcal{T})^{N}$，学习算法为映射$\mathcal{A}:\bigcup_{N\geqslant1}(\mathcal{X}\times\mathcal{T})^{N}\to\Theta$。若$\mathcal{A}$一次性使用整个$\mathcal{D}_N$确定参数，则该算法称为\textbf{批量学习}（batch learning）；若$\mathcal{A}$按数据点的到达顺序逐个处理，并在处理每个数据点后更新参数估计，则该算法称为\textbf{序贯学习}（sequential learning），也称\textbf{在线算法}（on-line algorithm）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch04-批量与序贯学习; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch04-批量与序贯学习; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch04-批量与序贯学习}区分的是\emph{计算方式}而不是\emph{目标函数}：两种学习方式优化的是同一个误差函数，只是逼近它的路径不同。
 
 这一区分在两种情形下具有实际意义。其一是数据规模：\eqref{align:ch04-最小二乘解}中的$\boldsymbol{\Phi}$是$N\times M$矩阵，当$N$极大时既无法一次性存入内存，也无法承受一次矩阵求逆的代价。其二是数据到达方式：若观测是流式到达的，则在全部数据到齐之前就必须给出预测，批量学习在这种场景下根本无法执行。
@@ -526,18 +530,18 @@
 其中$\tau$表示迭代次数，$\eta$是合适的学习率。$\boldsymbol{w}$的值被初始化为某个起始向量$\boldsymbol{w}^{(0)}$。通过平方和误差函数\eqref{align:ch04-平方和误差}，可得
 
 \begin{proposition}[LMS更新公式]\label{proposition:ch04-LMS更新}
-设单个数据点的误差为$E_n=\frac{1}{2}\bigl(t_n-\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)\bigr)^2$。则更新\eqref{align:ch04-随机梯度下降}等价于
+设迭代次数$\tau\geqslant0$，学习率$\eta>0$，参数$\boldsymbol{w}^{(\tau)}\in\mathbb{R}^{M}$，$\boldsymbol{\phi}_n=\boldsymbol{\phi}(\boldsymbol{x}_n)\in\mathbb{R}^{M}$，$t_n\in\mathbb{R}$，单个数据点的误差为$E_n:\mathbb{R}^{M}\to[0,\infty)$，$E_n(\boldsymbol{w})=\frac{1}{2}\bigl(t_n-\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}_n\bigr)^2$。则更新\eqref{align:ch04-随机梯度下降}等价于
 \begin{align}
   \boldsymbol{w}^{(\tau+1)}=\boldsymbol{w}^{(\tau)}+\eta\bigl(t_n-\boldsymbol{w}^{(\tau)\mathsf{T}}\boldsymbol{\phi}_n\bigr)\boldsymbol{\phi}_n
   \label{align:ch04-LMS更新}
 \end{align}
-其中$\boldsymbol{\phi}_n=\boldsymbol{\phi}(\boldsymbol{x}_n)$。
+其中$\boldsymbol{\phi}_n=\boldsymbol{\phi}(\boldsymbol{x}_n)$。即第$\tau$步的更新量等于学习率、当前数据点的残差与基函数向量$\boldsymbol{\phi}_n$三者之积。
 \end{proposition}
 
 这称为最小二乘（least-mean-square）法或LMS算法。
 
 \begin{proof}
-（重构新增）第一步，求$E_n$关于$\boldsymbol{w}$的梯度。记$r_n\triangleq t_n-\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}_n$，则$E_n=\frac{1}{2}r_n^2$。由于$r_n$关于$\boldsymbol{w}$是线性的，$\nabla_{\boldsymbol{w}}r_n=-\boldsymbol{\phi}_n$，故由链式法则
+第一步，求$E_n$关于$\boldsymbol{w}$的梯度。记$r_n\triangleq t_n-\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}_n$，则$E_n=\frac{1}{2}r_n^2$。由于$r_n$关于$\boldsymbol{w}$是线性的，$\nabla_{\boldsymbol{w}}r_n=-\boldsymbol{\phi}_n$，故由链式法则
 \begin{align*}
   \nabla_{\boldsymbol{w}}E_n=r_n\nabla_{\boldsymbol{w}}r_n=-\bigl(t_n-\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}_n\bigr)\boldsymbol{\phi}_n .
 \end{align*}
@@ -550,8 +554,8 @@
 此即\eqref{align:ch04-LMS更新}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch04-LMS更新; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch04-LMS更新; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch04-LMS更新}的结论\eqref{align:ch04-LMS更新}表明，一次更新只沿当前数据点的基向量$\boldsymbol{\phi}_n$方向移动，移动量正比于该点的预测残差$t_n-\boldsymbol{w}^{(\tau)\mathsf{T}}\boldsymbol{\phi}_n$。
 
 由此可以读出三点。第一，若当前点的预测已经精确，则残差为零，参数不再移动。第二，更新方向总在$\mathrm{span}\{\boldsymbol{\phi}_n\}$内，因此LMS算法从$\boldsymbol{w}^{(0)}$出发，其轨迹始终落在$\boldsymbol{w}^{(0)}$加上所有$\boldsymbol{\phi}_n$张成的子空间之内。第三，$\eta$必须足够小：过大的$\eta$会使单步修正越过极小点而产生振荡甚至发散，其收敛的步长条件将在讨论梯度下降时给出（参见\cref{section:ch07-收敛}）。
@@ -569,7 +573,7 @@ LMS的名称来自这样一个事实：当$\eta$取得足够小并且按适当�
 \end{align}
 
 \begin{definition}[正则化项与权重衰减]\label{definition:ch04-正则化项}
-\eqref{align:ch04-正则化误差}中，$E_D(\boldsymbol{w})$是数据相关的误差，$E_W(\boldsymbol{w})$是正则化项，$\lambda$是控制二者相对重要性的\textbf{正则化系数}。正则化项最为简单的形式之一是权重向量的平方和
+设参数空间为$\mathbb{R}^{M}$，$E_D:\mathbb{R}^{M}\to[0,\infty)$为数据相关的误差，$E_W:\mathbb{R}^{M}\to[0,\infty)$为正则化项，$\lambda\geqslant0$为控制二者相对重要性的\textbf{正则化系数}；$\lambda=0$对应无正则化。\eqref{align:ch04-正则化误差}定义在$\mathbb{R}^{M}$上。正则化项最为简单的形式之一是权重向量的平方和
 \begin{align}
   E_W(\boldsymbol{w})=\frac{1}{2}\sum_{j}w_j^2=\frac{1}{2}\boldsymbol{w}^{\mathsf{T}}\boldsymbol{w},
   \label{align:ch04-权重衰减}
@@ -577,8 +581,8 @@ LMS的名称来自这样一个事实：当$\eta$取得足够小并且按适当�
 相应的正则化称为\textbf{权重衰减}（weight decay）。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch04-正则化项; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch04-正则化项; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch04-正则化项}中的三项各司其职，缺一不可。
 
 $E_D$拟合数据，$E_W$惩罚参数的大小，$\lambda$则是二者的交换率。当$\lambda\to0$时\eqref{align:ch04-正则化总误差}退化为\eqref{align:ch04-平方和误差}，正则化消失；当$\lambda\to\infty$时最小值点趋于$\boldsymbol{w}=\boldsymbol{0}$，模型退化为常数预测。因此$\lambda$是一个\emph{超参数}：它不能与$\boldsymbol{w}$一起通过最小化$E$来确定，因为那样只会得到$\lambda=0$（这一点在\cref{section:ch04-偏差方差权衡}开头还会重申）。
@@ -605,16 +609,16 @@ $E_D$拟合数据，$E_W$惩罚参数的大小，$\lambda$则是二者的交换�
 在统计学中，正则化方法会将参数值向$0$减小，这为参数收缩（parameter shrinkage）提供了一个示例。这一方法的优势是，由于误差函数仍然是$\boldsymbol{w}$的二次函数，因此它具有闭式解。具体来说，将式\eqref{align:ch04-正则化总误差}关于$\boldsymbol{w}$的梯度设为$\boldsymbol{0}$，并像之前一样求解$\boldsymbol{w}$（见\cref{exercise:ch04-06}），可得
 
 \begin{proposition}[正则化最小二乘的闭式解]\label{proposition:ch04-正则化解}
-设$\lambda>0$。则\eqref{align:ch04-正则化总误差}的唯一最小值点为
+设$\boldsymbol{\Phi}\in\mathbb{R}^{N\times M}$为\cref{definition:ch04-设计矩阵}的设计矩阵，$\boldsymbol{t}\in\mathbb{R}^{N}$，$\lambda>0$，$\boldsymbol{I}$为$M\times M$单位矩阵，$E:\mathbb{R}^{M}\to\mathbb{R}$由\eqref{align:ch04-正则化总误差}定义。则$E$在$\mathbb{R}^{M}$上的唯一全局最小值点为
 \begin{align}
   \boldsymbol{w}=(\lambda\boldsymbol{I}+\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi})^{-1}\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{t},
   \label{align:ch04-正则化解}
 \end{align}
-其中$\boldsymbol{\Phi}$为\cref{definition:ch04-设计矩阵}的设计矩阵，$\boldsymbol{I}$为$M\times M$单位矩阵。该最小值点是全局最小值，且不要求$\boldsymbol{\Phi}$列满秩。
+该最小值点是全局最小值，且不要求$\boldsymbol{\Phi}$列满秩。
 \end{proposition}
 
 \begin{proof}
-（重构新增）第一步，把$E$写成矩阵形式。由\cref{definition:ch04-设计矩阵}，$\sum_n\bigl(t_n-\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)\bigr)^2=\|\boldsymbol{t}-\boldsymbol{\Phi}\boldsymbol{w}\|^2$，故
+第一步，把$E$写成矩阵形式。由\cref{definition:ch04-设计矩阵}，$\sum_n\bigl(t_n-\boldsymbol{w}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)\bigr)^2=\|\boldsymbol{t}-\boldsymbol{\Phi}\boldsymbol{w}\|^2$，故
 \begin{align*}
   E(\boldsymbol{w})=\frac{1}{2}\|\boldsymbol{t}-\boldsymbol{\Phi}\boldsymbol{w}\|^2+\frac{\lambda}{2}\boldsymbol{w}^{\mathsf{T}}\boldsymbol{w}.
 \end{align*}
@@ -640,8 +644,8 @@ $E_D$拟合数据，$E_W$惩罚参数的大小，$\lambda$则是二者的交换�
 第五步，说明是全局最小值。由第四步，Hesse矩阵$\lambda\boldsymbol{I}+\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}$正定，故$E$为严格凸二次函数，\eqref{align:ch04-正则化解}是唯一全局最小值点。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch04-正则化解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch04-正则化解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch04-正则化解}的结论\eqref{align:ch04-正则化解}与\eqref{align:ch04-最小二乘解}只差一处：$\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}$被换成了$\lambda\boldsymbol{I}+\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}$。
 
 这一处改动的意义超出“数值稳定”本身。因为$\lambda>0$时该矩阵必然正定，\eqref{align:ch04-正则化解}对任何设计矩阵都有定义，包括$M>N$或基函数共线的情形；而在这些情形下\eqref{align:ch04-最小二乘解}根本不存在。代价是解被系统性地“收缩”了：$\lambda$越大，$\boldsymbol{w}$越靠近原点，因此正则化解是有偏的（参见\cref{section:ch04-偏差方差权衡}对偏差与方差的讨论）。
@@ -658,16 +662,16 @@ $\lambda$的选取不属于本节的优化问题。若把$\lambda$也当作自�
 到目前为止，我们已经考虑了单目标变量$t$的情况。在一些应用中，我们可能希望预测$K>1$个目标变量，它们可以用目标向量$\boldsymbol{t}=(t_1,\cdots,t_K)^{\mathsf{T}}$来表示。通过为$\boldsymbol{t}$的每个分量引入一组不同的基函数，我们得到多个独立的回归问题。然而，更常见的方法是使用相同的一组基函数来对目标向量的所有分量建模。
 
 \begin{definition}[多重输出回归]\label{definition:ch04-多重输出}
-设目标向量$\boldsymbol{t}=(t_1,\cdots,t_K)^{\mathsf{T}}$的$K$个分量共用同一组基函数$\phi_0,\cdots,\phi_{M-1}$，则模型取
+设输入$\boldsymbol{x}\in\mathbb{R}^{D}$，输出维数$K\geqslant1$，目标向量$\boldsymbol{t}=(t_1,\cdots,t_K)^{\mathsf{T}}\in\mathbb{R}^{K}$，$M\geqslant1$，基函数$\phi_j:\mathbb{R}^{D}\to\mathbb{R}$（$j=0,\cdots,M-1$，$\phi_0\equiv1$）由$K$个输出分量共用，参数矩阵$\boldsymbol{W}\in\mathbb{R}^{M\times K}$。则模型取
 \begin{align}
   \boldsymbol{y}(\boldsymbol{x},\boldsymbol{w})=\boldsymbol{W}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}),
   \label{align:ch04-多重输出}
 \end{align}
-其中$\boldsymbol{y}$是一个$K$维的列向量；$\boldsymbol{W}$是一个$M\times K$大小的参数矩阵；$\boldsymbol{\phi}(\boldsymbol{x})$是一个$M$维的列向量，$\phi_j(\boldsymbol{x})$则是其中的元素，且$\phi_0(\boldsymbol{x})=1$。这样的模型称为\textbf{多重输出}（multiple outputs）的线性回归模型。
+其中$\boldsymbol{y}(\boldsymbol{x},\boldsymbol{W})\in\mathbb{R}^{K}$是$K$维列向量；$\boldsymbol{W}$是$M\times K$实参数矩阵；$\boldsymbol{\phi}(\boldsymbol{x})\in\mathbb{R}^{M}$是$M$维列向量，$\phi_j(\boldsymbol{x})$则是其中的元素，且$\phi_0(\boldsymbol{x})=1$。这样的模型称为\textbf{多重输出}（multiple outputs）的线性回归模型。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch04-多重输出; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch04-多重输出; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{definition:ch04-多重输出}的关键约定是“共用同一组基函数”：$\boldsymbol{W}$的每一列$\boldsymbol{w}_k$对应一个输出分量$t_k$，但所有分量共享同一个$\boldsymbol{\phi}(\boldsymbol{x})$。
 
 若为每个分量各配一组基函数，问题就退化为$K$个互不相关的\cref{section:ch04-线性回归}，没有任何新内容。共用一个$\boldsymbol{\phi}$则带来实质性的节省：设计矩阵$\boldsymbol{\Phi}$只需计算一次，其伪逆也只需计算一次，由\cref{proposition:ch04-多重输出解}可见全部$K$个分量共用同一个$\boldsymbol{\Phi}^{\dagger}$。
@@ -703,12 +707,12 @@ $\lambda$的选取不属于本节的优化问题。若把$\lambda$也当作自�
 和之前一样，我们可以关于$\boldsymbol{W}$最大化这个函数。
 
 \begin{proposition}[多重输出的最大似然解]\label{proposition:ch04-多重输出解}
-设对数似然由\eqref{align:ch04-多重输出对数似然}给出，$\boldsymbol{\Phi}$为\cref{definition:ch04-设计矩阵}的设计矩阵，$\boldsymbol{T}$为第$n$行为$\boldsymbol{t}_n^{\mathsf{T}}$的$N\times K$矩阵。若$\boldsymbol{\Phi}$列满秩，则
+设$\boldsymbol{\Phi}\in\mathbb{R}^{N\times M}$为\cref{definition:ch04-设计矩阵}的设计矩阵，$\boldsymbol{T}\in\mathbb{R}^{N\times K}$为第$n$行为$\boldsymbol{t}_n^{\mathsf{T}}$的矩阵，$\boldsymbol{W}\in\mathbb{R}^{M\times K}$，$\sigma^{2}>0$，对数似然由\eqref{align:ch04-多重输出对数似然}给出。若$\boldsymbol{\Phi}$列满秩，即$\operatorname{rank}\boldsymbol{\Phi}=M$，则
 \begin{align}
   \boldsymbol{W}_{\mathrm{ML}}=(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi})^{-1}\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{T},
   \label{align:ch04-多重输出ML}
 \end{align}
-其中，我们已经用输入的特征向量$\boldsymbol{\phi}(\boldsymbol{x}_1),\cdots,\boldsymbol{\phi}(\boldsymbol{x}_N)$组成了矩阵$\boldsymbol{\Phi}$。等价地，$\boldsymbol{W}_{\mathrm{ML}}$的第$k$列为
+其中$\boldsymbol{\Phi}$的第$n$行为$\boldsymbol{\phi}(\boldsymbol{x}_n)^{\mathsf{T}}$。等价地，$\boldsymbol{W}_{\mathrm{ML}}$的第$k$列为
 \begin{align}
   \boldsymbol{w}_k=(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi})^{-1}\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{t}_k=\boldsymbol{\Phi}^{\dagger}\boldsymbol{t}_k,
   \label{align:ch04-多重输出分量}
@@ -717,7 +721,7 @@ $\lambda$的选取不属于本节的优化问题。若把$\lambda$也当作自�
 \end{proposition}
 
 \begin{proof}
-（重构新增）第一步，把\eqref{align:ch04-多重输出对数似然}按输出分量拆开。记$\boldsymbol{w}_k$为$\boldsymbol{W}$的第$k$列，$t_{nk}$为$\boldsymbol{t}_n$的第$k$个分量。由$\boldsymbol{W}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)$的第$k$个分量为$\boldsymbol{w}_k^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)$，有
+第一步，把\eqref{align:ch04-多重输出对数似然}按输出分量拆开。记$\boldsymbol{w}_k$为$\boldsymbol{W}$的第$k$列，$t_{nk}$为$\boldsymbol{t}_n$的第$k$个分量。由$\boldsymbol{W}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)$的第$k$个分量为$\boldsymbol{w}_k^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)$，有
 \begin{align*}
   \bigl\|\boldsymbol{t}_n-\boldsymbol{W}^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)\bigr\|^2
   =\sum_{k=1}^{K}\bigl(t_{nk}-\boldsymbol{w}_k^{\mathsf{T}}\boldsymbol{\phi}(\boldsymbol{x}_n)\bigr)^2 .
@@ -739,8 +743,8 @@ $\lambda$的选取不属于本节的优化问题。若把$\lambda$也当作自�
 第四步，合并成矩阵形式。把$k=1,\cdots,K$的\eqref{align:ch04-多重输出分量}并排作为列，右端$\boldsymbol{\Phi}^{\dagger}\boldsymbol{t}_k$并排后恰为$\boldsymbol{\Phi}^{\dagger}\boldsymbol{T}$，故$\boldsymbol{W}_{\mathrm{ML}}=\boldsymbol{\Phi}^{\dagger}\boldsymbol{T}=(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi})^{-1}\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{T}$，即\eqref{align:ch04-多重输出ML}。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch04-多重输出解; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch04-多重输出解; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \cref{proposition:ch04-多重输出解}的证明实际上给出了比\eqref{align:ch04-多重输出ML}更强的信息：不同目标变量之间是\emph{完全解耦}的，$\boldsymbol{W}$的每一列可以独立求出。
 
 由此有两点推论。其一，伪逆矩阵$\boldsymbol{\Phi}^{\dagger}$只需计算一次，即可供全部$K$个分量共享，这是\cref{definition:ch04-多重输出}共用基函数所带来的计算节省。其二，\eqref{align:ch04-多重输出分布}中协方差取$\sigma^2\boldsymbol{I}$这一假设并不影响$\boldsymbol{W}_{\mathrm{ML}}$：只要协方差矩阵与$\boldsymbol{W}$无关，第一项就与$\boldsymbol{W}$无关，解耦论证照常成立。协方差取一般形式$\boldsymbol{\Sigma}$的情形见\cref{exercise:ch04-07}。

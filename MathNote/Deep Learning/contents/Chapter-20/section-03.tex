@@ -13,15 +13,15 @@
 \end{align}
 
 \begin{definition}[得分函数]\label{definition:ch20-得分函数}
-设 $p(\bm{x})$ 关于 $\bm{x}$ 可微且为正。称向量值函数
+设 $D\in\mathbb{N}$，$p:\mathbb{R}^{D}\to(0,\infty)$ 为 $\mathbb{R}^{D}$ 上关于 Lebesgue 测度的概率密度，且 $p$ 在 $\mathbb{R}^{D}$ 上连续可微。则由
 \begin{align*}
-\bm{s}(\bm{x})=\nabla_{\bm{x}}\ln p(\bm{x})
+\bm{s}(\bm{x})=\nabla_{\bm{x}}\ln p(\bm{x}),\qquad \bm{x}\in\mathbb{R}^{D},
 \end{align*}
-为分布 $p$ 的\textbf{得分函数}（score function），也称 \textbf{Stein 得分}。若 $p$ 还依赖参数 $\bm{w}$，则记 $\bm{s}(\bm{x},\bm{w})=\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{w})$。
+确定的向量场 $\bm{s}:\mathbb{R}^{D}\to\mathbb{R}^{D}$ 称为分布 $p$ 的\textbf{得分函数}（score function），也称 \textbf{Stein 得分}；若 $p$ 还依赖参数 $\bm{w}\in\mathbb{R}^{P}$，则记 $\bm{s}(\bm{x},\bm{w})=\nabla_{\bm{x}}\ln p(\bm{x}\mid\bm{w})$，并称 $\bm{s}(\cdot,\bm{w}):\mathbb{R}^{D}\to\mathbb{R}^{D}$ 为得分模型。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch20-得分函数; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch20-得分函数; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 得分函数是“对数密度关于\emph{数据}的梯度”，与通常“关于参数 $\bm{w}$ 的梯度”完全不同：前者指向“往哪个方向移动 $\bm{x}$ 能使密度增大”，后者指向“怎样调整参数能使似然增大”。这一区分是理解整节的钥匙——训练模型需要后者，而从模型采样需要前者。\par
 定义要求 $p>0$ 且可微：否则 $\ln p$ 或其梯度无定义。在支撑集边界附近得分函数可能发散，这是数值实现时要作裁剪或平滑的原因。另外，$\bm{s}(\bm{x})$ 是与 $\bm{x}$ 同维的向量值函数，其第 $i$ 个分量 $s_i(\bm{x})=\partial\ln p(\bm{x})/\partial x_i$ 只与 $\bm{x}$ 的第 $i$ 个分量对应；若 $\bm{x}$ 是图像，$\bm{s}(\bm{x})$ 也可视为同尺寸的“得分图像”。\par
 得分函数有一个关键性质：它不依赖归一化常数。若 $p(\bm{x})=\widetilde{p}(\bm{x})/Z$ 且 $Z$ 与 $\bm{x}$ 无关，则 $\nabla_{\bm{x}}\ln p=\nabla_{\bm{x}}\ln\widetilde{p}$。这正是基于能量的模型可以绕开配分函数的原因（参见\cref{subsection:ch14-基于能量的模型}）。
@@ -39,15 +39,15 @@
 为了理解得分函数的用处，考虑两个函数 $q(\bm{x})$ 和 $p(\bm{x})$，它们具有得分相等的属性，所以对于 $\bm{x}$ 的所有值，$\nabla\ln q(\bm{x})=\nabla\ln p(\bm{x})$。我们对这个等式的两边关于 $\bm{x}$ 积分并取指数，则可以得到 $q(\bm{x})=Kp(\bm{x})$，其中 $K$ 是一个独立于 $\bm{x}$ 的常数。所以如果我们能学习到一个得分函数的模型 $\bm{s}(\bm{x},\bm{w})$，就可以重建原始数据分布，所得结果与之前的相比，最多相差一个常数倍数。
 
 \begin{proposition}[得分确定密度至多相差常数倍]\label{proposition:ch20-得分确定密度}
-设 $p,q$ 是 $\mathbb{R}^{D}$ 上处处为正的光滑概率密度，且对一切 $\bm{x}$ 有 $\nabla_{\bm{x}}\ln q(\bm{x})=\nabla_{\bm{x}}\ln p(\bm{x})$。则存在常数 $K>0$，使得 $q(\bm{x})=Kp(\bm{x})$ 对一切 $\bm{x}$ 成立。
+设 $D\in\mathbb{N}$，$p,q:\mathbb{R}^{D}\to(0,\infty)$ 为 $\mathbb{R}^{D}$ 上关于 Lebesgue 测度的概率密度，二者均在 $\mathbb{R}^{D}$ 上连续可微，且对一切 $\bm{x}\in\mathbb{R}^{D}$ 成立 $\nabla_{\bm{x}}\ln q(\bm{x})=\nabla_{\bm{x}}\ln p(\bm{x})$。则存在常数 $K>0$，使 $q(\bm{x})=Kp(\bm{x})$ 对一切 $\bm{x}\in\mathbb{R}^{D}$ 成立，即两密度之比为常数；若进一步 $\int_{\mathbb{R}^{D}}p(\bm{x})\,\mathrm{d}\bm{x}=\int_{\mathbb{R}^{D}}q(\bm{x})\,\mathrm{d}\bm{x}=1$，则 $K=1$，即 $q=p$。换言之，得分函数在 $\mathbb{R}^{D}$ 上确定了密度的形状，而确定不了其归一化因子。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 令 $h(\bm{x})=\ln q(\bm{x})-\ln p(\bm{x})$。由假设 $\nabla_{\bm{x}}h(\bm{x})=\nabla_{\bm{x}}\ln q(\bm{x})-\nabla_{\bm{x}}\ln p(\bm{x})=\bm{0}$ 对一切 $\bm{x}$ 成立。$\mathbb{R}^{D}$ 连通，梯度处处为零的光滑函数必为常数，故 $h(\bm{x})\equiv\ln K$，即 $q(\bm{x})=Kp(\bm{x})$。又 $p,q>0$，故 $K>0$；若二者都是概率密度，则积分得 $K=1$。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch20-得分确定密度; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch20-得分确定密度; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题说明得分函数唯一确定了密度的\emph{形状}，而不确定其归一化：两个得分相同的密度只差一个正常数因子。这对建模是好事——我们不必计算配分函数就能比较密度的相对高低；但也有代价：仅凭得分无法直接得到归一化的概率值，需要用 Langevin 采样得到样本后再估计归一化常数，或转而使用不需归一化的采样方法。\par
 证明中的两个条件不可省：连通性保证“梯度为零”推出“常数”（若定义域分成两个不相连的块，两块上的常数可以不同）；正性保证 $\ln$ 处处有定义。若 $p$ 或 $q$ 在某个区域为零，则得分在该处无定义，命题的表述需要改成“在二者都为正的区域上”。\par
 若 $p,q$ 都是归一化密度，则 $K=1$，即得分相同意味着密度相同。这一点常被表述为“得分匹配可以识别分布”，但要注意它依赖“二者都归一化”这一额外信息；只拟合得分而不加归一化约束时，$K$ 是自由的。
@@ -98,15 +98,15 @@ J(\bm{w})=\frac{1}{2}\int\big\|\bm{s}(\bm{z},\bm{w})-\nabla_{\bm{z}}\ln q_{\sigm
 一个关键结果是，通过将\eqref{align:ch20-Parzen}代入\eqref{align:ch20-平滑损失}，我们可以将这个损失函数重写为以下等价形式（Vincent, 2011）（见\cref{exercise:ch20-17}）。
 
 \begin{proposition}[去噪得分匹配]\label{proposition:ch20-去噪得分匹配}
-设 $q_{\sigma}$ 由\eqref{align:ch20-Parzen}与\eqref{align:ch20-Gauss核}给出。则对任意得分模型 $\bm{s}(\bm{z},\bm{w})$，
+设 $D\in\mathbb{N}$，$\sigma>0$，$p$ 为 $\mathbb{R}^{D}$ 上关于 Lebesgue 测度的概率密度，$q(\bm{z}\mid\bm{x},\sigma)=\mathcal{N}(\bm{z}\mid\bm{x},\sigma^{2}\bm{I})$ 为 Gauss 噪声核，$q_{\sigma}$ 由\eqref{align:ch20-Parzen}与\eqref{align:ch20-Gauss核}给出；设得分模型 $\bm{s}(\cdot,\bm{w}):\mathbb{R}^{D}\to\mathbb{R}^{D}$ 关于 $\bm{z}$ 可测，且下列积分均存在并取有限值。则对任意 $\bm{w}$，
 \begin{align}
 J(\bm{w})=\frac{1}{2}\iint\big\|\bm{s}(\bm{z},\bm{w})-\nabla_{\bm{z}}\ln q(\bm{z}\mid\bm{x},\sigma)\big\|^2q(\bm{z}\mid\bm{x},\sigma)\,p(\bm{x})\,\mathrm{d}\bm{z}\,\mathrm{d}\bm{x}+\mathrm{const},
 \label{align:ch20-等价损失}
 \end{align}
-其中 $\mathrm{const}$ 与网络参数 $\bm{w}$ 无关。
+其中 $J$ 由\eqref{align:ch20-平滑损失}定义，$\|\cdot\|$ 为 $\mathbb{R}^{D}$ 上的 Euclid 范数，$\mathrm{const}$ 与网络参数 $\bm{w}$ 无关。
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 把\eqref{align:ch20-平滑损失}中的平方项展开：
 \begin{align*}
 J(\bm{w})=\frac{1}{2}\int\|\bm{s}\|^2q_{\sigma}\,\mathrm{d}\bm{z}-\int\bm{s}\cdot\nabla_{\bm{z}}q_{\sigma}\,\mathrm{d}\bm{z}+\frac{1}{2}\int\|\nabla_{\bm{z}}\ln q_{\sigma}\|^2q_{\sigma}\,\mathrm{d}\bm{z},
@@ -121,8 +121,8 @@ J(\bm{w})=\frac{1}{2}\int\|\bm{s}\|^2q_{\sigma}\,\mathrm{d}\bm{z}-\int\bm{s}\cdo
 这正是\eqref{align:ch20-等价损失}中交叉项的一半（带负号）。合并三项即得\eqref{align:ch20-等价损失}。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch20-去噪得分匹配; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch20-去噪得分匹配; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 \eqref{align:ch20-等价损失}的意义在于把“与未知的 $\nabla\ln q_{\sigma}$ 比较”换成了“与已知的核得分 $\nabla\ln q(\bm{z}\mid\bm{x},\sigma)$ 比较”，因而损失可以用样本 $\bm{x}_n$ 与人工噪声 $\bm{z}$ 直接计算。这正是“去噪”一词的来源：网络要从被噪声污染的 $\bm{z}$ 中估计出把 $\bm{z}$ 拉回 $\bm{x}$ 的方向。\par
 条件方面：交换积分次序要求 $q(\bm{z}\mid\bm{x},\sigma)p(\bm{x})$ 可积（Gauss 核保证这一点）；丢弃的第三项之所以与 $\bm{w}$ 无关，是因为它只含真实密度 $q_{\sigma}$。若两个得分模型在某个 $\bm{z}$ 上给出相同输出，这项对二者的相对大小没有影响，因此不能省掉它去比较不同 $\sigma$ 下的绝对损失值。\par
 与扩散模型的联系：若取 $\sigma^2=1-\alpha_t$ 并把核均值改为 $\sqrt{\alpha_t}\,\bm{x}$，就得到前向扩散核，此时\eqref{align:ch20-等价损失}与\eqref{align:ch20-KL噪声}具有相同的最小值（相差常数缩放）。这就是“去噪得分匹配”与 DDPM 训练目标等价的含义。
@@ -181,11 +181,11 @@ J(\bm{w})=\frac{1}{2N}\sum_{n=1}^{N}\int\big\|\bm{s}(\bm{z},\bm{w})-\nabla_{\bm{
 其中漂移项（drift term）是确定性的，类似于常微分方程（ODE），但扩散项（diffusion term）是随机的。这里的参数 $t$ 常常称为“时间”，类比于物理系统中的时间。扩散模型的前向加噪过程\eqref{align:ch20-递推}，可以通过采取连续时间极限而写成形如\eqref{align:ch20-SDE}的 SDE（见\cref{exercise:ch20-19}）。
 
 \begin{definition}[随机微分方程]\label{definition:ch20-随机微分方程}
-设 $\bm{f}(\bm{z},t)$ 为漂移系数、$g(t)$ 为扩散系数、$\bm{w}$ 为标准 Wiener 过程。称形如\eqref{align:ch20-SDE}的方程为 \textbf{It\^o 随机微分方程}（SDE），其解 $\bm{z}(t)$ 是一个连续时间的随机过程：$\bm{f}$ 描述确定性的漂移，$g\,\mathrm{d}\bm{w}$ 描述随机的扩散。
+设 $D\in\mathbb{N}$，$T>0$，$\bm{f}:\mathbb{R}^{D}\times[0,T]\to\mathbb{R}^{D}$ 为漂移系数，$g:[0,T]\to\mathbb{R}$ 为扩散系数，$(\Omega,\mathcal{F},(\mathcal{F}_{t})_{t\in[0,T]},\mathbb{P})$ 为带流的概率空间，$\bm{w}:[0,T]\times\Omega\to\mathbb{R}^{D}$ 为 $\mathbb{R}^{D}$ 取值的标准 Wiener 过程。则\eqref{align:ch20-SDE}形式的方程称为 \textbf{It\^o 随机微分方程}（SDE），其中 $\bm{f}$ 描述确定性的漂移项，$g\,\mathrm{d}\bm{w}$ 描述随机的扩散项，$t\in[0,T]$ 称为时间；其解 $\bm{z}:[0,T]\times\Omega\to\mathbb{R}^{D}$ 是一个连续时间的随机过程。
 \end{definition}
 
-% SUPPLEMENT: parent=definition:ch20-随机微分方程; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=definition:ch20-随机微分方程; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 SDE 可以看作“常微分方程 + 噪声”的连续时间极限：把 $\mathrm{d}\bm{w}$ 理解为均值为零、方差为 $\mathrm{d}t$ 的 Gauss 增量，就回到了离散的更新式。它之所以适合描述扩散模型，是因为前向加噪过程的步数 $T$ 可以趋于无穷，而每一步的方差 $\beta_t$ 必须随步长同步缩小，否则极限不存在。\par
 记号上要注意两点：其一，这里写的是 It\^o 形式，$g\,\mathrm{d}\bm{w}$ 的积分按 It\^o 定义，因而普通微积分的链式法则需要换成 It\^o 公式；其二，$g$ 只依赖 $t$ 而不依赖 $\bm{z}$，这是本书的简化约定，一般的 SDE 允许 $g(\bm{z},t)$。\par
 条件：$\bm{f}$ 关于 $\bm{z}$ 满足 Lipschitz 条件、$g$ 有界，才能保证 SDE 有唯一强解；若这些条件不满足，解可能在有限时间爆炸，后面的 Fokker--Planck 论证也随之失效。
@@ -205,14 +205,18 @@ SDE 可以看作“常微分方程 + 噪声”的连续时间极限：把 $\math
 \end{align}
 
 \begin{proposition}[逆时 SDE 与概率流 ODE]\label{proposition:ch20-逆时SDE}
-设 $p_t$ 是\eqref{align:ch20-SDE}的解的密度，关于 $t$ 连续可微、关于 $\bm{z}$ 二阶连续可微，在无穷远处充分快衰减，并满足 Fokker--Planck 方程
+设 $D\in\mathbb{N}$，$T>0$，$\bm{f}:\mathbb{R}^{D}\times[0,T]\to\mathbb{R}^{D}$ 连续可微，$g:[0,T]\to\mathbb{R}$ 有界；设 $\{p_t\}_{t\in[0,T]}$ 为一族 $\mathbb{R}^{D}$ 上关于 Lebesgue 测度的概率密度，$p_t$ 关于 $t$ 连续可微、关于 $\bm{z}$ 二阶连续可微，在无穷远处充分快衰减，且满足 Fokker--Planck 方程
 \begin{align*}
 \frac{\partial p_t}{\partial t}=-\nabla_{\bm{z}}\cdot\big(\bm{f}(\bm{z},t)p_t\big)+\frac{1}{2}g^2(t)\Delta_{\bm{z}}p_t.
 \end{align*}
-则：(i) 逆向 SDE\eqref{align:ch20-逆SDE}从 $t=T$ 倒序求解时，其边缘密度为 $p_t$；(ii) ODE\eqref{align:ch20-ODE}的轨道具有与\eqref{align:ch20-SDE}相同的边缘密度 $p_t$。
+则下列结论成立：
+\begin{enumerate}[(i)]
+\item 逆向 SDE\eqref{align:ch20-逆SDE}从 $t=T$ 倒序求解至 $t=0$ 时，其边缘密度为 $p_t$；
+\item ODE\eqref{align:ch20-ODE}的轨道具有与\eqref{align:ch20-SDE}相同的边缘密度 $p_t$。
+\end{enumerate}
 \end{proposition}
 
-\begin{proof}（重构新增）
+\begin{proof}
 先证 (ii)。令 $\bm{v}(\bm{z},t)=\bm{f}(\bm{z},t)-\frac{1}{2}g^2(t)\nabla_{\bm{z}}\ln p_t(\bm{z})$，则 $\bm{v}p_t=\bm{f}p_t-\frac{1}{2}g^2\nabla_{\bm{z}}p_t$，取散度得
 \begin{align*}
 \nabla_{\bm{z}}\cdot(\bm{v}p_t)=\nabla_{\bm{z}}\cdot(\bm{f}p_t)-\frac{1}{2}g^2\Delta_{\bm{z}}p_t.
@@ -226,8 +230,8 @@ SDE 可以看作“常微分方程 + 噪声”的连续时间极限：把 $\math
 另一方面，由 $q_{\tau}=p_{T-\tau}$ 与 Fokker--Planck 方程，$\partial_{\tau}q_{\tau}=-\partial_tp_t|_{T-\tau}=\nabla_{\bm{z}}\cdot(\bm{f}q_{\tau})-\frac{1}{2}g^2\Delta_{\bm{z}}q_{\tau}$。两式相同，故 $q_{\tau}$ 就是逆时 SDE 的密度，即逆时 SDE 的边缘密度为 $p_{T-\tau}$；换回 $t$ 即得 (i)。证毕。
 \end{proof}
 
-% SUPPLEMENT: parent=proposition:ch20-逆时SDE; kind=motivation; location=紧随其后的 remark（重构新增）
-\begin{remark}（重构新增）
+% SUPPLEMENT: parent=proposition:ch20-逆时SDE; kind=motivation; location=紧随其后的 remark
+\begin{remark}
 这条命题是“连续时间扩散模型”的理论核心：它把“加噪—去噪”的离散图像换成了“一个 SDE 与其逆时 SDE 具有相同边缘分布”的连续图像。证明只用到 Fokker--Planck 方程与连续性方程，两条方程分别刻画“随机过程的密度演化”与“确定性流对密度的输运”，因此结论是精确的，而非近似。\par
 ODE\eqref{align:ch20-ODE}称为概率流 ODE（probability flow ODE），它的轨道是确定性的：给定初值 $\bm{z}_T$，整条轨迹就被确定，因而它定义了从先验到数据的可逆映射，可以把扩散模型与标准化流联系起来，用变量替换公式精确计算对数似然（参见\cref{section:ch18-连续流}）。\par
 条件不能省：$p_t$ 的光滑性与衰减性保证 Fokker--Planck 方程的分部积分合法；$\nabla_{\bm{z}}\ln p_t$ 必须存在，否则逆时 SDE 的漂移无定义。逆时 SDE 中的 $\mathrm{d}\bar{\bm{w}}$ 是反向时间轴上的 Wiener 增量，它把“时间的箭头”翻转过来——这正是从 $t=T$ 倒序求解的含义。
