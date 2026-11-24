@@ -6,6 +6,9 @@ LaTeX 记录的数学笔记，以及对应的 Lean 4 形式化代码，放在同
 
 ```text
 Math Project/
+├── Code/                           代码
+│   └── Python/
+│       └── Undergraduate Thesis Code/   本科毕业论文代码
 ├── LaTeX Project/                  LaTeX 笔记工程
 │   ├── MathNote/                   笔记主体，一个学科一个目录
 │   ├── Paper/                      论文
@@ -31,6 +34,7 @@ Math Project/
 
 | 路径 | 作用 |
 |---|---|
+| `Code/Python/` | 论文配套代码，`data/` 存数据、`figures/` 存图 |
 | `LaTeX Project/MathNote/` | 全部笔记，每篇一个目录 |
 | `LaTeX Project/Template/` | ElegantBook 模板，笔记用 `../../Template/elegantbook` 引用 |
 | `LaTeX Project/Styles/` | 自定义宏与样式 |

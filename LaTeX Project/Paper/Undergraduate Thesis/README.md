@@ -70,7 +70,7 @@ Undergraduate Thesis/
 
 ## 图表与代码的对应
 
-论文中的全部数值插图由 `Code/Undergraduate Thesis Code` 生成，复制到 `figures/` 后由 `main.tex` 引用。图 4.3 是连续符号下的联合稳定域，对应新增的 `stability_coupled.pdf`。若修改了代码或参数，请重新生成图片并覆盖 `figures/` 中的同名文件，然后重新编译。
+论文中的全部数值插图由 `Code/Python/Undergraduate Thesis Code` 生成，复制到 `figures/` 后由 `main.tex` 引用。图 4.3 是连续符号下的联合稳定域，对应新增的 `stability_coupled.pdf`。若修改了代码或参数，请重新生成图片并覆盖 `figures/` 中的同名文件，然后重新编译。
 
 - 图 4.1：`figures/stability_geometry.pdf`
 - 图 4.2：`figures/stability_region.pdf`

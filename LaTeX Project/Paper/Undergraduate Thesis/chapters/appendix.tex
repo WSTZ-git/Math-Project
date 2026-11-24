@@ -2,7 +2,7 @@
 \chapter{核心代码与复现说明}
 % ==========================================================================
 
-本附录给出论文核心代码的结构与关键片段。完整代码位于配套的 \texttt{Code} 文件夹（其下的 \texttt{Undergraduate Thesis Code} 子文件夹），数据位于 \texttt{data} 子文件夹，图片位于 \texttt{figures} 子文件夹。
+本附录给出论文核心代码的结构与关键片段。完整代码位于仓库根目录的 \texttt{Code/Python/Undergraduate Thesis Code} 文件夹，数据位于 \texttt{data} 子文件夹，图片位于 \texttt{figures} 子文件夹。
 
 \section{代码结构}
 
@@ -84,7 +84,7 @@ rho = np.max(np.abs(np.linalg.eigvals(M)))
 代码依赖 Python 3.10 以上版本、NumPy、SciPy 与 Matplotlib。为避免污染系统环境，可将依赖安装到本地目录：
 
 \begin{lstlisting}[language=bash,caption={安装依赖}]
-cd "Code/Undergraduate Thesis Code"
+cd "Code/Python/Undergraduate Thesis Code"
 python3 -m pip install --target .pylibs \
     --break-system-packages numpy scipy matplotlib
 \end{lstlisting}
@@ -92,7 +92,7 @@ python3 -m pip install --target .pylibs \
 然后依次运行：
 
 \begin{lstlisting}[language=bash,caption={生成图片与数据}]
-cd "Code/Undergraduate Thesis Code"
+cd "Code/Python/Undergraduate Thesis Code"
 export PYTHONPATH=.:.pylibs
 export MPLCONFIGDIR=/tmp/mplconfig
 python3 stability_analysis.py

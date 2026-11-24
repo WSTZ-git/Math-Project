@@ -25,7 +25,7 @@
 推荐在**本目录内**安装依赖，避免污染系统环境：
 
 ```bash
-cd "Code/Undergraduate Thesis Code"
+cd "Code/Python/Undergraduate Thesis Code"
 bash setup.sh
 ```
 
@@ -41,7 +41,7 @@ export MPLCONFIGDIR=/tmp/mplconfig
 ## 复现命令
 
 ```bash
-cd "Code/Undergraduate Thesis Code"
+cd "Code/Python/Undergraduate Thesis Code"
 export PYTHONPATH=.:.pylibs
 export MPLCONFIGDIR=/tmp/mplconfig
 
