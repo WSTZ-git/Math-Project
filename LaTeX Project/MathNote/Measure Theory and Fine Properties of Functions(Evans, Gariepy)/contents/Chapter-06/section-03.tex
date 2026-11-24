@@ -1,0 +1,522 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{凸函数}\label{section:ch06-03}
+
+\begin{definition}[凸函数]\label{definition:ch06-6-3}
+设 $n$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}$ 为定义在整个 $\mathbb{R}^n$ 上的实值函数。若对一切 $x,y\in\mathbb{R}^n$ 与一切满足 $0\leqslant\lambda\leqslant1$ 的实数 $\lambda$ 都有
+\begin{align*}
+f(\lambda x+(1-\lambda)y)\leqslant\lambda f(x)+(1-\lambda)f(y),
+\end{align*}
+则称 $f$ 为 $\mathbb{R}^n$ 上的\textbf{凸函数}；上述不等式称为 $f$ 的\textbf{凸性不等式}，它要求 $f$ 在任意两点 $x,y$ 的每个凸组合处的取值不大于 $f(x)$ 与 $f(y)$ 的同一凸组合。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch06-6-3; kind=motivation; 说明凸性的几何含义、它与图像上方区域凸性的等价性，以及它在本节两条主结论中的作用
+\begin{remark}\phantomsection\label{remark:ch06-def-6-3-动机}
+该不等式断言：图像上连接 $(x,f(x))$ 与 $(y,f(y))$ 的弦位于图像的上方；等价地，图像上方的区域
+\begin{align*}
+\{(x,t)\in\mathbb{R}^n\times\mathbb{R}\mid t\geqslant f(x)\}
+\end{align*}
+是 $\mathbb{R}^{n+1}$ 中的凸集。这一纯代数条件给出的正则性远强于可测性。由它出发，\cref{theorem:ch06-6-7}(i) 将证明凸函数在 $\mathbb{R}^n$ 上局部 Lipschitz 连续，于是 $f\in W^{1,\infty}_{\loc}(\mathbb{R}^n)$，其梯度几乎处处存在并与弱梯度一致，\cref{theorem:ch03-3-2}（Rademacher 定理）因而适用。本节的两条主结论都以此为起点：\cref{theorem:ch06-6-7}给出用球上平均 $\fint_{B(x,r)}\lvert f\rvert\diff y$ 控制 $\lvert f\rvert$ 与 $\lvert Df\rvert$ 的尺度不变估计；\cref{theorem:ch06-6-8}把二阶导数实现为矩阵值的符号 Radon 测度 $[D^{2}f]$，使 $f$ 即使在处处不可微时仍有可用的二阶对象。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch06-6-3; kind=hypotheses; 逐条分析定义域与值域、量词顺序、端点取值、不等号方向与有限点凸组合的推广
+\begin{remark}\phantomsection\label{remark:ch06-def-6-3-条件}
+\begin{enumerate}[(i)]
+\item 定义要求 $f$ 定义在整个 $\mathbb{R}^n$ 上并取实值。若允许 $f$ 取值 $+\infty$（扩展实值凸函数），不等式仍有意义，但\cref{theorem:ch06-6-7}的局部有界性与\cref{theorem:ch06-6-8}的测度表示都须另加假设，故本节限于实值函数。% XREF internal
+\item 量词顺序为：对一切 $x,y\in\mathbb{R}^n$ 与一切 $\lambda\in[0,1]$。$x,y$ 的选取先于 $\lambda$，且不依赖于 $\lambda$。
+\item 端点 $\lambda=0$ 与 $\lambda=1$ 处不等式两端相等，恒成立；实质内容是 $\lambda\in(0,1)$ 的情形，此时 $\lambda x+(1-\lambda)y$ 是 $x$ 与 $y$ 的内分点。
+\item 不等号的方向不可反转。取 $f(x):=-\lvert x\rvert^{2}$，则 $f$ 满足反向的不等式，$f\in C^{2}(\mathbb{R}^n)$，而其 Hessian 为 $D^{2}f=-2I$，不是非负定矩阵，故\cref{theorem:ch06-6-7}(iii) 的结论不成立。% XREF internal
+\item 定义只涉及两点凸组合，但对点数 $m$ 作归纳可得：若 $\lambda_k\geqslant0$（$k=1,\cdots,m$）且 $\sum_{k=1}^{m}\lambda_k=1$，则
+\begin{align*}
+f\Bigl(\sum_{k=1}^{m}\lambda_kx_k\Bigr)\leqslant\sum_{k=1}^{m}\lambda_kf(x_k).
+\end{align*}
+这条推广在\cref{theorem:ch06-6-7}的证明第 (1) 步中用于立方体的 $2^{n}$ 个顶点。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[凸函数的性质]\label{theorem:ch06-6-7}
+设 $n$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}$ 为凸函数，即对一切 $x,y\in\mathbb{R}^n$ 与一切 $\lambda\in[0,1]$ 有 $f(\lambda x+(1-\lambda)y)\leqslant\lambda f(x)+(1-\lambda)f(y)$；$\mathcal{L}^{n}$ 为 $\mathbb{R}^n$ 上的 Lebesgue 测度。
+\begin{enumerate}[(i)]
+\item $f$ 在 $\mathbb{R}^n$ 上局部 Lipschitz 连续，即对每个紧集 $K\subseteq\mathbb{R}^n$ 存在常数 $C_K$，使得对一切 $x,y\in K$ 有 $\lvert f(x)-f(y)\rvert\leqslant C_K\lvert x-y\rvert$。
+\item 存在仅依赖于 $n$ 的常数 $C$，使得对每个球 $B(x,r)\subseteq\mathbb{R}^n$（$x\in\mathbb{R}^n$，$r>0$）有
+\begin{align*}
+\sup_{B(x,r/2)}\lvert f\rvert&\leqslant C\fint_{B(x,r)}\lvert f\rvert\diff y,\\
+\operatorname*{ess\,sup}_{B(x,r/2)}\lvert Df\rvert&\leqslant\frac{C}{r}\fint_{B(x,r)}\lvert f\rvert\diff y,
+\end{align*}
+其中 $Df$ 为 $f$ 的梯度，由 (i) 与 Rademacher 定理它在 $\mathcal{L}^{n}$-a.e. 的每一点处存在。
+\item 若进一步 $f\in C^{2}(\mathbb{R}^n)$，则
+\begin{align*}
+D^{2}f\geqslant0\quad\text{于 }\mathbb{R}^n\text{ 上},
+\end{align*}
+即对每个 $x\in\mathbb{R}^n$，$D^{2}f(x)$ 是非负定的对称矩阵。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）设 $Q:=[-L,L]^{n}$ 为立方体，其顶点集为 $V=\{v_k\}_{k=1}^{2^{n}}$。任意点 $x\in Q$ 可写成顶点的凸组合
+\begin{align*}
+x=\sum_{k=1}^{2^{n}}\lambda_kv_k,\qquad 0\leqslant\lambda_k\leqslant1,\qquad\sum_{k=1}^{2^{n}}\lambda_k=1,
+\end{align*}
+于是
+\begin{align*}
+f(x)\leqslant\sum_{k=1}^{2^{n}}\lambda_kf(v_k)\leqslant\max_{v_k\in V}f(v_k)<\infty,
+\end{align*}
+从而 $M:=\sup_{Q}f<\infty$。为得到下界，再次任取 $x\in Q$，并写
+\begin{align*}
+0=\frac12x+\frac12(-x).
+\end{align*}
+于是
+\begin{align*}
+f(0)\leqslant\frac12f(x)+\frac12f(-x)\leqslant\frac12f(x)+\frac12M,
+\end{align*}
+从而
+\begin{align*}
+f(x)\geqslant2f(0)-M.
+\end{align*}
+因此 $\inf_{Q}f\geqslant2f(0)-M$。这些估计对每个上述立方体 $Q$ 成立，故 $f$ 局部有界。
+
+% SUPPLEMENT: parent=theorem:ch06-6-7; kind=proof; 补出第 (1) 步的两处依据：顶点凸组合的显式系数公式与有限点凸组合不等式的归纳证明
+第 (1) 步的两处依据如下。
+
+（a）顶点凸组合的显式公式。设 $x=(x_1,\cdots,x_n)\in[-L,L]^{n}$。对每个 $i\in\{1,\cdots,n\}$ 令 $\lambda_i^{\pm}:=\frac{L\pm x_i}{2L}\geqslant0$，则 $\lambda_i^{+}+\lambda_i^{-}=1$ 且 $x_i=\lambda_i^{+}L+\lambda_i^{-}(-L)$。把 $n$ 个坐标的选取组合起来，得到 $2^{n}$ 个顶点（每个坐标取 $L$ 或 $-L$）上的系数 $\lambda_k\in[0,1]$，其和为 $\prod_{i=1}^{n}(\lambda_i^{+}+\lambda_i^{-})=1$。
+
+（b）有限点凸组合的不等式。对点数 $m$ 归纳证明。$m=1$ 时两端相等。设结论对 $m-1$ 成立，并设 $\lambda_k\geqslant0$ 与 $\sum_{k=1}^{m}\lambda_k=1$。若 $\lambda_m=1$，则其余系数为零，结论化为等式；若 $\lambda_m<1$，令 $s:=1-\lambda_m=\sum_{k=1}^{m-1}\lambda_k>0$ 与 $\mu_k:=\lambda_k/s$，则 $\mu_k\geqslant0$、$\sum_{k=1}^{m-1}\mu_k=1$，且
+\begin{align*}
+\sum_{k=1}^{m}\lambda_kx_k=(1-\lambda_m)\sum_{k=1}^{m-1}\mu_kx_k+\lambda_mx_m .
+\end{align*}
+对两点 $y:=\sum_{k=1}^{m-1}\mu_kx_k$ 与 $x_m$ 用定义中的不等式，再对 $y$ 用归纳假设，得
+\begin{align*}
+f\Bigl(\sum_{k=1}^{m}\lambda_kx_k\Bigr)
+&\leqslant(1-\lambda_m)f\Bigl(\sum_{k=1}^{m-1}\mu_kx_k\Bigr)+\lambda_mf(x_m)\\
+&\leqslant(1-\lambda_m)\sum_{k=1}^{m-1}\mu_kf(x_k)+\lambda_mf(x_m)=\sum_{k=1}^{m}\lambda_kf(x_k).
+\end{align*}
+
+（2）若 $x,y\in B(r)$ 且 $x\neq y$，其中 $B(r):=B(0,r)$，选取 $\mu>0$ 使得
+\begin{align*}
+z:=x+\mu(y-x)\in\partial B(2r).
+\end{align*}
+则 $\mu=\frac{\lvert z-x\rvert}{\lvert y-x\rvert}>1$ 且 $y=\frac1\mu z+\bigl(1-\frac1\mu\bigr)x$。于是
+\begin{align*}
+f(y)&\leqslant\frac1\mu f(z)+\Bigl(1-\frac1\mu\Bigr)f(x)\\
+&=f(x)+\frac1\mu\bigl(f(z)-f(x)\bigr)\\
+&\leqslant f(x)+C\lvert y-x\rvert,
+\end{align*}
+其中 $C:=\frac2r\sup_{B(2r)}\lvert f\rvert$，因为 $\lvert z-x\rvert\geqslant r$。交换 $x,y$ 得
+\begin{align*}
+\lvert f(y)-f(x)\rvert\leqslant C\lvert y-x\rvert\qquad\bigl(x,y\in B(r)\bigr).
+\end{align*}
+断言 (i) 得证。
+
+（3）其次设 $f\in C^{2}(\mathbb{R}^n)$ 且凸，并固定 $x\in\mathbb{R}^n$。则对每个 $y\in\mathbb{R}^n$ 与 $\lambda\in(0,1)$ 有
+\begin{align*}
+f\bigl(x+\lambda(y-x)\bigr)\leqslant f(x)+\lambda\bigl(f(y)-f(x)\bigr).
+\end{align*}
+于是
+\begin{align*}
+\frac{f\bigl(x+\lambda(y-x)\bigr)-f(x)}{\lambda}\leqslant f(y)-f(x).
+\end{align*}
+令 $\lambda\to0^{+}$ 得
+\begin{align*}
+f(y)\geqslant f(x)+Df(x)\cdot(y-x)\qquad(\star)
+\end{align*}
+对一切 $x,y\in\mathbb{R}^n$ 成立。
+
+（4）现给定 $B(x,r)\subset\mathbb{R}^n$，固定一点 $z\in B(x,r/2)$。则 $(\star)$ 蕴含
+\begin{align*}
+f(y)\geqslant f(z)+Df(z)\cdot(y-z).
+\end{align*}
+将此不等式关于 $y$ 在 $B(z,r/2)$ 上积分得
+\begin{align*}
+f(z)\leqslant\fint_{B(z,r/2)}f(y)\diff y\leqslant C\fint_{B(x,r)}\lvert f\rvert\diff y.\qquad(\star\star)
+\end{align*}
+其次取光滑截断函数 $\zeta\in C_c^{\infty}(\mathbb{R}^n)$ 满足
+\begin{align*}
+\begin{cases}
+0\leqslant\zeta\leqslant1,\qquad\lvert D\zeta\rvert\leqslant\dfrac{C}{r},\\[2pt]
+\zeta\equiv1\ \text{于}\ B(x,r/2),\qquad\zeta\equiv0\ \text{于}\ \mathbb{R}^n\setminus B(x,r).
+\end{cases}
+\end{align*}
+现 $(\star)$ 蕴含
+\begin{align*}
+f(z)\geqslant f(y)+Df(y)\cdot(z-y).
+\end{align*}
+将此不等式乘以 $\zeta(y)$ 并关于 $y$ 在 $B(x,r)$ 上积分：
+\begin{align*}
+f(z)\int_{B(x,r)}\zeta(y)\diff y
+&\geqslant\int_{B(x,r)}f(y)\zeta(y)\diff y+\int_{B(x,r)}\zeta(y)Df(y)\cdot(z-y)\diff y\\
+&=\int_{B(x,r)}f(y)\bigl[\zeta(y)-\operatorname{div}\bigl(\zeta(y)(z-y)\bigr)\bigr]\diff y\\
+&\geqslant-C\int_{B(x,r)}\lvert f\rvert\diff y.
+\end{align*}
+该不等式蕴含
+\begin{align*}
+f(z)\geqslant-C\fint_{B(x,r)}\lvert f\rvert\diff y,
+\end{align*}
+它与 $(\star\star)$ 一起给出
+\begin{align*}
+\lvert f(z)\rvert\leqslant C\fint_{B(x,r)}\lvert f\rvert\diff y.\qquad(\star\star\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch06-6-7; kind=proof; 补出第 (4) 步的三处依据：球上平均消去质心项、$B(z,r/2)$ 与 $B(x,r)$ 的体积换算、分部积分的边界项与散度估计
+第 (4) 步的三处依据如下。
+
+（a）$(\star\star)$ 的第一个不等号。把 $(\star)$ 在 $x=z$ 处关于 $y$ 在 $B(z,r/2)$ 上积分，得
+\begin{align*}
+\int_{B(z,r/2)}f(y)\diff y\geqslant f(z)\,\mathcal{L}^{n}\bigl(B(z,r/2)\bigr)+Df(z)\cdot\int_{B(z,r/2)}(y-z)\diff y .
+\end{align*}
+球关于其中心对称，故 $\int_{B(z,r/2)}(y-z)\diff y=0$；两边除以 $\mathcal{L}^{n}(B(z,r/2))$ 即得 $f(z)\leqslant\fint_{B(z,r/2)}f\diff y$。
+
+（b）$(\star\star)$ 的第二个不等号。若 $y\in B(z,r/2)$，则 $\lvert y-x\rvert\leqslant\lvert y-z\rvert+\lvert z-x\rvert<\frac r2+\frac r2=r$，故 $B(z,r/2)\subseteq B(x,r)$；又 $\mathcal{L}^{n}(B(x,r))=2^{n}\mathcal{L}^{n}(B(z,r/2))$，于是
+\begin{align*}
+\fint_{B(z,r/2)}f\diff y\leqslant\frac{\mathcal{L}^{n}(B(x,r))}{\mathcal{L}^{n}(B(z,r/2))}\fint_{B(x,r)}\lvert f\rvert\diff y=2^{n}\fint_{B(x,r)}\lvert f\rvert\diff y .
+\end{align*}
+
+（c）分部积分。函数 $y\mapsto\zeta(y)(z-y)$ 在 $B(x,r)$ 的边界附近为零，故散度定理中的边界项为零，从而
+\begin{align*}
+\int_{B(x,r)}\zeta(y)Df(y)\cdot(z-y)\diff y=-\int_{B(x,r)}f(y)\operatorname{div}\bigl(\zeta(y)(z-y)\bigr)\diff y .
+\end{align*}
+在 $\zeta$ 的支集上，$\lvert z-y\rvert\leqslant\lvert z-x\rvert+\lvert x-y\rvert<\frac r2+r$，故
+\begin{align*}
+\bigl\lvert\operatorname{div}\bigl(\zeta(y)(z-y)\bigr)\bigr\rvert\leqslant\lvert D\zeta(y)\rvert\,\lvert z-y\rvert+n\zeta(y)\leqslant\frac Cr\cdot\frac{3r}{2}+n\leqslant C',
+\end{align*}
+其中 $C'$ 只依赖于 $n$。另一方面 $\zeta\equiv1$ 于 $B(x,r/2)$，故
+\begin{align*}
+\int_{B(x,r)}\zeta(y)\diff y\geqslant\mathcal{L}^{n}\bigl(B(x,r/2)\bigr)=2^{-n}\mathcal{L}^{n}\bigl(B(0,1)\bigr)r^{n}.
+\end{align*}
+把这两点代入分部积分之后的等式，并用 $\zeta-\operatorname{div}(\zeta(z-\cdot))\geqslant-C'$ 逐点估计被积函数，得
+\begin{align*}
+f(z)\,2^{-n}\mathcal{L}^{n}\bigl(B(0,1)\bigr)r^{n}\geqslant-C'\int_{B(x,r)}\lvert f\rvert\diff y,
+\end{align*}
+即 $f(z)\geqslant-C\fint_{B(x,r)}\lvert f\rvert\diff y$，其中 $C$ 只依赖于 $n$。
+
+（5）对上述 $z$，定义
+\begin{align*}
+S_z:=\Bigl\{y\ \Big|\ \frac r4\leqslant\lvert y-x\rvert\leqslant\frac r2,\ Df(z)\cdot(y-z)\geqslant\frac12\lvert Df(z)\rvert\,\lvert y-z\rvert\Bigr\},
+\end{align*}
+并注意
+\begin{align*}
+\mathcal{L}^{n}(S_z)\geqslant Cr^{n},
+\end{align*}
+其中 $C$ 只依赖于 $n$。用 $(\star)$ 可写
+\begin{align*}
+f(y)\geqslant f(z)+\frac r8\lvert Df(z)\rvert
+\end{align*}
+对一切 $y\in S_z$ 成立。在 $S_z$ 上积分得
+\begin{align*}
+\lvert Df(z)\rvert\leqslant\frac Cr\fint_{B(x,r/2)}\lvert f(y)-f(z)\rvert\diff y .
+\end{align*}
+该不等式与 $(\star\star\star)$ 一起完成了对 $C^{2}$ 凸函数 $f$ 的断言 (i) 的证明。
+
+% SUPPLEMENT: parent=theorem:ch06-6-7; kind=proof; 补出第 (5) 步的完整论证：环域测度下界与 $\lvert y-z\rvert$ 正下界须以 $z$ 为心取环域，并据此重算积分估计
+第 (5) 步的两处依据如下。
+
+（a）环域的测度下界与 $\lvert y-z\rvert$ 的正下界。按上述定义，$y\in S_z$ 只保证 $\frac r4\leqslant\lvert y-x\rvert\leqslant\frac r2$，由此不能推出 $\lvert y-z\rvert$ 有正下界：取单位向量 $u$ 与 $z=x+\frac r2u$，则点 $y=x+\frac r2u$ 满足 $\frac r4\leqslant\lvert y-x\rvert\leqslant\frac r2$ 而 $\lvert y-z\rvert=0$。把半径条件改以 $z$ 为心，令
+\begin{align*}
+\tilde S_z:=\Bigl\{y\ \Big|\ \frac r4\leqslant\lvert y-z\rvert\leqslant\frac r2,\ Df(z)\cdot(y-z)\geqslant\frac12\lvert Df(z)\rvert\,\lvert y-z\rvert\Bigr\}.
+\end{align*}
+若 $Df(z)\neq0$，则变换 $y\mapsto2z-y$ 把环域 $\{\frac r4\leqslant\lvert y-z\rvert\leqslant\frac r2\}$ 映为自身并把 $Df(z)\cdot(y-z)$ 变为它的相反数，故该环域中恰有一半含于 $\tilde S_z$；若 $Df(z)=0$，则半空间条件对一切 $y$ 成立，$\tilde S_z$ 就是整个环域。两种情形下都有
+\begin{align*}
+\mathcal{L}^{n}(\tilde S_z)\geqslant\frac12\Bigl(\mathcal{L}^{n}(B(z,r/2))-\mathcal{L}^{n}(B(z,r/4))\Bigr)\geqslant c_nr^{n},
+\end{align*}
+其中 $c_n:=2^{-n-2}\mathcal{L}^{n}(B(0,1))$ 只依赖于 $n$。对 $y\in\tilde S_z$ 又有 $\lvert y-z\rvert\geqslant\frac r4$，于是由 $(\star)$ 与半空间条件得
+\begin{align*}
+f(y)\geqslant f(z)+Df(z)\cdot(y-z)\geqslant f(z)+\frac12\lvert Df(z)\rvert\,\lvert y-z\rvert\geqslant f(z)+\frac r8\lvert Df(z)\rvert .
+\end{align*}
+
+（b）由积分得到的估计。由 $z\in B(x,r/2)$ 与 $\lvert y-z\rvert<\frac r2$ 得 $\lvert y-x\rvert<r$，故 $\tilde S_z\subseteq B(x,r)$。在 $\tilde S_z$ 上积分 (a) 中最后的不等式，得
+\begin{align*}
+\int_{\tilde S_z}\bigl(f(y)-f(z)\bigr)\diff y\geqslant\frac r8\lvert Df(z)\rvert\,\mathcal{L}^{n}(\tilde S_z)\geqslant\frac{c_n}{8}\lvert Df(z)\rvert\,r^{n+1},
+\end{align*}
+而左端不超过 $\int_{B(x,r)}\lvert f(y)-f(z)\rvert\diff y$。于是
+\begin{align*}
+\lvert Df(z)\rvert\leqslant\frac{C}{r}\fint_{B(x,r)}\lvert f(y)-f(z)\rvert\diff y,
+\end{align*}
+其中 $C:=\dfrac{8\mathcal{L}^{n}(B(0,1))}{c_n}$ 只依赖于 $n$。再由 $(\star\star\star)$ 估计 $\lvert f(z)\rvert$，并把常数增大，即得
+\begin{align*}
+\lvert Df(z)\rvert\leqslant\frac Cr\fint_{B(x,r)}\lvert f\rvert\diff y
+\end{align*}
+对一切 $z\in B(x,r/2)$ 成立。
+
+（6）若 $f$ 只是凸函数，定义 $f^{\varepsilon}:=\eta_{\varepsilon}*f$，其中 $\varepsilon>0$，$\eta_{\varepsilon}$ 为标准磨光核。
+
+\textbf{断言 \#2.} $f^{\varepsilon}$ 是凸函数。
+
+\textbf{断言之证明.} 固定 $x,y\in\mathbb{R}^n$ 与 $0\leqslant\lambda\leqslant1$。则对每个 $z\in\mathbb{R}^n$ 有
+\begin{align*}
+f\bigl(z-(\lambda x+(1-\lambda)y)\bigr)&=f\bigl(\lambda(z-x)+(1-\lambda)(z-y)\bigr)\\
+&\leqslant\lambda f(z-x)+(1-\lambda)f(z-y).
+\end{align*}
+将此估计乘以 $\eta_{\varepsilon}(z)\geqslant0$ 并在 $\mathbb{R}^n$ 上积分：
+\begin{align*}
+f^{\varepsilon}\bigl(\lambda x+(1-\lambda)y\bigr)
+&=\int_{\mathbb{R}^n}f\bigl(z-(\lambda x+(1-\lambda)y)\bigr)\eta_{\varepsilon}(z)\diff z\\
+&\leqslant\lambda\int_{\mathbb{R}^n}f(z-x)\eta_{\varepsilon}(z)\diff z+(1-\lambda)\int_{\mathbb{R}^n}f(z-y)\eta_{\varepsilon}(z)\diff z\\
+&=\lambda f^{\varepsilon}(x)+(1-\lambda)f^{\varepsilon}(y).
+\end{align*}
+
+（7）根据上面为光滑凸函数证明的估计，有
+\begin{align*}
+\sup_{B(x,r/2)}\bigl(\lvert f^{\varepsilon}\rvert+r\lvert Df^{\varepsilon}\rvert\bigr)\leqslant C\fint_{B(x,r)}\lvert f^{\varepsilon}\rvert\diff y
+\end{align*}
+对每个球 $B(x,r)\subset\mathbb{R}^n$ 成立。令 $\varepsilon\to0$，取极限即得 $f$ 的同样估计。断言 (i) 得证。
+
+% SUPPLEMENT: parent=theorem:ch06-6-7; kind=proof; 补出第 (7) 步中 $\varepsilon\to0$ 极限的三项依据：磨光函数的局部一致收敛、$Df^{\varepsilon}=\eta_{\varepsilon}*Df$、上确界向 $\operatorname{ess\,sup}$ 的传递
+第 (7) 步的极限需要逐项核对。
+
+（a）$f^{\varepsilon}\to f$ 局部一致。由第 (1)(2) 步，$f$ 在 $\overline{B(x,2r)}$ 上 Lipschitz 连续，设其 Lipschitz 常数为 $L$。对 $y\in B(x,r)$ 与 $0<\varepsilon<r$ 有 $\lvert f(y-z)-f(y)\rvert\leqslant L\lvert z\rvert\leqslant L\varepsilon$ 对 $\lvert z\rvert<\varepsilon$ 成立，于是
+\begin{align*}
+\lvert f^{\varepsilon}(y)-f(y)\rvert\leqslant\int_{\mathbb{R}^n}\lvert f(y-z)-f(y)\rvert\eta_{\varepsilon}(z)\diff z\leqslant L\varepsilon .
+\end{align*}
+故 $f^{\varepsilon}\to f$ 在 $B(x,r)$ 上一致。
+
+（b）$Df^{\varepsilon}=\eta_{\varepsilon}*Df$。由第 (2) 步 $f$ 局部 Lipschitz 连续，故 $f\in W^{1,\infty}_{\loc}(\mathbb{R}^n)$，其弱梯度 $Df$ 属于 $L^{\infty}_{\loc}(\mathbb{R}^n;\mathbb{R}^n)$。磨光与弱微分可交换，即 $Df^{\varepsilon}=(Df)*\eta_{\varepsilon}$ 于 $\mathcal{L}^{n}$-a.e. 处成立。
+
+（c）上确界的传递。固定球 $B(x,r)$，取 $\mathcal{L}^{n}$-a.e. 的点 $z_0\in B(x,r/2)$，使 $z_0$ 是 $Df$ 的 Lebesgue 点。由 (b) 得 $\lvert Df^{\varepsilon}(z_0)\rvert\to\lvert Df(z_0)\rvert$（$\varepsilon\to0$），于是
+\begin{align*}
+\lvert Df(z_0)\rvert=\lim_{\varepsilon\to0}\lvert Df^{\varepsilon}(z_0)\rvert\leqslant\liminf_{\varepsilon\to0}\ \sup_{B(x,r/2)}\lvert Df^{\varepsilon}\rvert .
+\end{align*}
+对 $\mathcal{L}^{n}$-a.e. 的 $z_0$ 取上确界，并用 (a) 与 $B(x,r)$ 上的有界性计算右端的极限，得
+\begin{align*}
+\operatorname*{ess\,sup}_{B(x,r/2)}\lvert Df\rvert
+\leqslant\liminf_{\varepsilon\to0}\ \sup_{B(x,r/2)}\lvert Df^{\varepsilon}\rvert
+\leqslant\lim_{\varepsilon\to0}\frac Cr\fint_{B(x,r)}\lvert f^{\varepsilon}\rvert\diff y
+=\frac Cr\fint_{B(x,r)}\lvert f\rvert\diff y .
+\end{align*}
+$f$ 的估计同理由 (a) 取极限得到。
+
+（8）为证明断言 (ii)，由 Taylor 定理，
+\begin{align*}
+f(y)=f(x)+Df(x)\cdot(y-x)+(y-x)^{T}\cdot\int_0^1(1-s)D^{2}f\bigl(x+s(y-x)\bigr)\diff s\cdot(y-x).
+\end{align*}
+此等式与 $(\star)$ 给出
+\begin{align*}
+(y-x)^{T}\cdot\int_0^1(1-s)D^{2}f\bigl(x+s(y-x)\bigr)\diff s\cdot(y-x)\geqslant0
+\end{align*}
+对一切 $x,y\in\mathbb{R}^n$ 成立。于是对任意向量 $\xi\in\mathbb{R}^n$，在上式中取 $y=x+t\xi$（$t>0$）算得
+\begin{align*}
+\xi^{T}\cdot\int_0^1(1-s)D^{2}f(x+st\xi)\diff s\cdot\xi\geqslant0 .
+\end{align*}
+令 $t\to0$ 得
+\begin{align*}
+\xi^{T}\cdot D^{2}f(x)\cdot\xi\geqslant0 .
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-7; kind=motivation; 说明三条断言的含义与整个证明的八步结构：局部有界→Lipschitz→C² 情形的支撑线与两个方向估计→磨光过渡→Taylor 展开给出 Hessian 半正定
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-7-动机}
+凸性不包含任何光滑性假设，却自动给出三条结论，这是本定理的实质。(i) 是正则性结论：局部有界（第 (1) 步）与凸性结合给出 Lipschitz 估计，于是凸函数连续，并由\cref{theorem:ch03-3-2}几乎处处可微。(ii) 是定量估计：函数与梯度的局部大小被同一球上的平均控制，梯度估计带因子 $1/r$。(iii) 是二阶刻画：$C^{2}$ 凸函数的 Hessian 非负定，即凸性在二阶 Taylor 展开下的形式。% XREF internal
+证明分八步。第 (1) 步在立方体上用顶点凸组合得到上界，再用关于原点的对称性 $0=\frac12x+\frac12(-x)$ 得到下界，从而 $f$ 局部有界，且界只依赖 $f(0)$ 与 $f$ 在立方体上的上确界。第 (2) 步把局部有界性转成 Lipschitz 估计：把 $y$ 沿射线 $x+\mu(y-x)$ 投影到球面 $\partial B(2r)$ 上，凸性给出 $f(y)\leqslant f(x)+\frac1\mu(f(z)-f(x))$，而 $\frac1\mu=\lvert y-x\rvert/\lvert z-x\rvert\leqslant\lvert y-x\rvert/r$，故常数是 $\frac2r\sup_{B(2r)}\lvert f\rvert$。第 (3) 步对 $C^{2}$ 函数在一点处沿方向 $y-x$ 求导并令 $\lambda\to0^{+}$，得到支撑线不等式 $(\star)$：图像位于每一点处的切平面之上。第 (4) 步由 $(\star)$ 向两个方向积分：在球 $B(z,r/2)$ 上直接积分，一阶项因球的对称性消失，得到 $f(z)$ 的上界 $(\star\star)$；把 $z$ 与 $y$ 互换后乘以截断函数 $\zeta$ 并分部积分，把 $Df$ 的贡献转移到 $f$ 上，得到下界 $(\star\star\star)$。第 (5) 步把 $(\star)$ 限制在球壳的一个半空间切片 $S_z$ 上，用 $f-f(z)$ 的下界反解出 $\lvert Df(z)\rvert$，其中因子 $1/r$ 来自切片半径是 $r$ 的固定倍数。第 (6)(7) 步用磨光把 $C^{2}$ 情形的估计过渡到一般凸函数：磨光保持凸性（断言 \#2），且磨光函数在紧集上一致收敛于 $f$。第 (8) 步用带积分余项的 Taylor 公式读出 $(\star)$ 的二阶形式，得到 $D^{2}f\geqslant0$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-7; kind=hypotheses; 逐条分析凸性假设的作用、$C^2$ 附加假设的三处使用、常数只依赖 $n$ 的含义、$1/r$ 因子的必要性以及结论不能加强的原因
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-7-条件}
+\begin{enumerate}[(i)]
+\item 断言 (i)(ii) 的假设只有凸性，没有连续性、可微性或可积性。局部有界性来自立方体上的两个不等式，而这两个不等式只用顶点凸组合与对称性；Lipschitz 估计只用一次凸性不等式。凸性因此替代了通常需要的紧性与连续性假设。
+\item 断言 (iii) 的附加假设 $f\in C^{2}(\mathbb{R}^n)$ 在三处使用：第 (3) 步需要 $Df(x)$ 对每个 $x$ 存在且极限 $\lambda\to0^{+}$ 可算；第 (4)(5) 步需要 $(\star)$ 在一切点处成立（从而可对 $y$ 积分、可对 $z$ 反解）；第 (8) 步需要 $D^{2}f$ 在 $x$ 处连续，以便在 Taylor 余项中令 $t\to0$ 取极限。仅有凸性与局部 Lipschitz 性时 (iii) 无意义，因为 $D^{2}f$ 可能处处不存在。
+\item 常数 $C$ 只依赖于 $n$，与 $f$、$x$、$r$ 都无关。这是定理的定量内容：同一常数对一切凸函数与一切球成立。若允许 $C$ 依赖 $f$ 或 $r$，两个估计都变得平凡。
+\item 梯度估计中的因子 $1/r$ 不可去掉。取 $f(x)=\lvert x\rvert$ 与 $f_{\lambda}(x):=\lvert x\rvert/\lambda$（$\lambda>0$），则 $f_{\lambda}$ 凸，$\operatorname{ess\,sup}_{B(0,r/2)}\lvert Df_{\lambda}\rvert=1/\lambda$，而 $\fint_{B(0,r)}\lvert f_{\lambda}\rvert\diff y=\frac{n}{n+1}\frac r\lambda$。若估计中不含 $1/r$，则得 $1/\lambda\leqslant C\frac{n}{n+1}\frac r\lambda$，即 $1\leqslant C\frac{n}{n+1}r$，令 $r\to0$ 时对任何固定常数 $C$ 都不成立。
+\item 断言 (i) 的结论不能加强：$f(x)=\lvert x\rvert^{2}$ 在 $\mathbb{R}^n$ 上凸，但不是全局 Lipschitz 连续；$f(x)=\lvert x\rvert$ 在 $\mathbb{R}^n$ 上凸，而在 $x=0$ 处不可微，故不能把「局部 Lipschitz」加强为「$C^{1}$」。
+\item 断言 (ii) 中的上确界只对 $\lvert f\rvert$ 取，对 $\lvert Df\rvert$ 只能取本质上确界：$Df$ 由 (i) 与 Rademacher 定理只在 $\mathcal{L}^{n}$-a.e. 处存在，逐点上确界无意义。断言 (iii) 的逆命题对 $C^{2}$ 函数成立：若 $D^{2}f\geqslant0$ 于 $\mathbb{R}^n$ 上，则由带积分余项的 Taylor 公式沿线段 $x+t(y-x)$ 积分得 $f(y)\geqslant f(x)+Df(x)\cdot(y-x)$，再把该不等式分别用于 $x$ 与 $y$（以 $z:=\lambda x+(1-\lambda)y$ 为展开点），并以系数 $\lambda$ 与 $1-\lambda$ 相加即得凸性不等式；本定理只使用正向结论。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-7; kind=correction; 说明证明中的「断言 (i)」「断言 (ii)」与定理陈述的编号相差一位
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-7-编号}
+证明内部的编号与定理陈述的编号相差一位：第 (2) 步末尾的「断言 (i)」对应陈述 (i)；第 (3) 至 (7) 步证明的是陈述 (ii) 的两条估计，其中第 (5) 步末尾与第 (7) 步末尾所写的「断言 (i)」应按陈述 (ii) 理解；第 (8) 步开头所写的「断言 (ii)」应按陈述 (iii) 理解。按定理陈述，断言 (ii) 是两条球上平均估计，断言 (iii) 是 $D^{2}f\geqslant0$。除编号外，论证内容与陈述相符。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-7; kind=correction; 说明第 (5) 步中环域 $S_z$ 的半径条件须以 $z$ 为心，否则测度下界与 $f$ 的下界都不成立
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-7-环域}
+第 (5) 步中 $S_z$ 的半径条件若按 $\frac r4\leqslant\lvert y-x\rvert\leqslant\frac r2$ 理解，则不能推出 $\lvert y-z\rvert\geqslant\frac r4$，从而不能由 $(\star)$ 得到 $f(y)\geqslant f(z)+\frac r8\lvert Df(z)\rvert$；同时，当 $z$ 逼近球面 $\partial B(x,r/2)$ 时，满足半空间条件的那部分环域的体积随 $z$ 变化而无正下界，故「$\mathcal{L}^{n}(S_z)\geqslant Cr^{n}$，其中 $C$ 只依赖于 $n$」对这样的 $S_z$ 不成立。把半径条件改为以 $z$ 为心的 $\frac r4\leqslant\lvert y-z\rvert\leqslant\frac r2$ 后论证成立：环域被半空间条件恰好分成两半，其测度不小于 $c_nr^{n}$，且 $\lvert y-z\rvert\geqslant\frac r4$；相应的积分区域由 $B(x,r/2)$ 换成 $B(x,r)$，结论中的常数仍只依赖于 $n$。以 $z$ 为心的版本不影响结论，前述论证采用的正是这一版本。
+\end{remark}
+
+\begin{theorem}[二阶导数作为测度]\label{theorem:ch06-6-8}
+设 $n$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}$ 为凸函数，$\mathcal{L}^{n}$ 为 $\mathbb{R}^n$ 上的 Lebesgue 测度；记 $\varphi_{x_ix_j}:=\partial^{2}\varphi/\partial x_i\partial x_j$，$f_{x_i}$ 为 $f$ 的第 $i$ 个弱偏导数，$\mathbb{M}^{n\times n}$ 为实 $n\times n$ 矩阵空间。
+\begin{enumerate}[(i)]
+\item 存在符号 Radon 测度 $\mu^{ij}=\mu^{ji}$（$i,j=1,\cdots,n$），使得
+\begin{align*}
+\int_{\mathbb{R}^n}f\varphi_{x_ix_j}\diff x=\int_{\mathbb{R}^n}\varphi\diff\mu^{ij}\qquad(i,j=1,\cdots,n)
+\end{align*}
+对一切 $\varphi\in C_c^{2}(\mathbb{R}^n)$ 成立；此外，$\mu^{ii}$ 是非负测度（$i=1,\cdots,n$）。
+\item 进一步，
+\begin{align*}
+f_{x_1},\cdots,f_{x_n}\in\BV_{\loc}(\mathbb{R}^n),
+\end{align*}
+即 $f$ 的每个一阶弱偏导数都是 $\mathbb{R}^n$ 上的局部有界变差函数。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）固定向量 $\xi\in\mathbb{R}^n$，$\xi=(\xi_1,\cdots,\xi_n)$，$\lvert\xi\rvert=1$。设 $\eta_{\varepsilon}$ 为标准磨光核，写 $f^{\varepsilon}:=\eta_{\varepsilon}*f$。则 $f^{\varepsilon}$ 光滑且凸，从而
+\begin{align*}
+D^{2}f^{\varepsilon}\geqslant0 .
+\end{align*}
+于是对一切 $\varphi\in C_c^{2}(\mathbb{R}^n)$，$\varphi\geqslant0$，
+\begin{align*}
+\sum_{i,j=1}^{n}\int_{\mathbb{R}^n}f^{\varepsilon}\varphi_{x_ix_j}\xi_i\xi_j\diff x=\int_{\mathbb{R}^n}\varphi\sum_{i,j=1}^{n}f^{\varepsilon}_{x_ix_j}\xi_i\xi_j\diff x\geqslant0 .
+\end{align*}
+令 $\varepsilon\to0$ 得
+\begin{align*}
+L(\varphi):=\sum_{i,j=1}^{n}\int_{\mathbb{R}^n}f\varphi_{x_ix_j}\xi_i\xi_j\diff x\geqslant0 .
+\end{align*}
+于是由\cref{theorem:ch01-1-39}，存在 Radon 测度 $\mu^{\xi}$，使得% XREF p=271 "Then Theorem 1.39 implies the existence of a Radon measure"
+\begin{align*}
+L(\varphi)=\int_{\mathbb{R}^n}\varphi\diff\mu^{\xi}
+\end{align*}
+对一切 $\varphi\in C_c^{2}(\mathbb{R}^n)$ 成立。
+
+% SUPPLEMENT: parent=theorem:ch06-6-8; kind=proof; 补出第 (1) 步的依据：磨光函数的凸性与光滑性、两次分部积分，以及 $\varepsilon\to0$ 的极限
+第 (1) 步的三处依据如下。
+
+（a）$f^{\varepsilon}$ 光滑且凸。光滑性来自磨光核 $\eta_{\varepsilon}$ 光滑与 $f\in L^{1}_{\loc}(\mathbb{R}^n)$（后者由\cref{theorem:ch06-6-7}的证明第 (1) 步的局部有界性得到）。% XREF internal
+凸性由定义中的不等式与 $\eta_{\varepsilon}\geqslant0$、$\int\eta_{\varepsilon}=1$ 得到：对 $x,y\in\mathbb{R}^n$ 与 $\lambda\in[0,1]$ 有
+\begin{align*}
+f^{\varepsilon}\bigl(\lambda x+(1-\lambda)y\bigr)
+&=\int_{\mathbb{R}^n}f\bigl(\lambda(x-z)+(1-\lambda)(y-z)\bigr)\eta_{\varepsilon}(z)\diff z\\
+&\leqslant\lambda f^{\varepsilon}(x)+(1-\lambda)f^{\varepsilon}(y).
+\end{align*}
+于是由\cref{theorem:ch06-6-7}(iii) 得 $D^{2}f^{\varepsilon}\geqslant0$，即 $\sum_{i,j=1}^{n}f^{\varepsilon}_{x_ix_j}\xi_i\xi_j\geqslant0$ 对一切 $\xi\in\mathbb{R}^n$ 成立。% XREF internal
+
+（b）第一个等号。$f^{\varepsilon}$ 与 $\varphi$ 都光滑，且 $\varphi$ 具有紧支集，故对 $x_i$ 与 $x_j$ 各作一次分部积分时边界项为零，从而
+\begin{align*}
+\int_{\mathbb{R}^n}f^{\varepsilon}\varphi_{x_ix_j}\diff x=\int_{\mathbb{R}^n}f^{\varepsilon}_{x_ix_j}\varphi\diff x .
+\end{align*}
+
+（c）$\varepsilon\to0$ 的极限。由\cref{theorem:ch06-6-7}(i)，$f$ 局部 Lipschitz 连续。% XREF internal
+取紧集 $K$ 含于 $\varphi$ 的支集的一个邻域，并设 $L$ 为 $f$ 在该邻域的 $1$-邻域上的 Lipschitz 常数（当 $\varepsilon$ 充分小时该常数与 $\varepsilon$ 无关）。对 $y\in K$ 与 $\lvert z\rvert<\varepsilon$ 有 $\lvert f(y-z)-f(y)\rvert\leqslant L\lvert z\rvert\leqslant L\varepsilon$，故
+\begin{align*}
+\bigl\lvert f^{\varepsilon}(y)-f(y)\bigr\rvert\leqslant\int_{\mathbb{R}^n}\lvert f(y-z)-f(y)\rvert\eta_{\varepsilon}(z)\diff z\leqslant L\varepsilon
+\end{align*}
+于 $K$ 上一致，从而 $\int f^{\varepsilon}\varphi_{x_ix_j}\diff x\to\int f\varphi_{x_ix_j}\diff x$。上式左端的每一项对一切 $\varepsilon$ 非负，极限仍非负，故 $L(\varphi)\geqslant0$ 对一切非负的 $\varphi\in C_c^{2}(\mathbb{R}^n)$ 成立。% XREF internal
+
+（d）从 $C_c^{\infty}$ 到 $C_c^{2}$ 的延拓。$L$ 定义在 $C_c^{2}(\mathbb{R}^n)$ 上；把它限制在 $C_c^{\infty}(\mathbb{R}^n)\subseteq C_c^{2}(\mathbb{R}^n)$ 上，仍为线性泛函且把非负函数映为非负实数，故由\cref{theorem:ch01-1-39}存在 Radon 测度 $\mu^{\xi}$，使 $L(\varphi)=\int\varphi\diff\mu^{\xi}$ 对一切 $\varphi\in C_c^{\infty}(\mathbb{R}^n)$ 成立。% XREF internal
+为把它延拓到 $C_c^{2}(\mathbb{R}^n)$，设 $\varphi\in C_c^{2}(\mathbb{R}^n)$，取开集 $U$ 与紧集 $K$ 使 $\operatorname{spt}\varphi\subseteq K\subseteq U$，并取截断函数 $\zeta\in C_c^{\infty}(U)$ 满足 $0\leqslant\zeta\leqslant1$、$\zeta\equiv1$ 于 $K$。对 $k$ 充分大令 $\varphi_k:=\zeta\cdot(\eta_{1/k}*\varphi)$，则 $\varphi_k\in C_c^{\infty}(\mathbb{R}^n)$、$\operatorname{spt}\varphi_k\subseteq U$，且 $\varphi_k\to\varphi$、$D^{2}\varphi_k\to D^{2}\varphi$ 在 $K$ 上一致。于是
+\begin{align*}
+\bigl\lvert L(\varphi_k)-L(\varphi)\bigr\rvert\leqslant n^{2}\lVert f\rVert_{L^{1}(U)}\bigl\lVert D^{2}(\varphi_k-\varphi)\bigr\rVert_{L^{\infty}(K)}\longrightarrow0,
+\end{align*}
+而 $\int\varphi_k\diff\mu^{\xi}\to\int\varphi\diff\mu^{\xi}$，因为 $\varphi_k\to\varphi$ 于 $U$ 上一致而 $\mu^{\xi}$ 在 $U$ 上有限。故 $L(\varphi)=\int\varphi\diff\mu^{\xi}$ 对一切 $\varphi\in C_c^{2}(\mathbb{R}^n)$ 成立。% XREF internal
+
+（2）令 $\mu^{ii}:=\mu^{e_i}$（$i=1,\cdots,n$）。若 $i\neq j$，取 $\xi:=\frac{e_i+e_j}{\sqrt2}$。注意此时
+\begin{align*}
+\sum_{k,l=1}^{n}\varphi_{x_kx_l}\xi_k\xi_l=\frac12\bigl(\varphi_{x_ix_i}+2\varphi_{x_ix_j}+\varphi_{x_jx_j}\bigr).
+\end{align*}
+于是
+\begin{align*}
+\int_{\mathbb{R}^n}f\varphi_{x_ix_j}\diff x
+&=\int_{\mathbb{R}^n}f\sum_{k,l=1}^{n}\varphi_{x_kx_l}\xi_k\xi_l\diff x-\frac12\Bigl[\int_{\mathbb{R}^n}f\varphi_{x_ix_i}\diff x+\int_{\mathbb{R}^n}f\varphi_{x_jx_j}\diff x\Bigr]\\
+&=\int_{\mathbb{R}^n}\varphi\diff\mu^{\xi}-\frac12\int_{\mathbb{R}^n}\varphi\diff\mu^{ii}-\frac12\int_{\mathbb{R}^n}\varphi\diff\mu^{jj}\\
+&=\int_{\mathbb{R}^n}\varphi\diff\mu^{ij},
+\end{align*}
+其中
+\begin{align*}
+\mu^{ij}:=\mu^{\xi}-\frac12\mu^{ii}-\frac12\mu^{jj}.
+\end{align*}
+
+（3）设 $V\subset\subset\mathbb{R}^n$，$\phi\in C_c^{2}(V,\mathbb{R}^n)$，$\lvert\phi\rvert\leqslant1$。则对 $k=1,\cdots,n$，
+\begin{align*}
+\int_{\mathbb{R}^n}f_{x_k}\operatorname{div}\phi\diff x
+&=-\int_{\mathbb{R}^n}f\sum_{i=1}^{n}\phi^{i}_{x_ix_k}\diff x\\
+&=\sum_{i=1}^{n}\int_{\mathbb{R}^n}\phi^{i}\diff\mu^{ik}\leqslant\sum_{i=1}^{n}\mu^{ik}(V)<\infty .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch06-6-8; kind=proof; 补出第 (3) 步的依据：弱偏导数的分部积分、符号测度的全变差估计，以及由 $\BV_{\loc}$ 的定义推出断言 (ii)
+第 (3) 步的依据如下。
+
+（a）第一个等号。由\cref{theorem:ch06-6-7}(i)，$f$ 局部 Lipschitz 连续，故 $f\in W^{1,\infty}_{\loc}(\mathbb{R}^n)$，% XREF internal
+其弱偏导数 $f_{x_k}$ 属于 $L^{\infty}_{\loc}(\mathbb{R}^n)$。取 $\phi\in C_c^{2}(\mathbb{R}^n;\mathbb{R}^n)$，则 $\operatorname{div}\phi\in C_c^{1}(\mathbb{R}^n)$，由弱偏导数的定义
+\begin{align*}
+\int_{\mathbb{R}^n}f_{x_k}\operatorname{div}\phi\diff x=-\int_{\mathbb{R}^n}f\,\partial_{x_k}(\operatorname{div}\phi)\diff x=-\int_{\mathbb{R}^n}f\sum_{i=1}^{n}\phi^{i}_{x_ix_k}\diff x .
+\end{align*}
+
+（b）第二个等号。对每个 $i\in\{1,\cdots,n\}$，把 (i) 中的等式用于函数 $\phi^{i}\in C_c^{2}(\mathbb{R}^n)$ 与指标对 $(i,k)$，得 $\int f\phi^{i}_{x_ix_k}\diff x=\int\phi^{i}\diff\mu^{ik}$；把这 $n$ 个等式相加即得。
+
+（c）不等号。$\mu^{ik}$ 是符号测度，故对每个 $i$ 有
+\begin{align*}
+\bigl\lvert\int_{\mathbb{R}^n}\phi^{i}\diff\mu^{ik}\bigr\rvert\leqslant\lVert\phi^{i}\rVert_{L^{\infty}}\lvert\mu^{ik}\rvert(V)\leqslant\lvert\mu^{ik}\rvert(V),
+\end{align*}
+其中 $\lvert\mu^{ik}\rvert$ 为 $\mu^{ik}$ 的全变差测度，这里用到 $\lvert\phi^{i}\rvert\leqslant\lvert\phi\rvert\leqslant1$ 与 $\operatorname{spt}\phi\subseteq V$。由 $\mu^{ik}$ 是 Radon 测度与 $V$ 相对紧，$\lvert\mu^{ik}\rvert(V)<\infty$，故上面的上界有限。
+
+（d）断言 (ii)。按\cref{section:ch05-01}中 $\BV$ 的定义，% XREF internal
+$g\in\BV_{\loc}(\mathbb{R}^n)$ 等价于对每个相对紧的开集 $V\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\sup\Bigl\{\int_{\mathbb{R}^n}g\operatorname{div}\phi\diff x\ \Big|\ \phi\in C_c^{1}(V;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\Bigr\}<\infty .
+\end{align*}
+由 (a)(b)(c)，对 $g=f_{x_k}$ 与每个满足 $\lvert\phi\rvert\leqslant1$ 的 $\phi\in C_c^{2}(V;\mathbb{R}^n)$ 有
+\begin{align*}
+\Bigl\lvert\int_{\mathbb{R}^n}f_{x_k}\operatorname{div}\phi\diff x\Bigr\rvert\leqslant\sum_{i=1}^{n}\lvert\mu^{ik}\rvert(V)<\infty .
+\end{align*}
+又 $C_c^{2}(V;\mathbb{R}^n)$ 在 $C_c^{1}(V;\mathbb{R}^n)$ 中按 $C^{1}$ 范数稠密（在同一紧支集内用磨光逼近），而泛函 $\phi\mapsto\int f_{x_k}\operatorname{div}\phi\diff x$ 关于 $C^{1}$ 范数连续，故上确界可在 $C_c^{2}$ 上取；由 $V$ 的任意性得 $f_{x_k}\in\BV_{\loc}(\mathbb{R}^n)$。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-8; kind=motivation; 说明为何凸函数的二阶导数必然存在为测度、对角元非负的意义、以及断言 (ii) 的 $\BV_{\loc}$ 形式
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-8-动机}
+凸函数可能处处不可微（如 $f(x)=\lvert x\rvert$ 在 $x=0$ 处），因而二阶导数不可能总是经典对象。本定理指出：二阶导数总是以测度的形式存在。(i) 把分布 $\varphi\mapsto\int f\varphi_{x_ix_j}\diff x$ 实现为关于某个符号 Radon 测度的积分，使二阶偏导数成为可以作用于连续函数、可以分解与比较的对象；方向 $e_i$ 上的二阶导数非负，这与\cref{theorem:ch06-6-7}(iii) 的 $D^{2}f\geqslant0$ 一致，是凸性在二阶对象上的痕迹。断言 (ii) 把同一事实翻译成一阶导数的语言：$f$ 的一阶偏导数是 $\BV_{\loc}$ 函数，即它们的一阶分布导数是测度，这正是「$f$ 的二阶导数是测度」的等价说法。% XREF internal
+证明的策略是固定方向、先光滑后取极限、再作极化。固定 $\lvert\xi\rvert=1$ 后，分布 $\varphi\mapsto\sum_{i,j}\int f\varphi_{x_ix_j}\xi_i\xi_j\diff x$ 是光滑凸函数 $f^{\varepsilon}$ 的 Hessian 沿 $\xi$ 的二阶导数的极限，而后者非负，故该分布非负，由\cref{theorem:ch01-1-39}可用正 Radon 测度 $\mu^{\xi}$ 表示。取 $n$ 个坐标方向得到 $\mu^{ii}$；取 $\xi=(e_i+e_j)/\sqrt2$ 后，$\mu^{ij}$ 表示为 $\mu^{\xi}$ 与两个对角测度的组合，这一步是极化，它同时给出对称性 $\mu^{ij}=\mu^{ji}$。断言 (ii) 用对偶方式得到：把 (i) 的等式代入 $\int f_{x_k}\operatorname{div}\phi$，用 $\lvert\phi\rvert\leqslant1$ 控制上界，即得 $\BV$ 半范数有限。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-8; kind=hypotheses; 逐条分析凸性假设、试验函数的 $C_c^{2}$ 类、对称性的来源、符号测度的全变差、以及测度在紧集上有限而非全空间有限
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-8-条件}
+\begin{enumerate}[(i)]
+\item 凸性是全部结论的唯一假设。它在证明中有两处作用：其一，由\cref{theorem:ch06-6-7}(i) 得 $f$ 局部 Lipschitz 连续，从而 $f\in L^{1}_{\loc}(\mathbb{R}^n)$、$f\in W^{1,\infty}_{\loc}(\mathbb{R}^n)$，断言 (ii) 中的弱偏导数 $f_{x_i}$ 有意义；其二，磨光函数 $f^{\varepsilon}$ 仍凸，故 $D^{2}f^{\varepsilon}\geqslant0$，这是 $\mu^{\xi}$ 非负的来源。% XREF internal
+\item 试验函数取 $C_c^{2}(\mathbb{R}^n)$，不可改为 $C_c^{1}$：等式 $\int f\varphi_{x_ix_j}\diff x=\int\varphi\diff\mu^{ij}$ 两端含二阶导数，且证明中要对 $x_i$ 与 $x_j$ 各作一次分部积分。断言 (ii) 中的检验向量场可放宽到 $C_c^{1}$，因为那里只用到一阶导数。
+\item 对称性 $\mu^{ij}=\mu^{ji}$ 不是附加假设。混合偏导数作为分布相等，且第 (2) 步中的 $\xi=(e_i+e_j)/\sqrt2$ 关于 $i,j$ 对称，故构造出的 $\mu^{ij}$ 关于 $i,j$ 对称。
+\item 非负性只对对角元 $\mu^{ii}$ 成立。$i\neq j$ 时 $\mu^{ij}$ 是符号测度，可以取负值：取 $n=2$ 与 $f(x):=\lvert x_1-x_2\rvert$，则 $f$ 凸，$f=\lvert g\rvert$ 其中 $g:=x_1-x_2$，而 $\partial_{x_1}f=\operatorname{sign}g$，故 $\mu^{12}=\partial_{x_2}\partial_{x_1}f=-2\mathcal{H}^{1}\llcorner\{g=0\}$ 是非正测度，同时 $\mu^{11}=\mu^{22}=2\mathcal{H}^{1}\llcorner\{g=0\}$ 非负。
+\item 测度 $\mu^{ij}$ 只在紧集上有限，不必在全空间上有限。取 $f(x)=\lvert x\rvert^{2}$，则 $f$ 凸且 $\mu^{ij}=2\delta_{ij}\mathcal{L}^{n}$，故 $\mu^{ii}(\mathbb{R}^n)=+\infty$；因此结论只能写成 Radon 测度（局部有限），不能写成有限测度。
+\item 断言 (ii) 中的 $f_{x_i}$ 是弱偏导数，只在 $\mathcal{L}^{n}$-a.e. 的意义下确定。由\cref{theorem:ch06-6-7}(i) 已知 $f_{x_i}\in L^{\infty}_{\loc}(\mathbb{R}^n)\subseteq L^{1}_{\loc}(\mathbb{R}^n)$，而 $\BV_{\loc}(\mathbb{R}^n)$ 包含 $W^{1,1}_{\loc}(\mathbb{R}^n)$，故断言 (ii) 的实质内容是 $f_{x_i}$ 的分布导数仍是测度。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{definition*}[二阶导数的测度记号]\phantomsection\label{definition:ch06-def-6-8-记号}
+设 $n$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}$ 为凸函数，$\mu^{ij}$（$i,j=1,\cdots,n$）为\cref{theorem:ch06-6-8}(i) 所给的符号 Radon 测度，$\mathbb{M}^{n\times n}$ 为实 $n\times n$ 矩阵空间。% XREF internal
+仿照\cref{section:ch05-01}中引入的记号，记% XREF p=272 "By analogy with the notation introduced in Section 5.1"
+\begin{align*}
+[D^{2}f]:=(\mu^{ij})_{1\leqslant i,j\leqslant n}=\lVert D^{2}f\rVert\llcorner\Sigma,
+\end{align*}
+其中 $\Sigma:\mathbb{R}^n\to\mathbb{M}^{n\times n}$ 是 $\lVert D^{2}f\rVert$-可测的，且 $\lvert\Sigma\rvert=1$ 于 $\lVert D^{2}f\rVert$-a.e. 成立；又记
+\begin{align*}
+[f_{x_ix_j}]:=\mu^{ij}\qquad(i,j=1,\cdots,n).
+\end{align*}
+由\cref{theorem:ch01-1-31}（Lebesgue 分解定理），还可设% XREF p=272 "By Lebesgue's Decomposition Theorem"
+\begin{align*}
+\mu^{ij}=\mu^{ij}_{\mathrm{ac}}+\mu^{ij}_{\mathrm{s}},
+\end{align*}
+其中 $\mu^{ij}_{\mathrm{ac}}\ll\mathcal{L}^{n}$，$\mu^{ij}_{\mathrm{s}}\perp\mathcal{L}^{n}$。于是
+\begin{align*}
+\mu^{ij}_{\mathrm{ac}}=\mathcal{L}^{n}\llcorner f_{ij}
+\end{align*}
+对某个 $f_{ij}\in L^{1}_{\loc}(\mathbb{R}^n)$ 成立。令
+\begin{align*}
+f_{x_ix_j}:=f_{ij}\qquad(i,j=1,\cdots,n),
+\end{align*}
+并记
+\begin{align*}
+D^{2}f&:=(f_{x_ix_j})_{1\leqslant i,j\leqslant n},\\
+[D^{2}f]_{\mathrm{ac}}&:=(\mu^{ij}_{\mathrm{ac}})_{1\leqslant i,j\leqslant n}=\mathcal{L}^{n}\llcorner D^{2}f,\\
+[D^{2}f]_{\mathrm{s}}&:=(\mu^{ij}_{\mathrm{s}})_{1\leqslant i,j\leqslant n}.
+\end{align*}
+于是
+\begin{align*}
+[D^{2}f]=[D^{2}f]_{\mathrm{ac}}+[D^{2}f]_{\mathrm{s}}=\mathcal{L}^{n}\llcorner D^{2}f+[D^{2}f]_{\mathrm{s}}.
+\end{align*}
+因此 $D^{2}f\in L^{1}_{\loc}(\mathbb{R}^{n};\mathbb{M}^{n\times n})$ 是 $[D^{2}f]$ 的绝对连续部分 $[D^{2}f]_{\mathrm{ac}}$ 的密度。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch06-def-6-8-记号; kind=motivation; 说明把 $n^2$ 个二阶偏导数测度组织成矩阵值测度的作用：全变差、极分解、Lebesgue 分解与逐点密度
+\begin{remark}\phantomsection\label{remark:ch06-def-6-8-记号-动机}
+\cref{theorem:ch06-6-8}给出 $n^{2}$ 个彼此独立的符号 Radon 测度，逐个使用只能得到 $\int f\varphi_{x_ix_j}$ 这一类的积分恒等式。把它们按指标排成矩阵后，就可以对矩阵值测度使用与向量值测度相同的工具：全变差测度 $\lVert D^{2}f\rVert$、极分解的密度 $\Sigma$、关于 $\mathcal{L}^{n}$ 的 Lebesgue 分解，以及 Lebesgue--Besicovitch 微分定理。这一组织方式使「$f$ 在 $x$ 处的 Hessian」有了统一的对象：它不是逐点的二阶偏导数，而是矩阵值测度 $[D^{2}f]$；而在 $\mathcal{L}^{n}$-a.e. 的点处，$[D^{2}f]$ 关于 $\mathcal{L}^{n}$ 的密度 $D^{2}f$ 才充当逐点的 Hessian。下一节讨论 $D^{2}f$ 在几乎每一点处的经典意义。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch06-def-6-8-记号; kind=hypotheses; 说明记号的前提（凸性与测度的存在）、极分解中 $\Sigma$ 的归一化与退化情形、Radon--Nikodym 密度的可积性、以及 $D^2f$ 与经典 Hessian 的关系
+\begin{remark}\phantomsection\label{remark:ch06-def-6-8-记号-条件}
+\begin{enumerate}[(i)]
+\item 记号以 $f$ 为凸函数为前提：只有此时\cref{theorem:ch06-6-8}(i) 才给出测度 $\mu^{ij}$，从而 $[D^{2}f]$ 有定义。$f$ 不凸时二阶分布导数未必是测度，记号失去意义。% XREF internal
+\item 极分解 $[D^{2}f]=\lVert D^{2}f\rVert\llcorner\Sigma$ 中的 $\lVert D^{2}f\rVert$ 是矩阵值测度 $[D^{2}f]$ 的全变差测度，$\Sigma$ 是它关于该测度的密度，取值于 $\mathbb{M}^{n\times n}$，且 $\lvert\Sigma\rvert=1$ 于 $\lVert D^{2}f\rVert$-a.e. 成立。当 $\lVert D^{2}f\rVert\equiv0$ 时该归一化条件无内容，$\Sigma$ 可任取（如取 $\Sigma\equiv0$）。
+\item $\mu^{ij}$ 是 Radon 测度，故在每个紧集上有限；由 $\mu^{ij}_{\mathrm{ac}}\ll\mathcal{L}^{n}$ 与 Radon--Nikodym 定理得到密度 $f_{ij}\in L^{1}_{\loc}(\mathbb{R}^n)$，其局部可积性来自 $\lvert\mu^{ij}_{\mathrm{ac}}\rvert(K)<\infty$ 对紧集 $K$ 成立。$f_{ij}$ 只在 $\mathcal{L}^{n}$-a.e. 的意义下确定。
+\item 对称性 $\mu^{ij}=\mu^{ji}$ 使 $[D^{2}f]$ 的取值落在对称矩阵的子空间内，$D^{2}f(x)$ 与 $[D^{2}f]_{\mathrm{ac}}$ 逐点也是对称的。矩阵元 $f_{x_ix_j}$ 与矩阵整体 $D^{2}f$ 是同一对象的两种写法：前者便于逐项估计，后者便于整体运算。
+\item 当 $f\in C^{2}(\mathbb{R}^n)$ 时，两次分部积分给出 $\int f\varphi_{x_ix_j}\diff x=\int f_{x_ix_j}\varphi\diff x$，故 $\mu^{ij}=f_{x_ix_j}\mathcal{L}^{n}$，于是 $[D^{2}f]=\mathcal{L}^{n}\llcorner D^{2}f$、$[D^{2}f]_{\mathrm{s}}=0$，$D^{2}f$ 与经典 Hessian 一致。对一般的凸函数，$D^{2}f$ 只是 $[D^{2}f]$ 的绝对连续部分的密度，奇异部分 $[D^{2}f]_{\mathrm{s}}$ 可能非零。
+\end{enumerate}
+\end{remark}
+
+\end{document}

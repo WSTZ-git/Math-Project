@@ -17,128 +17,259 @@
 
 \subsection{存在性}\label{subsection:ch08-存在性}
 
-我们证明如下适定性结果。
+本节证明如下适定性结果。
 
-\begin{theorem}[$(P\epsilon)$ 的整体适定性]\label{theorem:ch08-正则化适定}
-设或 $N=1$ 且\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立，或 $N\geqslant2$、$u_0\in H^1_0(\Omega)$ 且\eqref{align:ch08-8.2b} 成立。则对每个 $\epsilon>0$，问题 $(P\epsilon)$ 存在唯一整体解 $u_\epsilon$。
+\begin{theorem}[$(P\varepsilon)$ 的整体适定性]\label{theorem:ch08-正则化适定}
+设 $N\geqslant1$，$\Omega\subseteq\mathbb{R}^N$ 为有界区域（$N\geqslant2$ 时边界 $\partial\Omega$ 光滑），$\varepsilon>0$，并设下列两组假设之一成立：
+\begin{enumerate}[(i)]
+\item $N=1$，$\phi:\mathbb{R}\to\mathbb{R}$ 与 $u_0$ 满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d}；
+\item $N\geqslant2$，$u_0\in H^1_0(\Omega)$，且 $\phi:\mathbb{R}^N\to\mathbb{R}^N$ 满足\eqref{align:ch08-8.2b}。
+\end{enumerate}
+则问题 $(P\varepsilon)$ 在 $Q_\infty$ 中存在唯一的整体解 $u_\varepsilon$：情形 (i) 按\cref{definition:ch08-正则化解N1} 的意义理解，情形 (ii) 按\cref{definition:ch08-正则化解N2} 的意义理解，整体性按\cref{definition:ch08-整体解} 的意义理解。
 \end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch08-正则化适定; kind=motivation; location=定理 8.2.1 后的注记; basis=8.2.1 小节的两条证明路线与 (8.1)、(8.2b)、(8.2a)、(8.2c)--(8.2e) 的对照，加上 $u_0\in H^1_0\setminus W^{1,\infty}_0$ 与 $\phi$ 仅有界两个边界例
+\begin{remark}\phantomsection\label{remark:ch08-适定动机}
+\begin{enumerate}[(i)]
+\item 引入动机。当 $\phi$ 非单调时问题 $(P)$ 是前向--后向抛物方程，通常不适定；$(P\varepsilon)$ 以 $\varepsilon\Delta\partial_tu$ 作 Sobolev 正则化，使方程关于 $\partial_tu$ 含椭圆算子 $I-\varepsilon\Delta$。本定理给出正则化问题的整体适定性，因而 $\varepsilon\to0^+$ 的极限过程才有对象可取。
+\item 各项假设的作用。$N=1$ 时\eqref{align:ch08-8.1a} 使 $u_0'$ 属于 $L^\infty(\Omega)$，可作为 $v=\partial_xu$ 的初值；\eqref{align:ch08-8.1b} 的局部 Lipschitz 性给出局部适定性（\cref{lemma:ch08-局部适定N1}）；\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d} 保证 $\phi(y)\to\pm\infty$（$y\to\pm\infty$），从而存在包含 $u_0'$ 值域的不变区间（\cref{proposition:ch08-不变区间}），再把局部解延拓为整体解（\cref{proposition:ch08-整体N1}）。$N\geqslant2$ 时\eqref{align:ch08-8.2b} 的整体 Lipschitz 性使\cref{proposition:ch08-Lipschitz算子}中的 $L$ 全局 Lipschitz，抽象 Cauchy 问题（\eqref{align:ch08-8.20}）因而有唯一整体解；$u_0\in H^1_0(\Omega)$ 只用于使 $(I-\varepsilon\Delta)^{-1}$ 与弱形式\eqref{align:ch08-8.11} 生效。
+\item 边界与例。$N\geqslant2$ 时本定理不要求\eqref{align:ch08-8.2a} 与\eqref{align:ch08-8.2c}--\eqref{align:ch08-8.2e}：存在性只需 $\phi$ 全局 Lipschitz，增长与强制性只在先验估计（\cref{proposition:ch08-先验估计N2}）中进入。$N=1$ 时\eqref{align:ch08-8.1a} 不能减弱为 $u_0\in H^1_0(\Omega)$：$u_0(x)=x^{1/3}$ 属于 $H^1_0(0,1)$，但 $u_0'(x)=\frac13x^{-2/3}$ 不属于 $L^\infty(0,1)$，\cref{lemma:ch08-局部适定N1} 的初值要求不满足。若 $\phi$ 有界（例如 $\phi(y)=\arctan y$），\eqref{align:ch08-8.1c} 失效，$\phi$ 不趋于 $\pm\infty$，1 维论证中不存在含任意大初值的不变区间。最后，定理中的解与存在时间都依赖于 $\varepsilon$，本定理不给出关于 $\varepsilon$ 的一致界。
+\end{enumerate}
+\end{remark}
 
 \subsubsection{$N=1$ 情形}\label{subsubsection:ch08-N1存在}
 
 先证 $N=1$ 时的\cref{theorem:ch08-正则化适定}。第一步是如下局部适定性结果。
 
 \begin{lemma}[局部适定性]\label{lemma:ch08-局部适定N1}
-设 $N=1$ 且\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1b} 成立。则对任意 $\epsilon>0$，存在 $T_\epsilon>0$，使问题\eqref{align:ch08-8.10} 在 $Q_{T_\epsilon}$ 中存在唯一解 $u_\epsilon$。
+设 $N=1$，$\Omega=(a,b)\subseteq\mathbb{R}$ 为有界区间，$\varepsilon>0$，$\phi:\mathbb{R}\to\mathbb{R}$ 与 $u_0$ 满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1b}。则存在 $T_\varepsilon>0$ 与唯一的 $u_\varepsilon\in C^1([0,T_\varepsilon);W^{1,\infty}_0(\Omega))$，使 $u_\varepsilon$ 按\cref{definition:ch08-正则化解N1} 的意义是问题\eqref{align:ch08-8.10} 在 $Q_{T_\varepsilon}$ 中的解；其相伴函数由\eqref{align:ch08-8.9} 给出，即 $v_\varepsilon\triangleq\partial_xu_\varepsilon\in C^1([0,T_\varepsilon);L^\infty(\Omega))$，$w_\varepsilon\triangleq\phi(v_\varepsilon)+\varepsilon\partial_tv_\varepsilon\in C([0,T_\varepsilon);W^{2,\infty}(\Omega)\cap C(\overline\Omega))$，$\partial_xw_\varepsilon\in C([0,T_\varepsilon);W^{1,\infty}_0(\Omega))$。
 \end{lemma}
 
 \begin{proof}
 考察问题
-\begin{align}
+\begin{align}\label{align:ch08-8.12}
 \begin{cases}
-\partial_t v=\partial_{xx}w & \text{在 }Q_T,\\
-\partial_x w=0 & \text{在 }\Gamma_T,\\
+\partial_tv=\partial_{xx}w & \text{在 }Q_T,\\
+\partial_xw=0 & \text{在 }\Gamma_T,\\
 v=v_0\triangleq u_0' & \text{在 }\Omega\times\{0\},
-\end{cases} \label{align:ch08-8.12}
+\end{cases}
 \end{align}
-其中 $w$ 如\eqref{align:ch08-8.9}。于是对每个 $\epsilon>0$，存在 $T_\epsilon>0$ 与唯一函数 $v_\epsilon\in C^1([0,T);L^\infty(\Omega))$，其 $w_\epsilon\in C([0,T);W^{2,\infty}(\Omega)\cap C(\overline\Omega))$ 且 $\partial_{xx}w_\epsilon\in C([0,T);L^\infty(\Omega))$，并在 $Q_{T_\epsilon}$ 中经典地满足\eqref{align:ch08-8.12}（见文献~\cite{ref74} 定理 2.1）。为简单计设 $\Omega\equiv(a,b)$。定义
+其中 $w$ 如\eqref{align:ch08-8.9}。于是对每个 $\varepsilon>0$，存在 $T_\varepsilon>0$ 与唯一函数 $v_\varepsilon\in C^1([0,T_\varepsilon);L^\infty(\Omega))$，其相伴的 $w_\varepsilon\in C([0,T_\varepsilon);W^{2,\infty}(\Omega)\cap C(\overline\Omega))$ 且 $\partial_{xx}w_\varepsilon\in C([0,T_\varepsilon);L^\infty(\Omega))$，并在 $Q_{T_\varepsilon}$ 中经典地满足\eqref{align:ch08-8.12}（见文献~\cite{ref74} 定理 2.1）。为简单计设 $\Omega\equiv(a,b)$。定义
 \begin{align}
-u_\epsilon(x,t)\triangleq \int_a^x v_\epsilon(y,t)\,\mathrm{d}y\qquad((x,t)\in\Omega\times[0,T_\epsilon)), \label{align:ch08-8.13}
+u_\varepsilon(x,t)\triangleq \int_a^x v_\varepsilon(y,t)\,\mathrm{d}y\qquad((x,t)\in\Omega\times[0,T_\varepsilon)), \label{align:ch08-8.13}
 \end{align}
 结论即得。
 \end{proof}
 
-下面证明\cref{lemma:ch08-局部适定N1} 所给局部解 $u_\epsilon$ 的先验估计。仿照文献~\cite{ref74}，对任意 $g\in C^1(\mathbb{R})$、$g'\geqslant0$，令
+% SUPPLEMENT: parent=lemma:ch08-局部适定N1; kind=proof; location=引理 8.2.2 证明之后; basis=原证明末句 the conclusion follows 压缩了 (8.10) 与 (8.12) 的等价性、$u_\varepsilon$ 属于 $C^1W^{1,\infty}_0$ 的核验、边界条件与唯一性来源
+\begin{proof}[补证：\eqref{align:ch08-8.10} 与\eqref{align:ch08-8.12} 的等价性及 $u_\varepsilon$ 的正则性]
+先说明两问题的等价性。设 $u$ 是\eqref{align:ch08-8.10} 在 $Q_T$ 中的经典解，$v\triangleq\partial_xu$，$w\triangleq\phi(v)+\varepsilon\partial_tv$。由 $\partial_tu=\partial_xw$ 得 $\partial_tv=\partial_{xt}u=\partial_{xx}w$；由 $u=0$ 在 $\Gamma_T$ 上得 $\partial_tu=0$ 在 $\Gamma_T$ 上，即 $\partial_xw=0$ 在 $\Gamma_T$ 上；又 $v(\cdot,0)=\partial_xu(\cdot,0)=u_0'$。故 $v$ 满足\eqref{align:ch08-8.12}。
+
+反之，设 $v_\varepsilon$ 为\eqref{align:ch08-8.12} 在 $Q_{T_\varepsilon}$ 中的解，$u_\varepsilon$ 由\eqref{align:ch08-8.13} 定义。由 $v_\varepsilon\in C^1([0,T_\varepsilon);L^\infty(\Omega))$ 得 $\partial_xu_\varepsilon=v_\varepsilon$ 与 $\partial_tu_\varepsilon=\int_a^x\partial_tv_\varepsilon\,\mathrm{d}y$ 都属于 $C([0,T_\varepsilon);L^\infty(\Omega))$，且 $\partial_x\partial_tu_\varepsilon=\partial_tv_\varepsilon$，故 $u_\varepsilon\in C^1([0,T_\varepsilon);W^{1,\infty}(\Omega))$；又 $u_\varepsilon(a,t)=0$，故 $u_\varepsilon(\cdot,t)\in W^{1,\infty}_0(\Omega)$（按\eqref{align:ch08-8.1a} 后的记号）。由 $v_0=u_0'$ 与 $u_0(a)=0$ 得 $u_\varepsilon(\cdot,0)=u_0$。再由 $\partial_xw_\varepsilon(a,t)=0$ 得
+\begin{align*}
+\partial_tu_\varepsilon(x,t)=\int_a^x\partial_tv_\varepsilon(y,t)\,\mathrm{d}y
+=\int_a^x\partial_{xx}w_\varepsilon(y,t)\,\mathrm{d}y
+=\partial_xw_\varepsilon(x,t)-\partial_xw_\varepsilon(a,t)=\partial_xw_\varepsilon(x,t),
+\end{align*}
+即\eqref{align:ch08-8.10} 的第一式。最后由 $\partial_xw_\varepsilon(b,t)=0$ 得 $\frac{\mathrm{d}}{\mathrm{d}t}u_\varepsilon(b,t)=0$，结合 $u_\varepsilon(b,0)=u_0(b)=0$ 得 $u_\varepsilon(b,t)=0$，故 $u_\varepsilon=0$ 在 $\Gamma_T$ 上。于是 $u_\varepsilon$ 满足\eqref{align:ch08-8.10} 的全部条件；又 $\partial_xw_\varepsilon\in C([0,T_\varepsilon);W^{1,\infty}_0(\Omega))$ 由 $\partial_{xx}w_\varepsilon\in C([0,T_\varepsilon);L^\infty(\Omega))$ 与 $\partial_xw_\varepsilon(\cdot,t)$ 在 $\partial\Omega$ 上为零得到，故 $u_\varepsilon$ 是\cref{definition:ch08-正则化解N1} 意义下的解。
+
+唯一性：若 $u$ 与 $\tilde u$ 都是\eqref{align:ch08-8.10} 在 $Q_T$ 中的解，则 $\partial_xu$ 与 $\partial_x\tilde u$ 都满足\eqref{align:ch08-8.12}，由 $v$ 的唯一性得 $\partial_xu=\partial_x\tilde u$；再由 $u(a,t)=\tilde u(a,t)=0$ 得 $u=\tilde u$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch08-局部适定N1; kind=motivation; location=引理 8.2.2 的补证之后; basis=引理 8.2.2 化二阶方程组 (8.10) 为关于 $v$ 的方程 (8.12) 的动机、$T_\varepsilon$ 对 $\varepsilon$ 与 $\|u_0'\|_\infty$ 的依赖，以及 $\varepsilon=0$ 时退化的边界
+\begin{remark}\phantomsection\label{remark:ch08-局部适定动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch08-8.10} 是关于 $(u,w)$ 的二阶方程组，直接求解需要处理 $u$ 与 $w$ 的耦合；对 $x$ 求导后，$v=\partial_xu$ 满足 $\partial_tv=\partial_{xx}w$，而 $w=\phi(v)+\varepsilon\partial_tv$ 给出 $\partial_tv=(w-\phi(v))/\varepsilon$。于是 $(v,w)$ 满足一个可以用经典方法处理的拟抛物方程组，$u$ 再由\eqref{align:ch08-8.13} 积分恢复。这一“先解斜率、再积分”的分解是 $N=1$ 情形全部论证的出发点。
+\item 各项假设的作用。\eqref{align:ch08-8.1a} 给出 $v_0=u_0'\in L^\infty(\Omega)$，这是\eqref{align:ch08-8.12} 的初值正则性；\eqref{align:ch08-8.1b} 使 $\phi$ 在每个有界区间上 Lipschitz，从而 $w$ 对 $v$ 的依赖 Lipschitz，\eqref{align:ch08-8.12} 的经典解唯一。$\varepsilon>0$ 使\eqref{align:ch08-8.9} 可由 $w$ 解出 $\partial_tv$，这是正则化的实质；$\varepsilon=0$ 时该式退化为 $w=\phi(v)$，方程不再是关于 $\partial_tv$ 可解的。
+\item 边界。$T_\varepsilon$ 依赖于 $\varepsilon$、$\|u_0'\|_{L^\infty(\Omega)}$ 与 $\phi$ 在相应区间上的 Lipschitz 常数，当 $\varepsilon\to0^+$ 时一般没有正下界；这正是需要先验估计（\cref{proposition:ch08-先验估计N1}）把它延拓为整体解的原因。$\Omega=(a,b)$ 只是记号上的简化：对有限个区间的并，论证在每个连通分支上进行，$u_\varepsilon$ 在内部端点处的零值由 $u_\varepsilon(\cdot,t)\in C_0(\overline\Omega)$ 保证。
+\end{enumerate}
+\end{remark}
+
+下面证明\cref{lemma:ch08-局部适定N1} 所给局部解 $u_\varepsilon$ 的先验估计。仿照文献~\cite{ref74}，对任意 $g\in C^1(\mathbb{R})$、$g'\geqslant0$，令
 \begin{align}
 G_\phi(y)\triangleq \int_0^y g(\phi(z))\,\mathrm{d}z+k\qquad(y,k\in\mathbb{R}). \label{align:ch08-8.14}
 \end{align}
-由\eqref{align:ch08-8.9}--\eqref{align:ch08-8.10}，在 $Q_{T_\epsilon}$ 中有
+由\eqref{align:ch08-8.9}--\eqref{align:ch08-8.10}，在 $Q_{T_\varepsilon}$ 中有
 \begin{align*}
-\partial_t G_\phi(\partial_x u_\epsilon)
-&=g(\phi(\partial_x u_\epsilon))\partial_{xt}u_\epsilon
-=g(w_\epsilon)\partial_{xx}w_\epsilon+[g(\phi(\partial_x u_\epsilon))-g(w_\epsilon)]\partial_{xx}w_\epsilon\\
-&=\partial_x[g(w_\epsilon)\partial_x w_\epsilon]-g'(w_\epsilon)|\partial_x w_\epsilon|^2
-+[g(\phi(\partial_x u_\epsilon))-g(w_\epsilon)]\frac{w_\epsilon-\phi(\partial_x u_\epsilon)}{\epsilon}.
+\partial_t G_\phi(\partial_x u_\varepsilon)
+&=g(\phi(\partial_x u_\varepsilon))\partial_{xt}u_\varepsilon
+=g(w_\varepsilon)\partial_{xx}w_\varepsilon+[g(\phi(\partial_x u_\varepsilon))-g(w_\varepsilon)]\partial_{xx}w_\varepsilon\\
+&=\partial_x[g(w_\varepsilon)\partial_x w_\varepsilon]-g'(w_\varepsilon)|\partial_x w_\varepsilon|^2
++[g(\phi(\partial_x u_\varepsilon))-g(w_\varepsilon)]\frac{w_\varepsilon-\phi(\partial_x u_\varepsilon)}{\varepsilon}.
 \end{align*}
 在 $\Omega$ 上积分即得
 \begin{align}
-\frac{\mathrm{d}}{\mathrm{d}t}\int_\Omega G_\phi(\partial_x u_\epsilon(x,t))\,\mathrm{d}x\leqslant0\quad\text{在 }(0,T_\epsilon). \label{align:ch08-8.15}
+\frac{\mathrm{d}}{\mathrm{d}t}\int_\Omega G_\phi(\partial_x u_\varepsilon(x,t))\,\mathrm{d}x\leqslant0\quad\text{在 }(0,T_\varepsilon). \label{align:ch08-8.15}
 \end{align}
-利用不等式\eqref{align:ch08-8.15}（概念上类比于第\cref{chapter:ch06}中的相应能量不等式；见文献\cite{ref74}），可证如下结果（见文献~\cite{ref74} 命题 2.7）。
+利用上述不等式（概念上类比于\eqref{align:ch6-6.61}；见\hyperref[remark:ch06-6.5.2]{该注记}），可证如下结果（见文献~\cite{ref74} 命题 2.7）。
 
 \begin{proposition}[不变区间]\label{proposition:ch08-不变区间}
-设
+设 $N=1$，$\Omega=(a,b)$，$y_1<y_2$ 为实数，$\phi:\mathbb{R}\to\mathbb{R}$ 与 $u_0$ 满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1b}，$\varepsilon>0$，$u_\varepsilon$ 为\cref{lemma:ch08-局部适定N1} 给出的问题\eqref{align:ch08-8.10} 在 $Q_{T_\varepsilon}$ 中的解。设
 \begin{align}
 \phi(y_1)\leqslant\phi(y)\leqslant\phi(y_2)\quad\text{对所有 }y\in[y_1,y_2], \label{align:ch08-8.16}
 \end{align}
-且 $u_0'(x)\in[y_1,y_2]$ 对几乎所有 $x\in\Omega$。则 $\partial_x u_\epsilon(x,t)\in[y_1,y_2]$ 对几乎所有 $(x,t)\in Q_{T_\epsilon}$。
+且 $u_0'(x)\in[y_1,y_2]$ 对几乎所有 $x\in\Omega$。则 $\partial_x u_\varepsilon(x,t)\in[y_1,y_2]$ 对几乎所有 $(x,t)\in Q_{T_\varepsilon}$。
 \end{proposition}
 
 \begin{proof}
-可适当修改 $\phi$ 的形状，使 $y<y_1$ 时 $\phi(y)<\phi(y_1)$、$y>y_2$ 时 $\phi(y)>\phi(y_2)$。取 $g\in C^1(\mathbb{R})$、$g'\geqslant0$，使 $g$ 在 $[\phi(y_1),\phi(y_2)]$ 上为零，$s<\phi(y_1)$ 时 $g(s)<0$，$s>\phi(y_2)$ 时 $g(s)>0$；并取\eqref{align:ch08-8.14} 中的常数 $k$ 使 $G_\phi(y)=\int_{y_1}^y g(\phi(z))\,\mathrm{d}z$。显然这蕴含 $G\equiv0$ 在 $[y_1,y_2]$ 上、$G>0$ 在 $(-\infty,y_1)\cup(y_2,\infty)$ 上。由不等式\eqref{align:ch08-8.15} 结论即得。
+可适当修改 $\phi$ 的形状，使 $y<y_1$ 时 $\phi(y)<\phi(y_1)$、$y>y_2$ 时 $\phi(y)>\phi(y_2)$。取 $g\in C^1(\mathbb{R})$、$g'\geqslant0$，使 $g$ 在 $[\phi(y_1),\phi(y_2)]$ 上为零，$s<\phi(y_1)$ 时 $g(s)<0$，$s>\phi(y_2)$ 时 $g(s)>0$；并取\eqref{align:ch08-8.14} 中的常数 $k$ 使 $G_\phi(y)=\int_{y_1}^y g(\phi(z))\,\mathrm{d}z$。这蕴含 $G\equiv0$ 在 $[y_1,y_2]$ 上、$G>0$ 在 $(-\infty,y_1)\cup(y_2,\infty)$ 上。由不等式\eqref{align:ch08-8.15} 结论即得。
 \end{proof}
 
-现证 $N=1$ 时的\cref{theorem:ch08-正则化适定}。
+% SUPPLEMENT: parent=proposition:ch08-不变区间; kind=proof; location=命题 8.2.3 证明之后; basis=原证明两处压缩：一是“修改 φ 的形状”为何合法（修改后问题的解与原问题的解重合，需唯一性回代），二是 (8.15) 的积分中边界项与末项符号，以及 G 的零点集恰为 [y1,y2] 的论证
+\begin{proof}[补证：修改 $\phi$ 的合法性、\eqref{align:ch08-8.15} 的符号与 $G_\phi$ 的零点集]
+先补出\eqref{align:ch08-8.15} 的推导。由 $w_\varepsilon=\phi(v_\varepsilon)+\varepsilon\partial_tv_\varepsilon$ 与 $v_\varepsilon=\partial_xu_\varepsilon$ 得 $\partial_{xt}u_\varepsilon=(w_\varepsilon-\phi(\partial_xu_\varepsilon))/\varepsilon$，于是上一陈列式右端第三项为
+\begin{align*}
+[g(\phi(\partial_xu_\varepsilon))-g(w_\varepsilon)]\frac{w_\varepsilon-\phi(\partial_xu_\varepsilon)}{\varepsilon}
+=-\frac{[g(w_\varepsilon)-g(\phi(\partial_xu_\varepsilon))][w_\varepsilon-\phi(\partial_xu_\varepsilon)]}{\varepsilon}\leqslant0,
+\end{align*}
+因为 $g$ 非减。又 $-g'(w_\varepsilon)|\partial_xw_\varepsilon|^2\leqslant0$；而 $\int_\Omega\partial_x[g(w_\varepsilon)\partial_xw_\varepsilon]\,\mathrm{d}x=[g(w_\varepsilon)\partial_xw_\varepsilon]_{x=a}^{x=b}=0$，因 $\partial_xw_\varepsilon=0$ 在 $\Gamma_{T_\varepsilon}$ 上。故\eqref{align:ch08-8.15} 成立。
 
-\begin{proposition}[$N=1$ 整体解存在唯一]\label{proposition:ch08-整体N1}
-设 $N=1$ 且\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立。则对每个 $\epsilon>0$，问题 $(P\epsilon)$ 存在唯一整体解 $u_\epsilon$。
+再补出 $G_\phi$ 的符号。由 $g$ 在 $[\phi(y_1),\phi(y_2)]$ 上为零、在 $(-\infty,\phi(y_1))$ 上为负、在 $(\phi(y_2),\infty)$ 上为正，且 $y\in[y_1,y_2]$ 时 $\phi(y)\in[\phi(y_1),\phi(y_2)]$，得 $G_\phi\equiv0$ 在 $[y_1,y_2]$ 上。若 $y<y_1$，则 $\phi(z)<\phi(y_1)$ 对所有 $z\in[y,y_1]$ 成立，故 $G_\phi(y)=-\int_y^{y_1}g(\phi(z))\,\mathrm{d}z>0$；若 $y>y_2$，则 $\phi(z)>\phi(y_2)$ 对所有 $z\in[y_2,y]$ 成立，故 $G_\phi(y)=\int_{y_2}^yg(\phi(z))\,\mathrm{d}z>0$。于是 $G_\phi\geqslant0$ 于 $\mathbb{R}$，且 $G_\phi(y)=0$ 当且仅当 $y\in[y_1,y_2]$。由 $u_0'\in[y_1,y_2]$ 得 $\int_\Omega G_\phi(u_0')\,\mathrm{d}x=0$；由\eqref{align:ch08-8.15} 得 $t\mapsto\int_\Omega G_\phi(\partial_xu_\varepsilon(\cdot,t))\,\mathrm{d}x$ 非增且非负，故恒为零，从而 $G_\phi(\partial_xu_\varepsilon)=0$ 几乎处处，即 $\partial_xu_\varepsilon\in[y_1,y_2]$ 几乎处处。
+
+最后说明“修改 $\phi$ 的形状”是合法的。设 $\tilde\phi\in C(\mathbb{R})$ 满足 $\tilde\phi=\phi$ 在 $[y_1,y_2]$ 上、$\tilde\phi(y)<\phi(y_1)$ 对 $y<y_1$、$\tilde\phi(y)>\phi(y_2)$ 对 $y>y_2$，且 $\tilde\phi$ 局部 Lipschitz（例如在 $(-\infty,y_1]$ 上取 $\tilde\phi(y)=\phi(y_1)+(y-y_1)$、在 $[y_2,\infty)$ 上取 $\tilde\phi(y)=\phi(y_2)+(y-y_2)$）。则 $\tilde\phi$ 满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1b}，以 $\tilde\phi$ 代替 $\phi$ 的问题\eqref{align:ch08-8.10} 有局部解 $\tilde u_\varepsilon$，且上面的论证给出 $\partial_x\tilde u_\varepsilon\in[y_1,y_2]$。在该集合上 $\tilde\phi(\partial_x\tilde u_\varepsilon)=\phi(\partial_x\tilde u_\varepsilon)$，故 $\tilde u_\varepsilon$ 也是原问题\eqref{align:ch08-8.10} 在 $Q_{\tilde T}$ 中的解；由\cref{lemma:ch08-局部适定N1} 的局部唯一性得 $\tilde u_\varepsilon=u_\varepsilon$ 于 $Q_{\min\{T_\varepsilon,\tilde T\}}$，于是 $\partial_xu_\varepsilon\in[y_1,y_2]$ 于 $Q_{\min\{T_\varepsilon,\tilde T\}}$。若 $\tilde T<T_\varepsilon$，则以 $t=\tilde T$ 时的数据重复上述论证；局部存在时间只依赖于初值的 $W^{1,\infty}$ 界，而该界始终不超过 $\max\{|y_1|,|y_2|\}$，故有限步后覆盖整个 $[0,T_\varepsilon)$。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch08-不变区间; kind=motivation; location=命题 8.2.3 的补证之后; basis=命题 8.2.3 的极值原理含义、(8.16) 只约束区间上 φ 的值这一事实、$y_1<y_2$ 的必要性，以及 $G_\phi^{-1}(0)\supsetneq[y_1,y_2]$ 的边界情形
+\begin{remark}\phantomsection\label{remark:ch08-不变区间动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{proposition:ch08-不变区间}是 $(P\varepsilon)$ 的比较原理：若初值的斜率落在区间 $[y_1,y_2]$ 内，且 $\phi$ 在该区间上的值不超出两端点的值，则斜率永远不越出该区间。\eqref{align:ch08-8.15} 是 $N=1$ 情形唯一的单调量，\cref{proposition:ch08-整体N1} 用它把局部解延拓为整体解。
+\item 各项假设的作用。\eqref{align:ch08-8.16} 保证 $G_\phi$ 在 $[y_1,y_2]$ 上恒为零；$u_0'\in[y_1,y_2]$ 使初始能量 $\int_\Omega G_\phi(\partial_xu_\varepsilon(\cdot,0))\,\mathrm{d}x$ 为零，与 $G_\phi\geqslant0$ 及\eqref{align:ch08-8.15} 合起来给出 $G_\phi(\partial_xu_\varepsilon)=0$。\eqref{align:ch08-8.1b} 保证 $\phi$ 连续、$g\circ\phi$ 属于 $C^1$，使\eqref{align:ch08-8.14}--\eqref{align:ch08-8.15} 的链式法则与积分合法。$y_1<y_2$ 不可省：若 $y_1=y_2$，\eqref{align:ch08-8.16} 不含任何信息，结论一般不成立。
+\item 边界。\eqref{align:ch08-8.16} 只约束 $\phi$ 在 $[y_1,y_2]$ 上的值，不能换成“$\phi$ 在 $[y_1,y_2]$ 上单调”；若 $\phi$ 在区间外仍取到 $[\phi(y_1),\phi(y_2)]$ 中的值，则 $G_\phi$ 的零点集严格大于 $[y_1,y_2]$，论证只能给出 $\partial_xu_\varepsilon\in G_\phi^{-1}(0)$。证明中“修改 $\phi$ 的形状”正是为排除这一情形：先把 $\phi$ 在区间外改为严格越出 $[\phi(y_1),\phi(y_2)]$，对修改后的问题得到不变区间，再由局部唯一性回到原问题。
+\end{enumerate}
+\end{remark}
+
+现证 $N=1$ 时的\cref{theorem:ch08-正则化适定}，即\cref{proposition:ch08-整体N1}。
+
+\begin{proposition}[$N=1$ 的整体解]\label{proposition:ch08-整体N1}
+设 $N=1$，$\Omega=(a,b)$，$\phi:\mathbb{R}\to\mathbb{R}$ 与 $u_0$ 满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d}，$\varepsilon>0$。则问题 $(P\varepsilon)$ 在 $Q_\infty$ 中存在唯一的整体解 $u_\varepsilon\in C^1([0,\infty);W^{1,\infty}_0(\Omega))$（按\cref{definition:ch08-正则化解N1} 与\cref{definition:ch08-整体解} 的意义）。
 \end{proposition}
 
 \begin{proof}
 由假设\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d}，当 $y\to\pm\infty$ 时 $\phi(y)\to\pm\infty$，故存在 $C_0>\|u_0'\|_\infty$，使 $[y_1,y_2]=[-C_0,C_0]$ 时不等式\eqref{align:ch08-8.16} 成立。于是由\cref{proposition:ch08-不变区间} 有
 \begin{align}
-\|u_\epsilon(\cdot,t)\|_{W^{1,\infty}_0(\Omega)}\leqslant C_0[\lambda(\Omega)+1]\quad\text{对所有 }t\in(0,T_\epsilon), \label{align:ch08-8.17}
+\|u_\varepsilon(\cdot,t)\|_{W^{1,\infty}_0(\Omega)}\leqslant C_0[\lambda(\Omega)+1]\quad\text{对所有 }t\in(0,T_\varepsilon), \label{align:ch08-8.17}
 \end{align}
 其中 $\lambda$ 如常表示 $\mathbb{R}$ 上的 Lebesgue 测度。由\cref{lemma:ch08-局部适定N1} 经标准延拓论证即得结论。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch08-整体N1; kind=proof; location=命题 8.2.4 证明之后; basis=原证明以 by standard prolongation arguments 一句话带过延拓，未写出不变区间的选取（$C_0$ 的存在性）与延拓的统一步长
+\begin{proof}[补证：不变区间的选取与延拓]
+由\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d} 得 $\phi(y)\to+\infty$（$y\to+\infty$）与 $\phi(y)\to-\infty$（$y\to-\infty$）：当 $y>y_0$ 时 $\phi(y)\geqslant C_1y^{p-1}$，当 $y<-y_0$ 时 $\phi(y)\leqslant-C_1|y|^{p-1}$。取 $R>\|u_0'\|_{L^\infty(\Omega)}$，令 $A\triangleq\max_{[-R,R]}\phi$、$M_-\triangleq\max_{(-\infty,-R]}\phi$（由 $\phi\to-\infty$ 知该最大值有限且可达）、$A'\triangleq\max\{A,M_-\}$，并令 $y_2\triangleq\inf\{y\geqslant R\mid\phi(y)\geqslant A'\}$。由 $\phi(R)\leqslant A\leqslant A'$ 与 $\phi\to+\infty$ 知 $y_2$ 有限；由连续性得 $\phi(y_2)=A'$，且 $\phi<A'$ 在 $[R,y_2)$ 上。结合 $\phi\leqslant M_-\leqslant A'$ 在 $(-\infty,-R]$ 上、$\phi\leqslant A\leqslant A'$ 在 $[-R,R]$ 上，得 $\phi(y)\leqslant\phi(y_2)$ 对所有 $y\leqslant y_2$ 成立。再令 $B\triangleq\min_{[-R,y_2]}\phi$、$y_1\triangleq\max\{y\leqslant-R\mid\phi(y)=B\}$（由 $\phi\to-\infty$ 知该集合非空）。则 $\phi(y_1)=B$；且对 $y\in(y_1,-R]$ 有 $\phi(y)>B$，否则由介值定理在 $(y,-R)$ 内存在满足 $\phi=B$ 的点，与 $y_1$ 的极大性矛盾。故 $\phi(y)\geqslant\phi(y_1)$ 对 $y\in[y_1,y_2]$ 成立。于是\eqref{align:ch08-8.16} 成立且 $[y_1,y_2]\supseteq[-R,R]\supseteq u_0'(\Omega)$。
+
+取 $C_0\triangleq\max\{|y_1|,|y_2|\}$，则 $C_0>\|u_0'\|_\infty$。由\cref{proposition:ch08-不变区间} 得 $|\partial_xu_\varepsilon(x,t)|\leqslant C_0$ 几乎处处；又 $u_\varepsilon(a,t)=0$，故 $|u_\varepsilon(x,t)|\leqslant C_0(b-a)=C_0\lambda(\Omega)$，即\eqref{align:ch08-8.17}。
+
+延拓：设 $t_0\in[0,T_\varepsilon)$。以 $u_\varepsilon(\cdot,t_0)$ 为初值应用\cref{lemma:ch08-局部适定N1}（其斜率仍受 $C_0$ 控制，$W^{1,\infty}_0$ 范数仍受\eqref{align:ch08-8.17} 控制），得解存在于 $[t_0,t_0+\tau)$，其中 $\tau>0$ 只依赖于 $\varepsilon$、$C_0$ 与 $\phi$ 在 $[-C_0-1,C_0+1]$ 上的 Lipschitz 常数（见文献~\cite{ref74} 定理 2.1），与 $t_0$ 无关。故解可从 $T_\varepsilon$ 延拓到 $T_\varepsilon+\tau$；反复延拓即得 $[0,\infty)$ 上的解 $u_\varepsilon$。唯一性由\cref{lemma:ch08-局部适定N1} 的局部唯一性得到：两个整体解在公共存在区间的每个局部时段上重合。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch08-整体N1; kind=motivation; location=命题 8.2.4 的补证之后; basis=命题 8.2.4 中 (8.1c)--(8.1d) 与不变区间的配合、(8.17) 常数对 ε 的一致性，以及 φ 有界时不变区间不存在的边界情形
+\begin{remark}\phantomsection\label{remark:ch08-整体N1动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{proposition:ch08-整体N1} 是 $N=1$ 情形的核心：\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d} 保证 $\phi$ 在 $\pm\infty$ 处趋于 $\pm\infty$，因而可选取任意大的不变区间 $[-C_0,C_0]$ 覆盖初值斜率的值域；\cref{proposition:ch08-不变区间} 随即给出与时间无关的 $W^{1,\infty}_0$ 界\eqref{align:ch08-8.17}，局部解由此延拓为整体解。
+\item 各项假设的作用。\eqref{align:ch08-8.1c} 给出 $|\phi(y)|\geqslant C_1|y|^{p-1}$，\eqref{align:ch08-8.1d} 给出 $\phi(y)y\geqslant0$，二者合起来确定 $\phi$ 在 $\pm\infty$ 的符号与增长速度，这是\eqref{align:ch08-8.16} 对任意大的 $[y_1,y_2]$ 可解的前提；\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1b} 提供局部解及其唯一性，使延拓有意义。\eqref{align:ch08-8.17} 中的 $C_0$ 只依赖于 $\|u_0'\|_{L^\infty(\Omega)}$ 与 $\lambda(\Omega)$，不依赖于 $\varepsilon$ 与 $t$，这是后续所有关于 $\varepsilon$ 的一致估计的起点。
+\item 边界。若 $\phi$ 有界（例如 $\phi(y)=\arctan y$），\eqref{align:ch08-8.1c} 失效，$\phi$ 不趋于 $\pm\infty$，对任意大的初值斜率不存在满足\eqref{align:ch08-8.16} 的区间，本节的延拓论证给不出整体解。若只假设\eqref{align:ch08-8.1b} 而不假设\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d}，则只能得到局部解，且存在时间随初值斜率增大而缩短。
+\end{enumerate}
+\end{remark}
 
 \subsubsection{$N\geqslant2$ 情形}\label{subsubsection:ch08-N2存在}
 
 为在此情形证明\cref{theorem:ch08-正则化适定}，令
 \begin{align*}
-(I-\epsilon\Delta)^{-1}:H^{-1}(\Omega)\to H^1_0(\Omega),\quad
-(I-\epsilon\Delta)^{-1}z\triangleq v\quad(z\in H^{-1}(\Omega)),
+(I-\varepsilon\Delta)^{-1}:H^{-1}(\Omega)\to H^1_0(\Omega),\quad
+(I-\varepsilon\Delta)^{-1}z\triangleq v\quad(z\in H^{-1}(\Omega)),
 \end{align*}
 其中 $v\in H^1_0(\Omega)$ 是椭圆问题
-\begin{align}
+\begin{align}\label{align:ch08-8.18}
 \begin{cases}
--\epsilon\Delta v+v=z & \text{在 }\Omega,\\
+-\varepsilon\Delta v+v=z & \text{在 }\Omega,\\
 v=0 & \text{在 }\partial\Omega
-\end{cases} \label{align:ch08-8.18}
+\end{cases}
 \end{align}
-的唯一解，$z\in H^{-1}(\Omega)$。如下结果易证（见文献~\cite{ref30} 命题 4.4）。
+的唯一解，$z\in H^{-1}(\Omega)$。如下结果成立（见文献~\cite{ref30} 命题 4.4）。
 
 \begin{proposition}[算子 $L$ 的 Lipschitz 连续性]\label{proposition:ch08-Lipschitz算子}
-设\eqref{align:ch08-8.2b} 成立。则算子
+设 $N\geqslant2$，$\Omega\subseteq\mathbb{R}^N$ 为具有光滑边界的有界区域，$\varepsilon>0$ 固定，$\phi:\mathbb{R}^N\to\mathbb{R}^N$ 满足\eqref{align:ch08-8.2b}。则算子
 \begin{align}
 L:H^1_0(\Omega)\to H^1_0(\Omega),\quad
-L(u)\triangleq (I-\epsilon\Delta)^{-1}\nabla\cdot[\phi(\nabla u)]\quad(u\in H^1_0(\Omega)) \label{align:ch08-8.19}
+L(u)\triangleq (I-\varepsilon\Delta)^{-1}\nabla\cdot[\phi(\nabla u)]\quad(u\in H^1_0(\Omega)) \label{align:ch08-8.19}
 \end{align}
-为 Lipschitz 连续。
+为 Lipschitz 连续；即存在常数 $C_L>0$（仅依赖于 $L$ 与 $\varepsilon$），使 $\|L(u)-L(v)\|_{H^1_0(\Omega)}\leqslant C_L\|u-v\|_{H^1_0(\Omega)}$ 对所有 $u,v\in H^1_0(\Omega)$ 成立。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch08-Lipschitz算子; kind=proof; location=命题 8.2.5 之后; basis=原书以 easily proven 引 [30, Proposition 4.4]，此处补出 (8.18) 的能量估计、$\nabla\cdot$ 的 $H^{-1}$ 界与 Lipschitz 性的传递，并给出常数对 $\varepsilon$ 的依赖
+\begin{proof}[补证：$L$ 的 Lipschitz 估计]
+设 $u,v\in H^1_0(\Omega)$。由\eqref{align:ch08-8.2b} 与 $\phi(0)$ 有限得 $|\phi(\nabla u)|\leqslant|\phi(0)|+L|\nabla u|$ 几乎处处，故 $\phi(\nabla u)\in L^2(\Omega;\mathbb{R}^N)$，且
+\begin{align*}
+\|\phi(\nabla u)-\phi(\nabla v)\|_{L^2(\Omega;\mathbb{R}^N)}
+\leqslant L\|\nabla u-\nabla v\|_{L^2(\Omega;\mathbb{R}^N)}=L\|u-v\|_{H^1_0(\Omega)}.
+\end{align*}
+对 $\psi\in L^2(\Omega;\mathbb{R}^N)$ 与 $\rho\in H^1_0(\Omega)$，Hölder 不等式给出 $\left|\int_\Omega\psi\cdot\nabla\rho\,\mathrm{d}x\right|\leqslant\|\psi\|_{L^2(\Omega)}\|\rho\|_{H^1_0(\Omega)}$，故 $\nabla\cdot\psi\in H^{-1}(\Omega)$ 且 $\|\nabla\cdot\psi\|_{H^{-1}(\Omega)}\leqslant\|\psi\|_{L^2(\Omega)}$。于是
+\begin{align*}
+\|\nabla\cdot[\phi(\nabla u)-\phi(\nabla v)]\|_{H^{-1}(\Omega)}\leqslant L\|u-v\|_{H^1_0(\Omega)}.
+\end{align*}
+现设 $z\in H^{-1}(\Omega)$，$w\triangleq(I-\varepsilon\Delta)^{-1}z$。在\eqref{align:ch08-8.18} 的弱形式中取试验函数 $\rho=w$，得
+\begin{align*}
+\|w\|^2_{L^2(\Omega)}+\varepsilon\|\nabla w\|^2_{L^2(\Omega)}
+=\langle z,w\rangle\leqslant\|z\|_{H^{-1}(\Omega)}\|w\|_{H^1_0(\Omega)},
+\end{align*}
+故 $\min\{1,\varepsilon\}\|w\|^2_{H^1(\Omega)}\leqslant\|z\|_{H^{-1}(\Omega)}\|w\|_{H^1_0(\Omega)}$，即
+\begin{align*}
+\|(I-\varepsilon\Delta)^{-1}z\|_{H^1_0(\Omega)}\leqslant\max\{1,\varepsilon^{-1}\}\|z\|_{H^{-1}(\Omega)}.
+\end{align*}
+把以上两式用于 $z=\nabla\cdot[\phi(\nabla u)-\phi(\nabla v)]$，得
+\begin{align*}
+\|L(u)-L(v)\|_{H^1_0(\Omega)}\leqslant\max\{1,\varepsilon^{-1}\}L\|u-v\|_{H^1_0(\Omega)},
+\end{align*}
+即 $L$ 为 Lipschitz 连续。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch08-Lipschitz算子; kind=motivation; location=命题 8.2.5 的补证之后; basis=命题 8.2.5 把 (Pε) 写成抽象 Cauchy 问题的动机、(8.2b) 的全局性与 $L$ 的 Lipschitz 常数对 ε 的依赖，以及只有局部 Lipschitz 时的边界
+\begin{remark}\phantomsection\label{remark:ch08-Lipschitz动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{proposition:ch08-Lipschitz算子}把\eqref{align:ch08-8.11} 的弱形式改写为 $H^1_0(\Omega)$ 中的抽象 Cauchy 问题 $\partial_tu=L(u)$。$L$ 的 Lipschitz 性是 Cauchy--Lipschitz 定理的适用条件，因而也是\cref{theorem:ch08-正则化适定}（$N\geqslant2$）的全部内容：一旦 $L$ 全局 Lipschitz，整体解的存在唯一性就是抽象理论的直接推论。
+\item 各项假设的作用。\eqref{align:ch08-8.2b} 的全局 Lipschitz 性给出 $\|\phi(\nabla u)-\phi(\nabla v)\|_{L^2}\leqslant L\|\nabla u-\nabla v\|_{L^2}$，这一步需要 $L$ 与 $u,v$ 无关；$u,v\in H^1_0(\Omega)$ 使 $\nabla u\in L^2$，从而 $\phi(\nabla u)\in L^2$、$\nabla\cdot[\phi(\nabla u)]\in H^{-1}$；$\varepsilon>0$ 使 $(I-\varepsilon\Delta)^{-1}:H^{-1}\to H^1_0$ 有界，其范数不超过 $\max\{1,\varepsilon^{-1}\}$；$\Omega$ 有界且 $\partial\Omega$ 光滑使 $H^1_0(\Omega)\subseteq L^2(\Omega)$ 与分部积分合法。
+\item 边界。若 $\phi$ 只有局部 Lipschitz 性，则 $L$ 仅在有界集上 Lipschitz，Cauchy--Lipschitz 定理只给出局部解，“$T=\infty$” 需要额外的先验界。$L$ 的 Lipschitz 常数随 $\varepsilon\to0^+$ 以 $\varepsilon^{-1}$ 增长，故\cref{proposition:ch08-Lipschitz算子}关于 $\varepsilon$ 不一致；这正是下一小节要建立与 $\varepsilon$ 无关的估计的原因。
+\end{enumerate}
+\end{remark}
+
 \begin{proof}[\cref{theorem:ch08-正则化适定} 的证明]
-只需考虑 $N\geqslant2$ 情形。由\cref{proposition:ch08-Lipschitz算子}，对所有 $u_0\in H^1_0(\Omega)$ 与 $\epsilon>0$，抽象 Cauchy 问题
-\begin{align}
+只需考虑 $N\geqslant2$ 情形。由\cref{proposition:ch08-Lipschitz算子}，对所有 $u_0\in H^1_0(\Omega)$ 与 $\varepsilon>0$，抽象 Cauchy 问题
+\begin{align}\label{align:ch08-8.20}
 \begin{cases}
 \partial_t u=L(u) & \text{在 }(0,\infty),\\
 u(0)=u_0
-\end{cases} \label{align:ch08-8.20}
+\end{cases}
 \end{align}
-存在唯一解 $u_\epsilon\in C^1([0,\infty);H^1_0(\Omega))$（例如见文献~\cite{ref31} 定理 II.16.1 与 II.1.7.1）。于是 $u_\epsilon$ 在 $C^1([0,T);H^{-1}(\Omega))$ 意义下满足 $Q_T$ 中的问题 $(P\epsilon)$（对任意 $T\in(0,\infty)$），因而等式\eqref{align:ch08-8.11} 对所有 $t\in(0,T)$ 与 $\rho\in H^1_0(\Omega)$ 成立。由于 $T\in(0,\infty)$ 任意，$u_\epsilon$ 为整体解。结论即得。
+存在唯一解 $u_\varepsilon\in C^1([0,\infty);H^1_0(\Omega))$（例如见文献~\cite{ref31} 定理 II.16.1 与 II.1.7.1）。于是 $u_\varepsilon$ 在 $C^1([0,T);H^{-1}(\Omega))$ 意义下满足 $Q_T$ 中的问题 $(P\varepsilon)$（对任意 $T\in(0,\infty)$），因而等式\eqref{align:ch08-8.11} 对所有 $t\in(0,T)$ 与 $\rho\in H^1_0(\Omega)$ 成立。由于 $T\in(0,\infty)$ 任意，$u_\varepsilon$ 为整体解。结论即得。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch08-正则化适定; kind=proof; location=定理 8.2.1 的证明（$N\geqslant2$ 部分）之后; basis=原证明以 in the sense of C^1([0,T);H^{-1}) 一句带过抽象方程与弱形式 (8.11) 的等价性，此处补出 $(I-\varepsilon\Delta)$ 与 $\nabla\cdot$ 的配对计算
+\begin{proof}[补证：抽象方程与弱形式\eqref{align:ch08-8.11} 的等价性]
+设 $u_\varepsilon\in C^1([0,\infty);H^1_0(\Omega))$ 满足 $\partial_tu_\varepsilon=L(u_\varepsilon)$，即
+\begin{align*}
+(I-\varepsilon\Delta)\partial_tu_\varepsilon=\nabla\cdot[\phi(\nabla u_\varepsilon)]
+\quad\text{在 }H^{-1}(\Omega)\text{ 中}.
+\end{align*}
+固定 $t\in(0,\infty)$ 与 $\rho\in H^1_0(\Omega)$，两端与 $\rho$ 作 $H^{-1}$-$H^1_0$ 配对。由 $(I-\varepsilon\Delta)$ 的定义，左端为
+\begin{align*}
+\langle(I-\varepsilon\Delta)\partial_tu_\varepsilon,\rho\rangle
+=\int_\Omega\partial_tu_\varepsilon\rho\,\mathrm{d}x
++\varepsilon\int_\Omega\nabla\partial_tu_\varepsilon\cdot\nabla\rho\,\mathrm{d}x,
+\end{align*}
+而右端由 $\nabla\cdot$ 的弱定义给出 $-\int_\Omega\phi(\nabla u_\varepsilon)\cdot\nabla\rho\,\mathrm{d}x$。故\eqref{align:ch08-8.11} 成立。反之，若 $u_\varepsilon\in C^1([0,\infty);H^1_0(\Omega))$ 使\eqref{align:ch08-8.11} 对所有 $\rho\in H^1_0(\Omega)$ 成立，则上式对每个 $t$ 成立，即 $(I-\varepsilon\Delta)\partial_tu_\varepsilon=\nabla\cdot[\phi(\nabla u_\varepsilon)]$ 在 $H^{-1}(\Omega)$ 中成立；由 $(I-\varepsilon\Delta)^{-1}$ 的定义得 $\partial_tu_\varepsilon=L(u_\varepsilon)$。初始条件 $u_\varepsilon(\cdot,0)=u_0$ 与\eqref{align:ch08-8.20} 一致，而 $L$ 全局 Lipschitz 保证\eqref{align:ch08-8.20} 的解对一切 $t\in(0,\infty)$ 存在，故 $u_\varepsilon$ 是整体解。
 \end{proof}
 
 \subsection{先验估计}\label{subsection:ch08-先验估计}
 
-为研究 $u_\epsilon$ 当 $\epsilon\to0^+$ 时的极限，需要其（关于 $\epsilon$ 一致的）先验估计。
+为研究 $u_\varepsilon$ 当 $\varepsilon\to0^+$ 时的极限，需要其（关于 $\varepsilon$ 一致的）先验估计。
 
 \subsubsection{$N=1$ 情形}\label{subsubsection:ch08-N1估计}
 
-\begin{proposition}[$N=1$ 先验估计]\label{proposition:ch08-先验估计N1}
-设 $N=1$ 且\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立。设 $u_\epsilon$ 为\cref{theorem:ch08-正则化适定} 给出的问题 $(P\epsilon)$ 的解。则存在 $C>0$（可依赖于 $\|u_0\|_{W^{1,\infty}_0(\Omega)}$），使对所有 $\epsilon>0$，
+\begin{proposition}[$N=1$ 的先验估计]\label{proposition:ch08-先验估计N1}
+设 $N=1$，$\Omega=(a,b)$，$\phi:\mathbb{R}\to\mathbb{R}$ 与 $u_0$ 满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d}，$u_\varepsilon$ 为\cref{theorem:ch08-正则化适定} 给出的问题 $(P\varepsilon)$ 在 $Q_\infty$ 中的整体解。则存在常数 $C>0$（可依赖于 $\|u_0\|_{W^{1,\infty}_0(\Omega)}$），使对所有 $\varepsilon>0$ 有
 \begin{align}
-\sup_{t\in(0,\infty)}\|u_\epsilon(t)\|_{W^{1,\infty}_0(\Omega)}
-+\|\partial_t u_\epsilon\|_{L^2(Q_\infty)}
-+\sqrt{\epsilon}\,\|\partial_{xt}u_\epsilon\|_{L^2(Q_\infty)}\leqslant C. \label{align:ch08-8.21}
+\sup_{t\in(0,\infty)}\|u_\varepsilon(t)\|_{W^{1,\infty}_0(\Omega)}
++\|\partial_t u_\varepsilon\|_{L^2(Q_\infty)}
++\sqrt{\varepsilon}\,\|\partial_{xt}u_\varepsilon\|_{L^2(Q_\infty)}\leqslant C. \label{align:ch08-8.21}
 \end{align}
 \end{proposition}
 
@@ -147,181 +278,299 @@ u(0)=u_0
 \begin{align}
 \Phi(y)\triangleq \int_0^y\phi(z)\,\mathrm{d}z+k\qquad(y,k\in\mathbb{R}) \label{align:ch08-8.22}
 \end{align}
-（即在\eqref{align:ch08-8.14} 中取 $g(s)=s$）。由\eqref{align:ch08-8.9}--\eqref{align:ch08-8.10} 有
+（即在\eqref{align:ch08-8.14} 中取 $g(s)=s$、$k=0$）。由\eqref{align:ch08-8.9}--\eqref{align:ch08-8.10} 有
 \begin{align*}
-\partial_t\Phi(\partial_x u_\epsilon)
-&=\phi(\partial_x u_\epsilon)\partial_{xt}u_\epsilon
-=w_\epsilon\partial_{xx}w_\epsilon+[\phi(\partial_x u_\epsilon)-w_\epsilon]\partial_{xx}w_\epsilon\\
-&=w_\epsilon\partial_{xx}w_\epsilon-\frac{|w_\epsilon-\phi(\partial_x u_\epsilon)|^2}{\epsilon}
-=w_\epsilon\partial_{xx}w_\epsilon-\epsilon|\partial_{xt}u_\epsilon|^2,
+\partial_t\Phi(\partial_x u_\varepsilon)
+&=\phi(\partial_x u_\varepsilon)\partial_{xt}u_\varepsilon
+=w_\varepsilon\partial_{xx}w_\varepsilon+[\phi(\partial_x u_\varepsilon)-w_\varepsilon]\partial_{xx}w_\varepsilon\\
+&=w_\varepsilon\partial_{xx}w_\varepsilon-\frac{|w_\varepsilon-\phi(\partial_x u_\varepsilon)|^2}{\varepsilon}
+=w_\varepsilon\partial_{xx}w_\varepsilon-\varepsilon|\partial_{xt}u_\varepsilon|^2,
 \end{align*}
-因而显然
+因而有
 \begin{align}
-\iint_{Q_\infty}\{|\partial_x w_\epsilon|^2+\epsilon|\partial_{xt}u_\epsilon|^2\}\,\mathrm{d}x\,\mathrm{d}t
-\leqslant\int_\Omega\Phi(u_0)\,\mathrm{d}x. \label{align:ch08-8.23}
+\iint_{Q_\infty}\{|\partial_x w_\varepsilon|^2+\varepsilon|\partial_{xt}u_\varepsilon|^2\}\,\mathrm{d}x\,\mathrm{d}t
+\leqslant\int_\Omega\Phi(u_0')\,\mathrm{d}x. \label{align:ch08-8.23}
 \end{align}
 另一方面，因解为整体的，由\eqref{align:ch08-8.17} 得先验估计
 \begin{align}
-\sup_{t\in(0,T)}\|u_\epsilon(t)\|_{W^{1,\infty}_0(\Omega)}\leqslant C_0[\lambda(\Omega)+1]. \label{align:ch08-8.24}
+\sup_{t\in(0,T)}\|u_\varepsilon(t)\|_{W^{1,\infty}_0(\Omega)}\leqslant C_0[\lambda(\Omega)+1]. \label{align:ch08-8.24}
 \end{align}
 由\eqref{align:ch08-8.23}--\eqref{align:ch08-8.24} 结论即得。
 \end{proof}
 
-\begin{remark}\label{remark:ch08-估计改写}
-设 $u_\epsilon$ 为\cref{theorem:ch08-正则化适定} 给出的解，$v_\epsilon,w_\epsilon$ 由\eqref{align:ch08-8.9} 给出。由于 $\partial_t u_\epsilon=\partial_x w_\epsilon$，估计\eqref{align:ch08-8.21} 也写为
-\begin{align}
-\|v_\epsilon\|_{L^\infty(Q_\infty)}+\|\partial_x w_\epsilon\|_{L^2(Q_\infty)}
-+\sqrt{\epsilon}\,\|\partial_t v_\epsilon\|_{L^2(Q_\infty)}\leqslant C. \label{align:ch08-8.25}
-\end{align}
-显然，这蕴含存在 $\widetilde C>0$（仅依赖于 $\|u_0\|_{W^{1,\infty}_0(\Omega)}$），使对所有充分小的 $\epsilon>0$，
-\begin{align}
-\|\phi(v_\epsilon)\|_{L^\infty(Q_\infty)}\leqslant\widetilde C, \label{align:ch08-8.26}\\
-\|w_\epsilon\|_{L^2(0,\infty;H^1(\Omega))}\leqslant\widetilde C. \label{align:ch08-8.27}
-\end{align}
-事实上，由假设\eqref{align:ch08-8.1b} 与不等式\eqref{align:ch08-8.25}，存在 $C_1>0$（仅依赖于 $\|u_0\|_{W^{1,\infty}_0(\Omega)}$）使对所有 $\epsilon>0$ 有 $\|\phi(v_\epsilon)\|_{L^\infty(Q_\infty)}\leqslant C_1$。由 $w_\epsilon$ 的定义与不等式\eqref{align:ch08-8.25} 得
+% SUPPLEMENT: parent=proposition:ch08-先验估计N1; kind=proof; location=命题 8.2.6 证明之后; basis=原证明 whence plainly 一句跳过了边界项、$k=0$ 使 $\Phi\geqslant0$ 的选取以及 (8.23) 到 (8.21) 的合并，此处补出；并记下 (8.23) 右端初值应为 $u_0'$
+\begin{proof}[补证：\eqref{align:ch08-8.23} 的积分与\eqref{align:ch08-8.21} 的合并]
+先补出\eqref{align:ch08-8.23}。由 $w_\varepsilon=\phi(\partial_xu_\varepsilon)+\varepsilon\partial_{xt}u_\varepsilon$ 得 $\partial_{xx}w_\varepsilon$ 项的积分为
 \begin{align*}
-\|w_\epsilon\|_{L^2(Q_\infty)}\leqslant C_1+\sqrt{\epsilon}\,C.
+\int_\Omega w_\varepsilon\partial_{xx}w_\varepsilon\,\mathrm{d}x
+=-\int_\Omega|\partial_xw_\varepsilon|^2\,\mathrm{d}x+[w_\varepsilon\partial_xw_\varepsilon]_{x=a}^{x=b}
+=-\int_\Omega|\partial_xw_\varepsilon|^2\,\mathrm{d}x,
+\end{align*}
+因为 $\partial_xw_\varepsilon=0$ 在 $\Gamma_\infty$ 上。又 $[\phi(\partial_xu_\varepsilon)-w_\varepsilon]\partial_{xx}w_\varepsilon=-\varepsilon\partial_{xt}u_\varepsilon\partial_{xx}w_\varepsilon=-\varepsilon|\partial_{xt}u_\varepsilon|^2$。故
+\begin{align*}
+\frac{\mathrm{d}}{\mathrm{d}t}\int_\Omega\Phi(\partial_xu_\varepsilon)\,\mathrm{d}x
+=-\int_\Omega\{|\partial_xw_\varepsilon|^2+\varepsilon|\partial_{xt}u_\varepsilon|^2\}\,\mathrm{d}x\leqslant0.
+\end{align*}
+由\eqref{align:ch08-8.1d}，$\phi(z)z\geqslant0$，故 $\Phi(y)=\int_0^y\phi(z)\,\mathrm{d}z\geqslant0$ 对所有 $y\in\mathbb{R}$ 成立（这里用到 $k=0$；$k$ 只影响 $\Phi$ 的常数项，取 $k=0$ 即可）。于是对 $T>0$，
+\begin{align*}
+\iint_{Q_T}\{|\partial_xw_\varepsilon|^2+\varepsilon|\partial_{xt}u_\varepsilon|^2\}\,\mathrm{d}x\,\mathrm{d}t
+=\int_\Omega\Phi(u_0')\,\mathrm{d}x-\int_\Omega\Phi(\partial_xu_\varepsilon(\cdot,T))\,\mathrm{d}x
+\leqslant\int_\Omega\Phi(u_0')\,\mathrm{d}x,
+\end{align*}
+令 $T\to\infty$ 并用单调收敛定理即得\eqref{align:ch08-8.23}。注意被积函数非负，故两个积分都有限，且 $\partial_xw_\varepsilon,\ \sqrt{\varepsilon}\,\partial_{xt}u_\varepsilon$ 属于 $L^2(Q_\infty)$。
+
+再合并\eqref{align:ch08-8.21}。由 $\partial_xu_\varepsilon=v_\varepsilon$ 与 $\partial_tu_\varepsilon=\partial_xw_\varepsilon$ 得
+\begin{align*}
+\|\partial_tu_\varepsilon\|_{L^2(Q_\infty)}=\|\partial_xw_\varepsilon\|_{L^2(Q_\infty)}
+\leqslant\left(\int_\Omega\Phi(u_0')\,\mathrm{d}x\right)^{1/2},\qquad
+\sqrt{\varepsilon}\,\|\partial_{xt}u_\varepsilon\|_{L^2(Q_\infty)}
+\leqslant\left(\int_\Omega\Phi(u_0')\,\mathrm{d}x\right)^{1/2}.
+\end{align*}
+与\eqref{align:ch08-8.24} 相加，取 $C\triangleq C_0[\lambda(\Omega)+1]+2\left(\int_\Omega\Phi(u_0')\,\mathrm{d}x\right)^{1/2}$，即得\eqref{align:ch08-8.21}；该常数只依赖于 $\|u_0'\|_{L^\infty(\Omega)}$、$\lambda(\Omega)$ 与 $\phi$ 在 $[-\|u_0'\|_\infty,\|u_0'\|_\infty]$ 上的取值，因而不依赖于 $\varepsilon$。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch08-先验估计N1; kind=motivation; location=命题 8.2.6 的补证之后; basis=命题 8.2.6 的三项估计各自的来源、(8.1d) 使 $\Phi\geqslant0$ 的作用、(8.23) 右端初值 $u_0$ 应为 $u_0'$ 的更正，以及 $\sqrt\varepsilon$ 加权项的边界
+\begin{remark}\phantomsection\label{remark:ch08-先验估计N1动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{proposition:ch08-先验估计N1} 给出与 $\varepsilon$ 无关的三项界：$W^{1,\infty}_0$ 界来自不变区间\eqref{align:ch08-8.17}，$L^2$ 界与 $\sqrt{\varepsilon}$ 加权界来自能量恒等式\eqref{align:ch08-8.23}。这三项恰好是下一节抽取收敛子列所需的全部紧性来源。
+\item 各项假设的作用。\eqref{align:ch08-8.1d} 使 $\Phi\geqslant0$（取 $k=0$），否则\eqref{align:ch08-8.23} 的右端要换成 $\int_\Omega\Phi(u_0')-\inf\Phi$，估计失去意义；\eqref{align:ch08-8.1a} 使 $\Phi(u_0')$ 可积并给出\eqref{align:ch08-8.24} 中的 $C_0$；\eqref{align:ch08-8.1b} 只用于保证解的存在与\eqref{align:ch08-8.15} 的推导；\eqref{align:ch08-8.1c} 通过\eqref{align:ch08-8.17} 进入第一项。
+\item 边界。\eqref{align:ch08-8.23} 右端的初值应为 $u_0'$ 而非 $u_0$（$\partial_xu_\varepsilon(\cdot,0)=u_0'$）；书中印作 $\Phi(u_0)$。第二、三项只给出 $L^2(Q_\infty)$ 中的界，其中第三项带因子 $\sqrt{\varepsilon}$，故 $\varepsilon\to0^+$ 时只能得到 $\sqrt{\varepsilon}\,\partial_{xt}u_\varepsilon\rightharpoonup0$，不能由此断言 $\partial_{xt}u_\varepsilon$ 本身有界。\eqref{align:ch08-8.21} 的第一项是 $L^\infty(0,\infty)$ 中的界，正是它使 $N=1$ 情形可以取 $u_x$ 的弱*极限（\cref{proposition:ch08-收敛N1}）。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch08-估计改写}
+设 $u_\varepsilon$ 为\cref{theorem:ch08-正则化适定} 给出的解，$v_\varepsilon,w_\varepsilon$ 由\eqref{align:ch08-8.9} 给出。由于 $\partial_t u_\varepsilon=\partial_x w_\varepsilon$，估计\eqref{align:ch08-8.21} 也写为
+\begin{align}
+\|v_\varepsilon\|_{L^\infty(Q_\infty)}+\|\partial_x w_\varepsilon\|_{L^2(Q_\infty)}
++\sqrt{\varepsilon}\,\|\partial_t v_\varepsilon\|_{L^2(Q_\infty)}\leqslant C. \label{align:ch08-8.25}
+\end{align}
+由此存在 $\widetilde C>0$（仅依赖于 $\|u_0\|_{W^{1,\infty}_0(\Omega)}$），使对所有充分小的 $\varepsilon>0$ 有
+\begin{align}
+\|\phi(v_\varepsilon)\|_{L^\infty(Q_\infty)}\leqslant\widetilde C, \label{align:ch08-8.26}\\
+\|w_\varepsilon\|_{L^2(0,\infty;H^1(\Omega))}\leqslant\widetilde C. \label{align:ch08-8.27}
+\end{align}
+事实上，由假设\eqref{align:ch08-8.1b} 与不等式\eqref{align:ch08-8.25}，存在 $C_1>0$（仅依赖于 $\|u_0\|_{W^{1,\infty}_0(\Omega)}$）使对所有 $\varepsilon>0$ 有 $\|\phi(v_\varepsilon)\|_{L^\infty(Q_\infty)}\leqslant C_1$。由 $w_\varepsilon$ 的定义与不等式\eqref{align:ch08-8.25} 得
+\begin{align*}
+\|w_\varepsilon\|_{L^2(Q_\infty)}\leqslant C_1+\sqrt{\varepsilon}\,C.
 \end{align*}
 由上式与\eqref{align:ch08-8.25} 存在常数 $\widetilde C\geqslant C_1$ 使\eqref{align:ch08-8.26}--\eqref{align:ch08-8.27} 成立。
 \end{remark}
 
+% SUPPLEMENT: parent=remark:ch08-估计改写; kind=proof; location=注记 8.2.1 之后; basis=原注记 Plainly 与 In fact 两段跳过了 (8.21) 到 (8.25) 的常数换算、由 (8.1b) 得 (8.26) 的取界方式，以及 (8.27) 中 $L^2$ 范数的来源，此处补出
+\begin{proof}[补证：\eqref{align:ch08-8.25}--\eqref{align:ch08-8.27}]
+关于\eqref{align:ch08-8.25}：由 $v_\varepsilon=\partial_xu_\varepsilon$ 与 $u_\varepsilon(a,t)=0$ 得
+\begin{align*}
+\|u_\varepsilon(\cdot,t)\|_{W^{1,\infty}_0(\Omega)}
+\leqslant(1+\lambda(\Omega))\|v_\varepsilon(\cdot,t)\|_{L^\infty(\Omega)},
+\end{align*}
+故\eqref{align:ch08-8.21} 与\eqref{align:ch08-8.25} 只相差常数因子 $1+\lambda(\Omega)$；又 $\partial_tu_\varepsilon=\partial_xw_\varepsilon$、$\partial_tv_\varepsilon=\partial_{xt}u_\varepsilon$，对应项相同。
+
+关于\eqref{align:ch08-8.26}：由\eqref{align:ch08-8.25} 有 $\|v_\varepsilon\|_{L^\infty(Q_\infty)}\leqslant C$；由\eqref{align:ch08-8.1b}，$\phi$ 在 $[-C-1,C+1]$ 上 Lipschitz 因而有界，取 $C_1\triangleq\max_{|s|\leqslant C+1}|\phi(s)|$ 即得\eqref{align:ch08-8.26}。
+
+关于\eqref{align:ch08-8.27}：由 $w_\varepsilon=\phi(v_\varepsilon)+\varepsilon\partial_tv_\varepsilon$ 与三角不等式得
+\begin{align*}
+\|w_\varepsilon\|_{L^2(Q_T)}\leqslant\|\phi(v_\varepsilon)\|_{L^2(Q_T)}+\varepsilon\|\partial_tv_\varepsilon\|_{L^2(Q_T)}
+\leqslant C_1|Q_T|^{1/2}+\sqrt{\varepsilon}\,C
+\end{align*}
+对每个 $T\in(0,\infty)$ 成立；与\eqref{align:ch08-8.23} 给出的 $\|\partial_xw_\varepsilon\|_{L^2(Q_\infty)}\leqslant C$ 合并，得 $\|w_\varepsilon\|_{L^2(0,T;H^1(\Omega))}\leqslant C_1|Q_T|^{1/2}+2C$。\eqref{align:ch08-8.27} 所断言的是 $T=\infty$ 时与 $T$ 无关的界，其证明需要对 $\varphi(v_\varepsilon)$ 在时间方向的衰减作进一步估计（见\hyperref[remark:ch08-8.27说明]{下一条注记}）。
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch08-估计改写; kind=motivation; location=注记 8.2.1 的补证之后; basis=对 (8.27) 全局 $L^2(0,\infty;H^1)$ 界的来源作边界说明：$L^\infty$ 界只给出随 $T$ 增长的局部界，全局界是后续论证的额外输入
+\begin{remark}\phantomsection\label{remark:ch08-8.27说明}
+\eqref{align:ch08-8.26} 只给出 $\phi(v_\varepsilon)$ 的 $L^\infty$ 界，而\eqref{align:ch08-8.27} 需要它在 $Q_\infty$ 上的 $L^2$ 界：对每个 $T$ 有 $\|\phi(v_\varepsilon)\|_{L^2(Q_T)}\leqslant C_1|Q_T|^{1/2}$，该界随 $T$ 增大而发散，不能直接推出 $w_\varepsilon$ 在 $L^2(0,\infty;H^1(\Omega))$ 中的一致有界性。式\eqref{align:ch08-8.27} 的完整证明需要 $w_\varepsilon$ 关于时间衰减的附加估计（这属于文献~\cite{ref74} 的能量分析），本书自\cref{remark:ch08-w收敛} 起把\eqref{align:ch08-8.27} 作为已知结论使用。本译本保留\eqref{align:ch08-8.27} 的原陈述，同时指出上一条补证只建立了它的局部形式。
+\end{remark}
+
 \subsubsection{$N\geqslant2$ 情形}\label{subsubsection:ch08-N2估计}
 
-对 $N\geqslant2$ 与任一固定的 $u_0\in W^{1,p}_0(\Omega)$（$p\in(1,2]$），证明类似估计。取一族 $\{u_{0\epsilon}\}\subseteq H^1_0(\Omega)$（$\epsilon>0$），满足
+对 $N\geqslant2$ 与任一固定的 $u_0\in W^{1,p}_0(\Omega)$（$p\in(1,2]$），证明相应的估计。取一族 $\{u_{0\varepsilon}\}\subseteq H^1_0(\Omega)$（$\varepsilon>0$），满足
 \begin{align}
-\|u_{0\epsilon}\|_{W^{1,p}_0(\Omega)}\leqslant\|u_0\|_{W^{1,p}_0(\Omega)},\qquad
-u_{0\epsilon}\to u_0\ \text{在 }W^{1,p}_0(\Omega). \label{align:ch08-8.28}
+\|u_{0\varepsilon}\|_{W^{1,p}_0(\Omega)}\leqslant\|u_0\|_{W^{1,p}_0(\Omega)},\qquad
+u_{0\varepsilon}\to u_0\ \text{在 }W^{1,p}_0(\Omega). \label{align:ch08-8.28}
 \end{align}
 
-\begin{proposition}[$N\geqslant2$ 先验估计]\label{proposition:ch08-先验估计N2}
-设 $N\geqslant2$ 且\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2e} 成立。设 $u_\epsilon$ 为\cref{theorem:ch08-正则化适定} 给出的问题 $(P\epsilon)$ 的解，其 Cauchy 数据 $u_{0\epsilon}\in H^1_0(\Omega)$ 如\eqref{align:ch08-8.28}。则存在 $C>0$（依赖于 $\|u_0\|_{W^{1,p}_0(\Omega)}$），使对所有 $\epsilon>0$，
+\begin{proposition}[$N\geqslant2$ 的先验估计]\label{proposition:ch08-先验估计N2}
+设 $N\geqslant2$，$\Omega\subseteq\mathbb{R}^N$ 为具有光滑边界的有界区域，$\phi:\mathbb{R}^N\to\mathbb{R}^N$ 与 $u_0$ 满足\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2e}，$\{u_{0\varepsilon}\}\subseteq H^1_0(\Omega)$ 如\eqref{align:ch08-8.28}，$u_\varepsilon$ 为\cref{theorem:ch08-正则化适定} 给出的问题 $(P\varepsilon)$ 的解，其 Cauchy 数据为 $u_{0\varepsilon}$。则存在常数 $C>0$（依赖于 $\|u_0\|_{W^{1,p}_0(\Omega)}$），使对所有 $\varepsilon>0$ 有
 \begin{align}
-\|u_\epsilon\|_{L^\infty(0,\infty;W^{1,p}_0(\Omega))}
-+\|\partial_t u_\epsilon\|_{L^2(Q_\infty)}
-+\sqrt{\epsilon}\,\|\nabla\partial_t u_\epsilon\|_{L^2(Q_\infty)}\leqslant C. \label{align:ch08-8.29}
+\|u_\varepsilon\|_{L^\infty(0,\infty;W^{1,p}_0(\Omega))}
++\|\partial_t u_\varepsilon\|_{L^2(Q_\infty)}
++\sqrt{\varepsilon}\,\|\nabla\partial_t u_\varepsilon\|_{L^2(Q_\infty)}\leqslant C. \label{align:ch08-8.29}
 \end{align}
 \end{proposition}
 
 \begin{proof}
-由于对所有 $t\in(0,\infty)$ 有 $\partial_t u_\epsilon(\cdot,t)\in H^1_0(\Omega)$，可在\eqref{align:ch08-8.11} 中取 $\rho=\partial_t u_\epsilon(\cdot,t)$。由假设\eqref{align:ch08-8.2d} 得
+由于对所有 $t\in(0,\infty)$ 有 $\partial_t u_\varepsilon(\cdot,t)\in H^1_0(\Omega)$，可在\eqref{align:ch08-8.11} 中取 $\rho=\partial_t u_\varepsilon(\cdot,t)$。由假设\eqref{align:ch08-8.2d} 得
 \begin{align*}
-\int_0^t\int_\Omega\partial_t u_\epsilon^2(x,s)\,\mathrm{d}x\,\mathrm{d}s
-=-\int_0^t\left(\frac{\mathrm{d}}{\mathrm{d}s}\int_\Omega[\Phi(\nabla u_\epsilon)](x,s)\,\mathrm{d}x\right)\mathrm{d}s
--\epsilon\iint_{Q_t}|\nabla\partial_t u_\epsilon|^2(x,s)\,\mathrm{d}x\,\mathrm{d}s,
+\int_0^t\int_\Omega\partial_t u_\varepsilon^2(x,s)\,\mathrm{d}x\,\mathrm{d}s
+=-\int_0^t\left(\frac{\mathrm{d}}{\mathrm{d}s}\int_\Omega[\Phi(\nabla u_\varepsilon)](x,s)\,\mathrm{d}x\right)\mathrm{d}s
+-\varepsilon\iint_{Q_t}|\nabla\partial_t u_\varepsilon|^2(x,s)\,\mathrm{d}x\,\mathrm{d}s,
 \end{align*}
 因而对所有 $t>0$，
 \begin{align}
-\int_\Omega[\Phi(\nabla u_\epsilon)](x,t)\,\mathrm{d}x
-+\int_0^t\int_\Omega\{\partial_t u_\epsilon^2+\epsilon|\nabla\partial_t u_\epsilon|^2\}(x,s)\,\mathrm{d}x\,\mathrm{d}s
-=\int_\Omega[\Phi(\nabla u_{0\epsilon})](x)\,\mathrm{d}x. \label{align:ch08-8.30}
+\int_\Omega[\Phi(\nabla u_\varepsilon)](x,t)\,\mathrm{d}x
++\int_0^t\int_\Omega\{\partial_t u_\varepsilon^2+\varepsilon|\nabla\partial_t u_\varepsilon|^2\}(x,s)\,\mathrm{d}x\,\mathrm{d}s
+=\int_\Omega[\Phi(\nabla u_{0\varepsilon})](x)\,\mathrm{d}x. \label{align:ch08-8.30}
 \end{align}
 另一方面，由\eqref{align:ch08-8.3} 中第一个不等式（取 $q=p$）有
 \begin{align}
-C_1\int_\Omega|\nabla u_\epsilon|^p(x,t)\,\mathrm{d}x
-&=C_1\int_{\{|\nabla u_\epsilon|>y_0\}}|\nabla u_\epsilon|^p(x,t)\,\mathrm{d}x
-+C_1\int_{\{|\nabla u_\epsilon|\leqslant y_0\}}|\nabla u_\epsilon|^p(x,t)\,\mathrm{d}x\nonumber\\
-&\leqslant\int_{\{|\nabla u_\epsilon|>y_0\}}[\Phi(\nabla u_\epsilon)](x,t)\,\mathrm{d}x
+C_1\int_\Omega|\nabla u_\varepsilon|^p(x,t)\,\mathrm{d}x
+&=C_1\int_{\{|\nabla u_\varepsilon|>y_0\}}|\nabla u_\varepsilon|^p(x,t)\,\mathrm{d}x
++C_1\int_{\{|\nabla u_\varepsilon|\leqslant y_0\}}|\nabla u_\varepsilon|^p(x,t)\,\mathrm{d}x\nonumber\\
+&\leqslant\int_{\{|\nabla u_\varepsilon|>y_0\}}[\Phi(\nabla u_\varepsilon)](x,t)\,\mathrm{d}x
 +C_1y_0^p\lambda_N(\Omega)\nonumber\\
-&=\int_\Omega[\Phi(\nabla u_\epsilon)](x,t)\,\mathrm{d}x
--\int_{\{|\nabla u_\epsilon|\leqslant y_0\}}[\Phi(\nabla u_\epsilon)](x,t)\,\mathrm{d}x
+&=\int_\Omega[\Phi(\nabla u_\varepsilon)](x,t)\,\mathrm{d}x
+-\int_{\{|\nabla u_\varepsilon|\leqslant y_0\}}[\Phi(\nabla u_\varepsilon)](x,t)\,\mathrm{d}x
 +C_1y_0^p\lambda_N(\Omega) \label{align:ch08-8.31}
 \end{align}
 其中 $y_0$ 如\eqref{align:ch08-8.2c}。由等式\eqref{align:ch08-8.30} 有
 \begin{align}
-&C_1\int_\Omega|\nabla u_\epsilon|^p(x,t)\,\mathrm{d}x
-+\int_0^t\int_\Omega\{\partial_t u_\epsilon^2+\epsilon|\nabla\partial_t u_\epsilon|^2\}(x,s)\,\mathrm{d}x\,\mathrm{d}s\nonumber\\
-&\qquad\leqslant\int_\Omega[\Phi(\nabla u_{0\epsilon})](x)\,\mathrm{d}x
--\int_{\{|\nabla u_\epsilon|\leqslant y_0\}}[\Phi(\nabla u_\epsilon)](x,t)\,\mathrm{d}x
+&C_1\int_\Omega|\nabla u_\varepsilon|^p(x,t)\,\mathrm{d}x
++\int_0^t\int_\Omega\{\partial_t u_\varepsilon^2+\varepsilon|\nabla\partial_t u_\varepsilon|^2\}(x,s)\,\mathrm{d}x\,\mathrm{d}s\nonumber\\
+&\qquad\leqslant\int_\Omega[\Phi(\nabla u_{0\varepsilon})](x)\,\mathrm{d}x
+-\int_{\{|\nabla u_\varepsilon|\leqslant y_0\}}[\Phi(\nabla u_\varepsilon)](x,t)\,\mathrm{d}x
 +C_1y_0^p\lambda_N(\Omega)
-\leqslant\int_\Omega[\Phi(\nabla u_{0\epsilon})](x)\,\mathrm{d}x+K_1 \label{align:ch08-8.32}
+\leqslant\int_\Omega[\Phi(\nabla u_{0\varepsilon})](x)\,\mathrm{d}x+K_1 \label{align:ch08-8.32}
 \end{align}
 其中常数 $K_1>0$ 仅依赖于 $y_0$ 与 $\lambda_N(\Omega)$（此处用到 $\Phi$ 的连续性）。
 
 仿\eqref{align:ch08-8.31}，由\eqref{align:ch08-8.3} 中第二个不等式与\eqref{align:ch08-8.28} 中不等式得
 \begin{align}
-\int_\Omega[\Phi(\nabla u_{0\epsilon})](x)\,\mathrm{d}x
-&=\int_{\{|\nabla u_{0\epsilon}|>y_0\}}[\Phi(\nabla u_{0\epsilon})](x)\,\mathrm{d}x
-+\int_{\{|\nabla u_{0\epsilon}|\leqslant y_0\}}[\Phi(\nabla u_{0\epsilon})](x)\,\mathrm{d}x\nonumber\\
-&\leqslant C_3\int_{\{|\nabla u_{0\epsilon}|>y_0\}}|\nabla u_{0\epsilon}|^p(x)\,\mathrm{d}x
-+\int_{\{|\nabla u_{0\epsilon}|\leqslant y_0\}}[\Phi(\nabla u_{0\epsilon})](x)\,\mathrm{d}x\nonumber\\
+\int_\Omega[\Phi(\nabla u_{0\varepsilon})](x)\,\mathrm{d}x
+&=\int_{\{|\nabla u_{0\varepsilon}|>y_0\}}[\Phi(\nabla u_{0\varepsilon})](x)\,\mathrm{d}x
++\int_{\{|\nabla u_{0\varepsilon}|\leqslant y_0\}}[\Phi(\nabla u_{0\varepsilon})](x)\,\mathrm{d}x\nonumber\\
+&\leqslant C_3\int_{\{|\nabla u_{0\varepsilon}|>y_0\}}|\nabla u_{0\varepsilon}|^p(x)\,\mathrm{d}x
++\int_{\{|\nabla u_{0\varepsilon}|\leqslant y_0\}}[\Phi(\nabla u_{0\varepsilon})](x)\,\mathrm{d}x\nonumber\\
 &\leqslant C_3\int_\Omega|\nabla u_0|^p(x)\,\mathrm{d}x+K_2 \label{align:ch08-8.33}
 \end{align}
 其中常数 $K_2>0$ 仅依赖于 $y_0$。由于 $u\mapsto\||\nabla u|\|_{L^p(\Omega)}$ 是 $W^{1,p}_0(\Omega)$ 上的等价范数，由\eqref{align:ch08-8.32}--\eqref{align:ch08-8.33}，对某个常数 $K_3>0$ 有
 \begin{align*}
-\|u_\epsilon\|^p_{L^\infty(0,\infty;W^{1,p}_0(\Omega))}
-+\|\partial_t u_\epsilon\|^2_{L^2(Q_\infty)}
-+\epsilon\|\nabla\partial_t u_\epsilon\|^2_{L^2(Q_\infty)}
+\|u_\varepsilon\|^p_{L^\infty(0,\infty;W^{1,p}_0(\Omega))}
++\|\partial_t u_\varepsilon\|^2_{L^2(Q_\infty)}
++\varepsilon\|\nabla\partial_t u_\varepsilon\|^2_{L^2(Q_\infty)}
 \leqslant\frac{1}{\min\{1,C_1K_3\}}\big(C_3\|u_0\|^p_{W^{1,p}_0(\Omega)}+K_1+K_2\big)=:C_4,
 \end{align*}
 因而
 \begin{align*}
-\|u_\epsilon\|_{L^\infty(0,\infty;W^{1,p}_0(\Omega))}
-+\|\partial_t u_\epsilon\|_{L^2(Q_\infty)}
-+\sqrt{\epsilon}\,\|\nabla\partial_t u_\epsilon\|_{L^2(Q_\infty)}\leqslant C_4+3.
+\|u_\varepsilon\|_{L^\infty(0,\infty;W^{1,p}_0(\Omega))}
++\|\partial_t u_\varepsilon\|_{L^2(Q_\infty)}
++\sqrt{\varepsilon}\,\|\nabla\partial_t u_\varepsilon\|_{L^2(Q_\infty)}\leqslant C_4+3.
 \end{align*}
 令 $C\triangleq C_4+3$，即得不等式\eqref{align:ch08-8.29}。证毕。
 \end{proof}
 
-\begin{remark}\label{remark:ch08-W1p界}
-由估计\eqref{align:ch08-8.21} 与\eqref{align:ch08-8.29}，族 $\{u_\epsilon\}$ 含于 $L^\infty(0,\infty;W^{1,q}_0(\Omega))$ 的一个有界子集（$N=1$ 时对所有 $1\leqslant q<\infty$），或 $L^\infty(0,\infty;W^{1,p}_0(\Omega))$ 的有界子集（$N\geqslant2$）。此外，若 $N\geqslant2$ 且 $p\in(1,2]$，则由估计\eqref{align:ch08-8.29}，对每个 $T\in(0,\infty)$ 存在常数 $\bar C_T>0$（依赖于 $\|u_0\|_{W^{1,p}_0(\Omega)}$），使对所有 $\epsilon>0$，
+% SUPPLEMENT: parent=proposition:ch08-先验估计N2; kind=proof; location=命题 8.2.7 证明之后; basis=原证明以等价范数一句从 (8.32)--(8.33) 得到 $C_4$，未写出 (8.30) 中取 $\rho=\partial_tu_\varepsilon$ 的合法性、$K_1$、$K_2$ 与 $K_3$ 的具体含义，此处补出
+\begin{proof}[补证：\eqref{align:ch08-8.30}--\eqref{align:ch08-8.33} 的细节与常数]
+由于 $u_\varepsilon\in C^1([0,\infty);H^1_0(\Omega))$，有 $\partial_tu_\varepsilon(\cdot,t)\in H^1_0(\Omega)$，故可在\eqref{align:ch08-8.11} 中取 $\rho=\partial_tu_\varepsilon(\cdot,t)$，得
+\begin{align*}
+\int_\Omega\partial_tu_\varepsilon^2\,\mathrm{d}x
++\int_\Omega\phi(\nabla u_\varepsilon)\cdot\nabla\partial_tu_\varepsilon\,\mathrm{d}x
++\varepsilon\int_\Omega|\nabla\partial_tu_\varepsilon|^2\,\mathrm{d}x=0.
+\end{align*}
+由\eqref{align:ch08-8.2d} 与链式法则，$\phi(\nabla u_\varepsilon)\cdot\nabla\partial_tu_\varepsilon=\partial_t[\Phi(\nabla u_\varepsilon)]$；在 $(0,t)$ 上积分即得\eqref{align:ch08-8.30}。
+
+关于\eqref{align:ch08-8.31}：由\eqref{align:ch08-8.3} 中第一个不等式（$q=p$）有 $C_1|y|^p\leqslant\Phi(y)$ 对 $|y|>y_0$，故在 $\{|\nabla u_\varepsilon|>y_0\}$ 上 $C_1|\nabla u_\varepsilon|^p\leqslant\Phi(\nabla u_\varepsilon)$；在 $\{|\nabla u_\varepsilon|\leqslant y_0\}$ 上 $C_1|\nabla u_\varepsilon|^p\leqslant C_1y_0^p$，而 $\lambda_N(\Omega)$ 为该集合的测度上界。关于\eqref{align:ch08-8.32} 中的 $K_1$：由\eqref{align:ch08-8.30} 消去 $\int_\Omega\Phi(\nabla u_\varepsilon)(x,t)\,\mathrm{d}x$，并注意在 $\{|\nabla u_\varepsilon|\leqslant y_0\}$ 上 $\Phi(\nabla u_\varepsilon)\geqslant-\max_{|y|\leqslant y_0}|\Phi(y)|$，故上式中的负项不超过 $\max_{|y|\leqslant y_0}|\Phi(y)|\lambda_N(\Omega)$，于是可取 $K_1\triangleq C_1y_0^p\lambda_N(\Omega)+\max_{|y|\leqslant y_0}|\Phi(y)|\lambda_N(\Omega)$。
+
+关于\eqref{align:ch08-8.33}：由\eqref{align:ch08-8.3} 中第二个不等式有 $\Phi(y)\leqslant C_3|y|^p$ 对 $|y|>y_0$，再由\eqref{align:ch08-8.28} 中的 $\|u_{0\varepsilon}\|_{W^{1,p}_0(\Omega)}\leqslant\|u_0\|_{W^{1,p}_0(\Omega)}$ 得第二行，其中 $K_2\triangleq\max_{|y|\leqslant y_0}|\Phi(y)|\lambda_N(\Omega)$。
+
+最后，由等价范数存在 $K_3>0$ 使 $\|u\|^p_{W^{1,p}_0(\Omega)}\leqslant K_3\int_\Omega|\nabla u|^p\,\mathrm{d}x$。在\eqref{align:ch08-8.32} 的左端把 $C_1\int_\Omega|\nabla u_\varepsilon|^p\,\mathrm{d}x$ 换成 $(C_1/K_3)\|u_\varepsilon\|^p_{W^{1,p}_0(\Omega)}$，并与\eqref{align:ch08-8.33} 合并，得
+\begin{align*}
+\min\{1,C_1/K_3\}\Big(\|u_\varepsilon\|^p_{L^\infty(0,\infty;W^{1,p}_0(\Omega))}
++\|\partial_tu_\varepsilon\|^2_{L^2(Q_\infty)}
++\varepsilon\|\nabla\partial_tu_\varepsilon\|^2_{L^2(Q_\infty)}\Big)
+\leqslant C_3\|u_0\|^p_{W^{1,p}_0(\Omega)}+K_1+K_2,
+\end{align*}
+即书中的估计（把常数 $K_3$ 重新记为 $1/K_3$ 即可写成 $\min\{1,C_1K_3\}$ 的形式）。注意左端第一项要对 $t$ 取上确界：由\eqref{align:ch08-8.31}--\eqref{align:ch08-8.32}，右端与 $t$ 无关，故对几乎处处的 $t$ 成立，再由 $u_\varepsilon$ 关于 $t$ 的连续性提升为对一切 $t$ 成立。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch08-先验估计N2; kind=motivation; location=命题 8.2.7 的补证之后; basis=命题 8.2.7 中 (8.2a)--(8.2e) 逐项作用、(8.28) 逼近的必要性、指数 $p\in(1,2]$ 的关键性，以及无不变区间时改用能量的动机
+\begin{remark}\phantomsection\label{remark:ch08-先验估计N2动机}
+\begin{enumerate}[(i)]
+\item 引入动机。$N\geqslant2$ 时没有\cref{proposition:ch08-不变区间}那样的极值原理可用（$\nabla u$ 是向量，不变区间没有逐分量的含义），于是改用能量方法：\eqref{align:ch08-8.30} 是精确的能量恒等式，\eqref{align:ch08-8.31} 用\eqref{align:ch08-8.2e} 的强制性把 $\Phi(\nabla u_\varepsilon)$ 从下方换成 $C_1|\nabla u_\varepsilon|^p$，从而由初始能量控制住 $\|\nabla u_\varepsilon\|_{L^p}$ 与耗散项。
+\item 各项假设的作用。\eqref{align:ch08-8.2a} 使初始能量有限；因 $u_0$ 一般不属于 $H^1_0(\Omega)$，需用\eqref{align:ch08-8.28} 的 $H^1_0$ 逼近 $u_{0\varepsilon}$ 才能把 $u_{0\varepsilon}$ 取作 Cauchy 数据；\eqref{align:ch08-8.2d} 使能量恒等式\eqref{align:ch08-8.30} 成立；\eqref{align:ch08-8.2e}（配合\eqref{align:ch08-8.2c}）给出\eqref{align:ch08-8.3} 的两个不等式，分别是\eqref{align:ch08-8.31} 与\eqref{align:ch08-8.33} 的来源；\eqref{align:ch08-8.2b} 只用于保证解的存在（\cref{theorem:ch08-正则化适定}）。
+\item 边界。指数范围 $p\in(1,2]$ 是关键：\eqref{align:ch08-8.37} 中的 Hölder 指数 $(2-p)/(2p)$ 要求 $p\leqslant2$，而 $L^2(Q_T)\subseteq L^p(Q_T)$ 同样要求 $p\leqslant2$；$p>2$ 时本节的估计链条失效。\eqref{align:ch08-8.29} 只给出 $L^\infty(0,\infty;W^{1,p}_0(\Omega))$ 的界，没有 $N=1$ 时的 $L^\infty$ 斜率界，故 $N\geqslant2$ 情形的收敛只能在对 $\nabla u_\varepsilon$ 取弱极限的意义下得到（\cref{proposition:ch08-收敛N2}）。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch08-W1p界}
+由估计\eqref{align:ch08-8.21} 与\eqref{align:ch08-8.29}，族 $\{u_\varepsilon\}$ 含于 $L^\infty(0,\infty;W^{1,q}_0(\Omega))$ 的一个有界子集（$N=1$ 时对所有 $1\leqslant q<\infty$），或 $L^\infty(0,\infty;W^{1,p}_0(\Omega))$ 的有界子集（$N\geqslant2$）。此外，若 $N\geqslant2$ 且 $p\in(1,2]$，则由估计\eqref{align:ch08-8.29}，对每个 $T\in(0,\infty)$ 存在常数 $\bar C_T>0$（依赖于 $\|u_0\|_{W^{1,p}_0(\Omega)}$），使对所有 $\varepsilon>0$ 有
 \begin{align}
-\|u_\epsilon\|_{W^{1,p}(Q_T)}\leqslant\bar C_T. \label{align:ch08-8.34}
+\|u_\varepsilon\|_{W^{1,p}(Q_T)}\leqslant\bar C_T. \label{align:ch08-8.34}
 \end{align}
-类似地，若 $N=1$，则由估计\eqref{align:ch08-8.21}，对所有 $\epsilon>0$ 有
+类似地，若 $N=1$，则由估计\eqref{align:ch08-8.21}，对所有 $\varepsilon>0$ 有
 \begin{align}
-\|u_\epsilon\|_{H^1(Q_T)}\leqslant\bar C_T. \label{align:ch08-8.35}
+\|u_\varepsilon\|_{H^1(Q_T)}\leqslant\bar C_T. \label{align:ch08-8.35}
 \end{align}
 \end{remark}
 
-\subsection{令 $\epsilon\to0^+$}\label{subsection:ch08-极限过程}
-
-若 $N\geqslant2$，由\eqref{align:ch08-8.29} 有如下结果。
-
-\begin{proposition}[$N\geqslant2$ 解的收敛]\label{proposition:ch08-收敛N2}
-设 $N\geqslant2$ 且\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2e} 成立。设 $u_\epsilon$ 为\cref{theorem:ch08-正则化适定} 给出的问题 $(P\epsilon)$ 的解，Cauchy 数据 $u_{0\epsilon}\in H^1_0(\Omega)$ 如\eqref{align:ch08-8.28}。则存在序列 $\{u_{\epsilon_k}\}\subseteq\{u_\epsilon\}$ 与
+% SUPPLEMENT: parent=remark:ch08-W1p界; kind=proof; location=注记 8.2.2 之后; basis=原注记直接写出 (8.34)--(8.35)，未写出由 (8.29)、(8.21) 到 $W^{1,p}(Q_T)$、$H^1(Q_T)$ 范数界的 Hölder 插值步骤与 $\bar C_T$ 的显式形式
+\begin{proof}[补证：由\eqref{align:ch08-8.29} 与\eqref{align:ch08-8.21} 到\eqref{align:ch08-8.34}--\eqref{align:ch08-8.35}]
+设 $N\geqslant2$。由\eqref{align:ch08-8.29} 有 $\|u_\varepsilon\|_{L^\infty(0,\infty;W^{1,p}_0(\Omega))}\leqslant C$ 与 $\|\partial_tu_\varepsilon\|_{L^2(Q_\infty)}\leqslant C$。对 $T\in(0,\infty)$，
 \begin{align*}
-u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))\cap C([0,\infty);L^p(\Omega))\cap W^{1,p}(Q_T),
+\|u_\varepsilon\|^p_{W^{1,p}(Q_T)}
+&=\iint_{Q_T}(|u_\varepsilon|^p+|\nabla u_\varepsilon|^p+|\partial_tu_\varepsilon|^p)\,\mathrm{d}x\,\mathrm{d}t\\
+&\leqslant T\tilde C^p+\iint_{Q_T}|\partial_tu_\varepsilon|^p\,\mathrm{d}x\,\mathrm{d}t
+\leqslant TC^p+|Q_T|^{\frac{2-p}{2}}\Big(\iint_{Q_T}|\partial_tu_\varepsilon|^2\,\mathrm{d}x\,\mathrm{d}t\Big)^{\frac p2}
+\leqslant TC^p+|Q_T|^{\frac{2-p}{2}}C^p,
 \end{align*}
-$\partial_t u\in L^2(Q_\infty)$，使
+其中 $\tilde C$ 是 $\|u_\varepsilon(t)\|_{L^p(\Omega)}$ 与 $\|\nabla u_\varepsilon(t)\|_{L^p(\Omega)}$ 的公共界（由 Poincaré 不等式与\eqref{align:ch08-8.29} 得到），第二个不等号是 Hölder 不等式，用到 $p\leqslant2$。故\eqref{align:ch08-8.34} 成立，例如取 $\bar C_T\triangleq(T\tilde C^p+|Q_T|^{(2-p)/2}C^p)^{1/p}$。
+
+设 $N=1$。由\eqref{align:ch08-8.21} 有 $\|u_\varepsilon\|_{L^\infty(0,\infty;W^{1,\infty}_0(\Omega))}\leqslant C$ 与 $\|\partial_tu_\varepsilon\|_{L^2(Q_\infty)}\leqslant C$，故
+\begin{align*}
+\|u_\varepsilon\|^2_{H^1(Q_T)}
+=\iint_{Q_T}(|u_\varepsilon|^2+|\partial_xu_\varepsilon|^2+|\partial_tu_\varepsilon|^2)\,\mathrm{d}x\,\mathrm{d}t
+\leqslant T C^2(1+\lambda(\Omega)^2)+C^2,
+\end{align*}
+即\eqref{align:ch08-8.35} 成立，例如取 $\bar C_T\triangleq\{TC^2(1+\lambda(\Omega)^2)+C^2\}^{1/2}$。
+\end{proof}
+
+\subsection{令 $\varepsilon\to0^+$}\label{subsection:ch08-极限过程}
+
+若 $N\geqslant2$，则由\eqref{align:ch08-8.29} 有如下结果。
+
+\begin{proposition}[$N\geqslant2$ 情形的解的收敛]\label{proposition:ch08-收敛N2}
+设 $N\geqslant2$，$\Omega\subseteq\mathbb{R}^N$ 为具有光滑边界的有界区域，$\phi:\mathbb{R}^N\to\mathbb{R}^N$ 与 $u_0$ 满足\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2e}，$\{u_{0\varepsilon}\}\subseteq H^1_0(\Omega)$ 如\eqref{align:ch08-8.28}，$u_\varepsilon$ 为\cref{theorem:ch08-正则化适定} 给出的问题 $(P\varepsilon)$ 的解，其 Cauchy 数据为 $u_{0\varepsilon}$。则存在序列 $\{u_{\varepsilon_k}\}\subseteq\{u_\varepsilon\}$ 与函数
+\begin{align*}
+u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))\cap C([0,\infty);L^p(\Omega))\cap W^{1,p}(Q_T)
+\end{align*}
+（$T\in(0,\infty)$ 任意）且 $\partial_tu\in L^2(Q_\infty)$，使
 \begin{align}
-&u_{\epsilon_k}\to u\ \text{在 }C([0,T);L^p(\Omega))\quad\text{对所有 }T\in(0,\infty); \label{align:ch08-8.36a}\\
-&u_{\epsilon_k}\rightharpoonup u\ \text{在 }L^r(0,T;W^{1,p}_0(\Omega))\quad\text{对所有 }T\in(0,\infty)\ (r\in[1,\infty)); \label{align:ch08-8.36b}\\
-&u_{\epsilon_k}\rightharpoonup u\ \text{在 }W^{1,p}(Q_T)\quad\text{对所有 }T\in(0,\infty); \label{align:ch08-8.36c}\\
-&\partial_t u_{\epsilon_k}\rightharpoonup\partial_t u,\quad
-\sqrt{\epsilon_k}\,\nabla\partial_t u_{\epsilon_k}\to0\ \text{在 }L^2(Q_\infty). \label{align:ch08-8.36d}
+&u_{\varepsilon_k}\to u\ \text{在 }C([0,T);L^p(\Omega))\quad\text{对所有 }T\in(0,\infty); \label{align:ch08-8.36a}\\
+&u_{\varepsilon_k}\rightharpoonup u\ \text{在 }L^r(0,T;W^{1,p}_0(\Omega))\quad\text{对所有 }T\in(0,\infty)\ (r\in[1,\infty)); \label{align:ch08-8.36b}\\
+&u_{\varepsilon_k}\rightharpoonup u\ \text{在 }W^{1,p}(Q_T)\quad\text{对所有 }T\in(0,\infty); \label{align:ch08-8.36c}\\
+&\partial_t u_{\varepsilon_k}\rightharpoonup\partial_t u,\quad
+\sqrt{\varepsilon_k}\,\nabla\partial_t u_{\varepsilon_k}\to0\ \text{在 }L^2(Q_\infty). \label{align:ch08-8.36d}
 \end{align}
 \end{proposition}
 
 \begin{proof}
-关于\eqref{align:ch08-8.36a}，注意由不等式\eqref{align:ch08-8.34} 族 $\{u_\epsilon\}$ 在 $W^{1,p}(Q_T)$ 中有界，故存在序列 $\{u_{\epsilon_k}\}\subseteq\{u_\epsilon\}$（可依赖于 $T\in(0,\infty)$）在 $L^p(Q_T)$ 中强收敛。现证 $\{u_{\epsilon_k}\}$ 是 $C([0,T];L^p(\Omega))$ 中的 Cauchy 列（对所有 $T\in(0,\infty)$）。事实上，对所有 $t\in[0,T]$，
+关于\eqref{align:ch08-8.36a}，注意由不等式\eqref{align:ch08-8.34} 族 $\{u_\varepsilon\}$ 在 $W^{1,p}(Q_T)$ 中有界，故存在序列 $\{u_{\varepsilon_k}\}\subseteq\{u_\varepsilon\}$（可依赖于 $T\in(0,\infty)$）在 $L^p(Q_T)$ 中强收敛。现证 $\{u_{\varepsilon_k}\}$ 是 $C([0,T];L^p(\Omega))$ 中的 Cauchy 列（对所有 $T\in(0,\infty)$）。事实上，对所有 $t\in[0,T]$，
 \begin{align*}
-&\left|\int_\Omega|u_{\epsilon_k}-u_{\epsilon_m}|^p(x,t)\,\mathrm{d}x-\int_\Omega|u_{0\epsilon_k}-u_{0\epsilon_m}|^p(x)\,\mathrm{d}x\right|\\
-&\qquad\leqslant p\iint_{Q_t}[|u_{\epsilon_k}-u_{\epsilon_m}|^{p-1}|\partial_t u_{\epsilon_k}-\partial_t u_{\epsilon_m}|](x,s)\,\mathrm{d}x\,\mathrm{d}s\\
-&\qquad\leqslant p\left(\iint_{Q_t}|u_{\epsilon_k}-u_{\epsilon_m}|^p\,\mathrm{d}x\,\mathrm{d}s\right)^{1-1/p}
-\left(\iint_{Q_t}|\partial_t u_{\epsilon_k}-\partial_t u_{\epsilon_m}|^p\,\mathrm{d}x\,\mathrm{d}s\right)^{1/p}\\
+&\left|\int_\Omega|u_{\varepsilon_k}-u_{\varepsilon_m}|^p(x,t)\,\mathrm{d}x-\int_\Omega|u_{0\varepsilon_k}-u_{0\varepsilon_m}|^p(x)\,\mathrm{d}x\right|\\
+&\qquad\leqslant p\iint_{Q_t}[|u_{\varepsilon_k}-u_{\varepsilon_m}|^{p-1}|\partial_t u_{\varepsilon_k}-\partial_t u_{\varepsilon_m}|](x,s)\,\mathrm{d}x\,\mathrm{d}s\\
+&\qquad\leqslant p\left(\iint_{Q_t}|u_{\varepsilon_k}-u_{\varepsilon_m}|^p\,\mathrm{d}x\,\mathrm{d}s\right)^{1-1/p}
+\left(\iint_{Q_t}|\partial_t u_{\varepsilon_k}-\partial_t u_{\varepsilon_m}|^p\,\mathrm{d}x\,\mathrm{d}s\right)^{1/p}\\
 &\qquad\leqslant p|Q_T|^{\frac{2-p}{2p}}
-\|u_{\epsilon_k}-u_{\epsilon_m}\|^{p-1}_{L^p(Q_T)}
-\|\partial_t u_{\epsilon_k}-\partial_t u_{\epsilon_m}\|_{L^2(Q_T)},
+\|u_{\varepsilon_k}-u_{\varepsilon_m}\|^{p-1}_{L^p(Q_T)}
+\|\partial_t u_{\varepsilon_k}-\partial_t u_{\varepsilon_m}\|_{L^2(Q_T)},
 \end{align*}
 因 $p\in(1,2]$。由不等式\eqref{align:ch08-8.29} 有
 \begin{align}
-\|u_{\epsilon_k}-u_{\epsilon_m}\|_{C([0,T];L^p(\Omega))}
-\leqslant K\|u_{\epsilon_k}-u_{\epsilon_m}\|^{1-1/p}_{L^p(Q_T)}
-+\|u_{0\epsilon_k}-u_{0\epsilon_m}\|_{L^p(\Omega)}, \label{align:ch08-8.37}
+\|u_{\varepsilon_k}-u_{\varepsilon_m}\|_{C([0,T];L^p(\Omega))}
+\leqslant K\|u_{\varepsilon_k}-u_{\varepsilon_m}\|^{1-1/p}_{L^p(Q_T)}
++\|u_{0\varepsilon_k}-u_{0\varepsilon_m}\|_{L^p(\Omega)}, \label{align:ch08-8.37}
 \end{align}
-其中 $K\triangleq 2C^p|Q_T|^{\frac{2-p}{2p}}$。由\eqref{align:ch08-8.28} 与\eqref{align:ch08-8.37} 得结论。经对角论证，存在序列 $\{u_{\epsilon_k}\}\subseteq\{u_\epsilon\}$ 与 $u\in C([0,\infty);L^p(\Omega))$，使\eqref{align:ch08-8.36a} 对所有 $T\in(0,\infty)$ 成立。
+其中 $K\triangleq 2C^p|Q_T|^{\frac{2-p}{2p}}$。由\eqref{align:ch08-8.28} 与\eqref{align:ch08-8.37} 得结论。经对角论证，存在序列 $\{u_{\varepsilon_k}\}\subseteq\{u_\varepsilon\}$ 与 $u\in C([0,\infty);L^p(\Omega))$，使\eqref{align:ch08-8.36a} 对所有 $T\in(0,\infty)$ 成立。
 
 关于\eqref{align:ch08-8.36b} 中的收敛，由\eqref{align:ch08-8.29} 有
 \begin{align}
-\|u_{\epsilon_k}\|_{L^r(0,T;W^{1,p}_0(\Omega))}\leqslant C\,T^{1/r} \label{align:ch08-8.38}
+\|u_{\varepsilon_k}\|_{L^r(0,T;W^{1,p}_0(\Omega))}\leqslant C\,T^{1/r} \label{align:ch08-8.38}
 \end{align}
-对所有 $T\in(0,\infty)$ 与 $r\in[1,\infty)$。经对角论证，存在 $\{u_{\epsilon_k}\}$ 的子列（为简便不重新标号）与函数 $u:(0,\infty)\to W^{1,p}_0(\Omega)$，使\eqref{align:ch08-8.36b} 对所有 $T\in(0,\infty)$ 与 $r\in[1,\infty)$ 成立。为证 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))$，注意由\eqref{align:ch08-8.29}
+对所有 $T\in(0,\infty)$ 与 $r\in[1,\infty)$。经对角论证，存在 $\{u_{\varepsilon_k}\}$ 的子列（为简便不重新标号）与函数 $u:(0,\infty)\to W^{1,p}_0(\Omega)$，使\eqref{align:ch08-8.36b} 对所有 $T\in(0,\infty)$ 与 $r\in[1,\infty)$ 成立。为证 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))$，注意由\eqref{align:ch08-8.29}
 \begin{align}
-\|u_{\epsilon_k}(\cdot,t)\|_{W^{1,p}_0(\Omega)}\leqslant C\quad\text{对几乎所有 }t\in(0,\infty). \label{align:ch08-8.39}
+\|u_{\varepsilon_k}(\cdot,t)\|_{W^{1,p}_0(\Omega)}\leqslant C\quad\text{对几乎所有 }t\in(0,\infty). \label{align:ch08-8.39}
 \end{align}
-于是存在 $\{u_{\epsilon_k}(\cdot,t)\}$ 的子列（可依赖于 $t$，仍记为 $\{u_{\epsilon_k}(\cdot,t)\}$）与函数 $f_t\in W^{1,p}_0(\Omega)$，使
+于是存在 $\{u_{\varepsilon_k}(\cdot,t)\}$ 的子列（可依赖于 $t$，仍记为 $\{u_{\varepsilon_k}(\cdot,t)\}$）与函数 $f_t\in W^{1,p}_0(\Omega)$，使
 \begin{align}
-u_{\epsilon_k}(\cdot,t)\rightharpoonup f_t\ \text{在 }W^{1,p}_0(\Omega). \label{align:ch08-8.40}
+u_{\varepsilon_k}(\cdot,t)\rightharpoonup f_t\ \text{在 }W^{1,p}_0(\Omega). \label{align:ch08-8.40}
 \end{align}
 由不等式\eqref{align:ch08-8.39} 与范数的弱下半连续性，
 \begin{align}
@@ -329,66 +578,112 @@ u_{\epsilon_k}(\cdot,t)\rightharpoonup f_t\ \text{在 }W^{1,p}_0(\Omega). \label
 \end{align}
 另一方面，由\eqref{align:ch08-8.36a} 与\eqref{align:ch08-8.40} 有 $f_t=u(\cdot,t)$。故由\eqref{align:ch08-8.41} 得 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))$。
 
-\eqref{align:ch08-8.36d} 中的收敛由\eqref{align:ch08-8.29} 直接得到，因序列 $\{\partial_t u_{\epsilon_k}\}$ 与 $\{\sqrt{\epsilon_k}\nabla\partial_t u_{\epsilon_k}\}$ 都含于 $L^2(Q_\infty)$ 的有界子集。证毕。
+\eqref{align:ch08-8.36d} 中的收敛由\eqref{align:ch08-8.29} 直接得到，因序列 $\{\partial_t u_{\varepsilon_k}\}$ 与 $\{\sqrt{\varepsilon_k}\,\nabla\partial_t u_{\varepsilon_k}\}$ 都含于 $L^2(Q_\infty)$ 的有界子集。证毕。
 \end{proof}
 
-类似地，对 $N=1$，由估计\eqref{align:ch08-8.21} 有如下结果。
-
-\begin{proposition}[$N=1$ 解的收敛]\label{proposition:ch08-收敛N1}
-设 $N=1$ 且\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立。设 $u_\epsilon$ 为\cref{theorem:ch08-正则化适定} 给出的问题 $(P\epsilon)$ 的解。则存在序列 $\{u_{\epsilon_k}\}\subseteq\{u_\epsilon\}$ 与
+% SUPPLEMENT: parent=proposition:ch08-收敛N2; kind=proof; location=命题 8.2.8 证明之后; basis=原证明未写出 (8.36c)，也未说明 (8.40) 的子列可依赖于 $t$ 时如何与 (8.36a) 衔接，此处补出
+\begin{proof}[补证：\eqref{align:ch08-8.36c} 与弱极限的识别]
+由\eqref{align:ch08-8.36b} 取 $r=p$ 得 $u_{\varepsilon_k}\rightharpoonup u$ 与 $\nabla u_{\varepsilon_k}\rightharpoonup\nabla u$ 在 $L^p(Q_T)$；由\eqref{align:ch08-8.36d} 与 $p\leqslant2$ 得 $\partial_tu_{\varepsilon_k}\rightharpoonup\partial_tu$ 在 $L^p(Q_T)$（$L^2(Q_T)\subseteq L^p(Q_T)$）。于是对每个 $\varphi\in C^1_c(Q_T)$，由分部积分与弱收敛得
 \begin{align*}
-u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))\cap C([0,\infty);L^2(\Omega))\cap H^1(Q_T),
+\iint_{Q_T}(u_{\varepsilon_k}\partial_t\varphi+\nabla u_{\varepsilon_k}\cdot\nabla\varphi)\,\mathrm{d}x\,\mathrm{d}t
+\to\iint_{Q_T}(u\,\partial_t\varphi+\nabla u\cdot\nabla\varphi)\,\mathrm{d}x\,\mathrm{d}t,
 \end{align*}
-对所有 $p\in[1,\infty)$ 与 $T\in(0,\infty)$，且 $u_x\in L^\infty(Q_\infty)$、$\partial_t u\in L^2(Q_\infty)$，使当 $k\to\infty$ 时
+即 $u_{\varepsilon_k}\rightharpoonup u$ 在 $W^{1,p}(Q_T)$；因 $C^1_c(Q_T)$ 在 $L^{p'}(Q_T)$ 中稠密，同样的配对估计对一切 $\psi\in L^{p'}(Q_T)$ 成立，故即得\eqref{align:ch08-8.36c}。
+
+关于 $f_t=u(\cdot,t)$ 的识别：固定 $t\in(0,\infty)$，由\eqref{align:ch08-8.36a} 得 $u_{\varepsilon_k}(\cdot,t)\to u(\cdot,t)$ 在 $L^p(\Omega)$（强收敛），而由\eqref{align:ch08-8.40} 同一序列（或其在 $W^{1,p}$ 中的弱收敛子列）满足 $u_{\varepsilon_k}(\cdot,t)\rightharpoonup f_t$ 在 $W^{1,p}_0(\Omega)$，特别地在 $L^p(\Omega)$ 中弱收敛。弱极限唯一，故 $f_t=u(\cdot,t)$。由于\eqref{align:ch08-8.39} 只对几乎处处的 $t$ 成立，\eqref{align:ch08-8.41} 也只需对几乎处处的 $t$ 陈述；改变 $u$ 在零测集上的值不影响其 $L^\infty(0,\infty;W^{1,p}_0(\Omega))$ 范数。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch08-收敛N2; kind=motivation; location=命题 8.2.8 的补证之后; basis=命题 8.2.8 作为 ε→0 紧性步骤的动机、(8.36a)--(8.36d) 各自的估计来源、只有子列与弱收敛的边界，以及 (8.36c) 在原证明中缺失这一事实
+\begin{remark}\phantomsection\label{remark:ch08-收敛N2动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{proposition:ch08-收敛N2} 把先验估计\eqref{align:ch08-8.29} 转化为收敛性：\eqref{align:ch08-8.36a} 的强收敛来自 $W^{1,p}(Q_T)\subset L^p(Q_T)$ 的紧性（Rellich--Kondrachov）加上\eqref{align:ch08-8.37} 的 Cauchy 估计，\eqref{align:ch08-8.36b}--\eqref{align:ch08-8.36d} 来自有界性。它是\cref{theorem:ch08-存在性} 中取极限的第一步。
+\item 各项假设的作用。\eqref{align:ch08-8.29} 的第一项给出 $L^\infty(0,\infty;W^{1,p}_0(\Omega))$ 有界，从而\eqref{align:ch08-8.38} 与\eqref{align:ch08-8.39}；第二、三项给出 $\partial_tu_{\varepsilon_k}$ 与 $\sqrt{\varepsilon_k}\nabla\partial_tu_{\varepsilon_k}$ 在 $L^2(Q_\infty)$ 中有界，从而\eqref{align:ch08-8.36d}。$p\in(1,2]$ 保证\eqref{align:ch08-8.37} 中的 Hölder 指数 $(2-p)/(2p)$ 非负、且 $L^2(Q_T)\subseteq L^p(Q_T)$；$u_{0\varepsilon}\to u_0$ 在 $W^{1,p}_0(\Omega)$ 中是\eqref{align:ch08-8.37} 右端初值项趋于零的原因。
+\item 边界。结论只对某个子列成立，且\eqref{align:ch08-8.36a} 的强收敛只在 $L^p$ 中，不能升级为 $W^{1,p}$ 强收敛；\eqref{align:ch08-8.36b} 的弱收敛在 $r=\infty$ 时失效。极限 $u$ 只满足能量型的正则性，一般不是 $(P)$ 的弱解，这正是需要引入 Young 测度值解（\cref{definition:ch08-Young测度值解}）的原因。原证明没有写出\eqref{align:ch08-8.36c}，它由\eqref{align:ch08-8.36b}（$r=p$）与\eqref{align:ch08-8.36d} 得到（见上一条补证）。
+\end{enumerate}
+\end{remark}
+
+对 $N=1$，由估计\eqref{align:ch08-8.21} 有相应的结果。
+
+\begin{proposition}[$N=1$ 情形的解的收敛]\label{proposition:ch08-收敛N1}
+设 $N=1$，$\Omega=(a,b)$，$\phi:\mathbb{R}\to\mathbb{R}$ 与 $u_0$ 满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d}，$u_\varepsilon$ 为\cref{theorem:ch08-正则化适定} 给出的问题 $(P\varepsilon)$ 在 $Q_\infty$ 中的整体解。则存在序列 $\{u_{\varepsilon_k}\}\subseteq\{u_\varepsilon\}$ 与函数
+\begin{align*}
+u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))\cap C([0,\infty);L^2(\Omega))\cap H^1(Q_T)
+\end{align*}
+（对所有 $p\in[1,\infty)$ 与 $T\in(0,\infty)$），且 $u_x\in L^\infty(Q_\infty)$、$\partial_tu\in L^2(Q_\infty)$，使当 $k\to\infty$ 时
 \begin{align}
-&u_{\epsilon_k}\to u\ \text{在 }C([0,T);L^2(\Omega))\quad\text{对所有 }T\in(0,\infty); \label{align:ch08-8.42a}\\
-&u_{\epsilon_k}\rightharpoonup u\ \text{在 }L^r(0,T;W^{1,p}_0(\Omega))\quad\text{对所有 }T\in(0,\infty)\ (r\in[1,\infty),\ p\in(1,\infty)); \label{align:ch08-8.42b}\\
-&u_{\epsilon_k}\rightharpoonup u\ \text{在 }H^1(Q_T)\quad\text{对所有 }T\in(0,\infty); \label{align:ch08-8.42c}\\
-&\partial_x u_{\epsilon_k}\stackrel{*}{\rightharpoonup}\partial_x u\ \text{在 }L^\infty(Q_\infty); \label{align:ch08-8.42d}\\
-&\partial_t u_{\epsilon_k}\rightharpoonup\partial_t u,\quad
-\epsilon_k\partial_{xt}u_{\epsilon_k}\to0\ \text{在 }L^2(Q_\infty). \label{align:ch08-8.42e}
+&u_{\varepsilon_k}\to u\ \text{在 }C([0,T);L^2(\Omega))\quad\text{对所有 }T\in(0,\infty); \label{align:ch08-8.42a}\\
+&u_{\varepsilon_k}\rightharpoonup u\ \text{在 }L^r(0,T;W^{1,p}_0(\Omega))\quad\text{对所有 }T\in(0,\infty)\ (r\in[1,\infty),\ p\in(1,\infty)); \label{align:ch08-8.42b}\\
+&u_{\varepsilon_k}\rightharpoonup u\ \text{在 }H^1(Q_T)\quad\text{对所有 }T\in(0,\infty); \label{align:ch08-8.42c}\\
+&\partial_x u_{\varepsilon_k}\stackrel{*}{\rightharpoonup}\partial_x u\ \text{在 }L^\infty(Q_\infty); \label{align:ch08-8.42d}\\
+&\partial_t u_{\varepsilon_k}\rightharpoonup\partial_t u,\quad
+\varepsilon_k\,\partial_{xt}u_{\varepsilon_k}\to0\ \text{在 }L^2(Q_\infty). \label{align:ch08-8.42e}
 \end{align}
 \end{proposition}
 
 \begin{proof}
 \eqref{align:ch08-8.42a} 的证明与\eqref{align:ch08-8.36a} 相同，只是用不等式\eqref{align:ch08-8.35} 代替\eqref{align:ch08-8.34}。关于\eqref{align:ch08-8.42b}，由\eqref{align:ch08-8.21} 有
 \begin{align}
-\|u_{\epsilon_k}\|_{L^r(0,T;W^{1,p}_0(\Omega))}\leqslant C\,T^{1/r}[\lambda_N(\Omega)]^{1/p} \label{align:ch08-8.43}
+\|u_{\varepsilon_k}\|_{L^r(0,T;W^{1,p}_0(\Omega))}\leqslant C\,T^{1/r}[\lambda_N(\Omega)]^{1/p} \label{align:ch08-8.43}
 \end{align}
-对所有 $T\in(0,\infty)$、$r\in[1,\infty)$、$p\in(1,\infty)$。经对角论证，存在 $\{u_{\epsilon_k}\}$ 的子列（仍记为 $\{u_{\epsilon_k}\}$）与函数 $u:(0,\infty)\to W^{1,p}_0(\Omega)$，使\eqref{align:ch08-8.42b} 成立。为证 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))\cap C([0,\infty);L^2(\Omega))$（对所有 $p\in[1,\infty)$）且 $u_x\in L^\infty(Q_\infty)$，论证如\cref{proposition:ch08-收敛N2} 的证明。关于\eqref{align:ch08-8.42d}，只需注意不等式\eqref{align:ch08-8.21} 蕴含
+对所有 $T\in(0,\infty)$、$r\in[1,\infty)$、$p\in(1,\infty)$。经对角论证，存在 $\{u_{\varepsilon_k}\}$ 的子列（仍记为 $\{u_{\varepsilon_k}\}$）与函数 $u:(0,\infty)\to W^{1,p}_0(\Omega)$，使\eqref{align:ch08-8.42b} 成立。为证 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))\cap C([0,\infty);L^2(\Omega))$（对所有 $p\in[1,\infty)$）且 $u_x\in L^\infty(Q_\infty)$，论证与\cref{proposition:ch08-收敛N2} 的证明相同。关于\eqref{align:ch08-8.42d}，只需注意不等式\eqref{align:ch08-8.21} 蕴含
 \begin{align}
-\|\partial_x u_\epsilon\|_{L^\infty(Q_\infty)}\leqslant C. \label{align:ch08-8.44}
+\|\partial_x u_\varepsilon\|_{L^\infty(Q_\infty)}\leqslant C. \label{align:ch08-8.44}
 \end{align}
 \eqref{align:ch08-8.42e} 的证明与\eqref{align:ch08-8.36d} 相同，结论即得。
 \end{proof}
 
-\begin{remark}\label{remark:ch08-w收敛}
-由不等式\eqref{align:ch08-8.27}，存在序列 $\{w_{\epsilon_k}\}\subseteq\{w_\epsilon\}$ 与 $w\in L^2(0,\infty;H^1(\Omega))$，使
+% SUPPLEMENT: parent=proposition:ch08-收敛N1; kind=proof; location=命题 8.2.9 证明之后; basis=原证明未写出 (8.42a) 的 Cauchy 估计（$p=2$ 情形）、(8.42c) 的推导与 (8.42d) 的弱*紧性论证，此处补出
+\begin{proof}[补证：\eqref{align:ch08-8.42a}、\eqref{align:ch08-8.42c} 与\eqref{align:ch08-8.42d}]
+关于\eqref{align:ch08-8.42a}：在\eqref{align:ch08-8.37} 的推导中取 $p=2$，得
+\begin{align*}
+\left|\int_\Omega|u_{\varepsilon_k}-u_{\varepsilon_m}|^2(x,t)\,\mathrm{d}x\right|
+\leqslant 2\|u_{\varepsilon_k}-u_{\varepsilon_m}\|_{L^2(Q_T)}\|\partial_tu_{\varepsilon_k}-\partial_tu_{\varepsilon_m}\|_{L^2(Q_T)},
+\end{align*}
+因 $N=1$ 时所有 $u_\varepsilon$ 的 Cauchy 数据都是 $u_0$，初值项为零；由\eqref{align:ch08-8.29} 与\eqref{align:ch08-8.35} 有
+\begin{align*}
+\|u_{\varepsilon_k}-u_{\varepsilon_m}\|_{C([0,T];L^2(\Omega))}
+\leqslant\sqrt{2C}\,\|u_{\varepsilon_k}-u_{\varepsilon_m}\|^{1/2}_{L^2(Q_T)},
+\end{align*}
+再由 $\{u_{\varepsilon_k}\}$ 在 $L^2(Q_T)$ 中的强收敛（它由\eqref{align:ch08-8.35} 与 Rellich--Kondrachov 定理给出）得 Cauchy 性。
+
+关于 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))$ 与 $u\in C([0,\infty);L^2(\Omega))$：前者由\eqref{align:ch08-8.21} 给出的、对几乎处处 $t$ 成立的 $W^{1,p}_0(\Omega)$ 一致界与范数的弱下半连续性得到（论证与\cref{proposition:ch08-收敛N2} 的证明相同），后者由\eqref{align:ch08-8.42a} 的收敛直接给出。关于\eqref{align:ch08-8.42c}：由\eqref{align:ch08-8.42b} 取 $r=p=2$ 得 $u_{\varepsilon_k}\rightharpoonup u$ 在 $L^2(0,T;H^1_0(\Omega))$，由\eqref{align:ch08-8.42e} 得 $\partial_tu_{\varepsilon_k}\rightharpoonup\partial_tu$ 在 $L^2(Q_T)$，故 $u_{\varepsilon_k}\rightharpoonup u$ 在 $H^1(Q_T)$。
+
+关于\eqref{align:ch08-8.42d}：由\eqref{align:ch08-8.44}，$\{\partial_xu_{\varepsilon_k}\}$ 含于 $L^\infty(Q_\infty)$ 的有界集；$L^\infty(Q_\infty)$ 是 $L^1(Q_\infty)$ 的对偶，故由弱*紧性存在子列与 $v\in L^\infty(Q_\infty)$ 使 $\partial_xu_{\varepsilon_k}\stackrel{*}{\rightharpoonup}v$。又 $\partial_xu_{\varepsilon_k}\rightharpoonup\partial_xu$ 在 $L^2_{\mathrm{loc}}(Q_\infty)$（由\eqref{align:ch08-8.42b}）故 $v=\partial_xu$，且 $\|\partial_xu\|_{L^\infty(Q_\infty)}\leqslant C$。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch08-收敛N1; kind=motivation; location=命题 8.2.9 的补证之后; basis=命题 8.2.9 在 $N=1$ 时给出更强正则性的动机、与命题 8.2.8 的逐项对照、$u_x$ 只有弱*收敛这一边界
+\begin{remark}\phantomsection\label{remark:ch08-收敛N1动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{proposition:ch08-收敛N1} 是 $N=1$ 情形的紧性结果。由于\eqref{align:ch08-8.17} 给出与 $\varepsilon$ 无关的 $W^{1,\infty}_0$ 界，这里能得到的正则性比 $N\geqslant2$ 情形强：$u_x\in L^\infty(Q_\infty)$，且 $u\in H^1(Q_T)$（而不只是 $W^{1,p}$）。这些信息在\cref{theorem:ch08-存在性} 中用来把 $\phi(v_{\varepsilon_k})$ 的一致可积性直接归到 $L^\infty$ 界\eqref{align:ch08-8.26}。
+\item 各项假设的作用。\eqref{align:ch08-8.21} 的第一项给出\eqref{align:ch08-8.44}，从而\eqref{align:ch08-8.42d}；\eqref{align:ch08-8.35} 给出 $H^1(Q_T)$ 有界，从而\eqref{align:ch08-8.42c} 与\eqref{align:ch08-8.42a} 的紧性；\eqref{align:ch08-8.21} 的第二、三项给出\eqref{align:ch08-8.42e}。\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d} 通过\cref{proposition:ch08-整体N1} 进入\eqref{align:ch08-8.21}，因而是全部收敛性的来源。
+\item 边界。\eqref{align:ch08-8.42d} 只是弱*收敛：$u_x$ 的 $L^\infty$ 界不能给出强收敛，也不能给出 $\partial_xu_{\varepsilon_k}\to\partial_xu$ 几乎处处。\eqref{align:ch08-8.42b} 要求 $p<\infty$，$p=\infty$ 不在其范围内，这与\eqref{align:ch08-8.42d} 的弱*陈述互补。另外\eqref{align:ch08-8.42a} 的强收敛只在 $L^2$ 中，不足以直接识别非线性项 $\phi(\partial_xu_{\varepsilon_k})$ 的极限（需要\cref{proposition:ch05-弱收敛}）。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch08-w收敛}
+由不等式\eqref{align:ch08-8.27}，存在序列 $\{w_{\varepsilon_k}\}\subseteq\{w_\varepsilon\}$ 与 $w\in L^2(0,\infty;H^1(\Omega))$，使
 \begin{align}
-w_{\epsilon_k}\rightharpoonup w\ \text{在 }L^2(0,\infty;H^1(\Omega)). \label{align:ch08-8.45}
+w_{\varepsilon_k}\rightharpoonup w\ \text{在 }L^2(0,\infty;H^1(\Omega)). \label{align:ch08-8.45}
 \end{align}
-不失一般性，可设\cref{proposition:ch08-收敛N1} 的收敛结果对同一指标列 $\{\epsilon_k\}$ 成立。特别地（见\eqref{align:ch08-8.42d}），
+不失一般性，可设\cref{proposition:ch08-收敛N1} 的收敛结果对同一指标列 $\{\varepsilon_k\}$ 成立。特别地（见\eqref{align:ch08-8.42d}），
 \begin{align}
-v_{\epsilon_k}\stackrel{*}{\rightharpoonup}v\ \text{在 }L^\infty(Q_\infty) \label{align:ch08-8.46}
+v_{\varepsilon_k}\stackrel{*}{\rightharpoonup}v\ \text{在 }L^\infty(Q_\infty) \label{align:ch08-8.46}
 \end{align}
 其中 $v\triangleq \partial_x u$，$u$ 为\cref{proposition:ch08-收敛N1} 给出的极限函数。
 \end{remark}
 
-\begin{remark}\label{remark:ch08-能量衰减}
-设 $N=1$ 时\cref{proposition:ch08-收敛N1} 的假设成立，或 $N\geqslant2$ 时 $u_0\in H^1_0(\Omega)$、\eqref{align:ch08-8.2c}--\eqref{align:ch08-8.2e} 取 $p=q=2$ 成立且\eqref{align:ch08-8.2f} 成立（因而特别地\cref{proposition:ch08-收敛N2} 取 $p=2$ 成立）。设 $u$ 为\cref{proposition:ch08-收敛N2}--\cref{proposition:ch08-收敛N1} 给出的极限函数。在这些假设下，映射 $t\mapsto\|u(\cdot,t)\|^2_{L^2(\Omega)}$ 在 $(0,\infty)$ 上非增。事实上，由于问题 $(P\epsilon)$ 的整体解 $u_\epsilon$ 对每个 $t\in(0,\infty)$ 满足 $u_\epsilon(\cdot,t)\in H^1_0(\Omega)$，由 $(P\epsilon)$ 与假设\eqref{align:ch08-8.2f} 易得
+\begin{remark}\phantomsection\label{remark:ch08-能量衰减}
+设 $N=1$ 时\cref{proposition:ch08-收敛N1} 的假设成立，或 $N\geqslant2$ 时 $u_0\in H^1_0(\Omega)$、\eqref{align:ch08-8.2c}--\eqref{align:ch08-8.2e} 取 $p=q=2$ 成立且\eqref{align:ch08-8.2f} 成立（因而特别地\cref{proposition:ch08-收敛N2} 取 $p=2$ 成立）。设 $u$ 为\cref{proposition:ch08-收敛N2}--\cref{proposition:ch08-收敛N1} 给出的极限函数。在这些假设下，映射 $t\mapsto\|u(\cdot,t)\|^2_{L^2(\Omega)}$ 在 $(0,\infty)$ 上非增。事实上，由于问题 $(P\varepsilon)$ 的整体解 $u_\varepsilon$ 对每个 $t\in(0,\infty)$ 满足 $u_\varepsilon(\cdot,t)\in H^1_0(\Omega)$，由 $(P\varepsilon)$ 与假设\eqref{align:ch08-8.2f} 得
 \begin{align*}
-\frac{\mathrm{d}}{\mathrm{d}t}\Big(\|u_\epsilon(\cdot,t)\|^2_{L^2(\Omega)}+\epsilon\|\nabla u_\epsilon(\cdot,t)\|^2_{L^2(\Omega)}\Big)
-=-2\int_\Omega[\phi(\nabla u_\epsilon)\cdot\nabla u_\epsilon](x,t)\,\mathrm{d}x\leqslant0.
+\frac{\mathrm{d}}{\mathrm{d}t}\Big(\|u_\varepsilon(\cdot,t)\|^2_{L^2(\Omega)}+\varepsilon\|\nabla u_\varepsilon(\cdot,t)\|^2_{L^2(\Omega)}\Big)
+=-2\int_\Omega[\phi(\nabla u_\varepsilon)\cdot\nabla u_\varepsilon](x,t)\,\mathrm{d}x\leqslant0.
 \end{align*}
-于是对每个 $t\in(0,\infty)$、$\tau>0$、$\epsilon>0$，
+于是对每个 $t\in(0,\infty)$、$\tau>0$、$\varepsilon>0$，
 \begin{align}
-\|u_\epsilon(\cdot,t+\tau)\|^2_{L^2(\Omega)}+\epsilon\|\nabla u_\epsilon(\cdot,t+\tau)\|^2_{L^2(\Omega)}
-\leqslant\|u_\epsilon(\cdot,t)\|^2_{L^2(\Omega)}+\epsilon\|\nabla u_\epsilon(\cdot,t)\|^2_{L^2(\Omega)}. \label{align:ch08-8.47}
+\|u_\varepsilon(\cdot,t+\tau)\|^2_{L^2(\Omega)}+\varepsilon\|\nabla u_\varepsilon(\cdot,t+\tau)\|^2_{L^2(\Omega)}
+\leqslant\|u_\varepsilon(\cdot,t)\|^2_{L^2(\Omega)}+\varepsilon\|\nabla u_\varepsilon(\cdot,t)\|^2_{L^2(\Omega)}. \label{align:ch08-8.47}
 \end{align}
-在最后一不等式中令 $\epsilon=\epsilon_k$（$\{u_{\epsilon_k}\}\subseteq\{u_\epsilon\}$ 由\cref{proposition:ch08-收敛N2}--\cref{proposition:ch08-收敛N1} 给出）并令 $k\to\infty$，得对所有 $t\in(0,\infty)$ 与 $\tau>0$ 有 $\|u(\cdot,t+\tau)\|^2_{L^2(\Omega)}\leqslant\|u(\cdot,t)\|^2_{L^2(\Omega)}$（此处 $N\geqslant2$ 时用\eqref{align:ch08-8.36a} 中的收敛与取 $p=2$ 的估计\eqref{align:ch08-8.29}，$N=1$ 时分别用\eqref{align:ch08-8.42a} 与估计\eqref{align:ch08-8.21}）。结论即得。
+在最后一不等式中令 $\varepsilon=\varepsilon_k$（$\{u_{\varepsilon_k}\}\subseteq\{u_\varepsilon\}$ 由\cref{proposition:ch08-收敛N2}--\cref{proposition:ch08-收敛N1} 给出）并令 $k\to\infty$，得对所有 $t\in(0,\infty)$ 与 $\tau>0$ 有 $\|u(\cdot,t+\tau)\|^2_{L^2(\Omega)}\leqslant\|u(\cdot,t)\|^2_{L^2(\Omega)}$（此处 $N\geqslant2$ 时用\eqref{align:ch08-8.36a} 中的收敛与取 $p=2$ 的估计\eqref{align:ch08-8.29}，$N=1$ 时分别用\eqref{align:ch08-8.42a} 与估计\eqref{align:ch08-8.21}）。结论即得。
 \end{remark}
-
-
-
 
 \end{document}

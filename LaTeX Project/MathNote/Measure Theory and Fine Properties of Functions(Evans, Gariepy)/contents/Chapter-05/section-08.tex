@@ -1,0 +1,230 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{Gauss--Green 定理}\label{section:ch05-08}
+
+沿用前述约定：$E\subseteq\mathbb{R}^n$ 为局部有限周长集，即 $\chi_E\in\BV_{\loc}(\mathbb{R}^n)$。下面进一步细化\cref{theorem:ch01-1-35}。% XREF p=235 "As above, we continue to assume E is a set of locally finite perimeter in R^n. We next refine Theorem 1.35 in Section 1.7."
+
+\begin{definition}[测度论边界]\label{definition:ch05-5-7}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为集合，$x\in\mathbb{R}^n$，$\mathcal{L}^n$ 为 $\mathbb{R}^n$ 上的 Lebesgue 测度，并对 $r>0$ 记 $B(x,r):=\{y\in\mathbb{R}^n\mid\lvert y-x\rvert<r\}$ 为以 $x$ 为心、$r$ 为半径的开球。若
+\begin{align*}
+\limsup_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap E\bigr)}{r^n}>0
+\quad\text{且}\quad
+\limsup_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\setminus E\bigr)}{r^n}>0,
+\end{align*}
+则称 $x$ 属于 $E$ 的\textbf{测度论边界}，记作 $x\in\partial_*E$，并称 $\partial_*E$ 为 $E$ 的测度论边界。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch05-5-7; kind=motivation; 说明以 Lebesgue 密度代替拓扑条件刻画边界的动机、与密度定理 1.35 及边界测度的关系
+\begin{remark}\phantomsection\label{remark:ch05-def-5-7-动机}
+测度论边界用 Lebesgue 测度在球内所占的比例代替「每个邻域同时与 $E$ 及其补集相交」这一拓扑条件。对一般的 $\mathcal{L}^n$-可测集 $E$，拓扑边界 $\partial E$ 会含有与 $E$ 在测度意义下无关的大块集合；$\partial_*E$ 只保留那些在任意小尺度上 $E$ 与其补集都占据正比例体积的点，因而在 $E$ 于 Lebesgue 零测集上的改动下保持不变。
+
+这一概念是\cref{theorem:ch01-1-35}的直接细化。该定理断言 $\mathcal{L}^n$-a.e. 的 $x\in E$ 是 $E$ 的密度 $1$ 点、$\mathcal{L}^n$-a.e. 的 $x\notin E$ 是 $E$ 的密度 $0$ 点，故 $\mathcal{L}^n(\partial_*E)=0$：$\partial_*E$ 是 $\partial E$ 在忽略 Lebesgue 零测集之后剩下的部分，它本身关于 $\mathcal{L}^n$ 是零测集。正因为如此，$\partial_*E$ 需要用一个更低维的测度来度量，而本节的主定理说明这个测度正是周长测度 $\lVert\partial E\rVert$ 与 $\mathcal{H}^{n-1}\llcorner\partial_*E$。密度 $1$ 点与密度 $0$ 点的整体结构已在\cref{section:ch01-07}中给出。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-7; kind=hypotheses; 逐条分析归一化因子的选择、上极限的作用、两个条件的同时性、可测性以及与拓扑边界的关系
+\begin{remark}\phantomsection\label{remark:ch05-def-5-7-条件}
+\begin{enumerate}[(i)]
+\item 分母取 $r^n$ 而非 $\mathcal{L}^n(B(x,r))=\alpha(n)r^n$，二者只相差正常数 $\alpha(n)$，两个比式的零点集与正性完全相同，故定义的含义与归一化因子的选取无关。
+\item 采用上极限而非极限，是因为 $E$ 在一点处的密度未必存在。上极限只依赖 $E$ 在 $x$ 的任意小邻域内的行为，且在密度不存在的点处仍有定义；两个上极限同时为正，意味着沿任何趋于零的半径列，$E$ 在球内的占比都不会趋于 $0$，其补集的占比也不会趋于 $0$。
+\item 两个条件互不蕴含，必须同时成立。若 $x$ 是 $E$ 的密度 $1$ 点，则第一个比式趋于 $1$ 而第二个比式趋于 $0$；若 $x$ 是 $E$ 的密度 $0$ 点，则情形相反。因此 $\partial_*E$、$E$ 的测度论内部与测度论外部两两不交（后两者的定义见\cref{section:ch01-07}）。% XREF internal
+\item 定义只要求 $E\subseteq\mathbb{R}^n$ 为集合。本节使用的 $E$ 为局部有限周长集，从而是 $\mathcal{L}^n$-可测集，两个比式中的 Lebesgue 测度都有定义；若 $E$ 为一般集合，则须把 $\mathcal{L}^n$ 换为外测度，两个条件的含义不变。
+\item 对每个固定的 $r>0$，$x\mapsto\mathcal{L}^n(B(x,r)\cap E)$ 是 Borel 函数（$E$ 为 Borel 集时）。把上极限沿有理数半径取下确界即知 $\partial_*E$ 是 Borel 集；$E$ 为 $\mathcal{L}^n$-可测集时 $\partial_*E$ 为 $\mathcal{L}^n$-可测集。故 $\mathcal{H}^{n-1}(\partial_*E\cap K)$ 对紧集 $K$ 有意义。
+\item 若 $x\in\partial_*E$，则对任意 $r>0$ 有 $\mathcal{L}^n(B(x,r)\cap E)>0$ 与 $\mathcal{L}^n(B(x,r)\setminus E)>0$，故 $B(x,r)$ 同时与 $E$ 及其补集相交，于是 $x\in\partial E$，即 $\partial_*E\subseteq\partial E$。反向的包含关系不成立：取 $E=\mathbb{Q}^n\cap(0,1)^n$，则 $\partial E=[0,1]^n$，而 $E$ 可数、$\mathcal{L}^n(B(x,r)\cap E)=0$ 对一切 $x\in\mathbb{R}^n$ 与 $r>0$ 成立，故 $\partial_*E=\varnothing$。
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}\label{lemma:ch05-5-5}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为局部有限周长集，即 $\chi_E\in\BV_{\loc}(\mathbb{R}^n)$，$\lVert\partial E\rVert$ 为其周长测度，$\partial^*E$ 为 $E$ 的约化边界，$\partial_*E$ 为 $E$ 的测度论边界（\cref{definition:ch05-5-7}），$\mathcal{H}^{n-1}$ 为 $(n-1)$ 维 Hausdorff 测度。则% XREF internal
+\begin{enumerate}[(i)]
+\item $\partial^*E\subseteq\partial_*E$；
+\item $\mathcal{H}^{n-1}(\partial_*E-\partial^*E)=0$。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+（1）断言 (i) 由\cref{lemma:ch05-5-3}得出。% XREF p=235 "Assertion (i) follows from Lemma 5.3 in Section 5.7."
+
+（2）映射
+\begin{align*}
+r\longmapsto\frac{\mathcal{L}^n\bigl(B(x,r)\cap E\bigr)}{r^n}
+\end{align*}
+连续，故当 $x\in\partial_*E$ 时，存在 $0<\alpha<1$ 与 $r_j\to0$，使得
+\begin{align*}
+\frac{\mathcal{L}^n\bigl(B(x,r_j)\cap E\bigr)}{\alpha(n)r_j^n}=\alpha .
+\end{align*}
+于是
+\begin{align*}
+\min\bigl\{\mathcal{L}^n\bigl(B(x,r_j)\cap E\bigr),\ \mathcal{L}^n\bigl(B(x,r_j)\setminus E\bigr)\bigr\}
+=\min\{\alpha,1-\alpha\}\alpha(n)r_j^n,
+\end{align*}
+从而相对等周不等式给出
+\begin{align*}
+\limsup_{r\to0}\frac{\lVert\partial E\rVert\bigl(B(x,r)\bigr)}{r^{n-1}}>0 .
+\end{align*}
+由于 $\lVert\partial E\rVert(\mathbb{R}^n-\partial^*E)=0$，覆盖论证给出
+\begin{align*}
+\mathcal{H}^{n-1}(\partial_*E-\partial^*E)=0 .
+\end{align*}
+\end{proof}
+
+
+% SUPPLEMENT: parent=lemma:ch05-5-5; kind=proof; 补出断言 (i) 所用的约化边界的密度性质、半径映射的连续性、α 与 r_j 的取法、相对等周不等式的代入以及覆盖论证的细节
+\begin{proof}
+（1）断言 (i)。设 $x\in\partial^*E$。由\cref{lemma:ch05-5-3}的 (i) 与 (ii)，存在只依赖于 $n$ 的正常数 $A_1,A_2$，使得% XREF internal
+\begin{align*}
+\liminf_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap E\bigr)}{r^n}>A_1>0,\qquad
+\liminf_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\setminus E\bigr)}{r^n}>A_2>0 .
+\end{align*}
+于是两个上极限都为正，按\cref{definition:ch05-5-7}即 $x\in\partial_*E$；由 $x$ 的任意性得 $\partial^*E\subseteq\partial_*E$。% XREF internal
+
+（2）半径映射的连续性。设 $x\in\mathbb{R}^n$、$0<r<r'$。由 $B(x,r)\subseteq B(x,r')$ 得
+\begin{align*}
+0\leqslant\mathcal{L}^n\bigl(B(x,r')\cap E\bigr)-\mathcal{L}^n\bigl(B(x,r)\cap E\bigr)\leqslant\mathcal{L}^n\bigl(B(x,r')\setminus B(x,r)\bigr)=\alpha(n)\bigl((r')^n-r^n\bigr),
+\end{align*}
+故 $g(r):=\mathcal{L}^n(B(x,r)\cap E)$ 在 $(0,\infty)$ 上连续。函数 $r\mapsto\alpha(n)r^n$ 在 $(0,\infty)$ 上连续且取正值，故 $\theta(r):=g(r)/(\alpha(n)r^n)$ 在 $(0,\infty)$ 上连续，且 $0\leqslant\theta\leqslant1$。
+
+（3）$\alpha$ 与 $r_j$ 的取法。记 $\beta:=\limsup_{r\to0}\theta(r)$、$\gamma:=\liminf_{r\to0}\theta(r)$。由 $x\in\partial_*E$ 得 $\beta>0$；又 $\mathcal{L}^n(B(x,r)\setminus E)/r^n=\alpha(n)(1-\theta(r))$，其正的上极限给出 $\gamma<1$。若 $\gamma<\beta$，取 $\alpha\in(\gamma,\beta)$，则 $0<\alpha<1$，并且存在趋于零的半径列使 $\theta$ 的取值分别大于 $\alpha$ 与小于 $\alpha$；由 $\theta$ 在区间上的介值性，存在 $r_j\to0$ 使 $\theta(r_j)=\alpha$。若 $\gamma=\beta$，则 $\theta(r)\to\beta\in(0,1)$（$r\to0$），此时取 $\alpha:=\beta$ 与任一列 $r_j\to0$，有 $\theta(r_j)\to\alpha$，下文诸极限关系仍成立，只需把 $\min\{\alpha,1-\alpha\}$ 换为其沿 $j$ 的极限。
+
+（4）相对等周不等式的代入。设 $n\geqslant2$，$F\subseteq\mathbb{R}^n$ 为有限周长集，$B$ 为球。相对等周不等式给出
+\begin{align*}
+\min\bigl\{\mathcal{L}^n(F\cap B),\ \mathcal{L}^n(B\setminus F)\bigr\}\leqslant C\bigl(\lVert\partial F\rVert(B)\bigr)^{\frac{n}{n-1}},
+\end{align*}
+其中 $C=C(n)$。在 $F=E$、$B=B(x,r_j)$ 处代入 (3) 的关系式，并用到 $\mathcal{L}^n(B(x,r_j)\setminus E)=(1-\alpha)\alpha(n)r_j^n$，得
+\begin{align*}
+\min\{\alpha,1-\alpha\}\alpha(n)r_j^n\leqslant C\bigl(\lVert\partial E\rVert(B(x,r_j))\bigr)^{\frac{n}{n-1}},
+\end{align*}
+于是存在 $c>0$（只依赖于 $n$、$\alpha$ 与 $\alpha(n)$）使
+\begin{align*}
+\lVert\partial E\rVert\bigl(B(x,r_j)\bigr)\geqslant c\,r_j^{n-1}.
+\end{align*}
+
+（5）覆盖论证。设 $A:=\partial_*E-\partial^*E$。由 (4)，对每个 $x\in A$ 有 $\limsup_{r\to0}\lVert\partial E\rVert(B(x,r))/r^{n-1}>0$。对正整数 $k$ 令
+\begin{align*}
+A_k:=\Bigl\{x\in A\Bigm|\limsup_{r\to0}\frac{\lVert\partial E\rVert(B(x,r))}{r^{n-1}}>\frac1k\Bigr\},
+\end{align*}
+则每个 $A_k$ 是 Borel 集且 $A=\bigcup_{k=1}^{\infty}A_k$。固定 $k$、紧集 $Q\subseteq\mathbb{R}^n$ 与 $\eta>0$。由 $\lVert\partial E\rVert(A_k)=0$ 与 $\lVert\partial E\rVert$ 的外正则性，存在开集 $U\supseteq A_k$ 使 $\lVert\partial E\rVert(U)<\eta$。对每个 $x\in A_k$，满足
+\begin{align*}
+0<r<\min\Bigl\{\frac{\varepsilon}{2},\ \operatorname{dist}(x,\mathbb{R}^n\setminus U)\Bigr\},\qquad \lVert\partial E\rVert\bigl(B(x,r)\bigr)>\frac{r^{n-1}}{k}
+\end{align*}
+的半径 $r$ 可取任意小，故这些闭球构成 $A_k\cap Q$ 的一个细覆盖。由\cref{theorem:ch01-1-24}（Vitali 覆盖定理），存在互不相交的球 $\{B(x_i,r_i)\}_{i=1}^{\infty}$，其半径满足上述要求，并且% XREF internal
+\begin{align*}
+A_k\cap Q\subseteq\bigcup_{i=1}^{\infty}B(x_i,5r_i).
+\end{align*}
+于是
+\begin{align*}
+\mathcal{H}^{n-1}_{5\varepsilon}(A_k\cap Q)
+&\leqslant\sum_{i=1}^{\infty}\mathcal{H}^{n-1}\bigl(B(x_i,5r_i)\bigr)
+\leqslant\alpha(n-1)5^{n-1}\sum_{i=1}^{\infty}r_i^{n-1}\\
+&\leqslant\alpha(n-1)5^{n-1}k\sum_{i=1}^{\infty}\lVert\partial E\rVert\bigl(B(x_i,r_i)\bigr)
+=\alpha(n-1)5^{n-1}k\,\lVert\partial E\rVert\Bigl(\bigcup_{i=1}^{\infty}B(x_i,r_i)\Bigr)\\
+&\leqslant\alpha(n-1)5^{n-1}k\,\lVert\partial E\rVert(U)<\alpha(n-1)5^{n-1}k\,\eta,
+\end{align*}
+其中第三个等号用到诸球两两不交，最后一个不等号用到 $B(x_i,r_i)\subseteq U$。先令 $\varepsilon\to0$ 再令 $\eta\to0$，得 $\mathcal{H}^{n-1}(A_k\cap Q)=0$；此式对每个 $k$ 与每个紧集 $Q$ 成立，故 $\mathcal{H}^{n-1}(A)=0$。
+
+（6）$n=1$ 的情形。第 (4)、(5) 步的估计只在 $n\geqslant2$ 时用到相对等周不等式；当 $n=1$ 时，周长测度只由跳点处的质量组成，而局部有限周长集在每个有界区间内只有有限多个跳点；在跳点处 $E$ 的放大像是一维半空间，故 $\partial^*E=\partial_*E$，结论 (ii) 成立。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-5-5; kind=motivation; 说明约化边界与测度论边界的定义差异、引理为何是本节的核心工具，以及它在主定理中的作用
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-5-动机}
+约化边界 $\partial^*E$ 由周长测度的爆破定义：$x\in\partial^*E$ 时，$\chi_E$ 在尺度 $r$ 下的放大像随 $r\to0$ 于 $L^1_{\loc}(\mathbb{R}^n)$ 中收敛于某个半空间的特征函数，该半空间的外法向量就是 $\nu_E(x)$（见\cref{theorem:ch05-5-13}）。测度论边界 $\partial_*E$ 的定义只涉及 Lebesgue 密度，不涉及 $\lVert\partial E\rVert$ 与爆破，因而对其定义域中的任意集合都有意义。引理把两者联系起来：$\partial^*E$ 含于 $\partial_*E$，并且两者相差一个 $\mathcal{H}^{n-1}$ 零测集。 % XREF internal
+
+这一比较是本节的核心工具。其一，它把 $\partial^*E$ 上的法向量场与周长测度搬到 $\partial_*E$ 上，而所有以 $\mathcal{H}^{n-1}$ 为积分测度的等式在零测集上不受影响；其二，它说明 $\partial^*E$ 与 $\partial_*E$ 在测度意义下是同一个边界，故主定理中的积分区域取哪一个都不改变等式；其三，$\partial_*E$ 的定义不依赖爆破构造，直接由密度给出，便于在一般情形下陈述结论。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch05-5-5; kind=hypotheses; 逐条分析局部有限周长的作用、两个断言的必要性与边界情形，并给出 ∂_*E 严格大于 ∂*E 的具体例子
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-5-条件}
+\begin{enumerate}[(i)]
+\item 假设 $E$ 具有局部有限周长，这一条件使 $\partial^*E$、$\lVert\partial E\rVert$ 与 $\nu_E$ 有定义，并使相对等周不等式可应用于每个球 $B(x,r)$，该不等式要求集合在球内具有有限周长。所有论证都在单个球内进行，故局部有限性足够，不需要 $\lVert\partial E\rVert(\mathbb{R}^n)<\infty$。
+\item 断言 (i) 中的包含关系不能加强为相等。取 $E=\{y>0\}\cup\{x<0,\ y\leqslant0\}\subseteq\mathbb{R}^2$，即以原点为角点的 $270^\circ$ 角域。该集合具有局部有限周长，其边界在原点附近是两条互相垂直的射线。原点处 $\mathcal{L}^2(B(0,r)\cap E)/r^2\to3\alpha(2)/4$ 且 $\mathcal{L}^2(B(0,r)\setminus E)/r^2\to\alpha(2)/4$，故原点属于 $\partial_*E$；而 $E$ 在原点的放大像始终是角域而非半平面，故原点不属于 $\partial^*E$。于是 $\partial_*E-\partial^*E$ 非空。
+\item 断言 (ii) 中的例外集不能从结论中删去。由前一款的集合，$\partial_*E-\partial^*E$ 可能非空；而断言 (ii) 说明它在 $\mathcal{H}^{n-1}$ 下为零，因此任何以 $\mathcal{H}^{n-1}$ 为积分测度的等式都不受这些点的影响。
+\item 断言 (ii) 只对 $\mathcal{H}^{n-1}$ 成立，对 $\mathcal{L}^n$ 则不必讨论：由\cref{theorem:ch01-1-35}，$\mathcal{L}^n(\partial_*E)=0$，故 $n$ 维测度无法区分 $\partial_*E$ 与 $\partial^*E$。% XREF internal
+\item 断言 (ii) 是逐集合的恒等式，不含半径或其他参数：它对每个局部有限周长集 $E$ 成立，与 $E$ 的直径以及 $\lVert\partial E\rVert(\mathbb{R}^n)$ 的大小无关。
+\end{enumerate}
+\end{remark}
+
+下面证明：若 $E$ 具有局部有限周长，则只要把边界取为 $E$ 的测度论边界，通常的 Gauss--Green 公式仍然成立。
+
+\begin{theorem}[Gauss--Green 定理]\label{theorem:ch05-5-16}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为局部有限周长集，即 $\chi_E\in\BV_{\loc}(\mathbb{R}^n)$，$\lVert\partial E\rVert$ 为周长测度，$\partial_*E$ 为 $E$ 的测度论边界，$\nu_E$ 为 $E$ 的测度论外单位法向量（见\cref{definition:ch05-5-6}），$\mathcal{H}^{n-1}$ 为 $(n-1)$ 维 Hausdorff 测度，$C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 为 $\mathbb{R}^n$ 上具有紧支集的 $C^1$ 向量场 $\phi=(\phi^1,\cdots,\phi^n)$ 的全体，$\diver\phi:=\sum_{i=1}^{n}\phi^i_{x_i}$ 为其散度，$\diff x$ 为 $\mathcal{L}^n$ 的体积元。则% XREF internal
+\begin{enumerate}[(i)]
+\item 对每个紧集 $K\subseteq\mathbb{R}^n$ 有 $\mathcal{H}^{n-1}(\partial_*E\cap K)<\infty$；
+\item 进而，对 $\mathcal{H}^{n-1}$-a.e. 的 $x\in\partial_*E$ 存在唯一的单位向量 $\nu_E(x)\in\mathbb{R}^n$（即 $E$ 在 $x$ 处的测度论外单位法向量，$\lvert\nu_E(x)\rvert=1$），使得
+\begin{align*}
+\int_E\diver\phi\diff x=\int_{\partial_*E}\phi\cdot\nu_E\diff\mathcal{H}^{n-1}
+\end{align*}
+对一切 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 成立；其中 $\nu_E$ 在 $\partial_*E$ 上按 $\mathcal{H}^{n-1}$-a.e. 确定。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+由前述理论，
+\begin{align*}
+\int_E\diver\phi\diff x=\int_{\mathbb{R}^n}\phi\cdot\nu_E\diff\lVert\partial E\rVert .
+\end{align*}
+但
+\begin{align*}
+\lVert\partial E\rVert(\mathbb{R}^n-\partial^*E)=0 ;
+\end{align*}
+又由\cref{theorem:ch05-5-15}与\cref{lemma:ch05-5-2}，% XREF p=236 "by Theorem 5.15" | p=236 "and Lemma 5.2"
+\begin{align*}
+\lVert\partial E\rVert=\mathcal{H}^{n-1}\llcorner\partial_*E .
+\end{align*}
+于是 (ii) 由\cref{lemma:ch05-5-5}得出。% XREF p=236 "Thus (ii) follows from Lemma 5.5."
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-16; kind=proof; 补出结论 (i) 的论证、恒等式 ‖∂E‖=H^{n-1}⊥∂_*E 的逐项核对，以及由该恒等式过渡到积分等式时的可测性与可积性检查
+\begin{proof}
+（1）断言 (i)。设 $K\subseteq\mathbb{R}^n$ 为紧集。由\cref{lemma:ch05-5-5}的 (i) 有 $\partial^*E\subseteq\partial_*E$，故 $\partial_*E\cap K$ 是 $\partial^*E\cap K$ 与 $(\partial_*E-\partial^*E)\cap K$ 的不交并，于是% XREF internal
+\begin{align*}
+\mathcal{H}^{n-1}(\partial_*E\cap K)=\mathcal{H}^{n-1}(\partial^*E\cap K)+\mathcal{H}^{n-1}\bigl((\partial_*E-\partial^*E)\cap K\bigr)=\mathcal{H}^{n-1}(\partial^*E\cap K),
+\end{align*}
+其中用到\cref{lemma:ch05-5-5}的 (ii)。再由\cref{theorem:ch05-5-15}的结论 (iii) $\lVert\partial E\rVert=\mathcal{H}^{n-1}\llcorner\partial^*E$ 得% XREF internal
+\begin{align*}
+\mathcal{H}^{n-1}(\partial^*E\cap K)=\lVert\partial E\rVert(\partial^*E\cap K)\leqslant\lVert\partial E\rVert(K),
+\end{align*}
+而 $E$ 具有局部有限周长，故 $\lVert\partial E\rVert$ 是 Radon 测度、在每个紧集上取有限值，即 $\lVert\partial E\rVert(K)<\infty$。
+
+（2）恒等式 $\lVert\partial E\rVert=\mathcal{H}^{n-1}\llcorner\partial_*E$。设 $B\subseteq\mathbb{R}^n$ 为 Borel 集。由\cref{theorem:ch05-5-15}的结论 (iii) 得 $\lVert\partial E\rVert(\mathbb{R}^n-\partial^*E)=\mathcal{H}^{n-1}\bigl((\mathbb{R}^n-\partial^*E)\cap\partial^*E\bigr)=0$，故% XREF internal
+\begin{align*}
+\lVert\partial E\rVert(B)=\lVert\partial E\rVert(B\cap\partial^*E)=\mathcal{H}^{n-1}(B\cap\partial^*E).
+\end{align*}
+又 $\partial^*E\subseteq\partial_*E$ 且 $\mathcal{H}^{n-1}(\partial_*E-\partial^*E)=0$，故 $\mathcal{H}^{n-1}(B\cap\partial^*E)=\mathcal{H}^{n-1}(B\cap\partial_*E)$。合起来即
+\begin{align*}
+\lVert\partial E\rVert(B)=\mathcal{H}^{n-1}(B\cap\partial_*E)=\bigl(\mathcal{H}^{n-1}\llcorner\partial_*E\bigr)(B).
+\end{align*}
+
+（3）积分等式与可积性。$\nu_E$ 是\cref{theorem:ch05-5-1}中密度 $\sigma$ 的相反数，故它是 $\lVert\partial E\rVert$-可测的向量场；又由\cref{definition:ch05-5-4}的条件 (iii) 有 $\lvert\nu_E(x)\rvert=1$ 对一切 $x\in\partial^*E$ 成立。于是 (2) 给出% XREF internal
+\begin{align*}
+\int_{\mathbb{R}^n}\phi\cdot\nu_E\diff\lVert\partial E\rVert=\int_{\partial_*E}\phi\cdot\nu_E\diff\mathcal{H}^{n-1}
+\end{align*}
+对每个 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 成立。两端都有限：右端不超过 $\lVert\phi\rVert_{L^{\infty}}\mathcal{H}^{n-1}(\partial_*E\cap\spt\phi)$，而 $\spt\phi$ 是紧集，由 (1) 该值有限。结合等式 $\int_E\diver\phi\diff x=\int_{\mathbb{R}^n}\phi\cdot\nu_E\diff\lVert\partial E\rVert$ 即得 (ii)。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-16; kind=motivation; 说明粗糙边界下 Gauss–Green 公式的两重困难、条款 (i)(ii) 的分工，以及证明把周长测度与 H^{n-1} 的限制等同起来的思路
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-16-动机}
+Gauss--Green 公式把 $E$ 上的散度积分与边界上的通量积分等同起来。经典形式要求 $\partial E$ 是 $C^1$ 超曲面，边界测度取 $\mathcal{H}^{n-1}\llcorner\partial E$，外法向量取 $\partial E$ 上的单位外法向量。对只具有局部有限周长的 $E$，边界可能十分粗糙，$\mathcal{H}^{n-1}\llcorner\partial E$ 不必在紧集上有限，拓扑意义下的外法向量也可能处处不存在。
+
+定理用两条款处理这两个困难。条款 (i) 说明测度论边界 $\partial_*E$ 在每个紧集上的 $\mathcal{H}^{n-1}$ 测度有限，因此它足以承载边界测度；条款 (ii) 说明在其上 $\mathcal{H}^{n-1}$-a.e. 存在测度论外单位法向量，并且 Gauss--Green 等式以 $\mathcal{H}^{n-1}\llcorner\partial_*E$ 为边界测度成立。公式的形状与光滑情形一致，只是边界与外法向量都换成了测度论版本。
+
+证明把前面两项结果合并起来：周长测度由\cref{theorem:ch05-5-15}等于 $\mathcal{H}^{n-1}\llcorner\partial^*E$，而\cref{lemma:ch05-5-5}说明 $\partial^*E$ 与 $\partial_*E$ 相差一个 $\mathcal{H}^{n-1}$ 零测集，故这两个测度相同。条款 (ii) 的实质是把约化边界换成不依赖爆破构造的测度论边界，条款 (i) 的实质是这样替换不会带来无穷的边界测度。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-16; kind=hypotheses; 逐条分析局部有限周长、检验向量场类、a.e. 意义下的唯一性、积分区域的选取与局部化的作用
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-16-条件}
+\begin{enumerate}[(i)]
+\item 假设 $E$ 具有局部有限周长，这使 $\lVert\partial E\rVert$ 成为 Radon 测度，从而 (i) 中的有限性与 (ii) 中两个积分的意义都有保障。若只假设 $E$ 为 $\mathcal{L}^n$-可测集，(i) 一般不成立。
+\item 检验向量场取在 $C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 中。$C^1$ 正则性使 $\diver\phi$ 按经典意义存在；紧支集使 $\spt\phi$ 为紧集，结合 (i) 保证 $\int_{\partial_*E}\lvert\phi\rvert\diff\mathcal{H}^{n-1}<\infty$，故右端绝对收敛。由于 $C_c^{\infty}(\mathbb{R}^n;\mathbb{R}^n)$ 在 $C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 中按 $C^1$ 范数稠密，把 $C_c^1$ 换成 $C_c^{\infty}$ 不改变结论。
+\item 等式只在 $\mathcal{H}^{n-1}$-a.e. 意义下确定 $\nu_E$：在 $\partial_*E$ 的 $\mathcal{H}^{n-1}$ 零测子集上改变 $\nu_E$ 不改变两端积分。条款 (ii) 中的「唯一」也在这个意义下理解，与\cref{definition:ch05-5-6}中按半空间条件定义法向量的方式相容。% XREF internal
+\item 积分区域必须是 $\partial_*E$ 而不能换成 $\partial E$：$\mathcal{H}^{n-1}\llcorner\partial E$ 不必是 Radon 测度，且在 $\partial E-\partial_*E$ 上不存在测度论外单位法向量。
+\item 假设只要求局部有限周长而非全局有限周长，因为检验向量场具有紧支集，而 $\lVert\partial E\rVert$ 在每个紧集上有限；这与\cref{lemma:ch05-5-5}的假设一致。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-16-判别}
+后文\cref{section:ch05-11}将证明：若 $E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集，且对每个紧集 $K\subseteq\mathbb{R}^n$ 有 $\mathcal{H}^{n-1}(\partial_*E\cap K)<\infty$，则 $E$ 具有局部有限周长。特别地，Gauss--Green 定理对 $E=U$ 成立，其中 $U$ 为具有 Lipschitz 边界的开集。% XREF p=236 "We will see in Section 5.11 below that if E ⊂ R^n is L^n-measurable and H^{n-1}(∂_*E ∩ K) < ∞ for all compact K ⊂ R^n, then E has locally finite perimeter."
+\end{remark}
+
+\end{document}

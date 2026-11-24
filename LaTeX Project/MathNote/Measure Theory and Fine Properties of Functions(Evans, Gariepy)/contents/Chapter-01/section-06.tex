@@ -1,0 +1,471 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{Radon 测度的微分}\label{section:ch01-06}
+
+本节利用覆盖定理研究 $\mathbb{R}^n$ 上 Radon 测度的微分，所用的覆盖定理见\cref{section:ch01-05}。% XREF p=47 "the covering theorems of the previous section"
+
+\subsection{导数}\label{subsection:ch01-06-1}
+
+设 $\mu$ 与 $\nu$ 为 $\mathbb{R}^n$ 上的 Radon 测度。
+
+\begin{definition}[上导数与下导数]\label{definition:ch01-1-20}
+设 $\mu$ 与 $\nu$ 为 $\mathbb{R}^n$ 上的 Radon 测度。对每个点 $x\in\mathbb{R}^n$，定义
+\begin{align*}
+\overline{D}_{\mu}\nu(x)
+&:=
+\begin{cases}
+\displaystyle\limsup_{r\to0}\frac{\nu(B(x,r))}{\mu(B(x,r))}, & \text{若对一切 } r>0 \text{ 都有 } \mu(B(x,r))>0,\\[10pt]
++\infty, & \text{若存在 } r>0 \text{ 使 } \mu(B(x,r))=0,
+\end{cases}
+\end{align*}
+以及
+\begin{align*}
+\underline{D}_{\mu}\nu(x)
+&:=
+\begin{cases}
+\displaystyle\liminf_{r\to0}\frac{\nu(B(x,r))}{\mu(B(x,r))}, & \text{若对一切 } r>0 \text{ 都有 } \mu(B(x,r))>0,\\[10pt]
++\infty, & \text{若存在 } r>0 \text{ 使 } \mu(B(x,r))=0.
+\end{cases}
+\end{align*}
+称 $\overline{D}_{\mu}\nu$ 为 $\nu$ 关于 $\mu$ 的\textbf{上导数}，称 $\underline{D}_{\mu}\nu$ 为 $\nu$ 关于 $\mu$ 的\textbf{下导数}。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-20; kind=motivation; 说明以球上测度比值刻画逐点密度的动机、上极限与下极限的分工以及分母为零时取 $+\infty$ 的理由
+\begin{remark}\phantomsection\label{remark:ch01-def-1-20-动机}
+测度本身不带有逐点的取值，刻画两个测度在一点处的相对大小只能借助该点附近球上的测度比值。设想 $\nu$ 关于 $\mu$ 有连续的密度 $f$，即 $\nu(A)=\int_A f\diff\mu$，则由积分中值估计，比值 $\nu(B(x,r))/\mu(B(x,r))$ 随 $r\to0$ 趋于 $f(x)$；因此该比值的极限是密度在点 $x$ 处的候选值，而极限是否存在决定了密度能否在该点定义。分别取上极限与下极限，使 $\overline{D}_{\mu}\nu$ 与 $\underline{D}_{\mu}\nu$ 处处有定义、取值于 $[0,+\infty]$，于是二者的比较即可在整个 $\mathbb{R}^n$ 上逐点进行，而不必先知道极限是否存在。分母为零时取值为 $+\infty$ 的约定，把「$\mu$ 在某个球上消失而 $\nu$ 不消失」这一情形归入密度为无穷的一类，使定义无需附加例外条款。后文\cref{theorem:ch01-1-29}将证明这两个函数在 $\mu$-a.e. 处相等且取有限值。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-20; kind=hypotheses; 逐条分析 Radon 假设、球的取法、分母非零条件与定义关于两个测度的不对称性
+\begin{remark}\phantomsection\label{remark:ch01-def-1-20-条件}
+\begin{enumerate}[(i)]
+\item 假设 $\mu$ 与 $\nu$ 为 Radon 测度，即 $\mathbb{R}^n$ 上的 Borel 正则测度且在紧集上有限。有限性保证对每个 $x\in\mathbb{R}^n$ 与每个 $r>0$，$\mu(B(x,r))$ 与 $\nu(B(x,r))$ 都是有限数，故比值取有限值或 $+\infty$；Borel 正则性则在\cref{theorem:ch01-1-29}的证明中用于把开集的测度取到下确界。% XREF internal
+\item 球 $B(x,r)$ 在此取闭球。由于 $r\to0$ 时的极限只依赖充分小的 $r$，把闭球换成开球不改变上导数与下导数的值；这一约定与本节其余部分的用法一致。
+\item 条件「对一切 $r>0$ 有 $\mu(B(x,r))>0$」排除分母为零。若存在 $r>0$ 使 $\mu(B(x,r))=0$，则对一切 $0<r'\leqslant r$ 同样有 $\mu(B(x,r'))=0$，而 $\nu(B(x,r'))$ 可能为正，此时比值没有有限极限；定义取 $+\infty$，与「$\nu$ 在 $x$ 附近的密度为无穷」相应。
+\item 定义关于 $\mu$ 与 $\nu$ 不对称。在 $\mu(B(x,r))>0$ 与 $\nu(B(x,r))>0$ 对一切 $r>0$ 成立的条件下，交换两个测度得到 $\overline{D}_{\nu}\mu(x)=1/\underline{D}_{\mu}\nu(x)$ 与 $\underline{D}_{\nu}\mu(x)=1/\overline{D}_{\mu}\nu(x)$；正是这一对偶关系使 (i) 与 (ii) 的结论可以互相转化，也使\cref{lemma:ch01-1-2}的两款证明结构相同、只需交换所控制的测度。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[可微性、导数与密度]\label{definition:ch01-1-21}
+设 $\mu$ 与 $\nu$ 为 $\mathbb{R}^n$ 上的 Radon 测度，$x\in\mathbb{R}^n$。若
+\begin{align*}
+\overline{D}_{\mu}\nu(x)=\underline{D}_{\mu}\nu(x)<+\infty,
+\end{align*}
+则称 $\nu$ 在 $x$ 处关于 $\mu$ \textbf{可微}，并记作
+\begin{align*}
+D_{\mu}\nu(x):=\overline{D}_{\mu}\nu(x)=\underline{D}_{\mu}\nu(x).
+\end{align*}
+称 $D_{\mu}\nu$ 为 $\nu$ 关于 $\mu$ 的\textbf{导数}，亦称 $D_{\mu}\nu$ 为 $\nu$ 关于 $\mu$ 的\textbf{密度}。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-21; kind=motivation; 说明以上、下导数相等且有限作为可微性的理由，以及「导数」与「密度」两个名称的来源
+\begin{remark}\phantomsection\label{remark:ch01-def-1-21-动机}
+上导数与下导数相等且有限时，比值 $\nu(B(x,r))/\mu(B(x,r))$ 有唯一的极限值，把它称为 $\nu$ 关于 $\mu$ 在 $x$ 处的导数，这与一元函数在一点可微的定义（差商的上、下极限相等且有限）在形式上一致。取值为 $+\infty$ 的情形被排除在可微之外，因为后文的积分表示要求密度在 $\mu$-a.e. 处取有限值，而 $+\infty$ 不能作为可积函数的取值。称 $D_{\mu}\nu$ 为密度的理由来自 Lebesgue 测度的情形：当 $\nu=f\mathcal{L}^n$ 且 $f$ 连续时 $D_{\mathcal{L}^n}\nu=f$，故 $D_{\mu}\nu$ 是 $\nu$ 相对于 $\mu$ 的密度函数。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-21; kind=hypotheses; 逐条分析有限性要求、可微性的逐点性质、定义域与分母为零的情形
+\begin{remark}\phantomsection\label{remark:ch01-def-1-21-条件}
+\begin{enumerate}[(i)]
+\item 可微性要求 $\overline{D}_{\mu}\nu(x)=\underline{D}_{\mu}\nu(x)<+\infty$，其中有限性是实质条件：若二者同为 $+\infty$，则导数在该点没有有限值，\cref{theorem:ch01-1-30}中的积分表示无法在该点使用。% XREF internal
+\item 可微性是逐点性质，定义本身不涉及测度的大小。\cref{theorem:ch01-1-29}断言它在 $\mu$-a.e. 处成立，并同时给出 $D_{\mu}\nu$ 的 $\mu$-可测性。% XREF internal
+\item $D_{\mu}\nu$ 只在集合 $\{x\in\mathbb{R}^n\mid\overline{D}_{\mu}\nu(x)=\underline{D}_{\mu}\nu(x)<+\infty\}$ 上有定义，在此集合之外无值；凡后文出现 $D_{\mu}\nu$ 的积分与等式，均在 $\mu$-a.e. 意义下理解。
+\item 若存在 $r>0$ 使 $\mu(B(x,r))=0$，则上导数与下导数同为 $+\infty$，点 $x$ 处不可微。
+\end{enumerate}
+\end{remark}
+
+本节的目标是弄清 $D_{\mu}\nu$ 何时存在，以及何时能够通过积分 $D_{\mu}\nu$ 还原 $\nu$。
+
+\begin{lemma}[上导数与下导数的测度估计]\label{lemma:ch01-1-2}
+设 $\mu$ 与 $\nu$ 为 $\mathbb{R}^n$ 上的 Radon 测度，$0<\alpha<\infty$。则
+\begin{enumerate}[(i)]
+\item 若 $A\subseteq\{x\in\mathbb{R}^n\mid\underline{D}_{\mu}\nu(x)\leqslant\alpha\}$，则 $\nu(A)\leqslant\alpha\mu(A)$；
+\item 若 $A\subseteq\{x\in\mathbb{R}^n\mid\overline{D}_{\mu}\nu(x)\geqslant\alpha\}$，则 $\nu(A)\geqslant\alpha\mu(A)$。
+\end{enumerate}
+\end{lemma}
+
+\begin{remark}\phantomsection\label{remark:ch01-lem-1-2-可测性}
+此处 $A$ 无需是 $\mu$-可测集，亦无需是 $\nu$-可测集。
+\end{remark}
+
+\begin{proof}
+（1）先设 $\mu(\mathbb{R}^n)<\infty$ 且 $\nu(\mathbb{R}^n)<\infty$；若不然，把 $\mu$ 与 $\nu$ 换成它们在 $\mathbb{R}^n$ 的紧子集上的限制。固定 $\varepsilon>0$。设 $U$ 为开集，$A\subseteq U$，其中 $A$ 满足 (i) 的假设。令
+\begin{align*}
+\mathcal{F}:=\{B\mid B=B(a,r),\ a\in A,\ B\subseteq U,\ \nu(B)\leqslant(\alpha+\varepsilon)\mu(B)\}.
+\end{align*}
+则对每个 $a\in A$ 有 $\inf\{r\mid B(a,r)\in\mathcal{F}\}=0$，故\cref{theorem:ch01-1-28}给出 $\mathcal{F}$ 中两两不交的球组成的可数族 $\mathcal{G}$，使得% XREF p=48 "and so Theorem 1.28 provides us with a countable collection G of disjoint balls in F such that"
+\begin{align*}
+\nu\Bigl(A-\bigcup_{B\in\mathcal{G}}B\Bigr)=0.
+\end{align*}
+于是
+\begin{align*}
+\nu(A)\leqslant\sum_{B\in\mathcal{G}}\nu(B)\leqslant(\alpha+\varepsilon)\sum_{B\in\mathcal{G}}\mu(B)\leqslant(\alpha+\varepsilon)\mu(U).
+\end{align*}
+该估计对每个开集 $U\supseteq A$ 成立，故由\cref{theorem:ch01-1-8}得 $\nu(A)\leqslant(\alpha+\varepsilon)\mu(A)$。(i) 得证。(ii) 的证明与 (i) 的证明同型，此处从略。% XREF p=48 "and hence Theorem 1.8 implies"
+
+% SUPPLEMENT: parent=lemma:ch01-1-2; kind=proof; 核验化归到有限测度与半径下确界为零这两处省略，并补出 (ii) 的完整证明
+（2）化归的核验。令 $U_j:=B(0,j)$，$\mu_j:=\mu\llcorner U_j$，$\nu_j:=\nu\llcorner U_j$，$A_j:=A\cap U_j$（$j=1,2,\cdots$）。由 $\mu$ 与 $\nu$ 是 Radon 测度，$\mu_j(\mathbb{R}^n)=\mu(U_j)<\infty$ 且 $\nu_j(\mathbb{R}^n)=\nu(U_j)<\infty$。对 $x\in U_j$，取 $\rho:=j-\lvert x\rvert>0$；则对一切 $0<r<\rho$ 有 $B(x,r)\subseteq U_j$，故 $\mu_j(B(x,r))=\mu(B(x,r))$ 且 $\nu_j(B(x,r))=\nu(B(x,r))$，即 $x$ 处关于 $(\mu_j,\nu_j)$ 的上导数与下导数值分别等于关于 $(\mu,\nu)$ 的上导数与下导数值。于是 $A_j\subseteq\{x\mid\underline{D}_{\mu_j}\nu_j(x)\leqslant\alpha\}$，由有限测度的情形得 $\nu(A_j)=\nu_j(A_j)\leqslant\alpha\mu_j(A_j)=\alpha\mu(A_j)$。$U_j$ 递增且 $\bigcup_{j=1}^{\infty}U_j=\mathbb{R}^n$，故由测度的下连续性得 $\nu(A)=\lim_{j\to\infty}\nu(A_j)$ 与 $\mu(A)=\lim_{j\to\infty}\mu(A_j)$，从而 $\nu(A)\leqslant\alpha\mu(A)$。(ii) 的化归相同，只需把 $\underline{D}_{\mu}\nu\leqslant\alpha$ 换成 $\overline{D}_{\mu}\nu\geqslant\alpha$。
+
+（3）半径下确界为零的核验。设 $a\in A$，则 $\underline{D}_{\mu}\nu(a)\leqslant\alpha$。若存在 $r_0>0$，使对一切 $0<r<r_0$ 都有 $B(a,r)\notin\mathcal{F}$，则因 $a\in A\subseteq U$ 而 $U$ 为开集，存在 $r_1\in(0,r_0)$，使 $0<r<r_1$ 时 $B(a,r)\subseteq U$，从而对这些 $r$ 有 $\nu(B(a,r))>(\alpha+\varepsilon)\mu(B(a,r))$。此时必有 $\mu(B(a,r))>0$，否则 $\underline{D}_{\mu}\nu(a)=+\infty>\alpha$，与 $a\in A$ 的取法矛盾；于是 $\nu(B(a,r))/\mu(B(a,r))>\alpha+\varepsilon$ 对一切 $0<r<r_1$ 成立，取下极限得 $\underline{D}_{\mu}\nu(a)\geqslant\alpha+\varepsilon>\alpha$，同样矛盾。故 $\inf\{r\mid B(a,r)\in\mathcal{F}\}=0$。此外 $\mathcal{F}$ 中球的球心集恰为 $A$：每个球的球心属于 $A$，而上面的论证表明每个 $a\in A$ 都是 $\mathcal{F}$ 中某个球的球心。这正是\cref{theorem:ch01-1-28}所要求的球心集条件，而 $\nu(A)<\infty$ 由 (1) 的假设给出。% XREF internal
+
+（4）(ii) 的完整证明。固定 $\varepsilon\in(0,\alpha)$，设 $A\subseteq\{x\in\mathbb{R}^n\mid\overline{D}_{\mu}\nu(x)\geqslant\alpha\}$ 且 $U\supseteq A$ 为开集。令
+\begin{align*}
+\mathcal{F}':=\{B\mid B=B(a,r),\ a\in A,\ B\subseteq U,\ \nu(B)\geqslant(\alpha-\varepsilon)\mu(B)\}.
+\end{align*}
+把 (3) 中的 $\underline{D}_{\mu}\nu\leqslant\alpha$ 换成 $\overline{D}_{\mu}\nu\geqslant\alpha$、把 $\alpha+\varepsilon$ 换成 $\alpha-\varepsilon$，同样的推理给出：对每个 $a\in A$ 有 $\inf\{r\mid B(a,r)\in\mathcal{F}'\}=0$，且 $\mathcal{F}'$ 中球的球心集为 $A$。由 $\mu(A)<\infty$ 与\cref{theorem:ch01-1-28}（其中的测度取为 $\mu$），存在 $\mathcal{F}'$ 中两两不交的球组成的可数族 $\mathcal{G}'$，使得% XREF internal
+\begin{align*}
+\mu\Bigl((A\cap U)-\bigcup_{B\in\mathcal{G}'}B\Bigr)=0.
+\end{align*}
+于是
+\begin{align*}
+\mu(A)
+&=\mu\Bigl(A\cap\bigcup_{B\in\mathcal{G}'}B\Bigr)
+\leqslant\sum_{B\in\mathcal{G}'}\mu(A\cap B)
+\leqslant\sum_{B\in\mathcal{G}'}\mu(B)\\
+&\leqslant\frac{1}{\alpha-\varepsilon}\sum_{B\in\mathcal{G}'}\nu(B)
+=\frac{1}{\alpha-\varepsilon}\,\nu\Bigl(\bigcup_{B\in\mathcal{G}'}B\Bigr)
+\leqslant\frac{1}{\alpha-\varepsilon}\,\nu(U).
+\end{align*}
+该估计对每个开集 $U\supseteq A$ 成立，故由\cref{theorem:ch01-1-8}得 $\mu(A)\leqslant(\alpha-\varepsilon)^{-1}\nu(A)$，即 $\nu(A)\geqslant(\alpha-\varepsilon)\mu(A)$。令 $\varepsilon\to0^{+}$ 即得 (ii)。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch01-1-2; kind=motivation; 说明引理如何把逐点比值信息转化为集合上的测度估计，以及两款方向相反的原因
+\begin{remark}\phantomsection\label{remark:ch01-lem-1-2-动机}
+本引理把「在每个点处比值的极限不超过 $\alpha$」这一逐点信息转换为集合上的测度不等式，是覆盖定理与微分理论之间的桥梁。$A$ 不必可测，故结论无法由测度的可加性直接得到；证明改用\cref{theorem:ch01-1-28}：先在 $A$ 的每一点处以任意小的球覆盖，取其中两两不交的可数子族，使余集的测度为零，再逐个球使用比值估计并求和。两款的方向相反：(i) 用满足 $\nu(B)\leqslant(\alpha+\varepsilon)\mu(B)$ 的球覆盖 $A$，从而以 $\mu$ 控制 $\nu$；(ii) 用满足 $\nu(B)\geqslant(\alpha-\varepsilon)\mu(B)$ 的球覆盖 $A$，从而以 $\nu$ 控制 $\mu$。控制的方向决定了填球时使用哪一个测度，也决定了证明中需要哪一个测度在全空间上有限。 % XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch01-1-2; kind=hypotheses; 逐条分析 $A$ 的可测性、参数范围、Radon 假设的作用与假设的不可删除性
+\begin{remark}\phantomsection\label{remark:ch01-lem-1-2-条件}
+\begin{enumerate}[(i)]
+\item $A$ 无需可测，亦无需关于 $\nu$ 可测（引理陈述之后的注记已指出这一点）。这一点在应用中必不可少：后文对 $I$ 与 $R(a,b)$ 这些由导数定义的集合使用本引理时，它们的可测性尚未证明。% XREF internal
+\item 参数限定为 $0<\alpha<\infty$。(ii) 的补证中出现的 $\alpha-\varepsilon$ 须保持正号，故取 $\varepsilon\in(0,\alpha)$；若 $\alpha=\infty$，(ii) 的结论成为关于无穷量的陈述，不提供信息。
+\item Radon 假设在两处使用：其一，\cref{theorem:ch01-1-28}要求球心集的测度有限，故证明开头把全空间的测度化归为有限情形；其二，取开集的下确界时用\cref{theorem:ch01-1-8}，其中 Radon 性保证外正则逼近成立。% XREF internal
+\item 两款填球所用的测度不同：(i) 以 $\nu$ 应用覆盖定理，需要 $\nu(A)<\infty$；(ii) 以 $\mu$ 应用覆盖定理，需要 $\mu(A)<\infty$。这正是 (ii) 不能照搬 (i) 的证明的原因。
+\item 假设 $A\subseteq\{\underline{D}_{\mu}\nu\leqslant\alpha\}$ 不可删除。取 $\mu=\mathcal{L}^1$、$\nu=2\mathcal{L}^1$、$A=[0,1]$、$\alpha=1$：则 $\underline{D}_{\mu}\nu=2$ 在 $\mathbb{R}$ 上处处成立，而 $\nu(A)=2>1=\alpha\mu(A)$，故 (i) 的结论不成立。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[测度的微分]\label{theorem:ch01-1-29}
+设 $\mu$ 与 $\nu$ 为 $\mathbb{R}^n$ 上的 Radon 测度。则
+\begin{enumerate}[(i)]
+\item $D_{\mu}\nu$ 存在，且在 $\mu$-a.e. 意义下取有限值；
+\item $D_{\mu}\nu$ 是 $\mu$-可测的。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）先设 $\nu(\mathbb{R}^n)<\infty$ 且 $\mu(\mathbb{R}^n)<\infty$；若不然，把 $\mu$ 与 $\nu$ 换成它们在 $\mathbb{R}^n$ 的紧子集上的限制。
+
+断言 \#1：$D_{\mu}\nu$ 存在，且在 $\mu$-a.e. 意义下取有限值。
+
+断言之证明：令 $I:=\{x\in\mathbb{R}^n\mid\overline{D}_{\mu}\nu(x)=+\infty\}$。注意对每个 $\alpha>0$ 有 $I\subseteq\{x\in\mathbb{R}^n\mid\overline{D}_{\mu}\nu(x)\geqslant\alpha\}$。于是由\cref{lemma:ch01-1-2}得% XREF p=48 "Thus by Lemma 1.2"
+\begin{align*}
+\mu(I)\leqslant\frac{1}{\alpha}\nu(I).
+\end{align*}
+令 $\alpha\to\infty$ 得 $\mu(I)=0$，故 $\overline{D}_{\mu}\nu$ 在 $\mu$-a.e. 意义下取有限值。
+
+对每个 $0<a<b$，令
+\begin{align*}
+R(a,b):=\{x\in\mathbb{R}^n\mid\underline{D}_{\mu}\nu(x)<a<b<\overline{D}_{\mu}\nu(x)<\infty\}.
+\end{align*}
+再次使用\cref{lemma:ch01-1-2}得% XREF p=49 "Again using Lemma 1.2, we see that"
+\begin{align*}
+b\mu(R(a,b))\leqslant\nu(R(a,b))\leqslant a\mu(R(a,b));
+\end{align*}
+由于 $b>a$ 且 $\mu(R(a,b))\leqslant\mu(\mathbb{R}^n)<\infty$，故 $\mu(R(a,b))=0$。又
+\begin{align*}
+\{x\in\mathbb{R}^n\mid\underline{D}_{\mu}\nu(x)<\overline{D}_{\mu}\nu(x)<\infty\}
+=\bigcup_{\substack{0<a<b\\ a,\,b\text{ 为有理数}}}R(a,b),
+\end{align*}
+于是 $D_{\mu}\nu$ 存在，且在 $\mu$-a.e. 意义下取有限值。
+
+（2）断言 \#2：对每个 $x\in\mathbb{R}^n$ 与每个 $r>0$ 有
+\begin{align*}
+\limsup_{y\to x}\mu(B(y,r))\leqslant\mu(B(x,r)).
+\end{align*}
+对 $\nu$ 有相应的结论成立。
+
+断言之证明：取 $y_k\in\mathbb{R}^n$ 使 $y_k\to x$。令 $f_k:=\chi_{B(y_k,r)}$，$f:=\chi_{B(x,r)}$。则
+\begin{align*}
+\limsup_{k\to\infty}f_k\leqslant f,
+\end{align*}
+从而
+\begin{align*}
+\liminf_{k\to\infty}(1-f_k)\geqslant(1-f).
+\end{align*}
+于是由\cref{theorem:ch01-1-17}（Fatou 引理）得% XREF p=49 "Thus by Fatou's Lemma"
+\begin{align*}
+\int_{B(x,2r)}(1-f)\diff\mu
+&\leqslant\int_{B(x,2r)}\liminf_{k\to\infty}(1-f_k)\diff\mu\\
+&\leqslant\liminf_{k\to\infty}\int_{B(x,2r)}(1-f_k)\diff\mu;
+\end{align*}
+即
+\begin{align*}
+\mu(B(x,2r))-\mu(B(x,r))\leqslant\liminf_{k\to\infty}\bigl(\mu(B(x,2r))-\mu(B(y_k,r))\bigr).
+\end{align*}
+由于 $\mu$ 是 Radon 测度，$\mu(B(x,2r))<\infty$；断言得证。
+
+（3）断言 \#3：$D_{\mu}\nu$ 是 $\mu$-可测的。
+
+断言之证明：由断言 \#2，对一切 $r>0$，函数 $x\mapsto\mu(B(x,r))$ 与 $x\mapsto\nu(B(x,r))$ 是上半连续的，从而是 Borel 可测的。于是对每个 $r>0$，
+\begin{align*}
+f_r(x):=
+\begin{cases}
+\displaystyle\frac{\nu(B(x,r))}{\mu(B(x,r))}, & \text{若 } \mu(B(x,r))>0,\\[10pt]
++\infty, & \text{若 } \mu(B(x,r))=0
+\end{cases}
+\end{align*}
+是 $\mu$-可测的。又
+\begin{align*}
+D_{\mu}\nu=\lim_{r\to0}f_r=\lim_{k\to\infty}f_{1/k}\qquad\mu\text{-a.e.},
+\end{align*}
+故 $D_{\mu}\nu$ 是 $\mu$-可测的。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-29; kind=motivation; 说明定理的三段式证明结构：控制导数不存在的两个集合、球的测度关于球心的上半连续性、以可测函数列的极限得到可测性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-29-动机}
+本定理是本节的核心存在性结论：任意两个 Radon 测度之间的导数在 $\mu$-a.e. 处存在且取有限值，并且是 $\mu$-可测函数。证明分为三段。第一段刻画两个可能使导数不存在的集合：取值为 $+\infty$ 的集合 $I$，以及上、下导数不相等的集合；后者被分解为可数多个形如 $R(a,b)$ 的集合，而 $I$ 与每个 $R(a,b)$ 都由\cref{lemma:ch01-1-2}判为零测集。第二段证明球的测度关于球心是上半连续的，这是球测度对球心的正则性，其中 Fatou 引理把积分的下极限与函数的下极限相比较。第三段把导数写成可测函数列 $f_{1/k}$ 的极限，从而得到 $D_{\mu}\nu$ 的 $\mu$-可测性。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-29; kind=hypotheses; 逐条分析 Radon 假设的三处作用、结论的 $\mu$-a.e. 性质、不要求绝对连续性以及有限测度化归的必要性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-29-条件}
+\begin{enumerate}[(i)]
+\item Radon 假设在三处使用：其一，\cref{lemma:ch01-1-2}的陈述本身要求 $\mu$ 与 $\nu$ 是 Radon 测度；其二，断言 \#2 末尾需要 $\mu(B(x,2r))<\infty$ 才能把不等式移项；其三，断言 \#3 中函数 $x\mapsto\nu(B(x,r))$ 需取有限值，从而比值在 $\{\mu(B(x,r))>0\}$ 上有定义。% XREF internal
+\item 结论只在 $\mu$-a.e. 处成立。在 $\mu$ 的零测集上，导数可能不存在，也可能取 $+\infty$；这样的点上 $D_{\mu}\nu$ 没有取值。
+\item 定理不要求 $\nu$ 关于 $\mu$ 绝对连续，故 $D_{\mu}\nu$ 可能恒等于零。由\cref{theorem:ch01-1-31}，当 $\nu$ 与 $\mu$ 相互奇异时 $D_{\mu}\nu=0$ 在 $\mu$-a.e. 处成立。% XREF internal
+\item 证明开头的有限测度化归不可省略：断言 \#1 中由 $b\mu(R(a,b))\leqslant a\mu(R(a,b))$ 与 $b>a$ 推出 $\mu(R(a,b))=0$，需要 $\mu(R(a,b))<\infty$，而这由 $\mu(\mathbb{R}^n)<\infty$ 提供。若 $\mu(R(a,b))=\infty$，该式成为 $\infty\leqslant\infty$，不提供信息。
+\item 断言 \#2 中对 $\nu$ 的相应结论不参与断言 \#3 的推导（断言 \#3 只用到 $x\mapsto\nu(B(x,r))$ 的 Borel 可测性），但它是同一论证的组成部分，且在\cref{theorem:ch01-1-31}的讨论中同样有效。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\subsection{导数的积分；Lebesgue 分解}\label{subsection:ch01-06-2}
+
+\begin{definition}[绝对连续与相互奇异]\label{definition:ch01-1-22}
+设 $\mu$ 与 $\nu$ 为 $\mathbb{R}^n$ 上的 Borel 测度。
+\begin{enumerate}[(i)]
+\item 称测度 $\nu$ 关于 $\mu$ \textbf{绝对连续}，记作
+\begin{align*}
+\nu\ll\mu,
+\end{align*}
+是指对一切 $A\subseteq\mathbb{R}^n$，$\mu(A)=0$ 蕴含 $\nu(A)=0$。
+\item 称测度 $\nu$ 与 $\mu$ \textbf{相互奇异}，记作
+\begin{align*}
+\nu\perp\mu,
+\end{align*}
+是指存在 Borel 集 $B\subseteq\mathbb{R}^n$，使得
+\begin{align*}
+\mu(\mathbb{R}^n-B)=\nu(B)=0.
+\end{align*}
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-22; kind=motivation; 说明绝对连续与相互奇异所刻画的两种极端情形，以及 Lebesgue 分解如何把一般测度化为这两部分之和
+\begin{remark}\phantomsection\label{remark:ch01-def-1-22-动机}
+绝对连续与相互奇异刻画两个测度之间「完全相容」与「完全分离」两种极端情形。若 $\nu$ 关于 $\mu$ 绝对连续，则 $\mu$ 的零测集不承载 $\nu$ 的质量，$\nu$ 的质量分布被 $\mu$ 的零测集结构完全约束，因而 $\nu$ 应当有关于 $\mu$ 的密度。若 $\nu$ 与 $\mu$ 相互奇异，则存在一个 Borel 集 $B$，使 $\nu$ 的质量全部落在 $B$ 上而 $\mu$ 的质量全部落在 $B$ 之外，两个测度不共享任何质量分布。\cref{theorem:ch01-1-31}证明：$\mathbb{R}^n$ 上的 Radon 测度 $\nu$ 关于 Radon 测度 $\mu$ 总可分解为这两个极端部分之和，而其中绝对连续部分的密度恰由\cref{theorem:ch01-1-30}给出的导数表示。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-22; kind=hypotheses; 逐条分析 Borel 测度假设、绝对连续性的陈述范围、承载集的 Borel 性与两个性质的相容性
+\begin{remark}\phantomsection\label{remark:ch01-def-1-22-条件}
+\begin{enumerate}[(i)]
+\item 定义只要求 $\mu$ 与 $\nu$ 为 Borel 测度。绝对连续性与相互奇异性只涉及零测集，不涉及测度的大小，故不需要 Radon 性或有限性；Radon 假设在\cref{theorem:ch01-1-30}与\cref{theorem:ch01-1-31}中才出现。% XREF internal
+\item $\nu\ll\mu$ 的定义对一切子集 $A\subseteq\mathbb{R}^n$ 陈述，不要求 $A$ 可测。当 $\mu$ 为 Radon 测度时，这一要求与「对每个 $\mu$-可测集 $A$，$\mu(A)=0$ 蕴含 $\nu(A)=0$」等价：任取满足 $\mu(A)=0$ 的集合 $A$，由外正则性存在 Borel 集 $B\supseteq A$ 使 $\mu(B)=0$。
+\item 相互奇异性要求承载集 $B$ 是 Borel 集。Borel 性在\cref{theorem:ch01-1-31}的构造中用于保证限制 $\nu\llcorner(\mathbb{R}^n-B)$ 仍是 Radon 测度。% XREF internal
+\item 两个性质可能同时成立：若 $\nu$ 是零测度，则对每个 Borel 测度 $\mu$ 有 $\nu\ll\mu$ 且 $\nu\perp\mu$。反之，若 $\nu\ll\mu$ 且 $\nu\perp\mu$，则 $\nu=0$：取 $B$ 使 $\mu(\mathbb{R}^n-B)=\nu(B)=0$，由 $\nu\ll\mu$ 得 $\nu(\mathbb{R}^n-B)=0$，故 $\nu(\mathbb{R}^n)=0$。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Radon 测度的微分]\label{theorem:ch01-1-30}
+设 $\mu$ 与 $\nu$ 为 $\mathbb{R}^n$ 上的 Radon 测度，且 $\nu\ll\mu$。则对每个 $\mu$-可测集 $A\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\nu(A)=\int_A D_{\mu}\nu\diff\mu .
+\end{align*}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-30-微积分}
+这是 Radon--Nikodym 定理的一个版本。此处所证明的不只是 $\nu$ 关于 $\mu$ 存在密度，而且是这一密度 $D_{\mu}\nu$ 能够由对 $\nu$ 关于 $\mu$ 作「微分」算出。这些结论合起来实际上就是 $\mathbb{R}^n$ 上 Radon 测度的微积分基本定理。
+\end{remark}
+
+\begin{proof}
+（1）设 $A$ 为 $\mu$-可测集。则存在 Borel 集 $B$ 使 $A\subseteq B$ 且 $\mu(B-A)=0$。于是 $\nu(B-A)=0$，故 $A$ 是 $\nu$-可测集。因此每个 $\mu$-可测集也是 $\nu$-可测集。
+
+（2）令
+\begin{align*}
+Z:=\{x\in\mathbb{R}^n\mid D_{\mu}\nu(x)=0\},\qquad I:=\{x\in\mathbb{R}^n\mid D_{\mu}\nu(x)=+\infty\};
+\end{align*}
+则 $Z$ 与 $I$ 是 $\mu$-可测集。由\cref{theorem:ch01-1-29}，$\mu(I)=0$，故 $\nu(I)=0$。又\cref{lemma:ch01-1-2}给出：对一切 $\alpha>0$ 有 $\nu(Z)\leqslant\alpha\mu(Z)$，故 $\nu(Z)=0$。于是% XREF p=50 "By Theorem 1.29, μ(I) = 0 and so ν(I) = 0" | p=50 "Also, Lemma 1.2 implies ν(Z) ≤ αμ(Z) for all α > 0"
+\begin{align*}
+\nu(Z)=0=\int_Z D_{\mu}\nu\diff\mu
+\end{align*}
+且
+\begin{align*}
+\nu(I)=0=\int_I D_{\mu}\nu\diff\mu .
+\end{align*}
+
+（3）现设 $A$ 为 $\mu$-可测集，固定 $1<t<\infty$。对每个整数 $m$ 令
+\begin{align*}
+A_m:=A\cap\{x\in\mathbb{R}^n\mid t^m\leqslant D_{\mu}\nu(x)<t^{m+1}\}.
+\end{align*}
+则 $A_m$ 是 $\mu$-可测集，从而是 $\nu$-可测集。又
+\begin{align*}
+A-\bigcup_{m=-\infty}^{\infty}A_m\subseteq Z\cup I\cup\{x\in\mathbb{R}^n\mid\overline{D}_{\mu}\nu(x)\neq\underline{D}_{\mu}\nu(x)\},
+\end{align*}
+故
+\begin{align*}
+\nu\Bigl(A-\bigcup_{m=-\infty}^{\infty}A_m\Bigr)=0 .
+\end{align*}
+于是由\cref{lemma:ch01-1-2}得% XREF p=51 "Consequently, Lemma 1.2 implies"
+\begin{align*}
+\nu(A)=\sum_{m=-\infty}^{\infty}\nu(A_m)
+&\leqslant\sum_{m=-\infty}^{\infty}t^{m+1}\mu(A_m)\\
+&=t\sum_{m=-\infty}^{\infty}t^{m}\mu(A_m)\leqslant t\int_A D_{\mu}\nu\diff\mu .
+\end{align*}
+同样地，由\cref{lemma:ch01-1-2}得% XREF p=51 "Similarly, Lemma 1.2 gives"
+\begin{align*}
+\nu(A)=\sum_{m=-\infty}^{\infty}\nu(A_m)
+&\geqslant\sum_{m=-\infty}^{\infty}t^{m}\mu(A_m)\\
+&=t^{-1}\sum_{m=-\infty}^{\infty}t^{m+1}\mu(A_m)
+\geqslant t^{-1}\sum_{m=-\infty}^{\infty}\int_{A_m}D_{\mu}\nu\diff\mu\\
+&=t^{-1}\int_A D_{\mu}\nu\diff\mu .
+\end{align*}
+于是对一切 $1<t<\infty$ 有
+\begin{align*}
+\frac{1}{t}\int_A D_{\mu}\nu\diff\mu\leqslant\nu(A)\leqslant t\int_A D_{\mu}\nu\diff\mu .
+\end{align*}
+令 $t\to1^{+}$ 即得所证。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-30; kind=motivation; 说明本定理作为 Radon--Nikodym 定理的测度论版本，以及按导数值二进分层、以引理 1.2 双向估计的证明思路
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-30-动机}
+本定理把密度表示为导数的积分，是 Radon--Nikodym 定理在 Radon 测度框架下的形式，并且给出了密度的显式计算方式。证明的思路是按导数的取值把积分区域分层：$A_m$ 是 $A$ 中使 $D_{\mu}\nu$ 落在 $[t^m,t^{m+1})$ 内的点集，在每一层上导数被上下两个常数夹住，于是由\cref{lemma:ch01-1-2}双向估计该层的 $\nu$ 测度与 $\mu$ 测度之比；对 $m$ 求和后，$\nu(A)$ 被 $t\int_A D_{\mu}\nu\diff\mu$ 与 $t^{-1}\int_A D_{\mu}\nu\diff\mu$ 夹住，最后令 $t\to1^{+}$ 取极限。分层的作用在于把逐点定义的导数转化为可数多个「导数近似为常数」的集合，使\cref{lemma:ch01-1-2}的集合形式估计得以逐层使用。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-30; kind=hypotheses; 逐条分析绝对连续性在第 1 步的作用、$A$ 的可测性限制、分层参数的范围与积分取无穷值的情形
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-30-条件}
+\begin{enumerate}[(i)]
+\item 绝对连续性在第 1 步使用：由 $\mu(B-A)=0$ 推出 $\nu(B-A)=0$，从而每个 $\mu$-可测集都是 $\nu$-可测集。若没有 $\nu\ll\mu$，第 1 步失效，结论也随之失效。取 $\mu$ 为集中在原点的 Dirac 测度、$\nu=\mathcal{L}^1$，则 $\mu$ 的零测集可能不是 Lebesgue 可测集，故 $\nu(A)$ 与 $\int_A D_{\mu}\nu\diff\mu$ 对这样的集合无法比较。
+\item 结论只对 $\mu$-可测集 $A$ 陈述。第 3 步把 $A$ 分解为可数多个 $A_m$，并对每个 $A_m$ 使用\cref{lemma:ch01-1-2}；$A_m$ 的 $\mu$-可测性保证 $\nu(A_m)$ 有定义。% XREF internal
+\item 分层参数取自 $1<t<\infty$，而不是 $t>0$。$t>1$ 使 $t^m\to0$（$m\to-\infty$）与 $t^m\to\infty$（$m\to\infty$），从而 $\{t^m\}_{m\in\mathbb{Z}}$ 构成 $(0,\infty)$ 的一个分点序列，每个使 $D_{\mu}\nu(x)\in(0,\infty)$ 的点 $x$ 恰属于一个 $A_m$。
+\item 等式按扩展实数理解：当 $\nu(A)=\infty$ 时右端积分亦为 $\infty$。若 $A\subseteq Z$，则两端同为 $0$；若 $A\subseteq I$，则 $\mu(A)=0$，两端同为 $0$。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[绝对连续部分与奇异部分]\label{definition:ch01-1-23}
+设 $\mu$ 与 $\nu$ 为 $\mathbb{R}^n$ 上的 Radon 测度，$\nu_{\mathrm{ac}}$ 与 $\nu_{\mathrm{s}}$ 为 $\mathbb{R}^n$ 上的 Radon 测度，满足
+\begin{align*}
+\nu=\nu_{\mathrm{ac}}+\nu_{\mathrm{s}},\qquad \nu_{\mathrm{ac}}\ll\mu,\qquad \nu_{\mathrm{s}}\perp\mu .
+\end{align*}
+则称 $\nu_{\mathrm{ac}}$ 为 $\nu$ 关于 $\mu$ 的\textbf{绝对连续部分}，称 $\nu_{\mathrm{s}}$ 为 $\nu$ 关于 $\mu$ 的\textbf{奇异部分}。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-23; kind=motivation; 说明把两个分量单独命名的理由与名称的用法
+\begin{remark}\phantomsection\label{remark:ch01-def-1-23-动机}
+这一定义为\cref{theorem:ch01-1-31}中的分解命名。分解本身的存在性由该定理保证，命名之所以必要，是因为「绝对连续部分」与「奇异部分」这两个名称在后文反复使用：绝对连续部分可由积分表示，而奇异部分在讨论测度的奇异性、跳跃与集中现象时作为独立的项处理。两个名称都把「关于 $\mu$」写在后面，因为分量依赖于所选取的参照测度。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-23; kind=hypotheses; 逐条分析三条性质的作用、名称中参照测度的必要性以及退化的情形
+\begin{remark}\phantomsection\label{remark:ch01-def-1-23-条件}
+\begin{enumerate}[(i)]
+\item 定义中的三条性质 $\nu=\nu_{\mathrm{ac}}+\nu_{\mathrm{s}}$、$\nu_{\mathrm{ac}}\ll\mu$、$\nu_{\mathrm{s}}\perp\mu$ 缺一不可：第一条保证两个分量合成原测度，后两条分别刻画两个极端。三条性质合起来正是\cref{theorem:ch01-1-31}的 (i) 所断言的分解。% XREF internal
+\item 名称中的「关于 $\mu$」不可省略。同一测度 $\nu$ 关于不同参照测度的绝对连续部分不同：取 $\nu=\mathcal{L}^1$，若 $\mu=\mathcal{L}^1$ 则绝对连续部分是 $\mathcal{L}^1$ 本身，而若 $\mu$ 为集中在原点的 Dirac 测度，则绝对连续部分为零测度。
+\item 退化的情形：若 $\nu\ll\mu$，则 $\nu_{\mathrm{s}}=0$ 且 $\nu_{\mathrm{ac}}=\nu$；若 $\nu\perp\mu$，则 $\nu_{\mathrm{ac}}=0$ 且 $\nu_{\mathrm{s}}=\nu$。两种情形都与定义相容。
+\item $\nu_{\mathrm{ac}}$ 与 $\nu_{\mathrm{s}}$ 都是 Radon 测度，这一点由它们是 $\nu$ 在 Borel 集上的限制保证；定义中把它列为条件，是为了使两个分量与原测度处于同一测度类，从而能够进行微分与积分。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Lebesgue 分解定理]\label{theorem:ch01-1-31}
+设 $\mu$ 与 $\nu$ 为 $\mathbb{R}^n$ 上的 Radon 测度。则
+\begin{enumerate}[(i)]
+\item 存在 $\mathbb{R}^n$ 上的 Radon 测度 $\nu_{\mathrm{ac}}$ 与 $\nu_{\mathrm{s}}$，使得
+\begin{align*}
+\nu=\nu_{\mathrm{ac}}+\nu_{\mathrm{s}},
+\end{align*}
+其中
+\begin{align*}
+\nu_{\mathrm{ac}}\ll\mu,\qquad \nu_{\mathrm{s}}\perp\mu ;
+\end{align*}
+\item 进一步，
+\begin{align*}
+D_{\mu}\nu=D_{\mu}\nu_{\mathrm{ac}},\qquad D_{\mu}\nu_{\mathrm{s}}=0\qquad \mu\text{-a.e.},
+\end{align*}
+从而对每个 Borel 集 $A\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\nu(A)=\int_A D_{\mu}\nu\diff\mu+\nu_{\mathrm{s}}(A).
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）先设 $\mu(\mathbb{R}^n)<\infty$ 且 $\nu(\mathbb{R}^n)<\infty$，化归的理由与\cref{lemma:ch01-1-2}的证明相同。% XREF p=52 "As before, we may as well assume μ(R^n), ν(R^n) < ∞"
+令
+\begin{align*}
+\mathcal{E}:=\{A\subseteq\mathbb{R}^n\mid A\text{ 为 Borel 集},\ \mu(\mathbb{R}^n-A)=0\},
+\end{align*}
+并取 $B_k\in\mathcal{E}$，使得
+\begin{align*}
+\nu(B_k)\leqslant\inf_{A\in\mathcal{E}}\nu(A)+\frac{1}{k}\qquad(k=1,2,\cdots).
+\end{align*}
+令 $B:=\bigcap_{k=1}^{\infty}B_k$。由于
+\begin{align*}
+\mu(\mathbb{R}^n-B)\leqslant\sum_{k=1}^{\infty}\mu(\mathbb{R}^n-B_k)=0,
+\end{align*}
+有 $B\in\mathcal{E}$，从而
+\begin{align*}
+\nu(B)=\inf_{A\in\mathcal{E}}\nu(A).\qquad(\star)
+\end{align*}
+令
+\begin{align*}
+\nu_{\mathrm{ac}}:=\nu\llcorner B,\qquad \nu_{\mathrm{s}}:=\nu\llcorner(\mathbb{R}^n-B);
+\end{align*}
+由\cref{theorem:ch01-1-7}，二者均为 Radon 测度。% XREF p=52 "these are Radon measures according to Theorem 1.7"
+
+（3）现设 $A\subseteq B$，$A$ 为 Borel 集，$\mu(A)=0$，而 $\nu(A)>0$。则 $B-A\in\mathcal{E}$ 且 $\nu(B-A)<\nu(B)$，与 $(\star)$ 矛盾。因此 $\nu_{\mathrm{ac}}\ll\mu$。另一方面，$\mu(\mathbb{R}^n-B)=0$，故 $\nu_{\mathrm{s}}\perp\mu$。
+
+最后，固定 $\alpha>0$ 并令
+\begin{align*}
+C:=\{x\in B\mid D_{\mu}\nu_{\mathrm{s}}(x)\geqslant\alpha\}.
+\end{align*}
+由\cref{lemma:ch01-1-2}，% XREF p=53 "According to Lemma 1.2"
+\begin{align*}
+\alpha\mu(C)\leqslant\nu_{\mathrm{s}}(C)=0,
+\end{align*}
+故 $D_{\mu}\nu_{\mathrm{s}}=0$ 在 $\mu$-a.e. 意义下成立。由此得到
+\begin{align*}
+D_{\mu}\nu_{\mathrm{ac}}=D_{\mu}\nu\qquad\mu\text{-a.e.}
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-31; kind=proof; 补出 (ii) 中积分表示的推导，并把 $\nu_{\mathrm{ac}}\ll\mu$ 从 $B$ 的 Borel 子集推广到 $\mathbb{R}^n$ 的全部子集
+下面补出 (ii) 中积分表示的推导，并核验 $\nu_{\mathrm{ac}}\ll\mu$ 对一切子集成立。
+
+（a）积分表示。设 $A\subseteq\mathbb{R}^n$ 为 Borel 集。由 $\nu=\nu_{\mathrm{ac}}+\nu_{\mathrm{s}}$ 得
+\begin{align*}
+\nu(A)=\nu_{\mathrm{ac}}(A)+\nu_{\mathrm{s}}(A).
+\end{align*}
+由于 $\nu_{\mathrm{ac}}\ll\mu$ 而 $\nu_{\mathrm{ac}}$ 是 Radon 测度，由\cref{theorem:ch01-1-30}得% XREF internal
+\begin{align*}
+\nu_{\mathrm{ac}}(A)=\int_A D_{\mu}\nu_{\mathrm{ac}}\diff\mu .
+\end{align*}
+又 $D_{\mu}\nu_{\mathrm{ac}}=D_{\mu}\nu$ 在 $\mu$-a.e. 意义下成立，而在一个 $\mu$-零测集上不同的两个非负 $\mu$-可测函数有相同的积分，故
+\begin{align*}
+\nu(A)=\int_A D_{\mu}\nu\diff\mu+\nu_{\mathrm{s}}(A).
+\end{align*}
+
+（b）$\nu_{\mathrm{ac}}\ll\mu$ 对一切子集成立。设 $A\subseteq\mathbb{R}^n$ 满足 $\mu(A)=0$。则 $\nu_{\mathrm{ac}}(A)=\nu(A\cap B)$。由 $\mu$ 的 Radon 性与\cref{theorem:ch01-1-8}，存在 Borel 集 $B'\supseteq A\cap B$ 使 $\mu(B')=0$。于是 $B'\cap B$ 是 Borel 集，$B'\cap B\subseteq B$ 且 $\mu(B'\cap B)=0$，故由（3）中已证的情形得 $\nu(B'\cap B)=0$。从而 $\nu_{\mathrm{ac}}(A)\leqslant\nu(B'\cap B)=0$，即 $\nu_{\mathrm{ac}}(A)=0$。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-31; kind=motivation; 说明分解两部分的含义、集合 $B$ 的构造思路（在 $\mu$ 满测集中使 $\nu$ 取到下确界）与两个极端部分的互补性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-31-动机}
+Lebesgue 分解把测度 $\nu$ 关于 $\mu$ 分成两部分：一部分关于 $\mu$ 绝对连续，因而可写成密度的积分；另一部分集中在 $\mu$ 的零测集上，因而不可能由 $\mu$ 的积分表示。构造的关键是在两个相反的要求之间取折中：$B$ 要尽可能「大」（$\mu(\mathbb{R}^n-B)=0$），又要尽可能少承载 $\nu$ 的质量（使 $\nu(B)$ 达到下确界）。先取一列 $B_k$ 使 $\nu(B_k)$ 按 $1/k$ 逼近下确界，再取它们的交集，既保持 $\mu$ 满测，又使 $\nu$ 的值不增，从而在 $\mathcal{E}$ 中取到下确界。这样 $B$ 承载 $\nu$ 关于 $\mu$ 的绝对连续部分，$\mathbb{R}^n-B$ 承载其余部分；两个分量的互补性正来自 $B$ 与 $\mathbb{R}^n-B$ 的分割。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-31; kind=hypotheses; 逐条分析 Radon 与有限测度假设的作用、$\mathcal{E}$ 采用 Borel 集的理由、导数的可加性以及分解的唯一性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-31-条件}
+\begin{enumerate}[(i)]
+\item Radon 假设与有限测度化归缺一不可：做差 $\nu(B-A)<\nu(B)$ 需要 $\nu$ 在相关集合上取有限值；\cref{theorem:ch01-1-7}保证 $\nu\llcorner B$ 与 $\nu\llcorner(\mathbb{R}^n-B)$ 仍是 Radon 测度；而\cref{lemma:ch01-1-2}的使用需要导数关于 $\mu$ 与 $\nu$ 都有定义。% XREF internal
+\item $\mathcal{E}$ 中取 Borel 集而非 $\mu$-可测集：这样限制 $\nu\llcorner B$ 与 $\nu\llcorner(\mathbb{R}^n-B)$ 直接是 Radon 测度，且 $\nu_{\mathrm{s}}\perp\mu$ 定义中的承载集可取为 $\mathbb{R}^n-B$。
+\item 结论 (ii) 中的两个导数等式是上述论证的直接推论：$D_{\mu}\nu_{\mathrm{s}}=0$ 由 $\nu_{\mathrm{s}}$ 集中在 $\mu$ 零测集 $B$ 的补集上得到；$D_{\mu}\nu_{\mathrm{ac}}=D_{\mu}\nu$ 由导数的可加性得到，即 $D_{\mu}\nu=D_{\mu}\nu_{\mathrm{ac}}+D_{\mu}\nu_{\mathrm{s}}$ 在 $\mu$-a.e. 处成立（两边的极限按 $\nu$ 与 $\nu_{\mathrm{ac}}$、$\nu_{\mathrm{s}}$ 的分解逐个计算）。
+\item 分解的唯一性：由 (ii) 的积分表示，$\nu_{\mathrm{ac}}$ 等于测度 $A\mapsto\int_A D_{\mu}\nu\diff\mu$，故 $\nu_{\mathrm{ac}}$ 由 $\mu$ 与 $\nu$ 唯一确定；$\nu_{\mathrm{s}}=\nu-\nu_{\mathrm{ac}}$ 亦然。因此 $B$ 的选取只在 $\nu$ 与 $\mu$ 的零测集意义下影响分解。
+\end{enumerate}
+\end{remark}
+
+\end{document}

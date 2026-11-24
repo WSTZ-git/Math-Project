@@ -353,7 +353,7 @@ x\in\mathbb{R}^n:
 为紧集. 因此
 \begin{align}
 \phi\in C_c^\infty(G).
-\label{eq:variational-cutoff-support-9d4e}
+\label{eq:variational-cutoff-sptort-9d4e}
 \end{align}
 从而$\phi=0$ 于 $U\setminus G$, 从而
 \begin{align}
@@ -406,6 +406,67 @@ c|K|-\frac{c|K|}{2}
 \int_{U}(v-\widetilde{v})\phi\,\mathrm{d}x=0,
 \end{align*}
 因而由\hyperref[lemma:变分法基本原理]{变分法基本原理}知$v-\widetilde{v}=0$ 几乎处处成立。
+\end{proof}
+
+\begin{proposition}[连续弱导数就是经典导数]
+\label{proposition:ch05-连续弱导数}
+设 \(U\subseteq\mathbb R^n\) 是开集，\(v\in C(U)\)。若 \(v\) 关于 \(x_i\) 的弱导数 \(D_i v\) 存在，并且在 \(U\) 上连续，则 \(v\) 在经典意义下关于 \(x_i\) 可微，且
+\[
+\partial_i v(x)=D_i v(x),
+\qquad
+\forall x\in U.
+\]
+特别地，若对每个 \(i=1,\cdots,n\)，\(D_i v\) 都存在且连续，则
+\[
+v\in C^1(U).
+\]
+\end{proposition}
+\begin{proof}
+固定 \(x\in U\)。由于 \(U\) 是开集，存在 \(\delta>0\)，使得
+\[
+x+te_i\in U,
+\qquad
+|t|<\delta.
+\]
+对 \(0<|h|<\delta\)，由微积分基本定理，
+\[
+v(x+he_i)-v(x)
+=
+\int_0^h
+D_i v(x+te_i)\,\mathrm{d}t.
+\]
+于是
+\[
+\frac{v(x+he_i)-v(x)}{h}
+=
+\frac1h
+\int_0^h
+D_i v(x+te_i)\,\mathrm{d}t.
+\]
+由于 \(D_i v\) 在 \(U\) 上连续，故
+\[
+\frac1h
+\int_0^h
+D_i v(x+te_i)\,\mathrm{d}t
+\longrightarrow
+D_i v(x),
+\qquad
+h\to0.
+\]
+因此 \(\partial_i v(x)\) 存在，且
+\[
+\partial_i v(x)=D_i v(x).
+\]
+由 \(x\in U\) 的任意性，\(v\) 在 \(U\) 上关于 \(x_i\) 经典可微，且
+\[
+\partial_i v=D_i v.
+\]
+由于 \(D_i v\) 连续，\(\partial_i v\) 也连续。
+
+若对每个 \(i=1,\cdots,n\),\(D_i v\) 都存在且连续，则 \(v\) 的所有一阶经典偏导数都存在且连续，故
+\[
+v\in C^1(U).
+\]
 \end{proof}
 
 \begin{example}\label{example:ch05-弱导例1}
@@ -1702,26 +1763,89 @@ d(u,v)\triangleq
 
 \item\label{proposition:ch05-Winftyp-2} \(W^{\infty,p}(U)\) 上不存在一个完备的范数，因此它一般不是 Banach 空间。
 
-\item\label{proposition:ch05-Winftyp-3} 对每个 \(k\geqslant0\)，
+\item\label{proposition:ch05-Winftyp-3} 对任意整数 \(0\leqslant l\leqslant m\leqslant \infty\)，有连续嵌入
 \[
-W^{\infty,p}(U)\subseteq W^{k,p}(U).
+W^{m,p}(U)\hookrightarrow W^{l,p}(U).
 \]
-因此它是固定 \(p\) 的 Sobolev 链
+更精确地,有
 \[
-W^{0,p}(U)\supseteq W^{1,p}(U)\supseteq W^{2,p}(U)\supseteq\cdots
+\|u\|_{W^{l,p}(U)}
+\leqslant
+\|u\|_{W^{m,p}(U)},
+\qquad
+\forall u\in W^{m,p}(U).
 \]
-中最小的空间。
 
-若 \(U\) 有界且 \(q\geqslant p\)，则
+若\(U\subseteq\mathbb R^n\) 是有界开集，\(1\leqslant p\leqslant q\leqslant\infty\)。则当
+$1\leqslant k\leqslant \infty$时,都有连续嵌入
 \[
-W^{\infty,q}(U)\subseteq W^{\infty,p}(U).
+W^{k,q}(U)\hookrightarrow W^{k,p}(U).
 \]
-特别地，
+更精确地,存在常数 \(C=C(U,p,q,k)>0\)，使得
 \[
-W^{\infty,\infty}(U)\subseteq W^{\infty,p}(U),\qquad 1\leqslant p<\infty.
+\|u\|_{W^{k,p}(U)}
+\leqslant
+C\|u\|_{W^{k,q}(U)},
+\qquad
+\forall u\in W^{k,q}(U).
 \]
 \end{enumerate}
 \end{proposition}
+\begin{remark}
+度量 $d$ 的每一项都不是随意选的, 逐条说明其作用.
+\begin{enumerate}[(i)]
+\item 为什么用可数半范族. 按定义, $u_{m}\to u$ 于 $W^{\infty,p}(U)$ 是指对每个 $k\geqslant0$ 有 $u_{m}\to u$ 于 $W^{k,p}(U)$, 即由半范族
+\begin{align*}
+p_{k}(u)\triangleq\lVert u\rVert_{W^{k,p}(U)},\qquad k=0,1,2,\cdots
+\end{align*}
+同时控制. 半范只有可数多个, 故可以用一个度量把它们"打包"成一个收敛性.
+
+\item 为什么先把每个半范压成有界量. 若直接取
+\begin{align*}
+d_{1}(u,v)\triangleq\sum\limits_{k=0}^{\infty}2^{-k}p_{k}(u-v),
+\end{align*}
+则右端可能发散($p_{k}$ 关于 $k$ 一般无界), 于是 $d_{1}$ 不是对一切 $u,v$ 都有定义的实值函数. 函数
+\begin{align*}
+\varphi(t)\triangleq\frac{t}{1+t}=1-\frac{1}{1+t},\qquad t\geqslant0
+\end{align*}
+把 $[0,\infty)$ 单调地映到 $[0,1)$, 且 $\varphi(t)=0$ 当且仅当 $t=0$; 用 $\varphi\circ p_{k}$ 代替 $p_{k}$ 不改变"是否收敛到零", 却使每一项有界.
+
+\item 为什么 $\varphi$ 取这个形状. $\varphi$ 在 $[0,\infty)$ 上单调递增且次可加:
+\begin{align*}
+\varphi(s+t)\leqslant\varphi(s)+\varphi(t),\qquad s,t\geqslant0,
+\end{align*}
+直接通分即可验证. 次可加性保证 $\varphi\circ p_{k}$ 仍满足三角不等式, 从而各项之和也满足三角不等式; 若把 $\varphi$ 换成恒等映射 $t\mapsto t$, 发散的问题依旧存在.
+
+\item 为什么乘 $2^{-k}$. 因子 $2^{-k}$ 保证
+\begin{align*}
+0\leqslant 2^{-k}\varphi\bigl(p_{k}(u-v)\bigr)\leqslant 2^{-k},\qquad \sum\limits_{k=0}^{\infty}2^{-k}=2,
+\end{align*}
+故级数对一切 $u,v$ 绝对收敛, 且 $d(u,v)\leqslant2$; 又 $2^{-k}$ 对每个固定的 $k$ 是正常数, 只改变度量值, 不改变"哪些列收敛".
+
+\item 为什么它给出的正是原来的拓扑. 一方面由每一项非负得
+\begin{align*}
+2^{-k}\varphi\bigl(p_{k}(u_{m}-u)\bigr)\leqslant d(u_{m},u),
+\end{align*}
+故 $d(u_{m},u)\to0$ 蕴含 $p_{k}(u_{m}-u)\to0$ 对每个固定的 $k$ 成立; 另一方面若 $p_{k}(u_{m}-u)\to0$ 对每个 $k$ 成立, 则对 $\varepsilon>0$ 先取 $K$ 使 $\sum\limits_{k>K}2^{-k}<\frac{\varepsilon}{2}$, 再取 $m$ 充分大使前 $K$ 项之和小于 $\frac{\varepsilon}{2}$, 得 $d(u_{m},u)<\varepsilon$. 故两种收敛性等价.
+
+\item 为什么它是度量而不是范数. $\varphi(0)=0$ 给出正定性(这里用到 $p_{0}=\lVert\cdot\rVert_{L^{p}(U)}$ 是范数), 对称性显然, 三角不等式由 (iii) 与级数求和得到; 又 $d(u,v)=d(u-v,0)$, 故 $d$ 平移不变. 但 $\varphi$ 不是齐次的, $d(\lambda u,\lambda v)\neq|\lambda|d(u,v)$, 所以 $d$ 不是范数. 事实上 $W^{\infty,p}(U)$ 一般不能赋一个与半范族相容的范数, 只能有这种由可数半范族给出的度量, 这正是 Fréchet 空间与 Banach 空间的差别.
+
+\item 取法不唯一. 把 $\varphi$ 换成 $\min\{1,t\}$, 把 $2^{-k}$ 换成任何满足 $c_{k}>0$ 且 $\sum\limits_{k=0}^{\infty}c_{k}<\infty$ 的权重, 甚至改用
+\begin{align*}
+\sup\limits_{k\geqslant0}2^{-k}\min\bigl\{1,p_{k}(u-v)\bigr\},
+\end{align*}
+得到的度量都给出同一拓扑(彼此等价); 命题中取 $\frac{t}{1+t}$ 与 $2^{-k}$ 只是为了书写方便.
+
+但是注意，如果像用同样的方法构造范数是做不到的，这会与范数的齐次性矛盾！假设$\varphi$具有齐次性，且$0\leqslant \varphi\leqslant M$,则对任意固定的$x$,$\forall n\in \mathbb{N}$,有
+\begin{align*}
+0\leqslant n\varphi \left( x \right) =\varphi \left( nx \right) \leqslant M\Longrightarrow 0\leqslant \varphi \left( x \right) =\frac{\varphi \left( nx \right)}{n}\leqslant \frac{M}{n}.
+\end{align*}
+令$n\to \infty$得$\varphi(x) =0,$显然不行.
+\end{enumerate}
+\end{remark}
+\begin{remark}
+实际上,(3)中$\mathbf{Step}\bm{1}$--$\bm{2}$的证明和结论就是泛函分析中的Kolmogorov可赋范定理(Kolmogorov normability theorem)的一个应用,即Hausdoff局部凸拓扑向量空间可赋范等价于$0$有有界邻域，也等价于$0$有有界凸邻域.
+\end{remark}
 \begin{proof}
 
 (1)在 \(W^{\infty,p}(U)\) 上取
@@ -1825,8 +1949,7 @@ d(u_m,u)\to0.
 \]
 故 \(W^{\infty,p}(U)\) 完备，从而是 Fréchet 空间。
 
-(2)记$X\triangleq W^{\infty,p}(U)$.
-反设存在这样的范数 \(\|\cdot\|\)，使得
+(2)反设存在这样的范数 \(\|\cdot\|\)，使得
 \begin{align}
 \|u_m-u\|\to0
 \iff
@@ -1837,12 +1960,12 @@ d(u_m,u)\to0.
 
 我们断言：存在 \(k\geqslant0\) 和 \(\varepsilon>0\)，使得
 \begin{align}
-\|u\|_{W^{k,p}}<\varepsilon
-\Longrightarrow
-\|u\|<1.\label{nineiwjwikklaew1}
+\{u\in W^{\infty,p}(U):\|u\|_{W^{k,p}}<\varepsilon\}
+\subseteq
+\{u\in W^{\infty,p}(U):\|u\|<1\}.\label{nineiwjwikklaew1}
 \end{align}
 
-反设\eqref{nineiwjwikklaew1}式不成立。则对任意 \(k\geqslant0\) 和 \(\varepsilon>0\)，都存在 \(u\in X\)，使得
+反设\eqref{nineiwjwikklaew1}式不成立。则对任意 \(k\geqslant0\) 和 \(\varepsilon>0\)，都存在 \(u\in W^{\infty,p}(U)\)，使得
 \begin{align}
 \|u\|_{W^{k,p}}<\varepsilon,
 \qquad
@@ -1860,9 +1983,9 @@ W^{n,p}(U)\subseteq W^{k,p}(U),\qquad k=0,1,\cdots,n,
 \]
 取 \(\delta_n>0\) 足够小，使得
 \[
-C_{k,n}\delta_n<\frac1n,\qquad k=0,1,\dots,n.
+C_{k,n}\delta_n<\frac1n,\qquad k=0,1,\cdots,n.
 \]
-由\eqref{nineiwjwikklaew2}式，取 \(k=n\)、\(\varepsilon=\delta_n\)，存在 \(u_n\in X\)，使得
+由\eqref{nineiwjwikklaew2}式，取 \(k=n\)、\(\varepsilon=\delta_n\)，存在 \(u_n\in W^{\infty,p}(U)\)，使得
 \[
 \|u_n\|_{W^{n,p}}<\delta_n,
 \qquad
@@ -1881,7 +2004,7 @@ C_{k,n}\delta_n<\frac1n,\qquad k=0,1,\dots,n.
 \]
 因此
 \[
-u_n\to0\quad\text{于 }W^{k,p}(U),\qquad \forall k.
+u_n\to0\quad\text{于 }W^{k,p}(U),\qquad \forall k\in \mathbb{N}.
 \]
 由\eqref{eqNJNZNJASKDJIW}式，得到
 \[
@@ -1893,22 +2016,22 @@ u_n\to0\quad\text{于 }W^{k,p}(U),\qquad \forall k.
 
 由\eqref{nineiwjwikklaew1}式，存在 \(k\geqslant0\) 和 \(\varepsilon>0\)，使得
 \begin{align}
-E\triangleq\{u\in X:\|u\|_{W^{k,p}}<\varepsilon\}
+E\triangleq\{u\in W^{\infty,p}(U):\|u\|_{W^{k,p}}<\varepsilon\}
 \subseteq
-\{u\in X:\|u\|<1\}.
+\{u\in W^{\infty,p}(U):\|u\|<1\}.
 \label{nineiwjwikklaew3}
 \end{align}
 
 下面证明存在 \(M>0\)，使得
 \begin{align}
-\|u\|_{W^{k+1,p}}\leqslant M\|u\|,\qquad \forall u\in X.
+\|u\|_{W^{k+1,p}}\leqslant M\|u\|,\qquad \forall u\in W^{\infty,p}(U).
 \label{nineiwjwikklaew4}
 \end{align}
-若不然，则对每个 \(M>0\)，存在 \(u\in X\)，使得
+若不然，则对每个 \(M>0\)，存在 \(u\in W^{\infty,p}(U)\)，使得
 \begin{align*}
 \|u\|_{W^{k+1,p}}>M\|u\|.
 \end{align*}
-取 \(M=n\)，得到 \(v_n\in X\)，满足
+取 \(M=n\)，得到 \(v_n\in W^{\infty,p}(U)\)，满足
 \begin{align*}
 \|v_n\|_{W^{k+1,p}}>n\|v_n\|.
 \end{align*}
@@ -1957,154 +2080,413 @@ u_n\triangleq\frac{v_n}{c_n\|v_n\|}.
 
 取 \(x_0\in U\) 和 \(r>0\)，使得
 \[
-B(x_0,r)\subseteq U.
+\overline{B(x_0,r)}\subseteq U.
 \]
 取非零函数
 \[
-\varphi\in C_c^{\infty}(B(x_0,r)).
+\varphi\in C_c^\infty(B(x_0,r)),\qquad \varphi\not\equiv0.
 \]
 对 \(N=1,2,\cdots\)，定义
 \[
-u_N(x)\triangleq N^{-k-\frac12}\varphi(x)\sin(Nx_1).
+u_N(x)\triangleq N^{-k-\frac12}\varphi(x)\sin(Nx_1),\qquad x\in U.
 \]
-则 \(u_N\in C_c^{\infty}(U)\subseteq X\)。
+则 \(u_N\in C_c^\infty(U)\subseteq W^{\infty,p}(U)\)。
 
-对任意 \(|\beta|\leqslant k\)，由\hyperref[theorem:ch05-弱导数性质-4]{Leibniz公式}，得
+\noindent\textbf{(i) \(u_N\) 在 \(W^{k,p}(U)\) 中趋于 \(0\).}
+对任意多重指标 \(\gamma\)，\(|\gamma|\leqslant k\)，由\hyperref[theorem:ch05-弱导数性质-4]{Leibniz公式}，得
 \begin{align*}
-D^{\beta}u_N
-&=
-N^{-k-\frac12}
-\sum_{\alpha\leqslant\beta}
-\binom{\beta}{\alpha}
-D^{\beta-\alpha}\varphi\,
-D^{\alpha}\bigl(\sin(Nx_1)\bigr),
+D^\gamma u_N(x)
+&=N^{-k-\frac12}\sum_{\alpha\leqslant\gamma}
+\binom{\gamma}{\alpha}
+D^{\gamma-\alpha}\varphi(x)\,
+D^\alpha\bigl(\sin(Nx_1)\bigr).
 \end{align*}
-其中 \(\alpha\leqslant\beta\) 表示逐分量 \(\alpha_j\leqslant\beta_j\)。
-若 \(\alpha\) 在 \(x_2,\cdots,x_n\) 方向上有非零分量，则
-\begin{align*}
-D^{\alpha}\bigl(\sin(Nx_1)\bigr)=0.
-\end{align*}
-因此只需考虑
-\begin{align*}
-\alpha=(\alpha_1,0,\dots,0)
-\end{align*}
-的项。此时
-\begin{align*}
-D^{\alpha}\bigl(\sin(Nx_1)\bigr)
-&=
-N^{|\alpha|}
-\sin\left(Nx_1+\frac{\pi|\alpha|}{2}\right),
-\end{align*}
-故
-\begin{align*}
-\left|D^{\alpha}\bigl(\sin(Nx_1)\bigr)\right|
-\leqslant N^{|\alpha|}.
-\end{align*}
+若 \(\alpha_2+\cdots+\alpha_n>0\)，则
+\[
+D^\alpha\bigl(\sin(Nx_1)\bigr)=0.
+\]
+故只需考虑 \(\alpha=(\alpha_1,0,\cdots,0)\)。此时
+\[
+D^\alpha\bigl(\sin(Nx_1)\bigr)
+=N^{\alpha_1}\sin\left(Nx_1+\frac{\pi\alpha_1}{2}\right),
+\]
+从而
+\[
+\left|D^\alpha\bigl(\sin(Nx_1)\bigr)\right|
+\leqslant N^{\alpha_1}=N^{|\alpha|}.
+\]
 于是
 \begin{align*}
-|D^{\beta}u_N(x)|
-&\leqslant
-N^{-k-\frac12}
-\sum_{\substack{\alpha\leqslant\beta\\
+|D^\gamma u_N(x)|
+\leqslant N^{-k-\frac12}
+\sum_{\substack{\alpha\leqslant\gamma\\
 \alpha_2=\cdots=\alpha_n=0}}
-\binom{\beta}{\alpha}
-\left\|D^{\beta-\alpha}\varphi\right\|_{L^\infty(\mathbb{R}^n)}
-N^{|\alpha|}.
+\binom{\gamma}{\alpha}
+\|D^{\gamma-\alpha}\varphi\|_{L^\infty(U)}
+N^{|\alpha|}\leqslant C_\gamma N^{-k-\frac12}N^{|\gamma|}
+\leqslant C_\gamma N^{-\frac12},
 \end{align*}
-令
-\begin{align*}
-C_{\beta}
-\triangleq
-\sum_{\substack{\alpha\leqslant\beta\\
+其中
+\[
+C_\gamma\triangleq
+\sum_{\substack{\alpha\leqslant\gamma\\
 \alpha_2=\cdots=\alpha_n=0}}
-\binom{\beta}{\alpha}
-\left\|D^{\beta-\alpha}\varphi\right\|_{L^\infty(\mathbb{R}^n)}.
-\end{align*}
-则 \(C_{\beta}\) 只依赖于 \(\beta\) 和 \(\varphi\)，不依赖于 \(N\) 和 \(x\)。
-由于 \(|\alpha|\leqslant|\beta|\)，当 \(N\geqslant1\) 时，
-\begin{align*}
-N^{-k-\frac12}N^{|\alpha|}
-\leqslant
-N^{-k-\frac12}N^{|\beta|}.
-\end{align*}
-因此
-\begin{align*}
-|D^{\beta}u_N(x)|
-\leqslant
-C_{\beta}N^{-k-\frac12}N^{|\beta|}.
-\end{align*}
-又因为 \(|\beta|\leqslant k\)，所以
-$|\beta|-k-\frac12\leqslant-\frac12.$
-从而
-\begin{align*}
-|D^{\beta}u_N(x)|
-\leqslant
-C_{\beta}N^{-\frac12}.
-\end{align*}
-特别地，对每个固定的 \(k\)，存在只依赖于 \(k,\beta,\varphi\) 而不依赖于 \(N\) 的常数 \(C_{\beta}\)，使得
-\begin{align*}
-\sup_{x\in U}|D^{\beta}u_N(x)|
-\leqslant
-C_{\beta}N^{-\frac12},
-\qquad
-\forall\,|\beta|\leqslant k.
-\end{align*}
-因此
-\[
-\|u_N\|_{W^{k,p}}\leqslant C N^{-\frac12}\to0.
+\binom{\gamma}{\alpha}
+\|D^{\gamma-\alpha}\varphi\|_{L^\infty(U)}
 \]
-特别地，当 \(N\) 充分大时，
+只依赖于 \(\gamma\) 和 \(\varphi\)，不依赖于 \(N\)。因此
 \[
-\|u_N\|_{W^{k,p}}<\varepsilon,
+\left\| D^{\gamma}u_N \right\| _{L^p(U)}\leqslant \begin{cases}
+\left( \int_{\mathrm{spt}\varphi}{\bigl( C_{\gamma}N^{-\frac{1}{2}} \bigr) ^p\,dx} \right) ^{\frac{1}{p}}=C_{\gamma}|\mathrm{spt}\varphi |^{\frac{1}{p}}N^{-\frac{1}{2}}\leqslant C_{\gamma ,p}N^{-\frac{1}{2}},&1\leqslant p<\infty ,\\
+C_{\gamma}N^{-\frac{1}{2}}= C_{\gamma ,p}N^{-\frac{1}{2}},&p=\infty .\\
+\end{cases}
 \]
-故 \(u_N\in E\)。
+其中
+\[
+C_{\gamma,p}=
+\begin{cases}
+C_\gamma|\operatorname{spt}\varphi|^{\frac{1}{p}},&1\leqslant p<\infty,\\[2mm]
+C_\gamma,&p=\infty.
+\end{cases}
+\]
+从而存在只依赖于 \(k,p,\varphi\) 而不依赖于 \(N\) 的常数 \(C>0\)，使得
+\[
+\|u_N\|_{W^{k,p}(U)}
+\leqslant C N^{-\frac12}\longrightarrow0
+\qquad(N\to\infty).
+\]
+所以当 \(N\) 充分大时，
+\[
+\|u_N\|_{W^{k,p}(U)}<\varepsilon,
+\]
+即 \(u_N\in E\)。
 
-另一方面，取
+\noindent\textbf{(ii) \(\|u_N\|_{W^{k+1,p}(U)}\to\infty\).}
+取
 \[
 \beta=(k+1,0,\cdots,0).
 \]
-则 \(D^{\beta}u_N\) 中含有主项
+则 \(D^\beta=\partial_1^{k+1}\)。由\hyperref[theorem:ch05-弱导数性质-4]{Leibniz公式}，得
+\begin{align*}
+D^\beta u_N(x)
+=N^{-k-\frac12}\partial_1^{k+1}
+\bigl(\varphi(x)\sin(Nx_1)\bigr)=N^{-k-\frac12}\sum_{j=0}^{k+1}
+\binom{k+1}{j}
+\partial_1^{k+1-j}\varphi(x)\,
+\partial_1^j\bigl(\sin(Nx_1)\bigr).
+\end{align*}
+而
 \[
-N^{\frac12}D^{\beta}\varphi(x)\sin(Nx_1)\,\text{或}\,N^{\frac12}D^{\beta}\varphi(x)\cos(Nx_1),
-\]
-其余项至多 \(O(N^{-\frac12})\)。因此存在 \(c>0\)，使得对充分大的 \(N\)（必要时取子列），
-\[
-\|D^{\beta}u_N\|_{L^p}\geqslant cN^{\frac12}.
-\]
-故
-\[
-\|u_N\|_{W^{k+1,p}}\geqslant cN^{\frac12}\to\infty.
-\]
-这与 $\mathbf{Step2}$中的结论:\(E\) 在 \(W^{k+1,p}\) 中有界矛盾！
-因此不存在这样的范数 \(\|\cdot\|\)。
-
-(3)由定义，对每个 \(k\geqslant0\)，
-\[
-W^{\infty,p}(U)=\bigcap_{j=0}^{\infty}W^{j,p}(U)
-\subseteq W^{k,p}(U).
-\]
-因此它是固定 \(p\) 的 Sobolev 链中最小的空间。
-
-若 \(U\) 有界且 \(q\geqslant p\)，则由\cref{Real Analysis-proposition:Lp空间包含关系}知
-\[
-L^{q}(U)\subseteq L^{p}(U).
-\]
-对 \(u\in W^{\infty,q}(U)\) 和任意多重指标 \(\alpha\)，
-\[
-D^{\alpha}u\in L^{q}(U)\subseteq L^{p}(U),
+\partial_1^j\bigl(\sin(Nx_1)\bigr)
+=N^j\sin\left(Nx_1+\frac{j\pi}{2}\right),
 \]
 故
+\begin{align*}
+D^\beta u_N(x)
+&=\sum_{j=0}^{k+1}
+\binom{k+1}{j}
+N^{j-k-\frac12}
+\partial_1^{k+1-j}\varphi(x)\,
+\sin\left(Nx_1+\frac{j\pi}{2}\right).
+\end{align*}
+将 \(j=k+1\) 的项单独写出：
+\begin{align*}
+D^\beta u_N(x)
+=
+N^{\frac12}\varphi(x)
+\sin\left(Nx_1+\frac{(k+1)\pi}{2}\right)+
+\sum_{j=0}^{k}
+\binom{k+1}{j}
+N^{j-k-\frac12}
+\partial_1^{k+1-j}\varphi(x)\,
+\sin\left(Nx_1+\frac{j\pi}{2}\right).
+\end{align*}
+当 \(0\leqslant j\leqslant k\) 时，有$j-k-\frac12\leqslant-\frac12,$
+故对 \(N\geqslant1\)，有
+$N^{j-k-\frac12}\leqslant N^{-\frac12}.$
+于是
+\begin{align*}
+\left|
+\sum_{j=0}^{k}
+\binom{k+1}{j}
+N^{j-k-\frac12}
+\partial_1^{k+1-j}\varphi(x)\,
+\sin\left(Nx_1+\frac{j\pi}{2}\right)
+\right|\leqslant
+N^{-\frac12}
+\sum_{j=0}^{k}
+\binom{k+1}{j}
+\left|\partial_1^{k+1-j}\varphi(x)\right|
+\leqslant
+C_\varphi N^{-\frac12},
+\end{align*}
+其中
 \[
-u\in W^{\infty,p}(U).
+C_\varphi
+\triangleq
+\sum_{j=0}^{k}
+\binom{k+1}{j}
+\left\|\partial_1^{k+1-j}\varphi\right\|_{L^\infty(U)}.
+\]
+因此存在只依赖于 \(k,p,\varphi\) 而不依赖于 \(N\) 的常数 \(C_{\varphi,p}>0\)，使得
+\begin{align*}
+\left\|
+\sum_{j=0}^{k}
+\binom{k+1}{j}
+N^{j-k-\frac12}
+\partial_1^{k+1-j}\varphi(\cdot)\,
+\sin\left(N\cdot+\frac{j\pi}{2}\right)
+\right\|_{L^p(U)}
+\leqslant
+C_{\varphi,p}N^{-\frac12}.
+\end{align*}
+由三角不等式，得
+\begin{align}
+\left\|D^\beta u_N\right\|_{L^p(U)}
+&\geqslant
+N^{\frac12}
+\left\|
+\varphi(\cdot)
+\sin\left(N\cdot+\frac{(k+1)\pi}{2}\right)
+\right\|_{L^p(U)}
+-
+C_{\varphi,p}N^{-\frac12}.
+\label{eq:Dbeta-lower}
+\end{align}
+
+对 \(1\leqslant p<\infty\)，由 \hyperref[Basis of Analytics-theorem:Riemann引理]{Riemann-Lebesgue引理}，当$N\to \infty$时,有
+\begin{align*}
+\left\|
+\varphi(\cdot)
+\sin\left(N\cdot+\frac{(k+1)\pi}{2}\right)
+\right\|_{L^p(U)}^p=
+\int_U |\varphi(x)|^p
+\left|\sin\left(Nx_1+\frac{(k+1)\pi}{2}\right)\right|^p\,\mathrm{d}x\longrightarrow
+\left(
+\frac1{2\pi}\int_0^{2\pi}|\sin t|^p\,dt
+\right)
+\|\varphi\|_{L^p(U)}^p>0.
+\end{align*}
+因此存在 \(c_0>0\) 和 \(N_1\)，使得当 \(N\geqslant N_1\)时，有
+\[
+\left\|
+\varphi(\cdot)
+\sin\left(N\cdot+\frac{(k+1)\pi}{2}\right)
+\right\|_{L^p(U)}
+\geqslant c_0.
+\]
+
+当 \(p=\infty\) 时，取 \(x^0\in U\) 使 \(\varphi(x^0)\neq0\)。由连续性，存在 \(\rho>0\) 和 \(\delta>0\)，使得
+\[
+B(x^0,\rho)\subset U,
+\qquad
+|\varphi(x)|\geqslant\delta
+\quad(x\in B(x^0,\rho)).
+\]
+球 \(B(x^0,\rho)\) 在 \(x_1\) 方向的投影包含一个长度 \(2\rho\) 的区间 \(I\)。当$N\geqslant\frac{\pi}{\rho}$时，$|NI|\geqslant 2\pi$,则此时\(NI\) 包含一个完整周期，故存在 \(x_1\in I\) 使
+\[
+\left|\sin\left(Nx_1+\frac{(k+1)\pi}{2}\right)\right|=1.
+\]
+取 \(x'\in\mathbb R^{n-1}\) 使 \(x=(x_1,x')\in B(x^0,\rho)\)，则
+\[
+\left|
+\varphi(x)\sin\left(Nx_1+\frac{(k+1)\pi}{2}\right)
+\right|
+\geqslant\delta.
 \]
 因此
 \[
-W^{\infty,q}(U)\subseteq W^{\infty,p}(U).
+\left\|
+\varphi(\cdot)
+\sin\left(N\cdot+\frac{(k+1)\pi}{2}\right)
+\right\|_{L^\infty(U)}
+\geqslant\delta.
 \]
-特别地，取 \(q=\infty\)，得到
+于是无论 \(1\leqslant p<\infty\) 还是 \(p=\infty\)，都存在 \(c_0>0\) 和 \(N_1\)，使得当 \(N\geqslant N_1\) 时，有
 \[
-W^{\infty,\infty}(U)\subseteq W^{\infty,p}(U),
-\qquad 1\leqslant p<\infty.
+\left\|
+\varphi(\cdot)
+\sin\left(N\cdot+\frac{(k+1)\pi}{2}\right)
+\right\|_{L^p(U)}
+\geqslant c_0.
+\]
+由\eqref{eq:Dbeta-lower}式，得
+\[
+\|D^\beta u_N\|_{L^p(U)}
+\geqslant
+c_0N^{\frac12}
+-
+C_{\varphi,p}N^{-\frac12}.
+\]
+取 \(N\) 充分大，使得
+$C_{\varphi,p}N^{-\frac12}
+\leqslant
+\frac12c_0N^{\frac12},$
+则
+\[
+\|D^\beta u_N\|_{L^p(U)}
+\geqslant
+\frac12c_0N^{\frac12}.
+\]
+令$c\triangleq\frac12c_0>0,$
+则
+\[
+\|u_N\|_{W^{k+1,p}(U)}
+\geqslant
+\|D^\beta u_N\|_{L^p(U)}
+\geqslant
+cN^{\frac12}\longrightarrow\infty,\quad N\to \infty.
+\]
+但由 (i)，当 \(N\) 充分大时 \(u_N\in E\)。而 \(\mathbf{Step}\mathbf{2}\) 已证 \(E\) 在 \(W^{k+1,p}(U)\) 中有界，即存在 \(M>0\)，使得
+\[
+\|u\|_{W^{k+1,p}(U)}\leqslant M,
+\qquad
+\forall u\in E.
+\]
+取 \(N\) 充分大，使得同时有 \(u_N\in E\) 和
+\[
+cN^{\frac12}>M,
+\]
+则
+\[
+\|u_N\|_{W^{k+1,p}(U)}
+\geqslant
+cN^{\frac12}>M,
+\]
+这与 \(\mathbf{Step}\mathbf{2}\) 中 \(E\) 在 \(W^{k+1,p}(U)\) 中有界矛盾!
+故不存在完备的范数 \(\|\cdot\|\)。
+
+(3){\heiti (i)证明 \(W^{m,p}(U)\hookrightarrow W^{l,p}(U)\).}
+先设 \(m<\infty\)。若 \(u\in W^{m,p}(U)\)，则对任意满足 \(|\alpha|\leqslant m\) 的多重指标 \(\alpha\)，有
+\[
+D^\alpha u\in L^p(U).
+\]
+因为 \(l\leqslant m\)，所以当 \(|\alpha|\leqslant l\) 时也有 \(|\alpha|\leqslant m\)，故
+\[
+D^\alpha u\in L^p(U).
+\]
+于是
+\[
+u\in W^{l,p}(U),
+\]
+即
+\[
+W^{m,p}(U)\subseteq W^{l,p}(U).
+\]
+并且由 Sobolev 范数的定义直接得到
+\[
+\|u\|_{W^{l,p}(U)}
+\leqslant
+\|u\|_{W^{m,p}(U)}.
+\]
+因此有连续嵌入
+\[
+W^{m,p}(U)\hookrightarrow W^{l,p}(U).
+\]
+
+当 \(m=\infty\) 时，连续嵌入
+\[
+W^{\infty,p}(U)\hookrightarrow W^{l,p}(U)
+\]
+按定义为：若
+\[
+u_n\to u\quad\text{于 }W^{\infty,p}(U),
+\]
+则
+\[
+u_n\to u\quad\text{于 }W^{l,p}(U).
+\]
+而由 \(W^{\infty,p}(U)\) 中收敛的定义 \eqref{eqHJNZMZNZMZZZ}，对每个 \(l\geqslant0\) 都有
+\[
+\|u_n-u\|_{W^{l,p}(U)}\to0.
+\]
+故连续嵌入成立。
+
+{\heiti (ii)证明 \(W^{k,q}(U)\hookrightarrow W^{k,p}(U)\).}
+设 \(U\) 有界，\(1\leqslant p\leqslant q\leqslant\infty\)。
+先设 \(k<\infty\)。因为 \(U\) 有界，所以
+\[
+|U|<\infty.
+\]
+由\hyperref[Real Analysis-theorem:实变函数--Hölder不等式]{Hölder不等式}，对任意 \(f\in L^q(U)\)，有
+\[
+\|f\|_{L^p(U)}
+\leqslant
+|U|^{\frac1p-\frac1q}
+\|f\|_{L^q(U)},
+\]
+因此存在常数 \(C_0=C_0(U,p,q)>0\)，使得
+\[
+\|f\|_{L^p(U)}
+\leqslant
+C_0\|f\|_{L^q(U)},
+\qquad
+\forall f\in L^q(U).
+\]
+特别地，
+\[
+L^q(U)\subseteq L^p(U).
+\]
+
+若 \(u\in W^{k,q}(U)\)，则对每个 \(|\alpha|\leqslant k\)，
+\[
+D^\alpha u\in L^q(U)\subseteq L^p(U).
+\]
+因此$u\in W^{k,p}(U),$
+即
+\[
+W^{k,q}(U)\subseteq W^{k,p}(U).
+\]
+
+并且对每个 \(|\alpha|\leqslant k\)，
+\[
+\|D^\alpha u\|_{L^p(U)}
+\leqslant
+C_0\|D^\alpha u\|_{L^q(U)}.
+\]
+由于满足 \(|\alpha|\leqslant k\) 的多重指标只有有限个，对这些项求和，得到
+\begin{align}
+\|u\|_{W^{k,p}(U)}
+\leqslant
+C(U,p,q,k)
+\|u\|_{W^{k,q}(U)}.\label{HJNVJAJJAAJA121}
+\end{align}
+因此包含映射连续，即有连续嵌入
+\[
+W^{k,q}(U)\hookrightarrow W^{k,p}(U).
+\]
+
+最后设 \(k=\infty\)。连续嵌入
+\[
+W^{\infty,q}(U)\hookrightarrow W^{\infty,p}(U)
+\]
+按定义为：若
+\[
+u_n\to u\quad\text{于 }W^{\infty,q}(U),
+\]
+则
+\[
+u_n\to u\quad\text{于 }W^{\infty,p}(U).
+\]
+由 \(W^{\infty,q}(U)\) 中收敛的定义，对每个有限的 \(j\geqslant0\)，
+\[
+\|u_n-u\|_{W^{j,q}(U)}\to0.
+\]
+由\eqref{HJNVJAJJAAJA121}式得
+\[
+\|u_n-u\|_{W^{j,p}(U)}
+\leqslant
+C(U,p,q,j)
+\|u_n-u\|_{W^{j,q}(U)}
+\to0.
+\]
+由于这对每个有限的 \(j\) 都成立，故由 \(W^{\infty,p}(U)\) 中收敛的定义，
+\[
+u_n\to u\quad\text{于 }W^{\infty,p}(U).
+\]
+因此连续嵌入成立：
+\[
+W^{\infty,q}(U)\hookrightarrow W^{\infty,p}(U).
 \]
 \end{proof}
 
@@ -2126,7 +2508,7 @@ W^{\infty,p}_0(U)=\overline{C_c^\infty(U)},
 C_c^\infty(U)\subseteq W^{\infty,p}_0(U).
 \end{align*}
 
-其次证明 $W^{\infty,p}_0(U)$ 在 $W^{\infty,p}(U)$ 中闭。设 $u_j\in W^{\infty,p}_0(U)$，$u\in W^{\infty,p}(U)$，且 $u_j\to u$ 于 $W^{\infty,p}(U)$。由\eqref{eqHJNZMZNZMZZZ}式，对每个 $k\geqslant0$，$u_j\to u$ 于 $W^{k,p}(U)$。因为 $W^{k,p}_0(U)$ 在 $W^{k,p}(U)$ 中闭，故 $u\in W^{k,p}_0(U)$。由 $k$ 的任意性，$u\in W^{\infty,p}_0(U)$。因此 $W^{\infty,p}_0(U)$ 是 $W^{\infty,p}(U)$ 中的闭集，从而
+其次证明 $W^{\infty,p}_0(U)$ 在 $W^{\infty,p}(U)$ 中闭。设 $u_j\in W^{\infty,p}_0(U)$，$u\in W^{\infty,p}(U)$，且 $u_j\to u$ 于 $W^{\infty,p}(U)$。于是对每个 $k\geqslant0$，$u_j\to u$ 于 $W^{k,p}(U)$。因为 $W^{k,p}_0(U)$ 在 $W^{k,p}(U)$ 中闭，故 $u\in W^{k,p}_0(U)$。由 $k$ 的任意性，$u\in W^{\infty,p}_0(U)$。因此 $W^{\infty,p}_0(U)$ 是 $W^{\infty,p}(U)$ 中的闭集，从而
 \begin{align*}
 \overline{C_c^\infty(U)}\subseteq W^{\infty,p}_0(U).
 \end{align*}
@@ -2141,7 +2523,7 @@ C_c^\infty(U)\subseteq W^{\infty,p}_0(U).
 \leqslant\|u_m-u\|_{W^{m,p}(U)}
 <\frac1m\longrightarrow0.
 \end{align*}
-因此 $u_m\to u$ 于 $W^{k,p}(U)$ 对一切 $k\geqslant0$ 成立；由\eqref{eqHJNZMZNZMZZZ}式，$u_m\to u$ 于 $W^{\infty,p}(U)$。所以 $u$ 属于 $C_c^\infty(U)$ 在 $W^{\infty,p}(U)$ 中的闭包。故
+因此 $u_m\to u$ 于 $W^{k,p}(U)$ 对一切 $k\geqslant0$ 成立.因此$u_m\to u$ 于 $W^{\infty,p}(U)$。所以 $u$ 属于 $C_c^\infty(U)$ 在 $W^{\infty,p}(U)$ 中的闭包。故
 \begin{align*}
 W^{\infty,p}_0(U)\subseteq\overline{C_c^\infty(U)}.
 \end{align*}

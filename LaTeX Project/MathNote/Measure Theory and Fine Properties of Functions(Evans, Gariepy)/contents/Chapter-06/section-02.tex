@@ -1,0 +1,161 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{$W^{1,p}$（$p>n$）的几乎处处可微性}\label{section:ch06-02}
+
+回顾\cref{section:ch03-01}中的定义。% XREF p=280 "Recall from Section 3.1 the"
+
+\begin{definition}[可微性]\label{definition:ch06-6-2}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为映射，$x\in\mathbb{R}^n$；记 $\lvert\cdot\rvert$ 为相应的 Euclid 范数，即分子中的范数取在 $\mathbb{R}^m$ 中、分母中的范数取在 $\mathbb{R}^n$ 中。若存在线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$，使得
+\begin{align*}
+\lim_{y\to x}\frac{\lvert f(y)-f(x)-L(x-y)\rvert}{\lvert x-y\rvert}=0,
+\end{align*}
+则称 $f$ 在 $x$ 处\textbf{可微}；满足该条件的线性映射 $L$ 称为 $f$ 在 $x$ 处的\textbf{微分}。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch06-6-2; kind=motivation; 说明可微性作为一阶线性逼近的含义、它与近似可微性的强弱关系以及本节在 $p>n$ 时的目标
+\begin{remark}\phantomsection\label{remark:ch06-def-6-2-动机}
+可微性要求用一个线性映射把 $f$ 在 $x$ 附近的增量逼近到一阶精度：误差 $\lvert f(y)-f(x)-L(x-y)\rvert$ 相对 $\lvert x-y\rvert$ 是更高阶的无穷小。本节证明：当 $p>n$ 时，$W^{1,p}_{\loc}(\mathbb{R}^n)$ 中的实值函数在经典意义下 $\mathcal{L}^{n}$-a.e. 可微，且该线性映射由弱导数给出。$p>n$ 这一限制来自 Morrey 不等式：它使 $W^{1,p}_{\loc}$ 函数在 $\mathcal{L}^{n}$-a.e. 处等于一个 Hölder 连续函数，从而点值有意义（见\cref{theorem:ch04-4-10}）；$p\leqslant n$ 时可用的是\cref{section:ch06-01}中的 $L^{p^{*}}$ 一阶逼近与近似可微性。$p=\infty$ 的情形即\cref{theorem:ch03-3-2}的 Rademacher 定理，故本节结论是 Rademacher 定理在 $W^{1,p}$（$p>n$）框架下的推广。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch06-6-2; kind=hypotheses; 逐条分析维数与值域、极限的取法与范数约定、线性映射的写法差异以及唯一性的地位
+\begin{remark}\phantomsection\label{remark:ch06-def-6-2-条件}
+\begin{enumerate}[(i)]
+\item 假设 $n,m\geqslant1$ 为正整数，$f$ 定义在整个 $\mathbb{R}^n$ 上，$x\in\mathbb{R}^n$ 是定义域的内点，故 $x$ 的去心邻域中的点都落在定义域内。若 $f$ 只定义在子集 $A\subseteq\mathbb{R}^n$ 上，则极限须沿 $y\in A$ 取，且 $x$ 须为 $A$ 的聚点。
+\item 商中分母为 $\lvert x-y\rvert$，故极限沿 $y\to x$、$y\neq x$ 取；$y=x$ 时分子与分母同时为零，商无定义，而极限只涉及去心邻域。分子中的范数取在 $\mathbb{R}^m$ 中，分母中的范数取在 $\mathbb{R}^n$ 中，二者都是相应的 Euclid 范数。
+\item $L$ 是线性映射 $\mathbb{R}^n\to\mathbb{R}^m$，不是矩阵；取定 $\mathbb{R}^n$ 与 $\mathbb{R}^m$ 的标准基之后，$L$ 才对应一个 $m$ 行 $n$ 列的矩阵。$\mathbb{R}^n$ 上的线性映射自动连续，且 $\lvert L(x-y)\rvert\leqslant\lVert L\rVert\lvert x-y\rvert$，故可微点处 $f$ 连续。
+\item 本定义中商写作 $L(x-y)$，而\cref{definition:ch03-3-2}中写作 $L(y-x)$。两种写法给出同一个概念：以 $-w$ 代替 $w:=y-x$ 只改变逼近映射的符号，且极限沿 $y\to x$ 双边取，故满足其中一种写法的 $L$ 也满足另一种，并且两种写法对应同一个 $L$。% XREF internal
+\item 条件要求 $L$ 存在，而唯一性不是附加假设：它由该条件推出，证明紧随导数记号之后，因此把 $L$ 记为 $Df(x)$ 不产生歧义。
+\end{enumerate}
+\end{remark}
+
+\begin{definition*}[导数记号]\phantomsection\label{definition:ch06-def-6-2-导数}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为映射，$x\in\mathbb{R}^n$。按\cref{definition:ch06-6-2}，若 $f$ 在 $x$ 处可微，则满足该定义的线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$ 唯一；把该线性映射记为 $Df(x)$，$Df(x)$ 称为 $f$ 在 $x$ 处的\textbf{导数}。% XREF internal
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch06-def-6-2-导数; kind=proof; 补出唯一性断言的证明
+\begin{proof}
+设线性映射 $L_1,L_2:\mathbb{R}^n\to\mathbb{R}^m$ 都满足\cref{definition:ch06-6-2}中的条件。固定 $w\in\mathbb{R}^n\setminus\{0\}$，对 $t>0$ 令 $y:=x+tw$，则 $x-y=-tw$ 且 $\lvert x-y\rvert=t\lvert w\rvert$，并且 $y\to x$ 当 $t\to0^{+}$。由 $L_1-L_2$ 的线性性，% XREF internal
+\begin{align*}
+\frac{\lvert (L_1-L_2)w\rvert}{\lvert w\rvert}
+&=\frac{\lvert L_1(x-y)-L_2(x-y)\rvert}{\lvert x-y\rvert}\\
+&\leqslant\frac{\lvert f(y)-f(x)-L_1(x-y)\rvert}{\lvert x-y\rvert}+\frac{\lvert f(y)-f(x)-L_2(x-y)\rvert}{\lvert x-y\rvert}\\
+&\longrightarrow0\qquad(t\to0^{+}),
+\end{align*}
+其中不等号来自三角不等式与恒等式 $L_1(x-y)-L_2(x-y)=\bigl(L_1(x-y)-(f(y)-f(x))\bigr)+\bigl((f(y)-f(x))-L_2(x-y)\bigr)$，极限则由 $L_1$ 与 $L_2$ 都满足可微性条件得到。左端与 $t$ 无关，故 $(L_1-L_2)w=0$；由 $w\in\mathbb{R}^n\setminus\{0\}$ 的任意性得 $L_1=L_2$。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=definition:ch06-def-6-2-导数; kind=motivation; 说明把线性映射记为 Df(x) 的作用以及逐点导数与弱导数在记号上的关系
+\begin{remark}\phantomsection\label{remark:ch06-def-6-2-导数-动机}
+唯一性把「存在某个线性映射」升级为「存在唯一的线性映射 $Df(x)$」，从而使 $Df(x)$ 成为与点 $x$ 有关的对象，可以逐点比较、作估计并对其积分。\cref{theorem:ch06-6-5}的结论正是「经典导数存在且与弱导数 $\mathcal{L}^{n}$-a.e. 相等」，若没有 $Df(x)$ 这一记号，该结论无法表述；面积公式与 Aleksandrov 定理的陈述也同样依赖它。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch06-def-6-2-导数; kind=hypotheses; 说明该记号以可微性为前提、$Df(x)$ 是线性映射而非数值，并辨析它与弱导数记号 $Df$ 的同形异义
+\begin{remark}\phantomsection\label{remark:ch06-def-6-2-导数-条件}
+\begin{enumerate}[(i)]
+\item 该记号以 $f$ 在 $x$ 处可微为前提；$f$ 在 $x$ 处不可微时 $Df(x)$ 没有定义，不能任意取值。唯一性由前面的证明给出，故 $Df(x)$ 与满足条件的线性映射的选取无关。
+\item $Df(x):\mathbb{R}^n\to\mathbb{R}^m$ 是线性映射，其矩阵表示（取标准基）为 $m$ 行 $n$ 列的 Jacobi 矩阵 $\bigl(\partial f^{i}/\partial x_{j}(x)\bigr)_{1\leqslant i\leqslant m,\,1\leqslant j\leqslant n}$；当 $m=1$ 时 $Df(x)$ 是 $\mathbb{R}^n$ 上的线性泛函，由梯度通过内积表示。
+\item 记号 $Df(x)$ 与弱导数 $Df$ 同形而含义不同：$Df(x)$ 是逐点的线性映射，$Df\in L^{p}_{\loc}(\mathbb{R}^n;\mathbb{R}^n)$ 是 $f$ 的弱梯度，只在 $\mathcal{L}^{n}$-a.e. 的意义下确定。\cref{theorem:ch06-6-5}的内容正是：对 $\mathcal{L}^{n}$-a.e. 的点 $x$，线性映射 $Df(x)$ 存在，且它在 $\mathbb{R}^n$ 的每个方向上的取值与弱梯度在该点的值通过内积一致。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[几乎处处可微性]\label{theorem:ch06-6-5}
+设 $n$ 为正整数，$p\in(n,\infty]$，$f\in W^{1,p}_{\loc}(\mathbb{R}^n)$ 为实值函数，$Df=(D_{1}f,\cdots,D_{n}f)\in L^{p}_{\loc}(\mathbb{R}^n;\mathbb{R}^n)$ 为 $f$ 的弱导数（弱梯度）。则 $f$ 在 $\mathcal{L}^{n}$-a.e. 的每一点 $x\in\mathbb{R}^n$ 处可微，且其导数 $L_{x}:\mathbb{R}^n\to\mathbb{R}$ 在 $\mathcal{L}^{n}$-a.e. 的意义下由弱导数给出，即 $L_{x}(w)=Df(x)\cdot w$ 对一切 $w\in\mathbb{R}^n$ 成立。
+\end{theorem}
+
+\begin{proof}
+由 $W^{1,\infty}_{\loc}(\mathbb{R}^n)\subseteq W^{1,p}_{\loc}(\mathbb{R}^n)$，只需考虑 $n<p<\infty$ 的情形。对 $\mathcal{L}^{n}$-a.e. 的点 $x\in\mathbb{R}^n$ 有
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert Df(z)-Df(x)\rvert^{p}\diff z=0.\qquad(\star)
+\end{align*}
+取满足 $(\star)$ 的点 $x$，并令
+\begin{align*}
+g(y):=f(y)-f(x)-Df(x)\cdot(y-x)\qquad\bigl(y\in B(x,r)\bigr).
+\end{align*}
+利用\cref{section:ch04-05}中的 Morrey 估计，得% XREF p=281 "Employing Morrey's estimate from Section 4.5"
+\begin{align*}
+\lvert g(y)-g(x)\rvert\leqslant Cr\Bigl(\fint_{B(x,r)}\lvert Dg\rvert^{p}\diff z\Bigr)^{\frac{1}{p}}
+\end{align*}
+其中 $r:=\lvert x-y\rvert$。由于 $g(x)=0$ 且 $Dg=Df-Df(x)$，上式即
+\begin{align*}
+\frac{\lvert f(y)-f(x)-Df(x)\cdot(y-x)\rvert}{\lvert y-x\rvert}
+&\leqslant C\Bigl(\fint_{B(x,r)}\lvert Df(z)-Df(x)\rvert^{p}\diff z\Bigr)^{\frac{1}{p}}\\
+&=o(1)\qquad(y\to x),
+\end{align*}
+依据 $(\star)$。
+
+% SUPPLEMENT: parent=theorem:ch06-6-5; kind=proof; 补出 (⋆) 的 Lebesgue 点来源，以及 Morrey 估计的适用性核查与由几乎处处的点对过渡到逐点估计
+下面对上述论证中的两处依据补出细节。
+
+（1）$(\star)$ 的来源。此时 $p<\infty$，$Df\in L^{p}_{\loc}(\mathbb{R}^n;\mathbb{R}^n)$ 的分量记为 $D_{1}f,\cdots,D_{n}f$，每个分量都是实值的 $L^{p}_{\loc}$ 函数。在\cref{theorem:ch01-1-33}中取 $\mu=\mathcal{L}^{n}$，得对每个 $i=1,\cdots,n$，% XREF internal
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert D_{i}f(z)-D_{i}f(x)\rvert^{p}\diff z=0
+\end{align*}
+对 $\mathcal{L}^{n}$-a.e. 的点 $x$ 成立。这 $n$ 个满测度集之交仍为满测度集，而在该集合上由
+\begin{align*}
+\lvert Df(z)-Df(x)\rvert^{p}\leqslant n^{p-1}\sum_{i=1}^{n}\lvert D_{i}f(z)-D_{i}f(x)\rvert^{p}
+\end{align*}
+即得 $(\star)$。
+
+（2）Morrey 估计的适用性。固定满足 $(\star)$ 的点 $x$ 与 $y\neq x$，令 $\rho:=\lvert x-y\rvert$，并在球 $B(x,\rho)$ 上取 $f$ 的连续代表元 $\bar f$：由\cref{theorem:ch04-4-10}，$p>n$ 时这样的代表元存在，它满足 $\bar f=f$ $\mathcal{L}^{n}$-a.e. 且弱导数与 $f$ 的弱导数相同。置% XREF internal
+\begin{align*}
+\bar g(y'):=\bar f(y')-\bar f(x)-Df(x)\cdot(y'-x)\qquad\bigl(y'\in B(x,\rho)\bigr),
+\end{align*}
+则 $\bar g$ 在 $B(x,\rho)$ 上连续，$\bar g\in W^{1,p}(B^{0}(x,\rho))$，且 $D\bar g=Df-Df(x)$，因为仿射项的弱导数为常向量 $Df(x)$。把\cref{theorem:ch04-4-10}(i) 用于球 $B(x,\rho)$ 与函数 $\bar g$，得% XREF internal
+\begin{align*}
+\lvert\bar g(y')-\bar g(z')\rvert\leqslant C\rho\Bigl(\fint_{B(x,\rho)}\lvert Df(z)-Df(x)\rvert^{p}\diff z\Bigr)^{\frac{1}{p}}
+\end{align*}
+对 $\mathcal{L}^{n}$-a.e. 的 $y',z'\in B(x,\rho)$ 成立。右端与点对 $(y',z')$ 无关，而左端在 $\bar g$ 的连续性下关于 $(y',z')$ 连续，故该估计对一切 $y',z'\in B(x,\rho)$ 成立。取 $y'=y$ 与 $z'=x$（$x$ 是球心，$y$ 在球面上），并注意 $\bar g(x)=0$，即得原证明中的估计，其中 $r=\rho=\lvert x-y\rvert$。
+
+（3）结论。对 $\mathcal{L}^{n}$-a.e. 的点 $x$ 与一切 $y\neq x$，由 (2) 与 $(\star)$ 得
+\begin{align*}
+\lim_{y\to x}\frac{\lvert\bar f(y)-\bar f(x)-Df(x)\cdot(y-x)\rvert}{\lvert y-x\rvert}=0,
+\end{align*}
+故 $\bar f$ 在 $x$ 处可微，其导数为线性映射 $w\mapsto Df(x)\cdot w$；按 $f$ 与其连续代表元的等同，$f$ 在 $x$ 处以同一线性映射为导数。使 $(\star)$ 成立的点 $x$ 构成满测度集，结论成立。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-5; kind=motivation; 说明证明的两步结构、Morrey 估计把平均信息变成逐点信息的机制，以及 $p>n$ 的确切用途
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-5-动机}
+证明分两步。第一步用 Lebesgue 点定理挑出一个点 $x$，使 $Df$ 在 $x$ 附近的球上平均振荡趋于零；第二步把这个平均信息转成逐点信息：对平移后的函数 $g$，Morrey 估计给出 $\lvert g(y)-g(x)\rvert\leqslant Cr(\fint_{B(x,r)}\lvert Dg\rvert^{p})^{1/p}$，右端以 $\lvert x-y\rvert$ 为一阶因子，而平均值因子当 $r=\lvert x-y\rvert\to0$ 时趋于零，于是差商是 $o(1)$。这一「先把差商放大为球上的平均、再让平均随半径趋于零」的机制，是 $W^{1,p}$（$p>n$）情形的可微性证明区别于\cref{theorem:ch03-3-2}的逐方向估计之处。$p>n$ 只在第二步起作用：Morrey 估计正是用 $p>n$ 保证权重 $\lvert y-w\rvert^{1-n}$ 的共轭幂在球上可积（见\cref{remark:ch04-thm-4-10-条件}）。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-5; kind=hypotheses; 逐条分析 $p>n$、$p=\infty$ 的归约、$W^{1,p}_{\mathrm{loc}}$ 的局部性、几乎处处的必要性以及结论中等式的确切含义
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-5-条件}
+\begin{enumerate}[(i)]
+\item 条件 $p>n$ 在证明中只通过 Morrey 估计起作用：该估计中权重积分的收敛等价于 $p>n$（见\cref{remark:ch04-thm-4-10-条件}），故上述论证不能延伸到 $p\leqslant n$。$p<n$ 时相应的较弱结论是\cref{theorem:ch06-6-2}的 $L^{p^{*}}$ 一阶逼近，对 $\BV_{\loc}$ 函数则有\cref{theorem:ch06-6-4}的近似可微性。% XREF internal
+\item 条件 $p=\infty$ 由证明首句归入有限 $p$ 的情形：$W^{1,\infty}_{\loc}(\mathbb{R}^n)\subseteq W^{1,p}_{\loc}(\mathbb{R}^n)$ 对一切 $p<\infty$ 成立。$W^{1,\infty}_{\loc}$ 恰是局部 Lipschitz 函数类（\cref{theorem:ch04-4-5}），故\cref{theorem:ch06-6-6}是本定理在 $p=\infty$ 时的直接推论。% XREF internal
+\item 假设只是局部的 $W^{1,p}_{\loc}(\mathbb{R}^n)$，不含任何整体可积性；结论也是局部性质，只需在每个点的充分小邻域内验证。若把 $W^{1,p}_{\loc}$ 换成 $W^{1,p}(\mathbb{R}^n)$，论证逐字不变。
+\item 结论中的「$\mathcal{L}^{n}$-a.e.」不能加强为「处处」：取 $n=1$ 与 $f(x)=\lvert x\rvert$，则 $f\in W^{1,p}_{\loc}(\mathbb{R})$ 对 $1<p\leqslant\infty$ 成立，而 $f$ 在 $x=0$ 处不可微。
+\item 结论中的等式是在 $\mathcal{L}^{n}$-a.e. 的意义下说的：$f$ 与 $Df$ 都是等价类，点值只在 $\mathcal{L}^{n}$-a.e. 处有意义；且经典导数 $L_{x}$ 是线性映射，它与向量 $Df(x)$ 通过内积对应，$L_{x}(w)=Df(x)\cdot w$。
+\end{enumerate}
+\end{remark}
+
+作为应用，下面给出 Rademacher 定理的一个新证明。
+
+\begin{theorem}[Rademacher 定理的再证]\label{theorem:ch06-6-6}
+设 $n$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}$ 为局部 Lipschitz 连续函数，即对每个紧集 $K\subseteq\mathbb{R}^n$ 存在常数 $C_{K}$，使得对一切 $x,y\in K$ 有 $\lvert f(x)-f(y)\rvert\leqslant C_{K}\lvert x-y\rvert$。则 $f$ 在 $\mathcal{L}^{n}$-a.e. 的每一点 $x\in\mathbb{R}^n$ 处可微。
+\end{theorem}
+
+\begin{proof}
+由\cref{theorem:ch04-4-5}，$f\in W^{1,\infty}_{\loc}(\mathbb{R}^n)$。% XREF p=281 "According to Theorem 4.5, f ∈ W^{1,∞}_{loc}(R^n)"
+% SUPPLEMENT: parent=theorem:ch06-6-6; kind=proof; 补出由 $W^{1,\infty}_{loc}$ 经几乎处处可微性定理（取 $p=\infty$）得到结论的最后一步
+在\cref{theorem:ch06-6-5}中取 $p=\infty$：由 $n<\infty$ 与 $f\in W^{1,\infty}_{\loc}(\mathbb{R}^n)$，该定理的假设成立，故 $f$ 在 $\mathcal{L}^{n}$-a.e. 的每一点处可微。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-6; kind=motivation; 说明本定理是 $p=\infty$ 情形的特例，以及它与第 3 章原始证明在方法上的差别
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-6-动机}
+本定理说明 Rademacher 定理是本节主结果在 $p=\infty$ 时的特例：局部 Lipschitz 函数恰是 $W^{1,\infty}_{\loc}$ 函数，故\cref{theorem:ch06-6-5}（取 $p=\infty$）直接给出 $\mathcal{L}^{n}$-a.e. 可微性。与\cref{theorem:ch03-3-2}的原始证明相比，这条路线不做逐方向的差商估计，而是把可微性归结为两件事：弱梯度在几乎每一点处的 Lebesgue 点性质，以及 Morrey 估计提供的 Hölder 型逐点控制。两处都用到了 $L^{p}$ 理论，因此论证更短，但对 $p>n$ 的依赖也更明显。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-6; kind=hypotheses; 说明局部 Lipschitz 假设如何转化为 $W^{1,\infty}_{loc}$、值域为 $\mathbb{R}$ 的处理以及几乎处处的必要性
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-6-条件}
+\begin{enumerate}[(i)]
+\item 局部 Lipschitz 连续是唯一的假设，它在证明中通过\cref{theorem:ch04-4-5}转化为 $f\in W^{1,\infty}_{\loc}(\mathbb{R}^n)$；该定理同时给出 $\lVert Df\rVert_{L^{\infty}}\leqslant\Lip(f)$，故 $p=\infty$ 落在\cref{theorem:ch06-6-5}允许的范围 $p\in(n,\infty]$ 之内。% XREF internal
+\item 值域取 $\mathbb{R}$。对 $f:\mathbb{R}^n\to\mathbb{R}^m$ 的局部 Lipschitz 映射，把上述论证用于每个分量 $f^{1},\cdots,f^{m}$，再合并 $m$ 个满测度集，即得同样的结论。
+\item 结论只能是 $\mathcal{L}^{n}$-a.e. 的：不可微点集可以非空。例如 $n=1$ 与 $f(x)=\lvert x\rvert$ 在 $x=0$ 处不可微；对 Lipschitz 函数，这样的集合必为 Lebesgue 零集。
+\end{enumerate}
+\end{remark}
+
+\end{document}

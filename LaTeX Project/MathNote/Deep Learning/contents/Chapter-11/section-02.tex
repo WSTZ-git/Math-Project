@@ -203,8 +203,8 @@ $p(b,c)>0$。则下列两条等价：
 
 \begin{definition}[后代与祖先]\label{definition:ch11-后代}
 设 $G=(\mathcal{V},\mathcal{E})$ 为有向图，$x,y\in\mathcal{V}$。若存在节点序列
-$v_0=x,v_1,\dots,v_m=y$，$m\geqslant1$，使 $(v_{i-1},v_i)\in\mathcal{E}$ 对
-$i=1,\dots,m$ 都成立，即路径上的每一步都沿箭头方向，则节点 $y$ 称为节点 $x$ 的
+$v_0=x,v_1,\cdots,v_m=y$，$m\geqslant1$，使 $(v_{i-1},v_i)\in\mathcal{E}$ 对
+$i=1,\cdots,m$ 都成立，即路径上的每一步都沿箭头方向，则节点 $y$ 称为节点 $x$ 的
 \textbf{后代}（descendant），节点 $x$ 称为节点 $y$ 的\textbf{祖先}（ancestor）。
 节点 $x$ 的全体后代记为 $\mathrm{de}(x)$。
 \end{definition}
@@ -359,12 +359,12 @@ d分离法如\cref{figure:ch11-d分离示意图}所示。在\cref{figure:ch11-d�
 \begin{proposition}[以参数为条件的预测]\label{proposition:ch11-条件独立预测}
 设训练数据为 $\{(\mathbf{x}_n,t_n)\}_{n=1}^{N}$，新输入为 $\hat{\mathbf{x}}$，模型
 参数为 $\mathbf{w}$，联合分布由\eqref{align:ch11-预测联合}给出。则给定 $\mathbf{w}$ 后
-$t_1,\dots,t_N$ 条件独立，且对新目标 $\hat{t}$ 的预测分布满足
+$t_1,\cdots,t_N$ 条件独立，且对新目标 $\hat{t}$ 的预测分布满足
 \begin{align}
   p(\hat{t}\mid \hat{\mathbf{x}},\mathbf{w},\mathbf{X},\mathbf{t}) = p(\hat{t}\mid \hat{\mathbf{x}},\mathbf{w}),
 \end{align}
 即以参数 $\mathbf{w}$ 为条件，$\hat{t}$ 的预测分布与训练数据
-$\{t_1,\dots,t_N\}$ 无关。
+$\{t_1,\cdots,t_N\}$ 无关。
 \end{proposition}
 
 \begin{proof}
@@ -386,8 +386,8 @@ $\{t_1,\dots,t_N\}$ 无关。
 有一种相关的图结构出现在朴素Bayes（Naive Bayes）模型中，其中我们使用条件独立性假设来简化模型结构。假设我们的数据由向量$\mathbf{x}$的观测值组成，我们希望将$\mathbf{x}$的观测值归入$K$个类别中的一个类别（后文简称类）。我们可以为每个类定义类-条件密度$p(\mathbf{x}\mid C_k)$以及先验类概率$p(C_k)$。朴素Bayes模型的关键假设是，以类$C_k$为条件，将输入变量的分布分解为两个或多个密度的乘积。
 
 \begin{definition}[朴素 Bayes 模型]\label{definition:ch11-朴素Bayes}
-设输入向量 $\mathbf{x}=(x^{(1)},\dots,x^{(L)})\in\mathbb{R}^{L}$，类别变量
-$C$ 取值于 $\{C_1,\dots,C_K\}$，其中 $K\geqslant2$、$L\geqslant1$。若对每个类
+设输入向量 $\mathbf{x}=(x^{(1)},\cdots,x^{(L)})\in\mathbb{R}^{L}$，类别变量
+$C$ 取值于 $\{C_1,\cdots,C_K\}$，其中 $K\geqslant2$、$L\geqslant1$。若对每个类
 $C_k$ 都有
 \begin{align}
   p(\mathbf{x}\mid C_k) = \prod_{l=1}^{L}p\bigl(x^{(l)}\mid C_k\bigr),
@@ -424,7 +424,7 @@ $C_k$ 都有
 
 \begin{proposition}[朴素 Bayes 的分类后验]\label{proposition:ch11-朴素Bayes后验}
 在\cref{definition:ch11-朴素Bayes}的假设下，设类先验满足 $p(C_k)>0$，
-$k=1,\dots,K$，输入 $\mathbf{x}$ 满足 $p(\mathbf{x})>0$。则类后验满足
+$k=1,\cdots,K$，输入 $\mathbf{x}$ 满足 $p(\mathbf{x})>0$。则类后验满足
 \begin{align}
   p(C_k\mid \mathbf{x}) = \frac{p(C_k)\prod_{l=1}^{L}p\bigl(x^{(l)}\mid C_k\bigr)}{\sum_{j=1}^{K}p(C_j)\prod_{l=1}^{L}p\bigl(x^{(l)}\mid C_j\bigr)},
   \label{align:ch11-朴素Bayes后验显式}
@@ -514,7 +514,7 @@ $(\mathbf{x},y)$ 空间上的概率分布，并给出从该分布采样的过程
 其中积分被离散变量的求和取代。现在我们注意到，任何与$x_i$无函数相关的因子$p(x_k\mid \mathrm{pa}(k))$都可以在对$x_i$的积分之外取值，因此分子和分母之间会抵消。剩下的因子就是节点$x_i$本身的条件分布$p(x_i\mid \mathrm{pa}(i))$，以及任何其他节点$x_k$的条件分布，从而节点$x_i$在$p(x_k\mid \mathrm{pa}(k))$的条件集中，即节点$x_i$是$x_k$的父节点。条件分布$p(x_i\mid \mathrm{pa}(i))$将取决于节点$x_i$的父节点，而条件分布$p(x_k\mid \mathrm{pa}(k))$将取决于$x_k$的子节点和共父节点[即节点$x_k$的父节点（节点$x_i$除外）所对应的变量]。
 
 \begin{definition}[Markov 毯]\label{definition:ch11-Markov毯}
-设有向无环图 $G=(\mathcal{V},\mathcal{E})$，$\mathcal{V}=\{1,\dots,D\}$，节点 $i$ 的
+设有向无环图 $G=(\mathcal{V},\mathcal{E})$，$\mathcal{V}=\{1,\cdots,D\}$，节点 $i$ 的
 父节点集为 $\mathrm{pa}(i)=\{j:(j,i)\in\mathcal{E}\}$，子节点集为
 $\mathrm{ch}(i)=\{k:(i,k)\in\mathcal{E}\}$，共父节点集为
 $\mathrm{cp}(i)=\bigcup_{k\in\mathrm{ch}(i)}\bigl(\mathrm{pa}(k)\setminus\{i\}\bigr)$。
@@ -542,8 +542,8 @@ $\mathrm{cp}(i)=\bigcup_{k\in\mathrm{ch}(i)}\bigl(\mathrm{pa}(k)\setminus\{i\}\b
 \begin{proposition}[Markov 毯的分离性质]\label{proposition:ch11-Markov毯}
 设 $p(\mathbf{x})$ 由有 $D$ 个节点的有向无环图 $G$ 按
 \eqref{align:ch11-有向图联合分布}分解，节点 $i$ 的 Markov 毯 $\mathrm{MB}(i)$ 由
-\eqref{align:ch11-Markov毯定义}给出，$i\in\{1,\dots,D\}$。则对任意
-$j\in\{1,\dots,D\}\setminus(\mathrm{MB}(i)\cup\{i\})$，
+\eqref{align:ch11-Markov毯定义}给出，$i\in\{1,\cdots,D\}$。则对任意
+$j\in\{1,\cdots,D\}\setminus(\mathrm{MB}(i)\cup\{i\})$，
 \begin{align}
   x_i \perp x_j \mid \mathbf{x}_{\mathrm{MB}(i)},
   \label{align:ch11-Markov毯独立}
@@ -583,7 +583,7 @@ $j\in\{1,\dots,D\}\setminus(\mathrm{MB}(i)\cup\{i\})$，
 
 \begin{theorem}[d 分离定理的过滤器形式]\label{theorem:ch11-过滤器等价}
 设 $K\geqslant1$，$G=(\mathcal{V},\mathcal{E})$ 是定义在随机向量
-$\mathbf{x}=(x_1,\dots,x_K)$ 上的有向无环图，其中 $\mathrm{pa}(k)$ 为节点 $k$ 的
+$\mathbf{x}=(x_1,\cdots,x_K)$ 上的有向无环图，其中 $\mathrm{pa}(k)$ 为节点 $k$ 的
 父节点集。记 $\mathcal{D}_F$ 为满足 $G$ 的有向分解的分布全体，$\mathcal{D}_I$ 为满足
 $G$ 经 d 分离所得全部条件独立性的分布全体，即
 \begin{align}

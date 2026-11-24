@@ -1,0 +1,262 @@
+﻿\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{沿直线的可微性}\label{section:ch04-09}
+
+本节研究 Sobolev 函数 $f$，更确切地说其精确代表元 $f^{*}$，限制在直线上的性质。
+
+\subsection{一元 Sobolev 函数}\label{subsection:ch04-09-1}
+
+\begin{definition*}[绝对连续函数的导数记号]
+\phantomsection\label{definition:ch04-def-4-20-导数}
+若 $h:\mathbb{R}\to\mathbb{R}$ 在每一紧子区间上绝对连续，则记 $h'$ 为 $h$ 的导数；该导数在 $\mathcal{L}^{1}$-a.e. 的每一点处存在，而在其余点上的取值不作约定。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch04-def-4-20-导数; kind=motivation; 说明为何要把绝对连续函数的经典导数固定为一个符号，以及该记号与弱导数、精确代表元的关系
+\begin{remark}\phantomsection\label{remark:ch04-def-4-20-导数-动机}
+记号 $h'$ 把绝对连续函数的经典导数固定为一个符号，使同一条陈述中能够同时出现两类导数：Sobolev 函数的弱导数，以及其精确代表元的经典导数。两者的区别不在数值而在定义方式：弱导数由分部积分恒等式确定，只作为 $L^{p}_{\loc}$ 的等价类有意义；经典导数由差商确定，是逐点的量。本节的结论断言二者在 a.e. 意义下相同，书写这一比较需要一个统一的记号。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-def-4-20-导数; kind=hypotheses; 逐条分析「每一紧子区间」与「L1-a.e. 存在」这两个限定，并说明 a.e. 可导不能代替绝对连续
+\begin{remark}\phantomsection\label{remark:ch04-def-4-20-导数-条件}
+\begin{enumerate}[(i)]
+\item 绝对连续性只要求在每一紧子区间上成立，而不要求在 $\mathbb{R}$ 上成立。$h(x):=x^{2}$ 在每个 $[a,b]$ 上绝对连续，但 $\int_{\mathbb{R}}\lvert h'\rvert\diff x=+\infty$，故 $h$ 不是 $\mathbb{R}$ 上的绝对连续函数。本节关于绝对连续的断言同样只对紧子区间陈述。
+\item 导数的存在性是绝对连续性的推论：绝对连续函数在每个紧子区间上有界变差，而有界变差函数在 $\mathcal{L}^{1}$-a.e. 点可导。因此 $h'$ 作为 $\mathcal{L}^{1}$-a.e. 定义的函数有意义；它在剩余零测集上的取值不影响任何 a.e. 命题，故不作约定。
+\item 「$\mathcal{L}^{1}$-a.e. 可导」不能代替绝对连续。Cantor 函数 $c:[0,1]\to[0,1]$ 连续、单调，且 $c'=0$ $\mathcal{L}^{1}$-a.e.。若 $c$ 绝对连续，则微积分基本定理给出
+\begin{align*}
+c(1)-c(0)=\int_{0}^{1}c'(x)\diff x=0,
+\end{align*}
+与 $c(0)=0$、$c(1)=1$ 矛盾。故 Cantor 函数不是绝对连续的，其恒为零的经典导数也不等于它在分布意义下的导数。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[一元 Sobolev 函数]\label{theorem:ch04-4-20}
+设 $1\leqslant p<\infty$。
+\begin{enumerate}[(i)]
+\item 若 $f\in W^{1,p}_{\loc}(\mathbb{R})$，则其精确代表元 $f^{*}$ 在 $\mathbb{R}$ 的每一紧子区间上绝对连续，且
+\begin{align*}
+(f^{*})'\in L^{p}_{\loc}(\mathbb{R}).
+\end{align*}
+\item 反之，设 $f\in L^{p}_{\loc}(\mathbb{R})$ 且 $f=g$ $\mathcal{L}^{1}$-a.e.，其中 $g:\mathbb{R}\to\mathbb{R}$ 在每一紧子区间上绝对连续，且
+\begin{align*}
+g'\in L^{p}_{\loc}(\mathbb{R}).
+\end{align*}
+则 $f\in W^{1,p}_{\loc}(\mathbb{R})$。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）先设 $f\in W^{1,p}_{\loc}(\mathbb{R})$，并记 $f'$ 为其弱导数。对 $0<\varepsilon\leqslant1$，取 $f^{\varepsilon}:=\eta_{\varepsilon}*f$，其中 $\eta_{\varepsilon}$ 为标准磨光核（\cref{definition:ch04-4-2-记号}），与前面相同。% XREF p=188 "For 0 < ε ≤ 1 define fε := ηε ∗ f, as before."
+则
+\begin{align*}
+f^{\varepsilon}(y)=f^{\varepsilon}(x)+\int_{x}^{y}(f^{\varepsilon})'(t)\diff t .\qquad(\star)
+\end{align*}
+设 $x_{0}$ 为 $f$ 的 Lebesgue 点，$\varepsilon,\delta\in(0,1)$。由于对 $x\in\mathbb{R}$ 有
+\begin{align*}
+\lvert f^{\varepsilon}(x)-f^{\delta}(x)\rvert
+\leqslant\Bigl\lvert\int_{x_{0}}^{x}\bigl\lvert(f^{\varepsilon})'(t)-(f^{\delta})'(t)\bigr\rvert\diff t\Bigr\rvert+\lvert f^{\varepsilon}(x_{0})-f^{\delta}(x_{0})\rvert ,
+\end{align*}
+由\cref{theorem:ch04-4-1}，$\{f^{\varepsilon}\}_{\varepsilon>0}$ 在 $\mathbb{R}$ 的紧子集上一致收敛到一个连续函数 $g$，且 $g=f$ $\mathcal{L}^{1}$-a.e.。% XREF p=188 "it follows from Theorem 4.1 that {fε}ε>0 converges uniformly on compact subsets of R to a continuous function g with g = f L1-a.e."
+
+由 $(\star)$ 得
+\begin{align*}
+g(x)=g(x_{0})+\int_{x_{0}}^{x}f'(t)\diff t ,
+\end{align*}
+故 $g$ 局部绝对连续，且 $g'=f'$ $\mathcal{L}^{1}$-a.e.。
+
+最后，由于对每个 $x\in\mathbb{R}$ 有 $(f)_{x,r}=(g)_{x,r}\to g(x)$（$r\to0$），故
+\begin{align*}
+g=f^{*}.
+\end{align*}
+至此 (i) 得证。
+
+（2）反之，设 $f=g$ $\mathcal{L}^{1}$-a.e.，其中 $g$ 在每一紧子区间上绝对连续，且 $g'\in L^{p}_{\loc}(\mathbb{R})$。则对每个 $\phi\in C^{1}_{c}(\mathbb{R})$ 有
+\begin{align*}
+\int_{-\infty}^{\infty}f\phi'\diff x=\int_{-\infty}^{\infty}g\phi'\diff x=-\int_{-\infty}^{\infty}g'\phi\diff x ,
+\end{align*}
+故 $g'$ 是 $f$ 的弱导数。既然 $g'\in L^{p}_{\loc}(\mathbb{R})$，即得 $f\in W^{1,p}_{\loc}(\mathbb{R})$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-20; kind=proof; 补出磨光导数的收敛、Cauchy 一致估计的完整推导、g=f 的来历、(★) 中取极限的依据、g'=f' 的微分定理依据，以及第 (2) 步分部积分的证明
+\begin{proof}
+（1）$(\star)$ 与磨光导数的收敛。$f^{\varepsilon}\in C^{\infty}(\mathbb{R})$，故微积分基本定理给出 $(\star)$。由\cref{theorem:ch04-4-1}(v)，$(f^{\varepsilon})'=\eta_{\varepsilon}*f'$；由\cref{theorem:ch04-4-1}(vi) 与 $1\leqslant p<\infty$，$(f^{\varepsilon})'\to f'$ 于 $L^{p}_{\loc}(\mathbb{R})$。对每个紧区间 $I$ 与每个 $u\in L^{p}(I)$，Hölder 不等式给出 $\lVert u\rVert_{L^{1}(I)}\leqslant\lvert I\rvert^{1-1/p}\lVert u\rVert_{L^{p}(I)}$，故 $\{(f^{\varepsilon})'\}_{\varepsilon>0}$ 也是 $L^{1}_{\loc}(\mathbb{R})$ 中的 Cauchy 列。% XREF internal
+
+（2）一致估计。固定 $N>0$，设 $\lvert x_{0}\rvert\leqslant N$，并取 $M:=2N$。对 $x\in[-N,N]$，在 $(\star)$ 中取 $x=x_{0}$、$y=x$，并把 $\varepsilon$ 与 $\delta$ 对应的两个等式相减，再用 $\lvert x-x_{0}\rvert\leqslant M$ 得
+\begin{align*}
+\lvert f^{\varepsilon}(x)-f^{\delta}(x)\rvert\leqslant\int_{-M}^{M}\bigl\lvert(f^{\varepsilon})'(t)-(f^{\delta})'(t)\bigr\rvert\diff t+\lvert f^{\varepsilon}(x_{0})-f^{\delta}(x_{0})\rvert .
+\end{align*}
+由第（1）步，右端第一个积分当 $\varepsilon,\delta\to0$ 时趋于零，且该估计关于 $x\in[-N,N]$ 是一致的。又 $x_{0}$ 是 $f$ 的 Lebesgue 点，由\cref{theorem:ch04-4-1}(iv) 得 $f^{\varepsilon}(x_{0})\to f(x_{0})$。于是 $\{f^{\varepsilon}\}$ 是 $C([-N,N])$ 中的 Cauchy 列，故在 $[-N,N]$ 上一致收敛；由 $N$ 的任意性，存在连续函数 $g$，使 $f^{\varepsilon}\to g$ 在 $\mathbb{R}$ 的紧子集上一致。% XREF internal
+
+（3）$g=f$ 的来历。由\cref{theorem:ch04-4-1}(iv)，$f^{\varepsilon}\to f$ $\mathcal{L}^{1}$-a.e.；而在紧子集上一致收敛的极限为 $g$，故 $g=f$ $\mathcal{L}^{1}$-a.e.。% XREF internal
+
+（4）$(\star)$ 中取极限。固定 $x\in\mathbb{R}$。由第（1）步，$\int_{x_{0}}^{x}(f^{\varepsilon})'\diff t\to\int_{x_{0}}^{x}f'\diff t$；又 $f^{\varepsilon}(x)\to g(x)$ 与 $f^{\varepsilon}(x_{0})\to g(x_{0})$。在 $(\star)$ 中令 $\varepsilon\to0$，得
+\begin{align*}
+g(x)=g(x_{0})+\int_{x_{0}}^{x}f'(t)\diff t .
+\end{align*}
+
+（5）$g'=f'$ $\mathcal{L}^{1}$-a.e.。由 $f'\in L^{1}_{\loc}(\mathbb{R})$，函数 $G(x):=\int_{x_{0}}^{x}f'(t)\diff t$ 绝对连续，且由\cref{theorem:ch01-1-32}（取 $n=1$ 与 $\mu=\mathcal{L}^{1}$）得 $G'=f'$ $\mathcal{L}^{1}$-a.e.。又 $g=G+g(x_{0})$，故 $g$ 绝对连续，且 $g'=f'$ $\mathcal{L}^{1}$-a.e.。% XREF internal
+
+（6）$g=f^{*}$。由 $f=g$ $\mathcal{L}^{1}$-a.e. 知对一切 $x$ 与 $r>0$ 有 $(f)_{x,r}=(g)_{x,r}$；又 $g$ 连续，故
+\begin{align*}
+\lvert(f)_{x,r}-g(x)\rvert=\lvert(g)_{x,r}-g(x)\rvert\leqslant\sup_{\lvert y-x\rvert\leqslant r}\lvert g(y)-g(x)\rvert\to0\qquad(r\to0).
+\end{align*}
+于是极限 $\lim_{r\to0}(f)_{x,r}$ 对每个 $x\in\mathbb{R}$ 存在且等于 $g(x)$；按\cref{definition:ch01-1-26} 的定义得 $f^{*}=g$。特别地，$f^{*}$ 在每一紧子区间上绝对连续，且 $(f^{*})'=g'=f'$ $\mathcal{L}^{1}$-a.e.，由 $f'\in L^{p}_{\loc}(\mathbb{R})$ 得 $(f^{*})'\in L^{p}_{\loc}(\mathbb{R})$，至此 (i) 得证。% XREF internal
+
+（7）第 (2) 步的分部积分。设 $\phi\in C^{1}_{c}(\mathbb{R})$，取 $R>0$ 使 $\spt\phi\subseteq[-R,R]$。由 $g$ 在 $[-R,R]$ 上绝对连续，
+\begin{align*}
+g(x)=g(-R)+\int_{-R}^{x}g'(t)\diff t\qquad(x\in[-R,R]).
+\end{align*}
+把该式代入 $\int_{-R}^{R}g\phi'\diff x$ 并交换积分次序（$g'\in L^{1}([-R,R])$、$\phi'$ 有界，Fubini 定理适用），得
+\begin{align*}
+\int_{-R}^{R}g\phi'\diff x=g(-R)\int_{-R}^{R}\phi'\diff x+\int_{-R}^{R}g'(t)\Bigl(\int_{t}^{R}\phi'(x)\diff x\Bigr)\diff t .
+\end{align*}
+第一项为零（$\phi$ 在 $\pm R$ 处取零值），第二项的内层积分为 $-\phi(t)$，故 $\int_{-R}^{R}g\phi'\diff x=-\int_{-R}^{R}g'\phi\diff x$。又 $f=g$ $\mathcal{L}^{1}$-a.e.，而 $\phi'$ 有界且支集紧，故 $\int f\phi'\diff x=\int g\phi'\diff x$。于是 $g'$ 满足弱导数的定义，$f\in W^{1,p}_{\loc}(\mathbb{R})$ 随之成立。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-20; kind=motivation; 说明一维情形为何是 Sobolev 理论的模型情形，以及两个方向各自的构造路线与后续用途
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-20-动机}
+一元情形是整章的模型情形：在 $\mathbb{R}$ 上，绝对连续函数恰是导数属于 $L^{1}_{\loc}$ 的函数，故「弱可微」与「逐点可微」之间的差距能够完全消去。定理的两个方向对应两条构造路线。(i) 从弱导数出发：用磨光把弱导数实现为经典导数，以微积分基本定理与一致性估计把磨光函数收敛到精确代表元。(ii) 从绝对连续的代表元出发：用分部积分把该代表元的经典导数认证为弱导数。两个方向合起来给出：$W^{1,p}_{\loc}(\mathbb{R})$ 的每个等价类中恰有一个在紧子区间上绝对连续的代表元，它就是精确代表元 $f^{*}$，且在 a.e. 意义下 $(f^{*})'=f'$。这一结论是把 $\mathbb{R}^{n}$ 上的问题沿直线化归为一维问题的根据（\cref{theorem:ch04-4-21}）。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-20; kind=hypotheses; 逐条分析 p 的范围（含 p=∞ 的补述）、Lp_loc 与局部绝对连续的配对，以及 (i) 中两个断言的独立性
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-20-条件}
+\begin{enumerate}[(i)]
+\item 条件 $1\leqslant p<\infty$：第 (1) 步用\cref{theorem:ch04-4-1}(vi) 时要求 $p<\infty$。$p=\infty$ 时结论仍成立，论证则不同：由\cref{theorem:ch04-4-5}，$f\in W^{1,\infty}_{\loc}(\mathbb{R})$ 有局部 Lipschitz 代表元，而局部 Lipschitz 函数在紧子区间上绝对连续，其 a.e. 导数本质有界，故该代表元就是 $f^{*}$。% XREF internal
+\item 条件 $f\in L^{p}_{\loc}(\mathbb{R})$ 在 (ii) 中不可省：$W^{1,p}_{\loc}$ 的元素首先是 $L^{p}_{\loc}$ 的元素；若 $f$ 只在 a.e. 意义下给定而无局部可积性，则 $f$ 不代表 $L^{p}_{\loc}(\mathbb{R})$ 中的元素，弱导数无从谈起。
+\item (ii) 中「在每一紧子区间上绝对连续」与「$g'\in L^{p}_{\loc}(\mathbb{R})$」缺一不可：前者保证 $g'$ 作为经典导数存在（见\cref{remark:ch04-def-4-20-导数-条件}），后者保证它属于 $L^{p}_{\loc}$，从而能够充当弱导数。% XREF internal
+\item (i) 中两个断言相互独立。绝对连续性说的是 $f^{*}$ 的正则性，$(f^{*})'\in L^{p}_{\loc}(\mathbb{R})$ 说的是导数的可积性；后者不能由前者推出：$h(x):=2\sqrt{x}$（$x\in[0,1]$）在 $[0,1]$ 上绝对连续，但 $h'(x)=x^{-1/2}\notin L^{2}_{\loc}(0,1)$。
+\end{enumerate}
+\end{remark}
+
+\subsection{几乎处处直线上的可微性}\label{subsection:ch04-09-2}
+
+\begin{theorem}[限制在直线上的 Sobolev 函数]\label{theorem:ch04-4-21}
+设 $n$ 为正整数，$1\leqslant p<\infty$。
+\begin{enumerate}[(i)]
+\item 若 $f\in W^{1,p}_{\loc}(\mathbb{R}^{n})$，则对每个 $k=1,\cdots,n$，函数
+\begin{align*}
+f^{*}_{k}(x',t):=f^{*}(\cdots,x_{k-1},t,x_{k+1},\cdots)
+\end{align*}
+对 $\mathcal{L}^{n-1}$-a.e. 的点 $x'=(x_{1},\cdots,x_{k-1},x_{k+1},\cdots,x_{n})\in\mathbb{R}^{n-1}$ 在 $\mathbb{R}$ 的紧子集上关于 $t$ 绝对连续，其中 $t$ 填入第 $k$ 个坐标。此外，
+\begin{align*}
+(f^{*}_{k})'\in L^{p}_{\loc}(\mathbb{R}^{n}).
+\end{align*}
+\item 反之，设 $f\in L^{p}_{\loc}(\mathbb{R}^{n})$ 且 $f=g$ $\mathcal{L}^{n}$-a.e.，其中 $g:\mathbb{R}^{n}\to\mathbb{R}$，而对每个 $k=1,\cdots,n$，函数
+\begin{align*}
+g_{k}(x',t):=g(x_{1},\cdots,x_{k-1},t,x_{k+1},\cdots,x_{n})
+\end{align*}
+对 $\mathcal{L}^{n-1}$-a.e. 的点 $x'=(x_{1},\cdots,x_{k-1},x_{k+1},\cdots,x_{n})\in\mathbb{R}^{n-1}$ 在 $\mathbb{R}$ 的紧子集上关于 $t$ 绝对连续，且
+\begin{align*}
+g'_{k}\in L^{p}_{\loc}(\mathbb{R}^{n}).
+\end{align*}
+则 $f\in W^{1,p}_{\loc}(\mathbb{R}^{n})$。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）只需对 $k=n$ 的情形证明断言 (i)。定义 $f^{\varepsilon}:=\eta_{\varepsilon}*f$，其中 $\eta_{\varepsilon}$ 为标准磨光核（\cref{definition:ch04-4-2-记号}），与前面相同。由\cref{theorem:ch04-4-1}(vi) 有% XREF p=189 "Define fε := ηε ∗ f as before, and recall" | p=189 "fε → f in W1,p_loc(Rn)"
+\begin{align*}
+f^{\varepsilon}\to f\qquad\text{于 }W^{1,p}_{\loc}(\mathbb{R}^{n}).
+\end{align*}
+依 Fubini 定理，对每个 $L>0$ 与 $\mathcal{L}^{n-1}$-a.e. 的 $x'=(x_{1},\cdots,x_{n-1})$，表达式
+\begin{align*}
+\int_{-L}^{L}\bigl(\lvert f^{\varepsilon}(x',t)-f(x',t)\rvert^{p}+\lvert f^{\varepsilon}_{x_{n}}(x',t)-f_{x_{n}}(x',t)\rvert^{p}\bigr)\diff t
+\end{align*}
+当 $\varepsilon\to0$ 时趋于零（此处用到\cref{theorem:ch04-4-1}(v)）。于是函数% XREF internal
+\begin{align*}
+f^{\varepsilon}_{n}(t):=f^{\varepsilon}(x',t)\qquad(t\in\mathbb{R})
+\end{align*}
+在 $W^{1,p}_{\loc}(\mathbb{R})$ 中收敛，从而在紧子集上一致收敛，其极限 $f_{n}$ 局部绝对连续，且
+\begin{align*}
+f'_{n}(t)=f_{x_{n}}(x',t)\qquad\text{对 }\mathcal{L}^{1}\text{-a.e. 的 }t\in\mathbb{R}.
+\end{align*}
+
+另一方面，\cref{theorem:ch04-4-19}、\cref{theorem:ch05-5-12}（后文将证明）与\cref{theorem:ch04-4-17} 给出% XREF p=189 "Theorem 4.19, Theorem 5.12 (to be proved later), and Theorem 4.17 imply" | p=189 "Theorem 5.12 (to be proved later)" | p=189 "Theorem 4.17"
+\begin{align*}
+f^{\varepsilon}\to f^{*}\qquad\mathcal{H}^{n-1}\text{-a.e.}
+\end{align*}
+
+由\cref{theorem:ch02-2-8}，对 $\mathcal{L}^{n-1}$-a.e. 的点 $x'$ 有% XREF p=190 "In view of Theorem 2.8, for Ln−1-a.e. point x′, we have"
+\begin{align*}
+f^{\varepsilon}_{n}(t)\to f^{*}(x',t)
+\end{align*}
+对一切 $t\in\mathbb{R}$ 成立。于是对 $\mathcal{L}^{n-1}$-a.e. 的 $x'$ 与一切 $t\in\mathbb{R}$ 有
+\begin{align*}
+f_{n}(t)=f^{*}(x',t).
+\end{align*}
+至此断言 (i) 得证。
+
+（2）现设断言 (ii) 的假设成立。设 $\phi\in C^{1}_{c}(\mathbb{R}^{n})$，并记 $x=(x',t)$，其中 $t:=x_{k}$。则
+\begin{align*}
+\int_{\mathbb{R}^{n}}f\phi_{x_{k}}\diff x
+&=\int_{\mathbb{R}^{n}}g\phi_{x_{k}}\diff x\\
+&=\int_{\mathbb{R}^{n-1}}\Bigl(\int_{-\infty}^{\infty}g_{k}(x',t)\phi_{x_{k}}(x',t)\diff t\Bigr)\diff x'\\
+&=-\int_{\mathbb{R}^{n-1}}\Bigl(\int_{-\infty}^{\infty}g'_{k}(x',t)\phi(x',t)\diff t\Bigr)\diff x'\\
+&=-\int_{\mathbb{R}^{n}}g'_{k}\phi\diff x .
+\end{align*}
+故 $f_{x_{k}}=g'_{k}$ $\mathcal{L}^{n}$-a.e.（$k=1,\cdots,n$），从而 $f\in W^{1,p}_{\loc}(\mathbb{R}^{n})$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-21; kind=proof; 补出 k=n 化归的正交变换、Fubini 步骤与零测集的合并、W1,p_loc(R) 收敛给出紧子集上一致收敛、由定理 2.8 把逐点收敛升级为对一切 t 收敛、以及断言 (ii) 中 Fubini 与分部积分的依据
+\begin{proof}
+（1）$k=n$ 的化归。设 $O$ 为正交矩阵且 $Oe_{n}=e_{k}$，令 $F(y):=f(Oy)$。由 $O$ 与 $O^{-1}$ 都是 $1$-Lipschitz 映射，得 $F\in W^{1,p}_{\loc}(\mathbb{R}^{n})$。又 $O$ 把球映为球并保持 Lebesgue 测度，故对一切 $y$ 与 $r>0$ 有
+\begin{align*}
+(F)_{y,r}=\frac{1}{\mathcal{L}^{n}(B(y,r))}\int_{B(y,r)}f(Oz)\diff z=(f)_{Oy,r},
+\end{align*}
+于是 $F^{*}(y)=f^{*}(Oy)$。对 $F$ 用 $k=n$ 的结论：对 $\mathcal{L}^{n-1}$-a.e. 的 $y'\in\mathbb{R}^{n-1}$，函数 $t\mapsto F^{*}(y',t)=f^{*}(O(y',t))$ 在紧子区间上绝对连续，其导数属于 $L^{p}_{\loc}$。由于 $O$ 把方向 $e_{n}$ 的直线映为方向 $e_{k}$ 的直线，并把 $\mathcal{L}^{n-1}$-零测集映为 $\mathcal{L}^{n-1}$-零测集，而 $y'\mapsto O(y',0)$ 是 $\mathbb{R}^{n-1}$ 到 $e_{k}^{\perp}$ 的等距同构，把 $y'$ 换回 $x'$ 即得 $k$ 情形的结论。
+
+（2）Fubini 步骤。由 $f^{\varepsilon}\to f$ 于 $W^{1,p}_{\loc}(\mathbb{R}^{n})$，对每个 $L>0$ 有
+\begin{align*}
+a_{\varepsilon}:=\int_{B_{n-1}(0,L)}\int_{-L}^{L}\bigl(\lvert f^{\varepsilon}-f\rvert^{p}+\lvert f^{\varepsilon}_{x_{n}}-f_{x_{n}}\rvert^{p}\bigr)\diff t\diff x'\to0\qquad(\varepsilon\to0),
+\end{align*}
+其中 $B_{n-1}(0,L)\subseteq\mathbb{R}^{n-1}$ 为球。沿任一序列 $\varepsilon_{j}\to0$ 有 $a_{\varepsilon_{j}}\to0$，故对 $\mathcal{L}^{n-1}$-a.e. 的 $x'\in B_{n-1}(0,L)$，内层积分当 $j\to\infty$ 时趋于零。对 $L=1,2,\cdots$ 取相应的 $\mathcal{L}^{n-1}$-零测例外集之并，得 $\mathcal{L}^{n-1}$-零测集 $N$，使 $x'\notin N$ 时内层积分对一切 $L$ 都趋于零。于是对 $x'\notin N$，序列 $f^{\varepsilon_{j}}_{n}$ 是 $W^{1,p}_{\loc}(\mathbb{R})$ 中的 Cauchy 列：其导数列 $(f^{\varepsilon_{j}}_{n})'=f^{\varepsilon_{j}}_{x_{n}}(x',\cdot)$ 在 $L^{p}_{\loc}(\mathbb{R})$ 中收敛，其函数列在 $L^{p}_{\loc}(\mathbb{R})$ 中收敛。
+
+（3）紧子集上的一致收敛。设 $f_{n}$ 为第（2）步所得的 $W^{1,p}_{\loc}(\mathbb{R})$ 极限的精确代表元。由\cref{theorem:ch04-4-20}(i)，$f_{n}$ 在紧子区间上绝对连续，且 $f'_{n}$ 等于该极限的弱导数，后者是 $(f^{\varepsilon_{j}}_{n})'$ 在 $L^{p}_{\loc}(\mathbb{R})$ 中的极限，即 $f_{x_{n}}(x',\cdot)$。取紧区间 $I$ 与 $t_{0}\in I$，对每个 $j$ 与 $t\in I$ 有 % XREF internal
+\begin{align*}
+\lvert f^{\varepsilon_{j}}_{n}(t)-f_{n}(t)\rvert\leqslant\lvert f^{\varepsilon_{j}}_{n}(t_{0})-f_{n}(t_{0})\rvert+\int_{I}\lvert f^{\varepsilon_{j}}_{x_{n}}(x',s)-f'_{n}(s)\rvert\diff s .
+\end{align*}
+取 $t_{0}$ 使 $f^{\varepsilon_{j}}_{n}(t_{0})\to f_{n}(t_{0})$（这样的点存在，因为子列在 $L^{1}(I)$ 中收敛，而 $f_{n}$ 连续），则右端当 $j\to\infty$ 时趋于零且与 $t\in I$ 无关，故 $f^{\varepsilon_{j}}_{n}\to f_{n}$ 在 $I$ 上一致。
+
+（4）由 $\mathcal{H}^{n-1}$-a.e. 收敛升级为对一切 $t$ 收敛。令
+\begin{align*}
+E:=\bigl\{y\in\mathbb{R}^{n}\mid f^{\varepsilon}(y)\text{ 当 }\varepsilon\to0\text{ 时不收敛于 }f^{*}(y)\bigr\},
+\end{align*}
+则由\cref{theorem:ch04-4-19}、\cref{theorem:ch05-5-12}与\cref{theorem:ch04-4-17} 得 $\mathcal{H}^{n-1}(E)=0$。设 $P:\mathbb{R}^{n}\to\mathbb{R}^{n-1}$ 为到前 $n-1$ 个坐标的投影。由\cref{theorem:ch02-2-8}(ii)（取 $s=n-1$）得 $\mathcal{H}^{n-1}(P(E))\leqslant\mathcal{H}^{n-1}(E)=0$，再由\cref{theorem:ch02-2-5} 得 $\mathcal{L}^{n-1}(P(E))=0$。于是对 $\mathcal{L}^{n-1}$-a.e. 的 $x'$ 与一切 $t\in\mathbb{R}$ 有 $(x',t)\notin E$，即 % XREF internal
+\begin{align*}
+f^{\varepsilon}(x',t)\to f^{*}(x',t)
+\end{align*}
+对一切 $t$ 成立。
+
+（5）合并。对 $\mathcal{L}^{n-1}$-a.e. 的 $x'$ 同时有：$f^{\varepsilon}_{n}(t)\to f_{n}(t)$ 对一切 $t$，以及 $f^{\varepsilon}_{n}(t)=f^{\varepsilon}(x',t)\to f^{*}(x',t)$ 对一切 $t$。故 $f_{n}(t)=f^{*}(x',t)$ 对一切 $t$，即 $t\mapsto f^{*}(x',t)$ 在 $\mathbb{R}$ 的紧子集上绝对连续，且其导数等于 $f'_{n}(t)=f_{x_{n}}(x',t)$ 对 $\mathcal{L}^{1}$-a.e. 的 $t$。既然 $f_{x_{n}}\in L^{p}_{\loc}(\mathbb{R}^{n})$，由 Fubini 定理得 $(f^{*}_{n})'\in L^{p}_{\loc}(\mathbb{R}^{n})$，至此 (i) 得证。
+
+（6）断言 (ii) 的核验。第一个等号来自 $f=g$ $\mathcal{L}^{n}$-a.e.（$\phi_{x_{k}}$ 有界且支集紧）。第二个等号是 Fubini 定理，其中把 $\mathbb{R}^{n}$ 写成 $\mathbb{R}^{n-1}\times\mathbb{R}$ 且 $t$ 为第 $k$ 个坐标。第三个等号：对 $\mathcal{L}^{n-1}$-a.e. 的 $x'$，$g_{k}(x',\cdot)$ 在紧子区间上绝对连续，而 $\phi(x',\cdot)\in C^{1}_{c}(\mathbb{R})$，故经典分部积分给出
+\begin{align*}
+\int_{-\infty}^{\infty}g_{k}(x',t)\phi_{x_{k}}(x',t)\diff t=-\int_{-\infty}^{\infty}g'_{k}(x',t)\phi(x',t)\diff t ,
+\end{align*}
+其余 $x'$ 上的积分不影响全积分的值。第四个等号再次由 Fubini 定理得到。于是 $f$ 的一阶弱偏导数存在，且 $f_{x_{k}}=g'_{k}$ $\mathcal{L}^{n}$-a.e.；由 $g'_{k}\in L^{p}_{\loc}(\mathbb{R}^{n})$（$k=1,\cdots,n$）得 $f\in W^{1,p}_{\loc}(\mathbb{R}^{n})$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-21; kind=motivation; 说明把高维弱可微性沿直线化归为一维问题的作用、任意方向 v∈∂B(0,1) 下「沿 a.e. 直线可微」的确切表述，以及两个方向证明的分工
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-21-动机}
+Sobolev 函数的弱导数只是 $L^{p}_{\loc}$ 中的等价类，本身没有逐点含义。本定理说明这种逐点信息能够沿直线完整恢复，而且恢复的方式是唯一的：对 a.e. 的直线，精确代表元在该直线上的限制是一元 Sobolev 函数。反过来，只要沿每个坐标方向的 a.e. 直线都具有这种一维正则性，函数就属于 $W^{1,p}_{\loc}$。于是 $W^{1,p}$ 的逐点刻画化归为一维情形，而一维情形由\cref{theorem:ch04-4-20}给出完整描述。证明的分工也由此确定：(i) 用磨光与 Fubini 定理把高维的 $L^{p}$ 收敛限制到一条条直线上，(ii) 用分部积分把这些一维导数拼回高维的弱导数。 % XREF internal
+
+结论按任意方向陈述同样成立。设 $v\in\partial B(0,1)$ 为单位向量，$v^{\perp}:=\{a\in\mathbb{R}^{n}\mid a\cdot v=0\}$ 为其正交补，并令
+\begin{align*}
+L_{a,v}:=\{a+tv\mid t\in\mathbb{R}\}\qquad(a\in v^{\perp}).
+\end{align*}
+取正交矩阵 $O$ 使 $Oe_{n}=v$，则 $a\mapsto O^{-1}a$ 是 $v^{\perp}$ 到 $\mathbb{R}^{n-1}$ 的等距同构，而 $L_{a,v}$ 在 $O^{-1}$ 下对应方向 $e_{n}$ 的直线。由 (i) 与正交变换下的不变性，存在 $\mathcal{L}^{n-1}$-零测集 $N_{v}\subseteq v^{\perp}$，使得对每个 $a\in v^{\perp}-N_{v}$，函数 $t\mapsto f^{*}(a+tv)$ 在 $\mathbb{R}$ 的紧子区间上绝对连续，从而沿 $L_{a,v}$ 在 $\mathcal{L}^{1}$-a.e. 点可微。这正是「沿 a.e. 直线可微」的确切含义：方向 $v$ 可取为任意单位向量，而例外直线集 $N_{v}$ 依赖于 $v$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-21; kind=hypotheses; 逐条分析 p 的范围（含 p=∞ 的补述）、几乎处处直线的来历、精确代表元不可换成任意代表元，以及 (f*_k)' ∈ Lp_loc 的含义
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-21-条件}
+\begin{enumerate}[(i)]
+\item 条件 $1\leqslant p<\infty$。定理陈述中 $p$ 的范围没有明确写出；证明中的 Fubini 步骤要对 $\lvert f^{\varepsilon}_{x_{n}}-f_{x_{n}}\rvert^{p}$ 积分，并用到\cref{theorem:ch04-4-1}(vi) 的 $W^{1,p}_{\loc}$ 收敛，两处都要求 $p<\infty$。$p=\infty$ 时结论不仅成立，而且能够去掉「几乎处处」的限制：由\cref{theorem:ch04-4-5}，$f\in W^{1,\infty}_{\loc}(\mathbb{R}^{n})$ 有局部 Lipschitz 代表元 $g$，而 $g=f^{*}$（两者的球平均值相同，且 $g$ 连续），故对每一条直线 $L_{a,v}$，函数 $t\mapsto f^{*}(a+tv)$ 局部 Lipschitz，从而在紧子区间上绝对连续。% XREF internal
+\item 「$\mathcal{L}^{n-1}$-a.e. 的点 $x'$」的来历。证明中对 a.e. $x'$ 得到 $W^{1,p}_{\loc}(\mathbb{R})$ 中的收敛，又对 a.e. $x'$ 得到对一切 $t$ 的逐点收敛，两次的例外集都是 $\mathcal{L}^{n-1}$-零测集，其并仍是 $\mathcal{L}^{n-1}$-零测集。陈述只断言这一 a.e. 结论，不声称对每个 $x'$ 成立。
+\item 结论必须针对精确代表元 $f^{*}$。若把 $f^{*}$ 换成 $f$ 的任意代表元，结论不成立：设 $n\geqslant2$，取 $f=0$，而把 $f$ 在超平面 $\{0\}\times\mathbb{R}^{n-1}$ 上改为处处不连续的有界函数，则 $f=0$ $\mathcal{L}^{n}$-a.e.，故 $f\in W^{1,p}_{\loc}(\mathbb{R}^{n})$；但该代表元在直线 $x_{1}=0$ 上的限制处处不连续，不是绝对连续的。精确代表元对等价类良定义（见\cref{definition:ch01-1-26}），陈述以它为对象正是为了避免这种任意性。% XREF internal
+\item 结论 $(f^{*}_{k})'\in L^{p}_{\loc}(\mathbb{R}^{n})$ 的含义。$(f^{*}_{k})'$ 表示沿第 $k$ 个方向的经典导数（在 $\mathcal{L}^{1}$-a.e. 点存在），定理断言它作为 $\mathbb{R}^{n}$ 上的函数局部 $p$ 次可积。证明给出更强的等式 $(f^{*}_{k})'=f_{x_{k}}$ $\mathcal{L}^{n}$-a.e.，即弱偏导数就是沿 a.e. 直线的经典导数；断言 (ii) 说明这一等式足以刻画 $W^{1,p}_{\loc}$。
+\end{enumerate}
+\end{remark}
+
+\end{document}

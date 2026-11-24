@@ -30,7 +30,7 @@ $S\in\mathbb{R}^{H_{S}\times W_{S}\times3}$，并设一个固定的预训练卷�
 \eqref{align:ch10-风格误差}或\eqref{align:ch10-多层风格误差}定义，总误差 $E(G)$ 由
 \eqref{align:ch10-风格迁移总误差}定义。若 $G_{0}\in\mathbb{R}^{H\times W\times3}$ 为
 随机初始化的图像，$\eta>0$ 为步长，且迭代
-$G_{\tau+1}=G_{\tau}-\eta\nabla_{G}E(G_{\tau})$，$\tau=0,1,2,\dots$，得到 $E$ 的局部
+$G_{\tau+1}=G_{\tau}-\eta\nabla_{G}E(G_{\tau})$，$\tau=0,1,2,\cdots$，得到 $E$ 的局部
 极小点 $G^{\ast}\in\mathbb{R}^{H\times W\times3}$，则 $G^{\ast}$ 称为以 $C$ 为内容、
 $S$ 为风格的\textbf{神经风格迁移}结果，这一过程称为神经风格迁移（neural style
 transfer）。
@@ -67,8 +67,8 @@ transfer）。
 
 \begin{definition}[风格矩阵（Gram 矩阵）]\label{definition:ch10-Gram矩阵}
 设某卷积层有 $K$ 个通道、每个通道的空间尺寸为 $I\times J$，
-$a_{ijk}\in\mathbb{R}$ 为通道 $k$ 在位置 $(i,j)$ 的预激活，$i=1,\dots,I$、
-$j=1,\dots,J$、$k=1,\dots,K$。由\eqref{align:ch10-Gram矩阵}定义的 $K\times K$ 实矩阵
+$a_{ijk}\in\mathbb{R}$ 为通道 $k$ 在位置 $(i,j)$ 的预激活，$i=1,\cdots,I$、
+$j=1,\cdots,J$、$k=1,\cdots,K$。由\eqref{align:ch10-Gram矩阵}定义的 $K\times K$ 实矩阵
 $F(G)=(F_{kk'}(G))$ 称为输入图像 $G$ 在该层的\textbf{风格矩阵}（style matrix），亦称
 \textbf{Gram 矩阵}，其元素为
 $F_{kk'}(G)=\sum_{i=1}^{I}\sum_{j=1}^{J}a_{ijk}(G)\,a_{ijk'}(G)$。

@@ -1,0 +1,693 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{覆盖定理}\label{section:ch01-05}
+
+本节介绍 Vitali 与 Besicovitch 的两个基本覆盖定理。Vitali 覆盖定理的证明较容易，在考察 $\mathbb{R}^n$ 上的 $\mathcal{L}^n$ 时最为有用。Besicovitch 覆盖定理的证明要困难得多，但在研究 $\mathbb{R}^n$ 上的任意 Radon 测度时是必需的。两者的关键几何差别在于：Vitali 覆盖定理给出的是由放大球构成的覆盖，而 Besicovitch 覆盖定理用原来的球给出覆盖，代价是允许一定的受控重叠。
+
+这些覆盖定理将在本书其余部分反复使用，其中最早也是最重要的应用是\cref{section:ch01-06}中的微分定理。% XREF p=35 "the first and most important applications being the differentiation theorems in Section 1.6"
+
+\subsection{Vitali 覆盖定理}\label{subsection:ch01-05-1}
+
+\begin{definition*}[膨胀球]\phantomsection\label{definition:ch01-05-bhat}
+设 $n$ 为正整数，$B=B(x,r)$ 为 $\mathbb{R}^n$ 中的闭球，其球心为 $x\in\mathbb{R}^n$，半径 $r>0$。记
+\begin{align*}
+\hat B:=B(x,5r),
+\end{align*}
+称 $\hat B$ 为 $B$ 的膨胀球；它与 $B$ 同心，半径是 $B$ 的半径的 $5$ 倍。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch01-05-bhat; kind=motivation; 说明膨胀球这一记号的用途与放大 5 倍的来源
+\begin{remark}\phantomsection\label{remark:ch01-05-bhat-动机}
+Vitali 型论证只能保证选出的不交球族覆盖到原球族的膨胀球族，而不是原球族本身。放大 $5$ 倍正是为了补偿极大不交选取留下的空隙：若 $B$ 与某个入选球 $B'$ 相交且 $\operatorname{diam}B\leqslant2\operatorname{diam}B'$，则 $B\subseteq\hat B'$。这一包含关系在\cref{theorem:ch01-1-24}的断言、\cref{theorem:ch01-1-25}的结论与\cref{theorem:ch01-1-26}的测度估计中都被使用。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-05-bhat; kind=hypotheses; 逐条说明半径为正、球为闭球与倍数 5 的作用
+\begin{remark}\phantomsection\label{remark:ch01-05-bhat-条件}
+\begin{enumerate}[(i)]
+\item 条件 $r>0$ 保证 $\hat B$ 非退化，从而 $\mathcal{L}^n(B)=\alpha(n)r^n>0$；\cref{theorem:ch01-1-26}的估计要用 $\mathcal{L}^n(B)$ 作分母。% XREF internal
+\item 取闭球而非开球，使「两球相交」与「包含于膨胀球」这两个命题的边界情形同时成立：若 $B=B(x,r)$ 与 $B'=B(x',r')$ 相交且 $2r\leqslant4r'$，则对 $z\in B$ 与 $y\in B\cap B'$ 有 $\lvert z-x'\rvert\leqslant2r+r'\leqslant5r'$。
+\item 倍数 $5$ 不必最优。上述估计只用到 $2r\leqslant4r'$，因此任何大于 $4$ 的倍数都能替代 $5$；取 $5$ 只是便于书写，代价是\cref{theorem:ch01-1-26}中出现常数 $5^n$。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[覆盖与细覆盖]\label{definition:ch01-1-19}
+设 $n$ 为正整数，$\mathcal{F}$ 为一族 $\mathbb{R}^n$ 中的闭球，即每个 $B\in\mathcal{F}$ 都可写成 $B=B(x_B,r_B)$，其中 $x_B\in\mathbb{R}^n$ 为球心，$r_B\geqslant0$ 为半径；又设 $A\subseteq\mathbb{R}^n$。
+\begin{enumerate}[(i)]
+\item 若 $A\subseteq\bigcup_{B\in\mathcal{F}}B$，则称 $\mathcal{F}$ 为 $A$ 的一个覆盖。
+\item 若 $\mathcal{F}$ 是 $A$ 的覆盖，且对每个 $x\in A$ 都有
+\begin{align*}
+\inf\{\operatorname{diam}B\mid x\in B,\ B\in\mathcal{F}\}=0,
+\end{align*}
+则称 $\mathcal{F}$ 为 $A$ 的一个细覆盖。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-19; kind=motivation; 说明为何把「覆盖」与「细覆盖」分成两款，以及细覆盖在覆盖定理中的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-19-动机}
+这两款条件分别刻画 Vitali 型论证所需的两个要素。第一款只要求 $\mathcal{F}$ 的并集包含 $A$，这是任何覆盖都要有的最小要求。第二款要求经过 $A$ 中每一点的球可以任意小，其作用是使证明能够不断切除已经选中的球而仍然保持对剩余部分的覆盖：在\cref{theorem:ch01-1-25}中，正是「以 $x$ 为中心、直径任意小」这一条使证明能够选到与任意有限多个指定闭球都不相交的球。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-19; kind=hypotheses; 逐项分析半径范围、闭球要求与下确界条件的含义及可削弱性
+\begin{remark}\phantomsection\label{remark:ch01-def-1-19-条件}
+\begin{enumerate}[(i)]
+\item 半径允许取 $r_B\geqslant0$，即允许退化球（单点集），这与下文「非退化闭球」的假设相区别。\cref{theorem:ch01-1-24}与\cref{theorem:ch01-1-27}都明确要求非退化，因为需要 $\operatorname{diam}B>0$ 才能按直径分档；而\cref{theorem:ch01-1-25}只要求细覆盖，退化球对细覆盖条件没有贡献。% XREF internal
+\item 细覆盖条件中的下确界是对所有满足 $x\in B$ 的 $B\in\mathcal{F}$ 取的，因此它等价于：存在球 $B_k\in\mathcal{F}$ 使 $x\in B_k$ 且 $\operatorname{diam}B_k\to0$。这一等价性在\cref{theorem:ch01-1-25}的证明中被直接使用。% XREF internal
+\item 定义本身不要求 $\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}<\infty$。该条件出现在定理中而非定义中，因为「覆盖」与「细覆盖」都是局部概念，而直径的一致有界性是 Vitali 型结论成立所需的额外整体条件。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Vitali 覆盖定理]\label{theorem:ch01-1-24}
+设 $n$ 为正整数，$\mathcal{F}$ 为 $\mathbb{R}^n$ 中任一非退化闭球族，且
+\begin{align*}
+\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}<\infty .
+\end{align*}
+则存在 $\mathcal{F}$ 中的可数球族 $\mathcal{G}$，其中的球两两不交，使得
+\begin{align*}
+\bigcup_{B\in\mathcal{F}}B\subseteq\bigcup_{B\in\mathcal{G}}\hat B .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+（1）记 $D:=\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}$，并对每个正整数 $j$ 令
+\begin{align*}
+\mathcal{F}_j:=\Bigl\{B\in\mathcal{F}\Bigm|\frac{D}{2^{j}}<\operatorname{diam}B\leqslant\frac{D}{2^{j-1}}\Bigr\}.
+\end{align*}
+按如下方式归纳选取 $\mathcal{G}_j\subseteq\mathcal{F}_j$：
+\begin{enumerate}[(a)]
+\item 取 $\mathcal{G}_1$ 为 $\mathcal{F}_1$ 中任一极大不交球族；
+\item 在 $\mathcal{G}_1,\cdots,\mathcal{G}_{k-1}$ 已选定之后，取 $\mathcal{G}_k$ 为集合
+\begin{align*}
+\Bigl\{B\in\mathcal{F}_k\Bigm|B\cap B'=\emptyset\ \text{对一切}\ B'\in\bigcup_{j=1}^{k-1}\mathcal{G}_j\Bigr\}
+\end{align*}
+的任一极大不交子族。
+\end{enumerate}
+最后令
+\begin{align*}
+\mathcal{G}:=\bigcup_{j=1}^{\infty}\mathcal{G}_j .
+\end{align*}
+由上述构造，$\mathcal{G}$ 中的球两两不交，且 $\mathcal{G}\subseteq\mathcal{F}$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-24; kind=proof; 补出极大不交子族的存在性（Zorn 引理）、各 $\mathcal{G}_j$ 与 $\mathcal{G}$ 的可数性，以及不交性的逐项核验
+（2）先说明（1）中的选取可行。设 $\mathcal{A}$ 为任一球族，其不交子族按包含关系构成偏序集；若 $\{\mathcal{H}_\alpha\}$ 是该偏序集中的一个链，则并族 $\bigcup_\alpha\mathcal{H}_\alpha$ 中的任意两个球同属于链中某个 $\mathcal{H}_\alpha$，故仍互不相交，即 $\bigcup_\alpha\mathcal{H}_\alpha$ 是链的上界。由 Zorn 引理，$\mathcal{A}$ 存在极大不交子族，因此 (a) 与 (b) 中的极大不交子族均存在。
+
+再说明 $\mathcal{G}$ 可数。固定 $j$。$\mathcal{F}_j$ 中每个球的直径大于 $D/2^{j}$，故其半径大于 $D/2^{j+1}>0$。$\mathcal{G}_j$ 是两两不交的闭球族，每个球都含有有理点（$\mathbb{Q}^n$ 在 $\mathbb{R}^n$ 中稠密），且互不相交的球所含的有理点互不相同，故 $\mathcal{G}_j$ 至多可数。于是 $\mathcal{G}$ 是可数个至多可数族之并，至多可数。
+
+最后核验不交性。若 $B,B'\in\mathcal{G}$ 同属于某个 $\mathcal{G}_j$，则由 $\mathcal{G}_j$ 是不交族得 $B\cap B'=\emptyset$。若 $B\in\mathcal{G}_k$、$B'\in\mathcal{G}_j$ 且 $j<k$，则由 (b) 中允许族的定义得 $B\cap B'=\emptyset$。故 $\mathcal{G}$ 中的球两两不交。
+
+（3）断言：对每个球 $B\in\mathcal{F}$，存在球 $B'\in\mathcal{G}$，使得 $B\cap B'\neq\emptyset$ 且 $B\subseteq\hat B'$。
+
+断言之证明：固定 $B\in\mathcal{F}$。由于 $\mathcal{F}$ 中的球非退化，$\operatorname{diam}B>0$；又 $\operatorname{diam}B\leqslant D$，故存在正整数 $j$ 使 $D/2^{j}<\operatorname{diam}B\leqslant D/2^{j-1}$，即 $B\in\mathcal{F}_j$。令
+\begin{align*}
+\mathcal{A}_j:=\Bigl\{B\in\mathcal{F}_j\Bigm|B\cap B'=\emptyset\ \text{对一切}\ B'\in\bigcup_{k=1}^{j-1}\mathcal{G}_k\Bigr\},
+\end{align*}
+则 $\mathcal{G}_j$ 是 $\mathcal{A}_j$ 的极大不交子族。若 $B\in\mathcal{A}_j$ 且 $B$ 与 $\mathcal{G}_j$ 中每个球都不交，则 $\mathcal{G}_j\cup\{B\}$ 是 $\mathcal{A}_j$ 的更大不交子族，与极大性矛盾；故此时存在 $B'\in\mathcal{G}_j$ 使 $B\cap B'\neq\emptyset$。若 $B\notin\mathcal{A}_j$，则由 $\mathcal{A}_j$ 的定义存在 $B'\in\bigcup_{k=1}^{j-1}\mathcal{G}_k$ 使 $B\cap B'\neq\emptyset$。两种情形都给出 $B'\in\bigcup_{k=1}^{j}\mathcal{G}_k$ 使 $B\cap B'\neq\emptyset$。
+
+现设 $B'\in\mathcal{G}_k$，其中 $k\leqslant j$。由 $B'\in\mathcal{F}_k$ 得 $\operatorname{diam}B'>D/2^{k}\geqslant D/2^{j}$，而 $\operatorname{diam}B\leqslant D/2^{j-1}=2D/2^{j}$，故
+\begin{align*}
+\operatorname{diam}B<2\operatorname{diam}B'.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-24; kind=proof; 补出由直径比较推出球包含 $B\subseteq\hat B'$ 的距离估计
+下面由直径比较推出 $B\subseteq\hat B'$。写 $B=B(x,r)$，$B'=B(x',r')$，则 $2r=\operatorname{diam}B$，$2r'=\operatorname{diam}B'$，故 $r<2r'$。取 $y\in B\cap B'$，则 $\lvert y-x\rvert\leqslant r$ 且 $\lvert y-x'\rvert\leqslant r'$。对每个 $z\in B$ 有
+\begin{align*}
+\lvert z-x'\rvert\leqslant\lvert z-x\rvert+\lvert x-y\rvert+\lvert y-x'\rvert\leqslant 2r+r'<5r',
+\end{align*}
+即 $z\in B(x',5r')=\hat B'$。因此 $B\subseteq\hat B'$，断言得证。
+
+（4）由（3），对每个 $B\in\mathcal{F}$ 取定一个球 $B'\in\mathcal{G}$ 使 $B\subseteq\hat B'$，于是
+\begin{align*}
+\bigcup_{B\in\mathcal{F}}B\subseteq\bigcup_{B'\in\mathcal{G}}\hat B'=\bigcup_{B\in\mathcal{G}}\hat B .
+\end{align*}
+结合（2）中已证的 $\mathcal{G}$ 可数且由两两不交的球组成，定理得证。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-24; kind=motivation; 说明按直径分档、逐档取极大不交族的构造思路与膨胀球的来源
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-24-动机}
+直接在一整族球中取极大不交子族只能保证覆盖到膨胀球族，无法控制膨胀的倍数：与入选球相交的球可能直径远大于入选球，从而逃出膨胀球。证明的对策是按直径把 $\mathcal{F}$ 分成几何级数档 $\mathcal{F}_j$，每档的直径落在 $(D/2^{j},D/2^{j-1}]$ 内，相差不超过 $2$ 倍。逐档选取极大不交子族时，第 $k$ 档的球被要求与前面各档已选的球全不相交。于是任一球 $B\in\mathcal{F}_j$ 若与某个入选球 $B'$ 相交，则 $B'$ 的档位不高于 $j$，从而 $\operatorname{diam}B\leqslant2\operatorname{diam}B'$，这正是 $B\subseteq\hat B'$ 所需的倍数。逐档处理还保证了可数性：每档的球半径有正下界，故该档的不交族至多可数。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-24; kind=hypotheses; 逐条分析直径一致有界、非退化与闭球假设的作用，并给出不可删除的反例
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-24-条件}
+\begin{enumerate}[(i)]
+\item 条件 $\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}<\infty$ 是证明的起点：$D$ 有限才能定义分档 $\mathcal{F}_j$，并在断言中得到 $\operatorname{diam}B\leqslant D/2^{j-1}$ 与 $\operatorname{diam}B'>D/2^{j}$ 的比较。
+\item 该条件不可删除。在 $\mathbb{R}$ 中取 $\mathcal{F}:=\{B(0,r)\mid r\geqslant1\}$，则 $\bigcup_{B\in\mathcal{F}}B=\mathbb{R}$，而 $\mathcal{F}$ 中任意两个球互相包含，故任一不交子族只含一个球 $B(0,r_0)$，其膨胀球为 $B(0,5r_0)\neq\mathbb{R}$，结论不成立。
+\item 非退化条件不可删除。取 $A=[0,1]\subseteq\mathbb{R}$，$\mathcal{F}:=\{\{x\}\mid x\in[0,1]\}$ 由退化闭球组成，则 $\hat B=B$。任一不交子族 $\mathcal{G}$ 满足 $\bigcup_{B\in\mathcal{G}}\hat B$ 至多可数，不可能包含 $A$，结论不成立。
+\item 闭球假设在本定理中只是便于与后文统一：断言只用到「相交」蕴含球心距离不超过半径之和，开球同样成立。闭球性在\cref{theorem:ch01-1-25}的证明中才起实质作用，那里需要 $x\notin B_k$ 时 $\operatorname{dist}(x,B_k)>0$。% XREF internal
+\item 结论中的 $\mathcal{G}$ 一般不能取为有限族：在 $\mathbb{R}$ 中取 $\mathcal{F}:=\{B(k,1)\mid k\in\mathbb{Z}\}\cup\{B(k+1/2,1/2)\mid k\in\mathbb{Z}\}$，任一不交子族至多可数，而 $\bigcup_{B\in\mathcal{F}}B=\mathbb{R}$ 需要可数多个膨胀球才能覆盖。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Vitali 覆盖定理的变体]\label{theorem:ch01-1-25}
+设 $n$ 为正整数，$A\subseteq\mathbb{R}^n$，$\mathcal{F}$ 为由闭球组成的 $A$ 的细覆盖，且
+\begin{align*}
+\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}<\infty .
+\end{align*}
+则存在 $\mathcal{F}$ 中的可数不交球族 $\mathcal{G}$，使得对每个有限子集 $\{B_1,\cdots,B_m\}\subseteq\mathcal{F}$ 都有
+\begin{align*}
+A\setminus\bigcup_{k=1}^{m}B_k\subseteq\bigcup_{B\in\mathcal{G}\setminus\{B_1,\cdots,B_m\}}\hat B .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+按\cref{theorem:ch01-1-24}的证明取 $\mathcal{G}$，并取定有限子集 $\{B_1,\cdots,B_m\}\subseteq\mathcal{F}$。% XREF p=37 "Choose G as in the proof of the Vitali Covering Theorem and select {B_1, . . . , B_m} ⊆ F."
+
+若 $A\subseteq\bigcup_{k=1}^{m}B_k$，则左端为空集，结论成立。否则取 $x\in A\setminus\bigcup_{k=1}^{m}B_k$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-25; kind=proof; 补出「由细覆盖与闭球性可取到含 $x$ 且与 $B_1,\cdots,B_m$ 都不交的球」的推理
+由于每个 $B_k$ 是闭集而 $x\notin B_k$，距离 $d_k:=\operatorname{dist}(x,B_k)>0$。令 $d:=\min\{d_1,\cdots,d_m\}>0$。由 $\mathcal{F}$ 是 $A$ 的细覆盖，可取 $B\in\mathcal{F}$ 使 $x\in B$ 且 $\operatorname{diam}B<d$。若 $z\in B$，则 $\lvert z-x\rvert\leqslant\operatorname{diam}B<d\leqslant d_k$，故 $z\notin B_k$；因此 $B\cap B_k=\emptyset$（$k=1,\cdots,m$）。
+
+于是由\cref{theorem:ch01-1-24}证明中的断言，存在球 $B'\in\mathcal{G}$ 使 $B\cap B'\neq\emptyset$ 且 $B\subseteq\hat B'$。% XREF p=37 "from the claim in the proof above, there exists a ball B' ∈ G such that B ∩ B' ≠ ∅ and so B ⊆ B̂'."
+
+% SUPPLEMENT: parent=theorem:ch01-1-25; kind=proof; 补出 $B'$ 不属于给定有限子集以及 $x$ 落在右端的核验
+由 $B'\cap B\neq\emptyset$ 而 $B\cap B_k=\emptyset$ 知 $B'\neq B_k$（$k=1,\cdots,m$），故 $B'\in\mathcal{G}\setminus\{B_1,\cdots,B_m\}$。又 $x\in B\subseteq\hat B'$，故 $x$ 属于右端并集。由 $x$ 的任意性，结论成立。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-25; kind=motivation; 说明该变体相对 Vitali 覆盖定理多出的信息及其在后续论证中的作用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-25-动机}
+本定理的球族 $\mathcal{G}$ 仍然只依赖 $\mathcal{F}$ 与 $A$，而结论对 $\mathcal{F}$ 中任意有限多个球都成立。多出的这一点信息使选取过程可以接着做：当论证已经把有限多个球处理完毕、需要对其余部分继续选取时，可以删去这些球而不失去覆盖。\cref{theorem:ch01-1-26}的证明正是逐轮删去已选球并重复 Vitali 覆盖定理，本定理把这一操作合法化。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-25; kind=hypotheses; 逐条分析细覆盖、直径有界与闭球条件，说明细覆盖不可删
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-25-条件}
+\begin{enumerate}[(i)]
+\item 细覆盖条件在证明中只用于一处：为点 $x$ 找到直径任意小的球 $B\in\mathcal{F}$ 使 $x\in B$，从而 $B$ 避开有限多个闭集 $B_1,\cdots,B_m$。若只假设 $\mathcal{F}$ 是覆盖而不细，结论一般不成立：取 $A=\{0,4\}\subseteq\mathbb{R}$，$\mathcal{F}=\{B(0,1),B(4,1)\}$，则 $\sup\operatorname{diam}B=2<\infty$，而取 $m=2$、$\{B_1,B_2\}=\mathcal{F}$ 时，不交子族 $\mathcal{G}$ 只能是 $\mathcal{F}$ 本身，右端为空集，左端为 $A$，结论不成立。
+\item 直径一致有界的作用与\cref{theorem:ch01-1-24}相同，因为它依赖该定理的构造；同一反例 $\mathcal{F}=\{B(0,r)\mid r\geqslant1\}$、$A=\{0\}$ 说明该条件不可删除。% XREF internal
+\item 闭球条件不可删除。证明中需要 $x\notin B_k$ 时 $\operatorname{dist}(x,B_k)>0$；若 $B_k$ 为开球且 $x$ 在其边界上，则该距离为零，无法再用直径小于距离的球避开它。
+\item 结论中的有限子集 $\{B_1,\cdots,B_m\}$ 可以包含不属于 $\mathcal{G}$ 的球，此时右端的指标集与 $\mathcal{G}$ 相同；这一退化情形由 $\mathcal{G}\setminus\{B_1,\cdots,B_m\}$ 的写法自动涵盖。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[用球填充开集]\label{theorem:ch01-1-26}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^n$ 为开集，$\delta>0$。则存在由 $U$ 中两两不交的闭球组成的可数族 $\mathcal{G}$，使得 $\operatorname{diam}B<\delta$ 对一切 $B\in\mathcal{G}$ 成立，且
+\begin{align*}
+\mathcal{L}^n\Bigl(U\setminus\bigcup_{B\in\mathcal{G}}B\Bigr)=0 .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+（1）固定 $1-\frac{1}{5^n}<\theta<1$，先设 $\mathcal{L}^n(U)<\infty$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-26; kind=proof; 补出 $U=\emptyset$ 的退化情形
+若 $U=\emptyset$，取 $\mathcal{G}:=\emptyset$ 即可。以下设 $U\neq\emptyset$，此时 $\mathcal{L}^n(U)>0$。
+
+（2）断言：存在 $U$ 中有限的不交闭球族 $\{B_i\}_{i=1}^{M_1}$，使得 $\operatorname{diam}B_i<\delta$（$i=1,\cdots,M_1$）且
+\begin{align*}
+\mathcal{L}^n\Bigl(U\setminus\bigcup_{i=1}^{M_1}B_i\Bigr)\leqslant\theta\,\mathcal{L}^n(U). \qquad(\star)
+\end{align*}
+
+断言之证明：令
+\begin{align*}
+\mathcal{F}_1:=\{B\subseteq U\mid B\ \text{为闭球},\ \operatorname{diam}B<\delta\}.
+\end{align*}
+由\cref{theorem:ch01-1-24}，存在可数不交族 $\mathcal{G}_1\subseteq\mathcal{F}_1$ 使 $U\subseteq\bigcup_{B\in\mathcal{G}_1}\hat B$。% XREF p=38 "By the Vitali Covering Theorem there exists a countable disjoint family G_1 ⊆ F_1 such that U ⊆ ⋃_{B∈G_1} B̂."
+于是
+\begin{align*}
+\mathcal{L}^n(U)\leqslant\sum_{B\in\mathcal{G}_1}\mathcal{L}^n(\hat B)=5^n\sum_{B\in\mathcal{G}_1}\mathcal{L}^n(B)=5^n\mathcal{L}^n\Bigl(\bigcup_{B\in\mathcal{G}_1}B\Bigr).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-26; kind=proof; 补出上式两步等号与最后一步不等号的理由
+上式第一处不等号由 $U\subseteq\bigcup_{B\in\mathcal{G}_1}\hat B$ 与 $\mathcal{L}^n$ 的单调性及可数次可加性得到。第一处等号用到半径为 $5r$ 的球其测度为 $\alpha(n)(5r)^n=5^n\alpha(n)r^n$，即 $\mathcal{L}^n(\hat B)=5^n\mathcal{L}^n(B)$。第二处等号用到 $\mathcal{G}_1$ 中球两两不交与 $\mathcal{L}^n$ 的可数可加性。
+
+因此
+\begin{align*}
+\mathcal{L}^n\Bigl(\bigcup_{B\in\mathcal{G}_1}B\Bigr)\geqslant\frac{1}{5^n}\mathcal{L}^n(U),
+\end{align*}
+从而由 $\bigcup_{B\in\mathcal{G}_1}B\subseteq U$ 与 $\mathcal{L}^n(U)<\infty$ 得
+\begin{align*}
+\mathcal{L}^n\Bigl(U\setminus\bigcup_{B\in\mathcal{G}_1}B\Bigr)
+=\mathcal{L}^n(U)-\mathcal{L}^n\Bigl(\bigcup_{B\in\mathcal{G}_1}B\Bigr)
+\leqslant\Bigl(1-\frac{1}{5^n}\Bigr)\mathcal{L}^n(U).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-26; kind=proof; 补出从可数族中取出有限子族使 (★) 成立的单调极限论证
+把 $\mathcal{G}_1$ 排成序列 $B_1,B_2,\cdots$，并令 $E_N:=\bigcup_{i=1}^{N}B_i$。则 $E_N$ 关于 $N$ 单调递增，且 $\bigcup_{N=1}^{\infty}E_N=\bigcup_{B\in\mathcal{G}_1}B$，故由测度的下连续性，
+\begin{align*}
+\lim_{N\to\infty}\mathcal{L}^n(E_N)=\mathcal{L}^n\Bigl(\bigcup_{B\in\mathcal{G}_1}B\Bigr)\geqslant\frac{1}{5^n}\mathcal{L}^n(U)>(1-\theta)\mathcal{L}^n(U),
+\end{align*}
+其中最后一处不等号用到 $1-\frac{1}{5^n}<\theta$ 与 $\mathcal{L}^n(U)>0$。于是存在正整数 $M_1$ 使 $\mathcal{L}^n(E_{M_1})>(1-\theta)\mathcal{L}^n(U)$，再由 $\mathcal{L}^n(U)<\infty$ 得
+\begin{align*}
+\mathcal{L}^n\Bigl(U\setminus\bigcup_{i=1}^{M_1}B_i\Bigr)=\mathcal{L}^n(U)-\mathcal{L}^n(E_{M_1})<\theta\,\mathcal{L}^n(U),
+\end{align*}
+即 $(\star)$ 成立；又 $E_{M_1}$ 是 $\mathcal{G}_1$ 中有限个两两不交的球的并。
+
+（3）现在令
+\begin{align*}
+U_2:=U\setminus\bigcup_{i=1}^{M_1}B_i,\qquad
+\mathcal{F}_2:=\{B\mid B\subseteq U_2,\ B\ \text{为闭球},\ \operatorname{diam}B<\delta\},
+\end{align*}
+并如上取 $\mathcal{F}_2$ 中有限个不交球 $B_{M_1+1},\cdots,B_{M_2}$，使得
+\begin{align*}
+\mathcal{L}^n\Bigl(U\setminus\bigcup_{i=1}^{M_2}B_i\Bigr)
+&=\mathcal{L}^n\Bigl(U_2\setminus\bigcup_{i=M_1+1}^{M_2}B_i\Bigr)\\
+&\leqslant\theta\,\mathcal{L}^n(U_2)\leqslant\theta^2\mathcal{L}^n(U).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-26; kind=proof; 核验把 (2) 应用于 $U_2$ 所需的假设，并说明 $U_2=\emptyset$ 时无新增球
+这里把 (2) 中的 $U$ 换成 $U_2$：$U_2$ 是开集（开集减去有限个闭球），$\mathcal{L}^n(U_2)\leqslant\mathcal{L}^n(U)<\infty$，故 (2) 适用。若 $U_2=\emptyset$，则令 $M_2:=M_1$，此时两处等式与不等号仍成立。第一处等号用到 $U_2\subseteq U$ 与 $\bigcup_{i=1}^{M_1}B_i\subseteq U$：两边都等于 $\mathcal{L}^n\bigl(U\setminus\bigcup_{i=1}^{M_2}B_i\bigr)$。最后一处不等号即 $(\star)$ 应用于 $U_2$ 的结果。
+
+（4）继续这一过程，得到由两两不交的球组成的可数族，使得
+\begin{align*}
+\mathcal{L}^n\Bigl(U\setminus\bigcup_{i=1}^{M_k}B_i\Bigr)\leqslant\theta^k\mathcal{L}^n(U)\qquad(k=1,2,\cdots).
+\end{align*}
+由于 $\theta^k\to0$，当 $\mathcal{L}^n(U)<\infty$ 时定理得证。
+
+% SUPPLEMENT: parent=theorem:ch01-1-26; kind=proof; 补出取极限得到零测余集的理由，并核验各轮选出的球两两不交
+记 $\mathcal{G}:=\bigcup_{k=1}^{\infty}\{B_{M_{k-1}+1},\cdots,B_{M_k}\}$，其中 $M_0:=0$。第 $k$ 轮的球都含于 $U_k=U\setminus\bigcup_{i=1}^{M_{k-1}}B_i$，而 $U_k$ 与前面各轮的球都不相交，故 $\mathcal{G}$ 中的球两两不交，且每个球的直径小于 $\delta$、都含于 $U$。又 $\bigcup_{i=1}^{M_k}B_i$ 关于 $k$ 单调递增，由测度的上连续性（这里用到 $\mathcal{L}^n(U)<\infty$），
+\begin{align*}
+\mathcal{L}^n\Bigl(U\setminus\bigcup_{B\in\mathcal{G}}B\Bigr)
+=\lim_{k\to\infty}\mathcal{L}^n\Bigl(U\setminus\bigcup_{i=1}^{M_k}B_i\Bigr)
+\leqslant\lim_{k\to\infty}\theta^k\mathcal{L}^n(U)=0 .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-26; kind=proof; 补出 $\mathcal{L}^n(U)=\infty$ 时按同心球壳分层填充的细节
+若 $\mathcal{L}^n(U)=\infty$，则对每个开集
+\begin{align*}
+U_m:=\{x\in U\mid m<\lvert x\rvert<m+1\}\qquad(m=0,1,\cdots)
+\end{align*}
+应用上述构造。逐项核验：每个 $U_m$ 是开集；由 $U_m\subseteq\{m<\lvert x\rvert<m+1\}$ 得
+\begin{align*}
+\mathcal{L}^n(U_m)\leqslant\alpha(n)\bigl((m+1)^n-m^n\bigr)<\infty,
+\end{align*}
+故有限测度情形适用于 $U_m$，得到 $U_m$ 中两两不交的闭球可数族 $\mathcal{G}^m$，其中每个球直径小于 $\delta$，且 $\mathcal{L}^n(U_m\setminus\bigcup_{B\in\mathcal{G}^m}B)=0$。由于 $U_m$ 两两不交，不同 $m$ 对应的球也两两不交，故 $\mathcal{G}:=\bigcup_{m=0}^{\infty}\mathcal{G}^m$ 是 $U$ 中两两不交的闭球可数族。最后，
+\begin{align*}
+U\setminus\bigcup_{B\in\mathcal{G}}B
+\subseteq\Bigl(U\setminus\bigcup_{m=0}^{\infty}U_m\Bigr)\cup\bigcup_{m=0}^{\infty}\Bigl(U_m\setminus\bigcup_{B\in\mathcal{G}^m}B\Bigr),
+\end{align*}
+其中右端第一个集合含于 $\{x\mid\lvert x\rvert\in\mathbb{N}\}$，其 $\mathcal{L}^n$ 测度为零（它是可数个球面之并），其余各项的测度也为零，故左端测度为零。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-26-比较}
+另见下一小节中的\cref{theorem:ch01-1-28}，它把上述证明中的 $\mathcal{L}^n$ 换成任意 Radon 测度。% XREF p=39 "See also Theorem 1.28 in the next section, which replaces L^n in the preceding proof by an arbitrary Radon measure."
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-26; kind=motivation; 说明「用球填充开集」的几何含义与逐轮削去的迭代思路
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-26-动机}
+本定理说明开集可以几乎处处地由互不相交的球填满，且球的直径可以事先压到任意小。这一结论把开集上的积分问题化归为球上的估计问题：由于余集测度为零，关于 $\mathcal{L}^n$ 的积分可以写成对各个球的积分之和，而球上的估计通常最容易做。证明是迭代的：先选有限个球使余下部分测度降到原来的 $\theta$ 倍，再在这一余下部分上重复，第 $k$ 轮后余下部分测度不超过 $\theta^k\mathcal{L}^n(U)$，从而趋于零。常数 $\theta$ 只需满足 $1-5^{-n}<\theta<1$，其来源是\cref{theorem:ch01-1-24}中膨胀球放大了 $5$ 倍。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-26; kind=hypotheses; 逐条分析开性、直径上界、测度有限性与 $\theta$ 的取值范围
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-26-条件}
+\begin{enumerate}[(i)]
+\item 开性在证明中有两处作用：其一，球含于 $U$ 才使 $\bigcup_{B\in\mathcal{G}}B\subseteq U$，从而可以作差集 $U\setminus\bigcup B$ 并用 $\mathcal{L}^n(U)<\infty$ 作减法；其二，$U_2=U\setminus\bigcup_{i=1}^{M_1}B_i$ 仍是开集，使迭代可以在同一框架内进行。
+\item 条件 $\operatorname{diam}B<\delta$ 可以取到：$\mathcal{F}_1$ 中的球直径已限制在 $\delta$ 以下，而\cref{theorem:ch01-1-24}给出的球族取自 $\mathcal{F}_1$。% XREF internal
+\item 结论中的余集只能是零测集，不能取为空集：例如 $U=(0,1)^2\subseteq\mathbb{R}^2$ 中互不相交的闭球之并是可数并，一般不能等于 $U$。
+\item 参数 $\theta$ 满足 $1-5^{-n}<\theta<1$ 使 $(1-5^{-n})\mathcal{L}^n(U)<\theta\mathcal{L}^n(U)$；这一步在 $\mathcal{L}^n(U)>0$ 时才有意义，故先处理 $U=\emptyset$。若 $n$ 越大，$5^{-n}$ 越小，$\theta$ 的可用范围越靠近 $1$，但总可以取到。
+\item 有限测度条件不可删除，但可以通过分层绕开：当 $\mathcal{L}^n(U)=\infty$ 时，证明把 $U$ 分成可数个有限测度的球壳层 $U_m$ 分别处理，余下的零测集是球面之并。若不这样分层而直接对 $U$ 使用上连续性，$\mathcal{L}^n(U)<\infty$ 缺失会使第 (4) 步的极限论证失效。
+\end{enumerate}
+\end{remark}
+
+\subsection{Besicovitch 覆盖定理}\label{subsection:ch01-05-2}
+
+若 $\mu$ 是 $\mathbb{R}^n$ 上的任意 Radon 测度，则一般无法由 $\mu(B)$ 系统地控制 $\mu(\hat B)$。因此 Vitali 覆盖定理在研究这类测度时用处不大；此时需要的是不要求放大球的覆盖定理。
+
+\begin{theorem}[Besicovitch 覆盖定理]\label{theorem:ch01-1-27}
+设 $n$ 为正整数。存在仅依赖于 $n$ 的常数 $N_n$，具有下述性质：设 $\mathcal{F}$ 为 $\mathbb{R}^n$ 中任一非退化闭球族，满足
+\begin{align*}
+\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}<\infty ,
+\end{align*}
+并设 $A$ 为 $\mathcal{F}$ 中所有球的球心之集。则存在 $\mathcal{F}$ 中的 $N_n$ 个可数球族 $\mathcal{G}_1,\cdots,\mathcal{G}_{N_n}$，每个族中的球两两不交，使得
+\begin{align*}
+A\subseteq\bigcup_{i=1}^{N_n}\bigcup_{B\in\mathcal{G}_i}B .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+（1）先设 $A$ 有界。记
+\begin{align*}
+D:=\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}.
+\end{align*}
+取任一球 $B_1=B(a_1,\tau_1)\in\mathcal{F}$ 使 $\tau_1\geqslant\frac{3}{4}\cdot\frac{D}{2}$；下文记 $r_1:=\tau_1$。对 $j\geqslant2$ 归纳选取 $B_j$ 如下。令 $A_j:=A\setminus\bigcup_{i=1}^{j-1}B_i$。若 $A_j=\emptyset$，则停止并置 $J:=j-1$。若 $A_j\neq\emptyset$，则取 $B_j=B(a_j,r_j)\in\mathcal{F}$ 使 $a_j\in A_j$ 且
+\begin{align*}
+r_j\geqslant\frac{3}{4}\sup\{r\mid B(a,r)\in\mathcal{F},\ a\in A_j\}.
+\end{align*}
+若对一切 $j$ 都有 $A_j\neq\emptyset$，则置 $J:=\infty$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 补出上述归纳选取的可行性：$D$ 有限且为正、上确界的近似取到
+若 $\mathcal{F}=\emptyset$，则 $A=\emptyset$，取 $\mathcal{G}_1=\cdots=\mathcal{G}_{N_n}=\emptyset$ 即满足结论；以下设 $\mathcal{F}\neq\emptyset$，此时 $0<D<\infty$。由于 $D/2$ 是 $\mathcal{F}$ 中球半径的上确界，存在 $B_1\in\mathcal{F}$ 使 $\tau_1\geqslant\frac{3}{4}\cdot\frac{D}{2}$。对 $j\geqslant2$，若 $A_j\neq\emptyset$，取 $a\in A_j$；由 $A$ 是 $\mathcal{F}$ 中球的球心之集，存在 $r>0$ 使 $B(a,r)\in\mathcal{F}$，故集合 $\{r\mid B(a,r)\in\mathcal{F},\ a\in A_j\}$ 非空，其上确界为正且不超过 $D/2<\infty$，从而可取到满足所述不等式的 $B_j$。
+
+（2）断言 \#1：若 $j>i$，则 $r_j\leqslant\frac{4}{3}r_i$。
+
+断言之证明：设 $j>i$。由 $i<j$ 得 $\bigcup_{i'=1}^{i-1}B_{i'}\subseteq\bigcup_{i'=1}^{j-1}B_{i'}$，故 $A_j\subseteq A_i$，于是 $a_j\in A_j\subseteq A_i$。由 $B_i$ 的取法，
+\begin{align*}
+r_i\geqslant\frac{3}{4}\sup\{r\mid B(a,r)\in\mathcal{F},\ a\in A_i\}\geqslant\frac{3}{4}r_j,
+\end{align*}
+即 $r_j\leqslant\frac{4}{3}r_i$。
+
+（3）断言 \#2：球族 $\{B(a_j,r_j/3)\}_{j=1}^{J}$ 中的球两两不交。
+
+断言之证明：设 $j>i$。则 $a_j\in A_j\subseteq A\setminus\bigcup_{i'=1}^{j-1}B_{i'}$，故 $a_j\notin B_i$，于是 $\lvert a_i-a_j\rvert>r_i$，从而
+\begin{align*}
+\lvert a_i-a_j\rvert>r_i=\frac{r_i}{3}+\frac{2r_i}{3}\geqslant\frac{r_i}{3}+\frac{2}{3}\cdot\frac{3}{4}r_j>\frac{r_i}{3}+\frac{r_j}{3}.
+\end{align*}
+即两球心距离大于两半径之和，故 $B(a_i,r_i/3)$ 与 $B(a_j,r_j/3)$ 不交。
+
+（4）断言 \#3：若 $J=\infty$，则 $\lim_{j\to\infty}r_j=0$。
+
+断言之证明：由断言 \#2，球 $\{B(a_j,r_j/3)\}_{j=1}^{J}$ 两两不交。由于 $a_j\in A$ 且 $A$ 有界，$r_j\to0$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 补出由不交球体积之和有界推出 $r_j\to0$ 的论证
+上述推论的细节如下。由 $A$ 有界，存在 $R>0$ 使 $A\subseteq B(0,R)$；又 $r_j\leqslant D/2$，故每个球 $B(a_j,r_j/3)$ 含于有界集 $B(0,R+D/2)$。由断言 \#2 中球两两不交与 $\mathcal{L}^n$ 的可数可加性，
+\begin{align*}
+\sum_{j=1}^{J}\alpha(n)\Bigl(\frac{r_j}{3}\Bigr)^{n}
+=\mathcal{L}^n\Bigl(\bigcup_{j=1}^{J}B(a_j,r_j/3)\Bigr)
+\leqslant\alpha(n)\bigl(R+D/2\bigr)^{n}<\infty .
+\end{align*}
+于是级数 $\sum_j r_j^{n}$ 收敛，其通项满足 $r_j^{n}\to0$，故 $r_j\to0$。
+
+（5）断言 \#4：$A\subseteq\bigcup_{j=1}^{J}B_j$。
+
+断言之证明：若 $J<\infty$，则由停止规则 $A_{J+1}=\emptyset$，而 $A_{J+1}=A\setminus\bigcup_{j=1}^{J}B_j$，故 $A\subseteq\bigcup_{j=1}^{J}B_j$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 补出 $J=\infty$ 情形的论证
+以下设 $J=\infty$。设 $a\in A$，则存在 $r>0$ 使 $B(a,r)\in\mathcal{F}$。若 $a\notin\bigcup_{j=1}^{\infty}B_j$，则 $a\in A_j$ 对一切 $j$ 成立，故由 $B_j$ 的取法，
+\begin{align*}
+r_j\geqslant\frac{3}{4}\sup\{r'\mid B(a',r')\in\mathcal{F},\ a'\in A_j\}\geqslant\frac{3}{4}r
+\end{align*}
+对一切 $j$ 成立；这与断言 \#3 的 $r_j\to0$ 矛盾。因此 $a\in\bigcup_{j=1}^{\infty}B_j$。
+
+（6）现固定 $k>1$，并令
+\begin{align*}
+I:=\{j\mid 1\leqslant j<k,\ B_j\cap B_k\neq\emptyset\},\qquad
+K:=I\cap\{j\mid r_j\leqslant3r_k\}.
+\end{align*}
+下面估计 $I$ 的基数，为此分别估计 $K$ 与 $I\setminus K$。
+
+（7）断言 \#5：$\operatorname{Card}(K)\leqslant20^{n}$。
+
+断言之证明：设 $j\in K$。则 $B_j\cap B_k\neq\emptyset$ 且 $r_j\leqslant3r_k$。取任一点 $x\in B(a_j,r_j/3)$，则
+\begin{align*}
+\lvert x-a_k\rvert&\leqslant\lvert x-a_j\rvert+\lvert a_j-a_k\rvert\leqslant\frac{r_j}{3}+r_j+r_k\\
+&=\frac{4}{3}r_j+r_k\leqslant4r_k+r_k=5r_k .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 补出上式所用「相交蕴含球心距不超过半径之和」与后续三项估计的理由
+上式中 $\lvert a_j-a_k\rvert\leqslant r_j+r_k$ 由 $B_j\cap B_k\neq\emptyset$ 得到；$\frac{4}{3}r_j\leqslant4r_k$ 由 $r_j\leqslant3r_k$ 得到。因此 $B(a_j,r_j/3)\subseteq B(a_k,5r_k)$。由断言 \#2，球 $B(a_j,r_j/3)$（$j\in K$）两两不交，又由断言 \#1 与 $j<k$ 得 $r_k\leqslant\frac{4}{3}r_j$，即 $r_j\geqslant\frac{3}{4}r_k\geqslant\frac{1}{4}r_k$。于是
+\begin{align*}
+\alpha(n)5^{n}r_k^{n}
+&=\mathcal{L}^n\bigl(B(a_k,5r_k)\bigr)\geqslant\sum_{j\in K}\mathcal{L}^n\bigl(B(a_j,r_j/3)\bigr)\\
+&=\sum_{j\in K}\alpha(n)\Bigl(\frac{r_j}{3}\Bigr)^{n}\geqslant\sum_{j\in K}\alpha(n)\Bigl(\frac{r_k}{4}\Bigr)^{n}
+=\operatorname{Card}(K)\,\alpha(n)\frac{r_k^{n}}{4^{n}} .
+\end{align*}
+因此
+\begin{align*}
+5^{n}\geqslant\operatorname{Card}(K)\frac{1}{4^{n}},
+\end{align*}
+即 $\operatorname{Card}(K)\leqslant20^{n}$。
+
+（8）下面估计 $\operatorname{Card}(I\setminus K)$。设 $i,j\in I\setminus K$ 且 $i\neq j$。则 $1\leqslant i,j<k$，$B_i\cap B_k\neq\emptyset$，$B_j\cap B_k\neq\emptyset$，$r_i>3r_k$，$r_j>3r_k$。为记号简便，设 $a_k=0$。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{ch01-1-5-three-balls.png}
+\end{figure}
+
+设 $0\leqslant\theta\leqslant\pi$ 为向量 $a_i$ 与 $a_j$ 的夹角。目标是给出 $\theta$ 的正下界，为此先列出若干几何事实：由于 $i,j<k$，$0=a_k\notin B_i\cup B_j$，故 $r_i<\lvert a_i\rvert$ 且 $r_j<\lvert a_j\rvert$。由于 $B_i\cap B_k\neq\emptyset$ 且 $B_j\cap B_k\neq\emptyset$，$\lvert a_i\rvert\leqslant r_i+r_k$ 且 $\lvert a_j\rvert\leqslant r_j+r_k$。又因交换 $i,j$ 的记号不影响论证，可设 $\lvert a_i\rvert\leqslant\lvert a_j\rvert$。综上，
+\begin{align*}
+\begin{cases}
+3r_k<r_i<\lvert a_i\rvert\leqslant r_i+r_k,\\
+3r_k<r_j<\lvert a_j\rvert\leqslant r_j+r_k,\\
+\lvert a_i\rvert\leqslant\lvert a_j\rvert.
+\end{cases}
+\end{align*}
+
+（9）断言 \#6a：若 $\cos\theta>\frac{5}{6}$，则 $a_i\in B_j$。
+
+断言之证明：设 $\lvert a_i-a_j\rvert\geqslant\lvert a_j\rvert$。由余弦定理，
+\begin{align*}
+\cos\theta=\frac{\lvert a_i\rvert^{2}+\lvert a_j\rvert^{2}-\lvert a_i-a_j\rvert^{2}}{2\lvert a_i\rvert\lvert a_j\rvert}
+\leqslant\frac{\lvert a_i\rvert^{2}}{2\lvert a_i\rvert\lvert a_j\rvert}
+=\frac{\lvert a_i\rvert}{2\lvert a_j\rvert}\leqslant\frac{1}{2}<\frac{5}{6}.
+\end{align*}
+反之设 $\lvert a_i-a_j\rvert\leqslant\lvert a_j\rvert$ 且 $a_i\notin B_j$。则 $r_j<\lvert a_i-a_j\rvert$，且
+\begin{align*}
+\cos\theta&=\frac{\lvert a_i\rvert^{2}+\lvert a_j\rvert^{2}-\lvert a_i-a_j\rvert^{2}}{2\lvert a_i\rvert\lvert a_j\rvert}\\
+&=\frac{\lvert a_i\rvert}{2\lvert a_j\rvert}
++\frac{\bigl(\lvert a_j\rvert-\lvert a_i-a_j\rvert\bigr)\bigl(\lvert a_j\rvert+\lvert a_i-a_j\rvert\bigr)}{2\lvert a_i\rvert\lvert a_j\rvert}\\
+&\leqslant\frac{1}{2}+\frac{\bigl(\lvert a_j\rvert-\lvert a_i-a_j\rvert\bigr)2\lvert a_j\rvert}{2\lvert a_i\rvert\lvert a_j\rvert}\\
+&\leqslant\frac{1}{2}+\frac{r_j+r_k-r_j}{r_i}
+=\frac{1}{2}+\frac{r_k}{r_i}\leqslant\frac{5}{6}.
+\end{align*}
+故当 $\cos\theta>\frac{5}{6}$ 时 $a_i\in B_j$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 逐项核验断言 \#6a 两处推导中的单调性、绝对值估计与最后一步
+第一段的不等号由 $\lvert a_i-a_j\rvert\geqslant\lvert a_j\rvert$ 得 $-\lvert a_i-a_j\rvert^{2}\leqslant-\lvert a_j\rvert^{2}$，分子至多为 $\lvert a_i\rvert^{2}$；最后一处用 $\lvert a_i\rvert\leqslant\lvert a_j\rvert$。第二段逐项核验如下：$\lvert a_j\rvert+\lvert a_i-a_j\rvert\leqslant2\lvert a_j\rvert$ 由 $\lvert a_i-a_j\rvert\leqslant\lvert a_j\rvert$ 得到；$\lvert a_j\rvert-\lvert a_i-a_j\rvert\leqslant r_j+r_k-r_j=r_k$ 由 $\lvert a_j\rvert\leqslant r_j+r_k$ 与 $r_j<\lvert a_i-a_j\rvert$ 得到；$\lvert a_i\rvert\geqslant r_i$ 由第 (8) 步的几何事实得到；最后一步用 $r_i>3r_k$，即 $r_k/r_i<1/3<1/3+1/6$。
+
+（10）断言 \#6b：若 $a_i\in B_j$，则
+\begin{align*}
+0\leqslant\lvert a_i-a_j\rvert+\lvert a_i\rvert-\lvert a_j\rvert\leqslant\lvert a_j\rvert\varepsilon(\theta),
+\end{align*}
+其中
+\begin{align*}
+\varepsilon(\theta):=\frac{8}{3}\bigl(1-\cos\theta\bigr).
+\end{align*}
+
+断言之证明：由 $a_i\in B_j$ 必有 $i<j$，于是 $a_j\notin B_i$，故 $\lvert a_i-a_j\rvert>r_i$。于是
+\begin{align*}
+0&\leqslant\frac{\lvert a_i-a_j\rvert+\lvert a_i\rvert-\lvert a_j\rvert}{\lvert a_j\rvert}\\
+&\leqslant\frac{\lvert a_i-a_j\rvert+\lvert a_i\rvert-\lvert a_j\rvert}{\lvert a_j\rvert}\cdot\frac{\lvert a_i-a_j\rvert-\lvert a_i\rvert+\lvert a_j\rvert}{\lvert a_i-a_j\rvert}\\
+&=\frac{\lvert a_i-a_j\rvert^{2}-\bigl(\lvert a_j\rvert-\lvert a_i\rvert\bigr)^{2}}{\lvert a_j\rvert\,\lvert a_i-a_j\rvert}\\
+&=\frac{\lvert a_i\rvert^{2}+\lvert a_j\rvert^{2}-2\lvert a_i\rvert\lvert a_j\rvert\cos\theta-\lvert a_i\rvert^{2}-\lvert a_j\rvert^{2}+2\lvert a_i\rvert\lvert a_j\rvert}{\lvert a_j\rvert\,\lvert a_i-a_j\rvert}\\
+&=\frac{2\lvert a_i\rvert\bigl(1-\cos\theta\bigr)}{\lvert a_i-a_j\rvert}.
+\end{align*}
+
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 核验断言 \#6b 中乘上因子不小于 $1$ 的合法性，并完成 $\varepsilon(\theta)$ 的估计
+断言 \#6b 第二处不等号是把分式乘以因子 $\bigl(\lvert a_i-a_j\rvert-\lvert a_i\rvert+\lvert a_j\rvert\bigr)/\lvert a_i-a_j\rvert$；由第 (8) 步的 $\lvert a_i\rvert\leqslant\lvert a_j\rvert$，该因子不小于 $1$，故不等号成立。第一处不等号由三角不等式 $\lvert a_i-a_j\rvert+\lvert a_i\rvert\geqslant\lvert a_j\rvert$ 得到。又由第 (8) 步的几何事实 $\lvert a_i\rvert\leqslant r_i+r_k$ 与 $\lvert a_i-a_j\rvert>r_i$，
+\begin{align*}
+\frac{2\lvert a_i\rvert\bigl(1-\cos\theta\bigr)}{\lvert a_i-a_j\rvert}
+\leqslant\frac{2(r_i+r_k)\bigl(1-\cos\theta\bigr)}{r_i}
+\leqslant\frac{2\bigl(1+\frac{1}{3}\bigr)r_i\bigl(1-\cos\theta\bigr)}{r_i}
+=\varepsilon(\theta),
+\end{align*}
+其中最后一处不等号用到 $r_k<r_i/3$。
+
+（11）断言 \#6c：若 $a_i\in B_j$，则 $\cos\theta\leqslant\frac{61}{64}$。
+
+断言之证明：由 $a_i\in B_j$ 与 $a_j\notin B_i$ 得 $r_i<\lvert a_i-a_j\rvert\leqslant r_j$。由 $i<j$ 与断言 \#1 得 $r_j\leqslant\frac{4}{3}r_i$。因此
+\begin{align*}
+\lvert a_i-a_j\rvert+\lvert a_i\rvert-\lvert a_j\rvert
+&\geqslant r_i+r_i-r_j-r_k\\
+&\geqslant\frac{3}{2}r_j-r_j-r_k
+=\frac{1}{2}r_j-r_k\geqslant\frac{1}{6}r_j\\
+&=\frac{1}{6}\cdot\frac{3}{4}\Bigl(r_j+\frac{1}{3}r_j\Bigr)\geqslant\frac{1}{8}(r_j+r_k)
+\geqslant\frac{1}{8}\lvert a_j\rvert .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 逐项核验断言 \#6c 的估计链并补出由 $\varepsilon(\theta)\geqslant1/8$ 到 $\cos\theta\leqslant61/64$ 的算术
+上链各步的理由如下：第一处不等号用 $\lvert a_i-a_j\rvert>r_i$、$\lvert a_i\rvert\geqslant r_i$、$\lvert a_j\rvert\leqslant r_j+r_k$；第二处用 $r_i\geqslant\frac{3}{4}r_j$；第三处用 $r_k<\frac{1}{3}r_j$；第四处是恒等变形，因为 $\frac{3}{4}\bigl(r_j+\frac{1}{3}r_j\bigr)=r_j$；第五处再用 $r_k<\frac{1}{3}r_j$；最后一处用 $\lvert a_j\rvert\leqslant r_j+r_k$。于是由断言 \#6b，
+\begin{align*}
+\frac{1}{8}\lvert a_j\rvert\leqslant\lvert a_i-a_j\rvert+\lvert a_i\rvert-\lvert a_j\rvert\leqslant\lvert a_j\rvert\varepsilon(\theta),
+\end{align*}
+故 $\varepsilon(\theta)\geqslant\frac{1}{8}$，即 $\frac{8}{3}(1-\cos\theta)\geqslant\frac{1}{8}$。由此 $1-\cos\theta\geqslant\frac{3}{64}$，即 $\cos\theta\leqslant\frac{61}{64}$。
+
+（12）断言 \#6：对一切 $i,j\in I\setminus K$ 且 $i\neq j$，设 $\theta$ 为 $a_i-a_k$ 与 $a_j-a_k$ 的夹角，则
+\begin{align*}
+\theta\geqslant\arccos\frac{61}{64}=:\theta_0>0 .
+\end{align*}
+这由断言 \#6a–c 推出。
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 补出断言 \#6 由 \#6a–c 推出的反证论证
+若 $\cos\theta>\frac{61}{64}$，则由 $\frac{61}{64}>\frac{5}{6}$（因 $61\cdot6=366>320=5\cdot64$）与断言 \#6a 得 $a_i\in B_j$，再由断言 \#6c 得 $\cos\theta\leqslant\frac{61}{64}$，矛盾。因此 $\cos\theta\leqslant\frac{61}{64}$；由于 $\arccos$ 在 $[-1,1]$ 上递减且 $\frac{61}{64}<1$，得 $\theta\geqslant\arccos\frac{61}{64}>0$。
+
+（13）断言 \#7：存在仅依赖于 $n$ 的常数 $L_n$，使得 $\operatorname{Card}(I\setminus K)\leqslant L_n$。
+
+断言之证明：先取 $r_0>0$，使得当 $x\in\partial B(1)$ 而 $y,z\in B(x,r_0)$ 时，$y$ 与 $z$ 的夹角小于断言 \#6 中的常数 $\theta_0$。取 $L_n$，使得 $\partial B(1)$ 可被 $L_n$ 个半径为 $r_0$、球心在 $\partial B(1)$ 上的球覆盖，而不能被 $L_n-1$ 个这样的球覆盖。
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 补出 $r_0$ 与 $L_n$ 的存在性，以及「半径 $r_0r_k$ 的球覆盖 $\partial B_k$」与卡上界
+$r_0$ 存在，因为若 $y,z\in B(x,r_0)$ 且 $x\in\partial B(1)$，则 $\lvert y-z\rvert\leqslant2r_0$、$\lvert y\rvert\geqslant1-r_0$、$\lvert z\rvert\geqslant1-r_0$，故 $\lvert y-z\rvert\leqslant\frac{2r_0}{1-r_0}\max\{\lvert y\rvert,\lvert z\rvert\}$，从而 $y$ 与 $z$ 的夹角不超过 $2\arcsin\frac{r_0}{1-r_0}$；取 $r_0>0$ 充分小使 $2\arcsin\frac{r_0}{1-r_0}<\theta_0$ 即可。$L_n$ 存在，因为 $\partial B(1)$ 是紧集，可被有限个这样的球覆盖，取覆盖所需球数的最小值即为 $L_n$。
+
+（续）于是 $\partial B_k$ 可被 $L_n$ 个半径为 $r_0r_k$、球心在 $\partial B_k$ 上的球覆盖。由断言 \#6，若 $i,j\in I\setminus K$ 且 $i\neq j$，则 $a_i-a_k$ 与 $a_j-a_k$ 的夹角超过 $\theta_0$。于是按 $r_0$ 的取法，射线 $a_j-a_k$ 与 $a_i-a_k$ 不可能经过 $\partial B_k$ 上的同一个球。因此 $\operatorname{Card}(I\setminus K)\leqslant L_n$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 补出「射线经同一球」到单射的严格论证
+细节如下。若 $\partial B_k$ 被球 $B(c_1,r_0r_k),\cdots,B(c_{L_n},r_0r_k)$ 覆盖，其中 $c_l\in\partial B_k$，则对每个 $j\in I\setminus K$，点 $p_j:=a_k+r_k\frac{a_j-a_k}{\lvert a_j-a_k\rvert}$ 属于某个 $B(c_l,r_0r_k)$；把 $j$ 对应到这样的一个 $l$。若 $i\neq j$ 对应同一个 $l$，则 $p_i,p_j\in B(c_l,r_0r_k)$。以 $a_k$ 为心、半径 $r_k$ 作伸缩，点 $(p_j-a_k)/r_k$ 与 $(p_i-a_k)/r_k$ 都落在 $B(c_l/r_k,r_0)$ 中，而 $c_l/r_k\in\partial B(1)$，故由 $r_0$ 的取法，这两点的夹角小于 $\theta_0$；但这两点的夹角正是 $a_i-a_k$ 与 $a_j-a_k$ 的夹角，与断言 \#6 矛盾。因此上述对应是单射，$\operatorname{Card}(I\setminus K)\leqslant L_n$。
+
+（14）最后置 $M_n:=20^{n}+L_n+1$。则由断言 \#5 与断言 \#7，
+\begin{align*}
+\operatorname{Card}(I)=\operatorname{Card}(K)+\operatorname{Card}(I\setminus K)\leqslant20^{n}+L_n<M_n .
+\end{align*}
+
+（15）下面定义不交球族 $\mathcal{G}_1,\cdots,\mathcal{G}_{M_n}$。先定义映射 $\sigma:\{1,2,\cdots\}\to\{1,\cdots,M_n\}$：
+\begin{enumerate}[(a)]
+\item 对 $1\leqslant i\leqslant M_n$，令 $\sigma(i):=i$。
+\item 对 $k\geqslant M_n$，按下述方式归纳定义 $\sigma(k+1)$。由上面的估计，
+\begin{align*}
+\operatorname{Card}\{j\mid 1\leqslant j\leqslant k,\ B_j\cap B_{k+1}\neq\emptyset\}<M_n,
+\end{align*}
+故存在 $l\in\{1,\cdots,M_n\}$，使得对一切满足 $\sigma(j)=l$ 的 $j\in\{1,\cdots,k\}$ 都有 $B_{k+1}\cap B_j=\emptyset$。令 $\sigma(k+1):=l$。
+\end{enumerate}
+然后对 $1\leqslant j\leqslant M_n$ 令
+\begin{align*}
+\mathcal{G}_j:=\{B_i\mid\sigma(i)=j\}.
+\end{align*}
+由 $\sigma(i)$ 的定义，每个 $\mathcal{G}_j$ 由 $\mathcal{F}$ 中两两不交的球组成。又每个 $B_i$ 属于某个 $\mathcal{G}_j$，故
+\begin{align*}
+A\subseteq\bigcup_{i=1}^{J}B_i=\bigcup_{i=1}^{M_n}\bigcup_{B\in\mathcal{G}_i}B .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 核验 $\sigma$ 的归纳定义（抽屉原理）与各 $\mathcal{G}_j$ 的不交性，并说明 $J<\infty$ 的情形
+第 (b) 款的抽屉原理如下：$M_n$ 个类 $l=1,\cdots,M_n$ 中，与 $B_{k+1}$ 相交的球 $B_j$（$j\leqslant k$）不到 $M_n$ 个，故至少有一个类 $l$ 不含这样的球，即 $\sigma(j)=l$ 时 $B_{k+1}\cap B_j=\emptyset$。不交性：若 $i<i'$ 且 $\sigma(i)=\sigma(i')=l$，则在定义 $\sigma(i')$ 的那一步（第 (b) 款），$B_{i'}$ 已与一切满足 $\sigma(j)=l$、$j<i'$ 的 $B_j$ 不交，特别地与 $B_i$ 不交。若 $J<\infty$，则只需对 $i\leqslant J$ 定义 $\sigma(i)$，并令 $\mathcal{G}_j:=\{B_i\mid i\leqslant J,\ \sigma(i)=j\}$；上述论证不变，且由断言 \#4 仍有 $A\subseteq\bigcup_{i=1}^{J}B_i$。
+
+（16）下面把结论推广到 $A$ 无界的情形。对 $l\geqslant1$，令
+\begin{align*}
+A_l:=A\cap\{x\mid 3D(l-1)\leqslant\lvert x\rvert<3Dl\},
+\end{align*}
+并置
+\begin{align*}
+\mathcal{F}^{l}:=\{B(a,r)\in\mathcal{F}\mid a\in A_l\}.
+\end{align*}
+则由（15），存在 $\mathcal{F}^{l}$ 中的可数不交闭球族 $\mathcal{G}^{l}_1,\cdots,\mathcal{G}^{l}_{M_n}$，使得
+\begin{align*}
+A_l\subseteq\bigcup_{i=1}^{M_n}\bigcup_{B\in\mathcal{G}^{l}_i}B .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 核验无界情形可按层应用有界情形，并说明 $A=\bigcup_l A_l$
+逐项核验如下。每个 $A_l$ 有界（含于 $\{\lvert x\rvert<3Dl\}$），且 $\mathcal{F}^l$ 中球的球心恰为 $A_l$，其直径上确界不超过 $D$，故（15）适用于 $\mathcal{F}^l$ 与 $A_l$。又 $D>0$，故对每个 $a\in A$ 存在唯一的 $l\geqslant1$ 使 $3D(l-1)\leqslant\lvert a\rvert<3Dl$，于是 $A=\bigcup_{l=1}^{\infty}A_l$。
+
+（续）令
+\begin{align*}
+\mathcal{G}_j:=\bigcup_{l=1}^{\infty}\mathcal{G}^{2l-1}_j\quad(1\leqslant j\leqslant M_n),
+\qquad
+\mathcal{G}_{j+M_n}:=\bigcup_{l=1}^{\infty}\mathcal{G}^{2l}_j\quad(1\leqslant j\leqslant M_n),
+\end{align*}
+并置 $N_n:=2M_n$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=proof; 补出奇偶分层保证不交的理由与最终覆盖关系
+不交性：同一 $\mathcal{G}_j$ 中的球都来自指标奇偶性相同的两个层 $A_l$，故相应的层指标相差至少 $2$。若 $B=B(a,r)\in\mathcal{F}^{l}$、$B'=B(a',r')\in\mathcal{F}^{l'}$ 且 $l'\geqslant l+2$，则 $\lvert a'\rvert\geqslant3D(l'-1)\geqslant3D(l+1)$、$\lvert a\rvert<3Dl$，故 $\lvert a'-a\rvert\geqslant\lvert a'\rvert-\lvert a\rvert>3D$；而 $r+r'\leqslant D/2+D/2=D$，于是 $\lvert a'-a\rvert>r+r'$，即 $B\cap B'=\emptyset$。覆盖关系：由 $A=\bigcup_l A_l$ 与 $A_l\subseteq\bigcup_{i=1}^{M_n}\bigcup_{B\in\mathcal{G}^l_i}B$ 得
+\begin{align*}
+A\subseteq\bigcup_{l=1}^{\infty}\bigcup_{i=1}^{M_n}\bigcup_{B\in\mathcal{G}^{l}_i}B
+=\bigcup_{i=1}^{2M_n}\bigcup_{B\in\mathcal{G}_i}B,
+\end{align*}
+且各 $\mathcal{G}_i$ 可数。定理得证。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=motivation; 说明为何需要不放大球的覆盖定理，以及「允许 $N_n$ 族重叠」这一折中的意义
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-27-动机}
+对任意 Radon 测度 $\mu$，比值 $\mu(\hat B)/\mu(B)$ 没有上界：把 $5$ 倍半径的球放大，可能圈进测度极大的区域。因此\cref{theorem:ch01-1-24}那种「覆盖到膨胀球」的结论无法用于 $\mu$，而需要只用原来的球覆盖。代价是不能只用一个不交族：本定理允许 $N_n$ 个不交族，同一族内的球互不相交，不同族之间允许重叠。$N_n$ 只依赖维数 $n$，与球族 $\mathcal{F}$ 和球心集 $A$ 无关，这一点使后文可以用统一的常数控制重叠重数：对任意测度 $\mu$ 都有 $\mu\bigl(\bigcup_{B\in\mathcal{F}}B\bigr)\leqslant N_n\sum_{i=1}^{N_n}\mu\bigl(\bigcup_{B\in\mathcal{G}_i}B\bigr)$ 型的估计。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=motivation; 以三个两两相交的球描述证明的几何图像，替代原页的示意图
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-27-几何}
+证明的核心几何图像由三个两两相交的球 $B_i,B_j,B_k$（$i,j<k$）给出。把 $a_k$ 平移到原点后，$a_i$ 与 $a_j$ 都落在以原点为心的环带内，并且第 (8) 步列出的三条不等式刻画了它们的位置：球心到原点的距离介于对应半径与「半径加 $r_k$」之间，而两个半径都大于 $3r_k$。夹角 $\theta$ 是 $B_i$ 与 $B_j$ 相对于 $a_k$ 的张角，三条断言分别控制它：断言 \#5 说明落在环带 $r_j\leqslant3r_k$ 中的球心不能太挤，至多 $20^n$ 个；断言 \#6 说明不在该环带中的球所对应的张角有正下界 $\theta_0$；断言 \#7 说明球面 $\partial B_k$ 可被 $L_n$ 个半径 $r_0r_k$ 的小球覆盖，而张角下界使不同的射线落入不同的小球。三者合起来给出 $\operatorname{Card}(I)<M_n$，即每个球 $B_k$ 至多与 $M_n-1$ 个排在它前面的球相交，这正是把序列 $\{B_j\}$ 分成 $M_n$ 个不交族所需的组合信息。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-27; kind=hypotheses; 逐条分析直径有界、非退化、球心集与常数 $N_n$ 依赖性的作用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-27-条件}
+\begin{enumerate}[(i)]
+\item 条件 $\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}<\infty$ 在证明中用于：确定起始球 $B_1$（取直径接近 $D$ 的球）、建立断言 \#1 的直径比 $r_j\leqslant\frac{4}{3}r_i$、以及无界情形中把 $A$ 分成宽度为 $3D$ 的层 $A_l$。若 $D=\infty$，这三处同时失效。该条件是否为结论的逻辑必要条件，本书的论证不予回答，此处不作断言。
+\item 非退化条件不可删除。取 $A=[0,1]\subseteq\mathbb{R}$，$\mathcal{F}:=\{\{x\}\mid x\in[0,1]\}$，则每个 $\{x\}$ 都是退化的闭球且以 $x$ 为球心。任一不交族的并至多可数，故 $N_n$ 个不交族的并仍至多可数，不可能包含 $A$。
+\item 结论中的 $A$ 取为球心集而非 $\bigcup_{B\in\mathcal{F}}B$。这一限制是本定理的形式所必需的：$\mathcal{F}$ 中的球可以偏离自己的球心集很远，而证明的归纳构造只控制球心序列 $a_j$。后文应用本定理时被覆盖的正是球心集。
+\item 常数 $N_n$ 只依赖 $n$，不依赖 $\mathcal{F}$ 或 $A$，这是本定理区别于「存在有限覆盖」的关键。若允许 $N_n$ 依赖 $\mathcal{F}$，结论就只是局部有限性而非一致控制。
+\item 各 $\mathcal{G}_i$ 只要求可数而不要求有限：$A$ 可以不可数，例如 $A=[0,1]$、$\mathcal{F}=\{B(x,1/10)\mid x\in[0,1]\}$ 时，每个 $\mathcal{G}_i$ 必须是可数无限族。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[关于用球填充开集的进一步结论]\label{theorem:ch01-1-28}
+设 $n$ 为正整数，$\mu$ 为 $\mathbb{R}^n$ 上的 Borel 测度，$\mathcal{F}$ 为任一非退化闭球族。设 $A$ 为 $\mathcal{F}$ 中所有球的球心之集。假设
+\begin{align*}
+\mu(A)<\infty
+\end{align*}
+且对每个 $a\in A$ 有
+\begin{align*}
+\inf\{r\mid B(a,r)\in\mathcal{F}\}=0 .
+\end{align*}
+则对每个开集 $U\subseteq\mathbb{R}^n$，存在由 $\mathcal{F}$ 中两两不交的球组成的可数族 $\mathcal{G}$，使得
+\begin{align*}
+\bigcup_{B\in\mathcal{G}}B\subseteq U
+\end{align*}
+且
+\begin{align*}
+\mu\Bigl((A\cap U)\setminus\bigcup_{B\in\mathcal{G}}B\Bigr)=0 .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+（1）固定 $1-\frac{1}{N_n}<\theta<1$。
+
+断言：存在 $U$ 中有限的不交闭球族 $\{B_1,\cdots,B_{M_1}\}$，使得
+\begin{align*}
+\mu\Bigl((A\cap U)\setminus\bigcup_{i=1}^{M_1}B_i\Bigr)\leqslant\theta\,\mu(A\cap U). \qquad(\star)
+\end{align*}
+
+断言之证明：令
+\begin{align*}
+\mathcal{F}_1:=\{B\in\mathcal{F}\mid \operatorname{diam}B\leqslant1,\ B\subseteq U\}.
+\end{align*}
+由\cref{theorem:ch01-1-27}，存在 $\mathcal{F}_1$ 中的不交球族 $\mathcal{G}_1,\cdots,\mathcal{G}_{N_n}$，使得% XREF p=46 "By Besicovitch's Theorem there exist families G_1, . . . , G_{N_n} of disjoint balls in F_1"
+\begin{align*}
+A\cap U\subseteq\bigcup_{i=1}^{N_n}\bigcup_{B\in\mathcal{G}_i}B .
+\end{align*}
+于是
+\begin{align*}
+\mu(A\cap U)\leqslant\sum_{i=1}^{N_n}\mu\Bigl(A\cap U\cap\bigcup_{B\in\mathcal{G}_i}B\Bigr).
+\end{align*}
+因此存在 $1$ 与 $N_n$ 之间的整数 $j$，使得
+\begin{align*}
+\mu\Bigl(A\cap U\cap\bigcup_{B\in\mathcal{G}_j}B\Bigr)\geqslant\frac{1}{N_n}\mu(A\cap U).
+\end{align*}
+由\cref{theorem:ch01-1-6}，存在球 $B_1,\cdots,B_{M_1}\in\mathcal{G}_j$，使得% XREF p=46 "By Theorem 1.6, there exist balls B_1, . . . , B_{M_1} ∈ G_j such that"
+\begin{align*}
+\mu\Bigl(A\cap U\cap\bigcup_{i=1}^{M_1}B_i\Bigr)\geqslant(1-\theta)\mu(A\cap U).
+\end{align*}
+由于 $\bigcup_{i=1}^{M_1}B_i$ 是 $\mu$-可测集，
+\begin{align*}
+\mu(A\cap U)=\mu\Bigl(A\cap U\cap\bigcup_{i=1}^{M_1}B_i\Bigr)+\mu\Bigl((A\cap U)\setminus\bigcup_{i=1}^{M_1}B_i\Bigr),
+\end{align*}
+故 $(\star)$ 成立。
+
+% SUPPLEMENT: parent=theorem:ch01-1-28; kind=proof; 核验应用 Besicovitch 定理所需的球心集等于 $A\cap U$，并补出外测度的次可加性、拆项与由定理 1.6 取出有限子族的推理
+逐项核验如下。第一，$\mathcal{F}_1$ 中球的球心集恰为 $A\cap U$：一方面球心属于 $A$，且 $B\subseteq U$ 蕴含球心在 $U$ 中；另一方面若 $a\in A\cap U$，则由 $U$ 开与 $\inf\{r\mid B(a,r)\in\mathcal{F}\}=0$ 可取 $r>0$ 使 $B(a,r)\in\mathcal{F}$、$2r\leqslant1$ 且 $B(a,r)\subseteq U$，即 $a$ 是 $\mathcal{F}_1$ 中某球的球心。因此\cref{theorem:ch01-1-27}给出所述覆盖。第二，$\mu$ 作为外测度满足次可加性，故第一个不等式成立；若 $\mu(A\cap U)=0$，则 $(\star)$ 的两端为零，结论成立，故以下设 $\mu(A\cap U)>0$，此时由次可加性存在所述的 $j$。第三，$\mathcal{G}_j$ 可数，其有限并 $\bigcup_{i=1}^{M}B_i$ 关于 $M$ 单调递增且并集为 $\bigcup_{B\in\mathcal{G}_j}B$，故由测度的下连续性可取到 $M_1$ 使所述不等式成立。第四，拆项等式是 Carathéodory 判别法在 $\mu$-可测集 $\bigcup_{i=1}^{M_1}B_i$（有限个闭球之并，因而是 Borel 集）上的应用。% XREF internal
+（2）现在令
+\begin{align*}
+U_2:=U\setminus\bigcup_{i=1}^{M_1}B_i,\qquad
+\mathcal{F}_2:=\{B\mid B\in\mathcal{F},\ \operatorname{diam}B\leqslant1,\ B\subseteq U_2\},
+\end{align*}
+并如上取有限个不交球 $B_{M_1+1},\cdots,B_{M_2}$，使得
+\begin{align*}
+\mu\Bigl((A\cap U)\setminus\bigcup_{i=1}^{M_2}B_i\Bigr)
+&=\mu\Bigl((A\cap U_2)\setminus\bigcup_{i=M_1+1}^{M_2}B_i\Bigr)\\
+&\leqslant\theta\,\mu(A\cap U_2)\leqslant\theta^{2}\mu(A\cap U).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-28; kind=proof; 核验第 (2) 步把结论应用于 $U_2$ 的合法性
+这里把 (1) 中的 $U$ 换成 $U_2$。$U_2$ 是开集（开集减去有限个闭球），$\mathcal{F}$ 中球心属于 $A\cap U_2$ 的球所成的族满足 (1) 的全部假设，故 (1) 适用。两处等号与第一个不等号即 $(\star)$ 用于 $U_2$ 的结果；最后一处不等号由 $U_2\subseteq U$ 与 $\mu(A\cap U_2)\leqslant\mu(A\cap U)$ 得到。若 $U_2=\emptyset$，则令 $M_2:=M_1$，各式仍成立。
+
+（3）继续这一过程，得到 $\mathcal{F}$ 中且含于 $U$ 内的两两不交球组成的可数族，使得
+\begin{align*}
+\mu\Bigl((A\cap U)\setminus\bigcup_{i=1}^{M_k}B_i\Bigr)\leqslant\theta^{k}\mu(A\cap U).
+\end{align*}
+由于 $\theta^{k}\to0$ 且 $\mu(A)<\infty$，定理得证。
+
+% SUPPLEMENT: parent=theorem:ch01-1-28; kind=proof; 补出取极限得到余集 $\mu$-测度为零的论证，并核验不交性与 $\mu(A\cap U)<\infty$
+记 $\mathcal{G}:=\bigcup_{k=1}^{\infty}\{B_{M_{k-1}+1},\cdots,B_{M_k}\}$，其中 $M_0:=0$。第 $k$ 轮的球含于 $U_k=U\setminus\bigcup_{i=1}^{M_{k-1}}B_i$，故与前面各轮的球不交，$\mathcal{G}$ 中球两两不交且都含于 $U$。又 $\bigcup_{i=1}^{M_k}B_i$ 关于 $k$ 单调递增，由测度的上连续性，
+\begin{align*}
+\mu\Bigl((A\cap U)\setminus\bigcup_{B\in\mathcal{G}}B\Bigr)
+=\lim_{k\to\infty}\mu\Bigl((A\cap U)\setminus\bigcup_{i=1}^{M_k}B_i\Bigr)
+\leqslant\lim_{k\to\infty}\theta^{k}\mu(A\cap U)=0,
+\end{align*}
+其中上连续性与最后的极限都用到 $\mu(A\cap U)\leqslant\mu(A)<\infty$。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-28-比较}
+这里 $A$ 不必是 $\mu$-可测的。可将此结论与上面基于 Vitali 覆盖定理的\cref{theorem:ch01-1-26}相比较。% XREF p=45 "The set A need not be μ-measurable here. Compare this assertion with Theorem 1.26 based on Vitali's Covering Theorem, above."
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-28; kind=motivation; 说明与定理 1.26 的差别：测度换成任意 Borel 测度、不要求覆盖整个开集而只要求覆盖球心集
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-28-动机}
+本定理是把\cref{theorem:ch01-1-26}中的 Lebesgue 测度换成任意 Borel 测度 $\mu$ 的结果。替换之所以可能，是因为\cref{theorem:ch01-1-27}只用原来的球覆盖，故每一步的测度估计都可以对 $\mu$ 进行。两处代价必须注意：其一，被填充的对象不是整个开集 $U$，而是 $A\cap U$，即只保证球心集在 $\mu$ 意义下被填满；其二，需要球族在每个球心处可以取到任意小的半径。后文讨论 Radon 测度的微分时，正是以球心集为对象，因此这一形式的结论足够使用。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-28; kind=hypotheses; 逐条分析 $\mu$ 的 Borel 性、$\mu(A)<\infty$、半径可任意小与 $U$ 开性的作用，并给出半径条件不可删的反例
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-28-条件}
+\begin{enumerate}[(i)]
+\item $\mu$ 只要求是 Borel 测度，不要求 Radon：证明中只用 Borel 集（球、有限并、可数并）的 $\mu$-可测性与测度的上、下连续性，未用到内正则逼近。
+\item 条件 $\mu(A)<\infty$ 使 $\mu(A\cap U)\leqslant\mu(A)<\infty$，从而第 (3) 步的不等式 $\mu(\cdots)\leqslant\theta^{k}\mu(A\cap U)$ 中的右端随 $k$ 趋于零，且上连续性可用。若 $\mu(A)=\infty$，该估计退化为 $\infty\leqslant\infty$，无法推出余集测度为零；本书的论证不覆盖这一情形，此处不对结论本身作断言。
+\item 条件 $\inf\{r\mid B(a,r)\in\mathcal{F}\}=0$ 不可删除。取 $n=1$，$\mu=\mathcal{L}^{1}$，$\mathcal{F}=\{B(a,1)\mid a\in[0,1]\}$，$A=[0,1]$，$U=(0,1)$。则 $\mu(A)=1<\infty$，但对每个 $a\in A$ 有 $\inf\{r\mid B(a,r)\in\mathcal{F}\}=1$。由于 $\mathcal{F}$ 中的球半径都是 $1$，没有一个是 $(0,1)$ 的子集，故满足 $\bigcup_{B\in\mathcal{G}}B\subseteq U$ 的 $\mathcal{G}$ 只能是空族，于是 $\mu\bigl((A\cap U)\setminus\emptyset\bigr)=1\neq0$，结论不成立。
+\item $U$ 的开性在核验 $\mathcal{F}_1$ 的球心集等于 $A\cap U$ 时使用：$a\in U$ 且 $U$ 开，才能取到半径充分小、整体含于 $U$ 的球。
+\item 结论中的 $\mu$ 零测余集不能换成 $\mathcal{L}^n$ 零测余集：$\mu$ 可以是集中在某个零测集上的测度，此时球心集的 $\mu$-测度为零而 $\mathcal{L}^n$ 测度不为零。
+\end{enumerate}
+\end{remark}
+
+\end{document}

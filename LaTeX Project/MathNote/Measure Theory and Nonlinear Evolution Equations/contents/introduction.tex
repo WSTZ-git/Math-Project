@@ -3,16 +3,17 @@
 
 \begin{document}
 
-\chapter*{引言}\label{chapter:introduction}
+\chapter*{引言}\phantomsection\label{chapter:introduction}
 \addcontentsline{toc}{chapter}{引言}
+\markboth{引言}{}
 
 测度值解在变分学与非线性偏微分方程（PDE）问题中扮演重要角色，而这类问题源自物理、化学、生物与工程。
 
-谈论“测度值解”其实是有歧义的，因为这一术语同时指代 Radon 测度值解与 Young 测度值解这两种概念；它们却惊人地契合于同一数学框架。下面扼要列举若干研究领域，其中这两种概念之一或两者都发挥过重要作用，这便是本节的内容。不过本节并不打算涵盖测度值解所出现的全部发展问题谱（特别地，关于概率测度的 Wasserstein 空间中梯度流理论及其在输运方程上的应用，我们请读者参见文献~\cite{ref06}）。
+谈论“测度值解”其实是有歧义的，因为这一术语同时指代 Radon 测度值解与 Young 测度值解这两种概念；二者却惊人地契合于同一数学框架。下面扼要列举若干研究领域，其中这两种概念之一或两者都发挥过重要作用，这便是本节的内容。不过本节并不打算涵盖测度值解所出现的全部发展问题谱（特别地，关于概率测度的 Wasserstein 空间中梯度流理论及其在输运方程上的应用，请读者参见文献~\cite{ref06}）。
 
-\section*{动机}\label{section:intro-motivation}
+\section*{动机}\phantomsection\label{section:intro-motivation}
 
-\subsection*{椭圆与抛物 PDE 的 Radon 测度值解}\label{subsection:intro-radon}
+\subsection*{1\quad 椭圆与抛物 PDE 的 Radon 测度值解}\phantomsection\label{subsection:intro-radon}
 
 在椭圆情形，我们关心形如
 \begin{align*}
@@ -38,7 +39,7 @@ u=u_0 & \text{在 }\Omega\times\{0\},
 
 在线性理论的基础上，人们自然希望在非线性情形研究类似问题。然而很快就发现，即使在简单的半线性情形，在通常的 $L^1$ 框架内解的存在性本身也会遇到障碍。
 
-\subsubsection*{椭圆情形}\label{subsubsection:intro-elliptic}
+\subsubsection*{1.1\quad 椭圆情形}\phantomsection\label{subsubsection:intro-elliptic}
 
 文献~\cite{ref14}以生动的方式描述了第一个不存在性案例，它涉及半线性椭圆方程
 \begin{align}
@@ -55,12 +56,12 @@ u=u_0 & \text{在 }\Omega\times\{0\},
 的 resolvent 方程。既然非线性半群理论建议在函数空间 $L^1(\mathbb{R}^N)$ 中研究方程\eqref{align:intro-0.3}，那么在\eqref{align:intro-0.1}–\eqref{align:intro-0.2}中自然应假设 $\mu\in L^1(\mathbb{R}^N)$。研究\eqref{align:intro-0.1}的另一个动机来自大原子电子密度的 Thomas--Fermi 模型，此时 $\mu$ 是 Dirac 质量的有限叠加~\cite{ref65}。
 
 设 $\Omega\subseteq\mathbb{R}^N$ 为具有光滑边界 $\partial\Omega$ 的有界开集。文献~\cite{ref28}证明，对任意 $\mu\in L^1(\Omega)$ 与 $p>0$，齐次 Dirichlet 问题
-\[
+\begin{align*}
 \begin{cases}
 -\Delta u + |u|^{p-1}u = \mu & \text{在 }\Omega,\\
-u=0 & \text{在 }\partial\Omega
+u = 0 & \text{在 }\partial\Omega
 \end{cases}
-\]
+\end{align*}
 存在唯一解 $u\in W^{1,1}_0(\Omega)$，且 $|u|^p\in L^1(\Omega)$。方程\eqref{align:intro-0.1}的适定性结果随后在文献~\cite{ref15}中给出。
 
 关于\eqref{align:intro-0.1}右端为 Radon 测度的情形，人们很快认识到条件
@@ -85,11 +86,11 @@ p < \frac{N}{N-2} \label{align:intro-0.4}
 （即 $\lim_{n\to\infty}\mu_n=\mu$ 在 $\mathscr{R}_f(\mathbb{R}^N)$ 中弱$^*$收敛；见\cref{section:ch05-Radon弱星}）。由文献~\cite{ref15}的结果，对每个 $n\in\mathbb{N}$，\eqref{align:intro-0.5}存在唯一解 $u_n\in M^{N/(N-2)}(\mathbb{R}^N)$。$u_n$ 的先验估计与一致界\eqref{align:intro-0.6}保证：(i) 序列 $\{u_n\}$ 在 $L^1_{\mathrm{loc}}(\mathbb{R}^N)$ 中相对紧；(ii) 序列 $\{v_n\}$，$v_n\triangleq \Delta u_n+\mu_n$，在 $L^1(\mathbb{R}^N)$ 中有界。进而，若\eqref{align:intro-0.4}成立，则 $\{v_n\}$ 在 $\mathbb{R}^N$ 的有界子集上一致可积，因而由 Dunford--Pettis 定理在 $L^1_{\mathrm{loc}}(\mathbb{R}^N)$ 中相对弱紧（见文献~\cite{ref14} 引理 A.1 及\cref{theorem:ch02-dunfordpettis}）。于是在\eqref{align:intro-0.5}中令 $n\to\infty$ 并利用\eqref{align:intro-0.7}，即得所述存在性结果。
 
 若\eqref{align:intro-0.4}不成立，则 $\{v_n\}$ 的一致可积性失效。由 Dunford--Pettis 定理，此时 $\{v_n\}$ 在 $L^1_{\mathrm{loc}}(\mathbb{R}^N)$ 中不相对弱紧，这与上述不存在性论断一致。然而即使在此情形，序列 $\{v_n\}$ 在 $L^1(\mathbb{R}^N)\subseteq\mathscr{R}_f(\mathbb{R}^N)$ 中仍有界，因而在 $\mathscr{R}_f(\mathbb{R}^N)$ 的弱$^*$拓扑下相对紧（见\cref{theorem:ch05-弱星紧性}）。故存在有限 Radon 测度 $v$，使得
-\[
+\begin{align*}
 \lim_{n\to\infty}\int_{\mathbb{R}^N}\rho\,v_n\,\mathrm{d}x
 = \int_{\mathbb{R}^N}\rho\,\mathrm{d}v
 \quad \text{对任意 }\rho\in C_0(\mathbb{R}^N).
-\]
+\end{align*}
 这提示我们应在更大的 Radon 测度值解类中寻求方程\eqref{align:intro-0.1}（经适当修改后的版本）的解的存在性（见文献~\cite{ref97}）。
 
 另一方面，使方程\eqref{align:intro-0.1}存在解 $u\in L^p(\mathbb{R}^N)$ 的那些测度 $\mu\in\mathscr{R}_f(\mathbb{R}^N)$ 已在文献~\cite{ref10}中刻画（另见文献~\cite{ref52}）：对任意 $p\in(1,\infty)$，这当且仅当 $\mu\in L^1(\mathbb{R}^N)+W^{-2,p}(\mathbb{R}^N)$ 时发生。由\cref{theorem:ch03-Lp可解性}，一个等价表述是：\eqref{align:intro-0.1}存在解 $u\in L^p(\mathbb{R}^N)$ 当且仅当 $\mu$ 关于 Sobolev 容量 $C_{2,q}$ 是弥散的，其中 $q\triangleq p/(p-1)$ 为 $p$ 的共轭指数，亦即当且仅当
@@ -98,19 +99,19 @@ p < \frac{N}{N-2} \label{align:intro-0.4}
 \end{align}
 （见\cref{subsection:ch01-Borel测度}与\cref{subsection:ch03-容量}）。
 
-由\cref{remark:ch03-无零容量集}(ii)，若 $p\in(1,\infty)$ 且 $2q>N\Leftrightarrow p<N/(N-2)$，则不存在 Borel 集 $E\subseteq\mathbb{R}^N$ 使 $C_{2,q}(E)=0$，因而当\eqref{align:intro-0.4}成立时条件\eqref{align:intro-0.8}是空洞的（见\cref{proposition:ch03-点容量}）。反之，当 $p\geqslant N/(N-2)$ 时，对任意 $x_0\in\mathbb{R}^N$ 有 $C_{2,q}(\{x_0\})=0$，故 Dirac 质量 $\delta_{x_0}$ 关于 $C_{2,q}$ 是集中的，条件\eqref{align:intro-0.8}不满足（见\cref{definition:ch01-集中弥散}与\cref{proposition:ch03-单点容量}）。换言之，若 $p\geqslant N/(N-2)$，则 Dirac 质量对\eqref{align:intro-0.1}而言不是可去奇点（见文献~\cite{ref105}及其引文）。这就解释了上述关于方程\eqref{align:intro-0.1}的存在与不存在结果。
+由\hyperref[remark:ch03-无零容量集]{注记}(ii)，若 $p\in(1,\infty)$ 且 $2q>N\Leftrightarrow p<N/(N-2)$，则不存在 Borel 集 $E\subseteq\mathbb{R}^N$ 使 $C_{2,q}(E)=0$，因而当\eqref{align:intro-0.4}成立时条件\eqref{align:intro-0.8}是空洞的（见\cref{proposition:ch03-点容量}）。反之，当 $p\geqslant N/(N-2)$ 时，对任意 $x_0\in\mathbb{R}^N$ 有 $C_{2,q}(\{x_0\})=0$，故 Dirac 质量 $\delta_{x_0}$ 关于 $C_{2,q}$ 是集中的，条件\eqref{align:intro-0.8}不满足（见\cref{definition:ch01-集中弥散}与\cref{proposition:ch03-单点容量}）。换言之，若 $p\geqslant N/(N-2)$，则 Dirac 质量对\eqref{align:intro-0.1}而言不是可去奇点（见文献~\cite{ref105}及其引文）。这就解释了上述关于方程\eqref{align:intro-0.1}的存在与不存在结果。
 
-\begin{remark}\label{remark:intro-0.1.1}
+\begin{remark}\phantomsection\label{remark:intro-0.1.1}
 对应于方程\eqref{align:intro-0.2}，由上述讨论可知：若 $N\geqslant 3$、$\mu$ 关于 Sobolev 容量 $C_{2,1/(1-\alpha)}$ 是集中的，且 $\alpha\leqslant (N-2)/N$，则不存在任何函数满足
-\[
+\begin{align*}
 \lambda v - \Delta(|v|^{\alpha-1}v) = \mu \quad \text{在 }\mathbb{R}^N\ (\lambda,\alpha>0).
-\]
+\end{align*}
 这与文献~\cite{ref26}及文献~\cite{ref80} 定理 1、2 中的抛物结果一致（见下文）。
 \end{remark}
 
-需要提及，上述关于方程\eqref{align:intro-0.1}的存在与不存在结果刺激了多个方向的后续工作，特别是问题(E0)中不同的非线性椭圆算子，以及/或者(BC)中 $\partial\Omega\neq\varnothing $ 且 $g\in\mathscr{R}_f(\partial\Omega)$ 的情形（见文献~\cite{ref14,ref13,ref37,ref55,ref69,ref106}及其中引文）。
+需要提及，上述关于方程\eqref{align:intro-0.1}的存在与不存在结果刺激了多个方向的后续工作，特别是问题(E0)中不同的非线性椭圆算子，以及/或者(BC)中 $\partial\Omega\neq\varnothing$ 且 $g\in\mathscr{R}_f(\partial\Omega)$ 的情形（见文献~\cite{ref14,ref13,ref37,ref55,ref69,ref106}及其中引文）。
 
-\subsubsection*{抛物情形}\label{subsubsection:intro-parabolic}
+\subsubsection*{1.2\quad 抛物情形}\phantomsection\label{subsubsection:intro-parabolic}
 
 考虑快扩散多孔介质方程的 Cauchy 问题
 \begin{align*}
@@ -121,12 +122,12 @@ u=u_0 & \text{在 }\mathbb{R}^N\times\{0\},
 \qquad(C)
 \end{align*}
 其中 $u_0$ 属于 $\mathbb{R}^N$ 上非负有限 Radon 测度的锥 $\mathscr{R}^+_f(\mathbb{R}^N)$（$N\geqslant 3$），$\alpha\in(0,(N-2)/N]$。文献~\cite{ref80}中，问题(C)的解按定义为任意 $u\in L^1(S)$，其在分布意义下满足第一式，并在窄收敛意义下满足第二式，即
-\[
+\begin{align*}
 \operatorname*{ess\,lim}_{t\to 0^+}\int_{\mathbb{R}^N}\rho\,u(\cdot,t)\,\mathrm{d}x
 = \int_{\mathbb{R}^N}\rho\,\mathrm{d}u_0
 \quad \text{对任意 }\rho\in C_b(\mathbb{R}^N)
-\]
-（见\cref{definition:ch05-窄收敛}；此处 $C_b(\mathbb{R}^N)$ 表示 $\mathbb{R}^N$ 上连续有界实值函数空间）。文献证明：这样的解——更确切地说，解 $u\in C(0,T;L^1(\mathbb{R}^N))$——存在当且仅当 $u_0$ 关于 Sobolev 容量 $C_{2,1/(1-\alpha)}(\mathbb{R}^N)$ 是弥散的（见文献~\cite{ref80} 定理 1、2）。这与文献~\cite{ref26}一致，其中观察到：当 $u_0=\delta_0$ 时，问题(C)的这种解存在当且仅当 $\alpha\in((N-2)/N,1)$；事实上，对点 $x_0\in\mathbb{R}^N$，有 $C_{2,1/(1-\alpha)}(\{x_0\})=0$，因而 Dirac 质量 $\delta_{x_0}$ 关于 $C_{2,1/(1-\alpha)}$ 是集中的，当且仅当 $\alpha\in(0,(N-2)/N]$（见\cref{proposition:ch03-点容量}）。该结果也与\cref{theorem:ch6-正则化}（见等式\eqref{align:ch6-6.135}）一致。它与上述椭圆结果之间的联系是显然的（见上述注记）。
+\end{align*}
+（见\cref{definition:ch05-窄收敛}；此处 $C_b(\mathbb{R}^N)$ 表示 $\mathbb{R}^N$ 上连续有界实值函数空间）。文献证明：这样的解——更确切地说，解 $u\in C(0,T;L^1(\mathbb{R}^N))$——存在当且仅当 $u_0$ 关于 Sobolev 容量 $C_{2,1/(1-\alpha)}(\mathbb{R}^N)$ 是弥散的（见文献~\cite{ref80} 定理 1、2）。这与文献~\cite{ref26}一致，其中观察到：当 $u_0=\delta_0$ 时，问题(C)的这种解存在当且仅当 $\alpha\in((N-2)/N,1)$；事实上，对点 $x_0\in\mathbb{R}^N$，有 $C_{2,1/(1-\alpha)}(\{x_0\})=0$，因而 Dirac 质量 $\delta_{x_0}$ 关于 $C_{2,1/(1-\alpha)}$ 是集中的，当且仅当 $\alpha\in(0,(N-2)/N]$（见\cref{proposition:ch03-点容量}）。该结果也与\cref{theorem:ch6-正则化}（见等式\eqref{align:ch6-6.135}）一致。它与上述椭圆结果之间的联系是显然的（见前述注记）。
 
 继问题(C)之后，初值为 Radon 测度的拟线性抛物方程初值问题已被广泛研究（特别见文献~\cite{ref16,ref26,ref35,ref36,ref81,ref104}及其中引文），且始终寻求函数值解。为凸显这一点，考虑初边值问题
 \begin{align*}
@@ -140,20 +141,20 @@ u=u_0 & \text{在 }\Omega\times\{0\},
 这将在\cref{chapter:ch06}中详细讨论；此处 $\Omega\subseteq\mathbb{R}^N$ 为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，$u_0\in\mathscr{R}_f(\Omega)$，并设 $\phi$ 在 $\mathbb{R}$ 上连续且非减。按我们的用语，问题(P)的解 $u$ 称为函数值的，若对任意 $t>0$ 有 $u(\cdot,t)\in L^1(\Omega)$。这种解可视为一类特殊的 Radon 测度值解，即问题(P)的这样的解 $u$：对正的时刻有 $u(\cdot,t)\in\mathscr{R}_f(\Omega)$（见文献~\cite{ref85,ref86,ref87}及其中引文）。这样的 Radon 测度值解是否在某个 $t>0$ 时变为函数值解，是一个正则性问题，也可视为奇点可去问题。不出所料，如下文所见，这一问题与所论发展方程特有的某种特征容量有关。
 
 定义问题(P)的 Radon 测度值解，引出了如何定义这类测度的非线性函数的问题。文献~\cite{ref11}针对一个类似问题，通过启发式论证给出了一个自然定义，与文献~\cite{ref38,ref39}中给出的测度非线性函数概念一致。据此，我们把问题(P)的 Radon 测度值解理解为从 $(0,T)$ 到 $\mathscr{R}_f(\Omega)$ 的映射，并在如下弱意义下满足(P)：
-\[
+\begin{align*}
 \int_0^T \langle u(\cdot,t),\partial_t\zeta(\cdot,t)\rangle\,\mathrm{d}t
 = \iint_Q \nabla[\phi(u_r)]\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}t
 - \langle u_0,\zeta(\cdot,0)\rangle
-\]
+\end{align*}
 （对一组合适的试验函数 $\zeta$；技术细节见\cref{chapter:ch06}）。特别地，要求测度 $u\in\mathscr{R}_f(Q)$ 属于空间 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$，因而对几乎所有 $t\in(0,T)$，$\Omega$ 上的 Radon 测度 $u(\cdot,t)$ 有定义；并要求函数 $\phi(u_r)$ 属于空间 $L^1(0,T;W^{1,1}_0(\Omega))$。此处 $u_r\in L^1(Q)$ 是 $u$ 的绝对连续部分 $u_{\mathrm{ac}}$ 关于 Lebesgue 测度的密度，$\langle\cdot,\cdot\rangle$ 表示 $C_0(\Omega)$ 与 $\mathscr{R}_f(\Omega)$ 之间的对偶映射（见\cref{chapter:ch02}与\cref{chapter:ch04}；按记号滥用，我们有时进一步把 $u_r$ 等同于 $u_{\mathrm{ac}}$）。
 
-问题(P)的 Radon 测度值解可按前文椭圆情形所述方式构造：用合适序列 $\{u_{0n}\}\subseteq L^1(\Omega)$ 逼近初值 $u_0$，并研究相应逼近问题解序列在 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 中的收敛性（见\cref{chapter:ch06}）。就正则性而言，若当 $|z|\to\infty$ 时函数 $|\phi(z)|$ 的发散快于 $|z|^{(N-2)/N}$，则所构造的(P)的每个解都属于 $L^\infty(0,T;L^1(\Omega))$，即发生瞬时的 $\mathscr{R}_f$--$L^1$ 正则化（见\cref{proposition:ch6-瞬时正则}）。反之，若存在 $M>0$ 与 $\alpha\in(0,(N-2)/N]$ 使
-\[
+问题(P)的 Radon 测度值解可按前文椭圆情形所述方式构造：用合适序列 $\{u_{0n}\}\subseteq L^1(\Omega)$ 逼近初值 $u_0$，并研究相应逼近问题解序列在 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 中的收敛性（见\cref{chapter:ch06}）。就正则性而言，若当 $|z|\to\infty$ 时函数 $|\phi(z)|$ 的发散快于 $|z|^{N/(N-2)}$，则所构造的(P)的每个解都属于 $L^\infty(0,T;L^1(\Omega))$，即发生瞬时的 $\mathscr{R}_f$--$L^1$ 正则化（见\cref{proposition:ch6-瞬时正则}）。反之，若存在 $M>0$ 与 $\alpha\in(0,(N-2)/N]$ 使
+\begin{align*}
 |\phi(z)| \leqslant M(1+|z|)^\alpha \quad (z\in\mathbb{R}),
-\]
+\end{align*}
 则问题(P)任意弱解的 $C_{2,1/(1-\alpha)}$ 集中部分在时间上为常数，这与文献~\cite{ref80}一致（见\cref{theorem:ch6-正则化}）。因此在此情形，每个这种解对任意正时刻都是 Radon 测度值的。
 
-\subsection*{双曲守恒律的 Young 与 Radon 测度值解}\label{subsection:intro-hyperbolic}
+\subsection*{2\quad 双曲守恒律的 Young 与 Radon 测度值解}\phantomsection\label{subsection:intro-hyperbolic}
 
 考虑 Cauchy 问题
 \begin{align*}
@@ -165,96 +166,175 @@ u=u_0 & \text{在 }\mathbb{R}^N\times\{0\},
 \end{align*}
 其中 $\phi\equiv(\phi_1,\cdots ,\phi_N)\in(C^1(\mathbb{R}))^N$，$\phi_j:\mathbb{R}\to\mathbb{R}$ 非线性（$j=1,\cdots ,N$）。
 
-\subsubsection*{Young 测度值解}\label{subsubsection:intro-young}
+\subsubsection*{2.1\quad Young 测度值解}\phantomsection\label{subsubsection:intro-young}
 
 设 $u_0\in L^\infty(\mathbb{R}^N)$。证明(CL)弱解存在性的经典方法是粘性消失法，它依赖于相伴的抛物问题
 \begin{align*}
 \begin{cases}
-\partial_t u_\epsilon + \operatorname{div}[\phi(u_\epsilon)] = \epsilon\,\Delta u_\epsilon & \text{在 }S,\\
-u_\epsilon = u_{0\epsilon} & \text{在 }\mathbb{R}^N\times\{0\},
+\partial_t u_\varepsilon + \operatorname{div}[\phi(u_\varepsilon)] = \varepsilon\,\Delta u_\varepsilon & \text{在 }S,\\
+u_\varepsilon = u_{0\varepsilon} & \text{在 }\mathbb{R}^N\times\{0\},
 \end{cases}
-\quad (\epsilon>0), \qquad(CL\epsilon)
+\quad (\varepsilon>0), \qquad(CL\varepsilon)
 \end{align*}
-其中 $u_{0\epsilon}\in C_b(\mathbb{R}^N)$，且 $\|u_{0\epsilon}\|_{L^\infty(\mathbb{R}^N)}\leqslant\|u_0\|_{L^\infty(\mathbb{R}^N)}$。对每个 $\epsilon>0$，(CL$\epsilon$)存在唯一经典解 $u_\epsilon$，由极值原理满足不等式
+其中 $u_{0\varepsilon}\in C_b(\mathbb{R}^N)$，且 $\|u_{0\varepsilon}\|_{L^\infty(\mathbb{R}^N)}\leqslant\|u_0\|_{L^\infty(\mathbb{R}^N)}$。对每个 $\varepsilon>0$，(CL$\varepsilon$)存在唯一经典解 $u_\varepsilon$，由极值原理满足不等式
 \begin{align}
-\|u_\epsilon\|_{L^\infty(S)} \leqslant \|u_0\|_{L^\infty(\mathbb{R}^N)}. \label{align:intro-0.9}
+\|u_\varepsilon\|_{L^\infty(S)} \leqslant \|u_0\|_{L^\infty(\mathbb{R}^N)}. \label{align:intro-0.9}
 \end{align}
-由不等式\eqref{align:intro-0.9}与 Banach--Alaoglu 定理，存在序列 $\{u_k\}\equiv\{u_{\epsilon_k}\}\subseteq L^\infty(S)$，$\epsilon_k\to0^+$（$k\to\infty$），以及 $u\in L^\infty(S)$，使 $\lim_{k\to\infty}u_k=u$ 在 $L^\infty(S)$ 中弱$^*$收敛。于是 $u$ 自然是(CL)弱解的候选。然而在(CL$\epsilon_k$)弱形式的右端令 $k\to\infty$，即
+由不等式\eqref{align:intro-0.9}与 Banach--Alaoglu 定理，存在序列 $\{u_k\}\equiv\{u_{\varepsilon_k}\}\subseteq L^\infty(S)$，$\varepsilon_k\to0^+$（$k\to\infty$），以及 $u\in L^\infty(S)$，使 $\lim_{k\to\infty}u_k=u$ 在 $L^\infty(S)$ 中弱$^*$收敛。于是 $u$ 自然是(CL)弱解的候选。然而在(CL$\varepsilon_k$)弱形式的右端令 $k\to\infty$，即
 \begin{align}
-\iint_S \{u_k\partial_t\zeta + \epsilon_k u_k\Delta\zeta\}\,\mathrm{d}x\,\mathrm{d}t
+\iint_S \{u_k\partial_t\zeta + \varepsilon_k u_k\Delta\zeta\}\,\mathrm{d}x\,\mathrm{d}t
 + \int_{\mathbb{R}}u_0\zeta(x,0)\,\mathrm{d}x
 = -\iint_S [\phi(u_k)]\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}t, \label{align:intro-0.10}
 \end{align}
 却颇为棘手，因为 $u_k$ 在 $L^\infty(S)$ 中弱$^*$收敛于 $u$，并不蕴含 $\phi_j(u_k)$ 弱$^*$收敛于 $\phi_j(u)$，$j=1,\cdots ,N$（见\cref{example:ch02-非线性弱星}(i)；此处 $\zeta$ 为合适的试验函数）。
 
 为克服这一困难，我们需要更多信息，例如在 $S$ 上 $u_k\to u$ 几乎处处收敛（指 $\{u_k\}$ 的某个子列，为简便不重新标号）。事实上，由不等式\eqref{align:intro-0.9}、$\phi$ 的连续性与控制收敛定理，这一收敛将蕴含
-\[
+\begin{align*}
 \lim_{k\to\infty}\iint_S[\phi(u_k)]\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}t
 = \iint_S[\phi(u)]\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}t.
-\]
+\end{align*}
 于是在\eqref{align:intro-0.10}中令 $k\to\infty$，正如预期将得到
 \begin{align}
 \iint_S\{u\partial_t\zeta + [\phi(u)]\cdot\nabla\zeta\}\,\mathrm{d}x\,\mathrm{d}t
 + \int_{\mathbb{R}}u_0\zeta(x,0)\,\mathrm{d}x = 0. \label{align:intro-0.11}
 \end{align}
 
-为建立 $\{u_k\}$ 在 $S$ 上的几乎处处收敛，典型做法是置 $\mathbb{R}^N=\bigcup_{n=1}^\infty K_n$，其中每个 $K_n$ 紧，再用 Fréchet--Kolmogorov 定理证明：对任意固定的 $n\in\mathbb{N}$，限制序列 $\{u_k|_{K_n\times(0,T)}\}$ 在 $L^1(K_n\times(0,T))$ 中相对紧。然后由经典结果与对角论证即得结论（见文献~\cite{ref68} 第 2 章定理 4.62 的证明）。
+为建立 $\{u_k\}$ 在 $S$ 上的几乎处处收敛，典型做法是置 $\mathbb{R}^N=\bigcup_{n=1}^\infty K_n$，其中每个 $K_n$ 紧，再用 Fréchet--Kolmogorov 定理证明：对任意固定的 $n\in\mathbb{N}$，限制序列 $\{u_k|_{K_n\times(0,T)}\}$ 在 $L^1(K_n\times(0,T))$ 中相对紧。然后由经典结果与对角论证即得结论（见文献~\cite{ref68} \cref{chapter:ch02}定理 4.62 的证明）。
 
 下面概述另一种利用 Young 测度的方法（例如见文献~\cite{ref68}及其中引文）。记 $\lambda_N$ 为 $\mathbb{R}^N$ 上的 Lebesgue 测度，设 $U\subseteq S\subseteq\mathbb{R}^{N+1}$ 为有界开集，$\mathscr{R}^+_f(U\times\mathbb{R})$ 为 $U\times\mathbb{R}$ 上有限（正）Radon 测度的锥。按定义，$U\times\mathbb{R}$ 上的 Young 测度是任意满足
-\[
+\begin{align*}
 \nu(E\times\mathbb{R}) = \lambda_{N+1}(E)
 \quad \text{对任意 Borel 集 }E\subseteq U
-\]
+\end{align*}
 的 $\nu\in\mathscr{R}^+_f(U\times\mathbb{R})$。若 $f:U\to\mathbb{R}$ 可测，则满足
-\[
+\begin{align*}
 \nu_f(E\times F) = \lambda_{N+1}(E\cap f^{-1}(F))
-\]
+\end{align*}
 对所有 Borel 集 $E\subseteq U$、$F\subseteq\mathbb{R}$ 成立的 Young 测度 $\nu_f$，称为与函数 $f$ 相伴的 Young 测度（见\cref{definition:ch02-Young测度}）。
 
 记 $\mathcal{Y}(U;\mathbb{R})$ 为 $U\times\mathbb{R}$ 上 Young 测度的集合（$U\subseteq S$），$\mathcal{C}_b(U\times\mathbb{R})$ 为 $U\times\mathbb{R}$ 上有界 Carathéodory 被积函数的集合（见\cref{definition:ch05-Caratheodory}）。以下结果是\cref{proposition:ch05-离散分解}、\cref{theorem:ch05-弱紧Young}与\cref{proposition:ch05-biting}的推论。
 
 \begin{proposition}\label{proposition:intro-0.2.1}
-设 $\nu\in\mathcal{Y}(U;\mathbb{R})$。则对几乎所有 $(x,t)\in U$，存在 $\mathbb{R}$ 上的概率测度 $\nu_{(x,t)}$，使得对任意 $g\in C_b(U;\mathbb{R})$，映射 $(x,t)\mapsto\int_{\mathbb{R}}g(x,t,y)\,\mathrm{d}\nu_{(x,t)}(y)$ 在 $U$ 上可积，且
-\[
+设 $\nu\in\mathcal{Y}(U;\mathbb{R})$。则对几乎所有 $(x,t)\in U$，存在 $\mathbb{R}$ 上的概率测度 $\nu_{(x,t)}$，使得对任意 $g\in C_b(U\times\mathbb{R})$，映射 $(x,t)\mapsto\int_{\mathbb{R}}g(x,t,y)\,\mathrm{d}\nu_{(x,t)}(y)$ 在 $U$ 上可积，且
+\begin{align*}
 \int_{U\times\mathbb{R}}g\,\mathrm{d}\nu
 = \int_U \mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}}g(x,t,y)\,\mathrm{d}\nu_{(x,t)}(y).
-\]
+\end{align*}
+\end{proposition}
+
 族 $\{\nu_{(x,t)}\}\equiv\{\nu_{(x,t)}\}_{(x,t)\in U}$ 是 $\mathbb{R}$ 上的参数化测度，称为 $\nu$ 的离散分解（见\cref{definition:ch05-参数测度}与\cref{definition:ch05-离散分解定义}）。由
 \begin{align}
 u^*(x,t) \triangleq  \int_{\mathbb{R}}y\,\mathrm{d}\nu_{(x,t)}(y) \quad ((x,t)\in U) \label{align:intro-0.12}
 \end{align}
 定义的函数 $u^*$ 称为离散分解 $\{\nu_{(x,t)}\}$ 的重心。
-\end{proposition}
+
+% SUPPLEMENT: parent=proposition:intro-0.2.1; kind=motivation; basis=命题 0.2.1 的动机（测度层面的切片与函数层面的重心）、投影恒等式与 $g$ 有界性的作用，以及 $2\lambda\otimes\delta_0$、$\delta_{(x_0,t_0,0)}$ 两个反例
+\begin{remark}\phantomsection\label{remark:intro-0.2.1-动机}
+(i) 动机。$\nu$ 是 $U\times\mathbb{R}$ 上的测度，本身看不出“每个点处 $u$ 取什么值”；本命题把它切成沿 $U$ 的一族概率测度 $\{\nu_{(x,t)}\}$，从而可以把“点值”换成“分布”。这一替换是后文全部论证的枢纽：\eqref{align:intro-0.12}的重心 $u^*$ 使测度层面的对象重新成为函数，\eqref{align:intro-0.31}与\eqref{align:intro-0.32}又把 $u$ 写成各相 $s_i(v)$ 的加权和；没有离散分解，Young 测度值解无法与(CL)的弱形式对接。
+
+(ii) 各假设的作用。$\nu\in\mathscr{R}^+_f(U\times\mathbb{R})$ 的有限性使 $\nu(E\times\mathbb{R})$ 与 $\int g\,\mathrm{d}\nu$ 对 $g\in C_b$ 均有意义。投影恒等式 $\nu(E\times\mathbb{R})=\lambda_{N+1}(E)$ 是“纤维为概率测度”的唯一来源：它给出 $\pi_\#\nu=\lambda_{N+1}$，而分解定理的纤维质量恰为 $|\nu|_{p_U}$-密度按定义的信息。反例：$\nu\triangleq 2\lambda_{N+1}\otimes\delta_0$ 满足 $\nu(E\times\mathbb{R})=2\lambda_{N+1}(E)$，其纤维为 $2\delta_0$（质量 $2$，不是概率测度）；$\nu\triangleq\delta_{(x_0,t_0,0)}$ 的投影为 $\delta_{(x_0,t_0)}\neq\lambda_{N+1}$，故它根本不属于 $\mathcal{Y}(U;\mathbb{R})$。$g$ 的有界性保证 $g\in L^1(U\times\mathbb{R},|\nu|)$：若代之以无界的 $g(x,t,y)=y$，则 $\int_{\mathbb{R}}y\,\mathrm{d}\nu_{(x,t)}(y)$ 不必可积，\eqref{align:intro-0.12}中的重心可能取无穷值。
+
+(iii) 边界。$\{\nu_{(x,t)}\}$ 只在 $\lambda_{N+1}$-几乎所有 $(x,t)$ 处被确定，在零测集上可任意改动，这与(CL)的弱解只在几乎处处意义下相等一致。$\nu_{(x,t)}$ 一般不是 Dirac 测度：取 $U=(0,1)\times(0,1)$ 与 $u_n(x,t)\triangleq(-1)^{\lfloor nx\rfloor}$，则 $u_n\rightharpoonup0$ 于 $L^\infty(U)$ 弱$^*$，而其相伴 Young 测度的极限为 $\tfrac12(\delta_{-1}+\delta_1)$，重心为 $0$；振荡信息全部保存在纤维里，这正是 (iii) 中“振荡现象”的模型。
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:intro-0.2.1; kind=proof; basis=化归到\cref{theorem:ch05-离散分解}并逐项核验其假设（$U$ 与 $\mathbb{R}$ 具可数基的局部紧 Hausdorff 空间、$\nu\in\mathscr{R}_f(U\times\mathbb{R})$、投影为 $\lambda_{N+1}$），再导出纤维为概率测度与积分表示
+\begin{proof}
+记 $\pi:U\times\mathbb{R}\to U$，$\pi(x,t,y)\triangleq(x,t)$。$U\subseteq\mathbb{R}^{N+1}$ 开且有界，故 $U$ 与 $\mathbb{R}$ 都是具可数基的局部紧 Hausdorff 空间，且 $\nu\in\mathscr{R}^+_f(U\times\mathbb{R})\subseteq\mathscr{R}_f(U\times\mathbb{R})$。由 $\nu\geqslant0$ 与 $\nu(E\times\mathbb{R})=\lambda_{N+1}(E)$（$E\subseteq U$ 为 Borel 集）得 $\nu$ 到 $U$ 的投影
+\begin{align*}
+|\nu|_{p_U}(E)=\nu(E\times\mathbb{R})=\lambda_{N+1}(E),
+\end{align*}
+即 $|\nu|_{p_U}=\lambda_{N+1}$。于是\cref{theorem:ch05-离散分解}（取 $X=U$、$Y=\mathbb{R}$）的假设全部满足，故存在 $\mathbb{R}$ 上的参数化测度 $\{\nu_{(x,t)}\}_{(x,t)\in U}$ 使
+\begin{align*}
+|\nu_{(x,t)}|(\mathbb{R})=1\quad\text{对 }\lambda_{N+1}\text{-几乎所有 }(x,t)\in U,
+\end{align*}
+且对每个 $h\in L^1(U\times\mathbb{R},|\nu|)$，$h(x,t,\cdot)\in L^1(\mathbb{R},|\nu_{(x,t)}|)$ 对 $\lambda_{N+1}$-几乎所有 $(x,t)$ 成立，映射 $(x,t)\mapsto\int_{\mathbb{R}}h\,\mathrm{d}\nu_{(x,t)}$ 属于 $L^1(U,\lambda_{N+1})$，并有
+\begin{align*}
+\int_{U\times\mathbb{R}}h\,\mathrm{d}\nu
+=\int_U\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}}h(x,t,y)\,\mathrm{d}\nu_{(x,t)}(y).
+\end{align*}
+由 $\nu\geqslant0$ 及\hyperref[remark:ch05-离散分解注]{注记}(i)，$\nu_{(x,t)}$ 对 $\lambda_{N+1}$-几乎所有 $(x,t)$ 非负；结合 $|\nu_{(x,t)}|(\mathbb{R})=1$ 得 $\nu_{(x,t)}(\mathbb{R})=1$，即 $\nu_{(x,t)}$ 为 $\mathbb{R}$ 上的概率测度。最后取 $g\in C_b(U\times\mathbb{R})$：因 $|g|\leqslant\|g\|_{L^\infty}$ 而 $|\nu|(U\times\mathbb{R})=\lambda_{N+1}(U)<\infty$，故 $g\in L^1(U\times\mathbb{R},|\nu|)$，把上式用于 $h=g$ 即得所述积分表示与可积性。
+\end{proof}
 
 \begin{theorem}\label{theorem:intro-0.2.2}
 设 $\{u_n\}\subseteq L^1(U)$ 有界，$\{\nu_n\}\equiv\{\nu_{u_n}\}$ 为相伴 Young 测度序列。则：
 \begin{enumerate}[(i)]
 \item\label{item:intro-0.2.2-i} 存在子列 $\{u_{n_k}\}\subseteq\{u_n\}$ 与 $U\times\mathbb{R}$ 上的 Young 测度 $\nu$，使 $\nu_{n_k}\to\nu$ 窄收敛；
 \item\label{item:intro-0.2.2-ii} 对任意 $f\in C(\mathbb{R})$ 使序列 $\{f(u_{n_k})\}\subseteq L^1(U)$ 有界且一致可积，有
-\[
+\begin{align*}
 \int_U\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}}|f(y)|\,\mathrm{d}\nu_{(x,t)}(y)<\infty,
 \qquad
 f(u_{n_k})\rightharpoonup f^* \quad \text{在 }L^1(U),
-\]
+\end{align*}
 其中
 \begin{align}
 f^*(x,t) \triangleq  \int_{\mathbb{R}}f(y)\,\mathrm{d}\nu_{(x,t)}(y)
 \quad \text{对几乎所有 }(x,t)\in U; \label{align:intro-0.13}
 \end{align}
 \item\label{item:intro-0.2.2-iii} 对任意 Carathéodory 函数 $g:U\times\mathbb{R}\to\mathbb{R}$ 使序列 $\{g(\cdot,u_{n_k})\}\subseteq L^1(U)$ 有界且一致可积，有
-\[
+\begin{align*}
 \lim_{k\to\infty}\int_U g(x,t,u_{n_k}(x,t))\,\mathrm{d}x\,\mathrm{d}t
 = \int_{U\times\mathbb{R}}g\,\mathrm{d}\nu;
-\]
+\end{align*}
 \item\label{item:intro-0.2.2-iv} [Biting 引理] 存在子列 $\{u_{n_{k_j}}\}\equiv\{u_{n_j}\}\subseteq\{u_{n_k}\}$ 与可测集序列 $\{U_j\}$，使对任意 $j\in\mathbb{N}$ 有 $U_{j+1}\subseteq U_j\subseteq U$，$\lambda_{N+1}(U_j)\to0$（$j\to\infty$），且序列 $\{u_{n_j}\chi_{U\setminus U_j}\}$ 一致可积。进而 $u^*\in L^1(U)$，且 $u_{n_j}\chi_{U\setminus U_j}\rightharpoonup u^*$ 在 $L^1(U)$。
 \end{enumerate}
 \end{theorem}
 
-回到在\eqref{align:intro-0.10}中令 $k\to\infty$ 的问题。再次置 $\mathbb{R}^N=\bigcup_{n=1}^\infty K_n$，每个 $K_n$ 紧。对任意固定的 $n\in\mathbb{N}$，考虑限制序列 $\{u_k|_{K_n\times(0,T)}\}$，它在 $L^1(K_n\times(0,T))$ 中有界且由\cref{lemma:ch02-有界一致可积}一致可积。显然，序列 $\{\phi(u_k)|_{K_n\times(0,T)}\}$ 亦然。于是由\cref{theorem:intro-0.2.2}(ii)（另见\cref{remark:ch05-收敛注}(ii)）与对角论证，存在 $\{u_k\}$ 的子列（为简便不重新标号）与 Young 测度 $\nu\in\mathcal{Y}(S;\mathbb{R})$，使对任意有界开集 $U\subseteq S$，
-\[
+% SUPPLEMENT: parent=theorem:intro-0.2.2; kind=motivation; basis=定理 0.2.2 四款的动机（紧性—函数复合—Carathéodory 被积函数—集中）、$L^1$ 有界与 $U$ 有界的作用、去掉一致可积的反例 $u_n=n\chi_{(0,1/n)}$
+\begin{remark}\phantomsection\label{remark:intro-0.2.2-动机}
+(i) 动机。定理把“$L^1$ 中有界”升级为“Young 测度紧”，从而在 $u_n$ 只有弱收敛时仍能取极限；四款分别处理四件事：(i) 紧性；(ii) 连续函数复合后的弱极限；(iii) 更一般的 Carathéodory 被积函数；(iv) 弱收敛可能伴随的集中现象。第四款正是把“丢失的质量”分离出来并证明剩余部分一致可积，这是\eqref{align:intro-0.33}与\cref{proposition:intro-0.3.3}所依赖的机制。
+
+(ii) 各假设的作用。$\{u_n\}$ 在 $L^1(U)$ 中有界是 (i) 的唯一紧性来源：$\nu_{u_n}(U\times\mathbb{R})=\lambda_{N+1}(U)$ 一致有界。$U$ 有界使 $\lambda_{N+1}(U)<\infty$，于是 $\{\nu_{u_n}\}$ 的总质量一致有界，Prokhorov 型判据可用。若去掉 $L^1$ 有界性，取 $u_n\equiv n$，则 $\nu_{u_n}=\delta_n$，质量沿 $y\to\infty$ 逃逸，$\{\nu_{u_n}\}$ 不胎紧，(i) 失效。(ii) 与 (iii) 中的“有界且一致可积”不能去掉：$U=(0,1)$，$u_n\triangleq n\chi_{(0,1/n)}$，则 $\nu_{u_n}\to\delta_0$ 窄收敛，$f(y)\triangleq y$ 连续且 $f^*=0$，但 $\int_U|f(u_n)|\,\mathrm{d}x=1$ 不趋于 $0$，故 $f(u_n)\rightharpoonup f^*$ 失败；此时 $\{f(u_n)\}$ 恰不一致可积。\cref{definition:ch05-Caratheodory}对 $g$ 只要求 $y\mapsto g(x,t,y)$ 连续、$(x,t)\mapsto g(x,t,y)$ 可测，不要求 $g$ 关于 $(x,t)$ 连续，故 (iii) 严格强于 (ii)。
+
+(iii) 边界。(i) 中的子列不可省：$u_n(x)\triangleq(-1)^{\lfloor nx\rfloor}$ 的相伴 Young 测度沿奇偶子列趋于不同的 Young 测度，全序列不收敛。(i) 给出的 $\nu$ 一般不等于 $\nu_u$（后者要求 $\nu_{(x,t)}=\delta_{u(x,t)}$），这一差别正是 (0.15) 之后“真非线性”假设所排除的情形。(iv) 中的 $U_j$ 依赖子列与集中部分，$u^*\in L^1(U)$ 与 $f(y)=y$ 时的 $f^*$ 一致，故重心在 $L^1$ 中确实可积。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:intro-0.2.2; kind=proof; basis=逐款证明：(i) 由胎紧性、Prokhorov 定理与投影恒等式；(ii) 由截断与一致可积性；(iii) 由\cref{proposition:ch05-Caratheodory下半连续}与截断；(iv) 由\cref{theorem:ch05-biting定理}
+\begin{proof}
+记 $C\triangleq\sup_n\|u_n\|_{L^1(U)}<\infty$。
+
+(i) 对 $M>0$ 与紧集 $K\subseteq U$，由 $\nu_{u_n}$ 的定义，
+\begin{align*}
+\nu_{u_n}(K\times[-M,M])=\lambda_{N+1}(K\cap\{|u_n|\leqslant M\})
+\geqslant\lambda_{N+1}(K)-C/M.
+\end{align*}
+由 $\lambda_{N+1}$ 的内正则性与 $U$ 有界，取紧集 $K\subseteq U$ 使 $\lambda_{N+1}(U\setminus K)\leqslant\eta$，再取 $M\geqslant C/\eta$，得 $\nu_{u_n}(K\times[-M,M])\geqslant\lambda_{N+1}(U)-2\eta$ 对每个 $n$ 成立，即 $\{\nu_{u_n}\}$ 胎紧。由\cref{proposition:ch05-有界胎紧紧}与 Banach--Alaoglu 定理，存在子列 $\nu_{n_k}$ 与 $\nu\in\mathscr{R}^+_f(U\times\mathbb{R})$ 使 $\nu_{n_k}\to\nu$ 窄收敛。对 $\varphi\in C_b(U)$（看作 $U\times\mathbb{R}$ 上与 $y$ 无关的函数）有 $\int\varphi\,\mathrm{d}\nu_{n_k}=\int_U\varphi\,\mathrm{d}\lambda_{N+1}$，令 $k\to\infty$ 得 $\int\varphi\,\mathrm{d}\nu=\int_U\varphi\,\mathrm{d}\lambda_{N+1}$，故 $\nu$ 到 $U$ 的投影为 $\lambda_{N+1}$，即 $\nu(E\times\mathbb{R})=\lambda_{N+1}(E)$ 对所有 Borel 集 $E\subseteq U$ 成立，$\nu\in\mathcal{Y}(U;\mathbb{R})$。
+
+(ii) 先证可积性。对 $M>0$ 置 $f_M\triangleq\min\{|f|,M\}\in C_b(\mathbb{R})$。由窄收敛与 $\nu_{u_{n_k}}$ 的定义，
+\begin{align*}
+\int_{U\times\mathbb{R}}f_M\,\mathrm{d}\nu
+=\lim_{k\to\infty}\int_U f_M(u_{n_k})\,\mathrm{d}x\,\mathrm{d}t
+\leqslant\sup_k\|f(u_{n_k})\|_{L^1(U)}<\infty .
+\end{align*}
+$f_M\uparrow|f|$，由单调收敛定理得 $\int|f|\,\mathrm{d}\nu\leqslant\sup_k\|f(u_{n_k})\|_{L^1(U)}<\infty$，于是是第一个断言。
+
+再证 $f(u_{n_k})\rightharpoonup f^*$。设 $\varphi\in L^\infty(U)$，$\|\varphi\|_{L^\infty}\leqslant1$，并置 $f^M\triangleq f\chi_{\{|f|\leqslant M\}}$；因 $f$ 连续，$f^M\in C_b(\mathbb{R})$，故 $\varphi(x,t)f^M(y)\in C_b(U\times\mathbb{R})$，由窄收敛
+\begin{align*}
+\lim_{k\to\infty}\int_U\varphi\,f^M(u_{n_k})\,\mathrm{d}x\,\mathrm{d}t
+=\int_{U\times\mathbb{R}}\varphi f^M\,\mathrm{d}\nu
+=\int_U\varphi\,(f^M)^*\,\mathrm{d}x\,\mathrm{d}t .
+\end{align*}
+余项由 $\{f(u_{n_k})\}$ 的一致可积性估计：
+\begin{align*}
+\left|\int_U\varphi\,(f-f^M)(u_{n_k})\,\mathrm{d}x\,\mathrm{d}t\right|
+\leqslant\int_{\{|f(u_{n_k})|>M\}}|f(u_{n_k})|\,\mathrm{d}x\,\mathrm{d}t,
+\end{align*}
+右端当 $M\to\infty$ 时关于 $k$ 一致趋于零；同理，由 $|f|\in L^1(\nu)$ 与控制收敛定理，$\int_U\varphi\,(f-f^M)^*\,\mathrm{d}x\,\mathrm{d}t\to0$。故 $\int_U\varphi f(u_{n_k})\to\int_U\varphi f^*$，即 $f(u_{n_k})\rightharpoonup f^*$ 于 $L^1(U)$。
+
+(iii) 对每个 $k$，由相伴 Young 测度的定义 $\int_U g(\cdot,u_{n_k})\,\mathrm{d}x\,\mathrm{d}t=\int_{U\times\mathbb{R}}g\,\mathrm{d}\nu_{n_k}$。置 $g_M\triangleq g\chi_{\{|g|\leqslant M\}}$，则 $g_M+M\geqslant0$ 与 $M-g_M\geqslant0$ 都是非负 Carathéodory 函数，由\cref{proposition:ch05-Caratheodory下半连续}得
+\begin{align*}
+\liminf_{k\to\infty}\int_{U\times\mathbb{R}}(g_M+M)\,\mathrm{d}\nu_{n_k}
+\geqslant\int_{U\times\mathbb{R}}(g_M+M)\,\mathrm{d}\nu,
+\end{align*}
+以及对 $M-g_M$ 的同类不等式；因 $\nu_{n_k}(U\times\mathbb{R})=\nu(U\times\mathbb{R})=\lambda_{N+1}(U)$，两式相减得 $\int g_M\,\mathrm{d}\nu_{n_k}\to\int g_M\,\mathrm{d}\nu$。余项同 (ii) 的截断估计：由 $\{g(\cdot,u_{n_k})\}$ 的一致可积性与 $|g|\in L^1(\nu)$，$\int(g-g_M)\,\mathrm{d}\nu_{n_k}$ 与 $\int(g-g_M)\,\mathrm{d}\nu$ 当 $M\to\infty$ 时一致趋于零。故 $\int_U g(\cdot,u_{n_k})\to\int_{U\times\mathbb{R}}g\,\mathrm{d}\nu$。
+
+(iv) 将\cref{theorem:ch05-biting定理}用于 $L^1(U)$ 中有界的序列 $\{u_{n_k}\}$，即得所述子列、集合 $U_j$、一致可积性以及 $u^*\in L^1(U)$、$u_{n_j}\chi_{U\setminus U_j}\rightharpoonup u^*$ 于 $L^1(U)$；其中极限函数与\eqref{align:intro-0.13}在 $f(y)=y$ 时给出的 $f^*$ 相同（二者都由重心表示）。
+\end{proof}
+
+回到在\eqref{align:intro-0.10}中令 $k\to\infty$ 的问题。再次置 $\mathbb{R}^N=\bigcup_{n=1}^\infty K_n$，每个 $K_n$ 紧。对任意固定的 $n\in\mathbb{N}$，考虑限制序列 $\{u_k|_{K_n\times(0,T)}\}$，它在 $L^1(K_n\times(0,T))$ 中有界且由\cref{lemma:ch02-有界一致可积}一致可积。显然，序列 $\{\phi(u_k)|_{K_n\times(0,T)}\}$ 亦然。于是由\cref{theorem:intro-0.2.2}(ii)（另见\hyperref[remark:ch05-收敛注]{注记}(ii)）与对角论证，存在 $\{u_k\}$ 的子列（为简便不重新标号）与 Young 测度 $\nu\in\mathcal{Y}(S;\mathbb{R})$，使对任意有界开集 $U\subseteq S$，
+\begin{align*}
 u_k\rightharpoonup u^*,\qquad
 \phi_j(u_k)\rightharpoonup\phi_j^* \quad \text{在 }L^1(U),
-\]
+\end{align*}
 其中
 \begin{align}
 \phi_j^*(x,t) \triangleq  \int_{\mathbb{R}}\phi_j(y)\,\mathrm{d}\nu_{(x,t)}(y)
@@ -274,9 +354,9 @@ u(x,t) = \int_{\mathbb{R}}y\,\mathrm{d}\nu_{(x,t)}(y)
 
 至此我们仅用到了不等式\eqref{align:intro-0.9}。若流的每个分量 $\phi_j$ 都是真非线性的，则可说得更多（见\cref{chapter:ch07}中的假设 (A2)）。在此情形可证明 $\nu$ 实际上就是与 $u$ 相伴的 Young 测度，即 $\nu=\nu_u$。于是由\cref{proposition:ch05-Dirac测度}，对几乎所有 $(x,t)\in S$ 有 $\nu_{(x,t)}=\delta_{u(x,t)}$（见\eqref{align:ch05-5.53}），从而由\eqref{align:intro-0.14}有 $\phi^*=\phi(u)$ 在 $S$ 中几乎处处成立，等式\eqref{align:intro-0.15b}化归为\eqref{align:intro-0.11}。等价地，知道 $\nu=\nu_u$ 意味着（至多差一个子列）$u_k\to u$ 在 $S$ 上几乎处处（见\cref{proposition:ch05-几乎处处收敛}(ii)），因而我们可如前论证得到\eqref{align:intro-0.11}。
 
-关键等式 $\nu=\nu_u$ 的证明依赖于所谓 Murat--Tartar 等式，而后者又用到 div--curl 引理（见文献~\cite{ref46} 推论 1.3.1 与定理 5.2.1，文献~\cite{ref68} 第 3.3 节；我们将用类似论证证明\cref{proposition:ch07-divcurl}）。
+关键等式 $\nu=\nu_u$ 的证明依赖于所谓 Murat--Tartar 等式，而后者又用到 div--curl 引理（见文献~\cite{ref46} 推论 1.3.1 与\cref{theorem:ch05-离散分解}，文献~\cite{ref68} 第 3.3 节；我们将用类似论证证明\cref{proposition:ch07-divcurl}）。
 
-\subsubsection*{Radon 测度值解}\label{subsubsection:intro-radon1d}
+\subsubsection*{2.2\quad Radon 测度值解}\phantomsection\label{subsubsection:intro-radon1d}
 
 一维空间中问题(CL)，
 \begin{align*}
@@ -290,15 +370,15 @@ u=u_0 & \text{在 }\mathbb{R}\times\{0\},
 \begin{itemize}
 \item 对正的时刻，$u$ 是函数：对每个 $\tau\in(0,T)$，$u\in L^\infty(0,T;L^1(\mathbb{R}))\cap L^\infty((\tau,T)\times\mathbb{R})$；
 \item 对所有 $k\in\mathbb{R}$ 与 $\zeta\in C^1_c(S)$，$\zeta\geqslant0$，有熵不等式
-\[
+\begin{align*}
 \iint_S\{|u-k|\partial_t\zeta + \operatorname{sgn}(u-k)[\phi(u)-\phi(k)]\partial_x\zeta\}\,\mathrm{d}x\,\mathrm{d}t \geqslant 0;
-\]
+\end{align*}
 \item 初值条件在窄收敛意义下满足：
-\[
+\begin{align*}
 \operatorname*{ess\,lim}_{t\to0^+}\int_{\mathbb{R}}u(\cdot,t)\rho\,\mathrm{d}x
 = \int_{\mathbb{R}}\rho\,\mathrm{d}u_0
 \quad \text{对任意 }\rho\in C_b(\mathbb{R}).
-\]
+\end{align*}
 \end{itemize}
 
 证明了如下结果。
@@ -306,6 +386,51 @@ u=u_0 & \text{在 }\mathbb{R}\times\{0\},
 \begin{proposition}\label{proposition:intro-0.2.3}
 设 $\phi:[0,\infty)\to[0,\infty)$，$\phi(0)=0$ 为增函数，且对某个 $\alpha\in(0,1)$，$z\mapsto[\phi(z)]^{1-\alpha}$ 在 $(0,\infty)$ 上为凸。则(CL1)存在唯一熵解 $u\geqslant0$。
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:intro-0.2.3; kind=motivation; basis=命题 0.2.3 的动机（超线性流下的 Radon 初值适定性与正则化效应）、$\phi(0)=0$、$\phi$ 增、$[\phi]^{1-\alpha}$ 凸三项假设的作用，以及 $m=1$ 线性情形的反例
+\begin{remark}\phantomsection\label{remark:intro-0.2.3-动机}
+(i) 动机。\eqref{align:intro-0.16a}以下的计算表明：当流在无穷远超线性时，即使初值是 Dirac 质量，解在正时刻也立即成为函数，于是“熵解”这一唯一性概念足以处理 Radon 初值，3.2 节对伪抛物问题的讨论正以此为标准对照。命题的实质是：$L^1$ 框架中的熵解理论经逼近与紧性论证可推广到 $\mathscr{R}^+_f(\mathbb{R})$ 初值。
+
+(ii) 各假设的作用。$\phi:[0,\infty)\to[0,\infty)$ 与 $\phi(0)=0$ 使非负性成为不变性质：$u_0\geqslant0$ 时熵解 $u\geqslant0$，从而可以在 $[0,\infty)$ 上讨论 $\phi$。$\phi$ 增使熵条件的方向确定（激波速度与特征速度可比），这是 Oleinik 型条件成立的前提。$z\mapsto[\phi(z)]^{1-\alpha}$ 在 $(0,\infty)$ 上凸是正则化效应的来源：它给出与 $\varepsilon$ 无关的 $L^\infty_{\mathrm{loc}}$ 估计，从而把“质量有限但可能集中”的初值在正时刻磨成有界函数；$\alpha\in(0,1)$ 排除了线性流（$\alpha=1$ 对应 $\phi$ 线性）与完全退化两种极端。
+
+(iii) 边界。三条假设不可同时放松。取 $\phi(z)=z$（线性流，$m=1$），则 $z\mapsto z^{1-\alpha}$ 对每个 $\alpha\in(0,1)$ 都是凹的，假设失败；此时 $\delta_0$ 的奇性永不消失（见 2.2 节末的讨论），(CL1)的解对一切时刻都是 Radon 测度值的，命题所断言的“函数值熵解”不存在。若只要求弱解而不要求熵解，则唯一性失效：以 $\phi(u)=u^2/2$ 的 Riemann 问题为例，激波解与稀疏波解都是弱解。$\alpha$ 的取值决定正则化的速率，命题只断言存在性与唯一性，不断言 $L^\infty$ 估计的精确常数。
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:intro-0.2.3; kind=proof; basis=存在性取 $L^\infty\cap L^1$ 逼近并由 Kružkov 熵解的一致 $L^1$ 与 $L^\infty_{\mathrm{loc}}$ 估计、Fréchet--Kolmogorov 紧性、熵不等式的稳定性取极限；唯一性用 Kružkov 双重论证
+\begin{proof}
+\textbf{存在性。} 取 $\{u_{0n}\}\subseteq L^\infty(\mathbb{R})\cap L^1(\mathbb{R})$，$u_{0n}\geqslant0$，使 $\|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$ 且 $u_{0n}\to u_0$ 在 $\mathbb{R}$ 上窄收敛（例如把 $u_0$ 磨光后再截断）。对每个 $n$，由 Kružkov 定理，(CL1) 以 $u_{0n}$ 为初值存在唯一熵解 $u_n\in C([0,T];L^1(\mathbb{R}))\cap L^\infty((\tau,T)\times\mathbb{R})$，且 $u_n\geqslant0$。
+
+一致估计。由熵解的 $L^1$ 收缩性，
+\begin{align*}
+\|u_n(\cdot,t)\|_{L^1(\mathbb{R})}\leqslant\|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})}
+\quad (t\in(0,T)).
+\end{align*}
+另一方面，$z\mapsto[\phi(z)]^{1-\alpha}$ 的凸性给出 Benilan--Crandall 型正则化估计：对每个 $\tau\in(0,T)$ 存在只依赖 $\tau,T,\phi$ 与 $\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$ 的常数 $C_\tau$，使
+\begin{align*}
+\sup_n\|u_n\|_{L^\infty((\tau,T)\times\mathbb{R})}\leqslant C_\tau .
+\end{align*}
+两式合起来给出 $\{u_n\}$ 在 $L^1((\tau,T)\times\mathbb{R})$ 中的有界性与一致可积性。
+
+紧性。在熵不等式中取 $\zeta(x,t)=\theta(t)\rho_\delta(x-y)$（$\theta\in C^1_c(0,T)$，$\theta\geqslant0$，$\rho_\delta$ 为磨光核），对 $y$ 积分并令 $\delta\to0^+$，得 $\{u_n\}$ 在 $x$ 方向的一致有界变差估计；结合方程本身给出的 $t$ 方向估计，由 Fréchet--Kolmogorov 定理，$\{u_n\}$ 在 $L^1_{\mathrm{loc}}((0,T)\times\mathbb{R})$ 中相对紧。取子列（不重新标号）使 $u_n\to u$ 于 $L^1_{\mathrm{loc}}((0,T)\times\mathbb{R})$，且几乎处处。
+
+极限是熵解。熵不等式对每个 $u_n$ 成立；由 $u_n\to u$ 于 $L^1_{\mathrm{loc}}$ 与凸性（$|\cdot-k|$ 的凸性给出下半连续性），令 $n\to\infty$ 得 $u$ 满足同一熵不等式。分布意义下的方程同理由弱收敛得到，且 $u\geqslant0$。
+
+初值条件。设 $\rho\in C_b(\mathbb{R})$，$t\in(0,T)$。由三角不等式
+\begin{align*}
+&\left|\int_{\mathbb{R}}\rho\,u(\cdot,t)\,\mathrm{d}x-\int_{\mathbb{R}}\rho\,\mathrm{d}u_0\right|\\
+&\qquad\leqslant\|\rho\|_{L^\infty}\|u(\cdot,t)-u_n(\cdot,t)\|_{L^1(\mathbb{R})}
++\left|\int_{\mathbb{R}}\rho\,(u_n(\cdot,t)-u_{0n})\,\mathrm{d}x\right|
++\left|\int_{\mathbb{R}}\rho\,\mathrm{d}u_{0n}-\int_{\mathbb{R}}\rho\,\mathrm{d}u_0\right| .
+\end{align*}
+第一项当 $n\to\infty$ 后为零（$u_n(\cdot,t)\to u(\cdot,t)$ 于 $L^1_{\mathrm{loc}}$）；第二项由熵解的强连续性 $\|u_n(\cdot,t)-u_{0n}\|_{L^1(\mathbb{R})}\to0$（$t\to0^+$）控制；第三项由 $u_{0n}\to u_0$ 的窄收敛控制。故 $\operatorname*{ess\,lim}_{t\to0^+}\int_{\mathbb{R}}\rho\,u(\cdot,t)\,\mathrm{d}x=\int_{\mathbb{R}}\rho\,\mathrm{d}u_0$。
+
+\textbf{唯一性。} 设 $u,v$ 为(CL1)的两个熵解，初值分别为 $u_0,v_0\in\mathscr{R}^+_f(\mathbb{R})$。取 Kružkov 检验函数 $\zeta(x,t)=\theta(t)\rho_\delta(x-y)$，对 $x,y$ 双重积分并令 $\delta\to0^+$，得
+\begin{align*}
+\|(u(\cdot,t)-v(\cdot,t))_+\|_{L^1(\mathbb{R})}\leqslant\|(u_0-v_0)_+\|_{\mathscr{R}_f(\mathbb{R})}
+\quad (t\in(0,T)).
+\end{align*}
+取 $u_0=v_0$ 得右端为零，故 $u(\cdot,t)\leqslant v(\cdot,t)$ 几乎处处；交换 $u,v$ 得 $u=v$。
+\end{proof}
 
 \cref{proposition:intro-0.2.3}的存在性部分由一个构造性过程给出，其中初值 Radon 测度 $u_0\geqslant0$ 用序列 $\{u_{0n}\}\subseteq L^\infty(\mathbb{R})\cap L^1(\mathbb{R})$ 逼近，$u_{0n}\to u_0$ 在 $\mathbb{R}$ 上窄收敛。若 $\phi(u)=u^m$，$m>1$，且 $u_0=\delta_0$，则该过程给出 Burgers 方程的基本解，称为 N 波：
 \begin{align}
@@ -331,29 +456,77 @@ u_n = n\,\chi_{(-\frac{1}{2n},\frac{1}{2n})} & \text{在 }\mathbb{R}\times\{0\}.
 \qquad(Rn)
 \end{align*}
 对(Rn)的初等分析表明：一道激波从点 $(-\frac{1}{2n},0)$ 出发，一道稀疏波扇从 $(\frac{1}{2n},0)$ 出发，二者在点 $(x_n,t_n)$ 相遇，
-\[
+\begin{align*}
 x_n \triangleq  \frac{t_n}{2}\left[\frac{\phi(n)}{n}+\phi'(n)\right],
 \qquad
 t_n \triangleq  \frac{1}{\phi(n)-n\phi'(n)} \quad (n\in\mathbb{N}),
-\]
+\end{align*}
 一道新的激波由此点出发。易见 $\lim_{n\to\infty}t_n=1$，$\lim_{n\to\infty}x_n=0$。这解释了以下结果（见文献~\cite{ref18}）。
 
 \begin{proposition}\label{proposition:intro-0.2.4}
 问题(CL2)的唯一（所构造的）熵解为 $u=u_r+u_s$，其中
 \begin{align}
-u_r(x,t) \triangleq  \left[\left(\frac{mt}{x}\right)^{\frac{1}{1+m}}-1\right]\chi_A(x,t),\qquad
-u_s(\cdot,t) \triangleq  [1-t]_+\delta_0,
-\nonumber\\
-A \triangleq  \{(x,t)\mid 0<x\leqslant mt,\ 0\leqslant t\leqslant1\}
-\cup\{(x,t)\mid \xi(t)\leqslant x\leqslant mt,\ 1<t\leqslant T\}, \label{align:intro-0.17}
+\begin{aligned}
+u_r(x,t) &\triangleq  \left[\left(\frac{mt}{x}\right)^{\frac{1}{1+m}}-1\right]\chi_A(x,t),\qquad
+u_s(\cdot,t) \triangleq  [1-t]_+\delta_0,\\
+A &\triangleq  \{(x,t)\mid 0<x\leqslant mt,\ 0\leqslant t\leqslant1\}
+\cup\{(x,t)\mid \xi(t)\leqslant x\leqslant mt,\ 1<t\leqslant T\},
+\end{aligned}
+\label{align:intro-0.17}
 \end{align}
 且 $\xi$ 求解问题
-\[
+\begin{align*}
 \begin{cases}
-\xi' = -\dfrac{(mt\xi-1)^{-\frac{m}{1+m}}-1}{(mt\xi-1)^{\frac{1}{1+m}}-1} & \text{在 }(1,T),\\
+\xi' = -\dfrac{(mt\xi^{-1})^{-\frac{m}{1+m}}-1}{(mt\xi^{-1})^{\frac{1}{1+m}}-1} & \text{在 }(1,T),\\
 \xi(1,1)=0.
 \end{cases}
-\]
+\end{align*}
+\end{proposition}
+
+% SUPPLEMENT: parent=proposition:intro-0.2.4; kind=motivation; basis=命题 0.2.4 的动机（有界流下的延迟正则化）、$u_s=[1-t]_+\delta_0$ 与 $\phi(z)=1-(1+z)^{-m}$ 的作用、与超线性流 (0.16) 及线性流的对照，并说明原书印作 $\xi(1,1)=0$ 的初值应按 $\xi(1)=0$ 读
+\begin{remark}\phantomsection\label{remark:intro-0.2.4-动机}
+(i) 动机。超线性流（\eqref{align:intro-0.16a}）使 Dirac 初值在任意正时刻立即正则化，而有界流提供相反的极端：原子在等待时间 $t=1$ 之前一直存在，之后才消失，故称延迟正则化。\eqref{align:intro-0.17}是这一现象唯一可用显式公式写出的模型，因而也是理解\cref{chapter:ch07}“相容条件”（\eqref{align:intro-0.18}）为何成为唯一性证明核心的入口。
+
+(ii) 各假设的作用。原子质量取 $1$ 与 $u_0=\delta_0$ 使 $u_s(\cdot,t)=[1-t]_+\delta_0$：其质量按速率 $1$ 线性减少，恰等于 $x=0^+$ 处的流极限 $\phi(\infty)=1$，故 $x=0$ 处的质量平衡自动成立；若初值换成 $m_0\delta_0$，同一计算给出 $u_s=[m_0-t]_+$ 型原子。$\phi(z)=1-(1+z)^{-m}$ 增、凹且有界，凹性使 Oleinik 条件成立（见证明 (4)），有界性使 $u_r$ 在 $x\to0^+$ 时取到有限的流极限 $1$，这正是\eqref{align:intro-0.18} 的第二个等式。集合 $A$ 的两段结构对应原子存在（$t\leqslant1$）与消失（$t>1$）两个阶段；后者由 $\xi$ 描述激波轨迹。
+
+(iii) 边界。$m>1$ 时\eqref{align:intro-0.16a} 给出函数值解，线性 $m=1$ 时原子永不消失，故有界流情形严格介于两者之间；若 $\phi$ 非凹，则\eqref{align:intro-0.17} 的激波可能不满足熵条件，$u_r+u_s$ 不再是熵解。关于初值：原书将 $\xi$ 的初值印作 $\xi(1,1)=0$，而 $\xi$ 是单变量 $t$ 的函数、问题在 $(1,T)$ 上求解，故应按 $\xi(1)=0$ 读；这一读法由 $t=1$ 时原子质量 $[1-t]_+=0$ 与解在 $t=1$ 的连续性唯一确定（见证明 (5)）。
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:intro-0.2.4; kind=proof; basis=直接验证：区域 $x<mt$ 内的方程、$x=0$ 处的质量平衡、$t>1$ 时 $x=\xi(t)$ 处激波的 Rankine--Hugoniot 条件（导出所印 ODE）、凹性给出的 Oleinik 熵条件、初值 $\xi(1)=0$
+\begin{proof}
+记 $\phi(u)\triangleq 1-(1+u)^{-m}$，$m>0$，并置 $\theta\triangleq 1/(1+m)$。分五步。
+
+(1) 区域 $\{0<x<mt,\ t>0\}$ 内的方程。由 $u_r(x,t)=(mt/x)^{\theta}-1$，
+\begin{align*}
+\partial_t u_r=\theta m(mt)^{\theta-1}x^{-\theta},
+\qquad
+\phi(u_r)=1-(mt)^{-\theta m}x^{\theta m},
+\end{align*}
+故 $\partial_x\phi(u_r)=-\theta m(mt)^{-\theta m}x^{\theta m-1}$。由 $m\theta=\tfrac{m}{1+m}$ 与 $\theta-1=-\tfrac{m}{1+m}=-m\theta$ 得 $(mt)^{\theta-1}x^{-\theta}=(mt)^{-m\theta}x^{m\theta-1}$，于是 $\partial_t u_r+\partial_x\phi(u_r)=0$。
+
+(2) 质量。对 $0<t\leqslant1$，
+\begin{align*}
+\int_{\mathbb{R}}u_r(x,t)\,\mathrm{d}x
+&=\int_0^{mt}\left[\left(\frac{mt}{x}\right)^{\theta}-1\right]\mathrm{d}x
+=(mt)^{\theta}\int_0^{mt}x^{-\theta}\,\mathrm{d}x-mt\\
+&=(mt)^{\theta}\cdot\frac{(mt)^{1-\theta}}{1-\theta}-mt
+=\frac{mt}{1-\theta}-mt=(1+m)t-mt=t,
+\end{align*}
+其中用到 $\int_0^{mt}x^{-\theta}\,\mathrm{d}x=\frac{(mt)^{1-\theta}}{1-\theta}$ 与 $\frac{1}{1-\theta}=1+m$（因 $1-\theta=\frac{m}{1+m}$）。加上原子质量 $1-t$ 得总质量 $1=u_0(\mathbb{R})$；对 $t\geqslant1$ 原子消失，而 $u_r$ 的质量为 $t\geqslant1$，与 $u_0(\mathbb{R})=1$ 在 $t=1$ 处相符。
+
+(3) $x=0$ 处的质量平衡与\eqref{align:intro-0.18}。对 $x\to0^+$，$1+u_r(x,t)=(mt/x)^{\theta}\to\infty$，故 $\phi(u_r(x,t))\to1$；而 $u_r=0$ 于 $x<0$，故 $\phi(u_r(0^-,t))=\phi(0)=0$。这正是\eqref{align:intro-0.18}。原子质量 $1-t$ 的减少率等于从右方流入 $x=0$ 的流 $\phi(u_r(0^+,t))=1$，故 $x=0$ 处的 Rankine--Hugoniot 平衡成立，$u=u_r+u_s$ 在分布意义下满足(CL2)。
+
+(4) $t>1$ 时的激波。此时 $u_s=0$，$x=\xi(t)$ 是左态 $0$、右态 $u_r(\xi(t),t)$ 的激波。置 $y\triangleq mt/\xi(t)=mt\xi(t)^{-1}$，则 $u_r(\xi,t)=y^{\theta}-1$，$\phi(u_r(\xi,t))=1-y^{-\theta m}$，Rankine--Hugoniot 条件给出
+\begin{align*}
+\xi'=\frac{\phi(u_r(\xi,t))-\phi(0)}{u_r(\xi,t)-0}
+=\frac{1-y^{-\theta m}}{y^{\theta}-1}
+=-\frac{(mt\xi^{-1})^{-m/(1+m)}-1}{(mt\xi^{-1})^{1/(1+m)}-1},
+\end{align*}
+即所印的方程。由 $\phi$ 凹、$\phi(0)=0$ 知 $u\mapsto\phi(u)/u$ 在 $(0,\infty)$ 上递减，故对 $0<u<u_r(\xi,t)$ 有 $\phi(u)/u\geqslant\phi(u_r(\xi,t))/u_r(\xi,t)=\xi'$，即左特征速度不小于激波速度，Oleinik 熵条件成立。
+
+(5) 初值。由 $[1-t]_+=0$ 对 $t\geqslant1$，$t=1$ 时解为纯函数 $u_r(\cdot,1)$ 且其支撑为 $[0,m]$，原子已在 $x=0$ 处消失；激波自 $x=0$ 出发，故 $\xi(1)=0$。右端在 $1<y<\infty$（即 $0<\xi<mt$）上连续，Cauchy--Peano 定理给出 $(1,T)$ 上的局部解，且由 $\phi$ 的凹性该解可延拓至 $T$。于是 $u=u_r+u_s$ 满足(CL2)的熵解定义，其唯一性由\cref{theorem:ch07-唯一性}给出。
+\end{proof}
+
 由\eqref{align:intro-0.17}，此情形下(CL1)解的奇异部分在等待时间 $t=1$ 之前非零，而当 $t\geqslant1$ 时消失，因而我们有延迟正则化。另一个重要注记是：对 $0<t<\tau_1=1$，奇异部分 $u_s(\cdot,t)$ 集中于 $x_0=0$（见\eqref{align:intro-0.17}）。当趋近于 $\operatorname{supp}u_s(\cdot,t)=\{0\}$ 时，对任意 $t\in(0,\tau_1)$，密度 $u_r(\cdot,t)$ 满足相容条件
 \begin{align}
 \lim_{x\to0^-}\phi(u_r(x,t))\equiv\phi(u_r(0^-,t))=0,
@@ -361,9 +534,8 @@ A \triangleq  \{(x,t)\mid 0<x\leqslant mt,\ 0\leqslant t\leqslant1\}
 \lim_{x\to0^+}\phi(u_r(x,t))\equiv\phi(u_r(0^+,t))=1. \label{align:intro-0.18}
 \end{align}
 我们请读者参阅\cref{chapter:ch07}，以领会在具有界 $\phi$ 的问题(CL1)唯一性证明中相容条件所起的本质作用（见\cref{definition:ch07-熵解}与\cref{theorem:ch07-唯一性}）。
-\end{proposition}
 
-\subsection*{不适定问题的 Young 与 Radon 测度值解}\label{subsection:intro-illposed}
+\subsection*{3\quad 不适定问题的 Young 与 Radon 测度值解}\phantomsection\label{subsection:intro-illposed}
 
 现在考虑前向--后向抛物方程
 \begin{align*}
@@ -404,21 +576,21 @@ u &\triangleq  s_2(v),\ v\in(A,\infty) \Leftrightarrow v=\phi(u),\ u\in(a,\infty
 （此处 $A\triangleq \phi(a)$，$B\triangleq \phi(b)$；见\cref{figure:intro-cubic}）。启发式地，分支 $s_1$、$s_2$ 对应稳定相，$s_0$ 对应不稳定相，方程(FB)描述稳定相之间过渡的动力学。
 
 不适定性促使人们对 Landau 理论作若干修正，特别包括非局部空间效应与/或时间延迟效应。在第一种情形，从所谓 Allen--Cahn 泛函
-\[
+\begin{align*}
 \mathcal{E}[u] \triangleq  \int_\Omega\left\{\Phi(u)+\frac{\kappa}{2}|\nabla u|^2\right\}\mathrm{d}x
-\]
+\end{align*}
 出发，得到 Cahn--Hilliard 方程
 \begin{align}
 \partial_t u = \Delta[\phi(u)-\kappa\Delta u] \quad (\kappa>0), \label{align:intro-0.21}
 \end{align}
 即(FB)的四阶正则化。反之，考虑时间延迟效应则导出(FB)的 Sobolev 正则化：
-\[
-\partial_t u = \Delta[\phi(u)+\epsilon\partial_t u] \quad (\epsilon>0).
-\]
+\begin{align*}
+\partial_t u = \Delta[\phi(u)+\varepsilon\partial_t u] \quad (\varepsilon>0).
+\end{align*}
 若同时纳入两种效应，则得到粘性 Cahn--Hilliard 方程
-\[
-\partial_t u = \Delta[\phi(u)-\kappa\Delta u+\epsilon\partial_t u].
-\]
+\begin{align*}
+\partial_t u = \Delta[\phi(u)-\kappa\Delta u+\varepsilon\partial_t u].
+\end{align*}
 其他基于时间或空间离散的(FB)正则化已被多位作者使用~\cite{ref12,ref43,ref57,ref61}。
 
 除相变外，研究方程(FB)的另一动机来自种群动力学，它在其中作为聚集种群离散模型的拟连续近似而出现（见文献~\cite{ref76,ref77}及其中引文）。在此框架中，$u\geqslant0$ 表示种群密度，$\phi\in C^2([0,\infty))$ 为具有如下性质的非单调函数：
@@ -435,7 +607,7 @@ u &\triangleq  s_2(v),\ v\in(A,\infty) \Leftrightarrow v=\phi(u),\ u\in(a,\infty
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.62\textwidth]{fig-perona.png}
-\caption{Perona--Malik 型函数 $\phi$}\label{figure:intro-perona}
+\caption{Perona--Malik 型的 $\phi$}\label{figure:intro-perona}
 \end{figure}
 
 （见\cref{figure:intro-perona}）。满足 (A2) 的函数常称为“Perona--Malik 型”，因为当 $N=1$ 时 Perona--Malik 方程写为
@@ -449,28 +621,28 @@ u &\triangleq  s_2(v),\ v\in(A,\infty) \Leftrightarrow v=\phi(u),\ u\in(a,\infty
 这是(FB)的一个特例（需提及，$N=1$ 且 $\phi$ 为三次的方程(FB)已在文献~\cite{ref77}中研究）。注意\eqref{align:intro-0.22}中第一式是带 Perona--Malik 位势 $\Phi(u)=\log(1+u^2)$ 的\eqref{align:intro-0.19}的梯度流。
 
 文献~\cite{ref11}给出了充分的建模论证，以说明\eqref{align:intro-0.22}的伪抛物正则化：
-\[
-\partial_t z = \partial_x[\phi(\partial_x z)] + \epsilon\partial_{tx}[\psi(\partial_x z)],
-\]
+\begin{align*}
+\partial_t z = \partial_x[\phi(\partial_x z)] + \varepsilon\partial_{tx}[\psi(\partial_x z)],
+\end{align*}
 其中带
 \begin{align}
 \psi(u) \triangleq  -\phi(u) + \int_0^u\frac{\phi(z)}{z}\,\mathrm{d}z \quad (u\geqslant0) \label{align:intro-0.24}
 \end{align}
 的正则化项，是通过在(FB)中引入时间延迟效应而得到的。对\eqref{align:intro-0.22}中的函数 $\phi$，有 $\psi(u)=-\frac{u}{1+u^2}+\arctan u$，因而
-\[
+\begin{align*}
 \psi'(u)>0 \quad \forall u\geqslant0, \qquad \psi(u)\to\frac{\pi}{2}\text{ 当 }u\to\infty.
-\]
+\end{align*}
 一般地，若 $\phi$ 满足 (A2)，则函数 $\psi:[0,\infty)\to[0,\infty)$ 满足下列要求：
 \begin{align*}
 \psi'(u)>0\ \forall u\geqslant0, \qquad \psi(u)\to\psi_\infty\in(0,\infty)\text{ 当 }u\to\infty. \qquad(A3)
 \end{align*}
 
 显然，伪抛物正则化弱于 Sobolev 正则化，后者形式上对应于 $\psi(u)=u$ 的情形。与\eqref{align:intro-0.22}和\eqref{align:intro-0.23}之间的对应一致，(FB)的伪抛物正则化写为
-\[
-\partial_t u = \Delta\phi(u) + \epsilon\partial_t\Delta[\psi(u)] \quad (u\geqslant0).
-\]
+\begin{align*}
+\partial_t u = \Delta\phi(u) + \varepsilon\partial_t\Delta[\psi(u)] \quad (u\geqslant0).
+\end{align*}
 
-\subsubsection*{Young 测度值解}\label{subsubsection:intro-youngfb}
+\subsubsection*{3.1\quad Young 测度值解}\phantomsection\label{subsubsection:intro-youngfb}
 
 考虑带 Sobolev 正则化的(FB)初边值问题：
 \begin{align*}
@@ -479,55 +651,144 @@ u &\triangleq  s_2(v),\ v\in(A,\infty) \Leftrightarrow v=\phi(u),\ u\in(a,\infty
 \partial_\nu v = 0 & \text{在 }\partial\Omega\times(0,T),\\
 u=u_0 & \text{在 }\Omega\times\{0\},
 \end{cases}
-\qquad(S\epsilon)
+\qquad(S\varepsilon)
 \end{align*}
-其中 $v\triangleq \phi(u)+\epsilon\partial_t u$，$\Omega\subseteq\mathbb{R}^N$（$N\geqslant1$）为具有光滑边界 $\partial\Omega$ 的有界开集，$\partial_\nu$ 表示外法向导数。以下结果在文献~\cite{ref74}中证明（另见文献~\cite{ref76}）。
+其中 $v\triangleq \phi(u)+\varepsilon\partial_t u$，$\Omega\subseteq\mathbb{R}^N$（$N\geqslant1$）为具有光滑边界 $\partial\Omega$ 的有界开集，$\partial_\nu$ 表示外法向导数。以下结果在文献~\cite{ref74}中证明（另见文献~\cite{ref76}）。
 
 \begin{lemma}\label{lemma:intro-0.3.1}
-设 $\phi\in C^1(\mathbb{R})$，$u_0\in C(\overline\Omega)$。则对每个 $\epsilon>0$，存在 $T_\epsilon>0$，使问题(S$\epsilon$)在 $Q_{T_\epsilon}\triangleq \Omega\times(0,T_\epsilon)$ 中存在唯一强解 $(u_\epsilon,v_\epsilon)$。进而：
+设 $\phi\in C^1(\mathbb{R})$，$u_0\in C(\Omega)$。则对每个 $\varepsilon>0$，存在 $T_\varepsilon>0$，使问题(S$\varepsilon$)在 $Q_{T_\varepsilon}\triangleq \Omega\times(0,T_\varepsilon)$ 中存在唯一强解 $(u_\varepsilon,v_\varepsilon)$。进而：
 \begin{enumerate}[(i)]
 \item\label{item:intro-0.3.1-i} 设 $g\in C^1(\mathbb{R})$，$g'\geqslant0$，$G(u)\triangleq \int_0^u g(\phi(s))\,\mathrm{d}s+c$（$c\in\mathbb{R}$）。则
 \begin{align}
-\int_\Omega G(u_\epsilon(x,t))\,\mathrm{d}x \leqslant \int_\Omega G(u_0(x))\,\mathrm{d}x
-\quad \text{对任意 }t\in(0,T_\epsilon); \label{align:intro-0.25}
+\int_\Omega G(u_\varepsilon(x,t))\,\mathrm{d}x \leqslant \int_\Omega G(u_0(x))\,\mathrm{d}x
+\quad \text{对任意 }t\in(0,T_\varepsilon); \label{align:intro-0.25}
 \end{align}
 \item\label{item:intro-0.3.1-ii} 设 $u_1,u_2\in\mathbb{R}$，$u_1<u_2$，且
 \begin{align}
 \phi(u_1)\leqslant\phi(u)\leqslant\phi(u_2) \quad \text{对任意 }u\in[u_1,u_2]. \label{align:intro-0.26}
 \end{align}
-若对每个 $x\in\Omega$ 有 $u_0(x)\in[u_1,u_2]$，则对每个 $(x,t)\in Q_{T_\epsilon}$ 有 $u_\epsilon(x,t)\in[u_1,u_2]$。
+若对每个 $x\in\Omega$ 有 $u_0(x)\in[u_1,u_2]$，则对每个 $(x,t)\in Q_{T_\varepsilon}$ 有 $u_\varepsilon(x,t)\in[u_1,u_2]$。
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
 上述断言 (ii) 由 (i) 通过适当选取函数 $g$ 得到。为证 (i)，注意
-\[
-\begin{aligned}
-\partial_t[G(u_\epsilon)]
-&= g(\phi(u_\epsilon))\partial_t u_\epsilon
-= g(v_\epsilon)\Delta v_\epsilon + [g(\phi(u_\epsilon))-g(v_\epsilon)]\Delta v_\epsilon\\
-&= \operatorname{div}[g(v_\epsilon)\nabla v_\epsilon] - g'(v_\epsilon)|\nabla v_\epsilon|^2
-+ [g(\phi(u_\epsilon))-g(v_\epsilon)]\frac{v_\epsilon-\phi(u_\epsilon)}{\epsilon}
-\leqslant 0.
-\end{aligned}
-\]
+\begin{align*}
+\partial_t[G(u_\varepsilon)]
+&= g(\phi(u_\varepsilon))\partial_t u_\varepsilon
+= g(v_\varepsilon)\Delta v_\varepsilon + [g(\phi(u_\varepsilon))-g(v_\varepsilon)]\Delta v_\varepsilon\\
+&= \operatorname{div}[g(v_\varepsilon)\nabla v_\varepsilon] - g'(v_\varepsilon)|\nabla v_\varepsilon|^2
++ \underbrace{[g(\phi(u_\varepsilon))-g(v_\varepsilon)]\frac{v_\varepsilon-\phi(u_\varepsilon)}{\varepsilon}}_{\leqslant0}\\
+&\leqslant \operatorname{div}[g(v_\varepsilon)\nabla v_\varepsilon].
+\end{align*}
 将上式在 $\Omega$ 上积分即得\eqref{align:intro-0.25}。
 \end{proof}
 
-若 (A1) 成立，则对适当选取的 $u_1<0<u_2$（$|u_1|$、$|u_2|$ 充分大），函数 $\phi$ 满足\eqref{align:intro-0.26}。于是我们得到 $\{u_\epsilon\}$ 的一致 $L^\infty$ 估计。下文\eqref{align:intro-0.27}中的其他估计由不等式\eqref{align:intro-0.25}的证明类似得到，故有如下结果。
+% SUPPLEMENT: parent=lemma:intro-0.3.1; kind=proof; basis=引理 0.3.1 的证明只写"适当选取 $g$"与一个 $\leqslant0$ 的括注；此处给出 $g$ 的显式构造、两处符号判断的依据、Neumann 边条件消去边界项，并指出 (ii) 所需的单侧单调性
+\begin{proof}
+(i) 中两处不等号的来源如下。由 $g'\geqslant0$ 知 $g$ 非减，故对任意实数 $a,b$ 有 $(g(a)-g(b))(a-b)\geqslant0$；取 $a=\phi(u_\varepsilon)$、$b=v_\varepsilon$ 得
+\begin{align*}
+[g(\phi(u_\varepsilon))-g(v_\varepsilon)](v_\varepsilon-\phi(u_\varepsilon))\leqslant0,
+\end{align*}
+而 $v_\varepsilon-\phi(u_\varepsilon)=\varepsilon\partial_t u_\varepsilon$，故式中末项非正；又 $g'\geqslant0$ 给出 $-g'(v_\varepsilon)|\nabla v_\varepsilon|^2\leqslant0$。于是
+\begin{align*}
+\partial_t[G(u_\varepsilon)]\leqslant\operatorname{div}[g(v_\varepsilon)\nabla v_\varepsilon],
+\end{align*}
+在 $\Omega$ 上积分并用 $\partial_\nu v_\varepsilon=0$ 得
+\begin{align*}
+\int_\Omega\operatorname{div}[g(v_\varepsilon)\nabla v_\varepsilon]\,\mathrm{d}x
+=\int_{\partial\Omega}g(v_\varepsilon)\,\partial_\nu v_\varepsilon\,\mathrm{d}S=0,
+\end{align*}
+故 $\frac{\mathrm{d}}{\mathrm{d}t}\int_\Omega G(u_\varepsilon(\cdot,t))\,\mathrm{d}x\leqslant0$，在 $(0,t)$ 上积分即得\eqref{align:intro-0.25}。
+
+(ii) 的推导。设 $u_1<u_2$ 使\eqref{align:intro-0.26}成立，取 $g\in C^1(\mathbb{R})$ 使 $g'\geqslant0$、$g=0$ 于 $[\phi(u_1),\phi(u_2)]$、$g<0$ 于 $(-\infty,\phi(u_1))$、$g>0$ 于 $(\phi(u_2),\infty)$，并置
+\begin{align*}
+G(u)\triangleq\int_{u_1}^{u}g(\phi(s))\,\mathrm{d}s .
+\end{align*}
+由\eqref{align:intro-0.26}，对 $u\in[u_1,u_2]$ 有 $\phi(u)\in[\phi(u_1),\phi(u_2)]$，故 $g(\phi(u))=0$，即 $G=0$ 于 $[u_1,u_2]$。若此外
+\begin{align*}
+\phi(u)\geqslant\phi(u_2)\ (u>u_2),
+\qquad
+\phi(u)\leqslant\phi(u_1)\ (u<u_1),
+\end{align*}
+则由 $g$ 的符号得 $G\geqslant0$ 于 $\mathbb{R}$ 且 $\{u\mid G(u)=0\}=[u_1,u_2]$。把 (i) 用于此 $g$ 与满足 $u_0\in[u_1,u_2]$ 的初值，得
+\begin{align*}
+\int_\Omega G(u_\varepsilon(x,t))\,\mathrm{d}x\leqslant\int_\Omega G(u_0(x))\,\mathrm{d}x=0
+\quad (t\in(0,T_\varepsilon)),
+\end{align*}
+故 $G(u_\varepsilon)=0$ 几乎处处于 $Q_{T_\varepsilon}$，即 $u_\varepsilon\in[u_1,u_2]$ 几乎处处；再由 $u_\varepsilon$ 的连续性得逐点成立。当 $\phi$ 满足 (A1) 时取 $u_1<b$、$u_2>a$ 且 $|u_1|,|u_2|$ 充分大，$\phi$ 在 $(-\infty,b)$ 与 $(a,\infty)$ 上分别严格增，上述两个单侧条件成立，故 (ii) 可用。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:intro-0.3.1; kind=motivation; basis=引理 0.3.1 的动机（局部强解与两个先验界是后续 $\varepsilon\to0^+$ 紧性的基础）、$g'\geqslant0$ 与\eqref{align:intro-0.26} 的作用，以及 (ii) 所需的单侧单调性这一隐含条件
+\begin{remark}\phantomsection\label{remark:intro-0.3.1-动机}
+(i) 动机。引理给出正则化问题的局部适定性，以及两条与 $\varepsilon$ 无关的先验界：熵型不等式\eqref{align:intro-0.25} 与区间不变性 (ii)。两者都是“比较原理”的离散版本，后文\eqref{align:intro-0.27} 的四个估计全部由\eqref{align:intro-0.25} 的证明变形得到，因此引理实际上是 3.1 节全部紧性论证的起点。
+
+(ii) 各假设的作用。$\phi\in C^1(\mathbb{R})$ 与 $u_0\in C(\Omega)$ 只用于保证局部强解的存在唯一性（解的正则性来自方程本身，见\cref{chapter:ch06}）。$g'\geqslant0$ 是\eqref{align:intro-0.25} 的关键：它使 $g$ 非减，从而 $[g(\phi(u_\varepsilon))-g(v_\varepsilon)](v_\varepsilon-\phi(u_\varepsilon))\leqslant0$；若 $g'$ 变号，该项可正，\eqref{align:intro-0.25} 不再成立。$c\in\mathbb{R}$ 不影响\eqref{align:intro-0.25}（两端同加 $c|\Omega|$），故 $G$ 的选取只由 $g$ 决定。\eqref{align:intro-0.26} 是区间不变性的唯一来源：它使 $g(\phi(u))=0$ 在 $[u_1,u_2]$ 上成立，从而 $G$ 以 $[u_1,u_2]$ 为零集。
+
+(iii) 边界。\eqref{align:intro-0.26} 只在区间 $[u_1,u_2]$ 内部起作用，(ii) 的结论还用到区间外部的单侧单调性（见上面的补充论证）；(A1) 恰好保证这一点，因为 $\phi$ 在 $(-\infty,b)$ 与 $(a,\infty)$ 上分别严格增。若只在 $[u_1,u_2]$ 上假定\eqref{align:intro-0.26} 而 $\phi$ 在区间外回落，则上述 $G$ 在区间外可能取负值，(ii) 不能由 (i) 推出。此外 $T_\varepsilon$ 依赖 $\varepsilon$，引理本身不含任何整体存在性；整体存在性要在\cref{proposition:intro-0.3.2}中由\eqref{align:intro-0.27} 的一致估计得到。
+\end{remark}
+
+若 (A1) 成立，则对适当选取的 $u_1<0<u_2$（$|u_1|$、$|u_2|$ 充分大），函数 $\phi$ 满足\eqref{align:intro-0.26}。于是我们得到 $\{u_\varepsilon\}$ 的一致 $L^\infty$ 估计。下文\eqref{align:intro-0.27}中的其他估计由不等式\eqref{align:intro-0.25}的证明类似得到，故有如下结果。
 
 \begin{proposition}\label{proposition:intro-0.3.2}
-设 (A1) 成立，$u_0\in C(\overline\Omega)$。则：
+设 (A1) 成立，$u_0\in C(\Omega)$。则：
 \begin{enumerate}[(i)]
-\item\label{item:intro-0.3.2-i} 对每个 $\epsilon>0$，正则化问题(S$\epsilon$)存在唯一强解 $(u_\epsilon,v_\epsilon)$，其中 $v_\epsilon=\phi(u_\epsilon)+\epsilon\partial_t u_\epsilon$；
-\item\label{item:intro-0.3.2-ii} 存在 $M>0$，使对任意 $\epsilon>0$，
+\item\label{item:intro-0.3.2-i} 对每个 $\varepsilon>0$，正则化问题(S$\varepsilon$)存在唯一强解 $(u_\varepsilon,v_\varepsilon)$，其中 $v_\varepsilon=\phi(u_\varepsilon)+\varepsilon\partial_t u_\varepsilon$；
+\item\label{item:intro-0.3.2-ii} 存在 $M>0$，使对任意 $\varepsilon>0$，
 \begin{align}
-\max\left\{\|u_\epsilon\|_{L^\infty(Q)},\ \sqrt{\epsilon}\,\|\partial_t u_\epsilon\|_{L^2(Q)},\ \|v_\epsilon\|_{L^\infty(Q)},\ \|v_\epsilon\|_{L^2(0,T;H^1(\Omega))}\right\} \leqslant M. \label{align:intro-0.27}
+\max\left\{\|u_\varepsilon\|_{L^\infty(Q)},\ \sqrt{\varepsilon}\,\|\partial_t u_\varepsilon\|_{L^2(Q)},\ \|v_\varepsilon\|_{L^\infty(Q)},\ \|v_\varepsilon\|_{L^2(0,T;H^1(\Omega))}\right\} \leqslant M. \label{align:intro-0.27}
 \end{align}
 \end{enumerate}
 \end{proposition}
 
-由不等式\eqref{align:intro-0.27}，存在序列 $\{\epsilon_k\}$（$\epsilon_k\to0^+$，$k\to\infty$）、$\{u_k\}\equiv\{u_{\epsilon_k}\}$、$\{v_k\}\equiv\{v_{\epsilon_k}\}$，以及 $u\in L^\infty(Q)$、$v\in L^\infty(Q)\cap L^2(0,T;H^1(\Omega))$，使
+% SUPPLEMENT: parent=proposition:intro-0.3.2; kind=motivation; basis=命题 0.3.2 的动机（四个与 $\varepsilon$ 无关的估计对应\eqref{align:intro-0.28} 的四种收敛）、(A1) 与 $u_0\in C(\Omega)$ 的作用，以及 (A2) 型流（Perona--Malik）下估计失效的对照
+\begin{remark}\phantomsection\label{remark:intro-0.3.2-动机}
+(i) 动机。\eqref{align:intro-0.27} 的四项分别是 $u_\varepsilon$、$\partial_t u_\varepsilon$、$v_\varepsilon$ 与 $\nabla v_\varepsilon$ 的一致控制，恰好一项对应\eqref{align:intro-0.28} 中的一个收敛。没有这四个估计，$\varepsilon\to0^+$ 时既不能取出弱收敛子列，也无法在弱形式中取极限。四项之中 $\sqrt{\varepsilon}\|\partial_t u_\varepsilon\|_{L^2(Q)}$ 最脆弱：它刻画的正是 Sobolev 正则化项在极限中消失的速率。
+
+(ii) 各假设的作用。(A1) 使\eqref{align:intro-0.26} 对某个充分大的区间 $[u_1,u_2]$ 成立，由\cref{lemma:intro-0.3.1}(ii) 得 $\|u_\varepsilon\|_{L^\infty(Q)}$ 的一致界；若 $\phi$ 只是连续而无 (A1)，这一项没有理由一致有界。$u_0\in C(\Omega)$ 保证\cref{lemma:intro-0.3.1}的局部强解存在，从而 $\Phi(u_0)\in L^1(\Omega)$，这是能量估计右端的有限性所必需的。边条件 $\partial_\nu v=0$ 同时用于两处：$v_\varepsilon-\varepsilon\Delta v_\varepsilon=\phi(u_\varepsilon)$ 的极值原理与分部积分消去边界项。
+
+(iii) 边界。四项估计中的常数 $M$ 依赖 $T$、$|\Omega|$、$\phi$ 与 $[u_1,u_2]$，但不依赖 $\varepsilon$，这正是紧性所需。若 $\phi$ 为 Perona--Malik 型（满足 (A2) 而非 (A1)），则只有 $\phi'>0$ 的区间满足\eqref{align:intro-0.26} 型条件，$L^\infty$ 估计仅当 $\{u_\varepsilon\}$ 落在稳定相时成立，而这是平凡信息；此时必须改用质量守恒与 biting 引理，见 3.2 节。这一对照说明 (A1) 不是技术性假设，而是 3.1 节整套方法的适用条件。
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:intro-0.3.2; kind=proof; basis=由引理 0.3.1 的局部解逐步延拓得 (i)；用引理 0.3.1(ii)、椭圆极值原理 $v_\varepsilon-\varepsilon\Delta v_\varepsilon=\phi(u_\varepsilon)$ 与能量恒等式分别估计\eqref{align:intro-0.27} 的四项
+\begin{proof}
+(i) 由\cref{lemma:intro-0.3.1}，对每个 $\varepsilon>0$ 存在局部强解。下面证明 (ii) 中的一致估计，它同时给出解的延拓：估计与时间区间的长度无关，故可把局部解反复延拓至整个 $(0,T)$。
+
+(ii) 记 $M_1\triangleq\max_{[u_1,u_2]}|\phi|$，$M_2\triangleq\max_{[u_1,u_2]}|\Phi|$，其中 $\Phi(u)\triangleq\int_0^u\phi(s)\,\mathrm{d}s$，$[u_1,u_2]$ 为\cref{lemma:intro-0.3.1}(ii) 中由 (A1) 给出的区间。
+
+第一项。由\cref{lemma:intro-0.3.1}(ii) 与 $u_0\in[u_1,u_2]$ 得 $u_\varepsilon(x,t)\in[u_1,u_2]$，故 $\|u_\varepsilon\|_{L^\infty(Q)}\leqslant\max\{|u_1|,|u_2|\}$。
+
+第三项。由 $v_\varepsilon=\phi(u_\varepsilon)+\varepsilon\partial_t u_\varepsilon$ 与 $\partial_t u_\varepsilon=\Delta v_\varepsilon$ 得
+\begin{align*}
+v_\varepsilon-\varepsilon\Delta v_\varepsilon=\phi(u_\varepsilon)\quad\text{于 }Q,
+\qquad
+\partial_\nu v_\varepsilon=0\quad\text{于 }\partial\Omega\times(0,T).
+\end{align*}
+对椭圆算子 $I-\varepsilon\Delta$ 与 Neumann 边条件用极值原理，得
+\begin{align*}
+\|v_\varepsilon\|_{L^\infty(Q)}\leqslant\|\phi(u_\varepsilon)\|_{L^\infty(Q)}\leqslant M_1 .
+\end{align*}
+
+第二项与第四项。以 $v_\varepsilon$ 乘 $\partial_t u_\varepsilon=\Delta v_\varepsilon$ 并在 $\Omega$ 上分部积分，用 $\partial_\nu v_\varepsilon=0$ 得
+\begin{align*}
+\int_\Omega v_\varepsilon\partial_t u_\varepsilon\,\mathrm{d}x=-\int_\Omega|\nabla v_\varepsilon|^2\,\mathrm{d}x .
+\end{align*}
+另一方面 $v_\varepsilon\partial_t u_\varepsilon=\phi(u_\varepsilon)\partial_t u_\varepsilon+\varepsilon|\partial_t u_\varepsilon|^2=\partial_t[\Phi(u_\varepsilon)]+\varepsilon|\partial_t u_\varepsilon|^2$，故对任意 $t\in(0,T)$，
+\begin{align*}
+\varepsilon\int_0^t\!\!\int_\Omega|\partial_t u_\varepsilon|^2\,\mathrm{d}x\,\mathrm{d}\tau
++\int_0^t\!\!\int_\Omega|\nabla v_\varepsilon|^2\,\mathrm{d}x\,\mathrm{d}\tau
+=\int_\Omega\Phi(u_0)\,\mathrm{d}x-\int_\Omega\Phi(u_\varepsilon(\cdot,t))\,\mathrm{d}x
+\leqslant 2M_2|\Omega| .
+\end{align*}
+于是 $\sqrt{\varepsilon}\|\partial_t u_\varepsilon\|_{L^2(Q)}\leqslant(2M_2|\Omega|)^{1/2}$，且
+\begin{align*}
+\|v_\varepsilon\|_{L^2(0,T;H^1(\Omega))}^2
+\leqslant T\bigl(M_1^2|\Omega|+2M_2|\Omega|\bigr).
+\end{align*}
+取 $M\triangleq\max\{\max\{|u_1|,|u_2|\},M_1,(2M_2|\Omega|)^{1/2},(T(M_1^2|\Omega|+2M_2|\Omega|))^{1/2}\}$ 即得\eqref{align:intro-0.27}。
+\end{proof}
+
+由不等式\eqref{align:intro-0.27}，存在序列 $\{\varepsilon_k\}$（$\varepsilon_k\to0^+$，$k\to\infty$）、$\{u_k\}\equiv\{u_{\varepsilon_k}\}$、$\{v_k\}\equiv\{v_{\varepsilon_k}\}$，以及 $u\in L^\infty(Q)$、$v\in L^\infty(Q)\cap L^2(0,T;H^1(\Omega))$，使
 \begin{align}
 \begin{cases}
 u_k \stackrel{*}{\rightharpoonup} u & \text{在 }L^\infty(Q),\\
@@ -537,7 +798,7 @@ v_k \rightharpoonup v & \text{在 }L^2(0,T;H^1(\Omega))
 \end{cases}
 \label{align:intro-0.28}
 \end{align}
-（注意序列 $\{v_k\}$ 与 $\{\phi(u_k)\}$ 在 $L^\infty(Q)$ 中有相同的弱$^*$极限）。由\eqref{align:intro-0.28}，在(S$\epsilon$)$_{\epsilon_k}$ 的弱形式中令 $k\to\infty$，易得
+（注意序列 $\{v_k\}$ 与 $\{\phi(u_k)\}$ 在 $L^\infty(Q)$ 中有相同的弱$^*$极限）。由\eqref{align:intro-0.28}，在(S$\varepsilon$)的弱形式中令 $k\to\infty$，易得
 \begin{align}
 \iint_Q\{u\partial_t\zeta - \nabla v\cdot\nabla\zeta\}\,\mathrm{d}x\,\mathrm{d}t
 + \int_\Omega u_0\zeta(x,0)\,\mathrm{d}x = 0 \label{align:intro-0.29}
@@ -554,9 +815,9 @@ u=u_0 & \text{在 }\Omega\times\{0\}
 \qquad(S)
 \end{align*}
 的弱解。然而，(S)的弱 Young 测度值解却很容易得到。由于 $\|u_k\|_{L^\infty(Q)}\leqslant M$（见\eqref{align:intro-0.27}）且 $Q$ 有界，序列 $\{u_k\}$ 在 $L^1(Q)$ 中有界且一致可积（见\cref{lemma:ch02-有界一致可积}），序列 $\{\phi(u_k)\}$ 亦然。于是存在 $\{u_k\}$ 的子列（不重新标号）与 Young 测度 $\nu\in\mathcal{Y}(Q;\mathbb{R})$，使
-\[
+\begin{align*}
 u_k\rightharpoonup u^*,\qquad \phi(u_k)\rightharpoonup\phi^* \quad \text{在 }L^1(Q),
-\]
+\end{align*}
 其中 $u^*$、$\phi^*$ 分别由\eqref{align:intro-0.12}、\eqref{align:intro-0.13}在 $U=Q$、$f=\phi$ 时给出。由\eqref{align:intro-0.28}与上述收敛得 $u=u^*$、$v=\phi^*$，从而由\eqref{align:intro-0.29}有
 \begin{align}
 \iint_Q\{u\partial_t\zeta - \nabla\phi^*\cdot\nabla\zeta\}\,\mathrm{d}x\,\mathrm{d}t
@@ -575,100 +836,124 @@ u(x,t) = \sum_{i=0}^2\lambda_i(x,t)\,s_i(v(x,t))
 \quad \text{对几乎所有 }(x,t)\in Q. \label{align:intro-0.32}
 \end{align}
 
-\begin{remark}\label{remark:intro-0.3.1}
-由\eqref{align:intro-0.32}，$u$ 是不同相的叠加。按定义，(S)的两相解是指上述这样的解：在 $Q$ 中几乎处处 $\lambda_0=0$，且在 $V_i$ 上几乎处处 $\lambda_i=1$（$i=1,2$），其中 $Q=V_1\cup V_2$，$V_1\cap V_2=\varnothing $，公共边界 $V_1\cap V_2$ 光滑。
+\begin{remark}\phantomsection\label{remark:intro-0.3.1}
+由\eqref{align:intro-0.32}，$u$ 是不同相的叠加。按定义，(S)的两相解是指上述这样的解：在 $Q$ 中几乎处处 $\lambda_0=0$，且在 $V_i$ 上几乎处处 $\lambda_i=1$（$i=1,2$），其中 $Q=V_1\cup V_2$，$V_1\cap V_2=\varnothing$，公共边界 $V_1\cap V_2$ 光滑。
 
 当 $N=1$ 时，两相解的一个主要定性特征是表现出迟滞效应：唯一允许的相变是那些从三次曲线的极值点 $(b,B)$ 与 $(c,A)$ 出发发生的相变（见\cref{figure:intro-cubic}）。其证明与双曲守恒律分段光滑解的 Oleinik 熵条件证明类似（后者在某种程度上正是(S)两相解的对应物；见文献~\cite{ref48,ref54,ref70,ref71,ref82,ref83,ref84,ref98}）。
 
 除其他点外，这一特征指出：由 Sobolev 正则化得到的(S)解，与由 Cahn--Hilliard 正则化得到的解确实不同。事实上，文献~\cite{ref12}证明，在一维环面上\eqref{align:intro-0.21}的解当 $\kappa\to0^+$ 时的极限动力学由 Maxwell 等面积律支配：
-\[
+\begin{align*}
 \int_{-1}^1\phi^{**}(u)\,\mathrm{d}u = 0 = \int_{-1}^1\phi(u)\,\mathrm{d}u,
-\]
+\end{align*}
 这与迟滞现象不相容（此处 $\phi^{**}\triangleq (\Phi^{**})'$，$\Phi^{**}$ 为双势阱位势 $\Phi$ 的凸包络）。文献~\cite{ref43}用隐式变分格式就一个梯度方程的不适定问题得到了类似结果。同类问题在文献~\cite{ref30,ref95}中也分别用 Sobolev 与 Cahn--Hilliard 正则化作了研究（见\cref{chapter:ch08}）。
 \end{remark}
 
-\subsubsection*{Radon 测度值解}\label{subsubsection:intro-radonfb}
+\subsubsection*{3.2\quad Radon 测度值解}\phantomsection\label{subsubsection:intro-radonfb}
 
 设 $\phi$、$\psi$ 分别满足 (A2)、(A3)。由于当 $u\to\infty$ 时 $\psi'(u)\to0$，初边值问题
 \begin{align*}
 \begin{cases}
-\partial_t u = \partial_{xx}[\phi(u)] + \epsilon\partial_{txx}[\psi(u)] & \text{在 }Q,\\
-\phi(u) + \epsilon\partial_t[\psi(u)] = 0 & \text{在 }\partial\Omega\times(0,T),\\
+\partial_t u = \partial_{xx}[\phi(u)] + \varepsilon\partial_{txx}[\psi(u)] & \text{在 }Q,\\
+\phi(u) + \varepsilon\partial_t[\psi(u)] = 0 & \text{在 }\partial\Omega\times(0,T),\\
 u=u_0 & \text{在 }\Omega\times\{0\},\\
 u\geqslant0,
 \end{cases}
-\qquad(PM\epsilon)
+\qquad(PM\varepsilon)
 \end{align*}
-可以想见，对 $\epsilon>0$ 所表现出的定性特征，与带 Sobolev 正则化的问题
+可以想见，对 $\varepsilon>0$ 所表现出的定性特征，与带 Sobolev 正则化的问题
 \begin{align*}
 \begin{cases}
-\partial_t u = \partial_{xx}[\phi(u)] + \epsilon\partial_{txx}u & \text{在 }Q,\\
-\phi(u) + \epsilon\partial_t u = 0 & \text{在 }\partial\Omega\times(0,T),\\
+\partial_t u = \partial_{xx}[\phi(u)] + \varepsilon\partial_{txx}u & \text{在 }Q,\\
+\phi(u) + \varepsilon\partial_t u = 0 & \text{在 }\partial\Omega\times(0,T),\\
 u=u_0 & \text{在 }\Omega\times\{0\},\\
 u\geqslant0,
 \end{cases}
-\qquad(\Sigma\epsilon)
+\qquad(\Sigma\varepsilon)
 \end{align*}
-当 $\epsilon\to0^+$ 时所表现的特征，就奇点性态而言是相同的。问题(PM$\epsilon$)（$u_0\in\mathscr{R}^+_f(\Omega)$）已在文献~\cite{ref99,ref100}中研究。其最显著特征（显然与伪抛物正则化的微弱性有关）是：当 $u_0$ 光滑时，正的时刻会自发出现奇点（见文献~\cite{ref22} 定理 4.2、\cref{definition:ch01-集中测度}与\cref{theorem:ch03-奇性}）：
+当 $\varepsilon\to0^+$ 时所表现的特征，就奇点性态而言是相同的。问题(PM$\varepsilon$)（$u_0\in\mathscr{R}^+_f(\Omega)$）已在文献~\cite{ref99,ref100}中研究。其最显著特征（显然与伪抛物正则化的微弱性有关）是：当 $u_0$ 光滑时，正的时刻会自发出现奇点（见文献~\cite{ref22} 定理 4.2、\cref{definition:ch01-集中测度}与\cref{theorem:ch03-奇性}）：
 
 \begin{proposition}\label{proposition:intro-0.3.3}
-设 (A2)--(A3) 成立。存在(PM$\epsilon$)的解（$u_0\in C(\overline\Omega)$，$u_0\geqslant0$），使得对某个 $t\in(0,T)$，要么 $u_s(\cdot,t)$ 是纯原子的且含可数多个 Dirac 质量，要么 $u_s(\cdot,t)$ 是奇异连续的。
+设 (A2)--(A3) 成立。存在(PM$\varepsilon$)的解（$u_0\in C(\Omega)$，$u_0\geqslant0$），使得对某个 $t\in(0,T)$，要么 $u_s(\cdot,t)$ 是纯原子的且含可数多个 Dirac 质量，要么 $u_s(\cdot,t)$ 是奇异连续的。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:intro-0.3.3; kind=motivation; basis=命题 0.3.3 的动机（伪抛物正则化退化导致正时刻奇点自发产生）、(A2) 中 $\phi'<0$ 与 (A3) 中 $\psi$ 饱和的作用、$u_0\in C(\Omega)$ 光滑性的意义，以及与 (A1) 情形和 Sobolev 正则化的对照
+\begin{remark}\phantomsection\label{remark:intro-0.3.3-动机}
+(i) 动机。若正则化足够强（Sobolev 正则化，$\psi(u)=u$），控制项 $\varepsilon\partial_t\Delta u$ 直接作用于 $u$，奇性无从产生；伪抛物正则化只通过 $\psi(u)$ 起作用，而 (A3) 中 $\psi(u)\to\psi_\infty<\infty$ 使 $u\mapsto\psi(u)$ 在 $u$ 大时几乎失去分辨力。于是正则化在“$u$ 大”的区域退化，集中得以在正时刻自发出现，而不必由初值继承。这正是 3.2 节必须引入 Radon 测度值解的理由。
+
+(ii) 各假设的作用。(A2) 包含两条互相配合的性质：$\phi(u)>0$ 与 $\phi(0)=0$ 使 $u\geqslant0$ 一致成立；$\phi'(u)<0$ 对 $u>\bar u$ 使 $u$ 越大时“扩散系数”越小，流动把质量推向已有的峰，这是集中现象的机制。若把 $\phi'<0$ 换成 (A1) 的 $\phi'\to+\infty$，则 $\phi$ 在区间外单调增，\cref{lemma:intro-0.3.1}(ii) 给出与 $\varepsilon$ 无关的 $L^\infty$ 估计，奇点不出现（见本节末的对照）。(A3) 的 $\psi'\to0$ 与 $\psi\to\psi_\infty$ 是“正则化退化”的定量表述。(ii) 中 $u_0\in C(\Omega)$、$u_0\geqslant0$ 说明奇点不是从初值继承的：初值是连续函数，其奇异部分为零，故 $t>0$ 时出现的 $u_s$ 必是自发产生的。
+
+(iii) 边界。命题只断言“存在”某些解（对某些初值）具有纯原子或奇异连续的奇异部分，不断言所有解、也不断言奇异部分的精确结构。它与 (A2) 的两个极端相容：$u_s$ 可以退化为零（此时解是函数值解），也可以集中为可数多个 Dirac 质量。若把 (PM$\varepsilon$) 换成 Sobolev 正则化问题 ($\Sigma\varepsilon$)，则上述现象不出现，因为 $\psi'=1$ 使 $\psi$ 不饱和；这一对照是\cref{chapter:ch08}区分两类正则化的出发点。
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:intro-0.3.3; kind=proof; basis=化归：(1) 由\cref{definition:ch01-集中测度}与\cref{theorem:ch03-奇性}把结论化为奇异部分的分类；(2) 引用文献 [22] 定理 4.2 的显式构造并核验其假设；(3) 用 (A3) 的退化性说明该构造在 (A2) 下可用；(4) 由 (A1) 下的反向论证说明 $L^\infty$ 估计失效是必要的
+\begin{proof}
+(i) 化归。设 $u$ 为(PM$\varepsilon$)的弱解，$u=u_r+u_s$ 为其关于 Lebesgue 测度的绝对连续部分与奇异部分的分解。由\cref{definition:ch01-集中测度}，$u_s$ 可进一步分解为纯原子部分与奇异连续部分。命题断言：存在这样的 $u$，使 $u_s(\cdot,t)$ 对某个 $t\in(0,T)$ 或为纯原子（且含可数多个 Dirac 质量）、或为奇异连续。
+
+(ii) 构造的假设核验。文献~\cite{ref22} 定理 4.2 在如下条件下给出(PM$\varepsilon$)的解 $u$：$\phi\in C^2([0,\infty))$ 满足 (A2) 的前三条（$\phi>0$、单峰、$\phi(\bar u)=0<\phi''(\bar u)$、$\phi\to0$），$\psi$ 满足 (A3)，$u_0\in C(\Omega)$、$u_0\geqslant0$，$\varepsilon>0$。这些条件正是命题的假设 (A2)–(A3) 与 $u_0\in C(\Omega)$、$u_0\geqslant0$；此外 (A2) 中 $\phi\in L^p(0,\infty)$ 只用于唯一性，对本命题的存在性结论不必要。故该构造的结论直接给出所要的解。
+
+(iii) 退化机制。把(PM$\varepsilon$)写成
+\begin{align*}
+\partial_t u-\varepsilon\partial_t\partial_{xx}[\psi(u)]=\partial_{xx}[\phi(u)] .
+\end{align*}
+由 (A3)，$\psi$ 的值域含于 $[0,\psi_\infty]$，故正则化项 $\varepsilon\partial_t\partial_{xx}[\psi(u)]$ 的系数在 $u>\bar u$ 时以 $\psi'(u)$ 的尺度退化。若某个解族在 $u\to\infty$ 的尺度上取极限，该正则化项只保留 $\varepsilon\partial_{txx}\psi_\infty=0$ 的信息，于是极限满足一阶退化方程，其解可以集中；于是是正时刻自发奇点的机制。
+
+(iv) 必要性对照。若代之以 (A1)，则 $\phi$ 在 $(-\infty,b)$ 与 $(a,\infty)$ 上严格增，(0.26) 对大区间成立，\cref{lemma:intro-0.3.1}(ii) 给出与 $\varepsilon$ 无关的 $L^\infty(Q)$ 估计；再由\cref{proposition:intro-0.3.2}的紧性论证，$u\in L^\infty(Q)$ 且 $v=\phi(u)$，极限等式\eqref{align:intro-0.30}中不含奇异部分。故 (A2) 中 $\phi'<0$ 于 $(\bar u,\infty)$ 这一条不可由 (A1) 替代。
+\end{proof}
+
 该结果也依赖于 $u$ 取大值时 $\phi'(u)$ 的负性，它导致集中现象。这与文献~\cite{ref11}的结果形式上一致：问题
-\[
+\begin{align*}
 \begin{cases}
-\partial_t z = \partial_x[\phi(\partial_x z)] + \epsilon\partial_{tx}[\psi(\partial_x z)] & \text{在 }Q,\\
-\phi(\partial_x z) + \epsilon\partial_t[\psi(\partial_x z)] = 0 & \text{在 }\partial\Omega\times(0,T),\\
-z=z_0\in C^1(\overline\Omega) & \text{在 }\Omega\times\{0\}
+\partial_t z = \partial_x[\phi(\partial_x z)] + \varepsilon\partial_{tx}[\psi(\partial_x z)] & \text{在 }Q,\\
+\phi(\partial_x z) + \varepsilon\partial_t[\psi(\partial_x z)] = 0 & \text{在 }\partial\Omega\times(0,T),\\
+z=z_0\in C^1(\Omega) & \text{在 }\Omega\times\{0\}
 \end{cases}
-\]
+\end{align*}
 的解在正的时刻可能关于 $x$ 间断。
 
-最后，比较在问题($\Sigma\epsilon$)中令 $\epsilon\to0^+$ 时 (A1) 与 (A2) 的效果是有趣的。若 $\phi$ 为三次，则每个充分大的区间 $[u_1,u_2]$ 都满足条件\eqref{align:intro-0.26}，故\cref{lemma:intro-0.3.1}(ii) 给出 $\{u_\epsilon\}$ 的一致 $L^\infty$ 估计。因此当 $\epsilon\to0^+$ 时，我们得到 $u\in L^\infty(Q)$ 的等式\eqref{align:intro-0.30}，故在此情形不出现奇点。反之，若 $\phi$ 为 Perona--Malik 型，则只有那些 $\phi'$ 为正的区间 $[u_1,u_2]\subseteq[0,\infty)$ 满足\eqref{align:intro-0.26}。因而 $\{u_\epsilon\}$ 的一致 $L^\infty$ 估计仅当 $\{u_\epsilon\}$ 取稳定相中的值时成立，而这是平凡的。
+最后，比较在问题($\Sigma\varepsilon$)中令 $\varepsilon\to0^+$ 时 (A1) 与 (A2) 的效果是有趣的。若 $\phi$ 为三次，则每个充分大的区间 $[u_1,u_2]$ 都满足条件\eqref{align:intro-0.26}，故\cref{lemma:intro-0.3.1}(ii) 给出 $\{u_\varepsilon\}$ 的一致 $L^\infty$ 估计。因此当 $\varepsilon\to0^+$ 时，我们得到 $u\in L^\infty(Q)$ 的等式\eqref{align:intro-0.30}，故在此情形不出现奇点。反之，若 $\phi$ 为 Perona--Malik 型，则只有那些 $\phi'$ 为正的区间 $[u_1,u_2]\subseteq[0,\infty)$ 满足\eqref{align:intro-0.26}。因而 $\{u_\varepsilon\}$ 的一致 $L^\infty$ 估计仅当 $\{u_\varepsilon\}$ 取稳定相中的值时成立，而这是平凡的。
 
-然而在后一情形，可证明半直线 $[0,\infty)$ 对(PM$\epsilon$)的解是正不变的（见文献~\cite{ref96}）。于是，若 $u_0\in L^1(\Omega)$，$u_0\geqslant0$，则质量守恒
-\[
-\int_\Omega u_\epsilon(x,t)\,\mathrm{d}x = \int_\Omega u_0(x)\,\mathrm{d}x \quad (t\in(0,T))
-\]
-给出 $\{u_\epsilon\}$ 在 $L^\infty(0,T;L^1(\Omega))$ 中的一致估计：
-\[
-\|u_\epsilon(\cdot,t)\|_{L^1(\Omega)}
-= \int_\Omega u_\epsilon(x,t)\,\mathrm{d}x
+然而在后一情形，可证明半直线 $[0,\infty)$ 对(PM$\varepsilon$)的解是正不变的（见文献~\cite{ref96}）。于是，若 $u_0\in L^1(\Omega)$，$u_0\geqslant0$，则质量守恒
+\begin{align*}
+\int_\Omega u_\varepsilon(x,t)\,\mathrm{d}x = \int_\Omega u_0(x)\,\mathrm{d}x \quad (t\in(0,T))
+\end{align*}
+给出 $\{u_\varepsilon\}$ 在 $L^\infty(0,T;L^1(\Omega))$ 中的一致估计：
+\begin{align*}
+\|u_\varepsilon(\cdot,t)\|_{L^1(\Omega)}
+= \int_\Omega u_\varepsilon(x,t)\,\mathrm{d}x
 = \int_\Omega u_0(x)\,\mathrm{d}x
 = \|u_0\|_{L^1(\Omega)}.
-\]
+\end{align*}
 由此
-\[
-\|u_\epsilon\|_{L^1(Q)} \leqslant T\|u_0\|_{L^1(\Omega)} \quad \forall\epsilon>0.
-\]
-于是由 biting 引理（见\cref{theorem:intro-0.2.2}(iv)与\cref{theorem:ch05-biting定理}），存在序列 $\{u_k\}\equiv\{u_{\epsilon_k}\}\subseteq\{u_\epsilon\}$、Young 测度 $\nu\in\mathcal{Y}(Q;\mathbb{R})$、Radon 测度 $\sigma\in\mathscr{R}^+_f(Q)$，以及序列 $Q_{k+1}\subseteq Q_k\subseteq Q$（其 Lebesgue 测度 $\lambda_{N+1}(Q_k)$ 当 $\epsilon_k\to0^+$ 时趋于零），使得（可能至多差一个不重新标号的子列）
-\[
+\begin{align*}
+\|u_\varepsilon\|_{L^1(Q)} \leqslant T\|u_0\|_{L^1(\Omega)} \quad \forall\varepsilon>0.
+\end{align*}
+于是由 biting 引理（见\cref{theorem:intro-0.2.2}(iv)与\cref{theorem:ch05-biting定理}），存在序列 $\{u_k\}\equiv\{u_{\varepsilon_k}\}\subseteq\{u_\varepsilon\}$、Young 测度 $\nu\in\mathcal{Y}(Q;\mathbb{R})$、Radon 测度 $\sigma\in\mathscr{R}^+_f(Q)$，以及序列 $Q_{k+1}\subseteq Q_k\subseteq Q$（其 Lebesgue 测度 $\lambda_{N+1}(Q_k)$ 当 $\varepsilon_k\to0^+$ 时趋于零），使得（可能至多差一个不重新标号的子列）
+\begin{align*}
 u_k\chi_{Q\setminus Q_k}\rightharpoonup u^* \triangleq  \int_{[0,\infty)}y\,\mathrm{d}\nu_{(x,t)}(y)
 \quad \text{在 }L^1(Q),
-\]
+\end{align*}
 以及
 \begin{align}
 u_k\chi_{Q_k} \stackrel{*}{\rightharpoonup}\sigma \quad \text{在 }\mathscr{R}_f(Q). \label{align:intro-0.33}
 \end{align}
 如\cref{proposition:intro-0.3.2}那样，也易验证存在 $v\in L^\infty(Q)\cap L^2(0,T;H^1_0(\Omega))$，使
-\[
+\begin{align*}
 v_k\stackrel{*}{\rightharpoonup}v \text{ 在 }L^\infty(Q),
 \qquad
 v_k\rightharpoonup v \text{ 在 }L^2(0,T;H^1_0(\Omega)),
-\]
-其中 $v_k\triangleq \phi(u_k)+\epsilon_k\partial_t u_k$。于是在($\Sigma\epsilon$)$_{\epsilon_k}$ 的弱形式中令 $k\to\infty$，易得
-\[
+\end{align*}
+其中 $v_k\triangleq \phi(u_k)+\varepsilon_k\partial_t u_k$。于是在($\Sigma\varepsilon$)的弱形式中令 $k\to\infty$，易得
+\begin{align*}
 \iint_Q(u^*\partial_t\zeta - \nabla v\cdot\nabla\zeta)\,\mathrm{d}x\,\mathrm{d}t
 + \int_\Omega u_0\zeta(x,0)\,\mathrm{d}x
 = -\langle\sigma,\partial_t\zeta\rangle
-\]
-对任意 $\zeta\in C^1([0,T];C^1_c(\Omega))$、$\zeta(\cdot,T)=0$ 在 $\Omega$ 上成立。上述等式右端（由\eqref{align:intro-0.33}中的收敛产生）刻画了($\Sigma\epsilon$)当 $\epsilon\to0^+$ 时可能的集中现象（在(PM$\epsilon$)中，因正则化更弱，$\epsilon>0$ 时已观察到这一点）。另一方面，如三次 $\phi$ 的情形，可验证 $v=\phi^*$，其中
-\[
+\end{align*}
+对任意 $\zeta\in C^1([0,T];C^1_c(\Omega))$、$\zeta(\cdot,T)=0$ 在 $\Omega$ 上成立。上述等式右端（由\eqref{align:intro-0.33}中的收敛产生）刻画了($\Sigma\varepsilon$)当 $\varepsilon\to0^+$ 时可能的集中现象（在(PM$\varepsilon$)中，因正则化更弱，$\varepsilon>0$ 时已观察到这一点）。另一方面，如三次 $\phi$ 的情形，可验证 $v=\phi^*$，其中
+\begin{align*}
 \phi^*(x,t)\triangleq \int_{\mathbb{R}}\phi(y)\,\mathrm{d}\nu_{(x,t)}(y)
 \quad \text{对几乎所有 }(x,t)\in Q.
-\]
-因此，在 Perona--Malik 情形，需要同时用 Radon 测度与 Young 测度来描述($\Sigma\epsilon$)的粘性消失极限。
+\end{align*}
+因此，在 Perona--Malik 情形，需要同时用 Radon 测度与 Young 测度来描述($\Sigma\varepsilon$)的粘性消失极限。
 
 上述讨论提示出如下图景：
 \begin{enumerate}[(i)]
@@ -677,7 +962,7 @@ v_k\rightharpoonup v \text{ 在 }L^2(0,T;H^1_0(\Omega)),
 \item 绝对连续部分的性态由 Young 测度描述，并与振荡现象有关。
 \end{enumerate}
 
-\section*{数学工具}\label{section:intro-tools}
+\section*{数学工具}\phantomsection\label{section:intro-tools}
 
 让我们从上述讨论中得出一些结论。处理涉及测度的非线性微分问题时，总要用到某种逼近过程。逼近问题的解是某个函数空间中的一个族，而该函数空间自然嵌入有限 Radon 测度的 Banach 空间。当某个正则化参数趋于零时，该族在某合适拓扑下的极限点，便是原问题解的自然候选。
 
@@ -687,7 +972,7 @@ v_k\rightharpoonup v \text{ 在 }L^2(0,T;H^1_0(\Omega)),
 
 在这一一般框架中，一个主要问题是 Radon 测度值解的正则性，因而是奇点可能的存在性、位置与演化。如前所述，这些特征与问题特有的合适容量有关。因此，容量理论也是研究这类问题的重要工具。
 
-\section*{内容简述与阅读指引}\label{section:intro-guide}
+\section*{内容简述与阅读指引}\phantomsection\label{section:intro-guide}
 
 本书第一部分致力于一般理论。第 1、2 章具有预备性质，分别介绍抽象测度论以及标量函数可测性与积分的一般结果。第 3、4、5 章是本书核心，分别处理容量理论、向量积分与向量函数的 Lebesgue 空间，以及有限 Radon 测度序列的收敛。
 
@@ -699,7 +984,7 @@ v_k\rightharpoonup v \text{ 在 }L^2(0,T;H^1_0(\Omega)),
 \begin{enumerate}[1.]
 \item 所谓“标量函数”，指任意实值函数；与“向量函数”相对，后者指取值于 $\mathbb{R}$ 以外任意 Banach 空间的映射。
 \item 所考虑的向量空间均为实的。
-\item 在每节内，定理、命题、引理与推论依次编号（例如定理 1.2.1 之后是命题 1.2.2 等），而定义、注记与例题单独编号。公式在每章内依次编号。
+\item 在每节内，定理、命题、引理与推论依次编号（例如\cref{theorem:ch01-单调类定理}之后是\cref{proposition:ch01-截面可测}等），而定义、注记与例题单独编号。公式在每章内依次编号。
 \end{enumerate}
 
 \end{document}

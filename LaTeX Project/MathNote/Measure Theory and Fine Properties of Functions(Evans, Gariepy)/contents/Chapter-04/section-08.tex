@@ -1,0 +1,469 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{拟连续性与 Sobolev 函数的精确表示}\label{section:ch04-08}
+
+本节研究 Sobolev 函数的精细性质。
+
+\begin{theorem}[容量的估计]\label{theorem:ch04-4-18}
+设 $n\geqslant2$ 为整数，$1\leqslant p<n$ 为实数，$p^*:=\frac{np}{n-p}$ 为 $p$ 的 Sobolev 共轭指数，$K^p$ 与 $\Cap_p$ 分别如\cref{definition:ch04-4-9}与\cref{definition:ch04-4-10}所定义。% XREF internal
+设 $f\in K^p$，$\varepsilon>0$，并令
+\begin{align*}
+A:=\bigl\{x\in\mathbb{R}^n\bigm|(f)_{x,r}>\varepsilon\ \text{对某个 }r>0\bigr\},
+\end{align*}
+其中对 $x\in\mathbb{R}^n$ 与 $r>0$，$(f)_{x,r}:=\fint_{B(x,r)}f\diff y$ 为 $f$ 在闭球 $B(x,r)$ 上关于 Lebesgue 测度的平均值。则
+\begin{align*}
+\Cap_p(A)\leqslant\frac{C}{\varepsilon^p}\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x,
+\end{align*}
+其中 $C$ 为只依赖于 $n$ 与 $p$ 的常数。
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-18-比较}
+这是下述简单估计的容量版本：
+\begin{align*}
+\mathcal{L}^n\bigl(\{x\in\mathbb{R}^n\mid f(x)>\varepsilon\}\bigr)\leqslant\frac{1}{\varepsilon^p}\int_{\mathbb{R}^n}\lvert f\rvert^p\diff x .
+\end{align*}
+\end{remark}
+
+\begin{proof}
+（1）先暂时取 $\varepsilon=1$，并注意若 $x\in A$ 且 $(f)_{x,r}>1$，则
+\begin{align*}
+\alpha(n)r^n\leqslant\int_{B(x,r)}f\diff y\leqslant(\alpha(n)r^n)^{1-\frac{1}{p^*}}\Bigl(\int_{B(x,r)}f^{p^*}\diff y\Bigr)^{\frac{1}{p^*}} .
+\end{align*}
+于是
+\begin{align*}
+r\leqslant C
+\end{align*}
+其中 $C$ 为某个常数。
+
+% SUPPLEMENT: parent=theorem:ch04-4-18; kind=proof; 补出第 (1) 步两个不等号的依据、解出 r ≤ C 的计算，并说明该常数依赖于 f 而只用于保证覆盖球的直径一致有界
+第（1）步第一个不等号由 $(f)_{x,r}>1$ 与 $\mathcal{L}^n(B(x,r))=\alpha(n)r^n$ 得到：由平均值的定义，
+\begin{align*}
+\int_{B(x,r)}f\diff y=\alpha(n)r^n(f)_{x,r}>\alpha(n)r^n .
+\end{align*}
+第二个不等号是 Hölder 不等式，取共轭指数 $p^*$ 与 $\frac{p^*}{p^*-1}$，并注意 $f\geqslant0$ 与 $\mathcal{L}^n(B(x,r))=\alpha(n)r^n$：
+\begin{align*}
+\int_{B(x,r)}f\diff y\leqslant(\alpha(n)r^n)^{1-\frac{1}{p^*}}\Bigl(\int_{B(x,r)}f^{p^*}\diff y\Bigr)^{\frac{1}{p^*}} .
+\end{align*}
+把第一式代入第二式并约去正因子 $(\alpha(n)r^n)^{1-\frac{1}{p^*}}$，得
+\begin{align*}
+(\alpha(n)r^n)^{\frac{1}{p^*}}\leqslant\Bigl(\int_{\mathbb{R}^n}f^{p^*}\diff y\Bigr)^{\frac{1}{p^*}} ,
+\end{align*}
+即
+\begin{align*}
+r\leqslant\alpha(n)^{-\frac{1}{n}}\Bigl(\int_{\mathbb{R}^n}f^{p^*}\diff y\Bigr)^{\frac{1}{n}}=:C .
+\end{align*}
+此常数依赖于 $f$、$n$ 与 $p$。它在证明中只有一个用途：保证第（2）步所用的闭球族具有一致有界的直径，从而满足 Besicovitch 覆盖定理的前提；它不进入最终估计。
+
+（2）由\cref{theorem:ch01-1-27}，存在整数 $N_n$ 与可数个两两不相交的闭球族 $\mathcal{F}_1,\cdots,\mathcal{F}_{N_n}$，使得% XREF p=198 "According to the Besicovitch Covering Theorem 1.27"
+\begin{align*}
+A\subseteq\bigcup_{i=1}^{N_n}\bigcup_{B\in\mathcal{F}_i}B
+\end{align*}
+且
+\begin{align*}
+(f)_B>1\qquad\text{对每个 }B\in\bigcup_{i=1}^{N_n}\mathcal{F}_i .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-18; kind=proof; 核对 Besicovitch 覆盖定理的前提：球心的集合正是 A、细覆盖成立、直径一致有界，并说明结论中的球都满足 (f)_B > 1
+覆盖定理的前提逐条核对如下。取球族
+\begin{align*}
+\mathcal{F}:=\bigl\{B(x,r)\mid x\in A,\ r>0,\ (f)_{x,r}>1\bigr\},
+\end{align*}
+其中 $B(x,r)$ 为闭球。由 $A$ 的定义，每个 $x\in A$ 都是 $\mathcal{F}$ 中某个球的球心，而 $\mathcal{F}$ 中每个球的球心都在 $A$ 内，故 $\mathcal{F}$ 中所有球的球心之集恰为 $A$。对每个 $x\in A$ 与每个 $\delta>0$，取 $0<r<\delta$ 使 $(f)_{x,r}>1$，则 $B(x,r)\in\mathcal{F}$、$x\in B(x,r)$ 且 $\operatorname{diam}B(x,r)<2\delta$，即 $\mathcal{F}$ 细覆盖 $A$。又由第（1）步，$\mathcal{F}$ 中每个球的半径不超过 $C$，故 $\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}\leqslant2C<\infty$。于是\cref{theorem:ch01-1-27}给出整数 $N_n$ 与可数球族 $\mathcal{F}_1,\cdots,\mathcal{F}_{N_n}$，每个族内的球两两不交，且 $A\subseteq\bigcup_{i=1}^{N_n}\bigcup_{B\in\mathcal{F}_i}B$。由于 $\mathcal{F}$ 中的球 $B$ 都满足 $(f)_B>1$，结论中第二条断言成立。% XREF internal
+
+记 $\mathcal{F}_i$ 的元素为 $B_i^j$（$i=1,\cdots,N_n$；$j=1,\cdots$）。选取 $h_{ij}\in K^p$，使得
+\begin{align*}
+h_{ij}=\bigl((f)_{B_i^j}-f\bigr)^+\qquad\text{于 }B_i^j
+\end{align*}
+且
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Dh_{ij}\rvert^p\diff x\leqslant C\int_{B_i^j}\lvert Df\rvert^p\diff x\qquad(i=1,\cdots,N_n;\ j=1,2,\cdots),
+\end{align*}
+其中 $C$ 只依赖于 $n$ 与 $p$。由\cref{theorem:ch04-4-7}与 Poincaré 不等式，这是可以做到的。注意% XREF p=199 "This is possible according to Theorem 4.7 and Poincaré's inequality"
+\begin{align*}
+f+h_{ij}\geqslant(f)_{B_i^j}\geqslant1\qquad\text{于 }B_i^j .
+\end{align*}
+于是，令
+\begin{align*}
+h:=\sup\{h_{ij}\mid i=1,\cdots,N_n,\ j=1,\cdots\}\in K^p ,
+\end{align*}
+即知
+\begin{align*}
+f+h\geqslant1\qquad\text{于 }A .\qquad(\star\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-18; kind=proof; 补出 h_{ij} 的构造：把 ((f)_B - f)^+ 缩放到单位球上用延拓定理与 Poincaré 不等式延拓并缩放回来，由此得到只依赖 n,p 的能量估计
+$h_{ij}$ 的构造如下。先证一个断言：存在常数 $C=C(n,p)$，使得对每个 $w\in W^{1,p}(\mathbb{R}^n)$ 与每个闭球 $B$，存在 $H\in K^p$ 满足 $H=((w)_B-w)^+$ 于 $B$，且
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert DH\rvert^p\diff x\leqslant C\int_B\lvert Dw\rvert^p\diff x .
+\end{align*}
+在断言中取 $w:=f$ 与 $B:=B_i^j$ 即得所需的 $h_{ij}$。断言的证明分三步。
+
+第一步给出单位球上的估计。记 $B=B(x_0,r)$ 并令
+\begin{align*}
+g(z):=(w)_B-w(x_0+rz),\qquad \Phi(z):=g(z)^+ ,
+\end{align*}
+其中 $z\in B(0,1)$。则 $g\in W^{1,p}(B^0(0,1))$，且由变量替换 $y=x_0+rz$ 得
+\begin{align*}
+\fint_{B(0,1)}w(x_0+rz)\diff z=\fint_{B(x_0,r)}w\diff y=(w)_B ,
+\end{align*}
+故 $\fint_{B(0,1)}g\diff z=0$。又由\cref{theorem:ch04-4-4}(iii)，$\Phi\in W^{1,p}(B^0(0,1))$ 且 $D\Phi=Dg$ 于 $\{g>0\}$、$D\Phi=0$ 于 $\{g\leqslant0\}$，故 $\lvert D\Phi\rvert\leqslant\lvert Dg\rvert$ $\mathcal{L}^n$-a.e.。对零平均函数 $g$ 用\cref{theorem:ch04-4-9}（球上的 Poincaré 不等式）与 Hölder 不等式，得 % XREF internal
+\begin{align*}
+\lVert g\rVert_{L^p(B(0,1))}\leqslant C\lVert Dg\rVert_{L^p(B(0,1))},
+\end{align*}
+于是
+\begin{align*}
+\lVert\Phi\rVert_{L^p(B(0,1))}\leqslant\lVert g\rVert_{L^p(B(0,1))}\leqslant C\lVert D\Phi\rVert_{L^p(B(0,1))}.% XREF internal
+\end{align*}
+
+第二步把这估计延拓到全空间。由\cref{theorem:ch04-4-7}（取 $U:=B^0(0,1)$ 与 $V:=B^0(0,2)$），存在 $\bar\Phi\in W^{1,p}(\mathbb{R}^n)$ 使得 $\bar\Phi=\Phi$ 于 $B^0(0,1)$ 且 % XREF internal
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert D\bar\Phi\rvert^p\diff z\leqslant\lVert\bar\Phi\rVert_{W^{1,p}(\mathbb{R}^n)}^p\leqslant C\bigl(\lVert\Phi\rVert_{L^p(B(0,1))}^p+\lVert D\Phi\rVert_{L^p(B(0,1))}^p\bigr)\leqslant C\lVert D\Phi\rVert_{L^p(B(0,1))}^p .% XREF internal
+\end{align*}
+
+第三步缩放回原来的球。令
+\begin{align*}
+H(y):=\bar\Phi^+\Bigl(\frac{y-x_0}{r}\Bigr),\qquad y\in\mathbb{R}^n .
+\end{align*}
+则 $H\geqslant0$，且由于 $\bar\Phi=\Phi\geqslant0$ 于 $B^0(0,1)$，有 $H=((w)_B-w)^+$ 于 $B$。由变量替换与链式法则，
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert DH\rvert^p\diff y=r^{n-p}\int_{\mathbb{R}^n}\lvert D(\bar\Phi^+)\rvert^p\diff z\leqslant r^{n-p}\int_{\mathbb{R}^n}\lvert D\bar\Phi\rvert^p\diff z ,
+\end{align*}
+而
+\begin{align*}
+\lVert D\Phi\rVert_{L^p(B(0,1))}^p\leqslant r^{p-n}\int_B\lvert Dw\rvert^p\diff y ,
+\end{align*}
+因为 $Dg(z)=-r\,Dw(x_0+rz)$ 而 $D\Phi=Dg$ 于 $\{g>0\}$、$D\Phi=0$ 于 $\{g\leqslant0\}$。合并以上三式得
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert DH\rvert^p\diff y\leqslant C\,r^{n-p}r^{p-n}\int_B\lvert Dw\rvert^p\diff y=C\int_B\lvert Dw\rvert^p\diff y .
+\end{align*}
+最后，$H\in L^{p^*}(\mathbb{R}^n)$：由\cref{theorem:ch04-4-8}（Gagliardo--Nirenberg--Sobolev 不等式）与 $\bar\Phi^+\in W^{1,p}(\mathbb{R}^n)$， % XREF internal
+\begin{align*}
+\lVert\bar\Phi^+\rVert_{L^{p^*}(\mathbb{R}^n)}\leqslant C_1\lVert D(\bar\Phi^+)\rVert_{L^p(\mathbb{R}^n)}<\infty ,% XREF internal
+\end{align*}
+而变量替换只把 $\lVert H\rVert_{L^{p^*}}$ 变为 $\lVert\bar\Phi^+\rVert_{L^{p^*}}$ 的常数倍，故 $H\in L^{p^*}(\mathbb{R}^n)$。于是 $H\in K^p$，断言得证。
+
+% SUPPLEMENT: parent=theorem:ch04-4-18; kind=proof; 补出 h 属于 K^p 的依据（关于上确界的求导法则与球族的两两不交）以及 f + h ≥ 1 于 A 的逐点验证
+下面验证 $h=\sup_{i,j}h_{ij}$ 属于 $K^p$ 且 $f+h\geqslant1$ 于 $A$。把双指标族 $\{h_{ij}\}$ 排成一列。对每个固定的 $i$，族 $\mathcal{F}_i$ 中的球两两不交，故
+\begin{align*}
+\int_{\mathbb{R}^n}\sup_{i,j}\lvert Dh_{ij}\rvert^p\diff x\leqslant\sum_{i=1}^{N_n}\sum_{j=1}^{\infty}\int_{\mathbb{R}^n}\lvert Dh_{ij}\rvert^p\diff x\leqslant C\sum_{i=1}^{N_n}\sum_{j=1}^{\infty}\int_{B_i^j}\lvert Df\rvert^p\diff x\leqslant CN_n\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x<\infty .
+\end{align*}
+于是由\cref{theorem:ch04-4-13}(iii)，$h\in K^p$，且 $\lvert Dh\rvert\leqslant\sup_{i,j}\lvert Dh_{ij}\rvert$ $\mathcal{L}^n$-a.e.。又若 $x\in A$，则由第（2）步的覆盖性质存在 $i,j$ 使 $x\in B_i^j$，于是 % XREF internal
+\begin{align*}
+f(x)+h_{ij}(x)=f(x)+\bigl((f)_{B_i^j}-f(x)\bigr)^+=\max\bigl\{f(x),(f)_{B_i^j}\bigr\}\geqslant(f)_{B_i^j}\geqslant1 ,% XREF internal
+\end{align*}
+而 $h\geqslant h_{ij}$ 逐点成立，故 $f(x)+h(x)\geqslant1$。因此 $(\star\star)$ 得证。
+
+（3）现在
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert D(f+h)\rvert^p\diff x
+&\leqslant C\Bigl\{\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x+\sum_{i=1}^{N_n}\sum_{j=1}^{\infty}\int_{\mathbb{R}^n}\lvert Dh_{ij}\rvert^p\diff x\Bigr\}\\
+&\leqslant C\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x .
+\end{align*}
+因此，由 $A$ 是开集，$(\star\star)$ 蕴含
+\begin{align*}
+A\subseteq\{f+h\geqslant1\}^{\circ} ,
+\end{align*}
+从而
+\begin{align*}
+\Cap_p(A)\leqslant\int_{\mathbb{R}^n}\lvert D(f+h)\rvert^p\diff x\leqslant C\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-18; kind=proof; 补出 (3) 中第一个不等号、A 的开性（平均值的连续性）与容量估计的最后一步
+第一个不等号由逐点不等式与初等不等式合并得到：由 $\lvert Dh\rvert\leqslant\sup_{i,j}\lvert Dh_{ij}\rvert$ $\mathcal{L}^n$-a.e. 与
+\begin{align*}
+\lvert D(f+h)\rvert^p\leqslant2^{p-1}\bigl(\lvert Df\rvert^p+\lvert Dh\rvert^p\bigr)\leqslant2^{p-1}\Bigl(\lvert Df\rvert^p+\sup_{i,j}\lvert Dh_{ij}\rvert^p\Bigr) ,
+\end{align*}
+逐项积分并把上确界换成求和即得。第二个不等号与上一段的计算相同。
+
+$A$ 是开集。设 $x\in A$ 并取 $r>0$ 使 $(f)_{x,r}>1$。对固定的 $r$，函数
+\begin{align*}
+y\mapsto\int_{B(y,r)}f\diff z=\int_{\mathbb{R}^n}f(z)\chi_{B(y,r)}(z)\diff z
+\end{align*}
+连续：若 $\lvert y-y_0\rvert\leqslant r$，则 $\lvert f(z)\chi_{B(y,r)}(z)\rvert\leqslant\lvert f(z)\rvert\chi_{B(y_0,2r)}(z)$，右端可和，故由控制收敛定理得连续性。于是存在 $x$ 的邻域，在其上该平均值仍大于 $1$，即该邻域含于 $A$。
+
+第（3）步最后的陈列式中，第一个不等号由\cref{definition:ch04-4-10}给出，第二个不等号即第（3）步开头的估计。由 $f\in K^p$、$h\in K^p$ 与 $f,h\geqslant0$ 得 $f+h\geqslant0$、$f+h\in L^{p^*}(\mathbb{R}^n)$ 且 $D(f+h)=Df+Dh\in L^p(\mathbb{R}^n;\mathbb{R}^n)$，故 $f+h\in K^p$；又 $A\subseteq\{f+h\geqslant1\}^{\circ}$，故 $\Cap_p(A)$ 作为下确界不超过容许函数 $f+h$ 的能量。% XREF internal
+
+（4）当 $0<\varepsilon\neq1$ 时，令 $g:=\varepsilon^{-1}f\in K^p$，于是
+\begin{align*}
+A&:=\bigl\{x\in\mathbb{R}^n\mid(f)_{x,r}>\varepsilon\ \text{对某个 }r>0\bigr\}\\
+&=\bigl\{x\in\mathbb{R}^n\mid(g)_{x,r}>1\ \text{对某个 }r>0\bigr\} .
+\end{align*}
+因此
+\begin{align*}
+\Cap_p(A)\leqslant C\int_{\mathbb{R}^n}\lvert Dg\rvert^p\diff x=\frac{C}{\varepsilon^p}\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x .
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-18; kind=motivation; 说明为何以容量而非 Lebesgue 测度估计坏集，并概述半径有界、Besicovitch 分解、逐球抬升与取上确界四层构造
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-18-动机}
+Sobolev 函数只按 $\mathcal{L}^n$-几乎处处相等确定，逐点性质必须先选定代表元；而例外集是否「小」，仅用 Lebesgue 测度刻画并不够。容量与 $W^{1,p}$ 的能量直接相容，因而是刻画这类例外集的合适尺度。本定理断言：使平均值 $(f)_{x,r}$ 在任意小尺度上超过 $\varepsilon$ 的点集，其 $p$-容量被 $p$ 次能量 $\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x$ 控制，比例常数为 $\varepsilon^{-p}$。它与弱型估计 $\mathcal{L}^n(\{f>\varepsilon\})\leqslant\varepsilon^{-p}\int\lvert f\rvert^p$ 形式相同，只是把 $\mathcal{L}^n$ 换成了 $\Cap_p$。
+证明的构造分四层。第一层用 $f\in L^{p^*}(\mathbb{R}^n)$ 与 Hölder 不等式证明所有相关球的半径一致有界，这是 Besicovitch 覆盖定理的前提。第二层用该覆盖定理把 $A$ 覆盖成 $N_n$ 族两两不相交的闭球。第三层在每个球上用延拓定理与 Poincaré 不等式构造 $K^p$ 中的非负函数 $h_{ij}$，使 $f+h_{ij}$ 在该球上不小于 $1$，而 $\int\lvert Dh_{ij}\rvert^p$ 被该球上 $\int\lvert Df\rvert^p$ 控制；对每个族求和时，球的两两不相交性把和化为全空间上的积分。第四层对这些 $h_{ij}$ 取上确界 $h$，由关于上确界的求导法则得 $h\in K^p$ 且 $\lvert Dh\rvert$ 被 $\sup\lvert Dh_{ij}\rvert$ 控制，于是 $f+h\geqslant1$ 于 $A$，而 $A$ 为开集，故 $A\subseteq\{f+h\geqslant1\}^{\circ}$，容量的定义随即给出 $\Cap_p(A)\leqslant\int\lvert D(f+h)\rvert^p$。
+最终的常数只依赖于 $n$ 与 $p$：第一层中出现的、依赖于 $f$ 的半径上界只用于保证 Besicovitch 定理可用，并不进入最后的估计。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-18; kind=hypotheses; 逐条分析 f∈K^p 的三条要求、ε>0 的齐次性、1≤p<n 的作用与常数 C 的无关性，并说明测度估计不能替代容量估计
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-18-条件}
+\begin{enumerate}[(i)]
+\item 条件 $f\in K^p$ 含三条要求。非负性 $f\geqslant0$ 使 $(f)_{x,r}>1$ 等价于 $\int_{B(x,r)}f\diff y>\alpha(n)r^n$，这正是第（1）步第一个不等号的来源；若 $f$ 变号，该不等号反向失效。$f\in L^{p^*}(\mathbb{R}^n)$ 使半径估计成立：只有 $\lVert f\rVert_{L^{p^*}}$ 有限才能从 Hölder 估计中解出 $r\leqslant C$。$Df\in L^p(\mathbb{R}^n;\mathbb{R}^n)$ 使右端能量有限，并使\cref{theorem:ch04-4-7}与 Poincaré 不等式可以用于 $f$。% XREF internal
+\item 参数 $\varepsilon>0$ 的作用是齐次性。第（1）至（3）步只处理 $\varepsilon=1$；一般情形由 $g:=\varepsilon^{-1}f$ 化归，此时能量按 $\varepsilon^{-p}$ 缩放，这正是结论中因子 $\varepsilon^{-p}$ 的来源。$0<\varepsilon\leqslant1$ 与 $\varepsilon>1$ 的情形由同一化归同时覆盖，故结论对一切 $\varepsilon>0$ 成立。
+\item 指数范围 $1\leqslant p<n$ 保证 Sobolev 共轭指数 $p^*=\frac{np}{n-p}$ 有限，从而 $K^p$ 有定义、\cref{theorem:ch04-4-7}与 Poincaré 不等式可用；$p\geqslant1$ 还保证 $t\mapsto t^+$ 的复合（\cref{theorem:ch04-4-4}）与不等式 $(a+b)^p\leqslant2^{p-1}(a^p+b^p)$ 成立。% XREF internal
+\item 常数 $C$ 只依赖于 $n$ 与 $p$，与 $f$、$\varepsilon$ 及覆盖族都无关。第（1）步得到的半径上界依赖于 $\lVert f\rVert_{L^{p^*}}$，但它不进入最终估计；进入最终估计的是 Besicovitch 定理中的整数 $N_n$ 与延拓、Poincaré 估计中的常数。
+\item 结论中的 $\Cap_p$ 不能用 $\mathcal{L}^n$ 替代而加强。由\cref{theorem:ch04-4-15}(vi)，$\mathcal{L}^n(A)\leqslant C\Cap_p(A)^{\frac{n}{n-p}}$，故本定理蕴含关于 $\mathcal{L}^n(A)$ 的估计；反之不成立：Hausdorff 测度 $\mathcal{H}^s$ 为正、$s>n-p$ 的紧集具有正的 $p$-容量，而它的 $\mathcal{L}^n$ 测度可以为零，故测度估计不能给出容量估计。% XREF internal
+\end{enumerate}
+\end{remark}
+
+下面用容量度量「坏」集的大小，研究 Sobolev 函数的精细结构性质。
+
+\begin{definition}[$p$-拟连续]\label{definition:ch04-4-11}
+设 $n\geqslant2$ 为整数，$1\leqslant p<n$ 为实数，$\Cap_p$ 为\cref{definition:ch04-4-10}所定义的 $p$-容量，$f:\mathbb{R}^n\to\mathbb{R}$ 为定义在全空间上的函数。% XREF internal
+称 $f$ 是 $p$-拟连续的，是指对每个 $\varepsilon>0$，存在开集 $V\subseteq\mathbb{R}^n$，使得
+\begin{align*}
+\Cap_p(V)\leqslant\varepsilon
+\end{align*}
+且限制 $f|_{\mathbb{R}^n-V}$ 在 $\mathbb{R}^n-V$ 上连续（按 $\mathbb{R}^n-V$ 的相对拓扑）。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch04-4-11; kind=motivation; 说明连续性对等价类无意义、以容量小的开集作例外集的思想，以及该性质与 Sobolev 函数精细结构的关系
+\begin{remark}\phantomsection\label{remark:ch04-def-4-11-动机}
+连续性是逐点性质，而 Sobolev 函数的等价类不区分零测集上的取值，因此不能对等价类陈述连续性。可行的替代是允许在函数上挖去一个例外集，并要求该例外集在适当的「小」意义下可以任意小。Lusin 型结论用的是 Lebesgue 测度，但 Sobolev 函数的例外集往往在测度意义下并不小：单个点就是 $\mathcal{L}^n$ 零测集，却可以是 Sobolev 函数不连续的点。容量恰好刻画这类例外集：由\cref{theorem:ch04-4-19}，Sobolev 函数的精确代表元在一个容量为零的集合之外有逐点极限，并且正是 $p$-拟连续的。定义中的开集 $V$ 就是被挖去的例外集，$\mathbb{R}^n-V$ 为闭集，$f$ 在其上按相对拓扑连续。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-11; kind=hypotheses; 逐条分析 f 定义在全空间、ε 与 V 的依赖关系、≤ 与 < 的等价性、V 取开的理由以及该定义不要求的性质
+\begin{remark}\phantomsection\label{remark:ch04-def-4-11-条件}
+\begin{enumerate}[(i)]
+\item $f$ 必须定义在全空间上：$f|_{\mathbb{R}^n-V}$ 是按点取值的限制，而等价类没有逐点取值。故 $p$-拟连续性是对函数而非对等价类陈述的性质，实际使用时常取精确代表元 $f^*$（见\cref{definition:ch01-1-26}）。% XREF internal
+\item 量词顺序是「对每个 $\varepsilon>0$ 存在开集 $V$」，故 $V$ 依赖于 $\varepsilon$，且不要求 $\Cap_p(V)$ 达到某个极小值。结论不对固定的 $V$ 成立，这与\cref{theorem:ch04-4-19}(iii)中 $V$ 随 $\varepsilon$ 变化的用法一致。% XREF internal
+\item 条件写作 $\Cap_p(V)\leqslant\varepsilon$；把 $\leqslant$ 换成 $<$ 得到等价的定义。若对每个 $\varepsilon>0$ 存在 $V$ 使 $\Cap_p(V)\leqslant\varepsilon$，则对给定的 $\varepsilon$ 取 $\varepsilon/2$ 即得 $\Cap_p(V)<\varepsilon$；反向由 $\Cap_p(V)<\varepsilon$ 蕴含 $\Cap_p(V)\leqslant\varepsilon$。
+\item 要求 $V$ 开，使 $\mathbb{R}^n-V$ 闭、连续性有确定的定义域；开集也正是\cref{theorem:ch04-4-15}(i)中容量从外部逼近所用的集合类，故该定义与容量的开逼近性质相容。% XREF internal
+\item 定义不要求 $f$ 可测，也不要求 $f\in W^{1,p}$：$p$-拟连续性只是一个拓扑--容量性质，它的用处在于 Sobolev 函数的精确代表元满足它。
+\item 限制在 $\mathbb{R}^n-V$ 上连续不蕴含 $f$ 在 $V$ 的边界附近有界或可连续延拓：定义对边界行为没有任何要求。
+\item 指数范围 $1\leqslant p<n$ 沿用 $\Cap_p$ 的定义范围；定义本身只用到容量的单调性与外逼近，不涉及 Sobolev 共轭指数。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Sobolev 函数的精细性质]\label{theorem:ch04-4-19}
+设 $n\geqslant2$ 为整数，$1\leqslant p<n$ 为实数，$p^*:=\frac{np}{n-p}$ 为 $p$ 的 Sobolev 共轭指数，$f\in W^{1,p}(\mathbb{R}^n)$，$(f)_{x,r}:=\fint_{B(x,r)}f\diff y$（$x\in\mathbb{R}^n$，$r>0$）为 $f$ 在闭球 $B(x,r)$ 上关于 Lebesgue 测度的平均值，$f^*$ 为 $f$ 的精确代表元（见\cref{definition:ch01-1-26}），$\Cap_p$ 为\cref{definition:ch04-4-10}所定义的 $p$-容量，$p$-拟连续如\cref{definition:ch04-4-11}所定义。% XREF internal
+则下列断言成立。
+\begin{enumerate}[(i)]
+\item 存在 Borel 集 $E\subseteq\mathbb{R}^n$，使得
+\begin{align*}
+\Cap_p(E)=0
+\end{align*}
+且极限
+\begin{align*}
+\lim_{r\to0}(f)_{x,r}=:f^*(x)
+\end{align*}
+对每个 $x\in\mathbb{R}^n-E$ 存在。
+\item 此外，
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert f-f^*(x)\rvert^{p^*}\diff y=0
+\end{align*}
+对每个 $x\in\mathbb{R}^n-E$ 成立。
+\item 精确代表元 $f^*$ 是 $p$-拟连续的。
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-19-代表元}
+若 $f$ 是 Sobolev 函数且 $f=g$ $\mathcal{L}^n$-a.e.，则 $g$ 也是 Sobolev 函数。因此，若要研究 $f$ 的精细性质，就必须转而研究精确代表元 $f^*$，它由\cref{definition:ch01-1-26}定义。% XREF p=200 "defined in Section 1.7"
+\end{remark}
+
+\begin{proof}
+（1）令
+\begin{align*}
+A:=\Bigl\{x\in\mathbb{R}^n\Bigm|\limsup_{r\to0}\frac{1}{r^{n-p}}\int_{B(x,r)}\lvert Df\rvert^p\diff y>0\Bigr\} .
+\end{align*}
+由\cref{theorem:ch02-2-10}与\cref{theorem:ch04-4-16}，% XREF p=200 "By Theorem 2.10 and Theorem 4.16" | p=200 "Theorem 2.10 and Theorem 4.16"
+\begin{align*}
+\mathcal{H}^{n-p}(A)=0,\qquad\Cap_p(A)=0 .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=proof; 补出由定理 2.10 得 H^{n-p}(A)=0 的代入方式（取 s:=n-p、把 f 换成 |Df|^p），以及由 H^{n-p}(A)<∞ 与定理 4.16 得 Cap_p(A)=0
+第一个结论是\cref{theorem:ch02-2-10}的特例：在该定理中取 $s:=n-p$，并把其中的 $f$ 换成 $\lvert Df\rvert^p$。由 $Df\in L^p(\mathbb{R}^n;\mathbb{R}^n)$ 得 $\lvert Df\rvert^p\in L^1(\mathbb{R}^n)\subseteq L^1_{\mathrm{loc}}(\mathbb{R}^n)$，而 $A$ 正是该定理中的集合 $\Lambda_{n-p}$（其中的比式 $\frac{1}{r^s}\int_{B(x,r)}\lvert f\rvert\diff y$ 在此为 $\frac{1}{r^{n-p}}\int_{B(x,r)}\lvert Df\rvert^p\diff y$），故 $\mathcal{H}^{n-p}(A)=0$。第二个结论由\cref{theorem:ch04-4-16}得到：$\mathcal{H}^{n-p}(A)=0<\infty$，故 $\Cap_p(A)=0$。% XREF internal
+
+现在，由 Poincaré 不等式，
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p^*}\diff y=0\qquad(\star)
+\end{align*}
+对每个 $x\notin A$ 成立。
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=proof; 补出由球上 Poincaré 不等式与平均值的体积因子得到 (★) 的计算，并说明 A 的定义正是使右端上极限为零的条件
+由\cref{theorem:ch04-4-9}（球上的 Poincaré 不等式），对每个 $x\in\mathbb{R}^n$ 与 $r>0$ 有 % XREF internal
+\begin{align*}
+\Bigl(\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}
+&\leqslant C_2r\Bigl(\fint_{B(x,r)}\lvert Df\rvert^p\diff y\Bigr)^{\frac{1}{p}}\\
+&=C_2\alpha(n)^{-\frac{1}{p}}\Bigl(\frac{1}{r^{n-p}}\int_{B(x,r)}\lvert Df\rvert^p\diff y\Bigr)^{\frac{1}{p}} ,% XREF internal
+\end{align*}
+其中最后一步用到 $\fint_{B(x,r)}\lvert Df\rvert^p\diff y=(\alpha(n)r^n)^{-1}\int_{B(x,r)}\lvert Df\rvert^p\diff y$ 与 $\alpha(n)^{-\frac{1}{p}}r^{1-\frac{n}{p}}=\alpha(n)^{-\frac{1}{p}}r^{-\frac{n-p}{p}}$。于是
+\begin{align*}
+\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p^*}\diff y\leqslant C\Bigl(\frac{1}{r^{n-p}}\int_{B(x,r)}\lvert Df\rvert^p\diff y\Bigr)^{\frac{p^*}{p}} .
+\end{align*}
+若 $x\notin A$，则括号内的量非负且其上极限为零，故上式右端当 $r\to0$ 时趋于零，即得 $(\star)$。
+
+选取函数 $f_i\in W^{1,p}(\mathbb{R}^n)\cap C^\infty(\mathbb{R}^n)$，使得
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df-Df_i\rvert^p\diff y\leqslant\frac{1}{2^{(p+1)i}}\qquad(i=1,2,\cdots),
+\end{align*}
+并令
+\begin{align*}
+B_i:=\Bigl\{x\in\mathbb{R}^n\Bigm|\fint_{B(x,r)}\lvert f-f_i\rvert\diff y>\frac{1}{2^i}\ \text{对某个 }r>0\Bigr\} .
+\end{align*}
+由\cref{theorem:ch04-4-18}，% XREF p=201 "According to Theorem 4.18"
+\begin{align*}
+\frac{\Cap_p(B_i)}{2^{pi}}\leqslant C\int_{\mathbb{R}^n}\lvert Df-Df_i\rvert^p\diff y\leqslant\frac{C}{2^{(p+1)i}} .
+\end{align*}
+因此
+\begin{align*}
+\Cap_p(B_i)\leqslant\frac{C}{2^i} .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=proof; 补出 f_i 的选取依据（稠密性）、B_i 是开集、以及在定理 4.18 中取 ε:=2^{-i} 与 |f-f_i| 为函数的具体代入
+$f_i$ 的存在性由\cref{theorem:ch04-4-2}（取 $U:=\mathbb{R}^n$）给出：$C^\infty(\mathbb{R}^n)\cap W^{1,p}(\mathbb{R}^n)$ 在 $W^{1,p}(\mathbb{R}^n)$ 中稠密，故可取 $f_i$ 使 $\lVert Df-Df_i\rVert_{L^p(\mathbb{R}^n)}\leqslant2^{-(p+1)i}$（必要时再乘以足够小的正常数）。 % XREF internal
+
+每个 $B_i$ 是开集，因而是 Borel 集：对固定的 $r>0$，函数 $y\mapsto\fint_{B(y,r)}\lvert f-f_i\rvert\diff z$ 连续，故 $\{y\mid\fint_{B(y,r)}\lvert f-f_i\rvert\diff z>2^{-i}\}$ 为开集，而 $B_i$ 是这些开集对 $r>0$ 的并。
+
+对 $B_i$ 应用\cref{theorem:ch04-4-18}：在该定理中取 $\varepsilon:=2^{-i}$，并把其中的 $f$ 取为 $g:=\lvert f-f_i\rvert$。由\cref{theorem:ch04-4-4}(iii)，$g\in W^{1,p}(\mathbb{R}^n)$ 且 $\lvert Dg\rvert=\lvert Df-Df_i\rvert$ $\mathcal{L}^n$-a.e.；又 $g\geqslant0$，且由\cref{theorem:ch04-4-8}（Gagliardo--Nirenberg--Sobolev 不等式）得 $g\in L^{p^*}(\mathbb{R}^n)$，故 $g\in K^p$。该定理中的集合 $\{x\mid(g)_{x,r}>\varepsilon\ \text{对某个 }r>0\}$ 正是 $B_i$，于是 % XREF internal
+\begin{align*}
+\Cap_p(B_i)\leqslant\frac{C}{(2^{-i})^p}\int_{\mathbb{R}^n}\lvert Dg\rvert^p\diff y=C\,2^{pi}\int_{\mathbb{R}^n}\lvert Df-Df_i\rvert^p\diff y ,% XREF internal
+\end{align*}
+即 $\Cap_p(B_i)/2^{pi}\leqslant C\int_{\mathbb{R}^n}\lvert Df-Df_i\rvert^p\diff y$。再代入 $\int_{\mathbb{R}^n}\lvert Df-Df_i\rvert^p\diff y\leqslant2^{-(p+1)i}$ 得
+\begin{align*}
+\Cap_p(B_i)\leqslant C\,2^{pi}\,2^{-(p+1)i}=C\,2^{-i} .
+\end{align*}
+
+此外，
+\begin{align*}
+\lvert(f)_{x,r}-f_i(x)\rvert
+&\leqslant\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert\diff y+\fint_{B(x,r)}\lvert f-f_i\rvert\diff y\\
+&\qquad+\fint_{B(x,r)}\lvert f_i-f_i(x)\rvert\diff y .
+\end{align*}
+于是 $(\star)$ 与 $B_i$ 的定义蕴含
+\begin{align*}
+\limsup_{r\to0}\lvert(f)_{x,r}-f_i(x)\rvert\leqslant\frac{1}{2^i}\qquad(x\notin A\cup B_i).\qquad(\star\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=proof; 补出上述三角不等式的恒等式来源，并逐项核对 (⋆⋆) 中三项的极限：Hölder、(B_i)^c 的定义与 f_i 的连续性
+第一个不等号来自恒等式
+\begin{align*}
+(f)_{x,r}-f_i(x)=\fint_{B(x,r)}\bigl((f)_{x,r}-f\bigr)\diff y+\fint_{B(x,r)}\bigl(f-f_i\bigr)\diff y+\fint_{B(x,r)}\bigl(f_i-f_i(x)\bigr)\diff y ,
+\end{align*}
+两端取绝对值并逐项用三角不等式。至于 $(\star\star)$，设 $x\in\mathbb{R}^n-(A\cup B_i)$。由 $(\star)$ 与 Hölder 不等式（$p^*\geqslant1$），右端第一项当 $r\to0$ 时趋于零，因为
+\begin{align*}
+\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert\diff y\leqslant\Bigl(\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}} ;
+\end{align*}
+第二项不超过 $2^{-i}$，因为 $x\notin B_i$，而 $B_i$ 的定义要求存在 $r>0$ 使该平均值大于 $2^{-i}$；第三项当 $r\to0$ 时趋于零，因为 $f_i\in C^\infty(\mathbb{R}^n)$ 在 $x$ 处连续，故
+\begin{align*}
+\fint_{B(x,r)}\lvert f_i-f_i(x)\rvert\diff y\leqslant\sup_{y\in B(x,r)}\lvert f_i(y)-f_i(x)\rvert\longrightarrow0 .
+\end{align*}
+三者合并即得 $(\star\star)$。
+
+令 $E_k:=A\cup\bigl(\bigcup_{j=k}^{\infty}B_j\bigr)$。则
+\begin{align*}
+\Cap_p(E_k)\leqslant\Cap_p(A)+\sum_{j=k}^{\infty}\Cap_p(B_j)\leqslant C\sum_{j=k}^{\infty}\frac{1}{2^j} .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=proof; 补出 Cap_p(E_k) 估计所用的可数次可加性与单调性，并给出 A 是 Borel 集的理由
+上式的不等号由\cref{theorem:ch04-4-14}（$\Cap_p$ 是 $\mathbb{R}^n$ 上的测度，故可数次可加且单调）给出： % XREF internal
+\begin{align*}
+\Cap_p(E_k)\leqslant\Cap_p(A)+\sum_{j=k}^{\infty}\Cap_p(B_j) ,
+\end{align*}
+再用 $\Cap_p(A)=0$ 与 $\Cap_p(B_j)\leqslant C\,2^{-j}$ 得 $\Cap_p(E_k)\leqslant C\sum_{j=k}^{\infty}2^{-j}=C\,2^{1-k}$。% XREF internal
+
+$A$ 也是 Borel 集：对每个正整数 $m$，
+\begin{align*}
+\Bigl\{x\Bigm|\limsup_{r\to0}\frac{1}{r^{n-p}}\int_{B(x,r)}\lvert Df\rvert^p\diff y>\frac1m\Bigr\}
+=\bigcup_{N=1}^{\infty}\bigcap_{\ell=N}^{\infty}\bigcup_{0<r<1/\ell}\Bigl\{x\Bigm|\frac{1}{r^{n-p}}\int_{B(x,r)}\lvert Df\rvert^p\diff y>\frac1m\Bigr\} ,
+\end{align*}
+而右端每个内层集合由 $y\mapsto\int_{B(y,r)}\lvert Df\rvert^p\diff z$ 的连续性而是开集，故 $A$ 是 Borel 集。
+
+此外，若 $x\in\mathbb{R}^n-E_k$ 且 $i,j\geqslant k$，则
+\begin{align*}
+\lvert f_i(x)-f_j(x)\rvert&\leqslant\limsup_{r\to0}\lvert(f)_{x,r}-f_i(x)\rvert+\limsup_{r\to0}\lvert(f)_{x,r}-f_j(x)\rvert\\
+&\leqslant\frac{1}{2^i}+\frac{1}{2^j} .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=proof; 说明 i,j ≥ k 时 (⋆⋆) 可用的理由（B_i ⊆ E_k），并对三角不等式取上极限得到该估计
+由 $i\geqslant k$ 得 $B_i\subseteq E_k$，故 $x\in\mathbb{R}^n-E_k$ 蕴含 $x\notin A\cup B_i$，$(\star\star)$ 对指标 $i$ 可用；同理由 $j\geqslant k$ 得 $x\notin A\cup B_j$，$(\star\star)$ 对指标 $j$ 可用。对每个 $r>0$，由三角不等式
+\begin{align*}
+\lvert f_i(x)-f_j(x)\rvert\leqslant\lvert f_i(x)-(f)_{x,r}\rvert+\lvert(f)_{x,r}-f_j(x)\rvert ,
+\end{align*}
+两端对 $r\to0$ 取上极限，再用两个 $(\star\star)$ 即得所需估计。
+
+由 $(\star\star)$，$\{f_j\}_{j=1}^{\infty}$ 在 $\mathbb{R}^n-E_k$ 上一致收敛于连续函数 $g$。此外，
+\begin{align*}
+\limsup_{r\to0}\lvert g(x)-(f)_{x,r}\rvert\leqslant\lvert g(x)-f_i(x)\rvert+\limsup_{r\to0}\lvert f_i(x)-(f)_{x,r}\rvert ,
+\end{align*}
+故 $(\star\star)$ 蕴含
+\begin{align*}
+g(x)=\lim_{r\to0}(f)_{x,r}=f^*(x)\qquad(x\in\mathbb{R}^n-E_k).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=proof; 补出由 |f_i - f_j| ≤ 2^{-i} + 2^{-j} 得一致 Cauchy、由完备性得极限 g、并令 j → ∞ 得 |f_i - g| ≤ 2^{-i} 的过程，以及 g = f^* 的极限论证
+一致收敛的依据是：$(\star\star)$ 之后的不等式说明 $\{f_j\}$ 在 $\mathbb{R}^n-E_k$ 上一致 Cauchy。对每个 $\eta>0$ 取整数 $k'$ 使 $2^{1-k'}<\eta$，则当 $i,j\geqslant\max\{k,k'\}$ 时 $\lvert f_i-f_j\rvert<\eta$ 于 $\mathbb{R}^n-E_k$ 上成立。由于 $\mathbb{R}$ 完备，$\{f_j\}$ 在 $\mathbb{R}^n-E_k$ 上逐点收敛于某函数 $g$；在 $(\star\star)$ 之后的不等式中固定 $i\geqslant k$ 并令 $j\to\infty$，得
+\begin{align*}
+\lvert f_i(x)-g(x)\rvert\leqslant\frac{1}{2^i}\qquad(i\geqslant k,\ x\in\mathbb{R}^n-E_k),
+\end{align*}
+故 $f_j\to g$ 在 $\mathbb{R}^n-E_k$ 上一致。每个 $f_j$ 在 $\mathbb{R}^n$ 上连续，其限制在 $\mathbb{R}^n-E_k$ 上连续，而一致收敛保持连续性，故 $g$ 在 $\mathbb{R}^n-E_k$ 上连续。
+至于 $g=f^*$，对 $x\in\mathbb{R}^n-E_k$ 与 $i\geqslant k$，由三角不等式与 $(\star\star)$，
+\begin{align*}
+\limsup_{r\to0}\lvert g(x)-(f)_{x,r}\rvert\leqslant\lvert g(x)-f_i(x)\rvert+\limsup_{r\to0}\lvert f_i(x)-(f)_{x,r}\rvert\leqslant\frac{1}{2^i}+\frac{1}{2^i} ,
+\end{align*}
+右端当 $i\to\infty$ 时趋于零，故 $\lim_{r\to0}\lvert g(x)-(f)_{x,r}\rvert=0$。该极限存在且等于 $g(x)$，于是由精确代表元的定义得 $f^*(x)=g(x)$。
+
+现令 $E:=\bigcap_{k=1}^{\infty}E_k$。则 $\Cap_p(E)\leqslant\lim_{k\to\infty}\Cap_p(E_k)=0$，且
+\begin{align*}
+f^*(x)=\lim_{r\to0}(f)_{x,r}
+\end{align*}
+对每个 $x\in\mathbb{R}^n-E$ 存在。至此 (i) 得证。
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=proof; 补出 Cap_p(E)=0 的单调性论证（不用递减紧集列的连续性）与 E 是 Borel 集
+$\Cap_p(E)=0$ 由单调性得到：$E\subseteq E_k$ 对一切 $k$ 成立，故 $\Cap_p(E)\leqslant\Cap_p(E_k)\leqslant C\,2^{1-k}$ 对一切 $k$ 成立，于是 $\Cap_p(E)\leqslant\inf_{k\geqslant1}C\,2^{1-k}=0$。$E$ 是 Borel 集，因为它是可数个 Borel 集 $E_k$ 的交，而每个 $E_k$ 是 Borel 集 $A$ 与可数个开集 $B_j$ 的并。
+
+（2）为证 (ii)，注意 $A\subseteq E$，故 $(\star)$ 对 $x\in\mathbb{R}^n-E$ 给出
+\begin{align*}
+&\lim_{r\to0}\Bigl(\fint_{B(x,r)}\lvert f-f^*(x)\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}\\
+&\qquad\leqslant\lim_{r\to0}\lvert(f)_{x,r}-f^*(x)\rvert+\lim_{r\to0}\Bigl(\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}\\
+&\qquad=0 .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=proof; 补出上述式子所用的 Minkowski 不等式（在 L^{p*}(B(x,r)) 上）与两个极限为零的依据
+这是 Minkowski 不等式在 $L^{p^*}(B(x,r))$ 上的应用。由于 $f^*(x)$ 为常数，
+\begin{align*}
+\Bigl(\fint_{B(x,r)}\lvert f-f^*(x)\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}
+&\leqslant\Bigl(\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}\\
+&\qquad+\Bigl(\fint_{B(x,r)}\lvert(f)_{x,r}-f^*(x)\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}\\
+&=\Bigl(\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}+\lvert(f)_{x,r}-f^*(x)\rvert .
+\end{align*}
+由于 $x\in\mathbb{R}^n-E\subseteq\mathbb{R}^n-A$，$(\star)$ 使第一项当 $r\to0$ 时趋于零；由 (i) 得 $f^*(x)=\lim_{r\to0}(f)_{x,r}$，故第二项也趋于零。于是右端的上极限为零，而左端非负，故其极限存在且等于零，即得 (ii)。
+
+（3）最后证明 (iii)：固定 $\varepsilon>0$，取 $k$ 使 $\Cap_p(E_k)<\frac{\varepsilon}{2}$。由\cref{theorem:ch04-4-15}，存在开集 $U\supset E_k$ 使 $\Cap_p(U)<\varepsilon$。由于 $\{f_i\}_{i=1}^{\infty}$ 在 $\mathbb{R}^n-U$ 上一致收敛于 $f^*$，故 $f^*|_{\mathbb{R}^n-U}$ 连续。% XREF p=202 "According to Theorem 4.15, there exists an open set U ⊃ E_k with Cap_p(U) < ε"
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=proof; 补出取 k 的依据、由定理 4.15(i) 得开集 U 的推理，以及一致收敛限制到 R^n - U 上仍一致的说明
+取 $k$ 的依据是 $\Cap_p(E_k)\leqslant C\,2^{1-k}\to0$（$k\to\infty$）。由\cref{theorem:ch04-4-15}(i)， % XREF internal
+\begin{align*}
+\Cap_p(E_k)=\inf\{\Cap_p(U)\mid U\ \text{开},\ E_k\subseteq U\} ,
+\end{align*}
+故存在开集 $U\supseteq E_k$ 使 $\Cap_p(U)<\varepsilon$。由于 $\mathbb{R}^n-U\subseteq\mathbb{R}^n-E_k$，而 $f_i\to f^*$ 在 $\mathbb{R}^n-E_k$ 上一致，故 $f_i|_{\mathbb{R}^n-U}$ 在 $\mathbb{R}^n-U$ 上一致收敛于 $f^*|_{\mathbb{R}^n-U}$。每个 $f_i$ 连续，故其限制连续，而一致收敛保持连续性，于是 $f^*|_{\mathbb{R}^n-U}$ 连续。对每个 $\varepsilon>0$ 都找到了满足定义要求的开集 $U$，故 $f^*$ 是 $p$-拟连续的。% XREF internal
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=motivation; 说明本定理把几乎处处结论精细化为容量零例外集、三款断言各自的内容与证明路线
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-19-动机}
+Sobolev 函数的等价类没有逐点取值，而关于 $\mathcal{L}^n$-a.e. 的结论也不指出例外集能有多小。本定理给出精细刻画：存在一个 $\Cap_p$ 零的 Borel 集 $E$，使平均值在 $\mathbb{R}^n-E$ 上逐点收敛于精确代表元，且收敛还是 $L^{p^*}$ 平均意义下的强收敛（(ii)）；极限函数 $f^*$ 在挖去一个容量任意小的开集后连续（(iii)）。由 $\Cap_p(E)=0$ 与\cref{theorem:ch04-4-15}(vi) 得 $\mathcal{L}^n(E)=0$，故 (i) 蕴含通常的几乎处处收敛，但结论强得多：例外集不仅测度为零，而且容量为零。% XREF internal
+证明的路线是：先用梯度密度的 $(n-p)$ 次齐次上极限定义坏集 $A$，由 Hausdorff 测度的覆盖估计与容量--Hausdorff 测度的比较得 $\mathcal{H}^{n-p}(A)=\Cap_p(A)=0$；在 $A$ 之外，Poincaré 不等式把 $f$ 围绕其平均值的涨落按 $r$ 控制，得 $(\star)$；再用光滑函数 $f_i$ 逼近 $f$，并用容量估计控制 $f$ 与 $f_i$ 的偏差超过 $2^{-i}$ 的集合 $B_i$；在 $A\cup\bigcup_{j\geqslant k}B_j$ 之外，$f_i$ 与 $f_j$ 之差被 $2^{-i}+2^{-j}$ 控制，故它们一致收敛于连续函数 $g$，且 $g$ 就是 $f^*$；最后对 $k$ 取交得容量为零的例外集，并借容量的开逼近把容量控制转成开集 $U$，得到拟连续性。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-19; kind=hypotheses; 逐条分析 f∈W^{1,p}(R^n) 的整体性、1≤p<n（含 p=1 时第二步的替代）、例外集 E 的性质、三款共用 E 以及 p≥n 的情形
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-19-条件}
+\begin{enumerate}[(i)]
+\item 条件 $f\in W^{1,p}(\mathbb{R}^n)$ 要求函数定义在全空间且梯度整体 $p$ 次可和。定义在全空间使每个球上的 Poincaré 不等式、全空间上的 GNS 不等式与光滑逼近都可用；$\lvert Df\rvert^p\in L^1(\mathbb{R}^n)$ 正是\cref{theorem:ch02-2-10}的前提，也是 $\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x<\infty$ 的来源。若只设 $f$ 局部属于 $W^{1,p}$，(ii) 中的 $L^{p^*}$ 平均与第（1）步的全局覆盖估计都没有依据。% XREF internal
+\item 指数范围 $1\leqslant p<n$ 使 $p^*$ 有限，并使\cref{theorem:ch04-4-9}、\cref{theorem:ch04-4-8}可用；$p\geqslant1$ 还使 Minkowski 不等式与 Hölder 不等式按所需方向成立。第（1）步引用\cref{theorem:ch04-4-16}时需要 $1<p<n$；$p=1$ 时该步改用 $\Cap_1$ 与 $\mathcal{H}^{n-1}$ 的等价刻画（后文将证明）：由 $\mathcal{H}^{n-1}(A)=0$ 直接得 $\Cap_1(A)=0$，故 (i) 对 $p=1$ 仍成立。% XREF internal
+\item 例外集 $E$ 依赖于 $f$ 与 $p$，只满足 $\Cap_p(E)=0$：它不必有界或闭，对 $s<n-p$ 也不必是 $\mathcal{H}^s$ 零集。结论不断言 $E$ 可取为与 $f$ 无关的集合。
+\item 三款断言共用同一个 $E$：(i) 与 (ii) 是逐点陈述，(iii) 是整体陈述；拟连续性中的开集 $U$ 依赖于 $\varepsilon$ 与 $E_k$，不依赖于点 $x$。
+\item $\Cap_p(E)=0$ 强于 $\mathcal{L}^n(E)=0$：由\cref{theorem:ch04-4-15}(vi) 得 $\mathcal{L}^n(E)\leqslant C\Cap_p(E)^{\frac{n}{n-p}}=0$。因此 (i) 蕴含通常的几乎处处收敛；反之，几乎处处收敛不能给出容量零的例外集，故本定理是实质性加强。% XREF internal
+\item $p=n$ 与 $p>n$ 时 $p^*$ 无定义，本定理的陈述不适用；这两类情形由其他估计处理。
+\end{enumerate}
+\end{remark}
+
+\end{document}

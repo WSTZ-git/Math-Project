@@ -1,0 +1,695 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{逼近}\label{section:ch04-02}
+
+\subsection{光滑函数逼近}\label{subsection:ch04-02-1}
+
+\begin{definition*}[记号与标准磨光核]
+\phantomsection\label{definition:ch04-4-2-记号}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$\varepsilon>0$。
+\begin{enumerate}[(i)]
+\item 记
+\begin{align*}
+U_\varepsilon:=\{x\in U\mid\operatorname{dist}(x,\partial U)>\varepsilon\}.
+\end{align*}
+\item 定义 $C^\infty$ 函数 $\eta:\mathbb{R}^n\to\mathbb{R}$ 为
+\begin{align*}
+\eta(x):=
+\begin{cases}
+c\exp\Bigl(\dfrac{1}{\lvert x\rvert^2-1}\Bigr), & \lvert x\rvert<1,\\[4pt]
+0, & \lvert x\rvert\geqslant1,
+\end{cases}
+\end{align*}
+其中常数 $c>0$ 取得使
+\begin{align*}
+\int_{\mathbb{R}^n}\eta(x)\diff x=1.
+\end{align*}
+\item 记
+\begin{align*}
+\eta_\varepsilon(x):=\frac{1}{\varepsilon^n}\eta\Bigl(\frac{x}{\varepsilon}\Bigr)\qquad(\varepsilon>0,\ x\in\mathbb{R}^n);
+\end{align*}
+$\eta_\varepsilon$ 称为\textbf{标准磨光核}。
+\item 设 $f\in L^1_{\loc}(U)$ 为局部可积函数，定义
+\begin{align*}
+f^\varepsilon:=\eta_\varepsilon*f;
+\end{align*}
+即
+\begin{align*}
+f^\varepsilon(x):=\int_U\eta_\varepsilon(x-y)f(y)\diff y\qquad(x\in U_\varepsilon).
+\end{align*}
+\end{enumerate}
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch04-4-2-记号; kind=motivation; 说明磨光的加权平均思想、ε 作为尺度参数的双重作用，以及 U_ε 的设计动机
+\begin{remark}\phantomsection\label{remark:ch04-def-4-2-记号-动机}
+磨光把函数在每一点附近作加权平均，权函数取为固定的光滑核 $\eta$ 经伸缩后的平移。由于 $\eta$ 光滑、支集含于单位球且积分为 $1$，卷积 $f^\varepsilon$ 在每一点处是 $f$ 在 $\varepsilon$ 邻域内的加权平均：$\varepsilon$ 越大，平均的范围越宽；$\varepsilon\to0$ 时平均退化为 $f$ 本身（在 $L^p_{\loc}$ 或 Lebesgue 点的意义下，见\cref{theorem:ch04-4-1}）。% XREF internal
+
+定义中的 $U_\varepsilon$ 刻画了这种平均有意义的点集：$x\in U_\varepsilon$ 保证以 $x$ 为心、$\varepsilon$ 为半径的球落在 $U$ 内，故 $f^\varepsilon(x)$ 只用到 $f$ 在 $U$ 上的值。Sobolev 理论中的常用模式是：先用磨光把关于弱导数的问题化为光滑函数上的经典问题，再令 $\varepsilon\to0$ 取极限；本节后两个小节都按这一模式进行。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-2-记号; kind=hypotheses; 逐条分析 U_ε 的严格不等式、归一化常数 c、η 的光滑性与支集、伸缩因子的作用以及 f^ε 的定义域
+\begin{remark}\phantomsection\label{remark:ch04-def-4-2-记号-条件}
+\begin{enumerate}[(i)]
+\item $U_\varepsilon$ 用严格不等式 $\operatorname{dist}(x,\partial U)>\varepsilon$ 定义。若改为 $\geqslant$，则 $x$ 到边界的距离恰为 $\varepsilon$ 时球 $B(x,\varepsilon)$ 可能与 $\partial U$ 相交，而 $f$ 只在 $U$ 上给定，卷积在 $x$ 处未必有意义；取严格不等式还保证 $U_\varepsilon$ 是开集，且 $B(x,\varepsilon)\subseteq U$（$x\in U_\varepsilon$）。
+\item 常数 $c$ 由归一化条件唯一确定，即
+\begin{align*}
+c=\Bigl(\int_{B(1)}\exp\Bigl(\frac{1}{\lvert x\rvert^2-1}\Bigr)\diff x\Bigr)^{-1};
+\end{align*}
+被积函数在 $B(1)$ 内为正且连续，故 $c>0$ 存在且唯一。
+\item $\eta$ 的光滑性来自指数函数在 $\lvert x\rvert\to1-$ 时的迅速衰减：当 $\lvert x\rvert<1$ 时 $\lvert x\rvert^2-1<0$，函数 $\lvert x\rvert\mapsto1/(\lvert x\rvert^2-1)$ 光滑；当 $\lvert x\rvert\to1-$ 时它趋于 $-\infty$，$\exp$ 的各阶导数乘以有理函数后仍趋于 $0$，故 $\eta$ 在 $\lvert x\rvert=1$ 处的一切阶偏导数存在且等于 $0$，从而 $\eta\in C^\infty(\mathbb{R}^n)$。
+\item 伸缩保持积分与光滑性：作变量替换 $x=\varepsilon z$ 得
+\begin{align*}
+\int_{\mathbb{R}^n}\eta_\varepsilon(x)\diff x=\int_{B(1)}\eta(z)\diff z=1,
+\end{align*}
+且 $\eta_\varepsilon\in C^\infty(\mathbb{R}^n)$、$\eta_\varepsilon\geqslant0$、$\spt(\eta_\varepsilon)\subseteq\overline{B(0,\varepsilon)}$。因此 $f^\varepsilon(x)$ 是 $f$ 在 $B(x,\varepsilon)$ 上的概率型平均。
+\item 条件 $f\in L^1_{\loc}(U)$ 保证积分对每个 $x\in U_\varepsilon$ 绝对收敛：
+\begin{align*}
+\lvert f^\varepsilon(x)\rvert\leqslant\frac{\lVert\eta\rVert_{L^\infty}}{\varepsilon^n}\int_{B(x,\varepsilon)}\lvert f(y)\rvert\diff y<\infty .
+\end{align*}
+若 $x\notin U_\varepsilon$，则 $B(x,\varepsilon)$ 可能越出 $U$，此时 $f^\varepsilon(x)$ 一般无定义；这正是 $f^\varepsilon$ 只在 $U_\varepsilon$ 上定义的原因。
+\item 定义域随 $\varepsilon$ 单调变化：若 $0<\varepsilon_2\leqslant\varepsilon_1$，则 $U_{\varepsilon_1}\subseteq U_{\varepsilon_2}$，且 $\bigcup_{\varepsilon>0}U_\varepsilon=U$。因此对每个固定的 $x\in U$，只要 $0<\varepsilon<\operatorname{dist}(x,\partial U)$ 就有 $f^\varepsilon(x)$ 有定义。
+\end{enumerate}
+\end{remark}
+
+磨光为用 $C^\infty$ 函数逼近 Sobolev 函数提供了系统的方法。
+
+\begin{theorem}[磨光核的性质]\label{theorem:ch04-4-1}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$\eta_\varepsilon$ 为标准磨光核，$f\in L^1_{\loc}(U)$，$f^\varepsilon:=\eta_\varepsilon*f$。则下列断言成立：
+\begin{enumerate}[(i)]
+\item 对每个 $\varepsilon>0$，$f^\varepsilon\in C^\infty(U_\varepsilon)$。
+\item 若 $f\in C(U)$，则
+\begin{align*}
+f^\varepsilon\to f\qquad\text{在 }U\text{ 的紧子集上一致}.
+\end{align*}
+\item 若 $f\in L^p_{\loc}(U)$，其中 $1\leqslant p<\infty$，则
+\begin{align*}
+f^\varepsilon\to f\qquad\text{于 }L^p_{\loc}(U).
+\end{align*}
+\item 此外，若 $x$ 是 $f$ 的 Lebesgue 点，则 $f^\varepsilon(x)\to f(x)$；特别地，
+\begin{align*}
+f^\varepsilon\to f\qquad\mathcal{L}^n\text{-a.e.}
+\end{align*}
+\item 若 $f\in W^{1,p}_{\loc}(U)$，其中 $1\leqslant p\leqslant\infty$，则
+\begin{align*}
+f^\varepsilon_{x_i}=\eta_\varepsilon*f_{x_i}\qquad(i=1,\cdots,n)
+\end{align*}
+于 $U_\varepsilon$ 上成立。
+\item 特别地，若 $f\in W^{1,p}_{\loc}(U)$，其中 $1\leqslant p<\infty$，则
+\begin{align*}
+f^\varepsilon\to f\qquad\text{于 }W^{1,p}_{\loc}(U).
+\end{align*}
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+（1）固定 $x\in U_\varepsilon$ 与 $i\in\{1,\cdots,n\}$。令 $e_i$ 表示第 $i$ 个坐标向量 $(0,\cdots,1,\cdots,0)$。当 $\lvert h\rvert$ 充分小时 $x+he_i\in U_\varepsilon$，于是
+\begin{align*}
+\frac{f^\varepsilon(x+he_i)-f^\varepsilon(x)}{h}
+&=\frac{1}{\varepsilon^n}\int_U\frac{1}{h}\Bigl[\eta\Bigl(\frac{x+he_i-y}{\varepsilon}\Bigr)-\eta\Bigl(\frac{x-y}{\varepsilon}\Bigr)\Bigr]f(y)\diff y\\
+&=\frac{1}{\varepsilon^n}\int_V\frac{1}{h}\Bigl[\eta\Bigl(\frac{x+he_i-y}{\varepsilon}\Bigr)-\eta\Bigl(\frac{x-y}{\varepsilon}\Bigr)\Bigr]f(y)\diff y,
+\end{align*}
+其中 $V\subset\subset U$ 是任一满足 $\overline{B(x,\varepsilon+\lvert h\rvert)}\subseteq V$ 的开集；这样的 $V$ 存在，因为 $x\in U_\varepsilon$ 且 $\lvert h\rvert$ 充分小时 $\overline{B(x,\varepsilon+\lvert h\rvert)}\subset U$。
+
+对每个 $y\in V$，上述差商当 $h\to0$ 时收敛到
+\begin{align*}
+\frac{1}{\varepsilon}\eta_{x_i}\Bigl(\frac{x-y}{\varepsilon}\Bigr)=\varepsilon^n\eta_{\varepsilon,x_i}(x-y).
+\end{align*}
+又被积函数的绝对值不超过
+\begin{align*}
+\frac{1}{\varepsilon^{n+1}}\lVert D\eta\rVert_{L^\infty}\lvert f\rvert\in L^1(V).
+\end{align*}
+故由控制收敛定理，
+\begin{align*}
+f^\varepsilon_{x_i}(x)=\lim_{h\to0}\frac{f^\varepsilon(x+he_i)-f^\varepsilon(x)}{h}
+\end{align*}
+存在，且等于
+\begin{align*}
+\int_U\eta_{\varepsilon,x_i}(x-y)f(y)\diff y.
+\end{align*}
+对高阶偏导数重复上述论证，可知 $f^\varepsilon$ 的一切阶偏导数在 $U_\varepsilon$ 的每一点存在且连续；断言 (i) 得证。
+
+（2）给定 $V\subset\subset U$，取 $V\subset\subset W\subset\subset U$。则对 $x\in V$ 与充分小的 $\varepsilon>0$ 有
+\begin{align*}
+f^\varepsilon(x)=\frac{1}{\varepsilon^n}\int_{B(x,\varepsilon)}\eta\Bigl(\frac{x-y}{\varepsilon}\Bigr)f(y)\diff y=\int_{B(1)}\eta(z)f(x-\varepsilon z)\diff z.
+\end{align*}
+于是，由 $\int_{B(1)}\eta(z)\diff z=1$ 得
+\begin{align*}
+\lvert f^\varepsilon(x)-f(x)\rvert\leqslant\int_{B(1)}\eta(z)\lvert f(x-\varepsilon z)-f(x)\rvert\diff z.
+\end{align*}
+若 $f$ 在 $W$ 上一致连续，则由上述估计得 $f^\varepsilon\to f$ 在 $V$ 上一致；断言 (ii) 成立。
+
+（3）设 $1\leqslant p\leqslant\infty$ 且 $f\in L^p_{\loc}(U)$。则对 $V\subset\subset W\subset\subset U$、$x\in V$ 与充分小的 $\varepsilon>0$，在 $1<p<\infty$ 的情形计算得
+\begin{align*}
+\lvert f^\varepsilon(x)\rvert
+&\leqslant\int_{B(1)}\eta(z)^{1-\frac1p}\eta(z)^{\frac1p}\lvert f(x-\varepsilon z)\rvert\diff z\\
+&\leqslant\Bigl(\int_{B(1)}\eta(z)\diff z\Bigr)^{1-\frac1p}\Bigl(\int_{B(1)}\eta(z)\lvert f(x-\varepsilon z)\rvert^p\diff z\Bigr)^{\frac1p}\\
+&=\Bigl(\int_{B(1)}\eta(z)\lvert f(x-\varepsilon z)\rvert^p\diff z\Bigr)^{\frac1p}.
+\end{align*}
+于是对 $1\leqslant p<\infty$ 得
+\begin{align*}
+\int_V\lvert f^\varepsilon(x)\rvert^p\diff x
+&\leqslant\int_{B(1)}\eta(z)\Bigl(\int_V\lvert f(x-\varepsilon z)\rvert^p\diff x\Bigr)\diff z\\
+&\leqslant\int_W\lvert f(y)\rvert^p\diff y\qquad(\star)
+\end{align*}
+对充分小的 $\varepsilon>0$ 成立。
+
+现在固定 $\delta>0$。由于 $f\in L^p(W)$，存在 $g\in C(\overline{W})$ 使
+\begin{align*}
+\lVert f-g\rVert_{L^p(W)}\leqslant\delta.
+\end{align*}
+由估计 ($\star$) 得
+\begin{align*}
+\lVert f^\varepsilon-g^\varepsilon\rVert_{L^p(V)}\leqslant\delta.
+\end{align*}
+因此，只要 $\varepsilon>0$ 充分小，由断言 (ii) 就有
+\begin{align*}
+\lVert f^\varepsilon-f\rVert_{L^p(V)}\leqslant2\delta+\lVert g^\varepsilon-g\rVert_{L^p(V)}\leqslant3\delta.
+\end{align*}
+断言 (iii) 得证。
+
+（4）为证 (iv)，设 $f\in L^1_{\loc}(U)$ 且 $x\in U$ 是 $f$ 的 Lebesgue 点。则由上面的计算，
+\begin{align*}
+\lvert f^\varepsilon(x)-f(x)\rvert
+&\leqslant\frac{1}{\varepsilon^n}\int_{B(x,\varepsilon)}\eta\Bigl(\frac{x-y}{\varepsilon}\Bigr)\lvert f(y)-f(x)\rvert\diff y\\
+&\leqslant\frac{\alpha(n)\lVert\eta\rVert_{L^\infty}}{\mathcal{L}^n(B(x,\varepsilon))}\int_{B(x,\varepsilon)}\lvert f(y)-f(x)\rvert\diff y\\
+&=o(1)\qquad(\varepsilon\to0).
+\end{align*}
+
+（5）设 $f\in W^{1,p}_{\loc}(U)$，其中 $1\leqslant p\leqslant\infty$。于是由上面的计算，
+\begin{align*}
+f^\varepsilon_{x_i}(x)&=\int_U\eta_{\varepsilon,x_i}(x-y)f(y)\diff y=-\int_U\eta_{\varepsilon,y_i}(x-y)f(y)\diff y\\
+&=\int_U\eta_\varepsilon(x-y)f_{x_i}(y)\diff y=(\eta_\varepsilon*f_{x_i})(x)
+\end{align*}
+对 $x\in U_\varepsilon$ 成立。断言 (v) 得证，而 (vi) 由 (iii) 立即得到。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-1; kind=motivation; 说明六条性质的层次关系与证明路线
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-1-动机}
+本定理列出标准磨光核的六条基本性质，它们构成 Sobolev 函数逼近理论的技术核心。断言 (i) 是正则化效应：卷积把 $f$ 的光滑性提升为 $C^\infty$；断言 (ii)(iii) 说明当 $\varepsilon\to0$ 时 $f^\varepsilon$ 回复为 $f$，回复的方式依赖于 $f$ 的正则性——连续函数给出一致收敛，$L^p_{\loc}$ 函数给出 $L^p_{\loc}$ 收敛；断言 (iv) 给出逐点收敛的精确范围，即 Lebesgue 点；断言 (v) 说明磨光与弱导数交换；断言 (vi) 把 (iii) 与 (v) 结合，得到 $W^{1,p}$ 中的逼近。
+
+证明的路线是：先在积分号下求导得到 (i)；再用变量替换把卷积写成 $f$ 关于核 $\eta$ 的对称平均，用一致连续性得到 (ii)；$L^p$ 情形用连续函数在 $L^p$ 中的稠密性与估计 ($\star$) 中的 $L^p$ 压缩性；断言 (iv) 用 Lebesgue 点的定义；断言 (v) 用弱导数的定义作分部积分。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-1; kind=hypotheses; 逐条分析 p 的范围、局部化方式、p=∞ 的失效、Lebesgue 点条件的必要性以及 U_ε 依赖
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-1-条件}
+\begin{enumerate}[(i)]
+\item 前提 $f\in L^1_{\loc}(U)$ 使 $f^\varepsilon$ 在 $U_\varepsilon$ 上有定义，断言 (i)(ii)(iv) 直接使用它；断言 (iii)(vi) 另加 $f\in L^p_{\loc}(U)$，$1\leqslant p<\infty$；断言 (v) 另加 $f\in W^{1,p}_{\loc}(U)$，$1\leqslant p\leqslant\infty$，其中 $p=\infty$ 只要求 $f_{x_i}\in L^\infty_{\loc}(U)$，不涉及 $L^p$ 逼近。
+\item $p=\infty$ 不在 (iii)(vi) 的范围内。$L^\infty$ 中的磨光一般不在 $L^\infty_{\loc}$ 中收敛：取 $U=\mathbb{R}$、$f=\chi_{[0,1]}$，则对每个 $\varepsilon\in(0,1)$ 与 $x\in(0,\varepsilon)$，由核的连续性有 $0<f^\varepsilon(x)<1$，故
+\begin{align*}
+\lVert f^\varepsilon-f\rVert_{L^\infty(-1,2)}\geqslant1-f^\varepsilon\Bigl(\frac{\varepsilon}{2}\Bigr)>0 .
+\end{align*}
+\item 断言 (ii) 的一致收敛只在紧子集上成立。若 $f$ 在 $U$ 上连续而不一致连续，则全 $U$ 上的一致收敛不成立：取 $U=\mathbb{R}$、$f(x)=e^x$，由 $\int_{B(1)}z\eta(z)\diff z=0$ 得
+\begin{align*}
+f^\varepsilon(x)&=e^x\int_{B(1)}\eta(z)e^{-\varepsilon z}\diff z\\
+&=e^x\Bigl(1+\frac{\varepsilon^2}{2}\int_{B(1)}z^2\eta(z)\diff z+O(\varepsilon^4)\Bigr)\qquad(\varepsilon\to0),
+\end{align*}
+故对固定的 $\varepsilon>0$，$f^\varepsilon(x)-f(x)$ 随 $x\to\infty$ 无界。
+\item 断言 (iv) 中 Lebesgue 点的条件不能去掉。取 $f=\chi_{[0,1]}$、$x=0$，则 $\eta$ 的对称性给出 $f^\varepsilon(0)=1/2$ 对一切 $\varepsilon\in(0,1)$，而 $f(0)=1$；此处 $0$ 不是 $f$ 的 Lebesgue 点。由\cref{theorem:ch01-1-32}，$\mathcal{L}^n$-a.e. 的 $x$ 都是 $f$ 的 Lebesgue 点，故断言 (iv) 的前半部分给出 $f^\varepsilon\to f$ $\mathcal{L}^n$-a.e.。% XREF internal
+\item 断言 (i) 与 (v) 只在 $U_\varepsilon$ 上成立，因为 $\partial U$ 附近 $f$ 的 $\varepsilon$ 邻域越出 $U$；又 $\bigcup_{\varepsilon>0}U_\varepsilon=U$，故断言 (iv) 逐点收敛的陈述与定义域的收缩不矛盾。
+\item 断言 (v) 中右端的卷积 $\eta_\varepsilon*f_{x_i}$ 也只在 $U_\varepsilon$ 上有定义，因为 $f_{x_i}$ 只是 $L^p_{\loc}(U)$ 函数；这与 (i) 中 $f^\varepsilon\in C^\infty(U_\varepsilon)$ 的定义域一致。第（5）步的证明中用到 $1\leqslant p\leqslant\infty$：$f_{x_i}\in L^p_{\loc}(U)$ 保证 $\eta_\varepsilon*f_{x_i}$ 对 $x\in U_\varepsilon$ 绝对收敛。
+\end{enumerate}
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.56\textwidth]{ch04-4-2-graph.png}
+\end{figure}
+
+\begin{theorem}[光滑函数的局部逼近]\label{theorem:ch04-4-2}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$1\leqslant p<\infty$，$f\in W^{1,p}(U)$ 为给定的 Sobolev 函数。则存在一列在 $U$ 内无穷次可微的函数 $\{f_k\}_{k=1}^{\infty}\subseteq W^{1,p}(U)\cap C^\infty(U)$，使得 $f_k$ 按 $W^{1,p}(U)$ 的范数逼近 $f$：
+\begin{align*}
+f_k\to f\qquad\text{于 }W^{1,p}(U).
+\end{align*}
+此处极限按 $W^{1,p}(U)$ 的范数理解，即 $f_k$ 与 $Df_k$ 分别在 $L^p(U)$ 中收敛到 $f$ 与 $Df$；等价地，$C^\infty(U)\cap W^{1,p}(U)$ 在 $W^{1,p}(U)$ 中稠密。
+\end{theorem}
+
+此处并未断言 $f_k\in C^\infty(\overline{U})$；相应的结论见\cref{theorem:ch04-4-3}。% XREF p=149 "but see Theorem 4.3 below"
+
+\begin{proof}
+（1）固定 $\varepsilon>0$，令 $U_0:=\varnothing$，并定义
+\begin{align*}
+U_k:=\Bigl\{x\in U\Bigm|\operatorname{dist}(x,\partial U)>\frac1k\Bigr\}\cap B^0(0,k)\qquad(k=1,2,\cdots),
+\end{align*}
+其中 $B^0(0,k):=\{x\in\mathbb{R}^n\mid\lvert x\rvert<k\}$。置
+\begin{align*}
+V_k:=U_{k+1}-\overline{U}_{k-1}\qquad(k=1,2,\cdots),
+\end{align*}
+并取一列光滑函数 $\{\zeta_k\}_{k=1}^{\infty}$ 满足
+\begin{align*}
+&\zeta_k\in C_c^\infty(V_k),\qquad0\leqslant\zeta_k\leqslant1\qquad(k=1,2,\cdots),\\
+&\sum_{k=1}^{\infty}\zeta_k\equiv1\qquad\text{于 }U.
+\end{align*}
+
+对每个 $k=1,2,\cdots$，$f\zeta_k\in W^{1,p}(U)$ 且 $\spt(f\zeta_k)\subseteq V_k$。故存在 $\varepsilon_k>0$ 使
+\begin{align*}
+\left\{
+\begin{array}{l}
+\displaystyle\spt(\eta_{\varepsilon_k}*(f\zeta_k))\subseteq V_k,\\[6pt]
+\displaystyle\Bigl(\int_U\lvert\eta_{\varepsilon_k}*(f\zeta_k)-f\zeta_k\rvert^p\diff x\Bigr)^{\frac1p}<\frac{\varepsilon}{2^k},\\[10pt]
+\displaystyle\Bigl(\int_U\lvert\eta_{\varepsilon_k}*(D(f\zeta_k))-D(f\zeta_k)\rvert^p\diff x\Bigr)^{\frac1p}<\frac{\varepsilon}{2^k}.
+\end{array}
+\right.\qquad(\star)
+\end{align*}
+定义
+\begin{align*}
+f_\varepsilon:=\sum_{k=1}^{\infty}\eta_{\varepsilon_k}*(f\zeta_k).
+\end{align*}
+在每一点 $x\in U$ 的某个邻域内，上述级数只有有限项非零；因此
+\begin{align*}
+f_\varepsilon\in C^\infty(U).
+\end{align*}
+
+（2）由于
+\begin{align*}
+f=\sum_{k=1}^{\infty}f\zeta_k,
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch04-4-2; kind=proof; 补出由 f 与 f_ε 的级数表示相减得到误差级数的一步（上述相减一步在正文中省略）
+将 $f_\varepsilon$ 的定义式与上式相减，得
+\begin{align*}
+f_\varepsilon-f=\sum_{k=1}^{\infty}\bigl(\eta_{\varepsilon_k}*(f\zeta_k)-f\zeta_k\bigr).
+\end{align*}
+由 ($\star$) 得
+\begin{align*}
+\lVert f_\varepsilon-f\rVert_{L^p(U)}
+&\leqslant\sum_{k=1}^{\infty}\Bigl(\int_U\lvert\eta_{\varepsilon_k}*(f\zeta_k)-f\zeta_k\rvert^p\diff x\Bigr)^{\frac1p}\\
+&<\varepsilon
+\end{align*}
+以及
+\begin{align*}
+\lVert Df_\varepsilon-Df\rVert_{L^p(U)}
+&\leqslant\sum_{k=1}^{\infty}\Bigl(\int_U\lvert\eta_{\varepsilon_k}*(D(f\zeta_k))-D(f\zeta_k)\rvert^p\diff x\Bigr)^{\frac1p}\\
+&<\varepsilon.
+\end{align*}
+因此 $f_\varepsilon\in W^{1,p}(U)$，且当 $\varepsilon\to0$ 时
+\begin{align*}
+f_\varepsilon\to f\qquad\text{于 }W^{1,p}(U).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-2; kind=proof; 补出由 ε 参数族过渡到序列的取法：令 ε=1/j 并按构造取定 {ε_k}
+对每个正整数 $j$，取 $\varepsilon=1/j$ 并按上述构造取定对应的 $\{\varepsilon_k\}$ 与 $f_{1/j}$，就得到满足定理要求的序列。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-2; kind=motivation; 说明单位分解与逐块磨光的构造思路，以及「内部逼近」与「全局逼近」的区别
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-2-动机}
+局部逼近定理断言：$W^{1,p}(U)$ 中每个函数都是 $C^\infty(U)$ 中函数在 $W^{1,p}$ 范数下的极限。证明的关键困难是单个磨光 $f^\varepsilon$ 只在 $U_\varepsilon$ 上有定义，而 $U_\varepsilon$ 随 $\varepsilon\to0$ 才填满 $U$；固定一个 $\varepsilon$ 无法覆盖靠近边界的点。解决办法是用单位分解把 $f$ 分解为局部化在离开边界的小块上的函数之和，对每块取足够小的磨光尺度，再把结果求和。由于单位分解在每点的邻域内只有有限项非零，求和仍是光滑函数。
+
+这一构造给出的是内部逼近：$f_k$ 在 $U$ 内光滑，但不保证在 $\partial U$ 附近有直到边界的光滑性。把逼近提升到 $C^\infty(\overline{U})$ 需要边界本身的几何正则性，这是下一小节的主题（见\cref{theorem:ch04-4-3}）。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-2; kind=hypotheses; 逐条分析 p<∞、U 的开性、U_k 中两个条件的配合、V_k 的局部有限性以及 f_k 不一定光滑到边界
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-2-条件}
+\begin{enumerate}[(i)]
+\item 条件 $1\leqslant p<\infty$：证明中的估计 ($\star$) 按 $L^p$ 范数控制磨光误差，并在级数求和中使用 $L^p$ 的三角不等式；$p=\infty$ 时需另行处理，本证明不适用。
+\item $U$ 只须为非空开集，可以有界、无界，边界可以没有任何正则性。构造只用到 $\operatorname{dist}(x,\partial U)$ 与球的有界性，不用 $\partial U$ 的几何。
+\item $U_k$ 的定义中两个条件各有分工：$\operatorname{dist}(x,\partial U)>1/k$ 使 $U_k$ 与 $\partial U$ 有正距离，从而 $\overline{U}_k\subset U$；$B^0(0,k)$ 使 $U_k$ 有界，从而 $\overline{U}_k$ 紧。两者合起来给出 $\overline{U}_k\subset\subset U$。
+\item $V_k=U_{k+1}-\overline{U}_{k-1}$ 的取法保证 $\overline{V}_k\subseteq U_{k+1}-U_{k-1}\subset\subset U$，故 $V_k$ 是紧含于 $U$ 的开集。又 $U_k$ 关于 $k$ 递增且 $\bigcup_kU_k=U$，故 $\{V_k\}$ 覆盖 $U$；并且对每个固定的 $x\in U$，只有有限多个 $k$ 使 $x\in V_k$，因此 $\sum_k\zeta_k$ 在每点附近只有有限项非零。
+\item 结论只断言 $f_k\in C^\infty(U)$，不涉及边界附近的行为；关于 $C^\infty(\overline{U})$ 中的光滑逼近，见\cref{theorem:ch04-4-3}。 % XREF internal
+\end{enumerate}
+\end{remark}
+
+接下来的目标是用一直光滑到边界的函数逼近 Sobolev 函数；这需要对 $\partial U$ 的几何行为附加某种假设。
+
+\begin{definition}[Lipschitz 边界]\label{definition:ch04-4-4}
+设 $n\geqslant2$ 为正整数，$U\subseteq\mathbb{R}^n$ 为非空开集。称边界 $\partial U$ 是 \textbf{Lipschitz} 的，是指对每个点 $x\in\partial U$，存在 $r>0$ 与 Lipschitz 连续映射 $\gamma:\mathbb{R}^{n-1}\to\mathbb{R}$，使得在必要时旋转并重新标号坐标轴之后成立
+\begin{align*}
+U\cap Q(x,r)=\{y\mid\gamma(y_1,\cdots,y_{n-1})<y_n\}\cap Q(x,r),
+\end{align*}
+其中
+\begin{align*}
+Q(x,r):=\{y\mid\lvert y_i-x_i\rvert<r,\ i=1,\cdots,n\}.
+\end{align*}
+\end{definition}
+
+在每一点 $x\in\partial U$ 附近，边界是某个 Lipschitz 连续函数的图像。
+
+\begin{remark}\phantomsection\label{remark:ch04-def-4-4-法向量}
+由\cref{theorem:ch03-3-2}，$U$ 的外单位法向量 $\nu(y)$ 对 $\mathcal{H}^{n-1}$-a.e. 的 $y\in\partial U$ 存在。% XREF p=151 "By Rademacher's Theorem, the outer unit normal"
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-4; kind=motivation; 说明 Lipschitz 图像表示为何足以支撑边界附近的磨光，以及它如何把全局问题局部化
+\begin{remark}\phantomsection\label{remark:ch04-def-4-4-动机}
+边界是 Lipschitz 的，意思是每一点附近 $\partial U$ 都可以表示为一个 Lipschitz 函数 $\gamma$ 的图像，而 $U$ 位于图像的上方。与 $C^1$ 边界相比，Lipschitz 边界允许法向量在零测集上不存在或剧烈变化（多边形的角点即为一例），这正好够用于磨光逼近：构造只需要沿 $e_n$ 方向把点推入内部的一个与 $\varepsilon$ 成正比的统一速率，不需要法向量的连续性。
+
+这一定义把全局的几何问题化为有限个立方体内的局部问题。当 $U$ 有界时 $\partial U$ 紧，故有限个这样的立方体即可覆盖 $\partial U$；在每个立方体内，图像表示保证沿 $e_n$ 方向平移后的点的 $\varepsilon$ 球仍落在 $U$ 内，磨光因此可以一直进行到边界。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-4; kind=hypotheses; 逐条分析坐标系的选择、γ 的正则性、局部性、立方体的取法，并给出尖点区域的反例
+\begin{remark}\phantomsection\label{remark:ch04-def-4-4-条件}
+\begin{enumerate}[(i)]
+\item 允许旋转并重新标号坐标轴，是因为 $\partial U$ 的局部图像相对标准坐标轴可以是倾斜的。旋转是正交变换，不改变 Lipschitz 常数以外的度量性质，也不影响边界附近的磨光构造。
+\item $\gamma$ 只要求 Lipschitz 连续，不要求 $C^1$。因此由 Lipschitz 图像围成的区域（多面体、Lipschitz 图下方的区域等）都满足定义。由\cref{theorem:ch03-3-2}，$\gamma$ 在 $\mathbb{R}^{n-1}$ 上 $\mathcal{L}^{n-1}$-a.e. 可微，于是 $\partial U$ 的外单位法向量几乎处处存在，且局部可写成 % XREF internal
+\begin{align*}
+\nu=\frac{(-\nabla\gamma,1)}{\sqrt{1+\lvert\nabla\gamma\rvert^2}};
+\end{align*}
+这就是上面关于法向量的注记。
+\item 条件只要求逐点局部成立：$r$ 与 $\gamma$ 都可以依赖 $x$。若 $U$ 有界，则 $\partial U$ 紧，有限个立方体即可覆盖 $\partial U$，这是\cref{theorem:ch04-4-3}中单位分解只有有限项的原因。% XREF internal
+\item $Q(x,r)$ 是开立方体（各棱长为 $2r$），与球 $B(x,r)$ 不同。取立方体是为了在\cref{theorem:ch04-4-3}中令 $Q'_i=Q(x_i,r_i/2)$ 作为单位分解的支集，并使 $Q'_i$ 与 $Q_i$ 的包含关系简单。% XREF internal
+\item 反例：区域
+\begin{align*}
+U=\{(x_1,x_2)\mid0<x_2<x_1^2,\ 0<x_1<1\}
+\end{align*}
+的边界在原点附近不是 Lipschitz 边界。该边界由两条在原点相切的曲线（$x_2=0$ 的射线与抛物线弧 $x_2=x_1^2$）组成；无论怎样旋转坐标轴，边界在原点附近都不是单值函数的图像：过原点的坐标线若与切向重合，则它含无穷多个边界点；若与切向不重合，则它与两条曲线各交于一点。
+\end{enumerate}
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.56\textwidth]{ch04-4-2-ball.png}
+\end{figure}
+
+\begin{theorem}[光滑函数的全局逼近]\label{theorem:ch04-4-3}
+设 $n\geqslant2$ 为正整数，$U\subseteq\mathbb{R}^n$ 为非空有界开集，$\partial U$ 为 Lipschitz 边界，$1\leqslant p<\infty$。
+\begin{enumerate}[(i)]
+\item 若 $f\in W^{1,p}(U)$，则存在序列 $\{f_k\}_{k=1}^{\infty}\subseteq W^{1,p}(U)\cap C^\infty(\overline{U})$，使得
+\begin{align*}
+f_k\to f\qquad\text{于 }W^{1,p}(U).
+\end{align*}
+\item 若此外 $f\in C(\overline{U})$，则
+\begin{align*}
+f_k\to f\qquad\text{在 }\overline{U}\text{ 上一致}.
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）对 $x\in\partial U$，取\cref{definition:ch04-4-4}中的 $r>0$ 与 $\gamma:\mathbb{R}^{n-1}\to\mathbb{R}$。% XREF p=151 "take r > 0 and γ : R^{n−1} → R as in the definition above"
+又记 $Q:=Q(x,r)$，$Q':=Q(x,r/2)$。
+
+（2）先设 $f$ 在 $\partial Q'\cap U$ 附近为零。对 $y\in U\cap Q'$、$\varepsilon>0$ 与 $\alpha>0$，定义
+\begin{align*}
+y^\varepsilon:=y+\varepsilon\alpha e_n.
+\end{align*}
+当 $\alpha$ 充分大时（例如 $\alpha:=\Lip(\gamma)+2$），对一切充分小的 $\varepsilon>0$ 有 $B(y^\varepsilon,\varepsilon)\subset U\cap Q$。
+
+% SUPPLEMENT: parent=theorem:ch04-4-3; kind=proof; 补出 B(y^ε,ε)⊂U∩Q 的验证：用 γ 的 Lipschitz 界控制 γ(z') 与 z_n 的大小，并控制坐标差
+下面验证这一断言。写 $y=(y',y_n)$，其中 $y'\in\mathbb{R}^{n-1}$，并设 $z\in B(y^\varepsilon,\varepsilon)$。由 $\gamma$ 的 Lipschitz 连续性，
+\begin{align*}
+\gamma(z')-\gamma(y')\leqslant\Lip(\gamma)\lvert z'-y'\rvert<\Lip(\gamma)\varepsilon,
+\end{align*}
+故由 $\gamma(y')<y_n$ 与 $z_n>y_n+\varepsilon\alpha-\varepsilon$ 得
+\begin{align*}
+\gamma(z')<y_n+\Lip(\gamma)\varepsilon<y_n+\varepsilon(\alpha-1)<z_n,
+\end{align*}
+即 $z\in\{w\mid\gamma(w')<w_n\}$。另一方面，对 $i=1,\cdots,n-1$ 有 $\lvert z_i-x_i\rvert<\varepsilon+r/2<r$；对 $i=n$，由 $\lvert z_n-y_n-\varepsilon\alpha\rvert<\varepsilon$ 与 $\lvert y_n-x_n\rvert<r/2$ 得 $\lvert z_n-x_n\rvert<\varepsilon(1+\alpha)+r/2<r$，只要 $\varepsilon(1+\alpha)<r/2$。故 $z\in Q$。由 $z$ 的任意性得 $B(y^\varepsilon,\varepsilon)\subseteq U\cap Q$。
+
+（3）对 $y\in U\cap Q'$，定义
+\begin{align*}
+f_\varepsilon(y)&:=\frac{1}{\varepsilon^n}\int_U\eta\Bigl(\frac{z}{\varepsilon}\Bigr)f(y^\varepsilon-z)\diff z\\
+&=\frac{1}{\varepsilon^n}\int_{B(y^\varepsilon,\varepsilon)}\eta\Bigl(\frac{y-w}{\varepsilon}+\alpha e_n\Bigr)f(w)\diff w
+\end{align*}
+与\cref{theorem:ch04-4-1}的证明相同，可验证% XREF p=152 "As in the proof of Theorem 4.1, we check"
+\begin{align*}
+f_\varepsilon\in C^\infty(U\cap\overline{Q}')
+\end{align*}
+以及
+\begin{align*}
+f_\varepsilon\to f\qquad\text{于 }W^{1,p}(U\cap Q').
+\end{align*}
+此外，由于 $f$ 在 $\partial Q'\cap U$ 附近为零，对充分小的 $\varepsilon>0$，$f_\varepsilon$ 在 $\partial Q'\cap U$ 附近也为零；于是可以把 $f_\varepsilon$ 在 $U-Q'$ 上补充定义为 $0$。
+
+（4）由于 $\partial U$ 紧，可以用有限个立方体 $Q'_i=Q(x_i,r_i/2)$（$i=1,\cdots,N$）覆盖 $\partial U$。取一列光滑函数 $\{\zeta_i\}_{i=0}^{N}$ 使得
+\begin{align*}
+&0\leqslant\zeta_i\leqslant1,\qquad\spt(\zeta_i)\subseteq Q'_i\qquad(i=1,\cdots,N),\\
+&0\leqslant\zeta_0\leqslant1,\qquad\spt(\zeta_0)\subseteq U,\\
+&\sum_{i=0}^{N}\zeta_i\equiv1\qquad\text{于 }U,
+\end{align*}
+并置
+\begin{align*}
+f^i:=f\zeta_i\qquad(i=0,1,2,\cdots,N).
+\end{align*}
+固定 $\delta>0$。按第（3）步构造 $g^i:=(f^i)_{\varepsilon_i}\in C^\infty(\overline{U})$ 使
+\begin{align*}
+\spt(g^i)\subset\overline{U}\cap Q_i,\qquad\lVert g^i-f^i\rVert_{W^{1,p}(U\cap Q_i)}<\frac{\delta}{2N}
+\end{align*}
+对 $i=1,\cdots,N$ 成立。按\cref{theorem:ch04-4-2}的证明磨光 $f^0$，得到 $g^0\in C_c^\infty(U)$ 使% XREF p=152 "Mollify f^0 as in proof of Theorem 4.2 to produce g^0 ∈ C∞c(U)"
+\begin{align*}
+\lVert g^0-f^0\rVert_{W^{1,p}(U)}<\frac{\delta}{2}.
+\end{align*}
+最后置
+\begin{align*}
+g:=\sum_{i=0}^{N}g^i\in C^\infty(\overline{U}),
+\end{align*}
+并计算
+\begin{align*}
+\lVert g-f\rVert_{W^{1,p}(U)}
+&\leqslant\lVert g^0-f^0\rVert_{W^{1,p}(U)}+\sum_{i=1}^{N}\lVert g^i-f^i\rVert_{W^{1,p}(U\cap Q_i)}\\
+&<\delta.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-3; kind=proof; 补出由 $\delta$ 的任意性过渡到序列的取法
+对每个正整数 $j$，取 $\delta=1/j$ 并按上述构造取定 $g$，即得满足 (i) 的序列。
+
+上述构造表明：若 $f\in W^{1,p}(U)\cap C(\overline{U})$，则 $f_k\to f$ 也在 $\overline{U}$ 上一致。
+
+% SUPPLEMENT: parent=theorem:ch04-4-3; kind=proof; 补出 (ii) 的一致收敛估计：由第（3）步的积分表示与 f 在 Ū 上的一致连续性逐片求和
+断言 (ii) 的证明如下。设 $f\in C(\overline{U})$。对 $y\in U\cap Q'$，由第（3）步的第二个积分表示与 $\int_{B(1)}\eta(z)\diff z=1$ 得
+\begin{align*}
+\lvert f_\varepsilon(y)-f(y)\rvert\leqslant\int_{B(1)}\eta(z)\lvert f(y^\varepsilon-\varepsilon z)-f(y)\rvert\diff z,
+\end{align*}
+而 $\lvert y^\varepsilon-\varepsilon z-y\rvert\leqslant\varepsilon(\alpha+1)$，故 $f$ 在 $\overline{U}$ 上的一致连续性给出 $f_\varepsilon\to f$ 在 $U\cap Q'$ 上一致。对每个 $i=1,\cdots,N$ 都有 $g^i\to f^i$ 在 $U\cap Q_i$ 上一致；又 $f^0=f\zeta_0$ 在 $U$ 上一致连续且 $\spt(\zeta_0)$ 可取为紧含于 $U$（因为 $U$ 有界而 $Q'_i$ 已覆盖 $\partial U$），故由\cref{theorem:ch04-4-1}(ii) 得 $g^0\to f^0$ 在 $U$ 上一致。于是 $g\to f$ 在 $\overline{U}$ 上一致。 % XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-3; kind=motivation; 说明边界推移构造与误差配额 δ/(2N)、δ/2 的来源，以及断言 (ii) 的来由
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-3-动机}
+局部逼近\cref{theorem:ch04-4-2}给出的光滑函数在边界附近可能没有定义，因此不能保证属于 $C^\infty(\overline{U})$。全局逼近定理说明：当 $U$ 有界且 $\partial U$ 为 Lipschitz 边界时，可以在 $W^{1,p}(U)\cap C^\infty(\overline{U})$ 中选到逼近 $f$ 的序列。构造的要点是把边界附近的点沿固定的坐标方向 $e_n$ 平移 $\alpha\varepsilon$；Lipschitz 图表示保证平移后的点的 $\varepsilon$ 球仍在 $U$ 内，于是磨光在边界附近也有定义。远离边界的部分用局部逼近处理，两者用单位分解拼接。 % XREF internal
+
+拼接时用 $W^{1,p}$ 范数的三角不等式，把总误差控制为 $N\cdot\delta/(2N)+\delta/2<\delta$；这解释了误差配额 $\delta/(2N)$ 与 $\delta/2$ 的来源。断言 (ii) 的一致收敛不需要额外构造：一旦 $f$ 连续到边界，第（3）步的积分表示直接给出关于 $y$ 一致的估计。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-3; kind=hypotheses; 逐条分析有界性、Lipschitz 边界、p 的范围、C(Ū) 的额外假设，并指出尖点区域的构造失效
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-3-条件}
+\begin{enumerate}[(i)]
+\item $U$ 有界：使 $\partial U$ 紧，从而可以用有限个立方体覆盖 $\partial U$，并使单位分解只有有限项；有界性还使 $C(\overline{U})$ 上的函数一致连续，断言 (ii) 才有意义。
+\item $\partial U$ 为 Lipschitz 边界：使第（2）步的平移构造成立，即存在与 $y$ 无关的 $\alpha$ 使 $B(y+\varepsilon\alpha e_n,\varepsilon)\subseteq U\cap Q$。若没有这一条件，$\varepsilon$ 球可能越出 $U$，磨光无定义。
+\item 条件 $1\leqslant p<\infty$：与\cref{theorem:ch04-4-2}相同，用于按 $L^p$ 范数估计各分片的误差并求和。% XREF internal
+\item 断言 (ii) 的额外假设 $f\in C(\overline{U})$：此时 $f$ 在 $\overline{U}$ 上一致连续，第（3）步的积分表示给出关于 $y$ 一致的误差估计，各分片求和即得一致收敛。若 $f$ 不连续到边界，断言 (i) 仍成立，但一致收敛不成立。
+\item Lipschitz 条件在证明中不能去掉：在尖点区域 $U=\{(x_1,x_2)\mid0<x_2<x_1^2,\ 0<x_1<1\}$ 上，$\partial U$ 在原点附近不是 Lipschitz 边界，第（2）步中不存在沿固定方向的统一推移量 $\alpha\varepsilon$，本定理的构造失效。
+\end{enumerate}
+\end{remark}
+
+\subsection{乘积法则与链式法则}\label{subsection:ch04-02-2}
+
+由\cref{section:ch04-02}的逼近结果，Sobolev 函数可以用光滑函数逼近；因此现在可以验证，通常的求导法则对弱导数同样成立。% XREF p=153 "In view of Section 4.2"
+
+设 $1\leqslant p<\infty$。
+
+\begin{theorem}[Sobolev 函数的求导法则]\label{theorem:ch04-4-4}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$1\leqslant p<\infty$。
+\begin{enumerate}[(i)]
+\item 若 $f,g\in W^{1,p}(U)\cap L^\infty(U)$，则
+\begin{align*}
+fg\in W^{1,p}(U)\cap L^\infty(U)
+\end{align*}
+且
+\begin{align*}
+(fg)_{x_i}=f_{x_i}g+fg_{x_i}\qquad\mathcal{L}^n\text{-a.e.}\qquad(i=1,2,\cdots,n).
+\end{align*}
+\item 若 $f\in W^{1,p}(U)$，$F\in C^1(\mathbb{R})$，$F'\in L^\infty(\mathbb{R})$ 且 $F(0)=0$，则
+\begin{align*}
+F(f)\in W^{1,p}(U)
+\end{align*}
+且
+\begin{align*}
+F(f)_{x_i}=F'(f)f_{x_i}\qquad\mathcal{L}^n\text{-a.e.}\qquad(i=1,2,\cdots,n).
+\end{align*}
+\item 若 $f\in W^{1,p}(U)$，则 $f^+,f^-,\lvert f\rvert\in W^{1,p}(U)$，且
+\begin{align*}
+Df^+&=
+\begin{cases}
+Df & \mathcal{L}^n\text{-a.e. 于 }\{f>0\},\\
+0 & \mathcal{L}^n\text{-a.e. 于 }\{f\leqslant0\},
+\end{cases}\\[4pt]
+Df^-&=
+\begin{cases}
+0 & \mathcal{L}^n\text{-a.e. 于 }\{f\geqslant0\},\\
+-Df & \mathcal{L}^n\text{-a.e. 于 }\{f<0\},
+\end{cases}\\[4pt]
+D\lvert f\rvert&=
+\begin{cases}
+Df & \mathcal{L}^n\text{-a.e. 于 }\{f>0\},\\
+0 & \mathcal{L}^n\text{-a.e. 于 }\{f=0\},\\
+-Df & \mathcal{L}^n\text{-a.e. 于 }\{f<0\}.
+\end{cases}
+\end{align*}
+\item 若 $f\in W^{1,p}(U)$，则
+\begin{align*}
+Df=0\qquad\mathcal{L}^n\text{-a.e. 于 }\{f=0\}.
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）为证 (i)，取 $\phi\in C_c^1(U)$ 且 $\spt(\phi)\subset V\subset\subset U$。令 $f^\varepsilon:=\eta_\varepsilon*f$，$g^\varepsilon:=\eta_\varepsilon*g$ 为按\cref{section:ch04-02}定义的磨光。则 % XREF p=154 "as in Section 4.2"
+\begin{align*}
+\int_U fg\phi_{x_i}\diff x
+&=\int_V fg\phi_{x_i}\diff x\\
+&=\lim_{\varepsilon\to0}\int_V f^\varepsilon g^\varepsilon\phi_{x_i}\diff x\\
+&=-\lim_{\varepsilon\to0}\int_V\bigl(f^\varepsilon_{x_i}g^\varepsilon+f^\varepsilon g^\varepsilon_{x_i}\bigr)\phi\diff x\\
+&=-\int_V(f_{x_i}g+fg_{x_i})\phi\diff x\\
+&=-\int_U(f_{x_i}g+fg_{x_i})\phi\diff x,
+\end{align*}
+上述计算中的极限过渡依据\cref{theorem:ch04-4-1}。% XREF p=154 "according to Theorem 4.1"
+
+% SUPPLEMENT: parent=theorem:ch04-4-4; kind=proof; 补出 (i) 中各极限过渡的依据：磨光的 L^p 收敛、L^∞ 控制与强收敛乘弱收敛
+第二个等号成立：由\cref{theorem:ch04-4-1}(iii) 与 (iv)，$f^\varepsilon\to f$、$g^\varepsilon\to g$ 于 $L^p(V)$ 且 $\mathcal{L}^n$-a.e.，而 $\lvert f^\varepsilon\rvert\leqslant\lVert f\rVert_{L^\infty}$、$\lvert g^\varepsilon\rvert\leqslant\lVert g\rVert_{L^\infty}$，故 $f^\varepsilon g^\varepsilon\to fg$ 于 $L^1(V)$。第四个等号成立：由\cref{theorem:ch04-4-1}(v) 与 (vi)，$f^\varepsilon_{x_i}\to f_{x_i}$、$g^\varepsilon_{x_i}\to g_{x_i}$ 于 $L^p(V)$，而 $f^\varepsilon$、$g^\varepsilon$ 在 $L^\infty$ 中一致有界，故 $f^\varepsilon_{x_i}g^\varepsilon+f^\varepsilon g^\varepsilon_{x_i}\to f_{x_i}g+fg_{x_i}$ 于 $L^1(V)$。% XREF internal
+
+（2）为证 (ii)，取与上面相同的 $\phi$、$V$ 与 $f^\varepsilon$。则
+\begin{align*}
+\int_U F(f)\phi_{x_i}\diff x
+&=\int_V F(f)\phi_{x_i}\diff x\\
+&=\lim_{\varepsilon\to0}\int_V F(f^\varepsilon)\phi_{x_i}\diff x\\
+&=-\lim_{\varepsilon\to0}\int_V F'(f^\varepsilon)f^\varepsilon_{x_i}\phi\diff x\\
+&=-\int_V F'(f)f_{x_i}\phi\diff x\\
+&=-\int_U F'(f)f_{x_i}\phi\diff x,
+\end{align*}
+其中再次反复使用了\cref{theorem:ch04-4-1}。% XREF p=154 "where again we have repeatedly used Theorem 4.1"
+
+% SUPPLEMENT: parent=theorem:ch04-4-4; kind=proof; 补出 (ii) 中复合函数收敛的依据：F' 有界与中值定理
+第三个等号用光滑函数的链式法则与分部积分。第四个等号成立：由中值定理，
+\begin{align*}
+\lvert F(f^\varepsilon)-F(f)\rvert\leqslant\lVert F'\rVert_{L^\infty}\lvert f^\varepsilon-f\rvert,
+\end{align*}
+而 $f^\varepsilon\to f$ 于 $L^p(V)$，故 $F(f^\varepsilon)\to F(f)$ 于 $L^p(V)$；又 $\lvert F'(f^\varepsilon)\rvert\leqslant\lVert F'\rVert_{L^\infty}$ 且 $F'$ 连续，故 $F'(f^\varepsilon)f^\varepsilon_{x_i}\to F'(f)f_{x_i}$ 于 $L^1(V)$。% XREF internal
+
+（3）固定 $\varepsilon>0$，定义
+\begin{align*}
+F_\varepsilon(r):=
+\begin{cases}
+(r^2+\varepsilon^2)^{\frac12}-\varepsilon, & r\geqslant0,\\
+0, & r<0.
+\end{cases}
+\end{align*}
+则 $F_\varepsilon\in C^1(\mathbb{R})$、$F'_\varepsilon\in L^\infty(\mathbb{R})$，故由断言 (ii)，对 $\phi\in C_c^1(U)$ 有
+\begin{align*}
+\int_U F_\varepsilon(f)\phi_{x_i}\diff x=-\int_U F'_\varepsilon(f)f_{x_i}\phi\diff x.
+\end{align*}
+令 $\varepsilon\to0$，得
+\begin{align*}
+\int_U f^+\phi_{x_i}\diff x=-\int_{U\cap\{f>0\}}f_{x_i}\phi\diff x.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-4; kind=proof; 补出令 ε→0 的收敛依据：F_ε 与 F'_ε 的逐点极限及控制收敛定理
+令 $\varepsilon\to0$ 的依据如下：对每个 $r\in\mathbb{R}$ 有 $F_\varepsilon(r)\to r^+$，且 $F'_\varepsilon(r)\to1$（$r>0$）、$F'_\varepsilon(r)\to0$（$r\leqslant0$）；又 $\lvert F_\varepsilon(r)\rvert\leqslant\lvert r\rvert$、$\lvert F'_\varepsilon(r)\rvert\leqslant1$。故由控制收敛定理，左端收敛到 $\int_Uf^+\phi_{x_i}\diff x$，右端收敛到 $-\int_{U\cap\{f>0\}}f_{x_i}\phi\diff x$。% XREF internal
+
+断言 (iii) 的第一部分由此得证；其余断言由公式
+\begin{align*}
+f^-=(-f)^+,\qquad\lvert f\rvert=f^++f^-
+\end{align*}
+得到。断言 (iv) 是 (iii) 的推论：在 $\{f=0\}$ 上 $Df^+=0$（因 $f\leqslant0$）且 $Df^-=0$（因 $f\geqslant0$），故由
+\begin{align*}
+Df=Df^+-Df^-
+\end{align*}
+得 $Df=0$ 于 $\{f=0\}$ 上 $\mathcal{L}^n$-a.e.。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-4-推广}
+若 $\mathcal{L}^n(U)<\infty$，则 (ii) 中的条件 $F(0)=0$ 是不必要的。断言 (iv) 推广了\cref{theorem:ch03-3-3}(i)。% XREF p=153 "If L^n(U) < ∞, the condition F(0) = 0 for (ii) is unnecessary. Assertion (iv) generalizes Theorem 3.3,(i) in Section 3.1."
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-4; kind=motivation; 说明以磨光把弱导数法则化为经典法则的统一思路，以及 (iii)(iv) 与 (ii) 的关系
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-4-动机}
+弱导数由试验函数上的积分恒等式定义，因此经典的乘积法则与链式法则不能直接通过求导验证。磨光提供了一个统一的途径：把 $f,g$ 换成光滑的 $f^\varepsilon,g^\varepsilon$，在光滑情形使用经典法则，再令 $\varepsilon\to0$。由于 $f^\varepsilon\to f$、$f^\varepsilon_{x_i}\to f_{x_i}$ 在 $L^p_{\loc}$ 中成立，积分恒等式在极限下保持，法则遂对弱导数成立。
+
+断言 (iii) 的公式是 (ii) 取 $F(r)=r^+$ 之类的分段函数并作光滑逼近的结果；分段函数 $r\mapsto r^+$ 不满足 $C^1$，故第（3）步先用 $F_\varepsilon$ 逼近再取极限。断言 (iv) 又是 (iii) 的直接推论。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-4; kind=hypotheses; 逐条分析 f,g 的有界性、F 的条件与 F(0)=0，并给出乘积法则失效与 F(0)=0 不可去掉的反例
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-4-条件}
+\begin{enumerate}[(i)]
+\item 条件 $f,g\in L^\infty(U)$ 保证乘积属于 $W^{1,p}$：$fg\in L^p$，且 $f_{x_i}g+fg_{x_i}\in L^p$（因为 $f_{x_i},g_{x_i}\in L^p$、$f,g\in L^\infty$）。去掉 $L^\infty$ 后结论一般不成立：取 $n=2$、$p=1$、$U=B(0,1)$ 与
+\begin{align*}
+f(x)=g(x)=\lvert x\rvert^{-\frac34},
+\end{align*}
+则 $f\in W^{1,1}(U)$，但
+\begin{align*}
+f^2(x)=\lvert x\rvert^{-\frac32}
+\end{align*}
+的弱导数不属于 $L^1(U)$，故 $fg\notin W^{1,1}(U)$。
+\item 条件 $F\in C^1(\mathbb{R})$ 且 $F'\in L^\infty(\mathbb{R})$ 使 $F$ 为 Lipschitz 函数，从而
+\begin{align*}
+\lvert F(f(x))\rvert\leqslant\lvert F(0)\rvert+\lVert F'\rVert_{L^\infty}\lvert f(x)\rvert,
+\end{align*}
+并且链式法则的经典形式可以在磨光上使用。$F$ 不必是 $C^2$ 的。
+\item 条件 $F(0)=0$ 在 $\mathcal{L}^n(U)=\infty$ 时不可去掉：取 $F\equiv1$（此时 $F'=0\in L^\infty$）与 $f\equiv0\in W^{1,p}(U)$，则 $F(f)\equiv1\notin L^p(U)$，故 (ii) 的结论 $F(f)\in W^{1,p}(U)$ 不成立。当 $\mathcal{L}^n(U)<\infty$ 时常数属于 $L^p(U)$，$F(0)=0$ 可以去掉，这就是定理后注记的第一句话。
+\item 断言 (i)(ii) 中 $p<\infty$ 用于 $L^p$ 范数下的收敛；$p=\infty$ 时的相应结论需要另行陈述。
+\item 断言 (iii) 中的 $f^+=\max(f,0)$ 与 $f^-=\max(-f,0)$ 都是 Lipschitz 函数与 $f$ 的复合，它们属于 $W^{1,p}(U)$ 是 (ii) 的极限形式；$F(r)=r^+$ 本身不满足 (ii) 的 $C^1$ 条件，故证明中用 $F_\varepsilon$ 逼近。
+\end{enumerate}
+\end{remark}
+
+\subsection{$W^{1,\infty}$ 与 Lipschitz 连续函数}\label{subsection:ch04-02-3}
+
+\begin{theorem}[Lipschitz 连续性与 $W^{1,\infty}$]\label{theorem:ch04-4-5}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$f:U\to\mathbb{R}$ 为实值函数。则 $f$ 在 $U$ 上局部 Lipschitz 连续当且仅当 $f$ 属于 Sobolev 空间 $W^{1,\infty}_{\loc}(U)$，即 $f$ 及其一阶弱导数都在 $U$ 的每个紧集上本质有界。
+\end{theorem}
+
+\begin{proof}
+（1）先设 $f$ 在 $U$ 上局部 Lipschitz 连续。固定 $i\in\{1,\cdots,n\}$。则对每个 $V\subset\subset W\subset\subset U$，取 $0<h<\operatorname{dist}(V,\partial W)$，并定义
+\begin{align*}
+g_i^h(x):=\frac{f(x+he_i)-f(x)}{h}\qquad(x\in V).
+\end{align*}
+于是
+\begin{align*}
+\sup_{h>0}\lvert g_i^h\rvert\leqslant\Lip(f|_W)<\infty.
+\end{align*}
+由\cref{theorem:ch01-1-42}，存在子列 $h_j\to0$ 与函数 $g_i\in L^\infty_{\loc}(U)$，使得% XREF p=155 "Then according to Theorem 1.42 there is a sequence h_j → 0 and a function g_i ∈ L∞loc(U)"
+\begin{align*}
+g_i^{h_j}\weakto g_i\qquad\text{于 }L^p_{\loc}(U)
+\end{align*}
+对一切 $1<p<\infty$ 成立。又若 $\phi\in C_c^1(V)$，则
+\begin{align*}
+\int_U f(x)\frac{\phi(x+he_i)-\phi(x)}{h}\diff x=-\int_U g_i^h(x)\phi(x+he_i)\diff x.
+\end{align*}
+令 $h=h_j$ 并令 $j\to\infty$，得
+\begin{align*}
+\int_U f\phi_{x_i}\diff x=-\int_U g_i\phi\diff x.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-5; kind=proof; 补出抽取弱收敛子列的对角线法与弱收敛下取极限的依据
+第一步中，对有界性只需在每个 $V$ 上使用；对一列递增的 $V_1\subset\subset V_2\subset\subset\cdots\subset U$ 逐次用\cref{theorem:ch01-1-42}抽取子列并作对角线选择，即得定义在整个 $U$ 上的 $g_i\in L^\infty_{\loc}(U)$。最后一步的极限过渡依据如下：由于 $\phi\in C_c^1(V)$，差商 $(\phi(x+he_i)-\phi(x))/h$ 当 $h\to0$ 时在 $\mathbb{R}^n$ 上一致收敛到 $\phi_{x_i}(x)$，故左端收敛；又 $\phi(\cdot+he_i)$ 于 $L^q(V)$ 中强收敛到 $\phi$（$q$ 为 $p$ 的共轭指数），而 $g_i^{h_j}\weakto g_i$ 于 $L^p(V)$，故右端收敛到 $-\int_Vg_i\phi\diff x=-\int_Ug_i\phi\diff x$。% XREF internal
+
+（2）由弱偏导数的定义，$g_i$ 就是 $f$ 关于 $x_i$ 的弱偏导数（$i=1,\cdots,n$）；又 $g_i\in L^\infty_{\loc}(U)$，故 $f\in W^{1,\infty}_{\loc}(U)$。
+
+反之，设 $f\in W^{1,\infty}_{\loc}(U)$。取 $B\subset\subset U$ 为含于 $U$ 的任一闭球。则由\cref{theorem:ch04-4-1}，对充分小的 $\varepsilon_0>0$ 有% XREF p=156 "Then by Theorem 4.1 we know"
+\begin{align*}
+\sup_{0<\varepsilon<\varepsilon_0}\lVert Df^\varepsilon\rVert_{L^\infty(B)}<\infty,
+\end{align*}
+其中 $f^\varepsilon:=\eta_\varepsilon*f$ 为通常的磨光。由于 $f^\varepsilon$ 是 $C^\infty$ 的，对 $x,y\in B$ 有
+\begin{align*}
+f^\varepsilon(x)-f^\varepsilon(y)=\int_0^1Df^\varepsilon(y+t(x-y))\diff t\cdot(x-y),
+\end{align*}
+于是
+\begin{align*}
+\lvert f^\varepsilon(x)-f^\varepsilon(y)\rvert\leqslant C\lvert x-y\rvert,
+\end{align*}
+其中常数 $C$ 与 $\varepsilon$ 无关。因此
+\begin{align*}
+\lvert f(x)-f(y)\rvert\leqslant C\lvert x-y\rvert\qquad(x,y\in B).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-5; kind=proof; 补出由磨光的 Lipschitz 估计过渡到 f 的估计：用 Lebesgue 点处的逐点收敛取极限并取连续延拓
+最后一步的依据如下：由\cref{theorem:ch04-4-1}(iv)，对 $\mathcal{L}^n$-a.e. 的 $x\in B$ 有 $f^\varepsilon(x)\to f(x)$（$\varepsilon\to0$）；记这样的点之集为 $L$，则 $\mathcal{L}^n(B-L)=0$。对 $x,y\in L$，在上式中令 $\varepsilon\to0$ 得 $\lvert f(x)-f(y)\rvert\leqslant C\lvert x-y\rvert$，即 $f|_L$ 是 $C$-Lipschitz 的。于是 $f|_L$ 唯一地连续延拓为 $B$ 上的 $C$-Lipschitz 函数 $g$，且 $g=f$ 于 $L$ 上，即 $g=f$ 于 $B$ 上 $\mathcal{L}^n$-a.e.；故 $f$ 的连续代表元在 $B$ 上 Lipschitz 连续。% XREF internal
+
+故对每个球 $B\subset\subset U$，$f|_B$ 是 Lipschitz 连续的；从而 $f$ 在 $U$ 上局部 Lipschitz 连续。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-5; kind=motivation; 说明两个方向的工具（差商弱紧性与磨光导数估计）以及 W^{1,∞} 与 Lipschitz 函数的对应关系
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-5-动机}
+Lipschitz 连续与 $W^{1,\infty}$ 是同一类函数的两种描述：Lipschitz 函数沿每条直线的差商有界，故其弱导数存在且有界；反过来，$W^{1,\infty}$ 函数的磨光具有与 $\varepsilon$ 无关的 Lipschitz 界，取极限即得 Lipschitz 连续性。于是 $W^{1,\infty}$ 可以看作 Lipschitz 函数在 Sobolev 空间框架中的对应物，这也解释了 Sobolev 嵌入定理在 $p>n$ 情形的极限位置。
+
+证明的两个方向分别使用两种工具：正向用差商的弱紧性（\cref{theorem:ch01-1-42}）与弱导数的定义；反向用磨光的导数估计与积分形式的中值定理。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-5; kind=hypotheses; 逐条分析局部性、p 的范围、B 的取法与球的正距离，并说明不能加强为处处可微
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-5-条件}
+\begin{enumerate}[(i)]
+\item $U$ 开：局部 Lipschitz 连续与 $W^{1,\infty}_{\loc}$ 都是局部性质，只依赖 $U$ 的紧子集。若 $U$ 不连通，结论逐连通分支成立。
+\item 定理陈述的是局部版本，不能把「局部」换成全局：取 $U=\mathbb{R}$、$f(x)=x^2$，则 $f$ 在 $\mathbb{R}$ 上局部 Lipschitz 连续且 $f\in W^{1,\infty}_{\loc}(\mathbb{R})$，但 $f\notin W^{1,\infty}(\mathbb{R})$，$f$ 也不是 $\mathbb{R}$ 上的 Lipschitz 函数。
+\item 正向证明中条件 $1<p<\infty$ 的弱紧性（\cref{theorem:ch01-1-42}）只用于抽取弱收敛子列；$g_i$ 的有界性来自差商估计，与 $p$ 的具体取值无关。反向证明中的球 $B$ 必须满足 $B\subset\subset U$，才能取 $\varepsilon_0>0$ 使 $B$ 含于 $U_{\varepsilon_0}$，从而磨光在 $B$ 上有定义。 % XREF internal
+\item 结论不能加强为 $f$ 处处可微：取 $U=(-1,1)$、$f(x)=\lvert x\rvert$，则 $f$ 局部 Lipschitz 连续而在 $0$ 处不可微。Lipschitz 函数的可微性只有几乎处处成立，即\cref{theorem:ch03-3-2}。% XREF internal
+\item 定理中的常数 $C$ 可以取为 $\lVert Df\rVert_{L^\infty(B)}$：反向证明给出的 $C$ 正是磨光导数的 $L^\infty(B)$ 界，令 $\varepsilon\to0$ 后即为 $f$ 的弱导数在 $B$ 上的本质上确界。
+\end{enumerate}
+\end{remark}
+
+\end{document}

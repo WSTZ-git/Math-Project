@@ -1,0 +1,482 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+% 章首导语：原书印刷页 193，位于 5.1 节标题之前。
+本章引入并研究 $\mathbb{R}^n$ 上具有\textbf{有界变差}的函数，即弱一阶偏导数为 Radon 测度的函数。这实质上是一个函数能够「可微」的最弱的测度论意义。本章还研究具有\textbf{有限周长}的集合 $E$，即其指示函数 $\chi_E$ 属于 $\BV$。
+
+对于一阶偏导数仅仅是测度的函数，通常的微积分法则是否仍然成立，并非不言而喻。因此本章的主要目标是研究这一问题，特别要考察：一个 $\BV$ 函数在多大程度上是「测度论意义下的 $C^1$ 函数」，以及一个有限周长集在多大程度上具有「测度论意义下的 $C^1$ 边界」。
+
+本章的讨论起初（\cref{section:ch05-01}至\cref{section:ch05-04}）与\cref{chapter:ch04}中对 Sobolev 函数的相应研究平行。% XREF p=208 "Our study initially, in Sections 5.1 through 5.4, parallels the corresponding investigation of Sobolev functions in Chapter 4" | p=208 "Sections 5.1 through 5.4" | p=208 "in Chapter 4"
+\cref{section:ch05-05}把余面积公式推广到 $\BV$ 情形，\cref{section:ch05-06}给出 Gagliardo--Nirenberg--Sobolev 不等式的推广。% XREF p=208 "Section 5.5 extends the coarea formula to the BV setting" | p=208 "Section 5.6 generalizes the Gagliardo-Nirenberg-Sobolev inequality"
+\cref{section:ch05-07}、\cref{section:ch05-08}与\cref{section:ch05-11}分析有限周长集的测度论边界，并建立 Gauss--Green 定理的一个版本；% XREF p=208 "Sections 5.7, 5.8, and 5.11 analyze the measure theoretic boundary of a set of finite perimeter" | p=208 "and most importantly establish a version of the Gauss-Green Theorem" | p=208 "Sections 5.7, 5.8, and 5.11"
+这些研究在\cref{section:ch05-09}与\cref{section:ch05-10}中被用于研究 $\BV$ 函数的精细逐点性质。% XREF p=208 "This investigation is carried over in Sections 5.9 and 5.10 to study the fine, pointwise properties of BV functions" | p=208 "Sections 5.9 and 5.10"
+
+\section{定义与结构定理}\label{section:ch05-01}
+
+本章始终约定：$U$ 表示 $\mathbb{R}^n$ 的开子集。% XREF p=208 "Throughout this chapter, U denotes an open subset of R^n"
+
+\begin{definition}[有界变差与有限周长]\label{definition:ch05-5-1}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为开集。记 $C_c^1(U;\mathbb{R}^n)$ 为 $U$ 上具有紧支集的 $C^1$ 向量场 $\phi=(\phi^1,\cdots,\phi^n):U\to\mathbb{R}^n$ 的全体，满足 $\lvert\phi\rvert\leqslant1$ 的向量场称为单位检验向量场；对 $\phi\in C_c^1(U;\mathbb{R}^n)$ 记 $\diver\phi:=\sum_{i=1}^{n}\phi^i_{x_i}$ 为其散度，$\lvert\phi\rvert$ 表示 $\mathbb{R}^n$ 中的欧氏范数，$\diff x$ 表示 $n$ 维 Lebesgue 测度 $\mathcal{L}^n$ 的体积元。
+\begin{enumerate}[(i)]
+\item 设 $f\in L^1(U)$ 为实值可积函数。若
+\begin{align*}
+\sup\left\{\int_U f\diver\phi\diff x\,\middle|\,\phi\in C_c^1(U;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\right\}<\infty,
+\end{align*}
+则这样的 $f$ 称为 $U$ 上的\textbf{有界变差}函数；记 $\BV(U)$ 为 $U$ 中一切具有有界变差的函数所成的集合，并约定不把两个 $\mathcal{L}^n$-a.e. 相等的 $\BV$ 函数视为同一函数。
+\item 设 $E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集，$\chi_E$ 为其指示函数。若 $\chi_E\in\BV(U)$，则称 $E$ 在 $U$ 中具有\textbf{有限周长}。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch05-5-1; kind=motivation; 说明有界变差是「弱一阶偏导数落在测度类中」的最弱可微性，并说明上确界即分布导数的对偶范数、有限周长即指示函数的变差测度
+\begin{remark}\phantomsection\label{remark:ch05-def-5-1-动机}
+对 $f\in C^1(U)$ 与 $\phi\in C_c^1(U;\mathbb{R}^n)$，分部积分给出
+\begin{align*}
+\int_U f\diver\phi\diff x=-\int_U\nabla f\cdot\phi\diff x,
+\end{align*}
+故当 $\lvert\phi\rvert\leqslant1$ 时上式右端不超过 $\int_U\lvert\nabla f\rvert\diff x$，且取 $\phi$ 逼近 $\nabla f/\lvert\nabla f\rvert$ 可使积分逼近该值。因此\cref{definition:ch05-5-1}中的上确界在 $f$ 光滑时恰是 $\int_U\lvert\nabla f\rvert\diff x$，即梯度的大小在 $U$ 上的总量；它的有限性正是「梯度可积」这一性质在只允许用一阶偏导数的积分恒等式检验时的表现形式。% XREF internal
+
+当 $f$ 只属于 $L^1(U)$ 时，同一上确界衡量的是分布意义下的一阶偏导数 $Df=(f_{x_1},\cdots,f_{x_n})$ 作为 $C_c^1(U;\mathbb{R}^n)$ 上线性泛函（按一致范数）的局部大小，即它的对偶范数。上确界有限意味着该线性泛函按一致范数连续，从而由 Riesz 表示定理可表示为一个向量值 Radon 测度；这正是\cref{theorem:ch05-5-1}的内容，也说明\cref{definition:ch05-5-1}刻画的是一阶导数落在测度类中的最弱情形。% XREF internal
+
+第 (ii) 款把同一概念用于集合的指示函数。此时\cref{definition:ch05-5-1}中的上确界度量的是 $E$ 的边界在 $U$ 中的「大小」；上确界有限意味着边界在测度论意义下足够小，而不是像分形边界那样具有无穷的 $(n-1)$ 维测度。这样的集合 $E$ 称为在 $U$ 中具有有限周长。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-1; kind=hypotheses; 逐条分析 f∈L^1(U)、φ∈C_c^1、|φ|≤1、上确界有限、E 的可测性以及「不认同 a.e. 相等函数」的作用
+\begin{remark}\phantomsection\label{remark:ch05-def-5-1-条件}
+\begin{enumerate}[(i)]
+\item 条件 $f\in L^1(U)$ 使积分 $\int_U f\diver\phi\diff x$ 对一切检验向量场有意义，并且使 $f$ 本身属于 $L^1(U)$；后者不可省去：若只要求 $f\in L^1_{\loc}(U)$，则须改用\cref{definition:ch05-5-2}的局部版本。% XREF internal
+\item 检验向量场取在 $C_c^1(U;\mathbb{R}^n)$ 中，其中 $C^1$ 正则性使 $\diver\phi$ 按经典意义存在，紧支集使分部积分不产生边界项，因而上确界只反映 $f$ 在 $U$ 内部的行为。由于 $C_c^{\infty}(U;\mathbb{R}^n)$ 在 $C_c^1(U;\mathbb{R}^n)$ 中按 $C^1$ 范数稠密，把 $C_c^1$ 换成 $C_c^{\infty}$ 不改变上确界的值。
+\item 约束 $\lvert\phi\rvert\leqslant1$ 是规范化的单位球条件，使上确界关于 $f$ 是一次齐次的：把 $f$ 换成 $cf$ 时上确界变为 $\lvert c\rvert$ 倍。若无此约束，上确界对任何非零 $f$ 都为 $+\infty$；若把 $1$ 换成其他常数，上确界按同一常数缩放。这里的 $\lvert\phi\rvert$ 是向量场取值的欧氏范数，而不是函数空间中的范数。
+\item 上确界有限是定义的核心条件，它不能由 $f\in L^1(U)$ 推出。先看两个对照情形：取 $n=1$、$U=(0,1)$ 与 $f(x)=1/x$，则 $f\notin L^1(U)$，不满足可积性假设；取 $f=\chi_{\mathbb{Q}\cap(0,1)}$，则 $f=0$ $\mathcal{L}^1$-a.e.，上确界等于 $0$。再取 $f(x)=\sin(1/x^2)$ 于 $(0,1)$，则 $f\in L^{\infty}(U)\subseteq L^1(U)$，但 $f$ 在 $0$ 的任何邻域内无限次取到 $\pm1$，其在 $(0,1)$ 上的总变差为 $+\infty$，故 $f\notin\BV_{\loc}(U)$，相应的上确界为 $+\infty$。因此有限性是对 $f$ 的实质限制。
+\item 第 (ii) 款要求 $E$ 为 $\mathcal{L}^n$-可测集，否则 $\chi_E$ 不是可测函数，$L^1(U)$ 中的成员资格无从谈起。又因 $\chi_E\in\BV(U)\subseteq L^1(U)$，条件 $\chi_E\in\BV(U)$ 强制 $\mathcal{L}^n(E\cap U)<\infty$；因此「在 $U$ 中具有有限周长」比\cref{definition:ch05-5-2}的「局部有限周长」更强，后者只要求 $\mathcal{L}^n(E\cap K)<\infty$ 对每个紧集 $K\subseteq U$ 成立。% XREF internal
+\item 约定不把两个 $\mathcal{L}^n$-a.e. 相等的 $\BV$ 函数视为同一函数，意味着 $\BV(U)$ 是函数空间而非等价类空间。这一约定不影响变差测度：若 $f=g$ $\mathcal{L}^n$-a.e.，则对一切检验向量场有 $\int_U f\diver\phi\diff x=\int_U g\diver\phi\diff x$，故 $\lVert Df\rVert=\lVert Dg\rVert$；但逐点性质（如近似连续、迹的取值）依赖于代表元的选取，需要保留函数本身。
+\end{enumerate}
+\end{remark}
+
+同时引入这些概念的局部版本是方便的。
+
+\begin{definition}[局部有界变差与局部有限周长]\label{definition:ch05-5-2}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为开集。记 $L^1_{\loc}(U)$ 为 $U$ 上局部可积的实值函数全体，并约定 $V\subset\subset U$ 表示 $V$ 为开集且 $\overline{V}$ 是 $U$ 的紧子集；这样的 $V$ 称为相对紧于 $U$ 的开集。
+\begin{enumerate}[(i)]
+\item 设 $f\in L^1_{\loc}(U)$。若对每个满足 $V\subset\subset U$ 的开集 $V$ 有
+\begin{align*}
+\sup\left\{\int_V f\diver\phi\diff x\,\middle|\,\phi\in C_c^1(V;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\right\}<\infty,
+\end{align*}
+则称 $f$ 在 $U$ 中具有\textbf{局部有界变差}；记 $\BV_{\loc}(U)$ 为这类函数所成的集合。
+\item 设 $E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集，$\chi_E$ 为其指示函数。若 $\chi_E\in\BV_{\loc}(U)$，则称 $E$ 在 $U$ 中具有\textbf{局部有限周长}。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch05-5-2; kind=motivation; 说明为何需要局部版本：可积性降为局部、上确界逐块检验，以及无界集合与常值函数只能落在 BV_loc 中
+\begin{remark}\phantomsection\label{remark:ch05-def-5-2-动机}
+\cref{definition:ch05-5-1}把 $f\in L^1(U)$ 直接写入定义，因此 $\BV(U)\subseteq L^1(U)$。这一要求对无界开集 $U$ 过强：常值函数 $f\equiv1$ 在 $\mathbb{R}^n$ 上一阶偏导数为零，其变差测度为零，然而 $1\notin L^1(\mathbb{R}^n)$。局部版本把两处要求同时放宽：$f$ 只需局部可积，上确界只需在每个相对紧开集上有限，从而把常值函数与半空间的指示函数等对象纳入讨论范围。% XREF internal
+
+局部化的第二个作用是使\cref{theorem:ch05-5-1}的陈述与证明都在局部尺度上进行：Riesz 表示定理只要求线性泛函在每个紧集上按一致范数有界，而这一有界性正由\cref{definition:ch05-5-2}中逐个 $V\subset\subset U$ 的上确界提供。因此局部版本是与结构定理的证明机制相匹配的精确假设，而不只是技术上的方便。% XREF internal
+
+对集合而言，局部有限周长把「边界在 $U$ 中的总量有限」放宽为「边界在每个相对紧子集中的总量有限」。半空间 $E=\{x_n>0\}$ 在 $U=\mathbb{R}^n$ 中具有局部有限周长而不具有有限周长：其边界超平面的 $(n-1)$ 维测度为 $+\infty$，而它与每个相对紧开集的交具有有限的 $(n-1)$ 维测度。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-2; kind=hypotheses; 逐条分析 f∈L^1_loc、V⊂⊂U 与穷尽判据、与 BV(U) 的包含关系、E 的可测性以及检验向量场的约束
+\begin{remark}\phantomsection\label{remark:ch05-def-5-2-条件}
+\begin{enumerate}[(i)]
+\item 条件 $f\in L^1_{\loc}(U)$ 使每个积分 $\int_V f\diver\phi\diff x$ 有意义：$\phi$ 的支集含于 $V$，而 $f$ 在相对紧开集 $V$ 上可积。若把 $L^1_{\loc}(U)$ 换成 $L^1(U)$，所得概念便退化为 $\BV(U)$，不再是 $\BV_{\loc}(U)$。
+\item 上确界只取在满足 $V\subset\subset U$ 的开集上，这一限制不可换成「一切开集」：若 $U$ 无界而取 $V=U$，上确界可能为 $+\infty$，局部有界变差将退化为有界变差。另一方面，条件只需对一列穷尽 $U$ 的相对紧开集 $V_1\subset\subset V_2\subset\subset\cdots$、$\bigcup_{j}V_j=U$ 检验：任何 $V\subset\subset U$ 都含于某个 $V_j$ 中，故上确界在 $V$ 上有限当且仅当它在每个 $V_j$ 上有限。
+\item 与\cref{definition:ch05-5-1}的关系是：$\BV(U)\subseteq\BV_{\loc}(U)$；并且当 $f\in L^1(U)$ 时，$f\in\BV(U)$ 当且仅当 $f\in\BV_{\loc}(U)$ 且 $\lVert Df\rVert(U)<\infty$。反向包含不成立，常值函数即为例。% XREF internal
+\item 第 (ii) 款仍要求 $E$ 为 $\mathcal{L}^n$-可测集，因为 $\chi_E$ 的局部可积性以此为前提。条件 $\chi_E\in\BV_{\loc}(U)$ 只强制 $\mathcal{L}^n(E\cap K)<\infty$ 对每个紧集 $K\subseteq U$ 成立，不强制 $\mathcal{L}^n(E)<\infty$；这正是「在 $U$ 中具有局部有限周长」与「在 $U$ 中具有有限周长」的差别。
+\item 检验向量场仍取在 $C_c^1(V;\mathbb{R}^n)$ 中并满足 $\lvert\phi\rvert\leqslant1$：$C^1$ 正则性保证散度按经典意义存在，支集含于 $V$ 使分部积分不出现边界项，单位球约束使上确界关于 $f$ 一次齐次。由于 $V$ 可任意接近 $U$，这一簇上确界完全决定 $f$ 的一阶偏导数在 $U$ 上的局部大小。
+\end{enumerate}
+\end{remark}
+
+若干例子将在建立下述一般结构断言之后给出。
+
+\begin{theorem}[$\BV_{\loc}$ 函数的结构定理]\label{theorem:ch05-5-1}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为开集，$f\in\BV_{\loc}(U)$。则存在 $U$ 上的 Radon 测度 $\mu$ 与 $\mu$-可测映射 $\sigma:U\to\mathbb{R}^n$，使得
+\begin{enumerate}[(i)]
+\item $\lvert\sigma(x)\rvert=1$ 对 $\mu$-a.e. $x\in U$ 成立，且
+\item 对一切 $\phi\in C_c^1(U;\mathbb{R}^n)$ 有
+\begin{align*}
+\int_U f\diver\phi\diff x=-\int_U\phi\cdot\sigma\diff\mu .
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-1-结构}
+结构定理断言：$\BV$ 函数的弱一阶偏导数是 Radon 测度。这一点将在后文详细讨论。
+\end{remark}
+
+\begin{proof}
+1. 定义线性泛函 $L:C_c^1(U;\mathbb{R}^n)\to\mathbb{R}$ 为
+\begin{align*}
+L(\phi):=-\int_U f\diver\phi\diff x
+\end{align*}
+其中 $\phi\in C_c^1(U;\mathbb{R}^n)$。由于 $f\in\BV_{\loc}(U)$，对每个开集 $V\subset\subset U$ 有
+\begin{align*}
+\sup\{L(\phi)\mid\phi\in C_c^1(V;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\}=:C(V)<\infty,
+\end{align*}
+从而
+\begin{align*}
+\lvert L(\phi)\rvert\leqslant C(V)\lVert\phi\rVert_{L^{\infty}}\qquad(\star)
+\end{align*}
+对 $\phi\in C_c^1(V;\mathbb{R}^n)$ 成立。
+
+2. 任取紧集 $K\subset U$，再取开集 $V$ 使 $K\subset V\subset\subset U$。对每个满足 $\spt\phi\subseteq K$ 的 $\phi\in C_c(U;\mathbb{R}^n)$，取 $\phi_k\in C_c^1(V;\mathbb{R}^n)$（$k=1,2,\cdots$）使 $\phi_k\to\phi$ 在 $V$ 上一致收敛。定义
+\begin{align*}
+\bar L(\phi):=\lim_{k\to\infty}L(\phi_k);
+\end{align*}
+由 $(\star)$，该极限存在，且与收敛到 $\phi$ 的序列 $\{\phi_k\}_{k=1}^{\infty}$ 的选取无关。于是 $L$ 唯一延拓为线性泛函
+\begin{align*}
+\bar L:C_c(U;\mathbb{R}^n)\to\mathbb{R},
+\end{align*}
+并且对每个紧集 $K\subset U$ 有
+\begin{align*}
+\sup\{L(\phi)\mid\phi\in C_c(U;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1,\ \spt\phi\subseteq K\}<\infty .
+\end{align*}
+Riesz 表示定理随即完成证明。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-1; kind=proof; 补出估计 (★)、逼近序列的构造、极限的存在唯一性、延拓的线性与局部有界性，并核对 Riesz 表示定理的适用条件
+\begin{proof}
+以下逐步补出上述论证所略去的环节。
+
+（1）估计 $(\star)$。设 $V\subset\subset U$ 为开集，$\phi\in C_c^1(V;\mathbb{R}^n)$ 且 $\phi\neq0$。由 $\spt\phi\subseteq V$、$\phi/\lVert\phi\rVert_{L^{\infty}}\in C_c^1(V;\mathbb{R}^n)$ 与 $\lvert\phi/\lVert\phi\rVert_{L^{\infty}}\rvert\leqslant1$，按 $C(V)$ 的定义得
+\begin{align*}
+\lvert L(\phi)\rvert=\lVert\phi\rVert_{L^{\infty}}\Bigl\lvert L\Bigl(\frac{\phi}{\lVert\phi\rVert_{L^{\infty}}}\Bigr)\Bigr\rvert\leqslant C(V)\lVert\phi\rVert_{L^{\infty}};
+\end{align*}
+$\phi=0$ 时两端为零，故 $(\star)$ 对一切 $\phi\in C_c^1(V;\mathbb{R}^n)$ 成立。
+
+（2）逼近序列的构造。设 $K\subset U$ 紧，$V$ 为开集且 $K\subset V\subset\subset U$，$\phi\in C_c(U;\mathbb{R}^n)$ 满足 $\spt\phi\subseteq K$。取 $\rho\in C_c^{\infty}(\mathbb{R}^n)$ 使 $\rho\geqslant0$、$\spt\rho\subseteq\overline{B(0,1)}$、$\int_{\mathbb{R}^n}\rho\diff x=1$，并对 $\varepsilon>0$ 令 $\rho_\varepsilon(x):=\varepsilon^{-n}\rho(x/\varepsilon)$、$\phi_\varepsilon:=\rho_\varepsilon*\phi$。函数 $\phi$ 在紧集 $K$ 上一致连续，故 $\phi_\varepsilon\to\phi$ 在 $\mathbb{R}^n$ 上一致收敛；又 $\spt\phi_\varepsilon\subseteq K+\overline{B(0,\varepsilon)}$，而 $K$ 紧、$V$ 开、$K\subset V$ 使 $\operatorname{dist}(K,\partial V)>0$，故当 $0<\varepsilon<\operatorname{dist}(K,\partial V)$ 时 $\spt\phi_\varepsilon\subseteq V$，于是 $\phi_\varepsilon\in C_c^{\infty}(V;\mathbb{R}^n)\subseteq C_c^1(V;\mathbb{R}^n)$。取 $\varepsilon_k\downarrow0$ 并令 $\phi_k:=\phi_{\varepsilon_k}$，即得所需的序列。
+
+（3）极限的存在性与唯一性。设 $\phi_k,\psi_k\in C_c^1(V;\mathbb{R}^n)$ 都在 $V$ 上一致收敛于 $\phi$，记 $M_k:=\lVert\phi_k-\phi\rVert_{L^{\infty}}$、$N_k:=\lVert\psi_k-\phi\rVert_{L^{\infty}}$，则 $M_k\to0$、$N_k\to0$。由 $(\star)$ 与 $L$ 的线性性，
+\begin{align*}
+\lvert L(\phi_k)-L(\psi_k)\rvert\leqslant C(V)\lVert\phi_k-\psi_k\rVert_{L^{\infty}}\leqslant C(V)(M_k+N_k)\to0\qquad(k\to\infty).
+\end{align*}
+取 $\psi_k=\phi_l$ 并令 $k,l\to\infty$，即知 $\{L(\phi_k)\}_{k=1}^{\infty}$ 是 Cauchy 列，由 $\mathbb{R}$ 的完备性其极限存在；上式同时表明该极限与序列的选取无关。
+
+（4）$\bar L$ 的定义与线性性。对 $\phi\in C_c(U;\mathbb{R}^n)$，集 $\spt\phi$ 紧且含于开集 $U$，故存在开集 $V$ 使 $\spt\phi\subseteq V\subset\subset U$，第 (2)、(3) 步给出 $\bar L(\phi)$。设 $\phi,\psi\in C_c(U;\mathbb{R}^n)$、$a,b\in\mathbb{R}$，取开集 $V$ 同时包含 $\spt\phi$ 与 $\spt\psi$ 且 $V\subset\subset U$，并取 $C_c^1(V;\mathbb{R}^n)$ 中分别一致收敛到 $\phi,\psi$ 的序列 $\phi_k,\psi_k$，则 $a\phi_k+b\psi_k$ 在 $V$ 上一致收敛于 $a\phi+b\psi$，于是
+\begin{align*}
+\bar L(a\phi+b\psi)=\lim_{k\to\infty}\bigl(aL(\phi_k)+bL(\psi_k)\bigr)=a\bar L(\phi)+b\bar L(\psi).
+\end{align*}
+故 $\bar L$ 为线性泛函。又对 $\phi\in C_c^1(U;\mathbb{R}^n)$ 取 $\phi_k=\phi$ 得 $\bar L(\phi)=L(\phi)$，即 $\bar L$ 是 $L$ 的延拓。
+
+（5）局部有界性。设 $K\subset U$ 紧，取开集 $V$ 使 $K\subset V\subset\subset U$。对满足 $\spt\phi\subseteq K$、$\lvert\phi\rvert\leqslant1$ 的 $\phi\in C_c(U;\mathbb{R}^n)$ 与相应的序列 $\phi_k$，由 $(\star)$ 与 $\lVert\phi_k\rVert_{L^{\infty}}\to\lVert\phi\rVert_{L^{\infty}}\leqslant1$ 得
+\begin{align*}
+\lvert\bar L(\phi)\rvert=\lim_{k\to\infty}\lvert L(\phi_k)\rvert\leqslant C(V)\limsup_{k\to\infty}\lVert\phi_k\rVert_{L^{\infty}}\leqslant C(V),
+\end{align*}
+故 $\sup\{\lvert\bar L(\phi)\rvert\mid\phi\in C_c(U;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1,\ \spt\phi\subseteq K\}\leqslant C(V)<\infty$。第二步末尾的上确界中的 $L$ 即指此延拓 $\bar L$。
+
+（6）应用 Riesz 表示定理。把 $C_c(U;\mathbb{R}^n)$ 中的函数在 $U$ 外取零值，视为 $C_c(\mathbb{R}^n;\mathbb{R}^n)$ 的子空间。对 $\psi\in C_c(\mathbb{R}^n;\mathbb{R}^n)$，限制 $\psi|_U$ 的支集含于紧集 $\spt\psi\cap U$，故 $\psi|_U\in C_c(U;\mathbb{R}^n)$，于是可令 $\tilde L(\psi):=\bar L(\psi|_U)$，得到 $C_c(\mathbb{R}^n;\mathbb{R}^n)$ 上的线性泛函。对紧集 $K\subseteq\mathbb{R}^n$，交集 $K\cap U$ 是 $U$ 的紧子集，故存在开集 $V$ 使 $K\cap U\subseteq V\subset\subset U$；凡满足 $\spt\psi\subseteq K$ 与 $\lvert\psi\rvert\leqslant1$ 的 $\psi$ 都满足 $\spt(\psi|_U)\subseteq V$，由第 (5) 步得 $\lvert\tilde L(\psi)\rvert\leqslant C(V)$，即 $\tilde L$ 满足\cref{theorem:ch01-1-38}的条件 $(\star)$。% XREF internal
+
+由\cref{theorem:ch01-1-38}，存在 $\mathbb{R}^n$ 上的 Radon 测度 $\tilde\mu$ 与 $\tilde\mu$-可测映射 $\tilde\sigma:\mathbb{R}^n\to\mathbb{R}^n$，使得 $\lvert\tilde\sigma\rvert=1$ $\tilde\mu$-a.e.，并且 % XREF internal
+\begin{align*}
+\tilde L(\psi)=\int_{\mathbb{R}^n}\psi\cdot\tilde\sigma\diff\tilde\mu
+\end{align*}
+对一切 $\psi\in C_c(\mathbb{R}^n;\mathbb{R}^n)$ 成立。令 $\mu:=\tilde\mu\llcorner U$ 与 $\sigma:=\tilde\sigma|_U$。则 $\mu$ 是 $U$ 上的 Radon 测度，$\sigma$ 是 $\mu$-可测映射，且 $\lvert\sigma(x)\rvert=1$ 对 $\mu$-a.e. $x\in U$ 成立，此即断言 (i)。对 $\phi\in C_c^1(U;\mathbb{R}^n)$，把 $\phi$ 在 $U$ 外取零值而视为 $C_c(\mathbb{R}^n;\mathbb{R}^n)$ 中的函数，则 $\psi\cdot\tilde\sigma$ 的支集含于 $U$，故
+\begin{align*}
+-\int_U f\diver\phi\diff x=L(\phi)=\bar L(\phi)=\tilde L(\phi)=\int_U\phi\cdot\sigma\diff\mu,
+\end{align*}
+此即断言 (ii)。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-1; kind=motivation; 说明结构定理是「弱导数成为测度」的实现、极分解 Df=σ‖Df‖ 的含义以及证明主线的三段结构
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-1-动机}
+结构定理把\cref{definition:ch05-5-1}中「上确界有限」这一条件兑现为具体对象：一个测度 $\mu$ 与一个单位向量场 $\sigma$。断言 (ii) 可以读作向量值测度的极分解（$f$ 的弱一阶导数所对应的向量值测度后文记为 $[Df]$） % XREF internal
+\begin{align*}
+[Df]=\sigma\lVert Df\rVert,
+\end{align*}
+其中 $\lVert Df\rVert$ 是总变差测度、$\sigma$ 是其极向量（长度恒为 $1$ 的密度）。这与 Sobolev 情形完全平行：当 $Df\in L^1_{\loc}(U;\mathbb{R}^n)$ 时，取 $\mu=\mathcal{L}^n\llcorner\lvert Df\rvert$ 与 $\sigma=Df/\lvert Df\rvert$（在 $Df\neq0$ 处）即可；结构定理的新内容是允许 $\mu$ 关于 $\mathcal{L}^n$ 奇异。% XREF internal
+
+这一定理是本章全部技术工具的来源。有了 Radon 测度 $\mu$，就可以对 $\mu$ 使用 Radon--Nikodym 定理与 Lebesgue 分解，把一阶导数分成绝对连续部分与奇异部分；可以定义变差测度 $\lVert Df\rVert$ 与 $\BV$ 范数；可以把余面积公式从 Sobolev 函数推广到 $\BV$ 函数；可以在测度论边界上定义法向量 $\nu_E$ 并证明 Gauss--Green 定理。缺少这一表示，$\BV$ 函数的一阶导数只是一个抽象的分布，无法与 Hausdorff 测度、周长等几何量对接。
+
+证明结构分三段：先在上定义线性泛函 $L(\phi):=-\int_U f\diver\phi\diff x$，其局部有界性正是 $f\in\BV_{\loc}(U)$ 的内容；再把 $L$ 从 $C_c^1$ 延拓到 $C_c$，延拓的唯一性由局部有界性给出的连续性保证；最后用 Riesz 表示定理把延拓后的泛函表示成 $\int\phi\cdot\sigma\diff\mu$，其中 $\sigma$ 取单位长度是定理结论的一部分。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-1; kind=hypotheses; 逐条分析 f∈BV_loc(U)、U 为开集、结论 (i) 的规范化与 (ii) 的检验函数类，说明 μ 的 Radon 性及 σ 的唯一性范围
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-1-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in\BV_{\loc}(U)$ 是唯一实质的假设：它逐字给出 $L$ 在每个 $V\subset\subset U$ 上按 $L^{\infty}$ 范数的有界性，从而是整个证明的起点。若把假设削弱为 $f\in L^1_{\loc}(U)$，结论不成立：取 $n=1$、$U=(-1,1)$、$f(x)=\sin(1/x^2)$，则 $f\in L^{\infty}(U)\subseteq L^1_{\loc}(U)$，但 $f$ 在 $0$ 的任何邻域内无限次取到 $\pm1$，其在 $U$ 上的总变差为 $+\infty$，故 $f$ 的分布导数不是 Radon 测度，$L$ 在 $U$ 上也无界。
+\item 假设 $U$ 为开集，使检验向量场 $C_c^1(U;\mathbb{R}^n)$ 有定义并使 Riesz 表示定理可以局部使用。$U$ 的有界性与连通性都不需要；结论中的 $\mu$ 只是在 $U$ 上的 Radon 测度，其总质量 $\mu(U)$ 可以等于 $+\infty$（当 $f\notin\BV(U)$ 时即为如此）。
+\item 结论 (i) 中的规范化 $\lvert\sigma\rvert=1$ $\mu$-a.e. 不可省去：没有它，表示 $(\mu,\sigma)$ 不唯一，因为把 $\lvert\sigma\rvert$ 并入测度可得到另一对 $(\lvert\sigma\rvert\mu,\sigma/\lvert\sigma\rvert)$。加上该条后 $\mu$ 被唯一确定为 $f$ 的变差测度 $\lVert Df\rVert$，这正是\cref{definition:ch05-def-5-1-变差测度}的记号来源。% XREF internal
+\item 结论 (ii) 的检验函数类为 $C_c^1(U;\mathbb{R}^n)$，与\cref{definition:ch05-5-1}、\cref{definition:ch05-5-2}中使用的类相同。由于 $C_c^1(U;\mathbb{R}^n)$ 在 $C_c(U;\mathbb{R}^n)$ 中按一致范数稠密，而 $C_c(U;\mathbb{R}^n)\ni\phi\mapsto\int_U\phi\cdot\sigma\diff\mu$ 关于该范数连续，断言 (ii) 等价于同一等式对一切 $\phi\in C_c(U;\mathbb{R}^n)$ 成立。% XREF internal
+\item 结论中的 $\mu$ 是 Radon 测度，即 $U$ 上的 Borel 正则测度且在紧集上取有限值；后一性质来自\cref{definition:ch05-5-2}的局部有限性。$\sigma$ 只在 $\mu$-a.e. 意义下由 $f$ 决定：在 $\mu$ 的零测集上改变 $\sigma$ 不改变断言 (ii) 的两端。 % XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{definition*}[变差测度的记号]\phantomsection\label{definition:ch05-def-5-1-变差测度}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为开集，$f\in\BV_{\loc}(U)$，并按\cref{theorem:ch05-5-1}取定 $U$ 上的 Radon 测度 $\mu$ 与 $\mu$-可测映射 $\sigma:U\to\mathbb{R}^n$。把该测度 $\mu$ 记为 $\lVert Df\rVert$，称为 $f$ 的\textbf{变差测度}；并记 % XREF p=211 "If f in BV_loc(U), we will henceforth write ||Df|| for the measure mu"
+\begin{align*}
+[Df]:=\lVert Df\rVert\llcorner\sigma,
+\end{align*}
+即对每个 Borel 集 $A\subseteq U$ 令 $[Df](A):=\int_A\sigma\diff\lVert Df\rVert$，所得的向量值测度记为 $[Df]$。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch05-def-5-1-变差测度; kind=motivation; 说明 ‖Df‖ 是总变差测度、[Df] 是打包各分量弱导数的向量值测度，以及这一对方括号记号与后文密度 Df 的区别
+\begin{remark}\phantomsection\label{remark:ch05-def-5-1-变差测度-动机}
+\cref{theorem:ch05-5-1}给出的是一对对象 $(\mu,\sigma)$，其中 $\mu$ 刻画一阶导数的大小，$\sigma$ 刻画其方向。把 $\mu$ 记为 $\lVert Df\rVert$ 强调它是总变差：当 $f\in C^1(U)$ 时 $\lVert Df\rVert=\mathcal{L}^n\llcorner\lvert\nabla f\rvert$，其总质量 $\lVert Df\rVert(U)=\int_U\lvert\nabla f\rvert\diff x$ 就是梯度模的积分。% XREF internal
+
+把 $n$ 个分量的弱导数打包成一个向量值测度记为 $[Df]$，是为了让结构定理的等式写成单一的形式 $\int_U f\diver\phi\diff x=-\int_U\phi\cdot\diff[Df]$，而不必逐个分量陈述。方括号记号在本章中始终表示向量值测度，与后文用 $Df$ 表示的密度函数（属于 $L^1_{\loc}(U;\mathbb{R}^n)$）严格区分：前者作用于 Borel 集，后者作用于点，二者的关系由 Radon--Nikodym 定理给出。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-def-5-1-变差测度; kind=hypotheses; 说明记号依赖 f∈BV_loc(U) 与定理 5.1 的规范化、[Df] 作为向量值 Radon 测度的可加性来源，以及 σ 只在 ‖Df‖-a.e. 意义下确定
+\begin{remark}\phantomsection\label{remark:ch05-def-5-1-变差测度-条件}
+\begin{enumerate}[(i)]
+\item 记号要求 $f\in\BV_{\loc}(U)$，否则\cref{theorem:ch05-5-1}不提供测度 $\mu$。$f$ 只需局部可积，不需要 $f\in L^1(U)$；相应地 $\lVert Df\rVert$ 是 $U$ 上的 Radon 测度，其总质量可以等于 $+\infty$。% XREF internal
+\item 记号与 $(\mu,\sigma)$ 的选取无关：由\cref{theorem:ch05-5-1}的断言 (i)，$\lvert\sigma\rvert=1$ $\mu$-a.e.；若另有表示 $(\mu',\sigma')$ 满足同样两条断言，则对一切检验向量场有 $\int_U\phi\cdot\sigma\diff\mu=\int_U\phi\cdot\sigma'\diff\mu'$，据此可验证 $\mu'=\mu$，故 $\lVert Df\rVert$ 由 $f$ 唯一确定。 % XREF internal
+\item $[Df]$ 是向量值 Radon 测度：对 Borel 集 $A\subseteq U$，$\lvert[Df](A)\rvert\leqslant\int_A\lvert\sigma\rvert\diff\lVert Df\rVert=\lVert Df\rVert(A)$，故当 $\overline{A}$ 紧时 $\lvert[Df](A)\rvert<\infty$；$\sigma$ 的可测性与 $\lVert Df\rVert$ 的可数可加性给出 $[Df]$ 的可数可加性。
+\item $\sigma$ 只在 $\lVert Df\rVert$-a.e. 意义下由 $f$ 决定，因此 $[Df]$ 的密度表示也只在同一意义下确定；在 $\lVert Df\rVert$ 的零测集上改变 $\sigma$ 不改变 $[Df]$。
+\end{enumerate}
+\end{remark}
+
+于是\cref{theorem:ch05-5-1}的断言 (ii) 可写为% XREF p=211 "Hence assertion (ii) in Theorem 5.1 reads"
+\begin{align*}
+\int_U f\diver\phi\diff x=-\int_U\phi\cdot\sigma\diff\lVert Df\rVert=-\int_U\phi\cdot\diff[Df]
+\end{align*}
+对一切 $\phi\in C_c^1(U;\mathbb{R}^n)$ 成立。
+
+\begin{definition*}[周长测度的记号]\phantomsection\label{definition:ch05-def-5-1-周长测度}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为开集，$E\subseteq\mathbb{R}^n$ 为在 $U$ 中具有局部有限周长的 $\mathcal{L}^n$-可测集，即 $f:=\chi_E\in\BV_{\loc}(U)$，并按\cref{theorem:ch05-5-1}取定相应的 Radon 测度 $\mu$ 与 $\mu$-可测映射 $\sigma:U\to\mathbb{R}^n$。把该测度 $\mu$ 记为 $\lVert\partial E\rVert$，称为 $E$ 的\textbf{周长测度}；并记 % XREF p=211 "Similarly, if f = chi_E and E is a set of locally finite perimeter in U, we will hereafter write ||dE|| for the measure mu"
+\begin{align*}
+\nu_E:=-\sigma,
+\end{align*}
+称 $\nu_E$ 为 $E$ 关于 $\lVert\partial E\rVert$ 的\textbf{外法向量场}。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch05-def-5-1-周长测度; kind=motivation; 说明集合情形下结构定理即 Gauss–Green 公式的测度论版本，ν_E 承担外法向量的角色，负号来自分部积分的符号
+\begin{remark}\phantomsection\label{remark:ch05-def-5-1-周长测度-动机}
+对集合 $E$ 取 $f=\chi_E$，结构定理的等式成为
+\begin{align*}
+\int_E\diver\phi\diff x=\int_U\phi\cdot\nu_E\diff\lVert\partial E\rVert,
+\end{align*}
+它是 Gauss--Green 公式在 $\BV$ 框架下的形式：左端是向量场在 $E$ 上的散度积分，右端是把向量场与「边界的单位法向量」相乘后关于「边界的面积测度」积分。因此在测度论意义下 $\lVert\partial E\rVert$ 扮演边界面测度的角色，$\nu_E$ 扮演外单位法向量的角色，二者替代了光滑情形下的 $\mathcal{H}^{n-1}\llcorner\partial E$ 与外法向量 $\nu$。后文的两个例子说明：当 $E$ 光滑时它们确实分别等于 $\mathcal{H}^{n-1}\llcorner\partial E$ 与 $\nu$。% XREF internal
+
+记号中的负号来自分部积分的符号：$\int_E\diver\phi\diff x=-\int_U\phi\cdot\sigma\diff\lVert\partial E\rVert$，而外法向量的方向与 $\sigma$ 相反，故定义 $\nu_E:=-\sigma$ 使公式两端同号。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-def-5-1-周长测度; kind=hypotheses; 说明 E 的可测性与局部有限周长假设、ν_E 的几乎处处确定性、‖∂E‖ 的局部有限性以及该记号在无光滑边界时仍然有定义
+\begin{remark}\phantomsection\label{remark:ch05-def-5-1-周长测度-条件}
+\begin{enumerate}[(i)]
+\item 记号要求 $E$ 为 $\mathcal{L}^n$-可测集且在 $U$ 中具有局部有限周长，即 $\chi_E\in\BV_{\loc}(U)$；若只假设 $E$ 可测而不假设局部有限周长，则 $\lVert\partial E\rVert$ 可能取 $+\infty$，结构定理不适用。
+\item $\nu_E$ 只在 $\lVert\partial E\rVert$-a.e. 意义下确定，且由\cref{theorem:ch05-5-1}的断言 (i) 得 $\lvert\nu_E\rvert=1$ $\lVert\partial E\rVert$-a.e.；在 $\lVert\partial E\rVert$ 的零测集上 $\nu_E$ 的取值不影响上述积分公式。% XREF internal
+\item $\lVert\partial E\rVert$ 是 $U$ 上的 Radon 测度，故在每个紧集 $K\subseteq U$ 上取有限值；这一有限性正是「局部有限周长」的含义。若进一步 $\lVert\partial E\rVert(U)<\infty$，则 $E$ 在 $U$ 中具有有限周长，此时 $\lVert\partial E\rVert(U)$ 称为 $E$ 在 $U$ 中的周长。
+\item 定义不要求 $\partial E$ 是光滑曲面，甚至不要求 $E$ 的拓扑边界具有有限的 $\mathcal{H}^{n-1}$ 测度；法向量与面测度都由弱导数这一测度论对象给出，因而对具有分形边界的有限周长集仍然适用。
+\end{enumerate}
+\end{remark}
+
+从而
+\begin{align*}
+\int_E\diver\phi\diff x=\int_U\phi\cdot\nu_E\diff\lVert\partial E\rVert
+\end{align*}
+对一切 $\phi\in C_c^1(U;\mathbb{R}^n)$ 成立。
+
+\begin{definition*}[偏导数测度的记号与 Lebesgue 分解]\phantomsection\label{definition:ch05-def-5-1-测度分解}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为开集，$f\in\BV_{\loc}(U)$，$\sigma=(\sigma^1,\cdots,\sigma^n)$ 与 $\lVert Df\rVert$ 按\cref{definition:ch05-def-5-1-变差测度}给出。对 $i=1,\cdots,n$ 记 % XREF p=211 "If f in BV_loc(U), we write mu^i = ||Df|| restricted sigma^i (i = 1,...,n)"
+\begin{align*}
+\mu^i:=\lVert Df\rVert\llcorner\sigma^i .
+\end{align*}
+由\cref{theorem:ch01-1-31}，进一步设 % XREF p=211 "By Lebesgue Decomposition Theorem 1.31, we may further set mu^i = mu^i_ac + mu^i_s"
+\begin{align*}
+\mu^i=\mu^i_{\mathrm{ac}}+\mu^i_{\mathrm{s}},
+\end{align*}
+其中 $\mu^i_{\mathrm{ac}}$ 与 $\mu^i_{\mathrm{s}}$ 为 $U$ 上的 Radon 测度，且
+\begin{align*}
+\mu^i_{\mathrm{ac}}\ll\mathcal{L}^n,\qquad \mu^i_{\mathrm{s}}\perp\mathcal{L}^n .
+\end{align*}
+于是存在 $f_i\in L^1_{\loc}(U)$（$i=1,\cdots,n$），使
+\begin{align*}
+\mu^i_{\mathrm{ac}}=\mathcal{L}^n\llcorner f_i,
+\end{align*}
+即对每个 Borel 集 $A\subseteq U$ 有 $\mu^i_{\mathrm{ac}}(A)=\int_A f_i\diff x$。进而记
+\begin{align*}
+f_{x_i}&:=f_i\quad(i=1,\cdots,n),\\
+Df&:=(f_{x_1},\cdots,f_{x_n}),\\
+[Df]_{\mathrm{ac}}&:=(\mu^1_{\mathrm{ac}},\cdots,\mu^n_{\mathrm{ac}})=\mathcal{L}^n\llcorner Df,\\
+[Df]_{\mathrm{s}}&:=(\mu^1_{\mathrm{s}},\cdots,\mu^n_{\mathrm{s}}).
+\end{align*}
+把 $f_{x_i}$ 称为 $f$ 的第 $i$ 个弱偏导数。于是
+\begin{align*}
+[Df]=[Df]_{\mathrm{ac}}+[Df]_{\mathrm{s}}=\mathcal{L}^n\llcorner Df+[Df]_{\mathrm{s}},
+\end{align*}
+从而 $Df\in L^1_{\loc}(U;\mathbb{R}^n)$ 是 $[Df]$ 的绝对连续部分的密度。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch05-def-5-1-测度分解; kind=motivation; 说明为何要把一阶导数测度分解为绝对连续部分与奇异部分，Df 作为弱梯度的回归，以及奇异部分承载的几何信息
+\begin{remark}\phantomsection\label{remark:ch05-def-5-1-测度分解-动机}
+结构定理只把一阶导数表示成测度，并未说明该测度关于 $\mathcal{L}^n$ 的结构。\cref{theorem:ch01-1-31}的 Lebesgue 分解把每个分量 $\mu^i$ 分成关于 $\mathcal{L}^n$ 绝对连续的部分 $\mu^i_{\mathrm{ac}}$ 与关于 $\mathcal{L}^n$ 奇异的部分 $\mu^i_{\mathrm{s}}$：前者由 Radon--Nikodym 定理表示成密度 $f_i$ 的积分，后者集中在某个 $\mathcal{L}^n$ 零测集上。因此一阶导数被拆成两个来源不同的部分，即函数部分 $\mathcal{L}^n\llcorner Df$ 与奇异部分 $[Df]_{\mathrm{s}}$。% XREF internal
+
+函数部分 $Df=(f_{x_1},\cdots,f_{x_n})$ 正是 Sobolev 意义下的弱梯度：当奇异部分为零时，$f$ 的一阶导数完全由可积函数描述，$f$ 回到 Sobolev 空间。奇异部分 $[Df]_{\mathrm{s}}$ 则是 $\BV$ 理论特有的对象，它承载跳跃与 Cantor 型集中现象的信息：对 Cantor 函数，奇异部分就是支撑在 Cantor 集上的那个测度，而函数部分恒为零。正是这一项使 $\BV$ 理论必须同时处理函数与测度两种对象。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-def-5-1-测度分解; kind=hypotheses; 逐条说明 μ^i 的 Radon 性、定理 1.31 的适用条件、密度 f_i 的唯一性范围、奇异部分非零的实例以及记号之间的相容性
+\begin{remark}\phantomsection\label{remark:ch05-def-5-1-测度分解-条件}
+\begin{enumerate}[(i)]
+\item 分解以 $f\in\BV_{\loc}(U)$ 为前提，使 $\lVert Df\rVert$ 与 $\sigma$ 有定义。$\mu^i=\lVert Df\rVert\llcorner\sigma^i$ 是 $\lVert Df\rVert$ 以 $\sigma^i$ 为密度的限制；因 $\lvert\sigma^i\rvert\leqslant1$ 而 $\lVert Df\rVert$ 局部有限，$\mu^i$ 也是 $U$ 上的 Radon 测度。
+\item 由\cref{theorem:ch01-1-31}，$\mu^i$ 为 Radon 测度这一前提得到保证；定理给出 $U$ 上的 Radon 测度 $\mu^i_{\mathrm{ac}}$ 与 $\mu^i_{\mathrm{s}}$，使 $\mu^i=\mu^i_{\mathrm{ac}}+\mu^i_{\mathrm{s}}$、$\mu^i_{\mathrm{ac}}\ll\mathcal{L}^n$ 且 $\mu^i_{\mathrm{s}}\perp\mathcal{L}^n$。% XREF internal
+\item 密度 $f_i$ 的存在性与唯一性来自 Radon--Nikodym 定理：$\mu^i_{\mathrm{ac}}\ll\mathcal{L}^n$ 且 $\mu^i_{\mathrm{ac}}$ 局部有限，故存在 $\mathcal{L}^n$-a.e. 唯一的 $f_i\in L^1_{\loc}(U)$ 使 $\mu^i_{\mathrm{ac}}=\mathcal{L}^n\llcorner f_i$。$f_i$ 只在 $\mathcal{L}^n$-a.e. 意义下确定，因此 $Df$ 也只在 $\mathcal{L}^n$-a.e. 意义下有定义。
+\item 奇异部分不必为零。取 $n=1$、$U=(0,1)$ 与 Cantor 函数 $f$（在每个被删去的区间上取相应的常值），则 $f$ 单调从而 $f\in\BV(U)$，而 $f'=\mu_{\mathrm{s}}$ 是支撑在 Cantor 集上的奇异测度，$\mu_{\mathrm{ac}}=0$。于是 $Df=0$ $\mathcal{L}^1$-a.e. 而 $[Df]_{\mathrm{s}}\neq0$，这说明函数部分不能代替整个导数。
+\item 记号相容：$[Df]_{\mathrm{ac}}=(\mu^1_{\mathrm{ac}},\cdots,\mu^n_{\mathrm{ac}})=\mathcal{L}^n\llcorner Df$ 表明 $[Df]$ 的绝对连续部分正是由密度 $Df$ 生成的向量值测度；逐分量相加即得 $[Df]=[Df]_{\mathrm{ac}}+[Df]_{\mathrm{s}}$。又 $\mu^i_{\mathrm{ac}}\ll\mathcal{L}^n$ 与 $\mu^i_{\mathrm{s}}\perp\mathcal{L}^n$ 对每个 $i$ 成立，故 $[Df]_{\mathrm{ac}}\ll\mathcal{L}^n$、$[Df]_{\mathrm{s}}\perp\mathcal{L}^n$ 按向量值测度的意义成立。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-def-5-1-凸函数}
+此记号可与\cref{section:ch06-03}中为凸函数建立的记号相比较。% XREF p=212 "Compare this with the notation for convex functions set forth in Section 6.3."
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-def-5-1-范数}
+\begin{enumerate}[(i)]
+\item $\lVert Df\rVert$ 称为 $f$ 的\textbf{变差测度}；$\lVert\partial E\rVert$ 称为 $E$ 的\textbf{周长测度}；$\lVert\partial E\rVert(U)$ 称为 $E$ 在 $U$ 中的\textbf{周长}。
+\item 若 $f\in\BV_{\loc}(U)\cap L^1(U)$，则 $f\in\BV(U)$ 当且仅当 $\lVert Df\rVert(U)<\infty$。此时定义
+\begin{align*}
+\lVert f\rVert_{\BV(U)}:=\lVert f\rVert_{L^1(U)}+\lVert Df\rVert(U).
+\end{align*}
+\item 由\cref{theorem:ch01-1-38}的证明可见% XREF p=212 "From the proof of the Riesz Representation Theorem 1.38, we see"
+\begin{align*}
+\lVert Df\rVert(V)&=\sup\left\{\int_V f\diver\phi\diff x\,\middle|\,\phi\in C_c^1(V;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\right\},\\
+\lVert\partial E\rVert(V)&=\sup\left\{\int_E f\diver\phi\diff x\,\middle|\,\phi\in C_c^1(V;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\right\}
+\end{align*}
+对每个开集 $V\subset\subset U$ 成立，其中第二式的 $f=\chi_E$，故被积函数 $\chi_E\diver\phi$ 在 $E$ 上与 $\diver\phi$ 相同。
+\end{enumerate}
+\end{remark}
+
+\begin{example}\phantomsection\label{example:ch05-exa-5-1-Sobolev}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为开集，$f\in W^{1,1}_{\loc}(U)$。则对每个满足 $V\subset\subset U$ 的开集 $V$ 与每个满足 $\lvert\phi\rvert\leqslant1$ 的 $\phi\in C_c^1(V;\mathbb{R}^n)$，有
+\begin{align*}
+\int_U f\diver\phi\diff x=-\int_U Df\cdot\phi\diff x\leqslant\int_V\lvert Df\rvert\diff x<\infty .
+\end{align*}
+\end{example}
+
+\begin{solution}
+于是 $f\in\BV_{\loc}(U)$。此外，
+\begin{align*}
+\lVert Df\rVert=\mathcal{L}^n\llcorner\lvert Df\rvert,
+\end{align*}
+并且在 $\mathcal{L}^n$-a.e. 意义下
+\begin{align*}
+\sigma=
+\begin{cases}
+\dfrac{Df}{\lvert Df\rvert}, & Df\neq0,\\
+0, & Df=0 .
+\end{cases}
+\end{align*}
+于是
+\begin{align*}
+W^{1,1}_{\loc}(U)\subset\BV_{\loc}(U),
+\end{align*}
+对 $W^{1,1}(U)$ 作同样的论证可得
+\begin{align*}
+W^{1,1}(U)\subset\BV(U).
+\end{align*}
+特别地，
+\begin{align*}
+W^{1,p}_{\loc}(U)\subset\BV_{\loc}(U)\qquad(1\leqslant p\leqslant\infty).
+\end{align*}
+因此，每个 Sobolev 函数都具有局部有界变差。
+\end{solution}
+
+% SUPPLEMENT: parent=example:ch05-exa-5-1-Sobolev; kind=proof; 补出 f∈BV_loc、‖Df‖=L^n⌞|Df| 与 σ=Df/|Df| 的论证（含上确界引理与 Radon 测度由相对紧开集上的值确定），以及三个包含关系
+\begin{proof}
+（1）$f\in\BV_{\loc}(U)$。设 $V\subset\subset U$ 为开集，$\phi\in C_c^1(V;\mathbb{R}^n)$ 且 $\lvert\phi\rvert\leqslant1$。由 $f$ 的弱可微性与 $\spt\phi\subseteq V$，
+\begin{align*}
+\int_U f\diver\phi\diff x=-\int_V Df\cdot\phi\diff x,
+\end{align*}
+故
+\begin{align*}
+\Bigl\lvert\int_U f\diver\phi\diff x\Bigr\rvert\leqslant\int_V\lvert Df\rvert\,\lvert\phi\rvert\diff x\leqslant\int_V\lvert Df\rvert\diff x .
+\end{align*}
+右端与 $\phi$ 无关且有限，对 $\phi$ 取上确界即得 $f\in\BV_{\loc}(U)$。
+
+（2）辅助事实。设 $V\subseteq\mathbb{R}^n$ 为开集，$g\in L^1(V;\mathbb{R}^n)$，则
+\begin{align*}
+\sup\left\{\int_V g\cdot\phi\diff x\,\middle|\,\phi\in C_c^1(V;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\right\}=\int_V\lvert g\rvert\diff x .
+\end{align*}
+对每个这样的 $\phi$ 有 $\int_V g\cdot\phi\diff x\leqslant\int_V\lvert g\rvert\diff x$，故上确界不超过右端。为证反向不等式，令 $w:=g/\lvert g\rvert$ 于 $\{\lvert g\rvert>0\}$、$w:=0$ 于 $\{\lvert g\rvert=0\}$，则 $\lvert w\rvert\leqslant1$ 且 $\int_V g\cdot w\diff x=\int_V\lvert g\rvert\diff x$。对 $\delta>0$ 令
+\begin{align*}
+V_\delta:=\{x\in V\mid\operatorname{dist}(x,\partial V)>\delta,\ \lvert x\rvert<1/\delta\},\qquad w_\delta:=w\chi_{V_\delta},
+\end{align*}
+则 $V_\delta\subset\subset V$、$\lvert w_\delta\rvert\leqslant1$ 且 $w_\delta\to w$ 于 $V$ 中 $\mathcal{L}^n$-a.e.，由控制收敛定理得 $\int_V g\cdot w_\delta\diff x\to\int_V\lvert g\rvert\diff x$。取标准磨光核 $\rho_\varepsilon$ 并令 $\phi_\varepsilon:=\rho_\varepsilon*w_\delta$，则 $\lvert\phi_\varepsilon\rvert\leqslant\rho_\varepsilon*\lvert w_\delta\rvert\leqslant1$，且当 $0<\varepsilon<\delta$ 时 $\phi_\varepsilon\in C_c^{\infty}(V;\mathbb{R}^n)$；又 $\phi_\varepsilon\to w_\delta$ 于 $L^1(V;\mathbb{R}^n)$，故 $\int_V g\cdot\phi_\varepsilon\diff x\to\int_V g\cdot w_\delta\diff x$。先令 $\varepsilon\to0$ 再令 $\delta\to0$，即得反向不等式。
+
+（3）$\lVert Df\rVert=\mathcal{L}^n\llcorner\lvert Df\rvert$。令 $\nu:=\mathcal{L}^n\llcorner\lvert Df\rvert$；因 $\lvert Df\rvert\in L^1_{\loc}(U)$，$\nu$ 是 $U$ 上的 Radon 测度。由 $Df$ 的弱导数恒等式与第 (2) 步，对每个满足 $V\subset\subset U$ 的开集 $V$ 有
+\begin{align*}
+\nu(V)=\int_V\lvert Df\rvert\diff x=\sup\left\{\int_V f\diver\phi\diff x\,\middle|\,\phi\in C_c^1(V;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\right\}=\lVert Df\rVert(V).
+\end{align*}
+下证两个 Radon 测度在一切相对紧开集上取值相同则相等。取一列紧集 $K_j\subseteq U$ 使 $\bigcup_{j}K_j=U$。对 Borel 集 $A\subseteq U$ 与 $j$，取开集 $V$ 使 $\overline{A\cap K_j}\subseteq V\subset\subset U$。由 $\nu$ 与 $\lVert Df\rVert$ 在 $V$ 上的 Borel 正则性，
+\begin{align*}
+\nu(A\cap K_j)&=\inf\{\nu(W)\mid A\cap K_j\subseteq W\subseteq V,\ W\text{ 为开集}\}\\
+&=\inf\{\lVert Df\rVert(W)\mid A\cap K_j\subseteq W\subseteq V,\ W\text{ 为开集}\}=\lVert Df\rVert(A\cap K_j),
+\end{align*}
+故 $\nu(A)=\lVert Df\rVert(A)$，即 $\lVert Df\rVert=\mathcal{L}^n\llcorner\lvert Df\rvert$。
+
+（4）$\sigma=Df/\lvert Df\rvert$。令 $\sigma_0:=Df/\lvert Df\rvert$ 于 $\{Df\neq0\}$、$\sigma_0:=0$ 于 $\{Df=0\}$。由 $\nu(\{Df=0\})=\int_{\{Df=0\}}\lvert Df\rvert\diff x=0$ 得 $\lvert\sigma_0\rvert=1$ $\nu$-a.e.；又对一切 $\phi\in C_c^1(U;\mathbb{R}^n)$ 有
+\begin{align*}
+\int_U\phi\cdot\sigma_0\diff\nu=\int_U\phi\cdot Df\diff x=-\int_U f\diver\phi\diff x=\int_U\phi\cdot\sigma\diff\lVert Df\rVert .
+\end{align*}
+结合 $\lVert Df\rVert=\nu$ 得 $\int_U\phi\cdot(\sigma_0-\sigma)\diff\nu=0$。对每个分量 $i$，由 $C_c^1(U)$ 在 $C_c(U)$ 中按一致范数的稠密性，上式给出 $\int_U\psi\,(\sigma_0^i-\sigma^i)\diff\nu=0$ 对一切 $\psi\in C_c(U)$ 成立，故带号测度 $(\sigma_0^i-\sigma^i)\nu$ 为零，即 $\sigma_0^i=\sigma^i$ $\nu$-a.e.，于是 $\sigma=\sigma_0$ $\nu$-a.e.。
+
+（5）包含关系。若 $f\in W^{1,1}_{\loc}(U)$，则 $f\in L^1_{\loc}(U)$ 且 $Df\in L^1_{\loc}(U;\mathbb{R}^n)$，第 (1) 步给出 $f\in\BV_{\loc}(U)$，即 $W^{1,1}_{\loc}(U)\subseteq\BV_{\loc}(U)$。若 $f\in W^{1,1}(U)$，则 $f\in L^1(U)$ 且 $\lVert Df\rVert(U)=\int_U\lvert Df\rvert\diff x<\infty$，故 $f\in\BV(U)$。最后设 $f\in W^{1,p}_{\loc}(U)$、$1\leqslant p\leqslant\infty$，则 $f\in L^p_{\loc}(U)\subseteq L^1_{\loc}(U)$，$Df\in L^p_{\loc}(U;\mathbb{R}^n)\subseteq L^1_{\loc}(U;\mathbb{R}^n)$（$p=\infty$ 时由 $Df$ 的局部有界性），故 $f\in W^{1,1}_{\loc}(U)\subseteq\BV_{\loc}(U)$。
+\end{proof}
+
+\begin{example}\phantomsection\label{example:ch05-exa-5-1-光滑集}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为开集，$E\subseteq\mathbb{R}^n$ 为具有光滑（$C^{\infty}$）边界的开集，且对每个紧集 $K\subseteq U$ 有 $\mathcal{H}^{n-1}(\partial E\cap K)<\infty$。则对每个满足 $V\subset\subset U$ 的开集 $V$ 与每个满足 $\lvert\phi\rvert\leqslant1$ 的 $\phi\in C_c^1(V;\mathbb{R}^n)$，有
+\begin{align*}
+\int_E\diver\phi\diff x=\int_{\partial E}\phi\cdot\nu\diff\mathcal{H}^{n-1},
+\end{align*}
+其中 $\nu$ 表示沿 $\partial E$ 的外单位法向量。
+\end{example}
+
+\begin{solution}
+于是
+\begin{align*}
+\int_E\diver\phi\diff x=\int_{\partial E\cap V}\phi\cdot\nu\diff\mathcal{H}^{n-1}\leqslant\mathcal{H}^{n-1}(\partial E\cap V)<\infty .
+\end{align*}
+因此 $E$ 在 $U$ 中具有局部有限周长。此外，
+\begin{align*}
+\lVert\partial E\rVert(U)=\mathcal{H}^{n-1}(\partial E\cap U)
+\end{align*}
+并且
+\begin{align*}
+\nu_E=\nu\qquad\mathcal{H}^{n-1}\text{-a.e. 于 }\partial E\cap U .
+\end{align*}
+因此 $\lVert\partial E\rVert(U)$ 度量 $\partial E$ 在 $U$ 中的「大小」。由于 $\chi_E\notin W^{1,1}_{\loc}(U)$（例如依据\cref{theorem:ch04-4-21}），可见% XREF p=213 "Since χ_E ∉ W^{1,1}_loc(U) (according, for instance, to Theorem 4.21), we see"
+\begin{align*}
+W^{1,1}_{\loc}(U)\subsetneq\BV_{\loc}(U),\qquad W^{1,1}(U)\subsetneq\BV(U).
+\end{align*}
+因此并非每个局部有界变差函数都是 Sobolev 函数。
+\end{solution}
+
+% SUPPLEMENT: parent=example:ch05-exa-5-1-光滑集; kind=proof; 补出局部有限周长的验证、‖∂E‖=H^{n-1}⌞(∂E∩U) 与 ν_E=ν 的论证，以及两个真包含关系的严格性
+\begin{proof}
+（1）局部有限周长。设 $V\subset\subset U$，$\phi\in C_c^1(V;\mathbb{R}^n)$ 且 $\lvert\phi\rvert\leqslant1$。因 $\spt\phi\subseteq V$，Gauss--Green 公式右端的被积函数在 $\partial E\cap V$ 外为零，故
+\begin{align*}
+\int_E\diver\phi\diff x=\int_{\partial E\cap V}\phi\cdot\nu\diff\mathcal{H}^{n-1}\leqslant\int_{\partial E\cap V}\lvert\phi\rvert\diff\mathcal{H}^{n-1}\leqslant\mathcal{H}^{n-1}(\partial E\cap V).
+\end{align*}
+由 $\lvert\nu\rvert=1$ 与 $\lvert\phi\rvert\leqslant1$ 得上式中的第二个不等号；又 $\overline{V}$ 是 $U$ 的紧子集且 $\partial E\cap V\subseteq\partial E\cap\overline{V}$，假设给出 $\mathcal{H}^{n-1}(\partial E\cap\overline{V})<\infty$，故右端有限且与 $\phi$ 无关，对 $\phi$ 取上确界即得 $\chi_E\in\BV_{\loc}(U)$。
+
+（2）$\lVert\partial E\rVert=\mathcal{H}^{n-1}\llcorner(\partial E\cap U)$。令 $\lambda:=\mathcal{H}^{n-1}\llcorner(\partial E\cap U)$，由假设它是 $U$ 上的 Radon 测度。对每个满足 $V\subset\subset U$ 的开集 $V$，由\hyperref[remark:ch05-def-5-1-范数]{前述注记}第三款中的公式与第 (1) 步的计算，
+\begin{align*}
+\lVert\partial E\rVert(V)=\sup\left\{\int_{\partial E\cap V}\phi\cdot\nu\diff\mathcal{H}^{n-1}\,\middle|\,\phi\in C_c^1(V;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\right\}.
+\end{align*}
+把 $\mathcal{H}^{n-1}\llcorner(\partial E\cap V)$ 视为 $V$ 上的 Radon 测度、$\nu$ 视为其单位密度，并重复上例第 (2) 步的上确界论证，得右端等于 $\int_{\partial E\cap V}\lvert\nu\rvert\diff\mathcal{H}^{n-1}=\mathcal{H}^{n-1}(\partial E\cap V)=\lambda(V)$。于是两个 Radon 测度在一切相对紧开集上取值相同，由上例第 (3) 步的论证得 $\lVert\partial E\rVert=\lambda$；取 $V$ 递增穷尽 $U$ 并令 $V\uparrow U$，得 $\lVert\partial E\rVert(U)=\mathcal{H}^{n-1}(\partial E\cap U)$。
+
+（3）$\nu_E=\nu$。对 $\phi\in C_c^1(U;\mathbb{R}^n)$，由 $\lVert\partial E\rVert=\mathcal{H}^{n-1}\llcorner(\partial E\cap U)$、Gauss--Green 公式与\cref{definition:ch05-def-5-1-周长测度}的积分公式，% XREF internal
+\begin{align*}
+\int_U\phi\cdot\nu\diff\lVert\partial E\rVert=\int_E\diver\phi\diff x=\int_U\phi\cdot\nu_E\diff\lVert\partial E\rVert,
+\end{align*}
+故 $\int_U\phi\cdot(\nu-\nu_E)\diff\lVert\partial E\rVert=0$。对每个分量 $i$ 与每个 $\psi\in C_c(U)$，取 $C_c^1(U)$ 中一致收敛到 $\psi$ 的序列并令 $\phi=\psi e_i$，得 $\int_U\psi\,(\nu^i-\nu_E^i)\diff\lVert\partial E\rVert=0$；于是带号测度 $(\nu^i-\nu_E^i)\lVert\partial E\rVert$ 为零，故 $\nu^i=\nu_E^i$ $\mathcal{H}^{n-1}$-a.e. 于 $\partial E\cap U$。
+
+（4）真包含关系。由第 (1) 步 $\chi_E\in\BV_{\loc}(U)$。若 $\chi_E\in W^{1,1}_{\loc}(U)$，则其弱梯度在 $\mathcal{L}^n$-a.e. 处为零：$E$ 与 $U\setminus\overline{E}$ 均为开集、$\mathcal{L}^n(\partial E)=0$，而 $\chi_E$ 在前者上取常值 $1$、在后者上取常值 $0$。取磨光核 $\rho_\varepsilon$ 并令 $\chi_\varepsilon:=\chi_E*\rho_\varepsilon$，则 $\nabla\chi_\varepsilon=(\nabla\chi_E)*\rho_\varepsilon=0$，故 $\chi_\varepsilon$ 在每个满足 $\overline{B(x,r)}\subset U$ 的球 $B(x,r)$ 上为常数（$\varepsilon$ 充分小）；令 $\varepsilon\to0$ 得 $\chi_E$ 在 $B(x,r)$ 上 $\mathcal{L}^n$-a.e. 为常数。当 $U$ 连通时，任意两点可由有限个这样的球连接，故 $\chi_E$ 在 $U$ 上 $\mathcal{L}^n$-a.e. 为常数，即 $\mathcal{L}^n(E\cap U)$ 等于 $0$ 或 $\mathcal{L}^n(U)$，这与 $E\cap U$ 与 $U\setminus E$ 都含非空开集矛盾。因此 $\chi_E\notin W^{1,1}_{\loc}(U)$，而 $\chi_E\in\BV_{\loc}(U)$，故 $W^{1,1}_{\loc}(U)\subsetneq\BV_{\loc}(U)$。
+
+对第二个真包含关系，取 $U=\mathbb{R}^n$ 与 $E$ 为有界光滑开集，则 $\lVert\partial E\rVert(\mathbb{R}^n)=\mathcal{H}^{n-1}(\partial E)<\infty$，故 $\chi_E\in\BV(\mathbb{R}^n)$；而由上一段的论证 $\chi_E\notin W^{1,1}(\mathbb{R}^n)$，故 $W^{1,1}(U)\subsetneq\BV(U)$。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch05-exa-5-1-奇异}
+事实上，若 $f\in\BV_{\loc}(U)$，则如上可写
+\begin{align*}
+[Df]=[Df]_{\mathrm{ac}}+[Df]_{\mathrm{s}}=\mathcal{L}^n\llcorner Df+[Df]_{\mathrm{s}}.
+\end{align*}
+从而 $f\in\BV_{\loc}(U)$ 属于 $W^{1,p}_{\loc}(U)$ 当且仅当
+\begin{align*}
+f\in L^p_{\loc}(U),\qquad [Df]_{\mathrm{s}}=0,\qquad Df\in L^p_{\loc}(U).
+\end{align*}
+$\BV$ 函数的研究比 Sobolev 函数的研究精细得多，因为必须始终追踪向量值测度 $[Df]$ 的奇异部分 $[Df]_{\mathrm{s}}$。
+\end{remark}
+
+\end{document}

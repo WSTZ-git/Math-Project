@@ -15,17 +15,38 @@
 
 \section{Young 测度}\label{section:ch02-Young测度}
 
-设 $(X,\mathscr A,\mu)$ 为测度空间，$(X',\mathscr A')$ 为可测空间。设 $f:X\to X'$ 为 $(\mathscr A,\mathscr A')$-可测。利用\eqref{align:ch02-2.2}，立即可见映射
+设 $(X,\mathscr A,\mu)$ 为测度空间，$(X',\mathscr A')$ 为可测空间。设 $f:X\to X'$ 为 $(\mathscr A,\mathscr A')$-可测。利用\eqref{align:ch02-2.2}（原像与可数并交换），映射
 \begin{align}
 \mu_f:\mathscr A'\to[0,\infty],\qquad \mu_f(E')\triangleq \mu(f^{-1}(E'))\quad(E'\in\mathscr A') \label{align:ch02-2.27}
 \end{align}
-为测度。
+为测度：$f^{-1}(\varnothing)=\varnothing$ 给出 $\mu_f(\varnothing)=0$，而 $\mathscr A'$ 中两两不交的 $\{E'_n\}$ 的原像 $\{f^{-1}(E'_n)\}$ 在 $\mathscr A$ 中两两不交且 $f^{-1}\bigl(\bigcup_nE'_n\bigr)=\bigcup_nf^{-1}(E'_n)$，故 $\mu_f$ 的 $\sigma$-可加性由 $\mu$ 的 $\sigma$-可加性得到。
 
 \begin{definition}\label{definition:ch02-像测度}
-由\eqref{align:ch02-2.27}定义的测度 $\mu_f$ 称为 $\mu$ 在 $f$ 下的像。
+设 $(X,\mathscr A,\mu)$ 为测度空间，$(X',\mathscr A')$ 为可测空间，$f:X\to X'$ 为 $(\mathscr A,\mathscr A')$-可测。由\eqref{align:ch02-2.27}定义的测度 $\mu_f:\mathscr A'\to[0,\infty]$ 称为 $\mu$ 在 $f$ 下的像（或前推测度）。
 \end{definition}
 
-设 $(X_1\times X_2,\mathscr A_1\times\mathscr A_2)$ 为两个可测空间 $(X_1,\mathscr A_1)$ 与 $(X_2,\mathscr A_2)$ 的乘积，$\mu:\mathscr A_1\times\mathscr A_2\to[0,\infty]$ 为测度。由\cref{lemma:ch02-投影可测}，像测度
+% SUPPLEMENT: parent=definition:ch02-像测度; kind=proof; location=定义 2.5.1 前段的测度性断言; basis=原书以“we immediately see”略去 $\mu_f$ 的 $\sigma$-可加性，此处补出非负性、$\mu_f(\varnothing)=0$、两两不交原像与可数并原像三项的完整验证
+\begin{proof}
+先证 $\mu_f$ 有定义：由 $f$ 的 $(\mathscr A,\mathscr A')$-可测性，$f^{-1}(E')\in\mathscr A$ 对每个 $E'\in\mathscr A'$ 成立，故 $\mu(f^{-1}(E'))$ 有定义且取值于 $[0,\infty]$。其次 $\mu_f(\varnothing)=\mu(f^{-1}(\varnothing))=\mu(\varnothing)=0$。最后设 $\{E'_n\}_{n\in\mathbb N}\subseteq\mathscr A'$ 两两不交。若 $x\in f^{-1}(E'_m)\cap f^{-1}(E'_n)$（$m\neq n$），则 $f(x)\in E'_m\cap E'_n=\varnothing$，矛盾，故 $\{f^{-1}(E'_n)\}$ 两两不交；又 $f^{-1}\bigl(\bigcup_nE'_n\bigr)=\bigcup_nf^{-1}(E'_n)$，故
+\begin{align*}
+\mu_f\Bigl(\bigcup_{n=1}^\infty E'_n\Bigr)
+=\mu\Bigl(\bigcup_{n=1}^\infty f^{-1}(E'_n)\Bigr)
+=\sum_{n=1}^\infty\mu(f^{-1}(E'_n))
+=\sum_{n=1}^\infty\mu_f(E'_n).
+\end{align*}
+此外 $\mu_f(X')=\mu(f^{-1}(X'))=\mu(X)$，且 $\mu_f$ 单调。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:ch02-像测度; kind=motivation; location=定义 2.5.1 后的注记; basis=定义 2.5.1 与 (2.27) + 可测性假设的作用、$\mu$ 与 $\mu_f$ 有限性/$\sigma$-有限性不互相继承的反例、像测度丢失 $f$ 的信息的边界
+\begin{remark}\phantomsection\label{remark:ch02-像测度动机}
+(i) 动机。$\mu_f$ 是 $f$ 的分布：$\mu_f(E')$ 是 $f$ 取值于 $E'$ 的“质量”。它把 $X'$ 上的积分化为 $X$ 上的积分（\cref{lemma:ch02-像测度积分}），并把 $X$ 上的测度搬到像空间，因而是乘积测度的边缘化\eqref{align:ch02-2.28a}与 Young 测度\eqref{align:ch02-2.29}的构造工具：与 $f$ 相伴的 Young 测度就是 $\mu$ 在映射 $x\mapsto(x,f(x))$ 下的像。
+
+(ii) 假设的作用。$f$ 的 $(\mathscr A,\mathscr A')$-可测性是唯一的显式假设，其作用是保证 $f^{-1}(E')\in\mathscr A$，即 $\mu_f$ 在 $\mathscr A'$ 上处处有定义；去掉它，\eqref{align:ch02-2.27} 可能对某些 $E'\in\mathscr A'$ 无意义。测度空间与可测空间本身不加 $\sigma$-有限性或完备性假设：$\mu$ 可以取值 $\infty$，$\mu_f$ 亦可以。
+
+(iii) 边界与例。$\mu_f$ 继承 $\mu$ 的有限性（$\mu_f(X')=\mu(X)$ 有限当且仅当 $\mu(X)<\infty$），但不继承 $\sigma$-有限性：取 $X=\mathbb R$、$\mathscr A=\mathscr B$、$\mu=\lambda$、$X'=\{0\}$、$f\equiv0$，则 $\mu_f(\{0\})=\lambda(\mathbb R)=\infty$，故 $\mu_f$ 不是 $\sigma$-有限的（$\{0\}$ 的测度为 $\infty$）；反之 $\mu_f$ 有限也不蕴含 $\mu$ 有限以外的信息。像测度丢失 $f$ 的信息：若 $f=g$ $\mu$-a.e.，则 $\mu_f=\mu_g$；反之 $\mu_f=\mu_g$ 不必推出 $f=g$（取 $X'$ 中 $\mu_f$-零测集上不同的值即可）。若 $f$ 非单射，$\mu_f$ 更不决定 $f$。
+\end{remark}
+
+设 $(X_1\times X_2,\mathscr A_1\times\mathscr A_2)$ 为两个可测空间 $(X_1,\mathscr A_1)$ 与 $(X_2,\mathscr A_2)$ 的乘积，$p_i:X_1\times X_2\to X_i$（$i=1,2$）为坐标投影（\cref{definition:ch02-投影分量迹}），$\mu:\mathscr A_1\times\mathscr A_2\to[0,\infty]$ 为乘积可测空间上的测度。由\cref{lemma:ch02-投影可测}，$p_i$ 为 $(\mathscr A_1\times\mathscr A_2,\mathscr A_i)$-可测；又 $p_1^{-1}(E_1)=E_1\times X_2$、$p_2^{-1}(E_2)=X_1\times E_2$，故像测度
 \begin{align}
 \mu_{p_1}:\mathscr A_1\to[0,\infty],\qquad \mu_{p_1}(E_1)\triangleq \mu(p_1^{-1}(E_1))=\mu(E_1\times X_2)\quad(E_1\in\mathscr A_1), \label{align:ch02-2.28a}\\
 \mu_{p_2}:\mathscr A_2\to[0,\infty],\qquad \mu_{p_2}(E_2)\triangleq \mu(p_2^{-1}(E_2))=\mu(X_1\times E_2)\quad(E_2\in\mathscr A_2) \label{align:ch02-2.28b}
@@ -33,54 +54,141 @@
 良定义。
 
 \begin{definition}\label{definition:ch02-投影测度}
-由\eqref{align:ch02-2.28a}定义的测度 $\mu_{p_i}$ 称为 $\mu$ 在 $X_i$ 上的投影（$i=1,2$）。
+设 $(X_1,\mathscr A_1)$ 与 $(X_2,\mathscr A_2)$ 为可测空间，$p_i:X_1\times X_2\to X_i$（$i=1,2$）为坐标投影，$\mu:\mathscr A_1\times\mathscr A_2\to[0,\infty]$ 为乘积可测空间 $(X_1\times X_2,\mathscr A_1\times\mathscr A_2)$ 上的测度。由\eqref{align:ch02-2.28a}与\eqref{align:ch02-2.28b}分别定义的测度 $\mu_{p_1}:\mathscr A_1\to[0,\infty]$ 与 $\mu_{p_2}:\mathscr A_2\to[0,\infty]$（即 $\mu$ 在 $p_1$ 与 $p_2$ 下的像测度）分别称为 $\mu$ 在 $X_1$ 与 $X_2$ 上的投影（或边缘测度）。
 \end{definition}
 
+% SUPPLEMENT: parent=definition:ch02-投影测度; kind=motivation; location=定义 2.5.2 后的注记; basis=定义 2.5.2 与 (2.28) + 边缘化的动机、各项假设的作用，以及“边缘测度不决定联合测度”的完整反例（对角线测度）
+\begin{remark}\phantomsection\label{remark:ch02-投影测度动机}
+(i) 动机。$\mu_{p_1}$ 与 $\mu_{p_2}$ 是 $\mu$ 的两个边缘：它们分别只记录 $\mu$ 在两族“柱集” $E_1\times X_2$、$X_1\times E_2$ 上的质量。边缘化把乘积空间上的测度降维，是离散分解（\cref{theorem:ch05-离散分解}）与 Young 测度定义中条件 $\nu(E\times Y)=\mu(E)$ 的来源：后者恰是说 $\nu$ 在 $X$ 上的投影等于给定的 $\mu$。
+
+(ii) 假设的作用。$\mu$ 只需是乘积 $\sigma$-代数上的测度，无需 $\sigma$-有限或有限；$p_i$ 的可测性由\cref{lemma:ch02-投影可测}保证，从而\eqref{align:ch02-2.28a} 是像测度定义的特例（\cref{definition:ch02-像测度}）。$p_1^{-1}(E_1)=E_1\times X_2$ 与 $p_2^{-1}(E_2)=X_1\times E_2$ 这两个恒等式用于把 $\mu_{p_i}$ 写成柱集上的值。
+
+(iii) 边界。边缘测度一般不能决定 $\mu$。在 $X_1=X_2=[0,1]$ 上取 $\nu_1\triangleq\lambda_2|_{\mathscr B([0,1]^2)}$ 与 $\nu_2\triangleq$（$\lambda|_{\mathscr B([0,1])}$ 在对角映射 $t\mapsto(t,t)$ 下的像测度），则两者的两个边缘都等于 $\lambda|_{\mathscr B([0,1])}$、总质量都等于 $1$，但 $\nu_1\neq\nu_2$：$\nu_2$ 集中于对角线 $\{(t,t)\mid t\in[0,1]\}$，而 $\nu_1$ 给该集合测度 $0$。这正是 Young 测度定义中除边缘条件外还需附加条件\eqref{align:ch02-2.29}的原因：该条件把 $\nu$ 与函数 $f$ 的图联系起来，从而恢复唯一性（\cref{remark:ch02-Young投影}）。
+\end{remark}
+
 \begin{definition}\label{definition:ch02-Young测度}
-设 $X$ 与 $Y$ 为局部紧 Hausdorff 空间，$\mu\in\mathscr R^+_f(X)$。
+设 $X$ 与 $Y$ 为局部紧 Hausdorff 空间，$\mu\in\mathscr R^+_f(X)$，即 $\mu$ 为 $X$ 上有限的正 Radon 测度。
 \begin{enumerate}[(i)]
-\item 任意满足 $\nu(E\times Y)=\mu(E)$（对所有 $E\in\mathscr B(X)$）的测度 $\nu\in\mathscr R^+_f(X\times Y)$ 称为 Young 测度。
-\item 设 $f:X\to Y$ 为 $(\mathscr B(X),\mathscr B(Y))$-可测。满足
+\item 设 $\nu\in\mathscr R^+_f(X\times Y)$。若
+\begin{align*}
+\nu(E\times Y)=\mu(E)\quad\text{对所有 }E\in\mathscr B(X),
+\end{align*}
+则称 $\nu$ 为（关于 $\mu$ 的）Young 测度。
+\item 设 $f:X\to Y$ 为 $(\mathscr B(X),\mathscr B(Y))$-可测，$\nu$ 为 Young 测度。若
 \begin{align}
-\nu(E\times F)=\mu(E\cap f^{-1}(F))\quad\text{对所有 }E\in\mathscr B(X),\ F\in\mathscr B(Y) \label{align:ch02-2.29}
+\nu(E\times F)=\mu(E\cap f^{-1}(F))\quad\text{对所有 }E\in\mathscr B(X),\ F\in\mathscr B(Y), \label{align:ch02-2.29}
 \end{align}
-的 Young 测度 $\nu$ 称为与 $f$ 相伴的 Young 测度。
+则称 $\nu$ 为与 $f$ 相伴的 Young 测度。
 \end{enumerate}
 \end{definition}
 
-由定义有 $\nu_{p_X}=\mu$，其中 $p_X$ 为 $X\times Y$ 到 $X$ 的投影。记 Young 测度的集合为 $\mathcal Y^+(X,\mathscr B(X),\mu;Y)\equiv\mathcal Y^+(X;Y)$。
-
-\begin{remark}\label{remark:ch02-Young有界}
-易见 $\mathcal Y^+(X;Y)$ 为 $\mathscr R^+_f(X\times Y)$ 的有界子集。事实上，对任意 $\nu\in\mathcal Y^+(X;Y)$，有
+% SUPPLEMENT: parent=definition:ch02-Young测度; kind=proof; location=定义 2.5.3 后的存在性与唯一性; basis=原书未验证与 $f$ 相伴的 Young 测度确实存在且由 (2.29) 唯一确定，此处用 $\nu=\mu_\Phi$（$\Phi(x)\triangleq(x,f(x))$）与重合准则补出
+\begin{proof}
+置 $\Phi:X\to X\times Y$，$\Phi(x)\triangleq(x,f(x))$。因 $x\mapsto x$ 与 $f$ 均为 Borel 可测，$\Phi$ 为 $(\mathscr B(X),\mathscr B(X)\otimes\mathscr B(Y))$-可测；又 $\Phi^{-1}(E\times F)=E\cap f^{-1}(F)$ 对 $E\in\mathscr B(X)$、$F\in\mathscr B(Y)$ 成立。令 $\nu\triangleq\mu_\Phi$，即 $\nu(B)=\mu(\Phi^{-1}(B))$（$B\in\mathscr B(X)\otimes\mathscr B(Y)$）。由\cref{definition:ch02-像测度}，$\nu$ 是 $\mathscr B(X)\otimes\mathscr B(Y)$ 上的有限测度，且 $\nu(X\times Y)=\mu(X)$，故 $\nu(E\times Y)=\mu(\Phi^{-1}(E\times Y))=\mu(E)$，即 $\nu$ 满足 (i)；又
 \begin{align*}
-\|\nu\|_{\mathscr R_f(X\times Y)}=\nu(X\times Y)=\mu(X).
+\nu(E\times F)=\mu\bigl(\Phi^{-1}(E\times F)\bigr)=\mu(E\cap f^{-1}(F)),
 \end{align*}
-故 $\mathcal Y^+(X;Y)$ 含于球面 $\partial B(0,\|\mu\|_{\mathscr R_f(X)})\subseteq\mathscr R^+_f(X\times Y)$。
+即 $\nu$ 满足\eqref{align:ch02-2.29}。
+
+唯一性：设 $\nu_1$、$\nu_2$ 在 $\mathscr B(X)\otimes\mathscr B(Y)$ 上都满足\eqref{align:ch02-2.29}（从而在乘积集上相等）。乘积集族是生成 $\mathscr B(X)\otimes\mathscr B(Y)$ 的 $\pi$-系，其有限不交并构成一个代数 $\mathcal A_0$，且 $\nu_1|_{\mathcal A_0}=\nu_2|_{\mathcal A_0}$（由有限可加性）；两个测度都有限，故由\cref{proposition:ch01-重合准则}得 $\nu_1=\nu_2$ 在 $\mathscr B(X)\otimes\mathscr B(Y)$ 上成立。
+
+Radon 性：在 $X$ 与 $Y$ 具可数基的局部紧 Hausdorff 空间中，由\cref{theorem:ch01-Borel乘积}有 $\mathscr B(X\times Y)=\mathscr B(X)\otimes\mathscr B(Y)$，且有限 Borel 测度与有限 Radon 测度一致（\cref{remark:ch01-BorelRadon一致}），故此时 $\nu\in\mathscr R^+_f(X\times Y)$，与 $f$ 相伴的 Young 测度存在。对一般的局部紧 Hausdorff 空间，\eqref{align:ch02-2.29} 唯一确定 $\nu$ 在 $\mathscr B(X)\otimes\mathscr B(Y)$ 上的值，$\nu$ 的 Radon 性须另行验证。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:ch02-Young测度; kind=motivation; location=定义 2.5.3 后的注记; basis=定义 2.5.3 + 参数化测度与弱极限的动机、$\mu$ 有限性作为存在性条件、图条件的作用，以及 $\mathcal Y^+(X;Y)$ 为空与不退化的边界
+\begin{remark}\phantomsection\label{remark:ch02-Young测度动机}
+(i) 动机。Young 测度是“参数化测度”：$\nu$ 在 $X$ 上的投影固定为 $\mu$，而 $\nu$ 在每条纤维 $\{x\}\times Y$ 上还可以分配质量，从而记录一列函数在弱拓扑下的振荡极限（\cref{theorem:ch05-离散分解}）。条件 (i) 保证 $\nu$ 的“$x$-边缘”不随极限改变；条件\eqref{align:ch02-2.29}则刻画最特殊的一类：与单个函数 $f$ 相伴的 Young 测度 $\nu_f$，它以 $f$ 的图为支撑（\cref{remark:ch02-Young投影}(ii)），因而在每条纤维 $\{x\}\times Y$ 上只把质量分配给单点 $f(x)$。于是“函数”成为“测度”的特例，弱收敛的函数列可用极限测度描述。
+
+(ii) 假设的作用。$\mu$ 的有限性不可省：若 $\mu(X)=\infty$，则 $\nu(X\times Y)=\mu(X)=\infty$ 对每个满足 (i) 的 $\nu$ 成立，与 $\nu\in\mathscr R^+_f(X\times Y)$ 矛盾，故 $\mathcal Y^+(X;Y)=\varnothing$；反之 $\nu_f$ 的存在性正由 $\mu(X)<\infty$ 保证（$f$ 的图支撑住的测度 $\nu_f$ 有限）。$X$ 与 $Y$ 的局部紧 Hausdorff 性使 $\mathscr R^+_f$ 与 Riesz 表示理论可用（\cref{theorem:ch02-Riesz正泛函}），并保证紧集足够多以讨论胎紧性（\cref{theorem:ch05-弱紧Young}）。$f$ 的 Borel 可测性是\eqref{align:ch02-2.29} 中 $f^{-1}(F)$ 可测的前提。
+
+(iii) 边界。$\mathcal Y^+(X;Y)$ 一般含多个元素：$\mu=\lambda|_{[0,1]}$、$X=Y=[0,1]$ 时，$\nu_1\triangleq\lambda_2|_{\mathscr B([0,1]^2)}$ 与 $\nu_2\triangleq$ 对角线 $\{(t,t)\mid t\in[0,1]\}$ 上的像测度都满足 (i)（两者的 $X$-投影都是 $\lambda|_{\mathscr B([0,1])}$），但都并非与某个 $f$ 相伴：由\cref{remark:ch02-Young投影}(ii)，与 $f$ 相伴的 Young 测度以 $f$ 的图为支撑，而 Borel 函数 $f$ 的图是 $\lambda_2$-零集。与 $f$ 相伴的 Young 测度是唯一的（\eqref{align:ch02-2.29} 在生成 $\sigma$-代数上确定 $\nu$），故 $\nu_f$ 与 $f$（$\mu$-a.e. 等价类）一一对应（\cref{remark:ch02-Young投影}(iii)）。
 \end{remark}
 
-\begin{remark}\label{remark:ch02-Young图支撑}\label{remark:ch02-Young投影}
-由\eqref{align:ch02-2.29}，与 $f$ 相伴的 Young 测度集中于 $f$ 的图像上，即集合 $\{(x,f(x))\mid x\in X\}$ 上（见\cref{definition:ch01-集中测度}）。又易见若 $f_1,f_2:X\to Y$ 为 $(\mathscr B(X),\mathscr B(Y))$-可测，$\nu_1,\nu_2$ 为相伴 Young 测度，则 $\nu_1=\nu_2$ 当且仅当 $f_1=f_2$ 在 $X$ 上 $\mu$-a.e.。事实上，若 $\nu_1=\nu_2$，则
+由定义有 $\nu_{p_X}=\mu$，其中 $p_X$ 为 $X\times Y$ 到 $X$ 的投影。记 Young 测度的集合为
 \begin{align*}
-\mu(X)=\nu_2(\{(x,f_2(x))\mid x\in X\})
-=\nu_1(\{(x,f_2(x))\mid x\in X\})
-=\mu(\{x\in X\mid f_1(x)=f_2(x)\}),
+\mathcal Y^+(X,\mathscr B(X),\mu;Y)\equiv\mathcal Y^+(X;Y).
 \end{align*}
-故 $f_1=f_2$ $\mu$-a.e.。反向蕴含由\eqref{align:ch02-2.29}立即得到。
+
+% SUPPLEMENT: parent=remark:ch02-Young有界; kind=proof; location=注 2.5.1 中“It is easily checked”; basis=原书以“易于验证”给出 $\mathcal Y^+(X;Y)$ 的有界性与范数等式，此处补出取 $E=X$ 的验证与球面归属
+\begin{remark}\phantomsection\label{remark:ch02-Young有界}
+$\mathcal Y^+(X;Y)$ 是 $\mathscr R^+_f(X\times Y)$ 的有界子集。事实上，对任意 $\nu\in\mathcal Y^+(X;Y)$，在\cref{definition:ch02-Young测度}(i) 中取 $E=X$ 得
+\begin{align*}
+\|\nu\|_{\mathscr R_f(X\times Y)}=\nu(X\times Y)=\mu(X)=\|\mu\|_{\mathscr R_f(X)},
+\end{align*}
+其中第一个等号用到 $\nu\geqslant0$ 时全变差范数等于总质量。故 $\mathcal Y^+(X;Y)$ 含于球面 $\partial B(0,\|\mu\|_{\mathscr R_f(X)})\subseteq\mathscr R^+_f(X\times Y)$，其上确界 $\sup_{\nu\in\mathcal Y^+(X;Y)}\|\nu\|=\|\mu\|_{\mathscr R_f(X)}$ 由每个元素取到。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch02-Young图支撑; kind=proof; location=注 2.5.2 中“the Young measure associated with $f$ is concentrated on the graph”; basis=原书未验证集中性，此处用 $\nu=\mu_\Phi$、重合准则与 $\Phi^{-1}$ 的显式描述补出
+% SUPPLEMENT: parent=remark:ch02-Young投影; kind=proof; location=注 2.5.2 中“the opposite implication”与投影积分公式; basis=投影公式由引理 2.5.1 取 $f=p_Y$ 得到；反向蕴含由 (2.29) 直接得到，正向蕴含补出可数基下的不交开集覆盖论证
+% SUPPLEMENT: parent=remark:ch02-Young投影; kind=correction; location=注 2.5.2 中 $\nu_2(\{(x,f_2(x))\})$ 一步; basis=原书以 $\nu_2(\Gamma_{f_2})=\mu(X)$ 推出 $f_1=f_2$ $\mu$-a.e.，这需要图 $\Gamma_{f_2}$ 为乘积可测集；改为用 $Y$ 的可数基中的不交开集对作覆盖，避免该前提
+\begin{remark}\phantomsection\label{remark:ch02-Young图支撑}\label{remark:ch02-Young投影}
+(i) 投影公式。设 $\nu\in\mathcal Y^+(X;Y)$。由\cref{lemma:ch02-像测度积分}（取 $f\triangleq p_Y$，其中 $p_Y:X\times Y\to Y$ 为第二投影，Borel 可测；测度取 $\nu$）得
+\begin{align*}
+\int_{X\times Y}g(y)\,\mathrm{d}\nu(x,y)=\int_Yg\,\mathrm{d}\nu_{p_Y}\quad\text{对任意 }g\in L^1(Y,\mathscr B(Y),\nu_{p_Y}),
+\end{align*}
+且当 $g\geqslant0$ 可测时两端同可为 $\infty$；同理对 $h\in L^1(X,\mathscr B(X),\nu_{p_X})$ 有 $\int_{X\times Y}h(x)\,\mathrm{d}\nu=\int_Xh\,\mathrm{d}\nu_{p_X}$，而当 $\nu$ 是 Young 测度时 $\nu_{p_X}=\mu$（\cref{definition:ch02-Young测度}(i)）。特别地 $\|\nu\|=\mu(X)$（\cref{remark:ch02-Young有界}）。
+
+(ii) 图支撑。由\eqref{align:ch02-2.29}，与 $f$ 相伴的 Young 测度集中于 $f$ 的图像上。准确地说，置 $\Gamma_f\triangleq\{(x,f(x))\mid x\in X\}$、$\Phi(x)\triangleq(x,f(x))$，则 $\nu=\mu_\Phi$（见\cref{definition:ch02-Young测度}后的证明），故对任意 $B\in\mathscr B(X)\otimes\mathscr B(Y)$ 且 $B\cap\Gamma_f=\varnothing$ 有 $\Phi^{-1}(B)=\varnothing$，从而 $\nu(B)=0$。当 $X$ 与 $Y$ 具可数基时（\cref{theorem:ch01-Borel乘积}）$\mathscr B(X\times Y)=\mathscr B(X)\otimes\mathscr B(Y)$ 且 $\Gamma_f\in\mathscr B(X\times Y)$，故 $\nu(\Gamma_f)=\mu(X)$，即 $\nu$ 按\cref{definition:ch01-集中测度}集中于 $\Gamma_f$。
+
+(iii) 与函数的一一对应。设 $f_1,f_2:X\to Y$ 为 $(\mathscr B(X),\mathscr B(Y))$-可测，$\nu_1$、$\nu_2$ 为相应的 Young 测度。若 $\nu_1=\nu_2$，则对任意 $E\in\mathscr B(X)$、$F\in\mathscr B(Y)$ 有
+\begin{align*}
+\mu(E\cap f_1^{-1}(F))=\nu_1(E\times F)=\nu_2(E\times F)=\mu(E\cap f_2^{-1}(F)).
+\end{align*}
+设 $Y$ 具可数基 $\mathcal B$。对任意一对满足 $U\cap V=\varnothing$ 的 $U,V\in\mathcal B$，在上式中取 $F=V$、$E\triangleq E_{U,V}\triangleq f_1^{-1}(U)\cap f_2^{-1}(V)$：由 $U\cap V=\varnothing$ 得 $E_{U,V}\cap f_1^{-1}(V)\subseteq f_1^{-1}(U\cap V)=\varnothing$，故
+\begin{align*}
+\mu(E_{U,V})=\mu(E_{U,V}\cap f_2^{-1}(V))=\mu(E_{U,V}\cap f_1^{-1}(V))=0.
+\end{align*}
+又 $\{f_1\neq f_2\}$ 等于这些 $E_{U,V}$（$(U,V)$ 取遍 $\mathcal B$ 中不交对）之并：若 $f_1(x)\neq f_2(x)$，由 $Y$ Hausdorff 与 $\mathcal B$ 为基，存在不交的 $U,V\in\mathcal B$ 使 $f_1(x)\in U$、$f_2(x)\in V$。$\mathcal B$ 可数故不交对至多可数，于是 $\mu(\{f_1\neq f_2\})=0$，即 $f_1=f_2$ $\mu$-a.e. 在 $X$ 中。反向蕴含由\eqref{align:ch02-2.29}立即得到：$f_1=f_2$ $\mu$-a.e. 时 $\mu(E\cap f_1^{-1}(F))=\mu(E\cap f_2^{-1}(F))$ 对一切 $E,F$ 成立，故 $\nu_1=\nu_2$。
 \end{remark}
 
 最后提及下列结果。
 
-\begin{lemma}\label{lemma:ch02-像测度积分}
-\label{lemma:ch02-像测度}
-设 $(X,\mathscr A,\mu)$ 为测度空间，$(X',\mathscr A')$ 为可测空间。设 $f:X\to X'$ 为 $(\mathscr A,\mathscr A')$-可测，$\mu_f$ 为 $\mu$ 在 $f$ 下的像。则对任意 $g\in L^1(X',\mathscr A',\mu_f)$，有 $g\circ f\in L^1(X,\mathscr A,\mu)$，且
+% SUPPLEMENT: parent=lemma:ch02-像测度; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+\begin{lemma}\label{lemma:ch02-像测度积分}\label{lemma:ch02-像测度}
+设 $(X,\mathscr A,\mu)$ 为测度空间，$(X',\mathscr A')$ 为可测空间，$f:X\to X'$ 为 $(\mathscr A,\mathscr A')$-可测，$\mu_f$ 为 $\mu$ 在 $f$ 下的像测度（\cref{definition:ch02-像测度}）。则对任意 $g\in L^1(X',\mathscr A',\mu_f)$ 有 $g\circ f\in L^1(X,\mathscr A,\mu)$，且
 \begin{align}
 \int_F g\,\mathrm{d}\mu_f=\int_{f^{-1}(F)}g\circ f\,\mathrm{d}\mu\quad\text{对任意 }F\in\mathscr A'. \label{align:ch02-2.30}
 \end{align}
 \end{lemma}
 
+% SUPPLEMENT: parent=lemma:ch02-像测度积分; kind=proof; location=引理 2.5.1 的证明; basis=原书仅对简单函数验证并援引 $\mathscr S(X')$ 在 $L^1$ 中的稠密性，此处补出简单函数、非负可测函数（Beppo Levi）与 $L^1$ 函数（正负部分解）三步的完整论证
 \begin{proof}
-设 $s\in\mathscr S(X')$，即 $s=\sum_{i=1}^n c_i\chi_{E'_i}$，其中 $c_1,\cdots ,c_n\in\mathbb R$，$\{E'_1,\cdots ,E'_n\}\subseteq\mathscr A'$ 为 $X'$ 的划分。因 $s\circ f=\sum_{i=1}^n c_i\chi_{f^{-1}(E'_i)}$，当 $g=s$ 时由\eqref{align:ch02-2.27}立即得\eqref{align:ch02-2.30}。再由 $\mathscr S(X')$ 在 $L^1(X',\mathscr A',\mu_f)$ 中的稠密性（见\cref{remark:ch02-简单函数稠密}）即得结论。
+先设 $g\in\mathscr S(X')$，即 $g=\sum_{i=1}^nc_i\chi_{E'_i}$，其中 $c_1,\cdots ,c_n\in\mathbb R$，$\{E'_1,\cdots ,E'_n\}\subseteq\mathscr A'$ 为 $X'$ 的划分。则 $g\circ f=\sum_{i=1}^nc_i\chi_{f^{-1}(E'_i)}$，且 $\{f^{-1}(E'_i)\}$ 是 $X$ 的 $\mathscr A$-可测划分；又 $f^{-1}(F)\cap f^{-1}(E'_i)=f^{-1}(F\cap E'_i)$。由\eqref{align:ch02-2.27}，
+\begin{align*}
+\int_{f^{-1}(F)}g\circ f\,\mathrm{d}\mu
+&=\sum_{i=1}^nc_i\,\mu\bigl(f^{-1}(F)\cap f^{-1}(E'_i)\bigr)
+=\sum_{i=1}^nc_i\,\mu\bigl(f^{-1}(F\cap E'_i)\bigr)\\
+&=\sum_{i=1}^nc_i\,\mu_f(F\cap E'_i)=\int_Fg\,\mathrm{d}\mu_f,
+\end{align*}
+其中最后一步是简单函数在 $F$ 上的积分定义。对 $|g|$ 用同一计算得 $\int_{f^{-1}(F)}|g\circ f|\,\mathrm{d}\mu=\int_F|g|\,\mathrm{d}\mu_f$，特别地 $g\circ f\in L^1(X,\mathscr A,\mu)$ 当且仅当 $g\in L^1(X',\mathscr A',\mu_f)$。
+
+次设 $g:X'\to[0,\infty]$ 为 $\mathscr A'$-可测。对每个 $n\in\mathbb N$，$g\wedge n$ 为实值 $\mathscr A'$-可测函数，由\cref{theorem:ch02-简单逼近}(i) 可取简单函数列 $\{s_k^{(n)}\}_k$ 使 $0\leqslant s_k^{(n)}\uparrow g\wedge n$（$k\to\infty$，逐点）。令 $s_k\triangleq\max_{n\leqslant k}s_k^{(n)}$（$k\in\mathbb N$），则 $\{s_k\}$ 为简单函数列，且由 $s_k^{(n)}\leqslant s_{k+1}^{(n)}$ 得 $\{s_k\}$ 非降、$0\leqslant s_k\leqslant g$、$s_k\uparrow g$ 在 $X'$ 上逐点成立。则 $0\leqslant s_k\circ f\leqslant g\circ f$ 且 $s_k\circ f\uparrow g\circ f$ 在 $X$ 上逐点成立。对 $\{s_k\}$ 与 $\{s_k\circ f\}$ 分别用 Beppo Levi 定理（\cref{theorem:ch02-BeppoLevi}），并利用上一段对简单函数成立的等式，得
+\begin{align*}
+\int_{f^{-1}(F)}g\circ f\,\mathrm{d}\mu
+=\lim_{k\to\infty}\int_{f^{-1}(F)}s_k\circ f\,\mathrm{d}\mu
+=\lim_{k\to\infty}\int_Fs_k\,\mathrm{d}\mu_f
+=\int_Fg\,\mathrm{d}\mu_f,
+\end{align*}
+两端同取值于 $[0,\infty]$。
+
+最后设 $g\in L^1(X',\mathscr A',\mu_f)$，则 $g^\pm\geqslant0$ 为 $\mathscr A'$-可测且 $\int_{X'}g^\pm\,\mathrm{d}\mu_f<\infty$。对 $g^+$ 与 $g^-$ 用上一段的结论得 $\int_{f^{-1}(F)}g^\pm\circ f\,\mathrm{d}\mu=\int_Fg^\pm\,\mathrm{d}\mu_f<\infty$。因 $g\circ f=(g^+\circ f)-(g^-\circ f)$ 且 $g^\pm\circ f\geqslant0$，故 $g\circ f\in L^1(X,\mathscr A,\mu)$，且由积分的线性性，
+\begin{align*}
+\int_{f^{-1}(F)}g\circ f\,\mathrm{d}\mu
+=\int_{f^{-1}(F)}g^+\circ f\,\mathrm{d}\mu-\int_{f^{-1}(F)}g^-\circ f\,\mathrm{d}\mu
+=\int_Fg^+\,\mathrm{d}\mu_f-\int_Fg^-\,\mathrm{d}\mu_f
+=\int_Fg\,\mathrm{d}\mu_f.
+\end{align*}
+取 $F=X'$ 得 $\int_{X'}g\,\mathrm{d}\mu_f=\int_Xg\circ f\,\mathrm{d}\mu$。此外，上述论证与 $\mathscr S(X')$ 在 $L^1(X',\mathscr A',\mu_f)$ 中的稠密性（\cref{remark:ch02-简单函数稠密}）等价：简单函数上的等式连同 $\|s\circ f\|_{L^1(\mu)}=\|s\|_{L^1(\mu_f)}$ 通过极限延拓到 $L^1$。
 \end{proof}
+
+% SUPPLEMENT: parent=lemma:ch02-像测度积分; kind=motivation; location=引理 2.5.1 后的注记; basis=引理 2.5.1 与 (2.30) + 换元公式的意义、$g\in L^1(\mu_f)$ 的作用（对非负可测函数无需该假设）、$L^1$ 等距嵌入与 a.e. 定义的边界
+\begin{remark}\phantomsection\label{remark:ch02-像测度积分动机}
+(i) 动机。\eqref{align:ch02-2.30}是换元公式：在像空间 $X'$ 上对 $\mu_f$ 积分等于在原空间上对 $\mu$ 积分。取 $F=X'$ 得 $\int_{X'}g\,\mathrm{d}\mu_f=\int_Xg\circ f\,\mathrm{d}\mu$，即 $\mu_f$ 正是使这一等式成立的唯一测度。它也给出 $L^1(X',\mathscr A',\mu_f)\to L^1(X,\mathscr A,\mu)$，$g\mapsto g\circ f$ 的等距嵌入（未必满），是处理像测度上的弱收敛与 Young 测度投影公式（\cref{remark:ch02-Young投影}(i)）的基本工具。
+
+(ii) 假设的作用。$f$ 的可测性使 $g\circ f$ 为 $\mathscr A$-可测（$g$ 为 $\mathscr A'$-可测）；$g\in L^1(X',\mathscr A',\mu_f)$ 使\eqref{align:ch02-2.30} 两端为有限实数，从而第三步中正负部分的差有意义。该假设对非负可测 $g$ 并不需要：此时第二步的论证直接给出两端同取值于 $[0,\infty]$ 的等式。此外，由第一步对 $|g|$ 的计算，$g\circ f\in L^1(X,\mathscr A,\mu)$ 与 $g\in L^1(X',\mathscr A',\mu_f)$ 等价，故引理的“可积性”结论不是附加信息。
+
+(iii) 边界。若 $g$ 只在 $\mu_f$-a.e. 意义下有定义，则由 $\mu_f(N)=0\Leftrightarrow\mu(f^{-1}(N))=0$ 知 $g\circ f$ 在 $\mu$-a.e. 意义下有定义，且\eqref{align:ch02-2.30} 不受影响。若 $g$ 为带号 $\mathscr A'$-可测函数而 $g\notin L^1(X',\mathscr A',\mu_f)$，则第三步中的差可写成 $\infty-\infty$，\eqref{align:ch02-2.30} 失去意义：例如 $X=X'=[0,1]$、$f=\mathrm{id}$、$\mu=\lambda$、$g(x)=1/x-1/(1-x)$ 时 $\int|g|\,\mathrm{d}\mu=\infty$，而 $g\circ f=g$ 的正负部分积分都为 $\infty$。等式对每个 $F\in\mathscr A'$ 成立；把 $F$ 换成与它 $\mu_f$-等价的集合时两端都不变，故\eqref{align:ch02-2.30}的右端只依赖 $f^{-1}(F)$ 的 $\mu$-等价类。
+\end{remark}
 
 
 

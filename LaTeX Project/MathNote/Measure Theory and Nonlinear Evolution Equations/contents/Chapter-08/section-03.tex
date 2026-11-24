@@ -18,45 +18,46 @@
 借助上节结果，可证明如下存在性定理。
 
 \begin{theorem}[Young 测度值解的整体存在性]\label{theorem:ch08-存在性}
-设或 $N=1$ 且\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立，或 $N\geqslant2$ 且\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2e} 成立。则问题 (P) 存在整体 Young 测度值解 $(u,\nu)$，它作为正则化问题族 $(P\epsilon_k)$ 解的某子列 $\{u_{\epsilon_k}\}$ 的极限而得到。进而：
+设 $\Omega\subseteq\mathbb{R}^N$ 为有界区域（$N\geqslant2$ 时 $\partial\Omega$ 光滑），$u_0$ 与 $\phi$ 满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d}（$N=1$）或\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2e}（$N\geqslant2$，其中 $p\in(1,2]$ 取为\hyperref[remark:ch08-8.1.1]{前述注记}所述的固定值 $p=q$）。则存在问题 (P) 的整体 Young 测度值解 $(u,\nu)$（见\cref{definition:ch08-Young测度值解}），它作为正则化问题族 $(P_{\varepsilon_k})$ 的解的某序列 $\{u_{\varepsilon_k}\}$（$\varepsilon_k\to0^+$）的极限而得到。此外：
 \begin{enumerate}[(i)]
-\item\label{item:ch08-exist-i} 若 $N=1$，则 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))\cap C([0,\infty);L^2(\Omega))\cap H^1(Q_T)$（对所有 $p\in[1,\infty)$），且 $u_x\in L^\infty(Q_\infty)$；
-\item\label{item:ch08-exist-ii} 若 $N\geqslant2$，则 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))\cap C([0,\infty);L^p(\Omega))\cap W^{1,p}(Q_T)$（$p\in(1,2]$）；
+\item\label{item:ch08-exist-i} 若 $N=1$，则 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))\cap C([0,\infty);L^2(\Omega))\cap H^1(Q_T)$ 对所有 $p\in[1,\infty)$ 与 $T\in(0,\infty)$ 成立，且 $u_x\in L^\infty(Q_\infty)$；
+\item\label{item:ch08-exist-ii} 若 $N\geqslant2$，则 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))\cap C([0,\infty);L^p(\Omega))\cap W^{1,p}(Q_T)$ 对所有 $T\in(0,\infty)$ 成立，其中 $p\in(1,2]$；
 \item\label{item:ch08-exist-iii} $\nu\in\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$。
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-先设 $N\geqslant2$。考察\cref{proposition:ch08-收敛N2} 给出的序列 $\{u_{\epsilon_k}\}$ 与函数 $u$。问题 $(P\epsilon_k)$ 的弱形式为
+先设 $N\geqslant2$。考察\cref{proposition:ch08-收敛N2} 给出的序列 $\{u_{\varepsilon_k}\}$ 与函数 $u$。问题 $(P_{\varepsilon_k})$ 的弱形式为
 \begin{align}
-&\iint_{Q_t}[u_{\epsilon_k}\partial_s\zeta-\phi(\nabla u_{\epsilon_k})\cdot\nabla\zeta-\epsilon_k\nabla u_{\epsilon_k,s}\cdot\nabla\zeta](x,s)\,\mathrm{d}x\,\mathrm{d}s\nonumber\\
-&\qquad=\int_\Omega u_{\epsilon_k}(x,t)\zeta(x,t)\,\mathrm{d}x-\int_\Omega u_{0\epsilon_k}(x)\zeta(x,0)\,\mathrm{d}x \label{align:ch08-8.48}
+&\iint_{Q_t}[u_{\varepsilon_k}\partial_s\zeta-\phi(\nabla u_{\varepsilon_k})\cdot\nabla\zeta-\varepsilon_k\nabla\partial_su_{\varepsilon_k}\cdot\nabla\zeta](x,s)\,\mathrm{d}x\,\mathrm{d}s\nonumber\\
+&\qquad=\int_\Omega u_{\varepsilon_k}(x,t)\zeta(x,t)\,\mathrm{d}x-\int_\Omega u_{0\varepsilon_k}(x)\zeta(x,0)\,\mathrm{d}x \label{align:ch08-8.48}
 \end{align}
-对所有 $t>0$ 与 $\zeta\in C^1([0,\infty);C^1_c(\Omega))$。由\eqref{align:ch08-8.36a}，当 $k\to\infty$ 时对所有 $t>0$ 有
+对所有 $t>0$ 与 $\zeta\in C^1([0,\infty);C^1_c(\Omega))$。由\eqref{align:ch08-8.36a}，当 $k\to\infty$ 时对所有 $t>0$ 得
 \begin{align}
-\lim_{k\to\infty}\iint_{Q_t}u_{\epsilon_k}(x,s)\partial_s\zeta(x,s)\,\mathrm{d}x\,\mathrm{d}s
+\lim_{k\to\infty}\iint_{Q_t}u_{\varepsilon_k}(x,s)\partial_s\zeta(x,s)\,\mathrm{d}x\,\mathrm{d}s
 =\iint_{Q_t}u(x,s)\partial_s\zeta(x,s)\,\mathrm{d}x\,\mathrm{d}s, \label{align:ch08-8.49}\\
-\lim_{k\to\infty}\int_\Omega u_{\epsilon_k}(x,t)\zeta(x,t)\,\mathrm{d}x
+\lim_{k\to\infty}\int_\Omega u_{\varepsilon_k}(x,t)\zeta(x,t)\,\mathrm{d}x
 =\int_\Omega u(x,t)\zeta(x,t)\,\mathrm{d}x, \label{align:ch08-8.50}
 \end{align}
 而由\eqref{align:ch08-8.36d} 与\eqref{align:ch08-8.28} 有
 \begin{align}
-\lim_{k\to\infty}\left(\epsilon_k\iint_{Q_t}\nabla\partial_s u_{\epsilon_k}\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}s\right)=0, \label{align:ch08-8.51}
+\lim_{k\to\infty}\left(\varepsilon_k\iint_{Q_t}\nabla\partial_s u_{\varepsilon_k}\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}s\right)=0, \label{align:ch08-8.51}
 \end{align}
 以及
 \begin{align}
-\lim_{k\to\infty}\int_\Omega u_{0\epsilon_k}(x)\zeta(x,0)\,\mathrm{d}x
+\lim_{k\to\infty}\int_\Omega u_{0\varepsilon_k}(x)\zeta(x,0)\,\mathrm{d}x
 =\int_\Omega u_0(x)\zeta(x,0)\,\mathrm{d}x. \label{align:ch08-8.52}
 \end{align}
-由于由不等式\eqref{align:ch08-8.29} 序列 $\{|\nabla u_{\epsilon_k}|\}$ 在 $L^p(Q_T)$（$p\in(1,2]$）中有界，由\cref{lemma:ch02-有界一致可积} 它一致可积；进而序列 $\{\phi(\nabla u_{\epsilon_k})\}$ 亦然，因由假设\eqref{align:ch08-8.2b} 有 $|\phi(\nabla u_{\epsilon_k})|\leqslant L|\nabla u_{\epsilon_k}|+|\phi(0)|$。于是由\cref{proposition:ch05-弱收敛} 与标准对角论证，存在 $\{\nabla u_{\epsilon_k}\}$ 的子列（为简便不重新标号）与测度 $\nu\in\mathscr{R}_f(Q_\infty\times\mathbb{R}^N)$（对所有 $T\in(0,\infty)$ 有 $\nu\in\mathcal{Y}^+(Q_T;\mathbb{R}^N)$），使
+
+由于由不等式\eqref{align:ch08-8.29} 序列 $\{|\nabla u_{\varepsilon_k}|\}$ 在 $L^p(Q_T)$（$p\in(1,2]$）中有界，由\cref{lemma:ch02-有界一致可积} 它一致可积；进而序列 $\{\phi(\nabla u_{\varepsilon_k})\}$ 亦然，因由假设\eqref{align:ch08-8.2b} 有 $|\phi(\nabla u_{\varepsilon_k})|\leqslant L|\nabla u_{\varepsilon_k}|+|\phi(0)|$。于是由\cref{proposition:ch05-弱收敛} 与标准对角论证，存在 $\{\nabla u_{\varepsilon_k}\}$ 的子列（为简便不重新标号）与测度 $\nu\in\mathscr{R}_f(Q_\infty\times\mathbb{R}^N)$，使对所有 $T\in(0,\infty)$ 有 $\nu\in\mathcal{Y}^+(Q_T;\mathbb{R}^N)$，且
 \begin{align}
-\phi(\nabla u_{\epsilon_k})\rightharpoonup\phi^*\ \text{在 }L^1(Q_T;\mathbb{R}^N), \label{align:ch08-8.53}
+\phi(\nabla u_{\varepsilon_k})\rightharpoonup\phi^*\ \text{在 }L^1(Q_T;\mathbb{R}^N), \label{align:ch08-8.53}
 \end{align}
-其中 $\phi^*$ 由\eqref{align:ch08-8.6} 定义。在\eqref{align:ch08-8.48} 中令 $k\to\infty$ 并用\eqref{align:ch08-8.49}--\eqref{align:ch08-8.53}，即得等式\eqref{align:ch08-8.5}。类似地，对 $h=\rho_i$（$\rho_i(y)\triangleq y_i$）应用\cref{proposition:ch05-弱收敛}，有
+其中 $\phi^*$ 由\eqref{align:ch08-8.6} 定义。在\eqref{align:ch08-8.48} 中令 $k\to\infty$ 并用\eqref{align:ch08-8.49}--\eqref{align:ch08-8.53}，即得等式\eqref{align:ch08-8.5}。同法可证，对 $h=\rho_i$（$\rho_i(y)\triangleq y_i$）应用\cref{proposition:ch05-弱收敛}，有
 \begin{align*}
-(\nabla u_{\epsilon_k})_i\rightharpoonup\int_{\mathbb{R}^N}y_i\,\mathrm{d}\nu_{(x,t)}(y)\ \text{在 }L^1(Q_T)\quad(i=1,\cdots ,N),
+(\nabla u_{\varepsilon_k})_i\rightharpoonup\int_{\mathbb{R}^N}y_i\,\mathrm{d}\nu_{(x,t)}(y)\ \text{在 }L^1(Q_T)\quad(i=1,\cdots ,N),
 \end{align*}
-结合\eqref{align:ch08-8.42b} 中的收敛即得等式\eqref{align:ch08-8.4}。
+结合\eqref{align:ch08-8.36b}（$N=1$ 时为\eqref{align:ch08-8.42b}）中的收敛即得等式\eqref{align:ch08-8.4}。
 
 因而偶 $(u,\nu)$ 是问题 (P) 在 $Q_T$ 中的 Young 测度值解。由\cref{proposition:ch08-收敛N2} 得 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))\cap C([0,\infty);L^p(\Omega))$ 且 $\partial_t u\in L^2(Q_\infty)$。此外，由于对每个 $T\in(0,\infty)$ 有 $\nu\in\mathcal{Y}^+(Q_T;\mathbb{R}^N)$，由测度的初等性质，对所有 Borel 集 $E\subseteq Q_\infty$ 有
 \begin{align*}
@@ -67,20 +68,52 @@
 由于 $(u,\nu)$ 对所有 $T\in(0,\infty)$ 都是 $Q_T$ 中问题 (P) 的 Young 测度值解，它是整体解；$N\geqslant2$ 情形结论即得。$N=1$ 情形的证明相同，只是用不等式\eqref{align:ch08-8.21} 与\cref{proposition:ch08-收敛N1} 分别代替\eqref{align:ch08-8.29} 与\cref{proposition:ch08-收敛N2}。证毕。
 \end{proof}
 
-\begin{remark}\label{remark:ch08-w等于phi星}
-设 $N=1$，$\{u_{\epsilon_k}\}$ 为\cref{theorem:ch08-存在性} 证明中所用序列。由不等式\eqref{align:ch08-8.25}，对所有 $T\in(0,\infty)$ 有
+% SUPPLEMENT: parent=theorem:ch08-存在性; kind=proof; location=定理 8.3.1 的证明后; basis=原证明以“标准对角论证”“对 $h=\rho_i$ 应用”“$N=1$ 情形的证明相同”带过三处关键步骤；此处补出 (8.51) 的 $\sqrt{\varepsilon}$ 估计、以 $T=n$ 抽取子列的对角论证、由 $L^p$ 有界得一致可积的推理链、$N=1$ 情形逐项替换的核对，以及 $\partial_tu\in L^2(Q_\infty)$ 与 (8.4) 的极限识别
+\begin{proof}[补证：\cref{theorem:ch08-存在性} 证明中省略的细节]
+\begin{enumerate}[(i)]
+\item 关于\eqref{align:ch08-8.51}。由\eqref{align:ch08-8.36d}，序列 $\{\sqrt{\varepsilon_k}\,\nabla\partial_su_{\varepsilon_k}\}$ 在 $L^2(Q_\infty)$ 中有界且 $\sqrt{\varepsilon_k}\,\nabla\partial_su_{\varepsilon_k}\to0$ 在 $L^2(Q_\infty)$ 中。于是
 \begin{align*}
-\|\phi(\partial_x u_{\epsilon_k})-w_{\epsilon_k}\|_{L^2(Q_T)}=\epsilon_k\|\partial_{xt}u_{\epsilon_k}\|_{L^2(Q_T)}\to0,
+\left|\varepsilon_k\iint_{Q_t}\nabla\partial_su_{\varepsilon_k}\cdot\nabla\zeta\right|
+=\sqrt{\varepsilon_k}\left|\iint_{Q_t}\sqrt{\varepsilon_k}\,\nabla\partial_su_{\varepsilon_k}\cdot\nabla\zeta\right|
+\leqslant\sqrt{\varepsilon_k}\,\|\sqrt{\varepsilon_k}\,\nabla\partial_su_{\varepsilon_k}\|_{L^2(Q_t)}\|\nabla\zeta\|_{L^2(Q_t)}\to0,
 \end{align*}
-故由\eqref{align:ch08-8.45} 有 $\phi(\partial_x u_{\epsilon_k})\rightharpoonup w$ 在 $L^2(Q_T)$。另一方面，由\eqref{align:ch08-8.53} 有 $\phi(\partial_x u_{\epsilon_k})\rightharpoonup\phi^*\triangleq \int_{\mathbb{R}}\phi(y)\,\mathrm{d}\nu(y)$ 在 $L^1(Q_T)$。于是 $w=\phi^*$，特别地 $\phi^*\in L^2(0,\infty;H^1(\Omega))\cap L^\infty(Q_T)$。
+因 $\sqrt{\varepsilon_k}\to0$ 而其余因子有界。\eqref{align:ch08-8.52} 由\eqref{align:ch08-8.28} 中 $u_{0\varepsilon}\to u_0$ 在 $W^{1,p}_0(\Omega)$ 中的强收敛与 $\zeta(\cdot,0)\in C^1_c(\Omega)\subseteq L^{p'}(\Omega)$ 得到，其中 $1/p+1/p'=1$。
+\item 关于一致可积性。\eqref{align:ch08-8.29} 给出 $\sup_{\varepsilon>0}\|\nabla u_\varepsilon\|_{L^p(Q_\infty)}\leqslant C$，而 $\lambda_{N+1}(Q_T)<\infty$ 且 $p>1$，故 $\{|\nabla u_{\varepsilon_k}|\}$ 在 $L^1(Q_T)$ 中有界且一致可积（\cref{lemma:ch02-有界一致可积}）。由\eqref{align:ch08-8.2b} 有 $|\phi(\nabla u_{\varepsilon_k})|\leqslant L|\nabla u_{\varepsilon_k}|+|\phi(0)|$，故 $\{\phi(\nabla u_{\varepsilon_k})\}$ 在 $L^1(Q_T;\mathbb{R}^N)$ 中有界，且对任意可测集 $E\subseteq Q_T$ 有
+\begin{align*}
+\int_E|\phi(\nabla u_{\varepsilon_k})|\,\mathrm{d}x\,\mathrm{d}t\leqslant L\int_E|\nabla u_{\varepsilon_k}|\,\mathrm{d}x\,\mathrm{d}t+|\phi(0)|\lambda_{N+1}(E),
+\end{align*}
+故它亦一致可积。\cref{proposition:ch05-弱收敛} 的前提（序列 $\{|\nabla u_\varepsilon|\}$ 在 $L^1(Q_T)$ 中有界，且 $\{|\nabla u_\varepsilon|\}$ 与 $\{\phi(\nabla u_\varepsilon)\}$ 都在 $L^1(Q_T)$ 中一致可积）全部满足。
+\item 关于“标准对角论证”。\cref{proposition:ch05-弱收敛} 是对固定的 $T$ 陈述的：对每个 $n\in\mathbb{N}$，把它用于 $Q_n$ 上的序列 $\{\nabla u_{\varepsilon_k}\}$ 可得子列与 Young 测度 $\nu_n\in\mathcal{Y}^+(Q_n;\mathbb{R}^N)$，使 $\nu_n$ 在 $Q_n$ 上覆盖 $\nu_{n+1}$ 在 $Q_n$ 上的限制（窄极限的唯一性）。按 $n=1,2,\cdots$ 逐次抽取子列并取对角线，得到单一序列（仍记作 $\{u_{\varepsilon_k}\}$）与 $\nu\in\mathscr{R}_f(Q_\infty\times\mathbb{R}^N)$，使 $\nu|_{Q_T\times\mathbb{R}^N}=\nu_T$ 对所有 $T\in(0,\infty)$ 成立，从而 $\nu\in\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 对每个 $T$ 成立，且\eqref{align:ch08-8.53} 对每个 $T$ 成立。
+\item 关于\eqref{align:ch08-8.4} 的识别。由\eqref{align:ch08-8.36b}（取 $r=1$）有 $\nabla u_{\varepsilon_k}\rightharpoonup\nabla u$ 在 $L^1(Q_T;\mathbb{R}^N)$ 中，故其每个分量 $(\nabla u_{\varepsilon_k})_i\rightharpoonup\partial_iu$ 在 $L^1(Q_T)$ 中。另一方面，对 $h=\rho_i$ 用\cref{proposition:ch05-弱收敛} 得 $(\nabla u_{\varepsilon_k})_i\rightharpoonup\int_{\mathbb{R}^N}y_i\,\mathrm{d}\nu_{(x,t)}(y)$ 在 $L^1(Q_T)$ 中；由于 $L^1(Q_T)$ 中的弱极限唯一，两个极限几乎处处相等，即\eqref{align:ch08-8.4}。$\nu$ 与 $h$ 无关这一条正来自\cref{proposition:ch05-弱收敛}，故对 $i=1,\cdots ,N$ 可用同一个 $\nu$。
+\item 关于 $\partial_tu\in L^2(Q_\infty)$ 与 $u$ 的正则性。由\eqref{align:ch08-8.29}，$\{\partial_tu_{\varepsilon_k}\}$ 在 $L^2(Q_\infty)$ 中有界，且由\eqref{align:ch08-8.36d} 弱收敛于 $\partial_tu$；由范数的弱下半连续性得 $\|\partial_tu\|_{L^2(Q_\infty)}\leqslant C$。同理，由\eqref{align:ch08-8.36b}（取 $r=1$）与 $u_{\varepsilon_k}\in L^\infty(0,\infty;W^{1,p}_0(\Omega))$ 关于 $\varepsilon$ 的一致有界性得 $u\in L^\infty(0,\infty;W^{1,p}_0(\Omega))$（见\cref{proposition:ch08-收敛N2} 的证明）。
+\item 关于 $N=1$ 情形的逐项替换。此时\eqref{align:ch08-8.48} 仍成立：由\eqref{align:ch08-8.9}--\eqref{align:ch08-8.10} 有 $\nabla u=\partial_xu$、$\nabla\partial_su=\partial_x\partial_su=\partial_sv$。逐项对应为：(a) \eqref{align:ch08-8.49}--\eqref{align:ch08-8.50} 改由\eqref{align:ch08-8.42a}（$u_{\varepsilon_k}\to u$ 在 $C([0,T);L^2(\Omega))$ 中）得到；(b) \eqref{align:ch08-8.51} 改由\eqref{align:ch08-8.42e}（$\varepsilon_k\partial_{xt}u_{\varepsilon_k}\to0$ 在 $L^2(Q_\infty)$ 中）得到，推理与上面 (i) 相同；(c) \eqref{align:ch08-8.52} 变为恒等式，因 $N=1$ 时初值不逼近，$u_{0\varepsilon}=u_0$；(d) 一致可积性不需经\cref{lemma:ch02-有界一致可积}：由\eqref{align:ch08-8.21} 有 $\|v_{\varepsilon_k}\|_{L^\infty(Q_\infty)}\leqslant C$，再由\eqref{align:ch08-8.26} 有 $\|\phi(v_{\varepsilon_k})\|_{L^\infty(Q_\infty)}\leqslant\widetilde C$，故 $\{\phi(v_{\varepsilon_k})\}$ 在 $L^\infty(Q_\infty)$ 中有界，从而一致可积；(e) \eqref{align:ch08-8.4} 改由\eqref{align:ch08-8.42b}（取 $r=1$）识别；(f) 结论 (i) 中的 $H^1(Q_T)$ 由 $\partial_tu\in L^2(Q_\infty)$ 与 $\nabla u\in L^\infty(Q_\infty)\subseteq L^2(Q_T)$ 得到，$u_x\in L^\infty(Q_\infty)$ 由\eqref{align:ch08-8.42d} 得到。
+\end{enumerate}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch08-存在性; kind=motivation; location=定理 8.3.1 的证明后的注记; basis=定理 8.3.1 与 (8.21)、(8.29)、(8.36)、(8.42) + 证明的五个环节、$p>1$ 与 (8.2b) 各自的作用、(8.2d)--(8.2e) 在位势能量估计中的作用，以及定理不声称唯一性与 $p=1$ 边界的说明
+\begin{remark}\phantomsection\label{remark:ch08-存在性}
+\begin{enumerate}[(i)]
+\item 引入动机。本定理是本章的核心：它把正则化解族 $\{u_\varepsilon\}$ 的极限组织为整体 Young 测度值解，从而在 $\phi$ 非单调、(P) 不适定的情形下给出一个仍可操作的解概念。证明的骨架是三步：先验估计\eqref{align:ch08-8.21} 或\eqref{align:ch08-8.29} 给出关于 $\varepsilon$ 一致的界；\cref{proposition:ch08-收敛N1} 或\cref{proposition:ch08-收敛N2} 给出 $u_{\varepsilon_k}$ 的收敛；一致可积性与\cref{proposition:ch05-弱收敛} 给出极限 Young 测度 $\nu$ 与 $\phi$ 的弱极限 $\phi^*$，最后在弱形式\eqref{align:ch08-8.48} 中逐项取极限。
+\item 各项假设的作用。$N=1$ 时\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d} 的强制性经不变区间论证给出\eqref{align:ch08-8.44} 与\eqref{align:ch08-8.26}，使 $\phi(v_{\varepsilon_k})$ 的一致可积性不依赖 $L^p$ 理论；\eqref{align:ch08-8.1a} 给出初值与 $W^{1,\infty}_0(\Omega)$ 的正则性。$N\geqslant2$ 时\eqref{align:ch08-8.2d}--\eqref{align:ch08-8.2e} 的位势结构使能量等式\eqref{align:ch08-8.30} 成立，并由强制性\eqref{align:ch08-8.2e} 反推 $\nabla u_\varepsilon$ 的 $L^p$ 界\eqref{align:ch08-8.29}；\eqref{align:ch08-8.2c} 给出 $\Phi(y)\leqslant C_3|y|^p$（即\eqref{align:ch08-8.3}），用于估计初始能量\eqref{align:ch08-8.33}；\eqref{align:ch08-8.2b} 把 $\nabla u_{\varepsilon_k}$ 的一致可积性传递给 $\phi(\nabla u_{\varepsilon_k})$，这一步不可省。指数范围 $p>1$ 是关键：\eqref{align:ch08-8.29} 只给出 $L^p$ 有界，而 $L^p$ 有界（$p>1$、区域测度有限）才蕴含一致可积性。
+\item 结论的作用。结论 (i)--(ii) 给出 $u$ 的正则性：$N=1$ 时 $u\in H^1(Q_T)$ 与 $u_x\in L^\infty(Q_\infty)$ 使 $\phi^*$ 可从 $L^1$ 提升到 $L^2(0,\infty;H^1(\Omega))\cap L^\infty(Q_\infty)$（\hyperref[remark:ch08-w等于phi星]{注记}）；$N\geqslant2$ 时 $u\in W^{1,p}(Q_T)$ 且 $p\leqslant2$。结论 (iii) 把逐 $T$ 的 Young 测度延拓为 $Q_\infty$ 上的一个 Young 测度，其证明只用到 $\nu|_{Q_T}\in\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 与测度的连续性。
+\item 边界。定理不声称唯一性：证明只对某个子列取极限，不同的取值 $\varepsilon_k\to0$ 可能给出不同的 $(u,\nu)$，而 $\phi$ 非单调时解的定义本身也不足以确定 $\nu$（见\hyperref[remark:ch08-Young测度值解]{注记}）。若把\eqref{align:ch08-8.2a} 放宽为 $p=1$，则\eqref{align:ch08-8.29} 只给出 $\nabla u_\varepsilon$ 在 $L^1$ 中有界而不一致可积，(8.53) 中 $\phi(\nabla u_{\varepsilon_k})$ 的弱极限可能只是测度而非函数，此时须改用\cref{chapter:ch05} 的 biting 引理与集中测度。若去掉\eqref{align:ch08-8.2b}，$\phi(\nabla u_{\varepsilon_k})$ 的一致可积性无法从 $\nabla u_{\varepsilon_k}$ 传递，\eqref{align:ch08-8.53} 同样失效。
+\end{enumerate}
 \end{remark}
 
-\begin{remark}\label{remark:ch08-phi星可积}
-仿\cref{theorem:ch08-存在性} 证明可知，若 $N\geqslant2$ 且假设\eqref{align:ch08-8.2c} 满足，则由\eqref{align:ch08-8.6} 定义的每个函数 $\phi_i^*$ 属于 $L^r(Q_T)$（对所有 $T\in(0,\infty)$ 与 $r=\frac{p}{p-1}$，$p\in(1,2]$；显然 $N=1$ 时由\eqref{align:ch08-8.21} 有 $\phi^*\in L^\infty(Q_\infty)$）。事实上，固定 $T\in(0,\infty)$。由\eqref{align:ch08-8.2c} 存在 $M>0$，使对几乎所有 $(x,t)\in Q_T$，
+\begin{remark}\phantomsection\label{remark:ch08-w等于phi星}
+设 $N=1$，$\{u_{\varepsilon_k}\}$ 为\cref{theorem:ch08-存在性} 证明中所用序列。由不等式\eqref{align:ch08-8.25}，对所有 $T\in(0,\infty)$ 有
+\begin{align*}
+\|\phi(\partial_x u_{\varepsilon_k})-w_{\varepsilon_k}\|_{L^2(Q_T)}=\varepsilon_k\|\partial_{xt}u_{\varepsilon_k}\|_{L^2(Q_T)}\to0,
+\end{align*}
+故由\eqref{align:ch08-8.45} 有 $\phi(\partial_x u_{\varepsilon_k})\rightharpoonup w$ 在 $L^2(Q_T)$。另一方面，由\eqref{align:ch08-8.53} 有 $\phi(\partial_x u_{\varepsilon_k})\rightharpoonup\phi^*\triangleq\int_{\mathbb{R}}\phi(y)\,\mathrm{d}\nu(y)$ 在 $L^1(Q_T)$。于是 $w=\phi^*$，特别地 $\phi^*\in L^2(0,\infty;H^1(\Omega))\cap L^\infty(Q_T)$。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch08-phi星可积}
+仿\cref{theorem:ch08-存在性} 的证明可知，若 $N\geqslant2$ 且假设\eqref{align:ch08-8.2c} 满足，则由\eqref{align:ch08-8.6} 定义的每个函数 $\phi_i^*$ 属于 $L^r(Q_T)$（对所有 $T\in(0,\infty)$ 与 $r=\frac{p}{p-1}$，$p\in(1,2]$；$N=1$ 时由\eqref{align:ch08-8.21} 直接得 $\phi^*\in L^\infty(Q_\infty)$）。事实上，固定 $T\in(0,\infty)$。由\eqref{align:ch08-8.2c} 存在 $M>0$，使对几乎所有 $(x,t)\in Q_T$，
 \begin{align}
 |\phi_i^*|(x,t)\leqslant M\int_{\mathbb{R}^N}(1+|y|^{p-1})\,\mathrm{d}\nu_{(x,t)}(y). \label{align:ch08-8.54}
 \end{align}
-由\eqref{align:ch08-8.54} 与 Jensen 不等式有
+由\eqref{align:ch08-8.54} 与 Jensen 不等式（$\nu_{(x,t)}$ 为概率测度）有
 \begin{align}
 |\phi_i^*|^r\leqslant\bar M\int_{\mathbb{R}^N}(1+|y|^p)\,\mathrm{d}\nu_{(x,t)}(y) \label{align:ch08-8.55}
 \end{align}
@@ -90,13 +123,14 @@ f_j(z)=
 \begin{cases}
 1 & \text{若 }z\in[0,j],\\
 0 & \text{若 }z\in[j+1,\infty).
-\end{cases} \label{align:ch08-8.56}
+\end{cases} 
+\label{align:ch08-8.56}
 \end{align}
-设 $\{u_{\epsilon_k}\}$ 为\cref{theorem:ch08-存在性} 证明中所用序列。由\eqref{align:ch08-8.29}，对每个 $j\in\mathbb{N}$，序列 $\{f_j(|\nabla u_{\epsilon_k}|)|\nabla u_{\epsilon_k}|^p\}$ 在 $Q_T$ 中有界因而一致可积。于是由\cref{proposition:ch05-弱收敛} 存在子列（不重新标号）使
+设 $\{u_{\varepsilon_k}\}$ 为\cref{theorem:ch08-存在性} 证明中所用序列。由\eqref{align:ch08-8.29}，对每个 $j\in\mathbb{N}$，序列 $\{f_j(|\nabla u_{\varepsilon_k}|)|\nabla u_{\varepsilon_k}|^p\}$ 在 $Q_T$ 中有界因而一致可积。于是由\cref{proposition:ch05-弱收敛} 存在子列（不重新标号）使
 \begin{align}
 \iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}(1+f_j(|y|)|y|^p)\,\mathrm{d}\nu_{(x,t)}(y)
-&=\lim_{k\to\infty}\iint_{Q_T}(1+f_j(|\nabla u_{\epsilon_k}|)|\nabla u_{\epsilon_k}|^p)\,\mathrm{d}x\,\mathrm{d}t\nonumber\\
-&\leqslant\lim_{k\to\infty}\iint_{Q_T}(1+|\nabla u_{\epsilon_k}|^p)\,\mathrm{d}x\,\mathrm{d}t\leqslant\widetilde C \label{align:ch08-8.57}
+&=\lim_{k\to\infty}\iint_{Q_T}(1+f_j(|\nabla u_{\varepsilon_k}|)|\nabla u_{\varepsilon_k}|^p)\,\mathrm{d}x\,\mathrm{d}t\nonumber\\
+&\leqslant\lim_{k\to\infty}\iint_{Q_T}(1+|\nabla u_{\varepsilon_k}|^p)\,\mathrm{d}x\,\mathrm{d}t\leqslant\widetilde C \label{align:ch08-8.57}
 \end{align}
 其中 $\widetilde C>0$ 与 $j$ 无关（回忆 $\nu_{(x,t)}(\mathbb{R}^N)=1$ 对几乎所有 $(x,t)\in Q_T$）。由于 $\lim_{j\to\infty}f_j(|y|)|y|^p=|y|^p$ 对所有 $y\in\mathbb{R}^N$，由\eqref{align:ch08-8.57} 与 Fatou 引理得
 \begin{align*}
@@ -108,34 +142,79 @@ f_j(z)=
 为后文引用，证明如下结果（见文献~\cite{ref100} 命题 6）。
 
 \begin{proposition}[测度分量的分离等式]\label{proposition:ch08-分离等式}
-设 $N=1$，$\Omega\equiv(a,b)$，\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立。设 $(u,\nu)$ 为\cref{theorem:ch08-存在性} 给出的 (P) 的 Young 测度值解。设 $G_\phi$ 如\eqref{align:ch08-8.14}（$g\in C^1_c(\mathbb{R})$），$f\in C^1(\mathbb{R})\cap W^{1,\infty}(\mathbb{R})$。则对几乎所有 $(x,t)\in Q_T$，
+设 $N=1$，$\Omega\equiv(a,b)$，$T\in(0,\infty)$，\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立。设 $(u,\nu)$ 为\cref{theorem:ch08-存在性} 给出的 (P) 在 $Q_T$ 中的 Young 测度值解，$\{\nu_{(x,t)}\}$ 为 $\nu$ 的离散分解。设 $G_\phi$ 如\eqref{align:ch08-8.14}（$g\in C^1_c(\mathbb{R})$，$k\in\mathbb{R}$），$f\in C^1(\mathbb{R})\cap W^{1,\infty}(\mathbb{R})$。则对几乎所有 $(x,t)\in Q_T$，$y\mapsto f(\phi(y))G_\phi(y)$ 关于 $\nu_{(x,t)}$ 可积，且
 \begin{align}
 \int_{\mathbb{R}}f(\phi(y))G_\phi(y)\,\mathrm{d}\nu_{(x,t)}(y)
 =\int_{\mathbb{R}}f(\phi(y))\,\mathrm{d}\nu_{(x,t)}(y)\int_{\mathbb{R}}G_\phi(y)\,\mathrm{d}\nu_{(x,t)}(y). \label{align:ch08-8.58}
 \end{align}
 \end{proposition}
 
-为证\cref{proposition:ch08-分离等式}，需要一个技术性引理（证明见文献~\cite{ref83} 引理 2.1）。设 $\{\eta_i\}\subseteq H^1(\Omega)$ 为算子 $-\Delta$ 在 $\partial\Omega$ 上齐次 Neumann 条件下的特征函数序列，$\{\mu_i\}$ 为相应特征值序列。对任意 $\epsilon>0$，令 $\mathbb{N}_\epsilon\triangleq \{i\in\mathbb{N}\mid\mu_i\leqslant1/\epsilon\}$，并令 $P_\epsilon,Q_\epsilon:L^2(\Omega)\to H^1(\Omega)$、$P_\epsilon+Q_\epsilon=I$，为由下式定义的投影算子：
+为证\cref{proposition:ch08-分离等式}，需要一个技术性引理（其证明见文献~\cite{ref83} 引理 2.1；本文的补证见后）。设 $\{\eta_i\}\subseteq H^1(\Omega)$ 为算子 $-\Delta$ 在 $\partial\Omega$ 上齐次 Neumann 条件下的特征函数序列（取为 $L^2(\Omega)$ 的正交规范基），$\{\mu_i\}$ 为相应的特征值序列（$\mu_i\to\infty$）。对任意 $\varepsilon>0$，令 $\mathbb{N}_\varepsilon\triangleq\{i\in\mathbb{N}\mid\mu_i\leqslant1/\varepsilon\}$，并令 $P_\varepsilon,Q_\varepsilon:L^2(\Omega)\to H^1(\Omega)$、$P_\varepsilon+Q_\varepsilon=I$，为由下式定义的投影算子：
 \begin{align}
-P_\epsilon f\triangleq \sum_{i\in\mathbb{N}_\epsilon}f_i\eta_i,\quad
-Q_\epsilon f\triangleq \sum_{i\in\mathbb{N}_\epsilon^c}f_i\eta_i,\quad
-f_i\triangleq \int_\Omega f\eta_i\,\mathrm{d}x\ (f\in L^2(\Omega)). \label{align:ch08-8.59}
+P_\varepsilon f\triangleq\sum_{i\in\mathbb{N}_\varepsilon}f_i\eta_i,\quad
+Q_\varepsilon f\triangleq\sum_{i\in\mathbb{N}_\varepsilon^c}f_i\eta_i,\quad
+f_i\triangleq\int_\Omega f\eta_i\,\mathrm{d}x\ (f\in L^2(\Omega)). \label{align:ch08-8.59}
 \end{align}
 
 \begin{lemma}[投影估计]\label{lemma:ch08-投影估计}
-设 $N=1$ 且\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立。设 $u_\epsilon$ 为\cref{theorem:ch08-正则化适定} 给出的问题 $(P\epsilon)$ 的解，$v_\epsilon\triangleq \partial_x u_\epsilon$。则存在 $C>0$，使对所有 $\epsilon>0$，
+设 $N=1$，$T\in(0,\infty)$ 且\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立。设 $u_\varepsilon$ 为\cref{theorem:ch08-正则化适定} 给出的问题 $(P_\varepsilon)$ 的整体解，$v_\varepsilon\triangleq\partial_xu_\varepsilon$。则存在 $C>0$（不依赖于 $\varepsilon$）使对所有 $\varepsilon>0$，
 \begin{align}
-\|P_\epsilon\phi(v_\epsilon)\|_{L^2(0,T;H^1_0(\Omega))}
-+\frac{1}{\sqrt\epsilon}\|Q_\epsilon\phi(v_\epsilon)\|_{L^2(Q_T)}\leqslant C. \label{align:ch08-8.60}
+\|P_\varepsilon\phi(v_\varepsilon)\|_{L^2(0,T;H^1(\Omega))}
++\frac{1}{\sqrt\varepsilon}\|Q_\varepsilon\phi(v_\varepsilon)\|_{L^2(Q_T)}\leqslant C. \label{align:ch08-8.60}
 \end{align}
 \end{lemma}
 
-\begin{proof}[\cref{proposition:ch08-分离等式} 的证明]
-设 $\{v_{\epsilon_k}\}$ 为\eqref{align:ch08-8.46} 中收敛的序列。在当前假设下，$f\circ\phi\in C_b(\mathbb{R})$，而 $|G_\phi(y)|\leqslant\|g\|_{L^\infty(\mathbb{R})}|y|$ 对所有 $y\in\mathbb{R}$。由\eqref{align:ch08-8.25} 序列 $\{v_{\epsilon_k}\}$ 在 $L^\infty(Q_T)$ 中有界因而在 $Q_T$ 中一致可积。于是由\cref{proposition:ch05-弱收敛} 在 $L^1(Q_T)$ 中有
+% SUPPLEMENT: parent=lemma:ch08-投影估计; kind=proof; location=引理 8.3.3 后; basis=原书把证明留给 [83, Lemma 2.1]；此处补出以 $-\Delta$ 的 Neumann 特征基展开、由 (8.9)--(8.10) 得 $\phi(v_\varepsilon)=(I-\varepsilon\partial_{xx})w_\varepsilon$、低频用 $1+\varepsilon\mu_i\leqslant2$、高频用 $(1+\varepsilon\mu_i)^2\leqslant2\varepsilon\mu_i(1+\varepsilon\mu_i)$，最后用 (8.25) 完成估计的完整论证
+\begin{proof}[补证：\cref{lemma:ch08-投影估计}]
+记 $s_\varepsilon\triangleq\phi(v_\varepsilon)$。由\eqref{align:ch08-8.9}--\eqref{align:ch08-8.10} 有 $\partial_tv_\varepsilon=\partial_x\partial_tu_\varepsilon=\partial_x(\partial_xw_\varepsilon)=\partial_{xx}w_\varepsilon$，故
 \begin{align*}
-f(\phi(v_{\epsilon_k}))\rightharpoonup(f\circ\phi)^*,\quad
-G_\phi(v_{\epsilon_k})\rightharpoonup(G_\phi)^*,\quad
-f(\phi(v_{\epsilon_k}))G_\phi(v_{\epsilon_k})\rightharpoonup((f\circ\phi)G_\phi)^*,
+s_\varepsilon=\phi(v_\varepsilon)=w_\varepsilon-\varepsilon\,\partial_tv_\varepsilon=(I-\varepsilon\,\partial_{xx})w_\varepsilon.
+\end{align*}
+把 $w_\varepsilon(\cdot,t)$ 与 $s_\varepsilon(\cdot,t)$ 按 $\{\eta_i\}$ 展开为 $\sum_iw_i\eta_i$ 与 $\sum_is_i\eta_i$。由 $\partial_xw_\varepsilon(\cdot,t)\in W^{1,\infty}_0(\Omega)$，两次分部积分无边界项，且 $-\partial_{xx}\eta_i=\mu_i\eta_i$，故 $s_i=(1+\varepsilon\mu_i)w_i$ 对每个 $i$ 成立，$\{\eta_i\}$ 的正交规范性给出
+\begin{align*}
+\|f\|^2_{H^1(\Omega)}=\sum_i(1+\mu_i)|f_i|^2\quad(f\in H^1(\Omega)).
+\end{align*}
+
+关于低频部分。对 $i\in\mathbb{N}_\varepsilon$ 有 $\varepsilon\mu_i\leqslant1$，故 $1+\varepsilon\mu_i\leqslant2$，于是
+\begin{align*}
+\|P_\varepsilon s_\varepsilon\|^2_{H^1(\Omega)}
+=\sum_{i\in\mathbb{N}_\varepsilon}(1+\mu_i)(1+\varepsilon\mu_i)^2|w_i|^2
+\leqslant4\sum_{i\in\mathbb{N}_\varepsilon}(1+\mu_i)|w_i|^2
+\leqslant4\|w_\varepsilon\|^2_{H^1(\Omega)}.
+\end{align*}
+
+关于高频部分。对 $i\notin\mathbb{N}_\varepsilon$ 有 $\varepsilon\mu_i>1$，故 $1+\varepsilon\mu_i<2\varepsilon\mu_i$，从而 $(1+\varepsilon\mu_i)^2\leqslant2\varepsilon\mu_i(1+\varepsilon\mu_i)$；于是
+\begin{align*}
+\|Q_\varepsilon s_\varepsilon\|^2_{L^2(\Omega)}
+=\sum_{i\notin\mathbb{N}_\varepsilon}(1+\varepsilon\mu_i)^2|w_i|^2
+\leqslant2\varepsilon\sum_{i\in\mathbb{N}}\mu_i(1+\varepsilon\mu_i)|w_i|^2
+=2\varepsilon\bigl(\|\partial_xw_\varepsilon\|^2_{L^2(\Omega)}+\varepsilon\|\partial_{xx}w_\varepsilon\|^2_{L^2(\Omega)}\bigr),
+\end{align*}
+其中用到 $\sum_i\mu_i|w_i|^2=\|\partial_xw_\varepsilon\|^2_{L^2(\Omega)}$ 与 $\sum_i\mu_i^2|w_i|^2=\|\partial_{xx}w_\varepsilon\|^2_{L^2(\Omega)}$。
+
+最后，由\eqref{align:ch08-8.25} 存在常数 $C_0>0$，使 $\|\partial_xw_\varepsilon\|_{L^2(Q_\infty)}\leqslant C_0$ 且 $\sqrt\varepsilon\,\|\partial_tv_\varepsilon\|_{L^2(Q_\infty)}\leqslant C_0$；又 $\partial_tv_\varepsilon=\partial_{xx}w_\varepsilon$。把上两式在 $(0,T)$ 上积分，得
+\begin{align*}
+\|P_\varepsilon s_\varepsilon\|^2_{L^2(0,T;H^1(\Omega))}\leqslant4C_0^2,\qquad
+\|Q_\varepsilon s_\varepsilon\|^2_{L^2(Q_T)}\leqslant4\varepsilon C_0^2,
+\end{align*}
+即 $\|P_\varepsilon\phi(v_\varepsilon)\|_{L^2(0,T;H^1(\Omega))}\leqslant2C_0$ 且 $\varepsilon^{-1/2}\|Q_\varepsilon\phi(v_\varepsilon)\|_{L^2(Q_T)}\leqslant2C_0$。取 $C\triangleq2C_0$ 即得\eqref{align:ch08-8.60}。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch08-投影估计; kind=motivation; location=引理 8.3.3 的补证后的注记; basis=引理 8.3.3 与 (8.60)、(8.25)、(8.59) + 低频/高频分解的动机、$1/\sqrt\varepsilon$ 因子的来源、$\mathbb{N}_\varepsilon$ 有限性的理由，以及 $N\geqslant2$ 时结论失效的边界
+\begin{remark}\phantomsection\label{remark:ch08-投影估计}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch08-8.25} 只给出两类信息：$w_\varepsilon=\phi(v_\varepsilon)+\varepsilon\partial_tv_\varepsilon$ 在 $L^2(0,\infty;H^1(\Omega))$ 中有界，而修正项 $\varepsilon\partial_tv_\varepsilon$ 被 $\sqrt\varepsilon$ 压制。引理把这一“$\phi(v_\varepsilon)$ 几乎等于 $w_\varepsilon$”的定性陈述定量化：低频部分 $P_\varepsilon\phi(v_\varepsilon)$ 继承 $H^1$ 界，高频部分 $Q_\varepsilon\phi(v_\varepsilon)$ 被 $\sqrt\varepsilon$ 压制。\cref{proposition:ch08-分离等式} 的证明正是用 (8.60) 的 $H^1$ 界来控制 $\partial_xF_{\varepsilon_k}$ 的 $L^2$ 范数。
+\item 条件的作用。$\mathbb{N}_\varepsilon$ 必为有限集，因 $\mu_i\to\infty$，故 $P_\varepsilon$ 是有限秩投影，$P_\varepsilon\phi(v_\varepsilon)$ 对每个 $t$ 是有限个 $H^1$ 函数的组合；$\varepsilon>0$ 使 $\mathbb{N}_\varepsilon$ 非空且 $1+\varepsilon\mu_i$ 有意义。$1/\sqrt\varepsilon$ 的因子来自 $\varepsilon\mu_i>1$ 时 $(1+\varepsilon\mu_i)^2\leqslant2\varepsilon\mu_i(1+\varepsilon\mu_i)$，它与\eqref{align:ch08-8.25} 中 $\sqrt\varepsilon\|\partial_tv_\varepsilon\|_{L^2}\leqslant C$ 恰好相配：这正是二者相乘后关于 $\varepsilon$ 一致的唯一原因。
+\item 边界。常数 $C$ 与 $\varepsilon$ 无关，这是取 $\varepsilon\to0^+$ 的前提；由\eqref{align:ch08-8.25} 定义在 $Q_\infty$ 上可知 $C$ 甚至与 $T$ 无关。若 $N\geqslant2$，$H^1(\Omega)$ 不再嵌入 $C(\overline\Omega)$，本证明中“逐点展开”的合法性须改由 $H^1$ 的谱刻画代替，且 $1/\sqrt\varepsilon$ 的幂次依赖于\eqref{align:ch08-8.29} 中 $\sqrt\varepsilon\|\nabla\partial_tu_\varepsilon\|$ 的幂次，故 $N\geqslant2$ 时不能再按\eqref{align:ch08-8.60} 的形式使用；原书因此把 $N\geqslant2$ 的相应论证交给其他工具。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}[\cref{proposition:ch08-分离等式} 的证明]
+设 $\{v_{\varepsilon_k}\}$ 为\eqref{align:ch08-8.46} 中收敛的序列。在当前假设下，$f\circ\phi\in C_b(\mathbb{R})$，而 $|G_\phi(y)|\leqslant\|g\|_{L^\infty(\mathbb{R})}|y|+|k|$ 对所有 $y\in\mathbb{R}$ 成立。由\eqref{align:ch08-8.25} 序列 $\{v_{\varepsilon_k}\}$ 在 $L^\infty(Q_T)$ 中有界因而在 $Q_T$ 中一致可积。于是由\cref{proposition:ch05-弱收敛} 在 $L^1(Q_T)$ 中有
+\begin{align*}
+f(\phi(v_{\varepsilon_k}))\rightharpoonup(f\circ\phi)^*,\quad
+G_\phi(v_{\varepsilon_k})\rightharpoonup(G_\phi)^*,\quad
+f(\phi(v_{\varepsilon_k}))G_\phi(v_{\varepsilon_k})\rightharpoonup((f\circ\phi)G_\phi)^*,
 \end{align*}
 其中
 \begin{align*}
@@ -145,55 +224,82 @@ f(\phi(v_{\epsilon_k}))G_\phi(v_{\epsilon_k})\rightharpoonup((f\circ\phi)G_\phi)
 \end{align*}
 于是若证明了
 \begin{align}
-f(\phi(v_{\epsilon_k}))G_\phi(v_{\epsilon_k})\rightharpoonup(f\circ\phi)^*(G_\phi)^*\ \text{在 }L^1(Q_T), \label{align:ch08-8.61}
+f(\phi(v_{\varepsilon_k}))G_\phi(v_{\varepsilon_k})\rightharpoonup(f\circ\phi)^*(G_\phi)^*\ \text{在 }L^1(Q_T), \label{align:ch08-8.61}
 \end{align}
-结论即得。令 $F\triangleq f\circ\phi$，$F_{\epsilon_k}\triangleq f(P_{\epsilon_k}\phi(v_{\epsilon_k}))$，其中 $P_{\epsilon_k}$ 为\eqref{align:ch08-8.59} 中取 $\epsilon=\epsilon_k$ 的投影算子。由假设 $\|f'\|_{L^\infty(\mathbb{R})}<\infty$，有
+结论即得。令 $F\triangleq f\circ\phi$，$F_{\varepsilon_k}\triangleq f(P_{\varepsilon_k}\phi(v_{\varepsilon_k}))$，其中 $P_{\varepsilon_k}$ 为\eqref{align:ch08-8.59} 中取 $\varepsilon=\varepsilon_k$ 的投影算子。由假设 $\|f'\|_{L^\infty(\mathbb{R})}<\infty$，有
 \begin{align}
-\|F_{\epsilon_k}-F(v_{\epsilon_k})\|_{L^2(Q_T)}
-=\|f(P_{\epsilon_k}\phi(v_{\epsilon_k}))-f(\phi(v_{\epsilon_k}))\|_{L^2(Q_T)}
-\leqslant\|f'\|_{L^\infty(\mathbb{R})}\|Q_{\epsilon_k}\phi(v_{\epsilon_k})\|_{L^2(Q_T)}. \label{align:ch08-8.62}
+\|F_{\varepsilon_k}-F(v_{\varepsilon_k})\|_{L^2(Q_T)}
+&=\|f(P_{\varepsilon_k}\phi(v_{\varepsilon_k}))-f(\phi(v_{\varepsilon_k}))\|_{L^2(Q_T)}\nonumber\\
+&\leqslant\|f'\|_{L^\infty(\mathbb{R})}\|Q_{\varepsilon_k}\phi(v_{\varepsilon_k})\|_{L^2(Q_T)}. \label{align:ch08-8.62}
 \end{align}
-另一方面，由\eqref{align:ch08-8.25} 存在 $C>0$ 使 $\|G_\phi(v_{\epsilon_k})\|_{L^2(Q_T)}\leqslant C$。由\eqref{align:ch08-8.60} 与\eqref{align:ch08-8.62} 得
+另一方面，由\eqref{align:ch08-8.25} 存在 $C>0$ 使 $\|G_\phi(v_{\varepsilon_k})\|_{L^2(Q_T)}\leqslant C$。由\eqref{align:ch08-8.60} 与\eqref{align:ch08-8.62} 得
 \begin{align*}
-\lim_{k\to\infty}\|[F_{\epsilon_k}-F(v_{\epsilon_k})]G_\phi(v_{\epsilon_k})\|_{L^2(Q_T)}=0.
+\lim_{k\to\infty}\|[F_{\varepsilon_k}-F(v_{\varepsilon_k})]G_\phi(v_{\varepsilon_k})\|_{L^2(Q_T)}=0.
 \end{align*}
 因此，为证\eqref{align:ch08-8.61}，只需对每个 $\zeta\in C^1_c(Q_T)$ 证明
 \begin{align}
-\lim_{k\to\infty}\iint_{Q_T}F_{\epsilon_k}G_\phi(v_{\epsilon_k})\zeta\,\mathrm{d}x\,\mathrm{d}t
+\lim_{k\to\infty}\iint_{Q_T}F_{\varepsilon_k}G_\phi(v_{\varepsilon_k})\zeta\,\mathrm{d}x\,\mathrm{d}t
 =\iint_{Q_T}(f\circ\phi)^*(G_\phi)^*\zeta\,\mathrm{d}x\,\mathrm{d}t. \label{align:ch08-8.63}
 \end{align}
-令 $\Gamma_{\epsilon_k}(x,t)\triangleq \int_a^x G_\phi(v_{\epsilon_k}(z,t))\,\mathrm{d}z$（$(x,t)\in Q_T$）。则
+令 $\Gamma_{\varepsilon_k}(x,t)\triangleq\int_a^xG_\phi(v_{\varepsilon_k}(z,t))\,\mathrm{d}z$（$(x,t)\in Q_T$）。则
 \begin{align}
-\iint_{Q_T}F_{\epsilon_k}G_\phi(v_{\epsilon_k})\zeta\,\mathrm{d}x\,\mathrm{d}t
-=-\iint_{Q_T}\partial_x(F_{\epsilon_k}\zeta)\Gamma_{\epsilon_k}\,\mathrm{d}x\,\mathrm{d}t. \label{align:ch08-8.64}
+\iint_{Q_T}F_{\varepsilon_k}G_\phi(v_{\varepsilon_k})\zeta\,\mathrm{d}x\,\mathrm{d}t
+=-\iint_{Q_T}\partial_x(F_{\varepsilon_k}\zeta)\Gamma_{\varepsilon_k}\,\mathrm{d}x\,\mathrm{d}t. \label{align:ch08-8.64}
 \end{align}
 由于 $\|f'\|_{L^\infty(\mathbb{R})}<\infty$，由不等式\eqref{align:ch08-8.60} 存在 $\bar C>0$ 使
 \begin{align*}
-\|\partial_x F_{\epsilon_k}\|_{L^2(Q_T)}
-\leqslant\|f'\|_{L^\infty(\mathbb{R})}\|\partial_x[P_{\epsilon_k}[\phi(v_{\epsilon_k})]]\|_{L^2(Q_T)}
+\|\partial_xF_{\varepsilon_k}\|_{L^2(Q_T)}
+\leqslant\|f'\|_{L^\infty(\mathbb{R})}\|\partial_x[P_{\varepsilon_k}[\phi(v_{\varepsilon_k})]]\|_{L^2(Q_T)}
 \leqslant\bar C\|f'\|_{L^\infty(\mathbb{R})}.
 \end{align*}
-由于 $f\in L^\infty(\mathbb{R})$，序列 $\{F_{\epsilon_k}\}$ 在 $L^\infty(Q_T)$ 因而在 $L^2(Q_T)$ 中有界；由上式它在 $L^2(0,T;H^1(\Omega))$ 中亦有界。于是存在 $\bar F\in L^2(0,T;H^1(\Omega))$ 使 $F_{\epsilon_k}\rightharpoonup\bar F$ 在 $L^2(0,T;H^1(\Omega))$。由\eqref{align:ch08-8.62} 这蕴含 $F(v_{\epsilon_k})\rightharpoonup\bar F$ 在 $L^2(Q_T)$，故 $(f\circ\phi)^*=\bar F$ 在 $Q_T$。因而 $(f\circ\phi)^*\in L^2(0,T;H^1(\Omega))$，且
+由于 $f\in L^\infty(\mathbb{R})$，序列 $\{F_{\varepsilon_k}\}$ 在 $L^\infty(Q_T)$ 因而在 $L^2(Q_T)$ 中有界；由上式它在 $L^2(0,T;H^1(\Omega))$ 中亦有界。于是存在 $\bar F\in L^2(0,T;H^1(\Omega))$ 使 $F_{\varepsilon_k}\rightharpoonup\bar F$ 在 $L^2(0,T;H^1(\Omega))$ 中。由\eqref{align:ch08-8.62} 这蕴含 $F(v_{\varepsilon_k})\rightharpoonup\bar F$ 在 $L^2(Q_T)$ 中，故 $(f\circ\phi)^*=\bar F$ 在 $Q_T$ 上。因而 $(f\circ\phi)^*\in L^2(0,T;H^1(\Omega))$，且
 \begin{align}
-\partial_x(F_{\epsilon_k}\zeta)\rightharpoonup\partial_x[(f\circ\phi)^*\zeta]\ \text{在 }L^2(Q_T). \label{align:ch08-8.65}
+\partial_x(F_{\varepsilon_k}\zeta)\rightharpoonup\partial_x[(f\circ\phi)^*\zeta]\ \text{在 }L^2(Q_T). \label{align:ch08-8.65}
 \end{align}
-另一方面，由于序列 $\{G_\phi(v_{\epsilon_k})\}$ 在 $L^\infty(Q_T)$ 中有界，存在 $G\in L^\infty(Q_T)$ 使（可能抽子列，不重新标号）$G_\phi(v_{\epsilon_k})\stackrel{*}{\rightharpoonup}G$ 在 $L^\infty(Q_T)$。由于 $G_\phi(v_{\epsilon_k})\rightharpoonup(G_\phi)^*$ 在 $L^1(Q_T)$，有 $G=(G_\phi)^*$。于是例行证明给出对几乎所有 $(x,t)\in Q_T$，
+另一方面，由于序列 $\{G_\phi(v_{\varepsilon_k})\}$ 在 $L^\infty(Q_T)$ 中有界，存在 $G\in L^\infty(Q_T)$ 使（可能抽取子列，不重新标号）$G_\phi(v_{\varepsilon_k})\stackrel{*}{\rightharpoonup}G$ 在 $L^\infty(Q_T)$ 中。由于 $G_\phi(v_{\varepsilon_k})\rightharpoonup(G_\phi)^*$ 在 $L^1(Q_T)$ 中，有 $G=(G_\phi)^*$。于是
 \begin{align}
-\Gamma_{\epsilon_k}(x,t)\to\Gamma^*(x,t)\triangleq \int_a^x(G_\phi)^*(z,t)\,\mathrm{d}z \label{align:ch08-8.66}
+\Gamma_{\varepsilon_k}(x,t)\to\Gamma^*(x,t)\triangleq \int_a^x(G_\phi)^*(z,t)\,\mathrm{d}z \label{align:ch08-8.66}
 \end{align}
-（细节见文献~\cite{ref100} 命题 5 与 6）。由于族 $\{\Gamma_{\epsilon_k}\}$ 在 $L^\infty(Q_T)$ 中有界，由\eqref{align:ch08-8.66} 与控制收敛定理得
+对几乎所有 $(x,t)\in Q_T$ 成立（补证见后；亦见文献~\cite{ref100} 命题 5 与 6）。由于族 $\{\Gamma_{\varepsilon_k}\}$ 在 $L^\infty(Q_T)$ 中有界，由\eqref{align:ch08-8.66} 与控制收敛定理得
 \begin{align}
-\Gamma_{\epsilon_k}\to\Gamma^*\ \text{在 }L^2(Q_T). \label{align:ch08-8.67}
+\Gamma_{\varepsilon_k}\to\Gamma^*\ \text{在 }L^2(Q_T). \label{align:ch08-8.67}
 \end{align}
 由\eqref{align:ch08-8.65} 与\eqref{align:ch08-8.67}，当 $k\to\infty$ 时等式\eqref{align:ch08-8.64} 的右端收敛于
 \begin{align*}
 -\iint_{Q_T}\partial_x[(f\circ\phi)^*\zeta]\Gamma^*\,\mathrm{d}x\,\mathrm{d}t
 =\iint_{Q_T}(f\circ\phi)^*(G_\phi)^*\zeta\,\mathrm{d}x\,\mathrm{d}t.
 \end{align*}
-这就证明了\eqref{align:ch08-8.63}，结论即得。
+于是\eqref{align:ch08-8.63}得证，结论即得。
 \end{proof}
 
+% SUPPLEMENT: parent=proposition:ch08-分离等式; kind=proof; location=命题 8.3.2 的证明后; basis=原证明以“a routine proof shows (8.66)”“the conclusion follows”带过两处；此处补出 $G=(G_\phi)^*$ 的对偶配对论证、$\Gamma_{\varepsilon_k}(\cdot,t)$ 的等 Lipschitz 紧性与弱收敛极限的识别、以及 (8.64) 右端的分部积分，末尾的换元步骤一并写出
+\begin{proof}[补证：\eqref{align:ch08-8.66} 与最后一步分部积分]
+\begin{enumerate}[(i)]
+\item $G=(G_\phi)^*$ 的依据。对每个 $\zeta\in C^1_c(Q_T)\subseteq L^1(Q_T)\cap L^\infty(Q_T)$，由 $L^1$ 弱收敛得 $\iint G_\phi(v_{\varepsilon_k})\zeta\to\iint(G_\phi)^*\zeta$，由 $L^\infty$ 弱*收敛得 $\iint G_\phi(v_{\varepsilon_k})\zeta\to\iint G\zeta$；$C^1_c(Q_T)$ 在 $L^1(Q_T)$ 中稠密，故 $G=(G_\phi)^*$ 在 $Q_T$ 上几乎处处成立。
+\item $\Gamma_{\varepsilon_k}\rightharpoonup\Gamma^*$ 在 $L^2(Q_T)$ 中。先说明 $\{G_\phi(v_{\varepsilon_k})\}$ 在 $L^2(Q_T)$ 中有界。由\eqref{align:ch08-8.60} 有 $\|P_{\varepsilon_k}\phi(v_{\varepsilon_k})\|_{L^2(Q_T)}\leqslant C$ 与 $\|Q_{\varepsilon_k}\phi(v_{\varepsilon_k})\|_{L^2(Q_T)}\leqslant C\sqrt{\varepsilon_k}\to0$，故 $\{\phi(v_{\varepsilon_k})\}$ 在 $L^2(Q_T)$ 中有界；又 $G_\phi$ 有界，故 $\{G_\phi(v_{\varepsilon_k})\}$ 在 $L^2(Q_T)$ 中有界。结合前文 $G_\phi(v_{\varepsilon_k})\rightharpoonup(G_\phi)^*$ 在 $L^1(Q_T)$ 中，得 $G_\phi(v_{\varepsilon_k})\rightharpoonup(G_\phi)^*$ 在 $L^2(Q_T)$ 中。于是对 $\psi\in C^1_c(\Omega)$ 与 $\theta\in L^2(0,T)$ 得
+\begin{align*}
+\iint_{Q_T}\Gamma_{\varepsilon_k}\psi'(x)\theta(t)\,\mathrm{d}x\,\mathrm{d}t
+=-\iint_{Q_T}G_\phi(v_{\varepsilon_k})\psi(x)\theta(t)\,\mathrm{d}x\,\mathrm{d}t
+\to-\iint_{Q_T}(G_\phi)^*\psi(x)\theta(t)\,\mathrm{d}x\,\mathrm{d}t,
+\end{align*}
+而 $\{\psi'\mid\psi\in C^1_c(\Omega)\}$ 在 $L^2(\Omega)$ 中稠密，故 $\Gamma_{\varepsilon_k}\rightharpoonup\Gamma^*$ 在 $L^2(Q_T)$ 中。
+\item \eqref{align:ch08-8.66} 的证明。对每个 $t$，函数 $x\mapsto\Gamma_{\varepsilon_k}(x,t)$ 与 $x\mapsto\Gamma^*(x,t)$ 都以 $\|G_\phi\|_{L^\infty(\mathbb{R})}$ 为 Lipschitz 常数，因 $\partial_x\Gamma_{\varepsilon_k}=G_\phi(v_{\varepsilon_k})$ 而 $|\partial_x\Gamma^*|=|(G_\phi)^*|\leqslant\|G_\phi\|_{L^\infty(\mathbb{R})}$；且两者都被 $\|G_\phi\|_{L^\infty(\mathbb{R})}(b-a)$ 控制。故对每个 $t$，族 $\{\Gamma_{\varepsilon_k}(\cdot,t)\}$ 在 $C(\overline\Omega)$ 中相对紧（Arzelà--Ascoli 定理）。由第 (ii) 步，对几乎所有 $t$ 有 $\Gamma_{\varepsilon_k}(\cdot,t)\rightharpoonup\Gamma^*(\cdot,t)$ 在 $L^2(\Omega)$ 中，而 $C(\overline\Omega)$ 中的任何聚点必等于这一弱极限，因此 $\Gamma_{\varepsilon_k}(\cdot,t)\to\Gamma^*(\cdot,t)$ 在 $C(\overline\Omega)$ 中，特别地对每个 $x$ 收敛。故\eqref{align:ch08-8.66} 对几乎所有 $(x,t)\in Q_T$ 成立。
+\item 最后一步。由第 (iii) 步，$\Gamma^*\in L^2(0,T;H^1(\Omega))$ 且 $\partial_x\Gamma^*=(G_\phi)^*$；又 $(f\circ\phi)^*\zeta\in L^2(0,T;H^1(\Omega))$ 且 $\zeta(\cdot,t)$ 紧支于 $\Omega$，故对几乎每个 $t$ 分部积分无边界项：
+\begin{align*}
+-\int_\Omega\partial_x[(f\circ\phi)^*\zeta](\cdot,t)\Gamma^*(\cdot,t)\,\mathrm{d}x
+=\int_\Omega(f\circ\phi)^*\zeta(\cdot,t)(G_\phi)^*(\cdot,t)\,\mathrm{d}x,
+\end{align*}
+在 $(0,T)$ 上积分即得所需等式。至此\eqref{align:ch08-8.63} 的证明完成。
+\end{enumerate}
+\end{proof}
 
-
+% SUPPLEMENT: parent=proposition:ch08-分离等式; kind=motivation; location=命题 8.3.2 的证明与补证后的注记; basis=命题 8.3.2 与 (8.58)、(8.14)、(8.60) + 分离等式的动机（把 $f(\phi)$ 与 $G_\phi$ 的矩解耦）、$f\in C^1\cap W^{1,\infty}$ 与 $g\in C_c^1$ 各自的作用、$G_\phi$ 在无穷远为常数的理由、常数 $k$ 可任取的理由，以及 $N\geqslant2$ 时证明失效的边界
+\begin{remark}\phantomsection\label{remark:ch08-分离等式}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch08-8.58} 说在每条纤维 $\nu_{(x,t)}$ 上，$f(\phi(y))$ 与 $G_\phi(y)$ 的乘积均值等于二者均值之积，即这两类量在极限测度下“解耦”。这一等式在\cref{section:ch08-测度刻画} 刻画极限 Young 测度时起关键作用：它把 $\phi$ 的函数的极限与位势型量的极限分开，从而显式确定 $\nu$；这也是文献~\cite{ref100} 中刻画极限测度的技术核心。
+\item 条件的作用。$N=1$ 与 $\Omega=(a,b)$ 是关键：$G_\phi(v)$ 可写成 $\partial_x\Gamma$，$\Gamma(x,t)=\int_a^xG_\phi(v)\,\mathrm{d}z$，故\eqref{align:ch08-8.64} 可用一维分部积分把乘积项化为 $\Gamma$ 与 $\partial_x(F\zeta)$ 的乘积，并借 $\Gamma_{\varepsilon_k}$ 的等 Lipschitz 紧性取极限。$g\in C^1_c(\mathbb{R})$ 使 $G_\phi$ 有界：由\eqref{align:ch08-8.1c} 的强制性 $|\phi(y)|\to\infty$，故 $g(\phi(y))=0$ 对 $|y|$ 充分大成立，于是 $G_\phi$ 在无穷远为常数；证明中只用较弱的线性界 $|G_\phi(y)|\leqslant\|g\|_\infty|y|+|k|$。$f\in C^1\cap W^{1,\infty}$ 使 $f\circ\phi$ 有界且 $f$ Lipschitz，\eqref{align:ch08-8.62} 的估计与 $\{F_{\varepsilon_k}\}$ 的 $H^1$ 有界性都依赖 $\|f'\|_\infty<\infty$。
+\item 边界。若 $\nu_{(x,t)}$ 为 Dirac 测度 $\delta_{\nabla u(x,t)}$，则\eqref{align:ch08-8.58} 两端都等于 $f(\phi(\nabla u(x,t)))G_\phi(\nabla u(x,t))$，等式平凡成立；命题的非平凡之处正在于 $\nu$ 可以非退化，而 $\phi$ 单调本身并不保证 $\nu_{(x,t)}$ 退化（见\hyperref[remark:ch08-Young平衡解]{注记}）。\eqref{align:ch08-8.58} 对\eqref{align:ch08-8.14} 中的常数 $k$ 无关：把 $G_\phi$ 换成 $G_\phi+k$，两端的变化量都是 $k\int_{\mathbb{R}}f(\phi(y))\,\mathrm{d}\nu_{(x,t)}(y)$，因 $\nu_{(x,t)}$ 是概率测度而相消。若 $N\geqslant2$，一维原函数 $\Gamma$ 不存在，\eqref{align:ch08-8.64} 型的论证失效；原书因此把本命题限定在 $N=1$。
+\end{enumerate}
+\end{remark}
 
 \end{document}

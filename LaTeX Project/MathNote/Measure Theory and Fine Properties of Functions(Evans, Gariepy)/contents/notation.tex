@@ -1,0 +1,165 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\chapter*{记号}
+\phantomsection\label{chapter:notation}
+\addcontentsline{toc}{chapter}{记号}
+\markboth{记号}{记号}
+
+\subsection*{A. 集合与几何记号（Set and geometric notation）}
+
+\begin{longtable}{@{}p{0.28\textwidth}p{0.69\textwidth}@{}}
+\toprule
+\textbf{符号} & \textbf{释义} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{符号} & \textbf{释义} \\
+\midrule
+\endhead
+$\mathbb{R}^n$ & $n$ 维实欧氏空间 \\
+$\mathbb{Z}$ & 整数集 \\
+$\mathbb{Z}^+$ & 非负整数集 \\
+$\mathbb{M}^{m\times n}$ & $m\times n$ 实矩阵空间 \\
+$e_i$ & $(0,\cdots,1,\cdots,0)$，其中第 $i$ 个位置为 $1$ \\
+$x=(x_1,x_2,\cdots,x_n)$ & $\mathbb{R}^n$ 中的典型点 \\
+$\lvert x\rvert$ & $(x_1^2+x_2^2+\cdots+x_n^2)^{\frac{1}{2}}$ \\
+$x\cdot y$ & $x_1y_1+x_2y_2+\cdots+x_ny_n$ \\
+$x^T\cdot Ay$ & 双线性型 $\sum_{i,j=1}^{n}a_{ij}x_iy_j$，其中 $x,y\in\mathbb{R}^n$，$A=((a_{ij}))$ 为 $n\times n$ 矩阵 \\
+$B(x,r)$ & $\{y\in\mathbb{R}^n\mid\lvert x-y\rvert\leqslant r\}$，即以 $x$ 为心、$r$ 为半径的闭球 \\
+$B(r)$ & $B(0,r)$，即以 $0$ 为心、$r$ 为半径的闭球 \\
+$B^0(x,r)$ & $\{y\in\mathbb{R}^n\mid\lvert x-y\rvert<r\}$，即以 $x$ 为心、$r$ 为半径的开球 \\
+$C(x,r,h)$ & $\{y\in\mathbb{R}^n\mid\lvert y'-x'\rvert<r,\ \lvert y_n-x_n\rvert<h\}$，即以 $x$ 为心、$r$ 为半径、高为 $2h$ 的开圆柱 \\
+$Q(x,r)$ & $\{y\in\mathbb{R}^n\mid\lvert x_i-y_i\rvert<r,\ i=1,\cdots,n\}$，即以 $x$ 为心、边长为 $2r$ 的开立方体 \\
+$\alpha(s)$ & $\dfrac{\pi^{\frac{s}{2}}}{\Gamma\bigl(\frac{s}{2}+1\bigr)}$（$0\leqslant s<\infty$） \\
+$\alpha(n)$ & $\mathbb{R}^n$ 中单位球的体积 \\
+$\operatorname{dist}(A,B)$ & 集合 $A,B\subseteq\mathbb{R}^n$ 之间的距离 \\
+$U,V,W$ & 开集，通常在 $\mathbb{R}^n$ 中 \\
+$V\subset\subset U$ & $V$ 紧含于 $U$，即 $\bar V$ 紧且 $\bar V\subseteq U$ \\
+$K$ & 紧集，通常在 $\mathbb{R}^n$ 中 \\
+$\chi_E$ & 集合 $E$ 的指示函数 \\
+$\bar E$ & $E$ 的闭包 \\
+$E^0$ & $E$ 的内部 \\
+$S_a(E)$ & 集合 $E$ 的 Steiner 对称化；见\cref{definition:ch02-2-3} \\% XREF p=308 "Steiner symmetrization of a set E; Section 2.3"
+$\partial E$ & $E$ 的拓扑边界 \\
+$\partial^*E$ & $E$ 的约化边界；见\cref{section:ch05-07} \\% XREF p=309 "reduced boundary of E; Section 5.7"
+$\partial_*E$ & $E$ 的测度论边界；见\cref{section:ch05-08} \\% XREF p=309 "measure theoretic boundary of E; Section 5.8"
+$\lVert\partial E\rVert$ & $E$ 的周长测度；见\cref{section:ch05-01} \\% XREF p=309 "perimeter measure of E; Section 5.1"
+\bottomrule
+\end{longtable}
+
+\subsection*{B. 函数记号（Functional notation）}
+
+\begin{longtable}{@{}p{0.28\textwidth}p{0.69\textwidth}@{}}
+\toprule
+\textbf{符号} & \textbf{释义} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{符号} & \textbf{释义} \\
+\midrule
+\endhead
+$\fint_E f\diff\mu$ 或 $(f)_E$ & $\dfrac{1}{\mu(E)}\int_E f\diff\mu$，即 $f$ 在 $E$ 上关于测度 $\mu$ 的平均值 \\
+$(f)_{x,r}$ & $\fint_{B(x,r)}f\diff x$，即 $f$ 在 $B(x,r)$ 上关于 Lebesgue 测度的平均值 \\
+$\spt(f)$ & $f$ 的支集 \\
+$f^+,f^-$ & $\max(f,0)$，$\max(-f,0)$ \\
+$f^*$ & $f$ 的精确代表元；见\cref{section:ch01-07} \\% XREF p=309 "precise representative of f; Section 1.7"
+$f|_E$ & $f$ 在集合 $E$ 上的限制 \\
+$\bar f$ 或 $Ef$ & $f$ 的延拓；参见\cref{section:ch01-02,section:ch03-01,section:ch04-04,section:ch05-04,section:ch06-05} \\% XREF p=309 "an extension of f; cf. Sections 1.2, 3.1, 4.4, 5.4, 6.5"
+$Tf$ & $f$ 的迹；见\cref{section:ch04-03,section:ch05-03} \\% XREF p=309 "trace of f; Sections 4.3, 5.3"
+$Df$ & $f$ 的导数 \\
+$[Df]$ & $f$ 的梯度的（向量值）测度，$f\in\BV$；见\cref{section:ch05-01} \\% XREF p=309 "(vector-valued) measure for gradient of f in BV; Section 5.1"
+$[Df]_{\mathrm{ac}},[Df]_{\mathrm{s}}$ & $[Df]$ 的绝对连续部分、奇异部分；见\cref{section:ch05-01} \\% XREF p=309 "absolutely continuous, singular parts of [Df]; Section 5.1"
+$\operatorname{ap}Df$ & $f$ 的近似导数；见\cref{section:ch06-01} \\% XREF p=309 "approximate derivative of f; Section 6.1"
+$Jf=[\![Df]\!]$ & $f$ 的 Jacobian；见\cref{section:ch03-02} \\% XREF p=309 "Jacobian of f; Section 3.2"
+$\Lip(f)$ & $f$ 的 Lipschitz 常数；见\cref{section:ch02-04,section:ch03-01} \\% XREF p=309 "Lipschitz constant of f; Sections 2.4, 3.1"
+$D^2f$ & $f$ 的 Hessian 矩阵 \\
+$[D^2f]$ & 凸函数 $f$ 的 Hessian 的（矩阵值）测度；见\cref{section:ch06-03} \\% XREF p=309 "(matrix-valued) measure for Hessian of convex f; Section 6.3"
+$[D^2f]_{\mathrm{ac}},[D^2f]_{\mathrm{s}}$ & $[D^2f]$ 的绝对连续部分、奇异部分；见\cref{section:ch06-03} \\% XREF p=309 "absolutely continuous, singular parts of [D^2f]; Section 6.3"
+$G(f,A)$ & $f$ 在集合 $A$ 上的图像；见\cref{section:ch02-04} \\% XREF p=309 "graph of f over the set A; Section 2.4"
+\bottomrule
+\end{longtable}
+
+\subsection*{C. 函数空间（Function spaces）}
+
+令 $U\subseteq\mathbb{R}^n$ 为开集。
+
+\begin{longtable}{@{}p{0.28\textwidth}p{0.69\textwidth}@{}}
+\toprule
+\textbf{符号} & \textbf{释义} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{符号} & \textbf{释义} \\
+\midrule
+\endhead
+$C(U)$ & $\{f:U\to\mathbb{R}\mid f$ 连续$\}$ \\
+$C(\bar U)$ & $\{f\in C(U)\mid f$ 局部一致连续$\}$ \\
+$C^k(U)$ & $\{f:U\to\mathbb{R}\mid f$ 是 $k$ 次连续可微的$\}$ \\
+$C^k(\bar U)$ & $\{f\in C^k(U)\mid D^\alpha f$ 在 $U$ 上局部一致连续，$\lvert\alpha\rvert\leqslant k\}$ \\
+$C_c(U),C_c(\bar U)$，等 & $C(U)$、$C(\bar U)$ 等中具有紧支集的函数 \\
+$C(U;\mathbb{R}^m)$ & 函数 $f:U\to\mathbb{R}^m$，$f=(f^1,f^2,\cdots,f^m)$，其中 $f^i\in C(U)$，$i=1,\cdots,m$ \\
+$C(\bar U;\mathbb{R}^m)$ & 函数 $f:U\to\mathbb{R}^m$，$f=(f^1,f^2,\cdots,f^m)$，其中 $f^i\in C(\bar U)$，$i=1,\cdots,m$ \\
+$L^p(U)$ & $\{f:U\to\mathbb{R}\mid\bigl(\int_U\lvert f\rvert^p\diff x\bigr)^{\frac{1}{p}}<\infty,\ f$ 为 Lebesgue 可测$\}$（$1\leqslant p<\infty$） \\
+$L^\infty(U)$ & $\{f:U\to\mathbb{R}\mid\operatorname{ess\,sup}_U\lvert f\rvert<\infty,\ f$ 为 Lebesgue 可测$\}$ \\
+$L^p_{\loc}(U)$ & $\{f:U\to\mathbb{R}\mid$ 对每个开集 $V\subset\subset U$ 有 $f\in L^p(V)\}$ \\
+$L^p(U;\mu)$ & $\{f:U\to\mathbb{R}\mid\bigl(\int_U\lvert f\rvert^p\diff\mu\bigr)^{\frac{1}{p}}<\infty,\ f$ 为 $\mu$-可测$\}$（$1\leqslant p<\infty$） \\
+$L^\infty(U;\mu)$ & $\{f:U\to\mathbb{R}\mid f$ 为 $\mu$-可测，$\operatorname{ess\,sup}_U\lvert f\rvert<\infty\}$ \\
+$W^{1,p}(U)$ & Sobolev 空间；见\cref{section:ch04-01} \\% XREF p=310 "Sobolev space; Section 4.1"
+$K^p$ & $\{f:\mathbb{R}^n\to\mathbb{R}\mid f\geqslant0,\ f\in L^{p^*},\ Df\in L^p\}$；见\cref{section:ch04-07} \\% XREF p=310 "f in L^{p*}, Df in L^p}; Section 4.7"
+$\BV(U)$ & 有界变差函数空间；见\cref{section:ch05-01} \\% XREF p=310 "space of functions of bounded variation; Section 5.1"
+\bottomrule
+\end{longtable}
+
+\subsection*{D. 测度与容量（Measures and capacity）}
+
+\begin{longtable}{@{}p{0.28\textwidth}p{0.69\textwidth}@{}}
+\toprule
+\textbf{符号} & \textbf{释义} \\
+\midrule
+$\mathcal{L}^n$ & $n$ 维 Lebesgue 测度 \\
+$\mathcal{H}^s_\delta$ & 近似 $s$ 维 Hausdorff 测度；见\cref{section:ch02-01} \\% XREF p=310 "approximate s-dimensional Hausdorff measure; Section 2.1"
+$\mathcal{H}^s$ & $s$ 维 Hausdorff 测度；见\cref{section:ch02-01} \\% XREF p=310 "s-dimensional Hausdorff measures; Section 2.1"
+$H_{\dim}$ & Hausdorff 维数；见\cref{section:ch02-01} \\% XREF p=310 "Hausdorff dimension; Section 2.1"
+$\Cap_p$ & $p$-容量；见\cref{section:ch04-07} \\% XREF p=310 "p-capacity; Section 4.7"
+\bottomrule
+\end{longtable}
+
+\subsection*{E. 其他记号（Other notation）}
+
+\begin{longtable}{@{}p{0.28\textwidth}p{0.69\textwidth}@{}}
+\toprule
+\textbf{符号} & \textbf{释义} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{符号} & \textbf{释义} \\
+\midrule
+\endhead
+$\mu\llcorner A$ & $\mu$ 在集合 $A$ 上的限制；见\cref{section:ch01-01} \\% XREF p=310 "μ restricted to the set A; Section 1.1"
+$\mu\llcorner f$ & 关于 $\mu$ 以 $f$ 为密度的（符号）测度；见\cref{section:ch01-03} \\% XREF p=310 "(signed) measure with density f with respect to μ; Section 1.3"
+$D_\mu\nu$ & $\nu$ 关于 $\mu$ 的导数；见\cref{section:ch01-06} \\% XREF p=310 "derivative of ν with respect to μ; Section 1.6"
+$\nu\ll\mu$ & $\nu$ 关于 $\mu$ 绝对连续；见\cref{section:ch01-06} \\% XREF p=310 "ν is absolutely continuous with respect to μ; Section 1.6"
+$\nu\perp\mu$ & $\nu$ 与 $\mu$ 相互奇异；见\cref{section:ch01-06} \\% XREF p=311 "ν and μ are mutually singular; Section 1.6"
+$\operatorname*{ap\,lim}_{y\to x}f$ & 近似极限；见\cref{section:ch01-07} \\% XREF p=311 "approximate limit; Section 1.7"
+$\operatorname*{ap\,lim\,sup}_{y\to x}f$ & 近似上极限；见\cref{section:ch01-07} \\% XREF p=311 "approximate lim sup; Section 1.7"
+$\operatorname*{ap\,lim\,inf}_{y\to x}f$ & 近似下极限；见\cref{section:ch01-07} \\% XREF p=311 "approximate lim inf; Section 1.7"
+$\weakto$ & 弱收敛；见\cref{section:ch01-09} \\% XREF p=311 "weak convergence; Section 1.9"
+$S$ & 对称线性映射；见\cref{section:ch03-02} \\% XREF p=311 "symmetric linear mapping; Section 3.2"
+$O$ & 正交线性映射；见\cref{section:ch03-02} \\% XREF p=311 "orthogonal linear mapping; Section 3.2"
+$L^*$ & $L$ 的伴随；见\cref{section:ch03-02} \\% XREF p=311 "adjoint of L; Section 3.2"
+$[\![L]\!]$ & 线性映射 $L$ 的 Jacobian；见\cref{section:ch03-02} \\% XREF p=311 "Jacobian of linear mapping L; Section 3.2"
+$\Lambda(m,n)$ & $\{\lambda:\{1,\cdots,n\}\to\{1,\cdots,m\}\mid\lambda$ 递增$\}$；见\cref{section:ch03-02} \\% XREF p=311 "lambda maps {l,...,n} to {1,...,m}, increasing; Section 3.2"
+$P_\lambda$ & 与 $\lambda\in\Lambda(m,n)$ 相伴的投影；见\cref{section:ch03-02} \\% XREF p=311 "projection associated with λ in Λ(m,n); Section 3.2"
+$\eta,\eta_\varepsilon$ & 磨光核；见\cref{section:ch04-02} \\% XREF p=311 "mollifiers; Section 4.2"
+$p^*$ & $\dfrac{np}{n-p}$，即 $p$ 的 Sobolev 共轭指数；见\cref{section:ch04-05} \\% XREF p=311 "Sobolev conjugate of p; Section 4.5"
+$H,H^+,H^-$ & 超平面、半空间；见\cref{section:ch05-07} \\% XREF p=311 "hyperplane, half spaces; Section 5.7"
+$\mu,\lambda$ & $\BV$ 函数的近似上极限、近似下极限；见\cref{section:ch05-09} \\% XREF p=311 "approximate lim sup, lim inf for BV function; Section 5.9"
+$J$ & $\BV$ 函数的「测度论跳跃」集；见\cref{section:ch05-09} \\% XREF p=311 "set of measure theoretic jumps for BV function; Section 5.9"
+$\operatorname{ess}V_a^b f$ & 本质变差；见\cref{section:ch05-10} \\% XREF p=311 "essential variation; Section 5.10"
+\bottomrule
+\end{longtable}
+
+\end{document}

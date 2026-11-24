@@ -1,0 +1,224 @@
+﻿\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{紧性}\label{section:ch04-06}
+
+\begin{theorem}[紧性与 $W^{1,p}$]\label{theorem:ch04-4-11}
+设 $n\geqslant2$ 为整数，$U\subseteq\mathbb{R}^n$ 为非空有界开集，$\partial U$ 为 Lipschitz 边界（特别地，$\partial U$ 为 $C^1$ 边界时该条件成立），$1<p<n$，并记 $p^*:=\frac{np}{n-p}$。
+设 $\{f_k\}_{k=1}^{\infty}$ 为 $W^{1,p}(U)$ 中的序列，满足 $\sup_{k}\lVert f_k\rVert_{W^{1,p}(U)}<\infty$。
+则存在子列 $\{f_{k_j}\}_{j=1}^{\infty}$ 与函数 $f\in W^{1,p}(U)$，使得对每个满足 $1\leqslant q<p^*$ 的 $q$ 都有
+\begin{align*}
+f_{k_j}\to f\qquad\text{于 }L^q(U).
+\end{align*}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch04-4-11; kind=motivation; 说明定理的内容（有界 Lipschitz 区域上 Sobolev 嵌入的紧化）、证明的三层结构以及紧性在变分问题中的作用
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-11-动机}
+\cref{theorem:ch04-4-8}给出的 Sobolev 嵌入只是范数估计：它把 $W^{1,p}(U)$ 中的有界列映为 $L^{p^*}(U)$ 中的有界列，并不保证存在强收敛的子列。本定理断言：把目标空间换为 $L^q(U)$（$1\leqslant q<p^*$）之后，$W^{1,p}(U)$ 的有界列必有强收敛的子列，即嵌入算子 $W^{1,p}(U)\to L^q(U)$ 是紧算子；这一定理通常称为 Rellich--Kondrachov 紧性定理。% XREF internal
+
+紧性来自定义域的两个几何条件。$U$ 有界且 $\partial U$ 为 Lipschitz 边界，使\cref{theorem:ch04-4-7}的延拓算子可用，从而把问题搬到全空间上，并且延拓后各函数的支集落在同一个有界开集 $V$ 之内；支集固定使局部一致收敛升级为整体一致收敛，也使磨光估计中的常数与指标 $k$ 无关。% XREF internal
+
+证明分三层。第一层用延拓算子与磨光，把每个 $f_k$ 换成光滑的 $\bar f_k^\varepsilon$，并证明磨光误差 $\lVert\bar f_k^\varepsilon-\bar f_k\rVert_{L^p(\mathbb{R}^n)}$ 按 $\varepsilon$ 一致地小（断言 1）。第二层证明磨光后的族 $\{\bar f_k^\varepsilon\}_{k=1}^{\infty}$ 一致有界且等度连续（断言 2），从而由 Arzelà--Ascoli 定理抽出一致收敛的子列。第三层用插值把磨光误差与一致收敛的估计合并（断言 3），再用对角线法把 $\delta=1,\frac12,\frac14,\cdots$ 各层次的子列拼成一条在 $L^p(U)$ 中收敛的子列，最后由 $L^p$ 收敛、$L^{p^*}$ 有界与插值得到 $L^q(U)$（$q<p^*$）中的强收敛。
+
+紧性的用途在于把「有界」变成「收敛」。变分法的直接方法中，极小化序列在 $W^{1,p}(U)$ 中只有弱收敛的子列，而能量泛函中的非线性项（如 $\lvert f\rvert^q$ 或 $F(f)$）关于弱收敛并不连续；同时具有 $f_k\to f$ 于 $L^q(U)$（$q<p^*$）与 $f_k\weakto f$ 于 $W^{1,p}(U)$，才能对能量泛函取极限并得到极小元。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-11; kind=hypotheses; 逐条分析有界性、Lipschitz 边界、1<p<n、一致有界性与 q<p^* 的作用，并给出说明各条件不可删除的反例
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-11-条件}
+\begin{enumerate}[(i)]
+\item $U$ 非空、有界、开且 $\partial U$ 为 Lipschitz 边界：这四条是\cref{theorem:ch04-4-7}的假设。该定理给出有界线性延拓算子 $E:W^{1,p}(U)\to W^{1,p}(\mathbb{R}^n)$ 与只依赖于 $n,p,U,V$ 的常数 $C_0$，满足 $Ef=f$ 于 $U$ 上、$\spt(Ef)\subseteq V$ 与 $\lVert Ef\rVert_{W^{1,p}(\mathbb{R}^n)}\leqslant C_0\lVert f\rVert_{W^{1,p}(U)}$。取 $V$ 为任一满足 $U\subset\subset V$ 的有界开集，则所有 $\bar f_k$ 的支集落在同一个有界集内，这是第（4）步在全空间上取得一致收敛、以及第（1）步估计中的常数与 $k$ 无关的原因。$C^1$ 边界是 Lipschitz 边界的特例：$C^1$ 函数局部 Lipschitz 连续，故\cref{definition:ch04-4-4}的图像表示成立。% XREF internal
+\item $U$ 的有界性不可去掉。取 $U=\mathbb{R}^n$、$\varphi\in C_c^\infty(B(0,1))$ 满足 $\varphi\not\equiv0$，并令 $f_k(x):=\varphi(x-ke_1)$。则 $\lVert f_k\rVert_{W^{1,p}(\mathbb{R}^n)}=\lVert\varphi\rVert_{W^{1,p}(\mathbb{R}^n)}$ 对一切 $k$ 成立，且 $f_k\to0$ 于 $L^q_{\loc}(\mathbb{R}^n)$；但 $\lVert f_k\rVert_{L^q(\mathbb{R}^n)}=\lVert\varphi\rVert_{L^q(\mathbb{R}^n)}>0$，故在 $L^q(\mathbb{R}^n)$ 中强收敛的子列只能以 $0$ 为极限，而这不可能。
+\item $1<p<n$：$p<n$ 使 $p^*=\frac{np}{n-p}$ 有限且 $p^*>p$，从而\cref{theorem:ch04-4-8}可用，这是第（5）步中 $L^{p^*}(U)$ 的一致有界性与插值不等式的依据；$p>1$ 使 $L^p$ 自反，第（5）步末由\cref{theorem:ch01-1-42}抽取弱收敛的梯度子列。$p=1$ 时\cref{theorem:ch01-1-42}不适用，但结论仍成立，只是极限的正则性改由 $\BV(U)$ 表述（见下面的端点注记）。$p\geqslant n$ 不在本定理范围内：此时 $p^*$ 或不存在或为无穷，第（5）步的插值无意义，相应的紧性需用 Morrey 型嵌入另行论证。% XREF internal
+\item 条件 $\sup_k\lVert f_k\rVert_{W^{1,p}(U)}<\infty$ 要求梯度的 $L^p$ 范数一致有界，而不只是函数本身的 $L^p$ 范数一致有界。梯度的一致界进入断言 1 的右端与断言 2 中的常数，是等度连续性的唯一来源。若只有 $L^p$ 界，结论不成立：取 $U=(0,1)$ 与 $f_k(x):=\sin(k\pi x)$，则
+\begin{align*}
+\lVert f_k\rVert^p_{L^p(U)}=\frac{1}{\pi}\int_0^{\pi}\lvert\sin t\rvert^p\diff t
+\end{align*}
+与 $k$ 无关，而 $\lVert Df_k\rVert_{L^p(U)}=k\pi\lVert\cos(k\pi\cdot)\rVert_{L^p(U)}\to\infty$；并且由 Riemann--Lebesgue 引理 $f_k\weakto0$ 于 $L^p(U)$，而 $\lVert f_k\rVert_{L^p(U)}$ 不趋于零，故不存在强收敛的子列。
+\item 指数范围 $1\leqslant q<p^*$ 的上端是严格的：$q$ 可任意接近 $p^*$，但不能取到 $p^*$（见下面的端点注记与\cref{remark:ch04-thm-4-11-端点例}）。由于 $U$ 有界，$L^{p^*}(U)\subseteq L^q(U)$ 对 $1\leqslant q\leqslant p^*$ 成立，故同一条子列对一切 $q<p^*$ 同时给出强收敛，无须按 $q$ 重新抽取子列。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）取有界开集 $V\subseteq\mathbb{R}^n$ 使 $U\subset\subset V$，并把每个 $f_k$ 延拓为 $\bar f_k\in W^{1,p}(\mathbb{R}^n)$，满足 $\spt\bar f_k\subseteq V$ 与
+\begin{align*}
+\sup_{k}\lVert\bar f_k\rVert_{W^{1,p}(\mathbb{R}^n)}\leqslant C\sup_{k}\lVert f_k\rVert_{W^{1,p}(U)}<\infty .\qquad(\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-11; kind=proof; 补出第（1）步延拓的依据（延拓定理）与 (★) 中常数 C 的含义
+第（1）步的延拓由\cref{theorem:ch04-4-7}给出。% XREF internal
+该定理的条件在此满足：$U$ 为非空有界开集，$\partial U$ 为 Lipschitz 边界，$1\leqslant p<\infty$，$U\subset\subset V$。它给出有界线性算子 $E:W^{1,p}(U)\to W^{1,p}(\mathbb{R}^n)$ 与只依赖于 $n,p,U,V$ 的常数 $C$，使得对一切 $f\in W^{1,p}(U)$ 有 $Ef=f$ 于 $U$ 上、$\spt(Ef)\subseteq V$，且 $\lVert Ef\rVert_{W^{1,p}(\mathbb{R}^n)}\leqslant C\lVert f\rVert_{W^{1,p}(U)}$。取 $\bar f_k:=Ef_k$ 即得所述延拓；$(\star)$ 中的常数 $C$ 即该算子的范数，与 $k$ 无关，右端的有限性由定理的假设保证。
+
+（2）令 $\bar f_k^\varepsilon:=\eta_\varepsilon*\bar f_k$ 为通常的磨光（见\cref{section:ch04-02}）。% XREF p=169 "as described in Section 4.2"
+
+\textbf{断言 1}：$\lVert\bar f_k^\varepsilon-\bar f_k\rVert_{L^p(\mathbb{R}^n)}\leqslant C\varepsilon$，关于 $k$ 一致成立。
+
+\textbf{断言 1 的证明}：先设 $\bar f_k$ 光滑，计算
+\begin{align*}
+\lvert\bar f_k^\varepsilon(x)-\bar f_k(x)\rvert
+&\leqslant\int_{B(1)}\eta(z)\lvert\bar f_k(x-\varepsilon z)-\bar f_k(x)\rvert\diff z\\
+&=\int_{B(1)}\eta(z)\Bigl\lvert\int_0^1\frac{\diff}{\diff t}\bar f_k(x-t\varepsilon z)\diff t\Bigr\rvert\diff z\\
+&\leqslant\varepsilon\int_{B(1)}\eta(z)\int_0^1\lvert D\bar f_k(x-\varepsilon tz)\rvert\diff t\diff z .
+\end{align*}
+于是
+\begin{align*}
+\lVert\bar f_k^\varepsilon-\bar f_k\rVert^p_{L^p(\mathbb{R}^n)}
+&\leqslant C\varepsilon^p\int_{B(1)}\eta(z)\int_0^1\Bigl(\int_{\mathbb{R}^n}\lvert D\bar f_k(x-\varepsilon tz)\rvert^p\diff x\Bigr)\diff t\diff z\\
+&\leqslant C\varepsilon^p\lVert\bar f_k\rVert^p_{W^{1,p}(\mathbb{R}^n)}\\
+&\leqslant C\varepsilon^p ,
+\end{align*}
+最后一个估计依据 $(\star)$。一般情形由逼近得到。
+
+% SUPPLEMENT: parent=theorem:ch04-4-11; kind=proof; 补出断言 1 中「一般情形由逼近得到」的具体论证：磨光逼近、Young 不等式与取极限
+下面补出这一逼近步骤。固定 $k$，令 $\bar f_k^\delta:=\eta_\delta*\bar f_k$。由\cref{theorem:ch04-4-1}(v)(vi)，$\bar f_k^\delta\to\bar f_k$ 于 $W^{1,p}_{\loc}(\mathbb{R}^n)$（$\delta\to0$）；又 $\spt\bar f_k\subseteq V$ 且 $\spt\bar f_k^\delta\subseteq V+B(0,\delta)$，故对 $\delta<1$ 两个支集都含于同一个有界开集 $V+B(0,1)$，上述局部收敛因此在 $W^{1,p}(\mathbb{R}^n)$ 中成立。% XREF internal
+把已证的光滑情形用于 $\bar f_k^\delta$，得
+\begin{align*}
+\lVert(\bar f_k^\delta)^\varepsilon-\bar f_k^\delta\rVert_{L^p(\mathbb{R}^n)}\leqslant C\varepsilon\lVert D\bar f_k^\delta\rVert_{L^p(\mathbb{R}^n)}\leqslant C\varepsilon\lVert D\bar f_k\rVert_{L^p(\mathbb{R}^n)},
+\end{align*}
+其中第二个不等号是 Young 不等式 $\lVert D\bar f_k^\delta\rVert_{L^p}=\lVert\eta_\delta*D\bar f_k\rVert_{L^p}\leqslant\lVert\eta_\delta\rVert_{L^1}\lVert D\bar f_k\rVert_{L^p}$。又
+\begin{align*}
+\lVert(\bar f_k^\delta)^\varepsilon-\bar f_k^\varepsilon\rVert_{L^p(\mathbb{R}^n)}=\lVert\eta_\varepsilon*(\bar f_k^\delta-\bar f_k)\rVert_{L^p(\mathbb{R}^n)}\leqslant\lVert\bar f_k^\delta-\bar f_k\rVert_{L^p(\mathbb{R}^n)}\to0
+\end{align*}
+（$\delta\to0$）。在不等式
+\begin{align*}
+\lVert\bar f_k^\varepsilon-\bar f_k\rVert_{L^p(\mathbb{R}^n)}\leqslant\lVert\bar f_k^\varepsilon-(\bar f_k^\delta)^\varepsilon\rVert_{L^p(\mathbb{R}^n)}+\lVert(\bar f_k^\delta)^\varepsilon-\bar f_k^\delta\rVert_{L^p(\mathbb{R}^n)}+\lVert\bar f_k^\delta-\bar f_k\rVert_{L^p(\mathbb{R}^n)}
+\end{align*}
+中令 $\delta\to0$，即得 $\lVert\bar f_k^\varepsilon-\bar f_k\rVert_{L^p(\mathbb{R}^n)}\leqslant C\varepsilon\lVert D\bar f_k\rVert_{L^p(\mathbb{R}^n)}\leqslant C\varepsilon$，其中常数 $C$ 与 $k$ 无关（依据 $(\star)$）。断言 1 得证。
+
+（3）\textbf{断言 2}：对每个 $\varepsilon>0$，序列 $\{\bar f_k^\varepsilon\}_{k=1}^{\infty}$ 在 $\mathbb{R}^n$ 上一致有界且等度连续。
+
+\textbf{断言 2 的证明}：计算
+\begin{align*}
+\lvert\bar f_k^\varepsilon(x)\rvert
+&\leqslant\int_{B(x,\varepsilon)}\eta_\varepsilon(x-y)\lvert\bar f_k(y)\rvert\diff y\\
+&\leqslant C\varepsilon^{-\frac np}\lVert\bar f_k\rVert_{L^p(\mathbb{R}^n)}\\
+&\leqslant C\varepsilon^{-\frac np}
+\end{align*}
+与
+\begin{align*}
+\lvert D\bar f_k^\varepsilon(x)\rvert\leqslant\int_{B(x,\varepsilon)}\lvert D\eta_\varepsilon(x-y)\rvert\lvert\bar f_k(y)\rvert\diff y\leqslant C\varepsilon^{-\frac np-1}.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-11; kind=proof; 补出由断言 2 验证 Arzelà–Ascoli 定理适用（一致有界、等度连续、支集一致有界）以及全空间上一致收敛的来源
+上述两个估计关于 $x\in\mathbb{R}^n$ 与 $k$ 一致。第一个给出族 $\{\bar f_k^\varepsilon\}_{k=1}^{\infty}$ 的一致有界性；第二个与中值定理给出
+\begin{align*}
+\lvert\bar f_k^\varepsilon(x)-\bar f_k^\varepsilon(y)\rvert\leqslant C\varepsilon^{-\frac np-1}\lvert x-y\rvert\qquad(x,y\in\mathbb{R}^n,\ k=1,2,\cdots),
+\end{align*}
+即该族等度连续，且 Lipschitz 常数 $C\varepsilon^{-\frac np-1}$ 与 $k$ 无关。又由 $\spt\bar f_k\subseteq V$ 与 $\spt\eta_\varepsilon\subseteq B(1)$ 得 $\spt\bar f_k^\varepsilon\subseteq V+B(0,\varepsilon)$，该包含关系的右端与 $k$ 无关。故 Arzelà--Ascoli 定理在紧集 $\overline{V+B(0,\varepsilon)}$ 上适用，存在子列在该紧集上一致收敛；由于该子列中的函数在 $V+B(0,\varepsilon)$ 之外恒为零，这一收敛在 $\mathbb{R}^n$ 上一致。
+
+（4）\textbf{断言 3}：对每个 $\delta>0$，存在子列 $\{f_{k_j}\}_{j=1}^{\infty}\subseteq\{f_k\}_{k=1}^{\infty}$，使得
+\begin{align*}
+\limsup_{i,j\to\infty}\lVert f_{k_i}-f_{k_j}\rVert_{L^p(U)}\leqslant\delta .
+\end{align*}
+
+\textbf{断言 3 的证明}：由断言 1，取 $\varepsilon>0$ 充分小，使得
+\begin{align*}
+\sup_{k}\lVert\bar f_k^\varepsilon-\bar f_k\rVert_{L^p(\mathbb{R}^n)}\leqslant\frac{\delta}{3}.
+\end{align*}
+再由断言 2 与 Arzelà--Ascoli 定理，存在子列 $\{\bar f_{k_j}^\varepsilon\}_{j=1}^{\infty}$ 在 $\mathbb{R}^n$ 上一致收敛。于是
+\begin{align*}
+\lVert f_{k_j}-f_{k_i}\rVert_{L^p(U)}
+&\leqslant\lVert\bar f_{k_j}-\bar f_{k_i}\rVert_{L^p(\mathbb{R}^n)}\\
+&\leqslant\lVert\bar f_{k_j}-\bar f_{k_j}^\varepsilon\rVert_{L^p(\mathbb{R}^n)}+\lVert\bar f_{k_j}^\varepsilon-\bar f_{k_i}^\varepsilon\rVert_{L^p(\mathbb{R}^n)}\\
+&\qquad+\lVert\bar f_{k_i}^\varepsilon-\bar f_{k_i}\rVert_{L^p(\mathbb{R}^n)}\\
+&\leqslant\frac{2\delta}{3}+\lVert\bar f_{k_j}^\varepsilon-\bar f_{k_i}^\varepsilon\rVert_{L^p(\mathbb{R}^n)}\leqslant\delta
+\end{align*}
+对充分大的 $i,j$ 成立。
+
+% SUPPLEMENT: parent=theorem:ch04-4-11; kind=proof; 补出最后一个不等号「≤δ」的依据：支集一致有界、Hölder 不等式与一致收敛
+最后一个不等号的依据如下。由 $\spt\bar f_k^\varepsilon\subseteq V+B(0,\varepsilon)$ 与 $\lvert V+B(0,\varepsilon)\rvert<\infty$，Hölder 不等式给出
+\begin{align*}
+\lVert\bar f_{k_j}^\varepsilon-\bar f_{k_i}^\varepsilon\rVert_{L^p(\mathbb{R}^n)}\leqslant\lvert V+B(0,\varepsilon)\rvert^{\frac1p}\lVert\bar f_{k_j}^\varepsilon-\bar f_{k_i}^\varepsilon\rVert_{L^\infty(\mathbb{R}^n)}\leqslant\frac{\delta}{3}
+\end{align*}
+对充分大的 $i,j$ 成立，其中第二个不等号来自该子列在 $\mathbb{R}^n$ 上的一致收敛。断言 3 得证。
+
+（5）用对角线法与断言 3（取 $\delta=1,\frac12,\frac14,\cdots$）得到子列，仍记为 $\{f_{k_j}\}_{j=1}^{\infty}$，它在 $L^p(U)$ 中收敛到某函数 $f$。
+
+% SUPPLEMENT: parent=theorem:ch04-4-11; kind=proof; 补出对角线法的构造（嵌套子列、取 δ=2^{-m}）与 L^p(U) 中 Cauchy 性的验证
+对角线法的构造如下。记 $\{f^{(0)}_k\}_{k=1}^{\infty}:=\{f_k\}_{k=1}^{\infty}$。对 $m=0,1,2,\cdots$，把断言 3 用于子列 $\{f^{(m)}_k\}_{k=1}^{\infty}$ 与 $\delta=2^{-m}$，得到子列 $\{f^{(m+1)}_k\}_{k=1}^{\infty}\subseteq\{f^{(m)}_k\}_{k=1}^{\infty}$，使得
+\begin{align*}
+\limsup_{i,j\to\infty}\lVert f^{(m+1)}_{k_i}-f^{(m+1)}_{k_j}\rVert_{L^p(U)}\leqslant2^{-m}.
+\end{align*}
+取对角线子列 $f_{k_j}:=f^{(j)}_j$。对每个 $m$ 与每个 $j\geqslant m$ 有 $f_{k_j}\in\{f^{(m)}_k\}_{k=1}^{\infty}$，故
+\begin{align*}
+\limsup_{i,j\to\infty}\lVert f_{k_i}-f_{k_j}\rVert_{L^p(U)}\leqslant2^{-m}.
+\end{align*}
+于是对每个 $\eta>0$，取 $m$ 使 $2^{-m}<\eta$，则存在 $J$，使得 $i,j\geqslant J$ 时 $\lVert f_{k_i}-f_{k_j}\rVert_{L^p(U)}<\eta$，即 $\{f_{k_j}\}_{j=1}^{\infty}$ 是 $L^p(U)$ 中的 Cauchy 列。由 $L^p(U)$ 的完备性，存在 $f\in L^p(U)$ 使 $f_{k_j}\to f$ 于 $L^p(U)$。
+
+又对 $1\leqslant q<p^*$ 有
+\begin{align*}
+\lVert f_{k_j}-f\rVert_{L^q(U)}\leqslant\lVert f_{k_j}-f\rVert^{\theta}_{L^p(U)}\lVert f_{k_j}-f\rVert^{1-\theta}_{L^{p^*}(U)},
+\end{align*}
+其中 $\frac1q=\frac{\theta}{p}+\frac{1-\theta}{p^*}$，从而 $\theta>0$。由于 $\{f_k\}_{k=1}^{\infty}$ 在 $L^{p^*}(U)$ 中有界，可见
+\begin{align*}
+\lim_{j\to\infty}\lVert f_{k_j}-f\rVert_{L^q(U)}=0
+\end{align*}
+对每个 $1\leqslant q<p^*$ 成立。
+
+% SUPPLEMENT: parent=theorem:ch04-4-11; kind=proof; 补出插值不等式的依据（Hölder 不等式与 θ>0）、L^{p*} 一致有界的来源以及 f∈L^{p*} 的 Fatou 论证
+插值不等式的依据是 Hölder 不等式：$q<p^*$ 给出 $\frac1q>\frac1{p^*}$，而由 $\frac1q=\frac{\theta}{p}+\frac{1-\theta}{p^*}$ 可解出 $\theta=\frac{\frac1q-\frac1{p^*}}{\frac1p-\frac1{p^*}}$，故 $\theta\in(0,1)$，特别地 $\theta>0$。% XREF internal
+$L^{p^*}(U)$ 中的一致有界性来自\cref{theorem:ch04-4-8}与\cref{theorem:ch04-4-7}：存在只依赖于 $n,p,U$ 的常数 $C$，使 $\lVert f_k\rVert_{L^{p^*}(U)}\leqslant C\lVert f_k\rVert_{W^{1,p}(U)}$ 对一切 $k$ 成立，故 $\sup_k\lVert f_k\rVert_{L^{p^*}(U)}<\infty$。% XREF internal
+又 $f\in L^{p^*}(U)$：沿子列 $f_{k_j}\to f$ 于 $L^p(U)$，必要时再取子列可设 $f_{k_j}\to f$ 于 $\mathcal{L}^n$-a.e.；于是由 Fatou 引理
+\begin{align*}
+\lVert f\rVert_{L^{p^*}(U)}\leqslant\liminf_{j\to\infty}\lVert f_{k_j}\rVert_{L^{p^*}(U)}\leqslant C\sup_{k}\lVert f_k\rVert_{W^{1,p}(U)}<\infty .
+\end{align*}
+这两条使插值不等式右端有意义，并给出 $\lVert f_{k_j}-f\rVert_{L^{p^*}(U)}$ 关于 $j$ 的有界性；再结合 $\lVert f_{k_j}-f\rVert_{L^p(U)}\to0$ 与 $\theta>0$，即得 $L^q(U)$ 中的强收敛。
+
+由于 $p>1$，由\cref{theorem:ch01-1-42}可得 $f\in W^{1,p}(U)$。% XREF p=170 "Since p > 1, it follows from Theorem 1.42 that f ∈ W^{1,p}(U)"
+
+% SUPPLEMENT: parent=theorem:ch04-4-11; kind=proof; 补出由 $L^p$ 弱紧性与弱偏导数的定义推出 f∈W^{1,p}(U) 的完整论证
+最后一步的依据如下。由 $(\star)$ 与 $U\subseteq V$ 得 $\sup_j\lVert Df_{k_j}\rVert_{L^p(U;\mathbb{R}^n)}\leqslant\sup_k\lVert\bar f_k\rVert_{W^{1,p}(\mathbb{R}^n)}<\infty$，且 $p>1$。对梯度的每个分量用\cref{theorem:ch01-1-42}（必要时再取子列并重新编号），存在 $g=(g_1,\cdots,g_n)\in L^p(U;\mathbb{R}^n)$，使 $Df_{k_j}\weakto g$ 于 $L^p(U;\mathbb{R}^n)$。% XREF internal
+对每个 $\varphi\in C_c^1(U)$ 与每个 $i=1,\cdots,n$，由弱偏导数的定义（\cref{definition:ch04-4-1}）有% XREF internal
+\begin{align*}
+\int_U f_{k_j}\varphi_{x_i}\diff x=-\int_U (f_{k_j})_{x_i}\varphi\diff x .
+\end{align*}
+左端当 $j\to\infty$ 时收敛到 $\int_U f\varphi_{x_i}\diff x$，因为 $f_{k_j}\to f$ 于 $L^p(U)$ 而 $\varphi_{x_i}\in L^{p'}(U)$；右端收敛到 $-\int_U g_i\varphi\diff x$，因为 $(f_{k_j})_{x_i}\weakto g_i$ 于 $L^p(U)$ 而 $\varphi\in L^{p'}(U)$。故
+\begin{align*}
+\int_U f\varphi_{x_i}\diff x=-\int_U g_i\varphi\diff x
+\end{align*}
+对一切 $\varphi\in C_c^1(U)$ 成立，即 $g_i$ 是 $f$ 关于 $x_i$ 的弱偏导数；于是 $f\in W^{1,p}(U)$ 且 $Df=g$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-11; kind=correction; 说明证明中两处下标须按指出的方式理解，否则相应估计不成立
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-11-下标}
+证明中有两处下标需要按下列方式理解。
+\begin{enumerate}[(i)]
+\item 第（2）步的第一个不等式中，被积函数的两个因子都取 $\bar f_k$，即
+\begin{align*}
+\lvert\bar f_k^\varepsilon(x)-\bar f_k(x)\rvert\leqslant\int_{B(1)}\eta(z)\lvert\bar f_k(x-\varepsilon z)-\bar f_k(x)\rvert\diff z .
+\end{align*}
+该式由 $\int_{B(1)}\eta(z)\diff z=1$ 与磨光的定义得到：右端关于 $z$ 积分后恰为 $\bar f_k^\varepsilon(x)-\bar f_k(x)$，与左端一致。若其中一个因子取 $f_k$，这一恒等式便不成立，后续对 $D\bar f_k$ 的估计也无从进行。
+\item 第（4）步的三角不等式中，第三项取 $\lVert\bar f_{k_i}^\varepsilon-\bar f_{k_i}\rVert_{L^p(\mathbb{R}^n)}$，与第一项 $\lVert\bar f_{k_j}-\bar f_{k_j}^\varepsilon\rVert_{L^p(\mathbb{R}^n)}$ 分别对应指标 $k_j$ 与 $k_i$。只有这样才可对这两项同时使用断言 1 而得到 $\frac{2\delta}{3}$；若第三项写成 $\lVert\bar f_{k_i}^\varepsilon-\bar f_{k_j}\rVert_{L^p(\mathbb{R}^n)}$，它既不是磨光误差，也不能由断言 1 控制。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-11-端点}
+紧性断言在端点情形 $q=p^*$ 下不成立。当 $p=1$ 时，上面的论证表明存在子列 $\{f_{k_j}\}_{j=1}^{\infty}$ 与函数 $f\in L^{1^*}(U)$，使得
+\begin{align*}
+\lim_{j\to\infty}\lVert f_{k_j}-f\rVert_{L^q(U)}=0
+\end{align*}
+对每个 $1\leqslant q<1^*$ 成立。由\cref{theorem:ch05-5-2}可得 $f\in\BV(U)$。% XREF p=170 "It follows from Theorem 5.2 that f ∈ BV(U)"
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch04-thm-4-11-端点; kind=hypotheses; 补出 q=p^* 时紧性失效的具体反例并逐项核对定理的假设
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-11-端点例}
+端点 $q=p^*$ 处紧性失效的反例。取 $U:=B(0,1)\subseteq\mathbb{R}^n$（$n\geqslant2$，$1<p<n$），取 $\varphi\in C_c^\infty(B(0,1))$ 满足 $0\leqslant\varphi\leqslant1$ 且 $\varphi\equiv1$ 于 $B(0,\frac12)$，并令
+\begin{align*}
+f_k(x):=k^{\frac{n-p}{p}}\varphi(kx)\qquad(x\in\mathbb{R}^n,\ k=1,2,\cdots).
+\end{align*}
+由伸缩计算，$\lVert f_k\rVert_{L^{p^*}(\mathbb{R}^n)}=\lVert\varphi\rVert_{L^{p^*}(\mathbb{R}^n)}$、$\lVert Df_k\rVert_{L^p(\mathbb{R}^n)}=\lVert D\varphi\rVert_{L^p(\mathbb{R}^n)}$ 与 $\lVert f_k\rVert_{L^p(\mathbb{R}^n)}=k^{-1}\lVert\varphi\rVert_{L^p(\mathbb{R}^n)}$；由于各 $f_k$ 的支集含于 $B(0,1)=U$，得 $\sup_k\lVert f_k\rVert_{W^{1,p}(U)}\leqslant\lVert\varphi\rVert_{W^{1,p}(\mathbb{R}^n)}<\infty$，定理的全部假设满足。另一方面，对每个 $x\neq0$，当 $k$ 充分大时 $kx\notin B(0,1)$，故 $f_k(x)=0$，即 $f_k\to0$ 于 $\mathcal{L}^n$-a.e.；若某子列在 $L^{p^*}(U)$ 中强收敛于 $g$，则 $g=0$ 于 $\mathcal{L}^n$-a.e.，但
+\begin{align*}
+\lVert f_k\rVert_{L^{p^*}(U)}=\lVert\varphi\rVert_{L^{p^*}(\mathbb{R}^n)}>0
+\end{align*}
+与 $k$ 无关，矛盾。故不存在在 $L^{p^*}(U)$ 中强收敛的子列，即 $q=p^*$ 不能取到。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch04-thm-4-11-端点; kind=motivation; 说明 p=1 情形为何仍可抽出子列、1^* 的含义以及 BV 正则性的来源
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-11-端点其他}
+当 $p=1$ 时 $1^*=\frac{n}{n-1}$（见\cref{definition:ch04-4-7}），定理的证明直到第（5）步的插值部分逐字适用：断言 1 与断言 2 只用到 $L^1$ 估计与 $\lVert Df_k\rVert_{L^1}$ 的一致界；断言 3 与对角线法给出在 $L^1(U)$ 中收敛的子列，其极限记为 $f$；\cref{theorem:ch04-4-8}在 $p=1$ 时给出 $L^{1^*}$ 界，插值不等式给出 $L^q(U)$（$1\leqslant q<1^*$）中的强收敛。% XREF internal
+与 $1<p<n$ 的差别在最后一步：$p=1$ 时\cref{theorem:ch01-1-42}不适用，梯度的弱紧性不能用来产生 $f$ 的弱梯度；此时改用\cref{theorem:ch05-5-2}，由 $f_{k_j}\to f$ 于 $L^1(U)$ 与 $\sup_j\lVert Df_{k_j}\rVert(U)<\infty$ 得 $\lVert Df\rVert(U)\leqslant\liminf_j\lVert Df_{k_j}\rVert(U)<\infty$，故 $f\in\BV(U)$。% XREF internal
+因此定理的结论在 $p=1$ 时仍然成立，只是极限的正则性从 $W^{1,p}(U)$ 降为 $\BV(U)$：$\BV$ 是「一阶导数落在测度类中」的函数空间，与 $p=1$ 的临界指数 $1^*$ 相匹配。
+\end{remark}
+
+\end{document}

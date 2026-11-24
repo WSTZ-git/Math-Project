@@ -1,0 +1,1202 @@
+\documentclass[../../main.tex]{subfiles}
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{测度与可测函数}\label{section:ch01-01}
+
+\subsection{测度}\label{subsection:ch01-01-测度}
+
+尽管后文几乎只在 $\mathbb{R}^n$ 中工作，从抽象情形出发仍然最为方便。
+
+设 $X$ 为非空集合，$2^X$ 表示 $X$ 的一切子集构成的集族。
+
+\begin{definition}[测度]\label{definition:ch01-1-1}
+设 $X$ 为非空集合。称映射 $\mu:2^{X}\to[0,\infty]$ 为 $X$ 上的\textbf{测度}，是指下列两条同时成立：
+\begin{enumerate}[(i)]
+\item $\mu(\varnothing)=0$；
+\item 若 $A\subseteq\bigcup_{k=1}^{\infty}A_{k}$，其中 $A,A_{1},A_{2},\cdots$ 均为 $X$ 的子集，则
+\begin{align*}
+\mu(A)\leqslant\sum_{k=1}^{\infty}\mu(A_{k}).
+\end{align*}
+\end{enumerate}
+\end{definition}
+
+条件 (ii) 称为次可加性。
+
+\begin{remark}\phantomsection\label{remark:ch01-def-1-1-约定}
+\textbf{术语约定.} 多数文献把上述映射 $\mu$ 称为\textbf{外测度}，而把测度一词保留给 $\mu$ 在 $X$ 的全体 $\mu$-可测子集构成的集族上的限制（见下文）。下文将说明，能够对不可测集也施行“测量”，具有实际的便利之处。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-1; kind=motivation; 说明测度作为体积抽象为何定义在整个幂集上并允许取值 +∞
+\begin{remark}\phantomsection\label{remark:ch01-def-1-1-测度动机}
+测度是长度、面积与体积的抽象：它给 $X$ 的每个子集指派一个非负广义实数，并要求空集取零、可数覆盖给出上界估计。定义域取整个幂集 $2^X$ 而非某个 $\sigma$-代数，使测度可以先于可测集的概念出现；正因如此，才能用覆盖的方式从外部对任意集合赋值，并在其上筛选出使得“分割不损失测度”的集合作为可测集。值域取 $[0,\infty]$ 允许集合的测度为无穷，从而无界集合与覆盖级数发散的情形都纳入同一框架；若把值域改为 $[0,\infty)$，则 $\mathbb{R}^n$ 中无界集的测度将无法定义。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-1; kind=hypotheses; 逐条分析两条公理的作用与削弱后的后果
+\begin{remark}\phantomsection\label{remark:ch01-def-1-1-测度条件}
+\begin{enumerate}[(i)]
+\item 公理 (i) 是归一化条件，它排除把正数常值指派给一切集合的退化情形，并保证空集为零测集；后续所有“几乎处处”论证都以存在非空零测集为前提。
+\item 公理 (ii) 要求对\textbf{可数}覆盖成立，且不要求覆盖中的集合互不相交。取覆盖为 $A\subseteq B\cup\varnothing\cup\varnothing\cup\cdots$ 即得单调性 $\mu(A)\leqslant\mu(B)$（$A\subseteq B$），故单调性是次可加性的特例，而非独立公理。
+\item 公理 (ii) 中的不等号方向不可反转：若把 $\leqslant$ 改为等号并要求覆盖互不相交，得到的是“可数可加性”，它不能对不可测集赋值，从覆盖构造测度的做法随之失效。
+\item 若把 (ii) 减弱为只对\textbf{有限}覆盖成立，则 $\sigma$-次可加性不再成立，\cref{theorem:ch01-1-2} 中测度的上连续性与可数可加性都将失去依据。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[测度在集合上的限制]\label{definition:ch01-1-2}
+设 $\mu$ 为非空集合 $X$ 上的测度，$C\subseteq X$。$\mu$ 在 $C$ 上的\textbf{限制}，记作 $\mu\llcorner C$，定义为
+\begin{align*}
+(\mu\llcorner C)(A):=\mu(A\cap C)\qquad\text{对一切 }A\subseteq X.
+\end{align*}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-2; kind=proof; 验证由上式给出的 μ⌞C 确实满足测度的两条公理，故“定义为测度”有据
+\begin{proof}
+固定 $C\subseteq X$，并对 $A\subseteq X$ 记 $\nu(A):=\mu(A\cap C)$。
+（1）由 $\varnothing\cap C=\varnothing$ 得 $\nu(\varnothing)=\mu(\varnothing)=0$。
+（2）设 $A\subseteq\bigcup_{k=1}^{\infty}A_{k}$。则 $A\cap C\subseteq\bigcup_{k=1}^{\infty}(A_{k}\cap C)$，由 $\mu$ 的次可加性得
+\begin{align*}
+\nu(A)=\mu(A\cap C)\leqslant\sum_{k=1}^{\infty}\mu(A_{k}\cap C)=\sum_{k=1}^{\infty}\nu(A_{k}).
+\end{align*}
+故 $\nu$ 为 $X$ 上的测度。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:ch01-1-2; kind=motivation; 说明为何需要把测度限制到子集上以及它在后续论证中的用途
+\begin{remark}\phantomsection\label{remark:ch01-def-1-2-限制动机}
+限制运算把注意力集中到 $C$ 内部的集合上：$(\mu\llcorner C)(A)$ 只依赖 $A\cap C$，因此 $C$ 之外的部分对测度没有贡献。这一运算使“在集合 $C$ 上局部地讨论测度”成为可能：当 $C$ 的测度有限时，$\mu\llcorner C$ 是有限测度，从而可以使用测度的上连续性与紧集内逼近；当 $C$ 是 $\mu$-可测集且 $\mu(C)<\infty$ 时，$\mu\llcorner C$ 甚至是 Radon 测度。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-2; kind=hypotheses; 说明定义中未加限制的条件及其必要性
+\begin{remark}\phantomsection\label{remark:ch01-def-1-2-限制条件}
+\begin{enumerate}[(i)]
+\item 定义对 $C$ 不加任何可测性要求，$C$ 可以是 $X$ 的任意子集；限制运算因此总是有定义，其可测集族则由\cref{theorem:ch01-1-1}给出。% XREF internal
+\item 若 $C=X$，则 $\mu\llcorner X=\mu$；若 $C=\varnothing$，则 $\mu\llcorner\varnothing$ 是恒取零的测度。这两种极端情形说明限制运算不引入新的对象类型。
+\item 限制运算只保留 $\mu$ 在 $C$ 上的信息：$\mu(C)=(\mu\llcorner C)(X)$ 恒成立，但当 $\mu(C)=\infty$ 时不能由 $\mu\llcorner C$ 反过来确定 $\mu$ 在 $C$ 之外的取值。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[$\mu$-可测集]\label{definition:ch01-1-3}
+设 $\mu$ 为非空集合 $X$ 上的测度。称 $A\subseteq X$ 为 $\mu$-\textbf{可测集}，是指对每个 $B\subseteq X$ 都有
+\begin{align*}
+\mu(B)=\mu(B\cap A)+\mu(B-A).
+\end{align*}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-3; kind=motivation; 说明 Carathéodory 分割条件的几何含义与筛选可测集的思路
+\begin{remark}\phantomsection\label{remark:ch01-def-1-3-可测动机}
+可测性并不是“能被简单集合逼近”这一朴素的几何要求，而是一条关于\textbf{分割}的代数条件：对任意测试集 $B$，用 $A$ 把 $B$ 切成 $B\cap A$ 与 $B-A$ 两块，要求两块测度之和恰等于 $B$ 的测度。由于次可加性总给出“两块之和不小于原来”，这条等式实际上只要求“分割不产生额外测度”。条件只用到 $\mu$ 在幂集上的取值，不预设 $\sigma$-代数，因此可以从任意测度出发把满足条件的集合筛选出来，再证明这些集合构成 $\sigma$-代数。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-3; kind=hypotheses; 说明量词顺序、等号方向与检验范围三处细节
+\begin{remark}\phantomsection\label{remark:ch01-def-1-3-可测条件}
+\begin{enumerate}[(i)]
+\item 量词顺序为：先固定 $A$，再对\textbf{每个} $B\subseteq X$ 要求等式成立。若只对部分 $B$ 检验，得到的条件严格弱于可测性。
+\item 等式中的等号不可换成不等号：次可加性（由 $B\subseteq(B\cap A)\cup(B-A)$ 得到）总给出 $\mu(B)\leqslant\mu(B\cap A)+\mu(B-A)$，故可测性等价于反向不等式 $\mu(B)\geqslant\mu(B\cap A)+\mu(B-A)$。
+\item 检验范围可以化到有限测度的集合上：若对每个满足 $\mu(B)<\infty$ 的 $B$ 都有等式成立，则对 $\mu(B)=\infty$ 的 $B$，由次可加性右端不小于 $\mu(B)=\infty$，等式同样成立。\cref{theorem:ch01-1-2} 的证明正是在这一化归下完成的。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[测度的基本性质]\label{theorem:ch01-1-1}
+设 $\mu$ 为非空集合 $X$ 上的测度。
+\begin{enumerate}[(i)]
+\item 若 $A\subseteq B\subseteq X$，则 $\mu(A)\leqslant\mu(B)$；
+\item $A\subseteq X$ 为 $\mu$-可测集当且仅当 $X-A$ 为 $\mu$-可测集；
+\item $\varnothing$ 与 $X$ 均为 $\mu$-可测集；更一般地，若 $\mu(A)=0$，则 $A$ 为 $\mu$-可测集；
+\item 若 $C$ 为 $X$ 的任意子集，则每个 $\mu$-可测集也是 $\mu\llcorner C$-可测集。
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+
+（1）断言 (i) 由测度的定义直接得到：由 $A\subseteq B\subseteq X$ 得 $A\subseteq B\cup\varnothing\cup\varnothing\cup\cdots$，对该可数覆盖用次可加性，
+\begin{align*}
+\mu(A)\leqslant\mu(B)+\mu(\varnothing)+\mu(\varnothing)+\cdots=\mu(B).
+\end{align*}
+
+（2）为证 (ii)，设 $A$ 为 $\mu$-可测集，$B\subseteq X$。由 $A$ 的可测性，
+\begin{align*}
+\mu(B)=\mu(B\cap A)+\mu(B-A).
+\end{align*}
+注意到 $B\cap A=B-(X-A)$ 与 $B-A=B\cap(X-A)$，代入上式得
+\begin{align*}
+\mu(B)=\mu\bigl(B-(X-A)\bigr)+\mu\bigl(B\cap(X-A)\bigr).
+\end{align*}
+由于 $B\subseteq X$ 任意，此式恰是 $X-A$ 为 $\mu$-可测集的定义。把论证中的 $A$ 换成 $X-A$ 并利用 $X-(X-A)=A$，即得逆命题。
+
+（3）设 $\mu(A)=0$，$B\subseteq X$。由 $B\cap A\subseteq A$ 与 (i) 得 $\mu(B\cap A)\leqslant\mu(A)=0$，故 $\mu(B\cap A)=0$，于是
+\begin{align*}
+\mu(B)\geqslant\mu(B-A)=\mu(B\cap A)+\mu(B-A).
+\end{align*}
+另一方面，由 $B\subseteq(B\cap A)\cup(B-A)$ 与次可加性得反向不等式 $\mu(B)\leqslant\mu(B\cap A)+\mu(B-A)$，故 $A$ 为 $\mu$-可测集。在 (iii) 中取 $A=\varnothing$ 得 $\varnothing$ 为 $\mu$-可测集，再由 (ii) 得 $X$ 为 $\mu$-可测集。
+
+（4）设 $A$ 为 $\mu$-可测集，$B\subseteq X$。由限制运算的定义与 $A$ 的可测性，
+\begin{align*}
+(\mu\llcorner C)(B)&=\mu(B\cap C)=\mu\bigl((B\cap C)\cap A\bigr)+\mu\bigl((B\cap C)-A\bigr)\\
+&=\mu\bigl((B\cap A)\cap C\bigr)+\mu\bigl((B-A)\cap C\bigr)\\
+&=(\mu\llcorner C)(B\cap A)+(\mu\llcorner C)(B-A).
+\end{align*}
+由 $B\subseteq X$ 的任意性，$A$ 为 $\mu\llcorner C$-可测集。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-1; kind=motivation; 说明四条性质各自的作用与它们在后续论证中的位置
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-1-动机}
+四条性质把“可测”这一抽象条件转化为可直接使用的运算规则：单调性使测度可以比较大小，补集封闭使可测集族在取补下稳定，零测集自动可测使“几乎处处”论证有落脚点，而对测度的限制保持可测性则使局部化成为可能。后续证明反复使用这四条：证明可测集族构成 $\sigma$-代数时，补集封闭与可数并封闭缺一不可；处理有限测度下的上连续性时，需要把问题化到 $\mu\llcorner B$ 上，此时第 (iv) 条保证原有的可测集不因换测度而失效。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-1; kind=hypotheses; 说明定理不含附加假设，并指出各款的最弱前提
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-1-条件}
+\begin{enumerate}[(i)]
+\item 定理不含任何附加假设，只需 $\mu$ 是 $X$ 上的测度。四款的证明只用测度的两条公理，其中 (i) 与 (iii) 的反向不等式用次可加性，(ii) 与 (iv) 用可测性定义中的等式。
+\item 第 (i) 款的单调性是对\textbf{一切}子集成立的，不要求可测性；这一点在证明第 (iii) 款时用于控制 $\mu(B\cap A)$，因为 $B\cap A$ 未必可测。
+\item 第 (iii) 款中“更一般地”的部分不能反过来用：可测集的测度未必为零。零测集可测这一事实只给出“测度为零蕴含可测”，其逆命题不成立。
+\item 第 (iv) 款对 $C$ 不加任何条件；若进一步要求 $C$ 为 $\mu$-可测集，则 $\mu\llcorner C$ 在 $C$ 上的取值与 $\mu$ 一致，此时限制运算还保持测度的数值信息。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[可测集序列]\label{theorem:ch01-1-2}
+设 $\{A_{k}\}_{k=1}^{\infty}$ 为 $X$ 中的一列 $\mu$-可测集。
+\begin{enumerate}[(i)]
+\item 集合 $\bigcup_{k=1}^{\infty}A_{k}$ 与 $\bigcap_{k=1}^{\infty}A_{k}$ 均为 $\mu$-可测集；
+\item 若 $\{A_{k}\}_{k=1}^{\infty}$ 两两不相交，则
+\begin{align*}
+\mu\Bigl(\bigcup_{k=1}^{\infty}A_{k}\Bigr)=\sum_{k=1}^{\infty}\mu(A_{k});
+\end{align*}
+\item 若 $A_{1}\subseteq\cdots\subseteq A_{k}\subseteq A_{k+1}\subseteq\cdots$，则
+\begin{align*}
+\lim_{k\to\infty}\mu(A_{k})=\mu\Bigl(\bigcup_{k=1}^{\infty}A_{k}\Bigr);
+\end{align*}
+\item 若 $A_{1}\supseteq\cdots\supseteq A_{k}\supseteq A_{k+1}\supseteq\cdots$ 且 $\mu(A_{1})<\infty$，则
+\begin{align*}
+\lim_{k\to\infty}\mu(A_{k})=\mu\Bigl(\bigcap_{k=1}^{\infty}A_{k}\Bigr).
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）由次可加性，对一切 $A,B\subseteq X$ 有 $\mu(B)\leqslant\mu(B\cap A)+\mu(B-A)$，故为证明 $A$ 是 $\mu$-可测集，只需再证反向不等式。对每个 $B\subseteq X$，
+\begin{align*}
+\mu(B)&=\mu(B\cap A_{1})+\mu(B-A_{1})\\
+&=\mu(B\cap A_{1})+\mu\bigl((B-A_{1})\cap A_{2}\bigr)+\mu\bigl((B-A_{1})-A_{2}\bigr)\\
+&\geqslant\mu\bigl(B\cap(A_{1}\cup A_{2})\bigr)+\mu\bigl(B-(A_{1}\cup A_{2})\bigr),
+\end{align*}
+其中最后一步用了两件事：一是 $(B\cap A_{1})\cup\bigl((B-A_{1})\cap A_{2}\bigr)=B\cap(A_{1}\cup A_{2})$，故由次可加性得 $\mu\bigl(B\cap(A_{1}\cup A_{2})\bigr)\leqslant\mu(B\cap A_{1})+\mu\bigl((B-A_{1})\cap A_{2}\bigr)$；二是 $(B-A_{1})-A_{2}=B-(A_{1}\cup A_{2})$。于是 $A_{1}\cup A_{2}$ 为 $\mu$-可测集。
+
+% SUPPLEMENT: parent=theorem:ch01-1-2; kind=proof; 补出有限并的归纳步骤：由两块并的结论与可测性定义逐次合并
+（2）对并的个数作归纳。设 $A_{1},\cdots,A_{j+1}$ 均 $\mu$-可测，且已证 $\bigcup_{k=1}^{j}A_{k}$ 为 $\mu$-可测集。把两块并的结论用于 $\mu$-可测集 $B_{j}:=\bigcup_{k=1}^{j}A_{k}$ 与 $A_{j+1}$，得 $\bigcup_{k=1}^{j+1}A_{k}=B_{j}\cup A_{j+1}$ 为 $\mu$-可测集。故有限多个 $\mu$-可测集之并仍为 $\mu$-可测集。
+
+（3）由于
+\begin{align*}
+X-(A_{1}\cap A_{2})=(X-A_{1})\cup(X-A_{2}),
+\end{align*}
+两个 $\mu$-可测集之交是可测集；再用数学归纳法与上一个步骤的结论，有限多个 $\mu$-可测集之交也是 $\mu$-可测集。
+
+（4）设 $\{A_{k}\}_{k=1}^{\infty}$ 两两不相交，并记
+\begin{align*}
+B_{j}:=\bigcup_{k=1}^{j}A_{k}\qquad(j=1,2,\cdots).
+\end{align*}
+由两两不相交得 $B_{j+1}\cap A_{j+1}=A_{j+1}$ 与 $B_{j+1}-A_{j+1}=B_{j}$，于是
+\begin{align*}
+\mu(B_{j+1})&=\mu(B_{j+1}\cap A_{j+1})+\mu(B_{j+1}-A_{j+1})\\
+&=\mu(A_{j+1})+\mu(B_{j})\qquad(j=1,2,\cdots);
+\end{align*}
+由 $B_{1}=A_{1}$ 与归纳法得
+\begin{align*}
+\mu\Bigl(\bigcup_{k=1}^{j}A_{k}\Bigr)=\sum_{k=1}^{j}\mu(A_{k})\qquad(j=1,2,\cdots).
+\end{align*}
+再由单调性 $\mu(B_{j})\leqslant\mu\bigl(\bigcup_{k=1}^{\infty}A_{k}\bigr)$，令 $j\to\infty$ 得
+\begin{align*}
+\sum_{k=1}^{\infty}\mu(A_{k})\leqslant\mu\Bigl(\bigcup_{k=1}^{\infty}A_{k}\Bigr),
+\end{align*}
+结合次可加性即得断言 (ii)。
+
+（5）为证 (iii)，注意由 (ii) 与 $A_{k}\subseteq A_{k+1}$ 得
+\begin{align*}
+\lim_{k\to\infty}\mu(A_{k})&=\mu(A_{1})+\sum_{k=1}^{\infty}\mu(A_{k+1}-A_{k})\\
+&=\mu(A_{1})+\mu\Bigl(\bigcup_{k=1}^{\infty}(A_{k+1}-A_{k})\Bigr)=\mu\Bigl(\bigcup_{k=1}^{\infty}A_{k}\Bigr),
+\end{align*}
+其中集合 $A_{1},A_{2}-A_{1},A_{3}-A_{2},\cdots$ 两两不相交且其并为 $\bigcup_{k=1}^{\infty}A_{k}$。
+
+断言 (iv) 由 (iii) 得到。事实上，由 $\mu(A_{1})<\infty$ 及 $A_{k}\subseteq A_{1}$ 得 $\mu(A_{1}-A_{k})=\mu(A_{1})-\mu(A_{k})$，而 $\{A_{1}-A_{k}\}_{k=1}^{\infty}$ 是递增序列，故
+\begin{align*}
+\mu(A_{1})-\lim_{k\to\infty}\mu(A_{k})&=\lim_{k\to\infty}\mu(A_{1}-A_{k})=\mu\Bigl(\bigcup_{k=1}^{\infty}(A_{1}-A_{k})\Bigr)\\
+&\geqslant\mu(A_{1})-\mu\Bigl(\bigcap_{k=1}^{\infty}A_{k}\Bigr),
+\end{align*}
+其中最后一步用了 $\bigcup_{k=1}^{\infty}(A_{1}-A_{k})=A_{1}-\bigcap_{k=1}^{\infty}A_{k}$ 与次可加性。由此得 $\lim_{k\to\infty}\mu(A_{k})\leqslant\mu\bigl(\bigcap_{k=1}^{\infty}A_{k}\bigr)$，反向不等式由单调性给出。
+
+% SUPPLEMENT: parent=theorem:ch01-1-2; kind=proof; 补出第 (5) 步的推导依据：把可测性检验转移到有限测度的限制测度上
+（6）若 $B$ 为 $X$ 的任意子集，则由\cref{theorem:ch01-1-1}，每个 $\mu$-可测集也是 $\mu\llcorner B$-可测集。由于 $B_{j}:=\bigcup_{k=1}^{j}A_{k}$ 由第 (1) 步为 $\mu$-可测集，对每个满足 $\mu(B)<\infty$ 的 $B\subseteq X$ 有% XREF p=20 "Recall that if B is any subset of X, then each μ-measurable set is also μ⌞B-measurable"
+\begin{align*}
+\mu\Bigl(B\cap\bigcup_{k=1}^{\infty}A_{k}\Bigr)&+\mu\Bigl(B-\bigcup_{k=1}^{\infty}A_{k}\Bigr)\\
+=&(\mu\llcorner B)\Bigl(\bigcup_{k=1}^{\infty}B_{k}\Bigr)+(\mu\llcorner B)\Bigl(\bigcap_{k=1}^{\infty}(X-B_{k})\Bigr)\\
+=&\lim_{k\to\infty}(\mu\llcorner B)(B_{k})+\lim_{k\to\infty}(\mu\llcorner B)(X-B_{k})\\
+=&\mu(B).
+\end{align*}
+其中第二个等号对第一项用 (iii)、对第二项用 (iv)，此时 $(\mu\llcorner B)(X-B_{1})\leqslant\mu(B)<\infty$，有限性条件成立；最后一个等号是因为 $B_{k}$ 与 $X-B_{k}$ 是 $B$ 的一个分割，故 $(\mu\llcorner B)(B_{k})+(\mu\llcorner B)(X-B_{k})=\mu(B)$ 对每个 $k$ 成立。
+
+若 $\mu(B)=\infty$，则由 $B\subseteq\bigl(B\cap\bigcup_{k}A_{k}\bigr)\cup\bigl(B-\bigcup_{k}A_{k}\bigr)$ 与次可加性，右端不小于 $\mu(B)=\infty$，等式同样成立。因此 $\bigcup_{k=1}^{\infty}A_{k}$ 是 $\mu$-可测集。又 $X-\bigcup_{k=1}^{\infty}A_{k}=\bigcap_{k=1}^{\infty}(X-A_{k})$，而由\cref{theorem:ch01-1-1}，每个 $X-A_{k}$ 为 $\mu$-可测集，故其并 $\bigcup_{k=1}^{\infty}(X-A_{k})$ 为 $\mu$-可测集。% XREF internal
+
+再由同一结论得 $\bigcap_{k=1}^{\infty}A_{k}=X-\bigcup_{k=1}^{\infty}(X-A_{k})$ 为 $\mu$-可测集。断言 (i) 证毕。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-2; kind=motivation; 说明可数运算的封闭性与三条测度公式的来源
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-2-动机}
+本定理是构造 $\sigma$-代数的技术核心：可数与交封闭使“可测集”这一筛选结果成为一个可以作可数运算的集族，而可数可加性与上、下连续性则把测度的数值行为与集合的单调极限对应起来。第 (ii) 款的证明思路值得记住：先在\textbf{有限}并上用可测性定义挤出可数可加性，再对 $j$ 取极限过渡到可数并。第 (5) 步的技巧是把检验集限制到有限测度上，从而把上连续性从较大的测度转移到限制测度 $\mu\llcorner B$，这一步决定了整个归约的可行性。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-2; kind=hypotheses; 逐款分析假设的作用并给出第 (iv) 款有限性条件不可删除的反例
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-2-条件}
+\begin{enumerate}[(i)]
+\item 第 (i) 款的证明对交集用到补集运算，因此依赖补集封闭（即\cref{theorem:ch01-1-1} 的第 (ii) 款）以及第 (1) 步已证的有限并封闭。% XREF internal
+\item 第 (ii) 款要求两两不相交；对一般序列只能得到次可加性 $\mu\bigl(\bigcup_{k}A_{k}\bigr)\leqslant\sum_{k}\mu(A_{k})$。取 $X=\{1,2\}$、$\mu$ 为计数测度、$A_{1}=A_{2}=\{1\}$，则左端为 $1$、右端为 $2$，等号不成立。
+\item 第 (iii) 款不需要任何有限性假设；它由 (ii) 作用于两两不相交的差集序列 $A_{1},A_{2}-A_{1},A_{3}-A_{2},\cdots$ 得到。
+\item 第 (iv) 款中 $\mu(A_{1})<\infty$ 不可删除。取 $X=\mathbb{N}$、$\mu$ 为计数测度、$A_{k}=\{k,k+1,\cdots\}$，则 $A_{k}$ 递减、$\bigcap_{k}A_{k}=\varnothing$，而 $\mu(A_{k})=\infty$ 对一切 $k$ 成立，故 $\lim_{k}\mu(A_{k})=\infty\neq0=\mu\bigl(\bigcap_{k}A_{k}\bigr)$。
+\item 第 (5) 步只对 $\mu(B)<\infty$ 的检验集使用 (iv)，正是为了避免上述失效；$\mu(B)=\infty$ 的情形另行由次可加性处理。
+\end{enumerate}
+\end{remark}
+
+\subsection{集族}\label{subsection:ch01-01-集族}
+
+下面引入 $X$ 的若干重要的子集族。
+
+\begin{definition}[$\sigma$-代数]\label{definition:ch01-1-4}
+设 $X$ 为非空集合。称集族 $\mathcal{A}\subseteq2^{X}$ 为 $X$ 上的\textbf{$\sigma$-代数}，是指下列四条同时成立：
+\begin{enumerate}[(i)]
+\item $\varnothing,X\in\mathcal{A}$；
+\item $A\in\mathcal{A}$ 蕴含 $X-A\in\mathcal{A}$；
+\item $A_{k}\in\mathcal{A}$（$k=1,2,\cdots$）蕴含 $\bigcup_{k=1}^{\infty}A_{k}\in\mathcal{A}$；
+\item $A_{k}\in\mathcal{A}$（$k=1,2,\cdots$）蕴含 $\bigcap_{k=1}^{\infty}A_{k}\in\mathcal{A}$。
+\end{enumerate}
+\end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch01-def-1-4-冗余}
+由于
+\begin{align*}
+X-\Bigl(\bigcap_{k=1}^{\infty}A_{k}\Bigr)=\bigcup_{k=1}^{\infty}(X-A_{k}),
+\end{align*}
+(iv) 实际上可由 (ii) 与 (iii) 推出；相仿地，(ii) 与 (iv) 也可推出 (iii)。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-4; kind=motivation; 说明 σ-代数的公理是如何从“可数运算下稳定”这一要求提炼出来的
+\begin{remark}\phantomsection\label{remark:ch01-def-1-4-代数动机}
+$\sigma$-代数是“可以对之施行可数运算的集族”的精确表述：测度、可测函数与积分都以它为定义域。四条公理中，(i) 提供两个极端元素，(ii) 允许取补，(iii) 允许取可数并；由集的运算律，这四条使集族对可数交、差、上极限与下极限$\bigl(\liminf_{k}A_{k}=\bigcup_{j}\bigcap_{k\geqslant j}A_{k}$，$\limsup_{k}A_{k}=\bigcap_{j}\bigcup_{k\geqslant j}A_{k}\bigr)$都稳定，因此“事件的极限”在 $\sigma$-代数内部封闭。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-4; kind=hypotheses; 说明四条公理中哪几条是独立的、哪一条最不可削弱
+\begin{remark}\phantomsection\label{remark:ch01-def-1-4-代数条件}
+\begin{enumerate}[(i)]
+\item 四条公理并不独立：(iv) 是 (ii) 与 (iii) 的推论，(iii) 也可由 (ii) 与 (iv) 推出，故通常只列 (i)(ii)(iii) 三条。
+\item (iii) 中的“可数”不可减为“有限”。若只要求对有限并封闭，得到的是代数；此时\cref{theorem:ch01-1-2} 中测度的上、下连续性不能对递增或递减序列使用，几乎所有极限论证都会失效。% XREF internal
+\item (ii) 中的补集是对全集 $X$ 取的，因此 $X$ 必须预先给定；把 $X$ 换成较小的集合会改变 $\sigma$-代数的内容。
+\item (i) 中同时要求 $\varnothing$ 与 $X$ 属于集族，这与 (ii) 一致：由 $X\in\mathcal{A}$ 与 (ii) 得 $\varnothing\in\mathcal{A}$。若集族为空，则四条公理中 (i) 已不成立，故 $\sigma$-代数必非空。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[可测集构成 $\sigma$-代数]\label{theorem:ch01-1-3}
+设 $\mu$ 为非空集合 $X$ 上的测度。则 $X$ 的一切 $\mu$-可测子集构成的集族是 $X$ 上的 $\sigma$-代数。
+\end{theorem}
+
+\begin{proof}
+这一结论由\cref{theorem:ch01-1-1}与\cref{theorem:ch01-1-2}立即得到。% XREF p=21 "This follows at once from Theorems 1.1 and 1.2." | p=21 "This follows at once from Theorems 1.1 and 1.2."
+
+% SUPPLEMENT: parent=theorem:ch01-1-3; kind=proof; 把“立即得到”展开为对 σ-代数四条公理的逐条核对
+记 $\mathcal{A}:=\{A\subseteq X\mid A\text{ 为 }\mu\text{-可测集}\}$，并逐条核对 $\sigma$-代数的四条公理。
+（1）由\cref{theorem:ch01-1-1} 的断言 (ii) 与 (iii)，$\varnothing,X\in\mathcal{A}$，且 $A\in\mathcal{A}$ 蕴含 $X-A\in\mathcal{A}$。% XREF internal
+（2）由\cref{theorem:ch01-1-2} 的断言 (i)，若 $A_{k}\in\mathcal{A}$（$k=1,2,\cdots$），则 $\bigcup_{k=1}^{\infty}A_{k}\in\mathcal{A}$ 且 $\bigcap_{k=1}^{\infty}A_{k}\in\mathcal{A}$。% XREF internal
+（3）以上论证核对了 $\sigma$-代数的四条公理，故 $\mathcal{A}$ 是 $X$ 上的 $\sigma$-代数。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-3; kind=motivation; 说明为何可测集族必然是 σ-代数以及这条结论的使用方式
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-3-动机}
+可测性最初是对单个集合、用分割等式定义的，本定理说明这种逐点的定义方式自动给出一个整体结构：全体可测集对可数运算封闭。由此可以把“$\mu$ 是 Borel 测度”这一要求化归为“每个开集可测”，因为可测集族既然是 $\sigma$-代数，只要它含有开集就必含有由开集生成的 Borel $\sigma$-代数。同样地，证明某集族包含一切 Borel 集的标准做法是：先证它是 $\sigma$-代数，再证它含有开集。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-3; kind=hypotheses; 指出该结论对测度定义域的依赖性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-3-条件}
+\begin{enumerate}[(i)]
+\item 定理要求 $\mu$ 定义在整个幂集 $2^{X}$ 上（\cref{definition:ch01-1-1}）。若测度只定义在某个预先给定的 $\sigma$-代数上，则“可测集”就是该 $\sigma$-代数本身，本定理退化为平凡陈述。% XREF internal
+\item 定理对 $X$ 只要求非空，对 $\mu$ 不加有限性、正则性等任何限制；证明只用到测度的两条公理。
+\item 结论中的 $\sigma$-代数依赖于 $\mu$：不同的测度可以有不同的可测集族。$X$ 上的计数测度使一切子集可测，而 $X=\mathbb{R}$ 上的 Lebesgue 测度存在不可测集，故两者对应的 $\sigma$-代数不同。
+\end{enumerate}
+\end{remark}
+
+任何一族 $\sigma$-代数之交仍为 $\sigma$-代数，因此下述定义有意义：
+
+\begin{definition}[由集族生成的 $\sigma$-代数]\label{definition:ch01-1-5}
+设 $X$ 为非空集合，$\mathcal{C}\subseteq2^{X}$ 为非空集族。由 $\mathcal{C}$ \textbf{生成的 $\sigma$-代数}，记作 $\sigma(\mathcal{C})$，定义为包含 $\mathcal{C}$ 的最小 $\sigma$-代数，即一切包含 $\mathcal{C}$ 的 $\sigma$-代数之交。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-5; kind=proof; 证明“最小 σ-代数”存在且唯一：交运算保持 σ-代数公理，且 2^X 保证集族非空
+\begin{proof}
+（1）先证任意一族 $\sigma$-代数之交仍为 $\sigma$-代数。设 $\{\mathcal{A}_{i}\}_{i\in I}$ 为一族 $X$ 上的 $\sigma$-代数，$\mathcal{A}:=\bigcap_{i\in I}\mathcal{A}_{i}$。由 $\varnothing,X\in\mathcal{A}_{i}$ 对一切 $i$ 成立得 $\varnothing,X\in\mathcal{A}$。若 $A\in\mathcal{A}$，则 $A\in\mathcal{A}_{i}$ 对一切 $i$ 成立，故 $X-A\in\mathcal{A}_{i}$ 对一切 $i$ 成立，即 $X-A\in\mathcal{A}$。若 $A_{k}\in\mathcal{A}$（$k=1,2,\cdots$），则 $A_{k}\in\mathcal{A}_{i}$ 对每个 $i$ 与每个 $k$ 成立，故 $\bigcup_{k}A_{k}\in\mathcal{A}_{i}$ 与 $\bigcap_{k}A_{k}\in\mathcal{A}_{i}$ 对一切 $i$ 成立，从而这两个集合属于 $\mathcal{A}$。
+（2）再证最小者存在。由（1），$\sigma(\mathcal{C}):=\bigcap\{\mathcal{A}\subseteq2^{X}\mid\mathcal{A}\text{ 为 }\sigma\text{-代数},\ \mathcal{C}\subseteq\mathcal{A}\}$ 是 $\sigma$-代数。该族非空，因为 $2^{X}$ 是包含 $\mathcal{C}$ 的 $\sigma$-代数。由定义 $\mathcal{C}\subseteq\sigma(\mathcal{C})$；又若 $\mathcal{A}$ 是任一包含 $\mathcal{C}$ 的 $\sigma$-代数，则它属于上述族，故 $\sigma(\mathcal{C})\subseteq\mathcal{A}$。因此 $\sigma(\mathcal{C})$ 是包含 $\mathcal{C}$ 的最小 $\sigma$-代数，且被此性质唯一确定。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:ch01-1-5; kind=motivation; 说明“生成”这一运算的作用与最小性的意义
+\begin{remark}\phantomsection\label{remark:ch01-def-1-5-生成动机}
+给定集族 $\mathcal{C}$ 后，满足“包含 $\mathcal{C}$”的 $\sigma$-代数可能很多（至少有 $2^{X}$），而生成运算挑出其中最小的一个：它恰好含有由 $\mathcal{C}$ 中集合出发、经可数并、可数交与补运算所能得到的一切集合，不含多余之物。这种“最小封闭结构”的构造是测度论中反复出现的手法，例如由开集生成 Borel $\sigma$-代数、由随机变量生成 $\sigma$-代数。最小性还给出一个常用的证明格式：欲证某 $\sigma$-代数 $\mathcal{A}$ 包含 $\sigma(\mathcal{C})$，只需验证 $\mathcal{C}\subseteq\mathcal{A}$，\cref{theorem:ch01-1-4} 的结论正是这一格式的实例。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-5; kind=hypotheses; 逐条说明 C 非空与“最小”两处约定的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-5-生成条件}
+\begin{enumerate}[(i)]
+\item 定义要求 $\mathcal{C}$ 非空。这一要求只是为了让讨论避开退化情形：即使 $\mathcal{C}=\varnothing$，满足 $\mathcal{C}\subseteq\mathcal{A}$ 的 $\sigma$-代数仍构成非空族（$2^{X}$ 在其中），故最小者仍存在，且此时 $\sigma(\varnothing)=\{\varnothing,X\}$。
+\item “最小”指包含关系下的最小，而不是基数最小；由上面的论证，最小者与任一包含 $\mathcal{C}$ 的 $\sigma$-代数都满足包含关系 $\sigma(\mathcal{C})\subseteq\mathcal{A}$，因此它在包含关系下唯一。
+\item 若 $\mathcal{C}$ 本身已是 $\sigma$-代数，则 $\sigma(\mathcal{C})=\mathcal{C}$；特别地 $\sigma(\varnothing)=\{\varnothing,X\}$，$\sigma(2^{X})=2^{X}$。
+\end{enumerate}
+\end{remark}
+
+一个重要的特殊情形是 $\mathcal{C}$ 取 $\mathbb{R}^{n}$ 的一切开集构成的集族：
+
+\begin{definition}[Borel $\sigma$-代数与 Borel 测度]\label{definition:ch01-1-6}
+\begin{enumerate}[(i)]
+\item $\mathbb{R}^{n}$ 的\textbf{Borel $\sigma$-代数}，定义为 $\mathbb{R}^{n}$ 中包含一切开集的最小 $\sigma$-代数，即由 $\mathbb{R}^{n}$ 的开集族生成的 $\sigma$-代数；其中的集合称为 \textbf{Borel 集}。
+\item 称 $\mathbb{R}^{n}$ 上的测度 $\mu$ 为 \textbf{Borel 测度}，是指每个 Borel 集都是 $\mu$-可测集。
+\end{enumerate}
+\end{definition}
+
+Caratheodory 判据（见\cref{theorem:ch01-1-9}）将为检验一个测度是 Borel 测度提供便利的方法。% XREF p=22 "Caratheodory's criterion (Theorem 1.9) will provide us with a convenient way to check that a measure is Borel."
+
+% SUPPLEMENT: parent=definition:ch01-1-6; kind=motivation; 说明为何要以开集为生成元固定“标准”σ-代数，以及 Borel 测度的用途
+\begin{remark}\phantomsection\label{remark:ch01-def-1-6-拓扑动机}
+$\mathbb{R}^{n}$ 上有许多 $\sigma$-代数，而分析中需要的是一个与拓扑相容、又足够小的标准选择：由开集生成的 $\sigma$-代数既包含一切开集、闭集、$F_{\sigma}$ 集与 $G_{\delta}$ 集，又不像 $2^{\mathbb{R}^{n}}$ 那样含有病态集合。在这样的 $\sigma$-代数上讨论测度，等于要求测度与拓扑相容；Lebesgue 测度、Hausdorff 测度与一切 Radon 测度都是 Borel 测度，因此 Borel 测度是后文讨论 Radon 测度与逼近性质的共同框架。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-6; kind=hypotheses; 说明 (ii) 的条件可等价改写，并指出 Borel 测度未必有限或正则
+\begin{remark}\phantomsection\label{remark:ch01-def-1-6-拓扑条件}
+\begin{enumerate}[(i)]
+\item 由\cref{theorem:ch01-1-3}，$\mu$-可测集构成 $\sigma$-代数，故 (ii) 等价于“每个开集都是 $\mu$-可测集”：若开集皆可测，则包含一切开集的 $\sigma$-代数（即 Borel $\sigma$-代数）中的集合皆可测。% XREF internal
+\item (ii) 不含任何有限性、正则性或 $\sigma$-有限性要求：$\mathbb{R}^{n}$ 上的计数测度是 Borel 测度（一切子集都可测），但它在紧集上不有限，故不是 Radon 测度。Borel 正则性在 Borel 性之外还要求外逼近，两者不可互相替代。
+\item (i) 的生成元有多种选择：一切开集、一切闭集、一切闭矩形分别生成同一个 Borel $\sigma$-代数；但若只取一个可数族作生成元，所得 $\sigma$-代数可能严格小于 Borel $\sigma$-代数。
+\end{enumerate}
+\end{remark}
+
+对各种应用而言，还便于引入一些结构比 $\sigma$-代数更弱的子集类。
+
+\begin{definition}[$\pi$-系统]\label{definition:ch01-1-7}
+设 $X$ 为非空集合。称非空集族 $\mathcal{P}\subseteq2^{X}$ 为 \textbf{$\pi$-系统}，是指
+\begin{align*}
+A,B\in\mathcal{P}\quad\text{蕴含}\quad A\cap B\in\mathcal{P}.
+\end{align*}
+\end{definition}
+
+$\pi$-系统就是关于有限交封闭的子集族。
+
+% SUPPLEMENT: parent=definition:ch01-1-7; kind=motivation; 说明 π-系统在 π-λ 定理中承担的角色
+\begin{remark}\phantomsection\label{remark:ch01-def-1-7-系统动机}
+$\pi$-系统刻画的是最容易核对的封闭性：两个集合之交仍在族内。许多具体集族天然是 $\pi$-系统，例如闭矩形族、半开区间族、柱集族；而验证一个集族是 $\sigma$-代数要困难得多。\cref{theorem:ch01-1-4} 表明：只要集族同时是 $\pi$-系统与 $\lambda$-系统，它就自动是 $\sigma$-代数，于是“易验证的 $\pi$-系统 + 易验证的 $\lambda$-系统”蕴涵了全部可数运算的封闭性。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-7; kind=hypotheses; 说明非空与“有限交”两处约定的作用及削弱后的后果
+\begin{remark}\phantomsection\label{remark:ch01-def-1-7-系统条件}
+\begin{enumerate}[(i)]
+\item 定义中“非空”是技术性约定：空族按字面也满足 $A,B\in\mathcal{P}\Rightarrow A\cap B\in\mathcal{P}$，但对\cref{theorem:ch01-1-4} 的论证没有用处，因为此时 $\sigma(\mathcal{P})=\{\varnothing,X\}$，结论自动成立。% XREF internal
+\item 公理只要求两个集合之交仍在族内，由归纳法即得任意有限多个集合之交仍在族内；它\textbf{不}要求可数交封闭。例如 $\mathbb{R}$ 中一切左开右闭区间 $(a,b]$ 构成的族是 $\pi$-系统，但它对可数交不封闭。
+\item 若把条件加强为对一切有限并与补集封闭，得到的已是代数；若加强为对可数交封闭而不要求补集，仍不足以推出 $\sigma$-代数。$\pi$-系统的弱性正是它与 $\lambda$-系统配对使用的原因。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[$\lambda$-系统]\label{definition:ch01-1-8}
+设 $X$ 为非空集合。称集族 $\mathcal{L}\subseteq2^{X}$ 为 \textbf{$\lambda$-系统}，是指下列三条同时成立：
+\begin{enumerate}[(i)]
+\item $X\in\mathcal{L}$；
+\item $A,B\in\mathcal{L}$ 且 $B\subseteq A$ 蕴含 $A-B\in\mathcal{L}$；
+\item 若 $A_{k}\in\mathcal{L}$ 且 $A_{k}\subseteq A_{k+1}$（$k=1,2,\cdots$），则 $\bigcup_{k=1}^{\infty}A_{k}\in\mathcal{L}$。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-8; kind=motivation; 说明 λ-系统为何恰好适合“用两个测度相等”这类集族的验证
+\begin{remark}\phantomsection\label{remark:ch01-def-1-8-差分动机}
+$\lambda$-系统的三条公理是照着“$\mu(B)=\nu(B)$ 型条件”设计的：全集上的等式通常直接由假设给出；两个测度在 $A$ 与 $B$ 上相等且 $\mu(B)<\infty$ 时，由差运算可推出它们在 $A-B$ 上相等；递增并上的等式由测度的下连续性给出。三条公理都不涉及$\sigma$-代数中的可数交，因此验证负担比 $\sigma$-代数小得多。它与 $\pi$-系统合用可以补足全部结构，这是 $\pi$-$\lambda$ 定理的要点。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-8; kind=hypotheses; 逐条比较 λ-系统与 σ-代数的强弱并指出不封闭之处
+\begin{remark}\phantomsection\label{remark:ch01-def-1-8-差分条件}
+\begin{enumerate}[(i)]
+\item 公理 (i) 只要求 $X\in\mathcal{L}$，不要求 $\varnothing\in\mathcal{L}$；但由 (i)(ii) 取 $A=B=X$ 得 $\varnothing\in\mathcal{L}$，故两者等价。
+\item 公理 (ii) 只允许在 $B\subseteq A$ 时作差，即只允许\textbf{真差}；一般的并、交、补都不在公理之列。若把 (ii) 换成“$A,B\in\mathcal{L}\Rightarrow A-B\in\mathcal{L}$”，则得到更强的结构，此时 $\lambda$-系统已是代数。
+\item 公理 (iii) 只允许\textbf{递增}可数并，任意可数并可能跑出 $\mathcal{L}$：在下一款给出的 $X=\{1,2,3,4\}$ 与 $\mathcal{L}$ 中，$\{1,2\}\cup\{1,3\}=\{1,2,3\}\notin\mathcal{L}$，而这两个集合互不包含，故 (iii) 不适用于它们。
+\item $\lambda$-系统不必是 $\sigma$-代数：在 $X=\{1,2,3,4\}$ 上取 $\mathcal{L}=\{\varnothing,\{1,2\},\{3,4\},\{1,3\},\{2,4\},X\}$。逐条核对：(i) 成立；(ii) 中非空真包含关系只有 $B=\varnothing$ 或 $A=X$ 两种，相应差集 $\varnothing,\{1,2\},\{3,4\},\{1,3\},\{2,4\}$ 与 $X$ 均在 $\mathcal{L}$ 内；(iii) 中任何递增链的并仍在 $\mathcal{L}$ 内。但 $\{1,2\}\cap\{1,3\}=\{1\}\notin\mathcal{L}$，故 $\mathcal{L}$ 不是 $\sigma$-代数。
+\end{enumerate}
+\end{remark}
+
+由于 $\pi$-系统与 $\lambda$-系统的性质都比 $\sigma$-代数宽松，应用时容易核对各种有意义的集族确实是 $\pi$-系统或 $\lambda$-系统。下述定理把这两类结构联回 $\sigma$-代数：
+
+\begin{theorem}[$\pi$-$\lambda$ 定理]\label{theorem:ch01-1-4}
+设 $X$ 为非空集合，$\mathcal{P}\subseteq2^{X}$ 为 $\pi$-系统，$\mathcal{L}\subseteq2^{X}$ 为 $\lambda$-系统，且 $\mathcal{P}\subseteq\mathcal{L}$。则
+\begin{align*}
+\sigma(\mathcal{P})\subseteq\mathcal{L}.
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+（1）定义
+\begin{align*}
+\mathcal{S}:=\bigcap_{\mathcal{L}'\supseteq\mathcal{P}}\mathcal{L}',
+\end{align*}
+其中 $\mathcal{L}'$ 取遍一切满足 $\mathcal{P}\subseteq\mathcal{L}'$ 的 $\lambda$-系统。由定义直接得到 $\mathcal{P}\subseteq\mathcal{S}$，又 $\mathcal{L}$ 属于这一族，故 $\mathcal{S}\subseteq\mathcal{L}$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-4; kind=proof; 补出“S 是 λ-系统”的逐条验证，交运算保持三条公理
+（2）逐条核对 $\mathcal{S}$ 的三条公理。公理 (i)：$X\in\mathcal{L}'$ 对每个 $\mathcal{L}'$ 成立，故 $X\in\mathcal{S}$。公理 (ii)：若 $A,B\in\mathcal{S}$ 且 $B\subseteq A$，则 $A,B\in\mathcal{L}'$ 对每个 $\mathcal{L}'$ 成立，由 $\mathcal{L}'$ 的 (ii) 得 $A-B\in\mathcal{L}'$，故 $A-B\in\mathcal{S}$。公理 (iii)：若 $A_{k}\in\mathcal{S}$ 且 $A_{k}\subseteq A_{k+1}$，则 $A_{k}\in\mathcal{L}'$ 对每个 $\mathcal{L}'$ 与每个 $k$ 成立，由 $\mathcal{L}'$ 的 (iii) 得 $\bigcup_{k=1}^{\infty}A_{k}\in\mathcal{L}'$，故 $\bigcup_{k=1}^{\infty}A_{k}\in\mathcal{S}$。
+
+（3）断言一：$\mathcal{S}$ 是 $\pi$-系统。
+
+断言之证明：任取 $A,B\in\mathcal{S}$，须证 $A\cap B\in\mathcal{S}$。定义
+\begin{align*}
+\mathcal{A}:=\{C\subseteq X\mid A\cap C\in\mathcal{S}\}.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-4; kind=proof; 补出文中“A 是 λ-系统”与“P ⊆ A”两处省略的论证
+先证 $\mathcal{A}$ 是 $\lambda$-系统。公理 (i)：$A\cap X=A\in\mathcal{S}$，故 $X\in\mathcal{A}$。公理 (ii)：若 $C,D\in\mathcal{A}$ 且 $D\subseteq C$，则 $A\cap(C-D)=(A\cap C)-(A\cap D)$，其中 $A\cap C,A\cap D\in\mathcal{S}$ 且 $A\cap D\subseteq A\cap C$，由 $\mathcal{S}$ 的公理 (ii) 得 $A\cap(C-D)\in\mathcal{S}$，即 $C-D\in\mathcal{A}$。公理 (iii)：若 $C_{k}\in\mathcal{A}$ 且 $C_{k}\subseteq C_{k+1}$，则 $A\cap\bigcup_{k}C_{k}=\bigcup_{k}(A\cap C_{k})$，右端是 $\mathcal{S}$ 中的递增序列之并，由 $\mathcal{S}$ 的公理 (iii) 属于 $\mathcal{S}$，即 $\bigcup_{k}C_{k}\in\mathcal{A}$。
+
+再证 $\mathcal{P}\subseteq\mathcal{A}$。设 $C\in\mathcal{P}$。由 $\mathcal{P}\subseteq\mathcal{S}$ 得 $A\in\mathcal{S}$ 且 $C\in\mathcal{S}$；由 $\mathcal{P}$ 是 $\pi$-系统得 $A\cap C\in\mathcal{P}$，又 $\mathcal{P}\subseteq\mathcal{S}$，故 $A\cap C\in\mathcal{S}$，即 $C\in\mathcal{A}$。由于 $\mathcal{S}$ 是一切包含 $\mathcal{P}$ 的 $\lambda$-系统之交，而 $\mathcal{A}$ 就是这样一个 $\lambda$-系统，故 $\mathcal{S}\subseteq\mathcal{A}$。既然 $B\in\mathcal{S}$，即 $B\in\mathcal{A}$，按 $\mathcal{A}$ 的定义得 $A\cap B\in\mathcal{S}$。断言一证毕。
+
+（4）断言二：$\mathcal{S}$ 是 $\sigma$-代数。
+
+断言之证明：由断言一，$\mathcal{S}$ 同时是 $\lambda$-系统与 $\pi$-系统。由 $X\in\mathcal{S}$ 与公理 (ii) 取 $A=B=X$ 得 $\varnothing=X-X\in\mathcal{S}$。由 $X\in\mathcal{S}$ 与公理 (ii) 得：$A\in\mathcal{S}$ 蕴含 $X-A\in\mathcal{S}$。由 $\mathcal{S}$ 对补集与有限交封闭，得它对有限并封闭：
+\begin{align*}
+A\cup B=X-\bigl((X-A)\cap(X-B)\bigr)\in\mathcal{S}.
+\end{align*}
+于是若 $A_{1},A_{2},\cdots\in\mathcal{S}$，则 $B_{n}:=\bigcup_{k=1}^{n}A_{k}\in\mathcal{S}$。序列 $\{B_{n}\}_{n=1}^{\infty}$ 递增，由 $\mathcal{S}$ 的公理 (iii) 得 $\bigcup_{k=1}^{\infty}A_{k}=\bigcup_{n=1}^{\infty}B_{n}\in\mathcal{S}$。故 $\mathcal{S}$ 是 $\sigma$-代数。
+
+（5）由于 $\mathcal{S}\supseteq\mathcal{P}$ 是 $\sigma$-代数，而 $\sigma(\mathcal{P})$ 是包含 $\mathcal{P}$ 的最小 $\sigma$-代数，故
+\begin{align*}
+\sigma(\mathcal{P})\subseteq\mathcal{S}\subseteq\mathcal{L}.
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-4; kind=motivation; 说明定理的证明策略与它在本书中的用途
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-4-动机}
+定理的证明策略是“取最小的 $\lambda$-系统 $\mathcal{S}$，再证明它已经是 $\sigma$-代数”：最小性使 $\mathcal{S}$ 自动落在给定的 $\mathcal{L}$ 内，因此只需补出 $\pi$-系统的性质即可凑齐 $\sigma$-代数的全部公理。关键的技术手段是对固定的 $A\in\mathcal{S}$ 引入辅助族 $\mathcal{A}=\{C\mid A\cap C\in\mathcal{S}\}$，先证它是包含 $\mathcal{P}$ 的 $\lambda$-系统从而包含 $\mathcal{S}$，再交换 $A,B$ 的角色得到 $\mathcal{S}$ 对交封闭。这一“把 $\pi$-性质逐点地植回 $\mathcal{S}$”的手法，是同类最小族论证的常见模式。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-4; kind=hypotheses; 说明两条假设各自的使用位置，并给出 P 非 π-系统时结论失效的反例
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-4-条件}
+\begin{enumerate}[(i)]
+\item 假设 $\mathcal{P}\subseteq\mathcal{L}$ 只用于保证 $\mathcal{S}\subseteq\mathcal{L}$，从而结论中的包含关系成立；若没有它，结论无从谈起。
+\item 假设 $\mathcal{P}$ 是 $\pi$-系统只在断言一的“$\mathcal{P}\subseteq\mathcal{A}$”处使用：需要 $A\in\mathcal{S}$ 与 $C\in\mathcal{P}$ 推出 $A\cap C\in\mathcal{P}$。
+\item 假设 $\mathcal{L}$ 是 $\lambda$-系统用于两处：一是保证 $\mathcal{S}$ 有定义（取交的族非空，$2^{X}$ 是其中一个），二是使辅助族 $\mathcal{A}$ 可以验证为 $\lambda$-系统。
+\item 若 $\mathcal{P}$ 不是 $\pi$-系统，结论可以失效。取 $X=\{1,2,3,4\}$，$\mathcal{L}=\{\varnothing,\{1,2\},\{3,4\},\{1,3\},\{2,4\},X\}$（由上一款，它是 $\lambda$-系统），$\mathcal{P}=\{\{1,2\},\{1,3\}\}\subseteq\mathcal{L}$。则 $\mathcal{P}$ 不是 $\pi$-系统，因为 $\{1,2\}\cap\{1,3\}=\{1\}\notin\mathcal{P}$；而 $\{1\}\in\sigma(\mathcal{P})$ 且 $\{1\}\notin\mathcal{L}$，故 $\sigma(\mathcal{P})\nsubseteq\mathcal{L}$。
+\end{enumerate}
+\end{remark}
+
+作为第一个应用，下面证明 $\mathbb{R}^{n}$ 上的有限 Borel 测度由它在各边平行于坐标轴的闭“矩形”上的取值唯一确定：
+
+\begin{theorem}[Borel 测度与矩形]\label{theorem:ch01-1-5}
+设 $\mu$ 与 $\nu$ 为 $\mathbb{R}^{n}$ 上的两个有限 Borel 测度，即 $\mu(\mathbb{R}^{n})<\infty$、$\nu(\mathbb{R}^{n})<\infty$，且二者满足
+\begin{align*}
+\mu(R)=\nu(R)
+\end{align*}
+对一切闭“矩形”
+\begin{align*}
+R:=\{x\in\mathbb{R}^{n}\mid-\infty\leqslant a_{i}\leqslant x_{i}\leqslant b_{i}\leqslant\infty\ (i=1,\cdots,n)\}
+\end{align*}
+成立。则
+\begin{align*}
+\mu(B)=\nu(B)
+\end{align*}
+对一切 Borel 集 $B\subseteq\mathbb{R}^{n}$ 成立。
+\end{theorem}
+
+\begin{proof}
+对 $\pi$-$\lambda$ 定理取
+\begin{align*}
+\mathcal{P}&:=\{R\subseteq\mathbb{R}^{n}\mid R\text{ 为闭矩形}\},\\
+\mathcal{L}&:=\{B\subseteq\mathbb{R}^{n}\mid B\text{ 为 Borel 集},\ \mu(B)=\nu(B)\}.
+\end{align*}
+则 $\mathcal{P}\subseteq\mathcal{L}$，因为每个闭矩形都是 Borel 集且由假设 $\mu(R)=\nu(R)$。由定义，$\mathcal{P}$ 是 $\pi$-系统。下面核对 $\mathcal{L}$ 是 $\lambda$-系统。
+
+% SUPPLEMENT: parent=theorem:ch01-1-5; kind=proof; 补出两处省略：P 对交封闭的退化情形，以及 L 是 λ-系统的逐条验证
+（1）关于 $\mathcal{P}$ 对交封闭：两个闭矩形之交或为闭矩形，或为空集。在后一情形，把 $\varnothing$ 并入 $\mathcal{P}$，即取 $\mathcal{P}':=\mathcal{P}\cup\{\varnothing\}$；此时 $\sigma(\mathcal{P}')=\sigma(\mathcal{P})$，因为 $\varnothing$ 属于每个 $\sigma$-代数，而 $\mathcal{P}'\supseteq\mathcal{P}$，故不妨以 $\mathcal{P}'$ 代替 $\mathcal{P}$，它确为 $\pi$-系统。
+
+（2）$\mathcal{L}$ 的公理 (i)：取 $R:=\mathbb{R}^{n}$（即 $a_{i}=-\infty$，$b_{i}=\infty$），它是闭矩形，故 $\mu(\mathbb{R}^{n})=\nu(\mathbb{R}^{n})$，即 $\mathbb{R}^{n}\in\mathcal{L}$。
+
+（3）$\mathcal{L}$ 的公理 (ii)：设 $A,B\in\mathcal{L}$ 且 $B\subseteq A$。则 $\mu(B)=\nu(B)\leqslant\nu(\mathbb{R}^{n})<\infty$。由 $B\subseteq A$ 与测度的可加性，$\mu(A-B)=\mu(A)-\mu(B)$ 与 $\nu(A-B)=\nu(A)-\nu(B)$ 均有意义，且右端相等，故 $\mu(A-B)=\nu(A-B)$，即 $A-B\in\mathcal{L}$。
+
+（4）$\mathcal{L}$ 的公理 (iii)：设 $A_{k}\in\mathcal{L}$ 且 $A_{k}\subseteq A_{k+1}$（$k=1,2,\cdots$）。每个 $A_{k}$ 是 Borel 集，故是 $\mu$-可测集与 $\nu$-可测集。由测度的下连续性，
+\begin{align*}
+\mu\Bigl(\bigcup_{k=1}^{\infty}A_{k}\Bigr)=\lim_{k\to\infty}\mu(A_{k})=\lim_{k\to\infty}\nu(A_{k})=\nu\Bigl(\bigcup_{k=1}^{\infty}A_{k}\Bigr),
+\end{align*}
+故 $\bigcup_{k=1}^{\infty}A_{k}\in\mathcal{L}$。
+
+于是由\cref{theorem:ch01-1-4}得 $\sigma(\mathcal{P})\subseteq\mathcal{L}$。% XREF p=24 "the π-λ Theorem implies σ(P) ⊆ L"
+
+% SUPPLEMENT: parent=theorem:ch01-1-5; kind=proof; 补出“σ(P) 就是 Borel σ-代数”的论证，含开集写成可数闭矩形之并的构造
+（5）最后说明 $\sigma(\mathcal{P})$ 恰是 Borel $\sigma$-代数。一方面，每个闭矩形是闭集，从而是 Borel 集，故 $\sigma(\mathcal{P})$ 包含于 Borel $\sigma$-代数。另一方面，设 $U\subseteq\mathbb{R}^{n}$ 为开集，取一切满足 $\overline{Q}\subseteq U$ 且端点均为有理数的闭矩形 $Q$；这样的矩形只有可数多个，记其全体为 $\{Q_{j}\}_{j=1}^{\infty}$。对每个 $x\in U$，由 $U$ 开，存在以 $x$ 为中心、含于 $U$ 的开球，在该球内取端点为有理数且含 $x$ 的闭矩形，则它属于上述族，故 $U\subseteq\bigcup_{j}Q_{j}$。反向包含由 $\overline{Q_{j}}\subseteq U$ 给出。于是 $U=\bigcup_{j=1}^{\infty}Q_{j}\in\sigma(\mathcal{P})$。故 Borel $\sigma$-代数 $\subseteq\sigma(\mathcal{P})$，两个 $\sigma$-代数相等。结合 $\sigma(\mathcal{P})\subseteq\mathcal{L}$ 得：每个 Borel 集 $B$ 满足 $\mu(B)=\nu(B)$。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-5-用法}
+这一证明显示了 $\lambda$-系统的用处。集族 $\{B\subseteq\mathbb{R}^{n}\mid B\text{ 为 Borel 集},\ \mu(B)=\nu(B)\}$ 是否为 $\sigma$-代数并不明显，因为它对交运算的封闭性并非一目了然。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-5; kind=motivation; 说明矩形上取值确定测度这一结论的意义与典型用法
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-5-动机}
+本定理说明：有限 Borel 测度的全部信息都集中在闭矩形上，而闭矩形族只是一个 $\pi$-系统。这是 Lebesgue 测度与乘积测度唯一性的基础——只要两个测度在“盒子”上一致，它们作为测度就完全相同。证明的结构也示范了 $\pi$-$\lambda$ 定理的标准用法：把一个“$X$ 上等式成立”型的性质写成集族 $\mathcal{L}$，验证 $\mathcal{L}$ 是 $\lambda$-系统，再用 $\pi$-系统生成整个 $\sigma$-代数。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-5; kind=hypotheses; 逐条说明有限性假设的位置、可削弱的方式与非 Borel 情形
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-5-条件}
+\begin{enumerate}[(i)]
+\item 有限性在两处使用：公理 (ii) 中由 $\mu(A)-\mu(B)$ 计算差集的测度，需要 $\mu(B)<\infty$ 才有 $\mu(A-B)=\mu(A)-\mu(B)$；公理 (iii) 的下连续性本身不需要有限性，但把它用于 $\nu$ 时同样要求这些集合 Borel 从而可测。
+\item 有限性可削弱为 $\sigma$-有限性：若存在一列闭矩形 $R_{j}$ 使 $R_{j}\subseteq R_{j+1}$、$\bigcup_{j}R_{j}=\mathbb{R}^{n}$ 且 $\mu(R_{j}),\nu(R_{j})<\infty$，则对每个 $j$，把定理用于有限测度 $\mu\llcorner R_{j}$ 与 $\nu\llcorner R_{j}$——它们在任一闭矩形 $Q$ 上的取值分别为 $\mu(Q\cap R_{j})$ 与 $\nu(Q\cap R_{j})$，而 $Q\cap R_{j}$ 仍是闭矩形，故取值相等——得 $\mu(B\cap R_{j})=\nu(B\cap R_{j})$，再令 $j\to\infty$ 即得结论。
+\item 假设两个测度都是 Borel 测度不可删除：$\mathcal{L}$ 的公理 (iii) 中需要各 $A_{k}$ 对两个测度都可测，才能使用下连续性。
+\item 若把“闭矩形”换成“开矩形”，结论仍然成立，因为开矩形族同样是 $\pi$-系统且生成同一个 Borel $\sigma$-代数。
+\end{enumerate}
+\end{remark}
+
+\subsection{用开集与紧集逼近}\label{subsection:ch01-01-逼近}
+
+下面引入若干具有良好逼近性质的测度类。
+
+\begin{definition}[正则测度、Borel 正则测度与 Radon 测度]\label{definition:ch01-1-9}
+设 $X$ 为非空集合。
+\begin{enumerate}[(i)]
+\item 称 $X$ 上的测度 $\mu$ 为\textbf{正则}的，是指对每个 $A\subseteq X$ 都存在 $\mu$-可测集 $B$，使得 $A\subseteq B$ 且 $\mu(A)=\mu(B)$；
+\item 称 $\mathbb{R}^{n}$ 上的测度 $\mu$ 为 \textbf{Borel 正则}的，是指 $\mu$ 是 Borel 测度，且对每个 $A\subseteq\mathbb{R}^{n}$ 都存在 Borel 集 $B$，使得 $A\subseteq B$ 且 $\mu(A)=\mu(B)$；
+\item 称 $\mathbb{R}^{n}$ 上的测度 $\mu$ 为 \textbf{Radon 测度}，是指 $\mu$ 是 Borel 正则的，且对每个紧集 $K\subset\mathbb{R}^{n}$ 都有 $\mu(K)<\infty$。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-9; kind=motivation; 说明三类测度的逼近要求逐级加强以及它们在本书中的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-9-逼近动机}
+三条定义都在要求“任意集合的测度可以由更好的集合从外面精确逼近”：正则性把任意集合换成 $\mu$-可测集，Borel 正则性进一步换成 Borel 集，Radon 测度再附加紧集上的有限性。这样做的目的是把对不可测集的估计转化为对开集、Borel 集与紧集的估计，从而使\cref{theorem:ch01-1-8} 一类逼近结论可用。全书的主要对象是 Radon 测度：Lebesgue 测度与 Hausdorff 测度都是 Radon 测度，而“局部有限”这一条恰好保证了紧集上的测度可以当作常数来控制。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-9; kind=hypotheses; 逐条比较三项定义并说明局部有限性假设的不可删除性
+\begin{remark}\phantomsection\label{remark:ch01-def-1-9-逼近条件}
+\begin{enumerate}[(i)]
+\item 正则性对论域 $X$ 只要求非空，且不要求 $\mu$ 是 Borel 测度；Borel 正则性则要求 $\mu$ 定义在 $\mathbb{R}^{n}$ 上并且是 Borel 测度。因此 Borel 正则性蕴含正则性，反之不然。
+\item Borel 正则性中“$B$ 是 Borel 集”不能减弱为“$B$ 是 $\mu$-可测集”，否则退化为正则性。也不能把 $\mu(A)=\mu(B)$ 减弱为 $\mu(B)\leqslant\mu(A)+\varepsilon$：若对每个 $\varepsilon>0$ 都有这样的 $B$，取 $\varepsilon=1/k$ 得 $B_{k}$，则 $B:=\bigcap_{k}B_{k}$ 仍为 Borel 集且 $\mu(B)=\mu(A)$，故两种表述等价。
+\item Radon 测度定义中的条件 $\mu(K)<\infty$ 不可删除。在 $\mathbb{R}$ 上取 $\mu:=\infty\cdot\delta_{0}$，即 $0\in B$ 时 $\mu(B)=\infty$、$0\notin B$ 时 $\mu(B)=0$。则每个集合都是 $\mu$-可测集，故 $\mu$ 是 Borel 正则的；但 $\mu(\{0\})=\infty$，故它不是 Radon 测度。把 $\mu$ 换成 Lebesgue 测度，则对每个紧集 $K$ 有 $\mu(K)<\infty$，条件成立。
+\item 条件“$\mu(K)<\infty$ 对每个紧集成立”等价于“$\mu$ 在每个有界开球上有限”：紧集被有限多个有界开球覆盖，故后者推出前者；而每个有界开球含于一个紧的闭球，故前者推出后者。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[递增集合]\label{theorem:ch01-1-6}
+设 $\mu$ 为非空集合 $X$ 上的正则测度。若 $A_{1}\subseteq\cdots\subseteq A_{k}\subseteq A_{k+1}\subseteq\cdots$，则
+\begin{align*}
+\lim_{k\to\infty}\mu(A_{k})=\mu\Bigl(\bigcup_{k=1}^{\infty}A_{k}\Bigr).
+\end{align*}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-6-要点}
+这里的要点是：集合 $\{A_{k}\}_{k=1}^{\infty}$ 不必是 $\mu$-可测的。
+\end{remark}
+
+\begin{proof}
+由 $\mu$ 的正则性，存在 $\mu$-可测集 $C_{k}$，使得 $A_{k}\subseteq C_{k}$ 且 $\mu(A_{k})=\mu(C_{k})$ 对每个 $k$ 成立。令 $B_{k}:=\bigcap_{j\geqslant k}C_{j}$。则 $A_{k}\subseteq B_{k}$，每个 $B_{k}$ 是 $\mu$-可测集，并且
+\begin{align*}
+\mu(A_{k})=\mu(B_{k})\qquad(k=1,2,\cdots),
+\end{align*}
+因为 $A_{k}\subseteq B_{k}\subseteq C_{k}$ 与单调性给出 $\mu(A_{k})\leqslant\mu(B_{k})\leqslant\mu(C_{k})=\mu(A_{k})$。于是
+\begin{align*}
+\lim_{k\to\infty}\mu(A_{k})=\lim_{k\to\infty}\mu(B_{k})=\mu\Bigl(\bigcup_{k=1}^{\infty}B_{k}\Bigr)\geqslant\mu\Bigl(\bigcup_{k=1}^{\infty}A_{k}\Bigr),
+\end{align*}
+其中第二个等号用到 $\{B_{k}\}_{k=1}^{\infty}$ 递增且各项 $\mu$-可测，故可对其用测度的下连续性。
+
+% SUPPLEMENT: parent=theorem:ch01-1-6; kind=proof; 补出反向不等式：由单调性对单个 A_k 与并集比较后取极限
+另一方面，对每个 $k$ 有 $A_{k}\subseteq\bigcup_{j=1}^{\infty}A_{j}$，由单调性得 $\mu(A_{k})\leqslant\mu\bigl(\bigcup_{j=1}^{\infty}A_{j}\bigr)$，令 $k\to\infty$ 得
+\begin{align*}
+\lim_{k\to\infty}\mu(A_{k})\leqslant\mu\Bigl(\bigcup_{j=1}^{\infty}A_{j}\Bigr).
+\end{align*}
+两个不等式合起来即为所要的等式。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-6; kind=motivation; 说明为何递增极限可以越过可测性而递减极限不能
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-6-动机}
+递增序列的极限之所以能对不可测集合计算，是因为正则性允许把每个 $A_{k}$ 从外面“包”进可测集 $C_{k}$ 而不改变测度，再用 $B_{k}=\bigcap_{j\geqslant k}C_{j}$ 把外包集合改造成递增序列，从而可以调用测度的下连续性。递减序列没有相应的结论：\cref{theorem:ch01-1-2} 的第 (iv) 款不但要求可测性，还要求首项测度有限。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-6; kind=hypotheses; 说明正则性在构造可测外包中的作用与递增假设的必要性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-6-条件}
+\begin{enumerate}[(i)]
+\item 正则性在证明中的作用是提供“等测度的可测外包”：对每个 $k$ 取 $\mu$-可测的 $C_{k}\supseteq A_{k}$ 使 $\mu(C_{k})=\mu(A_{k})$，再用 $B_{k}=\bigcap_{j\geqslant k}C_{j}$ 把外包改造成递增序列，从而 $\mu(B_{k})=\mu(A_{k})$ 且 $\mu\bigl(\bigcup_{k}B_{k}\bigr)=\lim_{k}\mu(B_{k})$。因此把正则性减弱为“每个集合都有等测度的 $\mu$-可测外包”时，证明照旧成立。
+\item 正则性不能完全删除：此时对每个 $k$ 只能得到 $\mu(A_{k})\leqslant\mu(B)$ 对一切 $\mu$-可测的 $B\supseteq A_{k}$ 成立，而证明所需的链条 $\mu\bigl(\bigcup_{k}A_{k}\bigr)\leqslant\lim_{k}\mu(B_{k})$ 中的 $\lim_{k}\mu(B_{k})$ 可能严格大于 $\lim_{k}\mu(A_{k})$，故无法由它推出 $\mu\bigl(\bigcup_{k}A_{k}\bigr)\leqslant\lim_{k}\mu(A_{k})$。
+\item 递增假设不可删除：若把递增换成递减，即使 $\mu$ 正则、集合可测，也需要首项测度有限，否则结论不成立（见\cref{theorem:ch01-1-2} 第 (iv) 款的反例）。% XREF internal
+\end{enumerate}
+\end{remark}
+
+下面说明：若 $\mu$ 是 Borel 正则的，则把 $\mu$ 限制到测度有限的 $\mu$-可测集上可以得到 Radon 测度。
+
+\begin{theorem}[限制与 Radon 测度]\label{theorem:ch01-1-7}
+设 $\mu$ 为 $\mathbb{R}^{n}$ 上的 Borel 正则测度，$A\subseteq\mathbb{R}^{n}$ 为 $\mu$-可测集且 $\mu(A)<\infty$。则 $\mu\llcorner A$ 是 Radon 测度。
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-7-例子}
+若 $A$ 是 Borel 集，则 $\mu\llcorner A$ 是 Borel 正则的，即使 $\mu(A)=\infty$。
+\end{remark}
+
+\begin{proof}
+（1）令 $\nu:=\mu\llcorner A$。对每个紧集 $K$，由 $K\cap A\subseteq A$ 与单调性得
+\begin{align*}
+\nu(K)=\mu(K\cap A)\leqslant\mu(A)<\infty.
+\end{align*}
+由于\cref{theorem:ch01-1-1} 的断言 (iv) 表明每个 $\mu$-可测集也是 $\nu$-可测集，而 $\mu$ 是 Borel 测度，故每个 Borel 集都是 $\mu$-可测集，从而是 $\nu$-可测集，即 $\nu$ 是 Borel 测度。% XREF p=25 "Since Theorem 1.1, (iv) asserts that every μ-measurable set is ν-measurable, ν is a Borel measure"
+
+（2）断言：$\nu$ 是 Borel 正则的。
+
+断言之证明：由 $\mu$ 是 Borel 正则的，存在 Borel 集 $B$，使得 $A\subseteq B$ 且 $\mu(A)=\mu(B)<\infty$。于是由 $A$ 是 $\mu$-可测集与 $\mu(A)<\infty$ 得
+\begin{align*}
+\mu(B-A)=\mu(B)-\mu(A)=0.
+\end{align*}
+任取 $C\subseteq\mathbb{R}^{n}$。由 $A\subseteq B$ 得 $C\cap B\cap A=C\cap A$，故
+\begin{align*}
+(\mu\llcorner B)(C)&=\mu(C\cap B)\\
+&=\mu(C\cap B\cap A)+\mu\bigl((C\cap B)-A\bigr)\\
+&\leqslant\mu(C\cap A)+\mu(B-A)\\
+&=(\mu\llcorner A)(C).
+\end{align*}
+另一方面，由 $A\subseteq B$ 与单调性，对每个 $C\subseteq\mathbb{R}^{n}$ 有 $(\mu\llcorner A)(C)=\mu(C\cap A)\leqslant\mu(C\cap B)=(\mu\llcorner B)(C)$。故 $\mu\llcorner B=\mu\llcorner A$，于是不妨设 $A$ 本身是 Borel 集。
+
+% SUPPLEMENT: parent=theorem:ch01-1-7; kind=proof; 补出最后一步的等式链：用 D∩A=E∩A 与 E 的选取把 ν(D) 压到 ν(C)
+（3）现设 $C\subseteq\mathbb{R}^{n}$，并设 $A$ 为 Borel 集。须证存在 Borel 集 $D$，使得 $C\subseteq D$ 且 $\nu(C)=\nu(D)$。由 $\mu$ 是 Borel 正则的，存在 Borel 集 $E$，使得 $A\cap C\subseteq E$ 且 $\mu(E)=\mu(A\cap C)$。令 $D:=E\cup(\mathbb{R}^{n}-A)$。由于 $A$ 与 $E$ 都是 Borel 集，$D$ 也是 Borel 集。又 $C\subseteq(A\cap C)\cup(\mathbb{R}^{n}-A)\subseteq D$：若 $x\in C$ 且 $x\in A$，则 $x\in A\cap C$；若 $x\in C$ 且 $x\notin A$，则 $x\in\mathbb{R}^{n}-A$。最后，由 $D\cap A=E\cap A$ 得
+\begin{align*}
+\nu(D)=\mu(D\cap A)=\mu(E\cap A)\leqslant\mu(E)=\mu(A\cap C)=\nu(C),
+\end{align*}
+结合 $C\subseteq D$ 与单调性得 $\nu(C)=\nu(D)$。故 $\nu$ 是 Borel 正则的。综上，$\nu$ 是 Radon 测度。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-7; kind=motivation; 说明限制到有限测度集是构造 Radon 测度的标准手段
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-7-动机}
+Radon 测度要求“Borel 正则 + 紧集上有限”，而 Borel 正则测度只保证外逼近。把 $\mu$ 限制到测度有限的 $\mu$-可测集 $A$ 上，可以同时补齐两条：紧集上有限由 $\nu(K)\leqslant\mu(A)<\infty$ 立即得到；Borel 正则性则由 $\mu$ 的正则性继承，其证明的关键是先把 $A$ 换成一个测度相同的 Borel 外包 $B$。这一构造在后续章节反复出现：处理局部问题时先把测度限制到有界可测集上，把一般 Radon 测度化归为有限测度。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-7; kind=hypotheses; 逐条说明两个假设的位置并给出 μ(A)=∞ 时的反例
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-7-条件}
+\begin{enumerate}[(i)]
+\item 假设 $\mu$ 是 Borel 正则的用于两处：第 (1) 步保证 Borel 集都是 $\mu$-可测集，从而 $\nu$ 是 Borel 测度；第 (2)(3) 步用外逼近找出 Borel 集 $B$ 与 $E$。
+\item 假设 $A$ 是 $\mu$-可测集用于第 (2) 步中 $\mu(B-A)=\mu(B)-\mu(A)$ 的计算；若 $A$ 不可测，则 $\mu(B-A)$ 与 $\mu(B)-\mu(A)$ 无此关系，论证中断。
+\item 假设 $\mu(A)<\infty$ 不可删除：在 $\mathbb{R}$ 上取 $\mu:=\infty\cdot\delta_{0}$，即 $\mu(B)=\infty$ 当 $0\in B$、$\mu(B)=0$ 当 $0\notin B$。则 $\mu$ 是 Borel 正则测度，取 $A:=\mathbb{R}$ 得 $\mu(A)=\infty$，而 $\mu\llcorner A=\mu$ 满足 $\mu(\{0\})=\infty$，故不是 Radon 测度。
+\item 结论给出 $\nu(\mathbb{R}^{n})=\mu(A)<\infty$，即 $\nu$ 是有限测度；上一款的反例说明当 $\mu(A)=\infty$ 时 $\mu\llcorner A$ 可能连“紧集上有限”都不成立，因此定理中的有限性不是形式上的假设。
+\end{enumerate}
+\end{remark}
+
+下面考虑用开集、闭集与紧集作测度论意义下的逼近。
+
+\begin{lemma}[用闭集与开集逼近]\label{lemma:ch01-1-1}
+设 $\mu$ 为 $\mathbb{R}^{n}$ 上的 Borel 测度，$B\subseteq\mathbb{R}^{n}$ 为 Borel 集。
+\begin{enumerate}[(i)]
+\item 若 $\mu(B)<\infty$，则对每个 $\varepsilon>0$ 存在闭集 $C$，使得
+\begin{align*}
+C\subseteq B,\qquad\mu(B-C)<\varepsilon;
+\end{align*}
+\item 若 $\mu$ 是 Radon 测度，则对每个 $\varepsilon>0$ 存在开集 $U$，使得
+\begin{align*}
+B\subseteq U,\qquad\mu(U-B)<\varepsilon.
+\end{align*}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+（1）令 $\nu:=\mu\llcorner B$。由于 $\mu$ 是 Borel 测度且 $\mu(B)<\infty$，$\nu$ 是有限 Borel 测度。令
+\begin{align*}
+\mathcal{F}:=\{A\subseteq\mathbb{R}^{n}\mid\ &A\text{ 是 }\mu\text{-可测集，且对每个 }\varepsilon>0\text{ 存在闭集 }C\subseteq A\\
+&\text{使得 }\nu(A-C)<\varepsilon\}.
+\end{align*}
+则 $\mathcal{F}$ 含一切闭集：若 $A$ 闭，取 $C:=A$ 即得 $\nu(A-C)=0$，而闭集是 Borel 集从而是 $\mu$-可测集。
+
+（2）断言一：若 $\{A_{i}\}_{i=1}^{\infty}\subseteq\mathcal{F}$，则 $A:=\bigcap_{i=1}^{\infty}A_{i}\in\mathcal{F}$。
+
+断言之证明：固定 $\varepsilon>0$。由 $A_{i}\in\mathcal{F}$，存在闭集 $C_{i}\subseteq A_{i}$，使得 $\nu(A_{i}-C_{i})<\varepsilon/2^{i}$（$i=1,2,\cdots$）。令 $C:=\bigcap_{i=1}^{\infty}C_{i}$。则 $C$ 是闭集且 $C\subseteq A$。又 $\bigcap_{i}A_{i}-\bigcap_{i}C_{i}\subseteq\bigcup_{i}(A_{i}-C_{i})$：若 $x\in\bigcap_{i}A_{i}$ 而 $x\notin\bigcap_{i}C_{i}$，则存在 $i$ 使 $x\notin C_{i}$，而 $x\in A_{i}$，故 $x\in A_{i}-C_{i}$。于是
+\begin{align*}
+\nu(A-C)&=\nu\Bigl(\bigcap_{i=1}^{\infty}A_{i}-\bigcap_{i=1}^{\infty}C_{i}\Bigr)\\
+&\leqslant\nu\Bigl(\bigcup_{i=1}^{\infty}(A_{i}-C_{i})\Bigr)\\
+&\leqslant\sum_{i=1}^{\infty}\nu(A_{i}-C_{i})<\varepsilon.
+\end{align*}
+故 $A\in\mathcal{F}$。
+
+（3）断言二：若 $\{A_{i}\}_{i=1}^{\infty}\subseteq\mathcal{F}$，则 $A:=\bigcup_{i=1}^{\infty}A_{i}\in\mathcal{F}$。
+
+断言之证明：固定 $\varepsilon>0$，并按断言一中的方式取闭集 $C_{i}\subseteq A_{i}$。由 $\nu(A)\leqslant\nu(B)<\infty$，序列 $\nu\bigl(A-\bigcup_{i=1}^{m}C_{i}\bigr)$ 关于 $m$ 单调递减，且由测度的上连续性，
+\begin{align*}
+\lim_{m\to\infty}\nu\Bigl(A-\bigcup_{i=1}^{m}C_{i}\Bigr)&=\nu\Bigl(\bigcup_{i=1}^{\infty}A_{i}-\bigcup_{i=1}^{\infty}C_{i}\Bigr)\\
+&\leqslant\nu\Bigl(\bigcup_{i=1}^{\infty}(A_{i}-C_{i})\Bigr)\\
+&\leqslant\sum_{i=1}^{\infty}\nu(A_{i}-C_{i})<\varepsilon.
+\end{align*}
+于是存在整数 $m$，使得 $\nu\bigl(A-\bigcup_{i=1}^{m}C_{i}\bigr)<\varepsilon$。而 $\bigcup_{i=1}^{m}C_{i}$ 是闭集，故 $A\in\mathcal{F}$。
+
+（4）由于 $\mathbb{R}^{n}$ 的每个开子集都可以写成一列闭集之并，断言二表明 $\mathcal{F}$ 含一切开集。
+
+% SUPPLEMENT: parent=lemma:ch01-1-1; kind=proof; 补出“开集是可数多个闭集之并”的构造：用距边界的距离截断
+事实上，设 $U\subseteq\mathbb{R}^{n}$ 为开集，并对 $j=1,2,\cdots$ 令
+\begin{align*}
+F_{j}:=\{x\in U\mid\operatorname{dist}(x,\mathbb{R}^{n}-U)\geqslant 1/j,\ |x|\leqslant j\}.
+\end{align*}
+每个 $F_{j}$ 是闭集（它是两个闭集之交，其中第一个是到闭集的距离不小于 $1/j$ 的点集），且 $F_{j}\subseteq F_{j+1}\subseteq U$。若 $x\in U$，则 $\operatorname{dist}(x,\mathbb{R}^{n}-U)>0$ 且 $|x|<\infty$，故存在 $j$ 使 $\operatorname{dist}(x,\mathbb{R}^{n}-U)\geqslant1/j$ 与 $|x|\leqslant j$ 同时成立，即 $x\in F_{j}$。故 $U=\bigcup_{j=1}^{\infty}F_{j}$。
+
+（5）再考虑
+\begin{align*}
+\mathcal{G}:=\{A\in\mathcal{F}\mid\mathbb{R}^{n}-A\in\mathcal{F}\}.
+\end{align*}
+若 $A\in\mathcal{G}$，则 $\mathbb{R}^{n}-A\in\mathcal{G}$，这一点由 $\mathbb{R}^{n}-(\mathbb{R}^{n}-A)=A$ 直接得到。又 $\mathcal{G}$ 含一切开集：若 $A$ 开，则由（4）得 $A\in\mathcal{F}$，而 $\mathbb{R}^{n}-A$ 闭，故由（1）得 $\mathbb{R}^{n}-A\in\mathcal{F}$。
+
+（6）断言三：若 $\{A_{i}\}_{i=1}^{\infty}\subseteq\mathcal{G}$，则 $A=\bigcup_{i=1}^{\infty}A_{i}\in\mathcal{G}$。
+
+断言之证明：由断言二，$A\in\mathcal{F}$。又 $\{\mathbb{R}^{n}-A_{i}\}_{i=1}^{\infty}\subseteq\mathcal{F}$，由断言一得 $\mathbb{R}^{n}-A=\bigcap_{i=1}^{\infty}(\mathbb{R}^{n}-A_{i})\in\mathcal{F}$。故 $A\in\mathcal{G}$。
+
+（7）于是 $\mathcal{G}$ 是含一切开集的 $\sigma$-代数：$\varnothing\in\mathcal{F}$（$\varnothing$ 是闭集）且 $\mathbb{R}^{n}\in\mathcal{F}$，故 $\varnothing\in\mathcal{G}$；$\mathcal{G}$ 对补集封闭由定义给出；$\mathcal{G}$ 对可数并封闭即断言三。因此 $\mathcal{G}$ 也含一切 Borel 集。特别地 $B\in\mathcal{G}$，于是给定 $\varepsilon>0$，存在闭集 $C\subseteq B$，使得
+\begin{align*}
+\mu(B-C)=\nu(B-C)<\varepsilon,
+\end{align*}
+其中等号用到 $B$ 是 Borel 集，故 $\nu(B-C)=\mu((B-C)\cap B)=\mu(B-C)$。至此 (i) 证毕。
+
+（8）记 $U_{m}:=B^{0}(0,m)$，即以 $0$ 为心、$m$ 为半径的开球。则 $U_{m}-B$ 是 Borel 集，且
+\begin{align*}
+\mu(U_{m}-B)\leqslant\mu\bigl(\overline{B^{0}(0,m)}\bigr)<\infty,
+\end{align*}
+其中有限性来自 $\mu$ 是 Radon 测度与闭球是紧集。于是可以对 $U_{m}-B$ 用 (i)，得闭集 $C_{m}\subseteq U_{m}-B$，使得
+\begin{align*}
+\mu\bigl((U_{m}-C_{m})-B\bigr)=\mu\bigl((U_{m}-B)-C_{m}\bigr)<\frac{\varepsilon}{2^{m}}.
+\end{align*}
+令 $U:=\bigcup_{m=1}^{\infty}(U_{m}-C_{m})$，则 $U$ 是开集。又由 $C_{m}\subseteq U_{m}-B$ 得 $B\cap C_{m}=\varnothing$，即 $B\subseteq\mathbb{R}^{n}-C_{m}$，从而 $U_{m}\cap B\subseteq U_{m}-C_{m}$。于是
+\begin{align*}
+B=\bigcup_{m=1}^{\infty}(U_{m}\cap B)\subseteq\bigcup_{m=1}^{\infty}(U_{m}-C_{m})=U.
+\end{align*}
+此外，由次可加性，
+\begin{align*}
+\mu(U-B)&=\mu\Bigl(\bigcup_{m=1}^{\infty}(U_{m}-C_{m})-B\Bigr)\\
+&\leqslant\sum_{m=1}^{\infty}\mu\bigl((U_{m}-C_{m})-B\bigr)<\varepsilon.
+\end{align*}
+至此 (ii) 证毕。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch01-1-1; kind=motivation; 说明该引理为何要先用“内逼近闭集”再用“补集”过渡到外逼近开集
+\begin{remark}\phantomsection\label{remark:ch01-lem-1-1-闭开动机}
+引理把“测度意义下的逼近”归约为两个方向：在有限测度下从内部用闭集逼近 Borel 集，在 Radon 条件下从外部用开集逼近 Borel 集。证明的策略是把内逼近写成一个集族 $\mathcal{F}$ 的封闭性命题：先证 $\mathcal{F}$ 对可数交、可数并封闭，再说明它含一切开集，于是它含一切 Borel 集。外逼近则通过补集转化为内逼近：$B$ 的开外逼近对应于 $U_{m}-B$ 的闭内逼近，开球 $U_{m}$ 的作用是把“全域”切成测度有限的片段，从而使内逼近可以逐段进行。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch01-1-1; kind=hypotheses; 逐条说明有限测度与 Radon 条件不可删除，并给出反例
+\begin{remark}\phantomsection\label{remark:ch01-lem-1-1-闭开条件}
+\begin{enumerate}[(i)]
+\item (i) 中的 $\mu(B)<\infty$ 不可删除。取 $\mu$ 为 $\mathbb{R}$ 上的计数测度（有限集按基数计测度，无限集测度为 $\infty$），它是 Borel 测度；取 $B=\mathbb{Q}$ 与 $\varepsilon=1/2$，则 $\mu(B)=\infty$，而对每个闭集 $C\subseteq\mathbb{Q}$，$C$ 可数，故 $\mathbb{Q}-C$ 无限，$\mu(B-C)=\infty>\varepsilon$，不存在满足 (i) 的闭集 $C$。
+\item (ii) 中的 Radon 条件不可删除。取 $\mu$ 为 $\mathbb{R}$ 上的计数测度（每个有限集按基数计测度，无限集测度为 $\infty$），它是 Borel 测度，但对紧集 $K=[0,1]$ 有 $\mu(K)=\infty$，故不是 Radon 测度。取 $B=\mathbb{Q}$ 与 $\varepsilon=1$，则任何开集 $U\supseteq\mathbb{Q}$ 都满足 $\mu(U-B)=\infty$，因为 $U$ 是稠开集从而 $U-\mathbb{Q}$ 无限，故 (ii) 失效。
+\item (i) 中 $B$ 的 Borel 性用于保证 $\nu=\mu\llcorner B$ 是 Borel 测度，从而第 (7) 步的集族论证可用；若 $B$ 只是 $\mu$-可测集，(i) 的结论仍可由同样的论证得到，只需把 $\mathcal{F}$ 中的可测性换成 $\mu$-可测性。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[用开集与紧集逼近]\label{theorem:ch01-1-8}
+设 $\mu$ 为 $\mathbb{R}^{n}$ 上的 Radon 测度。则
+\begin{enumerate}[(i)]
+\item 对每个集合 $A\subseteq\mathbb{R}^{n}$，
+\begin{align*}
+\mu(A)=\inf\{\mu(U)\mid A\subseteq U,\ U\text{ 为开集}\};
+\end{align*}
+\item 对每个 $\mu$-可测集 $A\subseteq\mathbb{R}^{n}$，
+\begin{align*}
+\mu(A)=\sup\{\mu(K)\mid K\subseteq A,\ K\text{ 为紧集}\}.
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-8-要点}
+断言 (i) 并不要求 $A$ 是 $\mu$-可测集。
+\end{remark}
+
+\begin{proof}
+（1）若 $\mu(A)=\infty$，则对每个开集 $U\supseteq A$ 由单调性得 $\mu(U)\geqslant\mu(A)=\infty$，故 (i) 成立。下设 $\mu(A)<\infty$。先设 $A$ 是 Borel 集，固定 $\varepsilon>0$。由\cref{lemma:ch01-1-1}，存在开集 $U\supset A$，使得 $\mu(U-A)<\varepsilon$。由于 $A$ 是 Borel 集，有 $\mu(U)=\mu(A)+\mu(U-A)<\infty$，故 (i) 成立。% XREF p=28 "Then by Lemma 1.1, there exists an open set"
+
+现设 $A$ 为任意集合。由 $\mu$ 是 Borel 正则的，存在 Borel 集 $B\supset A$，使得 $\mu(A)=\mu(B)$。于是
+\begin{align*}
+\mu(A)=\mu(B)&=\inf\{\mu(U)\mid B\subseteq U,\ U\text{ 为开集}\}\\
+&\geqslant\inf\{\mu(U)\mid A\subseteq U,\ U\text{ 为开集}\}.
+\end{align*}
+反向的不等式由单调性得到：对每个开集 $U\supseteq A$ 有 $\mu(U)\geqslant\mu(A)$，故右端不小于 $\mu(A)$。断言 (i) 证毕。
+
+（2）现设 $A$ 为 $\mu$-可测集且 $\mu(A)<\infty$。令 $\nu:=\mu\llcorner A$，则由\cref{theorem:ch01-1-7}，$\nu$ 是 Radon 测度。% XREF p=28 "ν is a Radon measure according to Theorem 1.7"
+固定 $\varepsilon>0$。把 (i) 用于 $\nu$ 与集合 $\mathbb{R}^{n}-A$，得开集 $U$，使得 $\mathbb{R}^{n}-A\subseteq U$ 且 $\nu(U)\leqslant\varepsilon$。令 $C:=\mathbb{R}^{n}-U$。则 $C$ 是闭集且 $C\subseteq A$，并且
+\begin{align*}
+\mu(A-C)=\nu(\mathbb{R}^{n}-C)=\nu(U)\leqslant\varepsilon.
+\end{align*}
+于是
+\begin{align*}
+0\leqslant\mu(A)-\mu(C)\leqslant\varepsilon,
+\end{align*}
+其中 $\mu(C)\leqslant\mu(A)$ 由 $C\subseteq A$ 与单调性给出，而 $\mu(A)-\mu(C)=\mu(A-C)$ 由 $A$ 是 $\mu$-可测集与 $\mu(A)<\infty$ 给出。由 $\varepsilon>0$ 的任意性得
+\begin{align*}
+\mu(A)=\sup\{\mu(C)\mid C\subseteq A,\ C\text{ 为闭集}\}.\qquad(\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-8; kind=proof; 补出 μ(A)=∞ 情形的完整论证：用球壳分层把 A 拆成有限测度部分
+（3）设 $\mu(A)=\infty$。定义 $D_{k}:=\{x\in\mathbb{R}^{n}\mid k-1\leqslant|x|<k\}$（$k=1,2,\cdots$）。则 $A=\bigcup_{k=1}^{\infty}(D_{k}\cap A)$，且各 $D_{k}\cap A$ 两两不相交、均为 $\mu$-可测集，故
+\begin{align*}
+\infty=\mu(A)=\sum_{k=1}^{\infty}\mu(A\cap D_{k}).
+\end{align*}
+由于 $\mu$ 是 Radon 测度且 $D_{k}\cap A\subseteq\{x\mid|x|\leqslant k\}$，其中后者的闭包是紧集，得 $\mu(D_{k}\cap A)<\infty$。于是把第 (2) 步的结论用于 $\mu$-可测集 $D_{k}\cap A$，得闭集 $C_{k}\subseteq D_{k}\cap A$，使得
+\begin{align*}
+\mu(C_{k})\geqslant\mu(D_{k}\cap A)-\frac{1}{2^{k}}.
+\end{align*}
+各 $C_{k}$ 两两不相交，且 $\bigcup_{k=1}^{\infty}C_{k}\subseteq A$，故
+\begin{align*}
+\lim_{n\to\infty}\mu\Bigl(\bigcup_{k=1}^{n}C_{k}\Bigr)&=\mu\Bigl(\bigcup_{k=1}^{\infty}C_{k}\Bigr)\\
+&=\sum_{k=1}^{\infty}\mu(C_{k})\geqslant\sum_{k=1}^{\infty}\Bigl(\mu(D_{k}\cap A)-\frac{1}{2^{k}}\Bigr)=\infty,
+\end{align*}
+其中第一个等号用测度的下连续性，第二个等号用可数可加性。而对每个 $n$，$\bigcup_{k=1}^{n}C_{k}$ 是闭集，故在此情形下 $(\star)$ 也成立。
+
+（4）最后，记 $B(m)$ 为以 $0$ 为心、$m$ 为半径的闭球。设 $C$ 为闭集，$C_{m}:=C\cap B(m)$，则每个 $C_{m}$ 是紧集，且 $\{C_{m}\}$ 递增、$\bigcup_{m}C_{m}=C$，故由测度的下连续性得
+\begin{align*}
+\mu(C)=\lim_{m\to\infty}\mu(C_{m}).
+\end{align*}
+因此，对每个 $\mu$-可测集 $A$，
+\begin{align*}
+&\sup\{\mu(K)\mid K\subseteq A,\ K\text{ 为紧集}\}\\
+&\qquad=\sup\{\mu(C)\mid C\subseteq A,\ C\text{ 为闭集}\}.
+\end{align*}
+事实上，紧集是闭集，故左端不大于右端；反之对每个闭集 $C\subseteq A$，各 $C_{m}$ 是含于 $A$ 的紧集且 $\mu(C_{m})\to\mu(C)$，故右端不大于左端。结合 $(\star)$ 即得
+\begin{align*}
+\mu(A)=\sup\{\mu(K)\mid K\subseteq A,\ K\text{ 为紧集}\},
+\end{align*}
+断言 (ii) 证毕。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-8; kind=motivation; 说明内逼近紧集与外逼近开集在测度论中的地位
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-8-动机}
+本定理把 Radon 测度在任意集合上的取值写成两类简单集合上的取值之极限：外面的开集与里面的紧集。外逼近对\textbf{一切}集合成立，因为 Borel 正则性允许先把集合换成测度相同的 Borel 外包；内逼近则要求集合可测，因为需要把测度写成 $\mu(A)-\mu(A-C)$ 的形式。这两条逼近性质是后续许多论证的起点：例如用开集逼近计算 Hausdorff 测度、用紧集逼近验证 Radon 测度的弱收敛、以及在可测集上用紧集上的连续函数作逼近。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-8; kind=hypotheses; 逐条说明 Radon 与可测性的使用位置，并给出 (ii) 中可测性不可删除的反例
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-8-条件}
+\begin{enumerate}[(i)]
+\item Radon 条件的使用位置：第 (2) 步由\cref{theorem:ch01-1-7} 知 $\nu=\mu\llcorner A$ 是 Radon 测度；第 (1) 步用 $\mu(A)<\infty$ 推出 $\mu(U)=\mu(A)+\mu(U-A)<\infty$；第 (3) 步需要 $\mu(D_{k}\cap A)<\infty$，这由 $\mu$ 在每个紧集上有限得到。若 $\mu$ 只是 Borel 正则而不在紧集上有限，第 (3) 步的论证失效。% XREF internal
+\item (ii) 中 $A$ 的 $\mu$-可测性不可删除。取 $\mu$ 为 $\mathbb{R}$ 上的 Lebesgue 测度，$A$ 为 Vitali 集（取 $\mathbb{R}/\mathbb{Q}$ 的一个代表元系）。则 $\mu(A)=\lambda^{*}(A)>0$；但 $A$ 的任何可测子集都是零测集：若可测集 $E\subseteq A$ 满足 $\lambda(E)>0$，则诸平移 $E+q$（$q\in\mathbb{Q}\cap[0,1]$）两两不相交且都含于某个有界区间，于是 $\sum_{q}\lambda(E)=\infty$ 与 $\lambda\bigl(\bigcup_{q}(E+q)\bigr)<\infty$ 矛盾。故含于 $A$ 的紧集都是零测集，从而 $\sup\{\mu(K)\mid K\subseteq A,\ K\text{ 为紧集}\}=0\neq\mu(A)$，即 (ii) 失效。
+\item (i) 中对 $A$ 没有可测性要求，这一点与内逼近形成对照；(i) 也不要求 $\mu(A)<\infty$：当 $\mu(A)=\infty$ 时结论由单调性自动成立。
+\end{enumerate}
+\end{remark}
+
+下面引入一个简单而很有用的验证测度为 Borel 测度的方法。
+
+\begin{theorem}[Caratheodory 判据]\label{theorem:ch01-1-9}
+设 $\mu$ 为 $\mathbb{R}^{n}$ 上的测度。若对一切集合 $A,B\subseteq\mathbb{R}^{n}$，只要 $\operatorname{dist}(A,B)>0$ 就有
+\begin{align*}
+\mu(A\cup B)=\mu(A)+\mu(B),
+\end{align*}
+则 $\mu$ 是 Borel 测度。
+\end{theorem}
+
+\begin{proof}
+（1）设 $A,C\subseteq\mathbb{R}^{n}$ 且 $C$ 为闭集。须证
+\begin{align*}
+\mu(A)\geqslant\mu(A\cap C)+\mu(A-C),\qquad(\star)
+\end{align*}
+反向的不等式由次可加性给出：$A\subseteq(A\cap C)\cup(A-C)$。若 $\mu(A)=\infty$，则 $(\star)$ 成立。下面设 $\mu(A)<\infty$，并定义
+\begin{align*}
+C_{n}:=\Bigl\{x\in\mathbb{R}^{n}\mid\operatorname{dist}(x,C)\leqslant\frac{1}{n}\Bigr\}\qquad(n=1,2,\cdots).
+\end{align*}
+
+（2）若 $x\in A-C_{n}$，则 $\operatorname{dist}(x,C)>1/n$；若 $y\in A\cap C$，则 $\operatorname{dist}(x,C)\leqslant|x-y|$，故 $|x-y|>1/n$。于是
+\begin{align*}
+\operatorname{dist}(A-C_{n},A\cap C)\geqslant\frac{1}{n}>0.
+\end{align*}
+由假设，
+\begin{align*}
+\mu(A-C_{n})+\mu(A\cap C)=\mu\bigl((A-C_{n})\cup(A\cap C)\bigr)\leqslant\mu(A),\qquad(\star\star)
+\end{align*}
+其中不等号由 $(A-C_{n})\cup(A\cap C)\subseteq A$ 与单调性给出。
+
+（3）断言：$\lim_{n\to\infty}\mu(A-C_{n})=\mu(A-C)$。
+
+断言之证明：令
+\begin{align*}
+R_{k}:=\Bigl\{x\in A\mid\frac{1}{k+1}<\operatorname{dist}(x,C)\leqslant\frac{1}{k}\Bigr\}\qquad(k=1,2,\cdots).
+\end{align*}
+由于 $C$ 是闭集，$A-C$ 中的点 $x$ 满足 $\operatorname{dist}(x,C)>0$，故存在 $n$ 使 $\operatorname{dist}(x,C)>1/n$，即 $x\in A-C_{n}$；若 $\operatorname{dist}(x,C)\leqslant1/n$，则存在 $k\geqslant n$ 使 $1/(k+1)<\operatorname{dist}(x,C)\leqslant1/k$，即 $x\in R_{k}$。因此
+\begin{align*}
+A-C=(A-C_{n})\cup\bigcup_{k=n}^{\infty}R_{k},
+\end{align*}
+从而由次可加性与单调性得
+\begin{align*}
+\mu(A-C_{n})\leqslant\mu(A-C)\leqslant\mu(A-C_{n})+\sum_{k=n}^{\infty}\mu(R_{k}).
+\end{align*}
+若能证明 $\sum_{k=1}^{\infty}\mu(R_{k})<\infty$，则由 $\sum_{k=n}^{\infty}\mu(R_{k})\to0$（$n\to\infty$）得
+\begin{align*}
+\lim_{n\to\infty}\mu(A-C_{n})\leqslant\mu(A-C)&\leqslant\lim_{n\to\infty}\mu(A-C_{n})+\lim_{n\to\infty}\sum_{k=n}^{\infty}\mu(R_{k})\\
+&=\lim_{n\to\infty}\mu(A-C_{n}),
+\end{align*}
+断言成立。
+
+（4）现证 $\sum_{k}\mu(R_{k})<\infty$。若 $j\geqslant i+2$，则对 $x\in R_{i}$ 与 $y\in R_{j}$ 有
+\begin{align*}
+|x-y|\geqslant\operatorname{dist}(x,C)-\operatorname{dist}(y,C)>\frac{1}{i+1}-\frac{1}{j}\geqslant\frac{1}{i+1}-\frac{1}{i+2}>0,
+\end{align*}
+故 $\operatorname{dist}(R_{i},R_{j})>0$。于是对每个 $m$，诸集合 $R_{2},R_{4},\cdots,R_{2m}$ 两两有正距离，由假设与归纳法得
+\begin{align*}
+\sum_{k=1}^{m}\mu(R_{2k})=\mu\Bigl(\bigcup_{k=1}^{m}R_{2k}\Bigr)\leqslant\mu(A),
+\end{align*}
+其中不等号由 $\bigcup_{k}R_{2k}\subseteq A$ 与单调性给出。对奇数下标作同样的论证（此时诸集合 $R_{1},R_{3},\cdots,R_{2m+1}$ 两两有正距离）得
+\begin{align*}
+\sum_{k=0}^{m}\mu(R_{2k+1})=\mu\Bigl(\bigcup_{k=0}^{m}R_{2k+1}\Bigr)\leqslant\mu(A).
+\end{align*}
+把两式相加并令 $m\to\infty$，得
+\begin{align*}
+\sum_{k=1}^{\infty}\mu(R_{k})\leqslant2\mu(A)<\infty.
+\end{align*}
+
+（5）于是由 $(\star\star)$ 与第 (3) 步的断言，
+\begin{align*}
+\mu(A-C)+\mu(A\cap C)=\lim_{n\to\infty}\mu(A-C_{n})+\mu(A\cap C)\leqslant\mu(A),
+\end{align*}
+此即 $(\star)$。故每个闭集 $C$ 都是 $\mu$-可测集。由\cref{theorem:ch01-1-3}，$\mu$-可测集构成 $\sigma$-代数，它含一切闭集，从而含由闭集生成的 $\sigma$-代数；而由闭集生成的 $\sigma$-代数与由开集生成的 $\sigma$-代数相同，故它含一切 Borel 集。因此 $\mu$ 是 Borel 测度。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-9; kind=motivation; 说明该判据为何把“可测性检验”化归为“正距离可加性检验”
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-9-动机}
+按定义检验 $\mu$-可测性需要对\textbf{一切}测试集 $B$ 验证分割等式，难以操作。本定理把这一负担换成一条只涉及“正距离”的加性条件：只要相距正距离的两个集合上的测度可以相加，测度就自动是 Borel 测度。证明的机理是把闭集 $C$ 从外面用开邻域 $C_{n}$ 逼近，在 $C_{n}$ 与 $C$ 的距离为 $1/n$ 处使用正距离可加性，再证明 $\mu(A-C_{n})\to\mu(A-C)$；后一步的困难在于 $C_{n}$ 单调递减而测度不一定上连续，故用球壳 $R_{k}$ 的“奇偶分族”论证把 $\sum_{k}\mu(R_{k})$ 控制住。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-9; kind=hypotheses; 说明假设的量词范围不可缩小，并给出不满足假设的测度
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-9-条件}
+\begin{enumerate}[(i)]
+\item 假设要求对\textbf{一切}集合 $A,B$（不限于可测集或闭集）且 $\operatorname{dist}(A,B)>0$ 时等式成立。若把范围缩小为“$A,B$ 可测”，则条件自动成立，判据失去意义。
+\item 假设不是自动成立的：定义 $\mu(A):=1$（$A\neq\varnothing$）、$\mu(\varnothing):=0$，则 $\mu$ 是 $\mathbb{R}^{n}$ 上的测度（次可加性成立），取 $A=\{0\}$ 与 $B=\{e_{1}\}$ 得 $\operatorname{dist}(A,B)=1>0$，而 $\mu(A\cup B)=1\neq2=\mu(A)+\mu(B)$，故它不满足假设；同时它不是 Borel 测度：对任一非空真子集 $A$，取 $B=\mathbb{R}^{n}$ 得 $\mu(B)=1$ 而 $\mu(B\cap A)+\mu(B-A)=2$。
+\item “$\operatorname{dist}(A,B)>0$”中的严格不等式不可放宽。判据的证明在第 (2) 步得到的是 $\operatorname{dist}(A-C_{n},A\cap C)\geqslant1/n>0$，严格的正距离是使用假设的唯一依据；若把条件改为“$A\cap B=\varnothing$ 时可加”，则 $A-C_{n}$ 与 $A\cap C$ 虽然不相交，却可能相距 $0$，第 (2) 步的不等式无法得到。
+\item 结论只断言 $\mu$ 是 Borel 测度，不附加正则性或紧集上有限性；事实上计数测度满足判据的假设，它是 Borel 测度但不是 Radon 测度。
+\end{enumerate}
+\end{remark}
+
+\subsection{可测函数}\label{subsection:ch01-01-可测}
+
+下面把可测性的概念从集合推广到函数。
+
+设 $X$ 为集合，$Y$ 为拓扑空间，并设 $\mu$ 为 $X$ 上的测度。
+
+\begin{definition}[$\mu$-可测函数与 Borel 可测函数]\label{definition:ch01-1-10}
+设 $X$ 为集合，$Y$ 为拓扑空间，$\mu$ 为 $X$ 上的测度。
+\begin{enumerate}[(i)]
+\item 称函数 $f:X\to Y$ 为 $\mu$-\textbf{可测}的，是指对每个开集 $U\subseteq Y$，集合 $f^{-1}(U)$ 都是 $\mu$-可测集；
+\item 称函数 $f:X\to Y$ 为 \textbf{Borel 可测}的，是指对每个开集 $U\subseteq Y$，集合 $f^{-1}(U)$ 都是 Borel 集。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-10; kind=motivation; 说明用开集原像定义可测性的理由与它带来的等价形式
+\begin{remark}\phantomsection\label{remark:ch01-def-1-10-函数动机}
+用开集的原像来定义函数的可测性，是因为函数可测的全部意义在于“可测集的原像仍可测”，从而可以对水平集 $\{x\mid f(x)>a\}$ 求测度。若把“开集”换成“任意集合”，条件过强，只有极特殊的函数满足；若换成“Borel 集”，由\cref{theorem:ch01-1-10} 的断言 (i)，它与定义等价。定义中 $Y$ 只需是拓扑空间，因此对 $Y=\mathbb{R}^{m}$、$Y=[-\infty,\infty]$ 或一般度量空间都适用。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-10; kind=hypotheses; 逐条说明论域、两个概念的关系与可减弱的条件
+\begin{remark}\phantomsection\label{remark:ch01-def-1-10-函数条件}
+\begin{enumerate}[(i)]
+\item $Y$ 必须是拓扑空间，定义才有“开集”可言；$X$ 只需是集合，因为只用到 $X$ 上的测度与可测集。
+\item (i) 只要求检验\textbf{开集}的原像，不要求检验一切集合的原像。(ii) 不使用 $\mu$，因此同一函数可以 Borel 可测而对某个测度不 $\mu$-可测；反之若 $\mu$ 是 Borel 测度，则 Borel 可测蕴含 $\mu$-可测。
+\item 定义对 $f$ 不加连续性、有界性或取值有限性要求；$Y=[-\infty,\infty]$ 时 $f$ 可取 $\pm\infty$，这一点在\cref{theorem:ch01-1-11} 与\cref{theorem:ch01-1-12} 中都要用到。% XREF internal
+\item 检验范围可以缩小为“$Y$ 的一个拓扑基中的开集”：若 $f^{-1}(U)$ 对基中每个 $U$ 可测，则对任意开集 $U=\bigcup_{i}U_{i}$（基中元素之并）有 $f^{-1}(U)=\bigcup_{i}f^{-1}(U_{i})$ 可测。
+\end{enumerate}
+\end{remark}
+
+\begin{example}[连续映射的 Borel 可测性]\label{example:ch01-1-10-连续}
+设 $n$ 为正整数，$Y$ 为拓扑空间，$f:\mathbb{R}^{n}\to Y$ 为连续映射。则 $f$ 是 Borel 可测的。
+\end{example}
+
+\begin{proof}
+对每个开集 $U\subseteq Y$，由 $f$ 连续得 $f^{-1}(U)$ 是 $\mathbb{R}^{n}$ 的开集，从而是 Borel 集；故 $f$ 是 Borel 可测的。若 $\mu$ 是 $\mathbb{R}^{n}$ 上的 Borel 测度，则开集也是 $\mu$-可测集，此时 $f$ 还是 $\mu$-可测的。
+\end{proof}
+
+\begin{theorem}[原像]\label{theorem:ch01-1-10}
+设 $X$ 为集合，$Y$ 为拓扑空间，$\mu$ 为 $X$ 上的测度。
+\begin{enumerate}[(i)]
+\item 若 $f:X\to Y$ 是 $\mu$-可测的，则对每个 Borel 集 $B\subseteq Y$，$f^{-1}(B)$ 是 $\mu$-可测集；
+\item 函数 $f:X\to[-\infty,\infty]$ 是 $\mu$-可测的，当且仅当对每个 $a\in\mathbb{R}$，$f^{-1}\bigl([-\infty,a)\bigr)$ 是 $\mu$-可测集；
+\item 若 $f:X\to\mathbb{R}^{n}$ 与 $g:X\to\mathbb{R}^{m}$ 都是 $\mu$-可测的，则
+\begin{align*}
+(f,g):X\to\mathbb{R}^{n+m}
+\end{align*}
+是 $\mu$-可测的。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）验证集族
+\begin{align*}
+\{A\subseteq Y\mid f^{-1}(A)\text{ 是 }\mu\text{-可测集}\}
+\end{align*}
+是含一切开集的 $\sigma$-代数，从而含一切 Borel 集。事实上，由 $f^{-1}(Y)=X$ 知 $Y$ 属于该集族；由 $f^{-1}(Y-A)=X-f^{-1}(A)$ 知它对补集封闭；由 $f^{-1}\bigl(\bigcup_{k}A_{k}\bigr)=\bigcup_{k}f^{-1}(A_{k})$ 与 $f^{-1}\bigl(\bigcap_{k}A_{k}\bigr)=\bigcap_{k}f^{-1}(A_{k})$ 知它对可数并与可数交封闭。又 $f$ 是 $\mu$-可测的，故每个开集属于该集族。断言 (i) 证毕。
+
+（2）同样地，集族
+\begin{align*}
+\mathcal{A}:=\{A\subseteq[-\infty,\infty]\mid f^{-1}(A)\text{ 是 }\mu\text{-可测集}\}
+\end{align*}
+是 $\sigma$-代数，且对每个 $a\in\mathbb{R}$ 含有 $[-\infty,a)$，从而含有 $\mathbb{R}$ 的一切 Borel 子集。
+
+% SUPPLEMENT: parent=theorem:ch01-1-10; kind=proof; 补出“含 [−∞,a) 的 σ-代数含一切 Borel 子集”的论证
+事实上，由 $[-\infty,b)\in\mathcal{A}$ 与 $[-\infty,a)\in\mathcal{A}$ 得 $(a,b)=[-\infty,b)-[-\infty,a]\in\mathcal{A}$；开区间之并给出 $\mathbb{R}$ 的每个开子集，故 $\mathcal{A}$ 含 $\mathbb{R}$ 的一切开子集，从而含 $\mathbb{R}$ 的 Borel $\sigma$-代数。至此 (ii) 成立：条件的必要性由 (i) 给出，充分性由上述集族是 $\sigma$-代数且含一切 Borel 子集得到。
+
+（3）令 $h:=(f,g)$。则集族
+\begin{align*}
+\{A\subseteq\mathbb{R}^{n+m}\mid h^{-1}(A)\text{ 是 }\mu\text{-可测集}\}
+\end{align*}
+是 $\sigma$-代数，且含一切形如 $U\times V$ 的开集，其中 $U\subseteq\mathbb{R}^{n}$ 与 $V\subseteq\mathbb{R}^{m}$ 为开集。
+
+% SUPPLEMENT: parent=theorem:ch01-1-10; kind=proof; 补出两点：矩形原像的可测性与“开矩形生成开集”的论证
+事实上，由 $h^{-1}(U\times V)=f^{-1}(U)\cap g^{-1}(V)$ 及 $f,g$ 的 $\mu$-可测性，每个开矩形 $U\times V$ 属于该集族。又 $\mathbb{R}^{n+m}$ 的每个开集可写成可数多个开矩形之并：取一切中心坐标为有理点、半径为有理数且含于该开集的开矩形，其全体是可数族且覆盖该开集。故该 $\sigma$-代数含 $\mathbb{R}^{n+m}$ 的一切开集，从而含一切 Borel 集。特别地，对每个开集 $W\subseteq\mathbb{R}^{n+m}$ 有 $h^{-1}(W)$ 可测，即 $h$ 是 $\mu$-可测的。断言 (iii) 证毕。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-10; kind=motivation; 说明三条断言各自把可测性检验简化到什么程度
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-10-动机}
+三条断言把可测性的检验逐步化简：断言 (i) 说明检验开集原像即可得到一切 Borel 集的原像可测，因此“$f^{-1}(\text{Borel})$ 可测”与定义等价；断言 (ii) 把检验范围进一步压缩到一族半直线 $[-\infty,a)$，这对实值函数是最常用的判据，因为它把函数可测性转化为水平集的可测性；断言 (iii) 说明可测性对配对运算封闭，从而可以把向量值函数的可测性问题逐分量处理。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-10; kind=hypotheses; 说明各处条件的必要性、可削弱之处与 (ii) 中检验族的可数化
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-10-条件}
+\begin{enumerate}[(i)]
+\item 断言 (i) 需要 $Y$ 是拓扑空间，使“Borel 集”有意义；若 $Y$ 只是集合而无拓扑，则 Borel 集无从定义，但结论对 $Y=\mathbb{R}^{m}$ 等具体空间仍然适用。
+\item 断言 (ii) 中的半直线族可换成可数族：由于 $[-\infty,a)=\bigcup_{q<a,\ q\in\mathbb{Q}}[-\infty,q)$，只需对有理数 $q$ 检验。这一可数化在讨论逐点极限时是必要的，因为此时要处理可数多个集合的交与并。
+\item 断言 (ii) 的检验族有多种等价选择：由 $[-\infty,a]=\bigcap_{k}[-\infty,a+1/k)$ 与 $[-\infty,a)=\bigcup_{k}[-\infty,a-1/k]$，开半直线族与闭半直线族彼此等价，两者都可作为检验族。
+\item 断言 (iii) 对有限多个因子成立；对可数多个因子，结论仍然成立，但需要把“开矩形之并”换成可数积的基中元素之并。
+\end{enumerate}
+\end{remark}
+
+可测函数继承可测集的良好性质：
+
+\begin{theorem}[可测函数的性质]\label{theorem:ch01-1-11}
+设 $X$ 为集合，$\mu$ 为 $X$ 上的测度。
+\begin{enumerate}[(i)]
+\item 若 $f,g:X\to[-\infty,\infty]$ 是 $\mu$-可测的，则 $f+g$、$fg$、$|f|$、$\min(f,g)$ 与 $\max(f,g)$ 都是 $\mu$-可测的；若 $g$ 在 $X$ 上处处不为零，则 $f/g$ 也是 $\mu$-可测的；
+\item 若函数 $f_{k}:X\to[-\infty,\infty]$（$k=1,2,\cdots$）都是 $\mu$-可测的，则
+\begin{align*}
+&\inf_{k\geqslant1}f_{k},\qquad\sup_{k\geqslant1}f_{k},\\
+&\liminf_{k\to\infty}f_{k},\qquad\limsup_{k\to\infty}f_{k}
+\end{align*}
+都是 $\mu$-可测的。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）正如上文所述，$f:X\to[-\infty,\infty]$ 是 $\mu$-可测的当且仅当对每个 $a\in\mathbb{R}$，$f^{-1}[-\infty,a]$ 是 $\mu$-可测集。% XREF p=32 "As noted above, f : X → [−∞,∞] is μ-measurable if and only if"
+
+（2）设 $f,g:X\to\mathbb{R}$ 是 $\mu$-可测的。对每个 $a\in\mathbb{R}$，
+\begin{align*}
+(f+g)^{-1}(-\infty,a)=\bigcup_{\substack{r,s\text{ 为有理数}\\ r+s<a}}\bigl(f^{-1}(-\infty,r)\cap g^{-1}(-\infty,s)\bigr),
+\end{align*}
+右端是可数多个 $\mu$-可测集之并，故 $(f+g)^{-1}(-\infty,a)$ 是 $\mu$-可测集，于是 $f+g$ 是 $\mu$-可测的。
+
+% SUPPLEMENT: parent=theorem:ch01-1-11; kind=proof; 补出上述原像恒等式的双向验证
+恒等式的验证如下：若 $f(x)+g(x)<a$，取有理数 $r,s$ 使 $f(x)<r$、$g(x)<s$ 且 $r+s<a$——这样的 $r,s$ 存在，因为取 $r$ 为介于 $f(x)$ 与 $a-g(x)$ 之间的有理数、$s$ 为介于 $g(x)$ 与 $a-r$ 之间的有理数即可——故 $x$ 属于右端；反之若 $x$ 属于右端，则 $f(x)+g(x)<r+s<a$。
+
+由于对 $a\geqslant0$ 有
+\begin{align*}
+(f^{2})^{-1}(-\infty,a)=f^{-1}(-\infty,a^{1/2})-f^{-1}(-\infty,-a^{1/2}],
+\end{align*}
+而 $f^{2}\geqslant0$，故对 $a\leqslant0$ 有 $(f^{2})^{-1}(-\infty,a)=\varnothing$，于是 $f^{2}$ 是 $\mu$-可测的。因此
+\begin{align*}
+fg=\frac{1}{2}\bigl[(f+g)^{2}-f^{2}-g^{2}\bigr]
+\end{align*}
+也是 $\mu$-可测的。
+
+% SUPPLEMENT: parent=theorem:ch01-1-11; kind=proof; 补出 (f²)^{-1}(−∞,a) 的等式与 f²≥0 处的处理
+上述等式由 $f^{2}<a\iff -a^{1/2}<f<a^{1/2}$ 得到：右端恰为 $f^{-1}(-\infty,a^{1/2})$ 与 $f^{-1}(-\infty,-a^{1/2}]$ 之差，两者都是 $\mu$-可测集，其差也是 $\mu$-可测集。
+
+（3）再注意若 $g\neq0$，则
+\begin{align*}
+\Bigl(\frac{1}{g}\Bigr)^{-1}(-\infty,a)=
+\begin{cases}
+g^{-1}(a^{-1},0), & a<0,\\[2pt]
+g^{-1}(-\infty,0), & a=0,\\[2pt]
+g^{-1}(-\infty,0)\cup g^{-1}(a^{-1},\infty), & a>0;
+\end{cases}
+\end{align*}
+故 $1/g$ 从而 $f/g$ 是 $\mu$-可测的。
+
+（4）最后，
+\begin{align*}
+f^{+}=f\chi_{\{f\geqslant0\}}=\max(f,0),\qquad f^{-}=-f\chi_{\{f<0\}}=\max(-f,0)
+\end{align*}
+是 $\mu$-可测的，从而
+\begin{align*}
+|f|=f^{+}+f^{-},\qquad\max(f,g)=(f-g)^{+}+g,\qquad\min(f,g)=-(f-g)^{-}+g
+\end{align*}
+也是 $\mu$-可测的。
+
+（5）设 $f_{k}:X\to[-\infty,\infty]$（$k=1,2,\cdots$）都是 $\mu$-可测的。则对每个 $a\in\mathbb{R}$，
+\begin{align*}
+\Bigl(\inf_{k\geqslant1}f_{k}\Bigr)^{-1}[-\infty,a]&=\bigcup_{k=1}^{\infty}f_{k}^{-1}[-\infty,a],\\
+\Bigl(\sup_{k\geqslant1}f_{k}\Bigr)^{-1}[-\infty,a]&=\bigcap_{k=1}^{\infty}f_{k}^{-1}[-\infty,a],
+\end{align*}
+故 $\inf_{k\geqslant1}f_{k}$ 与 $\sup_{k\geqslant1}f_{k}$ 是 $\mu$-可测的。
+
+（6）由
+\begin{align*}
+\liminf_{k\to\infty}f_{k}=\sup_{m\geqslant1}\inf_{k\geqslant m}f_{k},\qquad
+\limsup_{k\to\infty}f_{k}=\inf_{m\geqslant1}\sup_{k\geqslant m}f_{k}
+\end{align*}
+与第 (5) 步，$\liminf_{k}f_{k}$ 与 $\limsup_{k}f_{k}$ 都是 $\mu$-可测的。证毕。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-11; kind=motivation; 说明为何代数运算与极限运算的封闭性是积分理论的起点
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-11-动机}
+可测函数类对加法、乘法、绝对值、最大最小与逐点极限封闭，是从可测函数过渡到积分的必要条件：积分要对简单函数（可测集的线性组合）定义，再对非负可测函数用单调极限过渡，最后对一般可测函数用正负部分解。若可测函数类对其中任一运算不封闭，上述构造在中间步骤就会跑出可测函数的范围。第 (2) 步把 $f+g$ 的原像写成可数多个有理参数矩形的并，这一“有理数枚举”手法是处理连续运算与可测性相容性的标准手段。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-11; kind=hypotheses; 逐条说明 g≠0、±∞ 取值与逐点极限三处的条件
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-11-条件}
+\begin{enumerate}[(i)]
+\item 第 (i) 款中“$g$ 在 $X$ 上处处不为零”不可删除：若 $g$ 在某点为零，则 $f/g$ 在该点无定义；若只假设 $\{g=0\}$ 是零测集，则结论应改为“$f/g$ 在 $\{g\neq0\}$ 上可测”，因为可测性只涉及定义域上的原像。
+\item 当 $f,g$ 取值 $\pm\infty$ 时，$f+g$ 在 $f=\infty$、$g=-\infty$ 或 $f=-\infty$、$g=\infty$ 的点上没有定义，$fg$ 在 $0\cdot\infty$ 处同样有歧义。把歧义点集上的值指定为 $0$，所得函数仍是 $\mu$-可测的：歧义点集可测，在其上取常值时，任一 Borel 集的原像或包含该集合或与它不交，故原像仍可测。
+\item 第 (ii) 款要求 $f_{k}$ 对每个 $k$ 都可测，且结论中的 $\inf$、$\sup$、$\liminf$、$\limsup$ 都是逐点取的；即使逐点极限不存在，$\liminf$ 与 $\limsup$ 仍可测，这使 Fatou 型论证无需预先假设收敛。
+\item 第 (ii) 款不要求 $f_{k}$ 有界或单调；若 $f_{k}$ 单调递增，则 $\sup_{k}f_{k}$ 就是逐点极限，此时结论化为“单调可测函数列的极限可测”。
+\end{enumerate}
+\end{remark}
+
+下面给出一种把非负可测函数改写的简洁而十分有用的方法。
+
+\begin{theorem}[非负可测函数的分解]\label{theorem:ch01-1-12}
+设 $X$ 为集合，$\mu$ 为 $X$ 上的测度，$f:X\to[0,\infty]$ 为 $\mu$-可测函数。则存在 $X$ 中的一列 $\mu$-可测集 $\{A_{k}\}_{k=1}^{\infty}$，使得
+\begin{align*}
+f=\sum_{k=1}^{\infty}\frac{1}{k}\chi_{A_{k}}.
+\end{align*}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-12-说明}
+注意集合 $\{A_{k}\}_{k=1}^{\infty}$ 不必两两不相交，且这一断言即使 $f$ 不是简单函数也成立。
+\end{remark}
+
+\begin{proof}
+令
+\begin{align*}
+A_{1}:=\{x\in X\mid f(x)\geqslant1\},
+\end{align*}
+并对 $k=2,3,\cdots$ 归纳地定义
+\begin{align*}
+A_{k}:=\Bigl\{x\in X\mid f(x)\geqslant\frac{1}{k}+\sum_{j=1}^{k-1}\frac{1}{j}\chi_{A_{j}}\Bigr\}.
+\end{align*}
+由于 $f$ 与各 $\chi_{A_{j}}$ 都是 $\mu$-可测的，每个 $A_{k}$ 都是 $\mu$-可测集。
+
+% SUPPLEMENT: parent=theorem:ch01-1-12; kind=proof; 补出归纳法证明 f ≥ Σ_{k≤m}(1/k)χ_{A_k}，含基始与归纳步
+归纳法证明：对每个 $m\geqslant1$ 有
+\begin{align*}
+f\geqslant\sum_{k=1}^{m}\frac{1}{k}\chi_{A_{k}}.\qquad(\dagger)
+\end{align*}
+当 $m=1$ 时，在 $A_{1}$ 上由定义 $f\geqslant1$，在 $X-A_{1}$ 上右端为 $0$，故 $(\dagger)$ 成立。设 $(\dagger)$ 对 $m=k-1$ 成立。若 $x\in A_{k}$，则由 $A_{k}$ 的定义
+\begin{align*}
+f(x)\geqslant\frac{1}{k}+\sum_{j=1}^{k-1}\frac{1}{j}\chi_{A_{j}}(x)=\sum_{j=1}^{k}\frac{1}{j}\chi_{A_{j}}(x);
+\end{align*}
+若 $x\notin A_{k}$，则 $\chi_{A_{k}}(x)=0$，故由归纳假设
+\begin{align*}
+f(x)\geqslant\sum_{j=1}^{k-1}\frac{1}{j}\chi_{A_{j}}(x)=\sum_{j=1}^{k}\frac{1}{j}\chi_{A_{j}}(x).
+\end{align*}
+故 $(\dagger)$ 对 $m=k$ 成立。于是
+\begin{align*}
+f\geqslant\sum_{k=1}^{\infty}\frac{1}{k}\chi_{A_{k}}.
+\end{align*}
+
+若 $f(x)=\infty$，则对每个 $k$，$A_{k}$ 定义中不等式的右端 $\frac{1}{k}+\sum_{j=1}^{k-1}\frac{1}{j}\chi_{A_{j}}(x)$ 是有限数，故 $f(x)=\infty$ 满足该不等式，即 $x\in A_{k}$ 对一切 $k$ 成立。若 $0\leqslant f(x)<\infty$，则对无穷多个 $n$ 有 $x\notin A_{n}$：否则 $x\in A_{n}$ 对一切充分大的 $n$ 成立，于是 $\sum_{j=1}^{n-1}(1/j)\chi_{A_{j}}(x)$ 随 $n$ 增大而无界，与 $(\dagger)$ 给出的 $f(x)<\infty$ 矛盾。于是对无穷多个 $n$，
+\begin{align*}
+0\leqslant f(x)-\sum_{k=1}^{n-1}\frac{1}{k}\chi_{A_{k}}(x)\leqslant\frac{1}{n},
+\end{align*}
+其中右端不等式来自 $x\notin A_{n}$ 与 $A_{n}$ 的定义。由于 $\sum_{k=1}^{n}(1/k)\chi_{A_{k}}(x)$ 关于 $n$ 单调不减且由 $(\dagger)$ 不超过 $f(x)$，其极限存在；上式说明该极限等于 $f(x)$。结合 $f(x)=\infty$ 的情形，得
+\begin{align*}
+f=\sum_{k=1}^{\infty}\frac{1}{k}\chi_{A_{k}}.
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-12; kind=motivation; 说明为何要构造“每项系数 1/k 的特征函数级数”
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-12-动机}
+通常的做法是用简单函数逼近非负可测函数，得到的是极限关系；本定理给出的是精确的等式：$f$ 等于一列特征函数的加权和。构造的思想是“逐层扣除”：$A_{1}$ 取 $f\geqslant1$ 的点，扣掉这一层后剩下的函数若仍超过 $1/2$ 就再贡献一层，如此继续，第 $k$ 层的系数是 $1/k$，而层与层的落差恰好是 $1/k$，故每点的级数收敛到 $f(x)$（当 $f(x)=\infty$ 时发散到 $\infty$）。这一表示把对 $f$ 的积分化归为对各层测度之和，是分层积分法的起点。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-12; kind=hypotheses; 说明非负性、不互不相交与可测性的作用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-12-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\geqslant0$ 不可删除：构造中层高 $1/k$ 为正，若 $f$ 取负值，则 $A_{k}$ 的定义与 $(\dagger)$ 都不再成立，级数各项非负而 $f$ 可能为负。
+\item 假设 $f$ 取值于 $[0,\infty]$ 允许 $f=\infty$，此时结论仍成立，且级数在 $f=\infty$ 的点上发散到 $\infty$，与 $f$ 的取值一致。
+\item 各 $A_{k}$ 不必两两不相交。若强行要求互不相交，则须把 $A_{k}$ 换成 $A_{k}-\bigcup_{j<k}A_{j}$，但此时层高不再是 $1/k$ 而是随点变化，等式 $f=\sum(1/k)\chi_{A_{k}}$ 不再成立。
+\item 假设 $f$ 是 $\mu$-可测的用于保证各 $A_{k}$ 是 $\mu$-可测集；若不要求可测性，构造本身仍可进行，但级数右端未必可测，从而失去作为积分对象的资格。
+\end{enumerate}
+\end{remark}
+
+\end{document}

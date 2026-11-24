@@ -17,178 +17,394 @@
 
 \subsection{可测空间}\label{subsection:ch01-可测空间}
 
+回顾以下定义。
+
 \begin{definition}\label{definition:ch01-半代数代数}
-设 $X$ 为一集合，非空集族 $\mathcal{S}\subseteq\mathcal{P}(X)$ 称为一个\textbf{半代数}，若：
+设 $X$ 为一集合。非空族 $\mathcal{S}\subseteq\mathcal{P}(X)$ 称为\textbf{半代数}，若：
 \begin{enumerate}[(i)]
 \item $E,F\in\mathcal{S}\Rightarrow E\cap F\in\mathcal{S}$；
-\item 对任意 $E\in\mathcal{S}$，存在 $E^c$ 的一个在$\mathcal{S}$中的划分。
+\item 对任意 $E\in\mathcal{S}$，存在 $E$ 的补集 $E^c=X\setminus E$ 的划分 $\{F_1,\cdots,F_n\}\subseteq\mathcal{S}$，即 $F_j\cap F_k=\varnothing$（$j\neq k$）且 $E^c=\bigcup_{j=1}^nF_j$。
 \end{enumerate}
-集族 $\mathcal{A}\subseteq\mathcal{P}(X)$ 称为一个\textbf{代数}，若：
+族 $\mathcal{A}\subseteq\mathcal{P}(X)$ 称为\textbf{代数}，若：
 \begin{enumerate}[(i)]
-\item $\varnothing \in\mathcal{A}$；
+\item $\varnothing\in\mathcal{A}$；
 \item $E\in\mathcal{A}\Rightarrow E^c\in\mathcal{A}$；
 \item $E,F\in\mathcal{A}\Rightarrow E\cup F\in\mathcal{A}$。
 \end{enumerate}
 \end{definition}
-\begin{remark}
-显然$\mathcal{P}(X)$既是半代数，也是代数.
+
+% SUPPLEMENT: parent=definition:ch01-半代数代数; kind=motivation; 说明半代数与代数的引入动机、每项条件的作用与边界情形
+\begin{remark}\phantomsection\label{remark:ch01-半代数}
+\begin{enumerate}[(i)]
+\item 引入动机。测度的构造从一族便于计算体积的集合出发；这类集合通常只对交运算封闭，对并、补运算不封闭。半代数的两条条件是对此的最低要求：条件 (i) 保证有限交仍在族内，条件 (ii) 保证补集可分解为族内有限多个互不相交的成员，从而使有限可加性可由该族延拓到它生成的代数（\cref{example:ch01-N胞腔}）。
+\item 各项条件的作用。非空性排除空族这一退化情形：若 $\mathcal{S}=\varnothing$，则 (i)(ii) 空洞成立，而 $\mathcal{A}_0(\mathcal{S})=\{\varnothing,X\}$。条件 (i) 只要求对交封闭，故半代数不必含 $\varnothing$，也不必对并封闭。条件 (ii) 中要求 $F_j\in\mathcal{S}$ 是关键：补集本身一般不属于 $\mathcal{S}$，它只以族内有限不交并的形式回到 $\mathcal{S}$。
+\item 边界情形。若 $\mathcal{S}$ 含两个不交的成员，则 (i) 要求 $\varnothing\in\mathcal{S}$；不含空集的族（如 $N$--胞腔族）应按“$E\cap F\in\mathcal{S}$ 或 $E\cap F=\varnothing$”理解 (i)，或等价地约定 $\varnothing\in\mathcal{S}$。代数的三条条件给出更强的封闭性：由 (ii) 得 $X=\varnothing^c\in\mathcal{A}$，由 (i)(ii)(iii) 得 $\mathcal{A}$ 对有限交、差集、对称差封闭，因为 $E\cap F=(E^c\cup F^c)^c$ 且 $E\setminus F=E\cap F^c$。每个代数都是半代数：取单元素族 $\{E^c\}$ 作为 $E^c$ 的划分即可。
+\end{enumerate}
 \end{remark}
 
-\begin{proposition}
-对任意集族 $\mathcal{F}\subseteq\mathcal{P}(X)$，交集
-\[
-\mathcal{A}_0(\mathcal{F})\triangleq \bigcap\{\mathcal{A}\mid\mathcal{A}\text{ 为代数，}\mathcal{A}\supseteq\mathcal{F}\}
-\]
-是一个代数，它包含 $\mathcal{F}$ 且被包含在所有包含 $\mathcal{F}$ 的代数 $\mathcal{A}$ 中。它称为\textbf{由 $\mathcal{F}$ 生成的代数}，或\textbf{包含 $\mathcal{F}$ 的最小代数}。
-\end{proposition}
-\begin{proof}
-\noindent$\mathbf{Step}\mathbf{1}.${\heiti 说明所有包含 $\mathcal{F}$ 的代数构成的集族非空.}
-记 $\mathfrak{A}$ 为所有包含 $\mathcal{F}$ 的代数组成的集族, 则 $\mathcal{A}_0(\mathcal{F})=\bigcap\limits_{\mathcal{A}\in\mathfrak{A}}\mathcal{A}$。由于 $\mathcal{P}(X)$ 是代数且 $\mathcal{P}(X)\supseteq\mathcal{F}$, 故 $\mathcal{P}(X)\in\mathfrak{A}$, 从而 $\mathfrak{A}\neq\varnothing$。因此 $\mathcal{A}_0(\mathcal{F})$ 的定义合理。
+对任意族 $\mathcal{F}\subseteq\mathcal{P}(X)$，交集
+\begin{align*}
+\mathcal{A}_0(\mathcal{F})\triangleq\bigcap\{\mathcal{A}\mid\mathcal{A}\ \text{为代数},\ \mathcal{A}\supseteq\mathcal{F}\}
+\end{align*}
+是一个代数，它包含 $\mathcal{F}$，且包含于每个满足 $\mathcal{A}\supseteq\mathcal{F}$ 的代数 $\mathcal{A}$ 之中。称之为由 $\mathcal{F}$ \textbf{生成的代数}，或\textbf{包含 $\mathcal{F}$ 的最小代数}。
 
-\noindent$\mathbf{Step}\mathbf{2}.${\heiti 说明 $\mathcal{F}\subseteq\mathcal{A}_0(\mathcal{F})$.}
-任取 $E\in\mathcal{F}$。对任意 $\mathcal{A}\in\mathfrak{A}$, 由 $\mathcal{A}\supseteq\mathcal{F}$ 得 $E\in\mathcal{A}$。于是 $E\in\bigcap\limits_{\mathcal{A}\in\mathfrak{A}}\mathcal{A}=\mathcal{A}_0(\mathcal{F})$。故 $\mathcal{F}\subseteq\mathcal{A}_0(\mathcal{F})$。
+% SUPPLEMENT: parent=section:ch01-集族; kind=proof; 补出生成代数的存在性、代数性与最小性的完整验证
+\begin{remark}\phantomsection\label{remark:ch01-生成代数}
+上述构造的合理性分三步验证。首先，族 $\{\mathcal{A}\mid\mathcal{A}\ \text{为代数},\ \mathcal{A}\supseteq\mathcal{F}\}$ 非空，因为 $\mathcal{P}(X)$ 是代数且 $\mathcal{P}(X)\supseteq\mathcal{F}$。其次，$\mathcal{A}_0(\mathcal{F})$ 是代数：它的每个成员含 $\varnothing$，故 $\varnothing\in\mathcal{A}_0(\mathcal{F})$；若 $E\in\mathcal{A}_0(\mathcal{F})$，则 $E$ 属于每个满足 $\mathcal{A}\supseteq\mathcal{F}$ 的代数 $\mathcal{A}$，故 $E^c$ 亦然；若 $E,F\in\mathcal{A}_0(\mathcal{F})$，同理 $E\cup F\in\mathcal{A}_0(\mathcal{F})$。最后，$\mathcal{F}\subseteq\mathcal{A}_0(\mathcal{F})$；若 $\mathcal{B}$ 是满足 $\mathcal{B}\supseteq\mathcal{F}$ 的代数，则 $\mathcal{B}$ 属于定义中的交集族，故 $\mathcal{A}_0(\mathcal{F})\subseteq\mathcal{B}$，即 $\mathcal{A}_0(\mathcal{F})$ 是包含 $\mathcal{F}$ 的最小代数。
 
-\noindent$\mathbf{Step}\mathbf{3}.${\heiti 验证 $\varnothing\in\mathcal{A}_0(\mathcal{F})$.}
-对任意 $\mathcal{A}\in\mathfrak{A}$, 按\cref{definition:ch01-半代数代数}中代数的定义有 $\varnothing\in\mathcal{A}$。故 $\varnothing\in\bigcap\limits_{\mathcal{A}\in\mathfrak{A}}\mathcal{A}=\mathcal{A}_0(\mathcal{F})$。
-
-\noindent$\mathbf{Step}\mathbf{4}.${\heiti 验证 $\mathcal{A}_0(\mathcal{F})$ 对补运算封闭.}
-任取 $E\in\mathcal{A}_0(\mathcal{F})$。对任意 $\mathcal{A}\in\mathfrak{A}$, 有 $E\in\mathcal{A}$。因 $\mathcal{A}$ 是代数, 故 $E^c\in\mathcal{A}$。由 $\mathcal{A}$ 的任意性得 $E^c\in\mathcal{A}_0(\mathcal{F})$。因此 $\mathcal{A}_0(\mathcal{F})$ 对补运算封闭。
-
-\noindent$\mathbf{Step}\mathbf{5}.${\heiti 验证 $\mathcal{A}_0(\mathcal{F})$ 对有限并封闭并确认其为代数.}
-任取 $E,F\in\mathcal{A}_0(\mathcal{F})$。对任意 $\mathcal{A}\in\mathfrak{A}$, 有 $E,F\in\mathcal{A}$。因 $\mathcal{A}$ 是代数, 故 $E\cup F\in\mathcal{A}$。由 $\mathcal{A}$ 的任意性得 $E\cup F\in\mathcal{A}_0(\mathcal{F})$。因此 $\mathcal{A}_0(\mathcal{F})$ 对有限并封闭。结合 $\mathbf{Step3}$ 至 $\mathbf{Step5}$ 及\cref{definition:ch01-半代数代数}中代数定义可知 $\mathcal{A}_0(\mathcal{F})$ 是代数。
-
-\noindent$\mathbf{Step}\mathbf{6}.${\heiti 说明最小性.}
-设 $\mathcal{B}$ 是代数且 $\mathcal{B}\supseteq\mathcal{F}$。则 $\mathcal{B}\in\mathfrak{A}$, 于是 $\mathcal{A}_0(\mathcal{F})=\bigcap\limits_{\mathcal{A}\in\mathfrak{A}}\mathcal{A}\subseteq\mathcal{B}$。故 $\mathcal{A}_0(\mathcal{F})$ 被包含在所有包含 $\mathcal{F}$ 的代数中。
-\end{proof}
+此外，$\mathcal{A}_0(\mathcal{F})$ 恰由 $\mathcal{F}$ 中有限多个元素的有限布尔组合组成；特别地，$\mathcal{F}$ 为代数时 $\mathcal{A}_0(\mathcal{F})=\mathcal{F}$，$\mathcal{F}=\varnothing$ 时 $\mathcal{A}_0(\mathcal{F})=\{\varnothing,X\}$，而 $\mathcal{F}$ 可数时 $\mathcal{A}_0(\mathcal{F})$ 可数。
+\end{remark}
 
 \begin{example}\label{example:ch01-N胞腔}
-设 $a\equiv(a_1,\cdots ,a_n)$、$b\equiv(b_1,\cdots ,b_n)$，其中 $a_i,b_i\in[-\infty,\infty]$ 且对每个 $i=1,\cdots ,n$（$n\in\mathbb{N}$）有 $a_i<b_i$。考虑 $N$--胞腔
-\[
-(a,b]\triangleq \{x\equiv(x_1,\cdots ,x_n)\mid x_i\in[-\infty,\infty],\ a_i<x_i\leqslant b_i\ \forall i=1,\cdots ,n\}
-\]
+设 $a\equiv(a_1,\cdots,a_n)$、$b\equiv(b_1,\cdots,b_n)$，其中 $a_i,b_i\in[-\infty,\infty]$ 且对每个 $i=1,\cdots,n$（$n\in\mathbb{N}$）有 $a_i<b_i$。考虑 $N$--胞腔
+\begin{align*}
+(a,b]\triangleq\{x\equiv(x_1,\cdots,x_n)\mid x_i\in[-\infty,\infty],\ a_i<x_i\leqslant b_i\ \forall i=1,\cdots,n\},
+\end{align*}
 其体积为
-\[
-\operatorname{vol}((a,b])\triangleq \prod_{i=1}^n(b_i-a_i)\leqslant\infty.
-\]
-容易看出，$N$--胞腔族 $\mathcal{I}_n$ 是一个半代数，且由 $\mathcal{I}_n$ 生成的代数 $\mathcal{A}_0(\mathcal{I}_n)$ 由 $N$--胞腔的有限不交并组成，即对每个 $E\in\mathcal{A}_0(\mathcal{I}_n)$，存在不交的 $(a_1,b_1],\cdots ,(a_p,b_p]$ 使得
-\[
+\begin{align*}
+\operatorname{vol}((a,b])\triangleq\prod_{i=1}^n(b_i-a_i)\leqslant\infty.
+\end{align*}
+$N$--胞腔族 $\mathcal{I}_n$ 是半代数，且由 $\mathcal{I}_n$ 生成的代数 $\mathcal{A}_0(\mathcal{I}_n)$ 由 $N$--胞腔的有限不交并组成，即对每个 $E\in\mathcal{A}_0(\mathcal{I}_n)$，存在两两不交的 $(a_1,b_1],\cdots,(a_p,b_p]$ 使得
+\begin{align*}
 E=\bigcup_{k=1}^p(a_k,b_k].
-\]
+\end{align*}
 \end{example}
 
-\begin{definition}\label{definition:ch01-sigma代数}
-族 $\mathcal{A}\subseteq\mathcal{P}(X)$ 称为一个 $\sigma$--代数，若：
+% SUPPLEMENT: parent=example:ch01-N胞腔; kind=proof; 原书以“easily seen”略去，补出交封闭、补集分解与生成代数刻画的完整证明
+\begin{proof}
+以下把 $N$--胞腔按 $\mathbb{R}^n$ 中的块理解，即 $(a,b]\triangleq\{x\in\mathbb{R}^n\mid a_i<x_i\leqslant b_i\ (i=1,\cdots,n)\}$；相应约定见本例题后的注记。
+
+第一步：有限交封闭。设 $(a,b],(c,d]\in\mathcal{I}_n$，令
+\begin{align*}
+u_i\triangleq\max\{a_i,c_i\},\qquad v_i\triangleq\min\{b_i,d_i\}\qquad(i=1,\cdots,n).
+\end{align*}
+则
+\begin{align*}
+(a,b]\cap(c,d]=\{x\in\mathbb{R}^n\mid u_i<x_i\leqslant v_i\ (i=1,\cdots,n)\},
+\end{align*}
+故当 $u_i<v_i$ 对每个 $i$ 成立时此交为 $N$--胞腔 $(u,v]$，否则为空集。把空集并入退化情形，$\mathcal{I}_n$ 对有限交封闭。
+
+第二步：补集的有限不交分解。设 $C=(a,b]\in\mathcal{I}_n$，对 $k=1,\cdots,n$ 令
+\begin{align*}
+C_k^-\triangleq\{x\in\mathbb{R}^n\mid x_j\in(a_j,b_j]\ (j<k),\ x_k\leqslant a_k\},\\
+C_k^+\triangleq\{x\in\mathbb{R}^n\mid x_j\in(a_j,b_j]\ (j<k),\ x_k>b_k\}.
+\end{align*}
+每个 $C_k^\pm$ 都是 $N$--胞腔：它等于前 $k-1$ 个因子取 $(a_j,b_j]$、第 $k$ 个因子取 $(-\infty,a_k]$ 或 $(b_k,+\infty]$、其余因子取 $(-\infty,+\infty]$ 的乘积；当 $a_k=-\infty$ 时 $C_k^-=\varnothing$，当 $b_k=+\infty$ 时 $C_k^+=\varnothing$，空的情形舍去。
+
+现验证 $C^c=\bigcup_{k=1}^n(C_k^-\cup C_k^+)$。设 $x\notin C$，取最小的 $k$ 使 $x_k\notin(a_k,b_k]$；则 $x_j\in(a_j,b_j]$ 对 $j<k$ 成立，且 $x_k\leqslant a_k$ 或 $x_k>b_k$，故 $x\in C_k^-\cup C_k^+$。反之，若 $x\in C_k^-$ 则 $x_k\leqslant a_k$，若 $x\in C_k^+$ 则 $x_k>b_k$，两种情形都有 $x_k\notin(a_k,b_k]$，故 $x\notin C$。各 $C_k^\pm$ 两两不交：若 $k<l$ 且 $x\in C_k^\pm$，则 $x_k\notin(a_k,b_k]$，这与 $x\in C_l^\pm$ 所要求的前 $l-1$ 个坐标属于 $(a_j,b_j]$（特别地 $x_k\in(a_k,b_k]$）矛盾。
+
+第三步：生成代数的刻画。令 $\mathcal{D}$ 为由 $\varnothing$ 与 $N$--胞腔的有限不交并组成的族。则 $\varnothing\in\mathcal{D}$，且 $\mathbb{R}^n=(-\infty,+\infty]^n\in\mathcal{I}_n\subseteq\mathcal{D}$。由第一步、第二步，$\mathcal{D}$ 对有限交封闭：两个有限不交并之交为 $\bigcup_{i,j}(A_i\cap B_j)$，其中每个 $A_i\cap B_j$ 是胞腔或空集，且两两不交。$\mathcal{D}$ 对差集封闭：若 $E=\bigcup_{k=1}^pC_k$、$F=\bigcup_{l=1}^qD_l$ 的右侧均为不交并，则
+\begin{align*}
+E\setminus F=\bigcup_{k=1}^p\bigcap_{l=1}^q(C_k\setminus D_l),
+\end{align*}
+而 $C_k\setminus D_l=C_k\cap D_l^c$ 由第二步是 $\mathcal{D}$ 中的有限不交并，故上式右侧属于 $\mathcal{D}$。于是 $\mathcal{D}$ 对并封闭，因为 $E\cup F=E\cup(F\setminus E)$ 的右侧为不交并。因此 $\mathcal{D}$ 是代数；由 $\mathcal{I}_n\subseteq\mathcal{D}$ 与 $\mathcal{A}_0(\mathcal{I}_n)$ 的最小性得 $\mathcal{A}_0(\mathcal{I}_n)\subseteq\mathcal{D}$。反之，$\mathcal{D}$ 的每个成员是 $\mathcal{A}_0(\mathcal{I}_n)$ 中有限多个成员之并，故 $\mathcal{D}\subseteq\mathcal{A}_0(\mathcal{I}_n)$。于是 $\mathcal{A}_0(\mathcal{I}_n)=\mathcal{D}$，即 $\mathcal{A}_0(\mathcal{I}_n)$ 恰由 $N$--胞腔的有限不交并组成。
+\end{proof}
+
+% SUPPLEMENT: parent=example:ch01-N胞腔; kind=motivation; 说明胞腔的动机、条件 $a_i<b_i$ 的作用与 $\overline{\mathbb{R}}^n$ 约定的边界
+\begin{remark}\phantomsection\label{remark:ch01-N胞腔}
 \begin{enumerate}[(i)]
-\item $\varnothing \in\mathcal{A}$；
+\item 引入动机。$N$--胞腔是构造 Lebesgue 测度的基本砖块：其体积 $\prod_{i=1}^n(b_i-a_i)$ 可直接计算，且对互不相交的有限多个胞腔具有可加性。半代数性质把体积由 $\mathcal{I}_n$ 延拓到 $\mathcal{A}_0(\mathcal{I}_n)$，再经外测度延拓到 $\mathcal{B}(\mathbb{R}^n)$。
+\item 条件 $a_i<b_i$ 的作用。该条件排除空胞腔并使体积为正（可能为 $\infty$）；若允许 $a_i=b_i$，则得到单点面这类零体积的退化胞腔，有限交不再有例外情形，但分解不唯一。体积取 $\infty$ 是允许的：无界胞腔（某个 $a_i=-\infty$ 或 $b_i=+\infty$）的体积为 $\infty$。
+\item 边界情形。原书把胞腔写成坐标属于 $[-\infty,+\infty]$ 的集合，此时含 $-\infty$ 坐标的点不属于任何胞腔，条件 (ii) 中的分解须在 $\mathbb{R}^n$ 中理解（上述补证即如此处理）。这些点不承载有限体积，且每个有界开盒 $(a,b)=\bigcup_{m=m_0}^{\infty}(a,b-1/m]$ 属于 $\sigma_0(\mathcal{I}_n)$，故 $\sigma_0(\mathcal{I}_n)=\mathcal{B}(\mathbb{R}^n)$，上述约定不影响后续测度构造。此外 $\mathcal{I}_n$ 不是代数：它不含 $\varnothing$，且两个胞腔之并一般不是胞腔。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}\label{definition:ch01-sigma代数}
+族 $\mathcal{A}\subseteq\mathcal{P}(X)$ 称为一个 $\sigma$--\textbf{代数}，若：
+\begin{enumerate}[(i)]
+\item $\varnothing\in\mathcal{A}$；
 \item $E\in\mathcal{A}\Rightarrow E^c\in\mathcal{A}$；
 \item 对任意序列 $\{E_k\}\subseteq\mathcal{A}$，有 $\bigcup_{k=1}^\infty E_k\in\mathcal{A}$。
 \end{enumerate}
 \end{definition}
 
 \begin{definition}\label{definition:ch01-可测空间}
-设 $\mathcal{A}\subseteq\mathcal{P}(X)$ 为一 $\sigma$--代数。偶 $(X,\mathcal{A})$ 称为一个可测空间，$\mathcal{A}$ 的元素称为可测集。
+设 $\mathcal{A}\subseteq\mathcal{P}(X)$ 为一 $\sigma$--代数。偶 $(X,\mathcal{A})$ 称为一个\textbf{可测空间}，$\mathcal{A}$ 的元素称为\textbf{可测集}。
 \end{definition}
 
-\begin{remark}\label{remark:ch01-迹}
-设 $F\subseteq X$。容易看出，若 $\mathcal{A}$ 为一 $\sigma$--代数，则族
-\[
-\mathcal{A}\cap F\triangleq \{E\cap F\mid E\in\mathcal{A}\}\subseteq\mathcal{P}(F)
-\]
-也是一个 $\sigma$--代数，称为 $\mathcal{A}$ 在 $F$ 上的迹。可测空间 $(F,\mathcal{A}\cap F)$ 称为 $(X,\mathcal{A})$ 的一个可测子空间。
+% SUPPLEMENT: parent=definition:ch01-sigma代数; kind=motivation; 说明 $\sigma$--代数的动机、条件 (i) 的冗余性与不可数并的边界
+% SUPPLEMENT: parent=definition:ch01-可测空间; kind=motivation; 说明可测空间只记录可测集、可测性相对于 $\sigma$--代数而言
+\begin{remark}\phantomsection\label{remark:ch01-sigma代数可测空间}
+\begin{enumerate}[(i)]
+\item 引入动机。$\sigma$--代数是对可数集合运算封闭的集族，因而适合作为测度的定义域：可数可加性要求定义域对可数并封闭，单调收敛定理要求定义域在单调极限下稳定。条件 (iii) 中的“可数”是本质的；把可数并换为有限并即得代数的定义（\cref{definition:ch01-半代数代数}）。
+\item 条件的冗余性。若 $\mathcal{A}\neq\varnothing$，则由 (ii)(iii) 可得 (i)：取 $E\in\mathcal{A}$，则 $X=E\cup E^c\in\mathcal{A}$，故 $\varnothing=X^c\in\mathcal{A}$。因此 (i) 的实际作用是排除空族。由 (i)(ii)(iii) 得 $X\in\mathcal{A}$，且 $\mathcal{A}$ 对可数交、差集、对称差、有限并封闭；可数交的封闭性由 de Morgan 公式得到。
+\item 边界情形。$\sigma$--代数不必对不可数并封闭：$\mathbb{R}$ 的每个单点集属于 $\mathcal{B}(\mathbb{R})$，任一子集 $A\subseteq\mathbb{R}$ 是不可数多个单点集之并，而 $\lvert\mathcal{B}(\mathbb{R})\rvert=2^{\aleph_0}<\lvert\mathcal{P}(\mathbb{R})\rvert$，故存在 $A\notin\mathcal{B}(\mathbb{R})$。
+\item 可测空间的含义。$(X,\mathcal{A})$ 只记录可测的集合，尚未指定测度；同一集合上取不同的 $\sigma$--代数得到不同的可测空间。极小者为平凡 $\sigma$--代数 $\{\varnothing,X\}$，极大者为 $\mathcal{P}(X)$。集合 $E$ 的可测性总是相对于 $\mathcal{A}$ 而言。
+\end{enumerate}
 \end{remark}
 
+\begin{remark}\phantomsection\label{remark:ch01-迹}
+设 $F\subseteq X$，$\mathcal{A}$ 为 $X$ 上的 $\sigma$--代数。则族
+\begin{align*}
+\mathcal{A}\cap F\triangleq\{E\cap F\mid E\in\mathcal{A}\}\subseteq\mathcal{P}(F)
+\end{align*}
+也是 $F$ 上的 $\sigma$--代数，称为 $\mathcal{A}$ 在 $F$ 上的\textbf{迹}；可测空间 $(F,\mathcal{A}\cap F)$ 称为 $(X,\mathcal{A})$ 的\textbf{可测子空间}。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch01-迹; kind=proof; 原书以“it is easily seen”略去，补出 $\sigma$--代数三条封闭性的验证
+\begin{proof}
+记 $\mathcal{B}\triangleq\mathcal{A}\cap F$。首先 $\varnothing=\varnothing\cap F\in\mathcal{B}$。其次，若 $A=E\cap F\in\mathcal{B}$ 且 $E\in\mathcal{A}$，则 $A$ 在 $F$ 中的补集为 $F\setminus A=F\cap E^c\in\mathcal{B}$。最后，若 $\{A_k\}\subseteq\mathcal{B}$，取 $E_k\in\mathcal{A}$ 使 $A_k=E_k\cap F$，则 $\bigcup_{k=1}^\infty A_k=(\bigcup_{k=1}^\infty E_k)\cap F\in\mathcal{B}$。故 $\mathcal{B}$ 是 $F$ 上的 $\sigma$--代数。
+\end{proof}
+
 \begin{definition}\label{definition:ch01-单调类}
-非空族 $\mathcal{M}\subseteq\mathcal{P}(X)$ 称为一个单调类，若对任意非减（相应地，非增）序列 $\{E_k\}\subseteq\mathcal{M}$，有 $\bigcup_{k=1}^\infty E_k\in\mathcal{M}$（相应地，$\bigcap_{k=1}^\infty E_k\in\mathcal{M}$）。
+非空族 $\mathcal{M}\subseteq\mathcal{P}(X)$ 称为一个\textbf{单调类}，若对任意非减（相应地，非增）序列 $\{E_k\}\subseteq\mathcal{M}$ 成立
+\begin{align*}
+\bigcup_{k=1}^\infty E_k\in\mathcal{M}\qquad(\text{相应地，}\bigcap_{k=1}^\infty E_k\in\mathcal{M}).
+\end{align*}
 \end{definition}
 
-显然，每个 $\sigma$--代数都是一个单调类。与代数的情形一样，对任意族 $\mathcal{F}\subseteq\mathcal{P}(X)$，我们可以考虑由 $\mathcal{F}$ 生成的最小 $\sigma$--代数
-\[
-\sigma_0(\mathcal{F})\triangleq \bigcap\{\mathcal{A}\mid\mathcal{A}\text{ 为 }\sigma\text{--代数，}\mathcal{A}\supseteq\mathcal{F}\}
-\]
-和最小单调类
-\[
-\mathcal{M}_0(\mathcal{F})\triangleq \bigcap\{\mathcal{M}\mid\mathcal{M}\text{ 为单调类，}\mathcal{M}\supseteq\mathcal{F}\}.
-\]
+% SUPPLEMENT: parent=definition:ch01-单调类; kind=motivation; 说明单调类的动机、与 $\sigma$--代数的关系及非空性不可省的反例
+\begin{remark}\phantomsection\label{remark:ch01-单调类}
+\begin{enumerate}[(i)]
+\item 引入动机。单调类只要求对单调序列的并与交封闭，条件比 $\sigma$--代数弱，因而容易验证；\cref{theorem:ch01-单调类定理}说明当 $\mathcal{A}$ 为代数时，这一弱封闭性足以刻画出 $\sigma_0(\mathcal{A})$，从而把 $\sigma_0(\mathcal{A})$ 上的命题化归为 $\mathcal{A}$ 上的命题与单调极限。
+\item 与 $\sigma$--代数的关系。每个 $\sigma$--代数都是单调类：对非减序列取可数并；对非增序列先取补得非减序列，再取可数并并取补。反之不然，见 (iii)。
+\item 边界例。在 $X=\{1,2,3\}$ 上，$\mathcal{M}\triangleq\{\varnothing,\{1\},\{1,2\},X\}$ 是单调类：$\mathcal{M}$ 有限，其中任一单调序列终为常值，故其并与交仍属于 $\mathcal{M}$。但 $\mathcal{M}$ 不是代数，因为 $\{1\}^c=\{2,3\}\notin\mathcal{M}$。又单元素族 $\{\{1\}\}$ 是单调类而不含 $\varnothing$，说明非空性不能保证 $\varnothing\in\mathcal{M}$。
+\end{enumerate}
+\end{remark}
 
+每个 $\sigma$--代数都是单调类，其理由已在\hyperref[remark:ch01-单调类]{上述注记}中给出。与代数的情形一样，对任意族 $\mathcal{F}\subseteq\mathcal{P}(X)$，可考虑由 $\mathcal{F}$ 生成的最小 $\sigma$--代数
+\begin{align*}
+\sigma_0(\mathcal{F})\triangleq\bigcap\{\mathcal{A}\mid\mathcal{A}\ \text{为}\ \sigma\text{--代数},\ \mathcal{A}\supseteq\mathcal{F}\}
+\end{align*}
+与由 $\mathcal{F}$ 生成的最小单调类
+\begin{align*}
+\mathcal{M}_0(\mathcal{F})\triangleq\bigcap\{\mathcal{M}\mid\mathcal{M}\ \text{为单调类},\ \mathcal{M}\supseteq\mathcal{F}\}.
+\end{align*}
+
+% SUPPLEMENT: parent=definition:ch01-可分空间; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
 \begin{definition}\label{definition:ch01-可分可测空间}\label{definition:ch01-可分空间}
-可测空间 $(X,\mathcal{A})$ 称为可分的，若存在可数族 $\mathcal{S}\subseteq\mathcal{P}(X)$ 使得 $\mathcal{A}=\sigma_0(\mathcal{S})$。
+可测空间 $(X,\mathcal{A})$ 称为\textbf{可分的}，若存在可数族 $\mathcal{S}\subseteq\mathcal{P}(X)$ 使得 $\mathcal{A}=\sigma_0(\mathcal{S})$。
 \end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-可分可测空间; kind=motivation; 说明可分性的动机、可数代数刻画与 $\mathcal{P}(X)$ 不可分的基数论证
+\begin{remark}\phantomsection\label{remark:ch01-可分}
+\begin{enumerate}[(i)]
+\item 引入动机。可分性把 $\sigma$--代数的信息量限制为可数，使测度的唯一性论证、投影定理与离散分解可在可数生成族上施行。$\mathcal{B}(\mathbb{R}^N)$ 是可分的：有理端点的胞腔族可数且生成 $\mathcal{B}(\mathbb{R}^N)$（\hyperref[remark:ch01-实直线Borel]{关于实直线 Borel $\sigma$--代数的注记}）。
+\item 等价刻画。$\mathcal{A}$ 可分当且仅当存在可数代数 $\mathcal{A}'\subseteq\mathcal{A}$ 使 $\mathcal{A}=\sigma_0(\mathcal{A}')$。事实上，若 $\mathcal{A}=\sigma_0(\mathcal{S})$ 且 $\mathcal{S}$ 可数，则由 $\mathcal{S}$ 中有限多个元素的布尔组合组成的族 $\mathcal{A}_0(\mathcal{S})$ 可数（\hyperref[remark:ch01-生成代数]{关于生成代数的注记}），且 $\sigma_0(\mathcal{A}_0(\mathcal{S}))=\sigma_0(\mathcal{S})=\mathcal{A}$。
+\item 边界情形。$\mathcal{P}(X)$ 可分当且仅当 $X$ 可数。若 $X$ 不可数而 $\mathcal{P}(X)=\sigma_0(\mathcal{S})$、$\mathcal{S}$ 可数，则由 $\mathcal{S}$ 出发经 $\aleph_1$ 步取补与可数并（每一步所得族的基数不超过 $2^{\aleph_0}$，而可数序列的个数为 $(2^{\aleph_0})^{\aleph_0}=2^{\aleph_0}$）得 $\lvert\sigma_0(\mathcal{S})\rvert\leqslant2^{\aleph_0}$；另一方面 $\lvert\mathcal{P}(X)\rvert=2^{\lvert X\rvert}>2^{\aleph_0}$，矛盾。
+\end{enumerate}
+\end{remark}
 
 \begin{theorem}\label{theorem:ch01-单调类定理}
 设 $\mathcal{A}\subseteq\mathcal{P}(X)$ 为一代数。则最小单调类 $\mathcal{M}_0(\mathcal{A})$ 与最小 $\sigma$--代数 $\sigma_0(\mathcal{A})$ 重合。
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch01-单调类定理; kind=proof; 原证明中“$\widetilde{\mathcal{A}}$ 是单调类”与“并封闭类似可证”两处省略，补出完整论证（含良好集族的两步方法）
 \begin{proof}
-显然 $\varnothing \in\mathcal{M}_0(\mathcal{A})$。我们首先证明单调类 $\mathcal{M}_0(\mathcal{A})$ 是一个代数。令 $\widetilde{\mathcal{A}}\triangleq \{E\in\mathcal{M}_0(\mathcal{A})\mid E^c\in\mathcal{M}_0(\mathcal{A})\}$。由于 $\mathcal{A}$ 是代数且 $\mathcal{A}\subseteq\mathcal{M}_0(\mathcal{A})$，故 $\mathcal{A}\subseteq\widetilde{\mathcal{A}}$。另一方面，容易看出 $\widetilde{\mathcal{A}}$ 是一个单调类，因而 $\mathcal{M}_0(\mathcal{A})\subseteq\mathcal{M}_0(\widetilde{\mathcal{A}})\subseteq\widetilde{\mathcal{A}}$。由定义 $\widetilde{\mathcal{A}}\subseteq\mathcal{M}_0(\mathcal{A})$，故 $\widetilde{\mathcal{A}}=\mathcal{M}_0(\mathcal{A})$。因此对任意 $E\in\mathcal{M}_0(\mathcal{A})$，有 $E^c\in\mathcal{M}_0(\mathcal{A})$。类似地可证，对任意 $E,F\in\mathcal{M}_0(\mathcal{A})$，有 $E\cup F\in\mathcal{M}_0(\mathcal{A})$。故结论成立。
+分五步。
 
-设 $\{E_k\}\subseteq\mathcal{M}_0(\mathcal{A})$，令 $F_j\triangleq \bigcup_{k=1}^j E_k$（$j,k\in\mathbb{N}$）。则序列 $\{F_j\}$ 非减，且 $\{F_j\}\subseteq\mathcal{M}_0(\mathcal{A})$，因为 $\mathcal{M}_0(\mathcal{A})$ 是一个代数。由于 $\mathcal{M}_0(\mathcal{A})$ 是单调类，我们得到
-\[
+第一步：$\varnothing\in\mathcal{M}_0(\mathcal{A})$。由 $\mathcal{A}$ 为代数得 $\varnothing\in\mathcal{A}$，而 $\mathcal{A}\subseteq\mathcal{M}_0(\mathcal{A})$。
+
+第二步：$\mathcal{M}_0(\mathcal{A})$ 对补集封闭。令
+\begin{align*}
+\widetilde{\mathcal{A}}\triangleq\{E\in\mathcal{M}_0(\mathcal{A})\mid E^c\in\mathcal{M}_0(\mathcal{A})\}.
+\end{align*}
+由 $\mathcal{A}$ 对补集封闭及 $\mathcal{A}\subseteq\mathcal{M}_0(\mathcal{A})$ 得 $\mathcal{A}\subseteq\widetilde{\mathcal{A}}$。其次 $\widetilde{\mathcal{A}}$ 是单调类：设 $\{E_k\}\subseteq\widetilde{\mathcal{A}}$ 非减，则 $E\triangleq\bigcup_{k=1}^\infty E_k\in\mathcal{M}_0(\mathcal{A})$，且 $\{E_k^c\}$ 非增于 $\mathcal{M}_0(\mathcal{A})$，故 $E^c=\bigcap_{k=1}^\infty E_k^c\in\mathcal{M}_0(\mathcal{A})$，即 $E\in\widetilde{\mathcal{A}}$；$\{E_k\}$ 非增的情形同理。由 $\mathcal{M}_0(\mathcal{A})$ 的最小性得 $\mathcal{M}_0(\mathcal{A})\subseteq\widetilde{\mathcal{A}}$，结合 $\widetilde{\mathcal{A}}\subseteq\mathcal{M}_0(\mathcal{A})$ 得 $\widetilde{\mathcal{A}}=\mathcal{M}_0(\mathcal{A})$。故 $E\in\mathcal{M}_0(\mathcal{A})$ 蕴含 $E^c\in\mathcal{M}_0(\mathcal{A})$。
+
+第三步：$\mathcal{M}_0(\mathcal{A})$ 对有限并封闭。先固定 $E\in\mathcal{A}$，令
+\begin{align*}
+\mathcal{M}_E\triangleq\{F\in\mathcal{M}_0(\mathcal{A})\mid E\cup F\in\mathcal{M}_0(\mathcal{A})\}.
+\end{align*}
+由 $\mathcal{A}$ 对有限并封闭得 $\mathcal{A}\subseteq\mathcal{M}_E$。又 $\mathcal{M}_E$ 是单调类：设 $\{F_k\}\subseteq\mathcal{M}_E$ 非减，则 $F\triangleq\bigcup_{k=1}^\infty F_k\in\mathcal{M}_0(\mathcal{A})$，且 $\{E\cup F_k\}$ 非减于 $\mathcal{M}_0(\mathcal{A})$，故 $E\cup F=\bigcup_{k=1}^\infty(E\cup F_k)\in\mathcal{M}_0(\mathcal{A})$，即 $F\in\mathcal{M}_E$；非增情形同理。由最小性得 $\mathcal{M}_0(\mathcal{A})\subseteq\mathcal{M}_E$，即对任意 $E\in\mathcal{A}$、$F\in\mathcal{M}_0(\mathcal{A})$ 有 $E\cup F\in\mathcal{M}_0(\mathcal{A})$。
+
+现固定 $F\in\mathcal{M}_0(\mathcal{A})$，令
+\begin{align*}
+\mathcal{N}_F\triangleq\{E\in\mathcal{M}_0(\mathcal{A})\mid E\cup F\in\mathcal{M}_0(\mathcal{A})\}.
+\end{align*}
+由上一段得 $\mathcal{A}\subseteq\mathcal{N}_F$；与 $\mathcal{M}_E$ 相同的论证给出 $\mathcal{N}_F$ 是单调类，故 $\mathcal{M}_0(\mathcal{A})\subseteq\mathcal{N}_F$。于是对任意 $E,F\in\mathcal{M}_0(\mathcal{A})$ 有 $E\cup F\in\mathcal{M}_0(\mathcal{A})$。
+
+第四步：$\mathcal{M}_0(\mathcal{A})$ 是 $\sigma$--代数。设 $\{E_k\}\subseteq\mathcal{M}_0(\mathcal{A})$，令 $F_j\triangleq\bigcup_{k=1}^jE_k$（$j\in\mathbb{N}$）。由第三步，$\{F_j\}\subseteq\mathcal{M}_0(\mathcal{A})$ 且非减，故由单调类性质得
+\begin{align*}
 \bigcup_{k=1}^\infty E_k=\bigcup_{j=1}^\infty F_j\in\mathcal{M}_0(\mathcal{A}).
-\]
-因此 $\mathcal{M}_0(\mathcal{A})$ 是一个 $\sigma$--代数。由于 $\mathcal{M}_0(\mathcal{A})$ 是包含 $\mathcal{A}$ 的 $\sigma$--代数，故 $\mathcal{M}_0(\mathcal{A})\supseteq\sigma_0(\mathcal{A})$。另一方面，$\sigma$--代数 $\sigma_0(\mathcal{A})$ 是包含 $\mathcal{A}$ 的单调类，故 $\sigma_0(\mathcal{A})\supseteq\mathcal{M}_0(\mathcal{A})$。于是结论成立。
+\end{align*}
+结合第一步与第二步，$\mathcal{M}_0(\mathcal{A})$ 是 $\sigma$--代数。
+
+第五步：两向包含。$\mathcal{M}_0(\mathcal{A})$ 是包含 $\mathcal{A}$ 的 $\sigma$--代数，而 $\sigma_0(\mathcal{A})$ 是包含 $\mathcal{A}$ 的最小 $\sigma$--代数，故 $\mathcal{M}_0(\mathcal{A})\supseteq\sigma_0(\mathcal{A})$。另一方面，$\sigma$--代数 $\sigma_0(\mathcal{A})$ 是包含 $\mathcal{A}$ 的单调类，由 $\mathcal{M}_0(\mathcal{A})$ 的最小性得 $\sigma_0(\mathcal{A})\supseteq\mathcal{M}_0(\mathcal{A})$。于是 $\mathcal{M}_0(\mathcal{A})=\sigma_0(\mathcal{A})$。
 \end{proof}
 
-我们定义两个可测空间 $(X_1,\mathcal{A}_1)$ 与 $(X_2,\mathcal{A}_2)$ 的乘积。考虑可测矩形族 $\mathcal{R}\subseteq\mathcal{P}(X_1\times X_2)$，
-\[
-\mathcal{R}\triangleq \{E_1\times E_2\mid E_1\in\mathcal{A}_1,\ E_2\in\mathcal{A}_2\}.
-\]
+% SUPPLEMENT: parent=theorem:ch01-单调类定理; kind=motivation; 说明定理的用途、代数假设的必要性与证明方法的适用边界
+\begin{remark}\phantomsection\label{remark:ch01-单调类定理}
+\begin{enumerate}[(i)]
+\item 引入动机。验证一个集族是 $\sigma$--代数需要检查可数并，而验证单调类只需检查单调序列的极限，后者通常容易得多。该定理把“命题在 $\sigma_0(\mathcal{A})$ 上成立”化归为“命题在 $\mathcal{A}$ 上成立且在单调极限下保持”，是测度唯一性定理的标准工具。
+\item 代数假设的必要性。若 $\mathcal{A}$ 只是单调类而非代数，结论一般不成立：取\hyperref[remark:ch01-单调类]{关于单调类的注记}中的 $\mathcal{M}=\{\varnothing,\{1\},\{1,2\},X\}$，则 $\mathcal{M}_0(\mathcal{M})=\mathcal{M}$，而 $\sigma_0(\mathcal{M})=\mathcal{P}(X)$。证明中代数性恰好用在两处：$\varnothing\in\mathcal{A}$ 与 $\mathcal{A}$ 对补集、有限并封闭，分别支撑第二步与第三步中“$\mathcal{A}$ 含于良好集族”的断言。
+\item 适用边界。证明结构是良好集族方法的典型形式：先验证一个辅助族是单调类且含 $\mathcal{A}$，再由最小性得到它等于 $\mathcal{M}_0(\mathcal{A})$。同一结构在 $\pi$--$\lambda$ 定理中给出 $\sigma$--代数与 Dynkin 族的对应结论，但那时需把“单调类”换为对不交并可数并封闭的族。
+\end{enumerate}
+\end{remark}
+
+下面定义两个可测空间 $(X_1,\mathcal{A}_1)$ 与 $(X_2,\mathcal{A}_2)$ 的乘积。考虑可测矩形族 $\mathcal{R}\subseteq\mathcal{P}(X_1\times X_2)$，
+\begin{align*}
+\mathcal{R}\triangleq\{E_1\times E_2\mid E_1\in\mathcal{A}_1,\ E_2\in\mathcal{A}_2\}.
+\end{align*}
 
 \begin{definition}\label{definition:ch01-乘积sigma代数}
-\label{subsection:ch01-乘积}
-设 $(X_1,\mathcal{A}_1)$ 与 $(X_2,\mathcal{A}_2)$ 为可测空间。最小 $\sigma$--代数 $\sigma_0(\mathcal{R})$，记为 $\mathcal{A}_1\times\mathcal{A}_2$，称为乘积 $\sigma$--代数。可测空间 $(X_1\times X_2,\mathcal{A}_1\times\mathcal{A}_2)$ 称为乘积可测空间。
+设 $(X_1,\mathcal{A}_1)$ 与 $(X_2,\mathcal{A}_2)$ 为可测空间。最小 $\sigma$--代数 $\sigma_0(\mathcal{R})$ 记为 $\mathcal{A}_1\times\mathcal{A}_2$，称为\textbf{乘积 $\sigma$--代数}；可测空间 $(X_1\times X_2,\mathcal{A}_1\times\mathcal{A}_2)$ 称为\textbf{乘积可测空间}。
 \end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-乘积sigma代数; kind=motivation; 说明乘积 $\sigma$--代数的投影刻画、$\mathcal{R}$ 的半代数性质与退化情形
+\begin{remark}\phantomsection\label{remark:ch01-乘积sigma代数}
+\begin{enumerate}[(i)]
+\item 引入动机。$\mathcal{A}_1\times\mathcal{A}_2$ 是使两个坐标投影 $\pi_i:X_1\times X_2\to X_i$ 都可测的最小 $\sigma$--代数：一方面 $\pi_1^{-1}(E_1)=E_1\times X_2$ 与 $\pi_2^{-1}(E_2)=X_1\times E_2$ 都是可测矩形，故两个投影关于 $\mathcal{A}_1\times\mathcal{A}_2$ 可测；另一方面，任一使两个投影可测的 $\sigma$--代数必含全部可测矩形 $E_1\times E_2=\pi_1^{-1}(E_1)\cap\pi_2^{-1}(E_2)$，从而包含 $\sigma_0(\mathcal{R})$。
+\item $\mathcal{R}$ 的半代数性质。$\mathcal{R}$ 含 $\varnothing$；对交封闭，因为 $(E_1\times E_2)\cap(F_1\times F_2)=(E_1\cap F_1)\times(E_2\cap F_2)$；补集有分解
+\begin{align*}
+(E_1\times E_2)^c=(E_1^c\times X_2)\cup(E_1\times E_2^c),
+\end{align*}
+右侧为 $\mathcal{R}$ 中两个不交成员之并。故\cref{definition:ch01-半代数代数}适用，$\mathcal{A}_1\times\mathcal{A}_2$ 也可由 $\mathcal{R}$ 的有限不交并组成的代数再取 $\sigma_0$ 得到。
+\item 边界情形。$\mathcal{A}_1\times\mathcal{A}_2$ 一般不等于 $\mathcal{P}(X_1\times X_2)$；当 $\mathcal{A}_2=\{\varnothing,X_2\}$ 时 $\mathcal{A}_1\times\mathcal{A}_2=\{E\times X_2\mid E\in\mathcal{A}_1\}$，它与 $\mathcal{A}_1$ 同构，故乘积 $\sigma$--代数可以不含任何“真正的”二维信息。
+\end{enumerate}
+\end{remark}
 
 设 $E\subseteq X_1\times X_2$。集合
 \begin{align}
-E_{x_1}\triangleq \{x_2\in X_2\mid(x_1,x_2)\in E\}\qquad(x_1\in X_1) \label{align:ch01-截面}
+E_{x_1}\triangleq\{x_2\in X_2\mid(x_1,x_2)\in E\}\qquad(x_1\in X_1)\label{align:ch01-截面}
 \end{align}
-称为 $E$ 的 $x_1$--截面。$x_2\in X_2$ 的 $x_2$--截面类似地定义。注意到
-\[
-(E^c)_{x_i}=(E_{x_i})^c,\qquad
-\left(\bigcup_{n=1}^\infty E_n\right)_{x_i}=\bigcup_{n=1}^\infty(E_n)_{x_i}\qquad(i=1,2).
-\]
+称为 $E$ 的 $x_1$--\textbf{截面}。对 $x_2\in X_2$，$E$ 的 $x_2$--截面 $E_{x_2}\triangleq\{x_1\in X_1\mid(x_1,x_2)\in E\}$ 类似地定义。成立
+\begin{align*}
+(E^c)_{x_i}=(E_{x_i})^c,\qquad\left(\bigcup_{n=1}^\infty E_n\right)_{x_i}=\bigcup_{n=1}^\infty(E_n)_{x_i}\qquad(i=1,2).
+\end{align*}
 
+% SUPPLEMENT: parent=proposition:ch01-截口; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+% SUPPLEMENT: parent=proposition:ch01-截面; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
 \begin{proposition}\label{proposition:ch01-截面可测}\label{proposition:ch01-截口}\label{proposition:ch01-截面}
 设 $(X_1,\mathcal{A}_1)$ 与 $(X_2,\mathcal{A}_2)$ 为可测空间，$E\in\mathcal{A}_1\times\mathcal{A}_2$。则对任意 $x_1\in X_1$ 有 $E_{x_1}\in\mathcal{A}_2$，且对任意 $x_2\in X_2$ 有 $E_{x_2}\in\mathcal{A}_1$。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch01-截面可测; kind=proof; 原书以“easily checked”与“similarly seen”略去，补出良好集族 $\Omega$ 的 $\sigma$--代数验证与对称情形
 \begin{proof}
 令
-\[
-\Omega\triangleq \{E\in\mathcal{A}_1\times\mathcal{A}_2\mid E_{x_1}\in\mathcal{A}_2\ \forall x_1\in X_1\}.
-\]
-容易验证 $\Omega$ 是一个包含可测矩形族 $\mathcal{R}$ 的 $\sigma$--代数，故 $\Omega=\mathcal{A}_1\times\mathcal{A}_2$。类似地可证对任意 $x_2\in X_2$ 有 $E_{x_2}\in\mathcal{A}_1$，于是结论成立。
+\begin{align*}
+\Omega\triangleq\{E\in\mathcal{A}_1\times\mathcal{A}_2\mid E_{x_1}\in\mathcal{A}_2\ \text{对每个 }x_1\in X_1\}.
+\end{align*}
+$\Omega$ 是 $\sigma$--代数：$\varnothing_{x_1}=\varnothing\in\mathcal{A}_2$；若 $E\in\Omega$，则由截面与补集交换的等式得 $(E^c)_{x_1}=(E_{x_1})^c\in\mathcal{A}_2$；若 $\{E_k\}\subseteq\Omega$，则由截面与可数并交换的等式得 $(\bigcup_kE_k)_{x_1}=\bigcup_k(E_k)_{x_1}\in\mathcal{A}_2$。
+
+此外 $\mathcal{R}\subseteq\Omega$：对 $E_1\in\mathcal{A}_1$、$E_2\in\mathcal{A}_2$，当 $x_1\in E_1$ 时 $(E_1\times E_2)_{x_1}=E_2$，当 $x_1\notin E_1$ 时 $(E_1\times E_2)_{x_1}=\varnothing$，两者都属于 $\mathcal{A}_2$。于是
+\begin{align*}
+\sigma_0(\mathcal{R})\subseteq\Omega\subseteq\mathcal{A}_1\times\mathcal{A}_2=\sigma_0(\mathcal{R}),
+\end{align*}
+故 $\Omega=\mathcal{A}_1\times\mathcal{A}_2$，即 $E_{x_1}\in\mathcal{A}_2$ 对每个 $x_1\in X_1$ 成立。
+
+对 $x_2$--截面重复上述论证（交换下标 $1$ 与 $2$）得 $E_{x_2}\in\mathcal{A}_1$ 对每个 $x_2\in X_2$ 成立。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch01-截面可测; kind=motivation; 说明截口可测性的用途、$\sigma$--代数假设的作用与命题不可逆的边界
+\begin{remark}\phantomsection\label{remark:ch01-截面}
+\begin{enumerate}[(i)]
+\item 引入动机。截口是 Fubini--Tonelli 论证的起点：$E\in\mathcal{A}_1\times\mathcal{A}_2$ 时 $E_{x_1}\in\mathcal{A}_2$，故 $\mu_2(E_{x_1})$ 对每个 $x_1$ 有意义，从而 $x_1\mapsto\mu_2(E_{x_1})$ 可以成为讨论对象。
+\item 证明方法与假设的作用。证明采用良好集族方法：$\Omega$ 的 $\sigma$--代数性质只用到 $\mathcal{A}_2$ 对可数并与补集封闭，而 $\mathcal{R}\subseteq\Omega$ 只用到可测矩形的截面形状。若把 $\mathcal{A}_2$ 减弱为代数，则 $\Omega$ 对可数并的封闭性失效，命题对可数并的论证随之失效。
+\item 边界情形。命题是逐点结论：它断言每个截口可测，但不涉及映射 $x_1\mapsto E_{x_1}$（取值于集合族，需另设 $\sigma$--代数）的可测性，也不涉及 $x_1\mapsto\mu_2(E_{x_1})$ 的可测性；后者的证明需附加完备性与可数生成假设（投影定理的范围）。反向命题亦不成立：逐点截口可测不足以蕴含 $E\in\mathcal{A}_1\times\mathcal{A}_2$，故本命题不可作为乘积可测性的判别准则。
+\end{enumerate}
+\end{remark}
 
 \subsection{Borel $\sigma$ 代数}\label{subsection:ch01-Borel代数}
 
 \begin{definition}\label{definition:ch01-Borel代数}
-设 $(X,\mathcal{T})$ 为一拓扑空间。由拓扑 $\mathcal{T}$ 生成的 $\sigma$--代数 $\sigma_0(\mathcal{T})$（记为 $\mathcal{B}\equiv\mathcal{B}(X)\equiv\mathcal{B}(X,\mathcal{T})$）称为 Borel $\sigma$--代数。每个集合 $E\in\mathcal{B}$ 称为一个 Borel 集。
+设 $(X,\mathcal{T})$ 为一拓扑空间。由拓扑 $\mathcal{T}$ 生成的 $\sigma$--代数 $\sigma_0(\mathcal{T})$（记为 $\mathcal{B}\equiv\mathcal{B}(X)\equiv\mathcal{B}(X,\mathcal{T})$）称为 \textbf{Borel $\sigma$--代数}。每个集合 $E\in\mathcal{B}$ 称为一个 \textbf{Borel 集}。
 \end{definition}
 
-\begin{example}\label{example:ch01-GdeltaFsigma}
-开集的可数交集族 $\mathcal{G}_\delta$ 与闭集的可数并集族 $\mathcal{F}_\sigma$ 都包含于 $\mathcal{B}$。
-\end{example}
-
-\begin{definition}\label{definition:ch01-Baire代数}
-设 $(X,\mathcal{T})$ 为一紧拓扑空间，$\mathcal{G}_\delta\supseteq G_\delta$ 为属于 $\mathcal{G}_\delta$ 的紧集族。由族 $G_\delta$ 生成的 $\sigma$--代数（记为 $\mathcal{B}_a(X)$）称为 Baire $\sigma$--代数。每个集合 $E\in\mathcal{B}_a$ 称为一个 Baire 集。
-\end{definition}
-
-\begin{remark}\label{remark:ch01-实直线Borel}
-设 $X=\mathbb{R}$，$\mathcal{T}=\mathcal{T}(\mathbb{R})$ 为实拓扑。容易看出，Borel $\sigma$--代数 $\mathcal{B}(\mathbb{R})$ 与由有界开区间族生成的 $\sigma$--代数重合。它也可由其他区间族生成，例如由半直线族 $\{(a,\infty)\mid a\in\mathbb{R}\}$ 生成。类似的注记对 Borel $\sigma$--代数 $\mathcal{B}(\mathbb{R}^N)$（$N\geqslant 2$）也成立。
+% SUPPLEMENT: parent=definition:ch01-Borel代数; kind=motivation; 说明 Borel $\sigma$--代数的动机、等价生成族与真包含于幂集的基数论证
+\begin{remark}\phantomsection\label{remark:ch01-Borel代数}
+\begin{enumerate}[(i)]
+\item 引入动机。Borel $\sigma$--代数把拓扑结构与测度结构连接起来：开集是最容易赋予体积的集合，取由开集生成的 $\sigma$--代数即可保证所有开集、闭集及其可数运算结果可测。按定义 $\mathcal{B}(X)$ 由拓扑 $\mathcal{T}$ 确定；若 $\mathcal{T}$ 有可数基 $\mathcal{E}$，则 $\mathcal{B}(X)=\sigma_0(\mathcal{E})$，因为每个开集是可数个基元素之并。
+\item 等价生成族。闭集是开集的补集，故 $\mathcal{B}(X)=\sigma_0(\text{闭集族})$；在 $\mathbb{R}^N$ 上还可取有界开盒族或半空间族（\hyperref[remark:ch01-实直线Borel]{关于实直线 Borel $\sigma$--代数的注记}）。
+\item 边界情形。$\mathcal{B}(X)$ 一般真包含于 $\mathcal{P}(X)$：$\mathcal{B}(\mathbb{R})$ 由可数族生成，故 $\lvert\mathcal{B}(\mathbb{R})\rvert\leqslant2^{\aleph_0}$，而 $\lvert\mathcal{P}(\mathbb{R})\rvert=2^{2^{\aleph_0}}$，故存在非 Borel 集。此外 $\mathcal{B}(X)$ 依赖于拓扑 $\mathcal{T}$：同一集合上不同拓扑给出不同的 Borel $\sigma$--代数。
+\end{enumerate}
 \end{remark}
 
-我们提及以下关于 Borel $\sigma$--代数乘积的结果。
+\begin{example}\label{example:ch01-GdeltaFsigma}
+开集的可数交族
+\begin{align*}
+\mathcal{G}_\delta\triangleq\left\{\bigcap_{n=1}^\infty U_n\mid U_n\in\mathcal{T}\ (n\in\mathbb{N})\right\}
+\end{align*}
+与闭集的可数并族
+\begin{align*}
+\mathcal{F}_\sigma\triangleq\left\{\bigcup_{n=1}^\infty F_n\mid F_n\ \text{为闭集}\ (n\in\mathbb{N})\right\}
+\end{align*}
+都包含于 $\mathcal{B}$。
+\end{example}
 
+% SUPPLEMENT: parent=example:ch01-GdeltaFsigma; kind=proof; 补出两个族包含于 $\mathcal{B}$ 的验证
+\begin{proof}
+每个开集属于 $\mathcal{B}$，而 $\mathcal{B}$ 对可数交封闭，故 $\mathcal{G}_\delta\subseteq\mathcal{B}$。每个闭集是开集的补集，故属于 $\mathcal{B}$；而 $\mathcal{B}$ 对可数并封闭，故 $\mathcal{F}_\sigma\subseteq\mathcal{B}$。
+\end{proof}
+
+% SUPPLEMENT: parent=example:ch01-GdeltaFsigma; kind=motivation; 说明 $\mathcal{G}_\delta$ 与 $\mathcal{F}_\sigma$ 在 Borel 层次中的地位、二者不构成 $\sigma$--代数及度量空间中的补充事实
+\begin{remark}\phantomsection\label{remark:ch01-GdeltaFsigma}
+\begin{enumerate}[(i)]
+\item 引入动机。$\mathcal{G}_\delta$ 与 $\mathcal{F}_\sigma$ 是 Borel 层次的第一层，可测性论证常在层次中进行：连续函数的上水平集 $\{f>a\}$ 为开集，而下水平集 $\{f\geqslant a\}=\bigcap_n\{f>a-1/n\}$ 属于 $\mathcal{G}_\delta$。
+\item 边界情形。$\mathcal{G}_\delta$ 与 $\mathcal{F}_\sigma$ 都不是 $\sigma$--代数，二者也不相等：$\mathbb{Q}$ 属于 $\mathcal{F}_\sigma$（可数个单点集之并）而不属于 $\mathcal{G}_\delta$，否则 $\mathbb{Q}=\bigcap_nU_n$ 为可数个稠密开集之交，由 Baire 纲定理它是不可数的，矛盾。$\mathcal{B}$ 严格包含 $\mathcal{G}_\delta\cup\mathcal{F}_\sigma$，其证明依赖 Borel 层次的严格性，超出本节范围。
+\item 补充事实。若 $X$ 为度量空间，则每个闭集 $F$ 是 $\mathcal{G}_\delta$（$F=\bigcap_n\{x\mid d(x,F)<1/n\}$），每个开集是 $\mathcal{F}_\sigma$，故此时两类集合都很丰富。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}\label{definition:ch01-Baire代数}
+设 $(X,\mathcal{T})$ 为一紧拓扑空间，$\mathcal{G}_\delta$ 为开集的可数交族，$G_\delta\subseteq\mathcal{G}_\delta$ 为其中紧集组成的族。由族 $G_\delta$ 生成的 $\sigma$--代数（记为 $\mathcal{B}_a(X)$）称为 \textbf{Baire $\sigma$--代数}。每个集合 $E\in\mathcal{B}_a(X)$ 称为一个 \textbf{Baire 集}。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-Baire代数; kind=motivation; 说明 Baire $\sigma$--代数的动机、原书笔误的辨识与紧度量空间中与 Borel $\sigma$--代数的重合
+\begin{remark}\phantomsection\label{remark:ch01-Baire代数}
+\begin{enumerate}[(i)]
+\item 引入动机。在紧空间中，紧 $G_\delta$ 集构成检验内正则性的自然族：它们既紧又属于 $\mathcal{G}_\delta$，故其示性函数可用开集与紧集双向逼近。Baire $\sigma$--代数以这一族为生成元，避免直接使用开集族。
+\item 记号说明。原书此处把 Baire 集写成 $E\in\mathcal{B}$，应为 $E\in\mathcal{B}_a(X)$，即由 $G_\delta$ 生成的 $\sigma$--代数中的集合。由 $G_\delta\subseteq\mathcal{G}_\delta\subseteq\mathcal{B}(X)$ 得 $\mathcal{B}_a(X)\subseteq\mathcal{B}(X)$。
+\item 边界情形。紧性假设用于保证 $G_\delta$ 中元素足够多。在紧度量空间中闭集紧且为 $G_\delta$，故闭集族包含于 $G_\delta$，从而 $\mathcal{B}(X)\subseteq\mathcal{B}_a(X)$，结合 (ii) 得 $\mathcal{B}_a(X)=\mathcal{B}(X)$；在非度量的紧空间中这一等式一般不再成立。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch01-实直线Borel}
+设 $X=\mathbb{R}$，$\mathcal{T}=\mathcal{T}(\mathbb{R})$ 为实拓扑。Borel $\sigma$--代数 $\mathcal{B}(\mathbb{R})$ 与由有界开区间族生成的 $\sigma$--代数重合。它也可由其他区间族生成，例如由半直线族 $\{(a,\infty)\mid a\in\mathbb{R}\}$ 生成。类似的结论对 Borel $\sigma$--代数 $\mathcal{B}(\mathbb{R}^N)$（$N\geqslant2$）也成立。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch01-实直线Borel; kind=proof; 原书以“it is easily seen”略去，补出两种生成族与 $\mathbb{R}^N$ 情形的验证
+\begin{proof}
+记 $\Sigma_1$ 为有界开区间族生成的 $\sigma$--代数。有界开区间是开集，故 $\Sigma_1\subseteq\mathcal{B}(\mathbb{R})$。反之，每个开集 $U\subseteq\mathbb{R}$ 是可数个有界开区间之并（取端点为有理数的区间），故 $U\in\Sigma_1$，于是 $\mathcal{B}(\mathbb{R})\subseteq\Sigma_1$，两者相等。
+
+记 $\Sigma_2$ 为半直线族生成的 $\sigma$--代数。半直线是开集，故 $\Sigma_2\subseteq\mathcal{B}(\mathbb{R})$。反之，对 $a<b$ 有
+\begin{align*}
+(a,b)=(a,\infty)\cap(-\infty,b)=(a,\infty)\cap(b,\infty)^c\in\Sigma_2,
+\end{align*}
+故有界开区间族包含于 $\Sigma_2$，从而 $\Sigma_1\subseteq\Sigma_2$，于是 $\mathcal{B}(\mathbb{R})=\Sigma_2$。
+
+对 $\mathbb{R}^N$（$N\geqslant2$）：每个开集是可数个有界开盒 $(a,b)=\prod_{i=1}^N(a_i,b_i)$ 之并；每个有界开盒可写成
+\begin{align*}
+(a,b)=\bigcap_{i=1}^N\{x\mid x_i\in(a_i,b_i)\},\qquad
+\{x\mid x_i\in(a_i,b_i)\}=\{x_i>a_i\}\cap\{x_i<b_i\},
+\end{align*}
+故有界开盒属于半空间族生成的 $\sigma$--代数，而每个半空间是开集。于是 $\mathcal{B}(\mathbb{R}^N)$ 既由有界开盒族生成，也由半空间族生成。
+\end{proof}
+
+下面给出关于 Borel $\sigma$--代数乘积的一个结果。
+
+% SUPPLEMENT: parent=theorem:ch01-Borel积; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
 \begin{theorem}\label{theorem:ch01-Borel乘积}\label{theorem:ch01-Borel积}
 设 $(X_1,\mathcal{T}_1)$ 与 $(X_2,\mathcal{T}_2)$ 为具有可数基的拓扑空间，$(X_1\times X_2,\mathcal{T}_1\times\mathcal{T}_2)$ 为乘积拓扑空间。则
-\[
+\begin{align*}
 \mathcal{B}(X_1,\mathcal{T}_1)\times\mathcal{B}(X_2,\mathcal{T}_2)=\mathcal{B}(X_1\times X_2,\mathcal{T}_1\times\mathcal{T}_2).
-\]
+\end{align*}
 特别地，$\mathcal{B}(\mathbb{R}^M)\times\mathcal{B}(\mathbb{R}^N)=\mathcal{B}(\mathbb{R}^{M+N})$（$M,N\in\mathbb{N}$）。
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch01-Borel乘积; kind=proof; 原书未给证明，补出两向包含的完整论证并指明可数基假设的使用位置
+\begin{proof}
+第一向：$\mathcal{B}(X_1)\times\mathcal{B}(X_2)\subseteq\mathcal{B}(X_1\times X_2)$。对 $E_1\in\mathcal{B}(X_1)$，族
+\begin{align*}
+\Sigma\triangleq\{E\subseteq X_1\mid\pi_1^{-1}(E)\in\mathcal{B}(X_1\times X_2)\}
+\end{align*}
+是 $\sigma$--代数；由 $\pi_1$ 连续得 $\mathcal{T}_1\subseteq\Sigma$，故 $\mathcal{B}(X_1)\subseteq\Sigma$，即 $E_1\times X_2=\pi_1^{-1}(E_1)\in\mathcal{B}(X_1\times X_2)$。同理 $X_1\times E_2\in\mathcal{B}(X_1\times X_2)$ 对 $E_2\in\mathcal{B}(X_2)$ 成立。于是每个可测矩形 $E_1\times E_2=(E_1\times X_2)\cap(X_1\times E_2)$ 属于 $\mathcal{B}(X_1\times X_2)$，故 $\mathcal{B}(X_1)\times\mathcal{B}(X_2)=\sigma_0(\mathcal{R})\subseteq\mathcal{B}(X_1\times X_2)$。
 
+第二向：$\mathcal{B}(X_1\times X_2)\subseteq\mathcal{B}(X_1)\times\mathcal{B}(X_2)$。设 $\mathcal{E}_i$ 为 $\mathcal{T}_i$ 的可数基（$i=1,2$）。族 $\{V_1\times V_2\mid V_i\in\mathcal{E}_i\}$ 可数且是乘积拓扑的基，故每个乘积开集是可数个这样的乘积开集之并。而对 $V_i\in\mathcal{E}_i\subseteq\mathcal{T}_i$，有
+\begin{align*}
+V_1\times V_2=(V_1\times X_2)\cap(X_1\times V_2),
+\end{align*}
+其中 $V_1\times X_2=\pi_1^{-1}(V_1)$、$X_1\times V_2=\pi_2^{-1}(V_2)$ 都是可测矩形，故 $V_1\times V_2\in\mathcal{B}(X_1)\times\mathcal{B}(X_2)$。于是乘积拓扑的每个开集属于 $\mathcal{B}(X_1)\times\mathcal{B}(X_2)$，从而 $\mathcal{B}(X_1\times X_2)\subseteq\mathcal{B}(X_1)\times\mathcal{B}(X_2)$。
 
+最后，$\mathbb{R}^k$ 具有可数基（有理端点的开盒），且 $\mathbb{R}^M\times\mathbb{R}^N=\mathbb{R}^{M+N}$，故取 $X_1=\mathbb{R}^M$、$X_2=\mathbb{R}^N$ 即得 $\mathcal{B}(\mathbb{R}^M)\times\mathcal{B}(\mathbb{R}^N)=\mathcal{B}(\mathbb{R}^{M+N})$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-Borel乘积; kind=motivation; 说明定理的用途、可数基假设的使用位置与缺少可数基时只能得到单向包含
+\begin{remark}\phantomsection\label{remark:ch01-Borel乘积}
+\begin{enumerate}[(i)]
+\item 引入动机。Fubini--Tonelli 定理把 $\mathbb{R}^{M+N}$ 上的积分化为累次积分，这要求 $\mathcal{B}(\mathbb{R}^{M+N})$ 与乘积 $\sigma$--代数 $\mathcal{B}(\mathbb{R}^M)\times\mathcal{B}(\mathbb{R}^N)$ 一致；否则“Borel 可测”与“乘积可测”是两种不同的可测性。
+\item 可数基假设的作用。该假设只用于第二向：把乘积拓扑的每个开集写成可数个基元素之并，因而需要基可数。第一向不含任何可数性假设，故对任意拓扑空间有 $\mathcal{B}(X_1)\times\mathcal{B}(X_2)\subseteq\mathcal{B}(X_1\times X_2)$。
+\item 边界情形。缺少可数基时等式不能由上述论证得到，此时只有单向包含；对不可分度量空间（如 $\ell^\infty$）需另行处理。此外等式左端的乘积 $\sigma$--代数按\cref{definition:ch01-乘积sigma代数}理解。
+\end{enumerate}
+\end{remark}
 
 \end{document}

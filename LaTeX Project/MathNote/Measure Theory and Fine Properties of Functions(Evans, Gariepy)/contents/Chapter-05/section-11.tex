@@ -1,0 +1,555 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{有限周长的一个判别准则}\label{section:ch05-11}
+
+本节通过建立一个相对简单的判别准则来结束本章的讨论，该准则判定集合 $E$ 是否具有局部有限周长。
+
+\begin{remark}\phantomsection\label{remark:ch05-sec-5-11-记号}
+本节把 $\mathbb{R}^n$ 中的点 $x$ 写作 $x=(x',t)$，其中
+\begin{align*}
+x'=(x_1,\cdots,x_{n-1})\in\mathbb{R}^{n-1},\qquad t=x_n\in\mathbb{R}.
+\end{align*}
+\end{remark}
+
+\begin{definition}\label{definition:ch05-5-12}
+设 $n\geqslant2$ 为整数，$\mathcal{H}^0$ 为相应 Euclid 空间上的 $0$ 维 Hausdorff 测度，$\mathbb{R}^{n-1}$ 中的点记作 $x'$。
+\begin{enumerate}[(i)]
+\item 投影 $P:\mathbb{R}^n\to\mathbb{R}^{n-1}$ 定义为
+\begin{align*}
+P(x):=x'\qquad\bigl(x=(x',x_n)\in\mathbb{R}^n\bigr).
+\end{align*}
+\item 对 Borel 集 $A\subseteq\mathbb{R}^n$ 与点 $x'\in\mathbb{R}^{n-1}$，重数函数定义为
+\begin{align*}
+N(P|A,x'):=\mathcal{H}^0\bigl(A\cap P^{-1}\{x'\}\bigr).
+\end{align*}
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch05-5-12; kind=motivation; 说明投影与重数函数的作用：用纤维计数代替逆像，把沿第 n 个坐标方向的截口组织成可积的对象
+\begin{remark}\phantomsection\label{remark:ch05-def-5-12-动机}
+投影 $P$ 把 $\mathbb{R}^n$ 沿第 $n$ 个坐标方向压到 $\mathbb{R}^{n-1}$ 上，$P^{-1}\{x'\}=\{x'\}\times\mathbb{R}$ 是过 $x'$ 且平行于 $e_n$ 的直线。重数函数 $N(P|A,x')$ 是这条直线与 $A$ 相交的点数，它取代了不存在的一般逆映射：即使 $P|_A$ 不是单射、纤维是无限集，$\mathcal{H}^0$ 仍给出一个有定义的计数（取值于 $\mathbb{N}\cup\{0,+\infty\}$）。这样，$A$ 沿直线的截口 $A\cap P^{-1}\{x'\}$ 的信息被压缩成一个关于 $x'$ 的函数，而对 $x'$ 积分正是把各个截口的信息汇总。
+
+这一组记号在本节承担两项任务。其一，它使\cref{lemma:ch05-5-8}中的两个结论有意义：重数函数可测，并且其积分被 $A$ 的 $(n-1)$ 维 Hausdorff 测度控制。其二，它把\cref{theorem:ch05-5-23}的假设 $\mathcal{H}^{n-1}(K\cap\partial_*E)<\infty$ 转化为可直接使用的积分估计 $(\star\star)$：沿几乎所有直线，测度论边界与该直线的交点至多可数，且这些交点按 $x'$ 可积。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-12; kind=hypotheses; 逐条分析定义中的维数、Borel 性、计数测度的含义与重数函数的基本性质
+\begin{remark}\phantomsection\label{remark:ch05-def-5-12-条件}
+\begin{enumerate}[(i)]
+\item 条件 $n\geqslant2$ 使 $\mathbb{R}^{n-1}$ 与 $P$ 同时有意义；$n=1$ 时陪域退化为 $\mathbb{R}^0$，本节的全部论证都不适用。
+\item 定义只要求 $A$ 为 Borel 集。$\mathcal{H}^0$ 对一切集合都有定义，对 Borel 集要求 $A$ 是为了使 $x'\mapsto N(P|A,x')$ 具有可测性，这正是\cref{lemma:ch05-5-8}(i) 的内容。% XREF internal
+\item $\mathcal{H}^0$ 是计数测度：按\cref{definition:ch02-2-1}的约定 $\alpha(0)=1$，故非空集 $S$ 满足 $\mathcal{H}^0(S)=1$ 当且仅当 $S$ 只含一点，$\mathcal{H}^0(S)=k$ 当且仅当 $S$ 恰含 $k$ 个点。于是 $N(P|A,x')\in\mathbb{N}\cup\{0,+\infty\}$，且 $N(P|A,x')=0$ 当且仅当 $x'\notin P(A)$。% XREF internal
+\item 对固定的 $x'$，$A\mapsto N(P|A,x')$ 是可数可加的：若 $\{A_j\}$ 两两不交，则 $N(P|\bigcup_jA_j,x')=\sum_jN(P|A_j,x')$。定义不要求 $A$ 有界，也不要求 $P|_A$ 单射；这两点都不影响 $N$ 的取值。
+\item $P$ 是线性映射且 $\Lip(P)=1$。这一事实在\cref{lemma:ch05-5-8}(ii) 中体现为右端的常数等于 $1$，即投影不放大 $(n-1)$ 维测度。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}\label{lemma:ch05-5-8}
+设 $n\geqslant2$ 为整数，$P:\mathbb{R}^n\to\mathbb{R}^{n-1}$ 为\cref{definition:ch05-5-12}中的投影，$N(P|\cdot,\cdot)$ 为相应的重数函数，$\mathcal{H}^0$ 为 $0$ 维 Hausdorff 测度，$A\subseteq\mathbb{R}^n$ 为 Borel 集，$\mathcal{L}^{n-1}$ 为 $\mathbb{R}^{n-1}$ 上的 Lebesgue 测度，$\mathcal{H}^{n-1}$ 为 $\mathbb{R}^n$ 上的 $(n-1)$ 维 Hausdorff 测度。则 % XREF internal
+\begin{enumerate}[(i)]
+\item 映射 $x'\mapsto N(P|A,x')$ 是 $\mathcal{L}^{n-1}$-可测的；
+\item
+\begin{align*}
+\int_{\mathbb{R}^{n-1}}N(P|A,x')\diff x'\leqslant\mathcal{H}^{n-1}(A).
+\end{align*}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) 与 (ii) 的论证与\cref{lemma:ch03-3-5}的证明相同；另见该节中的注记（\cref{remark:ch03-lem-3-5-推广}）。% XREF p=250 "Assertions (i) and (ii) follow as in the proof of Lemma 3.5, Section 3.4" | p=250 "see also the remark in Section 3.4"
+\end{proof}
+% SUPPLEMENT: parent=lemma:ch05-5-8; kind=proof; 补出 (i) 的可测性与 (ii) 的积分估计：紧集情形用纤维中的第 k 个点把计数函数写成 Borel 函数之并，一般 Borel 集由内正则性化归
+\begin{proof}
+（1）先设 $A$ 紧。对 $k\geqslant1$ 与 $s\in\mathbb{R}$ 记
+\begin{align*}
+E_{k,s}:=\Bigl\{x'\in\mathbb{R}^{n-1}\Bigm|\#\bigl(A\cap P^{-1}\{x'\}\cap\{t\leqslant s\}\bigr)\geqslant k\Bigr\},
+\end{align*}
+并令
+\begin{align*}
+F_{k,s}:=\Bigl\{(x',t_1,\cdots,t_k)\in\mathbb{R}^{n-1}\times\mathbb{R}^k\Bigm|t_1<\cdots<t_k\leqslant s,\ (x',t_i)\in A\Bigr\}.
+\end{align*}
+由 $A$ 紧知 $F_{k,s}$ 是 $\mathbb{R}^{n-1}\times\mathbb{R}^k$ 中的有界闭集，故为紧集；而 $E_{k,s}$ 恰是 $F_{k,s}$ 在第一个因子上的投影，因此 $E_{k,s}$ 是紧集，特别地是 Borel 集。于是
+\begin{align*}
+B_k:=\bigcup_{s=1}^{\infty}E_{k,s}=\bigl\{x'\mid N(P|A,x')\geqslant k\bigr\}
+\end{align*}
+是 Borel 集，且
+\begin{align*}
+N(P|A,x')=\sum_{k=1}^{\infty}\chi_{B_k}(x')\qquad(x'\in\mathbb{R}^{n-1}),
+\end{align*}
+其中右端按扩展实数理解：两端在每个 $x'$ 处都等于纤维 $A\cap P^{-1}\{x'\}$ 的点数。故 $N(P|A,\cdot)$ 是 Borel 函数。
+
+（2）紧集情形下 (ii) 的证明。对 $k\geqslant1$ 定义
+\begin{align*}
+m_k(x'):=\inf\bigl\{t\in\mathbb{R}\mid\#\bigl(A\cap P^{-1}\{x'\}\cap(-\infty,t]\bigr)\geqslant k\bigr\}\qquad(x'\in\mathbb{R}^{n-1}),
+\end{align*}
+按约定 $\inf\varnothing:=+\infty$。由 $E_{k,s}$ 的定义，
+\begin{align*}
+\{x'\mid m_k(x')\leqslant s\}=E_{k,s}\qquad(s\in\mathbb{R}),
+\end{align*}
+右端为闭集，故 $m_k$ 是上半连续的 Borel 函数，从而 $B_k=\{x'\mid m_k(x')<+\infty\}$ 是 Borel 集。又因 $A$ 紧，当 $x'\in B_k$ 时上述下确界在 $A\cap P^{-1}\{x'\}$ 上取到，故 $m_k(x')\in\mathbb{R}$ 且 $(x',m_k(x'))\in A$。令
+\begin{align*}
+A_k:=\bigl\{(x',m_k(x'))\bigm|x'\in B_k\bigr\}\qquad(k=1,2,\cdots).
+\end{align*}
+则每个 $A_k$ 是 Borel 函数在 Borel 集上的图像，从而是 Borel 集，且 $A_k\subseteq A$，$P|_{A_k}$ 是单射，$P(A_k)=B_k$。不同的 $A_k$ 两两不交：若 $x\in A_j\cap A_k$ 而 $j<k$，则 $x=(x',m_j(x'))=(x',m_k(x'))$，与 $m_j(x')<m_k(x')$ 矛盾。
+
+由 (1) 的级数表示与单调收敛定理，
+\begin{align*}
+\int_{\mathbb{R}^{n-1}}N(P|A,x')\diff x'=\sum_{k=1}^{\infty}\mathcal{L}^{n-1}(B_k).
+\end{align*}
+在\cref{theorem:ch02-2-5}中把 $n$ 换成 $n-1$，得 $\mathbb{R}^{n-1}$ 上 $\mathcal{H}^{n-1}=\mathcal{L}^{n-1}$，故 $\mathcal{L}^{n-1}(B_k)=\mathcal{H}^{n-1}(P(A_k))$；又由\cref{theorem:ch02-2-8}(ii)（取 $s=n-1$）有 $\mathcal{H}^{n-1}(P(A_k))\leqslant\mathcal{H}^{n-1}(A_k)$。于是% XREF internal
+\begin{align*}
+\int_{\mathbb{R}^{n-1}}N(P|A,x')\diff x'\leqslant\sum_{k=1}^{\infty}\mathcal{H}^{n-1}(A_k)=\mathcal{H}^{n-1}\Bigl(\bigcup_{k=1}^{\infty}A_k\Bigr)\leqslant\mathcal{H}^{n-1}(A),
+\end{align*}
+其中中间等号用到 $A_k$ 两两不交且都是 Borel 集。
+
+（3）(i) 对一般 Borel 集。对每个 $k\geqslant1$，考虑 Borel 集
+\begin{align*}
+\Bigl\{(x',t_1,\cdots,t_k)\in\mathbb{R}^{n-1}\times\mathbb{R}^k\Bigm|t_1<\cdots<t_k,\ (x',t_i)\in A\ (i=1,\cdots,k)\Bigr\}
+\end{align*}
+它在第一个因子上的投影恰是 $\{x'\mid N(P|A,x')\geqslant k\}$，因此后者是解析集，而解析集关于 Lebesgue 测度可测；故 $N(P|A,\cdot)$ 是 $\mathcal{L}^{n-1}$-可测函数，即 (i) 成立。
+
+（4）(ii) 对一般 Borel 集。若 $\mathcal{H}^{n-1}(A)=+\infty$，则右端为 $+\infty$，不等式成立。以下设 $\mathcal{H}^{n-1}(A)<\infty$。此时 $\nu:=\mathcal{H}^{n-1}\llcorner A$ 是 $\mathbb{R}^n$ 上的有限 Borel 测度，而 $\mathbb{R}^n$ 是 $\sigma$-紧的，故存在紧集 $K_j\subseteq A$（$j=1,2,\cdots$）满足 $K_1\subseteq K_2\subseteq\cdots$ 且
+\begin{align*}
+\mathcal{H}^{n-1}\Bigl(A-\bigcup_{j=1}^{\infty}K_j\Bigr)=0 .
+\end{align*}
+记 $R:=A-\bigcup_jK_j$。由\cref{theorem:ch02-2-8}(ii) 与 $\mathbb{R}^{n-1}$ 上 $\mathcal{H}^{n-1}=\mathcal{L}^{n-1}$ 得% XREF internal
+\begin{align*}
+\mathcal{L}^{n-1}\bigl(P(R)\bigr)=\mathcal{H}^{n-1}\bigl(P(R)\bigr)\leqslant\mathcal{H}^{n-1}(R)=0 .
+\end{align*}
+当 $x'\notin P(R)$ 时 $R\cap P^{-1}\{x'\}=\varnothing$，故 $N(P|R,x')=0$ 对 $\mathcal{L}^{n-1}$-a.e. $x'$ 成立。因此
+\begin{align*}
+N(P|A,x')=\sup_{j}N(P|K_j,x')\qquad\text{对 }\mathcal{L}^{n-1}\text{-a.e. }x'\text{ 成立},
+\end{align*}
+其中「$\geqslant$」由 $K_j\subseteq A$ 得到，「$\leqslant$」由 $A\subseteq\bigl(\bigcup_jK_j\bigr)\cup R$ 与 $N(P|R,x')=0$ 得到。对 $j$ 用单调收敛定理并结合 (2)，
+\begin{align*}
+\int_{\mathbb{R}^{n-1}}N(P|A,x')\diff x'=\sup_{j}\int_{\mathbb{R}^{n-1}}N(P|K_j,x')\diff x'\leqslant\sup_{j}\mathcal{H}^{n-1}(K_j)\leqslant\mathcal{H}^{n-1}(A),
+\end{align*}
+即 (ii) 对一般的 Borel 集成立。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-5-8; kind=motivation; 说明重数函数的可测性与积分估计为何是把 H^{n-1}(∂_*E∩K)<∞ 转成可积性估计的关键，以及常数 1 的来源
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-8-动机}
+\cref{theorem:ch05-5-23}的证明需要把假设 $\mathcal{H}^{n-1}(K\cap\partial_*E)<\infty$ 转化为一个可以直接使用的可积性估计，即证明中的 $(\star\star)$。要做到这一点，必须先保证 $x'\mapsto N(P|U\cap\partial_*E,x')$ 可测，再保证它的积分不超过 $U\cap\partial_*E$ 的 $(n-1)$ 维 Hausdorff 测度：前者使积分有意义，后者使积分有限。本引理正是这两件事。% XREF internal
+
+右端的常数等于 $1$ 而非更大的常数，原因是投影 $P$ 的 Lipschitz 常数为 $1$，于是 $P$ 不放大 $(n-1)$ 维 Hausdorff 测度；在面积公式的语言下，$P$ 的 $(n-1)$ 维 Jacobi 因子恒等于 $1$。若把 $P$ 换成一般的 Lipschitz 映射 $f$，右端就要乘上 $(\Lip f)^{n-1}$。证明的构造说明了这个不等式的含义：对 a.e. $x'$，纤维 $A\cap P^{-1}\{x'\}$ 至多可数，记下它的第 $k$ 个点就得到 $A$ 的一层「横截面图像」$A_k$；这些层互不相交，而每层在 $P$ 下的像恰是「纤维至少含 $k$ 个点」的集合 $B_k$。计数函数的积分是各层像的测度之和，而每层像的测度不超过该层的 $(n-1)$ 维测度，求和即得右端。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch05-5-8; kind=hypotheses; 逐条分析 Borel 性、维数条件、右端为何用 H^{n-1} 而非 L^n，并说明不等号可取严格
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-8-条件}
+\begin{enumerate}[(i)]
+\item 条件「$A$ 为 Borel 集」使 $x'\mapsto N(P|A,x')$ 可测，依据是证明 (3) 中把 $\{N\geqslant k\}$ 写成 Borel 集在投影下的像。若 $A$ 只是 $\mathcal{L}^n$-可测集，则须先把 $A$ 换成它的 Borel 包（两者相差一个 $\mathcal{L}^n$-零集），这不改变 $N(P|A,\cdot)$ 的 $\mathcal{L}^{n-1}$-等价类。
+\item 条件 $n\geqslant2$ 使陪域 $\mathbb{R}^{n-1}$ 非平凡。右端的 $\mathcal{H}^{n-1}$ 与纤维的维数 $0$ 相加正好等于 $n$，这是估计中指数能够匹配的原因。
+\item 右端不能用 $\mathcal{L}^n(A)$ 代替。取 $n=2$ 与 $A=[0,1]^2$，则每条纤维都是长度 $1$ 的区间，$N(P|A,x')=+\infty$ 于 $x'\in[0,1]$，故左端为 $+\infty$，而 $\mathcal{L}^2(A)=1$：以 $\mathcal{L}^n(A)$ 为上界的估计不可能成立。在此例中 $(n-1)$ 维 Hausdorff 测度同样为 $+\infty$，不等式两端一致。
+\item 不等号可以严格。取 $n=2$ 与 $A=\{0\}\times[0,1]$，则 $N(P|A,x')=+\infty$ 当 $x'=0$、$N(P|A,x')=0$ 当 $x'\neq0$，故左端为 $0$（被积函数只在一点处非零），而 $\mathcal{H}^1(A)=1$。等号成立的情形是 $A$ 为可数条 Lipschitz 图像之并：若 $A$ 本身就是一张图像，则两端都等于底集的 $\mathcal{L}^{n-1}$ 测度。
+\item 结论 (i) 只断言 $\mathcal{L}^{n-1}$-可测，不断言 Borel 可测：$\{N\geqslant k\}$ 是一般 Borel 集的投影，不必是 Borel 集。这不影响 (ii)，因为 (ii) 只涉及 Lebesgue 积分。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}\label{definition:ch05-5-13}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集，$\mathcal{L}^n$ 为 $\mathbb{R}^n$ 上的 Lebesgue 测度，$B(x,r):=\{y\in\mathbb{R}^n\mid\lvert y-x\rvert<r\}$ 为以 $x$ 为心、$r$ 为半径的开球。定义
+\begin{align*}
+I:=\Bigl\{x\in\mathbb{R}^n\Bigm|\lim_{r\to0}\frac{\mathcal{L}^n(B(x,r)-E)}{r^n}=0\Bigr\}
+\end{align*}
+为 $E$ 的\textbf{测度论内部}，并定义
+\begin{align*}
+O:=\Bigl\{x\in\mathbb{R}^n\Bigm|\lim_{r\to0}\frac{\mathcal{L}^n(B(x,r)\cap E)}{r^n}=0\Bigr\}
+\end{align*}
+为 $E$ 的\textbf{测度论外部}。
+\end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch05-def-5-13-内外}
+注意 $\partial_*E=\mathbb{R}^n-(I\cup O)$，其中 $\partial_*E$ 为 $E$ 的测度论边界（\cref{definition:ch05-5-7}）。可以把 $I$ 理解为表示 $E$ 的「内部」，把 $O$ 理解为表示 $E$ 的「外部」。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-13; kind=motivation; 说明用密度的极限代替拓扑的内部与外部、为何三者构成 R^n 的分解，以及 I 与 E 几乎相等这一事实的意义
+\begin{remark}\phantomsection\label{remark:ch05-def-5-13-动机}
+对一般的 $\mathcal{L}^n$-可测集，拓扑内部与拓扑外部都不能反映集合在测度意义下的形态：一个满测度的开集可以有稠密补集，一个 Lebesgue 零测集可以是稠密的。测度论内部与外部改用体积密度：$x\in I$ 意味着 $E$ 在 $x$ 的任意小邻域内几乎占满整个球（补集体积为 $o(r^n)$），$x\in O$ 意味着 $E$ 在 $x$ 附近的体积为 $o(r^n)$。于是 $I$ 是 $E$ 的「几乎处处内部」，$O$ 是其补集的「几乎处处内部」。
+
+两个比式的极限存在且为零这一条件比「上极限为零」更强，但它只用在等号 $=0$ 的判据上：$\lim=0$ 与 $\limsup=0$ 对非负被积函数等价。三者构成分解 $\mathbb{R}^n=I\cup O\cup\partial_*E$，这是\cref{definition:ch05-5-7}的测度论边界定义的直接改写：$x\notin I$ 且 $x\notin O$ 恰好意味着 $E$ 与 $\mathbb{R}^n-E$ 在 $x$ 处都有正的上密度。由\cref{lemma:ch05-5-9}(ii)，$I$ 与 $E$ 只相差一个 Lebesgue 零集，因此在积分中可以把 $\chi_E$ 换成 $\chi_I$；这正是\cref{theorem:ch05-5-23}的证明中第一个等号的来源。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-13; kind=hypotheses; 逐条分析可测性、归一化因子、极限与上极限的等价性，以及退化情形
+\begin{remark}\phantomsection\label{remark:ch05-def-5-13-条件}
+\begin{enumerate}[(i)]
+\item 定义要求 $E$ 为 $\mathcal{L}^n$-可测集，否则 $\mathcal{L}^n(B(x,r)-E)$ 与 $\mathcal{L}^n(B(x,r)\cap E)$ 只是外测度，$I$、$O$ 的含义随之改变。可测性保证这两个量关于 $x$ 与 $r$ 都是可测函数，从而 $I$、$O$ 是 Borel 集（\cref{lemma:ch05-5-9}(i)）。% XREF internal
+\item 分母取 $r^n$ 而非 $\mathcal{L}^n(B(x,r))=\alpha(n)r^n$，两者只相差正常数 $\alpha(n)$，故条件「极限为零」不变。定义中的 $\alpha(n)$ 为 $\mathbb{R}^n$ 中单位球的 Lebesgue 测度。
+\item 由于被积函数非负，「$\lim=0$」与「$\limsup=0$」等价，因此 $I$、$O$ 也可以分别用上极限定义；这与\cref{definition:ch05-5-7}中使用上极限的写法一致。% XREF internal
+\item 两个集合可以退化为空集或全空间：$E=\varnothing$ 时 $I=\varnothing$、$O=\mathbb{R}^n$；$E=\mathbb{R}^n$ 时 $I=\mathbb{R}^n$、$O=\varnothing$。两种情形下 $\partial_*E=\varnothing$，与测度论边界的定义相符。
+\item $I$ 与 $O$ 互不相交：若两者的条件同时成立，则 $\mathcal{L}^n(B(x,r))\leqslant\mathcal{L}^n(B(x,r)-E)+\mathcal{L}^n(B(x,r)\cap E)=o(r^n)$，与 $\mathcal{L}^n(B(x,r))=\alpha(n)r^n$ 矛盾。$I$、$O$、$\partial_*E$ 三者两两不交且并为 $\mathbb{R}^n$。
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}\label{lemma:ch05-5-9}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集，$I$、$O$ 分别为\cref{definition:ch05-5-13}中定义的 $E$ 的测度论内部与测度论外部，$\partial_*E$ 为 $E$ 的测度论边界（\cref{definition:ch05-5-7}），$\mathcal{L}^n$ 为 $\mathbb{R}^n$ 上的 Lebesgue 测度。则 % XREF internal
+\begin{enumerate}[(i)]
+\item $I$、$O$ 与 $\partial_*E$ 都是 Borel 可测集；
+\item
+\begin{align*}
+\mathcal{L}^n\bigl((I-E)\cup(E-I)\bigr)=0 .
+\end{align*}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+（1）存在 Borel 集 $C\subseteq\mathbb{R}^n-E$，使得对一切 $\mathcal{L}^n$-可测集 $T$ 有
+\begin{align*}
+\mathcal{L}^n(C\cap T)=\mathcal{L}^n(T-E).
+\end{align*}
+于是
+\begin{align*}
+I=\Bigl\{x\Bigm|\lim_{r\to0}\frac{\mathcal{L}^n(B(x,r)\cap C)}{r^n}=0\Bigr\},
+\end{align*}
+从而是 Borel 可测的。$O$ 的证明与此相同。
+
+（2）(ii) 由\cref{theorem:ch01-1-35}得出。% XREF p=250 "Assertion (ii) follows from Theorem 1.35"
+
+% SUPPLEMENT: parent=lemma:ch05-5-9; kind=proof; 补出 Borel 集 C 的存在性、I 与 O 的 Borel 可测性（有理半径的上极限）以及由密度定理推出 (ii) 的两步估计
+（3）补出 (1) 中两处论断的依据。由 $E$ 的 $\mathcal{L}^n$-可测性知 $\mathbb{R}^n-E$ 是 $\mathcal{L}^n$-可测集；由 $\mathcal{L}^n$ 在 $\sigma$-有限集上的内正则性（\cref{theorem:ch01-1-8}），存在 Borel 集 $C\subseteq\mathbb{R}^n-E$ 使 $\mathcal{L}^n\bigl((\mathbb{R}^n-E)-C\bigr)=0$。对 $\mathcal{L}^n$-可测集 $T$，% XREF internal
+\begin{align*}
+\mathcal{L}^n(T-E)=\mathcal{L}^n\bigl(T\cap(\mathbb{R}^n-E)\bigr)=\mathcal{L}^n(T\cap C)+\mathcal{L}^n\bigl(T\cap((\mathbb{R}^n-E)-C)\bigr)=\mathcal{L}^n(C\cap T).
+\end{align*}
+
+其次，对固定的 $r>0$，映射 $x\mapsto\mathcal{L}^n(B(x,r)\cap C)$ 是 $\chi_C$ 与 $\chi_{B(0,r)}$ 的卷积，故连续；又对每个固定的 $x$，$r\mapsto\mathcal{L}^n(B(x,r)\cap C)$ 连续。因此
+\begin{align*}
+x\mapsto\limsup_{r\to0}\frac{\mathcal{L}^n(B(x,r)\cap C)}{r^n}=\lim_{m\to\infty}\ \sup_{0<r<1/m,\ r\in\mathbb{Q}}\frac{\mathcal{L}^n(B(x,r)\cap C)}{r^n}
+\end{align*}
+是可数个连续函数的上确界的极限，从而是 Borel 函数；$I$ 是它取零值的集合，故 $I$ 是 Borel 集。对 $O$ 用 $E$ 的 Borel 包重复同一论证，即得 $O$ 是 Borel 集。最后由 $\partial_*E=\mathbb{R}^n-(I\cup O)$（\cref{remark:ch05-def-5-13-内外}）知 $\partial_*E$ 是 Borel 集。% XREF internal
+
+（4）补出 (2) 的两步估计，其中 $\alpha(n)$ 为 $\mathbb{R}^n$ 中单位球的 Lebesgue 测度。由\cref{theorem:ch01-1-35}，对 $\mathcal{L}^n$-a.e. $x\in\mathbb{R}^n-E$ 有% XREF internal
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n(B(x,r)-E)}{\mathcal{L}^n(B(x,r))}=1,
+\end{align*}
+故这样的 $x$ 满足 $\lim_{r\to0}\mathcal{L}^n(B(x,r)-E)/r^n=\alpha(n)\neq0$，即 $x\notin I$。于是 $I-E=I\cap(\mathbb{R}^n-E)$ 是 $\mathcal{L}^n$-零集。同理由\cref{theorem:ch01-1-35}，对 $\mathcal{L}^n$-a.e. $x\in E$ 有 $\lim_{r\to0}\mathcal{L}^n(B(x,r)\cap E)/\mathcal{L}^n(B(x,r))=1$，故这样的 $x\notin O$，即 $E\cap O$ 是 $\mathcal{L}^n$-零集；又由\cref{theorem:ch01-1-35}，$\mathcal{L}^n$-a.e. 点处 $E$ 的密度为 $0$ 或 $1$，故 $\partial_*E$ 是 $\mathcal{L}^n$-零集，于是 $E-I\subseteq(E\cap O)\cup\partial_*E$ 也是 $\mathcal{L}^n$-零集。两步合起来即得 (ii)。 % XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-5-9; kind=motivation; 说明为何需要 I 与 O 的 Borel 性与 I 与 E 的几乎相等：把对 E 的积分换成对 I 的积分，并在切片中合法使用 Fubini
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-9-动机}
+\cref{theorem:ch05-5-23}的证明要沿直线切片并使用 Fubini 定理，被切片的函数必须是对某个可测集取特征函数得到的。若直接取 $\chi_E$，则切片 $t\mapsto\chi_E(z,t)$ 的变差与边界的交点之间的关系不直接；改取 $\chi_I$ 之后，$I$ 与 $E$ 只相差一个 Lebesgue 零集，两者给出同一个 $L^1$ 函数，而 $I$ 与 $\partial_*E$ 的几何关系（$I$、$O$、$\partial_*E$ 构成分解）正是论证所需要的。% XREF internal
+
+结论 (i) 的作用是把 $I$、$O$、$\partial_*E$ 都变成 Borel 集：这样 $x\mapsto\mathcal{L}^n(B(x,r)\cap C)$ 这类函数才有可测性，\cref{definition:ch05-5-13}中的极限才有意义，$\mathcal{H}^{n-1}(\partial_*E\cap K)$ 也才有定义。结论 (ii) 的作用是把 $E$ 上的积分换成 $I$ 上的积分：$\int_E\diver(\phi e_n)\diff x=\int_I\diver(\phi e_n)\diff x$ 就是由它得到的。 % XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch05-5-9; kind=hypotheses; 逐条分析可测性、Borel 包的作用与局部有限周长假设在此处并不需要
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-9-条件}
+\begin{enumerate}[(i)]
+\item 引理只假设 $E$ 为 $\mathcal{L}^n$-可测集，不要求 $E$ 具有局部有限周长。结论 (i) 与 (ii) 都只用到 Lebesgue 测度的正则性与密度定理，与周长的有限性无关。
+\item 条件「$E$ 可测」在证明 (3) 中用于构造 Borel 集 $C$：不可测集的补集没有 Borel 包可用，$I$ 与 $O$ 的 Borel 性随之失效。
+\item 证明 (3) 中把上极限限制在有理半径上取，依赖于 $r\mapsto\mathcal{L}^n(B(x,r)\cap C)$ 的连续性。若把球换成一般的集合族，这一化简不成立，须另行论证。
+\item 结论 (ii) 不能加强为 $I=E$：取 $E$ 为以有理点为心、半径充分小的开球的并，则 $E$ 稠密且 $\mathcal{L}^n(E)<\infty$，此时 $I$ 与 $E$ 可以相差一个正测度集。结论中的等号只在 $\mathcal{L}^n$-a.e. 意义下成立。
+\end{enumerate}
+\end{remark}
+\begin{theorem}[有限周长的判别准则]\label{theorem:ch05-5-23}
+设 $n\geqslant2$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集，$\partial_*E$ 为 $E$ 的测度论边界（\cref{definition:ch05-5-7}），$\mathcal{H}^{n-1}$ 为 $\mathbb{R}^n$ 上的 $(n-1)$ 维 Hausdorff 测度。则 $E$ 在 $\mathbb{R}^n$ 中具有局部有限周长，当且仅当 % XREF internal
+\begin{align*}
+\mathcal{H}^{n-1}(K\cap\partial_*E)<\infty\qquad(\star)
+\end{align*}
+对每个紧集 $K\subseteq\mathbb{R}^n$ 成立。
+\end{theorem}
+
+\begin{proof}
+（1）先设 $(\star)$ 成立。固定 $a>0$ 并令
+\begin{align*}
+U:=(-a,a)^n\subseteq\mathbb{R}^n.
+\end{align*}
+为简化记号，仍记 $z=x'\in\mathbb{R}^{n-1}$、$t=x_n\in\mathbb{R}$。由\cref{lemma:ch05-5-8}与假设 $(\star)$ 得 % XREF internal
+\begin{align*}
+\int_{\mathbb{R}^{n-1}}N(P|U\cap\partial_*E,z)\diff z\leqslant\mathcal{H}^{n-1}(U\cap\partial_*E)<\infty.\qquad(\star\star)
+\end{align*}
+对每个 $z\in\mathbb{R}^{n-1}$ 定义
+\begin{align*}
+f^z(t):=\chi_I(z,t)\qquad(t\in\mathbb{R}).
+\end{align*}
+取 $\phi\in C_c^1(U)$ 且 $\lvert\phi\rvert\leqslant1$，计算
+\begin{align*}
+\int_E\diver(\phi e_n)\diff x&=\int_I\diver(\phi e_n)\diff x=\int_I\phi_{x_n}\diff x\\
+&=\int_{\mathbb{R}^{n-1}}\Bigl[\int_{\mathbb{R}}f^z(t)\phi_{x_n}(z,t)\diff t\Bigr]\diff z\qquad(\star\star\star)\\
+&\leqslant\int_V\operatorname{ess}V_{-a}^{a}f^z\diff z,
+\end{align*}
+其中 $V:=(-a,a)^{n-1}\subseteq\mathbb{R}^{n-1}$。
+
+% SUPPLEMENT: parent=theorem:ch05-5-23; kind=proof; 补出 (⋆⋆⋆) 中三个等号与最后不等号的依据：I 与 E 相差零测集、散度的分量形式、Fubini 定理，以及本质变差对分布导数的控制
+（2）逐项核对 $(\star\star\star)$ 与最后的不等号。第一个等号用到 $\mathcal{L}^n(E\triangle I)=0$（\cref{lemma:ch05-5-9}(ii)），故 $\chi_I=\chi_E$ 于 $\mathcal{L}^n$-a.e. 成立，两个积分相等；第二个等号由 $\diver(\phi e_n)=\phi_{x_n}$ 得到；第三个等号是 Fubini 定理，依据是 $\phi$ 的支集为 $U$ 的紧子集，故 $(z,t)\mapsto f^z(t)\phi_{x_n}(z,t)$ 在 $\mathbb{R}^{n-1}\times\mathbb{R}$ 上可积。% XREF internal
+
+最后的不等号逐 $z$ 成立。固定 $z\in\mathbb{R}^{n-1}$，则 $f^z|_{(-a,a)}\in L^1(-a,a)$，且 $\psi:=\phi(z,\cdot)\in C_c^1((-a,a))$、$\lvert\psi\rvert\leqslant1$、$\psi'=\phi_{x_n}(z,\cdot)$。由\cref{theorem:ch05-5-21}，$f^z$ 在 $(-a,a)$ 上的分布导数测度满足 $\lVert Df^z\rVert(-a,a)=\operatorname{ess}V_{-a}^{a}f^z$；而分布导数对检验函数的取值满足% XREF internal
+\begin{align*}
+\Bigl\lvert\int_{\mathbb{R}}f^z(t)\phi_{x_n}(z,t)\diff t\Bigr\rvert=\bigl\lvert Df^z(\psi)\bigr\rvert\leqslant\lVert Df^z\rVert(-a,a)\lVert\psi\rVert_{L^{\infty}}\leqslant\operatorname{ess}V_{-a}^{a}f^z ,
+\end{align*}
+即得所要的不等式，其中 $\operatorname{ess}V_{-a}^{a}f^z$ 为 $f^z$ 在 $(-a,a)$ 上的本质变差（\cref{definition:ch05-5-11}）。又当 $z\notin V$ 时 $\phi(z,\cdot)\equiv0$，左端为 $0$，故对 $z$ 积分后右端只需在 $V$ 上积分。% XREF internal
+
+（3）对正整数 $k$ 与 $m$，定义
+\begin{align*}
+G(k)&:=\Bigl\{x\in\mathbb{R}^n\Bigm|\mathcal{L}^n\bigl(B(x,r)\cap O\bigr)\leqslant\frac{\alpha(n-1)}{3^{n+1}}r^n\ \text{对 }0<r<\frac3k\Bigr\},\\
+H(k)&:=\Bigl\{x\in\mathbb{R}^n\Bigm|\mathcal{L}^n\bigl(B(x,r)\cap I\bigr)\leqslant\frac{\alpha(n-1)}{3^{n+1}}r^n\ \text{对 }0<r<\frac3k\Bigr\},
+\end{align*}
+以及
+\begin{align*}
+G^{+}(k,m)&:=G(k)\cap\Bigl\{x\Bigm|x+se_n\in O\ \text{对 }0<s<\frac3m\Bigr\},\\
+G^{-}(k,m)&:=G(k)\cap\Bigl\{x\Bigm|x-se_n\in O\ \text{对 }0<s<\frac3m\Bigr\},\\
+H^{+}(k,m)&:=H(k)\cap\Bigl\{x\Bigm|x+se_n\in I\ \text{对 }0<s<\frac3m\Bigr\},\\
+H^{-}(k,m)&:=H(k)\cap\Bigl\{x\Bigm|x-se_n\in I\ \text{对 }0<s<\frac3m\Bigr\}.
+\end{align*}
+
+（4）断言 1：对 $k,m=1,2,\cdots$ 有
+\begin{align*}
+\mathcal{L}^{n-1}\bigl(P(G^{\pm}(k,m))\bigr)=\mathcal{L}^{n-1}\bigl(P(H^{\pm}(k,m))\bigr)=0 .
+\end{align*}
+断言 1 的证明：固定 $k,m$，写
+\begin{align*}
+G^{+}(k,m)=\bigcup_{j=-\infty}^{\infty}G_j,
+\end{align*}
+其中
+\begin{align*}
+G_j:=G^{+}(k,m)\cap\Bigl\{x\Bigm|\frac{j-1}{m}\leqslant x_n<\frac{j}{m}\Bigr\}.
+\end{align*}
+设 $z\in\mathbb{R}^{n-1}$、$0<r<\min\{\frac1k,\frac1m\}$ 且 $B(z,r)\cap P(G_j)\neq\varnothing$。则存在点 $b\in G_j\cap P^{-1}(B(z,r))\subseteq G(k)$，使得
+\begin{align*}
+b_n+\frac{r}{2}>\sup\bigl\{x_n\mid x\in G_j\cap P^{-1}(B(z,r))\bigr\}.
+\end{align*}
+于是由 $G^{+}(k,m)$ 的定义，
+\begin{align*}
+\Bigl\{y\Bigm|b_n+\frac{r}{2}\leqslant y_n\leqslant b_n+r\Bigr\}\cap P^{-1}\bigl(P(G_j)\cap B(z,r)\bigr)\subset O\cap B(b,3r).
+\end{align*}
+对上式两端取 $\mathcal{L}^n$ 测度，得
+\begin{align*}
+\frac{r}{2}\mathcal{L}^{n-1}\bigl(P(G_j)\cap B(z,r)\bigr)\leqslant\mathcal{L}^n\bigl(O\cap B(b,3r)\bigr)\leqslant\frac{\alpha(n-1)}{3^{n+1}}(3r)^n,
+\end{align*}
+因为 $b\in G(k)$。于是
+\begin{align*}
+\limsup_{r\to0}\frac{\mathcal{L}^{n-1}\bigl(P(G_j)\cap B(z,r)\bigr)}{\alpha(n-1)r^{n-1}}\leqslant\frac23
+\end{align*}
+对一切 $z\in\mathbb{R}^{n-1}$ 成立。由此可得
+\begin{align*}
+\mathcal{L}^{n-1}(P(G_j))=0\qquad(j=0,\pm1,\pm2,\cdots);
+\end{align*}
+从而 $\mathcal{L}^{n-1}\bigl(P(G^{+}(k,m))\bigr)=0$。对其余三种情形作相应的论证，得到
+\begin{align*}
+\mathcal{L}^{n-1}\bigl(P(G^{-}(k,m))\bigr)=\mathcal{L}^{n-1}\bigl(P(H^{\pm}(k,m))\bigr)=0
+\end{align*}
+对一切 $k,m$ 成立。
+
+% SUPPLEMENT: parent=theorem:ch05-5-23; kind=proof; 补出点 b 的选取、包含关系的逐项核验、左右两端 L^n 测度的计算，以及由密度上界推出 L^{n-1}(P(G_j))=0 的论证
+（5）先补出点 $b$ 的选取。由 $B(z,r)\cap P(G_j)\neq\varnothing$ 知 $G_j\cap P^{-1}(B(z,r))\neq\varnothing$，故其中的上确界是有限实数（不超过 $\frac{j}{m}$）；取 $b\in G_j\cap P^{-1}(B(z,r))$ 使
+\begin{align*}
+b_n>\sup\bigl\{x_n\mid x\in G_j\cap P^{-1}(B(z,r))\bigr\}-\frac r2,
+\end{align*}
+即得所要的不等式。又 $G_j\subseteq G^{+}(k,m)\subseteq G(k)$，故 $b\in G(k)$。
+
+再核验包含关系。设 $y$ 属于左端，则 $P(y)\in P(G_j)\cap B(z,r)$，故存在 $b'\in G_j$ 使 $P(b')=P(y)$。由 $b'\in G_j\cap P^{-1}(B(z,r))$ 与 $b$ 的取法得 $b_n+\frac r2>b'_n$，而 $y_n\geqslant b_n+\frac r2$，故 $s:=y_n-b'_n>0$。又 $b'\in G_j$ 给出 $b'_n\geqslant\frac{j-1}{m}$，而 $b\in G_j$ 与 $y_n\leqslant b_n+r<\frac{j}{m}+r$ 给出 $y_n<\frac{j+1}{m}$，故
+\begin{align*}
+s=y_n-b'_n<\frac{j+1}{m}-\frac{j-1}{m}=\frac{2}{m}<\frac3m .
+\end{align*}
+于是 $y=b'+se_n$ 且 $0<s<\frac3m$，由 $b'\in G^{+}(k,m)$ 的定义得 $y\in O$。其次，由 $P(y)\in B(z,r)$ 与 $P(b)\in B(z,r)$ 得
+\begin{align*}
+\lvert y-b\rvert\leqslant\lvert y_n-b_n\rvert+\lvert P(y)-P(b)\rvert<r+2r=3r,
+\end{align*}
+故 $y\in B(b,3r)$。
+
+其次补出两端 $\mathcal{L}^n$ 测度的计算。左端的集合是「底」$P(G_j)\cap B(z,r)$ 与高度为 $\frac r2$ 的竖段的乘积，故由 Fubini 定理其 $\mathcal{L}^n$ 测度为 $\frac r2\mathcal{L}^{n-1}\bigl(P(G_j)\cap B(z,r)\bigr)$；右端的不等号来自 $b\in G(k)$ 与 $3r<\frac3k$（因 $r<\frac1k$）。
+
+最后补出由密度上界推出 $\mathcal{L}^{n-1}(P(G_j))=0$ 的论证。由\cref{theorem:ch02-2-5}（把 $n$ 换成 $n-1$），$\mathbb{R}^{n-1}$ 上 $\mathcal{H}^{n-1}=\mathcal{L}^{n-1}$，故上式即% XREF internal
+\begin{align*}
+\mathcal{H}^{n-1}\bigl(P(G_j)\cap B(z,r)\bigr)\leqslant\frac23\mathcal{H}^{n-1}\bigl(B(z,r)\bigr)
+\end{align*}
+对一切 $z\in\mathbb{R}^{n-1}$ 与 $0<r<\min\{\frac1k,\frac1m\}$ 成立（左端按外测度理解）。固定 $R>0$ 并记 $A:=P(G_j)\cap B(0,R)$。任取 $\varepsilon>0$，取开集 $V$ 使 $A\subseteq V\subseteq B(0,R+1)$ 且 $\mathcal{H}^{n-1}(V)\leqslant\mathcal{H}^{n-1}(A)+\varepsilon$。对每个 $z\in A$ 取 $0<r(z)<\min\{\frac1k,\frac1m\}$ 使 $B(z,r(z))\subseteq V$；球族 $\{B(z,r(z))\}_{z\in A}$ 是 $A$ 的细覆盖，由\cref{theorem:ch01-1-25}存在其中可数不交子族 $\{B_i\}_{i=1}^{\infty}$，使得 $A-\bigcup_iB_i\subseteq\limsup_{i}\hat B_i$；又 $\sum_i\mathcal{H}^{n-1}(\hat B_i)\leqslant2^{n-1}\mathcal{H}^{n-1}(V)<\infty$，故 $\mathcal{H}^{n-1}\bigl(\limsup_{i}\hat B_i\bigr)=0$，即 $A$ 与其并集只相差一个 $\mathcal{H}^{n-1}$-零集。于是 % XREF internal
+\begin{align*}
+\mathcal{H}^{n-1}(A)&\leqslant\sum_{i=1}^{\infty}\mathcal{H}^{n-1}(A\cap B_i)\leqslant\frac23\sum_{i=1}^{\infty}\mathcal{H}^{n-1}(B_i)\\
+&\leqslant\frac23\mathcal{H}^{n-1}(V)\leqslant\frac23\bigl(\mathcal{H}^{n-1}(A)+\varepsilon\bigr),
+\end{align*}
+其中第三个不等号用到 $B_i$ 两两不交且都含于 $V$。令 $\varepsilon\to0$ 得 $\mathcal{H}^{n-1}(A)=0$，再令 $R\to\infty$ 得 $\mathcal{H}^{n-1}(P(G_j))=0$，即 $\mathcal{L}^{n-1}(P(G_j))=0$。
+
+（6）其余三种情形。把上述论证中的 $e_n$ 换成 $-e_n$ 即得 $P(G^{-}(k,m))$ 的结论：此时竖段取为 $b_n-r\leqslant y_n\leqslant b_n-\frac r2$，点 $b$ 取为 $G_j\cap P^{-1}(B(z,r))$ 中接近下确界者，并注意 $G^{-}(k,m)$ 的定义要求 $x-se_n\in O$。把 $G$ 换成 $H$、$O$ 换成 $I$ 即得 $P(H^{\pm}(k,m))$ 的结论：$H(k)$ 与 $G(k)$ 的定义只差 $O$ 与 $I$ 的互换，而上述论证只用到 $b\in G(k)$ 这一事实以及 $G^{\pm}(k,m)$、$H^{\pm}(k,m)$ 各自的定义。
+
+（7）现设
+\begin{align*}
+z\in V-\bigcup_{k,m=1}^{\infty}P\bigl[G^{+}(k,m)\cup G^{-}(k,m)\cup H^{+}(k,m)\cup H^{-}(k,m)\bigr]\qquad(\star\star\star\star)
+\end{align*}
+且 $N(P|U\cap\partial_*E,z)<\infty$。设 $-a<t_1<\cdots<t_{m+1}<a$ 是 $f^z$ 的近似连续点。注意 $\lvert f^z(t_{j+1})-f^z(t_j)\rvert\neq0$ 当且仅当 $\lvert f^z(t_{j+1})-f^z(t_j)\rvert=1$。在后一情形，为确定起见设 $(z,t_j)\in I$，但 $(z,t_{j+1})\notin I$。由于 $t_{j+1}$ 是 $f^z$ 的近似连续点，且 $\mathbb{R}^n-(O\cup I)=\partial_*E$，由 $N(P|U\cap\partial_*E,z)$ 的有限性推出 $t_{j+1}$ 的每个邻域必含有点 $s$，使得 $(z,s)\in O$ 且 $f^z$ 在 $s$ 处近似连续。于是
+\begin{align*}
+\operatorname{ess}V_{-a}^{a}f^z=\sup\Bigl\{\sum_{j=1}^{m}\lvert f^z(t_{j+1})-f^z(t_j)\rvert\Bigr\},
+\end{align*}
+其中上确界取遍满足 $-a<t_1<\cdots<t_{m+1}<a$、$(z,t_j)\in(O\cup I)$ 且 $f^z$ 在每个 $t_j$ 处近似连续的点组。
+
+% SUPPLEMENT: parent=theorem:ch05-5-23; kind=proof; 补出上述段落的三个依据：特征函数只取 0 与 1、由密度与纤维有限性找到 O 中的近似连续点、以及上确界可在 (O∪I) 中的点组上取到
+（8）补出（7）中三段论断的依据。
+
+其一，因 $f^z=\chi_I$ 只取 $0$ 与 $1$ 两个值，$\lvert f^z(t_{j+1})-f^z(t_j)\rvert$ 只能取 $0$ 或 $1$，故「$\neq0$」与「$=1$」等价。
+
+其二，设 $\lvert f^z(t_{j+1})-f^z(t_j)\rvert=1$，$(z,t_j)\in I$ 而 $(z,t_{j+1})\notin I$。由 $\mathbb{R}^n=I\cup O\cup\partial_*E$ 得 $(z,t_{j+1})\in O\cup\partial_*E$。因 $f^z$ 在 $t_{j+1}$ 处近似连续且 $f^z(t_{j+1})=\chi_I(z,t_{j+1})=0$，集合
+\begin{align*}
+\{t\mid f^z(t)=0\}=\{t\mid(z,t)\in O\cup\partial_*E\}
+\end{align*}
+在 $t_{j+1}$ 处具有密度 $1$。又由 $N(P|U\cap\partial_*E,z)<\infty$ 知集合 $\{t\in(-a,a)\mid(z,t)\in\partial_*E\}$ 是有限集，故对 $t_{j+1}$ 的每个邻域 $J$，集合 $\{t\in J\mid(z,t)\in O\}$ 的 $\mathcal{L}^1$ 测度为正，且其中 $\mathcal{L}^1$-a.e. 点都是 $f^z$ 的 Lebesgue 点，从而是 $f^z$ 的近似连续点。于是 $J$ 中含有满足 $(z,s)\in O$ 且 $f^z$ 在 $s$ 处近似连续的 $s$。
+
+其三，由本质变差的定义（\cref{definition:ch05-5-11}），$\operatorname{ess}V_{-a}^{a}f^z$ 等于一切由近似连续点组成的分割上变差和的上确界。若某个分割点 $t_j$ 落在 $\partial_*E$ 上，则由其二（用于 $t_j$）可在充分小的邻域内把它换成 $s_j$，使得 $(z,s_j)\in O$、$f^z$ 在 $s_j$ 处近似连续，且 $f^z(s_j)=f^z(t_j)$（因为 $(z,s_j)\in O$ 蕴含 $(z,s_j)\notin I$，故 $f^z(s_j)=0=f^z(t_j)$，后一等号来自 $(z,t_j)\notin I$）。取 $s_j$ 与 $t_j$ 足够接近即可保持分割的严格递增性与各项数值不变，故上确界可在满足 $(z,t_j)\in(O\cup I)$ 的点组上取到。 % XREF internal
+
+（9）断言 2：若 $(z,u)\in I$、$(z,v)\in O$ 且 $u<v$，则存在 $u<t<v$ 使 $(z,t)\in\partial_*E$。
+
+断言 2 的证明：若不然，则对一切 $u<t<v$ 有 $(z,t)\in(O\cup I)$。注意
+\begin{align*}
+I\subseteq\bigcup_{k=1}^{\infty}G(k),\qquad O\subseteq\bigcup_{k=1}^{\infty}H(k),
+\end{align*}
+且集合 $G(k)$、$H(k)$ 递增且闭。于是存在 $k_0$ 使 $(z,u)\in G(k_0)$、$(z,v)\in H(k_0)$。又 $H(k_0)\cap G(k_0)=\varnothing$，故
+\begin{align*}
+u_0:=\sup\{t\mid(z,t)\in G(k_0),\ t<v\}<v .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch05-5-23; kind=proof; 补出 I 与 O 被 G(k) 与 H(k) 覆盖、G(k) 与 H(k) 的单调性与闭性、两者互不相交（含常数比较）以及 u_0<v 的依据
+（10）补出（9）中的四项论断。
+
+其一，$I\subseteq\bigcup_kG(k)$。设 $x\in I$。由定义，$\mathcal{L}^n(B(x,r)-E)/r^n\to0$，故存在 $\delta>0$，使得 $0<r<\delta$ 时 $\mathcal{L}^n(B(x,r)-E)\leqslant\frac{\alpha(n-1)}{3^{n+1}}r^n$。又由 $\mathcal{L}^n(E\triangle I)=0$（\cref{lemma:ch05-5-9}(ii)）与 $O\cap I=\varnothing$ 得 $\mathcal{L}^n(O\cap E)=0$，故 % XREF internal
+\begin{align*}
+\mathcal{L}^n\bigl(B(x,r)\cap O\bigr)=\mathcal{L}^n\bigl(B(x,r)\cap O-E\bigr)\leqslant\mathcal{L}^n\bigl(B(x,r)-E\bigr);
+\end{align*}
+取 $k$ 使 $\frac3k<\delta$ 即得 $x\in G(k)$。同理由 $\mathcal{L}^n(I-E)=0$ 得 $\mathcal{L}^n(B(x,r)\cap I)\leqslant\mathcal{L}^n(B(x,r)\cap E)$，故 $O\subseteq\bigcup_kH(k)$。
+
+其二，$G(k)$ 递增。若 $k\leqslant k'$，则 $\frac3{k'}\leqslant\frac3k$，而 $G(k)$ 的定义中要求不等式对更多半径成立，故 $G(k)\subseteq G(k')$。$H(k)$ 同理。
+
+其三，$G(k)$ 与 $H(k)$ 是闭集。固定 $r>0$。映射 $x\mapsto\mathcal{L}^n(B(x,r)\cap O)$ 是 $\chi_O$ 与 $\chi_{B(0,r)}$ 的卷积，故连续，于是 $\{x\mid\mathcal{L}^n(B(x,r)\cap O)\leqslant\frac{\alpha(n-1)}{3^{n+1}}r^n\}$ 是闭集；$G(k)$ 是这些闭集对 $0<r<\frac3k$ 的交，故为闭集。$H(k)$ 同理。
+
+其四，$H(k)\cap G(k)=\varnothing$。若 $x$ 属于两者，则对 $0<r<\frac3k$ 有
+\begin{align*}
+\alpha(n)r^n=\mathcal{L}^n\bigl(B(x,r)\bigr)&\leqslant\mathcal{L}^n\bigl(B(x,r)\cap I\bigr)+\mathcal{L}^n\bigl(B(x,r)\cap O\bigr)+\mathcal{L}^n(\partial_*E)\\
+&\leqslant\frac{2\alpha(n-1)}{3^{n+1}}r^n,
+\end{align*}
+其中用到 $\mathbb{R}^n=I\cup O\cup\partial_*E$ 与 $\mathcal{L}^n(\partial_*E)=0$。但 $\alpha(n)>\frac{2\alpha(n-1)}{3^{n+1}}$：由
+\begin{align*}
+\alpha(n)=\alpha(n-1)\int_{-1}^{1}(1-t^2)^{\frac{n-1}{2}}\diff t\geqslant\alpha(n-1)\,2^{1-\frac n2}
+\end{align*}
+与 $2^{1-\frac n2}3^{n+1}=6\bigl(\frac{3}{\sqrt2}\bigr)^n\geqslant2$（$n\geqslant2$）即得。矛盾。
+
+其五，$u_0<v$。由 $(z,u)\in G(k_0)$ 与 $u<v$ 知上式中的上确界不小于 $u$，特别地该集合非空。若 $u_0=v$，则可取 $t_i<v$、$t_i\to v$ 使 $(z,t_i)\in G(k_0)$，由 $G(k_0)$ 闭得 $(z,v)\in G(k_0)$，与 $(z,v)\in H(k_0)$ 及 $G(k_0)\cap H(k_0)=\varnothing$ 矛盾。
+
+（11）令
+\begin{align*}
+v_0:=\inf\{t\mid(z,t)\in H(k_0),\ t>u_0\}.
+\end{align*}
+则
+\begin{align*}
+(z,u_0)\in G(k_0),\qquad(z,v_0)\in H(k_0),\qquad u\leqslant u_0<v_0\leqslant v,
+\end{align*}
+且
+\begin{align*}
+\{(z,t)\mid u_0<t<v_0\}\cap\bigl[H(k_0)\cup G(k_0)\bigr]=\varnothing .
+\end{align*}
+其次，存在 $u_0<s_1<t_1<v_0$ 使 $(z,s_1)\in I$、$(z,t_1)\in O$；这是 $(\star\star\star\star)$ 的推论。按（9）与上面的方式论证，可找到 $k_1>k_0$ 与数 $u_1,v_1$，使得
+\begin{align*}
+u_0<u_1<v_1<v_0,\qquad(z,u_1)\in G(k_1),\qquad(z,v_1)\in H(k_1),
+\end{align*}
+且当 $u_1<t<v_1$ 时 $(z,t)\notin H(k_1)\cup G(k_1)$。
+
+% SUPPLEMENT: parent=theorem:ch05-5-23; kind=proof; 补出 u_0 与 v_0 属于相应集合、区间与 G∪H 不交、由 (⋆⋆⋆⋆) 与纤维有限性找到 I 与 O 中的点，以及 k_1,u_1,v_1 的构造
+（12）补出（11）中的细节。
+
+首先，$(z,u_0)\in G(k_0)$：由 $u_0$ 的定义可取 $t_i<v$、$t_i\to u_0$ 使 $(z,t_i)\in G(k_0)$，再由 $G(k_0)$ 闭即得。$(z,v_0)\in H(k_0)$：由 $(z,v)\in H(k_0)$ 与 $u_0<v$ 知定义 $v_0$ 的集合非空，而 $H(k_0)$ 闭，故下确界在该集合上取到。又 $(z,u)\in G(k_0)$ 给出 $u\leqslant u_0$；$G(k_0)\cap H(k_0)=\varnothing$ 与 $(z,v_0)\in H(k_0)$ 给出 $u_0\neq v_0$，而按定义 $v_0>u_0$；最后 $v$ 属于定义 $v_0$ 的集合，故 $v_0\leqslant v$。
+
+其次，$\{(z,t)\mid u_0<t<v_0\}$ 与 $H(k_0)\cup G(k_0)$ 不交。若 $u_0<t<v_0$ 且 $(z,t)\in G(k_0)$，则由 $t<v_0\leqslant v$ 知 $t$ 属于定义 $u_0$ 的集合，故 $t\leqslant u_0$，矛盾。若 $u_0<t<v_0$ 且 $(z,t)\in H(k_0)$，则由 $t>u_0$ 知 $t$ 属于定义 $v_0$ 的集合，故 $t\geqslant v_0$，矛盾。
+
+再次，存在 $u_0<s_1<t_1<v_0$ 使 $(z,s_1)\in I$、$(z,t_1)\in O$。由 $(z,u_0)\in G(k_0)$ 与 $(\star\star\star\star)$ 知 $(z,u_0)\notin G^{+}(k_0,l)$ 对每个 $l\geqslant1$ 成立，故对每个 $l$ 存在 $0<s<\frac3l$ 使 $(z,u_0+s)\notin O$，即 $(z,u_0+s)\in I\cup\partial_*E$。由 $N(P|U\cap\partial_*E,z)<\infty$，纤维中落在 $\partial_*E$ 的点只有有限个，故对一切充分大的 $l$ 有 $(z,u_0+s_l)\in I$；又 $s_l<\frac3l\to0$，故可取 $l$ 使 $u_0+s_l<v_0$，令 $s_1:=u_0+s_l$ 即得 $(z,s_1)\in I$ 与 $u_0<s_1<v_0$。同理由 $(z,v_0)\in H(k_0)$ 与 $(\star\star\star\star)$（用于 $H^{-}(k_0,l)$）知对每个 $l$ 存在 $0<s'<\frac3l$ 使 $(z,v_0-s')\notin I$，即 $(z,v_0-s')\in O\cup\partial_*E$；对充分大的 $l$ 即有 $(z,v_0-s'_l)\in O$，令 $t_1:=v_0-s'_l$。必要时同时增大两个指标，可使 $s_1<t_1$。
+
+最后构造 $k_1,u_1,v_1$。由 $(z,s_1)\in I\subseteq\bigcup_kG(k)$、$(z,t_1)\in O\subseteq\bigcup_kH(k)$ 以及 $G(k)$、$H(k)$ 的单调性，取 $k_1>k_0$ 使 $(z,s_1)\in G(k_1)$、$(z,t_1)\in H(k_1)$。令
+\begin{align*}
+u_1&:=\sup\{t\mid(z,t)\in G(k_1),\ t<t_1\},\\
+v_1&:=\inf\{t\mid(z,t)\in H(k_1),\ t>u_1\}.
+\end{align*}
+把前面关于 $u_0$、$v_0$ 的论证用于点 $(z,s_1)$、$(z,t_1)$ 与指标 $k_1$，即得 $(z,u_1)\in G(k_1)$、$(z,v_1)\in H(k_1)$、$s_1\leqslant u_1<v_1\leqslant t_1$，且 $\{(z,t)\mid u_1<t<v_1\}$ 与 $H(k_1)\cup G(k_1)$ 不交。于是 $u_0<s_1\leqslant u_1<v_1\leqslant t_1<v_0$，即得所要的结论。
+
+（13）继续上述构造，存在 $k_j\to\infty$ 与数列 $\{u_j\}_{j=1}^{\infty}$、$\{v_j\}_{j=1}^{\infty}$，使得
+\begin{align*}
+\begin{cases}
+u_0<u_1<\cdots,\qquad v_0>v_1>v_2\cdots,\\[2pt]
+u_j<v_j\qquad(j=1,2,\cdots),\\[2pt]
+(z,u_j)\in G(k_j),\qquad(z,v_j)\in H(k_j),\\[2pt]
+(z,t)\notin G(k_j)\cup H(k_j)\qquad\text{若 }u_j<t<v_j.
+\end{cases}
+\end{align*}
+取 $t$ 满足 $\lim_{j\to\infty}u_j\leqslant t\leqslant\lim_{j\to\infty}v_j$，并置 $y:=(z,t)$。则
+\begin{align*}
+y\notin\bigcup_{j=1}^{\infty}\bigl[G(k_j)\cup H(k_j)\bigr];
+\end{align*}
+从而
+\begin{align*}
+\limsup_{r\to0}\frac{\mathcal{L}^n\bigl(B(y,r)\cap E\bigr)}{r^n}\geqslant\frac{\alpha(n-1)}{3^{n+1}}
+\end{align*}
+且
+\begin{align*}
+\limsup_{r\to0}\frac{\mathcal{L}^n\bigl(B(y,r)-E\bigr)}{r^n}\geqslant\frac{\alpha(n-1)}{3^{n+1}} .
+\end{align*}
+因此 $y\in\partial_*E$。
+
+% SUPPLEMENT: parent=theorem:ch05-5-23; kind=proof; 补出归纳构造、两个极限的比较（含两个极限相等时的处理）以及由 y∉G(k_j)∪H(k_j) 推出两个密度下界的论证
+（14）补出（13）中的归纳构造。把（12）的构造用于区间 $(u_j,v_j)$ 与指标 $k_j$，得到 $k_{j+1}>k_j$ 与 $u_j<u_{j+1}<v_{j+1}<v_j$，且 $(z,u_{j+1})\in G(k_{j+1})$、$(z,v_{j+1})\in H(k_{j+1})$、区间 $(u_{j+1},v_{j+1})$ 与 $G(k_{j+1})\cup H(k_{j+1})$ 不交。归纳即得所述数列；因 $k_j$ 严格递增，$k_j\to\infty$。又 $u_j$ 递增、$v_j$ 递减且 $u_j<v_j$，故两个极限存在且 $\lim_ju_j\leqslant\lim_jv_j$。
+
+若 $\lim_ju_j<\lim_jv_j$，取 $t$ 严格介于两者之间，则对每个 $j$ 有 $u_j<t<v_j$，故 $(z,t)\notin G(k_j)\cup H(k_j)$，于是下面的密度估计给出 $y\in\partial_*E$。若 $\lim_ju_j=\lim_jv_j=:t$，则对每个 $j$ 取 $t_j\in(u_j,v_j)$，则 $t_j\to t$ 且 $(z,t_j)\notin G(k_j)\cup H(k_j)$，故同样的密度估计给出 $(z,t_j)\in\partial_*E$；由 $N(P|U\cap\partial_*E,z)<\infty$，纤维中落在 $\partial_*E$ 的点只有有限个，故当 $j$ 充分大时 $(z,t_j)=(z,t)$，于是仍有 $y\in\partial_*E$，而两个密度下界由 $\partial_*E$ 的定义直接给出。
+
+最后补出两个密度估计。对每个 $j$，由 $y\notin G(k_j)$ 与 $G(k_j)$ 的定义，存在 $0<r<\frac3{k_j}$ 使
+\begin{align*}
+\mathcal{L}^n\bigl(B(y,r)\cap O\bigr)>\frac{\alpha(n-1)}{3^{n+1}}r^n .
+\end{align*}
+又由 $\mathcal{L}^n(O\cap E)=0$ 得 $\mathcal{L}^n(B(y,r)\cap O)=\mathcal{L}^n(B(y,r)\cap O-E)\leqslant\mathcal{L}^n(B(y,r)-E)$，故
+\begin{align*}
+\limsup_{r\to0}\frac{\mathcal{L}^n(B(y,r)-E)}{r^n}\geqslant\frac{\alpha(n-1)}{3^{n+1}} .
+\end{align*}
+同理，由 $y\notin H(k_j)$ 得存在 $0<r<\frac3{k_j}$ 使 $\mathcal{L}^n(B(y,r)\cap I)>\frac{\alpha(n-1)}{3^{n+1}}r^n$，而 $\mathcal{L}^n(I-E)=0$ 给出 $\mathcal{L}^n(B(y,r)\cap I)\leqslant\mathcal{L}^n(B(y,r)\cap E)$，故第二个密度下界也成立。两个下界说明 $E$ 与 $\mathbb{R}^n-E$ 在 $y$ 处的上密度都为正，即 $y\in\partial_*E$。
+
+（15）现在由断言 2，若 $z$ 满足 $(\star\star\star\star)$，则
+\begin{align*}
+\operatorname{ess}V_{-a}^{a}f^z&\leqslant\operatorname{Card}\bigl\{t\mid-a<t<a,\ (z,t)\in\partial_*E\bigr\}\\
+&=N(P|U\cap\partial_*E,z).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch05-5-23; kind=proof; 补出把每个非零跃度单射地对应到 ∂_*E 中不同点的论证
+（16）补出（15）的不等式。由（8）其三，$\operatorname{ess}V_{-a}^{a}f^z$ 是变差和
+\begin{align*}
+\sum_{j=1}^{m}\lvert f^z(t_{j+1})-f^z(t_j)\rvert
+\end{align*}
+在满足 $(z,t_j)\in(O\cup I)$ 且 $f^z$ 于各 $t_j$ 处近似连续的点组上的上确界。设某个这样的点组给出和式，并设第 $j$ 项非零，则 $\lvert f^z(t_{j+1})-f^z(t_j)\rvert=1$。不妨设 $(z,t_j)\in I$、$(z,t_{j+1})\notin I$；由 $\mathbb{R}^n=I\cup O\cup\partial_*E$ 得 $(z,t_{j+1})\in O\cup\partial_*E$。若 $(z,t_{j+1})\in O$，则由断言 2（用于 $u=t_j$、$v=t_{j+1}$）存在 $t_j<\tau_j<t_{j+1}$ 使 $(z,\tau_j)\in\partial_*E$；若 $(z,t_{j+1})\in\partial_*E$，则取 $\tau_j:=t_{j+1}$。两种情形下 $\tau_j$ 都落在互不相交的区间 $(t_j,t_{j+1}]$ 中，故不同的非零项对应 $\partial_*E\cap(-a,a)$ 中不同的点。于是和式不超过 $\operatorname{Card}\{t\mid-a<t<a,\ (z,t)\in\partial_*E\}$，取上确界即得不等式。
+
+（17）于是 $(\star\star\star)$ 蕴含
+\begin{align*}
+\int_V\operatorname{ess}V_{-a}^{a}f^z\diff z\leqslant\int_VN(P|U\cap\partial_*E,z)\diff z\leqslant\mathcal{H}^{n-1}(U\cap\partial_*E)<\infty,
+\end{align*}
+且对其他坐标方向有相应的不等式。根据\cref{theorem:ch05-5-22}，$E$ 因此具有局部有限周长。% XREF p=255 "According to Theorem 5.22, E therefore has locally finite perimeter"
+
+% SUPPLEMENT: parent=theorem:ch05-5-23; kind=proof; 补出对 z 积分的例外集处理、其他坐标方向的重复方式，以及用定理 5.22 的充分性方向得到 BV_loc 的核对
+（18）补出（17）中的三步。
+
+其一，（15）的不等式对 $\mathcal{L}^{n-1}$-a.e. $z\in V$ 成立：$(\star\star\star\star)$ 除去的集合是 $\mathcal{L}^{n-1}$-零集（由（4）与（6）），而 $N(P|U\cap\partial_*E,z)<\infty$ 对 $\mathcal{L}^{n-1}$-a.e. $z$ 成立（由 $(\star\star)$ 与积分有限）。对 $z$ 积分即得第一个不等号，第二个不等号由\cref{lemma:ch05-5-8}(ii) 给出。% XREF internal
+
+其二，其他坐标方向：把 $e_n$ 换成 $e_k$，把分解 $x=(x',t)$ 换成「去掉第 $k$ 个坐标后的点与 $x_k$」，重复（1）至（17）的全部论证（这些论证只用到 $e_n$ 是标准坐标向量以及 $\mathbb{R}^n=\mathbb{R}^{n-1}\times\mathbb{R}$ 的分解，故对每个坐标方向同样成立）。记 $f_{(k)}^z$ 为把 $\chi_I$ 的除第 $k$ 个坐标外的坐标固定为 $z$、把第 $k$ 个坐标记为 $t$ 所得的一元函数，则对每个 $k=1,\cdots,n$ 与每个 $a>0$ 有
+\begin{align*}
+\int_{(-a,a)^{n-1}}\operatorname{ess}V_{-a}^{a}f_{(k)}^z\diff z<\infty,
+\end{align*}
+
+
+其三，用\cref{theorem:ch05-5-22}。取 $f:=\chi_I$，则 $f\in L^1_{\loc}(\mathbb{R}^n)$ 且 $f=\chi_E$ 于 $\mathcal{L}^n$-a.e.。对每个 $k=1,\cdots,n$、每个 $-\infty<a<b<\infty$ 与每个紧集 $K\subseteq\mathbb{R}^{n-1}$，取 $a'>0$ 使 $K\subseteq(-a',a')^{n-1}$ 且 $(a,b)\subseteq(-a',a')$；记 $f_{(k)}$ 为 $f$ 沿第 $k$ 个坐标的截口（\cref{section:ch05-10}；在\cref{theorem:ch05-5-22}中记作 $f_k$），由其二与本质变差关于区间的单调性得 % XREF internal
+\begin{align*}
+\int_K\operatorname{ess}V_a^bf_{(k)}\diff z\leqslant\int_{(-a',a')^{n-1}}\operatorname{ess}V_{-a'}^{a'}f_{(k)}^z\diff z<\infty,
+\end{align*}
+这正是\cref{theorem:ch05-5-22}的条件，故 $f\in\BV_{\loc}(\mathbb{R}^n)$，即 $\chi_E\in\BV_{\loc}(\mathbb{R}^n)$，亦即 $E$ 在 $\mathbb{R}^n$ 中具有局部有限周长。% XREF internal
+
+（19）必要性：$(\star)$ 的必要性由\cref{theorem:ch05-5-16}的 (i) 建立。% XREF p=255 "The necessity of (∗) was established in Theorem 5.16"
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-23; kind=motivation; 说明判别准则把变分条件化为几何条件、证明为何要沿直线切片、各组常数的作用，以及三步论证的路线
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-23-动机}
+局部有限周长是一个变分条件：它要求 $\chi_E$ 的分布导数是一个取值于 $\mathbb{R}^n$ 的 Radon 测度，即 $E$ 的周长测度在每个紧集上有限。本定理把它换成一个纯几何条件：测度论边界 $\partial_*E$ 的 $(n-1)$ 维 Hausdorff 测度在每个紧集上有限。条件的必要性来自\cref{theorem:ch05-5-16}的条款 (i)，即 Gauss--Green 定理；充分性是本节的主要内容，它说明边界在 $(n-1)$ 维意义下「不太大」就足以使周长为 Radon 测度。% XREF internal
+
+充分性的证明只能沿直线进行，因为 $BV$ 的一维刻画（\cref{theorem:ch05-5-22}）正是用函数在几乎每条直线上的本质变差来判定 $BV_{\loc}$。证明分三步。第一步，把 $U=(-a,a)^n$ 上的检验函数 $\phi$ 的散度积分写成沿直线的积分（$(\star\star\star)$），并用本质变差控制它；这一步把待证的周长估计化为对几乎每个 $z$ 估计一维函数 $f^z=\chi_I(z,\cdot)$ 的本质变差。第二步，证明这个本质变差被该直线与 $\partial_*E$ 的交点个数控制（即（15））：每一个非零跃度都夹着一个边界点。第三步，用\cref{lemma:ch05-5-8}把交点个数按 $z$ 积分，得到 $(\star\star)$ 所允许的界。% XREF internal
+
+证明中的常数分成两类。$3/k$ 与 $3/m$ 是两个尺度上限：$G(k)$、$H(k)$ 只检验半径小于 $3/k$ 的球，$G^{\pm}(k,m)$、$H^{\pm}(k,m)$ 只要求竖直方向距离小于 $3/m$ 的点落在 $O$ 或 $I$ 中。常数 $\frac{\alpha(n-1)}{3^{n+1}}$ 则是一个密度阈值：它远小于球的体积 $\alpha(n)r^n$，使得同时满足 $G(k)$ 与 $H(k)$ 的点不存在，也使得 $G^{\pm}(k,m)$ 上方的短竖段必须整段落入 $O$。因子 $\frac23$ 正是由 $\frac{\alpha(n-1)}{3^{n+1}}(3r)^n=\frac{\alpha(n-1)}{3}r^n$ 与竖段高度 $\frac r2$ 相比得到的，它小于 $1$，从而使（4）中的密度上界可以排除正测度的投影集。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-23; kind=hypotheses; 逐条分析可测性、条件的局部性、维数 n-1 的意义、条件不能减弱为 L^n(∂_*E)=0，以及两个方向各自的依据
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-23-条件}
+\begin{enumerate}[(i)]
+\item 假设 $E$ 为 $\mathcal{L}^n$-可测集，此外不要求任何正则性：$E$ 可以没有拓扑内部，边界可以不是 Lipschitz 的。测度论内部 $I$、测度论外部 $O$ 与 $\partial_*E$ 都是 Borel 集（\cref{lemma:ch05-5-9}(i)），故条件中的 $\mathcal{H}^{n-1}(K\cap\partial_*E)$ 有定义。% XREF internal
+\item 条件是对每个紧集 $K$ 提出的，即要求 $\mathcal{H}^{n-1}\llcorner\partial_*E$ 是 Radon 测度。这与结论的局部性匹配：局部有限周长只要求 $\lVert\partial E\rVert$ 在每个紧集上有限，而不要求 $\lVert\partial E\rVert(\mathbb{R}^n)<\infty$。若把条件加强为 $\mathcal{H}^{n-1}(\partial_*E)<\infty$，则结论相应地加强为 $\chi_E\in\BV(\mathbb{R}^n)$。
+\item 维数 $n-1$ 不能改动。把维数换成 $0$（即要求 $\operatorname{Card}(K\cap\partial_*E)<\infty$）会使条件过强：局部有限周长集的测度论边界沿一条直线可以有无穷多个点。把维数换成 $s\geqslant n$ 时，由 $\mathcal{L}^n(\partial_*E)=0$ 得 $\mathcal{H}^s(K\cap\partial_*E)=0$，条件自动满足而不提供信息。
+\item 条件不能减弱为 $\mathcal{L}^n(\partial_*E)=0$。由\cref{theorem:ch01-1-35}，对每个 $\mathcal{L}^n$-可测集 $E$ 都有 $\mathcal{L}^n(\partial_*E)=0$（这一事实在\cref{lemma:ch05-5-9}的证明中已用到），故该条件对一切可测集成立，不能刻画有限周长。取 $n=2$ 与 $E:=\bigcup_{j\in\mathbb{Z}}\bigl([2j,2j+1]\times[0,1]\bigr)$，则 $\mathcal{L}^2(\partial_*E)=0$，而 $\mathcal{H}^1(\partial_*E\cap K)=\infty$ 对每个含无穷多个这些小正方形边界的紧集 $K$ 成立，故 $E$ 不具有局部有限周长。% XREF internal
+\item 两个方向的依据不同：必要性只用\cref{theorem:ch05-5-16}的条款 (i)，不涉及本节的其他结果；充分性用到\cref{lemma:ch05-5-8}、\cref{lemma:ch05-5-9}与\cref{theorem:ch05-5-22}，其中\cref{theorem:ch05-5-22}是把一维估计提升为 $BV_{\loc}$ 的唯一入口。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\end{document}

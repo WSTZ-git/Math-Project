@@ -1,0 +1,541 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+% 章首导语：原书印刷页 101，位于 3.1 节标题之前。
+本章研究 Lipschitz 连续映射
+\begin{align*}
+f:\mathbb{R}^n\to\mathbb{R}^m,
+\end{align*}
+并推导相应的变量替换公式。按 $n$ 与 $m$ 的相对大小，情形本质上分为两类。
+
+若 $m\geqslant n$，\textbf{面积公式}断言：$f(A)$ 的 $n$ 维测度（计重数）可以由在 $A$ 上积分 $f$ 的相应 Jacobi 行列式算出。
+
+若 $m\leqslant n$，\textbf{余面积公式}则断言：$f$ 的水平集的 $n-m$ 维测度的积分，可以由积分 Jacobi 行列式算出。这一断言是 Fubini 定理的深远推广。（「coarea」一词的读音与常见拼写均为「co-area」。）
+
+本章从\cref{section:ch03-01}开始，详细研究 Lipschitz 连续函数的可微性并证明 Rademacher 定理；在\cref{section:ch03-02}中讨论从 $\mathbb{R}^n$ 到 $\mathbb{R}^m$ 的线性映射并引入 Jacobi 行列式；面积公式在\cref{section:ch03-03}中证明，余面积公式在\cref{section:ch03-04}中证明。% XREF p=116 "We begin in Section 3.1 with a detailed study of the differentiability" | p=116 "In Section 3.2 we discuss linear maps from R^n to R^m and introduce Jacobians" | p=116 "The area formula is proved in Section 3.3" | p=116 "the coarea formula in Section 3.4"
+
+\section{Lipschitz 函数与 Rademacher 定理}\label{section:ch03-01}
+
+\subsection{Lipschitz 连续函数}\label{subsection:ch03-01-1}
+
+本节回顾并略微推广\cref{section:ch02-04}中的若干术语。% XREF p=116 "We recall and extend slightly some terminology from Section 2.4."
+
+\begin{definition}[Lipschitz 连续]\label{definition:ch03-3-1}
+设 $n,m$ 为正整数，$A\subseteq\mathbb{R}^n$ 为非空集合，$f:A\to\mathbb{R}^m$ 为映射。
+\begin{enumerate}[(i)]
+\item 若存在常数 $C$，使得对一切 $x,y\in A$ 成立
+\begin{align*}
+\lvert f(x)-f(y)\rvert\leqslant C\lvert x-y\rvert,\qquad(\star)
+\end{align*}
+则称 $f$ 在 $A$ 上是 \textbf{Lipschitz 连续}的。
+\item 设 $f$ 在 $A$ 上 Lipschitz 连续。使得 ($\star$) 对一切 $x,y\in A$ 成立的最小常数 $C$ 称为 $f$ 的 \textbf{Lipschitz 常数}，并记为
+\begin{align*}
+\Lip(f):=\sup\left\{\frac{\lvert f(x)-f(y)\rvert}{\lvert x-y\rvert}\Biggm|\ x,y\in A,\ x\neq y\right\};
+\end{align*}
+当 $A$ 至多含一个点时，约定 $\Lip(f):=0$。于是
+\begin{align*}
+\lvert f(x)-f(y)\rvert\leqslant\Lip(f)\lvert x-y\rvert\qquad(x,y\in A).
+\end{align*}
+\item 若对每个紧集 $K\subseteq A$ 存在常数 $C_K$，使得对一切 $x,y\in K$ 成立
+\begin{align*}
+\lvert f(x)-f(y)\rvert\leqslant C_K\lvert x-y\rvert,
+\end{align*}
+则称 $f:A\to\mathbb{R}^m$ 是 \textbf{局部 Lipschitz 连续}的。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch03-3-1; kind=motivation; 说明 Lipschitz 条件作为连续性的定量形式、Lip(f) 的最优常数含义，以及局部化版本为何适合本章的局部性结论
+\begin{remark}\phantomsection\label{remark:ch03-def-3-1-动机}
+Lipschitz 条件是连续性的定量形式：它要求差商 $\lvert f(x)-f(y)\rvert/\lvert x-y\rvert$ 在整个 $A$ 上一律有界，因而同时给出连续性、一致连续性，以及「增量由距离线性控制」这一可加估计。变量替换公式正需要这种控速条件：在用 Jacobi 行列式对 $f$ 积分之前，必须先排除 $f$ 把零测集映成正测集的可能，而 Lipschitz 条件恰好保证这一点，本章后两节对此反复使用。
+
+常数 $\Lip(f)$ 取为差商的上确界，故它是使 ($\star$) 成立的最小常数：若 $C<\Lip(f)$，按上确界的定义存在 $x\neq y$ 使差商大于 $C$，($\star$) 对这对点失效。因此 $\Lip(f)$ 携带几何信息：在 $m=n=1$ 时它是图像的最大斜率绝对值，在一般情形它是 $f$ 的最佳线性界。
+
+第 (iii) 款的局部化把「在整个定义域上一致有界」削弱为「在每个紧子集上有界」。这一削弱是必要的，因为本章的主要结论都是局部结论：Rademacher 定理只涉及 $f$ 在一个有界开集上的行为，面积公式与余面积公式也逐块建立。定义在非闭集合上的函数可以只有局部有界差商，例如 $x\mapsto 1/x$ 于 $(0,1)$。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch03-3-1; kind=hypotheses; 逐条分析非空性、常数 C 的取值范围、最小常数的存在性与等价刻画、C_K 对 K 的依赖，并给出局部 Lipschitz 而非 Lipschitz 的反例
+\begin{remark}\phantomsection\label{remark:ch03-def-3-1-条件}
+\begin{enumerate}[(i)]
+\item 条件 $A\neq\varnothing$ 是为使第 (ii) 款中的上确界取在非空集合上；当 $A$ 恰含一个点时，集合 $\{x,y\in A\mid x\neq y\}$ 为空，故约定 $\Lip(f)=0$，这与「常值函数的最小常数为 $0$」一致。$A=\varnothing$ 时 $f$ 是空映射，($\star$) 空真，同样约定 $\Lip(f)=0$；本章不使用这一退化情形。
+\item 常数 $C$ 只能取非负实数：由 $\lvert f(x)-f(y)\rvert\geqslant0$ 与 $\lvert x-y\rvert>0$（$x\neq y$）知负值不可能使 ($\star$) 成立。$C=0$ 当且仅当 $f$ 在 $A$ 上取常值。条件须对一切 $x,y\in A$ 成立，其中 $x=y$ 时两端为零而自动成立，$x\neq y$ 时两端同除以 $\lvert x-y\rvert$ 即化为差商不超过 $C$。
+\item 最小常数存在。记 $\Lambda:=\{C\geqslant0\mid(\star)\text{ 对一切 }x,y\in A\text{ 成立}\}$。由 $f$ 的 Lipschitz 连续性 $\Lambda\neq\varnothing$；又若 $C_j\in\Lambda$ 且 $C_j\downarrow C$，则对每对 $x,y$ 取极限得 $C\in\Lambda$，故 $\Lambda$ 是闭的半直线，其下确界属于 $\Lambda$ 并且等于差商的上确界。于是第 (ii) 款的两种表述一致。
+\item 常数 $C_K$ 依赖于 $K$，且无须关于 $K$ 一致有界。取 $A=(0,1)$ 与 $f(x)=1/x$。对紧集 $K\subseteq(0,1)$，令 $m_K:=\min_{x\in K}x$，则 $m_K>0$（$K$ 紧且 $0\notin K$），并且对 $x,y\in K$ 有
+\begin{align*}
+\Bigl\lvert\frac1x-\frac1y\Bigr\rvert=\frac{\lvert x-y\rvert}{xy}\leqslant\frac{\lvert x-y\rvert}{m_K^2},
+\end{align*}
+故 $f$ 在 $A$ 上局部 Lipschitz 连续。另一方面 $1/(xy)$ 在 $x,y\to0+$ 时无界，故 $f$ 在 $(0,1)$ 上不是 Lipschitz 连续。
+\item 第 (iii) 款在 $A$ 为开集（这是本章的实际情形）时蕴含 $f$ 在 $A$ 上连续：对 $x\in A$，取 $r>0$ 使 $\overline{B(x,r)}\subseteq A$，则 $K:=\overline{B(x,r)}$ 是 $A$ 的紧子集，故 $\lvert f(y)-f(x)\rvert\leqslant C_K\lvert y-x\rvert$ 对 $y\in K$ 成立。因此局部 Lipschitz 连续是连续性的加强；反过来，紧集上的连续函数一般不是局部 Lipschitz 连续（如 $x^{1/3}$ 在 $0$ 附近）。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Lipschitz 映射的延拓]\label{theorem:ch03-3-1}
+设 $n,m$ 为正整数，$A\subseteq\mathbb{R}^n$ 为非空集合，$f:A\to\mathbb{R}^m$ 为 Lipschitz 连续映射。则存在 Lipschitz 连续映射 $\bar f:\mathbb{R}^n\to\mathbb{R}^m$，使得
+\begin{enumerate}[(i)]
+\item $\bar f=f$ 在 $A$ 上；
+\item $\Lip(\bar f)\leqslant\sqrt{m}\,\Lip(f)$。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）先设 $f:A\to\mathbb{R}$。定义
+\begin{align*}
+\bar f(x):=\inf_{a\in A}\bigl\{f(a)+\Lip(f)\lvert x-a\rvert\bigr\}\qquad(x\in\mathbb{R}^n).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch03-3-1; kind=proof; 补足 $\bar f$ 的实值性：下确界取在非空集合上，且各项有与 $a$ 无关的公共下界
+固定 $a_0\in A$。对每个 $a\in A$，由 $f$ 的 Lipschitz 连续性与三角不等式
+\begin{align*}
+f(a)+\Lip(f)\lvert x-a\rvert
+&\geqslant f(a_0)-\Lip(f)\lvert a-a_0\rvert+\Lip(f)\lvert x-a\rvert\\
+&\geqslant f(a_0)-\Lip(f)\lvert x-a_0\rvert,
+\end{align*}
+故 $\bar f(x)\geqslant f(a_0)-\Lip(f)\lvert x-a_0\rvert>-\infty$；又取 $a=a_0$ 得 $\bar f(x)\leqslant f(a_0)+\Lip(f)\lvert x-a_0\rvert<\infty$。于是 $\bar f$ 是 $\mathbb{R}^n$ 上的实值函数。
+
+若 $b\in A$，则 $\bar f(b)=f(b)$。事实上，对一切 $a\in A$ 有
+\begin{align*}
+f(a)+\Lip(f)\lvert b-a\rvert\geqslant f(b),
+\end{align*}
+故 $\bar f(b)\geqslant f(b)$；而取 $a=b$ 得 $\bar f(b)\leqslant f(b)$。
+
+若 $x,y\in\mathbb{R}^n$，则对一切 $a\in A$ 有
+\begin{align*}
+f(a)+\Lip(f)\lvert x-a\rvert
+&\leqslant f(a)+\Lip(f)\bigl(\lvert y-a\rvert+\lvert x-y\rvert\bigr)\\
+&=\bigl(f(a)+\Lip(f)\lvert y-a\rvert\bigr)+\Lip(f)\lvert x-y\rvert,
+\end{align*}
+对 $a\in A$ 取下确界得
+\begin{align*}
+\bar f(x)\leqslant\bar f(y)+\Lip(f)\lvert x-y\rvert.
+\end{align*}
+交换 $x$ 与 $y$ 的地位并重复上述论证，得
+\begin{align*}
+\bar f(y)\leqslant\bar f(x)+\Lip(f)\lvert x-y\rvert.
+\end{align*}
+
+（2）对一般情形 $f:A\to\mathbb{R}^m$，写 $f=(f^1,\cdots,f^m)$，并定义 $\bar f:=(\bar f^1,\cdots,\bar f^m)$，其中每个 $\bar f^i$ 是第（1）步对分量 $f^i:A\to\mathbb{R}$ 给出的延拓。
+
+% SUPPLEMENT: parent=theorem:ch03-3-1; kind=proof; 补出每个分量满足 $\Lip(f^i)\leqslant\Lip(f)$ 以及由此得到的 $\sqrt m$ 估计
+对每个 $i$ 与每对 $x,y\in A$ 有
+\begin{align*}
+\lvert f^i(x)-f^i(y)\rvert\leqslant\lvert f(x)-f(y)\rvert\leqslant\Lip(f)\lvert x-y\rvert,
+\end{align*}
+故 $\Lip(f^i)\leqslant\Lip(f)$，从而由第（1）步 $\lvert\bar f^i(x)-\bar f^i(y)\rvert\leqslant\Lip(f)\lvert x-y\rvert$ 对一切 $x,y\in\mathbb{R}^n$ 与 $i=1,\cdots,m$ 成立。于是
+\begin{align*}
+\lvert\bar f(x)-\bar f(y)\rvert^2=\sum_{i=1}^m\lvert\bar f^i(x)-\bar f^i(y)\rvert^2\leqslant m\bigl(\Lip(f)\bigr)^2\lvert x-y\rvert^2,
+\end{align*}
+即 $\Lip(\bar f)\leqslant\sqrt{m}\,\Lip(f)$。又由第（1）步 $\bar f^i=f^i$ 在 $A$ 上成立（$i=1,\cdots,m$），故 $\bar f=f$ 在 $A$ 上。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-3-1; kind=motivation; 说明延拓的必要性、inf-卷积构造的几何含义，以及它给出最小 Lipschitz 延拓的原因
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-1-动机}
+后文的面积公式与余面积公式要求映射定义在整个 $\mathbb{R}^n$ 上，而 Lipschitz 连续函数往往只在子集 $A$ 上给定。本定理说明这一限制可以去掉，并且延拓是显式的：$\bar f$ 是一族「圆锥」$x\mapsto f(a)+\Lip(f)\lvert x-a\rvert$（$a\in A$）的下包络，每个圆锥以 $(a,f(a))$ 为顶点、斜率为 $\Lip(f)$，其图像完全位于 $f$ 的图像之上。取包络使 $\bar f$ 成为所有满足 $\Lip(g)\leqslant\Lip(f)$ 且 $g|_A=f$ 的函数 $g$ 之下的最大者：由 $g(a)=f(a)$ 与 $\Lip(g)\leqslant\Lip(f)$ 得 $g(x)\geqslant f(a)-\Lip(f)\lvert x-a\rvert$ 对一切 $a$ 成立，故 $g\geqslant\bar f$。这一最小性正是第（1）步中两个方向不等式的作用所在。
+
+第（2）步把标量情形逐分量拼接。$\sqrt{m}$ 这一因子来自用 $\ell^2$ 范数估计 $m$ 个分量之和：每个分量只保证 $\Lip(\bar f^i)\leqslant\Lip(f)$，合并时由 Cauchy--Schwarz 型不等式付出 $\sqrt{m}$。对 $m=1$ 该因子为 $1$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch03-3-1; kind=hypotheses; 逐条分析非空性、对 A 无拓扑假设、$\sqrt m$ 因子的来源与可改进性，以及退化情形
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-1-条件}
+\begin{enumerate}[(i)]
+\item 条件 $A\neq\varnothing$ 是构造的前提：$\bar f$ 定义为非空集族的下确界。若 $A=\varnothing$，则结论平凡，取 $\bar f\equiv0$ 即可，此时 $\Lip(f)$ 按约定为 $0$，($\star$) 与 (ii) 同时成立。
+\item $A$ 不带任何拓扑或测度假设：定理不要求 $A$ 开、闭、有界或可测。构造只用到 $A$ 上的距离 $\lvert x-a\rvert$ 与 $f$ 在 $A$ 上的 Lipschitz 不等式，故对任意非空子集成立。这也说明延拓与 $A$ 的几何形状无关。
+\item 结论 (ii) 中的常数 $\sqrt{m}$ 来自逐分量拼接，因此对 $m\geqslant2$ 并不最优。最优常数为 $1$：紧随其后关于 Kirszbraun 定理的注记断言，存在满足 $\Lip(\bar f)=\Lip(f)$ 的延拓。本定理的证明有意避开该定理，只用初等构造。
+\item 证明中出现的量 $f(a)+\Lip(f)\lvert x-a\rvert$ 必须有下界，否则下确界为 $-\infty$ 而 $\bar f$ 不是实值函数。第（1）步用 $f(a)\geqslant f(a_0)-\Lip(f)\lvert a-a_0\rvert$ 给出与 $a$ 无关的下界，这一步用到 $\Lip(f)<\infty$，即 $f$ 的 Lipschitz 连续性。
+\item 若 $\Lip(f)=0$，则 $f$ 在 $A$ 上为常值 $c$，此时 $\bar f(x)=\inf_{a\in A}\{c\}=c$，故 $\bar f$ 是常值延拓，结论 (i)(ii) 成立且 $\Lip(\bar f)=0$。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-1-改进}
+Kirszbraun 定理（\cite[第 2.10.43 节]{federer1969}）断言：实际上存在延拓 $\bar f$ 使 $\Lip(\bar f)=\Lip(f)$。
+\end{remark}
+
+\subsection{Rademacher 定理}\label{subsection:ch03-01-2}
+
+下面证明 Rademacher 的一个著名定理：Lipschitz 连续函数是 $\mathcal{L}^n$-a.e. 可微的。这一结论令人意外，因为不等式
+\begin{align*}
+\lvert f(x)-f(y)\rvert\leqslant\Lip(f)\lvert x-y\rvert
+\end{align*}
+表面上没有说明用线性映射局部逼近 $f$ 的可能性。（\cref{section:ch06-04}中将证明 Aleksandrov 定理，它断言凸函数是两次 a.e. 可微的。）% XREF p=118 "In Section 6.4 we prove Aleksandrov's Theorem, stating that a convex function is twice differentiable-a.e."
+
+\begin{definition}[可微性]\label{definition:ch03-3-2}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为映射，$x\in\mathbb{R}^n$。若存在线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$，使得
+\begin{align*}
+\lim_{y\to x}\frac{\lvert f(y)-f(x)-L(y-x)\rvert}{\lvert x-y\rvert}=0,
+\end{align*}
+或等价地
+\begin{align*}
+f(y)=f(x)+L(y-x)+o(\lvert y-x\rvert)\qquad(y\to x),
+\end{align*}
+则称 $f$ 在 $x$ 处 \textbf{可微}；满足上述条件的线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$ 称为 $f$ 在 $x$ 处的 \textbf{微分}。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch03-3-2; kind=motivation; 说明可微性为何必须用线性映射逼近来定义，以及两种等价写法各自的作用
+\begin{remark}\phantomsection\label{remark:ch03-def-3-2-动机}
+可微性刻画的是「$f$ 在 $x$ 的一个无穷小邻域上被一个线性映射逼近到一阶精度」。这一概念不能用连续性或 Lipschitz 条件代替：Lipschitz 条件只控制增量的量级 $\lvert f(y)-f(x)\rvert\leqslant\Lip(f)\lvert y-x\rvert$，而可微性要求误差比 $\lvert y-x\rvert$ 更高阶，即误差商趋于零。若把 $o(\lvert y-x\rvert)$ 减弱为 $O(\lvert y-x\rvert)$，所得条件恰为 $f$ 在 $x$ 附近 Lipschitz，它对几乎处处成立是平凡的，因而不含信息。
+
+两种写法分工不同：商形式 $\lvert f(y)-f(x)-L(y-x)\rvert/\lvert x-y\rvert\to0$ 便于用 $\varepsilon$-$\delta$ 语言验证，是证明中实际使用的形式；$o$ 形式 $f(y)=f(x)+L(y-x)+o(\lvert y-x\rvert)$ 便于在链式法则、乘积法则等运算中作渐近展开。二者等价，因为二者都等价于「对每个 $\varepsilon>0$，当 $\lvert y-x\rvert$ 充分小时误差不超过 $\varepsilon\lvert y-x\rvert$」。
+
+本章要证明的 Rademacher 定理断言：对 Lipschitz 函数，使上述逼近成立的 $x$ 构成 $\mathcal{L}^n$-满测度集。这说明 Lipschitz 条件虽然表面上只给出一阶量级的控制，却足以保证几乎处处存在一阶线性逼近。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch03-3-2; kind=hypotheses; 说明论域与维数、极限沿 $y\neq x$ 取、线性映射的唯一性及其证明、以及对 $L$ 无须额外假设
+\begin{remark}\phantomsection\label{remark:ch03-def-3-2-条件}
+\begin{enumerate}[(i)]
+\item 定义要求 $x\in\mathbb{R}^n$ 是 $f$ 定义域的内点（此处定义域为全空间 $\mathbb{R}^n$，故自动满足），并要求 $f$ 在 $x$ 的某个邻域内有定义。若 $f$ 只定义在子集 $A\subseteq\mathbb{R}^n$ 上，须把极限理解为沿 $A$ 中的点 $y\to x$ 取；此时还要求 $x$ 是 $A$ 的聚点，否则去心邻域内没有 $A$ 中的点，极限无从谈起。
+\item 商中的分母为 $\lvert x-y\rvert$，故极限沿 $y\to x$、$y\neq x$ 取。$y=x$ 时分子分母同时为零，商无定义；这不影响极限，因为极限只涉及去心邻域。
+\item 线性映射 $L$ 若存在则唯一。设 $L_1,L_2$ 都满足定义，任取 $w\in\mathbb{R}^n$ 并令 $y=x+tw$（$t>0$）。由三角不等式
+\begin{align*}
+\lvert (L_1-L_2)w\rvert
+&\leqslant\frac{\bigl\lvert f(x+tw)-f(x)-L_1(tw)\bigr\rvert}{t}\\
+&\qquad+\frac{\bigl\lvert f(x+tw)-f(x)-L_2(tw)\bigr\rvert}{t}\\
+&\longrightarrow0\qquad(t\to0+),
+\end{align*}
+而左端与 $t$ 无关，故 $(L_1-L_2)w=0$。由 $w$ 任意得 $L_1=L_2$。唯一性使记号 $Df(x)$ 有意义。
+\item 定义对 $L$ 没有连续性、有界性等额外要求：$\mathbb{R}^n$ 上的线性映射自动连续，且由 $\lvert Lh\rvert\leqslant\lVert L\rVert\lvert h\rvert$ 知误差项中的 $L(y-x)$ 是 $O(\lvert y-x\rvert)$，故 $f$ 在可微点处连续。
+\item 定义中的 $f$ 取值于 $\mathbb{R}^m$（$m\geqslant1$），$\lvert\cdot\rvert$ 取 Euclid 范数。对 $\mathbb{R}^m$ 上任意等价范数，条件「商趋于零」不变，故可微性与范数选取无关。
+\end{enumerate}
+\end{remark}
+
+\begin{definition*}[导数记号]\phantomsection\label{definition:ch03-def-3-2-导数}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为映射，$x\in\mathbb{R}^n$。若 $f$ 在 $x$ 处可微，则满足可微性条件的线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$ 唯一，并把该线性映射记为 $Df(x)$；称 $Df(x)$ 为 $f$ 在 $x$ 处的 \textbf{导数}。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch03-def-3-2-导数; kind=motivation; 说明为何把微分单独记为 $Df(x)$，以及该记号与 Jacobi 矩阵、偏导数的关系
+\begin{remark}\phantomsection\label{remark:ch03-def-3-2-导数-动机}
+可微性只断言「存在某个线性映射」，唯一性一旦成立，就可以把该映射作为 $f$ 与 $x$ 的函数来讨论，于是把「$f$ 在 $x$ 处可微」这一性质升级为「$f$ 在 $x$ 处有导数 $Df(x)$」这一对象。这一升级是必要的：Rademacher 定理的结论与本章的面积公式都断言 $Df(x)$ 在几乎每一点存在，并进一步对它积分；若没有 $Df(x)$ 这一记号，这些陈述无法写出。
+
+$Df(x)$ 是线性映射而非矩阵，其矩阵表示（在标准基下）是 $m\times n$ 矩阵 $(\partial f^i/\partial x_j(x))$，即 $f$ 在 $x$ 处的 Jacobi 矩阵；\cref{section:ch03-02}将讨论线性映射与 Jacobi 行列式的关系。 当 $m=1$ 时 $Df(x)$ 是 $\mathbb{R}^n$ 上的线性泛函，由梯度 $\operatorname{grad}f(x)$ 通过内积表示，这一对应是 Rademacher 定理证明中把 $D_vf$ 与 $\operatorname{grad}f$ 联系起来的依据。 % XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch03-def-3-2-导数; kind=hypotheses; 说明唯一性断言已在前一注记中证明、对 $m,n$ 的要求、以及 $Df(x)$ 的定义范围
+\begin{remark}\phantomsection\label{remark:ch03-def-3-2-导数-条件}
+\begin{enumerate}[(i)]
+\item 定义以 $f$ 在 $x$ 处可微为前提；若 $f$ 在 $x$ 处不可微，则 $Df(x)$ 没有定义，不能任意取值。因此「$Df(x)$ 存在」与「$f$ 在 $x$ 处可微」是同义的，本章的几乎处处陈述都用前一种说法。
+\item 唯一性已在\hyperref[remark:ch03-def-3-2-条件]{前一注记}中证明，它不是定义的附加假设，而是可微性条件的推论。若去掉商趋于零的要求（例如只要求误差为 $O(\lvert y-x\rvert)$），唯一性即失效，多个线性映射都可以充当一阶逼近。
+\item $Df(x)$ 定义在 $\mathbb{R}^n$ 上、取值于 $\mathbb{R}^m$，其定义不依赖基的选取；只有在写出矩阵表示时才需要固定 $\mathbb{R}^n$ 与 $\mathbb{R}^m$ 的基。这一无坐标性使链式法则 $D(g\circ f)(x)=Dg(f(x))Df(x)$ 成为线性映射的复合，而不只是矩阵乘法。
+\item 对 $m=n=1$，$Df(x)$ 是乘以标量 $f'(x)$ 的映射；对一般的 $n,m$，$Df(x)$ 的第 $i$ 个分量沿 $e_j$ 方向的方向导数恰为 $\partial f^i/\partial x_j(x)$。因此 $Df(x)$ 唯一确定了全部一阶偏导数，反之亦然（当 $Df(x)$ 存在时）。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Rademacher 定理]\label{theorem:ch03-3-2}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为局部 Lipschitz 连续映射。则 $f$ 在 $\mathcal{L}^n$-a.e. 的每一点处可微。
+\end{theorem}
+
+\begin{proof}
+（1）先设 $m=1$，并把 $f$ 化为 Lipschitz 连续的情形。
+
+% SUPPLEMENT: parent=theorem:ch03-3-2; kind=proof; 补出 $m\geqslant2$ 时由各分量的可微性得到 $f$ 的可微性，以及可微点集为满测度集的论证
+若 $m\geqslant2$，写 $f=(f^1,\cdots,f^m)$，其中每个 $f^i:\mathbb{R}^n\to\mathbb{R}$ 局部 Lipschitz 连续。若 $f$ 的每个分量都在 $x$ 处可微，并置 $L:=(Df^1(x),\cdots,Df^m(x))$，则
+\begin{align*}
+\lvert f(y)-f(x)-L(y-x)\rvert\leqslant\sum_{i=1}^m\bigl\lvert f^i(y)-f^i(x)-Df^i(x)(y-x)\bigr\rvert
+\end{align*}
+是 $m$ 个 $o(\lvert y-x\rvert)$ 之和，故 $f$ 在 $x$ 处可微且 $Df(x)=L$。于是 $f$ 的可微点集包含 $\bigcap_{i=1}^m\{x\mid f^i\text{ 在 }x\text{ 处可微}\}$，后者是 $m$ 个 $\mathcal{L}^n$-满测度集之交，仍为满测度集。因此只需考虑 $m=1$ 的情形。
+
+% SUPPLEMENT: parent=theorem:ch03-3-2; kind=proof; 补出由局部 Lipschitz 化归到 Lipschitz 的论证：用延拓定理把每个闭球上的 $f$ 延拓为全空间上的 Lipschitz 函数
+对每个正整数 $k$，$f$ 在紧集 $\overline{B(0,k)}$ 上 Lipschitz 连续；由\cref{theorem:ch03-3-1}，有 Lipschitz 连续函数 $g_k:\mathbb{R}^n\to\mathbb{R}$ 使 $g_k=f$ 在 $\overline{B(0,k)}$ 上成立。% XREF internal
+
+若已对 Lipschitz 连续函数证得结论，则 $g_k$ 在 $\mathcal{L}^n$-a.e. 点处可微，而 $g_k$ 与 $f$ 在 $B(0,k)$ 的每一点附近重合，故 $f$ 在 $B(0,k)$ 的 $\mathcal{L}^n$-a.e. 点处可微。对 $k=1,2,\cdots$ 取并，并用 $\mathbb{R}^n=\bigcup_{k=1}^{\infty}B(0,k)$，得 $f$ 在 $\mathbb{R}^n$ 的 $\mathcal{L}^n$-a.e. 点处可微。因此以下设 $\Lip(f)<\infty$。
+
+（2）固定任一满足 $\lvert v\rvert=1$ 的 $v\in\mathbb{R}^n$，并定义
+\begin{align*}
+D_vf(x):=\lim_{t\to0}\frac{f(x+tv)-f(x)}{t}\qquad(x\in\mathbb{R}^n),
+\end{align*}
+若该极限存在。
+
+\textbf{Claim \#1}：$D_vf(x)$ 对 $\mathcal{L}^n$-a.e. 的 $x$ 存在。
+
+% SUPPLEMENT: parent=theorem:ch03-3-2; kind=proof; 补出上导数与下导数的 Borel 可测性、$A_v$ 的可测性以及差商有界使上下极限有限
+\textbf{Claim \#1 的证明}。由于 $f$ 连续，对每个有理数 $t\neq0$，函数 $x\mapsto\frac{f(x+tv)-f(x)}{t}$ 在 $\mathbb{R}^n$ 上连续；可数族连续函数的上确界是下半连续函数，从而是 Borel 可测函数。于是
+\begin{align*}
+\overline{D}_vf(x):=\limsup_{t\to0}\frac{f(x+tv)-f(x)}{t}
+=\lim_{k\to\infty}\;\sup_{\substack{0<\lvert t\rvert<1/k\\ t\ \text{为有理数}}}\frac{f(x+tv)-f(x)}{t}
+\end{align*}
+是 Borel 可测函数。把上确界换为下确界、上极限换为下极限，同样得
+\begin{align*}
+\underline{D}_vf(x):=\liminf_{t\to0}\frac{f(x+tv)-f(x)}{t}
+\end{align*}
+是 Borel 可测函数。由于 $f$ Lipschitz 连续，
+\begin{align*}
+\biggl\lvert\frac{f(x+tv)-f(x)}{t}\biggr\rvert\leqslant\Lip(f)\lvert v\rvert=\Lip(f)\qquad(t\neq0),
+\end{align*}
+故上述上下极限都是有限实数，且 $D_vf(x)$ 存在当且仅当 $\underline{D}_vf(x)=\overline{D}_vf(x)$。因此
+\begin{align*}
+A_v=\{x\in\mathbb{R}^n\mid D_vf(x)\text{ 不存在}\}
+=\{x\in\mathbb{R}^n\mid \underline{D}_vf(x)<\overline{D}_vf(x)\}
+\end{align*}
+是 Borel 可测集。
+
+对每个点 $x\in\mathbb{R}^n$ 与每个满足 $\lvert v\rvert=1$ 的 $v\in\mathbb{R}^n$，定义 $\phi:\mathbb{R}\to\mathbb{R}$ 为
+\begin{align*}
+\phi(t):=f(x+tv)\qquad(t\in\mathbb{R}).
+\end{align*}
+则 $\phi$ 满足 $\lvert\phi(s)-\phi(t)\rvert\leqslant\Lip(f)\lvert s-t\rvert$，故 Lipschitz 连续，从而在每个有限区间上绝对连续，从而 $\mathcal{L}^1$-a.e. 可微：一维情形的 Lebesgue 定理断言，绝对连续函数在其定义区间内几乎处处可微且导数可积。于是
+\begin{align*}
+\mathcal{H}^1(A_v\cap L)=0
+\end{align*}
+对每条与 $v$ 平行的直线 $L$ 成立。事实上，沿 $L$ 的弧长参数化 $s\mapsto x_0+sv$（$\lvert v\rvert=1$）把 $L$ 上的 $\mathcal{H}^1$ 测度化为 $\mathcal{L}^1$ 测度，而 $x_0+sv\in A_v$ 当且仅当 $\phi_{x_0}'(s)$ 不存在，其中 $\phi_{x_0}(s):=f(x_0+sv)$。
+
+% SUPPLEMENT: parent=theorem:ch03-3-2; kind=proof; 补出用 Fubini 定理把各直线上的零测性汇总为 $\mathcal{L}^n(A_v)=0$ 的切片计算
+把等距同构 $\{v\}^{\perp}\times\mathbb{R}\to\mathbb{R}^n$、$(x_0,s)\mapsto x_0+sv$ 与 Fubini 定理（\cref{theorem:ch01-1-22}）用于乘积测度 $\mathcal{H}^{n-1}\times\mathcal{L}^1$（其中 $\mathcal{H}^{n-1}$ 在 $\{v\}^{\perp}$ 上与 $\mathcal{L}^{n-1}$ 一致），得% XREF p=119 "Fubini's Theorem then implies"
+\begin{align*}
+\mathcal{L}^n(A_v)=\int_{\{v\}^{\perp}}\mathcal{H}^1\bigl(A_v\cap L_{x_0}\bigr)\diff\mathcal{H}^{n-1}(x_0)=0,
+\end{align*}
+其中 $L_{x_0}:=\{x_0+sv\mid s\in\mathbb{R}\}$。Claim \#1 得证。
+
+（3）作为 Claim \#1 的推论，梯度
+\begin{align*}
+\operatorname{grad}f(x):=(f_{x_1}(x),\cdots,f_{x_n}(x))
+\end{align*}
+对 $\mathcal{L}^n$-a.e. 的点 $x$ 存在。事实上，对 $i=1,\cdots,n$ 取 $v=e_i$，由 Claim \#1 得 $f_{x_i}(x)=D_{e_i}f(x)$ 对 $\mathcal{L}^n$-a.e. 的 $x$ 存在；$n$ 个满测度集之交仍为满测度集。
+
+\textbf{Claim \#2}：
+\begin{align*}
+D_vf(x)=v\cdot\operatorname{grad}f(x)\qquad\text{对 } \mathcal{L}^n\text{-a.e. 的 } x.
+\end{align*}
+
+\textbf{Claim \#2 的证明}。写 $v=(v_1,\cdots,v_n)$，取 $\zeta\in C_c^{\infty}(\mathbb{R}^n)$。则
+\begin{align*}
+\int_{\mathbb{R}^n}\biggl[\frac{f(x+tv)-f(x)}{t}\biggr]\zeta(x)\diff x
+=-\int_{\mathbb{R}^n}f(x)\biggl[\frac{\zeta(x)-\zeta(x-tv)}{t}\biggr]\diff x,
+\end{align*}
+其中等号来自变量替换 $x\mapsto x-tv$，而 $\mathcal{L}^n$ 在平移下不变。在上式中取 $t=\frac1k$ 并注意
+\begin{align*}
+\biggl\lvert\frac{f\bigl(x+\frac1k v\bigr)-f(x)}{\frac1k}\biggr\rvert\leqslant\Lip(f)\lvert v\rvert=\Lip(f),
+\end{align*}
+由控制收敛定理（\cref{theorem:ch01-1-19}）得% XREF p=120 "Thus the Dominated Convergence Theorem implies"
+\begin{align*}
+\int_{\mathbb{R}^n}D_vf(x)\zeta(x)\diff x
+&=-\int_{\mathbb{R}^n}f(x)D_v\zeta(x)\diff x\\
+&=-\sum_{i=1}^n v_i\int_{\mathbb{R}^n}f(x)\zeta_{x_i}(x)\diff x\\
+&=\sum_{i=1}^n v_i\int_{\mathbb{R}^n}f_{x_i}(x)\zeta(x)\diff x\\
+&=\int_{\mathbb{R}^n}\bigl(v\cdot\operatorname{grad}f(x)\bigr)\zeta(x)\diff x,
+\end{align*}
+其中用到 Fubini 定理（\cref{theorem:ch01-1-22}）与 $f$ 在直线上的绝对连续性。% XREF p=120 "where we used Fubini's Theorem and the absolute continuity of f on lines"
+上述等式对每个 $\zeta\in C_c(\mathbb{R}^n)$ 成立，蕴含 $D_vf=v\cdot\operatorname{grad}f$ 在 $\mathcal{L}^n$-a.e. 处成立。
+
+% SUPPLEMENT: parent=theorem:ch03-3-2; kind=proof; 补出由试验函数上的积分恒为零推出几乎处处相等的论证
+记 $g:=D_vf-v\cdot\operatorname{grad}f$。由第（3）段与 Claim \#1，$g$ 在 $\mathcal{L}^n$-a.e. 处有定义，且 $\lvert g\rvert\leqslant(1+\sqrt{n})\Lip(f)$ 在该集合上成立；把 $g$ 在零测集上补充定义为 $0$，则 $g$ 为局部有界 Borel 函数。设 $R>0$ 与 $\mathcal{L}^n$-可测集 $E\subseteq B(0,R)$ 给定。把 $\chi_E$ 与标准磨光核卷积，得一列 $\zeta_j\in C_c^{\infty}(\mathbb{R}^n)$ 使 $\zeta_j\to\chi_E$ 于 $L^1(\mathbb{R}^n)$，且 $\lvert\zeta_j\rvert\leqslant1$。于是
+\begin{align*}
+\Bigl\lvert\int_E g\diff x\Bigr\rvert
+=\lim_{j\to\infty}\Bigl\lvert\int_{\mathbb{R}^n}g\zeta_j\diff x\Bigr\rvert=0,
+\end{align*}
+故 $g=0$ 在 $B(0,R)$ 上 $\mathcal{L}^n$-a.e. 成立；令 $R\to\infty$ 即得 $g=0$ 在 $\mathbb{R}^n$ 上 $\mathcal{L}^n$-a.e. 成立。Claim \#2 得证。
+
+（4）取 $\{v_k\}_{k=1}^{\infty}$ 为 $\partial B(1)$ 的可数稠密子集。对 $k=1,2,\cdots$ 置
+\begin{align*}
+A_k:=\{x\in\mathbb{R}^n\mid D_{v_k}f(x),\ \operatorname{grad}f(x)\text{ 存在},\ D_{v_k}f(x)=v_k\cdot\operatorname{grad}f(x)\},
+\end{align*}
+并定义
+\begin{align*}
+A:=\bigcap_{k=1}^{\infty}A_k.
+\end{align*}
+由 Claim \#1 与 Claim \#2，$\mathcal{L}^n(\mathbb{R}^n-A_k)=0$ 对每个 $k$ 成立，故这些零测集的可数并仍为零测集，即
+\begin{align*}
+\mathcal{L}^n(\mathbb{R}^n-A)=0.
+\end{align*}
+
+（5）\textbf{Claim \#3}：$f$ 在每个点 $x\in A$ 处可微。
+
+\textbf{Claim \#3 的证明}。固定 $x\in A$。取 $v\in\partial B(1)$、$t\in\mathbb{R}$、$t\neq0$，并置
+\begin{align*}
+Q(x,v,t):=\frac{f(x+tv)-f(x)}{t}-v\cdot\operatorname{grad}f(x).
+\end{align*}
+若 $v'\in\partial B(1)$，则
+\begin{align*}
+\lvert Q(x,v,t)-Q(x,v',t)\rvert
+&\leqslant\biggl\lvert\frac{f(x+tv)-f(x+tv')}{t}\biggr\rvert+\lvert(v-v')\cdot\operatorname{grad}f(x)\rvert\\
+&\leqslant\Lip(f)\lvert v-v'\rvert+\lvert\operatorname{grad}f(x)\rvert\,\lvert v-v'\rvert\\
+&\leqslant(\sqrt{n}+1)\Lip(f)\lvert v-v'\rvert.\qquad(\star)
+\end{align*}
+最后一步用到 $\lvert\operatorname{grad}f(x)\rvert\leqslant\sqrt{n}\Lip(f)$：梯度的每个分量 $f_{x_i}(x)=D_{e_i}f(x)$ 都满足 $\lvert f_{x_i}(x)\rvert\leqslant\Lip(f)$，故其 Euclid 范数不超过 $\sqrt{n}\Lip(f)$。
+
+% SUPPLEMENT: parent=theorem:ch03-3-2; kind=proof; 补出 $\Lip(f)=0$ 的退化情形，使下面含 $\Lip(f)$ 的分母有意义
+若 $\Lip(f)=0$，则由 $\lvert f(y)-f(x)\rvert\leqslant0$ 知 $f$ 在 $\mathbb{R}^n$ 上取常值，故 $D_vf\equiv0$、$f$ 在每一点处可微且 $Df(x)=0$，结论成立。以下设 $\Lip(f)>0$。
+
+现固定 $\varepsilon>0$，取 $N$ 充分大，使得若 $v\in\partial B(1)$，则
+\begin{align*}
+\lvert v-v_k\rvert\leqslant\frac{\varepsilon}{2(\sqrt{n}+1)\Lip(f)}\qquad(\star\star)
+\end{align*}
+对某个 $k\in\{1,\cdots,N\}$ 成立；这样的 $N$ 存在，因为 $\partial B(1)$ 紧而 $\{v_k\}_{k=1}^{\infty}$ 在 $\partial B(1)$ 中稠密。现
+\begin{align*}
+\lim_{t\to0}Q(x,v_k,t)=0\qquad(k=1,\cdots,N),
+\end{align*}
+故存在 $\delta>0$ 使得
+\begin{align*}
+\lvert Q(x,v_k,t)\rvert<\frac{\varepsilon}{2}\qquad\text{对一切 }0<\lvert t\rvert<\delta,\ k=1,\cdots,N.\qquad(\star\star\star)
+\end{align*}
+于是对每个 $v\in\partial B(1)$ 存在 $k\in\{1,\cdots,N\}$，使得当 $0<\lvert t\rvert<\delta$ 时
+\begin{align*}
+\lvert Q(x,v,t)\rvert\leqslant\lvert Q(x,v_k,t)\rvert+\lvert Q(x,v,t)-Q(x,v_k,t)\rvert<\varepsilon,
+\end{align*}
+依据 ($\star$)--($\star\star\star$)。注意同一个 $\delta>0$ 对所有 $v\in\partial B(1)$ 都适用。
+
+现取任一 $y\in\mathbb{R}^n$、$y\neq x$，写 $v:=\frac{y-x}{\lvert y-x\rvert}$，并令 $t:=\lvert x-y\rvert$，则 $y=x+tv$。于是
+\begin{align*}
+f(y)-f(x)-\operatorname{grad}f(x)\cdot(y-x)
+&=f(x+tv)-f(x)-tv\cdot\operatorname{grad}f(x)\\
+&=o(t)\\
+&=o(\lvert x-y\rvert)\qquad(y\to x).
+\end{align*}
+中间一步的依据是：右端第一式等于 $t\,Q(x,v,t)$，而 $\lvert Q(x,v,t)\rvert<\varepsilon$ 对一切 $0<\lvert t\rvert<\delta$ 成立，故其绝对值小于 $\varepsilon t$。因此 $f$ 在 $x$ 处可微，且
+\begin{align*}
+Df(x)=\operatorname{grad}f(x).
+\end{align*}
+Claim \#3 得证。结合 $\mathcal{L}^n(\mathbb{R}^n-A)=0$ 即得 $f$ 在 $\mathcal{L}^n$-a.e. 的每一点处可微。
+\end{proof}
+% SUPPLEMENT: parent=theorem:ch03-3-2; kind=motivation; 说明 Lipschitz 条件为何足以推出几乎处处可微、证明的四层结构，以及该定理对面积公式的作用
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-2-动机}
+定理的结论出人意料之处在于：Lipschitz 不等式是一个不含线性结构的整体度量约束，它只说明增量有界，却断言 $f$ 在几乎每一点处存在一阶线性逼近。证明分四层，每层只处理一件独立的事。
+
+第一层把问题化为标量情形与 Lipschitz 情形：向量值函数的可微性按分量判定，而局部 Lipschitz 条件在紧集上可局部化为 Lipschitz 条件。第二层（Claim \#1）沿固定方向 $v$ 考察方向导数 $D_vf$。这里的关键是降维：限制在每条与 $v$ 平行的直线上，$f$ 成为一维 Lipschitz 函数，从而绝对连续、从而几乎处处可微；Fubini 定理把「每条直线上几乎处处」翻译为「$\mathbb{R}^n$ 中几乎处处」。第三层（Claim \#2）把 $D_vf$ 与梯度联系起来。这一步用试验函数作分部积分，把「逐点方向导数」与「分布意义下的方向导数」等同起来；这一步之所以可行，正是因为 $f$ 沿直线绝对连续。
+
+第四层（Claim \#3）是全部论证的收尾，也是唯一需要一致性的地方。取 $\partial B(1)$ 的可数稠密子集后，在每个 $v_k$ 处方向导数存在且等于 $v_k\cdot\operatorname{grad}f(x)$；误差 $Q(x,v,t)$ 关于 $v$ 以 $(\sqrt{n}+1)\Lip(f)$ 为 Lipschitz 常数，故有限个方向构成 $\varepsilon$-网就足以控制全部方向，且所得的 $\delta$ 与 $v$ 无关。这一步把「各方向的差商收敛」升级为「差商关于方向一致收敛」，正是 $o(\lvert y-x\rvert)$ 所要求的。
+
+定理使 Lipschitz 映射的 Jacobi 行列式几乎处处有定义，从而为面积公式与余面积公式提供了被积函数；这是它在全书中的主要用途。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch03-3-2; kind=hypotheses; 逐条分析局部 Lipschitz 条件的三处作用、连续性不可替代、维数的无关性，以及「几乎处处」不能改进为处处成立
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-2-条件}
+\begin{enumerate}[(i)]
+\item 局部 Lipschitz 条件在三处使用。其一，化归：由\cref{theorem:ch03-3-1}把 $f$ 在每个闭球上的限制延拓为全空间上的 Lipschitz 函数，这一步需要 $f$ 在每个紧集上有有限的 Lipschitz 常数。其二，一维化：限制在直线上的函数 Lipschitz 连续，从而绝对连续，从而几乎处处可微；这是 Claim \#1 的唯一实质输入。其三，有界性：$\lvert(f(x+tv)-f(x))/t\rvert\leqslant\Lip(f)$ 同时保证上下导数有限（从而 $A_v$ 恰由 $\underline{D}_vf<\overline{D}_vf$ 刻画）与控制收敛定理可用的控制函数。% XREF internal
+\item 连续性不能替代 Lipschitz 条件。存在连续但处处不可微的函数（Weierstrass 函数即为一例），故仅假设 $f$ 连续时结论不成立。另一方面，局部 Lipschitz 条件确实不能减弱为「$f$ 可微几乎处处」，因为后者已是结论。
+\item 目标维数 $m$ 不影响结论：可微性按分量判定，而 $m$ 个满测度集之交仍为满测度集。源维数 $n\geqslant1$ 使 $\mathcal{L}^n$ 与方向导数的概念有意义；$n=1$ 时定理即一维绝对连续函数的几乎处处可微性。
+\item 结论中的「$\mathcal{L}^n$-a.e.」不能改进为处处成立。取 $n=1$、$f(x)=\lvert x\rvert$，则 $f$ 是 Lipschitz 连续的而在 $x=0$ 处不可微。不成立的点的集合甚至可以稠密：取 $\{q_k\}$ 为 $[0,1]$ 中有理数的一个枚举，令
+\begin{align*}
+f(x):=\sum_{k=1}^{\infty}2^{-k}\lvert x-q_k\rvert ,
+\end{align*}
+则右端在紧集上一致收敛，且 $f$ 满足 $\Lip(f)\leqslant1$；在 $x=q_j$ 处，除第 $j$ 项外的各项之和在 $q_j$ 处可微（其导数级数一致收敛），而 $2^{-j}\lvert x-q_j\rvert$ 的左、右导数相差 $2\cdot2^{-j}$，故 $f$ 在 $q_j$ 处不可微。于是 $f$ 的不可微点集包含稠密子集 $\{q_k\}$，而按本定理它是 $\mathcal{L}^1$-零集。
+\item 结论中的「几乎处处」是相对于 $\mathcal{L}^n$ 而言的。可微性只用 Euclid 距离描述，与测度无关，故定理不对其他测度陈述：若取一个支撑落在 $f$ 的不可微点集内的测度，则 $f$ 关于该测度并不几乎处处可微。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-2-另证}
+Rademacher 定理的另一个证明见\cref{theorem:ch06-6-6}，推广见\cref{theorem:ch06-6-5}。% XREF p=122 "See Theorem 6.6 for another proof of Rademacher's Theorem and Theorem 6.5 for a generalization." | p=122 "Theorem 6.5"
+\end{remark}
+
+下面记录若干供后文使用的技术性事实。
+
+\begin{theorem}[水平集上的可微性]\label{theorem:ch03-3-3}
+设 $n,m$ 为正整数。
+\begin{enumerate}[(i)]
+\item 设 $f:\mathbb{R}^n\to\mathbb{R}^m$ 为局部 Lipschitz 连续映射，
+\begin{align*}
+Z:=\{x\in\mathbb{R}^n\mid f(x)=0\}.
+\end{align*}
+则 $Df(x)=0$ 对 $\mathcal{L}^n$-a.e. 的 $x\in Z$ 成立。
+\item 设 $f,g:\mathbb{R}^n\to\mathbb{R}^n$ 为局部 Lipschitz 连续映射，
+\begin{align*}
+Y:=\{x\in\mathbb{R}^n\mid g(f(x))=x\}.
+\end{align*}
+则
+\begin{align*}
+Dg(f(x))Df(x)=I\qquad\text{对 } \mathcal{L}^n\text{-a.e. 的 } x\in Y,
+\end{align*}
+其中 $I$ 为 $\mathbb{R}^n$ 上的恒等映射。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）先证断言 (i)，并先设 $m=1$。
+
+% SUPPLEMENT: parent=theorem:ch03-3-3; kind=proof; 补出 $m\geqslant2$ 时把断言 (i) 归约到各标量分量的论证
+设 $m\geqslant2$，写 $f=(f^1,\cdots,f^m)$，并置 $Z^i:=\{x\in\mathbb{R}^n\mid f^i(x)=0\}$，则 $Z=\bigcap_{i=1}^mZ^i$。若断言 (i) 对每个标量函数 $f^i$ 成立，即 $Df^i(x)=0$ 对 $\mathcal{L}^n$-a.e. 的 $x\in Z^i$ 成立，则存在 $\mathcal{L}^n$-零集 $N_i$ 使 $Df^i(x)=0$ 对一切 $x\in Z^i-N_i$ 成立。令 $N:=\bigcup_{i=1}^mN_i$，则 $\mathcal{L}^n(N)=0$，且对 $x\in Z-N$ 有 $Df^i(x)=0$（$i=1,\cdots,m$），故线性映射 $Df(x)=(Df^1(x),\cdots,Df^m(x))$ 为零映射。因此只需处理 $m=1$ 的情形。
+
+选取 $x\in Z$，使 $Df(x)$ 存在，且
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n(Z\cap B(x,r))}{\mathcal{L}^n(B(x,r))}=1;\qquad(\star)
+\end{align*}
+$\mathcal{L}^n$-a.e. 的 $x\in Z$ 都满足这两项要求：第一项由\cref{theorem:ch03-3-2}得出，第二项由密度定理（\cref{theorem:ch01-1-35}）（取 $E=Z$）得出。% XREF p=122 "Choose x ∈ Z so that Df(x) exists, and" | p=122 "L^n(Z ∩ B(x,r))"
+此处 $Z$ 是连续函数 $f$ 的零点集，故为闭集，从而 $\mathcal{L}^n$-可测，密度定理适用。于是
+\begin{align*}
+f(y)=Df(x)\cdot(y-x)+o(\lvert y-x\rvert)\qquad(y\to x).\qquad(\star\star)
+\end{align*}
+
+设 $a:=Df(x)\neq0$，并置
+\begin{align*}
+S:=\Bigl\{v\in\partial B(1)\Bigm| a\cdot v\geqslant\frac12\lvert a\rvert\Bigr\}.
+\end{align*}
+对每个 $v\in S$ 与 $t>0$，在 ($\star\star$) 中取 $y=x+tv$：
+\begin{align*}
+f(x+tv)=a\cdot tv+o(\lvert tv\rvert)\geqslant\frac{t\lvert a\rvert}{2}+o(t)\qquad(t\to0).
+\end{align*}
+于是存在 $t_0>0$，使得
+\begin{align*}
+f(x+tv)>0\qquad(0<t<t_0,\ v\in S),
+\end{align*}
+这与 ($\star$) 矛盾。断言 (i) 得证。
+
+% SUPPLEMENT: parent=theorem:ch03-3-3; kind=proof; 补出锥体的测度估计，把「$f>0$」与密度条件 ($\star$) 的矛盾定量化
+上述矛盾可定量化如下。置 $C_1:=\{sv\mid v\in S,\ 0\leqslant s\leqslant1\}$，它是球面帽 $S$ 上的锥，故 $\mathcal{L}^n(C_1)>0$。对每个 $0<t_0'<t_0$，集合 $\{tv\mid v\in S,\ 0<t<t_0'\}$ 含于 $B(x,2t_0')$，在其上 $f>0$，故它与 $Z$ 不交。由 Lebesgue 测度的伸缩性，
+\begin{align*}
+\mathcal{L}^n(Z\cap B(x,2t_0'))
+&\leqslant\mathcal{L}^n(B(x,2t_0'))-\mathcal{L}^n\bigl(t_0'C_1\bigr)\\
+&=(2t_0')^n\mathcal{L}^n(B(0,1))-(t_0')^n\mathcal{L}^n(C_1),
+\end{align*}
+于是
+\begin{align*}
+\frac{\mathcal{L}^n(Z\cap B(x,2t_0'))}{\mathcal{L}^n(B(x,2t_0'))}
+\leqslant1-\frac{\mathcal{L}^n(C_1)}{2^n\mathcal{L}^n(B(0,1))}<1
+\end{align*}
+对一切 $0<t_0'<t_0$ 成立；而 ($\star$) 中取 $r=2t_0'\to0$ 时左端趋于 $1$，矛盾。
+
+（2）证断言 (ii)。先定义
+\begin{align*}
+A:=\{x\mid Df(x)\text{ 存在}\},\qquad B:=\{x\mid Dg(x)\text{ 存在}\}.
+\end{align*}
+令
+\begin{align*}
+X:=Y\cap A\cap f^{-1}(B).
+\end{align*}
+则
+\begin{align*}
+Y-X\subseteq(\mathbb{R}^n-A)\cup g(\mathbb{R}^n-B).\qquad(\star\star\star)
+\end{align*}
+这由下述事实得出：若 $x\in Y-f^{-1}(B)$，则 $f(x)\in\mathbb{R}^n-B$；又 $x\in Y$ 给出 $x=g(f(x))$，故 $x\in g(\mathbb{R}^n-B)$。
+
+% SUPPLEMENT: parent=theorem:ch03-3-3; kind=proof; 补出 $\mathcal{L}^n(Y-X)=0$ 的两个来源，以及局部 Lipschitz 映射把零测集映为零测集
+由 ($\star\star\star$) 与\cref{theorem:ch03-3-2}，$\mathcal{L}^n(Y-X)=0$。% XREF p=123 "According to (***) and Rademacher's Theorem,"
+事实上，$\mathcal{L}^n(\mathbb{R}^n-A)=0$ 与 $\mathcal{L}^n(\mathbb{R}^n-B)=0$；又 $g$ 局部 Lipschitz 连续，故把 $\mathcal{L}^n$-零集映为 $\mathcal{L}^n$-零集：写 $\mathbb{R}^n=\bigcup_{k=1}^{\infty}B(0,k)$，则 $g$ 在每个 $B(0,k)$ 上 Lipschitz 连续，而 Lipschitz 映射把零测集映为零测集（用体积任意小的球覆盖该零测集即得），再取可数并。
+
+若 $x\in X$，则 $Dg(f(x))$ 与 $Df(x)$ 存在；由链式法则，复合映射 $g\circ f$ 在 $x$ 处可微，且
+\begin{align*}
+Dg(f(x))Df(x)=D(g\circ f)(x).
+\end{align*}
+由于 $(g\circ f)(x)-x=0$ 在 $Y$ 上成立，断言 (i) 蕴含
+\begin{align*}
+D(g\circ f)=I\qquad\mathcal{L}^n\text{-a.e. 于 } Y.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch03-3-3; kind=proof; 补出把断言 (i) 用于 $h:=g\circ f-\mathrm{id}$ 的细节，以及由 $\mathcal{L}^n(Y-X)=0$ 得到最终结论
+上述一步如下落实。令 $h(x):=g(f(x))-x$，它作为两个局部 Lipschitz 连续映射的复合与恒等映射之差，仍局部 Lipschitz 连续，且 $h=0$ 在 $Y$ 上成立。以 $Z_h:=\{x\mid h(x)=0\}\supseteq Y$ 记其零点集，由断言 (i) 得 $Dh(x)=0$ 对 $\mathcal{L}^n$-a.e. 的 $x\in Z_h$，从而对 $\mathcal{L}^n$-a.e. 的 $x\in Y$ 成立。在使 $D(g\circ f)(x)$ 存在且 $Dh(x)=0$ 的那些 $x\in Y$ 处，有
+\begin{align*}
+D(g\circ f)(x)-I=Dh(x)=0 ,
+\end{align*}
+即 $D(g\circ f)(x)=I$。最后，由于 $\mathcal{L}^n(Y-X)=0$，上式对 $\mathcal{L}^n$-a.e. 的 $x\in Y$ 成立，而在 $X$ 上 $D(g\circ f)(x)=Dg(f(x))Df(x)$；合起来即得
+\begin{align*}
+Dg(f(x))Df(x)=I\qquad\text{对 } \mathcal{L}^n\text{-a.e. 的 } x\in Y.
+\end{align*}
+\end{proof}
+% SUPPLEMENT: parent=theorem:ch03-3-3; kind=motivation; 说明断言 (i) 的几何含义（水平集与梯度正交、密度论证）及其在余面积公式中的作用，以及断言 (ii) 作为链式法则的几乎处处形式的用途
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-3-动机}
+断言 (i) 的几何内容是本定理的核心：在零水平集 $Z$ 的几乎每一点处，梯度必须为零。理由如下。若 $Df(x)=a\neq0$，则 $f$ 在 $x$ 附近沿方向 $a$ 严格穿过水平 $0$：存在锥 $S$ 与 $t_0>0$，使 $f(x+tv)>0$ 对一切 $v\in S$ 与 $0<t<t_0$ 成立。于是 $Z$ 在 $x$ 的任何小邻域内至多占据一个「锥外」的部分，其体积占比被一个小于 $1$ 的常数控制，密度不可能为 $1$。而\cref{theorem:ch01-1-35}恰好断言零集在自身几乎每一点处密度为 $1$。两者矛盾，故 $Df(x)=0$。% XREF internal
+
+这一结论有两重用途。其一，它说明水平集在几乎每一点处与梯度正交，这正是余面积公式的几何基础：把 $f$ 的等值面视为 $(n-m)$ 维曲面时，其面积元与 Jacobi 因子之间的换算依赖于「沿切向 $Df$ 为零」。其二，它给出「Lipschitz 函数的零点集不能有正则点」这一结构信息，与隐函数定理形成对照：后者断言 $Df(x)\neq0$ 时零点集局部为 $C^1$ 曲面，而本定理断言这种点至多构成零测集。
+
+断言 (ii) 是链式法则的几乎处处形式。若 $g$ 在 $f$ 的像上是左逆，则在 $Y$ 上 $g\circ f$ 等于恒等映射，故其导数应为恒等映射；而由链式法则该导数又等于 $Dg(f(x))Df(x)$。本定理把这一形式计算在几乎处处的意义下严格化。它的典型用法是：若 $f$ 几乎处处单射且 $g$ 为其几乎处处逆，则 $Df$ 与 $Dg$ 在几乎每一点处互为逆矩阵，从而 Jacobi 行列式互为倒数。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch03-3-3; kind=hypotheses; 逐条分析两款的局部 Lipschitz 假设、维数配比、集合的可测性与「a.e. 于集合」的含义，并说明断言 (i) 可推广到任意水平集
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-3-条件}
+\begin{enumerate}[(i)]
+\item 两款都以局部 Lipschitz 连续为假设。它在断言 (i) 的证明中有三处作用：由 Rademacher 定理（\cref{theorem:ch03-3-2}）保证 $Df$ 几乎处处存在；由 $f$ 连续保证零点集 $Z$ 为闭集，从而密度定理适用；由 $f$ 连续保证 ($\star\star$) 中的展开在 $x$ 的邻域内成立。若只设 $f$ 连续，断言 (i) 不成立：存在连续函数其零点集具有正测度且在其上不存在导数。% XREF internal
+\item 断言 (i) 中 $m$ 不受限制，证明按分量进行；但须 $m\geqslant1$，因为值域 $\mathbb{R}^m$ 与线性映射 $Df(x)$ 都需要正整数维数。结论中的 $Df(x)=0$ 指线性映射为零映射，等价于全部一阶偏导数在 $x$ 处为零。
+\item 断言 (i) 的结论只对 $x\in Z$ 陈述，不对 $Z$ 之外的点作任何断言；「$\mathcal{L}^n$-a.e. 的 $x\in Z$」指相对于 $\mathcal{L}^n$ 在 $Z$ 上的限制，即例外集与 $Z$ 之交为 $\mathcal{L}^n$-零集。$Z$ 本身可以是任意闭集：每个闭集都是距离函数的零点集，故不能指望 $Z$ 具有更特殊的结构。
+\item 断言 (i) 对任意水平集成立。若 $c\in\mathbb{R}^m$，把 $f$ 换成 $f-c$ 即得：$Df(x)=0$ 对 $\mathcal{L}^n$-a.e. 的 $x\in\{f=c\}$ 成立。这一推广在后文讨论水平集时使用。
+\item 断言 (ii) 要求 $f,g$ 的值域与定义域同为 $\mathbb{R}^n$：否则乘积 $Dg(f(x))Df(x)$ 中两个线性映射的阶不相容，$I$ 也无法与复合映射的导数比较。$Y$ 是连续映射 $x\mapsto g(f(x))-x$ 的零点集，故为闭集，从而 $\mathcal{L}^n$-可测。
+\item 断言 (ii) 只断言 $Dg(f(x))Df(x)=I$ 对 $\mathcal{L}^n$-a.e. 的 $x\in Y$ 成立；由此仅在几乎处处的意义下推出 $Df(x)$ 可逆，而对单个点不作任何断言。它也不断言 $f$ 在 $Y$ 上单射。
+\end{enumerate}
+\end{remark}
+
+\end{document}

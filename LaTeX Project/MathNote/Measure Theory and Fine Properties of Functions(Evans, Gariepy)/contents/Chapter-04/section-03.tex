@@ -1,0 +1,219 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{迹}\label{section:ch04-03}
+
+\begin{theorem}[Sobolev 函数的迹]\label{theorem:ch04-4-6}
+设 $n\geqslant2$ 为正整数，$U\subseteq\mathbb{R}^n$ 为有界开集，$\partial U$ 为 Lipschitz 边界，$1\leqslant p<\infty$，$L^p(\partial U;\mathcal{H}^{n-1})$ 表示关于测度 $\mathcal{H}^{n-1}\llcorner\partial U$ 的 $p$ 次可积函数空间。则下列断言成立：
+\begin{enumerate}[(i)]
+\item 存在有界线性算子
+\begin{align*}
+T:W^{1,p}(U)\to L^p(\partial U;\mathcal{H}^{n-1}),
+\end{align*}
+即存在常数 $C=C(n,p,U)$，使得对一切 $f\in W^{1,p}(U)$ 有
+\begin{align*}
+\lVert Tf\rVert_{L^p(\partial U;\mathcal{H}^{n-1})}\leqslant C\lVert f\rVert_{W^{1,p}(U)},
+\end{align*}
+并且对每个 $f\in W^{1,p}(U)\cap C(\overline{U})$ 有
+\begin{align*}
+Tf=f\qquad\text{于 }\partial U\text{ 上}.
+\end{align*}
+\item 此外，对每个 $\phi\in C^1(\mathbb{R}^n;\mathbb{R}^n)$ 与每个 $f\in W^{1,p}(U)$ 有
+\begin{align*}
+\int_U f\diver\phi\diff x=-\int_U Df\cdot\phi\diff x+\int_{\partial U}(\phi\cdot\nu)Tf\diff\mathcal{H}^{n-1},
+\end{align*}
+其中 $\nu$ 表示 $\partial U$ 的单位外法向量，它对 $\mathcal{H}^{n-1}$-a.e. 的 $x\in\partial U$ 有定义。
+\end{enumerate}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch04-4-6; kind=motivation; 说明为何逐点限制无意义、迹算子承担何种角色、唯一性由何处产生，以及断言 (i) 与 (ii) 的分工
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-6-动机}
+$W^{1,p}(U)$ 的元素是 $\mathcal{L}^n$ 意义下的等价类，而 $\mathcal{L}^n(\partial U)=0$（$\partial U$ 是 $\mathcal{L}^n$ 零测集），因此逐点限制 $f\mapsto f|_{\partial U}$ 对 $W^{1,p}(U)$ 的元素没有意义：改动 $f$ 在 $\partial U$ 上的取值不改变它的等价类，也不改变它的弱导数。本定理断言：$f$ 与其一阶弱导数在 $U$ 内部的 $L^p$ 可积性仍然在边界上留下一个确定的可积函数 $Tf$，并且 $f\mapsto Tf$ 是连续线性映射。
+
+断言 (i) 给出存在性与有界性，并说明 $T$ 在 $W^{1,p}(U)\cap C(\overline{U})$ 上与逐点限制一致；断言 (ii) 给出 $T$ 的变分刻画，即 $Tf$ 是使 Gauss--Green 型分部积分公式对一切 $\phi\in C^1(\mathbb{R}^n;\mathbb{R}^n)$ 成立的那个边界函数。两者合起来确定 $T$：由 $C^1(\overline{U})$ 在 $W^{1,p}(U)$ 中的稠密性与 $T$ 的有界性得唯一性，而 (ii) 是\cref{section:ch05-03}中边界值公式的出发点。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-6; kind=hypotheses; 逐条分析有界性、Lipschitz 边界、p 的范围与迹算子的定义域，说明 C^1 边界是本定理的特例，并给出几何条件不能削弱的反例
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-6-条件}
+\begin{enumerate}[(i)]
+\item 条件 $U$ 有界：它使 $\partial U$ 紧，从而证明第（3）步可用有限个立方体覆盖 $\partial U$，并使单位分解只有有限项；它同时保证 $\mathcal{H}^{n-1}(\partial U)<\infty$，于是常数函数属于 $L^p(\partial U;\mathcal{H}^{n-1})$，边界上的积分对 $L^p$ 函数总有意义。
+\item 条件 $\partial U$ 为 Lipschitz 边界（即\cref{definition:ch04-4-4}的意义）在证明中有三处作用：其一，它给出证明第（1）步的局部图表示，使法向量的估计式 $(\star)$ 在 $Q\cap\partial U$ 上一致成立；其二，它保证 $\mathcal{H}^{n-1}\llcorner\partial U$ 局部有限，从而 $L^p(\partial U;\mathcal{H}^{n-1})$ 是 Banach 空间、算子范数有意义；其三，它使 $C^\infty(\overline{U})$ 在 $W^{1,p}(U)$ 中稠密（\cref{theorem:ch04-4-3}），这是证明第（4）步延拓迹算子的唯一依据。 % XREF internal
+\item $C^1$ 边界是 Lipschitz 边界的特例：局部 $C^1$ 图表示中的 $\gamma$ 在每个紧集上 Lipschitz 连续，故当 $\partial U$ 为 $C^1$ 超曲面时本定理的假设全部满足，此时 $\mathcal{H}^{n-1}\llcorner\partial U$ 就是通常的边界面测度。反之，Lipschitz 边界允许角点（例如 $U$ 为多面体的内部），本定理在这些区域上仍然成立。
+\item 几何条件不能减弱为「$U$ 为有界开集」。取
+\begin{align*}
+U:=\bigl\{(x_1,x_2)\mid0<x_1<1,\ 0<x_2<e^{-1/x_1}\bigr\},
+\end{align*}
+则 $\partial U$ 含线段 $(0,1)\times\{0\}$，而 $U$ 在原点附近呈指数型尖点，$\partial U$ 不是 Lipschitz 边界。对 $0<\varepsilon<1/4$ 取 $g_\varepsilon\in C_c^\infty((0,1))$，满足 $0\leqslant g_\varepsilon\leqslant1$、$g_\varepsilon=1$ 于 $(0,\varepsilon/2)$ 上、$\spt(g_\varepsilon)\subset(0,\varepsilon)$，并令 $f_\varepsilon(x_1,x_2):=g_\varepsilon(x_1)$。则 $f_\varepsilon\in C^\infty(U)\cap W^{1,1}(U)$，且
+\begin{align*}
+\int_U\lvert f_\varepsilon\rvert\diff x\leqslant\int_0^{\varepsilon}e^{-1/x_1}\diff x_1\leqslant\varepsilon e^{-1/\varepsilon},
+\qquad
+\int_U\lvert Df_\varepsilon\rvert\diff x\leqslant2e^{-2/\varepsilon},
+\end{align*}
+而 $Tf_\varepsilon=g_\varepsilon(x_1)$ 于 $\partial U$ 上，故
+\begin{align*}
+\int_{\partial U}\lvert Tf_\varepsilon\rvert\diff\mathcal{H}^1\geqslant\int_0^{\varepsilon/2}\diff x_1=\frac{\varepsilon}{2}.
+\end{align*}
+于是迹不等式 $\int_{\partial U}\lvert Tf\rvert\diff\mathcal{H}^1\leqslant C\int_U(\lvert Df\rvert+\lvert f\rvert)\diff x$ 对 $f=f_\varepsilon$ 蕴涵 $\varepsilon/2\leqslant2C(\varepsilon e^{-1/\varepsilon}+e^{-2/\varepsilon})$，令 $\varepsilon\to0$ 得矛盾。
+\item 条件 $1\leqslant p<\infty$：$p<\infty$ 使 $C^\infty(\overline{U})$ 在 $W^{1,p}(U)$ 中的稠密性（\cref{theorem:ch04-4-3}）可用，并使证明第（3）步对 $\lvert f\rvert^p$ 的估计有意义。$p=\infty$ 时 $W^{1,\infty}(U)$ 的函数是 Lipschitz 函数，其迹属于 $L^\infty(\partial U;\mathcal{H}^{n-1})$，但本节的有界性证明不覆盖该情形。% XREF internal
+\item 迹算子 $T$ 的定义域是整个 $W^{1,p}(U)$，而不是 $C^1(\overline{U})$：后者只是用来定义 $T$ 并验证范数估计的稠密子空间。结论中的等式 $Tf=f$ 当 $f\in W^{1,p}(U)\cap C(\overline{U})$ 时是逐点等式；对一般的 $f\in W^{1,p}(U)$，$Tf$ 只是 $L^p(\partial U;\mathcal{H}^{n-1})$ 中的等价类，等式只在 $\mathcal{H}^{n-1}$-a.e. 的意义下成立。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[迹]\label{definition:ch04-4-5}
+设 $n\geqslant2$ 为正整数，$U\subseteq\mathbb{R}^n$ 为有界开集，$\partial U$ 为 Lipschitz 边界，$1\leqslant p<\infty$，$T$ 为\cref{theorem:ch04-4-6}所给的有界线性算子，$f\in W^{1,p}(U)$。% XREF p=157 "is called the trace of f on ∂U"
+则 $L^p(\partial U;\mathcal{H}^{n-1})$ 中的元素 $Tf$ 称为 $f$ 在 $\partial U$ 上的\textbf{迹}（trace）。元素 $Tf$ 在相差一个 $\mathcal{H}^{n-1}\llcorner\partial U$ 零测集的意义下由 $f$ 唯一确定，即若 $T_1,T_2$ 都是满足\cref{theorem:ch04-4-6}(i) 的有界线性算子，则 $T_1f=T_2f$ 于 $\mathcal{H}^{n-1}$-a.e. 的 $x\in\partial U$ 处成立。% XREF p=157 "uniquely defined up to sets of H^{n−1}⌞ ∂U measure zero"
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch04-4-5; kind=motivation; 说明把「边界值」重新定义为算子的像的理由、与代表元选取无关的含义，以及唯一性来自何处
+\begin{remark}\phantomsection\label{remark:ch04-def-4-5-动机}
+在光滑情形下，$f$ 在 $\partial U$ 上的值就是限制 $f|_{\partial U}$；但对 $f\in W^{1,p}(U)$，这个限制没有逐点意义。定义把「$f$ 的边界值」换成算子 $T$ 在 $f$ 处的像 $Tf$：它是一个 $L^p(\partial U;\mathcal{H}^{n-1})$ 函数，只由 $f$ 的等价类决定，并且在 $f$ 连续到边界时与 $f|_{\partial U}$ 一致。
+
+唯一性的来源是稠密性：两个满足\cref{theorem:ch04-4-6}(i) 的算子 $T_1,T_2$ 在 $C^1(\overline{U})$ 上都等于逐点限制，而 $C^1(\overline{U})$ 在 $W^{1,p}(U)$ 中稠密、$T_1-T_2$ 有界，故 $T_1-T_2$ 恒为零。因此「迹」这一概念不依赖于迹算子的构造方式，只依赖于 $f$ 与 $U$、$p$。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-5; kind=hypotheses; 逐条分析定义所依赖的定理条件、测度 H^{n-1}⌞∂U 的含义、唯一性的等价类含义，以及定义不涉及的部分
+\begin{remark}\phantomsection\label{remark:ch04-def-4-5-条件}
+\begin{enumerate}[(i)]
+\item 定义中的 $U$ 有界、$\partial U$ 为 Lipschitz 边界、$1\leqslant p<\infty$ 三项假设不是为定义本身而设，而是为使\cref{theorem:ch04-4-6}的迹算子存在：若这些假设之一失效，$T$ 可能不存在或不再有界，此时 $Tf$ 无从谈起。% XREF internal
+\item 记号 $L^p(\partial U;\mathcal{H}^{n-1})$ 中的测度是 $(n-1)$ 维 Hausdorff 测度在 $\partial U$ 上的限制 $\mathcal{H}^{n-1}\llcorner\partial U$，它把零测集理解为 $\mathcal{H}^{n-1}\llcorner\partial U$ 零测集。当 $\partial U$ 为 $C^1$ 超曲面时它就是边界面测度；当 $U$ 为多面体时它是各面上面测度之和。
+\item 「在相差一个零测集的意义下唯一确定」不能加强为逐点相等：$Tf$ 是 $L^p$ 等价类，它在 $\mathcal{H}^{n-1}$ 零测集上的取值没有意义。若 $f\in W^{1,p}(U)\cap C(\overline{U})$，则可取 $\partial U$ 上的连续代表元 $f|_{\partial U}$。
+\item 迹与代表元的选取无关：若 $f,g\in W^{1,p}(U)$ 且 $f=g$ $\mathcal{L}^n$-a.e.，则 $f-g=0$ 于 $W^{1,p}(U)$ 中，由定义中的唯一性得 $Tf=Tg$ 于 $\mathcal{H}^{n-1}$-a.e. 的意义下。
+\item 定义只用到\cref{theorem:ch04-4-6}(i)，即迹算子的存在性、有界性及其在 $W^{1,p}(U)\cap C(\overline{U})$ 上与逐点限制的一致性；断言 (ii) 的积分公式不是定义的一部分，而是 $Tf$ 的一个等价刻画。% XREF internal
+\end{enumerate}
+\end{remark}
+
+把 $Tf$ 理解为 $f$ 在 $\partial U$ 上的「边值」。
+
+\begin{remark}\phantomsection\label{remark:ch04-def-4-5-边界值}
+设 $n\geqslant2$，$U\subseteq\mathbb{R}^n$ 为有界开集，$\partial U$ 为 Lipschitz 边界，$1\leqslant p<\infty$，$f\in W^{1,p}(U)$，$Tf$ 为 $f$ 在 $\partial U$ 上的迹。在\cref{section:ch05-03}中将证明：对 $\mathcal{H}^{n-1}$-a.e. 的 $x\in\partial U$ 有 % XREF p=157 "We will see in Section 5.3 that for H^{n−1}-a.e. point x ∈ ∂U"
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)\cap U}\lvert f-Tf(x)\rvert\diff y=0,
+\end{align*}
+从而
+\begin{align*}
+Tf(x)=\lim_{r\to0}\fint_{B(x,r)\cap U}f\diff y .
+\end{align*}
+\end{remark}
+
+\begin{proof}
+（1）先设 $f\in C^1(\overline{U})$。由于 $\partial U$ 是 Lipschitz 连续的，对任意点 $x\in\partial U$ 存在 $r>0$ 与 Lipschitz 连续函数 $\gamma:\mathbb{R}^{n-1}\to\mathbb{R}$，使得在必要时旋转并重新标号坐标轴之后成立
+\begin{align*}
+U\cap Q(x,r)=\{y\mid\gamma(y_1,\cdots,y_{n-1})<y_n\}\cap Q(x,r).
+\end{align*}
+记 $Q:=Q(x,r)$，$e_n:=(0,\cdots,0,1)$，并暂时假设 $f\equiv0$ 于 $U-Q$ 上。注意
+\begin{align*}
+-e_n\cdot\nu\geqslant\bigl(1+(\Lip(\gamma))^2\bigr)^{-\frac12}>0\qquad\mathcal{H}^{n-1}\text{-a.e. 于 }Q\cap\partial U.\qquad(\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-6; kind=proof; 补出 (⋆) 的推导：由 Rademacher 定理得 γ 几乎处处可微，写出外法向量的表达式，再用 Lipschitz 常数估计其第 n 个分量
+下面对 $(\star)$ 给出推导。由\cref{theorem:ch03-3-2}，$\gamma$ 在 $\mathbb{R}^{n-1}$ 上 $\mathcal{L}^{n-1}$-a.e. 可微。% XREF internal
+记 $y'=(y_1,\cdots,y_{n-1})$。对 $\mathcal{H}^{n-1}$-a.e. 的 $y=(y',y_n)\in Q\cap\partial U$ 有 $y_n=\gamma(y')$，且 $\partial U$ 在 $y$ 处的外单位法向量存在，其表达式为
+\begin{align*}
+\nu(y)=\frac{(\nabla\gamma(y'),-1)}{\sqrt{1+\lvert\nabla\gamma(y')\rvert^2}},
+\end{align*}
+这是因为 $U$ 局部等于 $\{\gamma(y')<y_n\}$，外法向量的第 $n$ 个分量为负。于是
+\begin{align*}
+-e_n\cdot\nu(y)=\frac{1}{\sqrt{1+\lvert\nabla\gamma(y')\rvert^2}}\geqslant\bigl(1+(\Lip(\gamma))^2\bigr)^{-\frac12}>0
+\end{align*}
+对 $\mathcal{H}^{n-1}$-a.e. 的 $y\in Q\cap\partial U$ 成立，此即 $(\star)$。
+
+（2）固定 $\varepsilon>0$，令
+\begin{align*}
+\beta_\varepsilon(t):=(t^2+\varepsilon^2)^{\frac12}-\varepsilon\qquad(t\in\mathbb{R}),
+\end{align*}
+并利用 Gauss--Green 定理计算得
+\begin{align*}
+\int_{\partial U}\beta_\varepsilon(f)\diff\mathcal{H}^{n-1}
+&=\int_{Q\cap\partial U}\beta_\varepsilon(f)\diff\mathcal{H}^{n-1}\\
+&\leqslant C\int_{Q\cap\partial U}\beta_\varepsilon(f)(-e_n\cdot\nu)\diff\mathcal{H}^{n-1}\\
+&=-C\int_{Q\cap U}\bigl(\beta_\varepsilon(f)\bigr)_{y_n}\diff y\\
+&\leqslant C\int_{Q\cap U}\lvert\beta'_\varepsilon(f)\rvert\lvert Df\rvert\diff y\\
+&\leqslant C\int_U\lvert Df\rvert\diff y ,
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-6; kind=proof; 逐步补出上式五个等号与不等号的依据：f≡0 于 U−Q 上的支集限制、(⋆) 与 β_ε(f)⩾0 给出的比较、对向量场 (0,…,0,β_ε(f)) 用 Gauss–Green 公式、链式法则与 |β'_ε|⩽1
+上式中各步的依据如下。第一步：$f$ 在 $U-Q$ 上为零，故其迹在 $\partial U-\overline{Q}$ 上为零，于是 $\beta_\varepsilon(f)$ 在 $\partial U-\overline{Q}$ 上为零；又取 $Q$ 时可使 $\mathcal{H}^{n-1}(\partial U\cap\partial Q)=0$，故两个积分相等。第二步：由 $(\star)$ 与 $\beta_\varepsilon(f)\geqslant0$ 得
+\begin{align*}
+\int_{Q\cap\partial U}\beta_\varepsilon(f)\diff\mathcal{H}^{n-1}\leqslant\bigl(1+(\Lip(\gamma))^2\bigr)^{\frac12}\int_{Q\cap\partial U}\beta_\varepsilon(f)(-e_n\cdot\nu)\diff\mathcal{H}^{n-1},
+\end{align*}
+而 $\Lip(\gamma)$ 只依赖于 $x$，故右端的常数可记为 $C$。第三步：对向量场 $\Phi:=(0,\cdots,0,\beta_\varepsilon(f))$ 在区域 $U\cap Q$ 上使用 Gauss--Green 定理。由 $f\equiv0$ 于 $U-Q$ 上知 $\Phi$ 在 $\partial Q\cap U$ 的一个相对邻域内为零，故边界积分的贡献只来自 $Q\cap\partial U$；又 $\diver\Phi=\bigl(\beta_\varepsilon(f)\bigr)_{y_n}$ 且 $\Phi\cdot\nu=\beta_\varepsilon(f)(e_n\cdot\nu)$，于是
+\begin{align*}
+\int_{Q\cap U}\bigl(\beta_\varepsilon(f)\bigr)_{y_n}\diff y=\int_{Q\cap\partial U}\beta_\varepsilon(f)(e_n\cdot\nu)\diff\mathcal{H}^{n-1},
+\end{align*}
+此即第三个等号。第四步：由链式法则与 $\beta'_\varepsilon(t)=t(t^2+\varepsilon^2)^{-\frac12}$ 得
+\begin{align*}
+\Bigl\lvert\int_{Q\cap U}\bigl(\beta_\varepsilon(f)\bigr)_{y_n}\diff y\Bigr\rvert\leqslant\int_{Q\cap U}\lvert\beta'_\varepsilon(f)\rvert\lvert Df\rvert\diff y ,
+\end{align*}
+此即第四个不等号。第五步：由
+\begin{align*}
+\lvert\beta'_\varepsilon(t)\rvert=\frac{\lvert t\rvert}{\sqrt{t^2+\varepsilon^2}}\leqslant1\qquad(t\in\mathbb{R})
+\end{align*}
+得 $\lvert\beta'_\varepsilon(f)\rvert\lvert Df\rvert\leqslant\lvert Df\rvert$；又 $f\equiv0$ 于 $U-Q$ 上给出 $Df=0$ 于 $U-Q$ 上 $\mathcal{L}^n$-a.e.，故可把积分区域由 $Q\cap U$ 换成 $U$，此即第五个不等号。
+
+在上式中最后一步用到 $\lvert\beta'_\varepsilon\rvert\leqslant1$。现在令 $\varepsilon\to0$，得
+\begin{align*}
+\int_{\partial U}\lvert f\rvert\diff\mathcal{H}^{n-1}\leqslant C\int_U\lvert Df\rvert\diff y .\qquad(\star\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-6; kind=proof; 补出令 ε→0 时的极限依据：β_ε(f)→|f| 逐点、0⩽β_ε(f)⩽|f| 且 H^{n−1}(∂U)<∞，用控制收敛定理过渡
+令 $\varepsilon\to0$ 的依据如下：对每个 $t\in\mathbb{R}$ 有 $\beta_\varepsilon(t)\to\lvert t\rvert$ 且 $0\leqslant\beta_\varepsilon(t)\leqslant\lvert t\rvert$。由 $f\in C^1(\overline{U})$ 知 $\beta_\varepsilon(f)$ 在 $\overline{U}$ 上连续且有界，从而 $\beta_\varepsilon(f)$ 与 $\lvert f\rvert$ 都属于 $L^1(\partial U;\mathcal{H}^{n-1})$；又 $\mathcal{H}^{n-1}(\partial U)<\infty$，故由控制收敛定理
+\begin{align*}
+\lim_{\varepsilon\to0}\int_{\partial U}\beta_\varepsilon(f)\diff\mathcal{H}^{n-1}=\int_{\partial U}\lvert f\rvert\diff\mathcal{H}^{n-1},
+\end{align*}
+而右端的 $\int_U\lvert Df\rvert\diff y$ 与 $\varepsilon$ 无关。于是 $(\star\star)$ 成立。
+
+（3）上面已在如下假设下建立 $(\star\star)$：存在立方体 $Q=Q(x,r)$（$x\in\partial U$）使 $f\equiv0$ 于 $U-Q$ 上。一般情形下，用有限个这样的立方体覆盖 $\partial U$，并使用单位分解（与\cref{theorem:ch04-4-3}的证明相同）可得 % XREF p=158 "use a partition of unity as in the proof of Theorem 4.3"
+\begin{align*}
+\int_{\partial U}\lvert f\rvert\diff\mathcal{H}^{n-1}\leqslant C\int_U\lvert Df\rvert+\lvert f\rvert\diff y
+\end{align*}
+对一切 $f\in C^1(\overline{U})$ 成立。对 $1<p<\infty$，把该估计中的 $\lvert f\rvert$ 换成 $\lvert f\rvert^p$，得
+\begin{align*}
+\int_{\partial U}\lvert f\rvert^p\diff\mathcal{H}^{n-1}
+&\leqslant C\int_U\lvert Df\rvert\lvert f\rvert^{p-1}+\lvert f\rvert^p\diff y\\
+&\leqslant C\int_U\lvert Df\rvert^p+\lvert f\rvert^p\diff y \qquad(\star\star\star)
+\end{align*}
+对一切 $f\in C^1(\overline{U})$ 成立。
+
+% SUPPLEMENT: parent=theorem:ch04-4-6; kind=proof; 补出有限覆盖与单位分解的细节、由 (⋆⋆) 逐块求和得到全局估计的过程，以及用 Young 不等式得到 (⋆⋆⋆) 第二个不等号的推导
+下面补出 $(\star\star\star)$ 之前的估计。由 $U$ 有界知 $\partial U$ 紧，故存在有限个点 $x_1,\cdots,x_N\in\partial U$ 与半径 $r_1,\cdots,r_N>0$，使 $Q_i:=Q(x_i,r_i)$ 覆盖 $\partial U$。取 $\zeta_i\in C_c^\infty(Q_i)$ 满足 $0\leqslant\zeta_i\leqslant1$ 且 $\sum_{i=1}^N\zeta_i=1$ 于 $\partial U$ 的某个邻域内，并记 $M:=\max_i\lVert D\zeta_i\rVert_{L^\infty}$。对每个 $i$，$f\zeta_i\in C^1(\overline{U})$ 且 $f\zeta_i\equiv0$ 于 $U-Q_i$ 上，故对 $f\zeta_i$ 用 $(\star\star)$ 与乘积法则得
+\begin{align*}
+\int_{\partial U}\lvert f\zeta_i\rvert\diff\mathcal{H}^{n-1}
+\leqslant C_i\int_U\lvert D(f\zeta_i)\rvert\diff y
+\leqslant C_i\int_U\bigl(\lvert Df\rvert+M\lvert f\rvert\bigr)\diff y ,
+\end{align*}
+其中 $C_i$ 只依赖于 $n$ 与 $\Lip(\gamma_i)$。对 $i=1,\cdots,N$ 求和，并取 $C:=N(1+M)\max_iC_i$，即得所要的估计。至于 $(\star\star\star)$ 的第二个不等号，只需对 $p'=\frac{p}{p-1}$ 用 Young 不等式：
+\begin{align*}
+\lvert Df\rvert\lvert f\rvert^{p-1}\leqslant\frac1p\lvert Df\rvert^p+\frac1{p'}\lvert f\rvert^p ,
+\end{align*}
+故右端的积分不超过 $\int_U\bigl(\lvert Df\rvert^p+\lvert f\rvert^p\bigr)\diff y$ 的常数倍。对 $p=1$，上面得到的全局估计本身即为 $p=1$ 的 $(\star\star\star)$。
+
+（4）于是，对 $f\in C^1(\overline{U})$ 定义
+\begin{align*}
+Tf:=f|_{\partial U},
+\end{align*}
+则由 $(\star\star\star)$ 与\cref{theorem:ch04-4-3}，$T$ 唯一地延拓为从 $W^{1,p}(U)$ 到 $L^p(\partial U;\mathcal{H}^{n-1})$ 的有界线性算子，并且 % XREF p=158 "Theorem 4.3 that T uniquely extends to a bounded linear operator"
+\begin{align*}
+Tf=f|_{\partial U}
+\end{align*}
+对一切 $f\in W^{1,p}(U)\cap C(\overline{U})$ 成立。至此证明了断言 (i)；断言 (ii) 由利用 Gauss--Green 定理的逼近论证得到。
+
+% SUPPLEMENT: parent=theorem:ch04-4-6; kind=proof; 补出第（4）步的延拓细节：C^1(Ū) 在 W^{1,p}(U) 中稠密、范数估计给出有界性、稠密子空间上的相等给出唯一性，并用全局逼近定理的一致收敛部分得到 Tf=f|∂U
+下面补出第（4）步的细节。由\cref{theorem:ch04-4-3}(i)，$C^\infty(\overline{U})$ 在 $W^{1,p}(U)$ 中稠密，而 $C^\infty(\overline{U})\subseteq C^1(\overline{U})$。由 $(\star\star\star)$，对每个 $f\in C^1(\overline{U})$ 有% XREF internal
+\begin{align*}
+\lVert Tf\rVert_{L^p(\partial U;\mathcal{H}^{n-1})}\leqslant C^{\frac1p}\lVert f\rVert_{W^{1,p}(U)},
+\end{align*}
+故 $T$ 是定义在稠密子空间 $C^1(\overline{U})$ 上的有界线性算子，它唯一地延拓为 $W^{1,p}(U)$ 上的有界线性算子，且范数不超过 $C^{1/p}$。唯一性：若 $T_1,T_2$ 都满足断言 (i)，则 $T_1-T_2$ 在 $C^1(\overline{U})$ 上为零，由稠密性与 $T_1-T_2$ 的连续性得 $T_1=T_2$。
+
+再证 $Tf=f|_{\partial U}$ 对 $f\in W^{1,p}(U)\cap C(\overline{U})$ 成立。由\cref{theorem:ch04-4-3}(ii)，存在 $f_k\in C^\infty(\overline{U})$，使得 $f_k\to f$ 于 $W^{1,p}(U)$ 且在 $\overline{U}$ 上一致。于是 $Tf_k=f_k|_{\partial U}\to f|_{\partial U}$ 在 $\partial U$ 上一致；又 $Tf_k\to Tf$ 于 $L^p(\partial U;\mathcal{H}^{n-1})$。由 $\mathcal{H}^{n-1}(\partial U)<\infty$，在 $\partial U$ 上的一致收敛蕴涵 $L^p(\partial U;\mathcal{H}^{n-1})$ 中的收敛，故 $Tf=f|_{\partial U}$。% XREF internal
+
+% SUPPLEMENT: parent=theorem:ch04-4-6; kind=proof; 补出断言 (ii) 的逼近论证：对光滑函数用 Gauss–Green 公式，再在 W^{1,p}(U) 与 L^p(∂U) 中分别取极限
+最后补出断言 (ii)。设 $f\in W^{1,p}(U)$ 与 $\phi\in C^1(\mathbb{R}^n;\mathbb{R}^n)$，并记 $p'$ 为 $p$ 的共轭指数（$p=1$ 时取 $p'=\infty$）。取 $f_k\in C^\infty(\overline{U})$ 使 $f_k\to f$ 于 $W^{1,p}(U)$。对 $f_k$ 用光滑情形的 Gauss--Green 公式得
+\begin{align*}
+\int_U f_k\diver\phi\diff x=-\int_U Df_k\cdot\phi\diff x+\int_{\partial U}(\phi\cdot\nu)Tf_k\diff\mathcal{H}^{n-1}.
+\end{align*}
+由于 $\diver\phi\in L^{p'}(U)$、$\phi\in L^{p'}(U;\mathbb{R}^n)$，且 $f_k\to f$、$Df_k\to Df$ 于 $L^p$ 中，第一、二项分别收敛到 $\int_Uf\diver\phi\diff x$ 与 $-\int_UDf\cdot\phi\diff x$。又 $\phi\cdot\nu\in L^{p'}(\partial U;\mathcal{H}^{n-1})$ 且有界，$Tf_k\to Tf$ 于 $L^p(\partial U;\mathcal{H}^{n-1})$，故第三项收敛到 $\int_{\partial U}(\phi\cdot\nu)Tf\diff\mathcal{H}^{n-1}$。因此断言 (ii) 成立。
+\end{proof}
+
+\end{document}

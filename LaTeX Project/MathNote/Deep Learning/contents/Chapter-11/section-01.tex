@@ -22,14 +22,14 @@
 
 \begin{definition}[有向图模型]\label{definition:ch11-有向图模型}
 设 $G=(\mathcal{V},\mathcal{E})$ 是一个有向无环图，节点集
-$\mathcal{V}=\{1,\dots,K\}$，$K\geqslant1$，每个节点 $k$ 对应一个随机变量 $x_k$，
+$\mathcal{V}=\{1,\cdots,K\}$，$K\geqslant1$，每个节点 $k$ 对应一个随机变量 $x_k$，
 其取值落在可测空间 $(\mathcal{X}_k,\mathcal{B}_k)$ 中；边集 $\mathcal{E}$ 由有序对
 $(j,k)$ 组成。若 $(j,k)\in\mathcal{E}$，则称节点 $j$ 是节点 $k$ 的\textbf{父节点}，
 节点 $k$ 是节点 $j$ 的\textbf{子节点}，并记
 $\mathrm{pa}(k)=\{j:(j,k)\in\mathcal{E}\}$ 为节点 $k$ 的父节点集。若联合分布
-$p(x_1,\dots,x_K)$ 具有形式
+$p(x_1,\cdots,x_K)$ 具有形式
 \begin{align*}
-  p(x_1,\dots,x_K)=\prod_{k=1}^{K}p\bigl(x_k\mid \mathbf{x}_{\mathrm{pa}(k)}\bigr),
+  p(x_1,\cdots,x_K)=\prod_{k=1}^{K}p\bigl(x_k\mid \mathbf{x}_{\mathrm{pa}(k)}\bigr),
 \end{align*}
 其中 $p(x_k\mid \mathbf{x}_{\mathrm{pa}(k)})$ 是给定父变量取值时 $x_k$ 的条件分布，
 则联合分布 $p$ 由 $G$ 表示，且 $G$ 连同这些条件分布称为\textbf{有向图模型}
@@ -44,7 +44,7 @@ $p(x_1,\dots,x_K)$ 具有形式
 图模型的另一大类是Markov随机场（Markov random field），也称无向图模型（undirected graphical model），其中的连接不带箭头，无方向意义。有向图适用于表达随机变量之间的因果关系，而无向图更适合表达随机变量之间的软约束。有向图和无向图都可以看作一种叫作因子图（factor graph）表示法的特例。
 
 \begin{definition}[无向图模型]\label{definition:ch11-无向图模型}
-设 $G=(\mathcal{V},\mathcal{E})$ 是一个无向图，节点集 $\mathcal{V}=\{1,\dots,K\}$，
+设 $G=(\mathcal{V},\mathcal{E})$ 是一个无向图，节点集 $\mathcal{V}=\{1,\cdots,K\}$，
 每个节点 $k$ 对应随机变量 $x_k$，每条边 $\{j,k\}\in\mathcal{E}$ 没有方向。设
 $\mathcal{C}$ 为 $G$ 的全部极大团的集合，并对每个 $C\in\mathcal{C}$ 给定非负可测函数
 $\psi_C$，其自变量为 $\mathbf{x}_C=(x_k)_{k\in C}$。若联合分布具有形式
@@ -65,8 +65,8 @@ $\psi_C$，其自变量为 $\mathbf{x}_C=(x_k)_{k\in C}$。若联合分布具有
 \begin{definition}[因子图]\label{definition:ch11-因子图}
 设 $\{f_s\}_{s\in\mathcal{S}}$ 是一族非负函数，$f_s$ 的自变量是随机变量组
 $\mathbf{x}_{\mathcal{N}(s)}=(x_k)_{k\in\mathcal{N}(s)}$，其中
-$\mathcal{N}(s)\subseteq\{1,\dots,K\}$ 为有限非空指标集。以
-$\{x_1,\dots,x_K\}$ 为变量节点、以 $\{f_s\}_{s\in\mathcal{S}}$ 为因子节点、以
+$\mathcal{N}(s)\subseteq\{1,\cdots,K\}$ 为有限非空指标集。以
+$\{x_1,\cdots,x_K\}$ 为变量节点、以 $\{f_s\}_{s\in\mathcal{S}}$ 为因子节点、以
 “$k\in\mathcal{N}(s)$”为连边条件所构成的二分图称为该函数族的\textbf{因子图}
 （factor graph）。若联合分布具有形式
 \begin{align}
@@ -165,10 +165,10 @@ $p(x_k\mid \mathbf{x}_{\mathrm{pa}(k)})$ 都已归一化（离散情形对 $x_k$
 我们现在所讨论的有向图有一个重要的限制条件，即禁止存在有向环（directed cycle）。换句话说，图中不存在闭环路径，这意味着我们不能沿着箭头的方向从一个节点移动到另一个节点，最后回到起始节点。
 
 \begin{definition}[有向无环图]\label{definition:ch11-有向无环图}
-设 $G=(\mathcal{V},\mathcal{E})$ 是一个有向图，节点集 $\mathcal{V}=\{1,\dots,K\}$，
+设 $G=(\mathcal{V},\mathcal{E})$ 是一个有向图，节点集 $\mathcal{V}=\{1,\cdots,K\}$，
 $K\geqslant1$，边集 $\mathcal{E}\subseteq\mathcal{V}\times\mathcal{V}$。若 $G$ 中不
-存在长度 $n\geqslant1$ 的有向环，即不存在节点序列 $v_1,v_2,\dots,v_n\in\mathcal{V}$
-使 $(v_i,v_{i+1})\in\mathcal{E}$（$i=1,\dots,n-1$）且 $(v_n,v_1)\in\mathcal{E}$，也就是
+存在长度 $n\geqslant1$ 的有向环，即不存在节点序列 $v_1,v_2,\cdots,v_n\in\mathcal{V}$
+使 $(v_i,v_{i+1})\in\mathcal{E}$（$i=1,\cdots,n-1$）且 $(v_n,v_1)\in\mathcal{E}$，也就是
 说沿箭头方向从某个节点出发、经过若干条边后回到该节点，则 $G$ 称为\textbf{有向
 无环图}（directed acyclic graph），简称 \textbf{DAG}。
 \end{definition}
@@ -212,7 +212,7 @@ $K\geqslant1$，边集 $\mathcal{E}\subseteq\mathcal{V}\times\mathcal{V}$。若 
 \end{figure}
 
 \begin{proposition}[离散图模型的参数计数]\label{proposition:ch11-离散参数计数}
-设 $M\geqslant1$，$K\geqslant2$，$M$ 个离散变量 $x_1,\dots,x_M$ 各有 $K$ 种状态，
+设 $M\geqslant1$，$K\geqslant2$，$M$ 个离散变量 $x_1,\cdots,x_M$ 各有 $K$ 种状态，
 联合分布按有向无环图分解为局部条件分布
 $p(x_i\mid \mathbf{x}_{\mathrm{pa}(i)})$，且每个条件分布用一般条件概率表给出，即对
 父变量的每种取值单独给出一个概率向量。则下列计数成立：
@@ -252,8 +252,8 @@ $p(x_i\mid \mathbf{x}_{\mathrm{pa}(i)})$，且每个条件分布用一般条件�
 
 \begin{definition}[共享参数]\label{definition:ch11-共享参数}
 设有向图模型的局部因子为 $p(x_k\mid \mathbf{x}_{\mathrm{pa}(k)})$，
-$k=1,\dots,K$。若存在参数向量 $\boldsymbol{\theta}$ 与函数族
-$g_k(\cdot;\boldsymbol{\theta})$，使得对指标集 $\mathcal{K}\subseteq\{1,\dots,K\}$ 中
+$k=1,\cdots,K$。若存在参数向量 $\boldsymbol{\theta}$ 与函数族
+$g_k(\cdot;\boldsymbol{\theta})$，使得对指标集 $\mathcal{K}\subseteq\{1,\cdots,K\}$ 中
 的每个 $k$ 都有
 $p(x_k\mid \mathbf{x}_{\mathrm{pa}(k)})
 =g_k(x_k,\mathbf{x}_{\mathrm{pa}(k)};\boldsymbol{\theta})$，即这些因子共用同一组参数
@@ -298,7 +298,7 @@ $\boldsymbol{\theta}$ 而不各自拥有独立的参数，则 $\boldsymbol{\thet
 
 \begin{definition}[线性 Gauss 模型]\label{definition:ch11-线性Gauss模型}
 设 $G$ 是一个有 $D$ 个节点的有向无环图，节点 $i$ 代表连续随机变量
-$x_i\in\mathbb{R}$，$i=1,\dots,D$，节点编号为拓扑序。设 $w_{ij}\in\mathbb{R}$
+$x_i\in\mathbb{R}$，$i=1,\cdots,D$，节点编号为拓扑序。设 $w_{ij}\in\mathbb{R}$
 （$j\in\mathrm{pa}(i)$）、$b_i\in\mathbb{R}$、$v_i>0$。若每个节点的条件分布为
 \begin{align}
   p\bigl(x_i\mid \mathrm{pa}(i)\bigr) = \mathcal{N}\left(x_i\,\Bigm|\, \sum_{j\in \mathrm{pa}(i)}w_{ij}x_j+b_i,\ v_i\right),
@@ -417,7 +417,7 @@ $x_i\in\mathbb{R}$，$i=1,\dots,D$，节点编号为拓扑序。设 $w_{ij}\in\m
 当开始处理更复杂的模型时，要像\cref{figure:ch11-二元分类器有向图}那样明确写出$t_1,\cdots,t_N$形式的多个节点就会变得很不方便。因此，我们引入了一种图形符号，以便更简洁地表示这样的多个节点。
 
 \begin{definition}[板块表示法]\label{definition:ch11-板块}
-设一个图模型含有 $N$ 个同构节点，它们仅在索引 $n=1,\dots,N$ 上不同，且每个节点连同
+设一个图模型含有 $N$ 个同构节点，它们仅在索引 $n=1,\cdots,N$ 上不同，且每个节点连同
 其入射边与局部因子都按同一模式连接到其余变量。把该模式画成一个代表性节点，并用一个
 标有 $N$ 的方框把它包围，以表示方框内的图形被独立重复 $N$ 次、每次取一个不同的索引
 值，这一图形缩写称为\textbf{板块}（plate）。

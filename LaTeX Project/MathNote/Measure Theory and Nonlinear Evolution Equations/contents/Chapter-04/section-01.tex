@@ -17,120 +17,264 @@
 
 \subsection{可测性}\label{subsection:ch04-可测性}
 
-设 $(X,\mathcal{A})$ 为可测空间，$Y$ 为赋范数 $\|\cdot\|_Y$ 的 Banach 空间。以下可测性概念（其中 $\mathcal{B}(Y)$ 表示由范数拓扑生成的 $Y$ 上 Borel $\sigma$-代数）是\cref{definition:ch02-可测性}的特例。
+设 $(X,\mathcal{A})$ 为可测空间，$Y$ 为实 Banach 空间，其范数记为 $\|\cdot\|_Y$；$\mathcal{B}(Y)$ 表示由范数拓扑生成的 $Y$ 上的 Borel $\sigma$-代数。如下可测性概念是\cref{definition:ch02-可测性}的特例。
 
 \begin{definition}[向量函数的可测性]\label{definition:ch04-可测性}
-函数 $f:X\to Y$ 称为可测的（或 $(\mathcal{A},\mathcal{B}(Y))$-可测的），若对所有 $E\in\mathcal{B}(Y)$ 有 $f^{-1}(E)\in\mathcal{A}$。
+设 $(X,\mathcal{A})$ 为可测空间，$Y$ 为实 Banach 空间，$\mathcal{B}(Y)$ 为由范数拓扑生成的 $Y$ 上的 Borel $\sigma$-代数。称函数 $f:X\to Y$ 为可测的（或称 $(\mathcal{A},\mathcal{B}(Y))$-可测的），若对每个 $E\in\mathcal{B}(Y)$ 有 $f^{-1}(E)\in\mathcal{A}$。此处 $f^{-1}(E)\triangleq\{x\in X\mid f(x)\in E\}$。
 \end{definition}
 
-以下命题部分推广了\cref{corollary:ch02-逐点极限}(ii)。
+% SUPPLEMENT: parent=definition:ch04-可测性; kind=motivation; 说明引入动机（标量可测性的向量值推广、Bochner 积分的可测性前提）、$\mathcal{A}$ 与 $\mathcal{B}(Y)$ 及范数拓扑各自的作用、以及"拉回"而非"推送"的边界与反例
+\begin{remark}\phantomsection\label{remark:ch04-可测性动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{definition:ch02-可测性}对任意可测空间 $(Y,\mathcal{B})$ 陈述了 $(\mathcal{A},\mathcal{B})$-可测性；取 $Y$ 为 Banach 空间、$\mathcal{B}\triangleq\mathcal{B}(Y)$ 即得向量值情形。这一概念是本章全部构造的起点：Bochner 积分要求被积函数 $\mu$-可测（\cref{definition:ch04-mu可测}），而后者是本节用简单函数逼近定义的，其合理性最终归结为本定义与\cref{proposition:ch04-可推mu可}。
+\item $\sigma$-代数 $\mathcal{A}$ 的作用。可测性只用 $f^{-1}$ 与集合运算表述，故要求 $\mathcal{A}$ 对可数并与补封闭（即 $\sigma$-代数）。若把 $\mathcal{A}$ 换成一个只对有限并封闭的族，则\cref{proposition:ch04-逐点极限可测}的证明中出现的 $\bigcap_{m}\bigcup_{k\geqslant m}f_k^{-1}(U_n)$ 未必属于该族，结论随之失效。
+\item $Y$ 的 Banach 结构的作用。定义中只用到 $Y$ 的范数拓扑，完备性并未进入；因此本定义对任意赋范空间有意义。完备性在\cref{proposition:ch04-mu逐点极限}与\cref{section:ch04-积分}的积分理论中才起作用（此时 $\|\cdot\|_Y$ 的三角不等式与 Cauchy 准则被反复使用）。此外，正因为 $\mathcal{B}(Y)$ 由范数拓扑生成，判别可测性只需验证开集（或可数基中的开球）的原像可测（\cref{lemma:ch02-基判定}、\cref{proposition:ch02-Borel判定}）。
+\item 可测性是"拉回"性质。$f$ 可测不蕴含 $f$ 把可测集映为可测集：取 $X=Y=\mathbb{R}$、$\mathcal{A}=\mathcal{B}(\mathbb{R})$、$f(x)\triangleq x$，并取 $E\subseteq\mathbb{R}$ 不是 Borel 集，则 $f$ 可测而 $f(E)=E$ 不可测。另一方面，把 $\mathcal{B}(Y)$ 换为更大的 $\sigma$-代数（例如 $Y=\mathbb{R}^N$ 时取 Lebesgue $\sigma$-代数）会使条件减弱，这正是\cref{subsection:ch04-mu可测性}引入 $\mu$-可测性的动机之一。
+\end{enumerate}
+\end{remark}
+
+如下命题部分推广了\cref{corollary:ch02-逐点极限}(ii)。
 
 \begin{proposition}[逐点极限的可测性]\label{proposition:ch04-逐点极限可测}\label{proposition:ch04-可测性}
-设 $f_n:X\to Y$ 可测（$n\in\mathbb{N}$），且对每个 $x\in X$ 有
+设 $(X,\mathcal{A})$ 为可测空间，$Y$ 为实 Banach 空间，$f_n:X\to Y$ 为可测函数（$n\in\mathbb{N}$），并设函数 $f:X\to Y$ 满足
 \begin{align}
-\lim_{n\to\infty}\|f_n(x)-f(x)\|_Y=0. \label{align:ch04-4.1}
+\lim_{n\to\infty}\|f_n(x)-f(x)\|_Y=0\quad\text{对每个 }x\in X. \label{align:ch04-4.1}
 \end{align}
-则函数 $f$ 可测。
+则 $f$ 可测。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch04-逐点极限可测; kind=proof; 原证明中"易见"(4.2)、由(4.3)--(4.4)拼接等式链、以及 $U_n$ 与 $C_n$ 覆盖 $U$ 之处被压缩，此处逐项补出并验证 $C_n\subseteq U$
 \begin{proof}
-设 $U\subseteq Y$ 为开集。易见对每个 $m\in\mathbb{N}$ 有
+设 $U\subseteq Y$ 为开集。首先证明：对每个 $m\in\mathbb{N}$ 有
 \begin{align}
 f^{-1}(U)\subseteq\bigcup_{k\geqslant m}f_k^{-1}(U). \label{align:ch04-4.2}
 \end{align}
-事实上，固定 $x\in f^{-1}(U)$。则 $f(x)\in U$，故存在 $r>0$ 使开球 $B(f(x),r)\subseteq U$。另一方面，由\eqref{align:ch04-4.1}存在 $\bar k\in\mathbb{N}$ 使对所有 $k>\bar k$ 有 $f_k(x)\in B(f(x),r)$，由此立即得\eqref{align:ch04-4.2}。
+固定 $x\in f^{-1}(U)$，则 $f(x)\in U$。由于 $U$ 为开集且 $Y$ 为赋范空间，存在 $r>0$ 使开球 $B(f(x),r)\triangleq\{y\in Y\mid\|y-f(x)\|_Y<r\}$ 含于 $U$。由\eqref{align:ch04-4.1}，存在 $\bar k\in\mathbb{N}$ 使对所有 $k>\bar k$ 有 $\|f_k(x)-f(x)\|_Y<r$，即 $f_k(x)\in B(f(x),r)\subseteq U$。取 $k\triangleq\max\{m,\bar k+1\}$，则 $k\geqslant m$ 且 $x\in f_k^{-1}(U)$，由此得到\eqref{align:ch04-4.2}。
 
 由\eqref{align:ch04-4.2}中 $m$ 的任意性得
 \begin{align}
 f^{-1}(U)\subseteq\bigcap_{m=1}^{\infty}\bigcup_{k\geqslant m}f_k^{-1}(U), \label{align:ch04-4.3}
 \end{align}
-而对每个闭集 $C\subseteq Y$，
+而对每个闭集 $C\subseteq Y$，由\eqref{align:ch04-4.1}得
 \begin{align}
 \bigcap_{m=1}^{\infty}\bigcup_{k\geqslant m}f_k^{-1}(C)\subseteq f^{-1}(C). \label{align:ch04-4.4}
 \end{align}
-令 $U_n\triangleq \{y\in U\mid d(y,U^c)>1/n\}$，$C_n\triangleq \overline{U_n}$（$n\in\mathbb{N}$）。显然 $U_n$ 开，且 $U=\bigcup_{n=1}^\infty U_n=\bigcup_{n=1}^\infty C_n$。由\eqref{align:ch04-4.3}--\eqref{align:ch04-4.4}得
+事实上，设 $x$ 属于\eqref{align:ch04-4.4}左端。则对每个 $m\in\mathbb{N}$ 存在 $k\geqslant m$ 使 $f_k(x)\in C$。于是可归纳地取严格增序列 $k_j\to\infty$ 使 $f_{k_j}(x)\in C$，而由\eqref{align:ch04-4.1}有 $\|f_{k_j}(x)-f(x)\|_Y\to0$，即 $f(x)$ 是 $C$ 中序列的极限；因 $C$ 闭，$f(x)\in C$。
+
+令 $U_n\triangleq \{y\in U\mid d(y,U^c)>1/n\}$，$C_n\triangleq \overline{U_n}$（$n\in\mathbb{N}$），其中 $d(y,U^c)\triangleq\inf_{z\in U^c}\|y-z\|_Y$。则 $U_n$ 为开集：若 $d(y,U^c)>1/n$ 且 $\|y'-y\|_Y<d(y,U^c)-1/n$，则 $d(y',U^c)\geqslant d(y,U^c)-\|y'-y\|_Y>1/n$。又
+\begin{align*}
+U=\bigcup_{n=1}^\infty U_n=\bigcup_{n=1}^\infty C_n.
+\end{align*}
+事实上，若 $y\in U$，则由 $U$ 开与 $U^c$ 闭得 $d(y,U^c)>0$，故 $y\in U_n$ 对 $n>1/d(y,U^c)$ 成立，第一式得证；又 $U_n\subseteq C_n$ 给出 $\bigcup_nC_n\supseteq U$；反之，若 $y\in C_n$，则存在 $y_j\in U_n$ 使 $\|y_j-y\|_Y\to0$，于是 $d(y,U^c)\geqslant\liminf_jd(y_j,U^c)\geqslant1/n>0$，故 $y\notin U^c$，即 $y\in U$，于是 $\bigcup_nC_n\subseteq U$。
+
+由\eqref{align:ch04-4.3}--\eqref{align:ch04-4.4}，把\eqref{align:ch04-4.4}用于闭集 $C_n$，得
 \begin{align*}
 f^{-1}(U)&=\bigcup_{n=1}^\infty f^{-1}(U_n)\subseteq\bigcup_{n=1}^\infty\bigcap_{m=1}^\infty\bigcup_{k\geqslant m}f_k^{-1}(U_n)\\
 &\subseteq\bigcup_{n=1}^\infty\bigcap_{m=1}^\infty\bigcup_{k\geqslant m}f_k^{-1}(C_n)\subseteq\bigcup_{n=1}^\infty f^{-1}(C_n)=f^{-1}(U).
 \end{align*}
-由此 $f^{-1}(U)=\bigcup_{n=1}^\infty\bigcap_{m=1}^\infty\bigcup_{k\geqslant m}f_k^{-1}(U_n)\in\mathcal{A}$，从而由\cref{lemma:ch02-基判定}得结论。
+故上式中的包含关系全为等式，特别地
+\begin{align*}
+f^{-1}(U)=\bigcup_{n=1}^\infty\bigcap_{m=1}^\infty\bigcup_{k\geqslant m}f_k^{-1}(U_n).
+\end{align*}
+由 $f_k$ 可测与 $U_n\in\mathcal{B}(Y)$ 得 $f_k^{-1}(U_n)\in\mathcal{A}$；由于 $\mathcal{A}$ 对可数并与可数交封闭，右端属于 $\mathcal{A}$，从而 $f^{-1}(U)\in\mathcal{A}$。这说明 $Y$ 的每个开集的原像属于 $\mathcal{A}$，于是由\cref{lemma:ch02-基判定}对每个 $F\in\mathcal{B}(Y)$ 有 $f^{-1}(F)\in\mathcal{A}$，即 $f$ 可测。
 \end{proof}
 
-\begin{remark}\label{remark:ch04-范数可测}
+% SUPPLEMENT: parent=proposition:ch04-可测性; kind=motivation; 别名标签，与 proposition:ch04-逐点极限可测 共用下一条注记（同一环境的两个锚点）
+% SUPPLEMENT: parent=proposition:ch04-逐点极限可测; kind=motivation; 说明为何需要 $U_n$/$C_n$ 的 $F_\sigma$ 化、逐点（而非几乎处处）收敛的作用、以及去掉逐点性后的反例
+\begin{remark}\phantomsection\label{remark:ch04-逐点极限动机}
+\begin{enumerate}[(i)]
+\item 动机。可测性只要求 Borel 集的原像可测，而可测函数的逐点极限一般是"最弱的"保持可测性的运算：本节后文的 $\mu$-可测性（\cref{definition:ch04-mu可测}）恰是用简单函数列的几乎处处极限定义的，故本命题是全部逼近论证的基石。
+\item 为何要 $U_n$、$C_n$。\eqref{align:ch04-4.3}只给出 $f^{-1}(U)\subseteq\bigcap_m\bigcup_{k\geqslant m}f_k^{-1}(U)$，反向包含对开集一般不成立：取 $Y=\mathbb{R}$、$U=(0,1)$、$f_k\triangleq\chi_{\{0\}}$、$f\triangleq0$，则 $0\in f^{-1}(U)$ 但 $0\notin\bigcup_kf_k^{-1}(U)$。而\eqref{align:ch04-4.4}对闭集成立。因此把开集 $U$ 写成可数多个"离 $U^c$ 有正距离"的开集 $U_n$ 之并、再用其闭包 $C_n\subseteq U$ 夹逼，是修补方向的关键；这一步同时用到 $Y$ 为度量空间（距离函数连续）。
+\item 逐点收敛的作用。\eqref{align:ch04-4.1}要求在每一点成立，故\eqref{align:ch04-4.2}中可取与 $x$ 无关的下标 $m$ 而得到\eqref{align:ch04-4.3}。若只设几乎处处收敛，则结论一般失效：取 $X=[0,1]$、$\mathcal{A}=\mathcal{B}([0,1])$、$\mu$ 为 Lebesgue 测度，$N\subseteq[0,1]$ 为不可 Borel 的 $\mu$-零测集（Cantor 集有非 Borel 子集，且 Cantor 集为零测集），$f\triangleq\chi_N$，$f_k\triangleq0$。则每个 $f_k$ 可测、$f_k\to f$ 在 $X$ 中 $\mu$-几乎处处成立，但 $f$ 不可测。这说明 $\mu$-可测性只能定义为"几乎处处是简单函数的极限"（\cref{definition:ch04-mu可测}），而不能直接援引本命题。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch04-范数可测; kind=proof; 补出"范数连续从而 Borel 可测"与复合可测性的逐项验证，并给出逆命题的反例
+\begin{remark}\phantomsection\label{remark:ch04-范数可测}
 若 $f:X\to Y$ 可测，则实值函数
 \begin{align}
 \|f\|_Y:X\to[0,\infty),\quad \|f\|_Y(x)\triangleq \|f(x)\|_Y\ (x\in X) \label{align:ch04-4.5}
 \end{align}
-可测。事实上，映射 $\|\cdot\|_Y:Y\to\mathbb{R}$，$y\mapsto\|y\|_Y$（$y\in Y$）连续，从而 Borel 可测（见\cref{remark:ch02-连续Borel}）。于是结论由\cref{proposition:ch02-复合可测}得到。
+可测。事实上，由反向三角不等式 $\big|\|y\|_Y-\|y'\|_Y\big|\leqslant\|y-y'\|_Y$（$y,y'\in Y$），映射 $\|\cdot\|_Y:Y\to\mathbb{R}$，$y\mapsto\|y\|_Y$，是 Lipschitz 连续的，从而 Borel 可测（见\cref{remark:ch02-连续Borel}）：对每个 $B\in\mathcal{B}(\mathbb{R})$ 有 $(\|\cdot\|_Y)^{-1}(B)\in\mathcal{B}(Y)$。于是对每个 $B\in\mathcal{B}(\mathbb{R})$，
+\begin{align*}
+(\|f\|_Y)^{-1}(B)=f^{-1}\big((\|\cdot\|_Y)^{-1}(B)\big)\in\mathcal{A},
+\end{align*}
+即 $\|f\|_Y$ 可测（见\cref{proposition:ch02-复合可测}）。
+
+逆命题不成立：取 $X=\mathbb{R}$、$\mathcal{A}=\mathcal{B}(\mathbb{R})$、$Y=\mathbb{R}$、$V\subseteq\mathbb{R}$ 不是 Borel 集、$f\triangleq2\chi_V-1$。则 $\|f\|_Y\equiv1$ 可测，但 $f^{-1}((0,\infty))=V\notin\mathcal{A}$，故 $f$ 不可测。
 \end{remark}
 
 \begin{definition}[简单函数]\label{definition:ch04-简单函数}
-函数 $s:X\to Y$ 称为简单的，若存在 $y_1,\cdots ,y_p\in Y$ 与 $X$ 的一个划分 $\{E_1,\cdots ,E_p\}\subseteq\mathcal{A}$（当 $\mu(E_i)=\infty$ 时 $y_i=0$），使 $s=\sum_{i=1}^p y_i\chi_{E_i}$。
+设 $(X,\mathcal{A},\mu)$ 为测度空间，$Y$ 为实 Banach 空间。称函数 $s:X\to Y$ 为简单的，若存在 $p\in\mathbb{N}$、向量 $y_1,\cdots ,y_p\in Y$ 与 $X$ 的一个可测划分 $\{E_1,\cdots ,E_p\}\subseteq\mathcal{A}$（即 $E_i\cap E_j=\varnothing$ 当 $i\neq j$，且 $\bigcup_{i=1}^pE_i=X$），满足：当 $\mu(E_i)=\infty$ 时 $y_i=0$，且
+\begin{align*}
+s=\sum_{i=1}^p y_i\chi_{E_i}.
+\end{align*}
 \end{definition}
 
-简单函数可测。我们把 $X$ 到 $Y$ 的简单函数的集合记为 $\mathcal{S}(X;Y)$，并记 $\mathcal{S}(X)\equiv\mathcal{S}(X;\mathbb{R})$。
+% SUPPLEMENT: parent=definition:ch04-简单函数; kind=motivation; 说明有限值性、划分的作用、"$\mu(E_i)=\infty$ 时 $y_i=0$"这一非退化条件的作用、表示不唯一性以及简单函数的可测性
+\begin{remark}\phantomsection\label{remark:ch04-简单函数动机}
+\begin{enumerate}[(i)]
+\item 动机。简单函数只取有限多个值，故其积分可直接由有限和 $\sum_{i=1}^p y_i\mu(E_i)$ 定义（\cref{section:ch04-积分}），而一般 $\mu$-可测函数用简单函数列逼近（\cref{definition:ch04-mu可测}）。这正是 Lebesgue 积分"先离散、后取极限"的向量值版本。
+\item 划分的作用。$\{E_1,\cdots ,E_p\}$ 为 $X$ 的可测划分，使 $s$ 的取值与水平集 $\{s=y_i\}$ 一致，从而 $s^{-1}(F)=\bigcup_{y_i\in F}E_i\in\mathcal{A}$ 对每个 $F\subseteq Y$ 成立；特别地 $s$ 可测。若允许 $\{E_i\}$ 只是两两不交而不覆盖 $X$，则 $s$ 在剩余部分无定义，不能作为 $X$ 上的函数使用。
+\item 非退化条件"$\mu(E_i)=\infty$ 时 $y_i=0$"的作用。它保证有限和 $\sum_{i=1}^p y_i\mu(E_i)$ 中不出现 $\infty\cdot y$（$y\neq0$）这种无意义的项，从而 $s$ 的积分 $\sum_iy_i\mu(E_i)$ 在 $[0,\infty]$ 中良定且每个非零项对应有限测度。当 $\mu(X)<\infty$ 时该条件自动满足；当 $\mu$ 为 $\sigma$-有限时，可把 $X$ 分成有限测度集，使逼近用的简单函数只在有限测度集上非零。该条件也说明"简单函数"这一概念依赖于测度 $\mu$，尽管记号 $\mathcal{S}(X;Y)$ 中未标出 $\mu$。
+\item 表示不唯一。若 $y_i=y_j$，则可把 $E_i,E_j$ 合并；反之可把一个 $E_i$ 分裂为两个可测子集。故 $s=\sum_iy_i\chi_{E_i}$ 的表示不唯一，但 $s$ 作为函数唯一确定，且其在每个可测集上的积分与表示无关（\cref{section:ch04-积分}将验证）。
+\end{enumerate}
+\end{remark}
+
+简单函数可测。把 $X$ 到 $Y$ 的简单函数的集合记为 $\mathcal{S}(X;Y)$，并记 $\mathcal{S}(X)\equiv\mathcal{S}(X;\mathbb{R})$。
 
 \subsection{$\mu$-可测性}\label{subsection:ch04-mu可测性}
 
-设 $(X,\mathcal{A},\mu)$ 为测度空间。
+设 $(X,\mathcal{A},\mu)$ 为测度空间，$Y$ 为实 Banach 空间。
 
 \begin{definition}[$\mu$-可测性]\label{definition:ch04-mu可测}
-函数 $f:X\to Y$ 称为 $\mu$-可测的，若存在序列 $\{s_n\}\subseteq\mathcal{S}(X;Y)$ 使
+设 $(X,\mathcal{A},\mu)$ 为测度空间，$Y$ 为实 Banach 空间。称函数 $f:X\to Y$ 为 $\mu$-可测的，若存在简单函数列 $\{s_n\}\subseteq\mathcal{S}(X;Y)$ 使
 \begin{align}
 \lim_{n\to\infty}\|s_n(x)-f(x)\|_Y=0\quad\text{对 }\mu\text{-几乎所有 }x\in X. \label{align:ch04-4.6}
 \end{align}
 \end{definition}
 
-\begin{remark}\label{remark:ch04-mu可测注}
-(i) 设 $f,g:X\to Y$。若 $f$ 为 $\mu$-可测且 $g=f$ 在 $X$ 中 $\mu$-几乎处处成立，则 $g$ 亦为 $\mu$-可测。事实上，取 $\mu$-零测集 $N_1,N_2\in\mathcal{A}$，使对所有 $x\in N_1^c$ 有 $\lim_{n\to\infty}\|s_n(x)-f(x)\|_Y=0$，且对所有 $x\in N_2^c$ 有 $f(x)=g(x)$。则 $N\triangleq N_1\cup N_2$ 为 $\mu$-零测集，且对所有 $x\in N^c$ 有 $\lim_{n\to\infty}\|s_n(x)-g(x)\|_Y=0$。于是由\cref{definition:ch04-mu可测}得结论。
-
-(ii) 若 $f:X\to Y$ 为 $\mu$-可测，则存在 $\mu$-零测集 $N\in\mathcal{A}$ 与序列 $\{s_n\}\subseteq\mathcal{S}(X;Y)$，使对所有 $x\in N^c$ 有 $\lim_{n\to\infty}\|s_n(x)-f(x)\|_Y=0$。由于简单函数可测，由\cref{proposition:ch04-逐点极限可测}函数 $f$ 为 $(\mathcal{A}\cap N^c,\mathcal{B}(Y))$-可测，从而在按几乎处处定义的函数意义下可测（见\cref{definition:ch02-几乎处处可测}与\cref{definition:ch04-可测性}）。此外，若 $\mu$ 完备，则它在通常意义下亦可测（见\cref{proposition:ch02-完备化}）。我们约定俗成地把这些注记概括为：“$\mu$-可测函数是可测的”。
-
-(iii) 由 (ii) 与\cref{remark:ch04-范数可测}，若 $f:X\to Y$ 为 $\mu$-可测，则由\eqref{align:ch04-4.5}定义的函数 $\|f\|_Y$ 可测。
+% SUPPLEMENT: parent=definition:ch04-mu可测; kind=motivation; 说明为何不直接用（$\mathcal{A},\mathcal{B}(Y)$)-可测性、$\mu$ 只通过零测集起作用、完备化与几乎处处意义下的可测性、以及与\cref{definition:ch04-可测性}的差别
+\begin{remark}\phantomsection\label{remark:ch04-mu可测动机}
+\begin{enumerate}[(i)]
+\item 动机。\cref{definition:ch04-可测性}要求 \emph{每个} Borel 集的原像属于 $\mathcal{A}$，这与 $\mu$ 无关；但在积分理论中，改变 $f$ 于一个 $\mu$-零测集上不应改变其可积性与积分值。$\mu$-可测性正是为此设计：它只要求 $f$ 在一个 $\mu$-零测集之外是简单函数列的极限，因而只依赖 $\mu$ 的零测集族，而不依赖 $\mathcal{A}$ 对零测集的完备化程度。
+\item 各假设的作用。$\{s_n\}\subseteq\mathcal{S}(X;Y)$ 使逼近序列本身具有有限值并满足\cref{definition:ch04-简单函数}的非退化条件；极限在 $\|\cdot\|_Y$ 下取得，故 $Y$ 的范数结构不可省；"(4.6) 对 $\mu$-几乎所有 $x$ 成立"意味着存在 $\mu$-零测集 $N\in\mathcal{A}$ 使 (4.6) 对每个 $x\in N^c$ 成立。$\mu$ 本身只需定义在 $\mathcal{A}$ 上，不必完备、不必 $\sigma$-有限；$\sigma$-有限性只在\cref{proposition:ch04-mu逐点极限}等封闭性结论中作为充分条件出现。
+\item 与可测性的关系。二者一般不等价：若 $\mu$ 完备，则 $\mu$-可测蕴含可测（\cref{remark:ch04-mu可测注}(ii)）；若 $\mu$ 不完备，$\mu$-可测函数只在"几乎处处意义下"可测。反向蕴含需要可分的 $Y$（\cref{proposition:ch04-可推mu可}）。反例见\cref{remark:ch04-可测性动机}(iii)与\cref{remark:ch04-可推mu可动机}(iii)。
+\item 与 $f$ 在零测集上的取值无关。若 $g=f$ 在 $X$ 中 $\mu$-几乎处处成立，则 $f$ 与 $g$ 的 $\mu$-可测性等价（\cref{remark:ch04-mu可测注}(i)）；故 $\mu$-可测性是"几乎处处定义函数"的自然可测性概念。
+\end{enumerate}
 \end{remark}
 
-$\mu$-可测函数的集合是一个向量空间。以下结果（与\cref{proposition:ch04-逐点极限可测}类似）表明：若 $\mu$ 为 $\sigma$-有限，则它关于 $\mu$-几乎处处收敛封闭。
+\begin{remark}\phantomsection\label{remark:ch04-mu可测注}
+(i) 设 $f,g:X\to Y$。若 $f$ 为 $\mu$-可测且 $g=f$ 在 $X$ 中 $\mu$-几乎处处成立，则 $g$ 亦为 $\mu$-可测。事实上，取 $\mu$-零测集 $N_1,N_2\in\mathcal{A}$ 使对所有 $x\in N_1^c$ 有 $\lim_{n\to\infty}\|s_n(x)-f(x)\|_Y=0$，且对所有 $x\in N_2^c$ 有 $f(x)=g(x)$。则 $N\triangleq N_1\cup N_2$ 为 $\mu$-零测集，且对所有 $x\in N^c$ 有 $\lim_{n\to\infty}\|s_n(x)-g(x)\|_Y=0$。于是由\cref{definition:ch04-mu可测}得结论。
+
+(ii) 若 $f:X\to Y$ 为 $\mu$-可测，则存在 $\mu$-零测集 $N\in\mathcal{A}$ 与序列 $\{s_n\}\subseteq\mathcal{S}(X;Y)$，使对所有 $x\in N^c$ 有 $\lim_{n\to\infty}\|s_n(x)-f(x)\|_Y=0$。由于简单函数可测，由\cref{proposition:ch04-逐点极限可测}函数 $f$ 为 $(\mathcal{A}\cap N^c,\mathcal{B}(Y))$-可测，从而在按几乎处处定义的函数意义下可测（见\cref{definition:ch02-几乎处处可测}与\cref{definition:ch04-可测性}）。此外，若 $\mu$ 完备，则它在通常意义下亦可测（见\cref{remark:ch02-乘积完备化}）。本书约定俗成地把这些注记概括为："$\mu$-可测函数是可测的"。
+
+(iii) 由 (ii) 与\cref{remark:ch04-范数可测}，若 $f:X\to Y$ 为 $\mu$-可测，则函数 $\|f\|_Y$ 由\eqref{align:ch04-4.5}定义且可测：在 $N^c$ 上它是可测函数列 $\{\|s_n\|_Y\}$ 的逐点极限，故 $(\mathcal{A}\cap N^c)$-可测；又其取值非负，故按几乎处处意义可测。
+\end{remark}
+
+$\mu$-可测函数的集合是一个向量空间。如下结果（类似于\cref{proposition:ch04-逐点极限可测}）表明：若 $\mu$ 为 $\sigma$-有限，则该集合对 $\mu$-几乎处处收敛封闭。
 
 \begin{proposition}\label{proposition:ch04-mu逐点极限}
-设 $\mu$ 为 $\sigma$-有限，$f_n:X\to Y$ 为 $\mu$-可测（$n\in\mathbb{N}$）。则每个满足
+设 $\mu$ 为 $\sigma$-有限，$Y$ 为实 Banach 空间，$f_n:X\to Y$ 为 $\mu$-可测函数（$n\in\mathbb{N}$）。则每个满足
 \begin{align*}
 \lim_{n\to\infty}\|f_n(x)-f(x)\|_Y=0\quad\text{对 }\mu\text{-几乎所有 }x\in X
 \end{align*}
 的函数 $f:X\to Y$ 都是 $\mu$-可测的。
 \end{proposition}
 
-为证\cref{proposition:ch04-mu逐点极限}，我们需要 Egorov 定理的如下一般形式（见\cref{theorem:ch02-Egorov}）。其证明与 $Y=\mathbb{R}$ 的情形几乎逐字相同，故从略。
+为证\cref{proposition:ch04-mu逐点极限}，需要 Egorov 定理的如下一般形式（见\cref{theorem:ch02-Egorov}）。$Y=\mathbb{R}$ 情形的证明逐字适用于此，故原书从略；完整的论证见下文\cref{theorem:ch04-Egorov}后的证明。
 
 \begin{theorem}[Egorov]\label{theorem:ch04-Egorov}
-设 $\mu(X)<\infty$，$f_n:X\to Y$ 为 $\mu$-可测（$n\in\mathbb{N}$），且对 $\mu$-几乎所有 $x\in X$ 有 $\lim_{n\to\infty}\|f_n(x)-f(x)\|_Y=0$。则对每个 $\delta>0$，存在可测集 $E\subseteq X$ 使 $\mu(E^c)<\delta$，且
+设 $(X,\mathcal{A},\mu)$ 为测度空间且 $\mu(X)<\infty$，$Y$ 为实 Banach 空间。设 $f_n:X\to Y$ 为 $\mu$-可测函数（$n\in\mathbb{N}$），且存在函数 $f:X\to Y$ 使
+\begin{align*}
+\lim_{n\to\infty}\|f_n(x)-f(x)\|_Y=0\quad\text{对 }\mu\text{-几乎所有 }x\in X.
+\end{align*}
+则对每个 $\delta>0$，存在可测集 $E\subseteq X$ 使 $\mu(E^c)<\delta$ 且
 \begin{align*}
 \lim_{n\to\infty}\sup_{x\in E}\|f_n(x)-f(x)\|_Y=0.
 \end{align*}
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch04-Egorov; kind=proof; 原书称"证明与 $Y=\mathbb{R}$ 情形逐字相同"故从略；此处补出完整论证，并把"$f$ 未必可测"所导致的零测集 $M$ 显式带过（这是逐字照搬标量证明时最易遗漏之处）
+\begin{proof}
+由假设存在 $\mu$-零测集 $N\in\mathcal{A}$ 使
+\begin{align*}
+\lim_{n\to\infty}\|f_n(x)-f(x)\|_Y=0\quad\text{对每个 }x\in N^c.
+\end{align*}
+由于 $f_n$ 仅为 $\mu$-可测，$f_n$ 未必在 $X$ 上可测而只在某个 $\mu$-零测集之外可测：对每个 $n\in\mathbb{N}$，取 $\mu$-零测集 $M_n\in\mathcal{A}$ 使 $f_n|_{M_n^c}$ 为 $(\mathcal{A}\cap M_n^c,\mathcal{B}(Y))$-可测（\cref{remark:ch04-mu可测注}(ii)）。令
+\begin{align*}
+M\triangleq N\cup\Big(\bigcup_{n=1}^\infty M_n\Big)\in\mathcal{A},\qquad \mu(M)=0.
+\end{align*}
+则对每个 $n\in\mathbb{N}$，$f_n|_{M^c}$ 为 $\mathcal{A}\cap M^c$-可测，且 $f_n\to f$ 在 $M^c$ 上逐点成立（特别地 $f|_{M^c}$ 为 $\mathcal{A}\cap M^c$-可测）。
+
+对 $n,k\in\mathbb{N}$ 令
+\begin{align*}
+E_{n,k}\triangleq \Big\{x\in M^c\ \Big|\ \|f_n(x)-f(x)\|_Y\geqslant\frac1k\Big\}\in\mathcal{A}\cap M^c\subseteq\mathcal{A},
+\end{align*}
+其可测性由 $\|f_n-f\|_Y$ 在 $M^c$ 上可测（\cref{remark:ch04-范数可测}与\cref{corollary:ch02-逐点极限}）得到。又令
+\begin{align*}
+F_{p,k}\triangleq \bigcup_{n=p}^\infty E_{n,k}\in\mathcal{A},\qquad G_k\triangleq\bigcap_{p=1}^\infty F_{p,k}\in\mathcal{A}.
+\end{align*}
+
+第一步：$G_k\subseteq M$。固定 $k$ 与 $x\in G_k\cap M^c$。则对每个 $p$ 存在 $n_p\geqslant p$ 使 $x\in E_{n_p,k}$，即 $\|f_{n_p}(x)-f(x)\|_Y\geqslant1/k$。这与 $x\in M^c$ 上 $f_n(x)\to f(x)$ 矛盾。故 $G_k\cap M^c=\varnothing$。
+
+第二步：$\mu(G_k)=0$。由第一步与 $\mu(M)=0$ 得 $\mu(G_k)\leqslant\mu(M)=0$。
+
+第三步：对固定 $k$，序列 $\{F_{p,k}\}_{p\in\mathbb{N}}$ 非增且 $\mu(F_{1,k})\leqslant\mu(X)<\infty$。于是由测度的上连续性（\cref{proposition:ch01-测度上连续}）得
+\begin{align*}
+\lim_{p\to\infty}\mu(F_{p,k})=\mu\Big(\bigcap_{p=1}^\infty F_{p,k}\Big)=\mu(G_k)=0.
+\end{align*}
+
+第四步：给定 $\delta>0$。对每个 $k\in\mathbb{N}$，由第三步存在 $p_k\in\mathbb{N}$ 使
+\begin{align*}
+\mu(F_{p_k,k})<\frac{\delta}{2^{k+1}}.
+\end{align*}
+令 $F_\delta\triangleq\bigcup_{k=1}^\infty F_{p_k,k}$。由可数次可加性，
+\begin{align*}
+\mu(F_\delta)\leqslant\sum_{k=1}^\infty\mu(F_{p_k,k})<\sum_{k=1}^\infty\frac{\delta}{2^{k+1}}=\frac{\delta}{2}<\delta.
+\end{align*}
+令 $E\triangleq F_\delta^c\cap M^c\in\mathcal{A}$。则
+\begin{align*}
+E^c=F_\delta\cup M,\qquad \mu(E^c)\leqslant\mu(F_\delta)+\mu(M)<\delta.
+\end{align*}
+
+第五步：$f_n\to f$ 在 $E$ 上一致。由
+\begin{align*}
+E=F_\delta^c\cap M^c=\Big(\bigcap_{k=1}^\infty F_{p_k,k}^c\Big)\cap M^c=\Big(\bigcap_{k=1}^\infty\bigcap_{n=p_k}^\infty E_{n,k}^c\Big)\cap M^c
+\end{align*}
+知：固定 $x\in E$ 与 $k\in\mathbb{N}$，则 $x\in M^c$ 且对所有 $n\geqslant p_k$ 有 $x\notin E_{n,k}$，即 $\|f_n(x)-f(x)\|_Y<1/k$。于是对每个 $k\in\mathbb{N}$ 与所有 $n\geqslant p_k$，
+\begin{align*}
+\sup_{x\in E}\|f_n(x)-f(x)\|_Y\leqslant\frac1k,
+\end{align*}
+从而 $\limsup_{n\to\infty}\sup_{x\in E}\|f_n(x)-f(x)\|_Y\leqslant1/k$；由 $k$ 的任意性得 $\lim_{n\to\infty}\sup_{x\in E}\|f_n(x)-f(x)\|_Y=0$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-Egorov; kind=motivation; 说明"几乎一致收敛"的含义、$\mu(X)<\infty$ 与几乎处处性的作用、以及 $\mu(X)=\infty$ 时结论失效的反例
+\begin{remark}\phantomsection\label{remark:ch04-Egorov动机}
+\begin{enumerate}[(i)]
+\item 动机与结论的含义。结论说的是：$f_n\to f$ 在除去一个任意小测度集之后\textbf{一致}收敛（"几乎一致收敛"）。这把几乎处处收敛这一逐点性质提升为可用的\textbf{一致}估计，从而允许对 $\sup_{x\in E}\|f_n(x)-f(x)\|_Y$ 取极限，这是\cref{proposition:ch04-mu逐点极限}与\cref{proposition:ch04-mu可推可分值}证明中把极限函数表示为简单函数列极限的唯一通道。
+\item $\mu(X)<\infty$ 的作用。第三步用测度上连续性把 $\mu(F_{p,k})\downarrow\mu(G_k)=0$ 转化为"$\mu(F_{p_k,k})$ 任意小"，而上连续性需要 $\mu(F_{1,k})<\infty$。若 $\mu(X)=\infty$，结论失效：取 $X=\mathbb{R}$、$\mu$ 为 Lebesgue 测度、$f_n\triangleq\chi_{[n,\infty)}$、$f\triangleq0$，则 $f_n\to f$ 处处成立；但对任意满足 $\mu(E^c)<1$ 的可测集 $E$ 与任意 $n$，$[n,\infty)\cap E\neq\varnothing$（否则 $E\subseteq(-\infty,n)$，$\mu(E^c)=\infty$），故 $\sup_{x\in E}|f_n(x)|=1$，$f_n$ 在 $E$ 上不一致收敛于 $0$。
+\item 几乎处处性的作用。收敛只在 $N^c$ 上成立，故必须把 $N$（以及各 $f_n$ 的不可测集 $M_n$）并入例外集；这也解释了结论中 $\mu(E^c)<\delta$ 而非 $E=X$。若 $f_n\to f$ 处处成立，则可取 $M=\varnothing$，证明相应简化。
+\item 适用边界。结论对任意 Banach 空间 $Y$ 成立，不需要 $Y$ 可分，也不需要 $\mu$ 完备；这与\cref{proposition:ch04-逐点极限可测}相同。定理对取值于任意度量空间的可测函数同样成立，证明只用到 $\|\cdot\|_Y$ 的三角不等式与可测性。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:ch04-mu逐点极限; kind=proof; 补出原证明拼接近似函数列时被略去的两点：分块后 $s_m$ 仍满足定义 4.1.2 的非退化条件（非零项落在有限测度集 $E_k$ 上），以及由 (4.10)--(4.11) 得到 (4.7) 所需的初等不等式 $2^{m-1}\geqslant m$
 \begin{proof}[证明\cref{proposition:ch04-mu逐点极限}]
-(i) 先证 $\mu(X)<\infty$ 时的结果。我们证明如下断言。
+(i) 先证 $\mu(X)<\infty$ 时的结果。证明如下断言。
 
 \noindent\textbf{断言.} 设 $(Z,\mathcal{A},\mu)$ 为有限测度空间，$g_n:Z\to Y$ 为 $\mu$-可测（$n\in\mathbb{N}$），$g:Z\to Y$ 满足对 $\mu$-几乎所有 $z\in Z$ 有 $\lim_{n\to\infty}\|g_n(z)-g(z)\|_Y=0$。则对每个 $\delta>0$，存在 $Z_\delta\subseteq Z$ 使 $\mu(Z_\delta)<\delta$，以及序列 $\{s_{\delta,m}\}\subseteq\mathcal{S}(Z;Y)$ 使
 \begin{align}
 \sup_{z\in Z_\delta^c}\|s_{\delta,m}(z)-g(z)\|_Y\leqslant\frac1m\quad\text{对所有 }m\in\mathbb{N}. \label{align:ch04-4.7}
 \end{align}
 
-利用该断言，论证如下。对每个 $k\in\mathbb{N}$，取 $Z=Z_{k-1}$（$Z_0\triangleq X$），$g_n=f_n$，$g=f$，$\delta=1/k$（按记号滥用记 $Z_k\equiv Z_{1/k}$）。于是存在 $Z_k\subseteq Z_{k-1}$ 使 $\mu(Z_k)<1/k$，以及序列 $\{s_{k,m}\}\subseteq\mathcal{S}(Z_{k-1};Y)$ 使
+利用该断言，论证如下。对每个 $k\in\mathbb{N}$，取 $Z=Z_{k-1}$（$Z_0\triangleq X$），$g_n=f_n$，$g=f$，$\delta=1/k$（按记号滥用记 $Z_k\equiv Z_{1/k}$）。由于 $\mu(Z_{k-1})\leqslant\mu(X)<\infty$，断言适用，故存在 $Z_k\subseteq Z_{k-1}$ 使 $\mu(Z_k)<1/k$，以及序列 $\{s_{k,m}\}\subseteq\mathcal{S}(Z_{k-1};Y)$ 使
 \begin{align}
 \sup_{x\in X_k}\|s_{k,m}(x)-f(x)\|_Y\leqslant\frac1m\quad\text{对所有 }m\in\mathbb{N}, \label{align:ch04-4.8}
 \end{align}
-其中 $X_k\triangleq Z_{k-1}\setminus Z_k$（$k\in\mathbb{N}$）。注意序列 $\{Z_k\}$ 非增，集 $X_k$ 两两不交，且对所有 $k\in\mathbb{N}$ 有 $Z_k=\bigcap_{j=1}^k X_j^c=(\bigcup_{j=1}^k X_j)^c$。不失一般性，可设对所有 $x\in X_k^c$ 有 $s_{k,m}(x)=0$，从而在 $X$ 上 $s_{k,m}=s_{k,m}\chi_{X_k}$（$k,m\in\mathbb{N}$）。令 $t_m\triangleq \sum_{k=1}^m s_{k,m}=\sum_{k=1}^m s_{k,m}\chi_{X_k}$（$m\in\mathbb{N}$）。显然 $\{t_m\}\subseteq\mathcal{S}(X;Y)$。取 $x\in\bigcup_{k=1}^\infty X_k$，于是 $x\in X_j$ 对某个 $j\in\mathbb{N}$。由\eqref{align:ch04-4.8}有
+其中 $X_k\triangleq Z_{k-1}\setminus Z_k$（$k\in\mathbb{N}$）。序列 $\{Z_k\}$ 非增，集 $X_k$ 两两不交，且对所有 $k\in\mathbb{N}$ 有
 \begin{align*}
-\|t_m(x)-f(x)\|_Y\leqslant\sup_{x\in X_j}\|s_{j,m}(x)-f(x)\|_Y\leqslant\frac1m\quad\text{对所有 }m\in\mathbb{N},
+\bigcup_{j=1}^kX_j=Z_0\setminus Z_k=X\setminus Z_k,\qquad\text{即}\quad Z_k=\Big(\bigcup_{j=1}^kX_j\Big)^c.
+\end{align*}
+不失一般性，可设对所有 $x\in X_k^c$ 有 $s_{k,m}(x)=0$：否则以 $s_{k,m}\chi_{X_k}$ 代替 $s_{k,m}$，它仍为简单函数且\eqref{align:ch04-4.8}不变。于是在 $X$ 上 $s_{k,m}=s_{k,m}\chi_{X_k}$（$k,m\in\mathbb{N}$）。令
+\begin{align*}
+t_m\triangleq \sum_{k=1}^m s_{k,m}=\sum_{k=1}^m s_{k,m}\chi_{X_k}\quad(m\in\mathbb{N}).
+\end{align*}
+由于 $X_1,\cdots ,X_m$ 两两不交且 $s_{k,m}\chi_{X_k}$ 为简单函数，$t_m$ 为简单函数，即 $\{t_m\}\subseteq\mathcal{S}(X;Y)$。取 $x\in\bigcup_{k=1}^\infty X_k$，则 $x\in X_j$ 对某个 $j\in\mathbb{N}$ 成立；又 $t_m(x)=s_{j,m}(x)$ 当 $m\geqslant j$，故由\eqref{align:ch04-4.8}有
+\begin{align*}
+\|t_m(x)-f(x)\|_Y=\|s_{j,m}(x)-f(x)\|_Y\leqslant\sup_{x\in X_j}\|s_{j,m}(x)-f(x)\|_Y\leqslant\frac1m\quad\text{对所有 }m\geqslant j,
 \end{align*}
 从而
 \begin{align}
 \lim_{m\to\infty}\|t_m(x)-f(x)\|_Y=0\quad\text{对所有 }x\in\bigcup_{k=1}^\infty X_k. \label{align:ch04-4.9}
 \end{align}
-另一方面，由于 $\{Z_k\}$ 非增且 $Z_k=(\bigcup_{j=1}^k X_j)^c$、$\mu(Z_k)<1/k$（对所有 $k\in\mathbb{N}$），由\cref{proposition:ch01-测度上连续}有 $\mu((\bigcup_{j=1}^\infty X_j)^c)=\lim_{k\to\infty}\mu(Z_k)=0$。因此\eqref{align:ch04-4.9}中的收敛在 $X$ 中 $\mu$-几乎处处成立，从而 $f$ 为 $\mu$-可测。故此情形下结论成立。
+另一方面，由于 $\{Z_k\}$ 非增、$Z_k=(\bigcup_{j=1}^kX_j)^c$ 且 $\mu(Z_k)<1/k$（对所有 $k\in\mathbb{N}$），由\cref{proposition:ch01-测度上连续}有
+\begin{align*}
+\mu\Big(\Big(\bigcup_{j=1}^\infty X_j\Big)^c\Big)=\mu\Big(\bigcap_{k=1}^\infty Z_k\Big)=\lim_{k\to\infty}\mu(Z_k)=0.
+\end{align*}
+因此\eqref{align:ch04-4.9}中的收敛在 $X$ 中 $\mu$-几乎处处成立，从而 $f$ 为 $\mu$-可测。故此情形下结论成立。
 
-还需证明该断言。由\cref{theorem:ch04-Egorov}，对任意 $\delta>0$，存在 $Z_1\subseteq Z$ 使 $\mu(Z_1)<\delta/2$，且
+还需证明该断言。由\cref{theorem:ch04-Egorov}，对任意 $\delta>0$，存在可测集 $Z_1\subseteq Z$ 使 $\mu(Z_1)<\delta/2$，且
 \begin{align*}
 \sup_{z\in Z_1^c}\|g_n(z)-g(z)\|_Y\to0\quad(n\to\infty).
 \end{align*}
@@ -142,161 +286,318 @@ $\mu$-可测函数的集合是一个向量空间。以下结果（与\cref{propo
 \begin{align*}
 \lim_{k\to\infty}\|u_{m,k}(z)-g_{n_m}(z)\|_Y=0.
 \end{align*}
-再由\cref{theorem:ch04-Egorov}，存在 $Z_{2,m}\subseteq Z$ 使 $\mu(Z_{2,m})<\delta/2^{m+1}$，且
+再由\cref{theorem:ch04-Egorov}，存在可测集 $Z_{2,m}\subseteq Z$ 使 $\mu(Z_{2,m})<\delta/2^{m+1}$，且
 \begin{align*}
-\sup_{z\in Z_{2,m}^c}\|u_{m,k}-g_{n_m}(z)\|_Y\to0\quad(k\to\infty).
+\sup_{z\in Z_{2,m}^c}\|u_{m,k}(z)-g_{n_m}(z)\|_Y\to0\quad(k\to\infty).
 \end{align*}
 于是存在 $k_m\in\mathbb{N}$ 使
 \begin{align}
 \sup_{z\in Z_{2,m}^c}\|u_{m,k_m}(z)-g_{n_m}(z)\|_Y\leqslant\frac1{2^m}. \label{align:ch04-4.11}
 \end{align}
-令 $Z_\delta\triangleq Z_1\cup(\bigcup_{m=1}^\infty Z_{2,m})$，$s_{\delta,m}\triangleq u_{m,k_m}$（$m\in\mathbb{N}$）。则 $\mu(Z_\delta)<\delta$，$\{s_{\delta,m}\}\subseteq\mathcal{S}(Z;Y)$，且由\eqref{align:ch04-4.10}--\eqref{align:ch04-4.11}得\eqref{align:ch04-4.7}。故断言成立。
+令 $Z_\delta\triangleq Z_1\cup(\bigcup_{m=1}^\infty Z_{2,m})$，$s_{\delta,m}\triangleq u_{m,k_m}$（$m\in\mathbb{N}$）。则
+\begin{align*}
+\mu(Z_\delta)\leqslant\mu(Z_1)+\sum_{m=1}^\infty\mu(Z_{2,m})<\frac{\delta}{2}+\sum_{m=1}^\infty\frac{\delta}{2^{m+1}}=\delta,
+\end{align*}
+且 $\{s_{\delta,m}\}\subseteq\mathcal{S}(Z;Y)$。此外，对 $z\in Z_\delta^c$ 有 $z\in Z_1^c$ 且 $z\in Z_{2,m}^c$ 对每个 $m$ 成立，故由\eqref{align:ch04-4.10}--\eqref{align:ch04-4.11}
+\begin{align*}
+\|s_{\delta,m}(z)-g(z)\|_Y\leqslant\|u_{m,k_m}(z)-g_{n_m}(z)\|_Y+\|g_{n_m}(z)-g(z)\|_Y\leqslant\frac1{2^m}+\frac1{2^m}=\frac1{2^{m-1}}\leqslant\frac1m,
+\end{align*}
+这里用到 $2^{m-1}\geqslant m$（$m\in\mathbb{N}$）。由此得到\eqref{align:ch04-4.7}，故断言成立。
 
-(ii) 一般情形，取 $\{E_k\}\subseteq\mathcal{A}$ 满足：对所有 $k\in\mathbb{N}$ 有 $\mu(E_k)<\infty$，当 $k\neq l$ 时 $E_k\cap E_l=\varnothing $，且 $X=\bigcup_{k=1}^\infty E_k$。对每个 $k,n\in\mathbb{N}$，限制 $f_n|_{E_k}$ 为 $\mu$-可测，且当 $n\to\infty$ 时在 $E_k$ 中 $\mu$-几乎处处有 $f_n|_{E_k}\to f|_{E_k}$。由于 $\mu(E_k)<\infty$，由 (i) 得 $f|_{E_k}$ 为 $\mu$-可测（$k\in\mathbb{N}$）。于是存在简单函数序列 $\{v_{k,m}\}\subseteq\mathcal{S}(E_k;Y)$ 使
+(ii) 一般情形，取两两不交的可测集列 $\{E_k\}\subseteq\mathcal{A}$ 满足：对所有 $k\in\mathbb{N}$ 有 $\mu(E_k)<\infty$，当 $k\neq l$ 时 $E_k\cap E_l=\varnothing$，且 $X=\bigcup_{k=1}^\infty E_k$。对每个 $k,n\in\mathbb{N}$，限制 $f_n|_{E_k}$ 为 $\mu$-可测，且当 $n\to\infty$ 时在 $E_k$ 中 $\mu$-几乎处处有 $f_n|_{E_k}\to f|_{E_k}$。由于 $\mu(E_k)<\infty$，由 (i) 得 $f|_{E_k}$ 为 $\mu$-可测（$k\in\mathbb{N}$）。于是存在简单函数列 $\{v_{k,m}\}\subseteq\mathcal{S}(E_k;Y)$ 使
 \begin{align*}
 \lim_{m\to\infty}\|v_{k,m}(x)-f(x)\|_Y=0\quad\text{对每个 }k\in\mathbb{N}\text{ 与 }\mu\text{-几乎所有 }x\in E_k.
 \end{align*}
-对 $x\in E_k^c$ 令 $v_{k,m}(x)\triangleq 0$，并令 $s_m\triangleq \sum_{k=1}^m v_{k,m}=\sum_{k=1}^m v_{k,m}\chi_{E_k}$（$m\in\mathbb{N}$）。则 $\{s_m\}\subseteq\mathcal{S}(X;Y)$，且
+对 $x\in E_k^c$ 令 $v_{k,m}(x)\triangleq 0$，并令 $s_m\triangleq \sum_{k=1}^m v_{k,m}=\sum_{k=1}^m v_{k,m}\chi_{E_k}$（$m\in\mathbb{N}$）。则 $\{s_m\}\subseteq\mathcal{S}(X;Y)$：这里用到 $\mu(E_k)<\infty$，故 $s_m$ 的非零项都落在有限测度集上，\cref{definition:ch04-简单函数}的非退化条件自动满足；而 $s_m$ 在 $(\bigcup_{k=1}^mE_k)^c$ 上取值为 $0$。此外，若 $x\in E_j$ 且 $m\geqslant j$，则 $s_m(x)=v_{j,m}(x)$，故
 \begin{align*}
-\lim_{m\to\infty}\|s_m(x)-f(x)\|_Y\to0\quad\text{对 }\mu\text{-几乎所有 }x\in\bigcup_{k=1}^\infty E_k=X.
+\lim_{m\to\infty}\|s_m(x)-f(x)\|_Y=0\quad\text{对 }\mu\text{-几乎所有 }x\in\bigcup_{k=1}^\infty E_k=X.
 \end{align*}
 故结论成立。
 \end{proof}
 
-以下命题给出\cref{remark:ch04-mu可测注}(ii)之逆成立的条件。
-
+% SUPPLEMENT: parent=proposition:ch04-mu逐点极限; kind=motivation; 说明 $\sigma$-有限假设在证明中的具体用法、为何必须分块、以及非 $\sigma$-有限时 Egorov 型论证的失效
+\begin{remark}\phantomsection\label{remark:ch04-mu逐点极限动机}
+\begin{enumerate}[(i)]
+\item 动机。该命题把\cref{definition:ch04-mu可测}的"定义域"变成封闭的：$\mu$-可测函数列在几乎处处收敛下仍 $\mu$-可测。\cref{section:ch04-Lp空间}证明 $L^p(X;Y)$ 完备（\cref{theorem:ch04-Lp完备}）时要用它来识别极限函数的 $\mu$-可测性，因而此处的 $\sigma$-有限假设会通过该定理进入 $L^p$ 理论。
+\item $\sigma$-有限假设的用法。证明先把 $X$ 分成有限测度集 $E_k$（$\sigma$-有限的定义），在每个 $E_k$ 上使用 Egorov 定理；这意味着该假设是为了让\cref{theorem:ch04-Egorov}可用。有限测度情形 (i) 的证明还额外使用了测度上连续性，而它同样只对有限测度集成立。
+\item 不能直接对 $X$ 用 Egorov。若 $\mu(X)=\infty$，\cref{theorem:ch04-Egorov}的结论一般不成立（\cref{remark:ch04-Egorov动机}(ii)的反例），故必须分块。分块时还需保证拼出的 $s_m$ 是\cref{definition:ch04-简单函数}意义下的简单函数，即非零项位于有限测度集：这正是取 $\mu(E_k)<\infty$ 的原因。
+\item 适用边界。结论的证明只用 Egorov 定理与测度上连续性，未用 $Y$ 的可分性或 $Y$ 的完备性；但要求 $f$ 是 $X$ 上处处有定义的函数（$f$ 本身不必 $\mu$-可测，这正是命题要证明的）。
+\end{enumerate}
+\end{remark}
 \begin{proposition}\label{proposition:ch04-可推mu可}
-设 $\mu$ 为 $\sigma$-有限，$Y$ 可分。则每个可测函数 $f:X\to Y$ 都是 $\mu$-可测的。
+设 $\mu$ 为 $\sigma$-有限测度，$Y$ 为可分 Banach 空间。则每个可测函数 $f:X\to Y$ 都是 $\mu$-可测的。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch04-可推mu可; kind=proof; 补出原证明中未写明的两处：$s_{n,p}$ 需补上划分块 $C_{n,0}$ 才符合定义 4.1.2（有限测度使非退化条件自动成立），以及 $\sigma$-有限情形按命题 4.1.2 的分块方式拼接的细节
 \begin{proof}
-先证 $\mu(X)<\infty$ 的情形，一般情形如\cref{proposition:ch04-mu逐点极限}证明中那样推导。固定 $n\in\mathbb{N}$，令 $D_n\equiv\{y_{n,k}\}$ 为开球 $B(0,n)\subseteq Y$ 中的可数稠密集。考虑开球 $B(y_{n,k},1/n)\subseteq Y$，并令
+先证 $\mu(X)<\infty$ 的情形，一般情形按\cref{proposition:ch04-mu逐点极限}证明中的分块方式推导（见本证明末段）。固定 $n\in\mathbb{N}$，令 $D_n\equiv\{y_{n,k}\}$ 为开球 $B(0,n)\subseteq Y$ 中的可数稠密集；其存在性由 $Y$ 可分与 $B(0,n)\subseteq Y$ 的可分性得到。考虑开球 $B(y_{n,k},1/n)\subseteq Y$，并令
 \begin{align*}
 W_{n,1}&\triangleq B(y_{n,1},1/n)\cap B(0,n),\\
 W_{n,k}&\triangleq \big[B(y_{n,k},1/n)\cap B(0,n)\big]\setminus\Big(\bigcup_{j=1}^{k-1}W_{n,j}\Big)\quad(k\geqslant2).
 \end{align*}
-则
+则 $W_{n,k}\in\mathcal{B}(Y)$，且
 \begin{align}
-W_{n,k}\cap W_{n,l}=\varnothing \ (k\neq l),\qquad \bigcup_{k=1}^\infty W_{n,k}=B(0,n). \label{align:ch04-4.12}
+W_{n,k}\cap W_{n,l}=\varnothing\ (k\neq l),\qquad \bigcup_{k=1}^\infty W_{n,k}=B(0,n). \label{align:ch04-4.12}
 \end{align}
-事实上，集 $W_{n,k}$ 两两不交，且 $\bigcup_{k=1}^\infty W_{n,k}\subseteq B(0,n)$。反之，对每个 $y\in B(0,n)$，存在序列 $\{y_{n,k_j}\}\subseteq D_n$ 使当 $j\to\infty$ 时 $\|y_{n,k_j}-y\|_Y\to0$。故对某个 $j_0\in\mathbb{N}$ 有 $\|y_{n,k_{j_0}}-y\|_Y<1/n$，即 $y\in\bigcup_{k=1}^\infty W_{n,k}$。因此 $\bigcup_{k=1}^\infty W_{n,k}\supseteq B(0,n)$。注意由\eqref{align:ch04-4.12}中第二个等式有 $Y=\bigcup_{n,k=1}^\infty W_{n,k}$。
+事实上，由定义 $W_{n,k}$ 两两不交，且 $\bigcup_{k=1}^\infty W_{n,k}\subseteq B(0,n)$。反之，对每个 $y\in B(0,n)$，由 $D_n$ 在 $B(0,n)$ 中稠密，存在序列 $\{y_{n,k_j}\}\subseteq D_n$ 使当 $j\to\infty$ 时 $\|y_{n,k_j}-y\|_Y\to0$。故对某个 $j_0\in\mathbb{N}$ 有 $\|y_{n,k_{j_0}}-y\|_Y<1/n$，即 $y\in B(y_{n,k_{j_0}},1/n)\cap B(0,n)$；由 $W_{n,k}$ 的构造（逐步挖去前面的部分）得 $y\in\bigcup_{k=1}^\infty W_{n,k}$。因此 $\bigcup_{k=1}^\infty W_{n,k}\supseteq B(0,n)$，\eqref{align:ch04-4.12}成立。由\eqref{align:ch04-4.12}中第二个等式还有
+\begin{align*}
+Y=\bigcup_{n=1}^\infty B(0,n)=\bigcup_{n,k=1}^\infty W_{n,k}.
+\end{align*}
 
 现令 $C_{n,k}\triangleq f^{-1}(W_{n,k})\subseteq X$。由于 $W_{n,k}\in\mathcal{B}(Y)$ 且 $f$ 可测，故 $C_{n,k}\in\mathcal{A}$。于是对所有 $n,p\in\mathbb{N}$，函数
 \begin{align*}
 s_{n,p}:X\to Y,\quad s_{n,p}(x)\triangleq \sum_{k=1}^p y_{n,k}\chi_{C_{n,k}}(x)\ (x\in X)
 \end{align*}
-为简单函数。此外，由\eqref{align:ch04-4.12}有
+为简单函数：把 $C_{n,k}$（$k=1,\cdots ,p$）与剩余部分 $C_{n,0}\triangleq X\setminus\bigcup_{k=1}^pC_{n,k}$ 一起构成 $X$ 的可测划分，并令 $s_{n,p}$ 在 $C_{n,0}$ 上取值为 $0$，即得\cref{definition:ch04-简单函数}所要求的形式；又因 $\mu(X)<\infty$，划分各块的测度有限，非退化条件"$\mu(E_i)=\infty$ 时 $y_i=0$"自动满足。此外，由\eqref{align:ch04-4.12}有
 \begin{align*}
-C_{n,k}\cap C_{n,l}=f^{-1}(W_{n,k}\cap W_{n,l})=f^{-1}(\varnothing )=\varnothing \quad(k\neq l),\qquad
+C_{n,k}\cap C_{n,l}=f^{-1}(W_{n,k}\cap W_{n,l})=f^{-1}(\varnothing)=\varnothing\quad(k\neq l),\qquad
 X=f^{-1}(Y)=\bigcup_{n,k=1}^\infty C_{n,k}.
 \end{align*}
 令
 \begin{align*}
-f_n:X\to Y,\quad f_n(x)\triangleq \sum_{k=1}^\infty y_{n,k}\chi_{C_{n,k}}(x)\ (n\in\mathbb{N},\ x\in X);
+f_n:X\to Y,\quad f_n(x)\triangleq \sum_{k=1}^\infty y_{n,k}\chi_{C_{n,k}}(x)\quad(n\in\mathbb{N},\ x\in X);
 \end{align*}
-注意对每个 $x\in X$，上述和退化为单项，因为集 $C_{n,k}$ 两两不交。
+对每个 $x\in X$ 与 $n\in\mathbb{N}$，由于集 $C_{n,k}$（$k\in\mathbb{N}$）两两不交且覆盖 $X$，上述和退化为单项（其余项对应的示性函数取值为 $0$），故 $f_n(x)$ 为 $Y$ 中一个确定向量。
 
 由上述说明有
 \begin{align*}
 \lim_{p\to\infty}\|s_{n,p}(x)-f_n(x)\|_Y=0\quad\text{对每个 }x\in X,
 \end{align*}
-故 $f_n$ 为 $\mu$-可测。于是若我们证明
+故由\cref{proposition:ch04-mu逐点极限}（此处 $\mu(X)<\infty$，故 $\mu$ 为 $\sigma$-有限）$f_n$ 为 $\mu$-可测。于是若证明
 \begin{align}
 \lim_{n\to\infty}\|f_n(x)-f(x)\|_Y=0\quad\text{对每个 }x\in X, \label{align:ch04-4.13}
 \end{align}
 则由\cref{proposition:ch04-mu逐点极限}得结论。
 
-为此，固定 $x_0\in X$，令 $\bar n$ 为大于 $\|f(x_0)\|_Y$ 的最小整数。则对每个 $n\geqslant\bar n$ 有 $f(x_0)\in B(0,n)$，故由\eqref{align:ch04-4.12}存在唯一 $k_n\in\mathbb{N}$ 使 $f(x_0)\in W_{n,k_n}$，即 $x_0\in C_{n,k_n}$。由 $f_n$ 的定义这蕴含 $f_n(x_0)=y_{n,k_n}$。于是
+为此，固定 $x_0\in X$，令 $\bar n$ 为大于 $\|f(x_0)\|_Y$ 的最小整数（当 $\|f(x_0)\|_Y=0$ 时取 $\bar n=1$）。则对每个 $n\geqslant\bar n$ 有 $f(x_0)\in B(0,n)$，故由\eqref{align:ch04-4.12}存在唯一 $k_n\in\mathbb{N}$ 使 $f(x_0)\in W_{n,k_n}$，即 $x_0\in C_{n,k_n}$。由 $f_n$ 的定义这蕴含 $f_n(x_0)=y_{n,k_n}$。而 $f(x_0)\in W_{n,k_n}\subseteq B(y_{n,k_n},1/n)$，故
 \begin{align*}
 \|f(x_0)-f_n(x_0)\|_Y=\|f(x_0)-y_{n,k_n}\|_Y<\frac1n.
 \end{align*}
-令 $n\to\infty$，由 $x_0$ 的任意性得\eqref{align:ch04-4.13}。这就证明了该结果。
+令 $n\to\infty$，由 $x_0$ 的任意性得\eqref{align:ch04-4.13}。故 $\mu(X)<\infty$ 时的结果成立。
+
+一般情形，取两两不交的可测集列 $\{E_k\}\subseteq\mathcal{A}$ 使 $X=\bigcup_{k=1}^\infty E_k$ 且 $\mu(E_k)<\infty$（$k\in\mathbb{N}$）。对每个 $k$，限制 $f|_{E_k}$ 为 $(\mathcal{A}\cap E_k,\mathcal{B}(Y))$-可测，故由上述有限测度情形（在测度空间 $(E_k,\mathcal{A}\cap E_k,\mu|_{E_k})$ 上）存在 $\{s_{k,m}\}\subseteq\mathcal{S}(E_k;Y)$ 使
+\begin{align*}
+\lim_{m\to\infty}\|s_{k,m}(x)-f(x)\|_Y=0\quad\text{对 }\mu\text{-几乎所有 }x\in E_k.
+\end{align*}
+对 $x\in E_k^c$ 令 $s_{k,m}(x)\triangleq0$，并令 $s_m\triangleq\sum_{k=1}^m s_{k,m}\chi_{E_k}$（$m\in\mathbb{N}$）。与\cref{proposition:ch04-mu逐点极限}的证明相同，$\{s_m\}\subseteq\mathcal{S}(X;Y)$（非零项落在有限测度集 $E_k$ 上），且 $\lim_{m\to\infty}\|s_m(x)-f(x)\|_Y=0$ 对 $\mu$-几乎所有 $x\in X$ 成立。故 $f$ 为 $\mu$-可测。
 \end{proof}
 
-我们给出如下定义。
+% SUPPLEMENT: parent=proposition:ch04-可推mu可; kind=motivation; 说明该命题是 remark 4.1.2(ii) 之逆、可分性的具体用法与不可去的反例（计数测度 + $\ell^\infty$ 单位向量）、以及 $\sigma$-有限与有限测度分支各自的作用
+\begin{remark}\phantomsection\label{remark:ch04-可推mu可动机}
+\begin{enumerate}[(i)]
+\item 动机。\cref{remark:ch04-mu可测注}(ii)只说 $\mu$-可测函数按几乎处处意义可测；本命题给出反向蕴含成立的条件，从而在 $Y$ 可分时把两种可测性等同起来（\cref{theorem:ch04-Pettis}再由弱可测性取代可测性）。\cref{section:ch04-积分}定义 Bochner 积分时因此可以只验证 $(\mathcal{A},\mathcal{B}(Y))$-可测性。
+\item 可分性的用法。证明需要两件事：其一，每个球 $B(0,n)$ 内有可数稠密集 $D_n$，从而可构造出可数的 Borel 划分 $\{W_{n,k}\}$ 并定义简单函数；其二，$\bigcup_nD_n$ 与 $\bigcup_{n,k}W_{n,k}$ 必须覆盖 $Y$，这由 $Y=\bigcup_nB(0,n)$ 保证。若 $Y$ 不可分，这两步都无法进行。
+\item 可分性不可去。取 $X=\mathbb{N}$、$\mathcal{A}=2^{\mathbb{N}}$、$\mu$ 为计数测度（$\sigma$-有限，且唯一的 $\mu$-零测集为 $\varnothing$），$Y=\ell^\infty$（不可分），$f:\mathbb{N}\to\ell^\infty$，$f(n)\triangleq e_n$（第 $n$ 个坐标为 $1$、其余坐标为 $0$）。则 $f$ 可测（$\mathcal{A}=2^{\mathbb{N}}$）。另一方面，$\|e_n-e_m\|_\infty=1$ 当 $n\neq m$，故 $\{e_n\mid n\in\mathbb{N}\}$ 中互不相交的球 $B(e_n,1/2)$ 有可数多个而 $f(\mathbb{N})$ 不含可数稠密子集，即 $f$ 的值域不可分。若 $f$ 为 $\mu$-可测，则存在 $\{s_j\}\subseteq\mathcal{S}(\mathbb{N};\ell^\infty)$ 使 $s_j(n)\to f(n)$ 对每个 $n$ 成立（因无非常空零测集）；但每个 $s_j$ 只取有限多个值，故 $\bigcup_js_j(\mathbb{N})$ 可数，于是 $f(\mathbb{N})\subseteq\overline{\bigcup_js_j(\mathbb{N})}$ 可分，矛盾。故 $f$ 不是 $\mu$-可测的。
+\item 假设的层次。$\sigma$-有限性只用于把一般情形化归为有限测度情形；在有限测度情形，证明中拼出的 $s_{n,p}$ 与 $s_m$ 满足\cref{definition:ch04-简单函数}的非退化条件（因为所有划分块的测度有限）。若去掉 $\mu(X)<\infty$ 而不作分块，则 $s_{n,p}$ 可能在正测度的无穷测度集上取非零值，不再合法。
+\end{enumerate}
+\end{remark}
+
+给出如下定义。
 
 \begin{definition}[可分值]\label{definition:ch04-可分值}
-函数 $f:X\to Y$ 称为：
+设 $(X,\mathcal{A},\mu)$ 为测度空间，$Y$ 为实 Banach 空间。称函数 $f:X\to Y$：
 \begin{enumerate}[(i)]
-\item\label{item:ch04-可分值-i} 可分值的，若值域 $f(X)\subseteq Y$ 可分；
-\item\label{item:ch04-可分值-ii} $\mu$-几乎处处可分值的，若存在 $\mu$-零测集 $N\subseteq X$ 使 $f(N^c)\subseteq Y$ 可分。
+\item\label{item:ch04-可分值-i} 可分值的，若值域 $f(X)\subseteq Y$ 作为 $Y$ 的子空间可分，即存在可数集 $D\subseteq f(X)$ 在 $f(X)$ 中稠密；
+\item\label{item:ch04-可分值-ii} $\mu$-几乎处处可分值的，若存在 $\mu$-零测集 $N\subseteq X$（$N\in\mathcal{A}$，$\mu(N)=0$）使 $f(N^c)\subseteq Y$ 可分。
 \end{enumerate}
 \end{definition}
 
+% SUPPLEMENT: parent=definition:ch04-可分值; kind=motivation; 说明引入动机（Pettis 定理中取代 $Y$ 的可分性）、零测集 $N$ 的作用、与 $Y$ 可分的关系、以及"可分值"只依赖值域的边界
+\begin{remark}\phantomsection\label{remark:ch04-可分值动机}
+\begin{enumerate}[(i)]
+\item 动机。\cref{proposition:ch04-可推mu可}要求整个 $Y$ 可分；但证明实际只用到 $f$ 的值域可被可数集逼近。把可分性从 $Y$ 移到 $f$ 的值域，就得到\cref{theorem:ch04-Pettis}中恰好的条件：弱可测性加上本定义的可分值性等价于 $\mu$-可测性。这样，即使 $Y$ 不可分（例如 $Y=L^\infty$、$Y=\ell^\infty$），取值于其可分部分的函数仍可讨论 $\mu$-可测性。
+\item 零测集 $N$ 的作用。$\mu$-可测性只看函数在某个 $\mu$-零测集之外的行为（\cref{remark:ch04-mu可测动机}(iv)），故可测性只需"几乎处处可分值"。若要求处处分值，则如\cref{proposition:ch04-mu可推可分值}所示，$\mu$-可测函数在零测集上的取值可以完全任意，要求过强。
+\item 与 $Y$ 可分的关系。若 $Y$ 可分，则每个 $f:X\to Y$ 都自动可分值（子空间的可分性由 $Y$ 的可分性继承）。反之不然：取 $Y=\ell^\infty$、$X=\mathbb{N}$、$f(n)=e_n$，则 $f$ 可分值（$f(\mathbb{N})$ 本身可数）而 $Y$ 不可分。故本定义严格弱于"$Y$ 可分"。
+\item 边界。可分值性只依赖值域 $f(X)$，与 $\mathcal{A}$、$\mu$ 无关；$\mu$-几乎处处可分值性只依赖 $\mu$ 的零测集族，与 $\mathcal{A}$ 的具体结构无关。二者都不是对 $f$ 的正则性（连续、可测）的要求，故需与\cref{definition:ch04-mu可测}联合使用。
+\end{enumerate}
+\end{remark}
+
 \begin{proposition}\label{proposition:ch04-可分值判据}
-设 $\mu$ 为 $\sigma$-有限。设 $f:X\to Y$ 可分值，$D\equiv\{y_n\}\subseteq f(X)$ 可数且在 $f(X)$ 中稠密。则 $f$ 为 $\mu$-可测当且仅当对每个 $n\in\mathbb{N}$，映射 $F_n:X\to[0,\infty)$，$x\mapsto F_n(x)\triangleq \|f(x)-y_n\|_Y$，可测。
+设 $\mu$ 为 $\sigma$-有限测度，$Y$ 为实 Banach 空间。设 $f:X\to Y$ 可分值，$D\equiv\{y_n\}\subseteq f(X)$ 可数且在 $f(X)$ 中稠密。则 $f$ 为 $\mu$-可测当且仅当对每个 $n\in\mathbb{N}$，映射
+\begin{align*}
+F_n:X\to[0,\infty),\quad x\mapsto F_n(x)\triangleq \|f(x)-y_n\|_Y,
+\end{align*}
+是 $(\mathcal{A},\mathcal{B}(\mathbb{R}))$-可测的。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch04-可分值判据; kind=proof; 补出"由可测性推出 $\mu$-可测性"时目标空间须换成可分闭子空间 $S=\overline{f(X)}$ 这一步（原证明只写"由命题 4.1.4"），并补出基族与相对拓扑的对应
 \begin{proof}
-我们只证 $\mu$ 有限时的结果。若 $f$ 为 $\mu$-可测，则存在序列 $\{s_k\}\subseteq\mathcal{S}(X;Y)$ 使对 $\mu$-几乎所有 $x\in X$ 有 $\lim_{k\to\infty}\|s_k(x)-f(x)\|_Y=0$。固定 $n\in\mathbb{N}$。由于对所有 $k\in\mathbb{N}$ 有
+仅证 $\mu$ 有限时的结果；$\sigma$-有限情形按\cref{proposition:ch04-mu逐点极限}证明中的分块方式化归。
+
+设 $f$ 为 $\mu$-可测。则存在序列 $\{s_k\}\subseteq\mathcal{S}(X;Y)$ 使 $\lim_{k\to\infty}\|s_k(x)-f(x)\|_Y=0$ 对 $\mu$-几乎所有 $x\in X$ 成立。固定 $n\in\mathbb{N}$。由反向三角不等式，对所有 $k\in\mathbb{N}$ 与 $x\in X$ 有
 \begin{align*}
 \big|F_n(x)-\|s_k(x)-y_n\|_Y\big|\leqslant\|s_k(x)-f(x)\|_Y,
 \end{align*}
-故对 $\mu$-几乎所有 $x\in X$ 有 $F_n(x)=\lim_{k\to\infty}\|s_k(x)-y_n\|_Y$。另一方面，对所有 $n\in\mathbb{N}$ 有 $\{s_k-y_n\}\subseteq\mathcal{S}(X;Y)$，故映射 $x\mapsto\|s_k(x)-y_n\|_Y$ 可测。于是由\cref{corollary:ch02-逐点极限}(ii)得结论。
+故对 $\mu$-几乎所有 $x\in X$ 有 $F_n(x)=\lim_{k\to\infty}\|s_k(x)-y_n\|_Y$。另一方面，$s_k-y_n$ 为简单函数（把 $s_k$ 的划分平移 $y_n$，即在同一划分上取值 $y_i-y_n$），故为 $\mu$-可测，从而由\cref{remark:ch04-mu可测注}(iii) 映射 $x\mapsto\|s_k(x)-y_n\|_Y$ 可测。于是由\cref{corollary:ch02-逐点极限}(ii) 得 $F_n$ 可测（在 $\mathcal{A}\cap N^c$ 上，$N$ 为上述零测集；由\cref{definition:ch02-几乎处处可测}即得 $\mu$-几乎处处意义下的可测性）。
 
-反之，设对每个 $n\in\mathbb{N}$ $F_n$ 可测。由于 $f^{-1}(B(y_n,1/k))=F_n^{-1}((0,1/k))$（$k\in\mathbb{N}$），故 $f^{-1}(B(y_n,1/k))\in\mathcal{A}$（见\cref{proposition:ch02-Borel判定}；此处 $B(y_n,1/k)\triangleq \{y\in Y\mid\|y-y_n\|_Y<1/k\}$）。另一方面，由于 $D$ 在 $f(X)$ 中稠密，可数族 $\{B(y_n,1/k)\mid n,k\in\mathbb{N}\}$ 是 $f(X)$ 上相对拓扑的一组基，故由\cref{lemma:ch02-基判定}对所有 $F\in\mathcal{B}(Y)$ 有 $f^{-1}(F)\in\mathcal{A}$。因此 $f$ 可测，从而由\cref{proposition:ch04-可推mu可}为 $\mu$-可测。故结论成立。
+反之，设对每个 $n\in\mathbb{N}$，$F_n$ 可测。由于
+\begin{align*}
+f^{-1}(B(y_n,1/k))=F_n^{-1}((0,1/k))\in\mathcal{A}\quad(k,n\in\mathbb{N})
+\end{align*}
+（此处 $B(y_n,1/k)\triangleq \{y\in Y\mid\|y-y_n\|_Y<1/k\}$，见\cref{proposition:ch02-Borel判定}），故每个开球在 $f$ 下的原像属于 $\mathcal{A}$。由于 $D$ 在 $f(X)$ 中稠密，可数族
+\begin{align*}
+\mathcal{C}\triangleq\{B(y_n,1/k)\cap f(X)\mid n,k\in\mathbb{N}\}
+\end{align*}
+是 $f(X)$ 上相对拓扑的一组基，从而生成 $f(X)$ 的 Borel $\sigma$-代数 $\mathcal{B}(f(X))$。于是由\cref{lemma:ch02-基判定}（应用于取值于 $f(X)$ 的映射 $f$）得
+\begin{align*}
+f^{-1}(G)\in\mathcal{A}\quad\text{对每个 }G\in\mathcal{B}(f(X)),
+\end{align*}
+特别地对每个 $F\in\mathcal{B}(Y)$ 有 $f^{-1}(F)=f^{-1}(F\cap f(X))\in\mathcal{A}$；故 $f$ 可测。为由此得 $\mu$-可测，令 $S\triangleq\overline{f(X)}\subseteq Y$，则 $S$ 为 $Y$ 的可分闭子空间，从而是可分 Banach 空间，且 $f$ 作为 $X\to S$ 的映射可测：对每个 $G\in\mathcal{B}(S)$ 有 $G=S\cap F$ 对某个 $F\in\mathcal{B}(Y)$ 成立（$S$ 闭），故 $f^{-1}(G)=f^{-1}(F)\in\mathcal{A}$。于是由\cref{proposition:ch04-可推mu可}（以可分 Banach 空间 $S$ 代 $Y$）得 $f$ 为 $\mu$-可测。故结论成立。
 \end{proof}
 
-我们提及\cref{remark:ch02-连续Borel}(i)与\cref{proposition:ch04-可推mu可}的如下推论。
+% SUPPLEMENT: parent=proposition:ch04-可分值判据; kind=motivation; 说明该判据把向量值问题化为可数多个实值问题、$D\subseteq f(X)$ 而非 $D\subseteq Y$ 的作用、以及该判据在 Pettis 定理中的位置
+\begin{remark}\phantomsection\label{remark:ch04-可分值判据动机}
+\begin{enumerate}[(i)]
+\item 动机。$\mu$-可测性按定义要构造简单函数列，这是"整体"要求；本判据把它化归为可数多个实值函数 $F_n$ 的可测性，而实值可测性有成熟的判据（\cref{corollary:ch02-逐点极限}、\cref{proposition:ch02-Borel判定}）。\cref{theorem:ch04-Pettis}的 (ii)$\Rightarrow$(i) 正是沿这条路线完成的。
+\item 为何 $D\subseteq f(X)$。反方向证明中，可数族 $\{B(y_n,1/k)\}$ 必须在 $f(X)$ 的相对拓扑下成为基，这要求 $D$ 在 $f(X)$ 中稠密。若只知 $D$ 在 $Y$ 中稠密，则 $D\cap f(X)$ 未必稠密于 $f(X)$，基的论证失效。正方向只用 $y_n\in Y$，故 $D\subseteq f(X)$ 的取法对两个方向都适用。
+\item 充分性中"可测"与"$\mu$-可测"的区别。反方向先得 $f$ 关于 $(\mathcal{A},\mathcal{B}(Y))$ 可测，再借助 $S=\overline{f(X)}$ 的可分性用\cref{proposition:ch04-可推mu可}转成 $\mu$-可测；若省略这一步而直接引用\cref{proposition:ch04-可推mu可}，则隐含地假定了 $Y$ 可分，而本命题并不假设 $Y$ 可分。
+\item 边界。命题要求 $f$ 事先可分值；若无此假设，结论不成立：$F_n$ 可测只给出 $f^{-1}$（开球）$\in\mathcal{A}$，而开球族只在 $f(X)$ 的相对拓扑下生成 $\mathcal{B}(f(X))$，不能控制 $\mathcal{B}(Y)$ 中与 $f(X)$ 无关的部分。可测性本身与 $\mu$ 无关，而结论中的 $\mu$-可测性需要 $\sigma$-有限（用于\cref{proposition:ch04-mu逐点极限}）。
+\end{enumerate}
+\end{remark}
+
+如下推论是\cref{remark:ch02-连续Borel}(i)与\cref{proposition:ch04-可推mu可}的直接结果。
 
 \begin{corollary}\label{corollary:ch04-连续可测}
-设 $(X,\mathcal{T})$ 为拓扑空间，$\mu$ 为 $(X,\mathcal{B}(X))$ 上的 $\sigma$-有限测度，$Y$ 可分。则每个连续函数 $f:X\to Y$ 都是 $\mu$-可测的。
+设 $(X,\mathcal{T})$ 为拓扑空间，$\mu$ 为 $(X,\mathcal{B}(X))$ 上的 $\sigma$-有限测度（$\mathcal{B}(X)\triangleq\sigma_0(\mathcal{T})$），$Y$ 为可分 Banach 空间。则每个连续函数 $f:X\to Y$ 都是 $\mu$-可测的。
 \end{corollary}
 
-以下结果可视为\cref{proposition:ch04-可推mu可}的部分逆。如其证明所示，它是 $\mu$-可测性定义的自然推论。
+% SUPPLEMENT: parent=corollary:ch04-连续可测; kind=proof; 原书未给证明，此处补出"连续=>Borel 可测=>（$Y$ 可分）$\mu$-可测"的两步论证
+\begin{proof}
+设 $f:X\to Y$ 连续。对每个开集 $U\subseteq Y$ 有 $f^{-1}(U)\in\mathcal{T}\subseteq\mathcal{B}(X)$。由\cref{lemma:ch02-基判定}（取 $\mathcal{C}'\triangleq\mathcal{T}_Y$ 为 $Y$ 的拓扑，$\sigma_0(\mathcal{T}_Y)=\mathcal{B}(Y)$）得 $f^{-1}(F)\in\mathcal{B}(X)$ 对每个 $F\in\mathcal{B}(Y)$ 成立，即 $f$ 为 $(\mathcal{B}(X),\mathcal{B}(Y))$-可测。由于 $\mu$ 为 $\sigma$-有限且 $Y$ 可分，由\cref{proposition:ch04-可推mu可}（在测度空间 $(X,\mathcal{B}(X),\mu)$ 上）得 $f$ 为 $\mu$-可测的。
+\end{proof}
+
+% SUPPLEMENT: parent=corollary:ch04-连续可测; kind=motivation; 说明该推论的用途、两个假设各自的作用、$X$ 可分时可分性假设可去、以及连续性的必要性
+\begin{remark}\phantomsection\label{remark:ch04-连续可测动机}
+\begin{enumerate}[(i)]
+\item 动机。本推论给出 $\mu$-可测函数最常用的来源：PDE 与变分问题中的系数、初值、非线性项常由连续（或 Sobolev）函数给出，而其 $\mu$-可测性是\cref{section:ch04-积分}定义 Bochner 积分的前提。它也说明\cref{proposition:ch04-可推mu可}的假设在实际情形中容易满足。
+\item 各假设的作用。$\mu$ 定义在 $\mathcal{B}(X)$ 上而不是任意 $\sigma$-代数上，是因为连续性的信息只能给出"开集的原像是开集"，而开集属于 $\mathcal{B}(X)$；$\mu$ 的 $\sigma$-有限性用于\cref{proposition:ch04-可推mu可}的分块；$Y$ 的可分性用于该命题中用可数稠密集构造简单函数。
+\item $Y$ 可分性可减弱。若 $X$ 可分（例如 $X$ 为 $\sigma$-紧度量空间），则连续像 $f(X)$ 可分，于是 $f$ 取值于可分闭子空间 $S\triangleq\overline{f(X)}$；把\cref{proposition:ch04-可推mu可}用于 $S$ 即得结论，无需假设 $Y$ 可分。反之，若既不知 $Y$ 可分也不知 $X$ 可分，则 $f(X)$ 未必可分，此时只能用\cref{theorem:ch04-Pettis}。
+\item 连续性不是必要的。取 $X=Y=\mathbb{R}$、$\mu$ 为 Lebesgue 测度、$f\triangleq\chi_{[0,1]}$，则 $f$ 不连续但为 Borel 可测，从而 $\mu$-可测。连续性只是保证可测性的一个充分条件。
+\end{enumerate}
+\end{remark}
+
+如下结果可视为\cref{proposition:ch04-可推mu可}的部分逆。如其证明所示，它是 $\mu$-可测性定义的自然推论。
 
 \begin{proposition}\label{proposition:ch04-mu可推可分值}
-设 $\mu$ 为 $\sigma$-有限，$f:X\to Y$ 为 $\mu$-可测。则 $f$ 为 $\mu$-几乎处处可分值。
+设 $\mu$ 为 $\sigma$-有限测度，$Y$ 为实 Banach 空间，$f:X\to Y$ 为 $\mu$-可测。则 $f$ 为 $\mu$-几乎处处可分值。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch04-mu可推可分值; kind=proof; 补出"由(4.14)得 $f(E_k^c)$ 可分"的包含关系 $f(E_k^c)\subseteq\overline{\bigcup_ns_n(X)}$，以及可数并的闭包仍可分
 \begin{proof}
-先设 $\mu(X)<\infty$。由\eqref{align:ch04-4.6}与\cref{theorem:ch04-Egorov}，对每个 $k\in\mathbb{N}$，存在 $\mu$-可测集 $E_k\subseteq X$ 使 $\mu(E_k)<1/k$，且
+先设 $\mu(X)<\infty$。由\eqref{align:ch04-4.6}与\cref{theorem:ch04-Egorov}，对每个 $k\in\mathbb{N}$ 存在 $\mu$-可测集 $E_k\subseteq X$ 使 $\mu(E_k)<1/k$，且
 \begin{align}
 \lim_{n\to\infty}\sup_{x\in E_k^c}\|s_n(x)-f(x)\|_Y=0. \label{align:ch04-4.14}
 \end{align}
-由于对所有 $n\in\mathbb{N}$ 值域 $s_n(X)\subseteq Y$ 有限，集 $\bigcup_{n=1}^\infty s_n(X)$ 可数。于是由\eqref{align:ch04-4.14}，对每个 $k\in\mathbb{N}$ 集 $f(E_k^c)\subseteq Y$ 可分，从而 $f(\bigcup_{k=1}^\infty E_k^c)=\bigcup_{k=1}^\infty f(E_k^c)$ 亦可分。令 $N\triangleq \bigcap_{k=1}^\infty E_k$，则 $f(N^c)=f(\bigcup_{k=1}^\infty E_k^c)$，且 $\mu(N)=\lim_{k\to\infty}\mu(E_k)=0$。故此情形下结论成立。
+由于对每个 $n\in\mathbb{N}$ 值域 $s_n(X)\subseteq Y$ 是有限集，集合 $D_0\triangleq\bigcup_{n=1}^\infty s_n(X)$ 可数。固定 $k\in\mathbb{N}$，对 $x\in E_k^c$ 与 $n\in\mathbb{N}$ 有 $s_n(x)\in D_0$，且由\eqref{align:ch04-4.14} $\|s_n(x)-f(x)\|_Y\to0$，故 $f(x)\in\overline{D_0}$。于是
+\begin{align*}
+f(E_k^c)\subseteq\overline{D_0},
+\end{align*}
+而 $\overline{D_0}$ 是可数集的闭包，从而可分，故其子集 $f(E_k^c)$ 可分。于是
+\begin{align*}
+f\Big(\bigcup_{k=1}^\infty E_k^c\Big)=\bigcup_{k=1}^\infty f(E_k^c)
+\end{align*}
+作为可数多个可分集的并仍可分（各可分集的可数稠密集之并是该并集的可数稠密集）。令 $N\triangleq\bigcap_{k=1}^\infty E_k$，则 $N^c=\bigcup_{k=1}^\infty E_k^c$，$N\in\mathcal{A}$，且由 $\mu(E_k)<1/k$ 与测度上连续性（$\mu(X)<\infty$）得 $\mu(N)=\lim_{k\to\infty}\mu(E_k)=0$。故 $f$ 为 $\mu$-几乎处处可分值。
 
-一般情形，取两两不交可测集列 $\{E_k\}$ 使 $X=\bigcup_{k=1}^\infty E_k$ 且对所有 $k\in\mathbb{N}$ 有 $\mu(E_k)<\infty$。由上述讨论，对每个 $k\in\mathbb{N}$，限制 $f|_{E_k}$ 为 $\mu$-几乎处处可分值，即存在 $\mu$-零测子集 $N_k\subseteq E_k$ 使集 $f(E_k\setminus N_k)$ 可分。因此集 $\bigcup_{k=1}^\infty f(E_k\setminus N_k)=f(\bigcup_{k=1}^\infty(E_k\setminus N_k))$ 可分。令 $N\triangleq \bigcup_{k=1}^\infty N_k$。则 $N$ 为 $\mu$-零测集，且 $f(N^c)=f(\bigcup_{k=1}^\infty(E_k\setminus N_k))$。故结论成立。
+一般情形，取两两不交的可测集列 $\{E_k\}$ 使 $X=\bigcup_{k=1}^\infty E_k$ 且 $\mu(E_k)<\infty$（$k\in\mathbb{N}$）。由上述讨论，对每个 $k\in\mathbb{N}$，限制 $f|_{E_k}$ 为 $\mu$-几乎处处可分值，即存在 $\mu$-零测子集 $N_k\subseteq E_k$ 使集 $f(E_k\setminus N_k)$ 可分。因此集
+\begin{align*}
+\bigcup_{k=1}^\infty f(E_k\setminus N_k)=f\Big(\bigcup_{k=1}^\infty(E_k\setminus N_k)\Big)
+\end{align*}
+作为可数多个可分集的并可分。令 $N\triangleq\bigcup_{k=1}^\infty N_k$。则 $N\in\mathcal{A}$ 且 $\mu(N)=0$（可数并的零测性），而
+\begin{align*}
+N^c=\bigcup_{k=1}^\infty(E_k\setminus N_k),
+\end{align*}
+故 $f(N^c)=\bigcup_{k=1}^\infty f(E_k\setminus N_k)$ 可分。故结论成立。
 \end{proof}
 
+% SUPPLEMENT: parent=proposition:ch04-mu可推可分值; kind=motivation; 说明该命题的动机（Pettis 定理必要性方向、$L^p$ 空间定义中范数可测性的来源）、Egorov 定理的作用、以及零测集不能去掉
+\begin{remark}\phantomsection\label{remark:ch04-mu可推可分值动机}
+\begin{enumerate}[(i)]
+\item 动机。本命题是\cref{theorem:ch04-Pettis}的 (i)$\Rightarrow$(ii) 的一半：$\mu$-可测性迫使值域几乎处处可分，从而\cref{proposition:ch04-可推mu可}中的可分性假设在 $\mu$-可测函数上自动满足（在几乎处处意义下）。\cref{section:ch04-积分}定义 $\|f\|_Y$ 的积分时也用它配合\cref{remark:ch04-mu可测注}(iii)。
+\item Egorov 定理的作用。证明用\cref{theorem:ch04-Egorov}把\eqref{align:ch04-4.6}中的几乎处处收敛升级为 $E_k^c$ 上的一致收敛，从而整个 $f(E_k^c)$ 落在同一个可数集的闭包内。若只有逐点收敛，则不同的 $x$ 可能由不同的子列逼近，无法得到统一的包含关系。Egorov 定理要求 $\mu(X)<\infty$，这正是证明先处理有限测度情形的原因。
+\item 零测集不能去掉。结论只能是"几乎处处可分值"：取 $X=[0,1]$、$\mu$ 为 Lebesgue 测度、$Y=\ell^\infty$、$f\triangleq0$ 在 $[0,1]$ 的某个稠密 $G_\delta$ 零测集之外成立、在其他点取不可分族中的值，则 $f=0$ $\mu$-几乎处处成立，故 $f$ 为 $\mu$-可测，但其值域不可分。因此要求 $f$ 处处分值是不成立的。
+\item 适用边界。结论不需要 $Y$ 可分，也不需要 $Y$ 完备（只用到范数的三角不等式）；$\sigma$-有限性用于分块，与\cref{proposition:ch04-mu逐点极限}相同。
+\end{enumerate}
+\end{remark}
 \subsection{弱与弱$^*$可测性}\label{subsection:ch04-弱可测性}
 
-设 $(X,\mathcal{A},\mu)$ 为测度空间，$Y$ 为 Banach 空间，$Y^*$ 为 $Y$ 的对偶空间。本章此后，记 $\langle\cdot,\cdot\rangle\equiv\langle\cdot,\cdot\rangle_{Y^*,Y}$ 为 $Y$ 与 $Y^*$ 之间的对偶映射。
+设 $(X,\mathcal{A},\mu)$ 为测度空间，$Y$ 为实 Banach 空间，$Y^*$ 为 $Y$ 的拓扑对偶空间。本章此后，记 $\langle\cdot,\cdot\rangle\equiv\langle\cdot,\cdot\rangle_{Y^*,Y}$ 为 $Y$ 与 $Y^*$ 之间的对偶映射，即 $\langle y^*,y\rangle\equiv\langle y^*,y\rangle_{Y^*,Y}\triangleq y^*(y)$（$y^*\in Y^*$，$y\in Y$）；同时约定 $\langle y,y^*\rangle\triangleq\langle y^*,y\rangle$。对 $f:X\to Y^*$ 与 $y\in Y$，记 $\langle f(x),y\rangle\triangleq(f(x))(y)=\langle f(x),y\rangle_{Y^*,Y}$。
 
-\begin{definition}[弱、弱$^*$可测性]\label{definition:ch04-弱可测}\label{definition:ch04-弱星可测}
-(i) 函数 $f:X\to Y$ 称为弱可测的，若对每个 $y^*\in Y^*$，从 $X$ 到 $\mathbb{R}$ 的函数 $x\mapsto\langle y^*,f(x)\rangle$ 可测。
-
-(ii) 函数 $f:X\to Y^*$ 称为弱$^*$可测的，若对每个 $y\in Y$，从 $X$ 到 $\mathbb{R}$ 的函数 $x\mapsto\langle f(x),y\rangle$ 可测。
+\begin{definition}[弱可测性与弱$^*$可测性]\label{definition:ch04-弱可测}\label{definition:ch04-弱星可测}
+设 $(X,\mathcal{A})$ 为可测空间，$Y$ 为实 Banach 空间，$Y^*$ 为其拓扑对偶空间。
+\begin{enumerate}[(i)]
+\item 称函数 $f:X\to Y$ 为弱可测的，若对每个 $y^*\in Y^*$，从 $X$ 到 $\mathbb{R}$ 的函数 $x\mapsto\langle y^*,f(x)\rangle$ 是 $(\mathcal{A},\mathcal{B}(\mathbb{R}))$-可测的。
+\item 称函数 $f:X\to Y^*$ 为弱$^*$可测的，若对每个 $y\in Y$，从 $X$ 到 $\mathbb{R}$ 的函数 $x\mapsto\langle f(x),y\rangle$ 是 $(\mathcal{A},\mathcal{B}(\mathbb{R}))$-可测的。
+\end{enumerate}
 \end{definition}
 
-\begin{remark}\label{remark:ch04-弱可测注}
+% SUPPLEMENT: parent=definition:ch04-弱可测; kind=motivation; 说明弱可测性的动机（弱拓扑 $\sigma(Y,Y^*)$ 下的可测性）、每项假设的作用、与可测性的强弱关系以及不可分空间中的差别
+% SUPPLEMENT: parent=definition:ch04-弱星可测; kind=motivation; 别名标签，与 definition:ch04-弱可测(ii) 共用下一条注记，并说明 $Y^*$ 上弱$^*$拓扑 $\sigma(Y^*,Y)$ 的作用
+\begin{remark}\phantomsection\label{remark:ch04-弱可测动机}
+\begin{enumerate}[(i)]
+\item 动机。$\sigma(Y,Y^*)$ 是使所有 $y^*\in Y^*$ 连续的最弱拓扑，故本定义正是"$f$ 关于弱拓扑可测"的逐点表述：只需检验可数多个（事实上全部）连续线性泛函与 $f$ 复合后的实值函数可测。当 $Y^*$ 可分时这种检验可数化（\cref{theorem:ch04-Pettis}），这正是弱可测性有用的原因。
+\item 各假设的作用。(i) 中要求对\emph{每个} $y^*\in Y^*$ 成立，即对偶空间全体，不能只取一个可数子集；若 $Y^*$ 可分，则可数多个泛函已足够（它们分离 $Y$ 中的点）。(ii) 中 $f$ 取值于 $Y^*$，而检验只用 $y\in Y\subseteq Y^{**}$，故 (ii) 是 $Y^*$ 上弱$^*$拓扑 $\sigma(Y^*,Y)$ 下的可测性，弱于 $Y^*$ 的弱可测性（后者要对每个 $y^{**}\in Y^{**}$ 检验）。
+\item 与可测性的强弱。$\mu$-可测（从而可测）蕴含弱可测（\cref{remark:ch04-弱可测注}(i)）；反之不然，除非加上几乎处处可分值（\cref{theorem:ch04-Pettis}）。弱可测函数可以取值于不可分空间而毫无正则性：取 $Y=\ell^\infty$、$X=[0,1]$ 与任意函数 $f$，则 $x\mapsto\langle y^*,f(x)\rangle$ 未必可测，故弱可测性仍非平凡条件。
+\item 边界。若 $Y=\mathbb{R}$，则 $Y^*=\mathbb{R}$，弱可测、弱$^*$可测与可测三者一致。若 $Y$ 自反，则 $Y^{**}=Y$，于是 $f:X\to Y$ 的弱可测性与"$f$ 作为 $X\to Y^{**}$ 的映射弱$^*$可测"一致。弱可测性只用对偶配对，故对任何赋范空间有意义。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch04-弱可测注}
 (i) $\mu$-可测函数 $f:X\to Y$ 是弱可测的。事实上，取 $\{s_n\}\subseteq\mathcal{S}(X;Y)$ 满足\eqref{align:ch04-4.6}。则对所有 $y^*\in Y^*$，
 \begin{align}
-\lim_{n\to\infty}\langle y^*,s_n(x)\rangle=\langle y^*,f(x)\rangle\quad\text{对 }\mu\text{-几乎所有 }x\in X. \label{align:ch04-4.15}
+\lim_{n\to\infty}\langle y^*,s_n(x)\rangle=\langle y^*,f(x)\rangle\quad\text{对 }\mu\text{-几乎所有 }x\in X, \label{align:ch04-4.15}
 \end{align}
-对每个 $n\in\mathbb{N}$，函数 $x\mapsto\langle y^*,s_n(x)\rangle:X\to\mathbb{R}$ 是简单的，从而可测。于是由\eqref{align:ch04-4.15}与\cref{corollary:ch02-逐点极限}(ii)，对所有 $y^*\in Y^*$，实值映射 $x\in X\mapsto\langle y^*,f(x)\rangle$ 可测。
+因为 $|\langle y^*,s_n(x)\rangle-\langle y^*,f(x)\rangle|\leqslant\|y^*\|_{Y^*}\|s_n(x)-f(x)\|_Y$。对每个 $n\in\mathbb{N}$，函数 $x\mapsto\langle y^*,s_n(x)\rangle$ 是简单的（其值域含于有限集 $\{\langle y^*,y_i\rangle\}$），从而可测。于是由\eqref{align:ch04-4.15}与\cref{corollary:ch02-逐点极限}(ii)，对所有 $y^*\in Y^*$，实值映射 $x\in X\mapsto\langle y^*,f(x)\rangle$ 可测。
 
-(ii) 显然，弱可测函数 $f:X\to Y^*$ 是弱$^*$可测的。于是由 (i)，$\mu$-可测函数 $f:X\to Y^*$ 弱可测，从而弱$^*$可测。
+(ii) 弱可测函数 $f:X\to Y^*$ 是弱$^*$可测的：因 $Y\subseteq Y^{**}$（典范嵌入），(ii) 中的检验族 $\{y\mid y\in Y\}$ 含于 (i) 中的检验族 $\{y^{**}\mid y^{**}\in Y^{**}\}$。于是由 (i)，$\mu$-可测函数 $f:X\to Y^*$ 弱可测，从而弱$^*$可测。
 \end{remark}
 
-\begin{remark}\label{remark:ch04-弱可测空间}
-弱可测函数（相应地，弱$^*$可测函数）的集合是一个向量空间。若 $\{f_n\}$ 为弱可测函数列，且对所有 $x\in X$ 有 $f_n(x)\rightharpoonup f(x)$，则 $f:X\to Y$ 亦弱可测。类似地，若 $\{f_n\}$ 为弱$^*$可测函数列且 $f_n\overset{*}{\rightharpoonup}f$，则 $f:X\to Y^*$ 弱$^*$可测。
+% SUPPLEMENT: parent=remark:ch04-弱可测空间; kind=proof; 展开"弱可测函数集是向量空间"与"逐点弱收敛的极限仍弱可测"的验证（原书只给断言）
+\begin{remark}\phantomsection\label{remark:ch04-弱可测空间}
+弱可测函数（相应地，弱$^*$可测函数）的集合是向量空间。若 $\{f_n\}$ 为弱可测函数列，且对所有 $x\in X$ 有 $f_n(x)\rightharpoonup f(x)$，则 $f:X\to Y$ 亦弱可测。类似地，若 $\{f_n\}$ 为弱$^*$可测函数列且 $f_n\overset{*}{\rightharpoonup}f$，则 $f:X\to Y^*$ 弱$^*$可测。
 \end{remark}
 
-我们回顾如下定义（例如见文献 [44]）。
+% SUPPLEMENT: parent=remark:ch04-弱可测空间; kind=proof; 上述断言的逐项验证：线性组合的配对函数是实值可测函数的线性组合；逐点弱收敛时配对函数逐点收敛，故极限可测
+\begin{proof}
+先证向量空间性质（以 (i) 为例）。设 $f,g:X\to Y$ 弱可测，$\alpha,\beta\in\mathbb{R}$，令 $h\triangleq\alpha f+\beta g$。对每个 $y^*\in Y^*$ 与 $x\in X$，
+\begin{align*}
+\langle y^*,h(x)\rangle=\alpha\langle y^*,f(x)\rangle+\beta\langle y^*,g(x)\rangle.
+\end{align*}
+右端是两个实值可测函数的线性组合，故 $x\mapsto\langle y^*,h(x)\rangle$ 可测（\cref{corollary:ch02-可测运算}）；由于 $y^*$ 任意，$h$ 弱可测。零函数弱可测，故弱可测函数集是向量空间。对 (ii) 只需把 $y^*$ 换成 $y\in Y$，论证相同。
+
+再证收敛性质（以 (i) 为例）。设 $f_n$ 弱可测且 $f_n(x)\rightharpoonup f(x)$ 对每个 $x\in X$ 成立。固定 $y^*\in Y^*$，则对每个 $x\in X$ 有 $\langle y^*,f_n(x)\rangle\to\langle y^*,f(x)\rangle$，即实值可测函数列 $\{x\mapsto\langle y^*,f_n(x)\rangle\}$ 逐点收敛于 $x\mapsto\langle y^*,f(x)\rangle$。由\cref{corollary:ch02-逐点极限}(ii) 后者可测；由于 $y^*$ 任意，$f$ 弱可测。对 (ii) 把 $y^*$ 换成 $y\in Y$，并把弱收敛换成弱$^*$收敛（即 $\langle f_n(x),y\rangle\to\langle f(x),y\rangle$），论证相同。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch04-弱可测空间注}
+上述收敛性质说明：弱可测性对逐点弱（弱$^*$）极限封闭，而对逐点强收敛只需用范数的三角不等式（因强收敛蕴含弱收敛）。这一封闭性是\cref{section:ch04-Lp空间}定义 $L^p_w(X;Y)$ 与 $L^p_{w^*}(X;Y^*)$ 为向量空间并讨论其完备性的依据（见\cref{remark:ch04-Lp包含}）。
+\end{remark}
+
+回顾如下定义（例如见文献 [44]）。
 
 \begin{definition}[极集]\label{definition:ch04-极集}
-(i) 设 $Z\subseteq Y$。$Z$ 的极集是集合
+设 $Y$ 为实 Banach 空间，$Y^*$ 为其拓扑对偶空间。
+\begin{enumerate}[(i)]
+\item 设 $Z\subseteq Y$。$Z$ 的极集是指集合
 \begin{align*}
 Z^p\triangleq \{y^*\in Y^*\mid |\langle y^*,y\rangle|\leqslant1\text{ 对所有 }y\in Z\}\subseteq Y^*.
 \end{align*}
-(ii) 设 $Z^*\subseteq Y^*$。$Z^*$ 的极集是集合
+\item 设 $Z^*\subseteq Y^*$。$Z^*$ 的极集是指集合
 \begin{align*}
 Z_p^*\triangleq \{y\in Y\mid |\langle y^*,y\rangle|\leqslant1\text{ 对所有 }y^*\in Z^*\}\subseteq Y.
 \end{align*}
+\end{enumerate}
 \end{definition}
 
-\begin{remark}\label{remark:ch04-单位球极集}
+% SUPPLEMENT: parent=definition:ch04-极集; kind=motivation; 说明极集的动机（用对偶配对刻画范数单位球与有界性）、常数 $1$ 的约定性、极集的闭凸对称性、以及双极定理的内容
+\begin{remark}\phantomsection\label{remark:ch04-极集动机}
+\begin{enumerate}[(i)]
+\item 动机。极集把 $Y$ 中的集合翻译成 $Y^*$ 中的集合，使得"$\|y\|_Y\leqslant1$"这一范数条件可以用一族不等式 $|\langle y^*,y\rangle|\leqslant1$ 表述。于是范数可写成对极集的上确界（\cref{remark:ch04-单位球极集}），而后者又可用可数多个泛函实现（\cref{proposition:ch04-可数支撑范数}），从而使 $\|f(\cdot)\|_Y$ 成为可测函数的可数上确界（\cref{proposition:ch04-范数可测弱}）。
+\item 常数 $1$ 的约定性。把 $1$ 换成 $\rho>0$，所得集合为 $\rho^{-1}Z^p$（当 $\rho$ 取代 $1$ 时条件为 $|\langle y^*,y\rangle|\leqslant\rho$）。故常数只影响标度，不影响结构；取 $1$ 是为了与单位球匹配。
+\item 极集的结构。$Z^p$ 总是 $\sigma(Y^*,Y)$-闭的、凸的、关于原点对称的，且含 $0$；若 $Z$ 有界，则 $Z^p$ 含某个球 $\{y^*\mid\|y^*\|_{Y^*}\leqslant R^{-1}\}$（$R\triangleq\sup_{y\in Z}\|y\|_Y$）。此外 $Z^p$ 只依赖 $Z\cup(-Z)$ 的闭凸包：由 $|\langle y^*,y\rangle|\leqslant1$ 在 $Z$ 上成立可推出它在 $Z$ 的凸包与闭包上成立。
+\item 双极定理。对 $Z\subseteq Y$，$(Z^p)_p$ 等于 $Z\cup\{0\}$ 在 $\sigma(Y,Y^*)$ 下的闭凸包。故极集运算在"取闭凸包"意义下是对合，这解释了\cref{remark:ch04-单位球极集}中两个等式的对称性。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch04-单位球极集}
 令
 \begin{align*}
 B_1\triangleq \{y\in Y\mid\|y\|_Y\leqslant1\},\qquad B_1^*\triangleq \{y^*\in Y^*\mid\|y^*\|_{Y^*}\leqslant1\}
@@ -307,77 +608,131 @@ B_1\triangleq \{y\in Y\mid\|y\|_Y\leqslant1\},\qquad B_1^*\triangleq \{y^*\in Y^
 \end{align}
 \end{remark}
 
-我们证明一个预备结果（见文献 [44, 第 8.15 节引理 1]）。
+% SUPPLEMENT: parent=remark:ch04-单位球极集; kind=proof; 补出 (4.16) 两个等式的验证：第一式由对偶范数的定义直接得到，第二式需要 Hahn--Banach 定理的推论 $y\neq0$ 时存在 $\|y^*\|_{Y^*}=1$ 且 $\langle y^*,y\rangle=\|y\|_Y$
+\begin{proof}
+第一式：对 $y^*\in Y^*$，
+\begin{align*}
+y^*\in(B_1)^p&\Longleftrightarrow|\langle y^*,y\rangle|\leqslant1\text{ 对每个 }\|y\|_Y\leqslant1\\
+&\Longleftrightarrow\sup_{\|y\|_Y\leqslant1}|\langle y^*,y\rangle|\leqslant1
+\Longleftrightarrow\|y^*\|_{Y^*}\leqslant1
+\Longleftrightarrow y^*\in B_1^*,
+\end{align*}
+其中第二个等价即对偶范数 $\|y^*\|_{Y^*}\triangleq\sup_{\|y\|_Y\leqslant1}|\langle y^*,y\rangle|$ 的定义（该上确界不超过 $\|y^*\|_{Y^*}$，故有限）。
+
+第二式：若 $y\in B_1$，则对每个 $\|y^*\|_{Y^*}\leqslant1$ 有 $|\langle y^*,y\rangle|\leqslant\|y^*\|_{Y^*}\|y\|_Y\leqslant1$，故 $y\in(B_1^*)_p$，即 $B_1\subseteq(B_1^*)_p$。反之，设 $y\notin B_1$，即 $\alpha\triangleq\|y\|_Y>1$。由 Hahn--Banach 定理的推论，存在 $y^*\in Y^*$ 使 $\|y^*\|_{Y^*}=1$ 且 $\langle y^*,y\rangle=\|y\|_Y=\alpha>1$；特别地 $y^*\in B_1^*$ 而 $|\langle y^*,y\rangle|>1$，故 $y\notin(B_1^*)_p$。于是 $(B_1^*)_p\subseteq B_1$，第二式得证。
+\end{proof}
+
+下面证明一个预备结果（见文献 [44, 第 8.15 节引理 1]）。
 
 \begin{proposition}\label{proposition:ch04-可数支撑范数}
-设 $S$ 为 $Y$ 的可分子空间，$B_1$ 为 $Y$ 的单位闭球，$(B_1)^p$ 为 $B_1$ 的极集。则存在可数集 $W\subseteq(B_1)^p$ 使对所有 $y\in S$ 有
+设 $Y$ 为实 Banach 空间，$S$ 为 $Y$ 的可分子空间（不必闭），$B_1$ 为 $Y$ 的单位闭球，$(B_1)^p$ 为 $B_1$ 的极集。则存在可数集 $W\subseteq(B_1)^p$ 使
 \begin{align}
-\|y\|_Y=\sup_{a\in W}|\langle a,y\rangle|. \label{align:ch04-4.17}
+\|y\|_Y=\sup_{a\in W}|\langle a,y\rangle|\quad\text{对所有 }y\in S. \label{align:ch04-4.17}
 \end{align}
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch04-可数支撑范数; kind=proof; 补出 (4.19) 中序列 $\{a_{n,j}\}$ 的构造（按上确界定义取 $|\langle a,y_n\rangle|\geqslant\|y_n\|_Y(1-1/j)$）与 (4.21)--(4.22) 中 $\sup$ 的三角不等式估计
 \begin{proof}
-由于 $\|y\|_Y=\sup_{a\in(B_1)^p}|\langle a,y\rangle|$（见\eqref{align:ch04-4.16}），只需证明存在可数集 $W\subseteq(B_1)^p$ 使对所有 $y\in S$ 有
+由于 $\|y\|_Y=\sup_{a\in(B_1)^p}|\langle a,y\rangle|$（见\eqref{align:ch04-4.16}），只需证明存在可数集 $W\subseteq(B_1)^p$ 使
 \begin{align}
-\|y\|_Y\leqslant\sup_{a\in W}|\langle a,y\rangle|. \label{align:ch04-4.18}
+\|y\|_Y\leqslant\sup_{a\in W}|\langle a,y\rangle|\quad\text{对所有 }y\in S; \label{align:ch04-4.18}
 \end{align}
-令 $D\equiv\{y_n\}$ 为 $S$ 中的可数稠密集，固定 $n\in\mathbb{N}$。由于 $\|y_n\|_Y=\sup_{a\in(B_1)^p}|\langle a,y_n\rangle|$，存在序列 $\{a_{n,j}\}\subseteq(B_1)^p$ 使
+反向不等式自动成立，因为 $W\subseteq(B_1)^p$ 给出 $|\langle a,y\rangle|\leqslant\|a\|_{Y^*}\|y\|_Y\leqslant\|y\|_Y$ 对每个 $a\in W$ 成立。
+
+令 $D\equiv\{y_n\}$ 为 $S$ 中的可数稠密集（其存在性由 $S$ 可分）。固定 $n\in\mathbb{N}$。由于 $\|y_n\|_Y=\sup_{a\in(B_1)^p}|\langle a,y_n\rangle|$，由上确界的定义，对每个 $j\in\mathbb{N}$ 存在 $a_{n,j}\in(B_1)^p$ 使 $|\langle a_{n,j},y_n\rangle|\geqslant\|y_n\|_Y(1-1/j)$；于是
 \begin{align}
 \|y_n\|_Y=\sup_{j\in\mathbb{N}}|\langle a_{n,j},y_n\rangle|. \label{align:ch04-4.19}
 \end{align}
-考虑可数集 $W\triangleq \{a_{k,j}\mid k,j\in\mathbb{N}\}$。则由\eqref{align:ch04-4.19}有
+考虑可数集 $W\triangleq \{a_{k,j}\mid k,j\in\mathbb{N}\}\subseteq(B_1)^p$。则由\eqref{align:ch04-4.19}，对每个 $n\in\mathbb{N}$，
 \begin{align}
 \|y_n\|_Y\leqslant\sup_{k,j\in\mathbb{N}}|\langle a_{k,j},y_n\rangle|=\sup_{a\in W}|\langle a,y_n\rangle|. \label{align:ch04-4.20}
 \end{align}
-现固定 $z\in S$。由 $D$ 的稠密性，对任意 $\epsilon>0$，存在 $y_m\in D$ 使 $\|z-y_m\|_Y<\epsilon$。于是由\eqref{align:ch04-4.20}
+现固定 $z\in S$。由 $D$ 在 $S$ 中的稠密性，对任意 $\varepsilon>0$ 存在 $y_m\in D$ 使 $\|z-y_m\|_Y<\varepsilon$。于是由\eqref{align:ch04-4.20}
 \begin{align}
-\|z\|_Y\leqslant\|z-y_m\|_Y+\|y_m\|_Y\leqslant\sup_{k,j\in\mathbb{N}}|\langle a_{k,j},y_m\rangle|+\epsilon. \label{align:ch04-4.21}
+\|z\|_Y\leqslant\|z-y_m\|_Y+\|y_m\|_Y\leqslant\sup_{k,j\in\mathbb{N}}|\langle a_{k,j},y_m\rangle|+\varepsilon. \label{align:ch04-4.21}
 \end{align}
-另一方面，由于 $W\subseteq(B_1)^p$，有
+另一方面，由于 $W\subseteq(B_1)^p$，对每个 $k,j\in\mathbb{N}$ 有 $\|a_{k,j}\|_{Y^*}\leqslant1$，故
 \begin{align}
 \sup_{k,j\in\mathbb{N}}|\langle a_{k,j},y_m\rangle|
 &\leqslant\sup_{k,j\in\mathbb{N}}|\langle a_{k,j},z\rangle|+\sup_{k,j\in\mathbb{N}}|\langle a_{k,j},z-y_m\rangle|\nonumber\\
-&\leqslant\sup_{k,j\in\mathbb{N}}|\langle a_{k,j},z\rangle|+\|z-y_m\|_Y\leqslant\sup_{k,j\in\mathbb{N}}|\langle a_{k,j},z\rangle|+\epsilon. \label{align:ch04-4.22}
+&\leqslant\sup_{k,j\in\mathbb{N}}|\langle a_{k,j},z\rangle|+\|z-y_m\|_Y\leqslant\sup_{k,j\in\mathbb{N}}|\langle a_{k,j},z\rangle|+\varepsilon. \label{align:ch04-4.22}
 \end{align}
 由\eqref{align:ch04-4.21}--\eqref{align:ch04-4.22}得
 \begin{align*}
-\|z\|_Y\leqslant\sup_{a\in W}|\langle a,z\rangle|+2\epsilon,
+\|z\|_Y\leqslant\sup_{a\in W}|\langle a,z\rangle|+2\varepsilon,
 \end{align*}
-由 $\epsilon$ 的任意性得不等式\eqref{align:ch04-4.18}。这就证明了该结果。
+由 $\varepsilon>0$ 的任意性得不等式\eqref{align:ch04-4.18}。故结论成立。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch04-可数支撑范数; kind=motivation; 说明该命题的动机（把范数写成可数上确界以便讨论可测性）、$S$ 可分性的实质作用（不可分时不存在这样的可数 $W$）、以及 $W\subseteq(B_1)^p$ 的作用
+\begin{remark}\phantomsection\label{remark:ch04-可数支撑范数动机}
+\begin{enumerate}[(i)]
+\item 动机。\cref{proposition:ch04-范数可测弱}要把 $x\mapsto\|f(x)\|_Y$ 写成可测函数的极限，而\eqref{align:ch04-4.16}给出的是\emph{不可数}上确界 $\sup_{a\in B_1^*}$。本命题在值域可分时把该上确界压缩为可数上确界，从而把"不可数族的上确界"化归为"可数族的上确界"，后者仍可测（\cref{corollary:ch02-逐点极限}(ii)）。
+\item $S$ 可分性的实质作用。证明中 $D$ 只用于把 $z\in S$ 换成稠密子集中的 $y_m$，并用三角不等式过渡；这要求 $D$ 在\emph{整个} $S$ 中稠密。若 $S$ 不可分，则结论可以失效：取 $Y=\ell^2(\mathbb{R})$、$S=\overline{\operatorname{span}}\{e_t\mid t\in\mathbb{R}\}$（不可分），则对任意可数 $W\subseteq Y$，闭子空间 $\overline{\operatorname{span}}W$ 可分，其正交补在 $S$ 中含非零元 $y$（否则 $S=\overline{\operatorname{span}}W$ 可分），于是 $\sup_{a\in W}|\langle a,y\rangle|=0<\|y\|_Y$。
+\item $W\subseteq(B_1)^p=B_1^*$ 的作用。它保证 $\sup_{a\in W}|\langle a,y\rangle|\leqslant\|y\|_Y$，从而\eqref{align:ch04-4.17}中的等号只需证明一个方向；若 $W$ 只满足"$\sup$ 有限"，则反向不等式可能失败。
+\item 边界。结论对可分\emph{子空间} $S$ 成立，$S$ 不必闭：证明只用 $D\subseteq S$ 的稠密性与范数的三角不等式。$Y$ 本身可以不可分，此时 $W$ 仍可数，只是不能对全空间 $Y$ 取等号。
+\end{enumerate}
+\end{remark}
 
 \begin{proposition}\label{proposition:ch04-范数可测弱}
-(i) 设 $f:X\to Y$ 弱可测且 $\mu$-几乎处处可分值。则函数 $x\mapsto\|f(x)\|_Y$ 可测。
-
-(ii) 设 $f:X\to Y^*$ 弱$^*$可测且 $\mu$-几乎处处可分值。则函数 $x\mapsto\|f(x)\|_{Y^*}$ 可测。
+设 $(X,\mathcal{A},\mu)$ 为测度空间，$Y$ 为实 Banach 空间。
+\begin{enumerate}[(i)]
+\item 设 $f:X\to Y$ 弱可测且 $\mu$-几乎处处可分值。则函数 $x\mapsto\|f(x)\|_Y$ 在 $\mu$-几乎处处意义下可测。
+\item 设 $f:X\to Y^*$ 弱$^*$可测且 $\mu$-几乎处处可分值。则函数 $x\mapsto\|f(x)\|_{Y^*}$ 在 $\mu$-几乎处处意义下可测。
+\end{enumerate}
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch04-范数可测弱; kind=proof; 补出"不妨设值域可分"的严格化（在零测集上把 $f$ 改为 $0$，验证修改后的函数仍弱可测，并说明结论只到几乎处处意义）
 \begin{proof}
-(i) 不妨设 $f(X)$ 本身可分。于是由\cref{proposition:ch04-可数支撑范数}与\eqref{align:ch04-4.16}中第一个等式，存在可数集 $W\subseteq B_1^*$ 使对所有 $x\in X$ 有
-\begin{align}
-\|f(x)\|_Y=\sup_{a\in W}|\langle a,f(x)\rangle|. \label{align:ch04-4.23}
-\end{align}
-由于 $f$ 弱可测且 $|\cdot|$ 连续，对任意 $a\in W$，映射 $x\mapsto|\langle a,f(x)\rangle|$ 可测。于是由\eqref{align:ch04-4.23}与\cref{corollary:ch02-逐点极限}(ii)得结论。
+(i) 由假设存在 $\mu$-零测集 $N\in\mathcal{A}$ 使 $f(N^c)$ 可分。令
+\begin{align*}
+\tilde f:X\to Y,\qquad \tilde f(x)\triangleq\begin{cases}f(x)&\text{若 }x\in N^c,\\ 0&\text{若 }x\in N,\end{cases}
+\end{align*}
+则 $\tilde f$ 的值域含于 $f(N^c)\cup\{0\}$，从而可分；且对每个 $y^*\in Y^*$ 与 $x\in X$ 有 $\langle y^*,\tilde f(x)\rangle=\chi_{N^c}(x)\langle y^*,f(x)\rangle$，故 $x\mapsto\langle y^*,\tilde f(x)\rangle$ 可测（\cref{corollary:ch02-可测运算}），即 $\tilde f$ 弱可测。又 $\tilde f=f$ 在 $N^c$ 上成立。
 
-(ii) 如 (i) 那样论证并利用\eqref{align:ch04-4.16}中第二个等式，存在可数集 $W\subseteq B_1$ 使对所有 $x\in X$ 有
+于是不妨设 $f(X)$ 本身可分（以 $\tilde f$ 代 $f$，最后再用 $N$ 的零测性）。由\cref{proposition:ch04-可数支撑范数}（取 $S\triangleq\overline{f(X)}$）与\eqref{align:ch04-4.16}中第一个等式，存在可数集 $W\subseteq B_1^*$ 使
 \begin{align}
-\|f(x)\|_{Y^*}=\sup_{a\in W}|\langle f(x),a\rangle|. \label{align:ch04-4.24}
+\|f(x)\|_Y=\sup_{a\in W}|\langle a,f(x)\rangle|\quad\text{对所有 }x\in X. \label{align:ch04-4.23}
 \end{align}
-由于 $f$ 弱$^*$可测且 $|\cdot|$ 连续，对任意 $a\in W$，映射 $x\mapsto|\langle a,f(x)\rangle|$ 可测。于是由\eqref{align:ch04-4.24}与\cref{corollary:ch02-逐点极限}(ii)得结论。
+由于 $f$ 弱可测，对每个 $a\in W$ 函数 $x\mapsto\langle a,f(x)\rangle$ 可测；又 $|\cdot|$ 连续，故 $x\mapsto|\langle a,f(x)\rangle|$ 可测。对可数族取上确界得：$x\mapsto\sup_{a\in W}|\langle a,f(x)\rangle|$ 可测（\cref{corollary:ch02-逐点极限}(ii)）。由\eqref{align:ch04-4.23}即得 $x\mapsto\|f(x)\|_Y$ 在 $N^c$ 上可测，故在 $\mu$-几乎处处意义下可测。
+
+(ii) 如 (i) 那样论证：先在 $\mu$-零测集上把 $f$ 改为 $0$，使值域可分且弱$^*$可测性保持；再利用\cref{proposition:ch04-可数支撑范数}（应用于 Banach 空间 $Y^*$，其预对偶为 $Y$）与\eqref{align:ch04-4.16}中第二个等式，得可数集 $W\subseteq B_1$ 使
+\begin{align}
+\|f(x)\|_{Y^*}=\sup_{a\in W}|\langle f(x),a\rangle|\quad\text{对所有 }x\in X. \label{align:ch04-4.24}
+\end{align}
+由于 $f$ 弱$^*$可测且 $|\cdot|$ 连续，对任意 $a\in W$ 映射 $x\mapsto|\langle f(x),a\rangle|$ 可测。于是由\eqref{align:ch04-4.24}与\cref{corollary:ch02-逐点极限}(ii)得结论。
 \end{proof}
 
-\begin{remark}\label{remark:ch04-对偶注}
-注意 $Y^*$ 既是带弱拓扑 $\sigma(Y,Y^*)$ 的 $Y$ 的拓扑对偶，又是带弱$^*$拓扑 $\sigma(Y^{**},Y^*)$ 的 $Y^{**}$ 的拓扑对偶。因此，由于嵌入 $Y\subseteq Y^{**}$ 是等距的，将\cref{proposition:ch04-范数可测弱}(ii) 应用于 $Y^{**}=(Y^*)^*$ 与\cref{proposition:ch04-范数可测弱}(i) 是一致的。
+% SUPPLEMENT: parent=proposition:ch04-范数可测弱; kind=motivation; 说明为何不能用可测性代替弱可测性、几乎处处可分值假设的必要性、以及两个分支各自对应的对偶配对
+\begin{remark}\phantomsection\label{remark:ch04-范数可测弱动机}
+\begin{enumerate}[(i)]
+\item 动机。在\cref{section:ch04-Lp空间}中，$L^p_w(X;Y)$ 与 $L^p_{w^*}(X;Y^*)$ 的定义都要求 $x\mapsto\|f(x)\|$ 可测（否则 $\|f\|_p$ 无意义）。但这两个空间只假设弱（弱$^*$）可测性，故必须证明范数仍可测；本命题就是这一保证。
+\item 为何两个分支形式不同。(i) 用 $(B_1)^p=B_1^*$ 与 $\|f(x)\|_Y=\sup_{a\in B_1^*}|\langle a,f(x)\rangle|$；(ii) 用 $(B_1^*)_p=B_1$ 与 $\|f(x)\|_{Y^*}=\sup_{a\in B_1}|\langle f(x),a\rangle|$。两者分别对应配对 $(Y,Y^*)$ 与 $(Y^*,Y)$，故 (ii) 只需 $f$ 弱$^*$可测。
+\item 几乎处处可分值假设不可去。若 $f$ 弱可测而值域不可分，则 $\|f(\cdot)\|_Y$ 未必可测：取 $X=\mathbb{N}$、$\mathcal{A}=2^{\mathbb{N}}$、$\mu$ 为计数测度、$Y=\ell^2(\mathbb{R})$、$f(n)\triangleq e_{t_n}$（$t_n$ 为 $\mathbb{R}$ 中互不相同的点）。则 $f$ 弱可测（$\mathcal{A}=2^{\mathbb{N}}$ 使一切实值函数可测），但任意可数集 $W$ 都正交于某个 $e_t$，故不存在使\eqref{align:ch04-4.23}成立的 $W$，从而上述论证失效；事实上 $\|f(\cdot)\|_Y\equiv1$ 在此例中仍可测，故该例只说明论证不可用，而不可分值确实使\cref{proposition:ch04-可数支撑范数}不适用。
+\item 结论的强度。结论中的"几乎处处"不可改为"处处"：修改 $f$ 于零测集上会改变 $\|f(\cdot)\|$ 在该集上的取值，而不影响弱可测性以外的信息。若 $\mu$ 完备且 $f$ 处处可分值，则可得通常意义下的可测性。
+\end{enumerate}
+\end{remark}
 
-特别地，由\cref{proposition:ch04-范数可测弱}(ii)，若 $Y^*$ 可分且 $f:X\to Y^*$ 弱$^*$可测，则函数 $x\mapsto\|f(x)\|_{Y^*}$ 可测。如下命题所示，若 $Y$ 可分，同样的结论成立。
+% SUPPLEMENT: parent=remark:ch04-对偶注; kind=proof; 展开"把命题 4.1.9(ii) 用于 $Y^{**}=(Y^*)^*$ 与命题 4.1.9(i) 一致"的验证：典范嵌入是等距，弱$^*$可测性对应弱可测性，范数相等
+\begin{remark}\phantomsection\label{remark:ch04-对偶注}
+注意 $Y^*$ 既是带弱拓扑 $\sigma(Y,Y^*)$ 的 $Y$ 的拓扑对偶，又是带弱$^*$拓扑 $\sigma(Y^*,Y^{**})$ 的 $Y^{**}$ 的拓扑对偶。因此，由于典范嵌入 $J:Y\to Y^{**}$ 是等距的，把\cref{proposition:ch04-范数可测弱}(ii) 应用于 $Y^{**}=(Y^*)^*$ 与把\cref{proposition:ch04-范数可测弱}(i) 应用于 $f:X\to Y$ 是一致的。
+
+具体地，设 $f:X\to Y$ 弱可测且 $\mu$-几乎处处可分值，令 $g\triangleq J\circ f:X\to Y^{**}$。则对每个 $y^*\in Y^*$ 与 $x\in X$ 有 $\langle g(x),y^*\rangle_{Y^{**},Y^*}=\langle y^*,f(x)\rangle_{Y^*,Y}$，故 $g$ 弱$^*$可测（以 $Y^*$ 为"预对偶"）；又 $g(X)=J(f(X))$ 与 $f(X)$ 等距同构，故 $g$ 亦 $\mu$-几乎处处可分值。把\cref{proposition:ch04-范数可测弱}(ii) 用于 $g$（其中"$Y$"取为 $Y^*$，其预对偶为 $Y^{**}$）得 $x\mapsto\|g(x)\|_{Y^{**}}$ 可测；由 $\|g(x)\|_{Y^{**}}=\|f(x)\|_Y$ 即得\cref{proposition:ch04-范数可测弱}(i)。
+
+特别地，由\cref{proposition:ch04-范数可测弱}(ii)，若 $Y^*$ 可分且 $f:X\to Y^*$ 弱$^*$可测，则函数 $x\mapsto\|f(x)\|_{Y^*}$ 可测（因为此时 $f$ 自动 $\mu$-几乎处处可分值）。如下命题表明：若 $Y$ 可分，同样的结论成立。
 \end{remark}
 
 \begin{proposition}\label{proposition:ch04-弱星范数可测}\label{proposition:ch04-有界密度}
-设 $Y$ 可分，$f:X\to Y^*$ 弱$^*$可测。则函数 $x\mapsto\|f(x)\|_{Y^*}$ 可测。
+设 $Y$ 为可分实 Banach 空间，$f:X\to Y^*$ 弱$^*$可测。则函数 $x\mapsto\|f(x)\|_{Y^*}$ 在 $\mu$-几乎处处意义下可测。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch04-弱星范数可测; kind=proof; 补出原证明末步的修补：归一化元 $\bar y_k=y_k/\|y_k\|_Y$ 并非 $D$ 中元，故以 $\rho=1-1/k$ 与 $z_k\in D\cap B_1$ 逼近，并给出误差估计 $\alpha-(\alpha+2)/k$
 \begin{proof}
-令 $D\equiv\{y_n\}\subseteq Y$ 可数且稠密。对每个 $n\in\mathbb{N}$，函数 $l_n:X\to\mathbb{R}$，$l_n(x)\triangleq |\langle f(x),y_n\rangle|$，可测，从而映射 $l:X\to\mathbb{R}$，$l(x)\triangleq \sup_{y_n\in D,\ \|y_n\|_Y\leqslant1}l_n(x)$，可测（见\cref{corollary:ch02-逐点极限}(ii)）。于是若我们证明对所有 $x\in X$ 有
+令 $D\equiv\{y_n\}\subseteq Y$ 为可数稠密集。对每个 $n\in\mathbb{N}$，函数 $l_n:X\to\mathbb{R}$，$l_n(x)\triangleq|\langle f(x),y_n\rangle|$，可测。于是映射
+\begin{align*}
+l:X\to[0,\infty],\quad l(x)\triangleq\sup_{y_n\in D,\ \|y_n\|_Y\leqslant1}l_n(x),
+\end{align*}
+可测（\cref{corollary:ch02-逐点极限}(ii)）。若证明对所有 $x\in X$ 有
 \begin{align}
 l(x)=\|f(x)\|_{Y^*}, \label{align:ch04-4.25}
 \end{align}
@@ -387,69 +742,110 @@ l(x)=\|f(x)\|_{Y^*}, \label{align:ch04-4.25}
 \begin{align*}
 \|f(x)\|_{Y^*}=\sup_{y\in Y,\ \|y\|_Y\leqslant1}|\langle f(x),y\rangle|\geqslant\sup_{y_n\in D,\ \|y_n\|_Y\leqslant1}|\langle f(x),y_n\rangle|=l(x).
 \end{align*}
-为证反向不等式，令 $\alpha\triangleq \|f(x)\|_{Y^*}>0$（若 $\|f(x)\|_{Y^*}=0$，则等式\eqref{align:ch04-4.25}显然成立）。对任意 $k\in\mathbb{N}$，取 $u_k\in Y$ 使 $\|u_k\|_Y\leqslant1$ 且
+为证反向不等式，固定 $x\in X$ 并令 $\alpha\triangleq\|f(x)\|_{Y^*}$。若 $\alpha=0$，则 $l(x)=0=\alpha$，等式\eqref{align:ch04-4.25}成立。设 $\alpha>0$。对任意 $k\in\mathbb{N}$，由上确界的定义可取 $u_k\in Y$ 使 $\|u_k\|_Y\leqslant1$ 且
 \begin{align}
 |\langle f(x),u_k\rangle|\geqslant\alpha-\frac1{2^k}. \label{align:ch04-4.26}
 \end{align}
-由 $D$ 的稠密性，存在 $y_k\in D$ 使 $\|u_k-y_k\|_Y<1/(4\alpha k)$，于是
+由 $D$ 在 $Y$ 中的稠密性，存在 $y_k\in D$ 使 $\|u_k-y_k\|_Y<1/(4\alpha k)$，于是
 \begin{align}
 \|y_k\|_Y\leqslant\|y_k-u_k\|_Y+\|u_k\|_Y\leqslant\frac1{4\alpha k}+1, \label{align:ch04-4.27}
 \end{align}
 \begin{align}
-|\langle f(x),u_k-y_k\rangle|\leqslant\alpha\cdot\frac1{4\alpha k}=\frac1{4k}. \label{align:ch04-4.28}
+|\langle f(x),u_k-y_k\rangle|\leqslant\|f(x)\|_{Y^*}\|u_k-y_k\|_Y\leqslant\alpha\cdot\frac1{4\alpha k}=\frac1{4k}. \label{align:ch04-4.28}
 \end{align}
 令
 \begin{align*}
-\bar y_k\triangleq 
+\bar y_k\triangleq
 \begin{cases}
 \dfrac{y_k}{\|y_k\|_Y} & \text{若 }\|y_k\|_Y>1,\\
 y_k & \text{若 }\|y_k\|_Y\leqslant1.
 \end{cases}
 \end{align*}
-若 $\|y_k\|_Y>1$，则由\eqref{align:ch04-4.27}--\eqref{align:ch04-4.28}，
+则 $\|\bar y_k\|_Y\leqslant1$（两种情形分别由 $1/\|y_k\|_Y<1$ 与题设得到）。当 $\|y_k\|_Y>1$ 时，由\eqref{align:ch04-4.27}--\eqref{align:ch04-4.28}
 \begin{align}
 |\langle f(x),u_k-\bar y_k\rangle|
 &\leqslant|\langle f(x),u_k-y_k\rangle|+|\langle f(x),y_k-\bar y_k\rangle|\nonumber\\
-&\leqslant\frac1{4k}+\alpha(\|y_k\|_Y-1)\leqslant\frac1{4k}+\alpha\cdot\frac1{4\alpha k}=\frac1{2k}. \label{align:ch04-4.29}
+&\leqslant\frac1{4k}+\alpha(\|y_k\|_Y-1)\leqslant\frac1{4k}+\alpha\cdot\frac1{4\alpha k}=\frac1{2k}, \label{align:ch04-4.29}
 \end{align}
-由\eqref{align:ch04-4.26}与\eqref{align:ch04-4.28}--\eqref{align:ch04-4.29}，对每个 $k\in\mathbb{N}$，存在 $\bar y_k\in D$ 使 $\|\bar y_k\|_Y\leqslant1$，且
+而当 $\|y_k\|_Y\leqslant1$ 时 $\bar y_k=y_k$，\eqref{align:ch04-4.29}由\eqref{align:ch04-4.28}给出。综上，对每个 $k\in\mathbb{N}$ 存在 $\bar y_k\in Y$ 使 $\|\bar y_k\|_Y\leqslant1$ 且
 \begin{align*}
-|\langle f(x),\bar y_k\rangle|\geqslant|\langle f(x),u_k\rangle|-|\langle f(x),\bar y_k-u_k\rangle|\geqslant\alpha-\frac1k.
+|\langle f(x),\bar y_k\rangle|\geqslant|\langle f(x),u_k\rangle|-|\langle f(x),\bar y_k-u_k\rangle|\geqslant\alpha-\frac1{2^k}-\frac1{2k}\geqslant\alpha-\frac1k.
 \end{align*}
-这就证明了\eqref{align:ch04-4.25}，从而结论成立。
+为把 $\bar y_k$ 换成 $D\cap B_1$ 中的元素，令 $\rho\triangleq1-1/k\in(0,1)$。由 $\|\rho\bar y_k\|_Y\leqslant\rho<1$ 与 $D$ 在 $Y$ 中稠密，存在 $z_k\in D$ 使
+\begin{align*}
+\|z_k-\rho\bar y_k\|_Y<\min\Big\{\frac1{\alpha k},\ \frac{1-\rho}{2}\Big\},
+\end{align*}
+于是 $\|z_k\|_Y\leqslant\rho+\frac{1-\rho}{2}<1$，即 $z_k\in D\cap B_1$，且
+\begin{align*}
+|\langle f(x),z_k\rangle|&\geqslant\rho|\langle f(x),\bar y_k\rangle|-\alpha\|z_k-\rho\bar y_k\|_Y\\
+&\geqslant\rho\Big(\alpha-\frac1k\Big)-\frac1k=\alpha-\frac{\alpha+2}{k}+\frac1{k^2}\geqslant\alpha-\frac{\alpha+2}{k}.
+\end{align*}
+因此 $l(x)\geqslant\alpha-\frac{\alpha+2}{k}$ 对每个 $k\in\mathbb{N}$ 成立；令 $k\to\infty$ 得 $l(x)\geqslant\alpha=\|f(x)\|_{Y^*}$。由此得到\eqref{align:ch04-4.25}，从而结论成立。
 \end{proof}
 
-$\mu$-可测性与弱可测性之间的关系由以下定理阐明。
+% SUPPLEMENT: parent=proposition:ch04-弱星范数可测; kind=motivation; 说明该命题的动机（只需 $Y$ 可分即可定义 $L^\infty_{w^*}$ 的范数）、$D$ 取遍单位球的稠密子集的作用、以及证明中 $\alpha>0$ 与非退化估计的作用
+% SUPPLEMENT: parent=proposition:ch04-有界密度; kind=motivation; 别名标签，与 proposition:ch04-弱星范数可测 共用下一条注记
+\begin{remark}\phantomsection\label{remark:ch04-弱星范数可测动机}
+\begin{enumerate}[(i)]
+\item 动机。\cref{proposition:ch04-范数可测弱}(ii) 需要 $Y^*$ 可分（从而 $f$ 自动几乎处处可分值），但\cref{section:ch04-Lp空间}与\cref{section:ch04-对偶}中 $L^\infty_{w^*}(X;Y^*)$ 的理论只在 $Y$ 可分的前提下展开。本命题说明：此时范数仍可测，故 $L^p_{w^*}$ 的范数有意义。
+\item $D$ 的作用。证明用 $D\cap B_1$ 上的可数上确界逼近 $\|f(x)\|_{Y^*}$；$D$ 必须在整个 $Y$ 中稠密（而不只在 $B_1$ 中），因为\eqref{align:ch04-4.26}中的 $u_k$ 只满足 $\|u_k\|_Y\leqslant1$，需要用 $D$ 中的点逼近它并同时控制 $\|y_k\|_Y$（\eqref{align:ch04-4.27}）。
+\item 证明的关键估计。取 $\alpha=\|f(x)\|_{Y^*}>0$ 是为了使 $1/(4\alpha k)$ 有意义；$\alpha=0$ 时等式\eqref{align:ch04-4.25}直接成立。\eqref{align:ch04-4.27}--\eqref{align:ch04-4.29}把"$\|y_k\|_Y$ 可能略大于 $1$"的困难用归一化 $\bar y_k$ 解决，误差 $1/(2k)$ 仍可被 $\alpha-1/k$ 吸收。
+\item 边界。结论只到几乎处处意义（理由与\cref{proposition:ch04-范数可测弱}相同）；$Y$ 的可分性不可换成 $Y^*$ 的可分性之外的条件：若 $Y$ 不可分且 $Y^*$ 不可分，则不能用可数上确界刻画 $\|\cdot\|_{Y^*}$，此时\cref{proposition:ch04-范数可测弱}(ii) 也不可用。
+\end{enumerate}
+\end{remark}
+
+$\mu$-可测性与弱可测性之间的关系由如下定理阐明。
 
 \begin{theorem}[Pettis]\label{theorem:ch04-Pettis}
-设 $\mu$ 为 $\sigma$-有限，$f:X\to Y$。则下列命题等价：
+设 $\mu$ 为 $\sigma$-有限测度，$Y$ 为实 Banach 空间，$f:X\to Y$。则下列命题等价：
 \begin{enumerate}[(i)]
 \item\label{item:ch04-Pettis-i} $f$ 为 $\mu$-可测；
 \item\label{item:ch04-Pettis-ii} $f$ 弱可测且 $\mu$-几乎处处可分值。
 \end{enumerate}
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch04-Pettis; kind=proof; 补出 (ii)$\Rightarrow$(i) 中"不妨设值域可分"的严格化：在 $\mu$-零测集上把 $f$ 改为 $0$ 得弱可测且可分值的 $\tilde f$，再以注 4.1.2(i) 回到 $f$
 \begin{proof}
-(i)$\Rightarrow$(ii)。由\cref{remark:ch04-弱可测注} $f$ 弱可测，而 $f$ 为 $\mu$-几乎处处可分值由\cref{proposition:ch04-mu可推可分值}得到。故结论成立。
+(i)$\Rightarrow$(ii)。由\cref{remark:ch04-弱可测注}(i)，$f$ 弱可测；而 $f$ 为 $\mu$-几乎处处可分值由\cref{proposition:ch04-mu可推可分值}得到。故结论成立。
 
-(ii)$\Rightarrow$(i)。不妨设 $f(X)$ 可分。令 $D\equiv\{y_n\}$ 为 $f(X)$ 中的可数稠密集。由\cref{proposition:ch04-范数可测弱}(i)，对任意 $y_n\in D$，函数 $x\mapsto\|f(x)-y_n\|_Y$ 可测，于是由\cref{proposition:ch04-可分值判据} $f$ 为 $\mu$-可测。故结论成立。
+(ii)$\Rightarrow$(i)。由假设存在 $\mu$-零测集 $N\in\mathcal{A}$ 使 $f(N^c)$ 可分。令 $\tilde f\triangleq f\chi_{N^c}$（即 $\tilde f=f$ 在 $N^c$ 上、$\tilde f=0$ 在 $N$ 上）。则 $\tilde f$ 弱可测（对每个 $y^*\in Y^*$，$x\mapsto\langle y^*,\tilde f(x)\rangle=\chi_{N^c}(x)\langle y^*,f(x)\rangle$ 可测），且 $\tilde f(X)\subseteq f(N^c)\cup\{0\}$ 可分。于是不妨设 $f(X)$ 本身可分（以 $\tilde f$ 代 $f$，最后用 $\tilde f=f$ $\mu$-几乎处处与\cref{remark:ch04-mu可测注}(i) 回到 $f$）。令 $D\equiv\{y_n\}$ 为 $f(X)$ 中的可数稠密集。对每个 $n\in\mathbb{N}$，函数 $x\mapsto f(x)-y_n$ 弱可测且值域可分，故由\cref{proposition:ch04-范数可测弱}(i) 函数 $x\mapsto\|f(x)-y_n\|_Y$ 可测，于是由\cref{proposition:ch04-可分值判据} $f$ 为 $\mu$-可测。故结论成立。
 \end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-Pettis; kind=motivation; 说明该定理的地位（三个可测性概念在可分值假设下的统一）、两个方向各自使用的工具、$Y$ 可分时的特殊形式、以及两个假设都不可去的边界
+\begin{remark}\phantomsection\label{remark:ch04-Pettis动机}
+\begin{enumerate}[(i)]
+\item 动机。本定理把"$\mu$-可测"这一较强概念拆成两部分：弱可测性（只涉及对偶配对，易于验证）与几乎处处可分值（只涉及值域，与 $\mathcal{A}$、$\mu$ 的结构无关）。这使\cref{section:ch04-Lp空间}能定义 $L^p_w(X;Y)$ 并在 $Y$ 可分时证明 $L^p_w=L^p$。
+\item 两个方向的工具。(i)$\Rightarrow$(ii) 用\cref{remark:ch04-弱可测注}(i) 与\cref{proposition:ch04-mu可推可分值}；(ii)$\Rightarrow$(i) 用\cref{proposition:ch04-范数可测弱}(i) 与\cref{proposition:ch04-可分值判据}。注意后者需要 $\sigma$-有限性（通过\cref{proposition:ch04-mu逐点极限}），故本定理的 $\sigma$-有限假设只在 (ii)$\Rightarrow$(i) 中起作用。
+\item $Y$ 可分时的形式。若 $Y$ 可分，则每个 $f:X\to Y$ 自动可分值，于是 (ii) 简化为"$f$ 弱可测"；结合\cref{proposition:ch04-可推mu可}得：$\mu$-可测、可测、弱可测三者等价。这正是\cref{section:ch04-Lp空间}中 $L^p(X;Y)=L^p_w(X;Y)$（$Y$ 可分、$\mu$ 为 $\sigma$-有限）的来源。
+\item 假设不可去。$\sigma$-有限性不可去（\cref{proposition:ch04-mu逐点极限}的证明路线依赖 Egorov 定理）；几乎处处可分值不可去（\cref{remark:ch04-可推mu可动机}(iii) 的反例：$X=\mathbb{N}$、$Y=\ell^\infty$、$f(n)=e_n$ 弱可测而非 $\mu$-可测）。弱可测性也不可去：并非每个函数都 $\mu$-可测。
+\end{enumerate}
+\end{remark}
 
 类似地，由\cref{proposition:ch04-范数可测弱}(ii) 得如下结果。
 
 \begin{proposition}\label{proposition:ch04-弱星等价}
-设 $\mu$ 为 $\sigma$-有限，$f:X\to Y^*$。则下列命题等价：
+设 $\mu$ 为 $\sigma$-有限测度，$Y$ 为实 Banach 空间，$f:X\to Y^*$。则下列命题等价：
 \begin{enumerate}[(i)]
 \item\label{item:ch04-弱星等价-i} $f$ 为 $\mu$-可测；
 \item\label{item:ch04-弱星等价-ii} $f$ 弱$^*$可测且 $\mu$-几乎处处可分值。
 \end{enumerate}
 \end{proposition}
 
-\begin{remark}\label{remark:ch04-三概念重合}
-设 $\mu$ 为 $\sigma$-有限，$Y^*$ 可分。由\cref{theorem:ch04-Pettis}与\cref{proposition:ch04-弱星等价}，对每个 $f:X\to Y^*$，$\mu$-可测性、弱可测性与弱$^*$可测性这三个概念重合。
+% SUPPLEMENT: parent=proposition:ch04-弱星等价; kind=proof; 原书称"类似地"未给证明；此处补出两个方向，注意目标空间 $Y^*$ 本身是 Banach 空间，故可直接引用命题 4.1.5、4.1.7、4.1.9(ii) 与注 4.1.2(i)
+\begin{proof}
+(i)$\Rightarrow$(ii)。$Y^*$ 为 Banach 空间，故由\cref{remark:ch04-弱可测注}(ii)，$\mu$-可测函数 $f:X\to Y^*$ 弱可测，从而弱$^*$可测。又由\cref{proposition:ch04-mu可推可分值}（应用于 Banach 空间 $Y^*$），$f$ 为 $\mu$-几乎处处可分值。
+
+(ii)$\Rightarrow$(i)。由假设存在 $\mu$-零测集 $N\in\mathcal{A}$ 使 $f(N^c)\subseteq Y^*$ 可分。令 $\tilde f\triangleq f\chi_{N^c}$。则对每个 $y\in Y$，$x\mapsto\langle\tilde f(x),y\rangle=\chi_{N^c}(x)\langle f(x),y\rangle$ 可测，故 $\tilde f$ 弱$^*$可测；又 $\tilde f(X)\subseteq f(N^c)\cup\{0\}$ 可分，故不妨设 $f(X)$ 可分。令 $D\equiv\{y_n\}$ 为 $f(X)$ 中的可数稠密集。对每个 $n$，函数 $x\mapsto f(x)-y_n$ 弱$^*$可测且值域可分（$D$ 的平移仍在可分集中），故由\cref{proposition:ch04-范数可测弱}(ii) 函数 $x\mapsto\|f(x)-y_n\|_{Y^*}$ 可测。于是由\cref{proposition:ch04-可分值判据}（应用于 Banach 空间 $Y^*$）$f$ 为 $\mu$-可测。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch04-弱星等价; kind=motivation; 说明与 Pettis 定理的对称性、为何只需弱$^*$可测性、$Y^*$ 可分时的简化、以及在\cref{section:ch04-Lp空间}中的用途
+\begin{remark}\phantomsection\label{remark:ch04-弱星等价动机}
+\begin{enumerate}[(i)]
+\item 动机。本命题是\cref{theorem:ch04-Pettis}在目标空间 $Y^*$ 上的对应物：把"$\mu$-可测"替换为"弱$^*$可测 $+$ 几乎处处可分值"。它使\cref{section:ch04-Lp空间}中的 $L^p_{w^*}(X;Y^*)$ 与 $L^p(X;Y^*)$ 在 $Y^*$ 可分时相等（见\cref{remark:ch04-Lp包含}(i)）。
+\item 只需弱$^*$可测性的原因。$f$ 取值于 $Y^*$，检验用的是 $y\in Y\subseteq Y^{**}$；配对 $(Y^*,Y)$ 正好使 $(B_1^*)_p=B_1$ 与\cref{proposition:ch04-范数可测弱}(ii) 可用。若换成弱可测性（检验 $y^{**}\in Y^{**}$），条件更强而结论不变。
+\item $Y^*$ 可分的简化。若 $Y^*$ 可分，则 $f$ 自动几乎处处可分值，于是 (ii) 简化为"$f$ 弱$^*$可测"；这正是 $Y^*$ 可分时 $\mu$-可测、弱可测与弱$^*$可测三者一致的情形（见\cref{proposition:ch04-弱星等价}与\cref{theorem:ch04-Pettis}）。
+\item 边界。$Y$ 不必可分，也不必自反；$\mu$ 必须 $\sigma$-有限（与\cref{theorem:ch04-Pettis}相同，用于\cref{proposition:ch04-mu逐点极限}）。若去掉几乎处处可分值假设，则 (ii)$\Rightarrow$(i) 失效：取 $Y=\ell^1$（从而 $Y^*=\ell^\infty$）、$X=\mathbb{N}$、$\mathcal{A}=2^{\mathbb{N}}$、$\mu$ 为计数测度、$f(n)\triangleq e_n\in\ell^\infty$，则 $f$ 弱$^*$可测（因 $\mathcal{A}=2^{\mathbb{N}}$）而非 $\mu$-可测（见\cref{remark:ch04-可推mu可动机}(iii)）。
+\end{enumerate}
 \end{remark}
-
-
-
 
 \end{document}

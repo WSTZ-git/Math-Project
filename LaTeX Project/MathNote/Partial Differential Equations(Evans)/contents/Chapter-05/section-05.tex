@@ -1,439 +1,514 @@
-\documentclass[../../main.tex]{subfiles}
-\graphicspath{{\subfix{../../image/}}}
-
-\begin{document}
-
 \section{迹}\label{section:ch08-变分法}
 
-下面我们讨论在 $\partial U$ 为 $C^{1}$ 的假设下，能否为函数 $u\in W^{1,p}(U)$ 沿 $\partial U$ 赋予“边界值”。若 $u\in C(\overline{U})$，则 $u$ 显然在通常意义下在 $\partial U$ 上有值。问题在于，典型的 $u\in W^{1,p}(U)$ 一般并不连续，更糟的是它只在 $U$ 中几乎处处有定义。由于 $\partial U$ 具有 $n$ 维 Lebesgue 零测度，我们无法直接给“$u$ 限制在 $\partial U$ 上”这一表达式以任何意义。迹算子的概念解决了这一问题。
+在\cref{section:ch05-延拓}中，我们用反射与单位分解把 $W^{k,p}(U)$ 中的函数延拓到 $\mathbb{R}^{n}$。现在讨论对偶的问题：$u\in W^{k,p}(U)$ 在边界 $\partial U$ 上留下什么？若 $u\in C(\overline{U})$，则 $u$ 在 $\partial U$ 上有通常意义的边值；但 $W^{k,p}(U)$ 的元素只是 $\mathcal{L}^{n}$ 意义下的等价类，而 $\mathcal{L}^{n}(\partial U)=0$，所以“$u$ 限制在 $\partial U$ 上”一般没有逐点意义。迹算子把“边值”重新定义为 $u$ 的弱导数在边界上留下的 $L^{p}$ 函数。
 
-\begin{theorem}[$W^{k,p}$ 的迹与零迹刻画]\label{theorem:ch05-零迹函数-一般}
-设 $k\geqslant1$，$1\leqslant p<\infty$，$U\subseteq\mathbb{R}^{n}$ 是有界开集，$\partial U$ 为 $C^{k}$。则存在有界线性算子
+本节从头证明一般 $k$ 的迹定理，不引用 $k=1$ 的情形。
+
+\begin{theorem}[$W^{k,p}$ 的迹与零迹刻画]\label{theorem:ch05-零迹函数-一般}\label{theorem:ch05-零迹函数}
+设 $k\geqslant1$，$1\leqslant p\leqslant\infty$，$U\subseteq\mathbb{R}^{n}$ 为有界开集，$\partial U$ 为 $C^{k}$。在 $\partial U$ 上取曲面测度 $\sigma=\mathcal{H}^{n-1}\llcorner\partial U$，并在
 \begin{align*}
-T_{k}:W^{k,p}(U)\longrightarrow\prod_{|\alpha|\leqslant k-1}L^{p}(\partial U),
+\prod_{|\alpha|\leqslant k-1}L^{p}(\partial U;\sigma)
 \end{align*}
-使得：
-\begin{enumerate}[(i)]
+上取范数
+\begin{align*}
+\|(f_{\alpha})_{|\alpha|\leqslant k-1}\|
+\triangleq
+\begin{cases}
+\left(\sum_{|\alpha|\leqslant k-1}\|f_{\alpha}\|_{L^{p}(\partial U;\sigma)}^{p}\right)^{\frac{1}{p}}, & 1\leqslant p<\infty,\\[2mm]
+\max_{|\alpha|\leqslant k-1}\|f_{\alpha}\|_{L^{\infty}(\partial U;\sigma)}, & p=\infty.
+\end{cases}
+\end{align*}
+则存在有界线性算子
+\begin{align*}
+T_{k}:W^{k,p}(U)\longrightarrow
+\prod_{|\alpha|\leqslant k-1}L^{p}(\partial U;\sigma),
+\end{align*}
+使得
+\begin{enumerate}[(1)]
 \item 若 $u\in C^{k}(\overline{U})$，则
 \begin{align*}
 T_{k}u=\bigl(D^{\alpha}u|_{\partial U}\bigr)_{|\alpha|\leqslant k-1};
 \end{align*}
 \item 存在只依赖于 $n,k,p,U$ 的常数 $C$，使得对每个 $u\in W^{k,p}(U)$，
 \begin{align}
-\|T_{k}u\|_{\prod_{|\alpha|\leqslant k-1}L^{p}(\partial U)}
-\leqslant C\|u\|_{W^{k,p}(U)};
+\|T_{k}u\|
+\leqslant
+C\|u\|_{W^{k,p}(U)};
 \label{eq:ch05-一般零迹-迹估计}
 \end{align}
-\item
+\item 若 $1\leqslant p<\infty$，则
 \begin{align}
-W^{k,p}_{0}(U)=\left\{u\in W^{k,p}(U):T_{k}u=0\right\}.
+W^{k,p}_{0}(U)
+=
+\left\{
+u\in W^{k,p}(U):T_{k}u=0
+\right\}.
 \label{eq:ch05-一般零迹-核}
 \end{align}
 \end{enumerate}
 \end{theorem}
+
+当 $p=\infty$ 时，结论 (1)(2) 仍成立，但 (3) 不成立；反例见\cref{remark:ch05-pinfty零迹反例}。
+
 \begin{proof}
-\noindent$\mathbf{Step}\bm{1}$.{\heiti 在标准半空间上证明 $W^{1,p}$ 的迹估计.}
+以下先设 $1\leqslant p<\infty$，证明 (1)(2)(3)；$p=\infty$ 时 (1)(2) 的证明放在 Step 9。
 
-记 $\mathbb{R}^{n}_{+}=\{x=(x',x_n):x'\in\mathbb{R}^{n-1},\,x_n>0\}$，$\partial\mathbb{R}^{n}_{+}=\mathbb{R}^{n-1}=\{x_n=0\}$。
+\noindent$\mathbf{Step}\mathbf{1}.${\heiti 半空间上的基本迹估计.}
 
-设 $g\in C^{1}(\overline{\mathbb{R}^{n}_{+}})\cap W^{1,p}(\mathbb{R}^{n}_{+})$，且 $\operatorname{spt}g$ 紧含于 $\overline{\mathbb{R}^{n}_{+}}$。对任意 $x=(x',x_n)\in\mathbb{R}^{n}_{+}$，由微积分基本定理，
+设 $g\in C^{1}_{c}(\overline{\mathbb{R}^{n}_{+}})$。对 $x=(x',x_{n})\in\mathbb{R}^{n}_{+}$，由微积分基本定理，
 \begin{align*}
-g(x',0)=g(x',x_n)-\int_{0}^{x_n}\partial_n g(x',t)\,\mathrm{d}t.
+g(x',0)=g(x',x_{n})-\int_{0}^{x_{n}}\partial_{n}g(x',t)\,\mathrm{d}t.
 \end{align*}
-于是由 $(a+b)^{p}\leqslant2^{p-1}(a^{p}+b^{p})$ 及 Hölder 不等式，
+由 $(a+b)^{p}\leqslant 2^{p-1}(a^{p}+b^{p})$ 与 Hölder 不等式，
 \begin{align}
 |g(x',0)|^{p}
-&\leqslant2^{p-1}\left(|g(x',x_n)|^{p}+\left|\int_{0}^{x_n}\partial_n g(x',t)\,\mathrm{d}t\right|^{p}\right)
+&\leqslant 2^{p-1}\left(|g(x',x_{n})|^{p}
++\left|\int_{0}^{x_{n}}\partial_{n}g(x',t)\,\mathrm{d}t\right|^{p}\right)
 \notag\\
-&\leqslant2^{p-1}\left(|g(x',x_n)|^{p}+x_n^{p-1}\int_{0}^{x_n}|\partial_n g(x',t)|^{p}\,\mathrm{d}t\right).
-\label{eq:ch05-一般零迹-半空间逐点}
+&\leqslant 2^{p-1}\left(|g(x',x_{n})|^{p}
++x_{n}^{p-1}\int_{0}^{x_{n}}|\partial_{n}g(x',t)|^{p}\,\mathrm{d}t\right).
+\label{eq:ch05-证明-半空间逐点}
 \end{align}
-对 $x'\in\mathbb{R}^{n-1}$ 积分，得
-\begin{align}
-\int_{\mathbb{R}^{n-1}}|g(x',0)|^{p}\,\mathrm{d}x'
-&\leqslant2^{p-1}\int_{\mathbb{R}^{n-1}}|g(x',x_n)|^{p}\,\mathrm{d}x'
-\notag\\
-&\qquad+2^{p-1}x_n^{p-1}\int_{0}^{x_n}\int_{\mathbb{R}^{n-1}}|\partial_n g(x',t)|^{p}\,\mathrm{d}x'\,\mathrm{d}t.
-\label{eq:ch05-一般零迹-半空间积分}
-\end{align}
-将 \eqref{eq:ch05-一般零迹-半空间积分} 对 $x_n\in(0,1)$ 积分，得
+对 $x'\in\mathbb{R}^{n-1}$ 积分，再对 $x_{n}\in(0,1)$ 积分，由 Fubini 定理，
 \begin{align*}
 \int_{\mathbb{R}^{n-1}}|g(x',0)|^{p}\,\mathrm{d}x'
-&\leqslant2^{p-1}\int_{0}^{1}\int_{\mathbb{R}^{n-1}}|g(x',x_n)|^{p}\,\mathrm{d}x'\,\mathrm{d}x_n\\
-&\qquad+2^{p-1}\int_{0}^{1}x_n^{p-1}\int_{0}^{x_n}\int_{\mathbb{R}^{n-1}}|\partial_n g(x',t)|^{p}\,\mathrm{d}x'\,\mathrm{d}t\,\mathrm{d}x_n.
+&\leqslant
+2^{p-1}\int_{\mathbb{R}^{n}_{+}}|g|^{p}\,\mathrm{d}x
++2^{p-1}\int_{0}^{1}x_{n}^{p-1}
+\int_{0}^{x_{n}}\int_{\mathbb{R}^{n-1}}
+|\partial_{n}g(x',t)|^{p}\,\mathrm{d}x'\,\mathrm{d}t\,\mathrm{d}x_{n}\\
+&\leqslant
+2^{p-1}\int_{\mathbb{R}^{n}_{+}}|g|^{p}\,\mathrm{d}x
++\frac{2^{p-1}}{p}\int_{\mathbb{R}^{n}_{+}}|\partial_{n}g|^{p}\,\mathrm{d}x\\
+&\leqslant C(p)\|g\|_{W^{1,p}(\mathbb{R}^{n}_{+})}^{p},
 \end{align*}
-对第二个积分交换积分次序：
+其中用了
 \begin{align*}
-\int_{0}^{1}x_n^{p-1}\int_{0}^{x_n}|\partial_n g(x',t)|^{p}\,\mathrm{d}t\,\mathrm{d}x_n
-&=\int_{0}^{1}\left(\int_{t}^{1}x_n^{p-1}\,\mathrm{d}x_n\right)|\partial_n g(x',t)|^{p}\,\mathrm{d}t\\
-&\leqslant\frac{1}{p}\int_{0}^{1}|\partial_n g(x',t)|^{p}\,\mathrm{d}t.
+\int_{0}^{1}x_{n}^{p-1}\int_{0}^{x_{n}}h(t)\,\mathrm{d}t\,\mathrm{d}x_{n}
+=\int_{0}^{1}h(t)\int_{t}^{1}x_{n}^{p-1}\,\mathrm{d}x_{n}\,\mathrm{d}t
+\leqslant\frac{1}{p}\int_{0}^{1}h(t)\,\mathrm{d}t.
 \end{align*}
 于是
 \begin{align}
-\int_{\mathbb{R}^{n-1}}|g(x',0)|^{p}\,\mathrm{d}x'
-\leqslant C\left(\int_{\mathbb{R}^{n}_{+}}|g|^{p}\,\mathrm{d}x+\int_{\mathbb{R}^{n}_{+}}|Dg|^{p}\,\mathrm{d}x\right)
-=C\|g\|_{W^{1,p}(\mathbb{R}^{n}_{+})}^{p},
-\label{eq:ch05-一般零迹-半空间迹估计}
+\|g(\cdot,0)\|_{L^{p}(\mathbb{R}^{n-1})}
+\leqslant C\|g\|_{W^{1,p}(\mathbb{R}^{n}_{+})}.
+\label{eq:ch05-证明-半空间估计}
 \end{align}
-其中 $C$ 只依赖于 $p$。这就证明了半空间上的迹估计。
 
-\noindent$\mathbf{Step}\bm{2}$.{\heiti 在 $C^{k}(\overline{U})$ 上定义 $T_{k}$ 并建立估计.}
+\noindent$\mathbf{Step}\mathbf{2}.${\heiti 对 $C^{k}(\overline{U})$ 建立迹估计.}
 
-由 $\partial U$ 紧及\cref{definition:appC-Ck边界}，存在有限个开集 $W_{i}$（$i=1,\cdots,N$）覆盖 $\partial U$，以及 $C^{k}$ 微分同胚
+取有界开集 $V$ 使 $U\subset\subset V$。由\cref{lemma:ch05-边界拉直覆盖}，存在 $N\in\mathbb{N}$，开集 $W_{0},W_{1},\cdots,W_{N}$，半径 $r_{i}>0$，以及 $C^{k}$ 微分同胚
 \begin{align*}
-\Phi_{i}:W_{i}\to B(0,r_{i}),\qquad\Psi_{i}=\Phi_{i}^{-1},
+\Phi_{i}:W_{i}\longrightarrow B(0,r_{i}),
+\qquad
+\Psi_{i}=\Phi_{i}^{-1},
+\qquad i=1,\cdots,N,
 \end{align*}
 使得
-\begin{align}
-\Phi_{i}(W_{i}\cap U)=B^{+}(0,r_{i}),\qquad
-\Phi_{i}(W_{i}\cap\partial U)=B(0,r_{i})\cap\{x_n=0\},
-\label{eq:ch05-一般零迹-拉直}
-\end{align}
-其中 $B^{+}(0,r_{i})=B(0,r_{i})\cap\{x_n>0\}$。再取 $W_{0}\subset\subset U$ 使得
-\begin{align}
-\overline{U}\subseteq\bigcup_{i=0}^{N}W_{i}.
-\label{eq:ch05-一般零迹-覆盖}
-\end{align}
-由\hyperref[corollary:紧集上的光滑单位分解定理]{紧集上的光滑单位分解定理}，存在 $\zeta_{i}\in C_{c}^{\infty}(W_{i})$，使得
-\begin{align}
-0\leqslant\zeta_{i}\leqslant1,\qquad
-\sum_{i=0}^{N}\zeta_{i}(x)=1\quad(x\in\overline{U}).
-\label{eq:ch05-一般零迹-单位分解}
-\end{align}
+\begin{align*}
+W_{0}\subset\subset U,
+\qquad
+\overline{U}\subseteq\bigcup_{i=0}^{N}W_{i},
+\end{align*}
+并且
+\begin{align*}
+\Phi_{i}(W_{i}\cap U)=B^{+}(0,r_{i}),
+\qquad
+\Phi_{i}(W_{i}\cap\partial U)=B^{0}(0,r_{i}),
+\qquad
+|\det D\Phi_{i}|=|\det D\Psi_{i}|=1.
+\end{align*}
+取从属于覆盖 $\{W_{i}\}_{i=0}^{N}$ 的光滑单位分解 $\{\zeta_{i}\}_{i=0}^{N}$，即
+\begin{align*}
+\zeta_{i}\in C^{\infty}_{c}(W_{i}),
+\qquad
+0\leqslant\zeta_{i}\leqslant1,
+\qquad
+\sum_{i=0}^{N}\zeta_{i}=1\quad\text{于 }\overline{U}.
+\end{align*}
 
-设 $u\in C^{k}(\overline{U})$，$|\alpha|\leqslant k-1$。定义
+设 $u\in C^{k}(\overline{U})$。对每个 $|\alpha|\leqslant k-1$，$D^{\alpha}u\in C^{1}(\overline{U})$。定义
 \begin{align}
 T_{k}u\triangleq\bigl(D^{\alpha}u|_{\partial U}\bigr)_{|\alpha|\leqslant k-1}.
-\label{eq:ch05-一般零迹-Tk定义}
+\label{eq:ch05-证明-Ck定义}
 \end{align}
-（这里 $D^{\alpha}u\in C^{1}(\overline{U})$，故 $D^{\alpha}u|_{\partial U}$ 是连续函数，从而属于 $L^{p}(\partial U)$。）
-
-下面估计 $\|T_{k}u\|$。由于 $\sum_{i=0}^{N}\zeta_{i}=1$ 于 $\overline{U}$，有
+由于 $\sum_{i=0}^{N}\zeta_{i}=1$ 于 $\overline{U}$，
 \begin{align*}
-D^{\alpha}u=\sum_{i=0}^{N}D^{\alpha}(\zeta_{i}u),
+D^{\alpha}u=\sum_{i=0}^{N}D^{\alpha}(\zeta_{i}u).
 \end{align*}
-故
-\begin{align}
-\|D^{\alpha}u\|_{L^{p}(\partial U)}^{p}
-\leqslant C\sum_{i=0}^{N}\|D^{\alpha}(\zeta_{i}u)\|_{L^{p}(\partial U\cap W_{i})}^{p}.
-\label{eq:ch05-一般零迹-分解估计}
-\end{align}
-对于 $i=0$，$\zeta_{0}u$ 的支集紧含于 $W_{0}\subset\subset U$，故 $D^{\alpha}(\zeta_{0}u)$ 在 $\partial U$ 的某邻域内为零，于是
-\begin{align}
-\|D^{\alpha}(\zeta_{0}u)\|_{L^{p}(\partial U\cap W_{0})}=0.
-\label{eq:ch05-一般零迹-i0迹}
-\end{align}
-
-对于 $i\geqslant1$，令
-\begin{align}
-g_{i}(y)\triangleq D^{\alpha}(\zeta_{i}u)(\Psi_{i}(y)),\qquad y\in B^{+}(0,r_{i}).
-\label{eq:ch05-一般零迹-gi}
-\end{align}
-由于 $\zeta_{i}u\in C^{k}(\overline{U})$，$|\alpha|\leqslant k-1$，故 $D^{\alpha}(\zeta_{i}u)\in C^{1}(\overline{U})$；又 $\Psi_{i}\in C^{k}$，故
+对 $i=0$，$\operatorname{spt}\zeta_{0}\subset\subset W_{0}\subset\subset U$，故 $D^{\alpha}(\zeta_{0}u)=0$ 于 $\partial U$ 的一个邻域内，从而
 \begin{align*}
-g_{i}\in C^{1}(\overline{B^{+}(0,r_{i})}),\qquad
-\operatorname{spt}g_{i}\ \text{紧含于}\ \overline{B^{+}(0,r_{i})}.
+\|D^{\alpha}(\zeta_{0}u)\|_{L^{p}(\partial U;\sigma)}=0.
 \end{align*}
-对 $g_{i}$ 应用 $\mathbf{Step}\bm{1}$ 的半空间迹估计（把 $\mathbb{R}^{n}_{+}$ 换为 $B^{+}(0,r_{i})$，这只需在估计中再乘一个截断函数，不改变结论），得到
+
+固定 $i\in\{1,\cdots,N\}$ 与 $|\alpha|\leqslant k-1$。令
+\begin{align*}
+g_{i,\alpha}\triangleq\bigl(D^{\alpha}(\zeta_{i}u)\bigr)\circ\Psi_{i}
+\qquad\text{于 }B^{+}(0,r_{i}),
+\end{align*}
+并零延拓到 $\mathbb{R}^{n}_{+}$。由于 $\operatorname{spt}\zeta_{i}\subset\subset W_{i}$，有 $g_{i,\alpha}\in C^{1}_{c}(\overline{\mathbb{R}^{n}_{+}})$。由 \eqref{eq:ch05-证明-半空间估计}，
 \begin{align}
-\int_{B(0,r_{i})\cap\{y_n=0\}}|g_{i}(y',0)|^{p}\,\mathrm{d}y'
-\leqslant C\|g_{i}\|_{W^{1,p}(B^{+}(0,r_{i}))}^{p}.
-\label{eq:ch05-一般零迹-gi估计}
+\int_{B^{0}(0,r_{i})}|g_{i,\alpha}(y',0)|^{p}\,\mathrm{d}y'
+\leqslant
+C\|g_{i,\alpha}\|_{W^{1,p}(B^{+}(0,r_{i}))}^{p}.
+\label{eq:ch05-证明-局部半空间}
 \end{align}
-另一方面，变量替换 $x=\Psi_{i}(y)$ 给出
+曲面测度的变量替换公式给出常数 $C_{i}\geqslant1$，使得
 \begin{align}
-\int_{B(0,r_{i})\cap\{y_n=0\}}|g_{i}(y',0)|^{p}\,\mathrm{d}y'
-&=\int_{W_{i}\cap\partial U}|D^{\alpha}(\zeta_{i}u)(x)|^{p}J_{i}(x)\,\mathrm{d}S_{x},
-\label{eq:ch05-一般零迹-曲面元}
-\end{align}
-其中 $J_{i}$ 是曲面测度的 Jacobi 因子。由于 $\partial U$ 紧且 $\Phi_{i}$ 是 $C^{1}$ 微分同胚，$J_{i}$ 在 $W_{i}\cap\partial U$ 上有正的上、下界。故存在 $C_{i}>0$，使得
-\begin{align}
-\|D^{\alpha}(\zeta_{i}u)\|_{L^{p}(\partial U\cap W_{i})}^{p}
-\leqslant C_{i}\int_{B(0,r_{i})\cap\{y_n=0\}}|g_{i}(y',0)|^{p}\,\mathrm{d}y'.
-\label{eq:ch05-一般零迹-曲面比较}
+\int_{\partial U\cap W_{i}}|D^{\alpha}(\zeta_{i}u)|^{p}\,\mathrm{d}\sigma
+\leqslant
+C_{i}\int_{B^{0}(0,r_{i})}|g_{i,\alpha}(y',0)|^{p}\,\mathrm{d}y'.
+\label{eq:ch05-证明-局部边界}
 \end{align}
 又由\cref{lemma:ch05-复合Wkp}（取 $k=1$），
 \begin{align}
-\|g_{i}\|_{W^{1,p}(B^{+}(0,r_{i}))}
-\leqslant C\|D^{\alpha}(\zeta_{i}u)\|_{W^{1,p}(W_{i}\cap U)}
-\leqslant C\|u\|_{W^{k,p}(U)}.
-\label{eq:ch05-一般零迹-gi范数}
+\|g_{i,\alpha}\|_{W^{1,p}(B^{+}(0,r_{i}))}
+\leqslant
+C_{i}\|D^{\alpha}(\zeta_{i}u)\|_{W^{1,p}(U\cap W_{i})}.
+\label{eq:ch05-证明-局部复合}
 \end{align}
-结合 \eqref{eq:ch05-一般零迹-gi估计}--\eqref{eq:ch05-一般零迹-gi范数}，
+合并 \eqref{eq:ch05-证明-局部半空间}--\eqref{eq:ch05-证明-局部复合}，得
 \begin{align}
-\|D^{\alpha}(\zeta_{i}u)\|_{L^{p}(\partial U\cap W_{i})}
+\int_{\partial U\cap W_{i}}|D^{\alpha}(\zeta_{i}u)|^{p}\,\mathrm{d}\sigma
+\leqslant
+C_{i}\|D^{\alpha}(\zeta_{i}u)\|_{W^{1,p}(U\cap W_{i})}^{p}.
+\label{eq:ch05-证明-局部估计}
+\end{align}
+
+由凸性不等式与 \eqref{eq:ch05-证明-局部估计}，
+\begin{align*}
+\|D^{\alpha}u\|_{L^{p}(\partial U;\sigma)}^{p}
+&=\int_{\partial U}\left|\sum_{i=0}^{N}D^{\alpha}(\zeta_{i}u)\right|^{p}\mathrm{d}\sigma\\
+&\leqslant (N+1)^{p-1}\sum_{i=0}^{N}\int_{\partial U\cap W_{i}}|D^{\alpha}(\zeta_{i}u)|^{p}\,\mathrm{d}\sigma\\
+&\leqslant C\sum_{i=0}^{N}\|D^{\alpha}(\zeta_{i}u)\|_{W^{1,p}(U\cap W_{i})}^{p}.
+\end{align*}
+由 Leibniz 公式，$|\alpha|\leqslant k-1$ 给出
+\begin{align*}
+\|D^{\alpha}(\zeta_{i}u)\|_{W^{1,p}(U\cap W_{i})}
 \leqslant C\|u\|_{W^{k,p}(U)}.
-\label{eq:ch05-一般零迹-zi迹估计}
-\end{align}
-将 \eqref{eq:ch05-一般零迹-i0迹} 与 \eqref{eq:ch05-一般零迹-zi迹估计} 代入 \eqref{eq:ch05-一般零迹-分解估计}，并对 $|\alpha|\leqslant k-1$ 求和，得到
+\end{align*}
+对 $|\alpha|\leqslant k-1$ 求和，即得
 \begin{align}
-\|T_{k}u\|_{\prod_{|\alpha|\leqslant k-1}L^{p}(\partial U)}
-\leqslant C\|u\|_{W^{k,p}(U)},\qquad u\in C^{k}(\overline{U}).
-\label{eq:ch05-一般零迹-Ck估计}
+\|T_{k}u\|
+\leqslant
+C\|u\|_{W^{k,p}(U)},
+\qquad u\in C^{k}(\overline{U}).
+\label{eq:ch05-证明-Ck估计}
 \end{align}
 
-\noindent$\mathbf{Step}\bm{3}$.{\heiti 用 $C^{\infty}(\overline{U})$ 逼近把 $T_{k}$ 延拓到 $W^{k,p}(U)$.}
+\noindent$\mathbf{Step}\mathbf{3}.${\heiti 用稠密性把 $T_{k}$ 延拓到 $W^{k,p}(U)$.}
 
-由\hyperref[theorem:ch05-直到边界光滑的函数整体逼近定理]{直到边界光滑的函数整体逼近定理}，$C^{\infty}(\overline{U})$ 在 $W^{k,p}(U)$ 中稠密。
-
-设 $u\in W^{k,p}(U)$。取 $u_{m}\in C^{\infty}(\overline{U})$，使得
+由\cref{theorem:ch05-直到边界光滑的函数整体逼近定理}，$C^{\infty}(\overline{U})$ 在 $W^{k,p}(U)$ 中稠密。设 $u\in W^{k,p}(U)$，取 $u_{m}\in C^{\infty}(\overline{U})$ 使 $u_{m}\to u$ 于 $W^{k,p}(U)$。由 \eqref{eq:ch05-证明-Ck估计}，
 \begin{align*}
-\|u_{m}-u\|_{W^{k,p}(U)}\longrightarrow0\quad(m\to\infty).
+\|T_{k}u_{m}-T_{k}u_{l}\|
+\leqslant C\|u_{m}-u_{l}\|_{W^{k,p}(U)}
+\longrightarrow0
+\qquad(m,l\to\infty).
 \end{align*}
-由 \eqref{eq:ch05-一般零迹-Ck估计}，
-\begin{align*}
-\|T_{k}u_{m}-T_{k}u_{l}\|_{\prod L^{p}(\partial U)}
-\leqslant C\|u_{m}-u_{l}\|_{W^{k,p}(U)}\longrightarrow0\quad(m,l\to\infty),
-\end{align*}
-故 $\{T_{k}u_{m}\}$ 是 $\prod_{|\alpha|\leqslant k-1}L^{p}(\partial U)$ 中的 Cauchy 列。由 $L^{p}(\partial U)$ 的完备性，存在极限，定义
+故 $\{T_{k}u_{m}\}$ 在 $\prod_{|\alpha|\leqslant k-1}L^{p}(\partial U;\sigma)$ 中收敛。定义
 \begin{align}
 T_{k}u\triangleq\lim_{m\to\infty}T_{k}u_{m}.
-\label{eq:ch05-一般零迹-Tk延拓}
+\label{eq:ch05-证明-Tk延拓}
 \end{align}
-
-下证 $T_{k}u$ 与逼近序列无关。设 $v_{m}\in C^{\infty}(\overline{U})$ 也满足 $\|v_{m}-u\|_{W^{k,p}(U)}\to0$。则
+若 $v_{m}\in C^{\infty}(\overline{U})$ 也满足 $v_{m}\to u$，则由 \eqref{eq:ch05-证明-Ck估计}，
 \begin{align*}
-\|T_{k}u_{m}-T_{k}v_{m}\|_{\prod L^{p}(\partial U)}
+\|T_{k}u_{m}-T_{k}v_{m}\|
 \leqslant C\|u_{m}-v_{m}\|_{W^{k,p}(U)}
-\leqslant C\left(\|u_{m}-u\|_{W^{k,p}(U)}+\|u-v_{m}\|_{W^{k,p}(U)}\right)\longrightarrow0,
+\longrightarrow0,
 \end{align*}
-故两个极限相同。于是 $T_{k}$ 在 $W^{k,p}(U)$ 上良定义。
+故 $T_{k}u$ 与逼近序列的选取无关。由 $T_{k}$ 在 $C^{\infty}(\overline{U})$ 上的线性性与极限的线性性，$T_{k}$ 线性；在 \eqref{eq:ch05-证明-Ck估计} 中取极限，得 \eqref{eq:ch05-一般零迹-迹估计}。
 
-由 \eqref{eq:ch05-一般零迹-Ck估计} 取极限，得 \eqref{eq:ch05-一般零迹-迹估计}。由 $T_{k}$ 在 $C^{\infty}(\overline{U})$ 上的线性性与极限的线性性，$T_{k}$ 线性。若 $u\in C^{k}(\overline{U})$，取 $u_{m}=u$（或由 $C^{k}(\overline{U})$ 中的函数可用 $C^{\infty}(\overline{U})$ 函数在 $W^{k,p}$ 中逼近，且 $T_{k}$ 连续），即得 (i)。这就完成了迹算子 $T_{k}$ 的构造与性质 (i)(ii)。
-
-\noindent$\mathbf{Step}\bm{4}$.{\heiti 证明半空间上带零迹函数的 $L^{p}$ 估计.}
-
-设 $g\in W^{1,p}(\mathbb{R}^{n}_{+})$，$\operatorname{spt}g$ 紧含于 $\overline{\mathbb{R}^{n}_{+}}$，且其迹 $Tg=0$（这里 $T$ 是 $\mathbf{Step}\bm{1}$--$\bm{3}$ 的构造在 $k=1$、$U=\mathbb{R}^{n}_{+}$ 的半空间版本；由于 $\operatorname{spt}g$ 紧，可用 $\mathbf{Step}\bm{1}$ 的估计与 $C_{c}^{\infty}(\overline{\mathbb{R}^{n}_{+}})$ 逼近定义）。我们证明：对几乎处处的 $x_n>0$，
+下面证明 $T_{k}$ 在 $C^{k}(\overline{U})$ 上与逐点迹一致。设 $u\in C^{k}(\overline{U})$，取 $u_{m}\in C^{\infty}(\overline{U})$ 使 $u_{m}\to u$ 于 $W^{k,p}(U)$。由 \eqref{eq:ch05-证明-Ck估计} 应用于 $u_{m}-u$，
+\begin{align*}
+\left\|\bigl(D^{\alpha}u_{m}|_{\partial U}\bigr)_{|\alpha|\leqslant k-1}
+-\bigl(D^{\alpha}u|_{\partial U}\bigr)_{|\alpha|\leqslant k-1}\right\|
+\leqslant C\|u_{m}-u\|_{W^{k,p}(U)}
+\longrightarrow0.
+\end{align*}
+而由 \eqref{eq:ch05-证明-Tk延拓}，
+\begin{align*}
+T_{k}u=\lim_{m\to\infty}T_{k}u_{m}
+=\lim_{m\to\infty}\bigl(D^{\alpha}u_{m}|_{\partial U}\bigr)_{|\alpha|\leqslant k-1}.
+\end{align*}
+由极限的唯一性，
 \begin{align}
-\int_{\mathbb{R}^{n-1}}|g(x',x_n)|^{p}\,\mathrm{d}x'
-\leqslant C x_n^{p-1}\int_{0}^{x_n}\int_{\mathbb{R}^{n-1}}|Dg(x',t)|^{p}\,\mathrm{d}x'\,\mathrm{d}t.
-\label{eq:ch05-一般零迹-零迹估计}
+T_{k}u=\bigl(D^{\alpha}u|_{\partial U}\bigr)_{|\alpha|\leqslant k-1}.
+\label{eq:ch05-证明-Ck一致}
+\end{align}
+这就证明了 (1)。
+
+\noindent$\mathbf{Step}\mathbf{4}.${\heiti Gauss--Green 公式与半空间零延拓.}
+
+记 $T\triangleq T_{1}$，即 $k=1$ 时由上面构造的迹算子。先对 $u\in C^{1}(\overline{U})$ 与 $\phi\in C^{1}(\mathbb{R}^{n};\mathbb{R}^{n})$ 用经典散度定理：
+\begin{align}
+\int_{U}u\operatorname{div}\phi\,\mathrm{d}x
+=-\int_{U}Du\cdot\phi\,\mathrm{d}x
++\int_{\partial U}(\phi\cdot\nu)Tu\,\mathrm{d}\sigma.
+\label{eq:ch05-证明-GG光滑}
+\end{align}
+现设 $u\in W^{1,p}(U)$。取 $u_{m}\in C^{\infty}(\overline{U})$ 使 $u_{m}\to u$ 于 $W^{1,p}(U)$。对 $u_{m}$ 用 \eqref{eq:ch05-证明-GG光滑}，并令 $m\to\infty$。由于 $Tu_{m}\to Tu$ 于 $L^{p}(\partial U;\sigma)$，且 $\operatorname{div}\phi\in L^{p'}(U)$、$\phi\in L^{p'}(U;\mathbb{R}^{n})$、$\phi\cdot\nu\in L^{p'}(\partial U;\sigma)$（$p=1$ 时取 $p'=\infty$），得
+\begin{align}
+\int_{U}u\operatorname{div}\phi\,\mathrm{d}x
+=-\int_{U}Du\cdot\phi\,\mathrm{d}x
++\int_{\partial U}(\phi\cdot\nu)Tu\,\mathrm{d}\sigma.
+\label{eq:ch05-证明-GG}
 \end{align}
 
-取 $g_{m}\in C_{c}^{\infty}(\overline{\mathbb{R}^{n}_{+}})$，使得
+下面证明半空间零延拓。设 $w\in W^{1,p}(\mathbb{R}^{n}_{+})$ 且 $Tw=0$。定义
 \begin{align*}
-g_{m}\longrightarrow g\quad\text{于}\ W^{1,p}(\mathbb{R}^{n}_{+}),\qquad
-g_{m}(\cdot,0)\longrightarrow Tg=0\quad\text{于}\ L^{p}(\mathbb{R}^{n-1}).
+W(x)\triangleq
+\begin{cases}
+w(x), & x_{n}>0,\\
+0, & x_{n}\leqslant0.
+\end{cases}
 \end{align*}
-（存在性：先由 $C^{\infty}(\overline{\mathbb{R}^{n}_{+}})$ 在 $W^{1,p}$ 中稠密取逼近列，再乘以截断函数；迹的收敛由 $\mathbf{Step}\bm{1}$ 的估计得到。）对 $g_{m}$ 用 \eqref{eq:ch05-一般零迹-半空间逐点}：
+任取 $\phi\in C^{\infty}_{c}(\mathbb{R}^{n})$ 与 $i\in\{1,\cdots,n\}$。对 $U_{R}=B(0,R)\cap\mathbb{R}^{n}_{+}$ 用 \eqref{eq:ch05-证明-GG}，其中 $R$ 充分大使得 $\operatorname{spt}\phi\subset B(0,R)$。由于 $\phi=0$ 于 $\partial B(0,R)$，曲边界上的积分消失；平边界上的项含 $Tw=0$，故
 \begin{align*}
-|g_{m}(x',x_n)|^{p}
-\leqslant2^{p-1}\left(|g_{m}(x',0)|^{p}+x_n^{p-1}\int_{0}^{x_n}|\partial_n g_{m}(x',t)|^{p}\,\mathrm{d}t\right).
-\end{align*}
-对 $x'$ 积分：
-\begin{align*}
-\int_{\mathbb{R}^{n-1}}|g_{m}(x',x_n)|^{p}\,\mathrm{d}x'
-&\leqslant2^{p-1}\int_{\mathbb{R}^{n-1}}|g_{m}(x',0)|^{p}\,\mathrm{d}x'\\
-&\qquad+2^{p-1}x_n^{p-1}\int_{0}^{x_n}\int_{\mathbb{R}^{n-1}}|\partial_n g_{m}(x',t)|^{p}\,\mathrm{d}x'\,\mathrm{d}t.
-\end{align*}
-令 $m\to\infty$。左端由 $g_{m}\to g$ 于 $L^{p}(\mathbb{R}^{n}_{+})$ 及\hyperref[Real Analysis-theorem:实变函数-Fubini定理]{Fubini定理}（取子列几乎处处收敛）收敛到左端；右端第一项由 $g_{m}(\cdot,0)\to0$ 于 $L^{p}(\mathbb{R}^{n-1})$ 趋于 $0$，第二项由 $\partial_n g_{m}\to\partial_n g$ 于 $L^{p}$ 收敛到相应的积分。于是对几乎处处的 $x_n>0$，\eqref{eq:ch05-一般零迹-零迹估计} 成立。
-
-\noindent$\mathbf{Step}\bm{5}$.{\heiti 证明标准半空间上的零迹定理.}
-
-设
-\begin{align*}
-v\in W^{k,p}(\mathbb{R}^{n}_{+}),\qquad
-\operatorname{spt}v\ \text{紧含于}\ \overline{\mathbb{R}^{n}_{+}},
-\end{align*}
-且
-\begin{align}
-T(D^{\alpha}v)=0\quad\text{于}\ \partial\mathbb{R}^{n}_{+},\quad\forall\,|\alpha|\leqslant k-1.
-\label{eq:ch05-一般零迹-半空间假设}
-\end{align}
-证明 $v\in W^{k,p}_{0}(\mathbb{R}^{n}_{+})$。
-
-先证明高阶平坦性估计：对每个 $0\leqslant j\leqslant k-1$，每个 $|\alpha|=j$，以及几乎处处的 $x_n>0$，
-\begin{align}
-\int_{\mathbb{R}^{n-1}}|D^{\alpha}v(x',x_n)|^{p}\,\mathrm{d}x'
-\leqslant C x_n^{(k-j)p-1}\int_{0}^{x_n}\int_{\mathbb{R}^{n-1}}|D^{k}v(x',s)|^{p}\,\mathrm{d}x'\,\mathrm{d}s.
-\label{eq:ch05-一般零迹-平坦}
-\end{align}
-对 $j$ 作反向归纳。
-
-当 $j=k-1$ 时，对 $|\alpha|=k-1$，$D^{\alpha}v\in W^{1,p}(\mathbb{R}^{n}_{+})$，$\operatorname{spt}(D^{\alpha}v)$ 紧含于 $\overline{\mathbb{R}^{n}_{+}}$，且 $T(D^{\alpha}v)=0$。对 $g=D^{\alpha}v$ 应用 \eqref{eq:ch05-一般零迹-零迹估计}：
-\begin{align*}
-\int_{\mathbb{R}^{n-1}}|D^{\alpha}v(x',x_n)|^{p}\,\mathrm{d}x'
-\leqslant C x_n^{p-1}\int_{0}^{x_n}\int_{\mathbb{R}^{n-1}}|D(D^{\alpha}v)(x',s)|^{p}\,\mathrm{d}x'\,\mathrm{d}s.
-\end{align*}
-由于 $|D(D^{\alpha}v)|\leqslant|D^{k}v|$，即得 $j=k-1$ 的情形。
-
-设 \eqref{eq:ch05-一般零迹-平坦} 对一切 $|\beta|=j+1$ 成立（$0\leqslant j\leqslant k-2$）。固定 $|\alpha|=j$。同上，$D^{\alpha}v\in W^{1,p}(\mathbb{R}^{n}_{+})$，$\operatorname{spt}(D^{\alpha}v)$ 紧含于 $\overline{\mathbb{R}^{n}_{+}}$，$T(D^{\alpha}v)=0$。由 \eqref{eq:ch05-一般零迹-零迹估计}，
-\begin{align}
-\int_{\mathbb{R}^{n-1}}|D^{\alpha}v(x',x_n)|^{p}\,\mathrm{d}x'
-\leqslant C x_n^{p-1}\int_{0}^{x_n}\int_{\mathbb{R}^{n-1}}|D(D^{\alpha}v)(x',s)|^{p}\,\mathrm{d}x'\,\mathrm{d}s.
-\label{eq:ch05-一般零迹-归纳1}
-\end{align}
-而
-\begin{align*}
-|D(D^{\alpha}v)(x',s)|^{p}\leqslant C\sum_{i=1}^{n}|D^{\alpha+e_i}v(x',s)|^{p}.
-\end{align*}
-对每个 $|\alpha+e_i|=j+1$，由归纳假设，
-\begin{align}
-\int_{\mathbb{R}^{n-1}}|D^{\alpha+e_i}v(x',s)|^{p}\,\mathrm{d}x'
-\leqslant C s^{(k-j-1)p-1}\int_{0}^{s}\int_{\mathbb{R}^{n-1}}|D^{k}v(x',t)|^{p}\,\mathrm{d}x'\,\mathrm{d}t.
-\label{eq:ch05-一般零迹-归纳2}
-\end{align}
-因为 $s\leqslant x_n$，有
-\begin{align*}
-\int_{0}^{s}\int_{\mathbb{R}^{n-1}}|D^{k}v|^{p}
-\leqslant\int_{0}^{x_n}\int_{\mathbb{R}^{n-1}}|D^{k}v|^{p}.
-\end{align*}
-将 \eqref{eq:ch05-一般零迹-归纳2} 代入 \eqref{eq:ch05-一般零迹-归纳1}：
-\begin{align*}
-\int_{\mathbb{R}^{n-1}}|D^{\alpha}v(x',x_n)|^{p}\,\mathrm{d}x'
-&\leqslant C x_n^{p-1}\int_{0}^{x_n}s^{(k-j-1)p-1}\,\mathrm{d}s
-\int_{0}^{x_n}\int_{\mathbb{R}^{n-1}}|D^{k}v|^{p}\\
-&=C' x_n^{(k-j)p-1}\int_{0}^{x_n}\int_{\mathbb{R}^{n-1}}|D^{k}v(x',t)|^{p}\,\mathrm{d}x'\,\mathrm{d}t.
-\end{align*}
-反向归纳完成。
-
-下面作截断。取 $\zeta\in C^{\infty}(\mathbb{R})$，$0\leqslant\zeta\leqslant1$，$\zeta=1$ 于 $(-\infty,1]$，$\zeta=0$ 于 $[2,\infty)$。对 $\delta>0$ 令
-\begin{align*}
-\zeta_{\delta}(x)\triangleq\zeta\left(\frac{x_n}{\delta}\right),\qquad
-w_{\delta}\triangleq v(1-\zeta_{\delta}).
-\end{align*}
-则 $\operatorname{spt}w_{\delta}$ 紧含于 $\{x_n\geqslant\delta\}$，且 $w_{\delta}\in W^{k,p}(\mathbb{R}^{n}_{+})$。由\hyperref[theorem:ch05-弱导数性质-4]{Leibniz 公式}，对 $|\alpha|\leqslant k$，
-\begin{align}
-D^{\alpha}w_{\delta}
-=(1-\zeta_{\delta})D^{\alpha}v
--\sum_{\beta_n=1}^{|\alpha|}\binom{\alpha}{\beta_n e_n}\delta^{-\beta_n}\zeta^{(\beta_n)}\left(\frac{x_n}{\delta}\right)D^{\alpha-\beta_n e_n}v.
-\label{eq:ch05-一般零迹-截断导数}
-\end{align}
-第一项由\hyperref[Real Analysis-theorem:控制收敛定理]{控制收敛定理}（控制函数 $|D^{\alpha}v|\in L^{p}$）收敛到 $D^{\alpha}v$。对求和中的每一项，用 \eqref{eq:ch05-一般零迹-平坦}（取 $j=|\alpha|-\beta_n$）：
-\begin{align*}
-\int_{\mathbb{R}^{n-1}}|D^{\alpha-\beta_n e_n}v(x',x_n)|^{p}\,\mathrm{d}x'
-\leqslant C x_n^{(k-|\alpha|+\beta_n)p-1}\int_{0}^{x_n}\int_{\mathbb{R}^{n-1}}|D^{k}v|^{p}
-\leqslant C x_n^{\beta_n p-1}\int_{0}^{2\delta}\int_{\mathbb{R}^{n-1}}|D^{k}v|^{p}
-\end{align*}
-（因为 $x_n\leqslant2\delta$ 且 $k-|\alpha|+\beta_n\geqslant\beta_n$）。于是该项的 $L^{p}$ 范数的 $p$ 次方不超过
-\begin{align*}
-C\delta^{-p\beta_n}\left(\int_{\delta}^{2\delta}x_n^{\beta_n p-1}\,\mathrm{d}x_n\right)
-\int_{0}^{2\delta}\int_{\mathbb{R}^{n-1}}|D^{k}v|^{p}
-\leqslant C\int_{0}^{2\delta}\int_{\mathbb{R}^{n-1}}|D^{k}v|^{p}\longrightarrow0
-\end{align*}
-（$\delta\to0^{+}$），因为 $D^{k}v\in L^{p}$ 而带状区域测度趋于零。故
-\begin{align}
-D^{\alpha}w_{\delta}\longrightarrow D^{\alpha}v\quad\text{于}\ L^{p}(\mathbb{R}^{n}_{+}),\qquad|\alpha|\leqslant k.
-\label{eq:ch05-一般零迹-截断收敛}
-\end{align}
-又 $w_{\delta}\to v$ 于 $L^{p}$，故 $w_{\delta}\to v$ 于 $W^{k,p}(\mathbb{R}^{n}_{+})$。
-
-最后磨光。固定 $\delta>0$，取标准磨光子 $\eta_{\varepsilon}$，$0<\varepsilon<\delta/2$，令
-\begin{align*}
-w_{\delta,\varepsilon}\triangleq\eta_{\varepsilon}*w_{\delta}.
-\end{align*}
-由\hyperref[theorem:appC-光滑算子的性质]{磨光子的性质}，$w_{\delta,\varepsilon}\in C^{\infty}(\mathbb{R}^{n})$，
-\begin{align*}
-\operatorname{spt}w_{\delta,\varepsilon}\subseteq\operatorname{spt}w_{\delta}+\overline{B(0,\varepsilon)}
-\subseteq\{x_n\geqslant\delta-\varepsilon\}\subseteq\{x_n>0\},
-\end{align*}
-故 $w_{\delta,\varepsilon}\in C_{c}^{\infty}(\mathbb{R}^{n}_{+})$，且
-\begin{align*}
-w_{\delta,\varepsilon}\longrightarrow w_{\delta}\quad\text{于}\ W^{k,p}(\mathbb{R}^{n}_{+})\quad(\varepsilon\to0^{+}).
-\end{align*}
-取 $\delta_{m}\to0^{+}$、$\varepsilon_{m}<\delta_{m}/2$ 充分小，使得
-\begin{align*}
-\|w_{\delta_{m},\varepsilon_{m}}-v\|_{W^{k,p}(\mathbb{R}^{n}_{+})}\longrightarrow0.
-\end{align*}
-故 $v\in W^{k,p}_{0}(\mathbb{R}^{n}_{+})$。
-
-\noindent$\mathbf{Step}\bm{6}$.{\heiti 用拉直与单位分解证明一般区域的零迹刻画.}
-
-设 $u\in W^{k,p}(U)$ 满足
-\begin{align}
-T_{k}u=0.
-\label{eq:ch05-一般零迹-假设}
-\end{align}
-证明 $u\in W^{k,p}_{0}(U)$。沿用 $\mathbf{Step}\bm{2}$ 的覆盖 $\{W_{i}\}_{i=0}^{N}$、拉直映射 $\Phi_{i},\Psi_{i}$ 与单位分解 $\{\zeta_{i}\}_{i=0}^{N}$。
-
-对 $i=0$，$\zeta_{0}u$ 的支集紧含于 $W_{0}\subset\subset U$。取 $\delta>0$ 使 $\operatorname{spt}\zeta_{0}u+\overline{B(0,\delta)}\subset\subset U$，令 $(\zeta_{0}u)_{\varepsilon}=\eta_{\varepsilon}*(\zeta_{0}u)$，$0<\varepsilon<\delta$。则 $(\zeta_{0}u)_{\varepsilon}\in C_{c}^{\infty}(U)$，且由\hyperref[theorem:appC-光滑算子的性质]{磨光子的性质}知
-\begin{align*}
-(\zeta_{0}u)_{\varepsilon}\longrightarrow\zeta_{0}u\quad\text{于}\ W^{k,p}(U),
-\end{align*}
-故
-\begin{align}
-\zeta_{0}u\in W^{k,p}_{0}(U).
-\label{eq:ch05-一般零迹-i0}
-\end{align}
-
-对 $i=1,\cdots,N$，令
-\begin{align*}
-v_{i}(y)\triangleq(\zeta_{i}u)(\Psi_{i}(y)),\qquad y\in B^{+}(0,r_{i}).
-\end{align*}
-由\cref{lemma:ch05-复合Wkp}，$v_{i}\in W^{k,p}(B^{+}(0,r_{i}))$，$\operatorname{spt}v_{i}$ 紧含于 $\overline{B^{+}(0,r_{i})}$。将 $v_{i}$ 零延拓到 $\mathbb{R}^{n}_{+}$，仍记为 $v_{i}$。则
-\begin{align*}
-v_{i}\in W^{k,p}(\mathbb{R}^{n}_{+}),\qquad
-\operatorname{spt}v_{i}\ \text{紧含于}\ \overline{\mathbb{R}^{n}_{+}}.
-\end{align*}
-
-下面验证 $T(D^{\alpha}v_{i})=0$ 于 $\partial\mathbb{R}^{n}_{+}$。固定 $|\alpha|\leqslant k-1$。由\cref{lemma:ch05-复合Wkp} 的链式法则，在 $B^{+}(0,r_{i})$ 上
-\begin{align}
-D^{\alpha}v_{i}(y)
-=\sum_{1\leqslant|\beta|\leqslant|\alpha|}(D^{\beta}(\zeta_{i}u))(\Psi_{i}(y))\,Q_{\alpha\beta}(y),
-\label{eq:ch05-一般零迹-链式}
-\end{align}
-其中 $Q_{\alpha\beta}$ 是 $D^{\gamma}\Psi_{i}$（$1\leqslant|\gamma|\leqslant|\alpha|\leqslant k-1$）的多项式，故 $Q_{\alpha\beta}\in C^{0}(\overline{B^{+}(0,r_{i})})$。对 \eqref{eq:ch05-一般零迹-链式} 取迹。由于 $D^{\beta}(\zeta_{i}u)\in W^{1,p}(U)$ 有迹，而 $Q_{\alpha\beta}\circ\Phi_{i}$ 在 $\partial U\cap W_{i}$ 上连续，乘积的迹等于迹的乘积：
-\begin{align}
-T(D^{\alpha}v_{i})(y')
-=\sum_{1\leqslant|\beta|\leqslant|\alpha|}T\bigl((D^{\beta}(\zeta_{i}u))\circ\Psi_{i}\bigr)(y')\,Q_{\alpha\beta}(y',0).
-\label{eq:ch05-一般零迹-迹公式}
-\end{align}
-而
-\begin{align*}
-D^{\beta}(\zeta_{i}u)=\sum_{\gamma\leqslant\beta}\binom{\beta}{\gamma}D^{\gamma}\zeta_{i}\,D^{\beta-\gamma}u,
-\end{align*}
-其中 $D^{\gamma}\zeta_{i}$ 光滑，$D^{\beta-\gamma}u\in W^{1,p}(U)$，且 $|\beta-\gamma|\leqslant|\beta|\leqslant k-1$。由 \eqref{eq:ch05-一般零迹-假设}，
-\begin{align*}
-T(D^{\beta-\gamma}u)=0.
-\end{align*}
-由迹算子与光滑函数乘法的相容性（对光滑函数成立，再由 $T$ 的连续性与 $C^{\infty}(\overline U)$ 在 $W^{1,p}(U)$ 中的稠密性取极限），
-\begin{align*}
-T(D^{\beta}(\zeta_{i}u))
-=\sum_{\gamma\leqslant\beta}\binom{\beta}{\gamma}(D^{\gamma}\zeta_{i})|_{\partial U}\,T(D^{\beta-\gamma}u)=0.
+\int_{\mathbb{R}^{n}_{+}}w\partial_{i}\phi\,\mathrm{d}x
+=-\int_{\mathbb{R}^{n}_{+}}\partial_{i}w\,\phi\,\mathrm{d}x.
 \end{align*}
 于是
-\begin{align*}
-T\bigl((D^{\beta}(\zeta_{i}u))\circ\Psi_{i}\bigr)(y')
-=T(D^{\beta}(\zeta_{i}u))(\Psi_{i}(y',0))=0.
-\end{align*}
-代入 \eqref{eq:ch05-一般零迹-迹公式}，得 $T(D^{\alpha}v_{i})=0$。由 $|\alpha|$ 的任意性，$v_{i}$ 满足 \eqref{eq:ch05-一般零迹-半空间假设}。由 $\mathbf{Step}\bm{5}$，$v_{i}\in W^{k,p}_{0}(\mathbb{R}^{n}_{+})$，从而
 \begin{align}
-v_{i}\in W^{k,p}_{0}(B^{+}(0,r_{i})).
-\label{eq:ch05-一般零迹-vi}
+\int_{\mathbb{R}^{n}}W\partial_{i}\phi\,\mathrm{d}x
+=-\int_{\mathbb{R}^{n}}\widetilde{\partial_{i}w}\,\phi\,\mathrm{d}x,
+\label{eq:ch05-证明-零延拓}
+\end{align}
+其中 $\widetilde{\partial_{i}w}$ 表示 $\partial_{i}w$ 到 $\mathbb{R}^{n}$ 的零延拓。因此 $W\in W^{1,p}(\mathbb{R}^{n})$，且 $D_{i}W=\widetilde{\partial_{i}w}$。
+
+再由 $W^{m,p}_{0}$ 的定义，若 $w\in W^{m,p}_{0}(\mathbb{R}^{n}_{+})$，取 $w_{j}\in C^{\infty}_{c}(\mathbb{R}^{n}_{+})$ 使 $w_{j}\to w$ 于 $W^{m,p}(\mathbb{R}^{n}_{+})$，将 $w_{j}$ 零延拓到 $\mathbb{R}^{n}$ 后仍在 $C^{\infty}_{c}(\mathbb{R}^{n})$ 中收敛，故 $w$ 的零延拓属于 $W^{m,p}(\mathbb{R}^{n})$。
+
+\noindent$\mathbf{Step}\mathbf{5}.${\heiti 半空间上的高阶零迹.}
+
+半空间上的迹算子由同样的构造给出；由于 $v$ 具有紧支集，也可把 $v$ 截断后化到 $B(0,R)\cap\mathbb{R}^{n}_{+}$ 上，再令 $R\to\infty$。以下用 $T_{m}v=0$ 表示 $D^{\alpha}v$ 在 $x_{n}=0$ 上的迹对一切 $|\alpha|\leqslant m-1$ 为零。
+
+证明断言：设 $m\geqslant1$，$v\in W^{m,p}(\mathbb{R}^{n}_{+})$ 的支集紧含于 $\overline{\mathbb{R}^{n}_{+}}$，且 $T_{m}v=0$，则 $v\in W^{m,p}_{0}(\mathbb{R}^{n}_{+})$。
+
+对 $m$ 作归纳。当 $m=1$ 时，$T_{1}v=0$。由 Step 4 的零延拓结论，$v$ 的零延拓 $V$ 属于 $W^{1,p}(\mathbb{R}^{n})$。对 $\delta>0$ 令
+\begin{align*}
+v_{\delta}(x',x_{n})\triangleq V(x',x_{n}-\delta),
+\qquad x_{n}>0.
+\end{align*}
+由于 $V=0$ 于 $x_{n}\leqslant0$，$v_{\delta}$ 的支集含于 $\{x_{n}\geqslant\delta\}$，且 $v_{\delta}\to v$ 于 $W^{1,p}(\mathbb{R}^{n}_{+})$。将 $v_{\delta}$ 零延拓到 $\mathbb{R}^{n}$，取标准磨光子 $\eta_{\varepsilon}$，$0<\varepsilon<\delta/2$，令 $v_{\delta,\varepsilon}=\eta_{\varepsilon}*v_{\delta}$。则 $v_{\delta,\varepsilon}\in C^{\infty}_{c}(\mathbb{R}^{n}_{+})$，且 $v_{\delta,\varepsilon}\to v_{\delta}$ 于 $W^{1,p}(\mathbb{R}^{n}_{+})$。取 $\delta_{j}\to0^{+}$ 与 $0<\varepsilon_{j}<\delta_{j}/2$，使得 $\|v_{\delta_{j},\varepsilon_{j}}-v\|_{W^{1,p}}\to0$，故 $v\in W^{1,p}_{0}(\mathbb{R}^{n}_{+})$。
+
+设 $m\geqslant2$，并设断言对 $m-1$ 成立。由 $T_{m}v=0$ 知 $T_{1}v=0$，故由 Step 4，$V\in W^{1,p}(\mathbb{R}^{n})$ 且
+\begin{align}
+D_{i}V=\widetilde{D_{i}v}.
+\label{eq:ch05-证明-DiV}
+\end{align}
+对每个 $i\in\{1,\cdots,n\}$，$D_{i}v\in W^{m-1,p}(\mathbb{R}^{n}_{+})$，支集紧含于 $\overline{\mathbb{R}^{n}_{+}}$，且 $T_{m-1}(D_{i}v)=0$（因为 $T_{m-1}(D_{i}v)$ 的各分量是 $D^{\alpha+e_{i}}v$ 在边界上的迹，$|\alpha|\leqslant m-2$，都是 $T_{m}v$ 的分量）。由归纳假设，
+\begin{align}
+D_{i}v\in W^{m-1,p}_{0}(\mathbb{R}^{n}_{+}).
+\label{eq:ch05-证明-Div零迹}
+\end{align}
+由 Step 4 末段，$\widetilde{D_{i}v}\in W^{m-1,p}(\mathbb{R}^{n})$。结合 \eqref{eq:ch05-证明-DiV}，得 $D_{i}V\in W^{m-1,p}(\mathbb{R}^{n})$。由于 $i$ 任意，$V\in W^{m,p}(\mathbb{R}^{n})$。
+
+再对 $\delta>0$ 令 $v_{\delta}(x',x_{n})=V(x',x_{n}-\delta)$，$x_{n}>0$。同 $m=1$ 的情形，$v_{\delta}\to v$ 于 $W^{m,p}(\mathbb{R}^{n}_{+})$，磨光并取对角线子列即得 $v\in W^{m,p}_{0}(\mathbb{R}^{n}_{+})$。断言得证。
+
+\noindent$\mathbf{Step}\mathbf{6}.${\heiti 证明 $W^{k,p}_{0}(U)\subseteq\ker T_{k}$.}
+
+设 $u\in W^{k,p}_{0}(U)$。取 $u_{j}\in C^{\infty}_{c}(U)$ 使 $u_{j}\to u$ 于 $W^{k,p}(U)$。对每个 $|\alpha|\leqslant k-1$，$D^{\alpha}u_{j}\in C^{\infty}_{c}(U)$，且 $D^{\alpha}u_{j}\to D^{\alpha}u$ 于 $W^{1,p}(U)$。由于 $D^{\alpha}u_{j}$ 在 $\partial U$ 的一个邻域内为零，由 \eqref{eq:ch05-证明-Ck一致}，$T(D^{\alpha}u_{j})=0$。由 $T$ 的连续性，
+\begin{align*}
+T(D^{\alpha}u)=\lim_{j\to\infty}T(D^{\alpha}u_{j})=0.
+\end{align*}
+故 $T_{k}u=0$。于是
+\begin{align}
+W^{k,p}_{0}(U)\subseteq\{u\in W^{k,p}(U):T_{k}u=0\}.
+\label{eq:ch05-证明-包含1}
 \end{align}
 
-由 \eqref{eq:ch05-一般零迹-vi}，存在 $v_{i,m}\in C_{c}^{\infty}(B^{+}(0,r_{i}))$，使得
+\noindent$\mathbf{Step}\mathbf{7}.${\heiti 证明 $\ker T_{k}\subseteq W^{k,p}_{0}(U)$.}
+
+设 $u\in W^{k,p}(U)$ 且 $T_{k}u=0$。由 $T_{k}$ 的定义，
+\begin{align}
+T(D^{\alpha}u)=0
+\qquad\text{对一切 }|\alpha|\leqslant k-1.
+\label{eq:ch05-证明-导数零迹}
+\end{align}
+
+沿用 Step 2 中的覆盖 $\{W_{i}\}_{i=0}^{N}$、拉直映射 $\Phi_{i},\Psi_{i}$ 与单位分解 $\{\zeta_{i}\}_{i=0}^{N}$。记
 \begin{align*}
-v_{i,m}\longrightarrow v_{i}\quad\text{于}\ W^{k,p}(B^{+}(0,r_{i})).
+B_{i}^{+}\triangleq B(0,r_{i})\cap\{x_{n}>0\},
+\qquad
+B_{i}^{0}\triangleq B(0,r_{i})\cap\{x_{n}=0\}.
 \end{align*}
-令 $u_{i,m}\triangleq v_{i,m}\circ\Phi_{i}$。则 $u_{i,m}\in C_{c}^{\infty}(W_{i}\cap U)$，且由\cref{lemma:ch05-复合Wkp}，
+
+对 $i=0$，$\zeta_{0}u$ 的支集紧含于 $W_{0}\subset\subset U$。将 $\zeta_{0}u$ 零延拓到 $\mathbb{R}^{n}$ 后与磨光子卷积，可得 $C^{\infty}_{c}(U)$ 中的函数列在 $W^{k,p}(U)$ 中逼近 $\zeta_{0}u$，故
+\begin{align}
+\zeta_{0}u\in W^{k,p}_{0}(U).
+\label{eq:ch05-证明-i0}
+\end{align}
+
+固定 $i\in\{1,\cdots,N\}$。令
 \begin{align*}
-u_{i,m}\longrightarrow v_{i}\circ\Phi_{i}=\zeta_{i}u\quad\text{于}\ W^{k,p}(W_{i}\cap U).
+v_{i}(y)\triangleq(\zeta_{i}u)(\Psi_{i}(y)),
+\qquad y\in B_{i}^{+},
 \end{align*}
-将 $u_{i,m}$ 与 $\zeta_{i}u$ 在 $U\setminus W_{i}$ 上零延拓，则 $u_{i,m}\in C_{c}^{\infty}(U)$ 且
+并零延拓到 $\mathbb{R}^{n}_{+}$。由\cref{lemma:ch05-复合Wkp}，$v_{i}\in W^{k,p}(B_{i}^{+})$，且 $\operatorname{spt}v_{i}$ 紧含于 $\overline{B_{i}^{+}}$。
+
+下面证明 $T_{k}v_{i}=0$。取 $u_{m}\in C^{\infty}(\overline{U})$ 使 $u_{m}\to u$ 于 $W^{k,p}(U)$。由 $T_{k}$ 的连续性，
 \begin{align*}
-u_{i,m}\longrightarrow\zeta_{i}u\quad\text{于}\ W^{k,p}(U).
+T_{k}u_{m}\longrightarrow T_{k}u=0.
+\end{align*}
+于是对每个 $|\beta|\leqslant k-1$，
+\begin{align*}
+D^{\beta}u_{m}|_{\partial U}\longrightarrow0
+\qquad\text{于 }L^{p}(\partial U;\sigma).
+\end{align*}
+由 Leibniz 公式，对每个 $|\alpha|\leqslant k-1$，
+\begin{align*}
+D^{\alpha}(\zeta_{i}u_{m})|_{\partial U}
+=\sum_{\gamma\leqslant\alpha}
+\binom{\alpha}{\gamma}
+D^{\gamma}\zeta_{i}|_{\partial U}\,
+D^{\alpha-\gamma}u_{m}|_{\partial U}
+\longrightarrow0
+\qquad\text{于 }L^{p}(\partial U;\sigma).
+\end{align*}
+因此 $T_{k}(\zeta_{i}u_{m})\to0$。由 $T_{k}$ 的连续性，$T_{k}(\zeta_{i}u)=0$。
+
+令
+\begin{align*}
+v_{i,m}\triangleq(\zeta_{i}u_{m})\circ\Psi_{i}
+\qquad\text{于 }B_{i}^{+}.
+\end{align*}
+则 $v_{i,m}\in C^{k}(\overline{B_{i}^{+}})$，$v_{i,m}\to v_{i}$ 于 $W^{k,p}(B_{i}^{+})$。对 $\alpha=0$，由 $D^{0}v_{i,m}=v_{i,m}$ 及 $D^{0}(\zeta_{i}u_{m})|_{\partial U}\to0$ 知结论成立。对 $|\alpha|\geqslant1$，由链式法则，
+\begin{align*}
+D^{\alpha}v_{i,m}(y',0)
+=
+\sum_{1\leqslant|\beta|\leqslant|\alpha|}
+D^{\beta}(\zeta_{i}u_{m})(\Psi_{i}(y',0))\,
+Q_{\alpha\beta}(y',0),
+\end{align*}
+其中 $Q_{\alpha\beta}\in C^{\infty}(\overline{B_{i}^{+}})$。由于 $D^{\beta}(\zeta_{i}u_{m})|_{\partial U}\to0$，且曲面测度的变量替换公式给出有界 Jacobi 因子，右端在 $L^{p}(B_{i}^{0})$ 中趋于 $0$；在 $B_{i}^{0}$ 之外 $v_{i,m}(\cdot,0)=0$。故
+\begin{align*}
+T_{k}v_{i,m}\longrightarrow0.
+\end{align*}
+由 $T_{k}$ 的连续性，$T_{k}v_{i}=0$。
+
+由 Step 5 的断言（取 $m=k$），
+\begin{align*}
+v_{i}\in W^{k,p}_{0}(\mathbb{R}^{n}_{+}).
+\end{align*}
+由于 $v_{i}$ 的支集紧含于 $\overline{B_{i}^{+}}$，取 cutoff 得
+\begin{align}
+v_{i}\in W^{k,p}_{0}(B_{i}^{+}).
+\label{eq:ch05-证明-vi}
+\end{align}
+于是存在 $v_{i,j}\in C^{\infty}_{c}(B_{i}^{+})$ 使 $v_{i,j}\to v_{i}$ 于 $W^{k,p}(B_{i}^{+})$。令
+\begin{align*}
+u_{i,j}\triangleq v_{i,j}\circ\Phi_{i}.
+\end{align*}
+则 $u_{i,j}\in C^{\infty}_{c}(U\cap W_{i})\subseteq C^{\infty}_{c}(U)$，且由\cref{lemma:ch05-复合Wkp}，
+\begin{align*}
+u_{i,j}\longrightarrow\zeta_{i}u
+\qquad\text{于 }W^{k,p}(U).
 \end{align*}
 故
 \begin{align}
-\zeta_{i}u\in W^{k,p}_{0}(U),\qquad i=1,\cdots,N.
-\label{eq:ch05-一般零迹-zi}
+\zeta_{i}u\in W^{k,p}_{0}(U),
+\qquad i=1,\cdots,N.
+\label{eq:ch05-证明-zi}
 \end{align}
-
-最后，由 \eqref{eq:ch05-一般零迹-单位分解}、\eqref{eq:ch05-一般零迹-i0}、\eqref{eq:ch05-一般零迹-zi} 及 $W^{k,p}_{0}(U)$ 的线性性，
+结合 \eqref{eq:ch05-证明-i0}、\eqref{eq:ch05-证明-zi} 与 $W^{k,p}_{0}(U)$ 的线性性，
 \begin{align*}
 u=\zeta_{0}u+\sum_{i=1}^{N}\zeta_{i}u\in W^{k,p}_{0}(U).
 \end{align*}
-这就证明了 \eqref{eq:ch05-一般零迹-核} 中“$\supseteq$”的包含关系。
+因此
+\begin{align}
+\{u\in W^{k,p}(U):T_{k}u=0\}\subseteq W^{k,p}_{0}(U).
+\label{eq:ch05-证明-包含2}
+\end{align}
 
-反之，若 $u\in W^{k,p}_{0}(U)$，则由 $C_{c}^{\infty}(U)$ 在 $W^{k,p}(U)$ 中的稠密性，取 $u_{m}\in C_{c}^{\infty}(U)$，$u_{m}\to u$ 于 $W^{k,p}(U)$。对每个 $|\alpha|\leqslant k-1$，$D^{\alpha}u_{m}\in C_{c}^{\infty}(U)$，故 $T(D^{\alpha}u_{m})=0$。由 $T_{k}$ 的连续性，
+\noindent$\mathbf{Step}\mathbf{8}.${\heiti 完成核刻画.}
+
+由 \eqref{eq:ch05-证明-包含1} 与 \eqref{eq:ch05-证明-包含2}，
 \begin{align*}
-T_{k}u=\lim_{m\to\infty}T_{k}u_{m}=0.
+W^{k,p}_{0}(U)=\{u\in W^{k,p}(U):T_{k}u=0\}.
 \end{align*}
-故 $W^{k,p}_{0}(U)\subseteq\ker T_{k}$。结合上面的反向包含，\eqref{eq:ch05-一般零迹-核} 成立。
+这就是 \eqref{eq:ch05-一般零迹-核}。这对 $1\leqslant p<\infty$ 证明了 (3)。
+
+\noindent$\mathbf{Step}\mathbf{9}.${\heiti $p=\infty$ 时 (1)(2) 的证明.}
+
+设 $p=\infty$。取有界开集 $V$ 使 $U\subset\subset V$。由\cref{theorem:ch05-扩张定理}，存在有界线性算子
+\begin{align*}
+E_{k}:W^{k,\infty}(U)\longrightarrow W^{k,\infty}(\mathbb{R}^{n}),
+\end{align*}
+使得对每个 $u\in W^{k,\infty}(U)$，
+\begin{align*}
+E_{k}u=u\quad\text{a.e. 于 }U,
+\qquad
+\operatorname{spt}(E_{k}u)\subset\subset V,
+\qquad
+\|E_{k}u\|_{W^{k,\infty}(\mathbb{R}^{n})}\leqslant C\|u\|_{W^{k,\infty}(U)}.
+\end{align*}
+
+固定 $u\in W^{k,\infty}(U)$，记 $\overline{u}\triangleq E_{k}u$。由 $W^{k,\infty}(\mathbb{R}^{n})\subseteq C^{k-1,1}(\mathbb{R}^{n})$ 的标准代表元定理（对 $D^{\alpha}\overline{u}\in W^{1,\infty}(\mathbb{R}^{n})$ 反复使用\cref{theorem:ch05-W1infty刻画}），可取 $\overline{u}$ 的连续代表元 $\widetilde{u}\in C^{k-1}(\mathbb{R}^{n})$，并且对每个 $|\alpha|\leqslant k-1$，
+\begin{align*}
+\|D^{\alpha}\widetilde{u}\|_{L^{\infty}(\mathbb{R}^{n})}
++\operatorname{Lip}(D^{\alpha}\widetilde{u})
+\leqslant C\|\overline{u}\|_{W^{k,\infty}(\mathbb{R}^{n})}.
+\end{align*}
+定义
+\begin{align}
+T_{k}u\triangleq\bigl(D^{\alpha}\widetilde{u}|_{\partial U}\bigr)_{|\alpha|\leqslant k-1}.
+\label{eq:ch05-证明-pinfty定义}
+\end{align}
+若 $\overline{u}_{1},\overline{u}_{2}$ 都是 $u$ 的 $W^{k,\infty}$ 延拓，则对每个 $|\alpha|\leqslant k-1$，$D^{\alpha}\overline{u}_{1}=D^{\alpha}\overline{u}_{2}$ 于 $U$。二者都在 $\overline{U}$ 上连续，故它们在 $\partial U$ 上的值相同。因此 $T_{k}u$ 与延拓及代表元的选取无关。由 $E_{k}$ 与限制映射的线性性，$T_{k}$ 线性。
+
+由 \eqref{eq:ch05-证明-pinfty定义} 与代表元估计，
+\begin{align*}
+\|T_{k}u\|
+&=
+\max_{|\alpha|\leqslant k-1}
+\|D^{\alpha}\widetilde{u}\|_{L^{\infty}(\partial U;\sigma)}\\
+&\leqslant
+C\|\overline{u}\|_{W^{k,\infty}(\mathbb{R}^{n})}
+\leqslant
+C\|u\|_{W^{k,\infty}(U)}.
+\end{align*}
+故 (2) 对 $p=\infty$ 成立。
+
+最后证明 (1)。设 $u\in C^{k}(\overline{U})$。对每个 $|\alpha|\leqslant k-1$，$D^{\alpha}u\in C^{1}(\overline{U})$。而 $D^{\alpha}\widetilde{u}$ 与 $D^{\alpha}u$ 都在 $\overline{U}$ 上连续，且在 $U$ 上相等，故它们在 $\partial U$ 上的值相等。于是
+\begin{align*}
+T_{k}u=\bigl(D^{\alpha}u|_{\partial U}\bigr)_{|\alpha|\leqslant k-1}.
+\end{align*}
+这就证明了 $p=\infty$ 时的 (1)(2)。定理证毕。
 \end{proof}
 
-
-
-
-\end{document}
+\begin{remark}[$p=\infty$ 时零迹刻画失效]\label{remark:ch05-pinfty零迹反例}
+定理 \ref{theorem:ch05-零迹函数-一般}(3) 只对 $1\leqslant p<\infty$ 成立；下面说明它不能推广到 $p=\infty$。取
+\begin{align*}
+n=1,
+\qquad
+U=(0,1),
+\qquad
+k\geqslant1,
+\end{align*}
+并令
+\begin{align*}
+u(x)=x^{k}(1-x)^{k},
+\qquad 0<x<1.
+\end{align*}
+则 $u\in C^{\infty}([0,1])\subseteq W^{k,\infty}(0,1)$，且
+\begin{align*}
+u^{(j)}(0)=u^{(j)}(1)=0,
+\qquad j=0,1,\cdots,k-1.
+\end{align*}
+因此，若用连续代表元定义迹，则 $T_{k}u=0$。但 $u\notin W^{k,\infty}_{0}(0,1)$。事实上，若存在 $u_{m}\in C^{\infty}_{c}(0,1)$ 使得 $u_{m}\to u$ 于 $W^{k,\infty}(0,1)$，则
+\begin{align*}
+\|u_{m}^{(k)}-u^{(k)}\|_{L^{\infty}(0,1)}
+\longrightarrow0.
+\end{align*}
+每个 $u_{m}$ 在 $(0,1)$ 中具有紧支集，故存在 $a_{m}>0$，使得 $u_{m}=0$ 于 $(0,a_{m})$，从而 $u_{m}^{(k)}=0$ 于 $(0,a_{m})$。令
+\begin{align*}
+x_{m}\triangleq\min\left\{\frac{a_{m}}{2},\frac{1}{m}\right\}.
+\end{align*}
+则 $x_{m}\to0$，且 $u_{m}^{(k)}(x_{m})=0$。于是
+\begin{align*}
+|u^{(k)}(x_{m})|
+\leqslant
+\|u_{m}^{(k)}-u^{(k)}\|_{L^{\infty}(0,1)}
+\longrightarrow0.
+\end{align*}
+但 $u^{(k)}(0)=k!\neq0$，由连续性得 $u^{(k)}(x_{m})\to k!$，矛盾。故 $u\notin W^{k,\infty}_{0}(0,1)$。这说明 $p=\infty$ 时迹算子的核严格大于 $W^{k,\infty}_{0}(U)$，零迹刻画不能原样推广到 $p=\infty$。
+\end{remark}

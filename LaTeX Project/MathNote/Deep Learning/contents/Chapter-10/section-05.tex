@@ -10,8 +10,8 @@
 
 \begin{definition}[语义分割]\label{definition:ch10-语义分割}
 设输入图像为 $I\in\mathbb{R}^{J\times K\times 3}$，$J,K\geqslant1$，预设类别集合为
-$\{1,\dots,C\}$，$C\geqslant2$。若分割网络对每个像素 $(j,k)$ 输出概率向量
-$\mathbf{p}(j,k)=(p_1(j,k),\dots,p_C(j,k))\in[0,1]^{C}$，满足
+$\{1,\cdots,C\}$，$C\geqslant2$。若分割网络对每个像素 $(j,k)$ 输出概率向量
+$\mathbf{p}(j,k)=(p_1(j,k),\cdots,p_C(j,k))\in[0,1]^{C}$，满足
 $\sum_{c=1}^{C}p_c(j,k)=1$，并按
 $\hat{c}(j,k)=\arg\max_{c}p_c(j,k)$（并列时取最小的 $c$）给该像素赋予类别，则这一任务
 称为\textbf{语义分割}（semantic segmentation）。此时网络输出为 $J\times K\times C$ 的

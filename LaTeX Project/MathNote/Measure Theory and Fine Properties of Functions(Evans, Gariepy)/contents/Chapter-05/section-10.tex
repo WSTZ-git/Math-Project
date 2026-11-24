@@ -1,0 +1,365 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{沿直线的本质变差}\label{section:ch05-10}
+
+以下考察 $\BV$ 函数限制在直线上时的行为。
+
+\subsection{一元 $\BV$ 函数}\label{subsection:ch05-10-1}
+
+先研究一元 $\BV$ 函数。设 $f:\mathbb{R}\to\mathbb{R}$ 为 $\mathcal{L}^1$-可测函数，$-\infty\leqslant a<b\leqslant\infty$。
+
+\begin{definition}[本质变差]\label{definition:ch05-5-11}
+设 $-\infty\leqslant a<b\leqslant\infty$，$f:\mathbb{R}\to\mathbb{R}$ 为 $\mathcal{L}^1$-可测函数。$f$ 在区间 $(a,b)$ 上的\textbf{本质变差}定义为
+\begin{align*}
+\operatorname{ess}V_a^b f:=\sup\left\{\sum_{j=1}^m\lvert f(t_{j+1})-f(t_j)\rvert\right\},
+\end{align*}
+其中上确界取遍一切正整数 $m$ 与一切满足 $a<t_1<\cdots<t_{m+1}<b$ 的有限分划 $\{t_1,\cdots,t_{m+1}\}$，并要求每个分划点 $t_i$ 都是 $f$ 的近似连续点（\cref{definition:ch01-1-29}）。% XREF p=245 "such that each t_i is a point of approximate continuity of f"
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch05-5-11; kind=motivation; 说明经典变差为何在零测集修改下失效、把分划点限制为近似连续点为何使本质变差只依赖 a.e. 等价类，以及它与变差测度的关系
+\begin{remark}\phantomsection\label{remark:ch05-def-5-11-动机}
+经典变差把一个函数在区间上的增量总量定义为一切有限分划上 $\sum_j\lvert f(t_{j+1})-f(t_j)\rvert$ 的上确界。对 $f\in C^1(a,b)$，这一上确界等于 $\int_a^b\lvert f'\rvert\diff x$；但它在 $\mathcal{L}^1$ 零测集上的修改面前不稳定：$f\equiv0$ 的经典变差为零，而其修改 $\tilde f=\chi_{\mathbb{Q}\cap(a,b)}$ 在每个分划上都可取到增量 $1$，经典变差为 $+\infty$。$\BV$ 函数的变差测度对这类修改不变，故与它相匹配的逐点量必须同样只依赖 $f$ 的 $\mathcal{L}^1$ 等价类。
+把分划点限制为近似连续点正起到这一作用。由\cref{theorem:ch01-1-37}，$\mathcal{L}^1$-a.e. 点都是 $f$ 的近似连续点；而在近似连续点 $t$ 处有 $f(t)=\aplim_{y\to t}f(y)$，右端只依赖 $f$ 的 $\mathcal{L}^1$ 等价类。于是可用的分划点与这些点上的取值都由等价类决定，本质变差成为等价类的不变量（见\cref{remark:ch05-def-5-11-变差}）。% XREF internal
+\cref{theorem:ch05-5-21}将证明本质变差等于变差测度的总质量 $\lVert Df\rVert(a,b)$。这一等式使一维 $\BV$ 理论完全由函数值的增量刻画，并成为\cref{theorem:ch05-5-22}把 $\mathbb{R}^n$ 上的 $\BV_{\loc}$ 判定化归为沿各条直线的一元判定的依据。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-11; kind=hypotheses; 逐条分析可测性、端点允许为无穷、分划的严格不等式、近似连续点限制与上确界允许为无穷的作用
+\begin{remark}\phantomsection\label{remark:ch05-def-5-11-条件}
+\begin{enumerate}[(i)]
+\item 条件「$f$ 为 $\mathcal{L}^1$-可测」是定义中唯一加在 $f$ 上的假设。本质变差只用到 $f$ 在近似连续点处的取值与零测集，不要求 $f$ 可积或局部可积，故允许 $\operatorname{ess}V_a^b f=+\infty$；可测性保证几乎每个点都是近似连续点，使定义中的上确界取在一个丰富的点集上。
+\item 条件 $-\infty\leqslant a<b\leqslant\infty$ 保证开区间 $(a,b)$ 非空。端点取 $\pm\infty$ 时 $(a,b)$ 为无界区间，分划仍只含有限多个点，且全部落在 $(a,b)$ 之内。
+\item 分划点满足严格不等式 $a<t_1<\cdots<t_{m+1}<b$：区间按开区间处理，端点不参与分划。这一点是必要的，因为 $f$ 在端点处的取值与 $\mathcal{L}^1$ 等价类无关，把端点计入会使本质变差依赖代表元的选取。
+\item 限制每个 $t_i$ 为 $f$ 的近似连续点，是本质变差与经典变差的分界。去掉该限制即得经典变差；保留该限制后，分划点上的取值等于近似极限，因而只依赖 $f$ 的 $\mathcal{L}^1$ 等价类。该限制不会使上确界取在空集上：$\mathcal{L}^1$-a.e. 点都是近似连续点，故所论分划总是存在。
+\item 上确界在 $[0,+\infty]$ 中取值，定义不要求它有限。$\operatorname{ess}V_a^b f<\infty$ 是\cref{theorem:ch05-5-21}中刻画 $\BV(a,b)$ 的条件，而不是定义本身的要求。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-def-5-11-变差}
+$f$ 在 $(a,b)$ 上的\textbf{变差}以同样的方式定义，只是不要求分划点 $t_j$ 为 $f$ 的近似连续点。由于要求函数在 $\mathcal{L}^1$ 零测集上被重新定义之后仍然是 $\BV$ 函数，本质变差才是这里恰当的概念。
+
+特别地，若 $f=g$ $\mathcal{L}^1$-a.e. 于 $(a,b)$，则
+\begin{align*}
+\operatorname{ess}V_a^b f=\operatorname{ess}V_a^b g.
+\end{align*}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch05-def-5-11-变差; kind=proof; 补出「f = g a.e. 蕴含 ess V f = ess V g」的完整论证：近似极限只依赖等价类，且分划和的上确界在满测度点集上不变
+\begin{proof}
+设 $N:=\{t\in(a,b)\mid f(t)\neq g(t)\}$，则 $\mathcal{L}^1(N)=0$。记 $F$ 为 $f$ 的近似极限（在 $\mathcal{L}^1$-a.e. 点存在），$A_f$、$A_g$ 分别为 $f$、$g$ 在 $(a,b)$ 中的近似连续点集。
+
+（1）近似极限只依赖等价类。设 $F(x)$ 存在。对每个 $\delta>0$，集 $\{\lvert g-F(x)\rvert>\delta\}$ 与 $\{\lvert f-F(x)\rvert>\delta\}$ 至多相差一个零测集，故二者在 $x$ 处的密度相同；由 $F(x)=\aplim_{y\to x}f(y)$ 知后者的密度为零，于是 $F(x)$ 也是 $g$ 在 $x$ 处的近似极限。
+
+（2）$A_f$ 与 $A_g$ 至多相差一个零测集。若 $x\in A_f\setminus N$，则由（1）与 $g(x)=f(x)$ 得 $g(x)=f(x)=F(x)=\aplim_{y\to x}g(y)$，故 $x\in A_g$；对称地 $A_g\setminus N\subseteq A_f$。于是 $A:=A_f\cap A_g$ 满足 $\mathcal{L}^1((a,b)\setminus A)=0$，且在 $A$ 上 $f=g=F$。
+
+（3）分划和的上确界对满测度子集不变。设 $S\subseteq A_f$ 满足 $\mathcal{L}^1((a,b)\setminus S)=0$，并设 $\{t_1,\cdots,t_{m+1}\}\subseteq A_f$ 为分划。由于 $\mathcal{L}^1$-a.e. 点都是 $f$ 的近似连续点，故 $F=f$ $\mathcal{L}^1$-a.e.；于是对每个 $\delta>0$，集 $\{\lvert F-F(t_j)\rvert>\delta\}$ 与 $\{\lvert f-f(t_j)\rvert>\delta\}$ 至多相差一个零测集；而 $f$ 在 $t_j$ 处近似连续，故后者的密度在 $t_j$ 处为零，前者的密度亦为零。$S$ 为满测度集，故在 $t_j$ 的每个邻域内存在 $t_j'\in S$ 使 $\lvert F(t_j')-F(t_j)\rvert<\delta$。取 $\delta>0$ 充分小，并把 $t_j'$ 取在 $t_j$ 的互不相交的小邻域内，使 $a<t_1'<\cdots<t_{m+1}'<b$，即得
+\begin{align*}
+\sum_{j=1}^m\lvert F(t_{j+1}')-F(t_j')\rvert\geqslant\sum_{j=1}^m\lvert F(t_{j+1})-F(t_j)\rvert-2m\delta .
+\end{align*}
+令 $\delta\to0$，并利用 $S\subseteq A_f$ 与上确界关于点集的单调性，得 $S$ 上的上确界等于 $A_f$ 上的上确界。
+
+（4）在 $A$ 上 $f=g=F$，故以 $A$ 为分划点集时 $f$ 与 $g$ 给出的和完全相同；由（3）取 $S=A$ 得 $\operatorname{ess}V_a^b f=\operatorname{ess}V_a^b g$。
+\end{proof}
+
+\begin{theorem}[一元 $\BV$ 函数]\label{theorem:ch05-5-21}
+设 $-\infty\leqslant a<b\leqslant\infty$，$f\in L^1(a,b)$ 为实值可积函数，$Df$ 为 $f$ 在 $(a,b)$ 上的分布导数测度，$\lVert Df\rVert$ 为 $Df$ 的全变差测度。则
+\begin{align*}
+\lVert Df\rVert(a,b)=\operatorname{ess}V_a^b f;
+\end{align*}
+从而
+\begin{align*}
+f\in\BV(a,b)\quad\text{当且仅当}\quad\operatorname{ess}V_a^b f<\infty .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+1. 先考虑 $\operatorname{ess}V_a^b f$。固定 $\varepsilon>0$，以 $f^\varepsilon:=\eta_\varepsilon*f$ 记 $f$ 的通常磨光。任取 $a+\varepsilon<t_1<\cdots<t_{m+1}<b-\varepsilon$。由\cref{theorem:ch01-1-37}，$\mathcal{L}^1$-a.e. 的点都是 $f$ 的近似连续点，故对 $\mathcal{L}^1$-a.e. $s$，点 $t_j-s$ 是 $f$ 的近似连续点。于是 % XREF p=245 "Since L^1-a.e. point is a point of approximate continuity of f, t_j - s is a point of approximate continuity of f for L^1-a.e. s."
+\begin{align*}
+\sum_{j=1}^m\lvert f^\varepsilon(t_{j+1})-f^\varepsilon(t_j)\rvert
+&=\sum_{j=1}^m\left\lvert\int_{-\varepsilon}^{\varepsilon}\eta_\varepsilon(s)\bigl(f(t_{j+1}-s)-f(t_j-s)\bigr)\diff s\right\rvert\\
+&\leqslant\int_{-\varepsilon}^{\varepsilon}\eta_\varepsilon(s)\sum_{j=1}^m\lvert f(t_{j+1}-s)-f(t_j-s)\rvert\diff s\\
+&\leqslant\operatorname{ess}V_a^b f .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch05-5-21; kind=proof; 补出第 1 步中三处省略：磨光表示的来源、第三个不等号所用的分划点、以及 $\int\lvert(f^\varepsilon)'\rvert$ 与分划和的上确界相等
+上述估计有三处需要补充依据。其一，把 $f$ 在 $(a,b)$ 外取零值后，标准磨光核 $\eta_\varepsilon(x)=\varepsilon^{-1}\eta(x/\varepsilon)$ 满足 $\eta_\varepsilon\geqslant0$、$\int_{\mathbb{R}}\eta_\varepsilon\diff s=1$ 与 $\spt\eta_\varepsilon\subseteq[-\varepsilon,\varepsilon]$，故
+\begin{align*}
+f^\varepsilon(x)=\int_{-\varepsilon}^{\varepsilon}\eta_\varepsilon(s)f(x-s)\diff s
+\end{align*}
+对 $x\in(a+\varepsilon,b-\varepsilon)$ 成立，式中的第一个等号由此得到。其二，对 $\mathcal{L}^1$-a.e. $s\in(-\varepsilon,\varepsilon)$，点 $t_1-s,\cdots,t_{m+1}-s$ 都是 $f$ 的近似连续点（有限多个零测集之并仍为零测集），且由 $a+\varepsilon<t_1$ 与 $t_{m+1}<b-\varepsilon$ 得 $a<t_1-s<\cdots<t_{m+1}-s<b$；故这组点是\cref{definition:ch05-5-11}所允许的分划点，相应的和不大于 $\operatorname{ess}V_a^b f$，再乘以非负且积分为 $1$ 的 $\eta_\varepsilon$ 后积分即得第三个不等号。% XREF internal
+其三，设 $g:=f^\varepsilon\in C^1(a+\varepsilon,b-\varepsilon)$。对任意分划 $a+\varepsilon<s_1<\cdots<s_{N+1}<b-\varepsilon$，由三角不等式得 $\sum_{k=1}^N\lvert g(s_{k+1})-g(s_k)\rvert\leqslant\int_{a+\varepsilon}^{b-\varepsilon}\lvert g'\rvert\diff x$；反之，固定 $\delta>0$，取网格小于 $\delta$ 的分划，在每个小区间上用 $g'$ 的一致连续性得 $\lvert\int_{s_k}^{s_{k+1}}g'\rvert\geqslant\int_{s_k}^{s_{k+1}}\lvert g'\rvert\diff x-\delta(s_{k+1}-s_k)$，求和得 $\sum_{k}\lvert g(s_{k+1})-g(s_k)\rvert\geqslant\int_{a+\varepsilon}^{b-\varepsilon}\lvert g'\rvert\diff x-\delta(b-a-2\varepsilon)$。若 $a$ 或 $b$ 为无穷，则先在含于 $(a+\varepsilon,b-\varepsilon)$ 的有限子区间上作上述论证，再对穷尽该区间的子区间取上确界。
+由此得到
+\begin{align*}
+\int_{a+\varepsilon}^{b-\varepsilon}\lvert(f^\varepsilon)'\rvert\diff x=\sup\left\{\sum_{j=1}^m\lvert f^\varepsilon(t_{j+1})-f^\varepsilon(t_j)\rvert\right\}\leqslant\operatorname{ess}V_a^b f .
+\end{align*}
+因此，若 $\phi\in C_c^1(a,b)$ 且 $\lvert\phi\rvert\leqslant1$，则对充分小的 $\varepsilon>0$（使 $\spt\phi\subseteq(a+\varepsilon,b-\varepsilon)$）有
+\begin{align*}
+\int_a^b f^\varepsilon\phi'\diff x=-\int_a^b(f^\varepsilon)'\phi\diff x\leqslant\int_{a+\varepsilon}^{b-\varepsilon}\lvert(f^\varepsilon)'\rvert\diff x\leqslant\operatorname{ess}V_a^b f .
+\end{align*}
+令 $\varepsilon\to0$ 得
+\begin{align*}
+\lVert Df\rVert(a,b)&=\sup\left\{\int_a^b f\phi'\diff x\,\middle|\,\phi\in C_c^1(a,b),\ \lvert\phi\rvert\leqslant1\right\}\\
+&\leqslant\operatorname{ess}V_a^b f\leqslant\infty .
+\end{align*}
+特别地，若 $f\notin\BV(a,b)$，则 $\operatorname{ess}V_a^b f=\infty$。
+
+2. 现设 $f\in\BV(a,b)$，取 $a<c<d<b$。则对每个 $\phi\in C_c^1(c,d)$（$\lvert\phi\rvert\leqslant1$）与每个充分小的 $\varepsilon>0$，计算得
+\begin{align*}
+\int_c^d(f^\varepsilon)'\phi\diff x&=-\int_c^d f^\varepsilon\phi'\diff x\\
+&=-\int_c^d(\eta_\varepsilon*f)\phi'\diff x\\
+&=-\int_c^b f(\eta_\varepsilon*\phi)'\diff x\\
+&\leqslant\lVert Df\rVert(a,b).
+\end{align*}
+于是 $\int_c^d\lvert(f^\varepsilon)'\rvert\diff x\leqslant\lVert Df\rVert(a,b)$。
+
+% SUPPLEMENT: parent=theorem:ch05-5-21; kind=proof; 补出第 2 步中 Fubini 换序、$\eta_\varepsilon*\phi$ 的支集与范数、以及 $\int_c^d\lvert(f^\varepsilon)'\rvert$ 的对偶表示
+第 2 步的第三个等号是 Fubini 定理与卷积的对称性：对充分小的 $\varepsilon>0$ 有 $\spt(\eta_\varepsilon*\phi)\subseteq(c-\varepsilon,d+\varepsilon)\subset(a,b)$，故
+\begin{align*}
+\int_c^d(\eta_\varepsilon*f)\phi'\diff x=\int_c^b f(\eta_\varepsilon*\phi)'\diff x .
+\end{align*}
+最后一个不等号用到 $\eta_\varepsilon*\phi\in C_c^1(a,b)$ 与 $\lVert\eta_\varepsilon*\phi\rVert_{L^\infty}\leqslant\lVert\phi\rVert_{L^\infty}\leqslant1$：按 $\lVert Df\rVert(a,b)$ 作为检验函数上确界的定义，该值不超过 $\lVert Df\rVert(a,b)$。至于 $\int_c^d\lvert(f^\varepsilon)'\rvert\diff x\leqslant\lVert Df\rVert(a,b)$，注意对连续函数 $h:=(f^\varepsilon)'$ 有
+\begin{align*}
+\int_c^d\lvert h\rvert\diff x=\sup\left\{\int_c^d h\phi\diff x\,\middle|\,\phi\in C_c^1(c,d),\ \lvert\phi\rvert\leqslant1\right\},
+\end{align*}
+其中右端不小于左端由取 $\phi$ 为 $\operatorname{sgn}h$ 的 $L^1$ 逼近且 $\lvert\phi\rvert\leqslant1$ 得到，而右端不超过 $\lVert Df\rVert(a,b)$ 已由上一步给出。
+
+3. 断言：$f\in L^\infty(a,b)$。
+
+断言的证明：由\cref{theorem:ch05-5-3}（取 $U=(a,b)$）取 $\{f_j\}_{j=1}^{\infty}\subseteq\BV(a,b)\cap C^\infty(a,b)$，使得 % XREF internal
+\begin{align*}
+f_j\to f\ \text{于}\ L^1(a,b),\qquad f_j\to f\quad\mathcal{L}^n\text{-a.e.}
+\end{align*}
+且
+\begin{align*}
+\int_a^b\lvert f_j'\rvert\diff x\to\lVert Df\rVert(a,b).
+\end{align*}
+对每个 $y,z\in(a,b)$ 有
+\begin{align*}
+f_j(z)=f_j(y)+\int_y^z f_j'\diff x .
+\end{align*}
+关于 $y\in(a,b)$ 取平均得
+\begin{align*}
+\lvert f_j(z)\rvert\leqslant\fint_a^b\lvert f_j\rvert\diff y+\int_a^b\lvert f_j'\rvert\diff x,
+\end{align*}
+从而
+\begin{align*}
+\sup_j\lVert f_j\rVert_{L^\infty(a,b)}<\infty .
+\end{align*}
+由于 $f_j\to f$ $\mathcal{L}^n$-a.e.，推得 $\lVert f\rVert_{L^\infty(a,b)}<\infty$。
+
+% SUPPLEMENT: parent=theorem:ch05-5-21; kind=proof; 补出第 3 步中逼近列的来源、两个积分项的一致有界性、端点可为无穷时的处理，以及由 a.e. 收敛推出 $\lVert f\rVert_{L^\infty}<\infty$
+第 3 步的细节如下。逼近列的存在性由\cref{theorem:ch05-5-3}给出：该定理给出 $g_j\in\BV(a,b)\cap C^\infty(a,b)$，使 $g_j\to f$ 于 $L^1(a,b)$ 且 $\lVert Dg_j\rVert(a,b)\to\lVert Df\rVert(a,b)$，而光滑函数的 $\lVert Dg_j\rVert(a,b)=\int_a^b\lvert g_j'\rvert\diff x$；再由 $L^1$ 收敛列存在 $\mathcal{L}^1$-a.e. 收敛的子列，取该子列并仍记为 $f_j$，即得所需三条性质。% XREF internal
+两个积分项的一致有界性分别来自：$\int_a^b\lvert f_j\rvert\diff y$ 有界，因为 $f_j\to f$ 于 $L^1(a,b)$ 蕴含 $\sup_j\lVert f_j\rVert_{L^1(a,b)}<\infty$；$\int_a^b\lvert f_j'\rvert\diff x$ 有界，因为它收敛于 $\lVert Df\rVert(a,b)$。若 $a=-\infty$ 或 $b=\infty$，则 $\fint_a^b$ 无定义，此时对任意有限区间 $(c,d)$（$a<c<d<b$）重复上述论证，得到 $\lVert f\rVert_{L^\infty(c,d)}<\infty$；再沿一列穷尽 $(a,b)$ 的有限子区间取上确界，得 $\lVert f\rVert_{L^\infty(a,b)}=\sup_{c,d}\lVert f\rVert_{L^\infty(c,d)}<\infty$。最后，由 $f_j\to f$ $\mathcal{L}^1$-a.e. 得 $\lvert f\rvert\leqslant\liminf_j\lvert f_j\rvert\leqslant\sup_j\lVert f_j\rVert_{L^\infty(a,b)}$ a.e.，故 $\lVert f\rVert_{L^\infty(a,b)}<\infty$。本节的论域是一维的，$\mathcal{L}^n$ 与 $\mathcal{L}^1$ 在此重合，故式中的 $\mathcal{L}^n$-a.e. 即 $\mathcal{L}^1$-a.e.。
+
+4. 由上述断言，$f$ 的每个近似连续点都是 Lebesgue 点，从而对 $f$ 的每个近似连续点有
+\begin{align*}
+f^\varepsilon(t)\to f(t)\qquad(\star)
+\end{align*}
+当 $\varepsilon\to0$。于是对每个分划 $\{a<t_1<\cdots<t_{m+1}<b\}$（其中每个 $t_j$ 都是 $f$ 的近似连续点）有
+\begin{align*}
+\sum_{j=1}^m\lvert f(t_{j+1})-f(t_j)\rvert&=\lim_{\varepsilon\to0}\sum_{j=1}^m\lvert f^\varepsilon(t_{j+1})-f^\varepsilon(t_j)\rvert\\
+&\leqslant\limsup_{\varepsilon\to0}\int_a^b\lvert(f^\varepsilon)'\rvert\diff x\\
+&\leqslant\lVert Df\rVert(a,b).
+\end{align*}
+因此
+\begin{align*}
+\operatorname{ess}V_a^b f\leqslant\lVert Df\rVert(a,b)<\infty .
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-21; kind=proof; 补出第 4 步中「有界加近似连续推出 Lebesgue 点」、$(\star)$ 的估计、增量和取极限以及端点无穷时的积分区间
+第 4 步的依据如下。设 $t$ 是 $f$ 的近似连续点，$M:=\lVert f\rVert_{L^\infty(a,b)}<\infty$。对 $\delta>0$ 记 $E_\delta:=\{y\in(a,b)\mid\lvert f(y)-f(t)\rvert>\delta\}$，则 $E_\delta$ 在 $t$ 处的密度为零，且
+\begin{align*}
+\fint_{t-r}^{t+r}\lvert f-f(t)\rvert\diff y\leqslant\delta+2M\cdot\frac{\mathcal{L}^1(E_\delta\cap(t-r,t+r))}{2r}\xrightarrow[r\to0]{}\delta .
+\end{align*}
+故 $t$ 是 $f$ 的 Lebesgue 点。再由 $f^\varepsilon(t)=\int\eta_\varepsilon(t-y)f(y)\diff y$、$\int\eta_\varepsilon(t-y)\diff y=1$ 与 $\eta_\varepsilon\leqslant\varepsilon^{-1}\lVert\eta\rVert_{L^\infty}$ 得
+\begin{align*}
+\lvert f^\varepsilon(t)-f(t)\rvert\leqslant\int_{\lvert t-y\rvert\leqslant\varepsilon}\eta_\varepsilon(t-y)\lvert f(y)-f(t)\rvert\diff y\leqslant2\lVert\eta\rVert_{L^\infty}\fint_{t-\varepsilon}^{t+\varepsilon}\lvert f-f(t)\rvert\diff y\to0,
+\end{align*}
+此即 $(\star)$。既得 $(\star)$，有限多个增量的和可逐项取极限，故第一个等号成立；又由三角不等式 $\sum_j\lvert f^\varepsilon(t_{j+1})-f^\varepsilon(t_j)\rvert\leqslant\int_{t_1}^{t_{m+1}}\lvert(f^\varepsilon)'\rvert\diff x\leqslant\int_a^b\lvert(f^\varepsilon)'\rvert\diff x$，而第 2 步已给出 $\int_c^d\lvert(f^\varepsilon)'\rvert\diff x\leqslant\lVert Df\rVert(a,b)$ 对一切 $a<c<d<b$ 成立，对 $(c,d)$ 取上确界即得 $\int_a^b\lvert(f^\varepsilon)'\rvert\diff x\leqslant\lVert Df\rVert(a,b)$。若 $a$ 或 $b$ 为无穷，则取包含全部 $t_j$ 的有限区间 $(c,d)$ 代替 $(a,b)$，论证不变。
+
+% SUPPLEMENT: parent=theorem:ch05-5-21; kind=motivation; 说明本定理为何把一维 BV 理论与经典有界变差对接，以及证明两个方向各自的作用与有界性断言的关键地位
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-21-动机}
+本定理把一维 $\BV$ 理论与经典有界变差理论对接：左端 $\lVert Df\rVert(a,b)$ 是分布导数测度的总质量，右端 $\operatorname{ess}V_a^b f$ 只由函数在近似连续点处的取值计算。等式说明「测度意义下的导数总量」与「沿分划的增量总量」是同一个量，故一维 $\BV$ 函数恰是本质变差有限的可积函数。
+证明的两个方向各有独立用处。第 1 步用磨光把检验函数上的积分用增量和控制，给出 $\lVert Df\rVert(a,b)\leqslant\operatorname{ess}V_a^b f$；这一步只用到 $f\in L^1(a,b)$，故它同时表明本质变差有限蕴含 $f\in\BV(a,b)$。第 2 至 4 步在 $f\in\BV(a,b)$ 下作反向估计：第 2 步用对偶得到磨光后导数在相对紧子区间上的 $L^1$ 界，第 3 步证明 $f$ 有界，第 4 步把有界性、近似连续与 Lebesgue 点联系起来并令 $\varepsilon\to0$。第 3 步的有界性断言是通道：没有它，近似连续点未必是 Lebesgue 点，$(\star)$ 便不成立。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-21; kind=hypotheses; 逐条分析 $f\in L^1$、端点可为无穷、磨光核的标准性与第 3 步有界性断言的作用，并说明 $\mathcal{L}^n$ 与 $\mathcal{L}^1$ 在一维重合
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-21-条件}
+\begin{enumerate}[(i)]
+\item 条件 $f\in L^1(a,b)$ 使 $Df$ 为 $(a,b)$ 上的 Radon 测度、$\lVert Df\rVert(a,b)$ 有限，并使作为检验函数上确界的 $\lVert Df\rVert(a,b)$ 有定义；第 1 步的磨光还要求把 $f$ 在 $(a,b)$ 外零延拓后可积。若只有 $f\in L^1_{\loc}(a,b)$，则相应的结论应对每个相对紧子区间成立，而不能直接写 $\lVert Df\rVert(a,b)$。% XREF internal
+\item 条件 $a<b$ 与端点允许取 $\pm\infty$：第 2 步的 $\int_c^d$ 与第 3 步的 $\fint_a^b$ 都须在有限区间上解释，端点无穷时先在有限子区间上论证再取上确界，故无穷端点不改变结论。
+\item 磨光核的标准性（$\eta_\varepsilon\geqslant0$、$\int_{\mathbb{R}}\eta_\varepsilon\diff s=1$、$\spt\eta_\varepsilon\subseteq[-\varepsilon,\varepsilon]$）在第 1 步中用于两处：非负与单位积分给出第二个不等号，支集落在 $[-\varepsilon,\varepsilon]$ 内使 $t_j-s$ 仍落在 $(a,b)$ 中，从而第三个不等号可用本质变差的定义。
+\item 第 3 步的有界性断言不可省去。它把近似连续点提升为 Lebesgue 点；若 $f$ 无界，则近似连续只控制偏差集的比例而不控制偏差的大小，$\fint_{\lvert t-y\rvert\leqslant\varepsilon}\lvert f-f(t)\rvert\diff y$ 未必趋于零，$(\star)$ 随之失效。
+\item 结论中「$f\in\BV(a,b)$ 当且仅当 $\operatorname{ess}V_a^b f<\infty$」由第一式与 $\BV(a,b)$ 的定义直接得到：$f\in\BV(a,b)$ 等价于 $\lVert Df\rVert(a,b)<\infty$，而第一式把后者等同于 $\operatorname{ess}V_a^b f<\infty$。
+\item 第 3 步中的 $\mathcal{L}^n$-a.e. 在本节的论域（一维）中与 $\mathcal{L}^1$-a.e. 一致：$n=1$ 时 $\mathcal{L}^n=\mathcal{L}^1$。
+\end{enumerate}
+\end{remark}
+
+\subsection{沿几乎所有直线的本质变差}\label{subsection:ch05-10-2}
+
+下面把上述分析推广到 $\mathbb{R}^n$ 上的 $\BV$ 函数。
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-21-记号}
+设 $f:\mathbb{R}^n\to\mathbb{R}$。对 $k=1,\cdots,n$，记
+\begin{align*}
+x'=(x_1,\cdots,x_{k-1},x_{k+1},\cdots,x_n)\in\mathbb{R}^{n-1}.
+\end{align*}
+若 $t\in\mathbb{R}$，则记
+\begin{align*}
+f_k(x',t):=f(\cdots,x_{k-1},t,x_{k+1},\cdots).
+\end{align*}
+于是 $\operatorname{ess}V_a^b f_k$ 表示 $f_k$ 作为 $t\in(a,b)$ 的函数（对每个固定的 $x'$）的本质变差。
+\end{remark}
+
+\begin{lemma}\label{lemma:ch05-5-7}
+设 $n\geqslant1$ 为整数，$f\in L^1_{\loc}(\mathbb{R}^n)$，$k\in\{1,\cdots,n\}$，$-\infty\leqslant a<b\leqslant\infty$。对 $x'=(x_1,\cdots,x_{k-1},x_{k+1},\cdots,x_n)\in\mathbb{R}^{n-1}$ 与 $t\in\mathbb{R}$ 记 $f_k(x',t):=f(\cdots,x_{k-1},t,x_{k+1},\cdots)$。则映射
+\begin{align*}
+x'\mapsto\operatorname{ess}V_a^b f_k
+\end{align*}
+是 $\mathcal{L}^{n-1}$-可测的。
+\end{lemma}
+
+\begin{proof}
+由\cref{theorem:ch05-5-21}，对 $\mathcal{L}^{n-1}$-a.e. $x'\in\mathbb{R}^{n-1}$ 有 % XREF p=248 "According to Theorem 5.21, for L^{n-1}-a.e. x' ∈ R^{n-1}"
+\begin{align*}
+\operatorname{ess}V_a^b f_k&=\lVert Df_k\rVert(a,b)\\
+&=\sup\left\{\int_a^b f_k(x',t)\phi'(t)\diff t\,\middle|\,\phi\in C_c^1(a,b),\ \lvert\phi\rvert\leqslant1\right\}.
+\end{align*}
+取 $\{\phi_j\}_{j=1}^{\infty}$ 为 $C_c^1(a,b)\cap\{\lvert\phi\rvert\leqslant1\}$ 的可数稠密子集。则
+\begin{align*}
+x'\mapsto\int_a^b f_k(x',t)\phi_j'(t)\diff t
+\end{align*}
+对 $j=1,2,\cdots$ 是 $\mathcal{L}^{n-1}$-可测的，从而
+\begin{align*}
+x'\mapsto\sup_j\left\{\int_a^b f_k(x',t)\phi_j'(t)\diff t\right\}=\operatorname{ess}V_a^b f_k
+\end{align*}
+是 $\mathcal{L}^{n-1}$-可测的。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-5-7; kind=proof; 补出引理证明中四处省略：theorem:ch05-5-21 的适用性（a.e. x' 与无穷端点）、Fubini 可测性、稠密子集上取上确界与全族上确界相同、以及由 a.e. 相等过渡到处处可测
+引理的证明有四处需要补充依据。其一，\cref{theorem:ch05-5-21}要求 $f_k(x',\cdot)\in L^1(a,b)$。由 $f\in L^1_{\loc}(\mathbb{R}^n)$ 与 Tonelli 定理，对 $\mathcal{L}^{n-1}$-a.e. $x'$ 有 $f_k(x',\cdot)\in L^1_{\loc}(a,b)$；当 $a,b$ 有限时它属于 $L^1(a,b)$，故\cref{theorem:ch05-5-21}对这样的 $x'$ 适用。当 $a=-\infty$ 或 $b=\infty$ 时，令 $a_m:=\max\{a,-m\}$、$b_m:=\min\{b,m\}$（$m=1,2,\cdots$），则 $(a_m,b_m)\subset(a,b)$ 且每个 $(a_m,b_m)$ 有限，并有 $a_m\downarrow a$、$b_m\uparrow b$；对每个 $m$ 使用该定理；由于 $\operatorname{ess}V_a^b f_k=\sup_m\operatorname{ess}V_{a_m}^{b_m}f_k$ 与 $\lVert Df_k\rVert(a,b)=\sup_m\lVert Df_k\rVert(a_m,b_m)$（两侧都对递增区间族取上确界），除去一个可数并的零测集后等式仍成立。% XREF internal
+其二，对每个固定的 $j$，函数 $(x',t)\mapsto f_k(x',t)\phi_j'(t)$ 关于 $\mathcal{L}^{n-1}\otimes\mathcal{L}^1$ 可测，且 $\phi_j'$ 有紧支集，故 $\int_a^b\lvert f_k(x',t)\phi_j'(t)\rvert\diff t$ 关于 $x'$ 局部可积；由 Fubini 定理，$x'\mapsto\int_a^b f_k(x',t)\phi_j'(t)\diff t$ 是 $\mathcal{L}^{n-1}$-可测的。
+其三，设 $x'$ 使 $f_k(x',\cdot)\in L^1(a,b)$。对每个 $\phi\in C_c^1(a,b)$（$\lvert\phi\rvert\leqslant1$）与每个 $j$ 有
+\begin{align*}
+\left\lvert\int_a^b f_k(x',t)\bigl(\phi'(t)-\phi_j'(t)\bigr)\diff t\right\rvert\leqslant\lVert f_k(x',\cdot)\rVert_{L^1(a,b)}\lVert\phi-\phi_j\rVert_{C^1},
+\end{align*}
+故当 $\phi_j\to\phi$ 于 $C^1$ 时相应的积分收敛；于是全族的上确界等于可数子族的上确界，而可数族的上确界仍可测。
+其四，上式中的等式只在 $\mathcal{L}^{n-1}$ 零测集外成立，而 $\mathcal{L}^{n-1}$ 是完备测度，故与可测函数 a.e. 相等的函数仍可测；特别地 $x'\mapsto\operatorname{ess}V_a^b f_k$ 可测。
+
+% SUPPLEMENT: parent=lemma:ch05-5-7; kind=motivation; 说明为何要证 ess V 沿直线的可测性，以及把不可数上确界化为可数上确界的思路
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-7-动机}
+\cref{theorem:ch05-5-22}的判据以 $\int_K\operatorname{ess}V_a^b f_k\diff x'$ 为对象，故必须先确认被积函数关于 $x'$ 可测，否则该积分无从谈起。本引理正是为此：它说明固定第 $k$ 条坐标方向后，一元函数的本质变差作为其余坐标 $x'$ 的函数是 $\mathcal{L}^{n-1}$-可测的。% XREF internal
+证明的关键是把本质变差的定义中「对不可数族取上确界」改写为「对可数稠密子族取上确界」。逐点定义的 $\operatorname{ess}V_a^b f_k$ 本身不直接显示可测性，而\cref{theorem:ch05-5-21}给出的对偶表示把它写成 $\sup_\phi\int_a^b f_k\phi'\diff t$；再用 $C_c^1(a,b)$ 的可数稠密子集把上确界化为可数个可测函数的上确界。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch05-5-7; kind=hypotheses; 逐条分析 $f\in L^1_loc$、方向 $k$、端点可为无穷、稠密子集的存在性与测度完备性的作用
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-7-条件}
+\begin{enumerate}[(i)]
+\item 条件 $f\in L^1_{\loc}(\mathbb{R}^n)$ 有两项作用：它使 Tonelli 定理可用于断定 $x'\mapsto\int_a^b\lvert f_k(x',t)\phi_j'(t)\rvert\diff t$ 局部可积，从而 Fubini 定理给出该函数的 $\mathcal{L}^{n-1}$-可测性；它又保证对 $\mathcal{L}^{n-1}$-a.e. $x'$ 有一元函数 $f_k(x',\cdot)\in L^1_{\loc}(a,b)$，使\cref{theorem:ch05-5-21}可逐条直线使用。% XREF internal
+\item 指标 $k\in\{1,\cdots,n\}$ 可任意固定，结论对每个方向分别成立；引理不要求 $f$ 属于 $\BV_{\loc}(\mathbb{R}^n)$，故它先于\cref{theorem:ch05-5-22}独立可用。% XREF internal
+\item 端点允许 $-\infty\leqslant a<b\leqslant\infty$。$a,b$ 有限时\cref{theorem:ch05-5-21}直接适用于几乎每个 $x'$；端点无穷时以可数多个有限区间穷尽 $(a,b)$，因可数并的零测集仍为零测集，结论不变。% XREF internal
+\item 结论中的可测性是关于 $\mathcal{L}^{n-1}$（即 $x'$ 所在空间的 Lebesgue 测度）的，而不是关于 $\mathcal{L}^n$ 的。$\mathcal{L}^{n-1}$ 的完备性使与可测函数 a.e. 相等的函数仍可测，这一点在把「a.e. $x'$ 上的等式」过渡为「处处可测」时用到。
+\item 可数稠密子集的存在性来自 $C_c^1(a,b)$ 按 $C^1$ 范数的可分性。若没有可分性，$\sup_\phi$ 是对不可数族取上确界，不能直接推出可测性。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[沿直线的本质变差]\label{theorem:ch05-5-22}
+设 $n\geqslant1$ 为整数，$f\in L^1_{\loc}(\mathbb{R}^n)$ 为实值局部可积函数，$\mathcal{L}^{n-1}$ 为 $\mathbb{R}^{n-1}$ 上的 Lebesgue 测度。对 $k=1,\cdots,n$、$x'=(x_1,\cdots,x_{k-1},x_{k+1},\cdots,x_n)\in\mathbb{R}^{n-1}$ 与 $t\in\mathbb{R}$ 记 $f_k(x',t):=f(\cdots,x_{k-1},t,x_{k+1},\cdots)$。则 $f\in\BV_{\loc}(\mathbb{R}^n)$ 当且仅当
+\begin{align*}
+\int_K\operatorname{ess}V_a^b f_k\diff x'<\infty\qquad(k=1,\cdots,n)
+\end{align*}
+对一切 $-\infty<a<b<\infty$ 与一切紧集 $K\subset\mathbb{R}^{n-1}$ 成立。
+\end{theorem}
+
+\begin{proof}
+1. 先设 $f\in\BV_{\loc}(\mathbb{R}^n)$。任取 $k\in\{1,\cdots,n\}$、$-\infty<a<b<\infty$ 与紧集 $K\subset\mathbb{R}^{n-1}$，令
+\begin{align*}
+C:=\left\{x\mid a\leqslant x_k\leqslant b,\ (x_1,\cdots,x_{k-1},x_{k+1},\cdots,x_n)\in K\right\}.
+\end{align*}
+仍记 $f^\varepsilon:=\eta_\varepsilon*f$。则
+\begin{align*}
+\lim_{\varepsilon\to0}\int_C\lvert f^\varepsilon-f\rvert\diff x=0,\qquad\limsup_{\varepsilon\to0}\int_C\lvert Df^\varepsilon\rvert\diff x<\infty .
+\end{align*}
+于是对 $\mathcal{H}^{n-1}$-a.e. $x'\in K$，
+\begin{align*}
+f_k^\varepsilon\to f_k\quad\text{于}\ L^1(a,b),
+\end{align*}
+其中
+\begin{align*}
+f_k^\varepsilon(x',t):=f^\varepsilon(\cdots,x_{k-1},t,x_{k+1},\cdots).
+\end{align*}
+从而对 $\mathcal{H}^{n-1}$-a.e. $x'\in K$ 有
+\begin{align*}
+\operatorname{ess}V_a^b f_k\leqslant\liminf_{\varepsilon\to0}\operatorname{ess}V_a^b f_k^\varepsilon .
+\end{align*}
+由 Fatou 引理得
+\begin{align*}
+\int_K\operatorname{ess}V_a^b f_k\diff x'&\leqslant\liminf_{\varepsilon\to0}\int_K\operatorname{ess}V_a^b f_k^\varepsilon\diff x'\\
+&=\liminf_{\varepsilon\to0}\int_C\lvert f_{x_k}^\varepsilon\rvert\diff x\\
+&\leqslant\limsup_{\varepsilon\to0}\int_C\lvert Df^\varepsilon\rvert\diff x<\infty .
+\end{align*}
+
+2. 现设 $f\in L^1_{\loc}(\mathbb{R}^n)$，且
+\begin{align*}
+\int_K\operatorname{ess}V_a^b f_k\diff x'<\infty
+\end{align*}
+对一切 $k=1,\cdots,n$、$-\infty<a<b<\infty$ 与紧集 $K\subset\mathbb{R}^{n-1}$ 成立。固定 $\phi\in C_c^\infty(\mathbb{R}^n)$（$\lvert\phi\rvert\leqslant1$），取 $a$、$b$ 与 $k$ 使得
+\begin{align*}
+\spt(\phi)\subset\{x\mid a<x_k<b\}.
+\end{align*}
+则由\cref{theorem:ch05-5-21}得% XREF p=249 "Then Theorem 5.21 implies"
+\begin{align*}
+\int_{\mathbb{R}^n}f\phi_{x_k}\diff x\leqslant\int_K\operatorname{ess}V_a^b f_k\diff x'<\infty,
+\end{align*}
+其中
+\begin{align*}
+K:=\left\{x'\in\mathbb{R}^{n-1}\,\middle|\,\text{存在 }t\in\mathbb{R}\text{ 使 }(\cdots,x_{k-1},t,x_{k+1},\cdots)\in\spt(\phi)\right\}.
+\end{align*}
+上述估计对 $k=1,\cdots,n$ 都成立，故 $f\in\BV_{\loc}(\mathbb{R}^n)$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-22; kind=proof; 补出第 1 步中两个极限的来历、由 Tonelli 得到 a.e. 的 $L^1(a,b)$ 收敛、本质变差关于 $L^1$ 收敛的下半连续性，以及 $\int_K ess V f_k^\varepsilon = \int_C \lvert f^\varepsilon_{x_k}\rvert$ 的等式
+第 1 步的依据如下。集 $C$ 是 $\mathbb{R}^n$ 中的紧集（紧集 $K$ 与闭区间 $[a,b]$ 的乘积在坐标置换下）。由 $f\in L^1_{\loc}(\mathbb{R}^n)$ 与磨光的标准性质得 $\int_C\lvert f^\varepsilon-f\rvert\diff x\to0$。又由 $\nabla f^\varepsilon=\eta_\varepsilon*Df$（把 $Df$ 视为向量值 Radon 测度）与 $\lvert\eta_\varepsilon*Df\rvert\leqslant\eta_\varepsilon*\lVert Df\rVert$，对含 $C$ 于内部的紧集 $C_1$ 有
+\begin{align*}
+\int_C\lvert Df^\varepsilon\rvert\diff x=\int_C\lvert\nabla f^\varepsilon\rvert\diff x\leqslant\lVert Df\rVert(C_1)<\infty
+\end{align*}
+对一切充分小的 $\varepsilon>0$ 成立，故第二个 $\limsup$ 有限。由 Tonelli 定理，
+\begin{align*}
+\int_C\lvert f^\varepsilon-f\rvert\diff x=\int_K\Bigl(\int_a^b\lvert f_k^\varepsilon-f_k\rvert\diff t\Bigr)\diff x',
+\end{align*}
+故内层积分在 $K$ 上依 $L^1$ 收敛于零，特别地对 $\mathcal{H}^{n-1}$-a.e. $x'\in K$ 有 $f_k^\varepsilon\to f_k$ 于 $L^1(a,b)$。
+其次，本质变差关于 $L^1(a,b)$ 收敛是下半连续的：由\cref{theorem:ch05-5-2}，当 $g_j\to g$ 于 $L^1(a,b)$ 时有 $\lVert Dg\rVert(a,b)\leqslant\liminf_j\lVert Dg_j\rVert(a,b)$；再由\cref{theorem:ch05-5-21}把两端换成本质变差，即得 $\operatorname{ess}V_a^b f_k\leqslant\liminf_{\varepsilon\to0}\operatorname{ess}V_a^b f_k^\varepsilon$。% XREF internal
+最后，$f^\varepsilon$ 是光滑函数，故对每个 $x'$ 一元函数 $f_k^\varepsilon(x',\cdot)\in C^1(a,b)$，由微积分基本定理与\cref{theorem:ch05-5-21}得 $\operatorname{ess}V_a^b f_k^\varepsilon=\int_a^b\lvert\partial_t f_k^\varepsilon(x',t)\rvert\diff t$；再由 Fubini 定理% XREF internal
+\begin{align*}
+\int_K\operatorname{ess}V_a^b f_k^\varepsilon\diff x'=\int_K\int_a^b\lvert\partial_t f^\varepsilon(x',t)\rvert\diff t\diff x'=\int_C\lvert f_{x_k}^\varepsilon\rvert\diff x .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch05-5-22; kind=proof; 补出第 2 步中沿直线的分部积分、$K$ 的紧性，以及由各分量估计得到 $\BV_{\loc}$ 的结论
+第 2 步的依据如下。对固定的 $x'\in\mathbb{R}^{n-1}$ 定义 $\psi(t):=\phi(x',t)$，则 $\psi\in C_c^\infty(a,b)$、$\lVert\psi\rVert_{L^\infty}\leqslant1$，且 $\psi'(t)=\phi_{x_k}(x',t)$；当 $x'\notin K$ 时 $\psi\equiv0$。由 Fubini 定理与\cref{theorem:ch05-5-21}，% XREF internal
+\begin{align*}
+\int_{\mathbb{R}^n}f\phi_{x_k}\diff x=\int_{\mathbb{R}^{n-1}}\Bigl(\int_a^b f_k(x',t)\psi'(t)\diff t\Bigr)\diff x'\leqslant\int_K\operatorname{ess}V_a^b f_k\diff x',
+\end{align*}
+其中被积函数在 $K$ 外为零。集 $K$ 是紧集 $\spt(\phi)$ 在投影 $(x_1,\cdots,x_n)\mapsto(x_1,\cdots,x_{k-1},x_{k+1},\cdots,x_n)$ 下的像，故为紧集。% XREF internal
+对 $\phi\in C_c^\infty(\mathbb{R}^n;\mathbb{R}^n)$（$\lvert\phi\rvert\leqslant1$）写 $\diver\phi=\sum_{k=1}^n\phi^k_{x_k}$，并对每个分量用上述估计，得 $\int_{\mathbb{R}^n}f\diver\phi\diff x$ 被 $\sum_{k=1}^n\int_{K_k}\operatorname{ess}V_a^b f_k\diff x'$ 控制，右端有限。由于每个紧集 $V\subset\subset\mathbb{R}^n$ 上的检验向量场都满足上述条件，按 $\BV_{\loc}(\mathbb{R}^n)$ 的定义得 $f\in\BV_{\loc}(\mathbb{R}^n)$。
+
+% SUPPLEMENT: parent=theorem:ch05-5-22; kind=motivation; 说明判据为何把 n 维 BV_loc 化归为一维本质变差，以及必要性与充分性两个方向各自的机制
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-22-动机}
+本定理给出 $\BV_{\loc}(\mathbb{R}^n)$ 的「沿直线」判据：只需检查平行于各坐标轴的直线上，一元本质变差在每个紧集上可积。结合\cref{theorem:ch05-5-21}，这等于说 $f$ 的变差测度在每个紧集上有限当且仅当它沿每个坐标方向的截面变差在每个紧集上可积，从而把 $n$ 维判定化归为一维计算。% XREF internal
+两个方向的机制不同。必要性方向沿直线使用磨光：光滑函数的本质变差等于其切向导数的绝对值沿直线的积分，于是问题化为估计 $\int_C\lvert Df^\varepsilon\rvert\diff x$，而它被 $\lvert Df\rvert$ 在稍大紧集上的质量控制；再用 Fatou 引理与本质变差关于 $L^1$ 收敛的下半连续性过渡到 $f$ 本身。充分性方向沿直线作分部积分：检验向量场的第 $k$ 个分量 $\phi^k_{x_k}$ 沿第 $k$ 条坐标方向是一个一元试验函数的导数，故\cref{theorem:ch05-5-21}把对应的积分用 $\int_K\operatorname{ess}V_a^b f_k\diff x'$ 控制；对 $k$ 求和即得 $\BV_{\loc}$ 所需的全部估计。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-22; kind=hypotheses; 逐条分析局部可积性、三重全称量词、有限区间、方向指标与局部版本的作用与不可减弱性
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-22-条件}
+\begin{enumerate}[(i)]
+\item 条件 $f\in L^1_{\loc}(\mathbb{R}^n)$ 使每个截面上的一元函数在 $\mathcal{L}^1$-a.e. $x'$ 处局部可积，从而使\cref{theorem:ch05-5-21}与本质变差的定义可用；它也是 $\BV_{\loc}(\mathbb{R}^n)$ 定义中的前提。% XREF internal
+\item 条件含三重全称量词：对每个 $k$、每个有限区间 $(a,b)$ 与每个紧集 $K$。三者都不能减弱为单个取值。对固定的 $K$ 与 $(a,b)$，证明中只控制了柱集 $C$ 上的变差，而 $\BV_{\loc}$ 要求每个紧集上的变差有限；对固定的 $k$，只能控制第 $k$ 个偏导数分量，而散度是各分量之和。
+\item 区间端点要求 $-\infty<a<b<\infty$ 有限。这是因为\cref{theorem:ch05-5-21}的估计与 $\int_K$ 的 Fubini 计算都在有限区间上进行；端点无穷的情形由「对一切有限 $(a,b)$ 成立」与本质变差关于区间单调取上确界而自动得到，故不必单列。% XREF internal
+\item 结论是局部版本 $\BV_{\loc}(\mathbb{R}^n)$ 而非 $\BV(\mathbb{R}^n)$：条件只控制各紧集上的积分，不控制 $\lVert Df\rVert(\mathbb{R}^n)$。若 $f\in\BV(\mathbb{R}^n)$，则条件成立并额外有 $\lVert Df\rVert(\mathbb{R}^n)<\infty$。
+\item 当 $n=1$ 时 $\mathbb{R}^{n-1}$ 为单点集，紧集 $K$ 只能取该单点，条件退化为 $\operatorname{ess}V_a^b f<\infty$ 对一切有限 $-\infty<a<b<\infty$ 成立，这正是\cref{theorem:ch05-5-21}的一维判据。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\end{document}

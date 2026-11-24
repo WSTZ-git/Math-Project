@@ -23,7 +23,7 @@
 
 设 $P\in\mathbb{N}$ 为参数个数，参数空间 $\mathcal{W}\subseteq\mathbb{R}^{P}$，模型由映射 $y(\cdot;\mathbf{w}):\mathcal{X}\to\mathcal{Y}$ 与参数 $\mathbf{w}\in\mathcal{W}$ 给出，则 $\mathbf{w}$ 称为该模型的\textbf{权重}（weight）。设 $\mathcal{A}:(\mathcal{X}\times\mathcal{Y})^{N}\to\mathcal{W}$ 为映射，若 $\mathbf{w}$ 按
 \begin{align*}
-  \mathbf{w}=\mathcal{A}\bigl((x_1,t_1),\dots,(x_N,t_N)\bigr)
+  \mathbf{w}=\mathcal{A}\bigl((x_1,t_1),\cdots,(x_N,t_N)\bigr)
 \end{align*}
 取值，则 $\mathcal{A}$ 称为\textbf{学习算法}（learning algorithm），按 $\mathcal{A}$ 由训练集确定 $\mathbf{w}$ 的过程称为\textbf{学习}（learning）或\textbf{训练}（training）。
 \end{definition}
@@ -93,13 +93,13 @@
 在上面讨论的两个应用中，神经网络学会了将输入（皮肤图像或氨基酸序列）转换成输出（病变分类或蛋白质的三维结构）。现在我们来看一个不同的例子：训练数据是一组样本图像，训练后的神经网络能生成类似的新图像。与病变分类和蛋白质结构预测的例子不同，这些训练图像是没有标注的，这样的训练属于无监督学习。\cref{figure:ch01-生成人脸}展示了一些由深度神经网络生成的合成图像，该深度神经网络是在拍摄于摄影棚单色背景下的人脸图像集上进行训练的。这些合成图像质量极高，很难将它们和真人照片区分开来。
 
 \begin{definition}[无监督学习]\label{definition:ch01-无监督学习}
-设 $N\in\mathbb{N}$，输入空间 $\mathcal{X}$，参数空间 $\mathcal{W}\subseteq\mathbb{R}^{P}$（$P\in\mathbb{N}$），$x_1,\dots,x_N\in\mathcal{X}$ 为训练样本。若学习算法 $\mathcal{A}:\mathcal{X}^{N}\to\mathcal{W}$ 的输入只有 $x_1,\dots,x_N$，即训练不使用任何人工给出的目标值，则相应的学习问题称为\textbf{无监督学习}（unsupervised learning），$\mathcal{A}$ 称为无监督学习算法。
+设 $N\in\mathbb{N}$，输入空间 $\mathcal{X}$，参数空间 $\mathcal{W}\subseteq\mathbb{R}^{P}$（$P\in\mathbb{N}$），$x_1,\cdots,x_N\in\mathcal{X}$ 为训练样本。若学习算法 $\mathcal{A}:\mathcal{X}^{N}\to\mathcal{W}$ 的输入只有 $x_1,\cdots,x_N$，即训练不使用任何人工给出的目标值，则相应的学习问题称为\textbf{无监督学习}（unsupervised learning），$\mathcal{A}$ 称为无监督学习算法。
 \end{definition}
 
 这种模型可以生成与训练数据不同但又有类似统计特性的结果，所以被称为生成式模型。这种方法的一个变体能根据输入的文本字符串（称为提示词，prompt）生成反映文本语义的图像（参见\cref{chapter:ch10-卷积网络}）。我们用生成式AI（generative AI）这个术语来描述那些能生成图像、视频、音频、文本、候选药物分子或其他形态信息的深度学习模型。
 
 \begin{definition}[生成式模型、提示词与生成式AI]\label{definition:ch01-生成式模型与提示词}
-设样本空间 $\mathcal{X}\subseteq\mathbb{R}^{D}$（$D\in\mathbb{N}$），$(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X:\Omega\to\mathcal{X}$ 服从未知分布 $p_{\mathrm{data}}$，$x_1,\dots,x_N$ 为 $X$ 的 $N$ 个独立观测；设 $\{p_{\boldsymbol{\theta}}:\boldsymbol{\theta}\in\Theta\}$ 为一族 $\mathcal{X}$ 上的概率分布，其参数 $\boldsymbol{\theta}$ 由 $x_1,\dots,x_N$ 确定，$d$ 为 $\mathcal{X}$ 上概率分布之间的全变差距离。
+设样本空间 $\mathcal{X}\subseteq\mathbb{R}^{D}$（$D\in\mathbb{N}$），$(\Omega,\mathcal{F},\mathbb{P})$ 为概率空间，$X:\Omega\to\mathcal{X}$ 服从未知分布 $p_{\mathrm{data}}$，$x_1,\cdots,x_N$ 为 $X$ 的 $N$ 个独立观测；设 $\{p_{\boldsymbol{\theta}}:\boldsymbol{\theta}\in\Theta\}$ 为一族 $\mathcal{X}$ 上的概率分布，其参数 $\boldsymbol{\theta}$ 由 $x_1,\cdots,x_N$ 确定，$d$ 为 $\mathcal{X}$ 上概率分布之间的全变差距离。
 \begin{enumerate}
   \item 给定容差 $\varepsilon\in(0,1)$。若 $d(p_{\boldsymbol{\theta}},p_{\mathrm{data}})\leqslant\varepsilon$ 且存在从 $p_{\boldsymbol{\theta}}$ 采样的算法，则 $\{p_{\boldsymbol{\theta}}\}$ 连同其采样过程称为\textbf{生成式模型}（generative model）；
   \item 设 $\Sigma$ 为有限字符集，$\Sigma^{*}$ 为 $\Sigma$ 上长度有限的字符串集合。若 $c\in\Sigma^{*}$ 作为条件输入模型，模型给出条件分布 $p_{\boldsymbol{\theta}}(\cdot\mid c)$ 并可由该分布采样，则 $c$ 称为\textbf{提示词}（prompt）；
@@ -134,7 +134,7 @@
 \begin{enumerate}
   \item $p_{\boldsymbol{\theta}}$ 由有限个可微层复合而成；
   \item 参数个数 $L$ 与预训练语料规模均大于预先给定的阈值；
-  \item 对每个 $T\geqslant1$ 与每个 $w_{1:T}=(w_{1},\dots,w_{T})\in\mathcal{V}^{T}$，模型给出条件分布 $p_{\boldsymbol{\theta}}(\cdot\mid w_{1:T})\in\Delta(\mathcal{V})$ 并可由该分布采样，
+  \item 对每个 $T\geqslant1$ 与每个 $w_{1:T}=(w_{1},\cdots,w_{T})\in\mathcal{V}^{T}$，模型给出条件分布 $p_{\boldsymbol{\theta}}(\cdot\mid w_{1:T})\in\Delta(\mathcal{V})$ 并可由该分布采样，
 \end{enumerate}
 则该模型称为\textbf{大语言模型}（Large Language Model, LLM）。其中“丰富的内部表征”“语义属性”属于非形式化描述，本定义不赋予其独立含义。
 \end{definition}
@@ -142,7 +142,7 @@
 有一类重要的大语言模型称为自回归（autoregressive）语言模型，它们能够输出语言，因此属于生成式AI的一种。这类模型以一个词序列作为输入，生成这个词序列最可能的下一个词，我们可以把末尾添加了新词的扩展序列再输入到模型中，让它生成后续的词，重复这个过程，就会得到越来越长的词序列。这样的模型还可以输出一个特殊的“停止”词，来表示文本生成的结束，这样就使得模型在输出一定长度的文本后停止。此时，用户可以在词序列的末尾添加自定义的词序列，然后将完整的词序列重新输入模型以触发生成后续的词。通过这种方式，人们就可以和神经网络对话了。
 
 \begin{definition}[自回归语言模型]\label{definition:ch01-自回归语言模型}
-设 $\mathcal{V}$ 为有限词表，$\mathcal{V}^{*}=\bigcup_{T\geqslant1}\mathcal{V}^{T}$，$p_{\boldsymbol{\theta}}:\mathcal{V}^{*}\to\Delta(\mathcal{V})$ 为参数 $\boldsymbol{\theta}\in\mathbb{R}^{L}$ 给出的条件分布，其中 $p_{\boldsymbol{\theta}}(w\mid w_{1:t})$ 表示前缀为 $w_{1:t}=(w_{1},\dots,w_{t})$ 时下一个词为 $w$ 的概率，$w_{1:0}$ 表示空序列。若对每个 $T\geqslant1$ 与每个 $w_{1:T}\in\mathcal{V}^{T}$ 有
+设 $\mathcal{V}$ 为有限词表，$\mathcal{V}^{*}=\bigcup_{T\geqslant1}\mathcal{V}^{T}$，$p_{\boldsymbol{\theta}}:\mathcal{V}^{*}\to\Delta(\mathcal{V})$ 为参数 $\boldsymbol{\theta}\in\mathbb{R}^{L}$ 给出的条件分布，其中 $p_{\boldsymbol{\theta}}(w\mid w_{1:t})$ 表示前缀为 $w_{1:t}=(w_{1},\cdots,w_{t})$ 时下一个词为 $w$ 的概率，$w_{1:0}$ 表示空序列。若对每个 $T\geqslant1$ 与每个 $w_{1:T}\in\mathcal{V}^{T}$ 有
 \begin{align*}
   p_{\boldsymbol{\theta}}(w_{1:T})=\prod_{t=1}^{T}p_{\boldsymbol{\theta}}(w_{t}\mid w_{1:t-1}),
 \end{align*}
@@ -152,7 +152,7 @@
 这类模型可以在大型文本数据集上通过提取训练对（training pair）进行训练。训练对的输入是随机选定的词序列，输出是已知的下一个词。这是自监督学习的一个例子，在自监督学习中，模型学习从输入到输出映射函数，有标注的输出是从输入训练数据中自动获取的，无须进行另外的人工标注。这种方法能把多种来源的大量文本作为大型训练集，从而训练出超大规模神经网络。
 
 \begin{definition}[训练对与自监督学习]\label{definition:ch01-自监督学习}
-设 $N\in\mathbb{N}$，输入空间 $\mathcal{X}$，目标空间 $\mathcal{Y}$，$g:\mathcal{X}\to\mathcal{Y}$ 为固定的、由数据生成方式确定的映射，$x_1,\dots,x_N\in\mathcal{X}$。若第 $n$ 个训练样本为 $(x_n,t_n)$ 且 $t_n=g(x_n)$ 由 $x_n$ 经 $g$ 自动得到、无须人工标注，则这样的样本对称为\textbf{训练对}（training pair），$g$ 称为\textbf{自监督目标}。若学习算法 $\mathcal{A}:(\mathcal{X}\times\mathcal{Y})^{N}\to\mathcal{W}$ 只以 $\{(x_n,g(x_n))\}_{n=1}^{N}$ 为输入来确定权重 $\mathbf{w}\in\mathcal{W}\subseteq\mathbb{R}^{P}$（$P\in\mathbb{N}$），则这一学习方式称为\textbf{自监督学习}（self-supervised learning）。
+设 $N\in\mathbb{N}$，输入空间 $\mathcal{X}$，目标空间 $\mathcal{Y}$，$g:\mathcal{X}\to\mathcal{Y}$ 为固定的、由数据生成方式确定的映射，$x_1,\cdots,x_N\in\mathcal{X}$。若第 $n$ 个训练样本为 $(x_n,t_n)$ 且 $t_n=g(x_n)$ 由 $x_n$ 经 $g$ 自动得到、无须人工标注，则这样的样本对称为\textbf{训练对}（training pair），$g$ 称为\textbf{自监督目标}。若学习算法 $\mathcal{A}:(\mathcal{X}\times\mathcal{Y})^{N}\to\mathcal{W}$ 只以 $\{(x_n,g(x_n))\}_{n=1}^{N}$ 为输入来确定权重 $\mathbf{w}\in\mathcal{W}\subseteq\mathbb{R}^{P}$（$P\in\mathbb{N}$），则这一学习方式称为\textbf{自监督学习}（self-supervised learning）。
 \end{definition}
 
 一些专家认为，展现出非凡能力的大语言模型是通用人工智能的雏形（Bubeck et al., 2023），本书后面将详细讨论这类模型（参见\cref{chapter:ch12-Transformer与注意力机制}）。接下来，我们给出一个基于GPT-4（OpenAI, 2023）的语言生成示例。GPT-4能够针对如下提示做出响应：“请以莎士比亚戏剧风格，通过两个角色对话展开争论的方式证明素数有无穷多个”，其输出的译文见本页脚注。\footnote{译者用大模型翻译的原文图1.4（原书此处为截图）：\\

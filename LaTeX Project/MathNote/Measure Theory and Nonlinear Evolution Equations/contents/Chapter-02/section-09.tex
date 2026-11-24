@@ -2,161 +2,598 @@
 \graphicspath{{\subfix{./image/}}{\subfix{../../image/}}} % 指定图片引用路径,后续可以直接使用图片文件名
 % 如果图片存放在上级目录,则使用 ../../image/ 作为备用路径
 
-% 例如:
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.3\textwidth]{图.png}
-% \caption{}
-% \label{figure:图}
-% \end{figure}
-% 注意:上述\label{}一定要放在\caption{}之后,否则引用图片序号会只会显示??.
-
 \begin{document}
 
 \section{微分}\label{section:ch02-微分}
 
-\subsection{Radon--Nikod\'ym 定理}\label{subsection:ch02-RadonNikodym}
+本节讨论测度的微分。给定可测空间 $(X,\mathscr A)$ 上的测度 $\mu$ 与带号测度 $\nu$，若 $\nu$ 关于 $\mu$ 绝对连续，则 $\nu$ 可写成某个密度关于 $\mu$ 的积分，这一表示由\cref{theorem:ch02-RadonNikodym}给出，密度称为 Radon--Nikodým 导数。当 $\mu$ 为 $\mathbb R^N$ 中开集上的 Radon 测度时，密度还可由球平均的极限逐点算出，相应的微分理论见\cref{subsection:ch02-RN微分}，其技术基础是覆盖定理与\cref{corollary:ch02-Lebesgue点}所刻画的 Lebesgue 点。
 
-设 $(X,\mathscr A)$ 为可测空间，$\mu,\nu:\mathscr A\to[0,\infty)$ 为测度。回顾 $\nu$ 关于 $\mu$ 绝对连续的定义：$\nu\ll\mu$ 当且仅当对所有 $E\in\mathscr A$（$\mu(E)=0$）有 $\nu(E)=0$。下列经典结果成立。
+\subsection{Radon--Nikodým 导数}\label{subsection:ch02-RadonNikodym}
 
-\begin{theorem}[Radon--Nikod\'ym]\label{theorem:ch02-RadonNikodym}
-设 $(X,\mathscr A,\mu)$ 为 $\sigma$-有限测度空间，$\nu:\mathscr A\to[0,\infty)$ 为测度，$\nu\ll\mu$。则存在 $h\in L^1_{\mathrm{loc}}(X,\mathscr A,\mu)$，使
+先固定记号。设 $(X,\mathscr A,\mu)$ 为测度空间。$\mathscr A$-可测函数 $f:X\to[-\infty,\infty]$ 称为拟可积的，若 $\int_Xf^+\,\mathrm{d}\mu$ 与 $\int_Xf^-\,\mathrm{d}\mu$ 中至少一个有限，此时 $\int_Xf\,\mathrm{d}\mu\triangleq\int_Xf^+\,\mathrm{d}\mu-\int_Xf^-\,\mathrm{d}\mu$ 有定义（\cref{definition:ch02-可积拟可积}）。设 $\mu$ 为正测度、$\nu$ 为 $\mathscr A$ 上的带号测度，$\nu\ll\mu$ 表示对每个 $E\in\mathscr A$，$\mu(E)=0$ 蕴含 $\nu(E)=0$（\cref{definition:ch01-相互奇异绝对连续}）。
+
+\begin{theorem}[Radon--Nikodým]\label{theorem:ch02-RadonNikodym}
+设 $(X,\mathscr A,\mu)$ 为 $\sigma$-有限测度空间，即存在序列 $\{X_n\}\subseteq\mathscr A$ 使 $X=\bigcup_{n=1}^\infty X_n$ 且 $\mu(X_n)<\infty$ 对每个 $n\in\mathbb N$ 成立；设 $\nu$ 为 $\mathscr A$ 上的带号测度（\cref{definition:ch01-带号测度}），且 $\nu\ll\mu$。则存在拟可积函数 $\hat\nu:X\to[-\infty,\infty]$，使
 \begin{align}
-\nu(E)=\int_E h\,\mathrm{d}\mu\quad\text{对所有 }E\in\mathscr A. \label{align:ch02-2.75}
+\nu(E)=\int_E\hat\nu\,\mathrm{d}\mu\quad\text{对每个 }E\in\mathscr A, \label{align:ch02-2.75}
 \end{align}
-此外，$h$ 在 $\mu$-a.e. 意义下唯一。
-\end{theorem}
-
-\cref{theorem:ch02-RadonNikodym}可推广到 $\sigma$-有限带号测度 $\nu$。对两个 $\sigma$-有限测度 $\mu,\nu:\mathscr A\to[0,\infty)$，下列 Jordan 类型分解成立。
-
-\begin{theorem}[Lebesgue 分解]\label{theorem:ch02-Lebesgue分解}
-设 $(X,\mathscr A)$ 为可测空间，$\mu,\nu:\mathscr A\to[0,\infty)$ 为 $\sigma$-有限测度。则存在唯一对 $\{\nu_a,\nu_s\}\subseteq\mathscr A$，使 $\nu=\nu_a+\nu_s$，$\nu_a\ll\mu$，$\nu_s\perp\mu$。
-\end{theorem}
-
-有下列 Riesz 表示定理（见\cref{theorem:ch02-RieszC0}）的相伴结果。
-
-\begin{proposition}\label{proposition:ch02-绝对连续泛函}
-\label{remark:ch02-绝对连续}
-设 $X$ 为局部紧 Hausdorff 空间，$\mu\in\mathscr R^+_f(X)$。设 $\nu\in\mathscr R^+(X)$，$\nu\ll\mu$。则存在 $h\in L^1_{\mathrm{loc}}(X,\mathscr B,\mu)$，使
-\begin{align}
-\int_X f\,\mathrm{d}\nu=\int_X fh\,\mathrm{d}\mu\quad\text{对所有 }f\in C_c(X). \label{align:ch02-2.76}
-\end{align}
-\end{proposition}
-
-\begin{proof}
-因 $\nu\ll\mu$，$\nu$ 在 $\mu$ 零测集上取值为零。由 Radon--Nikod\'ym 定理（见\cref{theorem:ch02-RadonNikodym}），存在 $h\in L^1_{\mathrm{loc}}(X,\mathscr B,\mu)$，使\eqref{align:ch02-2.75}成立，结论由标准逼近（见\cref{remark:ch02-简单函数稠密}）得到。
-\end{proof}
-
-\subsection{$\mathbb R^N$ 上的微分}\label{subsection:ch02-RN微分}
-
-现考虑 $X=\mathbb R^N$、$\mu=\lambda_N$ 的情形。先证明函数
-\begin{align*}
-\mathbb R^N\ni x\mapsto\int_{B(x,r)}f\,\mathrm{d}\lambda_N
-\end{align*}
-在 $f\in L^1_{\mathrm{loc}}(\mathbb R^N)$ 下的连续性。
-
-\begin{lemma}\label{lemma:ch02-球积分连续}
-设 $f\in L^1_{\mathrm{loc}}(\mathbb R^N)$。则函数 $g:\mathbb R^N\to\mathbb R$，$g(x)\triangleq \int_{B(x,r)}f\,\mathrm{d}\lambda_N$，对任意 $r>0$ 连续。
-\end{lemma}
-
-\begin{proof}
-设 $x_n\to x$。则 $f\chi_{B(x_n,r)}\to f\chi_{B(x,r)}$ $\lambda_N$-a.e.，因对任意 $y\in\partial B(x,r)$，$|\{y-x_n\}|-|\{y-x\}|\to0$。此外，若 $|x_n-x|<r$，则 $B(x_n,r)\subseteq B(x,2r)$，故由控制收敛定理得
-\begin{align*}
-g(x_n)=\int_{\mathbb R^N}f\chi_{B(x_n,r)}\,\mathrm{d}\lambda_N\to\int_{\mathbb R^N}f\chi_{B(x,r)}\,\mathrm{d}\lambda_N=g(x).
-\end{align*}
-\end{proof}
-
-下列 Vitali 覆盖引理是微分理论的基础。
-
-\begin{lemma}[Vitali 覆盖]\label{lemma:ch02-Vitali覆盖}
-设 $E\subseteq\mathbb R^N$，$\{B_\alpha\}_{\alpha\in I}$ 为 $E$ 的开球覆盖族。则存在两两不交的可数子族 $\{B_{\alpha_n}\}\subseteq\{B_\alpha\}$，使
-\begin{align*}
-\lambda_N(E\setminus\bigcup_{n=1}^\infty B_{\alpha_n})=0.
-\end{align*}
-此外，若 $\lambda_N(E)<\infty$，则对任意 $\epsilon>0$，子族可选为使
-\begin{align*}
-\lambda_N\left(E\setminus\bigcup_{n=1}^\infty B_{\alpha_n}\right)<\epsilon.
-\end{align*}
-\end{lemma}
-
-\begin{proof}
-设 $\lambda_N(E)<\infty$（一般情形由 $\sigma$-有限性归结）。令 $s\triangleq \sup\{\operatorname{diam}B_\alpha\mid\alpha\in I\}$。不妨设 $s<\infty$，否则直接取有限个球即可。
-
-递归选取：令 $B_{\alpha_1}$ 使 $\operatorname{diam}B_{\alpha_1}>s/2$。已选 $B_{\alpha_1},\cdots ,B_{\alpha_n}$，令
-\begin{align*}
-s_n\triangleq \sup\{\operatorname{diam}B_\alpha\mid B_\alpha\cap B_{\alpha_k}=\varnothing ,\ k=1,\cdots ,n\},
-\end{align*}
-取 $B_{\alpha_{n+1}}$ 使 $\operatorname{diam}B_{\alpha_{n+1}}>s_n/2$。若集合为空则停止。
-
-现证 $E\subseteq\bigcup_n 5B_{\alpha_n}$，其中 $5B$ 为同心五倍半径球。固定 $x\in E$。存在某球 $B_\alpha$ 使 $x\in B_\alpha$。若 $B_\alpha$ 被选取，则结论成立；否则存在最小 $n$ 使 $B_\alpha\cap B_{\alpha_n}\neq\varnothing $。由选取，$\operatorname{diam}B_{\alpha_n}\geqslant\operatorname{diam}B_\alpha/2$，故 $B_\alpha\subseteq 5B_{\alpha_n}$。
-
-于是 $E\setminus\bigcup_n B_{\alpha_n}\subseteq\bigcup_n(5B_{\alpha_n}\setminus B_{\alpha_n})$。因球两两不交，
-\begin{align*}
-\sum_n\lambda_N(B_{\alpha_n})\leqslant\lambda_N\left(\bigcup_n B_{\alpha_n}\right)\leqslant\lambda_N(E)<\infty,
-\end{align*}
-故 $\sum_n\lambda_N(5B_{\alpha_n}\setminus B_{\alpha_n})=(5^N-1)\sum_n\lambda_N(B_{\alpha_n})<\infty$，余项随 $n\to\infty$ 趋于零。
-\end{proof}
-
-下列结果是 Lebesgue 微分定理。
-
-\begin{theorem}[Lebesgue 微分]\label{theorem:ch02-Lebesgue微分}\label{corollary:ch02-Lebesgue点}\label{corollary:ch02-Lebesgue微分}
-设 $f\in L^1_{\mathrm{loc}}(\mathbb R^N)$。则对 $\lambda_N$-a.e. $x\in\mathbb R^N$，
-\begin{align}
-\lim_{r\to0}\frac1{\lambda_N(B(x,r))}\int_{B(x,r)}|f(y)-f(x)|\,\mathrm{d}y=0. \label{align:ch02-2.77}
-\end{align}
-特别地，
-\begin{align}
-\lim_{r\to0}\frac1{\lambda_N(B(x,r))}\int_{B(x,r)}f(y)\,\mathrm{d}y=f(x)\quad\text{对 }\lambda_N\text{-a.e. }x. \label{align:ch02-2.78}
-\end{align}
-\end{theorem}
-
-\begin{proof}
-固定 $g\in C_c(\mathbb R^N)$，则\eqref{align:ch02-2.77}对 $f-g$ 与 $g$ 分别考虑。对 $g$，由连续性显然成立；故只需证对每个 $f\in L^1_{\mathrm{loc}}(\mathbb R^N)$，
-\begin{align*}
-E_\alpha\triangleq \left\{x\in\mathbb R^N\ \middle|\ \limsup_{r\to0}\frac1{\lambda_N(B(x,r))}\int_{B(x,r)}|f(y)-f(x)|\,\mathrm{d}y>\alpha\right\}
-\end{align*}
-的测度为零。
-
-对任意 $\epsilon>0$，由 $C_c$ 稠密性（见\cref{lemma:ch02-Cc稠密}），存在 $g\in C_c(\mathbb R^N)$ 使 $\|f-g\|_1<\epsilon$。令 $h=f-g$。则
-\begin{align*}
-\frac1{\lambda_N(B(x,r))}\int_{B(x,r)}|h(y)-h(x)|\,\mathrm{d}y
-\leqslant\frac1{\lambda_N(B(x,r))}\int_{B(x,r)}|h(y)|\,\mathrm{d}y+|h(x)|.
-\end{align*}
-定义极大函数
-\begin{align*}
-\mathcal M h(x)\triangleq \sup_{r>0}\frac1{\lambda_N(B(x,r))}\int_{B(x,r)}|h(y)|\,\mathrm{d}y.
-\end{align*}
-由 Hardy--Littlewood--Wiener 极大不等式（见文献\cite{ref40} Theorem VIII.3.1），$\lambda_N(\{x\mid\mathcal M h(x)>\alpha/2\})\leqslant C\|h\|_1/\alpha$。又由 Chebyshev，$\lambda_N(\{x\mid|h(x)|>\alpha/2\})\leqslant2\|h\|_1/\alpha$。故
-\begin{align*}
-\lambda_N(E_\alpha)\leqslant\frac{C\|h\|_1}{\alpha}+\frac{2\|h\|_1}{\alpha}\leqslant\frac{(C+2)\epsilon}{\alpha}.
-\end{align*}
-由 $\epsilon$ 的任意性得 $\lambda_N(E_\alpha)=0$。结论成立。
-\end{proof}
-
-\begin{corollary}\label{corollary:ch02-带号Radon微分}
-设 $\mu$ 为 $\mathbb R^N$ 上局部有限带号 Radon 测度。则对 $\lambda_N$-a.e. $x$，极限
-\begin{align*}
-\frac{\mathrm{d}\mu}{\mathrm{d}\lambda_N}(x)\triangleq \lim_{r\to0}\frac{\mu(B(x,r))}{\lambda_N(B(x,r))}
-\end{align*}
-存在有限值。函数 $\mathrm{d}\mu/\mathrm{d}\lambda_N$ 为 $\mu$ 关于 $\lambda_N$ 的 Radon--Nikod\'ym 导数在绝对连续部分上的限制。
-\end{corollary}
-
-\cref{theorem:ch02-Lebesgue微分}的一个重要应用是绝对连续函数的刻画。回顾区间 $[a,b]$ 上函数 $f$ 为绝对连续的定义：对任意 $\epsilon>0$，存在 $\delta>0$，使对任意互不相交区间族 $(a_i,b_i)$（$i=1,\cdots ,n$），当 $\sum_i(b_i-a_i)<\delta$ 时有 $\sum_i|f(b_i)-f(a_i)|<\epsilon$。
-
-\begin{theorem}\label{theorem:ch02-绝对连续刻画}
-设 $f:[a,b]\to\mathbb R$。则下列命题等价：
+且这样的 $\hat\nu$ 在 $\mu$-a.e. 意义下唯一。此外成立：
 \begin{enumerate}[(i)]
-\item $f$ 绝对连续；
-\item $f$ 几乎处处可微，$f'\in L^1([a,b])$，且
-\begin{align*}
-f(x)-f(a)=\int_a^x f'(t)\,\mathrm{d}t\quad\text{对所有 }x\in[a,b].
-\end{align*}
+\item $\hat\nu\geqslant0$ $\mu$-a.e. 于 $X$ 当且仅当 $\nu$ 为正测度；
+\item $\hat\nu\in L^1(X,\mathscr A,\mu)$ 当且仅当 $\nu$ 有限，即 $|\nu|(X)<\infty$；
+\item 可取 $\hat\nu$ 为实值函数（即 $\hat\nu:X\to\mathbb R$）当且仅当 $\nu$ 为 $\sigma$-有限，即存在 $\{A_n\}\subseteq\mathscr A$ 使 $X=\bigcup_{n=1}^\infty A_n$ 且 $|\nu|(A_n)<\infty$ 对每个 $n\in\mathbb N$ 成立。
 \end{enumerate}
 \end{theorem}
 
-本微分理论的进一步发展、包括 Sobolev 函数的刻画，将在后续章节中展开。
+% SUPPLEMENT: parent=theorem:ch02-RadonNikodym; kind=motivation; location=定理 2.9.1 后的注记 remark:ch02-绝对连续; basis=原书定理 2.9.1 + 绝对连续性的定量形式、$\sigma$-有限性的作用、三条附加断言的边界与唯一性的含义（含 $\mu$ 非 $\sigma$-有限时存在性失效的构造）
+\begin{remark}\phantomsection\label{remark:ch02-绝对连续}
+\begin{enumerate}[(i)]
+\item 绝对连续性的定量形式。设 $\nu$ 为 $\mathscr A$ 上的有限带号测度且 $\nu\ll\mu$。则对任意 $\varepsilon>0$ 存在 $\delta>0$，使每个 $E\in\mathscr A$ 满足 $\mu(E)<\delta$ 时都有 $|\nu|(E)<\varepsilon$，特别地 $\lim_{\mu(E)\to0}\nu(E)=0$（\cref{lemma:ch01-绝对连续epsilon-delta}）。对 $f\in L^1(X,\mathscr A,\mu)$ 取 $\nu(E)\triangleq\int_E|f|\,\mathrm{d}\mu$，即得
+\begin{align*}
+\lim_{\mu(E)\to0}\int_E|f|\,\mathrm{d}\mu=0;
+\end{align*}
+对取值于 Banach 空间 $Y$ 的 Bochner 可积函数 $f$，取 $\nu(E)\triangleq\int_E\|f\|_Y\,\mathrm{d}\mu$ 得到同一结论 $\lim_{\mu(E)\to0}\int_E\|f\|_Y\,\mathrm{d}\mu=0$。这一致绝对连续性正是积分序列在 $L^1$ 中强收敛的 Vitali 判别法的组成部分，故它比逐集合的绝对连续性\eqref{align:ch02-2.75}更强，也是本定理的典型用法。
+\item 引入动机。测度 $\nu$ 关于参照测度 $\mu$ 的“密度”是微积分中密度概念的测度论形式：若 $\nu(E)=\int_Eg\,\mathrm{d}\lambda_N$，则 $g$ 就是 $\nu$ 关于 Lebesgue 测度的密度。定理断言，只要 $\mu$ 是 $\sigma$-有限的且 $\nu\ll\mu$，这样的密度总存在；它把关于 $\nu$ 的积分化为关于 $\mu$ 的积分，从而使 Radon--Nikodým 导数成为测度之间“换元”的载体。
+\item $\sigma$-有限性的作用。存在性证明分三步（$\mu,\nu$ 都有限；$\mu$ 有限；$\mu$ $\sigma$-有限）逐层约化，第三步用一列有限测度的块 $\{X_n\}$ 把问题拼接起来，并在每块上调用第二步；唯一性用到 $\mu$ 在有限测度集上的截断。若 $\mu$ 不是 $\sigma$-有限的，存在性可能失效：取 $X=[0,1]$、$\mathscr A=\mathscr B([0,1])$、$\mu$ 为计数测度（非 $\sigma$-有限）、$\nu=\lambda_1$，则 $\mu(E)=0$ 仅当 $E=\varnothing$，故 $\nu\ll\mu$；但若 $\nu(E)=\int_E\hat\nu\,\mathrm{d}\mu$ 对一切 $E$ 成立，取 $E=\{x\}$ 得 $\hat\nu(x)=\nu(\{x\})=0$ 对每个 $x$ 成立，于是 $\hat\nu\equiv0$，从而 $\nu\equiv0$，矛盾。
+\item 三条附加断言的边界。断言 (ii) 中“有限”不可减弱为 $\sigma$-有限：取 $X=\mathbb R$、$\mu=\nu=\lambda_1$，则 $\hat\nu\equiv1$ 而 $\int_{\mathbb R}1\,\mathrm{d}\lambda_1=\infty$。断言 (iii) 说明取无穷值的密度恰对应非 $\sigma$-有限的 $\nu$：取 $\mu=\lambda_1$，并令 $\nu(E)\triangleq\infty$（$\lambda_1(E)>0$）、$\nu(E)\triangleq0$（$\lambda_1(E)=0$），则 $\nu\ll\mu$ 而 $\nu$ 非 $\sigma$-有限，其密度只能取 $\infty$ 值。
+\item 唯一性的含义。\eqref{align:ch02-2.75}只确定 $\hat\nu$ 在 $\mu$-a.e. 意义下的类，故定理中的“唯一”应理解为：任意两个满足\eqref{align:ch02-2.75}的拟可积函数在 $\mu$-a.e. 意义下相等。改变 $\hat\nu$ 在一个 $\mu$-零测集上的取值不改变\eqref{align:ch02-2.75}；反之由\cref{theorem:ch02-RadonNikodym}的证明，这种改变是唯一允许的自由度。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[Radon--Nikodým 导数]\label{definition:ch02-RadonNikodym导数}
+设 $(X,\mathscr A,\mu)$ 为 $\sigma$-有限测度空间，$\nu$ 为 $\mathscr A$ 上的带号测度，$\nu\ll\mu$，$\hat\nu:X\to[-\infty,\infty]$ 为\cref{theorem:ch02-RadonNikodym}给出的、满足\eqref{align:ch02-2.75}的拟可积函数。称 $\hat\nu$（更确切地，其在 $\mu$-a.e. 意义下的等价类）为 $\nu$ 关于 $\mu$ 的 Radon--Nikodým 导数（或密度），并记
+\begin{align*}
+\hat\nu\equiv\frac{\mathrm{d}\nu}{\mathrm{d}\mu}.
+\end{align*}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch02-RadonNikodym导数; kind=motivation; location=定义 2.9.1 后的注记; basis=原书定义 2.9.1 + 记号与微积分中密度的对应、链式法则与变量替换式的作用、无穷值与不存在性的边界
+\begin{remark}\phantomsection\label{remark:ch02-RadonNikodym导数}
+\begin{enumerate}[(i)]
+\item 命名与内容。记号 $\mathrm{d}\nu/\mathrm{d}\mu$ 与微积分中 $g=\mathrm{d}\nu/\mathrm{d}x$ 的用法一致：当 $\mu=\lambda_N$ 且 $\nu(E)=\int_Eg\,\mathrm{d}\lambda_N$ 时 $\mathrm{d}\nu/\mathrm{d}\lambda_N=g$（\cref{remark:ch02-测度密度}）。定义只把\eqref{align:ch02-2.75}中的函数重新命名，本身不增加内容，但它使“密度”可以作为一个独立对象参与运算，例如链式法则
+\begin{align*}
+\frac{\mathrm{d}\rho}{\mathrm{d}\mu}=\frac{\mathrm{d}\rho}{\mathrm{d}\nu}\cdot\frac{\mathrm{d}\nu}{\mathrm{d}\mu}
+\end{align*}
+（\cref{remark:ch02-RN链式}）与变量替换公式（\eqref{align:ch02-2.13}）。
+\item 与 Jordan 分解的相容性。对带号测度 $\nu$，由\cref{lemma:ch01-绝对连续等价}，$\nu^+\ll\mu$ 且 $\nu^-\ll\mu$，故
+\begin{align*}
+\frac{\mathrm{d}\nu}{\mathrm{d}\mu}=\frac{\mathrm{d}\nu^+}{\mathrm{d}\mu}-\frac{\mathrm{d}\nu^-}{\mathrm{d}\mu}\quad\mu\text{-a.e.},
+\end{align*}
+即求导与 Jordan 分解可交换。因此带号测度的密度问题可化归为两个正测度的密度之差。
+\item 适用边界。\eqref{align:ch02-2.75}只确定 $\mathrm{d}\nu/\mathrm{d}\mu$ 的 $\mu$-a.e. 等价类，不具备逐点意义；当 $\nu$ 非 $\sigma$-有限时密度取 $\pm\infty$ 值（\cref{theorem:ch02-RadonNikodym}(iii)），此时 $\mathrm{d}\nu/\mathrm{d}\mu$ 不能与实数无条件相加或相乘；当 $\mu$ 非 $\sigma$-有限时密度可能不存在（\cref{remark:ch02-绝对连续}(iii) 的反例）。
+\end{enumerate}
+\end{remark}
+
+\cref{theorem:ch02-RadonNikodym}的证明需要下列结果。它断言：若两个有限测度满足 $\nu\leqslant\mu$，则 $\nu$ 的密度可取为 $[0,1]$ 值函数。
+
+\begin{lemma}[von Neumann]\label{lemma:ch02-vonNeumann}
+设 $(X,\mathscr A,\mu)$ 为有限测度空间，即 $\mu(X)<\infty$；设 $\nu$ 为 $\mathscr A$ 上的有限测度，且 $\nu\leqslant\mu$，即 $\nu(E)\leqslant\mu(E)$ 对每个 $E\in\mathscr A$ 成立。则存在 $\mathscr A$-可测函数 $h:X\to[0,1]$，使
+\begin{align}
+\nu(E)=\int_Eh\,\mathrm{d}\mu\quad\text{对每个 }E\in\mathscr A. \label{align:ch02-2.76}
+\end{align}
+\end{lemma}
+
+% SUPPLEMENT: parent=lemma:ch02-vonNeumann; kind=proof; location=引理 2.9.2 后的证明; basis=原书证明中“Clearly, h≥0”与 L² 泛函有界性估计被压缩，补出良定义性、Cauchy--Schwarz 链与 0≤h≤1 的逐集合论证
+\begin{proof}
+由 $\nu\leqslant\mu$ 得 $\nu\ll\mu$，故在 $X$ 上 $\mu$-a.e. 相等的两个函数也 $\nu$-a.e. 相等，从而泛函
+\begin{align*}
+\Lambda:L^2(X,\mathscr A,\mu)\to\mathbb R,\qquad\Lambda(f)\triangleq\int_Xf\,\mathrm{d}\nu
+\end{align*}
+良定义且线性。对 $f\in L^2(X,\mathscr A,\mu)$，由 Cauchy--Schwarz 不等式与 $\nu\leqslant\mu$ 得
+\begin{align*}
+|\Lambda(f)|\leqslant\int_X|f|\,\mathrm{d}\nu\leqslant[\nu(X)]^{\frac12}\Bigl(\int_X|f|^2\,\mathrm{d}\nu\Bigr)^{\frac12}\leqslant[\mu(X)]^{\frac12}\Bigl(\int_X|f|^2\,\mathrm{d}\mu\Bigr)^{\frac12},
+\end{align*}
+其中第一、二个不等号分别用到 $\bigl|\int_Xf\,\mathrm{d}\nu\bigr|\leqslant\int_X|f|\,\mathrm{d}\nu$ 与 $\int_X|f|\cdot1\,\mathrm{d}\nu\leqslant\bigl(\int_X|f|^2\,\mathrm{d}\nu\bigr)^{1/2}\bigl(\int_X1\,\mathrm{d}\nu\bigr)^{1/2}$，第三个不等号用到 $\nu(X)\leqslant\mu(X)$ 与 $|f|^2\geqslant0$ 的单调性。故 $\Lambda$ 为有界线性泛函，由 Hilbert 空间 $L^2(X,\mathscr A,\mu)$ 上的 Riesz 表示定理，存在 $h\in L^2(X,\mathscr A,\mu)$ 使
+\begin{align}
+\int_Xf\,\mathrm{d}\nu=\int_Xfh\,\mathrm{d}\mu\quad\text{对每个 }f\in L^2(X,\mathscr A,\mu). \label{align:ch02-2.77}
+\end{align}
+在\eqref{align:ch02-2.77}中取 $f=\chi_E$（$E\in\mathscr A$）得\eqref{align:ch02-2.76}。
+
+再证 $h$ 可取为 $[0,1]$ 值。若 $\mu(\{h<0\})>0$，在\eqref{align:ch02-2.76}中取 $E=\{h<0\}$：因 $h<0$ 于 $E$ 且 $\mu(E)>0$，故
+\begin{align*}
+\nu(E)=\int_Eh\,\mathrm{d}\mu<0,
+\end{align*}
+与 $\nu$ 为正测度矛盾，故 $h\geqslant0$ $\mu$-a.e.。若 $\mu(\{h>1\})>0$，取 $E=\{h>1\}$，则由 $h>1$ 于 $E$ 与 $\mu(E)>0$ 得
+\begin{align*}
+\nu(E)=\int_Eh\,\mathrm{d}\mu>\int_E1\,\mathrm{d}\mu=\mu(E),
+\end{align*}
+与 $\nu\leqslant\mu$ 矛盾，故 $h\leqslant1$ $\mu$-a.e.。在 $\mu$-零测集上修改 $h$ 的取值使其属于 $[0,1]$，所得函数仍 $\mathscr A$-可测且\eqref{align:ch02-2.76}不变。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch02-vonNeumann; kind=motivation; location=引理 2.9.2 后的注记; basis=原书引理 2.9.2 + 该引理在定理 2.9.1 证明中的作用、有限性假设的必要性分析与去掉 ν≤μ 的反例
+\begin{remark}\phantomsection\label{remark:ch02-vonNeumann}
+\begin{enumerate}[(i)]
+\item 引入动机。引理给出 Radon--Nikodým 定理的一个可直接构造的特殊情形：当 $\nu\leqslant\mu$ 且两者都有限时，密度可由 $L^2$ 空间的自对偶性显式得到，而不必经过分解或逼近。\cref{theorem:ch02-RadonNikodym}的证明正是先把一般情形化为这一情形：取 $\rho\triangleq\mu+\nu$，则 $\mu\leqslant\rho$ 且 $\nu\leqslant\rho$，于是一个 $L^2(\rho)$ 中的函数同时给出 $\mu$ 与 $\nu$ 关于 $\rho$ 的密度，二者之比即为所求。
+\item 各假设的作用。$\mu(X)<\infty$ 与 $\nu(X)<\infty$ 使\eqref{align:ch02-2.77}中的泛函有界：估计的两端出现 $[\nu(X)]^{1/2}$ 与 $[\mu(X)]^{1/2}$，若 $\mu(X)=\infty$ 则右端无意义（$\infty\cdot0$ 为不定式），$L^2$ 论证不能直接进行。$\nu\leqslant\mu$ 既给出 $\nu\ll\mu$（使 $\Lambda$ 在 $\mu$-a.e. 类上良定义），又给出 $h\leqslant1$；两条都不可省。
+\item 边界：去掉 $\nu\leqslant\mu$ 的后果。若仅有 $\nu\ll\mu$ 与 $\nu(X)<\infty$，则 $h$ 仍存在但不必属于 $[0,1]$：取 $\nu=2\mu$ 得 $h\equiv2$。此时结论退化为 $\nu$ 的密度存在，即已是\cref{theorem:ch02-RadonNikodym}在 $\nu$ 有限时的内容。
+\item $h$ 的确定程度。$h$ 由 $\nu$ 与 $\mu$ 在 $\mu$-a.e. 意义下唯一确定（\cref{theorem:ch02-RadonNikodym}的唯一性）；又 $\int_Xh\,\mathrm{d}\mu=\nu(X)\leqslant\mu(X)<\infty$，故 $h\in L^1(X,\mathscr A,\mu)$，这与下面的注记 (ii) 一致。
+\end{enumerate}
+\end{remark}
+
+下列注记把\eqref{align:ch02-2.76}从示性函数推广到非负可测函数，该形式在\cref{theorem:ch02-RadonNikodym}的证明中用于把关于 $\mathrm{d}\mu$ 的积分改写为关于 $\mathrm{d}\rho$ 的积分。
+
+\begin{remark}\phantomsection\label{remark:ch02-vonNeumann积分}
+设\cref{lemma:ch02-vonNeumann}的假设成立，$h:X\to[0,1]$ 为\eqref{align:ch02-2.76}中的 $\mathscr A$-可测函数。
+\begin{enumerate}[(i)]
+\item 对每个 $\mathscr A$-可测函数 $f:X\to[0,\infty]$ 与每个 $E\in\mathscr A$ 有
+\begin{align}
+\int_Ef\,\mathrm{d}\nu=\int_Efh\,\mathrm{d}\mu. \label{align:ch02-2.78}
+\end{align}
+\item $h\in L^1(X,\mathscr A,\mu)$。反之，按记号滥用，若存在 $h\in L^1(X,\mathscr A,\mu)$ 使\eqref{align:ch02-2.76}成立，则称 $\nu\in L^1(X)$。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch02-vonNeumann积分; kind=proof; location=注记 2.9.1 后的证明; basis=原书 (2.78) 未给证明，补出“示性函数—简单函数—单调收敛”三步与 $h\in L^1$ 的论证
+\begin{proof}
+(i) 先设 $f=\chi_A$（$A\in\mathscr A$）。则 $\int_Ef\,\mathrm{d}\nu=\nu(E\cap A)$，而 $\int_Efh\,\mathrm{d}\mu=\int_{E\cap A}h\,\mathrm{d}\mu$，故由\eqref{align:ch02-2.76}（以 $E\cap A$ 为积分集）二者相等。由积分的线性性，\eqref{align:ch02-2.78}对非负简单函数成立。设 $f:X\to[0,\infty]$ 为 $\mathscr A$-可测，取非负简单函数列 $\{s_n\}$ 使 $s_n\uparrow f$ 于 $X$（\cref{theorem:ch02-简单逼近}）。则 $s_nh\uparrow fh$，由单调收敛定理（\cref{theorem:ch02-BeppoLevi}）与已证情形得
+\begin{align*}
+\int_Ef\,\mathrm{d}\nu=\lim_{n\to\infty}\int_Es_n\,\mathrm{d}\nu=\lim_{n\to\infty}\int_Es_nh\,\mathrm{d}\mu=\int_Efh\,\mathrm{d}\mu.
+\end{align*}
+(ii) 在\eqref{align:ch02-2.78}中取 $E=X$、$f\equiv1$，得 $\nu(X)=\int_Xh\,\mathrm{d}\mu\leqslant\mu(X)<\infty$，故 $h\in L^1(X,\mathscr A,\mu)$。反向的断言是记号约定：若存在 $h\in L^1(X,\mathscr A,\mu)$ 使\eqref{align:ch02-2.76}成立，则 $\nu$ 由 $h$ 与 $\mu$ 完全确定，此时记 $\nu\in L^1(X)$。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch02-RN链式}
+设 $(X,\mathscr A,\mu)$ 为 $\sigma$-有限测度空间，$\nu$ 与 $\rho$ 为 $\mathscr A$ 上的有限带号测度，且 $\rho\ll\nu$、$\nu\ll\mu$。则 $\rho\ll\mu$，且
+\begin{align*}
+\frac{\mathrm{d}\rho}{\mathrm{d}\mu}=\frac{\mathrm{d}\rho}{\mathrm{d}\nu}\cdot\frac{\mathrm{d}\nu}{\mathrm{d}\mu}\quad\mu\text{-a.e. 于 }X.
+\end{align*}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch02-RN链式; kind=proof; location=注记 2.9.2 后的证明; basis=原书“from (2.13) we plainly obtain” + 变量替换公式 (2.13) 与 Radon--Nikodým 导数唯一性的独立推导
+\begin{proof}
+由 $\rho\ll\nu$、$\nu\ll\mu$ 及绝对连续性的传递性得 $\rho\ll\mu$。记 $f\triangleq\mathrm{d}\nu/\mathrm{d}\mu\in L^1(X,\mathscr A,\mu)$、$g\triangleq\mathrm{d}\rho/\mathrm{d}\nu\in L^1(X,\mathscr A,\nu)$，二者存在且可积分别由 $\nu$ 与 $\rho$ 的有限性给出（\cref{theorem:ch02-RadonNikodym}(ii)）。对 $E\in\mathscr A$，由变量替换公式（\eqref{align:ch02-2.13}）(ii)（取 $f$ 为密度、$g$ 为被积函数）与 $\rho$ 的密度表示得
+\begin{align*}
+\rho(E)=\int_Eg\,\mathrm{d}\nu=\int_Egf\,\mathrm{d}\mu.
+\end{align*}
+另一方面 $\rho(E)=\int_E(\mathrm{d}\rho/\mathrm{d}\mu)\,\mathrm{d}\mu$。于是 $L^1(X,\mathscr A,\mu)$ 中的两个函数 $gf$ 与 $\mathrm{d}\rho/\mathrm{d}\mu$ 在一切可测集上的积分相等，由 $\sigma$-有限性下密度的唯一性（\cref{theorem:ch02-RadonNikodym}）得 $gf=\mathrm{d}\rho/\mathrm{d}\mu$ $\mu$-a.e.。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-RadonNikodym; kind=proof; location=定理 2.9.1 的证明; basis=原书引用 [45, Satz IV.4.5] 的唯一性事实与三步存在性证明中“取序列”“由单调收敛定理”“由上一段的二分性”等跳步，逐项补出
+\begin{proof}[\cref{theorem:ch02-RadonNikodym}的证明]
+唯一性。设拟可积函数 $\hat\nu_1,\hat\nu_2:X\to[-\infty,\infty]$ 都满足\eqref{align:ch02-2.75}。取 $\{X_n\}\subseteq\mathscr A$ 使 $\mu(X_n)<\infty$ 且 $X_n\uparrow X$。固定 $n,k\in\mathbb N$ 并令
+\begin{align*}
+A_{n,k}\triangleq X_n\cap\{|\hat\nu_1|\leqslant k\}\cap\{|\hat\nu_2|\leqslant k\}.
+\end{align*}
+对每个 $E\in\mathscr A$，$E\subseteq A_{n,k}$，两函数在 $E$ 上有界，故 $\int_E\hat\nu_1\,\mathrm{d}\mu=\nu(E)=\int_E\hat\nu_2\,\mathrm{d}\mu$，即 $\int_E(\hat\nu_1-\hat\nu_2)\,\mathrm{d}\mu=0$。在其中取 $E=A_{n,k}\cap\{\hat\nu_1>\hat\nu_2\}$，被积函数于 $E$ 上非负且积分零，故 $\mu(E)=0$；取 $E=A_{n,k}\cap\{\hat\nu_1<\hat\nu_2\}$ 同样得 $\mu(E)=0$。于是 $\hat\nu_1=\hat\nu_2$ $\mu$-a.e. 于 $A_{n,k}$，对 $n,k$ 取并得
+\begin{align*}
+\hat\nu_1=\hat\nu_2\quad\mu\text{-a.e. 于 }\{|\hat\nu_1|<\infty,\ |\hat\nu_2|<\infty\}.
+\end{align*}
+再排除两密度在正测度集上取不同无穷值的情形。设 $B\subseteq X_n$ 可测且 $\hat\nu_1=+\infty$ 于 $B$。则对每个 $E\in\mathscr A$，$E\subseteq B$，$\mu(E)>0$，有 $\nu(E)=\int_E\hat\nu_1\,\mathrm{d}\mu=+\infty$。若 $\mu(B\cap\{|\hat\nu_2|<\infty\})>0$，取可测 $E\subseteq B\cap\{|\hat\nu_2|<\infty\}$ 使 $0<\mu(E)<\infty$，并令 $E_k\triangleq E\cap\{|\hat\nu_2|\leqslant k\}$。则 $E_k\uparrow E$，且由\eqref{align:ch02-2.75}与 $|\hat\nu_2|\leqslant k$ 于 $E_k$ 得 $|\nu(E_k)|\leqslant k\mu(E_k)<\infty$；另一方面 $\nu(E)=\infty$ 且 $\nu(E_k)\uparrow\nu(E)$，故 $\nu(E_k)>0$ 对充分大的 $k$ 成立，于是取这样的 $k$ 得 $0<\nu(E_k)<\infty$ 与 $\nu(E_k)=+\infty$ 矛盾。故 $\mu(B\cap\{|\hat\nu_2|<\infty\})=0$，即 $\hat\nu_2=+\infty$ $\mu$-a.e. 于 $B$。对 $\hat\nu_2$ 取 $-\infty$ 值的情形及 $\hat\nu_1$ 的相应情形对称处理，即得 $\hat\nu_1=\hat\nu_2$ $\mu$-a.e. 于 $X$。
+
+存在性。由\cref{lemma:ch01-绝对连续等价}，$\nu\ll\mu$ 当且仅当 $|\nu|\ll\mu$，即 $\nu^+\ll\mu$ 且 $\nu^-\ll\mu$。故只需讨论 $\nu$ 为正测度的情形：一般情形下对 $\nu^+$ 与 $\nu^-$ 分别取密度 $\hat\nu^\pm$，则 $\hat\nu\triangleq\hat\nu^+-\hat\nu^-$ 拟可积且满足\eqref{align:ch02-2.75}。以下设 $\nu$ 为正测度，分三步。
+
+a) $\mu$ 与 $\nu$ 都有限。令 $\rho\triangleq\mu+\nu$，则 $\rho$ 为有限测度且 $\mu\leqslant\rho$、$\nu\leqslant\rho$。由\cref{lemma:ch02-vonNeumann}，存在 $\mathscr A$-可测函数 $g,h:X\to[0,1]$ 使
+\begin{align*}
+\mu(E)=\int_Eg\,\mathrm{d}\rho,\qquad\nu(E)=\int_Eh\,\mathrm{d}\rho\quad(E\in\mathscr A).
+\end{align*}
+令 $N\triangleq\{g=0\}$。则 $\mu(N)=0$，由 $\nu\ll\mu$ 得 $\nu(N)=0$。定义
+\begin{align*}
+f(x)\triangleq
+\begin{cases}
+0, & x\in N,\\[1mm]
+\dfrac{h(x)}{g(x)}, & x\in N^c.
+\end{cases}
+\end{align*}
+则 $f$ 为 $\mathscr A$-可测非负函数。对 $E\in\mathscr A$，由 $\nu(N)=0$、$\{g>0\}=N^c$ 以及\eqref{align:ch02-2.78}（取该式中的 $\mu,\nu,h$ 分别为 $\rho,\mu,g$）得
+\begin{align*}
+\nu(E)=\nu(E\cap N^c)=\int_{E\cap N^c}h\,\mathrm{d}\rho=\int_{E\cap N^c}fg\,\mathrm{d}\rho=\int_Efg\,\mathrm{d}\rho=\int_Ef\,\mathrm{d}\mu.
+\end{align*}
+故\eqref{align:ch02-2.75}在此情形下以 $\hat\nu\triangleq f$ 成立。又 $\nu$ 正且有限，故 $\hat\nu\geqslant0$，且由 $\int_X\hat\nu\,\mathrm{d}\mu=\nu(X)<\infty$ 得 $\hat\nu\in L^1(X,\mathscr A,\mu)$。
+
+b) $\mu$ 有限，$\nu$ 为正测度且 $\sigma$-有限。令
+\begin{align*}
+\alpha\triangleq\sup\{\mu(E)\mid E\in\mathscr A,\ \nu(E)<\infty\},
+\end{align*}
+则 $\alpha\leqslant\mu(X)<\infty$。对每个 $n\in\mathbb N$ 取 $E_n'\in\mathscr A$ 使 $\nu(E_n')<\infty$ 且 $\mu(E_n')>\alpha-1/n$（由 $\alpha$ 的定义可取），并令 $E_n\triangleq\bigcup_{k=1}^nE_k'$。则 $\{E_n\}$ 非降，$\nu(E_n)<\infty$（有限个有限测度集之并），且 $\mu(E_n)\geqslant\mu(E_n')>\alpha-1/n$，故 $\mu(E_n)\to\alpha$。令 $E_\infty\triangleq\bigcup_{n=1}^\infty E_n$，则由测度关于非降序列的连续性得 $\mu(E_\infty)=\lim_n\mu(E_n)=\alpha$。
+
+现设 $E\in\mathscr A$，$E\subseteq E_\infty^c$，且 $\nu(E)<\infty$。因 $E_n\cap E=\varnothing$ 且 $\nu(E_n\cup E)\leqslant\nu(E_n)+\nu(E)<\infty$，故 $E_n\cup E$ 属于 $\alpha$ 的定义中所取上确界的集合，从而
+\begin{align*}
+\alpha+\mu(E)=\lim_{n\to\infty}\mu(E_n)+\mu(E)=\lim_{n\to\infty}\mu(E_n\cup E)\leqslant\alpha,
+\end{align*}
+即 $\mu(E)=0$，再由 $\nu\ll\mu$ 得 $\nu(E)=0$。因此对每个 $E\in\mathscr A$，$E\subseteq E_\infty^c$，或者 $\mu(E)=\nu(E)=0$，或者 $\mu(E)>0$ 且 $\nu(E)=\infty$。
+
+令 $F_n\triangleq E_n\setminus E_{n-1}$（$n\in\mathbb N$，其中 $E_0\triangleq\varnothing$，故 $F_1=\varnothing$）。则 $\{F_n\}\subseteq\mathscr A$ 两两不交，$E_\infty=\bigcup_{n=1}^\infty F_n$，且 $\nu(F_n)=\nu(E_n)-\nu(E_{n-1})<\infty$ 对每个 $n\in\mathbb N$ 成立。令 $\nu_n\triangleq\nu\lfloor F_n$（$n\in\mathbb N$）、$\nu_\infty\triangleq\nu\lfloor E_\infty^c$。由可数可加性，
+\begin{align}
+\sum_{n=1}^\infty\nu_n(E)=\sum_{n=1}^\infty\nu(F_n\cap E)=\nu(E_\infty\cap E)\quad\text{对每个 }E\in\mathscr A. \label{align:ch02-2.79}
+\end{align}
+对每个 $n\in\mathbb N$，$\nu_n(X)=\nu(F_n)<\infty$ 且 $\nu_n\ll\nu\ll\mu$，故由 a) 存在非负函数 $f_n\in L^1(X,\mathscr A,\mu)$ 使
+\begin{align}
+\nu_n(E)=\int_Ef_n\,\mathrm{d}\mu\quad\text{对每个 }E\in\mathscr A, \label{align:ch02-2.80}
+\end{align}
+且 $f_n=0$ 于 $F_n^c$（由 $\nu_n$ 集中于 $F_n$ 及密度的唯一性）。再令
+\begin{align*}
+g(x)\triangleq
+\begin{cases}
+0, & x\in E_\infty,\\
+\infty, & x\in E_\infty^c.
+\end{cases}
+\end{align*}
+则 $g$ 为 $\mathscr A$-可测非负函数。由\eqref{align:ch02-2.79}、\eqref{align:ch02-2.80}与单调收敛定理得
+\begin{align}
+\nu(E)&=\nu(E_\infty\cap E)+\nu(E_\infty^c\cap E)\notag\\
+&=\sum_{n=1}^\infty\nu_n(E)+\nu(E_\infty^c\cap E)\notag\\
+&=\sum_{n=1}^\infty\int_Ef_n\,\mathrm{d}\mu+\nu(E_\infty^c\cap E)=\int_E\Bigl(\sum_{n=1}^\infty f_n\Bigr)\mathrm{d}\mu+\nu(E_\infty^c\cap E)\notag\\
+&=\int_E\Bigl(\sum_{n=1}^\infty f_n+g\Bigr)\mathrm{d}\mu. \label{align:ch02-2.81}
+\end{align}
+末步用到 $\nu(E_\infty^c\cap E)=\int_Eg\,\mathrm{d}\mu$：若 $\mu(E_\infty^c\cap E)=0$，则左端为 $0$（因 $\nu\ll\mu$），而右端 $g$ 只在 $\mu$-零测集 $E_\infty^c\cap E$ 上取 $\infty$，故亦为 $0$；若 $\mu(E_\infty^c\cap E)>0$，则由上一段的二分性 $\nu(E_\infty^c\cap E)=\infty$，而 $\int_Eg\,\mathrm{d}\mu=\infty$。于是\eqref{align:ch02-2.75}在此情形下以 $\hat\nu\triangleq\sum_{n=1}^\infty f_n+g$ 成立。
+
+c) $\mu$ 为 $\sigma$-有限，$\nu$ 为正测度且 $\nu\ll\mu$。取两两不交的 $\{X_n\}\subseteq\mathscr A$ 使 $X=\bigcup_{n=1}^\infty X_n$ 且 $\mu(X_n)<\infty$ 对每个 $n\in\mathbb N$ 成立。对固定的 $n$，测度 $\mu_n\triangleq\mu\lfloor X_n$ 与 $\nu_n\triangleq\nu\lfloor X_n$ 满足 b) 的全部假设：$\mu_n$ 有限，$\nu_n$ 为正测度且 $\sigma$-有限，$\nu_n\ll\mu_n$。故存在 $\mathscr A$-可测函数 $\hat h_n:X\to[0,\infty]$ 使
+\begin{align}
+\nu_n(E)=\int_{E\cap X_n}\hat h_n\,\mathrm{d}\mu\quad\text{对每个 }E\in\mathscr A. \label{align:ch02-2.82}
+\end{align}
+对 $n\in\mathbb N$ 定义 $h_n(x)\triangleq\hat h_n(x)$（$x\in X_n$）、$h_n(x)\triangleq0$（$x\in X_n^c$）。则对每个 $n$ 与 $E\in\mathscr A$ 有 $\int_Eh_n\,\mathrm{d}\mu=\int_{E\cap X_n}\hat h_n\,\mathrm{d}\mu$，故由\eqref{align:ch02-2.82}与单调收敛定理
+\begin{align*}
+\nu(E)=\sum_{n=1}^\infty\nu(E\cap X_n)=\sum_{n=1}^\infty\nu_n(E)=\sum_{n=1}^\infty\int_Eh_n\,\mathrm{d}\mu=\int_E\Bigl(\sum_{n=1}^\infty h_n\Bigr)\mathrm{d}\mu.
+\end{align*}
+于是\eqref{align:ch02-2.75}以 $\hat\nu\triangleq\sum_{n=1}^\infty h_n$ 成立。
+
+最后证 (i)--(iii)。
+
+(i) 若 $\hat\nu\geqslant0$ $\mu$-a.e.，则对每个 $E\in\mathscr A$ 有 $\nu(E)=\int_E\hat\nu\,\mathrm{d}\mu\geqslant0$，故 $\nu$ 为正测度。反之设 $\nu$ 为正测度而 $\mu(\{\hat\nu<0\})>0$。在 $E\triangleq\{\hat\nu<0\}$ 上 $\hat\nu^+=0$ 而 $\hat\nu^->0$，故 $\int_E\hat\nu\,\mathrm{d}\mu=-\int_E\hat\nu^-\,\mathrm{d}\mu<0$，与 $\nu(E)\geqslant0$ 矛盾，故 $\hat\nu\geqslant0$ $\mu$-a.e.。
+
+(ii) 若 $\hat\nu\in L^1(X,\mathscr A,\mu)$，则对每个 $E\in\mathscr A$ 有
+\begin{align*}
+|\nu(E)|\leqslant\int_E|\hat\nu|\,\mathrm{d}\mu\leqslant\|\hat\nu\|_1<\infty,
+\end{align*}
+故 $\nu$ 有限。反之设 $\nu$ 有限。则 $\nu^\pm$ 为有限正测度且 $\nu^\pm\ll\mu$，对它们分别应用已证的存在性结论，得密度 $\hat\nu^\pm\in L^1(X,\mathscr A,\mu)$；由唯一性，$\hat\nu=\hat\nu^+-\hat\nu^-$ $\mu$-a.e.，故 $\hat\nu\in L^1(X,\mathscr A,\mu)$。
+
+(iii) 设 $\hat\nu:X\to\mathbb R$。取非降序列 $\{E_n\}\subseteq\mathscr A$ 使 $\bigcup_{n=1}^\infty E_n=X$ 且 $\mu(E_n)<\infty$，并令 $F_n\triangleq E_n\cap\{|\hat\nu|\leqslant n\}$。则 $\{F_n\}$ 非降、$\bigcup_{n=1}^\infty F_n=X$，且
+\begin{align*}
+|\nu(F_n)|\leqslant\int_{F_n}|\hat\nu|\,\mathrm{d}\mu\leqslant n\mu(E_n)<\infty\quad(n\in\mathbb N),
+\end{align*}
+故 $\nu$ 为 $\sigma$-有限。反之设 $\nu$ 为 $\sigma$-有限。取两两不交的 $\{X_n\}\subseteq\mathscr A$ 使 $\bigcup_{n=1}^\infty X_n=X$ 且 $|\nu(X_n)|<\infty$；此时 $\nu\lfloor X_n$ 为有限带号测度，故 $|\nu|(X_n)=|\nu\lfloor X_n|(X_n)<\infty$。令 $\nu_n\triangleq\nu\lfloor X_n$。则 $\nu_n$ 为有限带号测度且 $\nu_n\ll\mu$，由 (ii) 它存在密度 $\hat\nu_n\in L^1(X_n,\mathscr A,\mu)$，从而 $|\hat\nu_n(x)|<\infty$ 对 $\mu$-a.e. $x\in X_n$ 成立。在 $X_n^c$ 上令 $\hat\nu_n\triangleq0$。因 $\nu=\sum_{n=1}^\infty\nu_n$，由唯一性得 $\hat\nu=\sum_{n=1}^\infty\hat\nu_n$ $\mu$-a.e.，故（必要时在 $\mu$-零测集上修改其定义）$\hat\nu$ 可取为 $X$ 上的实值拟可积函数。证毕。
+\end{proof}
+
+\subsection{$\mathbb R^N$ 上 Radon 测度的微分}\label{subsection:ch02-RN微分}
+
+本小节处理带号 Radon 测度。按\cref{definition:ch02-带号Radon测度泛函}与\cref{remark:ch02-带号Radon注}，带号 Radon 测度可与一对相互奇异的（正）Radon 测度的有序偶 $\mu\equiv(\mu_1,\mu_2)$ 等同。这样的带号 Radon 测度不必是\cref{definition:ch01-带号测度}意义下的带号测度，因为 $\mu_1$ 与 $\mu_2$ 不必有限，故一般其差无定义；但对每个 Borel 集 $E\subset\subset U$，$\mu\lfloor E\triangleq\mu_1\lfloor E-\mu_2\lfloor E$ 是有限带号测度。当 $\mu_1$ 与 $\mu_2$ 中至少一个有限时，两种概念一致。
+
+设 $\mu$ 与 $\nu$ 为开集 $U\subseteq\mathbb R^N$ 上的（正）Radon 测度。对 $x_0\in U$ 令
+\begin{align}
+\overline{D}_{\mu\nu}(x_0)&\triangleq
+\begin{cases}
+\limsup\limits_{r\to0^+}\dfrac{\nu(B_r(x_0))}{\mu(B_r(x_0))}, & \mu(B_r(x_0))>0\text{ 对所有 }r>0,\\[2mm]
+\infty, & \text{存在 }r>0\text{ 使 }\mu(B_r(x_0))=0,
+\end{cases}
+\label{align:ch02-2.83}
+\end{align}
+\begin{align}
+\underline{D}_{\mu\nu}(x_0)&\triangleq
+\begin{cases}
+\liminf\limits_{r\to0^+}\dfrac{\nu(B_r(x_0))}{\mu(B_r(x_0))}, & \mu(B_r(x_0))>0\text{ 对所有 }r>0,\\[2mm]
+\infty, & \text{存在 }r>0\text{ 使 }\mu(B_r(x_0))=0,
+\end{cases}
+\label{align:ch02-2.84}
+\end{align}
+其中 $B_r(x_0)$ 表示以 $x_0$ 为心、$r$ 为半径的开球。把开球换成闭球，这两个定义不变（见\cref{remark:ch02-测度微分}(ii)）。
+
+\begin{definition}\label{definition:ch02-测度微分}
+设 $U\subseteq\mathbb R^N$ 为开集。
+\begin{enumerate}[(i)]
+\item 设 $\mu$ 与 $\nu$ 为 $U$ 上的（正）Radon 测度，$x_0\in U$，$\overline{D}_{\mu\nu}$ 与 $\underline{D}_{\mu\nu}$ 由\eqref{align:ch02-2.83}与\eqref{align:ch02-2.84}给出。若 $\overline{D}_{\mu\nu}(x_0)=\underline{D}_{\mu\nu}(x_0)<\infty$，则称 $\nu$ 在 $x_0$ 处关于 $\mu$ 可微，其在 $x_0$ 处的导数定义为
+\begin{align}
+D_{\mu\nu}(x_0)\triangleq\lim_{r\to0^+}\frac{\nu(B_r(x_0))}{\mu(B_r(x_0))}. \label{align:ch02-2.85}
+\end{align}
+\item 设 $\mu$ 为 $U$ 上的正 Radon 测度，$\nu\equiv(\nu_1,\nu_2)$ 为 $U$ 上的带号 Radon 测度。若 $\nu_1$ 与 $\nu_2$ 都在 $x_0$ 处关于 $\mu$ 可微，则称 $\nu$ 在 $x_0$ 处关于 $\mu$ 可微，并令
+\begin{align}
+D_{\mu\nu}(x_0)\triangleq D_{\mu\nu_1}(x_0)-D_{\mu\nu_2}(x_0). \label{align:ch02-2.86}
+\end{align}
+\end{enumerate}
+若 $\nu$ 在集合 $V\subseteq U$ 的每一点处关于 $\mu$ 可微，则称 $\nu$ 在 $V$ 上关于 $\mu$ 可微。此时函数 $D_{\mu\nu}:V\to\mathbb R$（在情形 (i) 中非负）称为 $\nu$ 关于 $\mu$ 的导数（或密度）。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch02-测度微分; kind=motivation; location=定义 2.9.2 后的注记; basis=原书定义 2.9.2 + 球平均导数的动机、“开球可换为闭球”的独立验证、偶表示无关性与各假设作用的分析
+\begin{remark}\phantomsection\label{remark:ch02-测度微分}
+\begin{enumerate}[(i)]
+\item 引入动机。Lebesgue 微分定理的测度论形式是：密度的值可由球平均的极限恢复。对 $x_0\in U$ 与 $r>0$，$\nu(B_r(x_0))/\mu(B_r(x_0))$ 是 $\nu$ 在球 $B_r(x_0)$ 上的“平均密度”；\cref{definition:ch02-测度微分}把这一平均值的极限取作 $\nu$ 关于 $\mu$ 在 $x_0$ 处的导数。取 $\mu=\lambda_N$、$\nu(E)=\int_Ef\,\mathrm{d}\lambda_N$ 时即得经典的 Lebesgue 微分定理（\cref{corollary:ch02-Lebesgue点}）。
+\item 开球与闭球。固定 $x_0\in U$，并设 $\mu(B_r(x_0))>0$ 对一切 $r>0$ 成立。由 $B_r(x_0)\subseteq\overline{B}_r(x_0)\subseteq B_{r'}(x_0)$（$0<r<r'$）得 $\nu(B_r)\leqslant\nu(\overline{B}_r)\leqslant\nu(B_{r'})$ 与 $\mu(B_r)\leqslant\mu(\overline{B}_r)\leqslant\mu(B_{r'})$，故
+\begin{align*}
+\frac{\nu(B_r(x_0))}{\mu(B_{r'}(x_0))}\leqslant\frac{\nu(\overline{B}_r(x_0))}{\mu(\overline{B}_r(x_0))}\leqslant\frac{\nu(B_{r'}(x_0))}{\mu(B_r(x_0))}.
+\end{align*}
+令 $r'\downarrow r$，由 $\nu$ 与 $\mu$ 关于非增球序列的连续性（即关于非增集合列的连续性，须注意 $\nu(B_{2r}(x_0))<\infty$）得 $\nu(B_{r'}(x_0))\to\nu(\overline{B}_r(x_0))$、$\mu(B_{r'}(x_0))\to\mu(\overline{B}_r(x_0))$，故上式两端之差趋于 $0$。再令 $r\to0^+$ 即知用开球与用闭球算出的上、下极限分别相同。若存在 $r_0>0$ 使 $\mu(B_{r_0}(x_0))=0$，则\eqref{align:ch02-2.83}与\eqref{align:ch02-2.84}按定义都取 $\infty$，闭球情形同样如此。
+\item 与偶表示无关。由\cref{theorem:ch02-RieszCc}，带号 Radon 测度与相互奇异的正 Radon 测度偶一一对应，故\eqref{align:ch02-2.86}的右端与偶 $(\nu_1,\nu_2)$ 的选取无关：若 $\nu_1-\nu_2=\nu_1'-\nu_2'$，则 $\nu_1+\nu_2'=\nu_1'+\nu_2$，而在导数存在处加性成立，故 $D_{\mu\nu_1}-D_{\mu\nu_2}=D_{\mu\nu_1'}-D_{\mu\nu_2'}$。
+\item 各假设的作用。$\mu,\nu$ 为 Radon 测度（局部有限）保证球上的值有限且关于 $r$ 连续，从而使比值有意义、极限可讨论；$U$ 为开集保证每个 $x_0$ 有球 $B_r(x_0)\subset\subset U$。非退化条件 $\mu(B_r(x_0))>0$（$r>0$）不可省：若 $\mu(B_{r_0}(x_0))=0$，则两个导出数都等于 $\infty$，而“可微”要求导出数有限，故 $\nu$ 在 $x_0$ 处不可微；若 $\overline{D}_{\mu\nu}(x_0)=\underline{D}_{\mu\nu}(x_0)=\infty$，同样不可微。因此“可微”蕴含导数有限。
+\end{enumerate}
+\end{remark}
+
+在本小节的其余部分，与通常约定一样，$(\mathscr B_N\cap U)$-可测函数简称为可测函数。
+
+\begin{theorem}\label{theorem:ch02-Radon测度微分}\label{theorem:ch02-Lebesgue微分}
+设 $U\subseteq\mathbb R^N$ 为开集，$\mu$ 为 $U$ 上的正 Radon 测度，$\nu$ 为 $U$ 上的带号 Radon 测度，$D_{\mu\nu}$ 为\cref{definition:ch02-测度微分}给出的导数。则：
+\begin{enumerate}[(i)]
+\item 导数 $D_{\mu\nu}(x_0)$ 对 $\mu$-a.e. $x_0\in U$ 存在，且 $D_{\mu\nu}$ 在其定义域上为 $(\mathscr B_N\cap U)$-可测；
+\item 若对每个开集 $U'\subset\subset U$ 有 $\nu\lfloor U'\ll\mu\lfloor U'$，则 $D_{\mu\nu}\in L^1_{\mathrm{loc}}(U,\mathscr B_N\cap U,\mu)$，且对每个开集 $U'\subset\subset U$ 与每个 Borel 集 $E\subseteq U'$ 有
+\begin{align}
+\nu(E)=\int_ED_{\mu\nu}\,\mathrm{d}\mu, \label{align:ch02-2.87}
+\end{align}
+并对 $\mu$-a.e. $x_0\in U'$ 有
+\begin{align}
+D_{\mu\nu}(x_0)=\frac{\mathrm{d}(\nu\lfloor U')}{\mathrm{d}\mu}(x_0). \label{align:ch02-2.88}
+\end{align}
+\end{enumerate}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch02-Radon测度微分; kind=motivation; location=定理 2.9.3 后的注记; basis=原书定理 2.9.3 + 与 Radon--Nikodým 定理的关系、局部绝对连续假设的必要性反例、局部化与相对紧性的作用
+% SUPPLEMENT: parent=theorem:ch02-Lebesgue微分; kind=motivation; 别名标签，与 theorem:ch02-Radon测度微分 共用同一条注记
+\begin{remark}\phantomsection\label{remark:ch02-Radon测度微分}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{theorem:ch02-RadonNikodym}断言密度存在但不给出计算方式；\cref{theorem:ch02-Radon测度微分}给出逐点公式：密度就是球平均的极限。断言 (i) 是 Besicovitch 型微分定理经\cref{theorem:ch01-VitaliBesicovitch}实现后的测度论形式，断言 (ii) 则把该极限与 Radon--Nikodým 导数等同起来，从而使两种“密度”概念一致。特别地，取 $\mu=\lambda_N$ 且 $\nu(E)=\int_Ef\,\mathrm{d}\lambda_N$（$f\in L^p_{\mathrm{loc}}(U)$，$p\in[1,\infty)$）时，\eqref{align:ch02-2.97}由此得到（\cref{corollary:ch02-Lebesgue点}(ii)）。
+\item 假设的作用。$\nu\lfloor U'\ll\mu\lfloor U'$ 只假定在每个相对紧开集上成立，而非在整个 $U$ 上成立：若 $\nu$ 在某个紧集上带有 $\mu$-奇异的集中质量，则\eqref{align:ch02-2.87}在含该紧集的开集上失效，但断言 (i) 仍成立，且\eqref{align:ch02-2.88}在 $\mu$-a.e. 点处给出绝对连续部分的密度。$U'$ 相对紧保证 $\mu(U')<\infty$ 与 $|\nu|(U')<\infty$，从而使 $\nu\lfloor U'$ 为有限带号测度、$\mathrm{d}(\nu\lfloor U')/\mathrm{d}\mu$ 有意义。
+\item 边界：局部假设不可省。取 $U=\mathbb{R}$、$\mu=\lambda_1$、$\nu=\delta_0$。则 $\nu\perp\mu$，故不存在开集 $U'\ni0$ 使 $\nu\lfloor U'\ll\mu\lfloor U'$。此时 $D_{\mu\nu}(0)$ 不存在（按定义要求导出数有限，而 $\delta_0(B_r(0))/\lambda_1(B_r(0))=1/(2r)\to\infty$），且\eqref{align:ch02-2.87}对 $E=\{0\}$ 失效：$\nu(\{0\})=1$ 而 $\int_{\{0\}}D_{\mu\nu}\,\mathrm{d}\mu=0$。这与\cref{corollary:ch02-Lebesgue分解}一致：奇异部分不进入密度积分。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch02-RN绝对连续; kind=proof; location=注记 2.9.3 后的证明; basis=原书“it follows that”“The same holds”未给证明，补出相对紧穷竭、单调收敛定理与带号情形的减法定稿
+\begin{remark}\phantomsection\label{remark:ch02-RN绝对连续}
+若 $\mu$ 与 $\nu$ 为开集 $U\subseteq\mathbb R^N$ 上的（正）Radon 测度且 $\nu\ll\mu$，则 $D_{\mu\nu}:U\to[0,\infty]$，且\eqref{align:ch02-2.87}对任意 Borel 集 $E\subseteq U$ 成立。若 $\nu$ 为有限带号测度，则对任意 Borel 集 $E\subseteq U$ 同样成立，此时 $D_{\mu\nu}\in L^1(U,\mathscr B_N\cap U,\mu)$。
+\end{remark}
+
+\begin{proof}
+由 $\nu\ll\mu$ 知对每个开集 $U'\subset\subset U$ 有 $\nu\lfloor U'\ll\mu\lfloor U'$，故\eqref{align:ch02-2.87}对每个 Borel 集 $E\subseteq U'$ 成立（\cref{theorem:ch02-Radon测度微分}(ii)）。取 $U'_k\triangleq U\cap B(0,k)$，则 $U'_k\subset\subset U$ 非降且 $\bigcup_kU'_k=U$。对 Borel 集 $E\subseteq U$，由 $\nu$ 为正测度、\eqref{align:ch02-2.87}与单调收敛定理得
+\begin{align*}
+\nu(E)=\lim_{k\to\infty}\nu(E\cap U'_k)=\lim_{k\to\infty}\int_{E\cap U'_k}D_{\mu\nu}\,\mathrm{d}\mu=\int_ED_{\mu\nu}\,\mathrm{d}\mu,
+\end{align*}
+即\eqref{align:ch02-2.87}对 $E\subseteq U$ 成立；又由 $\nu\ll\mu$ 时 $D_{\mu\nu}\geqslant0$ $\mu$-a.e.，故 $D_{\mu\nu}:U\to[0,\infty]$。若 $\nu$ 为有限带号测度，则 $\nu=\nu^+-\nu^-$，对 $\nu^\pm$ 分别应用上述结论并在一切 Borel 集 $E\subseteq U$ 上相减，即知\eqref{align:ch02-2.87}对 $E\subseteq U$ 成立；又 $\int_UD_{\mu\nu^+}\,\mathrm{d}\mu=\nu^+(U)<\infty$ 且 $\int_UD_{\mu\nu^-}\,\mathrm{d}\mu=\nu^-(U)<\infty$，故 $D_{\mu\nu}\in L^1(U,\mathscr B_N\cap U,\mu)$。
+\end{proof}
+
+\cref{theorem:ch02-Radon测度微分}的证明依赖下列引理，后者是\cref{theorem:ch01-VitaliBesicovitch}的推论。
+
+\begin{lemma}\label{lemma:ch02-微分零测}
+设 $U\subseteq\mathbb R^N$ 为开集，$\mu$ 与 $\nu$ 为 $U$ 上的（正）Radon 测度，$\overline{D}_{\mu\nu}$ 与 $\underline{D}_{\mu\nu}$ 由\eqref{align:ch02-2.83}与\eqref{align:ch02-2.84}给出。则：
+\begin{enumerate}[(i)]
+\item 集合 $\{x_0\in U\mid\underline{D}_{\mu\nu}(x_0)<\overline{D}_{\mu\nu}(x_0)\}$ 与 $\{x_0\in U\mid\overline{D}_{\mu\nu}(x_0)=\infty\}$ 为 $\mu$-零测集；
+\item 集合 $\{x_0\in U\mid\underline{D}_{\mu\nu}(x_0)=0\}$ 为 $\nu$-零测集。
+\end{enumerate}
+\end{lemma}
+
+% SUPPLEMENT: parent=lemma:ch02-微分零测; kind=proof; location=引理 2.9.4 后的证明; basis=原书“It is easily seen”“the result is easily proven”与 (2.92) 的覆盖论证，逐项补出可测性、$\mathbb{Q}_+$ 上的分解 (2.89)--(2.91)、极限过程与 Vitali--Besicovitch 覆盖的细节
+\begin{proof}
+第一段：可测性。固定 $r>0$。对开球，映射 $x\mapsto\mu(B(x,r))$ 与 $x\mapsto\nu(B(x,r))$ 下半连续：若 $x_n\to x$ 且 $y\in B(x,r)$，则当 $n$ 充分大时 $|y-x_n|<r$，即 $y\in B(x_n,r)$，故 $\liminf_n\mu(B(x_n,r))\geqslant\mu(B(x,r))$。对闭球，$x\mapsto\mu(\overline{B}(x,r))$ 上半连续：若 $y\in\overline{B}(x_n,r)$ 对无穷多个 $n$ 成立，则 $|y-x|\leqslant r$，故由 $\mu$ 的局部有限性与关于非增集合列的连续性得 $\limsup_n\mu(\overline{B}(x_n,r))\leqslant\mu(\overline{B}(x,r))$。两种情形下该映射都是 Borel 可测的（\cref{remark:ch02-连续半连续Borel}(iii)）。于是对每个 $r>0$，比值
+\begin{align*}
+q_r(x_0)\triangleq
+\begin{cases}
+\dfrac{\nu(B_r(x_0))}{\mu(B_r(x_0))}, & \mu(B_r(x_0))>0,\\
+\infty, & \mu(B_r(x_0))=0
+\end{cases}
+\end{align*}
+可测：在 $\{\mu(B_r)>0\}$ 上它是两个可测函数之商且分母非零（\cref{corollary:ch02-可测运算}(i)），其补集上取常值 $\infty$。
+
+第二段：把导出数写成可数上确界。由\cref{remark:ch02-测度微分}(ii)，可用闭球计算\eqref{align:ch02-2.83}与\eqref{align:ch02-2.84}。对固定 $x_0$，$r\mapsto\nu(\overline{B}_r(x_0))$ 与 $r\mapsto\mu(\overline{B}_r(x_0))$ 非降且右连续，故在分母为正处比值 $\overline{q}_r(x_0)\triangleq\nu(\overline{B}_r(x_0))/\mu(\overline{B}_r(x_0))$ 关于 $r$ 右连续；于是
+\begin{align*}
+\overline{D}_{\mu\nu}(x_0)=\lim_{k\to\infty}\ \sup_{r\in(0,1/k)\cap\mathbb{Q}}\overline{q}_r(x_0),
+\end{align*}
+右端每个 $\sup$ 是可数族可测函数的上确界，故 $\overline{D}_{\mu\nu}$ 可测；同理 $\underline{D}_{\mu\nu}$ 可测。$D_{\mu\nu}$ 在存在处等于 $\overline{D}_{\mu\nu}$，故也可测。从而所讨论的三个集合都是可测集，以下只需估计其测度。
+
+第三段：化归为 (2.92)。固定紧集 $K\subset U$ 且 $\mu(K)>0$。令 $\mathbb{Q}_+\triangleq\{q\in\mathbb{Q}\mid q>0\}$ 且
+\begin{align*}
+A_\beta\triangleq\{x_0\in K\mid\overline{D}_{\mu\nu}(x_0)\geqslant\beta\},\qquad
+B_\alpha\triangleq\{x_0\in K\mid\underline{D}_{\mu\nu}(x_0)\leqslant\alpha\}.
+\end{align*}
+则
+\begin{align}
+\{x_0\in K\mid\underline{D}_{\mu\nu}(x_0)<\overline{D}_{\mu\nu}(x_0)\}=\bigcup_{\alpha,\beta\in\mathbb{Q}_+,\ \alpha<\beta}(A_\beta\cap B_\alpha), \label{align:ch02-2.89}
+\end{align}
+\begin{align}
+\{x_0\in K\mid\overline{D}_{\mu\nu}(x_0)=\infty\}\subseteq A_\beta\quad\text{对每个 }\beta\in\mathbb{Q}_+, \label{align:ch02-2.90}
+\end{align}
+\begin{align}
+\{x_0\in K\mid\underline{D}_{\mu\nu}(x_0)=0\}\subseteq B_\alpha\quad\text{对每个 }\alpha\in\mathbb{Q}_+. \label{align:ch02-2.91}
+\end{align}
+下面证明：对 $\alpha,\beta\in(0,\infty)$，
+\begin{align}
+\text{(i) 若 Borel 集 }E\subseteq A_\beta\text{，则 }\nu(E)\geqslant\beta\mu(E);\qquad
+\text{(ii) 若 Borel 集 }E\subseteq B_\alpha\text{，则 }\nu(E)\leqslant\alpha\mu(E). \label{align:ch02-2.92}
+\end{align}
+
+第四段：由 (2.92) 推出结论。对 $\alpha,\beta\in\mathbb{Q}_+$，$\alpha<\beta$，把 (2.92) 应用于 $A_\beta\cap B_\alpha$ 得
+\begin{align*}
+\beta\mu(A_\beta\cap B_\alpha)\leqslant\nu(A_\beta\cap B_\alpha)\leqslant\alpha\mu(A_\beta\cap B_\alpha),
+\end{align*}
+故 $\mu(A_\beta\cap B_\alpha)=0$，再由\eqref{align:ch02-2.89}得 $\mu(\{x_0\in K\mid\underline{D}_{\mu\nu}(x_0)<\overline{D}_{\mu\nu}(x_0)\})=0$。同法，对 $\beta\in\mathbb{Q}_+$ 由 (2.92)(i) 得
+\begin{align}
+\mu(A_\beta)\leqslant\frac{\nu(A_\beta)}{\beta}\leqslant\frac{\nu(K)}{\beta}, \label{align:ch02-2.93}
+\end{align}
+对 $\alpha\in\mathbb{Q}_+$ 由 (2.92)(ii) 得
+\begin{align}
+\nu(B_\alpha)\leqslant\alpha\mu(B_\alpha)\leqslant\alpha\mu(K). \label{align:ch02-2.94}
+\end{align}
+在\eqref{align:ch02-2.93}中令 $\beta\to\infty$ 并用\eqref{align:ch02-2.90}得 $\mu(\{x_0\in K\mid\overline{D}_{\mu\nu}(x_0)=\infty\})=0$；在\eqref{align:ch02-2.94}中令 $\alpha\to0^+$ 并用\eqref{align:ch02-2.91}得 $\nu(\{x_0\in K\mid\underline{D}_{\mu\nu}(x_0)=0\})=0$。由 $K$ 的任意性（$U$ 可表为可数个紧集之并）得 (i) 与 (ii)。
+
+第五段：(2.92) 的证明。只证 (i)，(ii) 的论证与之平行（把 $A_\beta$ 换成 $B_\alpha$、不等号反向）。固定 Borel 集 $E\subseteq A_\beta$，取有界开集 $A\supseteq E$ 使 $\overline{A}\subset U$，并取 $\varepsilon\in(0,\beta)$。令
+\begin{align*}
+\mathscr{F}\triangleq\{B_r(x_0)\subset A\mid x_0\in E,\ \nu(B_r(x_0))\geqslant(\beta-\varepsilon)\mu(B_r(x_0))\}.
+\end{align*}
+断言 $\mathscr{F}$ 是 $E$ 的精细覆盖。事实上，设 $x_0\in E\subseteq A_\beta\subseteq K$。由\eqref{align:ch02-2.83}有两种情形：(a) 存在 $r_0>0$ 使 $\mu(B_{r_0}(x_0))=0$，则对一切 $r\in(0,r_0)$ 有 $\nu(B_r(x_0))\geqslant0=(\beta-\varepsilon)\mu(B_r(x_0))$；(b) $\mu(B_r(x_0))>0$ 对一切 $r>0$ 成立，此时 $\lim_{r\to0^+}\sup_{\rho\in(0,r)}\nu(B_\rho(x_0))/\mu(B_\rho(x_0))\geqslant\beta$（由\cref{remark:ch02-测度微分}(ii)，其中开球可换为闭球），故存在任意小的 $r$ 使 $\nu(B_r(x_0))\geqslant(\beta-\varepsilon)\mu(B_r(x_0))$。两种情形都给出任意小的球 $B_r(x_0)\in\mathscr{F}$，即 $\mathscr{F}$ 精细覆盖 $E$。
+
+由\cref{theorem:ch01-VitaliBesicovitch}（应用于有界集 $A$ 与其精细覆盖 $\mathscr{F}$），存在两两不交的族 $\mathscr{F}'\subseteq\mathscr{F}$，它是 $E$ 的 $\mu$-a.e. 覆盖，即 $\mu\bigl(E\setminus\bigcup_{B_\rho(x_0)\in\mathscr{F}'}B_\rho(x_0)\bigr)=0$。于是
+\begin{align*}
+(\beta-\varepsilon)\mu(E)&\leqslant(\beta-\varepsilon)\mu\Bigl(\bigcup_{B_\rho(x_0)\in\mathscr{F}'}B_\rho(x_0)\Bigr)\leqslant(\beta-\varepsilon)\sum_{B_\rho(x_0)\in\mathscr{F}'}\mu(B_\rho(x_0))\\
+&\leqslant\sum_{B_\rho(x_0)\in\mathscr{F}'}\nu(B_\rho(x_0))\leqslant\nu(A),
+\end{align*}
+其中第一个不等号用 $\mu$-a.e. 覆盖与 $\mu$ 的单调性，第二个用 $\mu$ 的可数次可加性，第三个用 $B_\rho\in\mathscr{F}$ 的定义，最后一个用 $\nu$ 的可数次可加性与 $\bigcup B_\rho\subseteq A$。由 $\varepsilon$ 的任意性得 $\beta\mu(E)\leqslant\nu(A)$，再对开集 $A\supseteq E$ 取下确界并用 $\nu$ 的外正则性得 $\beta\mu(E)\leqslant\nu(E)$，即 (2.92)(i)。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch02-微分零测; kind=motivation; location=引理 2.9.4 后的注记; basis=原书引理 2.9.4 + 两个断言的含义、$\mathbb{Q}_+$ 枚举的作用、覆盖论证的适用范围与奇异部分的边界分析
+\begin{remark}\phantomsection\label{remark:ch02-微分零测}
+\begin{enumerate}[(i)]
+\item 内容。断言 (i) 说明导出数 $\overline{D}_{\mu\nu}$ 与 $\underline{D}_{\mu\nu}$ 在 $\mu$-a.e. 点处相等且有限，即 $\nu$ 关于 $\mu$ 的导数几乎处处存在；断言 (ii) 说明 $\underline{D}_{\mu\nu}=0$ 的点集是 $\nu$-零测集，即 $\nu$ 的质量不落在“密度为零”的点上。两条合起来是\cref{theorem:ch02-Radon测度微分}(i) 与\eqref{align:ch02-2.95}中 $\nu(F_k^0)=0$ 的依据。
+\item 论证结构。证明分两层：先用 (2.92)（即 $A_\beta$ 上 $\nu\geqslant\beta\mu$、$B_\alpha$ 上 $\nu\leqslant\alpha\mu$）把导出数的不等式转化为测度不等式，再用 $\mathbb{Q}_+$ 的可数性把不可数多个水平集化成可数并\eqref{align:ch02-2.89}。这一步不可省：直接对实数 $\alpha<\beta$ 取并会得到不可测的并集；而 $\mathbb{Q}_+$ 的稠密性保证每个满足 $\underline{D}<\overline{D}$ 的点都落入某个有理水平对 $A_\beta\cap B_\alpha$。
+\item 覆盖论证的作用。(2.92) 的证明是本节唯一用到覆盖定理之处。$\mathscr{F}$ 由满足 $\nu\geqslant(\beta-\varepsilon)\mu$ 的球组成；导出数的定义保证 $\mathscr{F}$ 精细覆盖 $E$，而精细覆盖正是\cref{theorem:ch01-VitaliBesicovitch}的假设。若改用针对 $\lambda_N$ 的\cref{theorem:ch01-Vitali}，则因一般 Radon 测度没有伸缩齐性，覆盖论证无法进行。
+\item 边界。断言 (i) 中的“有限”不能去掉：取 $U=\mathbb{R}$、$\mu=\lambda_1$、$\nu=\delta_0$，则 $\overline{D}_{\mu\nu}(0)=\infty$，而 $\{0\}$ 是 $\mu$-零测集，故不影响 a.e. 结论；但若 $\nu$ 在正 $\mu$-测度集上集中（例如 $\nu=\mu\lfloor C$，$C$ 为正测度的 fat Cantor 集），则在该集上导出数为 $\infty$，此时 (i) 只在 $\mu$-a.e. 意义下成立，逐点有限性一般不成立。断言 (ii) 用于带号测度时须分别应用于 $\nu^\pm$（见\cref{theorem:ch02-Radon测度微分}证明的末段）。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-Radon测度微分; kind=proof; location=定理 2.9.3 的证明; basis=原书证明中“由引理 2.9.4(i) 及其证明”“由 (2.92) 与 $F_{k,m}$ 的定义”“令 $t\to1^+$”等处，补出可测性、级数分解 (2.95)、夹逼与带号情形的减法定稿
+\begin{proof}[\cref{theorem:ch02-Radon测度微分}的证明]
+先设 $\nu$ 为正测度。断言 (i) 由\cref{lemma:ch02-微分零测}(i) 及其证明得到：使 $\overline{D}_{\mu\nu}\neq\underline{D}_{\mu\nu}$ 或 $\overline{D}_{\mu\nu}=\infty$ 的点集是 $\mu$-零测集，而在其余点处 $D_{\mu\nu}=\overline{D}_{\mu\nu}$；$D_{\mu\nu}$ 的可测性来自 $\overline{D}_{\mu\nu}$ 的可测性（见\cref{lemma:ch02-微分零测}证明的第二段）。
+
+证 (ii)。固定开集 $U'\subset\subset U$ 与 Borel 集 $E\subseteq U'$，并取非降紧集列 $\{K_k\}$ 使 $\bigcup_{k=1}^\infty K_k=\mathbb{R}^N$（$\mathbb{R}^N$ 为 $\sigma$-紧）。对 $k\in\mathbb{N}$ 令
+\begin{align*}
+F_k\triangleq\{x_0\in E\cap K_k\mid D_{\mu\nu}(x_0)\text{ 存在}\}.
+\end{align*}
+由断言 (i)，$F_k$ 可测且 $\mu(F_k)=\mu(E\cap K_k)$；又 $\nu\lfloor U'\ll\mu\lfloor U'$，故 $\nu(F_k)=\nu(E\cap K_k)$。再令
+\begin{align*}
+F_k^0\triangleq\{x_0\in F_k\mid D_{\mu\nu}(x_0)=0\},\qquad
+F_{k,m}\triangleq\{x_0\in F_k\mid t^m\leqslant D_{\mu\nu}(x_0)<t^{m+1}\}\quad(m\in\mathbb{Z}),
+\end{align*}
+其中 $t>1$ 固定。则对每个 $k\in\mathbb{N}$，$F_k=F_k^0\cup\bigl(\bigcup_{m\in\mathbb{Z}}F_{k,m}\bigr)$ 为不交并。由\cref{lemma:ch02-微分零测}(ii) 得 $\nu(F_k^0)=0$ 对每个 $k$ 成立，故由 $\nu$ 的可数可加性
+\begin{align}
+\nu(F_k)=\nu(E\cap K_k)=\sum_{m\in\mathbb{Z}}\nu(F_{k,m}). \label{align:ch02-2.95}
+\end{align}
+另一方面，在 $F_{k,m}$ 上 $t^m\leqslant D_{\mu\nu}<t^{m+1}$，故由 (2.92) 与 $F_{k,m}\subseteq A_{t^m}\cap B_{t^{m+1}}$ 得
+\begin{align*}
+\frac1t\int_{F_{k,m}}D_{\mu\nu}\,\mathrm{d}\mu\leqslant t^m\mu(F_{k,m})\leqslant\nu(F_{k,m})\leqslant t^{m+1}\mu(F_{k,m})\leqslant t\int_{F_{k,m}}D_{\mu\nu}\,\mathrm{d}\mu,
+\end{align*}
+其中第一个不等号由 $\int_{F_{k,m}}D_{\mu\nu}\,\mathrm{d}\mu\leqslant t^{m+1}\mu(F_{k,m})$ 得到，第二个与第三个不等号分别由 (2.92)(i)（取 $\beta=t^m$）与 (2.92)(ii)（取 $\alpha=t^{m+1}$）得到，最后一个不等号由 $t^m\mu(F_{k,m})\leqslant\int_{F_{k,m}}D_{\mu\nu}\,\mathrm{d}\mu$ 得到。于是对一切 $t>1$，
+\begin{align*}
+\frac1t\int_{F_{k,m}}D_{\mu\nu}\,\mathrm{d}\mu\leqslant\nu(F_{k,m})\leqslant t\int_{F_{k,m}}D_{\mu\nu}\,\mathrm{d}\mu.
+\end{align*}
+令 $t\to1^+$ 得 $\nu(F_{k,m})=\int_{F_{k,m}}D_{\mu\nu}\,\mathrm{d}\mu$（$k\in\mathbb{N}$，$m\in\mathbb{Z}$），从而由\eqref{align:ch02-2.95}
+\begin{align*}
+\nu(E\cap K_k)=\nu(F_k)=\int_{F_k}D_{\mu\nu}\,\mathrm{d}\mu\quad(k\in\mathbb{N}).
+\end{align*}
+令 $k\to\infty$：左端由 $\nu$ 关于非降序列的连续性趋于 $\nu(E)$（注意 $\nu(E\cap K_1)<\infty$），右端由单调收敛定理（$D_{\mu\nu}\geqslant0$）趋于 $\int_ED_{\mu\nu}\,\mathrm{d}\mu$。由此证明了\eqref{align:ch02-2.87}在本情形下对每个 Borel 集 $E\subseteq U'$ 成立。特别地取 $E=U'$ 得 $D_{\mu\nu}\in L^1(U',\mathscr B_N\cap U',\mu)$；由 $U'$ 的任意性得 $D_{\mu\nu}\in L^1_{\mathrm{loc}}(U,\mathscr B_N\cap U,\mu)$。
+
+现设 $\nu\equiv(\nu_1,\nu_2)$ 为带号 Radon 测度。对 $\nu_1$ 与 $\nu_2$ 分别应用已证结论：导数 $D_{\mu\nu_1}$、$D_{\mu\nu_2}$ 对 $\mu$-a.e. 点存在且可测，故由\eqref{align:ch02-2.86}，$D_{\mu\nu}$ 也对 $\mu$-a.e. 点存在且可测，断言 (i) 成立；又对给定开集 $U'\subset\subset U$，\eqref{align:ch02-2.87}对 $\nu_1$ 与 $\nu_2$ 分别成立，两式相减即知它对 $\nu$ 在每个 Borel 集 $E\subseteq U'$ 上成立。最后，由\eqref{align:ch02-2.75}与\eqref{align:ch02-2.87}，对每个可测集 $E\subseteq U'$ 有
+\begin{align*}
+\int_E\Bigl(D_{\mu\nu}-\frac{\mathrm{d}(\nu\lfloor U')}{\mathrm{d}\mu}\Bigr)\mathrm{d}\mu=0,
+\end{align*}
+其中两项都属于 $L^1(U',\mathscr B_N\cap U',\mu)$。由 $E$ 的任意性（取 $E=\{D_{\mu\nu}>\mathrm{d}(\nu\lfloor U')/\mathrm{d}\mu\}\cap K_k$ 及其反向不等式中的集合）得\eqref{align:ch02-2.88}，即 $D_{\mu\nu}$ 与 $\mathrm{d}(\nu\lfloor U')/\mathrm{d}\mu$ 在 $U'$ 上 $\mu$-a.e. 相等。证毕。
+\end{proof}
 
 
+\begin{corollary}\label{corollary:ch02-Lebesgue点}\label{corollary:ch02-Lebesgue微分}
+设 $U\subseteq\mathbb R^N$ 为开集，$\mu$ 为 $U$ 上的 Radon 测度。则对 $\mu$-a.e. $x_0\in U$（特别地，对这些 $x_0$ 有 $\mu(B_r(x_0))>0$ 对一切 $r>0$，故下列商有意义）：
+\begin{enumerate}[(i)]
+\item 若 $f\in L^1_{\mathrm{loc}}(U,\mathscr B_N\cap U,\mu)$，则
+\begin{align}
+\lim_{r\to0^+}\frac{1}{\mu(B_r(x_0))}\int_{B_r(x_0)}f\,\mathrm{d}\mu=f(x_0); \label{align:ch02-2.96}
+\end{align}
+\item 若 $f\in L^p_{\mathrm{loc}}(U,\mathscr B_N\cap U,\mu)$（$p\in[1,\infty)$），则
+\begin{align}
+\lim_{r\to0^+}\frac{1}{\mu(B_r(x_0))}\int_{B_r(x_0)}|f-f(x_0)|^p\,\mathrm{d}\mu=0. \label{align:ch02-2.97}
+\end{align}
+\end{enumerate}
+\end{corollary}
 
+% SUPPLEMENT: parent=corollary:ch02-Lebesgue点; kind=proof; location=推论 2.9.5 后的证明; basis=原书“Equality (2.96) coincides with (2.88)”与 (ii) 中 $\mathbb{Q}$ 稠密性论证，补出 $\nu=f\mu$ 的 Radon 性、局部化取极限与 L^p 三角不等式的细节
+\begin{proof}
+(i) 定义 $\nu(E)\triangleq\int_Ef\,\mathrm{d}\mu$（$E\in\mathscr B_N\cap U$）。由 $f\in L^1_{\mathrm{loc}}(U,\mathscr B_N\cap U,\mu)$，$\nu$ 为 $U$ 上的带号 Radon 测度：局部有限性由 $|\nu|(K)\leqslant\int_K|f|\,\mathrm{d}\mu<\infty$（$K\subset U$ 紧）给出，正则性由 $\mu$ 的正则性与积分关于小测度集的绝对连续性给出。对每个开集 $U'\subset\subset U$ 与 $E\in\mathscr B_N\cap U'$ 有 $\nu(E)=\int_Ef\,\mathrm{d}\mu$，即 $\nu\lfloor U'=f\mu\lfloor U'$，故 $\nu\lfloor U'\ll\mu\lfloor U'$。由\cref{theorem:ch02-Radon测度微分}(ii) 与\eqref{align:ch02-2.88}，对每个开集 $U'\subset\subset U$ 有
+\begin{align*}
+D_{\mu\nu}=\frac{\mathrm{d}(\nu\lfloor U')}{\mathrm{d}\mu}=f\quad\mu\text{-a.e. 于 }U'.
+\end{align*}
+取穷竭 $U'_k\triangleq U\cap B(0,k)$（$k\in\mathbb N$），则 $U'_k\subset\subset U$ 且 $\bigcup_kU'_k=U$，故 $D_{\mu\nu}=f$ $\mu$-a.e. 于 $U$。于是由\cref{definition:ch02-测度微分}（\eqref{align:ch02-2.85}）与 $\nu(B_r(x_0))=\int_{B_r(x_0)}f\,\mathrm{d}\mu$，对 $\mu$-a.e. $x_0\in U$ 得\eqref{align:ch02-2.96}。
+
+(ii) 固定 $p\in[1,\infty)$ 并取 $f$ 的实值代表，则 $f(x_0)\in\mathbb R$ 对 $\mu$-a.e. $x_0$ 成立。对每个 $q\in\mathbb Q$，函数 $g_q\triangleq|f-q|^p$ 属于 $L^1_{\mathrm{loc}}(U,\mathscr B_N\cap U,\mu)$：由 $|f-q|^p\leqslant2^{p-1}(|f|^p+|q|^p)$ 与 $f\in L^p_{\mathrm{loc}}$ 得局部可积性。由已证的 (i)，存在 $\mu$-零测集 $N_q\subseteq U$ 使对每个 $x_0\in U\setminus N_q$ 有
+\begin{align*}
+\lim_{r\to0^+}\frac{1}{\mu(B_r(x_0))}\int_{B_r(x_0)}|f-q|^p\,\mathrm{d}\mu=|f(x_0)-q|^p.
+\end{align*}
+令 $N\triangleq\bigcup_{q\in\mathbb Q}N_q$，则 $N$ 为 $\mu$-零测集。固定 $x_0\in U\setminus N$ 与 $r>0$。由 $|f-f(x_0)|\leqslant|f-q|+|q-f(x_0)|$ 与 $L^p$ 范数（关于概率测度 $\mu\lfloor B_r(x_0)/\mu(B_r(x_0))$）的三角不等式得
+\begin{align*}
+\frac{1}{[\mu(B_r(x_0))]^{\frac1p}}\Bigl(\int_{B_r(x_0)}|f-f(x_0)|^p\,\mathrm{d}\mu\Bigr)^{\frac1p}
+\leqslant\frac{1}{[\mu(B_r(x_0))]^{\frac1p}}\Bigl(\int_{B_r(x_0)}|f-q|^p\,\mathrm{d}\mu\Bigr)^{\frac1p}+|f(x_0)-q|.
+\end{align*}
+对 $r\to0^+$ 取上极限并用 $x_0\notin N_q$ 得
+\begin{align*}
+\limsup_{r\to0^+}\frac{1}{[\mu(B_r(x_0))]^{\frac1p}}\Bigl(\int_{B_r(x_0)}|f-f(x_0)|^p\,\mathrm{d}\mu\Bigr)^{\frac1p}\leqslant2|f(x_0)-q|.
+\end{align*}
+对 $q\in\mathbb Q$ 取下确界，由 $\mathbb Q$ 在 $\mathbb R$ 中的稠密性得左端为 $0$，即\eqref{align:ch02-2.97}。
+\end{proof}
+
+% SUPPLEMENT: parent=corollary:ch02-Lebesgue点; kind=motivation; location=推论 2.9.5 后的注记; basis=原书推论 2.9.5 + 球平均的归一化解释、$\mu$-a.e. 点属于支集使商有意义、$p$ 与局部可积性假设的作用及 $p=\infty$ 的边界
+% SUPPLEMENT: parent=corollary:ch02-Lebesgue微分; kind=motivation; 别名标签，与 corollary:ch02-Lebesgue点 共用同一条注记
+\begin{remark}\phantomsection\label{remark:ch02-Lebesgue点}
+\begin{enumerate}[(i)]
+\item 内容。(i) 断言 $f$ 的球平均收敛于 $f(x_0)$，(ii) 断言更强的 $L^p$ 型平均收敛；取 $p=1$ 时 (ii) 等价于 $\int_{B_r(x_0)}|f-f(x_0)|\,\mathrm{d}\mu=o(\mu(B_r(x_0)))$，它比 (i) 更强，因为它要求偏差的绝对值而不只是偏差的平均为零。
+\item 商的意义。对 $\mu$-a.e. $x_0\in U$ 有 $\mu(B_r(x_0))>0$ 对一切 $r>0$ 成立。事实上，令 $G$ 为一切 $\mu$-零开集之并，则由 $U$ 可表为可数个紧集之并及 $\mu$ 的局部有限性得 $\mu(G)=0$；而 $x_0\in U\setminus G$ 当且仅当每个含 $x_0$ 的开集都有正 $\mu$-测度，特别地 $\mu(B_r(x_0))>0$。故\eqref{align:ch02-2.96}与\eqref{align:ch02-2.97}中的商对 $\mu$-a.e. $x_0$ 有意义。
+\item 各假设的作用。$f$ 只在 $\mu$-a.e. 意义下给定，故结论也只能在 $\mu$-a.e. 意义下成立；$f\in L^p_{\mathrm{loc}}$（而非 $L^p$）保证球上的积分有限，且使 (i) 可应用于局部可积的 $|f-q|^p$；$\mu$ 为 Radon 测度保证球可测、球上测度有限，从而使\cref{theorem:ch02-Radon测度微分}可用。若 $f$ 仅可测而不局部可积，则\eqref{align:ch02-2.96}中的积分可能为 $\infty$，(i) 无意义。
+\item 边界。$p=\infty$ 时\eqref{align:ch02-2.97}中的 $|f-f(x_0)|^p$ 无定义，结论须改用本质上确界表述；此外 (ii) 中的零测例外集依赖 $p$，不同的 $p$ 给出不同的例外集，故不能断言存在一个零测集使\eqref{align:ch02-2.97}对一切 $p$ 同时成立。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}\label{definition:ch02-Lebesgue点}
+设 $U\subseteq\mathbb R^N$ 为开集，$\mu$ 为 $U$ 上的 Radon 测度，$p\in[1,\infty)$，$f\in L^p_{\mathrm{loc}}(U,\mathscr B_N\cap U,\mu)$。点 $x_0\in U$ 称为 $f$ 关于 $\mu$ 的 Lebesgue 点，若 $\mu(B_r(x_0))>0$ 对一切 $r>0$ 成立，且\eqref{align:ch02-2.97}成立。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch02-Lebesgue点; kind=motivation; location=定义 2.9.3 后的注记; basis=原书定义 2.9.3 + 术语来源、$p=1$ 与 (2.96) 的等价性、例外集的依赖性与非退化条件的分析
+\begin{remark}\phantomsection\label{remark:ch02-Lebesgue点定义}
+\begin{enumerate}[(i)]
+\item 引入动机与术语。\cref{definition:ch02-Lebesgue点}把\cref{corollary:ch02-Lebesgue点}(ii) 中“平均偏差趋于零”的点命名为 Lebesgue 点。$p=1$、$\mu=\lambda_N$ 时即经典的 Lebesgue 点：$f$ 在 $x_0$ 附近的球平均收敛于 $f(x_0)$。\cref{corollary:ch02-Lebesgue点}断言：对每个 $p\in[1,\infty)$，$f\in L^p_{\mathrm{loc}}$ 的 Lebesgue 点集在 $U$ 中的补集是 $\mu$-零测集，即几乎每一点都是 Lebesgue 点。
+\item $p=1$ 的情形。当 $p=1$ 时，由三角不等式，\eqref{align:ch02-2.97}蕴含\eqref{align:ch02-2.96}；反之若 $f$ 连续于 $x_0$，则\eqref{align:ch02-2.96}与\eqref{align:ch02-2.97}同时成立。故 $p=1$ 的 Lebesgue 点正是那些球平均收敛于函数值的点。
+\item 非退化条件。定义中要求 $\mu(B_r(x_0))>0$ 对一切 $r>0$ 成立，这排除 $\mu$ 在 $x_0$ 的某邻域上为零的平凡情形（此时比值为 $0/0$）。由\cref{remark:ch02-Lebesgue点}(ii)，该条件对 $\mu$-a.e. $x_0$ 自动成立。
+\item 适用边界。Lebesgue 点的定义依赖 $p$ 与测度 $\mu$：改变 $p$ 会改变\eqref{align:ch02-2.97}中函数的可积性要求，从而改变例外集；改变 $\mu$ 则球的平均随之改变。此外，定义只对 $\mu$-a.e. 相等的等价类中的代表给出逐点条件，故 Lebesgue 点集本身在 $\mu$-零测集的意义下与代表选取无关。
+\end{enumerate}
+\end{remark}
+
+\begin{corollary}\label{corollary:ch02-Lebesgue分解}\label{corollary:ch02-带号Radon微分}
+设 $U\subseteq\mathbb R^N$ 为开集，$\mu$ 与 $\nu$ 为 $U$ 上的（正）Radon 测度，$\nu_{ac}\ll\mu$ 与 $\nu_s\perp\mu$ 为 $\nu$ 关于 $\mu$ 的绝对连续部分与奇异部分（\cref{theorem:ch01-Lebesgue分解}），即 $\nu=\nu_{ac}+\nu_s$、$\nu_{ac}\ll\mu$、$\nu_s\perp\mu$。则
+\begin{align}
+D_{\mu\nu}=D_{\mu\nu_{ac}},\qquad D_{\mu\nu_s}=0\quad\mu\text{-a.e. 于 }U, \label{align:ch02-2.98}
+\end{align}
+且对每个 Borel 集 $E\subseteq U$ 有
+\begin{align}
+\nu(E)=\int_ED_{\mu\nu}\,\mathrm{d}\mu+\nu_s(E)=\int_ED_{\mu\nu_{ac}}\,\mathrm{d}\mu+\nu_s(E). \label{align:ch02-2.99}
+\end{align}
+\end{corollary}
+
+% SUPPLEMENT: parent=corollary:ch02-Lebesgue分解; kind=proof; location=推论 2.9.6 后的证明; basis=原书“whence the first equality and (2.99) easily follow”与奇异部分为零的论证，补出 $\nu_s$ 的零测集选取、(2.92)(i) 的紧集化应用、导数的加性与 (2.87) 的穷竭取极限
+\begin{proof}
+第一步：$D_{\mu\nu_s}=0$ $\mu$-a.e. 于 $U$。由 $\nu_s\perp\mu$，存在 $\mu$-零测集 $N\subseteq U$ 使 $\nu_s(U\setminus N)=0$；又由 $\nu_{ac}\ll\mu$ 得 $\nu_{ac}(N)=0$。对 $\beta>0$ 令
+\begin{align*}
+C_\beta\triangleq\{x\in U\setminus N\mid D_{\mu\nu_s}(x)\text{ 存在且}\geqslant\beta\}.
+\end{align*}
+由\cref{theorem:ch02-Radon测度微分}(i)，使 $D_{\mu\nu_s}(x)$ 不存在的点集是 $\mu$-零测集，故 $C_\beta$ 与 $\{x\in U\setminus N\mid D_{\mu\nu_s}(x)>0\}$ 只相差一个 $\mu$-零测集。又 $C_\beta\subseteq U\setminus N$ 给出 $\nu_s(C_\beta)=0$。对每个紧集 $K\subset U$，由\eqref{align:ch02-2.92}(i)（取 $\nu$ 为 $\nu_s$、$E$ 为 $C_\beta\cap K$，并注意 $C_\beta\cap K\subseteq A_\beta$）得
+\begin{align*}
+\beta\mu(C_\beta\cap K)\leqslant\nu_s(C_\beta\cap K)=0,
+\end{align*}
+故 $\mu(C_\beta\cap K)=0$；由 $K$ 的任意性与 $U$ 的可数紧穷竭得 $\mu(C_\beta)=0$。再由 $\beta>0$ 的任意性（取 $\beta=1/n$，$n\in\mathbb N$）得 $\mu(\{x\in U\setminus N\mid D_{\mu\nu_s}(x)>0\})=0$，即 $D_{\mu\nu_s}=0$ $\mu$-a.e. 于 $U$。
+
+第二步：\eqref{align:ch02-2.98}的第一式。由 $\nu=\nu_{ac}+\nu_s$ 及 $D_{\mu\nu_{ac}}$ 与 $D_{\mu\nu_s}$ 在 $\mu$-a.e. 点处存在，比值关于 $r$ 的分解
+\begin{align*}
+\frac{\nu(B_r(x_0))}{\mu(B_r(x_0))}=\frac{\nu_{ac}(B_r(x_0))}{\mu(B_r(x_0))}+\frac{\nu_s(B_r(x_0))}{\mu(B_r(x_0))}
+\end{align*}
+在 $\mu$-a.e. $x_0$ 处随 $r\to0^+$ 取极限，且第二项的极限为 $0$、第一项的极限为 $D_{\mu\nu_{ac}}(x_0)$（由\cref{definition:ch02-测度微分}(i) 中导数的定义），故 $D_{\mu\nu}(x_0)$ 存在且等于 $D_{\mu\nu_{ac}}(x_0)$。
+
+第三步：\eqref{align:ch02-2.99}。由 $\nu=\nu_{ac}+\nu_s$ 得 $\nu(E)=\nu_{ac}(E)+\nu_s(E)$（在 $[0,\infty]$ 中）。又 $\nu_{ac}\ll\mu$，取开集 $U_k'\subset\subset U$ 使 $\bigcup_kU_k'=U$ 且 $U_k'$ 非降，则由\cref{theorem:ch02-Radon测度微分}(ii) 与单调收敛定理（$D_{\mu\nu_{ac}}\geqslant0$）
+\begin{align*}
+\nu_{ac}(E)=\lim_{k\to\infty}\nu_{ac}(E\cap U_k')=\lim_{k\to\infty}\int_{E\cap U_k'}D_{\mu\nu_{ac}}\,\mathrm{d}\mu=\int_ED_{\mu\nu_{ac}}\,\mathrm{d}\mu.
+\end{align*}
+把它代入上式并用\eqref{align:ch02-2.98}第一式得\eqref{align:ch02-2.99}。
+\end{proof}
+
+% SUPPLEMENT: parent=corollary:ch02-Lebesgue分解; kind=motivation; location=推论 2.9.6 后的注记; basis=原书推论 2.9.6 + 与 Lebesgue 分解、(2.87) 的关系，奇异部分不进入密度积分的含义，以及一元情形与绝对连续函数刻画的联系
+% SUPPLEMENT: parent=corollary:ch02-带号Radon微分; kind=motivation; 别名标签，与 corollary:ch02-Lebesgue分解 共用同一条注记
+\begin{remark}\phantomsection\label{remark:ch02-Lebesgue分解}
+\begin{enumerate}[(i)]
+\item 内容。\eqref{align:ch02-2.99}把 $\nu$ 精确地拆成两部分：绝对连续部分由密度 $D_{\mu\nu}$ 关于 $\mu$ 积分得到，奇异部分 $\nu_s$ 不进入积分。这正是 Lebesgue 分解（\cref{theorem:ch01-Lebesgue分解}）的“微分形式”，它说明\cref{theorem:ch02-Radon测度微分}(ii) 中关于 $\nu\lfloor U'\ll\mu\lfloor U'$ 的假设恰好排除奇异部分。
+\item 断言 (2.98) 的含义。$D_{\mu\nu}=D_{\mu\nu_{ac}}$ 说明球平均的极限“看不见”奇异部分：$\nu_s$ 的质量集中在 $\mu$-零测集上，而球 $B_r(x_0)$ 的体积随 $r\to0$ 趋于零，故其贡献被平均掉；$D_{\mu\nu_s}=0$ $\mu$-a.e. 则说明奇异测度在 $\mu$-a.e. 点处的密度为零。注意这两条都只在 $\mu$-a.e. 意义下成立：在 $\nu_s$ 集中的 $\mu$-零测集上，$D_{\mu\nu_s}$ 可以取任意值或不取有限值。
+\item 一元情形与绝对连续函数的刻画。取 $N=1$、$\mu=\lambda_1$ 并令 $\nu(E)\triangleq\int_Eg\,\mathrm{d}\lambda_1$，则由\eqref{align:ch02-2.96}得：$\lim_{r\to0^+}\frac{1}{2r}\int_{x_0-r}^{x_0+r}g\,\mathrm{d}t=g(x_0)$ 对 $\lambda_1$-a.e. $x_0$ 成立。由此可推出区间上绝对连续函数的经典刻画：$f:[a,b]\to\mathbb R$ 绝对连续当且仅当 $f$ 几乎处处可微、$f'\in L^1([a,b])$ 且 $f(x)-f(a)=\int_a^xf'(t)\,\mathrm{d}t$（$x\in[a,b]$）。该刻画及其在有界变差函数理论中的推广属于后续小节的内容。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch02-RN带号微分}
+若 $\nu\equiv(\nu_1,\nu_2)$ 为 $U\subseteq\mathbb R^N$ 上的带号 Radon 测度，则对 $\nu_1$ 与 $\nu_2$ 分别应用\cref{corollary:ch02-Lebesgue分解}可知\eqref{align:ch02-2.98}在此情形下同样成立。同理，对任意开集 $U'\subset\subset U$，\eqref{align:ch02-2.99}对每个 Borel 集 $E\subseteq U'$ 成立。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch02-RN带号微分; kind=proof; location=注记 2.9.4 后的证明; basis=原书“applying Corollary 2.9.6 to both ν1 and ν2 proves”未展开，补出分解的线性性、导数的加性与相对紧开集上的局部化
+\begin{proof}
+对 $i=1,2$ 记 $\nu_i=(\nu_i)_{ac}+(\nu_i)_s$ 为 $\nu_i$ 关于 $\mu$ 的 Lebesgue 分解。由\cref{corollary:ch02-Lebesgue分解}，$D_{\mu\nu_i}=D_{\mu(\nu_i)_{ac}}$ 且 $D_{\mu(\nu_i)_s}=0$ $\mu$-a.e.。由 Lebesgue 分解的线性性与唯一性，$\nu_{ac}\triangleq(\nu_1)_{ac}-(\nu_2)_{ac}$ 与 $\nu_s\triangleq(\nu_1)_s-(\nu_2)_s$ 给出 $\nu$ 关于 $\mu$ 的 Lebesgue 分解。在使 $D_{\mu\nu_1}$ 与 $D_{\mu\nu_2}$ 都存在且 $D_{\mu(\nu_1)_s}=D_{\mu(\nu_2)_s}=0$ 的 $\mu$-a.e. 点处，由导数的加性（\cref{definition:ch02-测度微分}(ii)）得
+\begin{align*}
+D_{\mu\nu}=D_{\mu\nu_1}-D_{\mu\nu_2}=D_{\mu(\nu_1)_{ac}}-D_{\mu(\nu_2)_{ac}}=D_{\mu\nu_{ac}},\qquad D_{\mu\nu_s}=D_{\mu(\nu_1)_s}-D_{\mu(\nu_2)_s}=0,
+\end{align*}
+即\eqref{align:ch02-2.98}的带号情形。至于\eqref{align:ch02-2.99}，固定开集 $U'\subset\subset U$。则 $\nu\lfloor U'$ 为有限带号测度，其 Lebesgue 分解的两个分量分别为 $\nu_{ac}\lfloor U'$ 与 $\nu_s\lfloor U'$。对正测度 $\nu_{ac}\lfloor U'$（它关于 $\mu$ 绝对连续）应用\cref{theorem:ch02-Radon测度微分}(ii) 的\eqref{align:ch02-2.87}，得
+\begin{align*}
+\nu(E)=\int_ED_{\mu\nu}\,\mathrm{d}\mu+\nu_s(E)\quad\text{对每个 Borel 集 }E\subseteq U',
+\end{align*}
+其中用到了带号情形的\eqref{align:ch02-2.98}与 $D_{\mu\nu}=D_{\mu\nu_{ac}}$。
+\end{proof}
+
+% 以下锚点对应旧译文曾有、但在原页 §2.9 中并不存在的对象：覆盖引理与球积分连续性由第 1 章的覆盖定理与本节引理 2.9.4 的证明承担，
+% Radon 测度的 Lebesgue 分解定理与绝对连续函数刻画分别由第 1 章的定理与后续小节承担。保留超链接锚点，使其余文件中可能存在的引用仍可解析。
+\hypertarget{lemma:ch02-Vitali覆盖}{}
+\hypertarget{lemma:ch02-球积分连续}{}
+\hypertarget{theorem:ch02-Lebesgue分解}{}
+\hypertarget{proposition:ch02-绝对连续泛函}{}
+\hypertarget{theorem:ch02-绝对连续刻画}{}
 
 \end{document}

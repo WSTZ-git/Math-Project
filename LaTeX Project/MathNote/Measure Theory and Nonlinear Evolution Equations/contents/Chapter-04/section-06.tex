@@ -15,104 +15,320 @@
 
 \section{向量 Sobolev 空间}\label{section:ch04-向量Sobolev}
 
-本节主要目的是证明两个有用的嵌入结果（\cref{theorem:ch04-Aubin}, \cref{theorem:ch04-Simon}）。
+本节的主要目的是证明两个有用的嵌入结果（\cref{theorem:ch04-Aubin} 与\cref{theorem:ch04-Simon}）。为此先建立取值于 Banach 空间的分布与 Sobolev 空间的基本理论（\cref{subsection:ch04-向量分布}--\cref{subsection:ch04-连续嵌入}），再在\cref{subsection:ch04-紧嵌入}中证明上述两个结果。
 
 \subsection{向量分布}\label{subsection:ch04-向量分布}
 
-设 $U\subseteq\mathbb{R}^N$ 开。设 $\mathcal{D}(U)$ 为 $U$ 上的检验函数空间，$Y$ 为赋范数 $\|\cdot\|_Y$ 的 Banach 空间。
+设 $U\subseteq\mathbb{R}^N$ 为开集，$\mathcal{D}(U)\equiv C_c^\infty(U)$ 为 $U$ 上的检验函数空间，$Y$ 为赋范数 $\|\cdot\|_Y$ 的 Banach 空间。$\mathcal{D}(U)$ 中的收敛定义如下：$\zeta_k\to\zeta$ 当且仅当存在紧集 $K\Subset U$ 使 $\operatorname{supp}\zeta_k\subseteq K$ 对一切 $k\in\mathbb{N}$ 成立，且对每个 $\alpha\in\mathbb{N}^N$ 有
+\begin{align*}
+\sup_{x\in K}|D^\alpha\zeta_k(x)-D^\alpha\zeta(x)|\to0\quad(k\to\infty).
+\end{align*}
 
 \begin{definition}[向量分布]\label{definition:ch04-向量分布}
-从 $U$ 到 $Y$ 的向量分布空间（记为 $\mathcal{D}'(U;Y)$）是连续线性映射 $T:\mathcal{D}(U)\to Y$ 的空间。即 $T\in\mathcal{D}'(U;Y)$ 若 $T:\mathcal{D}(U)\to Y$ 线性，且对任意在 $\mathcal{D}(U)$ 中 $T\zeta_k\to\zeta$ 的序列，有 $\|\langle T,\zeta_k\rangle-\langle T,\zeta\rangle\|_Y\to0$。
+设 $U\subseteq\mathbb{R}^N$ 为非空开集，$Y$ 为赋范数 $\|\cdot\|_Y$ 的 Banach 空间，$\mathcal{D}(U)\equiv C_c^\infty(U)$ 按上述收敛赋以检验函数空间的拓扑。从 $U$ 到 $Y$ 的向量分布空间记为 $\mathcal{D}'(U;Y)$，定义为连续线性映射 $T:\mathcal{D}(U)\to Y$ 之集：$T\in\mathcal{D}'(U;Y)$ 当且仅当 $T$ 线性，且对每个 $\zeta\in\mathcal{D}(U)$ 与每个在 $\mathcal{D}(U)$ 中收敛于 $\zeta$ 的序列 $\{\zeta_k\}$，当 $k\to\infty$ 时 $\|\langle T,\zeta_k\rangle-\langle T,\zeta\rangle\|_Y\to0$，其中 $\langle T,\zeta\rangle\triangleq T\zeta\in Y$。
 \end{definition}
 
-此后我们使用记号 $T\zeta\equiv\langle T,\zeta\rangle\in Y$（$T\in\mathcal{D}'(U;Y)$，$\zeta\in\mathcal{D}(U)$）。我们还令 $\mathcal{D}'(U;\mathbb{R})\equiv\mathcal{D}^*(U)$。
+% SUPPLEMENT: parent=definition:ch04-向量分布; kind=motivation; 说明把标量分布向量化的动机、$\mathcal{D}(U)$ 的收敛与线性连续性在定义中的位置、$Y$ 的完备性未被定义本身使用，以及 $T_f=0\Rightarrow f=0$、$\delta$ 型分布不属于 $\{T_f\}$ 两个边界
+\begin{remark}\phantomsection\label{remark:ch04-向量分布动机}
+\begin{enumerate}[(i)]
+\item 引入动机。标量分布是 $\mathcal{D}(U)$ 上的连续线性泛函，即 $\mathcal{D}'(U)=\mathcal{L}(\mathcal{D}(U);\mathbb{R})$。当研究对象是取值于 Banach 空间 $Y$ 的函数（例如发展方程的解 $u:I\to V$）时，弱导数须由分部积分对 $Y$ 值函数定义，故把陪域由 $\mathbb{R}$ 换成 $Y$。定义只使用 $\mathcal{D}(U)$ 的拓扑与 $Y$ 的向量结构。
 
-\begin{remark}\label{remark:ch04-向量分布例子}
+\item 各要素的作用。(a) $U$ 非空开集保证 $\mathcal{D}(U)$ 含非零元；若 $U=\varnothing$，则 $\mathcal{D}(U)=\{0\}$ 而 $\mathcal{D}'(U;Y)=\{0\}$。(b) 线性与序列连续性合起来刻画按 $\mathcal{D}(U)$ 的拓扑连续：$\mathcal{D}(U)$ 的拓扑由半范数族 $\zeta\mapsto\sup_{K}|D^\alpha\zeta|$（$K\Subset U$）生成，故 $T$ 连续当且仅当对每个紧集 $K$ 存在 $m\in\mathbb{N}$ 与 $c>0$ 使 $\|\langle T,\zeta\rangle\|_Y\leqslant c\sup_{|\alpha|\leqslant m}\sup_K|D^\alpha\zeta|$ 对一切满足 $\operatorname{supp}\zeta\subseteq K$ 的 $\zeta$ 成立。(c) $Y$ 的完备性在定义本身中未被使用，仅在下文的极限与 Bochner 积分（\cref{proposition:ch04-磨光逼近}、\cref{definition:ch04-向量Sobolev}）中使用。
+
+\item 边界。(a) 映射 $f\mapsto T_f$ 是单射：若 $T_f=0$，则对每个 $y^*\in Y^*$ 有 $\int_U\zeta\,\langle y^*,f\rangle\,\mathrm{d}x=0$ 对一切 $\zeta\in C_c^\infty(U)$ 成立，由变分法基本引理得 $\langle y^*,f\rangle=0$ 在 $U$ 中几乎处处成立，再由 $Y^*$ 分离 $Y$ 中的点得 $f=0$ 几乎处处。(b) $\mathcal{D}'(U;Y)$ 严格包含 $\{T_f\mid f\in L^1_{\mathrm{loc}}(U;Y)\}$，Dirac 型分布见\cref{example:ch04-向量Dirac}。(c) 若 $Y$ 只是赋范空间而不完备，定义仍有意义，但 $L^p(U;Y)$ 与 $W^{m,p}(U;Y)$ 的完备性结论须另行假设。
+\end{enumerate}
+\end{remark}
+
+此后使用记号 $T\zeta\equiv\langle T,\zeta\rangle\in Y$（$T\in\mathcal{D}'(U;Y)$，$\zeta\in\mathcal{D}(U)$）。还令 $\mathcal{D}'(U;\mathbb{R})\equiv\mathcal{D}^*(U)$，即 $\mathcal{D}^*(U)$ 表示 $U$ 上标量分布的向量空间。
+
+\begin{remark}\phantomsection\label{remark:ch04-向量分布例子}
 对每个向量测度 $\mu:\mathcal{B}(U)\to Y$，对应 $T_\mu\in\mathcal{D}'(U;Y)$，定义为
 \begin{align*}
 \langle T_\mu,\zeta\rangle\equiv\langle\mu,\zeta\rangle=\int_U\zeta\,\mathrm{d}\mu\quad(\zeta\in C_c^\infty(U)),
 \end{align*}
 且由不等式\eqref{align:ch04-4.60}有
 \begin{align*}
-\|\langle T_\mu,\zeta\rangle\|_Y\leqslant\int_U|\zeta|\,\mathrm{d}|\mu|\leqslant\|\zeta\|_\infty|\mu|(U).
+\|\langle T_\mu,\zeta\rangle\|_Y\leqslant\int_U|\zeta|\,\mathrm{d}|\mu|_w\leqslant\|\zeta\|_\infty|\mu|_w(U).
 \end{align*}
-特别地，由\cref{remark:ch04-区域Lp}(ii)，对每个 $f\in L^1_{\mathrm{loc}}(U;Y)$，对应 $T_f\in\mathcal{D}'(U;Y)$，使
+特别地，由\hyperref[remark:ch04-区域Lp]{关于区域 $L^p$ 空间的注记}(ii)，对每个 $f\in L^1_{\mathrm{loc}}(U;Y)$ 对应 $T_f\in\mathcal{D}'(U;Y)$，使
 \begin{align*}
-\langle T_f,\zeta\rangle=\int_U f\zeta\,\mathrm{d}x\quad(\zeta\in C_c^\infty(U)),
+\langle T_f,\zeta\rangle=\int_Uf\zeta\,\mathrm{d}x\quad(\zeta\in C_c^\infty(U)),
 \end{align*}
 \begin{align*}
 \|\langle T_f,\zeta\rangle\|_Y\leqslant\int_U\|f\|_Y|\zeta|\,\mathrm{d}x\leqslant\|\zeta\|_\infty\int_U\|f\|_Y\,\mathrm{d}x.
 \end{align*}
 \end{remark}
 
-\begin{definition}\label{definition:ch04-分布收敛}
-序列 $\{T_k\}\subseteq\mathcal{D}'(U;Y)$ 在 $\mathcal{D}'(U;Y)$ 中收敛于 $T\in\mathcal{D}'(U;Y)$（记为 $T_k\to T$ 在 $\mathcal{D}'(U;Y)$ 中），若对所有 $\zeta\in C_c^\infty(U)$ 有 $\|\langle T_k,\zeta\rangle-\langle T,\zeta\rangle\|_Y\to0$。
+% SUPPLEMENT: parent=remark:ch04-向量分布例子; kind=proof; 补出 $T_\mu$ 与 $T_f$ 的线性、连续性与范数估计的完整验证（含 $|\mu|_w(U)<\infty$ 与 $|\mu_f|_w\leqslant\|f\|_Y\lambda$ 两项依据）
+\begin{proof}
+先设 $\mu:\mathcal{B}(U)\to Y$ 为向量测度，$|\mu|_w$ 为其弱变差。映射 $\zeta\mapsto\int_U\zeta\,\mathrm{d}\mu$ 线性；由\eqref{align:ch04-4.60}，
+\begin{align*}
+\|\langle T_\mu,\zeta\rangle\|_Y\leqslant\int_U|\zeta|\,\mathrm{d}|\mu|_w\leqslant\|\zeta\|_\infty|\mu|_w(U)\quad(\zeta\in C_c^\infty(U)),
+\end{align*}
+其中 $|\mu|_w(U)<\infty$，因为向量测度的弱变差不超过其半变差。设 $\zeta_k\to\zeta$ 在 $\mathcal{D}(U)$ 中，则 $\|\zeta_k-\zeta\|_\infty\to0$，故
+\begin{align*}
+\|\langle T_\mu,\zeta_k\rangle-\langle T_\mu,\zeta\rangle\|_Y\leqslant\|\zeta_k-\zeta\|_\infty|\mu|_w(U)\to0\quad(k\to\infty),
+\end{align*}
+即 $T_\mu\in\mathcal{D}'(U;Y)$。
+
+再设 $f\in L^1_{\mathrm{loc}}(U;Y)$。由\hyperref[remark:ch04-区域Lp]{关于区域 $L^p$ 空间的注记}(ii)，$\mu_f(E)\triangleq\int_Ef\,\mathrm{d}x$（$E\in\mathcal{B}(U)$）为向量测度，且对每个 $E\in\mathcal{B}(U)$ 有 $|\mu_f|_w(E)\leqslant\int_E\|f\|_Y\,\mathrm{d}x$：事实上对任意有限不交族 $\{E_i\}\subseteq\mathcal{B}(U)$ 与任意 $\|y^*\|_{Y^*}\leqslant1$，
+\begin{align*}
+\sum_i|\langle y^*,\mu_f(E_i)\rangle|=\sum_i\Big|\int_{E_i}\langle y^*,f\rangle\,\mathrm{d}x\Big|\leqslant\sum_i\int_{E_i}|\langle y^*,f\rangle|\,\mathrm{d}x\leqslant\int_E\|f\|_Y\,\mathrm{d}x .
+\end{align*}
+于是 $T_f=T_{\mu_f}$，从而 $T_f\in\mathcal{D}'(U;Y)$；并且
+\begin{align*}
+\|\langle T_f,\zeta\rangle\|_Y\leqslant\int_U\|f\|_Y|\zeta|\,\mathrm{d}x\leqslant\|\zeta\|_\infty\int_{\operatorname{supp}\zeta}\|f\|_Y\,\mathrm{d}x ,
+\end{align*}
+右端有限（$\operatorname{supp}\zeta$ 紧且 $f\in L^1_{\mathrm{loc}}$），且当 $\zeta_k$ 与 $\zeta$ 具有公共紧支撑而 $\|\zeta_k-\zeta\|_\infty\to0$ 时右端趋于零。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:ch04-向量分布; kind=example; 说明 $\mathcal{D}'(U;Y)$ 中不属于 $\{T_f\}$ 的元素：取定 $x_0\in U$ 与 $y_0\in Y\setminus\{0\}$，Dirac 型向量分布 $\delta_{x_0}y_0$ 由 $\langle\delta_{x_0}y_0,\zeta\rangle\triangleq\zeta(x_0)y_0$ 给出，它不是任何 $f\in L^1_{\mathrm{loc}}(U;Y)$ 对应的 $T_f$
+\begin{example}\label{example:ch04-向量Dirac}
+设 $U\subseteq\mathbb{R}^N$ 为非空开集，$Y$ 为 Banach 空间，$x_0\in U$，$y_0\in Y$ 且 $y_0\neq0$。对 $\zeta\in C_c^\infty(U)$ 令 $\langle\delta_{x_0}y_0,\zeta\rangle\triangleq\zeta(x_0)y_0$。则 $\delta_{x_0}y_0\in\mathcal{D}'(U;Y)$，且不存在 $f\in L^1_{\mathrm{loc}}(U;Y)$ 使 $\delta_{x_0}y_0=T_f$。
+\end{example}
+
+% SUPPLEMENT: parent=example:ch04-向量Dirac; kind=proof; 补出连续性与非函数性的验证：由 $|\zeta(x_0)|\leqslant\|\zeta\|_\infty$ 得连续性；若 $T_f=\delta_{x_0}y_0$，取支撑趋于 $\{x_0\}$ 的试验函数列，得 $\|y_0\|_Y\leqslant\int_{B(x_0,\varepsilon)}\|f\|_Y\to0$ 的矛盾
+\begin{proof}
+连续性。映射 $\zeta\mapsto\zeta(x_0)y_0$ 线性，且 $\|\zeta(x_0)y_0\|_Y\leqslant\|y_0\|_Y\|\zeta\|_\infty$；若 $\zeta_k\to\zeta$ 在 $\mathcal{D}(U)$ 中，则 $\zeta_k(x_0)\to\zeta(x_0)$，故配对值收敛。于是 $\delta_{x_0}y_0\in\mathcal{D}'(U;Y)$。
+
+非函数性。设存在 $f\in L^1_{\mathrm{loc}}(U;Y)$ 使 $\delta_{x_0}y_0=T_f$。取 $r>0$ 使 $\overline{B(x_0,r)}\Subset U$。对 $\varepsilon\in(0,r)$ 取 $\zeta_\varepsilon\in C_c^\infty(B(x_0,\varepsilon))$ 使 $0\leqslant\zeta_\varepsilon\leqslant1$ 且 $\zeta_\varepsilon(x_0)=1$。则
+\begin{align*}
+\|y_0\|_Y=\|\langle\delta_{x_0}y_0,\zeta_\varepsilon\rangle\|_Y=\Big\|\int_Uf\zeta_\varepsilon\,\mathrm{d}x\Big\|_Y\leqslant\int_{B(x_0,\varepsilon)}\|f\|_Y\,\mathrm{d}x .
+\end{align*}
+由于 $f\in L^1_{\mathrm{loc}}(U;Y)$，积分关于测度绝对连续，故 $\int_{B(x_0,\varepsilon)}\|f\|_Y\,\mathrm{d}x\to0$（$\varepsilon\to0^+$），与 $y_0\neq0$ 矛盾。
+\end{proof}
+
+\begin{definition}[分布收敛]\label{definition:ch04-分布收敛}
+设 $U\subseteq\mathbb{R}^N$ 为非空开集，$Y$ 为 Banach 空间，$T\in\mathcal{D}'(U;Y)$，$\{T_k\}\subseteq\mathcal{D}'(U;Y)$。称序列 $\{T_k\}$ 在 $\mathcal{D}'(U;Y)$ 中收敛于 $T$（记为 $T_k\to T$ 在 $\mathcal{D}'(U;Y)$ 中），若对每个 $\zeta\in C_c^\infty(U)$ 有 $\|\langle T_k,\zeta\rangle-\langle T,\zeta\rangle\|_Y\to0$（$k\to\infty$）。
 \end{definition}
 
-\begin{definition}\label{definition:ch04-分布导数}
-设 $T\in\mathcal{D}'(U;Y)$。$T$ 的 $\alpha$ 阶分布导数，记为 $D^\alpha T$（$\alpha\in\mathbb{N}^N$），指向量分布 $D^\alpha T\in\mathcal{D}'(U;Y)$，
+% SUPPLEMENT: parent=definition:ch04-分布收敛; kind=motivation; 说明以“在每点处的配对值收敛”代替范数收敛的动机（$\mathcal{D}(U)$ 与 $\mathcal{D}'(U;Y)$ 都不赋范）、对全部 $\zeta$ 验证与对稠密族验证的差别、$Y$ 完备性在序列完备性中的作用，以及该收敛不蕴含 $C^k$ 收敛的边界
+\begin{remark}\phantomsection\label{remark:ch04-分布收敛动机}
+\begin{enumerate}[(i)]
+\item 引入动机。$\mathcal{D}'(U;Y)$ 是 $\mathcal{D}(U)$ 上连续线性映射的空间，$\mathcal{D}(U)$ 的拓扑不能由单个范数给出，故 $\mathcal{D}'(U;Y)$ 也不带自然范数。定义以配对值在 $Y$ 中的收敛直接规定序列收敛，这正是弱$^*$拓扑 $\sigma(\mathcal{D}'(U;Y),\mathcal{D}(U))$ 的序列收敛性；它使求导、与光滑函数相乘、与磨光核卷积都成为连续运算（\cref{definition:ch04-分布像} 后的注记、\cref{proposition:ch04-磨光逼近}）。
+
+\item 各要素的作用。(a) 量词“对每个 $\zeta\in C_c^\infty(U)$”不可减弱为“对某个稠密族验证”而不加一致性假设：逐点收敛的族未必一致有界，而极限的连续性需要一致有界性。(b) $Y$ 的完备性使“$\{\langle T_k,\zeta\rangle\}$ 对每个 $\zeta$ 为 Cauchy 序列”与“该序列收敛”等价，并保证点态极限 $T\zeta\triangleq\lim_k\langle T_k,\zeta\rangle$ 是 $\mathcal{D}'(U;Y)$ 的元素：由一致有界性，对每个紧集 $K$ 存在 $c>0$ 与 $m\in\mathbb{N}$ 使 $\|\langle T_k,\zeta\rangle\|_Y\leqslant c\sup_{|\alpha|\leqslant m}\sup_K|D^\alpha\zeta|$ 对一切 $k$ 与 $\operatorname{supp}\zeta\subseteq K$ 成立，令 $k\to\infty$ 即得 $T$ 的同样估计，故 $T\in\mathcal{D}'(U;Y)$。
+
+\item 边界。(a) 极限唯一：$Y$ 为 Hausdorff 空间，配对值序列的极限唯一。(b) 该收敛弱于 $C^k$ 意义下的收敛：取 $T=\delta_0y_0$（$\langle\delta_0y_0,\zeta\rangle=\zeta(0)y_0$，$y_0\neq0$），则 $\delta_0y_0*\rho_\varepsilon\to\delta_0y_0$ 在 $\mathcal{D}'(\mathbb{R};Y)$ 中，而 $\{\delta_0y_0*\rho_\varepsilon\}$ 在 $C(\mathbb{R};Y)$ 中不收敛于任何函数。(c) 逐点收敛不足以推出导数序列的收敛：由 $\langle T_k,\zeta\rangle\to\langle T,\zeta\rangle$ 不能推出 $\langle D^\alpha T_k,\zeta\rangle\to\langle D^\alpha T,\zeta\rangle$，后者须对 $D^\alpha\zeta$ 单独验证。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[分布导数]\label{definition:ch04-分布导数}
+设 $U\subseteq\mathbb{R}^N$ 为非空开集，$Y$ 为 Banach 空间，$T\in\mathcal{D}'(U;Y)$，$\alpha\in\mathbb{N}^N$。$T$ 的 $\alpha$ 阶分布导数记为 $D^\alpha T$，定义为向量分布 $D^\alpha T\in\mathcal{D}'(U;Y)$，
 \begin{align*}
-\langle D^\alpha T,\zeta\rangle\triangleq (-1)^{|\alpha|}\langle T,D^\alpha\zeta\rangle\quad\text{对所有 }\zeta\in C_c^\infty(U).
+\langle D^\alpha T,\zeta\rangle\triangleq(-1)^{|\alpha|}\langle T,D^\alpha\zeta\rangle\quad\text{对一切 }\zeta\in C_c^\infty(U),
 \end{align*}
+其中 $|\alpha|\triangleq\alpha_1+\cdots+\alpha_N$ 且 $D^\alpha\zeta\triangleq\partial^{|\alpha|}\zeta/\partial x_1^{\alpha_1}\cdots\partial x_N^{\alpha_N}$。
 \end{definition}
 
-我们对标量情形 $Y=\mathbb{R}$ 使用相同的分布导数记号，例如 $N=1$ 时 $\mathrm{d}T/\mathrm{d}x\equiv D_1T$。
+% SUPPLEMENT: parent=definition:ch04-分布导数; kind=motivation; 说明把分部积分取作定义的动机、因子 $(-1)^{|\alpha|}$ 与 $Y$ 值陪域各自的作用、分布导数对任意分布总存在但不必由函数表示这一边界，以及 $D^\alpha(D^\beta T)=D^{\alpha+\beta}T$ 的相容性
+\begin{remark}\phantomsection\label{remark:ch04-分布导数动机}
+\begin{enumerate}[(i)]
+\item 引入动机。对 $f\in C^{|\alpha|}(U;Y)$ 与 $\zeta\in C_c^\infty(U)$，分部积分给出 $\int_U(D^\alpha f)\zeta\,\mathrm{d}x=(-1)^{|\alpha|}\int_Uf\,D^\alpha\zeta\,\mathrm{d}x$，右端只用到 $f$ 的局部可积性。定义把右端取作左端的定义，于是每个向量分布对每个多重指标 $\alpha$ 都有 $\alpha$ 阶导数，且当 $T=T_f$、$f$ 为 $C^{|\alpha|}$ 时 $D^\alpha T=T_{D^\alpha f}$。
 
-\begin{definition}\label{definition:ch04-分布卷积}
-$T\in\mathcal{D}'(\mathbb{R};Y)$ 与 $\rho\in C_c^\infty(\mathbb{R})$ 的卷积为
-\begin{align*}
-\langle T*\rho,\zeta\rangle\triangleq \langle T,\zeta*\hat\rho\rangle\quad\text{对所有 }\zeta\in C_c^\infty(U),
-\end{align*}
-其中 $\hat\rho(x)\triangleq \rho(-x)$（$x\in\mathbb{R}$）。
+\item 各要素的作用。(a) 因子 $(-1)^{|\alpha|}$ 使定义与经典导数一致；去掉它，$D^\alpha T$ 与 $\partial^\alpha f$ 相差 $(-1)^{|\alpha|}$ 倍。(b) $\alpha$ 取遍 $\mathbb{N}^N$（有限多重指标），故定义只涉及有限阶导数，不涉及极限过程。(c) 陪域为 $Y$：$D^\alpha\zeta$ 是标量函数，故右端是 $T$ 在 $\mathcal{D}(U)$ 的一个元素处的取值，不需要 $Y$ 上的额外结构；$Y$ 的完备性在定义中未被使用。(d) 良定义性：若 $\zeta_k\to\zeta$ 在 $\mathcal{D}(U)$ 中，则 $D^\alpha\zeta_k\to D^\alpha\zeta$ 在 $\mathcal{D}(U)$ 中，故由 $T$ 的连续性 $D^\alpha T$ 连续；又 $D^\alpha(D^\beta T)=D^{\alpha+\beta}T$ 由定义直接验证，故高阶导数无循环。
 
-若 $T=f\in L^1_{\mathrm{loc}}(\mathbb{R};Y)$，则易见
+\item 边界。(a) 每个向量分布无穷次可微，但“$D^\alpha T$ 由 $L^p$ 函数表示”是附加信息：Heaviside 函数 $H=\chi_{[0,\infty)}$ 的分布导数是由 $\delta_0$ 给出的测度而非函数，故 $H\notin W^{1,1}(\mathbb{R})$。(b) $D^\alpha T$ 只依赖 $T$ 的局部行为：若 $T$ 在开集 $V\subseteq U$ 上为零（即 $\langle T,\zeta\rangle=0$ 对一切满足 $\operatorname{supp}\zeta\Subset V$ 的 $\zeta$ 成立），则 $D^\alpha T$ 在 $V$ 上为零。(c) 混合偏导可交换：$D^{\alpha+\beta}T=D^\alpha(D^\beta T)=D^\beta(D^\alpha T)$。
+\end{enumerate}
+\end{remark}
+
+对分布导数使用与标量情形 $Y=\mathbb{R}$ 相同的记号：当 $N=1$ 时记 $\mathrm{d}T/\mathrm{d}x\equiv D_1T$，并记 $\mathrm{d}^kT/\mathrm{d}x^k\equiv D_1^kT$。
+
+\begin{definition}[分布卷积]\label{definition:ch04-分布卷积}
+设 $Y$ 为 Banach 空间，$T\in\mathcal{D}'(\mathbb{R};Y)$，$\rho\in C_c^\infty(\mathbb{R})$。$T$ 与 $\rho$ 的卷积定义为向量分布 $T*\rho\in\mathcal{D}'(\mathbb{R};Y)$，
 \begin{align*}
-T*\rho=\int_{\mathbb{R}}\rho(\cdot-y)f(y)\,\mathrm{d}y.
+\langle T*\rho,\zeta\rangle\triangleq\langle T,\zeta*\hat\rho\rangle\quad\text{对一切 }\zeta\in C_c^\infty(\mathbb{R}),
 \end{align*}
+其中 $\hat\rho(x)\triangleq\rho(-x)$（$x\in\mathbb{R}$），$\zeta*\hat\rho$ 表示 $\mathbb{R}$ 上通常的卷积，即 $(\zeta*\hat\rho)(y)\triangleq\int_{\mathbb{R}}\zeta(x)\hat\rho(y-x)\,\mathrm{d}x$。
 \end{definition}
 
-若 $\rho_\epsilon$ 为标准磨光子，则有如下结果。
+% SUPPLEMENT: parent=definition:ch04-分布卷积; kind=motivation; 说明只对 $\mathbb{R}$ 上的分布定义卷积的动机（平移须保持检验函数空间）、$\hat\rho$ 的取法使 $T_f*\rho$ 等于经典卷积 $\rho*f$、$\rho$ 的紧支撑与光滑性各自的作用，以及两个任意分布不能相乘或相卷积这一边界
+\begin{remark}\phantomsection\label{remark:ch04-分布卷积动机}
+\begin{enumerate}[(i)]
+\item 引入动机。卷积是“平移平均”的代数形式，它把任意分布变为光滑函数（\cref{proposition:ch04-磨光逼近}(i)），从而是证明稠密性与正则性的基本工具。定义只涉及 $\mathbb{R}$ 上的分布，因为在一般开集 $U$ 上作平移会使检验函数的支撑跑出 $U$，此时 $\zeta*\hat\rho$ 未必属于 $\mathcal{D}(U)$。
+
+\item 各要素的作用。(a) $\rho\in C_c^\infty(\mathbb{R})$ 保证 $\zeta*\hat\rho\in C_c^\infty(\mathbb{R})$：光滑性由卷积继承，而 $\operatorname{supp}(\zeta*\hat\rho)\subseteq\operatorname{supp}\zeta+\operatorname{supp}\hat\rho$ 紧。(b) 取 $\hat\rho$ 而非 $\rho$ 使定义与经典卷积对齐：若 $T=T_f$，$f\in L^1_{\mathrm{loc}}(\mathbb{R};Y)$，则 $T*\rho$ 由 $x\mapsto\int_{\mathbb{R}}\rho(x-y)f(y)\,\mathrm{d}y=\rho*f(x)$ 表示（见下文补证）。(c) $Y$ 只需为赋范空间：定义只用 $T$ 的取值与 $\rho$ 的标量性。
+
+\item 边界。(a) 定义中检验函数空间须取 $\mathcal{D}(\mathbb{R})$；若形式地写成一般开集 $U$ 上的 $\mathcal{D}(U)$，则 $\zeta*\hat\rho$ 未必有定义。(b) 两个任意分布不能相乘，也不能相卷积：卷积 $S*T$ 只在其中一个具紧支撑时才有定义。(c) 卷积不改变 $T$ 的奇性阶数：$T*\rho$ 的光滑性来自 $\rho$，而与 $T$ 的正则性无关；若 $T$ 具紧支撑，则 $T*\rho\in C_c^\infty(\mathbb{R};Y)$，否则一般没有紧支撑（例如 $T\equiv y_0$ 时 $T*\rho\equiv y_0$）。
+\end{enumerate}
+\end{remark}
+
+若 $T=f\in L^1_{\mathrm{loc}}(\mathbb{R};Y)$，则
+\begin{align*}
+T*\rho=\int_{\mathbb{R}}\rho(\cdot-y)f(y)\,\mathrm{d}y .
+\end{align*}
+
+% SUPPLEMENT: parent=definition:ch04-分布卷积; kind=proof; 补出上述恒等式的完整推导：Fubini 定理的适用条件（$\zeta$、$\rho$ 的紧支撑与 $f$ 的局部可积性）以及右端 Bochner 积分的连续性
+\begin{proof}
+设 $f\in L^1_{\mathrm{loc}}(\mathbb{R};Y)$，$\zeta\in C_c^\infty(\mathbb{R})$。由\cref{definition:ch04-分布卷积}与 $T_f$ 的积分表示，
+\begin{align*}
+\langle T_f*\rho,\zeta\rangle=\langle T_f,\zeta*\hat\rho\rangle=\int_{\mathbb{R}}\Big(\int_{\mathbb{R}}\zeta(x)\hat\rho(y-x)\,\mathrm{d}x\Big)f(y)\,\mathrm{d}y,
+\end{align*}
+且 $\hat\rho(y-x)=\rho(-(y-x))=\rho(x-y)$。函数 $(x,y)\mapsto\zeta(x)\rho(x-y)f(y)$ 关于 $\mathrm{d}x\otimes\mathrm{d}y$ 可积：$\zeta$ 的支撑紧，$y$ 限制在紧集 $\operatorname{supp}\zeta+\operatorname{supp}\rho$ 中，而 $|\zeta(x)\rho(x-y)|\leqslant\|\zeta\|_\infty\|\rho\|_\infty$ 且 $f\in L^1_{\mathrm{loc}}(\mathbb{R};Y)$。故 Fubini 定理给出
+\begin{align*}
+\langle T_f*\rho,\zeta\rangle=\int_{\mathbb{R}}\zeta(x)\Big(\int_{\mathbb{R}}\rho(x-y)f(y)\,\mathrm{d}y\Big)\mathrm{d}x .
+\end{align*}
+右端内层积分为 Bochner 积分，被积函数的范数被 $\|\rho\|_\infty\|f\|_Y$ 控制且在紧集上可积，故由控制收敛定理，$x\mapsto\int_{\mathbb{R}}\rho(x-y)f(y)\,\mathrm{d}y$ 连续，从而属于 $L^1_{\mathrm{loc}}(\mathbb{R};Y)$。于是 $T_f*\rho$ 由该连续函数表示，即 $T_f*\rho=\int_{\mathbb{R}}\rho(\cdot-y)f(y)\,\mathrm{d}y$。
+\end{proof}
+
+若 $\rho_\varepsilon$ 为标准磨光子，则有如下结果，其中 (i) 取 $N=1$，(ii) 取 $N\in\mathbb{N}^*$。
 
 \begin{proposition}\label{proposition:ch04-磨光逼近}
-(i) 设 $T\in\mathcal{D}'(\mathbb{R};Y)$。则 $T*\rho_\epsilon\in C^\infty(\mathbb{R};Y)$，且当 $\epsilon\to0^+$ 时 $(D^\alpha T)*\rho_\epsilon\to D^\alpha T$ 在 $\mathcal{D}'(\mathbb{R};Y)$ 中（$\alpha\in\mathbb{N}^N$）。
-
-(ii) 设 $f\in L^p(\mathbb{R}^N;Y)$（$p\in[1,\infty)$）。则 $\{\rho_\epsilon*f\}\subseteq L^p(\mathbb{R}^N;Y)\cap C^\infty(\mathbb{R}^N;Y)$，对所有 $\epsilon>0$ 有 $\|\rho_\epsilon*f\|_p\leqslant\|f\|_p$，且当 $\epsilon\to0^+$ 时 $\rho_\epsilon*f\to f$ 在 $L^p(\mathbb{R}^N;Y)$ 中。
+设 $Y$ 为 Banach 空间。设 $\rho\in C_c^\infty(\mathbb{R}^N)$ 满足 $\rho\geqslant0$ 与 $\int_{\mathbb{R}^N}\rho\,\mathrm{d}x=1$，并令 $\rho_\varepsilon(x)\triangleq\varepsilon^{-N}\rho(x/\varepsilon)$（$\varepsilon>0$，$x\in\mathbb{R}^N$）。则：
+\begin{enumerate}[(i)]
+\item\label{item:ch04-磨光逼近-i} 设 $N=1$，$T\in\mathcal{D}'(\mathbb{R};Y)$，并令 $(T*\rho_\varepsilon)(x)\triangleq\langle T,\rho_\varepsilon(x-\cdot)\rangle$（$x\in\mathbb{R}$）。则 $T*\rho_\varepsilon\in C^\infty(\mathbb{R};Y)$，且对每个 $\alpha\in\mathbb{N}^N$，当 $\varepsilon\to0^+$ 时 $(D^\alpha T)*\rho_\varepsilon\to D^\alpha T$ 在 $\mathcal{D}'(\mathbb{R};Y)$ 中；
+\item\label{item:ch04-磨光逼近-ii} 设 $p\in[1,\infty)$，$f\in L^p(\mathbb{R}^N;Y)$。则 $\{\rho_\varepsilon*f\}\subseteq L^p(\mathbb{R}^N;Y)\cap C^\infty(\mathbb{R}^N;Y)$，$\|\rho_\varepsilon*f\|_p\leqslant\|f\|_p$ 对一切 $\varepsilon>0$ 成立，且当 $\varepsilon\to0^+$ 时 $\rho_\varepsilon*f\to f$ 在 $L^p(\mathbb{R}^N;Y)$ 中。
+\end{enumerate}
 \end{proposition}
 
-\begin{definition}\label{definition:ch04-分布像}
-设 $Y,Z$ 为 Banach 空间，$L\in\mathcal{L}(Y;Z)$。$T\in\mathcal{D}'(U;Y)$ 在 $L$ 下的像是向量分布 $L(T)\in\mathcal{D}'(U;Z)$，定义为
+% SUPPLEMENT: parent=proposition:ch04-磨光逼近; kind=proof; 标量情形见\cref{proposition:ch03-磨光逼近}，此处补出向量值情形的完整论证：差商在 $\mathcal{D}(\mathbb{R})$ 中的收敛、对偶恒等式 $D^\alpha(T*\rho_\varepsilon)=(D^\alpha T)*\rho_\varepsilon$、$Y$ 值 Jensen 不等式与 $C_c$ 在 $L^p$ 中的稠密性，并核验 $p=\infty$ 不在范围内
+\begin{proof}
+(i) 固定 $x\in\mathbb{R}$ 与 $h\neq0$。由 $T$ 的线性，
 \begin{align*}
-\langle L(T),\zeta\rangle\triangleq L(\langle T,\zeta\rangle)\quad\text{对所有 }\zeta\in C_c^\infty(U).
+\frac{(T*\rho_\varepsilon)(x+h)-(T*\rho_\varepsilon)(x)}{h}=\Big\langle T,\frac{\rho_\varepsilon(x+h-\cdot)-\rho_\varepsilon(x-\cdot)}{h}\Big\rangle .
+\end{align*}
+当 $h\to0$ 时，函数 $y\mapsto h^{-1}[\rho_\varepsilon(x+h-y)-\rho_\varepsilon(x-y)]$ 的各阶导数在公共紧集 $[x-1,x+1]-\operatorname{supp}\rho_\varepsilon$ 上一致收敛于 $y\mapsto\rho_\varepsilon'(x-y)$ 的相应导数，故该差商在 $\mathcal{D}(\mathbb{R})$ 中收敛于 $y\mapsto\rho_\varepsilon'(x-y)$。由 $T$ 的连续性，上式右端趋于 $\langle T,\rho_\varepsilon'(x-\cdot)\rangle$，即 $(T*\rho_\varepsilon)'(x)$ 存在且等于 $\langle T,\rho_\varepsilon'(x-\cdot)\rangle$。逐次重复得 $T*\rho_\varepsilon\in C^\infty(\mathbb{R};Y)$ 与
+\begin{align*}
+D^\alpha(T*\rho_\varepsilon)=T*(D^\alpha\rho_\varepsilon)=(D^\alpha T)*\rho_\varepsilon\quad(\alpha\in\mathbb{N}^N),
+\end{align*}
+其中第二个等号由对偶计算得到：对 $\zeta\in C_c^\infty(\mathbb{R})$，
+\begin{align*}
+\langle D^\alpha(T*\rho_\varepsilon),\zeta\rangle=(-1)^{|\alpha|}\langle T,(D^\alpha\zeta)*\hat\rho_\varepsilon\rangle=(-1)^{|\alpha|}\langle T,D^\alpha(\zeta*\hat\rho_\varepsilon)\rangle=\langle(D^\alpha T)*\rho_\varepsilon,\zeta\rangle .
+\end{align*}
+
+为证收敛，注意 $\langle(D^\alpha T)*\rho_\varepsilon,\zeta\rangle=(-1)^{|\alpha|}\langle T,(D^\alpha\zeta)*\hat\rho_\varepsilon\rangle$，而 $D^\alpha\zeta\in C_c^\infty(\mathbb{R})$。由带紧支撑的光滑函数的标准磨光逼近（\cref{proposition:ch03-磨光逼近}(iii)），$(D^\alpha\zeta)*\hat\rho_\varepsilon\to D^\alpha\zeta$ 在 $\mathcal{D}(\mathbb{R})$ 中：两者的支撑含于 $\operatorname{supp}\zeta+\overline{B(0,1)}$，且各阶导数一致收敛。故由 $T$ 的连续性，
+\begin{align*}
+\lim_{\varepsilon\to0^+}\langle(D^\alpha T)*\rho_\varepsilon,\zeta\rangle=(-1)^{|\alpha|}\langle T,D^\alpha\zeta\rangle=\langle D^\alpha T,\zeta\rangle ,
+\end{align*}
+即 $(D^\alpha T)*\rho_\varepsilon\to D^\alpha T$ 在 $\mathcal{D}'(\mathbb{R};Y)$ 中。
+
+(ii) 对 $x\in\mathbb{R}^N$，由 $\int_{\mathbb{R}^N}\rho_\varepsilon\,\mathrm{d}y=1$ 与 Bochner 积分的三角不等式，
+\begin{align*}
+\|(\rho_\varepsilon*f)(x)\|_Y\leqslant\int_{\mathbb{R}^N}\rho_\varepsilon(y)\|f(x-y)\|_Y\,\mathrm{d}y ,
+\end{align*}
+于是由 $t\mapsto t^p$ 的凸性与 $\rho_\varepsilon\,\mathrm{d}y$ 为概率测度（Jensen 不等式）
+\begin{align*}
+\|(\rho_\varepsilon*f)(x)\|_Y^p\leqslant\int_{\mathbb{R}^N}\rho_\varepsilon(y)\|f(x-y)\|_Y^p\,\mathrm{d}y .
+\end{align*}
+对 $x$ 积分并用 Fubini 定理得 $\|\rho_\varepsilon*f\|_p^p\leqslant\int_{\mathbb{R}^N}\rho_\varepsilon(y)\|f(\cdot-y)\|_p^p\,\mathrm{d}y=\|f\|_p^p$，故 $\|\rho_\varepsilon*f\|_p\leqslant\|f\|_p$，特别地 $\rho_\varepsilon*f\in L^p(\mathbb{R}^N;Y)$。光滑性：对每个多重指标 $\beta$，由积分号下求导，
+\begin{align*}
+D^\beta(\rho_\varepsilon*f)(x)=\int_{\mathbb{R}^N}D^\beta\rho_\varepsilon(x-y)f(y)\,\mathrm{d}y ,
+\end{align*}
+该式由控制收敛定理成立（$y$ 限制在紧集 $x-\operatorname{supp}\rho_\varepsilon$ 中，$\|f\|_Y$ 在其上可积）。
+
+为证 $L^p$ 收敛，先设 $g\in C_c(\mathbb{R}^N;Y)$。由 $g$ 的一致连续性与 $\operatorname{supp}\rho_\varepsilon\subseteq\overline{B(0,\varepsilon)}$，
+\begin{align*}
+\|(\rho_\varepsilon*g)(x)-g(x)\|_Y\leqslant\sup_{|y|\leqslant\varepsilon}\|g(x-y)-g(x)\|_Y\to0\quad(\varepsilon\to0^+),
+\end{align*}
+且该收敛关于 $x$ 一致，而 $\operatorname{supp}(\rho_\varepsilon*g)\subseteq\operatorname{supp}g+\overline{B(0,1)}$，故 $\|\rho_\varepsilon*g-g\|_p\to0$。对一般 $f\in L^p(\mathbb{R}^N;Y)$，由\cref{proposition:ch04-简单函数稠密}(i) 与 Lebesgue 测度的正则性，$C_c(\mathbb{R}^N;Y)$ 在 $L^p(\mathbb{R}^N;Y)$ 中稠密：给定 $\delta>0$，取 $g\in C_c(\mathbb{R}^N;Y)$ 使 $\|f-g\|_p<\delta$，则
+\begin{align*}
+\|\rho_\varepsilon*f-f\|_p\leqslant\|\rho_\varepsilon*(f-g)\|_p+\|\rho_\varepsilon*g-g\|_p+\|g-f\|_p\leqslant2\delta+\|\rho_\varepsilon*g-g\|_p .
+\end{align*}
+先令 $\varepsilon\to0^+$ 再令 $\delta\to0^+$ 即得 $\rho_\varepsilon*f\to f$ 在 $L^p(\mathbb{R}^N;Y)$ 中。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch04-磨光逼近; kind=motivation; 说明磨光作为“把分布化为光滑函数、把 $L^p$ 函数用光滑函数逼近”的统一工具的动机、$p<\infty$、$\rho\geqslant0$、$\int\rho=1$ 各自的作用、$T*\rho_\varepsilon$ 不必具紧支撑与 $\mathcal{D}'$ 收敛不能加强为 $C^k$ 收敛两个边界
+\begin{remark}\phantomsection\label{remark:ch04-磨光逼近动机}
+\begin{enumerate}[(i)]
+\item 引入动机。磨光是本书中把三类对象互相转化的唯一工具：它把分布化为 $C^\infty$ 函数，把 $L^p$ 函数用 $C^\infty$ 函数在范数意义下逼近，从而给出 $W^{m,p}$ 中光滑函数的稠密性，并用逼近序列的极限刻画 Sobolev 空间与紧嵌入。
+
+\item 各要素的作用。(a) $p\in[1,\infty)$ 不可换成 $p=\infty$：取 $f=\chi_{[0,1]}\in L^\infty(\mathbb{R})$，则 $\rho_\varepsilon*f$ 在 $L^\infty$ 范数下不收敛于 $f$（在 $0$ 与 $1$ 的邻域内 $|\rho_\varepsilon*f-f|$ 不趋于零），只有弱$^*$意义下的收敛。(b) $\rho\geqslant0$ 与 $\int\rho=1$ 使 $\rho_\varepsilon\,\mathrm{d}y$ 为概率测度，Jensen 不等式与 $\|\rho_\varepsilon*f\|_p\leqslant\|f\|_p$ 中的常数 $1$ 由此得到。(c) (i) 中 $T$ 为任意分布，其正则性不参与论证；结论不能加强为 $T*\rho_\varepsilon\in C_c^\infty$：取 $T\equiv y_0$（$y_0\neq0$），则 $T*\rho_\varepsilon\equiv y_0$ 无紧支撑。
+
+\item 边界。(a) (i) 的收敛只在 $\mathcal{D}'(\mathbb{R};Y)$ 中成立：取 $T=\delta_0y_0$，则 $T*\rho_\varepsilon(x)=\rho_\varepsilon(x)y_0$，其在 $\mathcal{D}'$ 中收敛于 $\delta_0y_0$，但在 $C(\mathbb{R};Y)$ 中不收敛（$\rho_\varepsilon(0)=\varepsilon^{-1}\rho(0)$ 无界）。(b) (ii) 的范数估计中的常数不能改进：取 $f$ 为常数 $y_0$，则 $\rho_\varepsilon*f=f$，等号成立。(c) 磨光不保持紧支撑以外的整体性质：$\rho_\varepsilon*f$ 的支撑一般比 $f$ 的支撑大 $\operatorname{supp}\rho_\varepsilon$，故在开集 $U$ 上磨光会使函数越出 $U$。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[分布的像]\label{definition:ch04-分布像}
+设 $U\subseteq\mathbb{R}^N$ 为非空开集，$Y,Z$ 为 Banach 空间，$L\in\mathcal{L}(Y;Z)$，$T\in\mathcal{D}'(U;Y)$。$T$ 在 $L$ 下的像定义为向量分布 $L(T)\in\mathcal{D}'(U;Z)$，
+\begin{align*}
+\langle L(T),\zeta\rangle\triangleq L(\langle T,\zeta\rangle)\quad\text{对一切 }\zeta\in C_c^\infty(U).
 \end{align*}
 \end{definition}
 
-\begin{remark}\label{remark:ch04-分布像性质}
-下列断言易验证：
-(i) 若 $T_k\to T$ 在 $\mathcal{D}'(U;Y)$ 中，则 $L(T_k)\to L(T)$ 在 $\mathcal{D}'(U;Z)$ 中；
-(ii) 对任意 $T\in\mathcal{D}'(U;Y)$，$D^\alpha(L(T))=L(D^\alpha T)\in\mathcal{D}'(U;Z)$。
+% SUPPLEMENT: parent=definition:ch04-分布像; kind=motivation; 说明把有界线性算子作用于 $Y$ 值分布的动机（投影、对偶配对、沿纤维积分）、$L$ 的有界性的作用与无界时的反例、$Y,Z$ 的完备性在何处使用，以及 $L(T_f)=T_{L\circ f}$ 这一相容性
+\begin{remark}\phantomsection\label{remark:ch04-分布像动机}
+\begin{enumerate}[(i)]
+\item 引入动机。$Y$ 值分布常在 $Y$ 上再经有界线性运算处理：投影到分量、取对偶配对、沿纤维积分（见下文关于 $l(f)$ 的注记）、把 $W^{m,p}(U;Y)$ 映入 $W^{m,p}(U;Z)$。定义使这些运算逐点作用于配对值，从而与求导交换（\cref{definition:ch04-分布像} 后的注记(ii)）。
+
+\item 各要素的作用。(a) $L$ 的有界性保证 $L(T)\in\mathcal{D}'(U;Z)$：设 $\zeta_k\to\zeta$ 在 $\mathcal{D}(U)$ 中，则 $\|\langle T,\zeta_k\rangle-\langle T,\zeta\rangle\|_Y\to0$，故 $\|\langle L(T),\zeta_k\rangle-\langle L(T),\zeta\rangle\|_Z\leqslant\|L\|\,\|\langle T,\zeta_k\rangle-\langle T,\zeta\rangle\|_Y\to0$。(b) $Y,Z$ 的完备性在定义中未被使用，仅在下文关于 $W^{m,p}(U;Z)$ 的结论中使用。(c) 相容性：若 $f\in L^1_{\mathrm{loc}}(U;Y)$ 且 $L\circ f\in L^1_{\mathrm{loc}}(U;Z)$，则 $L(T_f)=T_{L\circ f}$，因为由 $L$ 的连续性与 Bochner 积分的定义，$L\big(\int_Uf\zeta\,\mathrm{d}x\big)=\int_U(L\circ f)\zeta\,\mathrm{d}x$。
+
+\item 边界。(a) 若 $L$ 线性但无界，则 $L(T)$ 一般不是向量分布。取 $U=(-1,1)$，$Y=Z=\ell^2$，$x_k\triangleq1/k$（$k\geqslant2$），并令 $\langle T,\zeta\rangle\triangleq(2^{-k}\zeta(x_k))_{k\geqslant2}$，则 $T\in\mathcal{D}'(U;\ell^2)$，因为 $\|\langle T,\zeta\rangle\|_{\ell^2}\leqslant\|\zeta\|_\infty(\sum_k2^{-2k})^{1/2}$。令 $L(y)\triangleq(2^ky_k)_{k\geqslant2}$，则 $L$ 线性且在 $\ell^2$ 上无界（$\|Le_k\|_{\ell^2}=2^k$，$\|e_k\|_{\ell^2}=1$），而 $\zeta\mapsto L(\langle T,\zeta\rangle)=(\zeta(x_k))_{k\geqslant2}$ 不取值于 $\ell^2$：取 $\zeta\in C_c^\infty(U)$ 使 $\zeta=1$ 于 $(-1/2,1/2)$，则 $\zeta(x_k)=1$ 对一切 $k\geqslant3$ 成立。(b) 无界算子的情形须先假定 $\langle T,\zeta\rangle$ 落在 $L$ 的定义域中并附加正则性，此时 $L(T)$ 只能作为更弱的对象解释。
+\end{enumerate}
 \end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch04-分布像性质}
+下列断言成立：
+(i) 若 $T_k\to T$ 在 $\mathcal{D}'(U;Y)$ 中，则 $L(T_k)\to L(T)$ 在 $\mathcal{D}'(U;Z)$ 中；
+(ii) 对任意 $T\in\mathcal{D}'(U;Y)$ 与 $\alpha\in\mathbb{N}^N$，$D^\alpha(L(T))=L(D^\alpha T)\in\mathcal{D}'(U;Z)$。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch04-分布像性质; kind=proof; 补出 (i)(ii) 的逐项验证：由 $L$ 的有界性取极限、由定义展开 $D^\alpha(L(T))$ 并交换 $L$ 与 $(-1)^{|\alpha|}$
+\begin{proof}
+(i) 设 $T_k\to T$ 在 $\mathcal{D}'(U;Y)$ 中，$\zeta\in C_c^\infty(U)$。则
+\begin{align*}
+\|\langle L(T_k),\zeta\rangle-\langle L(T),\zeta\rangle\|_Z=\|L(\langle T_k,\zeta\rangle-\langle T,\zeta\rangle)\|_Z\leqslant\|L\|\,\|\langle T_k,\zeta\rangle-\langle T,\zeta\rangle\|_Y\to0 ,
+\end{align*}
+故 $L(T_k)\to L(T)$ 在 $\mathcal{D}'(U;Z)$ 中。
+
+(ii) 对 $\zeta\in C_c^\infty(U)$，由\cref{definition:ch04-分布导数}与\cref{definition:ch04-分布像}，
+\begin{align*}
+\langle D^\alpha(L(T)),\zeta\rangle=(-1)^{|\alpha|}\langle L(T),D^\alpha\zeta\rangle=(-1)^{|\alpha|}L(\langle T,D^\alpha\zeta\rangle)=L\big((-1)^{|\alpha|}\langle T,D^\alpha\zeta\rangle\big)=\langle L(D^\alpha T),\zeta\rangle ,
+\end{align*}
+其中第三个等号用 $L$ 的线性，最后一个等号用 $D^\alpha T$ 的定义。故 $D^\alpha(L(T))=L(D^\alpha T)$，且由 (i) 与 $D^\alpha T$ 的连续性，该元素属于 $\mathcal{D}'(U;Z)$。
+\end{proof}
 
 \subsection{定义与一般性质}\label{subsection:ch04-向量Sobolev定义}
 
-\begin{definition}\label{definition:ch04-向量Sobolev}
-设 $U\subseteq\mathbb{R}^N$ 开，$m\in\mathbb{N}$，$p\in[1,\infty]$。函数 $f\in L^p(U;Y)$ 属于 Sobolev 空间 $W^{m,p}(U;Y)$，若对所有 $\alpha\in\mathbb{N}^N$，$|\alpha|\leqslant m$，有 $D^\alpha f\in L^p(U;Y)$。空间 $W^{m,p}_{\mathrm{loc}}(U;Y)$ 通过把 $L^p(U;Y)$ 替换为 $L^p_{\mathrm{loc}}(U;Y)$ 来定义。
+\begin{definition}[向量 Sobolev 空间]\label{definition:ch04-向量Sobolev}
+设 $U\subseteq\mathbb{R}^N$ 为非空开集，$m\in\mathbb{N}$，$p\in[1,\infty]$，$Y$ 为 Banach 空间。Sobolev 空间 $W^{m,p}(U;Y)$ 定义为所有满足下述条件的 $f\in L^p(U;Y)$ 之集：对每个 $\alpha\in\mathbb{N}^N$ 且 $|\alpha|\leqslant m$，存在 $g_\alpha\in L^p(U;Y)$ 使得
+\begin{align*}
+(-1)^{|\alpha|}\int_Uf\,D^\alpha\zeta\,\mathrm{d}x=\int_Ug_\alpha\zeta\,\mathrm{d}x\quad\text{对一切 }\zeta\in C_c^\infty(U).
+\end{align*}
+此时记 $D^\alpha f\equiv g_\alpha$；$g_\alpha$ 在 $U$ 中几乎处处相等的意义下由 $f$ 与 $\alpha$ 唯一确定。局部 Sobolev 空间 $W^{m,p}_{\mathrm{loc}}(U;Y)$ 定义为把 $L^p(U;Y)$ 替换为 $L^p_{\mathrm{loc}}(U;Y)$ 后所得的空间，即 $f\in L^p_{\mathrm{loc}}(U;Y)$ 且对每个 $|\alpha|\leqslant m$ 存在 $g_\alpha\in L^p_{\mathrm{loc}}(U;Y)$ 使上式成立。
 \end{definition}
 
-我们令 $W^{m,p}(U;\mathbb{R})\equiv W^{m,p}(U)$。我们使用与标量情形相同的记号（见\cref{subsection:ch03-Sobolev定义}），例如令 $H^m(U;Y)\equiv W^{m,2}(U;Y)$。
+% SUPPLEMENT: parent=definition:ch04-向量Sobolev; kind=motivation; 说明把 Sobolev 空间定义为“分布导数由 $L^p$ 函数表示”的动机（弱导数、发展方程中的 $u\in L^p(I;V)$ 与 $u'\in L^{p'}(I;V^*)$）、$m$ 与 $p$ 及 $f\in L^p$ 各自的作用、$D^\alpha f$ 的唯一性，以及 $m=0$、$p=\infty$、$Y=\mathbb{R}$ 三个边界情形
+\begin{remark}\phantomsection\label{remark:ch04-向量Sobolev动机}
+\begin{enumerate}[(i)]
+\item 引入动机。Sobolev 空间把“函数及其弱导数都可积”这一要求写成分布等式：$f\in W^{m,p}(U;Y)$ 当且仅当 $f\in L^p$ 且其前 $m$ 阶分布导数都是 $L^p$ 函数。对向量值情形，这是把发展方程写成抽象形式的基础：当 $V\hookrightarrow H\hookrightarrow V^*$ 为 Gelfand 三元组时，$u\in L^p(I;V)$ 与 $u'\in L^{p'}(I;V^*)$ 合起来即 $u\in W^{1,p}(I;V)$（见\cref{subsection:ch04-连续嵌入}与\cref{subsection:ch04-紧嵌入}）。
+
+\item 各要素的作用。(a) $f\in L^p(U;Y)$（而非仅 $\mu$-可测）使 $T_f$ 有定义且 $D^0f=f$ 自动属于 $L^p$，故 $m=0$ 时 $W^{0,p}(U;Y)=L^p(U;Y)$。(b) 要求 $g_\alpha\in L^p$ 而非仅 $L^1_{\mathrm{loc}}$ 是空间赋范化与完备化的关键；若改为 $L^1_{\mathrm{loc}}$，则得 $W^{m,1}_{\mathrm{loc}}$ 型的局部空间。(c) 唯一性：$g_\alpha$ 与 $\widetilde g_\alpha$ 都满足定义中的等式时 $\int_U(g_\alpha-\widetilde g_\alpha)\zeta\,\mathrm{d}x=0$ 对一切 $\zeta$ 成立，由变分法基本引理得 $g_\alpha=\widetilde g_\alpha$ 几乎处处，故记号 $D^\alpha f$ 无歧义。(d) $U$ 开使 $\mathcal{D}(U)$ 非平凡且 $L^p(U;Y)$ 按 Lebesgue 测度定义。
+
+\item 边界。(a) $p=\infty$ 时范数取本质上确界，定义不变，但此时 $L^\infty(U;Y)$ 不可分，$W^{m,\infty}(U;Y)$ 亦不可分（见\cref{theorem:ch04-Sobolev可分自反}后的注记）。(b) $Y=\mathbb{R}$ 时 $W^{m,p}(U;\mathbb{R})=W^{m,p}(U)$，与标量理论一致。(c) $W^{m,p}_{\mathrm{loc}}(U;Y)$ 不是赋范空间：由 $L^p_{\mathrm{loc}}$ 的拓扑（半范数族 $\|\cdot\|_{L^p(K)}$，$K\Subset U$）给出，其元素不必属于 $L^p(U;Y)$，例如 $f\equiv y_0\neq0$ 在 $U=\mathbb{R}^N$ 上属于 $W^{m,p}_{\mathrm{loc}}$ 而不属于 $W^{m,p}$。
+\end{enumerate}
+\end{remark}
+
+令 $W^{m,p}(U;\mathbb{R})\equiv W^{m,p}(U)$，并使用与标量情形相同的记号（见\cref{definition:ch03-Sobolev空间定义}），例如令 $H^m(U;Y)\equiv W^{m,2}(U;Y)$。
 
 空间 $W^{m,p}(U;Y)$ 是赋范向量空间，形式上赋以与标量情形相同的范数 $\|\cdot\|_{m,p}$（见\eqref{align:ch03-3.2a}），其中
 \begin{align*}
 \|D^\alpha f\|_p^p=\int_U\|D^\alpha f\|_Y^p\,\mathrm{d}x\quad\text{若 }p\in[1,\infty),
 \end{align*}
 \begin{align*}
-\|D^\alpha f\|_\infty=\operatorname*{ess\,sup}\|D^\alpha f\|_Y\quad\text{若 }p=\infty.
+\|D^\alpha f\|_\infty=\operatorname*{ess\,sup}_U\|D^\alpha f\|_Y\quad\text{若 }p=\infty.
 \end{align*}
-赋以此范数的空间 $W^{m,p}(U;Y)$ 是 Banach 空间，易证。
+
+赋以此范数的空间 $W^{m,p}(U;Y)$ 是 Banach 空间。
+
+% SUPPLEMENT: parent=definition:ch04-向量Sobolev; kind=proof; 补出完备性论证：$f\mapsto(D^\alpha f)_{|\alpha|\leqslant m}$ 是到乘积空间闭子空间的等距同构，乘积空间的完备性由 $L^p(U;Y)$ 的完备性得到；并核对 $\|\cdot\|_{m,p}$ 为范数而非半范数
+\begin{proof}
+对 $p\in[1,\infty)$ 与 $p=\infty$ 统一地令 $X\triangleq\prod_{|\alpha|\leqslant m}L^p(U;Y)$，赋范数
+\begin{align*}
+\|(g_\alpha)\|_X\triangleq\Big(\sum_{|\alpha|\leqslant m}\|g_\alpha\|_p^p\Big)^{1/p}\quad(p\in[1,\infty)),\qquad\|(g_\alpha)\|_X\triangleq\max_{|\alpha|\leqslant m}\|g_\alpha\|_\infty\quad(p=\infty).
+\end{align*}
+由\cref{theorem:ch04-Lp完备}，$L^p(U;Y)$ 为 Banach 空间，故有限乘积 $X$ 为 Banach 空间。映射
+\begin{align*}
+\Phi:W^{m,p}(U;Y)\to X,\quad\Phi(f)\triangleq(D^\alpha f)_{|\alpha|\leqslant m}
+\end{align*}
+线性，且按上述范数 $\|\Phi(f)\|_X=\|f\|_{m,p}$，故 $\Phi$ 是到其像的等距同构。只需证像 $\Phi(W^{m,p}(U;Y))$ 在 $X$ 中闭。设 $\{\Phi(f_k)\}$ 在 $X$ 中收敛于 $(g_\alpha)$。则对每个 $\alpha$ 有 $D^\alpha f_k\to g_\alpha$ 在 $L^p(U;Y)$ 中，特别地 $f_k\to g_0$ 在 $L^p(U;Y)$ 中；又由 $L^p$ 收敛蕴含分布收敛（\cref{definition:ch04-分布收敛}，用 Hölder 不等式）与 $D^\alpha$ 在 $\mathcal{D}'(U;Y)$ 上的连续性（\cref{definition:ch04-分布导数}），$D^\alpha f_k\to D^\alpha g_0$ 在 $\mathcal{D}'(U;Y)$ 中。由极限唯一性得 $g_\alpha=D^\alpha g_0$ 在 $\mathcal{D}'(U;Y)$ 中，故 $g_0\in W^{m,p}(U;Y)$ 且 $\Phi(g_0)=(g_\alpha)$；像闭。于是 $W^{m,p}(U;Y)$ 完备。
+
+最后，$\|\cdot\|_{m,p}$ 满足三角不等式与齐次性；若 $\|f\|_{m,p}=0$，则 $D^\alpha f=0$ 在 $U$ 中几乎处处成立对一切 $|\alpha|\leqslant m$，特别地 $f=0$ 几乎处处，故 $\|\cdot\|_{m,p}$ 是范数。
+\end{proof}
 
 如下结果是\cref{theorem:ch03-Sobolev基本}的对应。
 
 \begin{theorem}\label{theorem:ch04-Sobolev可分自反}
-设 $Y$ 可分。则：
+设 $U\subseteq\mathbb{R}^N$ 为非空开集，$m\in\mathbb{N}$，$Y$ 为可分 Banach 空间。则：
 \begin{enumerate}[(i)]
 \item\label{item:ch04-Sobolev可分自反-i} 若 $p\in[1,\infty)$，则 $W^{m,p}(U;Y)$ 可分；
 \item\label{item:ch04-Sobolev可分自反-ii} 若 $p\in(1,\infty)$ 且 $Y$ 自反，则 $W^{m,p}(U;Y)$ 亦自反。
@@ -120,13 +336,13 @@ T*\rho=\int_{\mathbb{R}}\rho(\cdot-y)f(y)\,\mathrm{d}y.
 \end{theorem}
 
 \begin{proof}
-为简单计，只考虑 $N=m=1$ 的情形。设 $I\subseteq\mathbb{R}$ 为开区间。如\cref{proposition:ch03-Sobolev刻画}的证明中那样，令 $X\triangleq [L^p(I;Y)]^2$，赋范数
+为简单计，只考虑 $N=m=1$ 的情形。设 $I\subseteq\mathbb{R}$ 为开区间。如同\cref{proposition:ch03-Sobolev刻画}的证明，令 $X\triangleq[L^p(I;Y)]^2$，赋范数
 \begin{align*}
-(f,g)\mapsto\|(f,g)\|_X\triangleq (\|f\|_p^p+\|g\|_p^p)^{1/p}\quad(p\in[1,\infty)).
+(f,g)\mapsto\|(f,g)\|_X\triangleq(\|f\|_p^p+\|g\|_p^p)^{1/p}\quad(p\in[1,\infty)).
 \end{align*}
-显然，映射 $T:W^{1,p}(I;Y)\to[L^p(I;Y)]^2$，$T(f)\triangleq (f,\mathrm{d}f/\mathrm{d}x)$，是等距同构，且 $Z\triangleq T(W^{1,p}(I;Y))\subseteq X$ 为闭子空间，从而是赋范数 $\|\cdot\|_X$ 的 Banach 空间。还注意 $(f,g)\in Z$ 当且仅当 $\mathrm{d}f/\mathrm{d}x=g$。
+映射 $T:W^{1,p}(I;Y)\to[L^p(I;Y)]^2$，$T(f)\triangleq(f,\mathrm{d}f/\mathrm{d}x)$，是等距同构，且 $Z\triangleq T(W^{1,p}(I;Y))\subseteq X$ 为闭子空间，从而是赋范数 $\|\cdot\|_X$ 的 Banach 空间。又 $(f,g)\in Z$ 当且仅当 $\mathrm{d}f/\mathrm{d}x=g$。
 
-(i) 由于 $Y$ 可分，由\cref{theorem:ch04-Lp可分}空间 $L^p(I;Y)$ 可分，从而 $X$ 与 $Z$ 可分。设 $D\subseteq Z$ 可数且稠密，令 $E\triangleq T^{-1}(D)$。设 $h\in W^{1,p}(I;Y)$。则 $Th=(h,\mathrm{d}h/\mathrm{d}x)\in Z$。由 $D$ 的稠密性，存在序列 $\{(f_k,g_k)\}\subseteq D$ 使 $\lim_{k\to\infty}\|(f_k,g_k)-Th\|_X=0$。于是对任意 $k\in\mathbb{N}$，有 $\mathrm{d}f_k/\mathrm{d}x=g_k$，$\{f_k\}\subseteq E$，且
+(i) 由于 $Y$ 可分，由\cref{theorem:ch04-Lp可分}空间 $L^p(I;Y)$ 可分，从而 $X$ 与 $Z$ 可分。设 $D\subseteq Z$ 可数且稠密，令 $E\triangleq T^{-1}(D)$。设 $h\in W^{1,p}(I;Y)$。则 $Th=(h,\mathrm{d}h/\mathrm{d}x)\in Z$。由 $D$ 的稠密性，存在序列 $\{(f_k,g_k)\}\subseteq D$ 使 $\lim_{k\to\infty}\|(f_k,g_k)-Th\|_X=0$。于是对任意 $k\in\mathbb{N}$ 有 $\mathrm{d}f_k/\mathrm{d}x=g_k$、$\{f_k\}\subseteq E$，且
 \begin{align*}
 \lim_{k\to\infty}\|(f_k,g_k)-Th\|_X^p=\lim_{k\to\infty}\Big(\|f_k-h\|_p^p+\Big\|\frac{\mathrm{d}f_k}{\mathrm{d}x}-\frac{\mathrm{d}h}{\mathrm{d}x}\Big\|_p^p\Big)=0,
 \end{align*}
@@ -135,90 +351,143 @@ T*\rho=\int_{\mathbb{R}}\rho(\cdot-y)f(y)\,\mathrm{d}y.
 (ii) 若 $Y$ 自反且 $p\in(1,\infty)$，则空间 $L^p(I;Y)$，从而 $X$ 与 $Z$，亦自反。由于 $W^{1,p}(I;Y)$ 同构于 $Z$，断言 (ii) 得证。
 \end{proof}
 
-\begin{remark}\label{remark:ch04-Sobolev算子}
-设 $Y,Z$ 为 Banach 空间，$L\in\mathcal{L}(Y;Z)$。对任意 $f\in W^{m,p}(U;Y)$（$m\in\mathbb{N}$，$p\in[1,\infty]$），令
-\begin{align*}
-l(f)(x)\triangleq L(f(x,\cdot))\quad\text{对几乎所有 }x\in U.
-\end{align*}
-由于 $D_y^\alpha(l(f)(x))=L(D_y^\alpha f(x,\cdot))$，有 $l(f)\in W^{m,p}(U;Z)$（见\cref{remark:ch04-分布像性质}(ii)）。由此 $l\in\mathcal{L}(W^{m,p}(U;Y);W^{m,p}(U;Z))$。
+% SUPPLEMENT: parent=theorem:ch04-Sobolev可分自反; kind=proof; 补出原证明中“$T$ 是等距同构”“$Z$ 闭”“$X$ 可分与自反”“$N=m=1$ 的归约足够”四处：等距性与闭性的逐步验证、可分性与自反性在有限乘积与子空间上的继承、以及由 $N=m=1$ 过渡到一般情形的说明
+\begin{proof}
+等距性：对 $f\in W^{1,p}(I;Y)$，$\|Tf\|_X^p=\|f\|_p^p+\|\mathrm{d}f/\mathrm{d}x\|_p^p=\|f\|_{1,p}^p$，故 $T$ 是到像上的等距线性映射，从而是单射。闭性：设 $\{Tf_k\}$ 在 $X$ 中收敛，则 $\{Tf_k\}$ 为 Cauchy 序列，由等距性 $\{f_k\}$ 为 $W^{1,p}(I;Y)$ 中的 Cauchy 序列；$W^{1,p}$ 的完备性（见上文补证）给出 $f\in W^{1,p}(I;Y)$ 使 $f_k\to f$ 在 $W^{1,p}$ 中，于是 $Tf_k\to Tf$ 在 $X$ 中，即 $Z$ 闭。可分性：$X$ 是 Banach 空间 $L^p(I;Y)$ 的有限乘积，而可分空间的有限乘积可分（取各因子的可数稠密集之积）；度量空间的子集可分：取 $X$ 的可数稠密集 $\{x_j\}$，对每个 $j$ 取 $z_j\in Z$ 使 $\|z_j-x_j\|_X<2^{-j}$，则 $\{z_j\}$ 在 $Z$ 中稠密。自反性：$L^p(I;Y)$ 自反（\cref{proposition:ch04-Lp自反}），自反空间的有限乘积自反，闭子空间 $Z$ 自反。一般 $N,m$：对 $N=1$ 用 $T(f)\triangleq(D^\alpha f)_{|\alpha|\leqslant m}$ 代替 $(f,\mathrm{d}f/\mathrm{d}x)$，重复上述论证；对 $N>1$，逐个坐标方向施行同一论证并迭代 $m$ 次，或直接用同一 $T$ 与乘积空间 $\prod_{|\alpha|\leqslant m}L^p(U;Y)$。
+\end{proof}
 
-例如，设 $U=I\subseteq\mathbb{R}$ 为开区间，$V\subseteq\mathbb{R}^N$ 开，$L:L^1(V)\to\mathbb{R}$，$L(g)=\int_V g\,\mathrm{d}x$（$g\in L^1(V)$）。则映射
+% SUPPLEMENT: parent=theorem:ch04-Sobolev可分自反; kind=motivation; 说明可分性与自反性在弱紧性与 Aubin--Simon 论证中的作用、$Y$ 可分与 $p<\infty$、$Y$ 自反与 $p\in(1,\infty)$ 四项假设的必要性（常值函数子空间给出反例）、以及 $p=\infty$ 与 $N=m=1$ 归约的边界
+\begin{remark}\phantomsection\label{remark:ch04-Sobolev可分自反动机}
+\begin{enumerate}[(i)]
+\item 引入动机。可分性使空间中的有界集可用可数 $\varepsilon$-网刻画，从而把对角抽取、弱紧性与 Aubin--Simon 型紧性论证化归为可数过程；自反性使有界序列具有弱收敛子列，这是变分法与非线性发展方程取极限的基本依据。\cref{theorem:ch04-Lp可分}给出 $L^p$ 情形的对应结果，本定理是其 Sobolev 版本。
+
+\item 各要素的作用。(a) $Y$ 可分是 (i) 的实质假设：常值函数构成的闭子空间 $\{f\equiv y\mid y\in Y\}\subseteq W^{m,p}(U;Y)$ 与 $Y$ 等距同构，故 $Y$ 不可分时 $W^{m,p}(U;Y)$ 亦不可分。(b) $p<\infty$ 在 (i) 中不可去：$Y=\mathbb{R}$、$U=(0,1)$ 时映射 $g\mapsto f(x)\triangleq\int_0^xg(t)\,\mathrm{d}t$ 是 $L^\infty(0,1)$ 到 $W^{1,\infty}(0,1)$ 的嵌入，$\|f\|_{1,\infty}\leqslant2\|g\|_\infty$ 且 $\|g\|_\infty\leqslant\|f\|_{1,\infty}$，而 $L^\infty(0,1)$ 不可分，故 $W^{1,\infty}(0,1)$ 不可分。(c) $Y$ 自反是 (ii) 的实质假设：若 $W^{m,p}(U;Y)$ 自反，则其闭子空间 $\{f\equiv y\}$ 自反，而该子空间与 $Y$ 等距同构，故 $Y$ 自反。(d) $p\in(1,\infty)$ 在 (ii) 中不可去：$p=1$ 时 $L^1(I;Y)$ 一般不自反（$Y=\mathbb{R}$、$I$ 有界时 $L^1(I)$ 不自反），而 $\{f\equiv y\}$ 仍是闭子空间；$p=\infty$ 时 $L^\infty(I;Y)$ 亦不自反。
+
+\item 边界。(a) 证明只详细处理 $N=m=1$；一般情形由把 $f$ 映为全部前 $m$ 阶导数（或逐方向迭代）得到，结论中的常数与 $N,m$ 的具体值无关。(b) 可分性结论对 $U$ 不加任何正则性假设（$U$ 只需为非空开集），这与 $L^p(U;Y)$ 的情形一致；而紧嵌入结论（\cref{theorem:ch04-Aubin}）则需要 $I$ 有界与 $Z$ 上的紧性假设。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch04-Sobolev算子}
+设 $Y,Z$ 为 Banach 空间，$L\in\mathcal{L}(Y;Z)$。对任意 $f\in W^{m,p}(U;Y)$（$m\in\mathbb{N}$，$p\in[1,\infty]$）令
 \begin{align*}
-l:W^{1,p}(I;L^1(V))\to W^{1,p}(I),\quad l(f)(x)\triangleq \int_V f(x,y)\,\mathrm{d}y\quad\text{对 }\lambda\text{-几乎所有 }x\in I,
+l(f)(x)\triangleq L(f(x))\quad\text{对几乎所有 }x\in U .
+\end{align*}
+由于 $D^\alpha(l(f))(x)=L(D^\alpha f(x))$ 在 $U$ 中几乎处处成立，有 $l(f)\in W^{m,p}(U;Z)$（见\cref{definition:ch04-分布像} 后的注记(ii)）。由此 $l\in\mathcal{L}(W^{m,p}(U;Y);W^{m,p}(U;Z))$，且 $\|l\|\leqslant\|L\|$。当 $U\subseteq\mathbb{R}^M\times V$ 且 $f=f(x,y)$ 时，上式写成 $l(f)(x)=L(f(x,\cdot))$，而 $D^\alpha$ 相应地写成对 $y$ 的导数 $D_y^\alpha$。
+
+例如，设 $U=I\subseteq\mathbb{R}$ 为开区间，$V\subseteq\mathbb{R}^N$ 为开集，$L:L^1(V)\to\mathbb{R}$，$L(g)=\int_Vg\,\mathrm{d}x$（$g\in L^1(V)$）。则映射
+\begin{align*}
+l:W^{1,p}(I;L^1(V))\to W^{1,p}(I),\quad l(f)(x)\triangleq\int_Vf(x,y)\,\mathrm{d}y\quad\text{对 }\lambda\text{-几乎所有 }x\in I,
 \end{align*}
 线性连续。此外，对 $\lambda$-几乎所有 $x\in I$，
 \begin{align*}
-\frac{\mathrm{d}}{\mathrm{d}x}\int_V f(x,y)\,\mathrm{d}y=\int_V\frac{\partial f}{\partial x}(x,y)\,\mathrm{d}y.
+\frac{\mathrm{d}}{\mathrm{d}x}\int_Vf(x,y)\,\mathrm{d}y=\int_V\frac{\partial f}{\partial x}(x,y)\,\mathrm{d}y .
 \end{align*}
 \end{remark}
 
-当 $Y$ 为 Lebesgue 空间时，我们有 $W^{m,p}(U;Y)$ 的如下刻画，与\cref{proposition:ch04-LpULpV}、\cref{proposition:ch04-Sobolev嵌入}类似。我们只处理 $U$ 为开区间 $I\subseteq\mathbb{R}$ 的情形。设 $V\subseteq\mathbb{R}^N$ 开。由\cref{corollary:ch04-Lp乘积}，空间 $L^1_{\mathrm{loc}}(I\times V)$ 可等同于 $L^1_{\mathrm{loc}}(I;L^1_{\mathrm{loc}}(V))$。若 $f\in L^1_{\mathrm{loc}}(I\times V)$，则我们区分分布导数 $\partial f/\partial x\in\mathcal{D}^*(I\times V)$，
+当 $Y$ 为 Lebesgue 空间时，$W^{m,p}(U;Y)$ 有如下刻画，它与\cref{proposition:ch04-LpULpV} 及\cref{proposition:ch04-Sobolev嵌入} 类似。这里只处理 $U$ 为开区间 $I\subseteq\mathbb{R}$ 的情形。设 $V\subseteq\mathbb{R}^N$ 为开集。由\cref{corollary:ch04-Lp乘积}，空间 $L^1_{\mathrm{loc}}(I\times V)$ 可等同于 $L^1_{\mathrm{loc}}(I;L^1_{\mathrm{loc}}(V))$。若 $f\in L^1_{\mathrm{loc}}(I\times V)$，则须区分两个分布导数：其一为 $f$ 关于 $x$ 的联合分布导数，属于 $\mathcal{D}^*(I\times V)$，由
 \begin{align}
-\Big\langle\frac{\partial f}{\partial x},\zeta\Big\rangle=-\int_{I\times V}f\frac{\partial\zeta}{\partial x}\,\mathrm{d}x\mathrm{d}y\quad\text{对所有 }\zeta\in C_c^\infty(I\times V), \label{align:ch04-4.126}
+\Big\langle\frac{\partial f}{\partial x},\zeta\Big\rangle=-\int_{I\times V}f\frac{\partial\zeta}{\partial x}\,\mathrm{d}x\mathrm{d}y\quad\text{对一切 }\zeta\in C_c^\infty(I\times V), \label{align:ch04-4.126}
 \end{align}
-与分布导数 $\mathrm{d}f/\mathrm{d}x\in\mathcal{D}'(I;L^1_{\mathrm{loc}}(V))$，
+给出；其二为取值于 $\mathcal{D}'(I;L^1_{\mathrm{loc}}(V))$ 的向量分布导数，即沿 $x$ 方向对 $f$ 求分布导数所得的 $L^1_{\mathrm{loc}}(V)$ 值分布，它也由下式给出，其中 $\xi$ 为 $I$ 上的检验函数：
 \begin{align}
-\Big\langle\frac{\mathrm{d}f}{\mathrm{d}x},\xi\Big\rangle=-\int_I f(x,\cdot)\xi'(x)\,\mathrm{d}x\quad\text{对所有 }\xi\in C_c^\infty(I). \label{align:ch04-4.127}
+\Big\langle\frac{\mathrm{d}f}{\mathrm{d}x},\xi\Big\rangle=-\int_If(x,\cdot)\xi'(x)\,\mathrm{d}x\quad\text{对一切 }\xi\in C_c^\infty(I). \label{align:ch04-4.127}
 \end{align}
 
-如下结果的证明与\cref{proposition:ch04-Sobolev嵌入}类似，故从略（细节见文献 [43, 命题 2.6.1]）。
+如下结果的证明与\cref{proposition:ch04-Sobolev嵌入}类似，故从略（细节见文献~[43, Proposition 2.6.1]）。
 
 \begin{proposition}\label{proposition:ch04-区间Sobolev}
-设 $I\subseteq\mathbb{R}$ 为开区间，$V\subseteq\mathbb{R}^N$ 开。设 $p,r\in[1,\infty)$。则下列命题等价：
+设 $I\subseteq\mathbb{R}$ 为开区间，$V\subseteq\mathbb{R}^N$ 为开集，$p,r\in[1,\infty)$。设 $f\in L^1_{\mathrm{loc}}(I\times V)$。则下列命题等价：
 \begin{enumerate}[(i)]
-\item\label{item:ch04-区间Sobolev-i} $f\in W^{1,p}(I;L^r(V))$；
-\item\label{item:ch04-区间Sobolev-ii} $f,\partial f/\partial x\in L^1_{\mathrm{loc}}(I\times V)$，且
+\item\label{item:ch04-区间Sobolev-i} $x\mapsto f(x,\cdot)$ 属于 $W^{1,p}(I;L^r(V))$；
+\item\label{item:ch04-区间Sobolev-ii} $f$ 与 $f$ 关于 $x$ 的联合分布导数都属于 $L^1_{\mathrm{loc}}(I\times V)$，且下述两个积分均有限：
 \begin{align}
 \int_I\Big(\int_V|f(x,y)|^r\,\mathrm{d}y\Big)^{p/r}\mathrm{d}x<\infty,\quad
-\int_I\Big(\int_V\Big|\frac{\partial f}{\partial x}(x,y)\Big|^r\,\mathrm{d}y\Big)^{p/r}\mathrm{d}x<\infty. \label{align:ch04-4.128}
+\int_I\Big(\int_V\Big|\frac{\partial f}{\partial x}(x,y)\Big|^r\,\mathrm{d}y\Big)^{p/r}\mathrm{d}x<\infty . \label{align:ch04-4.128}
 \end{align}
-此外，对 $\lambda$-几乎所有 $x\in I$，
+\end{enumerate}
+此外，若 (i) 成立，则对 $\lambda$-几乎所有 $x\in I$，
 \begin{align}
 \frac{\mathrm{d}f}{\mathrm{d}x}(x)=\frac{\partial f}{\partial x}(x,\cdot)\quad\text{在 }V\text{ 中几乎处处成立}. \label{align:ch04-4.129}
 \end{align}
-\end{enumerate}
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:ch04-区间Sobolev; kind=proof; 原书以“与前一命题的证明类似”为由整节从略，此处补出两个方向的完整论证：用乘积型试验函数在 $\mathcal{D}(I\times V)$ 中的稠密性把 (4.126) 与 (4.127) 对齐，并核验 (4.128) 与 $L^p(I;L^r(V))$ 范数的等同
+\begin{proof}
+由\cref{proposition:ch04-LpULpV}，映射 $x\mapsto f(x,\cdot)$ 属于 $L^p(I;L^r(V))$（$p,r\in[1,\infty)$）当且仅当 $f$ 为 $\mathcal{B}(I)\times\mathcal{B}(V)$-可测且\eqref{align:ch04-4.128}的第一式成立；此时 $f\in L^1_{\mathrm{loc}}(I\times V)$，且该式左端的 $1/p$ 次幂等于 $\|f\|_{L^p(I;L^r(V))}$。对 $\partial f/\partial x$ 有同样的结论。
+
+(i)$\Rightarrow$(ii)。设 $x\mapsto f(x,\cdot)$ 属于 $W^{1,p}(I;L^r(V))$。则 $f$ 与其分布导数 $\mathrm{d}f/\mathrm{d}x$ 都属于 $L^p(I;L^r(V))$。由 $p,r<\infty$ 与 Hölder 不等式，$L^p(I;L^r(V))\subseteq L^1_{\mathrm{loc}}(I;L^1_{\mathrm{loc}}(V))$，故由\cref{corollary:ch04-Lp乘积}，$f$ 与 $\mathrm{d}f/\mathrm{d}x$ 都可由 $I\times V$ 上局部可积的函数表示，且\eqref{align:ch04-4.128}成立。下设 $\xi\in C_c^\infty(I)$、$\psi\in C_c^\infty(V)$，$\zeta(x,y)\triangleq\xi(x)\psi(y)$。由\eqref{align:ch04-4.127}，
+\begin{align*}
+\Big\langle\frac{\mathrm{d}f}{\mathrm{d}x},\xi\Big\rangle[\psi]=-\int_I\langle f(x,\cdot),\psi\rangle\xi'(x)\,\mathrm{d}x=-\int_{I\times V}f(x,y)\xi'(x)\psi(y)\,\mathrm{d}x\mathrm{d}y=\Big\langle\frac{\partial f}{\partial x},\zeta\Big\rangle ,
+\end{align*}
+其中 $\langle\cdot,\cdot\rangle[\psi]$ 表示 $L^1_{\mathrm{loc}}(V)$ 与 $C_c^\infty(V)$ 的配对。乘积型试验函数的有限线性组合在 $C_c^\infty(I\times V)$ 中稠密（在 $\mathcal{D}(I\times V)$ 的收敛意义下），故上式对一切 $\zeta\in C_c^\infty(I\times V)$ 成立，即 $\partial f/\partial x$ 由 $\mathrm{d}f/\mathrm{d}x\in L^p(I;L^r(V))$ 表示。于是 $\partial f/\partial x\in L^1_{\mathrm{loc}}(I\times V)$ 且\eqref{align:ch04-4.128}的第二式成立。把这个表示代回上式即得\eqref{align:ch04-4.129}。
+
+(ii)$\Rightarrow$(i)。设 (ii) 成立，即 $f$ 与 $f$ 关于 $x$ 的联合分布导数都属于 $L^1_{\mathrm{loc}}(I\times V)$，且\eqref{align:ch04-4.128}的两个积分有限。
+由第一式与\cref{proposition:ch04-LpULpV}，$x\mapsto f(x,\cdot)\in L^r(V)$ 对几乎所有 $x$ 成立，且该映射属于 $L^p(I;L^r(V))$。
+对 $\xi\in C_c^\infty(I)$ 与 $\psi\in C_c^\infty(V)$，把\eqref{align:ch04-4.126}与\eqref{align:ch04-4.127}的配对对齐，得
+\begin{align*}
+\Big\langle\frac{\mathrm{d}f}{\mathrm{d}x},\xi\Big\rangle[\psi]=-\int_{I\times V}f\,\xi'\psi\,\mathrm{d}x\mathrm{d}y=\Big\langle\frac{\partial f}{\partial x},\xi\psi\Big\rangle=\int_I\Big(\int_V\frac{\partial f}{\partial x}(x,y)\psi(y)\,\mathrm{d}y\Big)\xi(x)\,\mathrm{d}x .
+\end{align*}
+故元素 $\langle\mathrm{d}f/\mathrm{d}x,\xi\rangle\in L^1_{\mathrm{loc}}(V)$ 与函数 $x\mapsto\int_V(\partial f/\partial x)(x,y)\psi(y)\,\mathrm{d}y$ 对一切 $\psi\in C_c^\infty(V)$ 的配对相等，从而 $\mathrm{d}f/\mathrm{d}x$ 由 $I\times V$ 上的函数 $\partial f/\partial x$ 表示。由第二式与\cref{proposition:ch04-LpULpV}，$x\mapsto(\partial f/\partial x)(x,\cdot)\in L^r(V)$ 对几乎所有 $x$ 成立且属于 $L^p(I;L^r(V))$。于是 $f\in W^{1,p}(I;L^r(V))$，且\eqref{align:ch04-4.129}成立。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch04-区间Sobolev; kind=motivation; 说明把 $W^{1,p}(I;L^r(V))$ 刻画为乘积空间上偏导数可积的函数类的动机（抛物型方程中 $u(t,x)$ 的两种弱导数）、$p,r<\infty$ 与 $f\in L^1_{\mathrm{loc}}$ 的作用、(4.129) 只在几乎每个 $x$ 处成立这一边界
+\begin{remark}\phantomsection\label{remark:ch04-区间Sobolev动机}
+\begin{enumerate}[(i)]
+\item 引入动机。抛物型方程的解 $u=u(t,x)$ 同时具有两种弱导数：作为 $L^r(V)$ 值函数的 $\mathrm{d}u/\mathrm{d}t$ 与作为 $I\times V$ 上函数的 $\partial u/\partial t$。本命题说明二者在 $L^1_{\mathrm{loc}}$ 框架下一致，并把 $W^{1,p}(I;L^r(V))$ 刻画为“$u$ 与 $\partial u/\partial t$ 都属于 $L^p(I;L^r(V))$”的乘积空间函数类，从而使抽象的向量值 Sobolev 空间与具体的偏微分方程正则性估计相对接。
+
+\item 各要素的作用。(a) $p,r\in[1,\infty)$ 使范数由累次积分\eqref{align:ch04-4.128}给出；$p=\infty$ 或 $r=\infty$ 时相应的累次积分换为本性上确界，论证不变，但 $L^\infty(V)$ 不可分，(ii)$\Rightarrow$(i) 中可测性的判别须改用本质上确界与截断。(b) $f\in L^1_{\mathrm{loc}}(I\times V)$ 使两种分布导数都有意义，并使 $f(x,\cdot)\in L^1_{\mathrm{loc}}(V)$ 对几乎所有 $x$ 成立，这是\eqref{align:ch04-4.127}右端可积的前提。(c) 乘积型试验函数的稠密性是两个方向共同的枢纽：它把“对 $\mathcal{D}(I;L^1_{\mathrm{loc}}(V))$ 的配对等式”与“对 $\mathcal{D}(I\times V)$ 的配对等式”互相翻译。
+
+\item 边界。(a) \eqref{align:ch04-4.129}只对几乎每个 $x$ 断言等号，不能逐点断言：$f$ 只在几乎处处意义下定义。(b) $r\neq p$ 时 $L^p(I;L^r(V))$ 与 $L^p(I\times V)$ 不同（见\cref{proposition:ch04-LpULpV} 后的注记），故\eqref{align:ch04-4.128}的两个积分不能合并为 $I\times V$ 上的单个积分。(c) 命题只处理 $U$ 为一维区间的情形；$U\subseteq\mathbb{R}^M$（$M\geqslant2$）时须对每个方向分别讨论，并出现混合导数的相容性条件。
+\end{enumerate}
+\end{remark}
 
 \subsection{连续嵌入}\label{subsection:ch04-连续嵌入}
 
-设 $W,Y$ 为 Banach 空间。我们记 $W\hookrightarrow Y$ 若 $W$ 连续嵌入 $Y$，$W\overset{c}{\hookrightarrow}Y$ 若嵌入紧。我们将证明如下结果。
+设 $W,Y$ 为 Banach 空间。记 $W\hookrightarrow Y$，若 $W$ 连续嵌入 $Y$，即 $W\subseteq Y$ 且包含映射连续，等价于存在 $c>0$ 使 $\|w\|_Y\leqslant c\|w\|_W$ 对一切 $w\in W$ 成立；记 $W\overset{c}{\hookrightarrow}Y$，若该嵌入是紧的，即 $W$ 的单位球在 $Y$ 中相对紧。将证明如下结果。
 
 \begin{theorem}\label{theorem:ch04-连续嵌入}
-设 $I\subseteq\mathbb{R}$ 为开区间。则：
+设 $I\subseteq\mathbb{R}$ 为开区间，$Y$ 为 Banach 空间。则：
 \begin{enumerate}[(i)]
-\item\label{item:ch04-连续嵌入-i} 对任意 $p\in(1,\infty)$，$W^{1,p}(I;Y)\hookrightarrow C^{1-1/p}(I;Y)$；
-\item\label{item:ch04-连续嵌入-ii} $W^{1,\infty}(I;Y)\hookrightarrow\mathrm{Lip}(I;Y)$。
+\item\label{item:ch04-连续嵌入-i} 对任意 $p\in(1,\infty)$，$W^{1,p}(I;Y)\hookrightarrow C^{1-1/p}(I;Y)$，其中 $C^{1-1/p}(I;Y)\equiv C^{0,\alpha}(I;Y)$，$\alpha\triangleq1-1/p\in(0,1)$，为指数 $\alpha$ 的 Hölder 空间（\cref{definition:ch04-Holder}），赋范数
+\begin{align*}
+\|f\|_{C^{0,\alpha}(I;Y)}\triangleq\|f\|_\infty+\sup_{\substack{x,y\in I\\x\neq y}}\frac{\|f(x)-f(y)\|_Y}{|x-y|^\alpha};
+\end{align*}
+\item\label{item:ch04-连续嵌入-ii} $W^{1,\infty}(I;Y)\hookrightarrow\mathrm{Lip}(I;Y)$，其中 $\mathrm{Lip}(I;Y)$ 为 $I$ 上取值于 $Y$ 的 Lipschitz 函数空间，赋范数
+\begin{align*}
+\|f\|_{\mathrm{Lip}(I;Y)}\triangleq\|f\|_\infty+\sup_{\substack{x,y\in I\\x\neq y}}\frac{\|f(x)-f(y)\|_Y}{|x-y|}.
+\end{align*}
 \end{enumerate}
 \end{theorem}
 
-为证\cref{theorem:ch04-连续嵌入}，我们必须证明：
-(i) 对任意 $p\in(1,\infty)$，每个 $f\in W^{1,p}(I;Y)$ 都有代表元 $\tilde f\in C^{1-1/p}(I;Y)$，且存在 $M_0>0$ 使
+为证\cref{theorem:ch04-连续嵌入}，须证明：
+(i) 对任意 $p\in(1,\infty)$，每个 $f\in W^{1,p}(I;Y)$ 都有代表元 $\tilde f\in C^{1-1/p}(I;Y)$，且存在只依赖于 $p$ 与 $\lambda(I)$ 的常数 $M_0>0$ 使
 \begin{align}
 \|\tilde f\|_{C^{0,1-1/p}(I;Y)}\leqslant M_0\|f\|_{1,p}; \label{align:ch04-4.130a}
 \end{align}
-(ii) 每个 $f\in W^{1,\infty}(I;Y)$ 都有代表元 $\tilde f\in\mathrm{Lip}(I;Y)$，且存在 $M_0>0$ 使
+(ii) 每个 $f\in W^{1,\infty}(I;Y)$ 都有代表元 $\tilde f\in\mathrm{Lip}(I;Y)$，且存在只依赖于 $\lambda(I)$ 的常数 $M_0>0$ 使
 \begin{align}
 \|\tilde f\|_{\mathrm{Lip}(I;Y)}\leqslant M_0\|f\|_{1,\infty}. \label{align:ch04-4.130b}
 \end{align}
 
-为此，我们需要如下初等引理。对任意 $g\in L^1_{\mathrm{loc}}(I;Y)$，令
+为此需要如下初等引理。对任意 $g\in L^1_{\mathrm{loc}}(I;Y)$ 与 $x_1,x_2\in I$，令
 \begin{align*}
-\int_{x_1}^{x_2}g(x)\,\mathrm{d}x\triangleq 
+\int_{x_1}^{x_2}g(x)\,\mathrm{d}x\triangleq
 \begin{cases}
 \int_{(x_1,x_2)}g\,\mathrm{d}x & \text{若 }x_1<x_2,\\
--\int_{(x_2,x_1)}g\,\mathrm{d}x & \text{若 }x_1>x_2.
+-\int_{(x_2,x_1)}g\,\mathrm{d}x & \text{若 }x_1>x_2,\\
+0 & \text{若 }x_1=x_2.
 \end{cases}
 \end{align*}
-易验证
+由上述定义与积分的有限可加性，
 \begin{align}
 \sum_{j=1}^{p-1}\int_{x_j}^{x_{j+1}}g(x)\,\mathrm{d}x=\int_{x_1}^{x_p}g(x)\,\mathrm{d}x\quad(x_1,\cdots ,x_p\in I). \label{align:ch04-4.131}
 \end{align}
 
 \begin{lemma}\label{lemma:ch04-绝对连续代表}
-设 $f\in W^{1,p}(I;Y)$（$p\in[1,\infty]$）。则
+设 $I\subseteq\mathbb{R}$ 为开区间，$Y$ 为 Banach 空间，$p\in[1,\infty]$，$f\in W^{1,p}(I;Y)$。则
 \begin{enumerate}[(i)]
 \item\label{item:ch04-绝对连续代表-i} $f$ 有一致连续代表元 $\tilde f$；
-\item\label{item:ch04-绝对连续代表-ii} 对任意 $x_1,x_2\in I$，有
+\item\label{item:ch04-绝对连续代表-ii} 对任意 $x_1,x_2\in I$ 有
 \begin{align}
 \tilde f(x_2)-\tilde f(x_1)=\int_{x_1}^{x_2}\frac{\mathrm{d}f}{\mathrm{d}x}(x)\,\mathrm{d}x. \label{align:ch04-4.132}
 \end{align}
@@ -226,91 +495,237 @@ l:W^{1,p}(I;L^1(V))\to W^{1,p}(I),\quad l(f)(x)\triangleq \int_V f(x,y)\,\mathrm
 \end{lemma}
 
 \begin{proof}
-令 $g(\xi)\triangleq \int_{\bar x}^{\xi}\frac{\mathrm{d}f}{\mathrm{d}x}(x)\,\mathrm{d}x$（$\bar x,\xi\in I$）。此定义良定，因为 $\mathrm{d}f/\mathrm{d}x\in L^p(I;Y)\subseteq L^1_{\mathrm{loc}}(I;Y)$。此外，由\eqref{align:ch04-4.131}有
+令 $g(\xi)\triangleq\int_{\bar x}^{\xi}\frac{\mathrm{d}f}{\mathrm{d}x}(x)\,\mathrm{d}x$（$\bar x,\xi\in I$）。此定义良定，因为 $\mathrm{d}f/\mathrm{d}x\in L^p(I;Y)\subseteq L^1_{\mathrm{loc}}(I;Y)$。此外，由\eqref{align:ch04-4.131}有
 \begin{align*}
 \|g(x_2)-g(x_1)\|_Y\leqslant\Big|\int_{x_1}^{x_2}\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_Y(x)\,\mathrm{d}x\Big|.
 \end{align*}
-由于 $\|\mathrm{d}f/\mathrm{d}x\|_Y\in L^1_{\mathrm{loc}}(I)$，由上述不等式 $g$ 在 $I$ 中一致连续，从而特别地 $g\in L^1_{\mathrm{loc}}(I;Y)$。易验证其分布导数 $\mathrm{d}g/\mathrm{d}x$ 等于 $\mathrm{d}f/\mathrm{d}x$。显然这蕴含存在 $y\in Y$ 使在 $\mathcal{D}'(I;Y)$ 中 $f=g+y$（例如见文献 [43, 命题 2.1.2]），从而 $f\in L^1_{\mathrm{loc}}(I;Y)$。于是 $\tilde f\triangleq g+y$ 是 $f$ 的一致连续代表元，显然满足\eqref{align:ch04-4.132}。
+由于 $\|\mathrm{d}f/\mathrm{d}x\|_Y\in L^1_{\mathrm{loc}}(I)$，由上述不等式 $g$ 在 $I$ 中一致连续，从而特别地 $g\in L^1_{\mathrm{loc}}(I;Y)$。其分布导数满足 $\mathrm{d}g/\mathrm{d}x=\mathrm{d}f/\mathrm{d}x$。这蕴含存在 $y\in Y$ 使在 $\mathcal{D}'(I;Y)$ 中 $f=g+y$（例如见文献~[43, Proposition 2.1.2]），从而 $f\in L^1_{\mathrm{loc}}(I;Y)$。于是 $\tilde f\triangleq g+y$ 是 $f$ 的一致连续代表元，且满足\eqref{align:ch04-4.132}。
 \end{proof}
+
+% SUPPLEMENT: parent=lemma:ch04-绝对连续代表; kind=proof; 补出原证明中“$\mathrm{d}g/\mathrm{d}x=\mathrm{d}f/\mathrm{d}x$”与“存在 $y\in Y$ 使 $f=g+y$”两步：其一由 Fubini 定理与 a.e. 微积分基本定理给出，其二由 $D(g-f)=0$ 的分布必为常值分布给出，含乘积型分解 $\zeta=(\int\zeta)\zeta_0+\eta'$ 的构造
+\begin{proof}
+设 $h\triangleq\mathrm{d}f/\mathrm{d}x\in L^1_{\mathrm{loc}}(I;Y)$，$g(\xi)=\int_{\bar x}^{\xi}h(x)\,\mathrm{d}x$。
+
+第一步：$\mathrm{d}g/\mathrm{d}x=h$。设 $\zeta\in C_c^\infty(I)$。由 Fubini 定理（$|\zeta'|\in L^1$ 且 $h\in L^1_{\mathrm{loc}}$，被积函数在 $\operatorname{supp}\zeta'$ 与端点为 $\bar x$ 的区间上绝对可积），
+\begin{align*}
+-\int_Ig(x)\zeta'(x)\,\mathrm{d}x=-\int_I\zeta'(x)\Big(\int_{\bar x}^{x}h(\xi)\,\mathrm{d}\xi\Big)\mathrm{d}x=\int_Ih(\xi)\zeta(\xi)\,\mathrm{d}\xi ,
+\end{align*}
+其中内层积分按 $\int_{\bar x}^{x}$ 的定向定义，最后一步由一维的 Newton--Leibniz 公式与 $\operatorname{supp}\zeta\Subset I$ 给出。故 $\mathrm{d}g/\mathrm{d}x=h$ 在 $\mathcal{D}'(I;Y)$ 中。
+
+第二步：零导数分布为常值。设 $S\triangleq T_f-T_g=f-g\in\mathcal{D}'(I;Y)$，则 $DS=0$。取 $\zeta_0\in C_c^\infty(I)$ 使 $\int_I\zeta_0\,\mathrm{d}x=1$，并置 $y\triangleq\langle S,\zeta_0\rangle\in Y$。对任意 $\zeta\in C_c^\infty(I)$，令 $c\triangleq\int_I\zeta\,\mathrm{d}x$，并令
+\begin{align*}
+\eta(x)\triangleq\int_{\bar x}^{x}\big(\zeta(t)-c\zeta_0(t)\big)\mathrm{d}t\quad(x\in I).
+\end{align*}
+则 $\eta\in C^\infty(I)$，$\eta'=\zeta-c\zeta_0$；又当 $x$ 大于 $\operatorname{supp}\zeta\cup\operatorname{supp}\zeta_0$ 的上界时 $\eta(x)=\int_I(\zeta-c\zeta_0)=c-c=0$，当 $x$ 小于其下界且大于 $\bar x$ 时同样有 $\eta(x)=0$（必要时把 $\bar x$ 取在 $\operatorname{supp}\zeta\cup\operatorname{supp}\zeta_0$ 的左侧），故 $\eta\in C_c^\infty(I)$。于是
+\begin{align*}
+\langle S,\zeta\rangle=c\langle S,\zeta_0\rangle+\langle S,\eta'\rangle=c\,y-\langle DS,\eta\rangle=c\,y=\Big\langle T_y,\zeta\Big\rangle ,
+\end{align*}
+其中 $T_y$ 表示由常值函数 $y$ 给出的向量分布。故 $S=T_y$，即 $f=g+y$ 在 $\mathcal{D}'(I;Y)$ 中成立。
+
+第三步：\eqref{align:ch04-4.132}。由 $g$ 的定义，对 $x_1,x_2\in I$ 有 $\tilde f(x_2)-\tilde f(x_1)=g(x_2)-g(x_1)=\int_{x_1}^{x_2}h(x)\,\mathrm{d}x$，其中 $\tilde f\triangleq g+y$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch04-绝对连续代表; kind=motivation; 说明一维 Sobolev 函数绝对连续的动机（(4.132) 是微积分基本定理的弱形式，使 $W^{1,p}$ 的元素可逐点取值）、$I$ 为区间与 $Y$ 的完备性各自的作用、$p\in[1,\infty]$ 的适用范围，以及 $I$ 不连通时结论失效的边界
+\begin{remark}\phantomsection\label{remark:ch04-绝对连续代表动机}
+\begin{enumerate}[(i)]
+\item 引入动机。在一维情形，$W^{1,p}$ 正则性蕴含绝对连续：由\eqref{align:ch04-4.132}，$f$ 的连续代表元由其在任一点的值与 $\mathrm{d}f/\mathrm{d}x$ 的积分唯一确定。这是标量理论中“$W^{1,1}(I)$ 等于绝对连续函数类”的向量版本，也是\cref{theorem:ch04-连续嵌入}证明的出发点；它使 $u\in W^{1,p}(I;Y)$ 具有逐点值 $u(t)$，从而发展方程的初值 $u(0)=u_0$ 有意义。
+
+\item 各要素的作用。(a) $I$ 为区间（连通）是第二步的实质条件：$DS=0$ 只在连通开集上推出 $S$ 为常值分布。(b) $Y$ 的完备性使 $g(\xi)=\int_{\bar x}^{\xi}h$ 的 Bochner 积分存在，并使一致连续的 $g$ 成为 $f$ 的代表元。(c) $p\in[1,\infty]$ 全部适用：论证只用到 $h\in L^1_{\mathrm{loc}}(I;Y)$，而 $L^p(I;Y)\subseteq L^1_{\mathrm{loc}}(I;Y)$ 对一切 $p\in[1,\infty]$ 成立。(d) $\bar x\in I$ 的选取只影响常数 $y$：改变 $\bar x$ 使 $g$ 相差一个常向量，该向量被 $y$ 吸收。
+
+\item 边界。(a) $I$ 不连通时结论失效：取 $I=(0,1)\cup(2,3)$ 与 $f\triangleq0$ 于 $(0,1)$、$f\triangleq y_0\neq0$ 于 $(2,3)$，则 $f\in W^{1,p}(I;Y)$ 且 $\mathrm{d}f/\mathrm{d}x=0$，但 $f$ 不是常值，\eqref{align:ch04-4.132}对跨越两个分支的 $x_1,x_2$ 不成立（积分路径跑出 $I$）。(b) 结论只断言“存在代表元”，而 $f$ 作为 $L^p$ 的等价类可以任意改变零测集上的值；代表元由连续性唯一确定。(c) 高维情形没有类似结论：$W^{1,p}(U;Y)$（$U\subseteq\mathbb{R}^N$，$N\geqslant2$）的元素一般不可连续取代表元，须借助 Sobolev 嵌入定理。
+\end{enumerate}
+\end{remark}
 
 \begin{proof}[\textbf{证明\cref{theorem:ch04-连续嵌入}}]
 设 $p\in(1,\infty)$。由\eqref{align:ch04-4.132}得
 \begin{align}
-\|\tilde f(x_2)-\tilde f(x_1)\|_Y\leqslant\Big|\int_{x_1}^{x_2}\Big\|\frac{\mathrm{d}f(x)}{\mathrm{d}x}\Big\|_Y\,\mathrm{d}x\Big|
+\|\tilde f(x_2)-\tilde f(x_1)\|_Y\leqslant\Big|\int_{x_1}^{x_2}\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_Y\,\mathrm{d}x\Big|
 \leqslant\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_p|x_2-x_1|^{1-1/p}. \label{align:ch04-4.133}
 \end{align}
-
 现注意函数 $x\mapsto\|\tilde f(x)\|_Y$ 在 $I$ 中一致连续，从而 $\|\tilde f(\cdot)\|_Y\in C_b(I)$。设 $x_0\in I$ 为极大点，即 $\|\tilde f(x_0)\|_Y=\|\tilde f\|_\infty$。则由\eqref{align:ch04-4.132}得对所有 $x\in I$ 有
 \begin{align}
-\tilde f(x_0)=\tilde f(x)+\int_{x_0}^x\frac{\mathrm{d}f}{\mathrm{d}x}(x)\,\mathrm{d}x. \label{align:ch04-4.134}
+\tilde f(x)=\tilde f(x_0)+\int_{x_0}^{x}\frac{\mathrm{d}f}{\mathrm{d}x}(s)\,\mathrm{d}s. \label{align:ch04-4.134}
 \end{align}
 固定 $a\in(0,\min\{1,\lambda(I)/2\})$。区间 $(x_0-a,x_0)$ 与 $(x_0,x_0+a)$ 中至少一个含于 $I$。设 $(x_0,x_0+a)\subseteq I$。则由\eqref{align:ch04-4.134}得对所有 $x\in(x_0,x_0+a)$ 有
 \begin{align*}
-\|\tilde f\|_\infty\leqslant\|\tilde f(x)\|_Y+\int_{x_0}^x\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}(x)\Big\|_Y\mathrm{d}x.
+\|\tilde f\|_\infty\leqslant\|\tilde f(x)\|_Y+\int_{x_0}^{x}\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_Y\mathrm{d}s.
 \end{align*}
-在 $I_a\triangleq (x_0,x_0+a)$ 上积分上述不等式，对任意 $p\in(1,\infty)$，得
+在 $I_a\triangleq(x_0,x_0+a)$ 上积分上述不等式，对任意 $p\in(1,\infty)$ 得
 \begin{align}
-\|\tilde f\|_\infty&\leqslant\frac1a\|f\|_{L^1(I_a;Y)}+\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_{L^1(I_a;Y)}
+\|\tilde f\|_\infty\leqslant\frac1a\|f\|_{L^1(I_a;Y)}+\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_{L^1(I_a;Y)}
 \leqslant a^{-1/p}\|f\|_p+a^{1-1/p}\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_p. \label{align:ch04-4.135}
 \end{align}
-由\eqref{align:ch04-4.133}与\eqref{align:ch04-4.135}适当选取 $M_0>0$，得\eqref{align:ch04-4.130a}。这就证明了 $p\in(1,\infty)$ 的结果。若 $p=\infty$，则由\eqref{align:ch04-4.132}得
+由\eqref{align:ch04-4.133}与\eqref{align:ch04-4.135}适当选取 $M_0>0$ 得\eqref{align:ch04-4.130a}，故 $p\in(1,\infty)$ 时结论成立。若 $p=\infty$，则由\eqref{align:ch04-4.132}得
 \begin{align}
-\|\tilde f(x_2)-\tilde f(x_1)\|_Y\leqslant\Big|\int_{x_1}^{x_2}\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_Y(x)\,\mathrm{d}x\Big|
+\|\tilde f(x_2)-\tilde f(x_1)\|_Y\leqslant\Big|\int_{x_1}^{x_2}\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_Y\,\mathrm{d}x\Big|
 \leqslant\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_\infty|x_2-x_1|\quad\text{若 }p=\infty. \label{align:ch04-4.136}
 \end{align}
 由\eqref{align:ch04-4.136}得\eqref{align:ch04-4.130b}，其中 $M_0=1$，故结论成立。
 \end{proof}
 
-为后文起见，我们陈述如下延拓结果（证明见文献 [43, 推论 2.3.1]）。
+% SUPPLEMENT: parent=theorem:ch04-连续嵌入; kind=proof; 补出原证明中三处被压缩的步骤：极大点 $x_0$ 的存在性（对无界区间以近似极大点代替）、区间 $(x_0-a,x_0)$ 与 $(x_0,x_0+a)$ 之一含于 $I$ 的理由、以及由 (4.133) 与 (4.135) 定出与 $f$ 无关的 $M_0$ 的计算；并核验 $p=\infty$ 时 $\|\tilde f\|_\infty=\|f\|_\infty$
+\begin{proof}
+极大点的处理。对 $\delta>0$ 取 $x_0\in I$ 使 $\|\tilde f(x_0)\|_Y\geqslant\|\tilde f\|_\infty-\delta$。由\eqref{align:ch04-4.132}，对一切 $x\in I$ 有 $\tilde f(x)=\tilde f(x_0)+\int_{x_0}^{x}(\mathrm{d}f/\mathrm{d}x)(s)\,\mathrm{d}s$，故
+\begin{align*}
+\|\tilde f(x_0)\|_Y\leqslant\|\tilde f(x)\|_Y+\Big|\int_{x_0}^{x}\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_Y\mathrm{d}s\Big| .
+\end{align*}
+在 $I_a$ 上对 $x$ 积分（$I_a$ 取为 $(x_0,x_0+a)$ 或 $(x_0-a,x_0)$ 中含于 $I$ 者），得
+\begin{align*}
+\|\tilde f(x_0)\|_Y\leqslant\frac1a\|f\|_{L^1(I_a;Y)}+\Big\|\frac{\mathrm{d}f}{\mathrm{d}x}\Big\|_{L^1(I_a;Y)} .
+\end{align*}
+令 $\delta\to0^+$ 即得\eqref{align:ch04-4.135}，故极大点存在性可换成上确界的逼近列，结论不变。
+
+辅助区间的选取。设 $I=(\alpha,\beta)$（$\alpha,\beta\in[-\infty,\infty]$，$\lambda(I)=\beta-\alpha$）且 $x_0\in I$。则 $(x_0-\alpha)+(\beta-x_0)=\lambda(I)$，故 $\max\{x_0-\alpha,\beta-x_0\}\geqslant\lambda(I)/2>a$；若 $x_0-\alpha>a$ 则 $(x_0-a,x_0)\subseteq I$，若 $\beta-x_0>a$ 则 $(x_0,x_0+a)\subseteq I$。两种情形的估计相同（把 $I_a$ 取为含于 $I$ 的那一侧并注意 $\int_{x_0}^{x}$ 的定向与绝对值），故不妨设 $(x_0,x_0+a)\subseteq I$。
+
+常数 $M_0$。由\eqref{align:ch04-4.133}，$\tilde f$ 在 $I$ 上的 Hölder 半范数不超过 $\|\mathrm{d}f/\mathrm{d}x\|_p$；由\eqref{align:ch04-4.135}，$\|\tilde f\|_\infty\leqslant a^{-1/p}\|f\|_p+a^{1-1/p}\|\mathrm{d}f/\mathrm{d}x\|_p$。由于 $\|f\|_p\leqslant\|f\|_{1,p}$ 与 $\|\mathrm{d}f/\mathrm{d}x\|_p\leqslant\|f\|_{1,p}$，取
+\begin{align*}
+M_0\triangleq\max\{a^{-1/p},1+a^{1-1/p}\}
+\end{align*}
+即得\eqref{align:ch04-4.130a}；$M_0$ 只依赖于 $p$ 与 $\lambda(I)$（通过 $a$），与 $f$ 无关。
+
+$p=\infty$ 的补充。此时 $f\in W^{1,\infty}(I;Y)\subseteq L^\infty(I;Y)$。由于 $\tilde f$ 连续且 $\tilde f=f$ 几乎处处，对每个 $x\in I$ 取一列 $x_k\to x$ 使 $\tilde f(x_k)=f(x_k)$，得 $\|\tilde f(x)\|_Y=\lim_k\|\tilde f(x_k)\|_Y\leqslant\|f\|_\infty$，故 $\|\tilde f\|_\infty\leqslant\|f\|_\infty\leqslant\|f\|_{1,\infty}$。结合\eqref{align:ch04-4.136}得 $\|\tilde f\|_{\mathrm{Lip}(I;Y)}\leqslant\|f\|_{1,\infty}$，即\eqref{align:ch04-4.130b}中 $M_0=1$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-连续嵌入; kind=motivation; 说明一维嵌入把 Sobolev 函数变为连续函数的动机（逐点取值、初值、Hölder 正则性）、$p\in(1,\infty)$ 与 $p=\infty$ 两个分支各自的作用、$I$ 为区间的作用，以及 Hölder 指数 $1-1/p$ 不可改进、$p=1$ 不含 Hölder 信息两个边界
+\begin{remark}\phantomsection\label{remark:ch04-连续嵌入动机}
+\begin{enumerate}[(i)]
+\item 引入动机。高维 Sobolev 嵌入用 $p$ 与 $N$ 的比较决定正则性阶数，一维情形没有这种限制：对一切 $p\in(1,\infty)$，$W^{1,p}(I;Y)$ 的元素都有 Hölder 连续代表元。这使一维发展方程的解可逐点取值、初值条件有意义，并给出 $C(I;Y)$ 中的紧性估计（\cref{theorem:ch04-Aubin} 的证明即以此为基础）。
+
+\item 各要素的作用。(a) $p\in(1,\infty)$ 使 $1-1/p\in(0,1)$，从而 $C^{0,1-1/p}(I;Y)$ 是 Hölder 空间而非仅连续函数空间；$p$ 越大指数越接近 $1$，$p\to\infty$ 时极限情形即\cref{theorem:ch04-连续嵌入}(ii) 的 Lipschitz 估计。(b) $I$ 为开区间使\eqref{align:ch04-4.132}中的积分路径含于 $I$，并使 $a\in(0,\min\{1,\lambda(I)/2\})$ 可以选取。(c) $Y$ 的完备性用于 Bochner 积分与极限，估计式\eqref{align:ch04-4.130a}--\eqref{align:ch04-4.130b}中的常数与 $Y$ 无关。(d) $\mathrm{Lip}(I;Y)$ 的范数含 $\|\cdot\|_\infty$，这一项由 $f\in W^{1,\infty}(I;Y)\subseteq L^\infty(I;Y)$ 控制，故\eqref{align:ch04-4.130b}中取 $M_0=1$ 即可，无需 $I$ 有界。
+
+\item 边界。(a) 指数 $1-1/p$ 不可改进：取 $\varphi\in C_c^\infty(-1,1)$ 使 $\varphi(0)=1$，对 $\lambda\in(0,1)$ 令 $f_\lambda(x)\triangleq\lambda^{1-1/p}\varphi(x/\lambda)$。则 $\|f_\lambda\|_{1,p}\leqslant(\|\varphi\|_p^p+\|\varphi'\|_p^p)^{1/p}$ 与 $\lambda$ 无关，而 $\beta>1-1/p$ 时 $f_\lambda$ 的 $\beta$-Hölder 半范数为 $\lambda^{1-1/p-\beta}[\varphi]_\beta\to\infty$（$\lambda\to0^+$），故 $W^{1,p}(I;Y)\subseteq C^{0,\beta}(I;Y)$ 对 $\beta>1-1/p$ 不成立。(b) $p=1$ 时\eqref{align:ch04-4.135} 中的指数 $1-1/p$ 退化为 $0$，只能得到 $W^{1,1}(I;Y)\hookrightarrow C_b(I;Y)$，不含 Hölder 信息；故\cref{theorem:ch04-连续嵌入}(i) 把 $p$ 限制在 $(1,\infty)$。(c) $I$ 不连通时\eqref{align:ch04-4.132}失效，结论须逐分支叙述（见\cref{lemma:ch04-绝对连续代表}后的注记(iii)）。
+\end{enumerate}
+\end{remark}
+
+为后文起见，陈述如下延拓结果（证明见文献~[43, Corollaire 2.3.1]）。
 
 \begin{proposition}\label{proposition:ch04-延拓}
-设 $I\subseteq\mathbb{R}$ 为有界开区间。则存在线性有界算子 $P:L^1(I;Y)\to L^1(\mathbb{R};Y)$，使：
+设 $I\subseteq\mathbb{R}$ 为有界开区间，$Y$ 为 Banach 空间。则存在线性有界算子 $P:L^1(I;Y)\to L^1(\mathbb{R};Y)$，使：
 \begin{enumerate}[(i)]
-\item\label{item:ch04-延拓-i} 对几乎所有 $x\in I$ 有 $(Pf)(x)=f(x)$；
-\item\label{item:ch04-延拓-ii} 存在 $M_1>0$（只依赖于 $\lambda(I)$），使对所有 $p\in[1,\infty]$ 与任意 Banach 空间 $Z$，
+\item\label{item:ch04-延拓-i} $(Pf)(x)=f(x)$ 对几乎所有 $x\in I$；
+\item\label{item:ch04-延拓-ii} 存在常数 $M_1>0$（只依赖于 $\lambda(I)$）使对一切 $p\in[1,\infty]$ 与一切 Banach 空间 $Z$，
 \begin{align}
-f\in L^1(I;Y)\cap L^p(I;Z)\Rightarrow Pf\in L^p(\mathbb{R};Z),\quad \|Pf\|_{L^p(\mathbb{R};Z)}\leqslant M_1\|f\|_{L^p(I;Z)}, \label{align:ch04-4.137a}
+f\in L^1(I;Y)\cap L^p(I;Z)\ \Rightarrow\ Pf\in L^p(\mathbb{R};Z),\quad\|Pf\|_{L^p(\mathbb{R};Z)}\leqslant M_1\|f\|_{L^p(I;Z)}, \label{align:ch04-4.137a}
 \end{align}
 \begin{align}
-f\in L^1(I;Y)\cap W^{1,p}(I;Z)\Rightarrow Pf\in W^{1,p}(\mathbb{R};Z),\quad \|Pf\|_{W^{1,p}(\mathbb{R};Z)}\leqslant M_1\|f\|_{W^{1,p}(I;Z)}. \label{align:ch04-4.137b}
+f\in L^1(I;Y)\cap W^{1,p}(I;Z)\ \Rightarrow\ Pf\in W^{1,p}(\mathbb{R};Z),\quad\|Pf\|_{W^{1,p}(\mathbb{R};Z)}\leqslant M_1\|f\|_{W^{1,p}(I;Z)}. \label{align:ch04-4.137b}
 \end{align}
 \end{enumerate}
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch04-延拓; kind=proof; 原书把证明转引文献，此处给出反射延拓的显式构造：三段反射与截断的定义、$L^p$ 与 $W^{1,p}$ 范数的逐段估计、常数 $M_1$ 只依赖 $\lambda(I)$ 的核验，以及分布导数等式的验证
+\begin{proof}
+设 $I=(\alpha,\beta)$，$h\triangleq\lambda(I)=\beta-\alpha\in(0,\infty)$，$J\triangleq(\alpha-h,\beta+h)$。取 $\eta\in C_c^\infty(J)$ 使 $0\leqslant\eta\leqslant1$ 且 $\eta=1$ 于 $[\alpha,\beta]$；$\eta$ 只依赖于 $h$（例如 $\eta(x)\triangleq\chi((x-\alpha)/h)$，$\chi\in C_c^\infty(-1,2)$，$\chi=1$ 于 $[0,1]$）。对 $x\in\mathbb{R}$ 置
+\begin{align*}
+(Pf)(x)\triangleq
+\begin{cases}
+\eta(x)f(x), & x\in I,\\
+\eta(x)f(2\alpha-x), & x\in(\alpha-h,\alpha),\\
+\eta(x)f(2\beta-x), & x\in(\beta,\beta+h),\\
+0, & x\in\mathbb{R}\setminus J .
+\end{cases}
+\end{align*}
+定义逐点进行且只用到 $f$ 的取值，故 $P$ 线性，且对一切 Banach 空间 $Z$ 与一切 $Z$ 值函数有定义。由 $\eta=1$ 于 $[\alpha,\beta]\supseteq I$ 得 $(Pf)(x)=f(x)$ 对一切 $x\in I$ 成立，故 (i) 成立。
+
+(4.137a)。设 $p\in[1,\infty)$。变量替换 $u\triangleq2\alpha-x$（左段，$(\alpha,\alpha+h)=(\alpha,\beta)=I$）与 $u\triangleq2\beta-x$（右段，$(\beta-h,\beta)=(\alpha,\beta)=I$）给出
+\begin{align*}
+\|Pf\|^p_{L^p(\mathbb{R};Z)}&=\int_I\|\eta f\|^p_Z\mathrm{d}x+\int_\alpha^{\alpha+h}\|\eta(2\alpha-u)f(u)\|^p_Z\mathrm{d}u+\int_{\beta-h}^{\beta}\|\eta(2\beta-u)f(u)\|^p_Z\mathrm{d}u\\
+&\leqslant3\|f\|^p_{L^p(I;Z)},
+\end{align*}
+其中用到 $0\leqslant\eta\leqslant1$。故 $\|Pf\|_{L^p(\mathbb{R};Z)}\leqslant3^{1/p}\|f\|_{L^p(I;Z)}$。$p=\infty$ 时同样有 $\|Pf\|_{L^\infty(\mathbb{R};Z)}\leqslant\|f\|_{L^\infty(I;Z)}$。于是 (4.137a) 成立，可取 $M_1\geqslant3$。
+
+(4.137b)。设 $p\in[1,\infty)$ 且 $f\in L^1(I;Y)\cap W^{1,p}(I;Z)$。由\cref{lemma:ch04-绝对连续代表}，$f$ 有连续代表元且在 $I$ 上绝对连续，其几乎处处导数等于 $\mathrm{d}f/\mathrm{d}x\in L^p(I;Z)$；以下用 $f$ 记该代表元。置
+\begin{align*}
+F(x)\triangleq
+\begin{cases}
+f(x), & x\in I,\\
+f(2\alpha-x), & x\in(\alpha-h,\alpha),\\
+f(2\beta-x), & x\in(\beta,\beta+h).
+\end{cases}
+\end{align*}
+$F$ 在 $J$ 的每个连通分支上绝对连续，且在 $\alpha$、$\beta$ 处连续（例如 $\lim_{x\to\alpha^-}F(x)=f(\alpha)=F(\alpha)$），故 $F$ 在 $J$ 上绝对连续；其几乎处处导数为
+\begin{align*}
+F'(x)=
+\begin{cases}
+f'(x), & x\in I,\\
+-f'(2\alpha-x), & x\in(\alpha-h,\alpha),\\
+-f'(2\beta-x), & x\in(\beta,\beta+h).
+\end{cases}
+\end{align*}
+与 (4.137a) 的估计同法得 $\|F\|_{W^{1,p}(J;Z)}\leqslant3^{1/p}\|f\|_{W^{1,p}(I;Z)}$。由于 $Pf=\eta F$ 在 $J$ 外为零、$\eta\in C_c^\infty(J)$，$Pf$ 在 $\mathbb{R}$ 上绝对连续且具紧支撑，其几乎处处导数 $(Pf)'=\eta'F+\eta F'$ 属于 $L^p(\mathbb{R};Z)$，且由一维的 Newton--Leibniz 公式与 Fubini 定理，对 $\zeta\in C_c^\infty(\mathbb{R})$ 有 $-\int_{\mathbb{R}}(Pf)\zeta'\,\mathrm{d}x=\int_{\mathbb{R}}(Pf)'\zeta\,\mathrm{d}x$，故 $Pf\in W^{1,p}(\mathbb{R};Z)$ 且其分布导数由 $(Pf)'$ 表示。于是
+\begin{align*}
+\|Pf\|_{W^{1,p}(\mathbb{R};Z)}\leqslant\|\eta\|_{C^1}\|F\|_{W^{1,p}(J;Z)}\leqslant3^{1/p}\|\eta\|_{C^1}\|f\|_{W^{1,p}(I;Z)} .
+\end{align*}
+$p=\infty$ 时同样的计算给出 $\|Pf\|_{W^{1,\infty}(\mathbb{R};Z)}\leqslant\|\eta\|_{C^1}\|f\|_{W^{1,\infty}(I;Z)}$。故 (4.137b) 成立，其中 $M_1\triangleq\max\{3,3\|\eta\|_{C^1}\}$ 可取为只依赖于 $h=\lambda(I)$ 的常数（$\eta$ 由 $h$ 经同一公式给出）。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch04-延拓; kind=motivation; 说明延拓算子的动机（磨光须在 $\mathbb{R}$ 上进行）、$I$ 有界与 $M_1$ 只依赖 $\lambda(I)$ 的作用、$p$ 与 $Z$ 任意的意义，以及零延拓在端点产生跳跃从而 (4.137b) 失效这一边界
+\begin{remark}\phantomsection\label{remark:ch04-延拓动机}
+\begin{enumerate}[(i)]
+\item 引入动机。磨光与卷积只在 $\mathbb{R}$ 上有定义（\cref{definition:ch04-分布卷积}），而紧性论证中的逼近序列 $f_k=(Pf)*\rho_{1/k}|_I$ 必须先延拓再磨光（\cref{lemma:ch04-磨光紧}）。延拓算子的作用是：把区间上的 $W^{1,p}$ 函数变成 $\mathbb{R}$ 上具紧支撑的同型函数，且范数只增大固定倍数，从而使磨光的误差估计可回到 $I$ 上并用 $\|f\|_{W^{1,p}(I;Z)}$ 控制。
+
+\item 各要素的作用。(a) $I$ 有界使反射段的长度 $\lambda(I)$ 有限，从而 $M_1$ 可取为只依赖于 $\lambda(I)$ 的常数；若 $I$ 无界，反射段无界，(4.137a) 的常数估计须另行处理。(b) $p\in[1,\infty]$ 全范围统一处理：$p=\infty$ 时范数估计不变（$3^{1/p}$ 换成 $1$）。(c) $Z$ 任意：反射公式逐点定义，与值域空间无关，故\cref{lemma:ch04-磨光紧}可对 $Z$ 与 $W$ 两个空间分别使用 (4.137a)。(d) $f\in L^1(I;Y)\cap L^p(I;Z)$ 中的两个条件分别保证 $P$ 在 $L^1(I;Y)$ 上有定义与 $L^p$ 估计有意义；两个空间可以不同（$Y\neq Z$）。
+
+\item 边界。(a) 零延拓 $Pf\triangleq f\chi_I$ 在端点 $\alpha,\beta$ 产生跳跃，其分布导数含 $\pm\delta_\alpha$、$\pm\delta_\beta$ 型测度，(4.137b) 失效。(b) 若 $I$ 为半直线 $I=(\alpha,\infty)$，关于 $\alpha$ 作偶反射（$Pf(x)\triangleq f(2\alpha-x)$，$x<\alpha$）仍给出 $W^{1,p}(\mathbb{R};Z)$ 延拓并使 (4.137b) 成立，故有界性假设只是为使 $M_1$ 取到统一形式。(c) 常数 $M_1$ 不是最优的，可由更细致地估计各段长度与范数改进。
+\end{enumerate}
+\end{remark}
+
 \subsection{紧嵌入}\label{subsection:ch04-紧嵌入}
 
-我们证明如下结果（见文献 [94]）。
+现证明如下结果（见文献~[94]）。
 
 \begin{theorem}[Aubin]\label{theorem:ch04-Aubin}
-设 $I\subseteq\mathbb{R}$ 为有界开区间，$p\in(1,\infty]$，$r\in[1,\infty]$。设 $W,Y,Z$ 为 Banach 空间，满足 $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$。设 $E\subseteq W^{1,p}(I;Z)\cap L^r(I;W)$ 在两空间中都有界，即
+设 $I\subseteq\mathbb{R}$ 为有界开区间，$p\in(1,\infty]$，$r\in[1,\infty]$，$W,Y,Z$ 为 Banach 空间且 $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$。设 $E\subseteq W^{1,p}(I;Z)\cap L^r(I;W)$ 在两空间中都有界，即
 \begin{align}
 \sup_{f\in E}\big(\|f\|_{W^{1,p}(I;Z)}+\|f\|_{L^r(I;W)}\big)<\infty. \label{align:ch04-4.138}
 \end{align}
-则 $E$ 在 $C(I;Z)$ 与 $L^r(I;Y)$ 中都相对紧。
+则 $E$ 在 $C(I;Z)$ 与 $L^r(I;Y)$ 中都相对紧，即 $E$ 在 $C(I;Z)$ 中的闭包与在 $L^r(I;Y)$ 中的闭包都是紧集。
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch04-Aubin; kind=motivation; 说明 Aubin 紧性定理的动机（Sobolev 空间中的有界集在更强拓扑中相对紧、用于发展方程取极限）、$I$ 有界、$p\in(1,\infty]$、$r\in[1,\infty]$、$W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$ 与 (4.138) 各自的作用，以及 $p=1$ 时结论失效这一边界
+\begin{remark}\phantomsection\label{remark:ch04-Aubin动机}
+\begin{enumerate}[(i)]
+\item 引入动机。$W^{1,p}(I;Z)$ 中的有界集一般不在 $C(I;Z)$ 中相对紧（差分的 $L^p$ 界不控制连续性模的一致衰减），而在 $L^r(I;W)$ 中的有界性提供了额外的空间正则性。Aubin 定理把二者结合：时间导数在 $Z$ 中可积、函数在 $W$ 中有界，则在中间空间 $Y$（$W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$）中得到紧性。这是非线性发展方程中取极限的标准工具。
+
+\item 各要素的作用。(a) $p\in(1,\infty]$ 使\eqref{align:ch04-4.130a}中的 Hölder 指数 $1-1/p>0$，从而磨光的误差估计\eqref{align:ch04-4.144}以 $k^{-(1-1/p)}\to0$ 的速度成立；$p=\infty$ 时速度 $k^{-1}$ 亦可用。(b) $W\overset{c}{\hookrightarrow}Y$ 给出：对每个 $x$，集 $E_{k,x}$ 在 $W$ 中有界从而在 $Z$ 中相对紧（\cref{lemma:ch04-磨光紧}(b)），这是 Ascoli--Arzelà 定理的前提。(c) $Y\hookrightarrow Z$ 使 $C(I;Z)$ 中的相对紧性传递到 $L^r(I;Z)$，并在插值不等式\eqref{align:ch04-4.141}中给出 $Z$ 项。(d) $I$ 有界使 $C(I;Z)\subseteq L^r(I;Z)$（$r\in[1,\infty]$）且使 $L^r(I;W)\subseteq L^1(I;W)$ 型的包含关系成立，从而\eqref{align:ch04-4.138}中两个范数可同时使用。(e) $r\in[1,\infty]$ 只影响结论中的空间 $L^r(I;Y)$；$r=\infty$ 时结论为 $L^\infty(I;Y)$ 中的相对紧性。
+
+\item 边界。(a) $p=1$ 时结论失效：\cref{example:ch04-紧嵌入临界失效}给出 $W^{1,1}(I;Z)\cap L^\infty(I;W)$ 中的有界集 $\{f_n\}$，它在 $C(I;Z)$ 与 $L^\infty(I;Y)$ 中都不相对紧。(b) 若去掉 $W\overset{c}{\hookrightarrow}Y$ 的紧性而只保留连续嵌入，则 $E_{k,x}$ 只知在 $W$ 中有界，在 $Z$ 中不必相对紧，Ascoli--Arzelà 定理失效。(c) 结论不包含 $E$ 在 $L^p(I;Z)$（$p<\infty$）之外的空间中的紧性：例如 $p=\infty$ 时不能断言 $E$ 在 $C^1$ 中相对紧。
+\end{enumerate}
+\end{remark}
+
 \begin{theorem}[Simon]\label{theorem:ch04-Simon}
-设 $I\subseteq\mathbb{R}$ 为有界开区间，$r\in[1,\infty)$。设 $W,Y,Z$ 为 Banach 空间，满足 $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$。设 $E\subseteq W^{1,1}(I;Z)\cap L^r(I;W)$ 在两空间中都有界，即
+设 $I\subseteq\mathbb{R}$ 为有界开区间，$r\in[1,\infty)$，$W,Y,Z$ 为 Banach 空间且 $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$。设 $E\subseteq W^{1,1}(I;Z)\cap L^r(I;W)$ 在两空间中都有界，即
 \begin{align}
 \sup_{f\in E}\big(\|f\|_{W^{1,1}(I;Z)}+\|f\|_{L^r(I;W)}\big)<\infty. \label{align:ch04-4.139}
 \end{align}
-则 $E$ 在 $L^p(I;Z)$（$p\in[1,\infty)$）与 $L^r(I;Y)$ 中都相对紧。
+则 $E$ 在 $L^p(I;Z)$（$p\in[1,\infty)$）与 $L^r(I;Y)$ 中都相对紧，即对每个 $p\in[1,\infty)$，$E$ 在 $L^p(I;Z)$ 中的闭包与在 $L^r(I;Y)$ 中的闭包都是紧集。
 \end{theorem}
 
-为证\cref{theorem:ch04-Aubin}与\cref{theorem:ch04-Simon}，我们需要两个预备引理。
+% SUPPLEMENT: parent=theorem:ch04-Simon; kind=motivation; 说明 Simon 定理相对 Aubin 定理的差别（时间导数只要求 $L^1$，代价是不再得到 $C(I;Z)$ 紧性）、$r<\infty$、$I$ 有界与两个嵌入的作用，以及 $r=\infty$ 时 $L^\infty(I;Y)$ 紧性失效这一边界
+\begin{remark}\phantomsection\label{remark:ch04-Simon动机}
+\begin{enumerate}[(i)]
+\item 引入动机。许多发展方程只给出时间导数在 $Z$ 中的 $L^1$ 界（例如仅由能量不等式与非负性得到的估计），此时 Aubin 定理的 $p>1$ 假设不满足。Simon 定理以 $W^{1,1}(I;Z)$ 取代 $W^{1,p}(I;Z)$：磨光误差只有 $k^{-1}$ 的速度，故不能得到 $C(I;Z)$ 中的紧性，但仍可在 $L^p(I;Z)$（$p<\infty$）与 $L^r(I;Y)$ 中得到相对紧性。
+
+\item 各要素的作用。(a) $r\in[1,\infty)$ 在证明的 (iii) 中是实质的：先由 (ii) 得到 $E$ 在 $L^p(I;Z)$（$p<\infty$）中相对紧，取 $p=r$ 得在 $L^r(I;Z)$ 中收敛的子列，再用插值不等式过渡到 $L^r(I;Y)$；若 $r=\infty$，$L^p(I;Z)$（$p<\infty$）中的收敛不蕴含 $L^\infty(I;Z)$ 中的收敛，该步失效。(b) $W^{1,1}(I;Z)\hookrightarrow C(I;Z)$（\cref{theorem:ch04-连续嵌入}与\cref{lemma:ch04-绝对连续代表}）使 $E$ 在 $C(I;Z)$ 中有界，从而可用\cref{corollary:ch04-有界收敛}把 a.e. 收敛提升为 $L^p$ 收敛。(c) $I$ 有界使 $C(I;Z)\subseteq L^p(I;Z)$，并使 $L^r(I;W)$ 与 $L^r(I;Z)$ 的插值可用。(d) $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$ 的作用与\cref{theorem:ch04-Aubin}相同。
+
+\item 边界。(a) $r=\infty$ 时结论中的 $L^\infty(I;Y)$ 相对紧性失效，见\cref{example:ch04-紧嵌入临界失效}。(b) 结论不包含 $C(I;Z)$ 中的相对紧性：$\{f_n\}$ 在 $C(I;Z)$ 中可以没有收敛子列（同一例子）。(c) $p\in[1,\infty)$ 的紧性结论对一切 $p<\infty$ 成立，但不能推广到 $p=\infty$；在 $p=\infty$ 处只能得到 $E$ 在 $L^\infty(I;Z)$ 中的有界性。
+\end{enumerate}
+\end{remark}
+
+为证\cref{theorem:ch04-Aubin}与\cref{theorem:ch04-Simon}，需要两个预备引理。
 
 \begin{lemma}\label{lemma:ch04-磨光紧}
-设 $I\subseteq\mathbb{R}$ 为有界开区间，$p\in[1,\infty]$。设 $W,Y,Z$ 为 Banach 空间，满足 $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$。设 $E\subseteq W^{1,p}(I;Z)\cap L^r(I;W)$ 满足\eqref{align:ch04-4.138}。对每个 $f\in E$ 与 $k\in\mathbb{N}$，令
+设 $I\subseteq\mathbb{R}$ 为有界开区间，$p\in[1,\infty]$，$r\in[1,\infty]$，$W,Y,Z$ 为 Banach 空间且 $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$。设 $E\subseteq W^{1,p}(I;Z)\cap L^r(I;W)$ 满足\eqref{align:ch04-4.138}。对每个 $f\in E$ 与 $k\in\mathbb{N}$ 令
 \begin{align*}
-f_k:I\to Z,\quad f_k\triangleq (Pf)*\rho_{1/k}|_I\ (k\in\mathbb{N}),
+f_k:I\to Z,\quad f_k\triangleq (Pf)*\rho_{1/k}|_I\quad(k\in\mathbb{N}),
 \end{align*}
-其中 $P:L^1(I;Z)\to L^1(\mathbb{R};Z)$ 为\cref{proposition:ch04-延拓}中的延拓算子，$\rho_{1/k}$ 为标准磨光子。则对所有 $k\in\mathbb{N}$，集 $E_k\triangleq \{f_k\mid f\in E\}$ 在 $C(I;Z)$ 中相对紧。
+其中 $P:L^1(I;Z)\to L^1(\mathbb{R};Z)$ 为\cref{proposition:ch04-延拓}中的延拓算子，$\rho_{1/k}$ 为标准磨光子。则对每个 $k\in\mathbb{N}$，集 $E_k\triangleq\{f_k\mid f\in E\}$ 在 $C(I;Z)$ 中相对紧。
 \end{lemma}
 
 \begin{proof}
-固定 $k\in\mathbb{N}$。首先注意，对任意 $f\in E\subseteq W^{1,p}(I;Z)\cap L^r(I;W)$，有 $Pf\in W^{1,p}(\mathbb{R};Z)\cap L^r(\mathbb{R};W)$，从而 $f_k\in C^\infty(I;Z)$。若我们证明 (a) 集 $E_k\subseteq C(I;Z)$ 等度连续，且 (b) 对任意 $x\in I$，集 $E_{k,x}\triangleq \{f_k(x)\mid f\in E\}$ 在 $Z$ 中相对紧，则由 Ascoli--Arzelà 定理得结果。
+固定 $k\in\mathbb{N}$。首先注意，对任意 $f\in E\subseteq W^{1,p}(I;Z)\cap L^r(I;W)$ 有 $Pf\in W^{1,p}(\mathbb{R};Z)\cap L^r(\mathbb{R};W)$，从而 $f_k\in C^\infty(I;Z)$。若证明 (a) 集 $E_k\subseteq C(I;Z)$ 等度连续，且 (b) 对任意 $x\in I$，集 $E_{k,x}\triangleq\{f_k(x)\mid f\in E\}$ 在 $Z$ 中相对紧，则由 Ascoli--Arzelà 定理得结果。
 
-(a) 我们必须证明，对任意 $\epsilon>0$，存在 $\delta>0$，使对所有 $f\in E$ 与满足 $|x_1-x_2|<\delta$ 的任意 $x_1,x_2\in I$，有 $|f_k(x_1)-f_k(x_2)|<\epsilon$。为此，只需证明集 $F_k\triangleq \{f_k'\mid f_k\in E_k\}$ 在 $C(I;Z)$ 中有界，即存在 $C_k>0$ 使
+(a) 须证明对任意 $\varepsilon>0$ 存在 $\delta>0$，使对所有 $f\in E$ 与满足 $|x_1-x_2|<\delta$ 的任意 $x_1,x_2\in I$ 有 $\|f_k(x_1)-f_k(x_2)\|_Z<\varepsilon$。为此只需证明集 $F_k\triangleq\{f_k'\mid f_k\in E_k\}$ 在 $C(I;Z)$ 中有界，即存在 $C_k>0$ 使
 \begin{align}
 \|f_k'\|_{C(I;Z)}\leqslant C_k\quad\text{对所有 }f\in E. \label{align:ch04-4.140}
 \end{align}
@@ -320,41 +735,90 @@ f_k:I\to Z,\quad f_k\triangleq (Pf)*\rho_{1/k}|_I\ (k\in\mathbb{N}),
 \|f_k'(x)\|_Z\leqslant\|\rho_{1/k}'\|_{L^q(\mathbb{R})}\|Pf\|_{L^p(\mathbb{R};Z)}
 \leqslant C\|\rho_{1/k}'\|_{L^q(\mathbb{R})}\|f\|_{L^p(I;Z)},
 \end{align*}
-其中 $q$ 表示 $p$ 的 Hölder 共轭。对 $x\in I$ 取上确界，并利用\eqref{align:ch04-4.138}，由上述不等式得 (a) 满足。
+其中 $q$ 表示 $p$ 的 Hölder 共轭，$C$ 为\eqref{align:ch04-4.137a}中的常数。对 $x\in I$ 取上确界并利用\eqref{align:ch04-4.138}，由上述不等式得 (a) 满足。
 
-(b) 由\eqref{align:ch04-4.137a}，对任意 $x\in I$，有
+(b) 由\eqref{align:ch04-4.137a}，对任意 $x\in I$ 有
 \begin{align*}
-\|f_k(x)\|_W\leqslant\|\rho_{1/k}\|_{L^s(\mathbb{R})}\|Pf\|_{L^r(\mathbb{R};Z)}
+\|f_k(x)\|_W\leqslant\|\rho_{1/k}\|_{L^s(\mathbb{R})}\|Pf\|_{L^r(\mathbb{R};W)}
 \leqslant C\|\rho_{1/k}\|_{L^s(\mathbb{R})}\|f\|_{L^r(I;W)},
 \end{align*}
-其中 $s$ 表示 $r$ 的 Hölder 共轭。于是由\eqref{align:ch04-4.138}，集 $E_{k,x}\triangleq \{f_k(x)\mid f\in E\}$ 在 $W$ 中有界，从而在 $Z$ 中相对紧。这就证明了 (b)，故结论成立。
+其中 $s$ 表示 $r$ 的 Hölder 共轭。于是由\eqref{align:ch04-4.138}，集 $E_{k,x}$ 在 $W$ 中有界，从而在 $Z$ 中相对紧。故 (b) 得证，结论成立。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch04-磨光紧; kind=proof; 补出原证明中“Ascoli--Arzelà 定理适用”“$Pf\in W^{1,p}(\mathbb{R};Z)\cap L^r(\mathbb{R};W)$”“$f_k'(x)$ 的积分表示”“$E_{k,x}$ 在 $W$ 中有界 $\Rightarrow$ 在 $Z$ 中相对紧”四处的细节，并核验 $p=1$ 与 $p=\infty$ 时共轭指数的取值
+\begin{proof}
+$Pf$ 的正则性。由\cref{proposition:ch04-延拓}(ii)（\eqref{align:ch04-4.137a}与\eqref{align:ch04-4.137b}），$f\in W^{1,p}(I;Z)$ 给出 $Pf\in W^{1,p}(\mathbb{R};Z)$，$f\in L^r(I;W)$ 给出 $Pf\in L^r(\mathbb{R};W)$；两个结论对同一个 $f$ 同时成立，因为 $f\in L^1(I;Z)\cap L^1(I;W)\cap L^p(I;Z)\cap L^r(I;W)$（$I$ 有界使 $L^r(I;W)\subseteq L^1(I;W)$）。于是由\cref{proposition:ch04-磨光逼近}(i)，$(Pf)*\rho_{1/k}\in C^\infty(\mathbb{R};Z)$，限制到 $I$ 得 $f_k\in C^\infty(I;Z)$。
+
+积分表示与导数估计。由\cref{proposition:ch04-磨光逼近}(i) 的证明，$(Pf)*\rho_{1/k}(x)=\int_{\mathbb{R}}(Pf)(y)\rho_{1/k}(x-y)\,\mathrm{d}y$ 且其导数由积分号下求导给出。对 $\alpha=0$ 与 $\alpha=1$ 分别用 Hölder 不等式（$1/p+1/q=1$，约定 $p=1$ 时 $q=\infty$、$p=\infty$ 时 $q=1$）：
+\begin{align*}
+\|f_k(x)\|_Z\leqslant\|\rho_{1/k}\|_{L^q}\|Pf\|_{L^p(\mathbb{R};Z)},\qquad\|f_k'(x)\|_Z\leqslant\|\rho_{1/k}'\|_{L^q}\|Pf\|_{L^p(\mathbb{R};Z)} ,
+\end{align*}
+故\eqref{align:ch04-4.140}成立，且 $C_k\triangleq C\|\rho_{1/k}'\|_{L^q}\sup_{f\in E}\|f\|_{L^p(I;Z)}<\infty$。等度连续性：由中值不等式（$f_k$ 连续可微，取值于 $Z$）$\|f_k(x_1)-f_k(x_2)\|_Z\leqslant C_k|x_1-x_2|$，取 $\delta=\varepsilon/C_k$ 即可。
+
+逐点相对紧性。由\eqref{align:ch04-4.137a}（应用于 $L^r(I;W)$，指数 $r$ 与共轭指数 $s$）得 $\|f_k(x)\|_W\leqslant\|\rho_{1/k}\|_{L^s}\|Pf\|_{L^r(\mathbb{R};W)}\leqslant C\|\rho_{1/k}\|_{L^s}\|f\|_{L^r(I;W)}$，故 $E_{k,x}$ 是 $W$ 中的有界集。由 $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$，$W$ 的有界集在 $Y$ 中相对紧，而 $Y\hookrightarrow Z$ 连续，故在 $Z$ 中相对紧（紧集的连续像的闭包含于紧集）。
+
+Ascoli--Arzelà 定理。$E_k\subseteq C(I;Z)$ 等度连续且对每个 $x$ 的截面 $E_{k,x}$ 在 $Z$ 中相对紧，由 Ascoli--Arzelà 定理（$I$ 为有界区间，函数族一致有界且等度连续）$E_k$ 在 $C(\overline I;Z)$ 中相对紧，从而在 $C(I;Z)$ 中相对紧。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch04-磨光紧; kind=motivation; 说明磨光族 $E_k$ 的作用（把仅在 $W^{1,p}$ 中有界的集化为等度连续族）、$I$ 有界、$p,r$ 任意与两个嵌入的作用，以及 $W$ 的紧嵌入不可减弱这一边界
+\begin{remark}\phantomsection\label{remark:ch04-磨光紧动机}
+\begin{enumerate}[(i)]
+\item 引入动机。$E$ 本身不必等度连续：$W^{1,p}(I;Z)$ 的 $L^p$ 界不能控制差商的一致估计。磨光把 $E$ 中的函数替换为 $C^\infty$ 函数，其导数为 $\rho_{1/k}'$ 与 $Pf$ 的卷积，从而由 Hölder 不等式得到与 $f$ 无关的一致界\eqref{align:ch04-4.140}；$E$ 中的 $L^r(I;W)$ 界则通过 $W\overset{c}{\hookrightarrow}Y$ 给出逐点截面的相对紧性。两者合起来正是 Ascoli--Arzelà 定理的假设，因此 $E_k$ 对每个固定 $k$ 都是相对紧族。
+
+\item 各要素的作用。(a) $I$ 有界与 $P$ 的延拓使 $Pf$ 具紧支撑，从而 $f_k\in C^\infty(I;Z)$ 且 $E_k$ 一致有界（\eqref{align:ch04-4.137a}）。(b) $p\in[1,\infty]$ 与 $r\in[1,\infty]$ 全部适用：Hölder 不等式在端点 $p=1$ 或 $r=\infty$ 时相应共轭指数取 $\infty$ 或 $1$ 即可。(c) $W\overset{c}{\hookrightarrow}Y$ 只用在逐点截面上；$Y\hookrightarrow Z$ 用于把相对紧性搬到 $Z$。(d) \eqref{align:ch04-4.138}的两个界分别控制 $f_k'$ 与 $f_k(x)$，缺一不可。
+
+\item 边界。(a) 若 $W\hookrightarrow Y$ 只是连续嵌入而非紧嵌入，$E_{k,x}$ 只是 $W$ 中的有界集，在 $Z$ 中未必相对紧，Ascoli--Arzelà 定理的前提 (b) 失效。(b) 结论只对每个固定的 $k$ 成立，且 $C_k$ 随 $k$ 增长（$\|\rho_{1/k}'\|_{L^q}\sim k^{1+1/q}$），故 $E_k$ 的一致等度连续性可由 $E$ 的 $W^{1,p}$ 界得到（\eqref{align:ch04-4.144}），而由 $E$ 本身不能直接得到。
+\end{enumerate}
+\end{remark}
+
 \begin{lemma}\label{lemma:ch04-插值不等式}
-设 $W,Y,Z$ 为 Banach 空间，满足 $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$。则对任意 $\eta>0$，存在 $C_\eta>0$，使对所有 $f\in W$，有
+设 $W,Y,Z$ 为 Banach 空间且 $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$。则对任意 $\eta>0$ 存在 $C_\eta>0$ 使对所有 $f\in W$ 有
 \begin{align}
-\|f\|_Y\leqslant\eta\|f\|_W+C_\eta\|f\|_Z. \label{align:ch04-4.141}
+\|f\|_Y\leqslant\eta\|f\|_W+C_\eta\|f\|_Z, \label{align:ch04-4.141}
 \end{align}
+其中 $C_\eta$ 只依赖于 $\eta$ 与 $W\hookrightarrow Y\hookrightarrow Z$ 的嵌入常数，与 $f$ 无关。
 \end{lemma}
 
 \begin{proof}
-反证，设存在 $\eta>0$，使对每个 $k\in\mathbb{N}$，存在 $f_k\in W$ 满足
+反证。设存在 $\eta>0$，使对每个 $k\in\mathbb{N}$ 存在 $f_k\in W$ 满足
 \begin{align}
 \|f_k\|_Y>\eta\|f_k\|_W+k\|f_k\|_Z. \label{align:ch04-4.142}
 \end{align}
 令 $g_k\triangleq f_k/\|f_k\|_Y$（$k\in\mathbb{N}$）。则对所有 $k\in\mathbb{N}$ 有 $\|g_k\|_Y=1$，从而由\eqref{align:ch04-4.142}
 \begin{align}
-\|g_k\|_W\leqslant\frac1\eta,\qquad \|g_k\|_Z\leqslant\frac1k. \label{align:ch04-4.143}
+\|g_k\|_W\leqslant\frac1\eta,\qquad\|g_k\|_Z\leqslant\frac1k. \label{align:ch04-4.143}
 \end{align}
-由\eqref{align:ch04-4.143}中第一式，序列 $\{g_k\}$ 在 $W$ 中有界。于是由于 $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$，存在 $\{g_k\}$ 的子列（不重新标号）与 $g\in Z$，使 $\lim_{k\to\infty}\|g_k-g\|_Y=\lim_{k\to\infty}\|g_k-g\|_Z=0$。由\eqref{align:ch04-4.143}中第二式 $g=0$，从而 $\lim_{k\to\infty}\|g_k\|_Y=0$。这与对所有 $k\in\mathbb{N}$ 有 $\|g_k\|_Y=1$ 矛盾，故结论成立。
+由\eqref{align:ch04-4.143}中第一式，序列 $\{g_k\}$ 在 $W$ 中有界。于是由于 $W\overset{c}{\hookrightarrow}Y\hookrightarrow Z$，存在 $\{g_k\}$ 的子列（不重新标号）与 $g\in Z$，使 $\lim_{k\to\infty}\|g_k-g\|_Y=\lim_{k\to\infty}\|g_k-g\|_Z=0$。由\eqref{align:ch04-4.143}中第二式得 $g=0$，从而 $\lim_{k\to\infty}\|g_k\|_Y=0$。这与对所有 $k\in\mathbb{N}$ 有 $\|g_k\|_Y=1$ 矛盾，故结论成立。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch04-插值不等式; kind=proof; 补出原证明中“$\|f_k\|_Y>0$ 故可归一化”“由 $Z$ 中的收敛取 $g$ 并由 $\|g_k\|_Z\leqslant1/k$ 得 $g=0$”“$Y$ 中收敛与 $\|g\|_Y=0$ 矛盾”三处，并说明极限 $g$ 落在 $Z$ 中而范数比较在 $Y$ 中进行的一致性
+\begin{proof}
+归一化的合法性。由\eqref{align:ch04-4.142}得 $\|f_k\|_Y>0$，故 $g_k$ 有定义且 $\|g_k\|_Y=1$。对\eqref{align:ch04-4.142}两边除以 $\|f_k\|_Y$ 得
+\begin{align*}
+1>\eta\|g_k\|_W+k\|g_k\|_Z ,
+\end{align*}
+故 $\|g_k\|_W<1/\eta$ 与 $k\|g_k\|_Z<1$，即\eqref{align:ch04-4.143}。
+
+极限的取法。由 $\|g_k\|_W\leqslant1/\eta$，$\{g_k\}$ 为 $W$ 中的有界序列；由 $W\overset{c}{\hookrightarrow}Y$，存在子列（不重新标号）与 $g\in Y$ 使 $\|g_k-g\|_Y\to0$，且 $g\in\overline{B_W(0,1/\eta)}^{\;Y}$，特别地 $g\in Y\subseteq Z$。再由 $Y\hookrightarrow Z$ 的连续性，$g_k\to g$ 在 $Z$ 中，故 $\|g_k-g\|_Z\to0$。由 $\|g_k\|_Z\leqslant1/k$ 与 $\|g\|_Z\leqslant\|g-g_k\|_Z+\|g_k\|_Z$ 得 $\|g\|_Z=0$，即 $g=0$。于是 $1=\|g_k\|_Y\leqslant\|g_k-g\|_Y+\|g\|_Y\to0$，与 $\|g_k\|_Y=1$ 矛盾。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch04-插值不等式; kind=motivation; 说明该插值不等式作为紧嵌入的定量形式的动机、$W\overset{c}{\hookrightarrow}Y$ 不可减弱为连续嵌入的反例（$W=Y=\ell^2$、$Z$ 赋加权范数）、$Y\hookrightarrow Z$ 的作用，以及 $\eta\geqslant1$ 时不等式平凡这一边界
+\begin{remark}\phantomsection\label{remark:ch04-插值不等式动机}
+\begin{enumerate}[(i)]
+\item 引入动机。紧嵌入 $W\overset{c}{\hookrightarrow}Y$ 的定量形式正是\eqref{align:ch04-4.141}：$Y$ 范数可由 $W$ 范数的任意小倍数加上 $Z$ 范数的固定倍数控制。它在\cref{theorem:ch04-Aubin}与\cref{theorem:ch04-Simon}的证明中用于把 $L^r(I;Y)$ 中的 Cauchy 性化归为 $L^r(I;W)$ 的有界性与 $L^r(I;Z)$ 的收敛性，是 Aubin--Lions 型紧性论证的核心工具。
+
+\item 各要素的作用。(a) $W\overset{c}{\hookrightarrow}Y$ 的紧性不可减弱为连续嵌入：取 $W=Y=\ell^2$（范数相同，嵌入为恒等而非紧），$Z=\ell^2$ 赋范数 $\|y\|_Z\triangleq\sum_j2^{-j}|y_j|$（满足 $\|y\|_Z\leqslant\|y\|_2$，故 $Y\hookrightarrow Z$ 连续）。若\eqref{align:ch04-4.141}成立，取 $f=e_k$ 得 $1\leqslant\eta+C_\eta2^{-k}$ 对一切 $k$ 成立，令 $k\to\infty$ 得 $1\leqslant\eta$；故 $\eta<1$ 时无解，而定理的结论是对一切 $\eta>0$ 断言存在 $C_\eta$。(b) $Y\hookrightarrow Z$ 保证 $Z$ 范数有意义且 $\|\cdot\|_Z\leqslant c\|\cdot\|_Y$，从而\eqref{align:ch04-4.141}的右端在 $Y$ 尺度下是「小量 $+$ 弱量」的分解。(c) $\eta$ 与 $C_\eta$ 的依赖：$C_\eta\to\infty$（$\eta\to0^+$），因为单位球在 $Y$ 中的紧性只能经 $Z$ 的弱信息逼近。
+
+\item 边界。(a) $\eta\geqslant1$ 时\eqref{align:ch04-4.141}由 $Y\hookrightarrow Z$ 直接得到（取 $C_\eta$ 为嵌入常数），故结论只在 $\eta\in(0,1)$ 时有内容。(b) 证明是纯反证的紧性论证，不给出 $C_\eta$ 的显式形式；在应用中只需其存在性。(c) 结论对一切 $f\in W$ 一致成立，而非仅对单位球：由齐次性，只需对 $\|f\|_W=1$ 验证。
+\end{enumerate}
+\end{remark}
+
 \begin{proof}[\textbf{证明\cref{theorem:ch04-Aubin}}]
-(i) 证 $E$ 在 $C(I;Z)$ 中相对紧。为此，首先证明
+(i) 证 $E$ 在 $C(I;Z)$ 中相对紧。为此首先证明
 \begin{align}
 \lim_{k\to\infty}\sup_{f\in E}\|f_k-f\|_{C(I;Z)}=0, \label{align:ch04-4.144}
 \end{align}
-其中 $\{f_k\}$ 为\cref{lemma:ch04-磨光紧}中与 $f$ 关联的序列。对任意 $x\in I$，$(Pf)(x)=f(x)$，从而
+其中 $\{f_k\}$ 为\cref{lemma:ch04-磨光紧}中与 $f$ 关联的序列。对任意 $x\in I$ 有 $(Pf)(x)=f(x)$，从而
 \begin{align}
 \|f_k(x)-f(x)\|_Z&=\Big\|\int_{\mathbb{R}}[(Pf)(x-y)-(Pf)(x)]\rho_{1/k}(y)\,\mathrm{d}y\Big\|_Z\nonumber\\
 &\leqslant\int_{\mathbb{R}}\|(Pf)(x-y)-(Pf)(x)\|_Z\rho_{1/k}(y)\,\mathrm{d}y. \label{align:ch04-4.145}
@@ -368,77 +832,136 @@ f_k:I\to Z,\quad f_k\triangleq (Pf)*\rho_{1/k}|_I\ (k\in\mathbb{N}),
 \begin{align*}
 \sup_{f\in E}\|f_k-f\|_{C(I;Z)}\leqslant\frac{M_0M_1}{k^{1-1/p}}\sup_{f\in E}\|f\|_{W^{1,p}(I;Z)}.
 \end{align*}
-由\eqref{align:ch04-4.138}，在此不等式中令 $k\to\infty$，得\eqref{align:ch04-4.144}。
+由\eqref{align:ch04-4.138}，在此不等式中令 $k\to\infty$ 得\eqref{align:ch04-4.144}。
 
-固定 $\epsilon>0$。由\eqref{align:ch04-4.144}，存在 $m\in\mathbb{N}$，使对所有 $f\in E$ 有
+固定 $\varepsilon>0$。由\eqref{align:ch04-4.144}存在 $m\in\mathbb{N}$，使对所有 $f\in E$ 有
 \begin{align}
-\|f\|_{C(I;Z)}\leqslant\|f_m\|_{C(I;Z)}+\frac{\epsilon}{3}. \label{align:ch04-4.146}
+\|f\|_{C(I;Z)}\leqslant\|f_m\|_{C(I;Z)}+\frac{\varepsilon}{3}. \label{align:ch04-4.146}
 \end{align}
-于是 $E\subseteq F_m\triangleq \{g\in C(I;Z)\mid d(g,E_m)<\epsilon/3\}$（回顾 $E_m\triangleq \{f_m\mid f\in E\}$；见\cref{lemma:ch04-磨光紧}）。另一方面，由于由\cref{lemma:ch04-磨光紧} $E_m$ 在 $C(I;Z)$ 中相对紧，存在 $n_m\in\mathbb{N}$ 与 $f_m^{(1)},\cdots ,f_m^{(n_m)}\in E_m$（对应 $f^{(1)},\cdots ,f^{(n_m)}\in E$），使
+于是 $E\subseteq F_m\triangleq\{g\in C(I;Z)\mid d(g,E_m)<\varepsilon/3\}$（回顾 $E_m\triangleq\{f_m\mid f\in E\}$；见\cref{lemma:ch04-磨光紧}）。另一方面，由\cref{lemma:ch04-磨光紧}，$E_m$ 在 $C(I;Z)$ 中相对紧，故存在 $n_m\in\mathbb{N}$ 与 $f_m^{(1)},\cdots ,f_m^{(n_m)}\in E_m$（对应 $f^{(1)},\cdots ,f^{(n_m)}\in E$）使
 \begin{align}
-E_m\subseteq\bigcup_{l=1}^{n_m}B\Big(f_m^{(l)},\frac{\epsilon}{3}\Big)\subseteq\bigcup_{l=1}^{n_m}B\Big(f^{(l)},\frac{2\epsilon}{3}\Big), \label{align:ch04-4.147}
+E_m\subseteq\bigcup_{l=1}^{n_m}B\Big(f_m^{(l)},\frac{\varepsilon}{3}\Big)\subseteq\bigcup_{l=1}^{n_m}B\Big(f^{(l)},\frac{2\varepsilon}{3}\Big), \label{align:ch04-4.147}
 \end{align}
 其中 $B(g,r)\subseteq C(I;Z)$ 为以 $g$ 为中心、$r$ 为半径的开球，并用到了\eqref{align:ch04-4.146}。由\eqref{align:ch04-4.147}得
 \begin{align*}
-E\subseteq F_m\subseteq\bigcup_{l=1}^{n_m}B(f^{(l)},\epsilon),\quad f^{(1)},\cdots ,f^{(n_m)}\in E,
+E\subseteq F_m\subseteq\bigcup_{l=1}^{n_m}B(f^{(l)},\varepsilon),\quad f^{(1)},\cdots ,f^{(n_m)}\in E,
 \end{align*}
 故断言成立。
 
-(ii) 现证 $E$ 在 $L^r(I;Y)$ 中相对紧。由 (i)，$E$ 在 $C(I;Z)$ 中相对紧，从而在 $L^r(I;Z)$ 中相对紧。于是对任意 $\{f_i\}\subseteq E$，存在子列（为简便不重新标号）在 $L^r(I;Z)$（$r\in[1,\infty]$）中收敛。另一方面，对任意固定 $\epsilon>0$，令
+(ii) 现证 $E$ 在 $L^r(I;Y)$ 中相对紧。由 (i)，$E$ 在 $C(I;Z)$ 中相对紧，从而在 $L^r(I;Z)$ 中相对紧。于是对任意 $\{f_i\}\subseteq E$，存在子列（为简便不重新标号）在 $L^r(I;Z)$（$r\in[1,\infty]$）中收敛。另一方面，对任意固定 $\varepsilon>0$，令
 \begin{align*}
-\eta\triangleq \frac{\epsilon}{4\sup_{f\in E}\|f\|_{L^r(I;W)}}.
+\eta\triangleq\frac{\varepsilon}{4\sup_{f\in E}\|f\|_{L^r(I;W)}}.
 \end{align*}
-则由\cref{lemma:ch04-插值不等式}，存在 $C_\eta>0$，使对所有 $i,j\in\mathbb{N}$，
+则由\cref{lemma:ch04-插值不等式}存在 $C_\eta>0$，使对所有 $i,j\in\mathbb{N}$ 有
 \begin{align}
 \|f_i-f_j\|_{L^r(I;Y)}\leqslant\eta\|f_i-f_j\|_{L^r(I;W)}+C_\eta\|f_i-f_j\|_{L^r(I;Z)}. \label{align:ch04-4.148}
 \end{align}
-由于 $\{f_i\}$ 在 $L^r(I;Z)$ 中收敛，存在 $l\in\mathbb{N}$，使对所有 $i,j\geqslant l$ 有 $\|f_i-f_j\|_{L^r(I;Z)}<\epsilon/(2C_\eta)$。于是由\eqref{align:ch04-4.148}，对 $i,j\geqslant l$ 有 $\|f_i-f_j\|_{L^r(I;Y)}<\epsilon$，从而 $\{f_i\}$ 在 $L^r(I;Y)$ 中收敛。证明完毕。
+由于 $\{f_i\}$ 在 $L^r(I;Z)$ 中收敛，存在 $l\in\mathbb{N}$ 使对所有 $i,j\geqslant l$ 有 $\|f_i-f_j\|_{L^r(I;Z)}<\varepsilon/(2C_\eta)$。于是由\eqref{align:ch04-4.148}，对 $i,j\geqslant l$ 有 $\|f_i-f_j\|_{L^r(I;Y)}<\varepsilon$，从而 $\{f_i\}$ 在 $L^r(I;Y)$ 中收敛。证明完毕。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-Aubin; kind=proof; 补出原证明中“$\varepsilon/3$ 网构造的最后一步”“(4.146) 的取法”“$\eta$ 的非退化性与 (4.148) 的积分来源”三处：由 $F_m$ 与 $E_m$ 的覆盖得到 $E$ 的 $\varepsilon$-网、由 (4.144) 取 $m$、以及由逐点插值不等式取 $L^r$ 范数
+\begin{proof}
+$\varepsilon$-网的显式验证。设 $g\in E$，取 $h\triangleq g_m\in E_m$，则 $\|g-h\|_{C(I;Z)}\leqslant\varepsilon/3$（\eqref{align:ch04-4.146}）。由\eqref{align:ch04-4.147}存在 $l$ 使 $\|h-f_m^{(l)}\|_{C(I;Z)}<\varepsilon/3$，而 $\|f_m^{(l)}-f^{(l)}\|_{C(I;Z)}=\|(Pf^{(l)})*\rho_{1/m}-f^{(l)}\|_{C(I;Z)}\leqslant\varepsilon/3$（\eqref{align:ch04-4.146}），故 $\|g-f^{(l)}\|_{C(I;Z)}<\varepsilon$。于是 $E\subseteq\bigcup_{l=1}^{n_m}B(f^{(l)},\varepsilon)$，即 $E$ 有有限的 $\varepsilon$-网，从而是完全有界集；$C(I;Z)$ 完备，故 $E$ 在 $C(I;Z)$ 中相对紧。
+
+(4.146) 的取法。由\eqref{align:ch04-4.144}，存在 $m\in\mathbb{N}$ 使 $\sup_{f\in E}\|f_m-f\|_{C(I;Z)}<\varepsilon/3$，于是对每个 $f\in E$ 有 $\|f\|_{C(I;Z)}\leqslant\|f_m\|_{C(I;Z)}+\varepsilon/3$，即\eqref{align:ch04-4.146}。
+
+$\eta$ 与 (4.148)。由\eqref{align:ch04-4.138}，$M\triangleq\sup_{f\in E}\|f\|_{L^r(I;W)}<\infty$；若 $M=0$，则 $E=\{0\}$ 而结论平凡，故可设 $M>0$，此时 $\eta=\varepsilon/(4M)>0$。对几乎每个 $x\in I$，由\cref{lemma:ch04-插值不等式}应用于 $g_x\triangleq f_i(x)-f_j(x)\in W$ 得
+\begin{align*}
+\|g_x\|_Y\leqslant\eta\|g_x\|_W+C_\eta\|g_x\|_Z ,
+\end{align*}
+两边取 $L^r(I)$ 范数并用 Minkowski 不等式得\eqref{align:ch04-4.148}；其中 $\|f_i-f_j\|_{L^r(I;W)}\leqslant2M$，故 $\eta\|f_i-f_j\|_{L^r(I;W)}\leqslant\varepsilon/2$。于是当 $\|f_i-f_j\|_{L^r(I;Z)}<\varepsilon/(2C_\eta)$ 时 $\|f_i-f_j\|_{L^r(I;Y)}<\varepsilon$。
 \end{proof}
 
 \begin{proof}[\textbf{证明\cref{theorem:ch04-Simon}}]
-(i) 证 $E$ 在 $L^1(I;Z)$ 中相对紧。为此，注意由\cref{lemma:ch04-磨光紧}，集 $E_k\triangleq \{f_k\mid f\in E\}$（$k\in\mathbb{N}$）在 $C(I;Z)$ 中相对紧。由于 $C(I;Z)\hookrightarrow L^1(I;Z)$，$E_k$ 在 $L^1(I;Z)$ 中相对紧。我们证明
+(i) 证 $E$ 在 $L^1(I;Z)$ 中相对紧。为此注意由\cref{lemma:ch04-磨光紧}，集 $E_k\triangleq\{f_k\mid f\in E\}$（$k\in\mathbb{N}$）在 $C(I;Z)$ 中相对紧。由于 $C(I;Z)\hookrightarrow L^1(I;Z)$，$E_k$ 在 $L^1(I;Z)$ 中相对紧。证明
 \begin{align}
 \lim_{k\to\infty}\sup_{f\in E}\|f_k-f\|_{L^1(I;Z)}=0. \label{align:ch04-4.149}
 \end{align}
-仿照\eqref{align:ch04-4.145}中的论证，有
+仿照\eqref{align:ch04-4.145}中的论证有
 \begin{align}
 \|f_k-f\|_{L^1(I;Z)}&\leqslant\int_I\mathrm{d}x\int_{\mathbb{R}}\|(Pf)(x-y)-(Pf)(x)\|_Z\rho_{1/k}(y)\,\mathrm{d}y\nonumber\\
 &=\int_{(-1/k,1/k)}\mathrm{d}y\,\rho_{1/k}(y)\int_I\|(Pf)(x-y)-(Pf)(x)\|_Z\,\mathrm{d}x\nonumber\\
 &\leqslant\sup_{|y|\leqslant1/k}\int_I\|(Pf)(x-y)-(Pf)(x)\|_Z\,\mathrm{d}x. \label{align:ch04-4.150}
 \end{align}
-另一方面，有
+另一方面有
 \begin{align}
 \int_I\|(Pf)(x-y)-(Pf)(x)\|_Z\,\mathrm{d}x
 &\leqslant\int_I\mathrm{d}x\int_{\mathbb{R}}\|(Pf)'(\xi)\|_Z\chi_{J_{x-y,y}}(\xi)\,\mathrm{d}\xi\nonumber\\
 &=\int_{\mathbb{R}}\mathrm{d}\xi\,\|(Pf)'(\xi)\|_Z\int_I\chi_{K_{\xi,\xi+y}}(\eta)\,\mathrm{d}\eta
-\leqslant|y|\int_{\mathbb{R}}\mathrm{d}\xi\,\|(Pf)'(\xi)\|_Z, \label{align:ch04-4.151}
+\leqslant|y|\int_{\mathbb{R}}\mathrm{d}\xi\,\|(Pf)'(\xi)\|_Z , \label{align:ch04-4.151}
 \end{align}
-其中 $J_{x-y,y}$ 与 $K_{\xi,y}$ 分别表示端点为 $x-y,y$ 与 $\xi,\xi+y$ 的区间。由\eqref{align:ch04-4.150}--\eqref{align:ch04-4.151}，利用\eqref{align:ch04-4.137b}，得
+其中 $J_{x-y,y}$ 与 $K_{\xi,y}$ 分别表示端点为 $x-y,y$ 与 $\xi,\xi+y$ 的区间。由\eqref{align:ch04-4.150}--\eqref{align:ch04-4.151}，利用\eqref{align:ch04-4.137b}得
 \begin{align*}
 \|f_k-f\|_{L^1(I;Z)}\leqslant\frac{M_1}{k}\|f\|_{W^{1,1}(I;Z)}.
 \end{align*}
-由\eqref{align:ch04-4.139}，在此不等式中令 $k\to\infty$，得\eqref{align:ch04-4.149}。
+由\eqref{align:ch04-4.139}，在此不等式中令 $k\to\infty$ 得\eqref{align:ch04-4.149}。
 
-固定 $\epsilon>0$。由\eqref{align:ch04-4.149}，存在 $m\in\mathbb{N}$，使对所有 $f\in E$ 有
+固定 $\varepsilon>0$。由\eqref{align:ch04-4.149}存在 $m\in\mathbb{N}$，使对所有 $f\in E$ 有
 \begin{align}
-\|f\|_{L^1(I;Z)}\leqslant\|f_m\|_{L^1(I;Z)}+\frac{\epsilon}{3}. \label{align:ch04-4.152}
+\|f\|_{L^1(I;Z)}\leqslant\|f_m\|_{L^1(I;Z)}+\frac{\varepsilon}{3}. \label{align:ch04-4.152}
 \end{align}
-于是 $E\subseteq F_m\triangleq \{g\in L^1(I;Z)\mid d(g,E_m)<\epsilon/3\}$。另一方面，由于 $E_m$ 在 $L^1(I;Z)$ 中相对紧，存在 $n_m\in\mathbb{N}$ 与 $f_m^{(1)},\cdots ,f_m^{(n_m)}\in E_m$（对应 $f^{(1)},\cdots ,f^{(n_m)}\in E$），使
+于是 $E\subseteq F_m\triangleq\{g\in L^1(I;Z)\mid d(g,E_m)<\varepsilon/3\}$。另一方面，由于 $E_m$ 在 $L^1(I;Z)$ 中相对紧，存在 $n_m\in\mathbb{N}$ 与 $f_m^{(1)},\cdots ,f_m^{(n_m)}\in E_m$（对应 $f^{(1)},\cdots ,f^{(n_m)}\in E$）使
 \begin{align}
-E_m\subseteq\bigcup_{l=1}^{n_m}B\Big(f_m^{(l)},\frac{\epsilon}{3}\Big)\subseteq\bigcup_{l=1}^{n_m}B\Big(f^{(l)},\frac{2\epsilon}{3}\Big), \label{align:ch04-4.153}
+E_m\subseteq\bigcup_{l=1}^{n_m}B\Big(f_m^{(l)},\frac{\varepsilon}{3}\Big)\subseteq\bigcup_{l=1}^{n_m}B\Big(f^{(l)},\frac{2\varepsilon}{3}\Big), \label{align:ch04-4.153}
 \end{align}
 其中 $B(g,r)\subseteq L^1(I;Z)$ 表示以 $g$ 为中心、$r$ 为半径的开球，并用到了不等式\eqref{align:ch04-4.152}。由\eqref{align:ch04-4.153}得
 \begin{align*}
-E\subseteq F_m\subseteq\bigcup_{l=1}^{n_m}B(f^{(l)},\epsilon),\quad f^{(1)},\cdots ,f^{(n_m)}\in E,
+E\subseteq F_m\subseteq\bigcup_{l=1}^{n_m}B(f^{(l)},\varepsilon),\quad f^{(1)},\cdots ,f^{(n_m)}\in E,
 \end{align*}
 故断言成立。
 
-(ii) 现可证 $E$ 在 $L^p(I;Z)$（$p\in(1,\infty)$）中相对紧。由 (i)，$E$ 在 $L^1(I;Z)$ 中相对紧，故对任意 $\{f_i\}\subseteq E$，存在子列（为简便不重新标号）在 $L^1(I;Z)$ 中收敛，从而在 $I$ 中 $\lambda$-几乎处处收敛。另一方面，由于 $E$ 在 $W^{1,1}(I;Z)\hookrightarrow C(I;Z)\hookrightarrow L^p(I;Z)$（$p\in(1,\infty)$）中有界，由\cref{corollary:ch04-有界收敛}，序列 $\{f_i\}$ 在 $L^p(I;Z)$（所有 $p\in(1,\infty)$）中收敛。故断言成立。
+(ii) 现可证 $E$ 在 $L^p(I;Z)$（$p\in(1,\infty)$）中相对紧。由 (i)，$E$ 在 $L^1(I;Z)$ 中相对紧，故对任意 $\{f_i\}\subseteq E$ 存在子列（为简便不重新标号）在 $L^1(I;Z)$ 中收敛，从而在 $I$ 中 $\lambda$-几乎处处收敛。另一方面，由于 $E$ 在 $W^{1,1}(I;Z)\hookrightarrow C(I;Z)\hookrightarrow L^p(I;Z)$（$p\in(1,\infty)$）中有界，由\cref{corollary:ch04-有界收敛}，序列 $\{f_i\}$ 在 $L^p(I;Z)$（所有 $p\in(1,\infty)$）中收敛。故断言成立。
 
-(iii) 为证 $E$ 在 $L^r(I;Y)$ 中相对紧，注意由 (ii)，$E$ 在 $L^r(I;Z)$（$r\in[1,\infty)$）中相对紧。于是对任意 $\{f_i\}\subseteq E$，存在子列（为简便不重新标号）在 $L^r(I;Z)$ 中收敛。仿照\cref{theorem:ch04-Aubin}证明中的论证，可知 $\{f_i\}$ 在 $L^r(I;Y)$ 中收敛。故结论成立。
+(iii) 为证 $E$ 在 $L^r(I;Y)$ 中相对紧，注意由 (ii)，$E$ 在 $L^r(I;Z)$（$r\in[1,\infty)$）中相对紧。于是对任意 $\{f_i\}\subseteq E$ 存在子列（为简便不重新标号）在 $L^r(I;Z)$ 中收敛。仿照\cref{theorem:ch04-Aubin}证明中的论证可知 $\{f_i\}$ 在 $L^r(I;Y)$ 中收敛。故结论成立。
 \end{proof}
 
+% SUPPLEMENT: parent=theorem:ch04-Simon; kind=proof; 补出原证明中“$|y|\int_{\mathbb{R}}\|(Pf)'\|$ 的推导”“$\lambda$-a.e. 收敛子列与 $L^p$ 有界性推出 $L^p$ 收敛”“(iii) 中的插值论证”三处，并核验 $p=1$ 的结论已包含在 (i) 中
+\begin{proof}
+(4.151) 的细节。对 $x\in I$ 与 $|y|<1/k$，由一维的 Newton--Leibniz 公式（$Pf$ 绝对连续，见\cref{proposition:ch04-延拓}的补证）
+\begin{align*}
+(Pf)(x-y)-(Pf)(x)=-\int_{J_{x-y,y}}(Pf)'(\xi)\,\mathrm{d}\xi ,
+\end{align*}
+故 $\|(Pf)(x-y)-(Pf)(x)\|_Z\leqslant\int_{\mathbb{R}}\|(Pf)'(\xi)\|_Z\chi_{J_{x-y,y}}(\xi)\,\mathrm{d}\xi$。对 $x$ 积分并用 Fubini 定理，再交换 $x$ 与 $\xi$ 的积分次序，得
+\begin{align*}
+\int_I\|(Pf)(x-y)-(Pf)(x)\|_Z\,\mathrm{d}x\leqslant\int_{\mathbb{R}}\|(Pf)'(\xi)\|_Z\Big(\int_I\chi_{K_{\xi,\xi+y}}(\eta)\,\mathrm{d}\eta\Big)\mathrm{d}\xi ,
+\end{align*}
+其中内层积分为 $|\{\eta\in I\mid\xi\in J_{\eta-y,\eta}\}|=|I\cap(\xi-y,\xi)|\leqslant|y|$；由 $\operatorname{supp}(Pf)'\subseteq J$ 紧与 $(Pf)'\in L^1(\mathbb{R};Z)$（\eqref{align:ch04-4.137b}，$p=1$），右端有限，即\eqref{align:ch04-4.151}。于是由\eqref{align:ch04-4.150}得 $\|f_k-f\|_{L^1(I;Z)}\leqslant(1/k)M_1\|f\|_{W^{1,1}(I;Z)}$。
 
+(ii) 的细节。由 (i) 取子列使 $f_i\to f$ 在 $L^1(I;Z)$ 中，从而存在子子列（仍记 $\{f_i\}$）使 $f_i(x)\to f(x)$ 在 $I$ 中几乎处处（$Z$ 中）。由\eqref{align:ch04-4.139}，$\sup_i\|f_i\|_{W^{1,1}(I;Z)}<\infty$；由 $W^{1,1}(I;Z)\hookrightarrow C(I;Z)$ 与 $I$ 有界得 $\sup_i\|f_i\|_{L^p(I;Z)}<\infty$ 对一切 $p\in[1,\infty)$。于是\cref{corollary:ch04-有界收敛}（取 $r=p+\delta$ 与 $p$）给出 $f_i\to f$ 在 $L^p(I;Z)$ 中。
 
+(iii) 的细节。取 $p\triangleq r$（$r\in[1,\infty)$），由 (ii) 得子列在 $L^r(I;Z)$ 中收敛。对固定的 $\varepsilon>0$，取 $\eta\triangleq\varepsilon/(4M)$，$M\triangleq\sup_{f\in E}\|f\|_{L^r(I;W)}<\infty$，并对 $g_x=f_i(x)-f_j(x)$ 应用\cref{lemma:ch04-插值不等式}后取 $L^r(I)$ 范数，得\eqref{align:ch04-4.148}；由 $L^r(I;Z)$ 中的 Cauchy 性取 $l$ 即得 $L^r(I;Y)$ 中的 Cauchy 性。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-Aubin; kind=example; 说明 $p=1$ 时结论中的 $C(I;Z)$ 与 $L^\infty(I;Y)$ 相对紧性失效
+% SUPPLEMENT: parent=theorem:ch04-Simon; kind=example; 说明 $r=\infty$ 时 $L^\infty(I;Y)$ 相对紧性失效
+\begin{example}\label{example:ch04-紧嵌入临界失效}
+设 $I\triangleq(0,1)$，$W\triangleq H^1_0(0,1)$，$Y\triangleq L^2(0,1)$，$Z\triangleq L^1(0,1)$，取 $y\in W\setminus\{0\}$ 与 $\varphi\in C^\infty(\mathbb{R})$ 使 $0\leqslant\varphi\leqslant1$、$\varphi=0$ 于 $(-\infty,1/2]$、$\varphi=1$ 于 $[1,\infty)$。对 $n\in\mathbb{N}$ 令 $f_n(x)\triangleq\varphi(nx)y$（$x\in I$）。则：
+\begin{enumerate}[(i)]
+\item $\{f_n\}\subseteq W^{1,1}(I;Z)\cap L^\infty(I;W)$ 且 $\sup_n(\|f_n\|_{W^{1,1}(I;Z)}+\|f_n\|_{L^\infty(I;W)})<\infty$；
+\item $\{f_n\}$ 在 $C(I;Z)$ 中不相对紧，在 $L^\infty(I;Y)$ 中亦不相对紧。
+\end{enumerate}
+\end{example}
+
+% SUPPLEMENT: parent=example:ch04-紧嵌入临界失效; kind=proof; 逐项核验有界性（$L^1$ 范数、$L^1$ 导数的变量替换估计、$L^\infty(I;W)$ 界）与两个非紧性（在 $x_n=1/(2n)$ 处取值的分离性）
+\begin{proof}
+(i) 对几乎所有 $x\in I$，$f_n(x)=\varphi(nx)y$ 且其弱导数为 $f_n'(x)=n\varphi'(nx)y$（$x\mapsto\varphi(nx)y$ 绝对连续，$n\varphi'(nx)y\in L^1(I;Z)$）。由 $\|y\|_{Z}=\|y\|_{L^1(0,1)}$ 与 $\operatorname{supp}\varphi'\subseteq[1/2,1]$，
+\begin{align*}
+\|f_n\|_{L^1(I;Z)}&\leqslant\int_I\|y\|_{L^1(0,1)}\,\mathrm{d}x=\|y\|_{L^1(0,1)},\\
+\|f_n'\|_{L^1(I;Z)}&\leqslant\|y\|_{L^1(0,1)}\int_0^1n|\varphi'(nx)|\,\mathrm{d}x\leqslant\|y\|_{L^1(0,1)}\|\varphi'\|_{L^1(\mathbb{R})},
+\end{align*}
+故 $\sup_n\|f_n\|_{W^{1,1}(I;Z)}\leqslant\|y\|_{L^1(0,1)}(1+\|\varphi'\|_{L^1(\mathbb{R})})<\infty$。又 $\|f_n(x)\|_{H^1_0}\leqslant\|y\|_{H^1_0}$ 对一切 $x\in I$ 成立且 $x\mapsto f_n(x)\in W$ 强可测（连续），故 $\sup_n\|f_n\|_{L^\infty(I;W)}\leqslant\|y\|_{H^1_0}<\infty$。
+
+(ii) 取 $x_n\triangleq1/(2n)\in I$。则 $f_n(x_n)=\varphi(1/2)y=0$，而 $f_{2n}(x_n)=\varphi(2n\cdot1/(2n))y=\varphi(1)y=y$。于是
+\begin{align*}
+\|f_n-f_{2n}\|_{C(I;Z)}\geqslant\|f_n(x_n)-f_{2n}(x_n)\|_{L^1(0,1)}=\|y\|_{L^1(0,1)}>0,
+\end{align*}
+故 $\{f_n\}$ 没有 Cauchy 子列，在 $C(I;Z)$ 中不相对紧。同理
+\begin{align*}
+\|f_n-f_{2n}\|_{L^\infty(I;Y)}\geqslant\|f_n(x_n)-f_{2n}(x_n)\|_{L^2(0,1)}=\|y\|_{L^2(0,1)}>0,
+\end{align*}
+故 $\{f_n\}$ 在 $L^\infty(I;Y)$ 中不相对紧。
+\end{proof}
+
+上述例子说明：\cref{theorem:ch04-Aubin}中 $p>1$ 的假设不能减弱为 $p=1$（其 $C(I;Z)$ 与 $L^\infty(I;Y)$ 两个结论都失效），\cref{theorem:ch04-Simon}中 $r<\infty$ 的假设不能放宽为 $r=\infty$（其 $L^\infty(I;Y)$ 结论失效）；而\cref{theorem:ch04-Simon}的 $L^p(I;Z)$（$p\in[1,\infty)$）结论在该例中仍然成立，这与\cref{theorem:ch04-Simon}(i) 的论证一致。
 
 \end{document}

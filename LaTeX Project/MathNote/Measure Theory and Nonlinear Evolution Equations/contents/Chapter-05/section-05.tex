@@ -1,20 +1,857 @@
-\documentclass[../../main.tex]{subfiles}% 注意这里的文件路径不能用 ./main.tex ,否则用latexmk编译子文件会报错
-\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}} % 指定图片引用路径,后续可以直接使用图片文件名
-% 如果图片存放在上级目录,则使用 ../../image/ 作为备用路径
-
-% 例如:
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.3\textwidth]{图.png}
-% \caption{}
-% \label{figure:图}
-% \end{figure}
-% 注意:上述\label{}一定要放在\caption{}之后,否则引用图片序号会只会显示??.
+\documentclass[../../main.tex]{subfiles}
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
 
 \begin{document}
 
+\subsection{一致可积性}\label{subsection:ch05-一致可积性}
 
+若 $F\subseteq L^1(X)$ 既有界又一致可积，则把上述结果与 Dunford--Pettis 定理（\cref{theorem:ch02-dunfordpettis}）相结合可获得关于序列 $\{u_j\}$ 自身的更多信息。沿此方向，先证明：一致可积性允许取消\cref{corollary:ch05-下半连续}中关于函数 $h$ 的符号条件。
 
+% SUPPLEMENT: parent=lemma:ch05-一致可积; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+% SUPPLEMENT: parent=proposition:ch05-5.4.10; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+% SUPPLEMENT: parent=proposition:ch05-biting; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+\begin{lemma}\label{lemma:ch05-一致可积模不等式}\label{lemma:ch05-一致可积}
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$，$F\subseteq L^1(X)\equiv L^1(X,\mathscr{B}(X),\mu)$ 为有界子集。设存在 $h\in C(X\times\mathbb{R})$，使集合 $G_h\triangleq\{h\circ u\mid u\in F\}$ 在 $L^1(X)$ 中有界且一致可积。则对任意序列 $\{u_j\}\subseteq F$，存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$，二者均与 $h$ 无关，且使对上述 $h$ 有
+\begin{align*}
+\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu(x,y)
+\leqslant\liminf_{k\to\infty}\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x),
+\end{align*}
+即不等式\eqref{align:ch05-5.75}在取消符号条件 $h\geqslant0$ 之后仍然成立。
+\end{lemma}
 
+\begin{proof}
+由\cref{corollary:ch05-下半连续}，存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$，它们只依赖 $F$ 与 $\{u_j\}$，而不依赖 $h$。因 $G_h$ 有界且一致可积，其一致可积模 $\eta(G_h)$ 等于零（见\cref{definition:ch02-一致可积模}与\hyperref[remark:ch02-模零一致可积]{注记}），从而
+\begin{align*}
+\lim_{t\to\infty}\sup_{k\in\mathbb{N}}\int_{\{|h\circ u_{j_k}|\geqslant t\}}|h\circ u_{j_k}|\,\mathrm{d}\mu=0.
+\end{align*}
+记 $h^-\triangleq\max\{-h,0\}$ 为 $h$ 的负部。由 $0\leqslant h^-\leqslant|h|$ 与\cref{proposition:ch02-有界一致可积等价}，$\eta(G_{h^-})=0$。于是对任意 $\varepsilon>0$，存在 $\bar t>0$，使对任意 $t\geqslant\bar t$ 有
+\begin{align}
+\int_{\{h^-\circ u_{j_k}\geqslant t\}}(h^-\circ u_{j_k})\,\mathrm{d}\mu
+=-\int_{A^t_k}(h\circ u_{j_k})\,\mathrm{d}\mu<\varepsilon
+\quad\text{对所有 }k\in\mathbb{N},\label{align:ch05-5.78}
+\end{align}
+其中 $A^t_k\triangleq\{h\circ u_{j_k}\leqslant-t\}$（$k\in\mathbb{N}$，$t>0$）。
+
+对 $t>0$ 置 $h_t\triangleq\max\{h,-t\}$。在补集 $(A^t_k)^c$ 上有 $h\circ u_{j_k}>-t$，故 $h\circ u_{j_k}=h_t\circ u_{j_k}$；而在 $A^t_k$ 上有 $h_t\circ u_{j_k}=-t$。于是利用\eqref{align:ch05-5.78}得
+\begin{align}
+\int_X(h\circ u_{j_k})\,\mathrm{d}\mu
+&=\int_{A^t_k}(h\circ u_{j_k})\,\mathrm{d}\mu+\int_{(A^t_k)^c}(h\circ u_{j_k})\,\mathrm{d}\mu\notag\\
+&=\int_{A^t_k}(h\circ u_{j_k})\,\mathrm{d}\mu+\int_{(A^t_k)^c}(h_t\circ u_{j_k})\,\mathrm{d}\mu\notag\\
+&=\int_X(h_t\circ u_{j_k})\,\mathrm{d}\mu+\int_{A^t_k}(h\circ u_{j_k})\,\mathrm{d}\mu-\int_{A^t_k}(h_t\circ u_{j_k})\,\mathrm{d}\mu\notag\\
+&=\int_X(h_t\circ u_{j_k})\,\mathrm{d}\mu+\int_{A^t_k}(h\circ u_{j_k})\,\mathrm{d}\mu+t\mu(A^t_k)\notag\\
+&\geqslant\int_X(h_t\circ u_{j_k})\,\mathrm{d}\mu+\int_{A^t_k}(h\circ u_{j_k})\,\mathrm{d}\mu
+>\int_X(h_t\circ u_{j_k})\,\mathrm{d}\mu-\varepsilon.\label{align:ch05-5.79}
+\end{align}
+
+现固定 $t>0$。因 $h_t+t\geqslant0$ 于 $X\times\mathbb{R}$，且 $h_t+t$ 为连续因而为 Carathéodory 函数，由\eqref{align:ch05-5.75}得
+\begin{align*}
+\int_{X\times\mathbb{R}}[h_t(x,y)+t]\,\mathrm{d}\nu(x,y)
+\leqslant\liminf_{k\to\infty}\int_X[h_t(x,u_{j_k}(x))+t]\,\mathrm{d}\mu(x).
+\end{align*}
+因 $\mu(X)<\infty$，两端同减去 $t\mu(X)$ 得
+\begin{align}
+\int_{X\times\mathbb{R}}h_t(x,y)\,\mathrm{d}\nu(x,y)
+\leqslant\liminf_{k\to\infty}\int_Xh_t(x,u_{j_k}(x))\,\mathrm{d}\mu(x),\label{align:ch05-5.80}
+\end{align}
+其中还用到 $\int_{X\times\mathbb{R}}t\,\mathrm{d}\nu=t\nu(X\times\mathbb{R})=t\mu(X)$。由于 $h\leqslant h_t$（$t>0$），\eqref{align:ch05-5.80}蕴含
+\begin{align*}
+\int_{X\times\mathbb{R}}h\,\mathrm{d}\nu\leqslant\int_{X\times\mathbb{R}}h_t\,\mathrm{d}\nu
+\leqslant\liminf_{k\to\infty}\int_Xh_t(x,u_{j_k}(x))\,\mathrm{d}\mu(x).
+\end{align*}
+联合\eqref{align:ch05-5.79}与\eqref{align:ch05-5.80}，对任意 $\varepsilon>0$ 得
+\begin{align*}
+\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu(x,y)
+\leqslant\liminf_{k\to\infty}\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x)+\varepsilon,
+\end{align*}
+再由 $\varepsilon$ 的任意性即得所需不等式。证明完成。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-一致可积模不等式; kind=proof; 原证明将“$\eta(G_h)=0$ 推出 $\eta(G_{h^-})=0$”“\eqref{align:ch05-5.79}中的代数恒等式”“由\eqref{align:ch05-5.75}到\eqref{align:ch05-5.80}时减去 $t\mu(X)$”三处一语带过，此处逐处补出
+\begin{proof}
+第一处：由负部的模估计推出负部的模为零。由 $0\leqslant h^-\leqslant|h|$ 得 $\{h^-\circ u\geqslant t\}\subseteq\{|h\circ u|\geqslant t\}$ 且 $h^-\circ u\leqslant|h\circ u|$，故对任意 $t>0$ 与 $k\in\mathbb{N}$ 有
+\begin{align*}
+\int_{\{h^-\circ u_{j_k}\geqslant t\}}(h^-\circ u_{j_k})\,\mathrm{d}\mu
+\leqslant\int_{\{|h\circ u_{j_k}|\geqslant t\}}|h\circ u_{j_k}|\,\mathrm{d}\mu,
+\end{align*}
+取 $k$ 的上确界再令 $t\to\infty$ 即得 $\eta(G_{h^-})\leqslant\eta(G_h)=0$。于是存在 $\bar t>0$，使对任意 $t\geqslant\bar t$ 与任意 $k\in\mathbb{N}$ 有 $\int_{\{h^-\circ u_{j_k}\geqslant t\}}(h^-\circ u_{j_k})\,\mathrm{d}\mu<\varepsilon$。最后，在 $A^t_k=\{h\circ u_{j_k}\leqslant-t\}$ 上 $h\circ u_{j_k}\leqslant-t<0$，故 $h\circ u_{j_k}=-h^-\circ u_{j_k}$ 且 $h^-\circ u_{j_k}\geqslant t$；反之在 $\{h^-\circ u_{j_k}\geqslant t\}$ 上有 $h\circ u_{j_k}\leqslant-t$，即该集合等于 $A^t_k$。两者结合给出\eqref{align:ch05-5.78}中的等式。
+
+第二处：\eqref{align:ch05-5.79}中的恒等式。在 $A^t_k$ 上 $h_t=-t$，故
+\begin{align*}
+\int_{A^t_k}(h\circ u_{j_k})\,\mathrm{d}\mu-\int_{A^t_k}(h_t\circ u_{j_k})\,\mathrm{d}\mu
+=\int_{A^t_k}\big[(h\circ u_{j_k})+t\big]\,\mathrm{d}\mu
+=\int_{A^t_k}(h\circ u_{j_k})\,\mathrm{d}\mu+t\mu(A^t_k),
+\end{align*}
+这正是\eqref{align:ch05-5.79}的第四行。又因在 $A^t_k$ 上有 $h\circ u_{j_k}+t\geqslant0$，该量非负，故\eqref{align:ch05-5.79}中的不等号成立；而由\eqref{align:ch05-5.78}，$\int_{A^t_k}(h\circ u_{j_k})\,\mathrm{d}\mu>-\varepsilon$，故末端的严格不等式亦成立。
+
+第三处：减去常数项。因 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 满足 $\nu(X\times\mathbb{R})=\mu(X)$，有 $\int_{X\times\mathbb{R}}t\,\mathrm{d}\nu=t\mu(X)$；又 $\mu(X)<\infty$，故可在不等式两端同时减去 $t\mu(X)$ 而不改变方向，所得即\eqref{align:ch05-5.80}。此处 $\mu$ 的有限性与 $h_t+t\geqslant0$ 均为必需：前者保证 $t\mu(X)$ 有限，后者保证\eqref{align:ch05-5.75}可应用于 $h_t+t$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-一致可积模不等式; kind=motivation; 说明取消符号条件的动机、每项假设（$F$ 有界、$G_h$ 有界、$G_h$ 一致可积、$h$ 连续、$\mu$ 有限）的逐处作用、去掉一致可积性后的反例，以及“与 $h$ 无关”这一点的用途
+\begin{remark}\phantomsection\label{remark:ch05-一致可积模不等式}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{corollary:ch05-下半连续}只对非负 Carathéodory 被积函数给出不等式\eqref{align:ch05-5.75}；然而\cref{proposition:ch05-弱收敛}与\cref{theorem:ch05-分解}需要对可变号的 $h(x,y)=|y-u(x)|$ 使用同一不等式。本引理指出：只要 $\{h\circ u\mid u\in F\}$ 自身有界且一致可积，符号条件即可取消。其证明策略是用截断 $h_t=\max\{h,-t\}$ 把 $h$ 从下方压成有界函数，再对非负函数 $h_t+t$ 使用\eqref{align:ch05-5.75}。
+
+\item 各假设的作用。$F$ 的有界性使\cref{corollary:ch05-下半连续}可应用于 $\{u_j\}$，从而给出与 $h$ 无关的子列与极限 Young 测度 $\nu$；$G_h$ 在 $L^1(X)$ 中的有界性使\eqref{align:ch05-5.80}两端的量有限；$G_h$ 的一致可积性经负部 $h^-$ 传递（第一处补证），这是\eqref{align:ch05-5.78}中 $\varepsilon$ 一致于 $k$ 的唯一来源；$h$ 的连续性保证 $h_t$ 连续、$h_t+t$ 为非负 Carathéodory 函数；$\mu$ 的有限性保证\eqref{align:ch05-5.80}中可减去 $t\mu(X)$。
+
+\item 边界与反例。$G_h$ 的一致可积性不可省。取 $X=(0,1)$、$\mu=\lambda$、$u_j\triangleq j\chi_{(0,1/j)}$，则 $\{u_j\}$ 在 $L^1(X)$ 中有界且 $u_j\to0$ 依测度，故相伴 Young 测度序列窄收敛于 $\nu_x=\delta_0$。取 $h(y)\triangleq-y$，则 $h\circ u_j=-j\chi_{(0,1/j)}$ 在 $L^1(X)$ 中有界（范数为 $1$）但不一致可积，且
+\begin{align*}
+\int_{X\times\mathbb{R}}h\,\mathrm{d}\nu=0,\qquad
+\liminf_{j\to\infty}\int_Xh(x,u_j(x))\,\mathrm{d}\mu(x)=-1,
+\end{align*}
+故\eqref{align:ch05-5.75}不成立。此时\eqref{align:ch05-5.78}对任何 $t>0$ 都给出 $\varepsilon\geqslant1$，故引理的论证恰在一致可积性处失效。
+
+\item “与 $h$ 无关”的用途。子列与 $\nu$ 只依赖 $F$ 与 $\{u_j\}$，故在\cref{proposition:ch05-弱收敛}的证明中可对同一子列先后用不同的 $h$（先 $h$，后 $\hat h=fh$），而不必再次抽取子列；这是该引理与\cref{corollary:ch05-下半连续}的唯一实质差别。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:ch05-5.4.10; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+% SUPPLEMENT: parent=proposition:ch05-biting; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+\begin{proposition}\label{proposition:ch05-弱收敛}\label{proposition:ch05-biting}\label{proposition:ch05-5.4.10}
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$，$F\subseteq L^1(X)$ 为有界子集。设存在 $h\in C(X\times\mathbb{R})$，使 $G_h\triangleq\{h\circ u\mid u\in F\}$ 在 $L^1(X)$ 中有界且一致可积。则对任意序列 $\{u_j\}\subseteq F$，存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$，二者均与 $h$ 无关，且使 $h\circ u_{j_k}\rightharpoonup h^*$ 在 $L^1(X)$ 中弱收敛，其中
+\begin{align}
+h^*(x)\triangleq\int_{\mathbb{R}}h(x,y)\,\mathrm{d}\nu_x(y)
+\quad\text{对 }\mu\text{-几乎所有 }x\in X.\label{align:ch05-5.81}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+取\cref{lemma:ch05-一致可积模不等式}所给的子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$。因 $G_h$ 在 $L^1(X)$ 中有界且一致可积，由 Dunford--Pettis 定理（\cref{theorem:ch02-dunfordpettis}）它在 $L^1(X)$ 的弱拓扑中相对序列紧。于是可从 $\{h\circ u_{j_k}\}\subseteq G_h$ 中再抽取子列（仍记作 $h\circ u_{j_k}$），使对某个 $h^*\in L^1(X)$ 与所有 $f\in L^\infty(X)$ 有
+\begin{align}
+\lim_{k\to\infty}\int_Xf(x)h(x,u_{j_k}(x))\,\mathrm{d}\mu(x)
+=\int_Xf(x)h^*(x)\,\mathrm{d}\mu(x).\label{align:ch05-5.82}
+\end{align}
+
+尚需证明等式\eqref{align:ch05-5.81}。由\cref{lemma:ch05-一致可积模不等式}，\eqref{align:ch05-5.75}成立；把该引理用于 $-h$（$G_{-h}=-G_h$ 同样有界且一致可积）又得
+\begin{align*}
+-\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu(x,y)
+\leqslant\liminf_{k\to\infty}\left(-\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x)\right),
+\end{align*}
+即
+\begin{align*}
+\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu(x,y)
+\geqslant\limsup_{k\to\infty}\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x).
+\end{align*}
+于是
+\begin{align*}
+\limsup_{k\to\infty}\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x)
+\leqslant\int_{X\times\mathbb{R}}h\,\mathrm{d}\nu
+\leqslant\liminf_{k\to\infty}\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x),
+\end{align*}
+从而
+\begin{align}
+\lim_{k\to\infty}\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x)
+=\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu(x,y).\label{align:ch05-5.83}
+\end{align}
+
+现设 $f\in L^\infty(X)$。函数 $\hat h(x,y)\triangleq f(x)h(x,y)$ 为 Carathéodory 函数且 $|\hat h|\leqslant\|f\|_\infty|h|$（文中此处写作 $\hat h\in C(X\times\mathbb{R})$，实则 $f$ 仅可测有界，见后文补证）。因 $G_h$ 在 $L^1(X)$ 中有界，$G_{\hat h}=\{\hat h\circ u\mid u\in F\}$ 亦然；又因 $G_h$ 一致可积，由\hyperref[remark:ch02-正负一致可积]{注记}与\cref{proposition:ch02-有界一致可积等价}可验证 $G_{\hat h}$ 亦一致可积。于是可把\eqref{align:ch05-5.83}中的 $h$ 换为 $\hat h$，从而对任意 $f\in L^\infty(X)$ 得
+\begin{align}
+\lim_{k\to\infty}\int_Xf(x)h(x,u_{j_k}(x))\,\mathrm{d}\mu(x)
+=\int_X\mathrm{d}\mu(x)\,f(x)\int_{\mathbb{R}}h(x,y)\,\mathrm{d}\nu_x(y).\label{align:ch05-5.84}
+\end{align}
+由\eqref{align:ch05-5.82}与\eqref{align:ch05-5.84}及 $f\in L^\infty(X)$ 的任意性得\eqref{align:ch05-5.81}。证明完成。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-弱收敛; kind=proof; 补出三处：Dunford--Pettis 定理给出弱收敛子列的确切用法、对 $-h$ 使用引理得到的上极限不等式、以及 $\hat h=fh$ 仅为 Carathéodory 函数时引理论证仍逐字适用的核查（原书称 $\hat h\in C(X\times\mathbb{R})$ 有误）
+\begin{proof}
+第一处：Dunford--Pettis 定理的用法。因 $X$ 为具可数基的局部紧 Hausdorff 空间且 $\mu\in\mathscr{R}^+_f(X)$，空间 $L^1(X)$ 的对偶为 $L^\infty(X)$。$G_h$ 有界且一致可积，故由\cref{theorem:ch02-dunfordpettis}，$G_h$ 中每个序列都有在 $\sigma(L^1,L^\infty)$ 中收敛的子列；其极限 $h^*$ 属于 $L^1(X)$（弱极限仍在 $L^1(X)$ 中），且\eqref{align:ch05-5.82}中的检验函数可取遍 $L^\infty(X)$。
+
+第二处：上极限不等式。由 $h\circ u$ 与 $-h\circ u$ 的对称性，$G_{-h}=-G_h$；把\cref{lemma:ch05-一致可积模不等式}用于 $-h$ 得
+\begin{align*}
+-\int_{X\times\mathbb{R}}h\,\mathrm{d}\nu\leqslant\liminf_{k\to\infty}\Big(-\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x)\Big)
+=-\limsup_{k\to\infty}\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x),
+\end{align*}
+两端变号即得上极限不等式。与\eqref{align:ch05-5.75}合并便得\eqref{align:ch05-5.83}。此处关键点是两次应用给出的是同一个子列与同一个 $\nu$，这由引理中“二者均与 $h$ 无关”保证。
+
+第三处：$\hat h$ 的正则性。若 $f\in L^\infty(X)$ 仅可测，则 $\hat h(x,y)=f(x)h(x,y)$ 满足：对 $\mu$-几乎所有 $x$，$\hat h(x,\cdot)=f(x)h(x,\cdot)\in C(\mathbb{R})$；对每个 $y$，$\hat h(\cdot,y)=f(\cdot)h(\cdot,y)$ 可测。故 $\hat h$ 为 Carathéodory 函数而非连续函数。复查\cref{lemma:ch05-一致可积模不等式}的证明：其中只用到 (a) $h_t=\max\{h,-t\}$ 的 Carathéodory 性以应用\eqref{align:ch05-5.75}（该不等式对非负 Carathéodory 函数成立，见\cref{corollary:ch05-下半连续}），(b) 集合 $A^t_k=\{h\circ u_{j_k}\leqslant-t\}$ 的可测性（由 $h$ 的 Carathéodory 性与 $u_{j_k}$ 的可测性得到），(c) $G_h$ 的有界性与一致可积性。三者对 Carathéodory $\hat h$ 同样成立，故\eqref{align:ch05-5.83}对 $\hat h$ 成立，\eqref{align:ch05-5.84}的推导不受影响。
+
+第四处：由\eqref{align:ch05-5.82}与\eqref{align:ch05-5.84}得\eqref{align:ch05-5.81}。两式左端相同，故对任意 $f\in L^\infty(X)$ 有
+\begin{align*}
+\int_Xf(x)\Big[h^*(x)-\int_{\mathbb{R}}h(x,y)\,\mathrm{d}\nu_x(y)\Big]\,\mathrm{d}\mu(x)=0.
+\end{align*}
+取 $f$ 为该方括号的正部所对应集合（可测）的特征函数，即知方括号 $\mu$-几乎处处为零，此即\eqref{align:ch05-5.81}。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-弱收敛; kind=motivation; 说明该命题把“弱紧性”与“Young 测度表示”连接起来的动机、$F$ 有界与 $G_h$ 有界且一致可积的作用、$h$ 连续性的可放宽性（Carathéodory 加线性增长），以及去掉一致可积性后的反例
+\begin{remark}\phantomsection\label{remark:ch05-弱收敛注}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{lemma:ch05-一致可积模不等式}只给出积分的\emph{下}极限估计，本命题把它升级为完整的弱收敛：极限不仅存在，而且等于 $\int_{\mathbb{R}}h(x,y)\,\mathrm{d}\nu_x(y)$。这正是把“$L^1$ 中的弱紧性”翻译为“Young 测度的矩表示”的关键一步，\cref{theorem:ch05-分解}中的 $u^*$ 与\cref{proposition:ch05-函数弱星}中的 $f^*$ 都是\eqref{align:ch05-5.81}的特例。
+
+\item 各假设的作用。$F$ 的有界性给出子列与 $\nu$（\cref{corollary:ch05-下半连续}）；$G_h$ 的有界性使 $h\circ u_{j_k}$ 落在 $L^1(X)$ 的一个固定球内，从而可用 Dunford--Pettis 定理抽出弱收敛子列；$G_h$ 的一致可积性同时用于两点：一是 Dunford--Pettis 定理的紧性前提，二是\eqref{align:ch05-5.83}中上、下极限的夹逼（经\cref{lemma:ch05-一致可积模不等式}）。$X$ 具可数基保证 $L^1(X)$ 的对偶为 $L^\infty(X)$ 且 $C_0(X)$ 可分。
+
+\item 假设的可行替换。由\hyperref[remark:ch02-正负一致可积]{注记}，若 $F$ 本身有界且一致可积，则 $G_h$ 的有界性与一致可积性可由 $|h(x,y)|\leqslant k|y|+f(x)$（$k>0$，$f\in L^1(X)$）推出；详见本命题后的注记。
+
+\item 边界与反例。$G_h$ 的一致可积性不可省：取\hyperref[remark:ch05-一致可积模不等式]{注记}(iii) 中的 $u_j=j\chi_{(0,1/j)}$、$h(y)=-y$，则 $\nu_x=\delta_0$、$h^*=0$，但 $\int_Xh(x,u_j(x))\,\mathrm{d}\mu=-1$ 不趋于 $0$，故 $h\circ u_j\rightharpoonup h^*$ 失效。又若 $h$ 不连续（仅可测），则\eqref{align:ch05-5.75}与\eqref{align:ch05-5.83}都可能失效，因为夹逼论证依赖 $h_t+t$ 为非负 Carathéodory 函数。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-一致可积加强}
+\begin{enumerate}[(i)]
+\item 若 $F\subseteq L^1(X)$ 有界且一致可积，则对 $k>0$ 与 $f\in L^1(X)$，集合 $F_{k,f}\triangleq\{k|u|+f\mid u\in F\}$ 亦然（见\hyperref[remark:ch02-正负一致可积]{注记}）。由此可直接推出：\cref{proposition:ch05-弱收敛}的结论在下列假设下仍成立：(a) $F\subseteq L^1(X)$ 有界且一致可积；(b) $h$ 为 Carathéodory 函数，且 $y\mapsto h(x,y)$ 具至多线性增长，即存在 $k>0$ 与 $f\in L^1(X)$ 使
+\begin{align*}
+|h(x,y)|\leqslant k|y|+f(x)
+\quad\text{对 }\mu\text{-几乎所有 }x\in X\text{ 与所有 }y\in\mathbb{R}.
+\end{align*}
+
+\item 设 $\{u_j\}\subseteq L^1(X)$ 有界且一致可积。把 (i) 用于 $h(y)=y$ 表明：对某个子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 有 $u_{j_k}\rightharpoonup u^*$ 在 $L^1(X)$ 中，其中
+\begin{align}
+u^*(x)\triangleq\int_{\mathbb{R}}y\,\mathrm{d}\nu_x(y)
+\quad\text{对 }\mu\text{-几乎所有 }x\in X.\label{align:ch05-5.85}
+\end{align}
+元素 $u^*$ 称为离散分解 $\{\nu_x\}_{x\in X}$ 的\textbf{重心}。
+
+\item 把 (i) 用于 $h(y)=y^\pm\triangleq\max\{\pm y,0\}$ 表明：对 $\{u_{j_k}\}$ 的某个子列（为简便不重新标号）有 $u^\pm_{j_k}\rightharpoonup u^\pm$ 在 $L^1(X)$ 中，其中
+\begin{align}
+u^\pm(x)\triangleq\int_{\mathbb{R}}y^\pm\,\mathrm{d}\nu_x(y)
+\quad\text{对 }\mu\text{-几乎所有 }x\in X.\label{align:ch05-5.86}
+\end{align}
+由定义直接得到
+\begin{align}
+u^*=u^+-u^-\quad\text{于 }L^1(X).\label{align:ch05-5.87}
+\end{align}
+\end{enumerate}
+\end{remark}
+
+用本小节余下的篇幅证明\cref{proposition:ch05-非相伴}。
+
+\begin{proof}[证明\cref{proposition:ch05-非相伴}]
+因 $u_j\not\to u$ 在 $L^1(X)$ 中强收敛，存在 $\varepsilon>0$ 与子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 使
+\begin{align}
+\|u_{j_k}-u\|_{L^1(X)}\geqslant\varepsilon
+\quad\text{对所有 }k\in\mathbb{N}.\label{align:ch05-5.88}
+\end{align}
+由 $u_{j_k}\rightharpoonup u$ 及 Dunford--Pettis 定理（\cref{theorem:ch02-dunfordpettis}），子列 $\{u_{j_k}\}$ 有界且一致可积。于是由\cref{proposition:ch05-弱收敛}与\hyperref[remark:ch05-一致可积加强]{注记}，存在 $\{u_{j_l}\}\equiv\{u_{j_{k_l}}\}\subseteq\{u_{j_k}\}$、相伴 Young 测度序列的子列 $\{\nu_{u_{j_l}}\}$ 与 Young 测度 $\nu$，使 $\nu_{u_{j_l}}\stackrel{n}{\rightharpoonup}\nu$ 且 $u_{j_l}\rightharpoonup u^*$，其中 $u^*\in L^1(X)$ 为离散分解 $\{\nu_x\}_{x\in X}$ 的重心（见\eqref{align:ch05-5.85}）。
+
+反设：对任意子列 $\{\nu_{u_{j_k}}\}$ 与任意使 $\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\tau$ 的 Young 测度 $\tau\in\mathcal{Y}^+(X;\mathbb{R})$，都存在 $\mathscr{B}(X)$-可测函数与 $\tau$ 相伴。特别地，这应对上述 $\nu_{u_{j_l}}$ 与 $\nu$ 成立，即 $\nu=\nu_f$ 对某个 $\mathscr{B}(X)$-可测的 $f:X\to\mathbb{R}$ 成立。于是由\eqref{align:ch05-5.53}得 $\nu_x=(\nu_f)_x=\delta_{f(x)}$ 对 $\mu$-几乎所有 $x\in X$，从而由\eqref{align:ch05-5.85}得 $u^*=f$。又因按假设 $u_{j_k}\rightharpoonup u$ 在 $L^1(X)$ 中，由极限的唯一性得 $u=f$。此外，因 $\nu_{u_{j_l}}\stackrel{n}{\rightharpoonup}\nu_f$ 于 $\mathcal{Y}^+(X;\mathbb{R})$，由\cref{proposition:ch05-几乎处处收敛}（可能再抽取子列，不重新标号）得 $u_{j_l}\to f=u$ 对 $\mu$-几乎所有 $x\in X$。
+
+综上，在反设之下将存在一致可积的子列 $\{u_{j_l}\}\subseteq\{u_{j_k}\}$ 使 $u_{j_l}\to u$ 对 $\mu$-几乎所有 $x\in X$。然而由 Vitali 定理（\cref{theorem:ch02-Vitali}）这将蕴含 $\lim_{l\to\infty}\|u_{j_l}-u\|_{L^1(X)}=0$，与\eqref{align:ch05-5.88}矛盾。结论得证。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-非相伴; kind=proof; 原证明中“由 Dunford--Pettis 定理知子列有界且一致可积”“$\nu$ 与某个 $f$ 相伴推出 $\nu_x=\delta_{f(x)}$ 与 $u^*=f$”“由 Vitali 定理得强收敛”三处为转引，此处补出各步依据；该证明属于 §5.4.3 末（原书 p260），因命题陈述在 §5.4.2 而证明延后至此
+\begin{proof}
+第一处：Dunford--Pettis 定理的反向使用。由 $u_{j_k}\rightharpoonup u$ 在 $L^1(X)$ 中，序列 $\{u_{j_k}\}$ 弱收敛故有界；且由\cref{theorem:ch02-dunfordpettis}（有界且一致可积等价于弱相对序列紧），弱收敛序列必有界且一致可积，否则其某个子列将无弱收敛子列，与 $u_{j_k}\rightharpoonup u$ 矛盾。
+
+第二处：$\nu=\nu_f$ 的后果。由\cref{proposition:ch05-Dirac测度}（等式\eqref{align:ch05-5.53}）得 $\nu_x=(\nu_f)_x=\delta_{f(x)}$ 对 $\mu$-几乎所有 $x$；代入重心的定义\eqref{align:ch05-5.85}得 $u^*(x)=\int_{\mathbb{R}}y\,\mathrm{d}\delta_{f(x)}(y)=f(x)$，故 $u^*=f$ 于 $L^1(X)$。又 $\nu_{u_{j_l}}\stackrel{n}{\rightharpoonup}\nu_f$ 且 $u_{j_l}\rightharpoonup u^*=f$，而按假设 $u_{j_l}\rightharpoonup u$，由 $L^1(X)$ 中弱极限的唯一性得 $u=f$。
+
+第三处：Vitali 定理的适用性。子列 $\{u_{j_l}\}$ 一致可积（第一处）、$u\in L^1(X)$、且 $u_{j_l}\to u$ $\mu$-几乎处处，故由\cref{theorem:ch02-Vitali}得 $\|u_{j_l}-u\|_{L^1(X)}\to0$。这与\eqref{align:ch05-5.88}（对子列的一切指标成立）矛盾，故反设不成立。
+
+第四处：反设的否定。反设是“每个窄极限 Young 测度都与某可测函数相伴”。其否定给出：存在子列 $\{\nu_{u_{j_k}}\}$ 与 $\tau\in\mathcal{Y}^+(X;\mathbb{R})$（$\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\tau$）使 $\tau$ 不与任何 $\mathscr{B}(X)$-可测函数相伴。取 $\tau=\nu$ 与相应子列即得\cref{proposition:ch05-非相伴}的断言 (i)(ii)。
+\end{proof}
+
+\subsection{Biting 引理}\label{subsection:ch05-Biting}
+
+若序列 $\{u_j\}\subseteq L^1(X)$ 有界但不一致可积，则通过去掉测度充分小的集合，可为它关联一个一致可积的子列。这是如下定理的内容（见\cite[Theorem 6.6]{ref78}与\cite[Theorem 23]{ref103}）。
+
+\begin{theorem}[Biting 引理]\label{theorem:ch05-biting定理}
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$，$F\subseteq L^1(X)\equiv L^1(X,\mathscr{B}(X),\mu)$ 为有界子集。则对任意序列 $\{u_j\}\subseteq F$，存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与非增序列 $\{E_m\}\subseteq\mathscr{B}(X)$（$\mu\big(\bigcap_{m=1}^\infty E_m\big)=0$），使序列 $\{u_{j_k}\chi_{E_k^c}\}$ 一致可积。
+\end{theorem}
+
+\begin{proof}
+设 $\{u_j\}\subseteq F$，并置
+\begin{align*}
+\eta\equiv\eta(\{u_j\})\triangleq\lim_{t\to\infty}\sup_{j\in\mathbb{N}}\int_{\{|u_j|\geqslant t\}}|u_j|\,\mathrm{d}\mu
+\end{align*}
+为其一致可积模（见\cref{definition:ch02-一致可积模}）。若 $\eta(\{u_j\})=0$，则由\hyperref[remark:ch02-模零一致可积]{注记}序列 $\{u_j\}$ 一致可积，于是对每个 $m\in\mathbb{N}$ 取 $E_m=\varnothing$ 即得结论。若 $\eta(\{u_j\})>0$，则置
+\begin{align}
+g_m(t)\triangleq\sup_{j\geqslant m}\int_{\{|u_j|\geqslant t\}}|u_j|\,\mathrm{d}\mu
+\qquad(m\in\mathbb{N},\ t\geqslant0).\label{align:ch05-5.89}
+\end{align}
+对每个 $m\in\mathbb{N}$，函数 $g_m$ 非增，故极限 $\lim_{t\to\infty}g_m(t)=:L_m\geqslant0$ 存在，且 $g_m\geqslant g_{m+1}$ 于 $[0,\infty)$。此外
+\begin{align}
+\lim_{t\to\infty}g_m(t)=\eta\quad\text{对所有 }m\in\mathbb{N}.\label{align:ch05-5.90}
+\end{align}
+事实上，$m=1$ 时等式\eqref{align:ch05-5.90}由 $\eta$ 的定义即得。对 $m\geqslant2$ 置
+\begin{align*}
+\bar g_m(t)\triangleq\max_{j=1,\cdots ,m-1}\int_{\{|u_j|\geqslant t\}}|u_j|\,\mathrm{d}\mu,
+\end{align*}
+于是 $g_1(t)=\max\{\bar g_m(t),g_m(t)\}$（$m\geqslant2$，$t\geqslant0$）。由\hyperref[remark:ch02-单点一致可积]{注记}与\cref{proposition:ch02-有界一致可积等价}，对任意固定 $m\geqslant2$ 有 $\lim_{t\to\infty}\bar g_m(t)=0$。若还有 $L_m=0$，则将得到 $\lim_{t\to\infty}g_1(t)=\eta=0$，矛盾。故 $L_m>0$，从而当 $t$ 充分大时 $g_m(t)>\bar g_m(t)$，即 $g_1(t)=g_m(t)$。因此对每个 $m\in\mathbb{N}$ 有
+\begin{align*}
+\lim_{t\to\infty}g_m(t)=\lim_{t\to\infty}g_1(t)=\eta.
+\end{align*}
+
+由上述论述，存在非降且发散的序列 $\{t_k\}\subseteq(0,\infty)$ 使
+\begin{align}
+\eta\leqslant g_m(t_k)\leqslant g_1(t_k)<\eta+\frac1k
+\quad\text{对所有 }k,m\in\mathbb{N}.\label{align:ch05-5.91}
+\end{align}
+
+固定 $k\in\mathbb{N}$。因按定义 $g_1(t_k)=\sup_{j\in\mathbb{N}}\int_{\{|u_j|\geqslant t_k\}}|u_j|\,\mathrm{d}\mu$，存在 $j_k\in\mathbb{N}$ 使
+\begin{align*}
+\int_{\{|u_{j_k}|\geqslant t_k\}}|u_{j_k}|\,\mathrm{d}\mu>g_1(t_k)-\frac1k
+\end{align*}
+（序列 $\{j_k\}$ 非降且发散）。由该不等式与\eqref{align:ch05-5.91}中的第一个不等式得
+\begin{align}
+\int_{\{|u_{j_k}|\geqslant t_k\}}|u_{j_k}|\,\mathrm{d}\mu>\eta-\frac1k
+\quad\text{对所有 }k\in\mathbb{N}.\label{align:ch05-5.92}
+\end{align}
+
+现置 $F_k\triangleq\{x\in X\mid|u_{j_k}(x)|\geqslant t_k\}$。下述断言成立。
+
+\textbf{断言.} 序列 $\{u_{j_k}\chi_{F_k^c}\}$ 一致可积。
+
+利用该断言可以完成证明。由 Chebyshev 不等式，对所有 $k\in\mathbb{N}$ 有
+\begin{align*}
+t_k\mu(F_k)\leqslant\int_X|u_{j_k}(x)|\,\mathrm{d}\mu\leqslant\sup_{j\in\mathbb{N}}\|u_j\|_{L^1(X,\mathbb{R})}<\infty,
+\end{align*}
+故 $\lim_{k\to\infty}\mu(F_k)=0$。于是存在 $\{F_k\}$ 的子列（为简便不重新标号）使 $\mu(F_k)<1/2^k$ 对所有 $k\in\mathbb{N}$。置 $E_m\triangleq\bigcup_{k=m}^\infty F_k$（$m\in\mathbb{N}$）。则对任意 $m$ 有 $E_m\in\mathscr{B}(X)$、$E_m\supseteq E_{m+1}$ 且 $\mu(E_m)\leqslant\sum_{k=m}^\infty1/2^k$，从而 $\mu\big(\bigcap_{m=1}^\infty E_m\big)=\lim_{m\to\infty}\mu(E_m)=0$。此外，因 $E_m^c=\bigcap_{k=m}^\infty F_k^c\subseteq F_m^c$，故对所有 $k\in\mathbb{N}$ 有
+\begin{align}
+|u_{j_k}|\chi_{F_k^c}\geqslant|u_{j_k}|\chi_{E_k^c}
+\quad\Rightarrow\quad
+\{|u_{j_k}|\chi_{F_k^c}\geqslant t\}\supseteq\{|u_{j_k}|\chi_{E_k^c}\geqslant t\}
+\quad(t\geqslant0).\label{align:ch05-5.93}
+\end{align}
+因由断言序列 $\{u_{j_k}\chi_{F_k^c}\}$ 一致可积，由\cref{proposition:ch02-有界一致可积等价}与\eqref{align:ch05-5.93}得
+\begin{align*}
+0=\lim_{t\to\infty}\sup_{k\in\mathbb{N}}\int_{\{|u_{j_k}|\chi_{F_k^c}\geqslant t\}}|u_{j_k}|\chi_{F_k^c}\,\mathrm{d}\mu
+\geqslant\lim_{t\to\infty}\sup_{k\in\mathbb{N}}\int_{\{|u_{j_k}|\chi_{E_k^c}\geqslant t\}}|u_{j_k}|\chi_{E_k^c}\,\mathrm{d}\mu.
+\end{align*}
+于是由\cref{proposition:ch02-有界一致可积等价}序列 $\{u_{j_k}\chi_{E_k^c}\}$ 一致可积，结论得证。
+
+尚需证明断言。为此，对 $k\in\mathbb{N}$、$t\geqslant0$ 有
+\begin{align*}
+t\mapsto\int_{\{|u_{j_k}|\geqslant t\}}|u_{j_k}|\chi_{F_k^c}\,\mathrm{d}\mu
+=\int_{\{t\leqslant|u_{j_k}|<t_k\}}|u_{j_k}|\,\mathrm{d}\mu,
+\end{align*}
+它在 $[0,\infty)$ 上非增。同样的结论对映射
+\begin{align*}
+h_m(t)\triangleq\sup_{k\geqslant m}\int_{\{|u_{j_k}|\geqslant t\}}|u_{j_k}|\chi_{F_k^c}\,\mathrm{d}\mu
+\qquad(m\in\mathbb{N},\ t\geqslant0)
+\end{align*}
+成立，故极限 $\lim_{t\to\infty}h_m(t)=:\tilde L_m$ 存在。因 $\{|u_{j_k}|\chi_{F_k^c}\geqslant t\}\subseteq\{|u_{j_k}|\geqslant t\}$（$t\geqslant0$），故
+\begin{align*}
+\sup_{k\in\mathbb{N}}\int_{\{|u_{j_k}|\chi_{F_k^c}\geqslant t\}}|u_{j_k}|\chi_{F_k^c}\,\mathrm{d}\mu\leqslant h_1(t).
+\end{align*}
+于是由\cref{proposition:ch02-有界一致可积等价}，断言得证，只需再证 $\tilde L_1=0$。
+
+为此，对任意 $m\geqslant2$ 置
+\begin{align*}
+\bar h_m(t)\triangleq\max_{k=1,\cdots ,m-1}\int_{\{|u_{j_k}|\geqslant t\}}|u_{j_k}|\chi_{F_k^c}\,\mathrm{d}\mu,
+\end{align*}
+于是 $h_1(t)=\max\{\bar h_m(t),h_m(t)\}$（$m\geqslant2$，$t\geqslant0$）。因 $\bar h_m\leqslant\bar g_m$ 于 $(0,\infty)$（见\eqref{align:ch05-5.89}），有 $\lim_{t\to\infty}\bar h_m(t)=0$。这直接蕴含 $\tilde L_1=\tilde L_m$ 对任意 $m\in\mathbb{N}$ 成立。特别地，对任意 $m\in\mathbb{N}$ 有
+\begin{align}
+\lim_{l\to\infty}h_1(t_l)=\lim_{l\to\infty}h_m(t_l).\label{align:ch05-5.94}
+\end{align}
+
+由\eqref{align:ch05-5.91}--\eqref{align:ch05-5.92}，对任意固定 $l\in\mathbb{N}$ 有
+\begin{align}
+h_m(t_l)&=\sup_{k\geqslant m}\left(\int_{\{|u_{j_k}|\geqslant t_l\}}|u_{j_k}|\,\mathrm{d}\mu-\int_{\{|u_{j_k}|\geqslant t_k\}}|u_{j_k}|\,\mathrm{d}\mu\right)\notag\\
+&\leqslant\sup_{k\geqslant m}\left(g_1(t_l)-\int_{\{|u_{j_k}|\geqslant t_k\}}|u_{j_k}|\,\mathrm{d}\mu\right)\notag\\
+&\leqslant\sup_{k\geqslant m}\left(\eta+\frac1l-\eta+\frac1k\right)=\frac1l+\frac1m.\label{align:ch05-5.95}
+\end{align}
+
+由\eqref{align:ch05-5.94}--\eqref{align:ch05-5.95}得
+\begin{align*}
+\tilde L_1=\lim_{l\to\infty}h_m(t_l)\leqslant\frac1m\quad\text{对所有 }m\in\mathbb{N},
+\end{align*}
+故由 $m\in\mathbb{N}$ 的任意性得 $\tilde L_1=0$。断言得证，从而结论成立。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-biting定理; kind=proof; 原证明中“$g_m$ 非增故极限存在”“由 Remark 2.8.2 与 Proposition 2.8.6 得 $\lim_t\bar g_m(t)=0$”“存在非降发散序列 $\{t_k\}$ 使 (5.91)”“$\{j_k\}$ 非降且发散”“存在子列使 $\mu(F_k)<2^{-k}$”“$\bar h_m\leqslant\bar g_m$ 直接蕴含 $\tilde L_1=\tilde L_m$”六处未展开，此处逐处补出
+\begin{proof}
+第一处：\eqref{align:ch05-5.89}中极限的存在性与单调性。对每个固定的 $j$，$t\mapsto\int_{\{|u_j|\geqslant t\}}|u_j|\,\mathrm{d}\mu$ 非增且非负，故上确界 $t\mapsto g_m(t)$ 亦然；非增非负函数在 $t\to\infty$ 时的极限存在（有限或 $+\infty$，此处由 $F$ 的有界性知有限）。又 $j\geqslant m+1$ 的取值范围包含于 $j\geqslant m$ 的取值范围，故 $g_{m+1}\leqslant g_m$。
+
+第二处：$\lim_t\bar g_m(t)=0$。$\bar g_m$ 是有限族 $\{u_1,\cdots ,u_{m-1}\}$ 上的最大值。由\hyperref[remark:ch02-单点一致可积]{注记}，每个单点集 $\{u_j\}$ 一致可积，故由\cref{proposition:ch02-有界一致可积等价}有 $\lim_{t\to\infty}\int_{\{|u_j|\geqslant t\}}|u_j|\,\mathrm{d}\mu=0$；有限多个趋于零的量的最大值仍趋于零。
+
+第三处：\eqref{align:ch05-5.91}的构造。由\eqref{align:ch05-5.90}，对每个 $k\in\mathbb{N}$ 与每个 $m\in\mathbb{N}$ 存在 $s_{k,m}>0$，使对任意 $t\geqslant s_{k,m}$ 有 $g_1(t)<\eta+1/k$ 且 $\eta\leqslant g_m(t)$（后者由 $\eta=\lim_tg_m(t)$ 与 $g_m\geqslant\eta$ 得到，因为 $g_m(t)\geqslant\sup_j\int_{\{|u_j|\geqslant t\}}|u_j|\,\mathrm{d}\mu$ 的极限正是 $\eta$）。令 $t_k\triangleq\max\{k,\max_{m\leqslant k}s_{k,m}\}$，则 $\{t_k\}$ 非降、$t_k\geqslant k$ 故发散，且对任意 $m$ 与 $k\geqslant m$ 有 $t_k\geqslant s_{k,m}$，从而\eqref{align:ch05-5.91}成立（对 $k<m$ 的情形由 $g_m\leqslant g_1$ 与 $g_m\geqslant\eta$ 仍成立）。
+
+第四处：$\{j_k\}$ 的选取。由 $g_1(t_k)$ 为上确界，对每个 $k$ 存在 $i_k\in\mathbb{N}$ 使 $\int_{\{|u_{i_k}|\geqslant t_k\}}|u_{i_k}|\,\mathrm{d}\mu>g_1(t_k)-1/k$。若必要，把 $i_k$ 替换为 $\max\{i_1,\cdots ,i_k,k\}$ 中的相应指标并重新选取，可得非降且发散的序列 $\{j_k\}$（因 $\{t_k\}$ 发散，指标必须沿无穷子列取值）。相应的 $u_{j_k}$ 仍满足\eqref{align:ch05-5.92}，因为\eqref{align:ch05-5.92}只用到 $g_1(t_k)$ 的定义与\eqref{align:ch05-5.91}。
+
+第五处：$\mu(F_k)<2^{-k}$ 的子列。由 $\lim_k\mu(F_k)=0$，对每个 $m$ 存在 $k_m\geqslant m$ 使 $\mu(F_{k_m})<2^{-m}$；令 $k_1<k_2<\cdots$ 递归选取即可。由于结论只涉及子列，重新标号后不妨设 $\mu(F_k)<2^{-k}$ 对所有 $k$ 成立。
+
+第六处：$\tilde L_1=\tilde L_m$。由 $h_1=\max\{\bar h_m,h_m\}$ 与 $\lim_t\bar h_m(t)=0$ 得：对任意 $\delta>0$，当 $t$ 充分大时 $0\leqslant\bar h_m(t)<\delta$，此时 $h_1(t)\leqslant\max\{\delta,h_m(t)\}\leqslant h_m(t)+\delta$，且 $h_m\leqslant h_1$。于是 $\tilde L_1=\lim_th_1(t)$ 与 $\tilde L_m=\lim_th_m(t)$ 相差不超过 $\delta$；由 $\delta$ 的任意性得 $\tilde L_1=\tilde L_m$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-biting定理; kind=motivation; 说明 biting 引理的动机（有界而非一致可积的序列如何“咬掉”小测度集以恢复一致可积性）、$F$ 有界、$X$ 具可数基、$\mu$ 有限三项假设的作用、$\eta>0$ 的几何含义（质量集中）、$E_m$ 只能依赖指标而不能依赖测度阈值的边界，以及去掉有界性后的反例
+\begin{remark}\phantomsection\label{remark:ch05-biting引理注}
+\begin{enumerate}[(i)]
+\item 引入动机。一致可积性在 $L^1(X)$ 中是弱相对紧性的正确紧性条件（\cref{theorem:ch02-dunfordpettis}），而有界性只是必要条件。本定理说明：有界序列的“非一致可积性”总可归因于测度趋于零的集合列 $\{E_m\}$——把这些集合“咬掉”（biting）之后，剩余部分 $\{u_{j_k}\chi_{E_k^c}\}$ 便一致可积。因此它是处理集中现象的标准工具，其量化形式即\cref{theorem:ch05-分解}。
+
+\item 各假设的作用。$F$ 的有界性用于三处：使 $\eta<\infty$、使 $L_m$ 有限、使 Chebyshev 不等式给出 $\mu(F_k)\to0$。$X$ 具可数基的局部紧 Hausdorff 性与 $\mu\in\mathscr{R}^+_f(X)$ 保证 $\mathscr{B}(X)$ 上的测度论论证（\cref{proposition:ch02-有界一致可积等价}中的非增序列刻画）可用。$\mu$ 的有限性使 $\mu(E_m)\leqslant\sum_{k\geqslant m}2^{-k}\to0$ 与控制收敛可用。
+
+\item $\eta>0$ 的含义。$\eta(\{u_j\})>0$ 表明质量沿 $|u_j|\to\infty$ 的方向逃逸：\eqref{align:ch05-5.92}说明在集合 $F_k=\{|u_{j_k}|\geqslant t_k\}$ 上仍残留质量 $\eta-1/k$，而 $E_m=\bigcup_{k\geqslant m}F_k$ 把这些集合累积起来；$\mu(E_m)\to0$ 表明这些“集中集”在测度意义下越来越小。
+
+\item 边界。$E_m$ 的选取只依赖子列的指标 $k$（即 $E_m=\bigcup_{k\geqslant m}F_k$），因此 $E_m$ 不能随 $t$ 变化；这正是结论中同时出现 $\{u_{j_k}\}$ 与 $\{E_m\}$ 而下标 $k$ 一一对应的原因。若去掉 $F$ 的有界性，结论失效：取 $u_j\equiv j$ 于 $X=(0,1)$，则 $\mu(F_k)=1$ 对一切 $k$ 与 $t$ 成立，任何 $E_m$ 都不能使 $\{u_{j_k}\chi_{E_k^c}\}$ 一致可积。
+\end{enumerate}
+\end{remark}
+
+在\cref{theorem:ch05-biting定理}的意义下，某些作者（例如见\cite[Section 2]{ref53}）引入如下术语。
+
+\begin{remark}\phantomsection\label{remark:ch05-biting意义}
+设 $X$ 为局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。称序列 $\{u_j\}\subseteq L^1(X)$ \textbf{按 biting 意义收敛}于 $u$（记作 $u_j\stackrel{b}{\rightharpoonup}u$），若存在 $u\in L^1(X)$ 与非增序列 $\{E_m\}\subseteq\mathscr{B}(X)$，使 $\mu\big(\bigcap_{m=1}^\infty E_m\big)=0$ 且 $u_{j_k}\chi_{E_m^c}\rightharpoonup u\chi_{E_m^c}$ 在 $L^1(X)$ 中对每个 $m\in\mathbb{N}$ 成立。
+
+由\cref{theorem:ch05-biting定理}，$L^1(X)$ 中每个有界序列都有按 biting 意义收敛的子列：先取使 $\{u_{j_k}\chi_{E_k^c}\}$ 一致可积的子列与 $\{E_m\}$，再对每个固定的 $m$ 用 Dunford--Pettis 定理与对角论证抽取弱收敛子列。
+\end{remark}
+
+由 biting 引理得到如下结果（见\cite[Theorem 4.5]{ref92}与\cite[Section 2]{ref04}）。
+
+\begin{theorem}\label{theorem:ch05-分解}
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$，$\{u_j\}\subseteq L^1(X)$ 有界。则存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$、Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$、$\sigma\in\mathscr{R}_f(X)$、非增序列 $\{E_m\}\subseteq\mathscr{B}(X)$（$\mu\big(\bigcap_{m=1}^\infty E_m\big)=0$）以及集合 $F\in\mathscr{B}(X)$（$E_m$ 与 $F$ 可为空集），具有下列性质：
+\begin{enumerate}[(i)]
+\item\label{item:ch05-fenjie-i} $u_{j_k}\chi_{E_m^c}\rightharpoonup u^*\chi_{E_m^c}$ 在 $L^1(X)$ 中对每个固定 $m\in\mathbb{N}$ 成立，其中 $u^*$ 由\eqref{align:ch05-5.85}给出且属于 $L^1(X)$；
+\item\label{item:ch05-fenjie-ii} $u_{j_k}\chi_{E_k^c}\rightharpoonup u^*$ 在 $L^1(X)$ 中，且 $u_{j_k}\chi_{E_k}\stackrel{*}{\rightharpoonup}\sigma$ 在 $\mathscr{R}_f(X)$ 中；
+\item\label{item:ch05-fenjie-iii} $u_{j_k}\chi_{F^c}\to u^*\chi_{F^c}$ 对 $\mu$-几乎所有 $x\in X$，且 $u_{j_k}\chi_{F^c\setminus E_m}\to u^*\chi_{F^c\setminus E_m}$ 强收敛于 $L^1(X)$ 对每个固定 $m\in\mathbb{N}$；
+\item\label{item:ch05-fenjie-iv} $\eta(\{u_{j_k}\})=\eta$，其中 $\eta(\{u_{j_k}\})$ 与 $\eta\equiv\eta(\{u_j\})$ 分别为 $\{u_{j_k}\}$ 与 $\{u_j\}$ 的一致可积模；
+\item\label{item:ch05-fenjie-v} 对所有 $u\in L^1(X)$ 有
+\begin{align}
+\lim_{k\to\infty}\|u_{j_k}-u\|_{L^1(X)}
+&=\eta+\int_X\mathrm{d}\mu(x)\int_{\mathbb{R}}|y-u(x)|\,\mathrm{d}\nu_x(y)\notag\\
+&=\eta+\big\|(u-u^*)\chi_{F^c}\big\|_{L^1(X)}
++\int_F\mathrm{d}\mu(x)\int_{\mathbb{R}}|y-u(x)|\,\mathrm{d}\nu_x(y).\label{align:ch05-5.96}
+\end{align}
+\end{enumerate}
+这里 $\eta\equiv\eta(\{u_j\})$ 是 $\{u_j\}$ 的一致可积模，$\{\nu_x\}_{x\in X}$ 是与子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 相伴的 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$（其存在性见\cref{theorem:ch05-函数窄收敛}）的离散分解。
+\end{theorem}
+
+\begin{proof}
+(i)--(ii) 不妨设序列 $\{u_j\}$ 对某个 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 具有\cref{theorem:ch05-函数窄收敛}、\cref{corollary:ch05-下半连续}与\cref{proposition:ch05-弱收敛}中所述的性质。于是\eqref{align:ch05-5.85}中定义的 $u^*$ 属于 $L^1(X)$，因为 $\{u_j\}$ 在 $L^1(X)$ 中有界（见取 $h(x,y)=h(y)=y$ 的\cref{corollary:ch05-下半连续}）。
+
+设 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 $\{E_m\}\subseteq\mathscr{B}(X)$ 如\cref{theorem:ch05-biting定理}的证明中所示。则存在 $\tilde u\in L^1(X)$ 使（可能抽取子列，不重新标号）$u_{j_k}\chi_{E_k^c}\rightharpoonup\tilde u$ 在 $L^1(X)$ 中。不妨设序列 $\{u_{j_k}\chi_{E_k^c}\}$ 对某个 $\tilde\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 具有\cref{theorem:ch05-函数窄收敛}、\cref{corollary:ch05-下半连续}与\cref{proposition:ch05-弱收敛}中所述的性质。则由\eqref{align:ch05-5.85}得
+\begin{align*}
+\tilde u(x)=\int_{\mathbb{R}}y\,\mathrm{d}\tilde\nu_x(y)
+\quad\text{对 }\mu\text{-几乎所有 }x\in X.
+\end{align*}
+
+此外，由\eqref{align:ch05-5.74}，对每个 $h\in C_b(X\times\mathbb{R})\cap L^\infty(X\times\mathbb{R})$ 有
+\begin{align*}
+\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\tilde\nu(x,y)
+&=\int_X\mathrm{d}\mu(x)\int_{\mathbb{R}}h(x,y)\,\mathrm{d}\tilde\nu_x(y)\\
+&=\lim_{k\to\infty}\int_Xh(x,u_{j_k}\chi_{E_k^c}(x))\,\mathrm{d}\mu(x)\\
+&=\lim_{k\to\infty}\left\{\int_{E_k^c}h(x,u_{j_k}(x))\,\mathrm{d}\mu(x)+\int_{E_k}h(x,0)\,\mathrm{d}\mu(x)\right\}\\
+&=\lim_{k\to\infty}\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x)
++\lim_{k\to\infty}\int_{E_k}[h(x,0)-h(x,u_{j_k}(x))]\,\mathrm{d}\mu(x)\\
+&\leqslant\int_X\mathrm{d}\mu(x)\int_{\mathbb{R}}h(x,y)\,\mathrm{d}\nu_x(y)
++2\|h\|_\infty\lim_{k\to\infty}\mu(E_k)
+=\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu(x,y),
+\end{align*}
+因为 $\lim_{k\to\infty}\mu(E_k)=0$。由 $h$ 在上述等式中的任意性得 $\nu=\tilde\nu$，从而 $u^*=\tilde u$ 于 $L^1(X)$。于是\cref{item:ch05-fenjie-ii}中的第一个收敛成立。
+
+固定 $m\in\mathbb{N}$。因序列 $\{E_m^c\}$ 非降，且 $E_m^c\subseteq E_k^c$ 对所有 $k>m$ 成立，故 $u_{j_k}\chi_{E_m^c}=u_{j_k}\chi_{E_k^c}$ $\mu$-几乎处处于 $E_m^c$。于是由\cref{item:ch05-fenjie-ii}中的第一个收敛得断言\cref{item:ch05-fenjie-i}。
+
+为完成\cref{item:ch05-fenjie-ii}的证明，考虑序列 $\{\sigma_k\}\subseteq\mathscr{R}_f(X)$，$\sigma_k(E)\triangleq\int_Eu_{j_k}\chi_{E_k}\,\mathrm{d}\mu$（$E\in\mathscr{B}(X)$）。因
+\begin{align*}
+\|\sigma_k\|_{\mathscr{R}_f(X)}=|\sigma_k|(X)\leqslant\mu(X)\sup_{j\in\mathbb{N}}\|u_j\|_{L^1(X)}<\infty,
+\end{align*}
+由 Banach--Alaoglu 定理存在 $\sigma\in\mathscr{R}_f(X)$ 使（可能抽取子列，不重新标号）$\sigma_k\stackrel{*}{\rightharpoonup}\sigma$。于是断言得证。
+
+\cref{item:ch05-fenjie-iii} 置 $F\triangleq\{x\in X\mid\nu_x\neq\delta_{u^*(x)}\}$。则（可能抽取子列，不重新标号）由\cref{proposition:ch05-几乎处处收敛}得 $u_{j_k}\to u^*$ $\mu$-几乎处处于 $F^c$。此外，因对每个固定 $m\in\mathbb{N}$ 序列 $\{u_{j_k}\chi_{E_m^c}\}$ 一致可积，Vitali 定理（\cref{theorem:ch02-Vitali}）的假设在 $F^c\cap E_m^c=F^c\setminus E_m$ 上满足。故 $u_{j_k}\chi_{F^c\setminus E_m}\to u^*\chi_{F^c\setminus E_m}$ 强收敛于 $L^1(X)$，于是断言\cref{item:ch05-fenjie-iii}得证。
+
+\cref{item:ch05-fenjie-iv} 由定义\eqref{align:ch02-2.62}直接得 $\eta(\{u_{j_k}\})\leqslant\eta$。于是断言将随之成立，只要证明：对任意子列 $\{u_{j_l}\}\equiv\{u_{j_{k_l}}\}\subseteq\{u_{j_k}\}$ 有 $\eta(\{u_{j_l}\})\geqslant\eta$。为此，因 $\{u_{j_l}\}\subseteq\{u_{j_k}\}$，由\eqref{align:ch05-5.92}有
+\begin{align}
+\int_{\{|u_{j_l}|\geqslant t_l\}}|u_{j_l}|\,\mathrm{d}\mu>\eta-\frac1l
+\quad\text{对所有 }l\in\mathbb{N}.\label{align:ch05-5.97}
+\end{align}
+另一方面，序列 $\{t_l\}$ 非降且发散（见\cref{theorem:ch05-biting定理}的证明），故对任意 $t>0$ 存在 $\bar l$ 使 $t_{\bar l}>t$。于是由\eqref{align:ch05-5.97}得
+\begin{align*}
+\int_{\{|u_{j_{\bar l}}|\geqslant t\}}|u_{j_{\bar l}}|\,\mathrm{d}\mu>\eta-\frac1{\bar l},
+\end{align*}
+从而
+\begin{align*}
+\sup_{l\in\mathbb{N}}\int_{\{|u_{j_l}|\geqslant t\}}|u_{j_l}|\,\mathrm{d}\mu\geqslant\eta.
+\end{align*}
+在该不等式中令 $t\to\infty$ 得 $\eta(\{u_{j_l}\})\geqslant\eta$，于是断言成立。
+
+\cref{item:ch05-fenjie-v} 只需证明\eqref{align:ch05-5.96}中的第一个等式，第二个由集合 $F$ 的定义得到。对任意固定 $u\in L^1(X)$，置
+\begin{align*}
+\|u_{j_k}-u\|_{L^1(X)}-\left(\eta+\int_X\mathrm{d}\mu(x)\int_{\mathbb{R}}|y-u(x)|\,\mathrm{d}\nu_x(y)\right)=\sum_{k=1}^4I_k,
+\end{align*}
+其中
+\begin{align*}
+I_1&\triangleq-\int_{E_m}\mathrm{d}\mu(x)\int_{\mathbb{R}}|y-u(x)|\,\mathrm{d}\nu_x(y),\\
+I_2&\triangleq\|u_{j_k}-u\|_{L^1(E_m;\mathbb{R})}-\|u_{j_k}\|_{L^1(E_m;\mathbb{R})},\\
+I_3&\triangleq\|u_{j_k}-u\|_{L^1(E_m^c;\mathbb{R})}-\int_{E_m^c}\mathrm{d}\mu(x)\int_{\mathbb{R}}|y-u(x)|\,\mathrm{d}\nu_x(y),\\
+I_4&\triangleq\|u_{j_k}\|_{L^1(E_m;\mathbb{R})}-\eta.
+\end{align*}
+
+固定 $\varepsilon>0$。关于 $I_1$，由不等式\eqref{align:ch05-5.75}有
+\begin{align*}
+\int_{X\times\mathbb{R}}|y-u(x)|\,\mathrm{d}\nu(x,y)
+\leqslant\liminf_{k\to\infty}\int_X|u_{j_k}(x)-u(x)|\,\mathrm{d}\mu(x)
+\leqslant\sup_{j\in\mathbb{N}}\|u_j\|_{L^1(X)}+\|u\|_{L^1(X)}<\infty.
+\end{align*}
+故函数 $h(x,y)=|y-u(x)|$ 属于 $L^1(X\times\mathbb{R},\mathscr{B}(X)\times\mathscr{B}(\mathbb{R}),\nu)$。因 $I_1=-\int_{X\times\mathbb{R}}\chi_{E_m}(x)|y-u(x)|\,\mathrm{d}\nu(x,y)$ 且 $\chi_{E_m}\to0$（$m\to\infty$），由控制收敛定理得 $|I_1|<\varepsilon/4$ 对所有充分大的 $m\in\mathbb{N}$。同样，对任意充分大的 $m\in\mathbb{N}$ 有 $|I_2|\leqslant\|u\|_{L^1(E_m;\mathbb{R})}<\varepsilon/4$。
+
+取 $m\in\mathbb{N}$ 充分大使 $|I_1|+|I_2|<\varepsilon/2$。关于 $I_3$，有
+\begin{align*}
+\|u_{j_k}-u\|_{L^1(E_m^c;\mathbb{R})}
+=\int_{E_m^c}|u_{j_k}(x)-u(x)|\,\mathrm{d}\mu(x)
+=\int_{E_m^c}\mathrm{d}\mu(x)\int_{\mathbb{R}}|y-u(x)|\,\mathrm{d}(\nu_{u_{j_k}})_x(y).
+\end{align*}
+如前所示，序列 $\{u_{j_k}\chi_{E_m^c}\}$ 一致可积，故序列 $\{|u_{j_k}(x)-u(x)|\chi_{E_m^c}\}$ 亦然。于是取 $h(x,y)=|y-u(x)|$ 应用\cref{proposition:ch05-弱收敛}得：对所有充分大的 $j_k$ 有 $|I_3|<\varepsilon/4$。
+
+现在处理 $I_4$。回忆\cref{theorem:ch05-biting定理}的证明中 $E_m\triangleq\bigcup_{k=m}^\infty F_k$，其中 $F_k\triangleq\{|u_{j_k}(x)|\geqslant t_k\}$，故 $F_k\subseteq E_m$ 对所有 $k\geqslant m$ 成立。于是对任意固定 $m\in\mathbb{N}$，由\eqref{align:ch05-5.92}有
+\begin{align*}
+\int_{E_m}|u_{j_k}|\,\mathrm{d}\mu\geqslant\int_{\{|u_{j_k}|\geqslant t_k\}}|u_{j_k}|\,\mathrm{d}\mu>\eta-\frac1k
+\quad\text{对所有 }k\geqslant m.
+\end{align*}
+若 $m\geqslant[4/\varepsilon]+1$，其中 $[4/\varepsilon]$ 表示不超过 $4/\varepsilon$ 的最大整数，则由上述不等式得
+\begin{align}
+\|u_{j_k}\|_{L^1(E_m;\mathbb{R})}\geqslant\eta-\frac{\varepsilon}{4}
+\quad\text{对所有 }k\geqslant\left[\frac4\varepsilon\right]+1.\label{align:ch05-5.98}
+\end{align}
+另一方面，由\cref{lemma:ch02-一致可积模等价}有 $\eta=\lim_{\delta\to0^+}H_\delta$，其中
+\begin{align*}
+H_\delta\triangleq\sup\left\{\int_E|u_j|\,\mathrm{d}\mu\ \middle|\ j\in\mathbb{N},\ E\in\mathscr{B}\text{ 使 }\mu(E)<\delta\right\}.
+\end{align*}
+取 $\delta>0$ 充分小使 $H_\delta<\eta+\varepsilon/4$。因 $\lim_{m\to\infty}\mu(E_m)=0$，可取 $m$ 充分大使 $\mu(E_m)<\delta$，于是对每个 $j_k$ 得
+\begin{align}
+\|u_{j_k}\|_{L^1(E_m;\mathbb{R})}\leqslant H_\delta<\eta+\frac{\varepsilon}{4}.\label{align:ch05-5.99}
+\end{align}
+按上述方式选取 $m$ 与 $j_k$，由\eqref{align:ch05-5.98}--\eqref{align:ch05-5.99}得 $|I_4|<\varepsilon/4$。
+
+综上，对任意 $\varepsilon>0$，存在 $\bar k\in\mathbb{N}$，使对所有 $k>\bar k$ 有
+\begin{align*}
+\left|\|u_{j_k}-u\|_{L^1(X)}-\eta-\int_X\mathrm{d}\mu(x)\int_{\mathbb{R}}|y-u(x)|\,\mathrm{d}\nu_x(y)\right|<\varepsilon.
+\end{align*}
+证明完成。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-分解; kind=proof; 原证明中“不妨设 $\{u_j\}$ 与 $\{u_{j_k}\chi_{E_k^c}\}$ 分别具有定理 5.4.5、推论 5.4.6、命题 5.4.10 所述性质”“由 (5.74) 的两端夹出 $\nu=\tilde\nu$”“$\eta(\{u_{j_k}\})\leqslant\eta$ 由 (2.62) 直接得到”“$h(x,y)=|y-u(x)|\in L^1(\nu)$”四处未展开，此处补出；并补出 $I_1$–$I_4$ 中 $m$ 与 $j_k$ 的选取为何可同时满足各项要求
+\begin{proof}
+第一处：“不妨设”的含义。\cref{theorem:ch05-函数窄收敛}、\cref{corollary:ch05-下半连续}与\cref{proposition:ch05-弱收敛}的结论都是“存在子列”。由子列的传递性（子列的子列仍是原序列的子列），可逐次抽取：先用\cref{theorem:ch05-函数窄收敛}得窄收敛子列并定出 $\nu$，再在其上抽取使\cref{corollary:ch05-下半连续}与\cref{proposition:ch05-弱收敛}成立的子列；极限 Young 测度仍为 $\nu$（窄极限唯一）。对 $\{u_{j_k}\chi_{E_k^c}\}$ 作同样处理即得 $\tilde\nu$。\cref{theorem:ch05-biting定理}给出的 $\{E_m\}$ 只依赖 $\{u_{j_k}\}$ 的指标，故在上述抽取下保持不变。
+
+第二处：$\nu=\tilde\nu$ 的夹逼。对 $h\in C_b(X\times\mathbb{R})\cap L^\infty(X\times\mathbb{R})$，由\cref{theorem:ch05-函数窄收敛}（等式\eqref{align:ch05-5.74}）应用于序列 $\{u_{j_k}\chi_{E_k^c}\}$ 得第一、二行等式；把 $u_{j_k}\chi_{E_k^c}=u_{j_k}$ 于 $E_k^c$、$=0$ 于 $E_k$ 代入即得第三行。第四行是两个极限之和。第五行的估计为：$|h(x,0)-h(x,u_{j_k}(x))|\leqslant2\|h\|_\infty$，且 $\mu(E_k)\to0$，故第二项极限为零；第一项由\eqref{align:ch05-5.74}（对 $\{u_{j_k}\}$ 与 $\nu$）等于 $\int_{X\times\mathbb{R}}h\,\mathrm{d}\nu$。于是 $\int h\,\mathrm{d}\tilde\nu\leqslant\int h\,\mathrm{d}\nu$ 对一切这样的 $h$ 成立；把 $h$ 换为 $-h$ 得反向不等式，故 $\int h\,\mathrm{d}\tilde\nu=\int h\,\mathrm{d}\nu$。由 $C_b\cap L^\infty$ 在 $L^1(X\times\mathbb{R},|\nu|+|\tilde\nu|)$ 中的稠密性得 $\tilde\nu=\nu$，再由重心表示的唯一性得 $u^*=\tilde u$。
+
+第三处：$\eta(\{u_{j_k}\})\leqslant\eta$。由\eqref{align:ch02-2.62}，$\eta(\mathscr F)$ 关于 $\mathscr F$ 单调；而 $\{u_{j_k}\}\subseteq\{u_j\}$，故 $\eta(\{u_{j_k}\})\leqslant\eta(\{u_j\})=\eta$。
+
+第四处：$h(x,y)=|y-u(x)|\in L^1(X\times\mathbb{R},\nu)$。由\eqref{align:ch05-5.75}，$\int_{X\times\mathbb{R}}|y-u(x)|\,\mathrm{d}\nu\leqslant\liminf_k\int_X|u_{j_k}-u|\,\mathrm{d}\mu\leqslant\sup_j\|u_j\|_{L^1(X)}+\|u\|_{L^1(X)}<\infty$，即 $h$ 的积分有限；又 $h$ 为 $\mathscr{B}(X)\times\mathscr{B}(\mathbb{R})$-可测（$u$ 可测），故 $h\in L^1(X\times\mathbb{R},\nu)$。
+
+第五处：$m$ 与 $j_k$ 的选取。$I_1,I_2$ 的估计要求 $m$ 充分大（$|I_1|+|I_2|<\varepsilon/2$），$I_4$ 的两个估计要求 $m\geqslant[4/\varepsilon]+1$ 且 $\mu(E_m)<\delta$；这四项都只涉及 $m$，而 $\mu(E_m)\to0$、$\chi_{E_m}\to0$、$\|u\|_{L^1(E_m)}\to0$ 保证它们可同时满足（取四者中最大者）。固定这样的 $m$ 后，$I_3$ 的估计要求 $j_k$ 充分大，$I_4$ 的估计要求 $k\geqslant[4/\varepsilon]+1$，二者亦可同时满足。故对任意 $\varepsilon>0$ 存在 $\bar k$ 使 $k>\bar k$ 时四项之和的绝对值小于 $\varepsilon$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-分解; kind=motivation; 说明该分解定理的动机（有界序列的“绝对连续部分 + 集中部分”分解）、每项假设的作用、$F$ 的几何意义（$\nu_x$ 非 Dirac 的集合，即振荡集）、$\eta$ 的残余质量解释、以及去掉有界性后结论失效的反例
+\begin{remark}\phantomsection\label{remark:ch05-分解注}
+\begin{enumerate}[(i)]
+\item 引入动机。有界序列 $\{u_j\}\subseteq L^1(X)$ 的弱$^*$极限一般不是函数：一部分质量沿 $|u_j|\to\infty$ 集中到小测度集上（由 $\sigma$ 记录），另一部分以振荡方式留在 Young 测度 $\nu$ 中（由 $u^*$ 与 $\nu_x$ 的矩记录）。本定理把这两部分完全分离：\eqref{align:ch05-5.96}给出 $\|u_{j_k}-u\|_{L^1(X)}$ 的精确极限，它等于“集中损失”$\eta$、$F^c$ 上的偏差 $\|(u-u^*)\chi_{F^c}\|$ 与 $F$ 上的振荡误差三项之和。这正是把强收敛的失败量化的公式。
+
+\item 各假设的作用。$\{u_j\}$ 的有界性是全部结论的前提：它使 $\eta<\infty$、使 $\eta(\{u_{j_k}\})=\eta$ 的论证可用、使 Banach--Alaoglu 定理可应用于 $\{\sigma_k\}$。$\mu\in\mathscr{R}^+_f(X)$ 与 $X$ 具可数基保证\cref{theorem:ch05-函数窄收敛}可用（胎紧性判据与 $C_0(X)$ 的可分性）。$E_m$ 的非增性与 $\mu(\bigcap_mE_m)=0$ 来自\cref{theorem:ch05-biting定理}，它们使集中集“最终消失”。
+
+\item $F$ 与 $\eta$ 的含义。$F=\{x\mid\nu_x\neq\delta_{u^*(x)}\}$ 是\emph{振荡集}：在 $F^c$ 上 Young 测度退化为 Dirac 测度，故由\cref{proposition:ch05-几乎处处收敛}存在子列在 $F^c$ 上几乎处处收敛（断言\cref{item:ch05-fenjie-iii}）。$\eta$ 是\emph{集中损失}：由\cref{lemma:ch02-一致可积模等价}，$\eta$ 度量沿小测度集逃逸的质量，故 $\eta=0$ 当且仅当 $\{u_{j_k}\}$ 一致可积（结合断言\cref{item:ch05-fenjie-iv}与\hyperref[remark:ch02-模零一致可积]{注记}）。
+
+\item 边界。$\{u_j\}$ 的有界性不可省：取 $u_j\equiv j$ 于 $X=(0,1)$，则 $\nu_{u_j}=\delta_j$ 无窄收敛子列，\eqref{align:ch05-5.96}两端的量均无意义。又\eqref{align:ch05-5.96}中的 $F$ 一般非空：\cref{example:ch05-周期Young测度}(ii) 中 $\nu_x=\frac12(\delta_1+\delta_{-1})$，相应的 $F$ 为整个区间，$u^*=0$，而 $\int_X|u_{j_k}|\,\mathrm{d}\mu\equiv1$ 不趋于零。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-分解; kind=motivation; 该注记前两段为原书 Remark 5.4.4 的忠实译文（记号的滥用与 $\sigma$ 的奇异性问题），末列两项为补写，说明该分解一般不是 Radon--Nikodým 分解
+\begin{remark}\phantomsection\label{remark:ch05-5.4.4}
+设 $\{u_j\}\subseteq L^1(X)$ 有界。则由\cref{theorem:ch05-分解}\cref{item:ch05-fenjie-ii}存在 $\{u_{j_k}\}\subseteq\{u_j\}$ 使
+\begin{align}
+u_{j_k}=u_{j_k}\chi_{E_k^c}+u_{j_k}\chi_{E_k}\stackrel{*}{\rightharpoonup}\tilde u
+\quad\text{于 }\mathscr{R}_f(X),\label{align:ch05-5.100a}
+\end{align}
+其中
+\begin{align}
+\tilde u(E)\triangleq\int_Eu^*\,\mathrm{d}\mu+\sigma(E)
+\quad\text{对所有 }E\in\mathscr{B}(X),\label{align:ch05-5.100b}
+\end{align}
+而 $u^*\in L^1(X)$ 与 $\sigma\in\mathscr{R}_f(X)$ 由同一定理给出。按记号滥用，代替\eqref{align:ch05-5.100a}--\eqref{align:ch05-5.100b}，常写作 $u_{j_k}\stackrel{*}{\rightharpoonup}\tilde u:=u^*+\sigma$，在类似情形中也作同样的记号滥用。
+
+由于测度 $E\mapsto\int_Eu^*\,\mathrm{d}\mu$（$E\in\mathscr{B}(X)$）关于 $\mu$ 绝对连续，一个自然的问题是：测度 $\sigma$ 是否关于 $\mu$ 奇异？一般地答案是否定的，如下例所示（见\cite{ref04,ref09}）。
+
+\begin{enumerate}[(i)]
+\item 分解与 Radon--Nikodým 分解的关系。\eqref{align:ch05-5.100b}中的分解 $u^*\,\mathrm{d}\mu+\sigma$ 一般\emph{不是} $\tilde u$ 关于 $\mu$ 的 Lebesgue--Radon--Nikodým 分解：$\sigma$ 不必关于 $\mu$ 奇异，故 $u^*$ 也不必定是 $\tilde u$ 的绝对连续部分。\cref{example:ch05-集中非奇异}给出 $\sigma=\mu$ 的极端情形。
+
+\item 各项的含义。$u^*$ 是 Young 测度 $\nu$ 的重心所给出的 $L^1(X)$ 部分（见\eqref{align:ch05-5.85}），$\sigma$ 是弱$^*$极限中“不再是函数”的部分；\eqref{align:ch05-5.100a}表明二者之和恰是 $u_{j_k}$ 在 $\mathscr{R}_f(X)$ 中的弱$^*$极限。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:ch05-5.4.13; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+\begin{example}\label{example:ch05-集中非奇异}
+设 $X=(0,1)$，$\mu=\lambda\llcorner X$，并置
+\begin{align*}
+u_k\triangleq\sum_{i=1}^kk\chi_{(i/k-1/k^2,\ i/k)}.
+\end{align*}
+则
+\begin{align}
+u_k\stackrel{*}{\rightharpoonup}\mu\quad\text{于 }\mathscr{R}_f(X).\label{align:ch05-5.101}
+\end{align}
+\end{example}
+
+\begin{proof}
+序列 $\{u_k\}$ 在 $L^1(X)$ 中有界：每个区间 $(i/k-1/k^2,i/k)$ 的长度为 $1/k^2$，其上的取值为 $k$，故
+\begin{align*}
+\|u_k\|_{L^1(X)}=\sum_{i=1}^kk\cdot\frac1{k^2}=1\quad(k\in\mathbb{N}).
+\end{align*}
+设 $\varphi\in C_c(X)$。因 $\varphi$ 一致连续且 $1/k\to0$，取 $\xi_{k,i}\in(i/k-1/k^2,i/k)$，由积分中值估计得
+\begin{align*}
+\int_Xu_k\varphi\,\mathrm{d}\lambda
+=\sum_{i=1}^kk\int_{i/k-1/k^2}^{i/k}\varphi\,\mathrm{d}\lambda
+=\frac1k\sum_{i=1}^k\varphi(\xi_{k,i})+o(1)
+\end{align*}
+而右端是 $\int_X\varphi\,\mathrm{d}\lambda$ 的 Riemann 和，故趋于 $\int_X\varphi\,\mathrm{d}\lambda=\int_X\varphi\,\mathrm{d}\mu$。由 $\varphi\in C_c(X)$ 的任意性与 $\mu\in\mathscr{R}^+_f(X)$ 得 $u_k\stackrel{*}{\rightharpoonup}\mu$ 于 $\mathscr{R}_f(X)$。
+\end{proof}
+
+% SUPPLEMENT: parent=example:ch05-集中非奇异; kind=motivation; 说明该例的动机（$\sigma$ 可以不离散于 $\mu$）、逐项验证 (5.101) 与 $\nu_x=\delta_0$、以及原书印刷式 $u_k=\sum_ik\chi_{(i/k-i/k^2,i/k)}$ 与有界性及 (5.101) 矛盾、应改为 $1/k^2$ 的订正
+\begin{remark}\phantomsection\label{remark:ch05-集中非奇异注}
+\begin{enumerate}[(i)]
+\item 一致可积性的失效。$\lambda(\{u_k\neq0\})=\sum_{i=1}^k1/k^2=1/k\to0$，故 $u_k\to0$ 依测度；但 $\|u_k\|_{L^1(X)}=1=\mu(X)$ 表明质量并未消失，而是集中到测度为 $1/k$ 的集合上。由\cref{theorem:ch02-Vitali}，$\{u_k\}$ 不一致可积，其一致可积模为 $\eta=1$（与\cref{example:ch02-弱收敛振荡}(ii) 的计算同理）。
+
+\item Young 测度与重心。因 $u_k\to0$ 依测度，由\cref{proposition:ch05-几乎处处收敛}，相伴 Young 测度序列 $\{\nu_{u_k}\}$ 窄收敛于满足 $\nu_x=\delta_0$（$\lambda$-几乎所有 $x\in(0,1)$）的 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$。于是重心 $u^*=0$。由\cref{theorem:ch05-分解}（可能抽取子列，不重新标号）有
+\begin{align}
+u_k\stackrel{*}{\rightharpoonup}u^*+\sigma\quad\text{于 }\mathscr{R}_f(X),\label{align:ch05-5.102}
+\end{align}
+而 $u^*=0$。由\eqref{align:ch05-5.101}--\eqref{align:ch05-5.102}得 $\sigma=\mu$，故 $\sigma$ 关于 $\mu=\lambda\llcorner X$ 并不奇异。
+
+\item 关于印刷式的订正。原书把 $u_k$ 印刷为 $u_k=\sum_{i=1}^kk\chi_{(i/k-i/k^2,\ i/k)}$。按该式，第 $i$ 个区间的长度为 $i/k^2$，从而
+\begin{align*}
+\|u_k\|_{L^1(X)}=k\sum_{i=1}^k\frac{i}{k^2}=\frac{k+1}{2}\to\infty,
+\end{align*}
+故 $\{u_k\}$ 在 $L^1(X)$ 中无界；而 $\mathscr{R}_f(X)$ 中弱$^*$收敛的序列必有界（Banach--Steinhaus 定理），故此时 (5.101) 不可能成立。又按该式，$\int_Xu_k\varphi\,\mathrm{d}\lambda=\sum_{i=1}^k(i/k)\varphi(\xi_{k,i})$ 亦不收敛于 $\int_X\varphi\,\mathrm{d}\lambda$。把区间左端点改为 $i/k-1/k^2$ 后，有界性、$u_k\to0$ 依测度与 (5.101) 三项结论同时成立。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch05-biting注; kind=motivation; 该注记为原书 Remark 5.4.5 的忠实译文，并补出“为何 $\sigma=\sigma_+-\sigma_-$ 不是 Jordan 分解”一项
+\begin{remark}\phantomsection\label{remark:ch05-5.4.5}\phantomsection\label{remark:ch05-biting注}
+设 $\{u_j\}\subseteq L^1(X)$ 有界，于是 $\{u^\pm_j\}$ 亦有界。因此由\cref{theorem:ch05-分解}\cref{item:ch05-fenjie-ii}，存在 $\{u_{j_k}\}\subseteq\{u_j\}$、$\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 与 $\sigma_\pm\in\mathscr{R}^+_f(X)$ 使
+\begin{align}
+u^\pm_{j_k}\stackrel{*}{\rightharpoonup}u_\pm+\sigma_\pm
+\quad\text{于 }\mathscr{R}_f(X),\label{align:ch05-5.103}
+\end{align}
+其中 $u_\pm\in L^1(X)$，$u_\pm\geqslant0$，由\eqref{align:ch05-5.86}给出（不妨设 $\{u_j\}$ 与 $\nu$ 具有\cref{theorem:ch05-函数窄收敛}、\cref{corollary:ch05-下半连续}与\cref{proposition:ch05-弱收敛}中所述的性质）。由\eqref{align:ch05-5.100a}--\eqref{align:ch05-5.103}得 $u^*=u_+-u_-$（与\eqref{align:ch05-5.87}一致）与 $\sigma=\sigma_+-\sigma_-$；然而后一等式不是 $\sigma$ 的 Jordan 分解，因为 $\sigma_\pm$ 不必相互奇异。
+
+\begin{enumerate}[(i)]
+\item 为何不是 Jordan 分解。$\sigma\in\mathscr{R}_f(X)$ 的 Jordan 分解要求 $\sigma^\pm$ 为相互奇异的正测度（见\cref{definition:ch01-Jordan分解}）。\eqref{align:ch05-5.103}中的 $\sigma_\pm$ 分别来自 $u^+_{j_k}$ 与 $u^-_{j_k}$ 的弱$^*$极限：若两者在同一小测度集上同时集中，则 $\sigma_+$ 与 $\sigma_-$ 在该集合上同时具有正质量，从而不相互奇异。此时 $\sigma=\sigma_+-\sigma_-$ 只给出 $\sigma$ 的一个正部/负部估计，而非其 Jordan 分解。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch05-biting一致可积; kind=motivation; 该注记为原书 Remark 5.4.6 的忠实译文，并在每项后补出所用依据（(5.104) 与 (5.105) 由 (5.96) 取 $\eta=0$ 或 $u=u^*$ 得到）
+\begin{remark}\phantomsection\label{remark:ch05-biting一致可积}
+设 $\{u_j\}\subseteq L^1(X)$ 有界。
+\begin{enumerate}[(i)]
+\item 若 $\{u_j\}$ 一致可积，从而 $\eta=0$，则从它的每个子列中都可抽取子列 $\{u_{j_k}\}$，使\eqref{align:ch05-5.96}读作
+\begin{align}
+\lim_{k\to\infty}\|u_{j_k}-u\|_{L^1(X)}
+=\big\|(u-u^*)\chi_{F^c}\big\|_{L^1(X)}
++\int_F\mathrm{d}\mu(x)\int_{\mathbb{R}}|y-u(x)|\,\mathrm{d}\nu_x(y).\label{align:ch05-5.104}
+\end{align}
+若进一步 $u_j\to u$ 对 $\mu$-几乎所有 $x\in X$，则由\cref{proposition:ch05-几乎处处收敛}得 $u=u^*$ 与 $F=\varnothing$。于是 $u_{j_k}\to u$ 强收敛于 $L^1(X)$，从而 $u_j\to u$ 强收敛于 $L^1(X)$。该论证可以反过来进行，与 Vitali 定理（\cref{theorem:ch02-Vitali}）一致。
+
+\item 特别地，若 $u_j\rightharpoonup u$ 在 $L^1(X)$ 中，则等式\eqref{align:ch05-5.104}成立。若 $u_j\not\to u$ 强收敛于 $L^1(X)$，则由 (i) 中所用的论证可知它有子列不在 $X$ 中 $\mu$-几乎处处收敛。于是再用\cref{proposition:ch05-几乎处处收敛}即重新得到\cref{proposition:ch05-非相伴}。
+
+\item 集中现象取决于是否有 $\eta>0$。例如若 $u_j\to u$ 对 $\mu$-几乎所有 $x\in X$，则 $u=u^*$、$F=\varnothing$，于是由\eqref{align:ch05-5.96}得
+\begin{align}
+\lim_{k\to\infty}\|u_{j_k}-u^*\|_{L^1(X)}=\eta.\label{align:ch05-5.105}
+\end{align}
+与 Vitali 定理一致，该等式表明：这样的序列强收敛于 $u^*$ 当且仅当它一致可积。\eqref{align:ch05-5.105}由\cref{example:ch02-弱收敛振荡}(ii) 中考虑的序列 $u_k=k\chi_{(0,1/k)}$ 所满足，此时 $u^*=0$ 且 $\|u_k\|_{L^1(0,1)}=\eta=1$（$k\in\mathbb{N}$）。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:ch05-5.4.13; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+\begin{proposition}\label{proposition:ch05-函数弱星}\label{proposition:ch05-5.4.13}
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$，$\{u_j\}\subseteq L^1(X)\equiv L^1(X,\mathscr{B}(X),\mu)$ 有界。设 $\{u_{j_k}\}\subseteq\{u_j\}$、$\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 与 $\sigma_\pm\in\mathscr{R}^+_f(X)$ 由\hyperref[remark:ch05-5.4.5]{注记}给出。设 $f\in C(\mathbb{R})$，且存在
+\begin{align}
+\lim_{y\to\pm\infty}\frac{f(y)}{y}=:M^\pm_f\in\mathbb{R}.\label{align:ch05-5.106}
+\end{align}
+则（可能抽取子列，为简便不重新标号）有
+\begin{align}
+f\circ u_{j_k}\stackrel{*}{\rightharpoonup}f^*+M^+_f\sigma_+-M^-_f\sigma_-
+\quad\text{于 }\mathscr{R}_f(X).\label{align:ch05-5.107}
+\end{align}
+这里 $f^*\in L^1(X)$，
+\begin{align}
+f^*(x)\triangleq\int_{\mathbb{R}}f(y)\,\mathrm{d}\nu_x(y)
+\quad\text{对 }\mu\text{-几乎所有 }x\in X,\label{align:ch05-5.108}
+\end{align}
+而 $\{\nu_x\}_{x\in X}$ 是由\cref{theorem:ch05-函数窄收敛}给出的、与子列 $\{u_{j_k}\}$ 相伴的 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 的离散分解。
+\end{proposition}
+
+\begin{proof}
+由\eqref{align:ch05-5.106}，存在 $L>0$ 使
+\begin{align}
+|f(y)|\leqslant L(1+|y|)\quad\text{对所有 }y\in\mathbb{R},\label{align:ch05-5.109}
+\end{align}
+且对每个 $\varepsilon>0$，存在 $y_\varepsilon>0$ 使
+\begin{align}
+(M^\pm_f\mp\varepsilon)y\leqslant f(y)\leqslant(M^\pm_f\pm\varepsilon)y
+\quad\text{若 }\pm y\geqslant y_\varepsilon.\label{align:ch05-5.110}
+\end{align}
+
+固定 $l>y_\varepsilon$，并设 $g_{0,l}\in C(\mathbb{R})$、$g_{\pm,l}\in C(\mathbb{R})$ 满足：
+\begin{enumerate}[a)]
+\item $0\leqslant g_{0,l}(y)\leqslant1$，$0\leqslant g_{\pm,l}(y)\leqslant1$，$g_{-,l}(y)+g_{0,l}(y)+g_{+,l}(y)=1$ 对所有 $y\in\mathbb{R}$；
+\item $\operatorname{supp}g_{-,l}\subseteq(-\infty,-l]$，$\operatorname{supp}g_{0,l}\subseteq[-l-1,l+1]$，$\operatorname{supp}g_{+,l}\subseteq[l,\infty)$。
+\end{enumerate}
+于是直接验证
+\begin{align}
+&(M^+_f-\varepsilon)yg_{+,l}(y)+f(y)g_{0,l}(y)+(M^-_f+\varepsilon)yg_{-,l}(y)\leqslant f(y)\notag\\
+&\quad\leqslant(M^+_f+\varepsilon)yg_{+,l}(y)+f(y)g_{0,l}(y)+(M^-_f-\varepsilon)yg_{-,l}(y)
+\quad\text{对所有 }y\in\mathbb{R}.\label{align:ch05-5.111}
+\end{align}
+
+对 $\mu$-几乎所有 $x\in X$，定义
+\begin{align}
+G^*_{0,l}(x)\triangleq\int_{\mathbb{R}}f(y)g_{0,l}(y)\,\mathrm{d}\nu_x(y),
+\qquad
+G^*_{\pm,l}(x)\triangleq\int_{\mathbb{R}}yg_{\pm,l}(y)\,\mathrm{d}\nu_x(y),\label{align:ch05-5.112}
+\end{align}
+从而 $G^*_{0,l}\in L^1(X)$、$G^*_{\pm,l}\in L^1(X)$。因 $\lim_{l\to+\infty}g_{\pm,l}(y)=0$ 对每个 $y\in\mathbb{R}$，且 $|yg_{\pm,l}(y)|\leqslant|y|\in L^1(\mathbb{R},\mathscr{B},\nu_x)$ 对 $\mu$-几乎所有 $x\in X$（这由\eqref{align:ch05-5.86}与 $u_\pm\in L^1(X)$ 得到），由控制收敛定理得 $\lim_{l\to+\infty}G^*_{\pm,l}(x)=0$ 对 $\mu$-几乎所有 $x\in X$。此外 $|G^*_{\pm,l}(x)|\leqslant\int_{\mathbb{R}}y^\pm\,\mathrm{d}\nu_x(y)$ 对 $\mu$-几乎所有 $x\in X$。因映射 $x\mapsto\int_{\mathbb{R}}y^\pm\,\mathrm{d}\nu_x(y)$ 属于 $L^1(X)$，由控制收敛定理得
+\begin{align}
+\lim_{l\to+\infty}G^*_{\pm,l}=0\quad\text{于 }L^1(X).\label{align:ch05-5.113}
+\end{align}
+
+同样，因 $\lim_{l\to+\infty}g_{0,l}(y)=1$ 对每个 $y\in\mathbb{R}$，且 $|f(y)g_{0,l}(y)|\leqslant|f(y)|$ 对 $\mu$-几乎所有 $x\in X$ 属 $L^1(\mathbb{R},\mathscr{B},\nu_x)$（这由\eqref{align:ch05-5.109}、\eqref{align:ch05-5.86}与 $u_\pm\in L^1(X)$ 得到），有 $\lim_{l\to+\infty}G^*_{0,l}(x)=f^*(x)$ 对 $\mu$-几乎所有 $x\in X$，其中 $f^*$ 如\eqref{align:ch05-5.108}。另一方面，由不等式\eqref{align:ch05-5.109}有 $|G^*_{0,l}(x)|\leqslant L\int_{\mathbb{R}}(1+|y|)\,\mathrm{d}\nu_x(y)$ 对 $\mu$-几乎所有 $x\in X$。因映射 $x\mapsto\int_{\mathbb{R}}(1+|y|)\,\mathrm{d}\nu_x(y)$ 属于 $L^1(X)$，由控制收敛定理得
+\begin{align}
+\lim_{l\to+\infty}G^*_{0,l}=f^*\quad\text{于 }L^1(X).\label{align:ch05-5.114}
+\end{align}
+
+需证明：当 $k\to\infty$ 时（可能抽取子列，不重新标号）有
+\begin{align}
+u_{j_k}g_{\pm,l}(u_{j_k})\stackrel{*}{\rightharpoonup}G^*_{\pm,l}\pm\sigma_\pm,
+\qquad
+f(u_{j_k})g_{0,l}(u_{j_k})\stackrel{n}{\rightharpoonup}G^*_{0,l}
+\quad\text{于 }\mathscr{R}_f(X),\label{align:ch05-5.115}
+\end{align}
+其中 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 $\sigma_\pm\in\mathscr{R}^+_f(X)$ 由\hyperref[remark:ch05-5.4.5]{注记}给出。
+
+利用\eqref{align:ch05-5.115}中的收敛断言可以完成证明。事实上，由不等式\eqref{align:ch05-5.111}，在 $X$ 中 $\mu$-几乎处处有
+\begin{align*}
+&(M^-_f+\varepsilon)u_{j_k}g_{-,l}(u_{j_k})+f(u_{j_k})g_{0,l}(u_{j_k})+(M^+_f-\varepsilon)u_{j_k}g_{+,l}(u_{j_k})\leqslant f(u_{j_k})\\
+&\quad\leqslant(M^-_f-\varepsilon)u_{j_k}g_{-,l}(u_{j_k})+f(u_{j_k})g_{0,l}(u_{j_k})+(M^+_f+\varepsilon)u_{j_k}g_{+,l}(u_{j_k}).
+\end{align*}
+由\eqref{align:ch05-5.115}，在上述不等式中令 $k\to\infty$ 得：对每个 $\zeta\in C_c(X)$，$\zeta\geqslant0$，
+\begin{align}
+&(M^-_f+\varepsilon)\Big(\int_XG^*_{-,l}\zeta\,\mathrm{d}\mu-\langle\sigma_-,\zeta\rangle\Big)+\int_XG^*_{0,l}\zeta\,\mathrm{d}\mu
++(M^+_f-\varepsilon)\Big(\int_XG^*_{+,l}\zeta\,\mathrm{d}\mu+\langle\sigma_+,\zeta\rangle\Big)\notag\\
+&\quad\leqslant\liminf_{k\to\infty}\int_Xf(u_{j_k})\zeta\,\mathrm{d}\mu
+\leqslant\limsup_{k\to\infty}\int_Xf(u_{j_k})\zeta\,\mathrm{d}\mu\notag\\
+&\quad\leqslant(M^-_f-\varepsilon)\Big(\int_XG^*_{-,l}\zeta\,\mathrm{d}\mu-\langle\sigma_-,\zeta\rangle\Big)+\int_XG^*_{0,l}\zeta\,\mathrm{d}\mu
++(M^+_f+\varepsilon)\Big(\int_XG^*_{+,l}\zeta\,\mathrm{d}\mu+\langle\sigma_+,\zeta\rangle\Big).\notag
+\end{align}
+由\eqref{align:ch05-5.113}--\eqref{align:ch05-5.114}，在该不等式中令 $l\to\infty$ 得
+\begin{align}
+&(M^+_f-\varepsilon)\langle\sigma_+,\zeta\rangle+\int_Xf^*\zeta\,\mathrm{d}\mu-(M^-_f+\varepsilon)\langle\sigma_-,\zeta\rangle\notag\\
+&\quad\leqslant\liminf_{k\to\infty}\int_Xf(u_{j_k})\zeta\,\mathrm{d}\mu
+\leqslant\limsup_{k\to\infty}\int_Xf(u_{j_k})\zeta\,\mathrm{d}\mu\notag\\
+&\quad\leqslant(M^+_f+\varepsilon)\langle\sigma_+,\zeta\rangle+\int_Xf^*\zeta\,\mathrm{d}\mu-(M^-_f-\varepsilon)\langle\sigma_-,\zeta\rangle\label{align:ch05-5.116}
+\end{align}
+对所有非负的 $\zeta\in C_c(X)$ 与 $\varepsilon>0$ 成立。由 $\varepsilon$ 与 $\zeta$ 的任意性，从\eqref{align:ch05-5.116}得\eqref{align:ch05-5.107}，于是结果得证。
+
+尚需证明\eqref{align:ch05-5.115}。只证明带“$+$”的第一个断言，另一情形类似。为此观察到
+\begin{align*}
+yg_+(y)-y^+\leqslant y-y^+\leqslant0\quad\text{对所有 }y\in\mathbb{R},
+\qquad
+yg_+(y)-y^+=0\quad\text{若 }y\in(-\infty,0]\cup[l+1,\infty),
+\end{align*}
+从而
+\begin{align*}
+|yg_+(y)-y^+|=y^+-yg_+(y)\leqslant|y|\quad\text{对所有 }y\in\mathbb{R}.
+\end{align*}
+于是由\cref{proposition:ch05-弱收敛}与\hyperref[remark:ch05-一致可积加强]{注记}，当 $k\to\infty$ 时有
+\begin{align*}
+u_{j_k}g_+(u_{j_k})-u^+_{j_k}\rightharpoonup\int_{\mathbb{R}}[yg_+(y)-y^+]\,\mathrm{d}\nu_x(y)
+\quad\text{于 }L^1(X)
+\end{align*}
+（可能抽取子列，不重新标号），从而特别地
+\begin{align}
+u_{j_k}g_+(u_{j_k})-u^+_{j_k}\stackrel{n}{\rightharpoonup}\int_{\mathbb{R}}[yg_+(y)-y^+]\,\mathrm{d}\nu_x(y)
+\quad\text{于 }\mathscr{R}_f(X).\label{align:ch05-5.117}
+\end{align}
+另一方面，由\hyperref[remark:ch05-5.4.4]{注记}，当 $k\to\infty$ 时
+\begin{align}
+(u_{j_k})_+\stackrel{*}{\rightharpoonup}\int_{\mathbb{R}}y^+\,\mathrm{d}\nu_x(y)+\sigma_+
+\quad\text{于 }\mathscr{R}_f(X).\label{align:ch05-5.118}
+\end{align}
+由\eqref{align:ch05-5.117}--\eqref{align:ch05-5.118}得 $u_{j_k}g_{+,l}(u_{j_k})\stackrel{*}{\rightharpoonup}G^*_{+,l}+\sigma_+$。
+
+关于\eqref{align:ch05-5.115}中的第二个断言，观察到
+\begin{align*}
+\sup_{x\in X}|f(u_{j_k}(x))|g_{0,l}(u_{j_k}(x))\leqslant\max_{y\in[-l-1,l+1]}|f(y)|<\infty.
+\end{align*}
+于是序列 $\{f(u_{j_k})g_{0,l}(u_{j_k})\}$ 在 $L^\infty(X)$ 中有界，从而在 $L^1(X)$ 中有界且一致可积（见\cref{lemma:ch02-有界一致可积}）。于是由\cref{proposition:ch05-弱收敛}（可能抽取子列，不重新标号）有
+\begin{align*}
+\lim_{k\to\infty}\int_Xf(u_{j_k}(x))g_{0,l}(u_{j_k}(x))\zeta(x)\,\mathrm{d}\mu(x)
+&=\int_X\mathrm{d}\mu(x)\,\zeta(x)\int_{\mathbb{R}}f(y)g_{0,l}(y)\,\mathrm{d}\nu_x(y)\\
+&=\int_XG^*_{0,l}(x)\zeta(x)\,\mathrm{d}\mu(x)
+\end{align*}
+对任意 $\zeta\in C_b(X)$ 成立。证明完成。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-函数弱星; kind=proof; 原证明中“显然 (5.111) 成立”“由 (5.106) 得 (5.109)–(5.110)”“$G^*_{\pm,l}\in L^1(X)$、$G^*_{0,l}\in L^1(X)$”“由控制收敛定理得 (5.113)–(5.114)”“令 $k\to\infty$ 与 $l\to\infty$ 的两次取极限”“由 $\varepsilon,\zeta$ 的任意性得 (5.107)”六处未展开，此处逐处补出
+\begin{proof}
+第一处：\eqref{align:ch05-5.111}的验证。按 $y$ 的位置分三段。若 $y\geqslant l$，则 $g_{-,l}(y)=0$，且由 $l>y_\varepsilon\geqslant y_\varepsilon$ 得\eqref{align:ch05-5.110}中的下界 $(M^+_f-\varepsilon)y\leqslant f(y)$；又 $g_{0,l}(y)+g_{+,l}(y)=1$，故\eqref{align:ch05-5.111}两端之差为 $f(y)-[(M^+_f-\varepsilon)yg_{+,l}(y)+f(y)g_{0,l}(y)]=g_{+,l}(y)[f(y)-(M^+_f-\varepsilon)y]\geqslant0$，而右端之差为 $g_{+,l}(y)[(M^+_f+\varepsilon)y-f(y)]\geqslant0$。若 $y\leqslant-l$，同理用\eqref{align:ch05-5.110}中 $y\leqslant-y_\varepsilon$ 的一支与 $g_{0,l}+g_{-,l}=1$ 得证。若 $|y|\leqslant l$，则 $g_{\pm,l}(y)=0$、$g_{0,l}(y)=1$，\eqref{align:ch05-5.111}化为 $f(y)\leqslant f(y)\leqslant f(y)$。中间过渡带 $[-l-1,-l]$ 与 $[l,l+1]$ 上 $g_{0,l}$ 与相应的 $g_{\pm,l}$ 均取 $[0,1]$ 中的值且和为 $1$，上述逐项比较仍逐字适用（因为系数非负）。
+
+第二处：\eqref{align:ch05-5.109}--\eqref{align:ch05-5.110}由\eqref{align:ch05-5.106}得到。由\eqref{align:ch05-5.106}，$f(y)/y\to M^+_f$（$y\to+\infty$），故 $f$ 在 $[1,\infty)$ 上有界且 $|f(y)|\leqslant(1+|M^+_f|)y$ 对 $y$ 充分大；在 $[-1,1]$ 上由 $f$ 连续得 $|f|\leqslant\max_{[-1,1]}|f|$；在 $(-\infty,-1]$ 上同理。合并即得\eqref{align:ch05-5.109}。而\eqref{align:ch05-5.110}是 $f(y)/y\to M^\pm_f$ 的 $\varepsilon$ 说法（$y<0$ 时除以 $y$ 使不等式反向，故写为 $\pm y\geqslant y_\varepsilon$ 的统一形式）。
+
+第三处：$G^*_{0,l},G^*_{\pm,l}\in L^1(X)$。由 $|g_{0,l}|\leqslant1$、\eqref{align:ch05-5.109}与\eqref{align:ch05-5.86}，$|G^*_{0,l}(x)|\leqslant L\int_{\mathbb{R}}(1+|y|)\,\mathrm{d}\nu_x(y)=L[1+u^+(x)+u^-(x)]$，其右端属 $L^1(X)$；由 $|yg_{\pm,l}(y)|\leqslant|y|\chi_{[l,\infty)}(y)$ 与\eqref{align:ch05-5.86}，$|G^*_{\pm,l}(x)|\leqslant u^\pm(x)\in L^1(X)$。又 $G^*_{0,l}$、$G^*_{\pm,l}$ 为 $\mathscr{B}(X)$-可测（由参数化测度的定义与\cref{definition:ch05-Caratheodory}），故三者均属 $L^1(X)$。
+
+第四处：\eqref{align:ch05-5.113}--\eqref{align:ch05-5.114}的控制收敛。以 $G^*_{+,l}$ 为例：$|G^*_{+,l}(x)|\leqslant\int_{\mathbb{R}}y^+\,\mathrm{d}\nu_x(y)=u^+(x)$，而 $u^+\in L^1(X)$ 为可积控制函数，且 $G^*_{+,l}(x)\to0$ 对 $\mu$-几乎所有 $x$；故由控制收敛定理得 $\|G^*_{+,l}\|_{L^1(X)}\to0$。$G^*_{-,l}$ 同理。对 $G^*_{0,l}$，控制函数为 $L[1+u^++u^-]\in L^1(X)$，极限为 $f^*$，故 $G^*_{0,l}\to f^*$ 于 $L^1(X)$。
+
+第五处：两次取极限。先固定 $l$ 与 $\zeta\in C_c(X)$，令 $k\to\infty$：由\eqref{align:ch05-5.115}，$\int_Xu_{j_k}g_{\pm,l}(u_{j_k})\zeta\,\mathrm{d}\mu\to\int_XG^*_{\pm,l}\zeta\,\mathrm{d}\mu\pm\langle\sigma_\pm,\zeta\rangle$ 且 $\int_Xf(u_{j_k})g_{0,l}(u_{j_k})\zeta\,\mathrm{d}\mu\to\int_XG^*_{0,l}\zeta\,\mathrm{d}\mu$（弱$^*$与窄收敛都蕴含与 $\zeta\in C_c(X)\subseteq C_0(X)\subseteq C_b(X)$ 的配对收敛）。于是从逐点不等式得四条不等式链。再令 $l\to\infty$：由\eqref{align:ch05-5.113}--\eqref{align:ch05-5.114}，$\int_XG^*_{\pm,l}\zeta\,\mathrm{d}\mu\to0$、$\int_XG^*_{0,l}\zeta\,\mathrm{d}\mu\to\int_Xf^*\zeta\,\mathrm{d}\mu$（因 $|\zeta|\leqslant\|\zeta\|_\infty$ 且 $\zeta$ 具紧支撑），即得\eqref{align:ch05-5.116}。
+
+第六处：由\eqref{align:ch05-5.116}得\eqref{align:ch05-5.107}。\eqref{align:ch05-5.116}对一切 $\varepsilon>0$ 成立，令 $\varepsilon\downarrow0$ 得
+\begin{align*}
+&M^+_f\langle\sigma_+,\zeta\rangle+\int_Xf^*\zeta\,\mathrm{d}\mu-M^-_f\langle\sigma_-,\zeta\rangle\\
+&\leqslant\liminf_{k}\int_Xf(u_{j_k})\zeta\,\mathrm{d}\mu
+\leqslant\limsup_{k}\int_Xf(u_{j_k})\zeta\,\mathrm{d}\mu\\
+&\leqslant M^+_f\langle\sigma_+,\zeta\rangle+\int_Xf^*\zeta\,\mathrm{d}\mu-M^-_f\langle\sigma_-,\zeta\rangle,
+\end{align*}
+故 $\lim_k\int_Xf(u_{j_k})\zeta\,\mathrm{d}\mu=\langle f^*\,\mathrm{d}\mu+M^+_f\sigma_+-M^-_f\sigma_-,\zeta\rangle$ 对一切 $\zeta\in C_c(X)$，$\zeta\geqslant0$ 成立。把 $\zeta$ 换成 $\zeta_1-\zeta_2$（$\zeta_i\in C_c(X)$，$\zeta_i\geqslant0$）即知该等式对一切 $\zeta\in C_c(X)$ 成立。因 $C_c(X)$ 在 $C_0(X)$ 中稠密且 $\mathscr{R}_f(X)$ 为 $C_0(X)$ 的对偶，得\eqref{align:ch05-5.107}。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-函数弱星; kind=motivation; 说明该命题的动机（$f\circ u_{j_k}$ 的弱$^*$极限由“振荡部分” $f^*$ 与“集中部分” $M^\pm_f\sigma_\pm$ 组成）、$f$ 在 $\pm\infty$ 处的极限 $M^\pm_f$ 如何充当集中质量的密度、去掉 (5.106) 的反例，以及 $M^+_f\sigma_+-M^-_f\sigma_-$ 中符号的来源
+\begin{remark}\phantomsection\label{remark:ch05-函数弱星注}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{proposition:ch05-弱收敛}只处理 $f\circ u_{j_k}$ 在 $L^1(X)$ 中的弱收敛，其前提是 $f$ 具至多线性增长\emph{且}序列一致可积。本命题取消一致可积性：此时 $f\circ u_{j_k}$ 的弱$^*$极限多出一项 $M^+_f\sigma_+-M^-_f\sigma_-$，它记录 $u_{j_k}$ 在集中集上取大值时 $f$ 的渐近斜率。因此\eqref{align:ch05-5.107}是“振荡 + 集中”分解在非线性 $f$ 下的完整形式。
+
+\item 各假设的作用。$\{u_j\}$ 的有界性使\cref{theorem:ch05-分解}可用，从而给出 $\nu$ 与 $\sigma_\pm$，并使\eqref{align:ch05-5.109}中的线性控制有意义；\eqref{align:ch05-5.106}（即 $f$ 在 $\pm\infty$ 处有有限的渐近斜率）给出常数 $M^\pm_f$ 与\eqref{align:ch05-5.109}--\eqref{align:ch05-5.110}，前者保证 $f\circ u_{j_k}$ 在 $L^1(X)$ 中有界，后者是\eqref{align:ch05-5.111}中把 $f(y)$ 换成 $M^\pm_fy$ 的依据；$f$ 的连续性用于\eqref{align:ch05-5.115}中 $f(u_{j_k})g_{0,l}(u_{j_k})$ 的有界性（在与 $l$ 有关的紧区间上取最大值）。
+
+\item 符号的来源。在 $y\to+\infty$ 一侧，$y>0$ 且 $f(y)\approx M^+_fy$，而该侧的质量由 $u^+_{j_k}$ 的部分承载，其弱$^*$极限含 $+\sigma_+$，故贡献为 $+M^+_f\sigma_+$。在 $y\to-\infty$ 一侧，$y<0$ 使 $f(y)\approx M^-_fy$，而 $y\approx-t$（$t\to+\infty$）对应 $u^-_{j_k}$ 的部分，其弱$^*$极限中 $\sigma_-$ 以负号进入（$u^*=u^+-u^-$），故贡献为 $-M^-_f\sigma_-$。若 $f$ 为偶函数（$M^+_f=-M^-_f=M_f$），则\eqref{align:ch05-5.107}读作 $f\circ u_{j_k}\stackrel{*}{\rightharpoonup}f^*+M_f(\sigma_++\sigma_-)$。
+
+\item 边界与反例。若\eqref{align:ch05-5.106}失效（$f$ 在无穷远处超线性增长），结论不成立。取 $X=(0,1)$、$\mu=\lambda$、$u_k=k\chi_{(0,1/k)}$、$f(y)=y^2$，则 $f(u_k)=k^2\chi_{(0,1/k)}$，$\|f(u_k)\|_{L^1(X)}=k\to\infty$ 无界，故 $\{f(u_k)\}$ 在 $\mathscr{R}_f(X)$ 中无弱$^*$收敛子列，\eqref{align:ch05-5.107}无意义。又若 $f$ 有界（$M^\pm_f=0$），则\eqref{align:ch05-5.107}退化为 $f\circ u_{j_k}\stackrel{*}{\rightharpoonup}f^*$，此时集中项消失，与\cref{proposition:ch05-弱收敛}一致。
+\end{enumerate}
+\end{remark}
+
+最后证明\cref{theorem:ch05-分解}的如下推论，它改进\cref{proposition:ch02-强收敛性质}(iv)。
+
+\begin{proposition}\label{proposition:ch05-强收敛}
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。设 $\{u_j\}\subseteq L^1(X)\equiv L^1(X,\mathscr{B}(X),\mu)$ 与 $u\in L^1(X)$。设 $u_j\to u$ 对 $\mu$-几乎所有 $x\in X$，且
+\begin{align}
+\limsup_{j\to\infty}\|u_j\|_{L^1(X)}\leqslant\|u\|_{L^1(X)}.\label{align:ch05-5.119}
+\end{align}
+则 $u_j\to u$ 强收敛于 $L^1(X)$。
+\end{proposition}
+
+\begin{proof}
+反证，设存在 $\varepsilon>0$ 与子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 使
+\begin{align}
+\|u_{j_k}-u\|_{L^1(X)}\geqslant\varepsilon\quad\text{对所有 }k\in\mathbb{N}.\label{align:ch05-5.120}
+\end{align}
+由\eqref{align:ch05-5.119}，子列 $\{u_{j_k}\}$ 在 $L^1(X)$ 中有界。此外，因 $u_{j_k}\to u$ 对 $\mu$-几乎所有 $x\in X$，由\cref{proposition:ch05-几乎处处收敛}得 $\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\nu_u$，其中 $(\nu_u)_x=\delta_{u(x)}$ 对 $\mu$-几乎所有 $x\in X$。于是由\cref{theorem:ch05-分解}存在进一步子列（仍不重新标号）使
+\begin{align}
+\limsup_{k\to\infty}\|u_{j_k}\|_{L^1(X)}=\eta+\|u\|_{L^1(X)}\label{align:ch05-5.121}
+\end{align}
+（见\eqref{align:ch05-5.96}）。由\eqref{align:ch05-5.119}与\eqref{align:ch05-5.121}得 $\eta=0$，从而 $\{u_{j_k}\}$ 一致可积。于是由 Vitali 定理（\cref{theorem:ch02-Vitali}）$u_{j_k}\to u$ 强收敛于 $L^1(X)$，与\eqref{align:ch05-5.120}矛盾，故结果成立。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-强收敛; kind=proof; 原证明中“由 (5.119) 子列有界”“由 (5.96) 得 (5.121)”“由 (5.119) 与 (5.121) 得 $\eta=0$”三处为转引，此处补出：(5.121) 的完整推导需用 $\nu_x=\delta_{u(x)}$ 把 (5.96) 的振荡项消去，并用控制收敛定理处理范数差
+\begin{proof}
+第一处：子列有界。由\eqref{align:ch05-5.119}，存在 $j_0$ 使 $\sup_{j\geqslant j_0}\|u_j\|_{L^1(X)}\leqslant\|u\|_{L^1(X)}+1$，故 $\sup_j\|u_j\|_{L^1(X)}<\infty$。
+
+第二处：由\eqref{align:ch05-5.96}得\eqref{align:ch05-5.121}。把\cref{theorem:ch05-分解}(v) 用于序列 $\{u_{j_k}\}$ 与 $u\in L^1(X)$：因 $u_{j_k}\to u$ $\mu$-几乎处处且 $\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\nu_u$，窄极限唯一给出 $\nu=\nu_u$，故 $\nu_x=\delta_{u(x)}$ 对 $\mu$-几乎所有 $x$。于是重心为 $u^*(x)=\int_{\mathbb{R}}y\,\mathrm{d}\delta_{u(x)}(y)=u(x)$，振荡集 $F=\{x\mid\nu_x\neq\delta_{u^*(x)}\}=\varnothing$，且
+\begin{align*}
+\int_{\mathbb{R}}|y-u(x)|\,\mathrm{d}\nu_x(y)=|u(x)-u(x)|=0
+\quad\text{对 }\mu\text{-几乎所有 }x\in X.
+\end{align*}
+代入\eqref{align:ch05-5.96}得 $\lim_k\|u_{j_k}-u\|_{L^1(X)}=\eta$。另一方面，由 $|\,|u_{j_k}|-|u_{j_k}-u|\,|\leqslant|u|$ 与 $u\in L^1(X)$，控制收敛定理给出
+\begin{align*}
+\lim_{k\to\infty}\big(\|u_{j_k}\|_{L^1(X)}-\|u_{j_k}-u\|_{L^1(X)}\big)=\|u\|_{L^1(X)},
+\end{align*}
+故 $\lim_k\|u_{j_k}\|_{L^1(X)}=\eta+\|u\|_{L^1(X)}$，此即\eqref{align:ch05-5.121}。
+
+第三处：$\eta=0$。由\eqref{align:ch05-5.121}，$\lim_k\|u_{j_k}\|_{L^1(X)}=\eta+\|u\|_{L^1(X)}\geqslant\|u\|_{L^1(X)}$；而由\eqref{align:ch05-5.119}，同一量满足 $\limsup_k\|u_{j_k}\|_{L^1(X)}\leqslant\|u\|_{L^1(X)}$。两者合并得 $\eta\leqslant0$，即 $\eta=0$。
+
+第四处：由 $\eta=0$ 到强收敛。$\{u_{j_k}\}$ 有界（第一处）且 $\eta(\{u_{j_k}\})=0$，故由\hyperref[remark:ch02-模零一致可积]{注记}它一致可积。又 $u_{j_k}\to u$ $\mu$-几乎处处且 $u\in L^1(X)$，故\cref{theorem:ch02-Vitali}给出 $\|u_{j_k}-u\|_{L^1(X)}\to0$，与\eqref{align:ch05-5.120}（其中 $\varepsilon>0$）矛盾。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-强收敛; kind=motivation; 说明该命题相对于命题 2.8.8(iv) 的改进（只需范数的上极限估计，不需范数收敛）、两项假设的逐处作用、去掉任一假设的反例，以及“几乎处处收敛”不能换成“弱收敛”的边界
+\begin{remark}\phantomsection\label{remark:ch05-强收敛注}
+\begin{enumerate}[(i)]
+\item 引入动机。Vitali 定理（\cref{theorem:ch02-Vitali}）断言：几乎处处收敛加一致可积蕴含 $L^1$ 强收敛。本命题说明一致可积性不必预先假设——它可由“范数的不等式\eqref{align:ch05-5.119}”与几乎处处收敛自动导出。与\cref{proposition:ch02-强收敛性质}(iv) 相比，这里只需 $\limsup_j\|u_j\|_{L^1(X)}\leqslant\|u\|_{L^1(X)}$，而\emph{不}需要 $\|u_j\|_{L^1(X)}\to\|u\|_{L^1(X)}$；两者的差别恰是\eqref{align:ch05-5.121}中的集中损失 $\eta$，而本命题的结论是 $\eta=0$。
+
+\item 各假设的作用。几乎处处收敛用于两处：一是由\cref{proposition:ch05-几乎处处收敛}确定极限 Young 测度为 $\nu_{u}$（从而 $\nu_x=\delta_{u(x)}$，振荡项与 $F$ 消失），二是作为 Vitali 定理的逐点收敛前提。\eqref{align:ch05-5.119}用于排除质量集中：若无此式，则由\eqref{align:ch05-5.121}可有 $\eta>0$，序列只弱收敛而不强收敛。$\mu$ 的有限性与 $X$ 的可数基使\cref{theorem:ch05-分解}与\cref{proposition:ch05-几乎处处收敛}可用。
+
+\item 反例。去掉\eqref{align:ch05-5.119}：取 $X=(0,1)$、$u_k\triangleq k\chi_{(0,1/k)}$、$u\equiv0$，则 $u_k\to0$ $\lambda$-几乎处处（除 $x=0$ 外），而 $\|u_k\|_{L^1(X)}=1>0=\|u\|_{L^1(X)}$，且 $\|u_k-u\|_{L^1(X)}=1$ 不趋于零，故结论不成立；此时 $\eta=1$，与\eqref{align:ch05-5.105}一致。
+
+\item 边界。$\mu$-几乎处处收敛不可减弱为弱收敛。取 $X=(0,1)$、$u\triangleq\chi_{(0,1/2)}$，并置 $u_k\triangleq\chi_{(0,1/2)}$（$k$ 为偶数）、$u_k\triangleq\chi_{(1/2,1)}$（$k$ 为奇数）。则 $\|u_k\|_{L^1(X)}=1/2=\|u\|_{L^1(X)}$，故\eqref{align:ch05-5.119}成立，且 $u_k\rightharpoonup1/2$ 于 $L^1(X)$；但当 $k$ 为奇数时 $\|u_k-u\|_{L^1(X)}=1/2$，故 $u_k$ 不强收敛于 $u$，且 $\{u_k\}$ 的任何子列都不在 $X$ 上几乎处处收敛。可见逐点收敛在本命题中不可替代，其作用是在第四处作为 Vitali 定理的前提。
+\end{enumerate}
+\end{remark}
 
 \end{document}

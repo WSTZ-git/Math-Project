@@ -1,0 +1,810 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{面积公式}\label{section:ch03-03}
+
+本节始终假定
+\begin{align*}
+n\leqslant m.
+\end{align*}
+
+\subsection{预备知识}\label{subsection:ch03-03-1}
+
+本节沿用\cref{section:ch03-02}的术语与记号。% XREF internal
+对线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$（$n\leqslant m$），$\llbracket L\rrbracket$ 表示 $L$ 的 Jacobi 因子，它等于 $L$ 的一切 $n\times n$ 子行列式平方和的平方根；若 $L=O\circ S$ 为 $L$ 的极分解，其中 $O:\mathbb{R}^n\to\mathbb{R}^m$ 为等距嵌入、$S:\mathbb{R}^n\to\mathbb{R}^n$ 为对称变换，则
+\begin{align*}
+\llbracket L\rrbracket=\lvert\det S\rvert .
+\end{align*}
+对 Lipschitz 连续映射 $f:\mathbb{R}^n\to\mathbb{R}^m$，在 $Df(x)$ 存在处把线性映射 $Df(x):\mathbb{R}^n\to\mathbb{R}^m$ 的 Jacobi 因子记为
+\begin{align*}
+Jf(x):=\llbracket Df(x)\rrbracket ,
+\end{align*}
+并称 $Jf(x)$ 为 $f$ 在 $x$ 处的 \textbf{Jacobi 行列式}。以下总用 $B(x,r)$ 表示以 $x$ 为心、$r$ 为半径的开球，并记 $\alpha(n):=\mathcal{L}^n(B(0,1))$ 为 $\mathbb{R}^n$ 中单位球的体积。
+
+\begin{lemma}[线性映射的 Jacobi 因子与 Hausdorff 测度]\label{lemma:ch03-3-1}
+设 $n,m$ 为正整数，$n\leqslant m$，$L:\mathbb{R}^n\to\mathbb{R}^m$ 为线性映射，$\llbracket L\rrbracket$ 为 $L$ 的 Jacobi 因子。则对每个子集 $A\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\mathcal{H}^n(L(A))=\llbracket L\rrbracket\,\mathcal{L}^n(A).
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+（1）如\cref{section:ch03-02}所述，写 $L=O\circ S$，其中 $O$ 为 $\mathbb{R}^n$ 到 $\mathbb{R}^m$ 的等距嵌入、$S$ 为 $\mathbb{R}^n$ 上的对称变换；于是 $\llbracket L\rrbracket=\lvert\det S\rvert$。% XREF p=130 "Write L = O ∘ S as in Section 3.2; [[L]] = |det S|."
+
+（2）若 $\llbracket L\rrbracket=0$，则 $\dim S(\mathbb{R}^n)\leqslant n-1$，从而 $\dim L(\mathbb{R}^n)\leqslant n-1$。于是 $\mathcal{H}^n(L(\mathbb{R}^n))=0$。
+
+若 $\llbracket L\rrbracket>0$，则
+\begin{align*}
+\frac{\mathcal{H}^n(L(B(x,r)))}{\mathcal{L}^n(B(x,r))}
+&=\frac{\mathcal{L}^n(O^{*}\circ L(B(x,r)))}{\mathcal{L}^n(B(x,r))}
+=\frac{\mathcal{L}^n(O^{*}\circ O\circ S(B(x,r)))}{\mathcal{L}^n(B(x,r))}\\
+&=\frac{\mathcal{L}^n(S(B(x,r)))}{\mathcal{L}^n(B(x,r))}
+=\frac{\mathcal{L}^n(S(B(0,1)))}{\alpha(n)}
+=\lvert\det S\rvert=\llbracket L\rrbracket .
+\end{align*}
+
+（3）对一切 $A\subseteq\mathbb{R}^n$ 定义 $\nu(A):=\mathcal{H}^n(L(A))$。则 $\nu$ 是 Radon 测度，$\nu\ll\mathcal{L}^n$，并且
+\begin{align*}
+D_{\mathcal{L}^n}\nu(x)=\lim_{r\to0}\frac{\nu(B(x,r))}{\mathcal{L}^n(B(x,r))}=\llbracket L\rrbracket .
+\end{align*}
+于是对一切 Borel 集 $B\subseteq\mathbb{R}^n$，由\cref{theorem:ch01-1-30}得% XREF p=130 "Then for all Borel sets B ⊆ R^n, Theorem 1.30 implies"
+\begin{align*}
+\mathcal{H}^n(L(B))=\llbracket L\rrbracket\,\mathcal{L}^n(B).
+\end{align*}
+由于 $\nu$ 与 $\mathcal{L}^n$ 都是 Radon 测度，同一公式对一切集合 $A\subseteq\mathbb{R}^n$ 成立。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-3-1; kind=proof; 补足第（2）步各等号的依据、第（3）步中 $\nu$ 的 Radon 性与绝对连续性，以及由 Borel 集过渡到任意集合的内外逼近论证
+\begin{proof}
+（1）第（2）步第一个等号。由 $O^{*}\circ O=I_{\mathbb{R}^n}$ 知 $O^{*}\circ L(B(x,r))=S(B(x,r))\subseteq\mathbb{R}^n$，而 $O^{*}$ 把 $n$ 维子空间 $O(\mathbb{R}^n)$ 等距地映到 $\mathbb{R}^n$ 上，Hausdorff 测度在等距变换下不变，故
+\begin{align*}
+\mathcal{H}^n(L(B(x,r)))=\mathcal{H}^n\bigl(S(B(x,r))\bigr).
+\end{align*}
+又由\cref{theorem:ch02-2-5}，$\mathbb{R}^n$ 上 $\mathcal{H}^n=\mathcal{L}^n$，故上式右端等于 $\mathcal{L}^n(S(B(x,r)))$；于是给出了第一个与第三个等号。第二个等号只用到 $O^{*}\circ O=I_{\mathbb{R}^n}$。% XREF internal
+
+（2）第（2）步第四个等号。因 $S$ 对称，存在正交矩阵 $Q$ 与实数 $\lambda_1,\cdots,\lambda_n$，使得 $Q^{-1}SQ=\operatorname{diag}(\lambda_1,\cdots,\lambda_n)$。正交变换保持 Lebesgue 测度，对角变换把测度放大 $\lvert\lambda_1\cdots\lambda_n\rvert=\lvert\det S\rvert$ 倍，故对每个 $r>0$ 有
+\begin{align*}
+\mathcal{L}^n(S(B(x,r)))=\lvert\det S\rvert\,\mathcal{L}^n(B(x,r)),
+\end{align*}
+于是 $\mathcal{L}^n(S(B(x,r)))/\mathcal{L}^n(B(x,r))=\lvert\det S\rvert$；取 $r=1$、$x=0$ 并用 $\mathcal{L}^n(B(0,1))=\alpha(n)$，得第五个等号 $\mathcal{L}^n(S(B(0,1)))/\alpha(n)=\lvert\det S\rvert$。
+
+（3）$\nu$ 是 Radon 测度。$\nu$ 是 Borel 测度：若 $\llbracket L\rrbracket>0$，则 $L$ 为单射，把 Borel 集映为 Borel 集，故 $E$ 为 Borel 集时 $\nu(E)=\mathcal{H}^n(L(E))$ 有定义且对可数并、补集运算保持；若 $\llbracket L\rrbracket=0$，则由第（2）步 $\nu\equiv0$。$\nu$ 局部有限：对紧集 $K\subseteq\mathbb{R}^n$，由\cref{theorem:ch02-2-8}（取 $s=n$）与等距不变性 % XREF internal
+\begin{align*}
+\nu(K)=\mathcal{H}^n(L(K))=\mathcal{H}^n(S(K))\leqslant\bigl(\Lip(S)\bigr)^n\mathcal{H}^n(K)=\bigl(\Lip(S)\bigr)^n\mathcal{L}^n(K)<\infty .
+\end{align*}
+$\mathbb{R}^n$ 上局部有限的 Borel 测度必为 Radon 测度，故 $\nu$ 是 Radon 测度。% XREF internal
+
+（4）$\nu\ll\mathcal{L}^n$。设 $\mathcal{L}^n(A)=0$。由 $\mathcal{L}^n$ 的 Borel 正则性，存在 Borel 集 $B\supseteq A$ 使 $\mathcal{L}^n(B)=0$。于是由第（1）（3）段同样的论证与\cref{theorem:ch02-2-8} % XREF internal
+\begin{align*}
+\nu(A)\leqslant\nu(B)=\mathcal{H}^n(S(B))\leqslant\bigl(\Lip(S)\bigr)^n\mathcal{H}^n(B)=\bigl(\Lip(S)\bigr)^n\mathcal{L}^n(B)=0 .
+\end{align*}
+
+（5）从 Borel 集过渡到任意集合。设 $A\subseteq\mathbb{R}^n$ 任意。取 Borel 集 $B\supseteq A$ 与 Borel 集 $C\subseteq A$，使 $\mathcal{L}^n(B)=\mathcal{L}^n(C)=\mathcal{L}^n(A)$（$\mathcal{L}^n$ 的外正则性与内正则性）。由已证的 Borel 情形
+\begin{align*}
+\llbracket L\rrbracket\mathcal{L}^n(A)=\llbracket L\rrbracket\mathcal{L}^n(C)=\mathcal{H}^n(L(C))\leqslant\mathcal{H}^n(L(A))\leqslant\mathcal{H}^n(L(B))=\llbracket L\rrbracket\mathcal{L}^n(B)=\llbracket L\rrbracket\mathcal{L}^n(A),
+\end{align*}
+故两端相等。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-3-1; kind=motivation; 说明该引理作为面积公式的线性模型、$\llbracket L\rrbracket$ 的几何含义，以及用测度微分定理证明的思路来源
+\begin{remark}\phantomsection\label{remark:ch03-lem-3-1-动机}
+本引理是面积公式在映射为线性时的特例，也是整个面积公式的模型。对线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$，像集 $L(A)$ 落在 $L(\mathbb{R}^n)$ 这个至多 $n$ 维的线性子空间中，其 $n$ 维 Hausdorff 测度与 $A$ 的 $n$ 维 Lebesgue 测度只差一个与 $A$ 无关的常数；这个常数就是 Jacobi 因子 $\llbracket L\rrbracket$，即 $L$ 在 $n$ 维方向上的面积放大倍数。当 $m=n$ 时 $\llbracket L\rrbracket=\lvert\det L\rvert$，本引理就是通常的线性变量替换公式；当 $m>n$ 时它给出「$n$ 维面积在嵌入下的放大率」，例如 $n=1$ 时 $\llbracket L\rrbracket=\lvert L\rvert$ 是向量的长度。
+
+证明的路线是把线性问题化为测度问题：先算出 $\nu(E):=\mathcal{H}^n(L(E))$ 在球上的密度恰为常数 $\llbracket L\rrbracket$，于是 $\nu$ 关于 $\mathcal{L}^n$ 的 Radon--Nikodym 导数处处等于该常数，再用测度微分定理把密度还原为测度。这条「先算球上密度、再积分回去」的路线正是面积公式一般情形证明的雏形，区别仅在于一般情形的密度 $Jf(x)$ 逐点变化，需要先用\cref{lemma:ch03-3-3}把映射局部化成近似线性的片。% XREF internal
+
+本引理同时解释了为什么面积公式的右端要出现重数函数：对线性映射，$L$ 在 $\mathbb{R}^n$ 上单射时 $\mathcal{H}^0(A\cap L^{-1}\{y\})=1$（$y\in L(A)$），故 $\int\mathcal{H}^0(A\cap L^{-1}\{y\})\diff\mathcal{H}^n=\mathcal{H}^n(L(A))=\llbracket L\rrbracket\mathcal{L}^n(A)$；若 $L$ 不单射，右端按重数累加，公式依然成立。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch03-3-1; kind=hypotheses; 逐条分析 $n\leqslant m$、$L$ 的线性性、$A$ 的任意性、$\llbracket L\rrbracket=0$ 的退化情形，并说明 $n>m$ 时结论失效
+\begin{remark}\phantomsection\label{remark:ch03-lem-3-1-条件}
+\begin{enumerate}[(i)]
+\item 条件 $n\leqslant m$ 不可删除。若 $n>m$，则 $L(\mathbb{R}^n)$ 的维数至多为 $m<n$，故 $\mathcal{H}^n(L(\mathbb{R}^n))=0$；取 $A=B(0,1)$ 得左端为 $0$，而右端 $\llbracket L\rrbracket\mathcal{L}^n(B(0,1))>0$（当 $L$ 的秩为 $m$ 时 $\llbracket L\rrbracket>0$），等式不成立。$n\leqslant m$ 保证 $\llbracket L\rrbracket$ 由 $L$ 的 $n\times n$ 子行列式定义。
+\item $L$ 的线性性在两处使用：其一，等距嵌入与对称变换的极分解使 $\llbracket L\rrbracket$ 成为与点无关的常数，故球上密度与球心和半径无关；其二，线性性保证 $L$ 把 $A$ 的几何形状按统一的倍数放大，这正是「密度为常数」的来源。对非线性映射，密度随点变化，引理的结论要换成面积公式的积分形式。
+\item $A$ 可以是 $\mathbb{R}^n$ 的任意子集，不要求 $\mathcal{L}^n$-可测，此时右端的 $\mathcal{L}^n(A)$ 理解为 Lebesgue 外测度、左端的 $\mathcal{H}^n(L(A))$ 理解为 Hausdorff 外测度；这正是第（3）步末尾要用 Radon 测度的内外正则性作逼近的原因。若把 $A$ 限制为 Borel 集，则第（2）步之后的论证可直接由\cref{theorem:ch01-1-30}得到。% XREF internal
+\item 退化情形 $\llbracket L\rrbracket=0$ 等价于 $\operatorname{rank}L\leqslant n-1$。此时 $L(\mathbb{R}^n)$ 含于一个 $(n-1)$ 维子空间，故 $\mathcal{H}^n(L(A))=0$，而右端 $\llbracket L\rrbracket\mathcal{L}^n(A)=0$（若 $\mathcal{L}^n(A)<\infty$）或按 $0\cdot\infty:=0$ 理解，等式仍成立。
+\item $\nu$ 的 Radon 性依赖 $n\leqslant m$ 之下 $L(\mathbb{R}^n)$ 是 $n$ 维子空间这一事实：$n$ 维 Hausdorff 测度限制在该子空间上局部有限，因而 $\nu$ 局部有限；若 $n>m$，$m$ 维空间上的 $n$ 维 Hausdorff 测度局部无限，$\nu$ 甚至不是 $\sigma$-有限的。
+\end{enumerate}
+\end{remark}
+
+此后总假定 $f:\mathbb{R}^n\to\mathbb{R}^m$ 为 Lipschitz 连续映射。
+
+\begin{lemma}[像集的可测性与重数函数的可积性]\label{lemma:ch03-3-2}
+设 $n,m$ 为正整数，$n\leqslant m$，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为 Lipschitz 连续映射，$A\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集。则
+\begin{enumerate}[(i)]
+\item $f(A)$ 是 $\mathcal{H}^n$-可测集；
+\item 映射 $y\mapsto\mathcal{H}^0(A\cap f^{-1}\{y\})$ 在 $\mathbb{R}^m$ 上是 $\mathcal{H}^n$-可测的；
+\item \begin{align*}
+\int_{\mathbb{R}^m}\mathcal{H}^0(A\cap f^{-1}\{y\})\diff\mathcal{H}^n\leqslant(\Lip(f))^n\mathcal{L}^n(A).
+\end{align*}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+（1）不妨设 $A$ 有界。由\cref{theorem:ch01-1-8}，存在紧集 $K_i\subseteq A$，使得% XREF p=131 "By Theorem 1.8, there exist compact sets K_i ⊆ A such that"
+\begin{align*}
+\mathcal{L}^n(K_i)\geqslant\mathcal{L}^n(A)-\frac1i\qquad(i=1,2,\cdots).
+\end{align*}
+由于 $\mathcal{L}^n(A)<\infty$ 且 $A$ 是 $\mathcal{L}^n$-可测的，$\mathcal{L}^n(A-K_i)<\frac1i$。由于 $f$ 连续，$f(K_i)$ 是紧集，从而是 $\mathcal{H}^n$-可测的。于是 $f\bigl(\bigcup_{i=1}^{\infty}K_i\bigr)=\bigcup_{i=1}^{\infty}f(K_i)$ 是 $\mathcal{H}^n$-可测的。此外，
+\begin{align*}
+\mathcal{H}^n\Bigl(f(A)-f\Bigl(\bigcup_{i=1}^{\infty}K_i\Bigr)\Bigr)
+&\leqslant\mathcal{H}^n\Bigl(f\Bigl(A-\bigcup_{i=1}^{\infty}K_i\Bigr)\Bigr)\\
+&\leqslant(\Lip(f))^n\mathcal{L}^n\Bigl(A-\bigcup_{i=1}^{\infty}K_i\Bigr)=0 .
+\end{align*}
+于是 $f(A)$ 是 $\mathcal{H}^n$-可测的，故 (i) 得证。
+
+（2）令
+\begin{align*}
+B_k:=\Bigl\{Q\Bigm|Q=(a_1,b_1]\times\cdots\times(a_n,b_n],\ a_i=\frac{c_i}{k},\ b_i=\frac{c_i+1}{k},\ c_i\in\mathbb{Z}\Bigr\},
+\end{align*}
+并注意
+\begin{align*}
+\mathbb{R}^n=\bigcup_{Q\in B_k}Q .
+\end{align*}
+现在
+\begin{align*}
+g_k:=\sum_{Q\in B_k}\chi_{f(A\cap Q)}
+\end{align*}
+由 (i) 是 $\mathcal{H}^n$-可测的，并且
+\begin{align*}
+g_k(y)=\#\{Q\in B_k\mid f^{-1}\{y\}\cap(A\cap Q)\neq\varnothing\}.
+\end{align*}
+于是当 $k\to\infty$ 时，
+\begin{align*}
+g_k(y)\to\mathcal{H}^0(A\cap f^{-1}\{y\})
+\end{align*}
+对每个 $y\in\mathbb{R}^m$ 成立；因而 $y\mapsto\mathcal{H}^0(A\cap f^{-1}\{y\})$ 是 $\mathcal{H}^n$-可测的。
+
+（3）由单调收敛定理，
+\begin{align*}
+\int_{\mathbb{R}^m}\mathcal{H}^0(A\cap f^{-1}\{y\})\diff\mathcal{H}^n
+&=\lim_{k\to\infty}\int_{\mathbb{R}^m}g_k\diff\mathcal{H}^n\\
+&=\lim_{k\to\infty}\sum_{Q\in B_k}\mathcal{H}^n(f(A\cap Q))\\
+&\leqslant\limsup_{k\to\infty}\sum_{Q\in B_k}(\Lip(f))^n\mathcal{L}^n(A\cap Q)\\
+&=(\Lip(f))^n\mathcal{L}^n(A).
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-3-2; kind=proof; 补足「不妨设 A 有界」的化归、H^n(f(E))≤(Lip f)^n L^n(E) 的依据、L^n(A−⋃K_i)=0 的推导，以及 g_k 的单调性与点态收敛
+\begin{proof}
+（1）化归到 $A$ 有界。若结论对一切有界的 $\mathcal{L}^n$-可测集成立，则对一般的 $\mathcal{L}^n$-可测集 $A$ 取
+\begin{align*}
+A_j:=A\cap\bigl(B(0,j)-B(0,j-1)\bigr)\qquad(j=1,2,\cdots),
+\end{align*}
+则各 $A_j$ 有界、$\mathcal{L}^n$-可测且两两不交，$A=\bigcup_{j=1}^{\infty}A_j$。断言 (i) 由 $f(A)=\bigcup_{j}f(A_j)$ 得到。断言 (ii) 由
+\begin{align*}
+\mathcal{H}^0(A\cap f^{-1}\{y\})=\sum_{j=1}^{\infty}\mathcal{H}^0(A_j\cap f^{-1}\{y\})
+\end{align*}
+与可测函数的级数仍可测得到。对部分和 $A^{(J)}:=\bigcup_{j=1}^{J}A_j$ 用 (iii) 并令 $J\to\infty$，由单调收敛定理得
+\begin{align*}
+\int_{\mathbb{R}^m}\mathcal{H}^0(A\cap f^{-1}\{y\})\diff\mathcal{H}^n
+&=\lim_{J\to\infty}\int_{\mathbb{R}^m}\mathcal{H}^0(A^{(J)}\cap f^{-1}\{y\})\diff\mathcal{H}^n\\
+&\leqslant(\Lip(f))^n\lim_{J\to\infty}\mathcal{L}^n(A^{(J)})\leqslant(\Lip(f))^n\mathcal{L}^n(A).
+\end{align*}
+故只需考虑 $A$ 有界的情形；此时 $\mathcal{L}^n(A)<\infty$，\cref{theorem:ch01-1-8}中取内逼近紧集所需的有限性条件成立。% XREF internal
+
+（2）第（1）步中的 Lipschitz 像估计。对每个 $E\subseteq\mathbb{R}^n$，由\cref{theorem:ch02-2-8}（取 $s=n$）与\cref{theorem:ch02-2-5}得% XREF internal
+\begin{align*}
+\mathcal{H}^n(f(E))\leqslant(\Lip(f))^n\mathcal{H}^n(E)=(\Lip(f))^n\mathcal{L}^n(E).
+\end{align*}
+
+（3）第（1）步末尾等号成立的理由。对每个 $i$ 有 $A-\bigcup_{j=1}^{\infty}K_j\subseteq A-K_i$，故
+\begin{align*}
+\mathcal{L}^n\Bigl(A-\bigcup_{j=1}^{\infty}K_j\Bigr)\leqslant\mathcal{L}^n(A-K_i)<\frac1i .
+\end{align*}
+由 $i$ 任意得 $\mathcal{L}^n\bigl(A-\bigcup_{j=1}^{\infty}K_j\bigr)=0$。
+
+（4）$g_k$ 关于 $k$ 单调不减且点态收敛。第 $k+1$ 层的立方体族 $B_{k+1}$ 加细第 $k$ 层的立方体族 $B_k$：每个 $Q\in B_k$ 是若干 $Q'\in B_{k+1}$ 的不交并。于是 $A\cap Q$ 是相应的 $A\cap Q'$ 的不交并，$f(A\cap Q)=\bigcup_{Q'}f(A\cap Q')$，故 $\chi_{f(A\cap Q)}\leqslant\sum_{Q'}\chi_{f(A\cap Q')}$，即 $g_k\leqslant g_{k+1}$。又对固定的 $y\in\mathbb{R}^m$，集合 $A\cap f^{-1}\{y\}$ 中任意两个不同点 $x,x'$ 满足 $\lvert x-x'\rvert>0$，故当 $k$ 充分大时它们落在不同的立方体中，且每个含 $A\cap f^{-1}\{y\}$ 中点的立方体恰好含一个这样的点；于是 $g_k(y)$ 最终等于 $\#\bigl(A\cap f^{-1}\{y\}\bigr)=\mathcal{H}^0(A\cap f^{-1}\{y\})$。单调收敛定理因而可用。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-3-2; kind=motivation; 说明为何需要“像集可测 + 重数函数可测可积”这一组结论，以及它作为面积公式右端合法性的来源
+\begin{remark}\phantomsection\label{remark:ch03-lem-3-2-动机}
+面积公式的右端是重数函数关于 $\mathcal{H}^n$ 的积分，要让这个积分有意义，必须先知道两件事：像集 $f(A)$ 是 $\mathcal{H}^n$-可测的，从而 $\mathcal{H}^0(A\cap f^{-1}\{y\})$ 这个计数不至于是病态的；以及重数函数本身 $\mathcal{H}^n$-可测并且其积分有限（当 $\mathcal{L}^n(A)<\infty$ 时）。本引理正是这两件事，其中 (iii) 还给出积分的一个显式上界 $(\Lip(f))^n\mathcal{L}^n(A)$，它只依赖 Lipschitz 常数与 $A$ 的测度。
+
+(iii) 的证明不用任何微分信息，只把 $A$ 按边长为 $1/k$ 的立方体分划，用 $g_k(y)$ 数出与 $f^{-1}\{y\}$ 相交的立方体个数。由于 $f$ 在 $A\cap Q$ 上的像含于一个 $\mathcal{H}^n$ 测度不超过 $(\Lip(f))^n\mathcal{L}^n(A\cap Q)$ 的集合中，逐块估计再求和即得。这条「分块—计数—求和」的思路在\cref{theorem:ch03-3-8}的证明中再次出现。% XREF internal
+
+由 (iii) 立即得到重数函数的有限性：当 $\mathcal{L}^n(A)<\infty$ 时 $\int_{\mathbb{R}^m}\mathcal{H}^0(A\cap f^{-1}\{y\})\diff\mathcal{H}^n<\infty$，故 $\mathcal{H}^0(A\cap f^{-1}\{y\})<\infty$ 对 $\mathcal{H}^n$-a.e. $y\in\mathbb{R}^m$ 成立，即 $A\cap f^{-1}\{y\}$ 对几乎每个 $y$ 是有限集。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch03-3-2; kind=hypotheses; 逐条分析 Lipschitz 条件、A 的 L^n-可测性、n≤m 以及有限测度假设在各款中的作用与必要性
+\begin{remark}\phantomsection\label{remark:ch03-lem-3-2-条件}
+\begin{enumerate}[(i)]
+\item 断言 (i) 只用 $f$ 的连续性：紧集的连续像是紧集，从而 $\mathcal{H}^n$-可测；再配合 $A$ 有界时用紧集从内部逼近，即得 $f(A)$ 可测。Lipschitz 条件在 (i) 中并不必要，它只在 (iii) 的上界中出现。
+\item 断言 (iii) 需要 $\Lip(f)<\infty$。若 $f$ 只是连续，(iii) 一般不成立：取 $n=1$、$m=2$ 与把 $[0,1]$ 映满 $[0,1]^2$ 的 Peano 型连续曲线 $f$，则 $A=[0,1]$ 的 $\mathcal{L}^1$ 测度为 $1$，而重数函数在 $[0,1]^2$ 上的积分不小于 $\mathcal{H}^1([0,1]^2)=+\infty$，故不存在只依赖 $\mathcal{L}^1(A)$ 的有限上界。
+\item 常数 $(\Lip(f))^n$ 不可改进：取相似映射 $f(x)=\lambda x$（$\lambda>0$）与任意 $\mathcal{L}^n$-可测集 $A$，则 $\Lip(f)=\lambda$、$Jf=\lambda^n$ 且 $f$ 为单射，故 (iii) 的两端都等于 $\lambda^n\mathcal{L}^n(A)$。
+\item $A$ 的 $\mathcal{L}^n$-可测性使 $\mathcal{L}^n(A\cap Q)$ 与 $\mathcal{L}^n(A)$ 有定义，并使 (i) 中「$A$ 用紧集从内部逼近」可用；若 $A$ 不可测，则右端应换成外测度，(i) 也不再成立。
+\item $n\leqslant m$ 保证 $\mathcal{H}^n$ 在 $\mathbb{R}^m$ 中有意义且 $f(A)$ 落在至多 $n$ 维的集合中；本引理对 $n>m$ 也成立，此时 (i) 平凡（$f(A)$ 含于 $m<n$ 维空间，其 $\mathcal{H}^n$ 测度为零），但本节其余结论均在 $n\leqslant m$ 下使用。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[重数函数]\label{definition:ch03-3-7}
+设 $n,m$ 为正整数，$n\leqslant m$，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为 Lipschitz 连续映射，$A\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集。称定义在 $\mathbb{R}^m$ 上的函数
+\begin{align*}
+y\mapsto\mathcal{H}^0\bigl(A\cap f^{-1}\{y\}\bigr)
+\end{align*}
+为 $f$ 在 $A$ 上的 \textbf{重数函数}，并记作 $N(f,A,y)$，即
+\begin{align*}
+N(f,A,y):=\mathcal{H}^0\bigl(A\cap f^{-1}\{y\}\bigr)\qquad(y\in\mathbb{R}^m).
+\end{align*}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch03-3-7; kind=motivation; 说明重数函数作为纤维基数的几何含义、它替代逆映射的作用，以及在面积公式中的地位
+\begin{remark}\phantomsection\label{remark:ch03-def-3-7-动机}
+当 $f$ 不是单射时，$\mathcal{H}^n(f(A))$ 会少算被多次覆盖的部分：若 $k$ 个点映到同一个 $y$，像集在 $y$ 附近只被计一次，而积分 $\int_AJf$ 却按 $k$ 次累加。重数函数 $N(f,A,y)$ 正是用来补偿这一差别的量：它是纤维 $A\cap f^{-1}\{y\}$ 的基数，取值为非负整数或 $+\infty$，因而面积公式
+\begin{align*}
+\int_AJf\diff x=\int_{\mathbb{R}^m}N(f,A,y)\diff\mathcal{H}^n(y)
+\end{align*}
+可以读作「$A$ 的 $n$ 维面积按覆盖重数计入像集」。当 $f$ 在 $A$ 上单射时 $N(f,A,y)$ 在 $f(A)$ 上恒等于 $1$、在 $f(A)$ 之外为 $0$，公式就退化为 $\mathcal{H}^n(f(A))=\int_AJf$。
+
+重数函数也是用计数测度代替逆映射的装置：$f$ 不可逆时无法把 $A$ 上的积分搬到 $f(A)$ 上，但可以把每个纤维的基数当作权，把积分搬到 $\mathbb{R}^m$ 上。这一技巧在\cref{theorem:ch03-3-9}中进一步推广为带权重的变量替换公式。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch03-3-7; kind=hypotheses; 逐条说明重数函数的可测性、有限性、整数性与纤维定义所依赖的条件
+\begin{remark}\phantomsection\label{remark:ch03-def-3-7-条件}
+\begin{enumerate}[(i)]
+\item 定义要求 $f$ Lipschitz 连续、$A$ 为 $\mathcal{L}^n$-可测集。这两条不是为使定义式有意义（对任意映射与任意集合，$\mathcal{H}^0(A\cap f^{-1}\{y\})$ 都有意义），而是为使 $N(f,A,\cdot)$ 成为 $\mathcal{H}^n$-可测函数：这正是\cref{lemma:ch03-3-2}(ii) 的内容。没有可测性，面积公式右端的积分无从谈起。% XREF internal
+\item $N(f,A,y)$ 取值于 $\mathbb{N}\cup\{0,+\infty\}$，且 $N(f,A,y)=0$ 当且仅当 $y\notin f(A)$；故 $N(f,A,\cdot)$ 的支撑含于 $f(A)$ 的闭包。当 $\mathcal{L}^n(A)<\infty$ 时，由\cref{lemma:ch03-3-2}(iii) 知 $N(f,A,y)<\infty$ 对 $\mathcal{H}^n$-a.e. $y$ 成立。% XREF internal
+\item $N(f,A,y)$ 对 $A$ 可数可加：若 $\{A_j\}$ 两两不交，则 $N(f,\bigcup_jA_j,y)=\sum_jN(f,A_j,y)$。定义本身不要求 $A$ 有界或开，也不要求 $f$ 单射。
+\item 改变 $A$ 的 $\mathcal{L}^n$-零测子集一般会改变 $N(f,A,\cdot)$，但只在一个 $\mathcal{H}^n$-零测集上改变：若 $\mathcal{L}^n(A\triangle A')=0$，则由\cref{lemma:ch03-3-2}(iii) 得 $N(f,A,y)=N(f,A',y)$ 对 $\mathcal{H}^n$-a.e. $y$ 成立。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}[正 Jacobi 行列式集合的分解]\label{lemma:ch03-3-3}
+设 $n,m$ 为正整数，$n\leqslant m$，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为 Lipschitz 连续映射，$t>1$，并令
+\begin{align*}
+B:=\{x\in\mathbb{R}^n\mid Df(x)\text{ 存在},\ Jf(x)>0\}.
+\end{align*}
+则存在 $\mathbb{R}^n$ 的一列 Borel 子集 $\{E_k\}_{k=1}^{\infty}$，使得
+\begin{enumerate}[(i)]
+\item $B=\bigcup_{k=1}^{\infty}E_k$；
+\item $f|_{E_k}$ 是单射（$k=1,2,\cdots$）；并且
+\item 对每个 $k=1,2,\cdots$，存在对称自同构 $T_k:\mathbb{R}^n\to\mathbb{R}^n$，使得
+\begin{align*}
+\Lip\bigl((f|_{E_k})\circ T_k^{-1}\bigr)\leqslant t,\qquad \Lip\bigl(T_k\circ(f|_{E_k})^{-1}\bigr)\leqslant t,
+\end{align*}
+以及
+\begin{align*}
+t^{-n}\lvert\det T_k\rvert\leqslant Jf|_{E_k}\leqslant t^n\lvert\det T_k\rvert .
+\end{align*}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+（1）取 $\varepsilon>0$ 使
+\begin{align*}
+t^{-1}+\varepsilon<1<t-\varepsilon .
+\end{align*}
+设 $C$ 为 $B$ 的可数稠密子集，$\mathcal{S}$ 为 $\mathbb{R}^n$ 的一切对称自同构所成集合的可数稠密子集。
+
+（2）对每个 $c\in C$、$T\in\mathcal{S}$ 与 $i=1,2,\cdots$，定义 $E(c,T,i)$ 为所有满足下述两条的 $b\in B\cap B(c,\frac1i)$ 的集合：
+\begin{align*}
+(t^{-1}+\varepsilon)\lvert Tv\rvert\leqslant\lvert Df(b)v\rvert\leqslant(t-\varepsilon)\lvert Tv\rvert\qquad(\star)
+\end{align*}
+对一切 $v\in\mathbb{R}^n$ 成立，以及
+\begin{align*}
+\lvert f(a)-f(b)-Df(b)\cdot(a-b)\rvert\leqslant\varepsilon\lvert T(a-b)\rvert\qquad(\star\star)
+\end{align*}
+对一切 $a\in B(b,\frac2i)$ 成立。由于 $Df$ 是 Borel 可测的，$E(c,T,i)$ 是 Borel 集。由 $(\star)$ 与 $(\star\star)$ 得到估计
+\begin{align*}
+t^{-1}\lvert T(a-b)\rvert\leqslant\lvert f(a)-f(b)\rvert\leqslant t\lvert T(a-b)\rvert\qquad(\star\star\star)
+\end{align*}
+对 $b\in E(c,T,i)$、$a\in B(b,\frac2i)$ 成立。
+
+（3）断言：若 $b\in E(c,T,i)$，则
+\begin{align*}
+(t^{-1}+\varepsilon)^n\lvert\det T\rvert\leqslant Jf(b)\leqslant(t-\varepsilon)^n\lvert\det T\rvert .
+\end{align*}
+断言的证明：如上有 $Df(b)=L=O\circ S$，并且
+\begin{align*}
+Jf(b)=\llbracket Df(b)\rrbracket=\lvert\det S\rvert .
+\end{align*}
+由 $(\star)$，对 $v\in\mathbb{R}^n$ 有
+\begin{align*}
+(t^{-1}+\varepsilon)\lvert Tv\rvert\leqslant\lvert(O\circ S)v\rvert=\lvert Sv\rvert\leqslant(t-\varepsilon)\lvert Tv\rvert ,
+\end{align*}
+从而
+\begin{align*}
+(t^{-1}+\varepsilon)\lvert v\rvert\leqslant\lvert(S\circ T^{-1})v\rvert\leqslant(t-\varepsilon)\lvert v\rvert\qquad(v\in\mathbb{R}^n).
+\end{align*}
+于是
+\begin{align*}
+(S\circ T^{-1})(B(0,1))\subseteq B(0,t-\varepsilon);
+\end{align*}
+由此
+\begin{align*}
+\lvert\det(S\circ T^{-1})\rvert\alpha(n)\leqslant\mathcal{L}^n\bigl(B(0,t-\varepsilon)\bigr)=\alpha(n)(t-\varepsilon)^n,
+\end{align*}
+从而
+\begin{align*}
+\lvert\det S\rvert\leqslant(t-\varepsilon)^n\lvert\det T\rvert .
+\end{align*}
+另一侧不等式的证明方式相同。
+
+（4）把可数族 $\{E(c,T,i)\mid c\in C,\ T\in\mathcal{S},\ i=1,2,\cdots\}$ 重新编号为 $\{E_k\}_{k=1}^{\infty}$。任取 $b\in B$，如上有 $Df(b)=O\circ S$，并取 $T\in\mathcal{S}$ 使
+\begin{align*}
+\Lip(T\circ S^{-1})\leqslant(t^{-1}+\varepsilon)^{-1},\qquad \Lip(S\circ T^{-1})\leqslant t-\varepsilon .
+\end{align*}
+再取 $i\in\{1,2,\cdots\}$ 与 $c\in C$，使 $\lvert b-c\rvert<\frac1i$，且对一切 $a\in B(b,\frac2i)$ 有
+\begin{align*}
+\lvert f(a)-f(b)-Df(b)\cdot(a-b)\rvert\leqslant\frac{\varepsilon}{\Lip(T^{-1})}\lvert a-b\rvert\leqslant\varepsilon\lvert T(a-b)\rvert .
+\end{align*}
+于是 $b\in E(c,T,i)$。由于这一结论对一切 $b\in B$ 成立，断言 (i) 得证。
+
+（5）任取集合 $E_k$，它形如 $E(c,T,i)$，其中 $c\in C$、$T\in\mathcal{S}$、$i=1,2,\cdots$。令 $T_k=T$。由 $(\star\star\star)$，
+\begin{align*}
+t^{-1}\lvert T_k(a-b)\rvert\leqslant\lvert f(a)-f(b)\rvert\leqslant t\lvert T_k(a-b)\rvert
+\end{align*}
+对一切 $b\in E_k$、$a\in B(b,\frac2i)$ 成立。由于 $E_k\subseteq B(c,\frac1i)\subseteq B(b,\frac2i)$，故对一切 $a,b\in E_k$ 有
+\begin{align*}
+t^{-1}\lvert T_k(a-b)\rvert\leqslant\lvert f(a)-f(b)\rvert\leqslant t\lvert T_k(a-b)\rvert\qquad(\star\star\star\star)
+\end{align*}
+于是 $f|_{E_k}$ 是单射。最后，上式蕴含
+\begin{align*}
+\Lip\bigl((f|_{E_k})\circ T_k^{-1}\bigr)\leqslant t,\qquad \Lip\bigl(T_k\circ(f|_{E_k})^{-1}\bigr)\leqslant t,
+\end{align*}
+而第（3）步的断言给出估计
+\begin{align*}
+t^{-n}\lvert\det T_k\rvert\leqslant Jf|_{E_k}\leqslant t^n\lvert\det T_k\rvert .
+\end{align*}
+断言 (iii) 得证。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-3-3; kind=proof; 补出第（3）步中另一侧不等式、$E(c,T,i)$ 的 Borel 性、第（4）步中 $T$ 与 $i,c$ 的选取依据，以及第（5）步中 Lipschitz 常数的推导
+\begin{proof}
+（1）第（3）步中另一侧的不等式。由
+\begin{align*}
+(t^{-1}+\varepsilon)\lvert v\rvert\leqslant\lvert(S\circ T^{-1})v\rvert\qquad(v\in\mathbb{R}^n)
+\end{align*}
+令 $w=(S\circ T^{-1})v$，即 $v=T\circ S^{-1}w$，得
+\begin{align*}
+(t^{-1}+\varepsilon)\lvert T\circ S^{-1}w\rvert\leqslant\lvert w\rvert\qquad(w\in\mathbb{R}^n),
+\end{align*}
+即 $\Lip(T\circ S^{-1})\leqslant(t^{-1}+\varepsilon)^{-1}$。于是 $(T\circ S^{-1})(B(0,1))\subseteq B(0,(t^{-1}+\varepsilon)^{-1})$，从而
+\begin{align*}
+\lvert\det(T\circ S^{-1})\rvert\alpha(n)\leqslant\mathcal{L}^n\bigl(B(0,(t^{-1}+\varepsilon)^{-1})\bigr)=\alpha(n)(t^{-1}+\varepsilon)^{-n},
+\end{align*}
+即 $\lvert\det T\rvert\leqslant(t^{-1}+\varepsilon)^{-n}\lvert\det S\rvert$，等价于 $(t^{-1}+\varepsilon)^n\lvert\det T\rvert\leqslant Jf(b)$。
+
+（2）$E(c,T,i)$ 是 Borel 集。取 $\mathbb{R}^n$ 的可数稠密子集 $D$。对固定的 $v\in D$，映射 $b\mapsto\lvert Df(b)v\rvert$ 在 $\{Df\text{ 存在}\}$ 上 Borel 可测，故满足 $(\star)$ 中该 $v$ 对应不等式的 $b$ 集为 Borel 集；$(\star)$ 对一切 $v\in\mathbb{R}^n$ 成立，等价于对一切 $v\in D$ 成立（两端关于 $v$ 连续，不等式在稠密集上成立即在全空间成立），故 $(\star)$ 定义 Borel 集。同理，对固定的 $a\in D$，映射 $b\mapsto f(a)-f(b)-Df(b)\cdot(a-b)$ 与 $b\mapsto\varepsilon\lvert T(a-b)\rvert$ 都在 $\{Df\text{ 存在}\}$ 上 Borel 可测，而 $b\mapsto\lvert a-b\rvert$ 连续，故满足 $\lvert a-b\rvert<\frac2i$ 且 $(\star\star)$ 中该 $a$ 对应不等式的 $b$ 集为 Borel 集；$(\star\star)$ 对一切 $a\in B(b,\frac2i)$ 成立，等价于对一切满足 $\lvert a-b\rvert<\frac2i$ 的 $a\in D$ 成立，故 $(\star\star)$ 也定义 Borel 集。于是 $E(c,T,i)$ 是 Borel 集。
+
+（3）第（4）步中 $T$ 的选取。设 $S$ 的奇异值为 $\sigma_1,\cdots,\sigma_n>0$（$S$ 对称且 $\lvert\det S\rvert=Jf(b)>0$），记 $\sigma:=\min_j\sigma_j$。由于 $\mathcal{S}$ 在一切对称自同构中稠密，取 $T\in\mathcal{S}$ 使 $\lVert T-S\rVert<\delta$，其中 $\delta:=\frac12\sigma\min\{1-(t^{-1}+\varepsilon),(t-\varepsilon)-1\}$。则 $\lVert S^{-1}\rVert=\sigma^{-1}$，从而
+\begin{align*}
+\Lip(T\circ S^{-1})\leqslant1+\lVert(T-S)S^{-1}\rVert\leqslant1+\frac{\delta}{\sigma}\leqslant(t^{-1}+\varepsilon)^{-1},
+\end{align*}
+同理 $\Lip(S\circ T^{-1})\leqslant1+\frac{\delta}{\sigma}\leqslant t-\varepsilon$，其中用到 $t^{-1}+\varepsilon<1<t-\varepsilon$。又 $\lVert T-S\rVert<\sigma$ 保证 $T$ 可逆。
+
+（4）第（4）步中 $i$ 与 $c$ 的选取。由 $f$ 在 $b$ 处可微，存在 $\rho>0$，使得对一切 $\lvert a-b\rvert<\rho$ 有
+\begin{align*}
+\lvert f(a)-f(b)-Df(b)\cdot(a-b)\rvert\leqslant\frac{\varepsilon}{\Lip(T^{-1})}\lvert a-b\rvert .
+\end{align*}
+取 $i$ 充分大使 $\frac2i<\rho$，再取 $c\in C$ 使 $\lvert b-c\rvert<\frac1i$（$C$ 在 $B$ 中稠密且 $b\in B$）。又由 $\lvert a-b\rvert=\lvert T^{-1}T(a-b)\rvert\leqslant\Lip(T^{-1})\lvert T(a-b)\rvert$ 得
+\begin{align*}
+\frac{\varepsilon}{\Lip(T^{-1})}\lvert a-b\rvert\leqslant\varepsilon\lvert T(a-b)\rvert .
+\end{align*}
+
+（5）第（5）步中的两个 Lipschitz 常数。由 $(\star\star\star\star)$，对 $a,b\in E_k$ 有 $\lvert f(a)-f(b)\rvert\leqslant t\lvert T_k(a-b)\rvert$。令 $u=T_ka$、$v=T_kb$，则 $u,v\in T_k(E_k)$，$a=T_k^{-1}u$、$b=T_k^{-1}v$，故
+\begin{align*}
+\bigl\lvert(f|_{E_k})\circ T_k^{-1}(u)-(f|_{E_k})\circ T_k^{-1}(v)\bigr\rvert\leqslant t\lvert u-v\rvert ,
+\end{align*}
+即 $\Lip\bigl((f|_{E_k})\circ T_k^{-1}\bigr)\leqslant t$。另一侧由 $(\star\star\star\star)$ 的左半部分 $\lvert T_k(a-b)\rvert\leqslant t\lvert f(a)-f(b)\rvert$ 给出：对 $u,v\in f(E_k)$ 写 $u=f(a)$、$v=f(b)$（$f|_{E_k}$ 单射），得
+\begin{align*}
+\bigl\lvert T_k\circ(f|_{E_k})^{-1}(u)-T_k\circ(f|_{E_k})^{-1}(v)\bigr\rvert=\lvert T_k(a-b)\rvert\leqslant t\lvert u-v\rvert ,
+\end{align*}
+即 $\Lip\bigl(T_k\circ(f|_{E_k})^{-1}\bigr)\leqslant t$。最后由 $(t^{-1}+\varepsilon)^n\lvert\det T_k\rvert\leqslant Jf|_{E_k}\leqslant(t-\varepsilon)^n\lvert\det T_k\rvert$ 及 $t^{-1}+\varepsilon>t^{-1}$、$t-\varepsilon<t$ 得 $t^{-n}\lvert\det T_k\rvert\leqslant Jf|_{E_k}\leqslant t^n\lvert\det T_k\rvert$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-3-3; kind=motivation; 说明该分解把「$Jf>0$ 的可微点集」切成有限多个近似线性的片，以及参数 $t$ 与对称自同构 $T_k$ 的几何含义
+\begin{remark}\phantomsection\label{remark:ch03-lem-3-3-动机}
+面积公式的困难在于 $Jf$ 逐点变化，而\cref{lemma:ch03-3-1}只处理常系数的线性映射。本引理的作用是把 $B=\{Df\text{ 存在},\ Jf>0\}$ 切成可数多个 Borel 片 $E_k$，使 $f$ 在每一片上与某个线性映射 $T_k$ 只差一个双 Lipschitz 变换：$f|_{E_k}\circ T_k^{-1}$ 及其逆都以常数 $t$ 为 Lipschitz，且 $Jf$ 在 $E_k$ 上与 $\lvert\det T_k\rvert$ 相差不超过因子 $t^n$。于是每一片上都能用线性情形（\cref{lemma:ch03-3-1}）作估计，误差由 $t$ 控制，最后令 $t\to1^+$ 即得精确公式。% XREF internal
+
+$T_k$ 的角色是 $Df$ 在片上的近似：由可微性，$Df(b)$ 在 $b$ 附近把增量按线性方式放大，而 $Df(b)$ 的极分解中的对称部分正是引理所需的对称自同构；由于对称自同构在全空间中稠密，可以只从可数族 $\mathcal{S}$ 中选取。参数 $t>1$ 是这一近似的精度，$t$ 越接近 $1$，$E_k$ 的数量越多而每片上的估计越精确。
+
+分片为何可数：三重指标 $(c,T,i)$ 分别取自可数集 $C$、可数集 $\mathcal{S}$ 与正整数，故得到的片至多可数；$C$ 稠密保证每个 $b\in B$ 附近有 $c$ 可选，$\mathcal{S}$ 稠密保证 $T$ 可选，$i$ 充分大保证可微性估计在 $B(b,\frac2i)$ 上一致成立。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch03-3-3; kind=hypotheses; 逐条分析 $t>1$、$Jf>0$、$f$ 的 Lipschitz 性、$E_k$ 的 Borel 性与可数性，并说明该分解不覆盖 $\{Jf=0\}$
+\begin{remark}\phantomsection\label{remark:ch03-lem-3-3-条件}
+\begin{enumerate}[(i)]
+\item 条件 $t>1$ 不可改为 $t=1$。构造中要求 $t^{-1}+\varepsilon<1<t-\varepsilon$，这等价于 $t^{-1}<1<t$，即 $t>1$；若 $t=1$，则不存在这样的 $\varepsilon$，而结论在 $t=1$ 时一般不成立：此时 (iii) 要求 $f|_{E_k}\circ T_k^{-1}$ 及其逆都是 $1$-Lipschitz，即均为等距映射，于是 $f$ 在每个 $E_k$ 上与某个线性映射只差一个等距映射；这对非线性映射（例如 $n=1$、$m=2$ 时的 $f(t)=(t,t^2)$）不可能在 $Jf>0$ 的集合上成立。
+\item 限制在 $Jf>0$ 上是必要的。若 $Jf(b)=0$，则 $Df(b)$ 的像维数小于 $n$，$f$ 在 $b$ 附近沿某个方向压缩到低维，不存在满足 $t^{-n}\lvert\det T_k\rvert\leqslant Jf|_{E_k}$ 的对称自同构 $T_k$（其行列式非零）。$Jf=0$ 的部分在\cref{theorem:ch03-3-8}的证明中单独处理。% XREF internal
+\item $f$ 的 Lipschitz 连续性在两处使用：其一，$B$ 上 $Df$ 的存在性来自 Rademacher 定理，而该定理要求 $f$ 局部 Lipschitz 连续；其二，$(\star\star\star)$ 中的两个不等式都只用到 $f$ 的 Lipschitz 常数与 $Df(b)$ 的估计。
+\item $E_k$ 必须是 Borel 集，因为\cref{theorem:ch03-3-8}要对 $E_k$ 用\cref{lemma:ch03-3-1}并逐片积分，需要对 $f(E_k)$ 与 $E_k$ 作可测性判断；若 $E_k$ 只是 Lebesgue 可测，$\mathcal{H}^n$-可测性的论证需另作处理。分解本身不唯一：不同的稠密子集 $C$、$\mathcal{S}$ 与不同的 $\varepsilon$ 给出不同的片。 % XREF internal
+\item 每个 $E_k$ 上 $f$ 是单射，这一条使重数函数在 $f(E_k)$ 上恒等于 $1$；同时 $E_k\subseteq B(c,\frac1i)$ 有界，故逐片积分时可先假设 $A$ 有界。$T_k$ 取对称自同构而非任意自同构，是因为它要在算子范数下与 $Df(b)$ 极分解中的对称部分 $S$ 比较；对称矩阵的奇异值即其特征值的绝对值，故 $\Lip(T_k^{\pm1})$ 与 $\lvert\det T_k\rvert$ 由同一组特征值控制。
+\end{enumerate}
+\end{remark}
+
+\subsection{面积公式的证明}\label{subsection:ch03-03-2}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.74\textwidth]{ch03-3-3-area-formula.png}
+\end{figure}
+
+\begin{theorem}[面积公式]\label{theorem:ch03-3-8}
+设 $n,m$ 为正整数，$n\leqslant m$，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为 Lipschitz 连续映射。则对每个 $\mathcal{L}^n$-可测集 $A\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\int_AJf(x)\diff x=\int_{\mathbb{R}^m}\mathcal{H}^0\bigl(A\cap f^{-1}\{y\}\bigr)\diff\mathcal{H}^n(y).
+\end{align*}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-8-解释}
+面积公式说明：像集 $f(A)$ 的 $\mathcal{H}^n$ 测度在按重数计数之后，可以通过对 $A$ 积分 Jacobi 行列式 $Jf$ 算出。同时可以看出，对 $\mathcal{H}^n$-a.e. $y\in\mathbb{R}^m$，$f^{-1}\{y\}$ 至多可数。
+\end{remark}
+
+\begin{proof}
+（1）由 Rademacher 定理，可以认为 $Df(x)$ 与 $Jf(x)$ 对一切 $x\in A$ 存在。也可以假设 $\mathcal{L}^n(A)<\infty$。% XREF p=135 "In view of Rademacher's Theorem, we may as well assume Df(x) and Jf(x) exist for all x ∈ A."
+
+（2）情形 1：$A\subseteq\{Jf>0\}$。固定 $t>1$，并按\cref{lemma:ch03-3-3}取 Borel 集 $\{E_k\}_{k=1}^{\infty}$。可以假设各 $E_k$ 两两不交。按\cref{lemma:ch03-3-2}的证明定义 $B_k$。令% XREF p=135 "choose Borel sets {E_k} as in Lemma 3.3" | p=135 "Define B_k as in the proof of Lemma 3.2"
+\begin{align*}
+F_j^i:=E_j\cap Q_i\cap A\qquad(Q_i\in B_k,\ j=1,2,\cdots).
+\end{align*}
+则各 $F_j^i$ 两两不交，且 $A=\bigcup_{i,j=1}^{\infty}F_j^i$。
+
+（3）断言 1：
+\begin{align*}
+\lim_{k\to\infty}\sum_{i,j=1}^{\infty}\mathcal{H}^n(f(F_j^i))=\int_{\mathbb{R}^m}\mathcal{H}^0(A\cap f^{-1}\{y\})\diff\mathcal{H}^n .
+\end{align*}
+断言的证明：令
+\begin{align*}
+g_k:=\sum_{i,j=1}^{\infty}\chi_{f(F_j^i)};
+\end{align*}
+于是 $g_k(y)$ 是满足 $F_j^i\cap f^{-1}\{y\}\neq\varnothing$ 的集合 $\{F_j^i\}$ 的个数。则当 $k\to\infty$ 时 $g_k(y)\to\mathcal{H}^0(A\cap f^{-1}\{y\})$。由单调收敛定理即得。
+
+（4）注意
+\begin{align*}
+\mathcal{H}^n(f(F_j^i))=\mathcal{H}^n\bigl(f|_{E_j}\circ T_j^{-1}\circ T_j(F_j^i)\bigr)\leqslant t^n\mathcal{L}^n\bigl(T_j(F_j^i)\bigr)
+\end{align*}
+以及
+\begin{align*}
+\mathcal{L}^n\bigl(T_j(F_j^i)\bigr)=\mathcal{H}^n\bigl(T_j\circ(f|_{E_j})^{-1}\circ f(F_j^i)\bigr)\leqslant t^n\mathcal{H}^n\bigl(f(F_j^i)\bigr),
+\end{align*}
+这里用到\cref{lemma:ch03-3-3}。于是% XREF p=135 "by Lemma 3.3"
+\begin{align*}
+t^{-2n}\mathcal{H}^n(f(F_j^i))&\leqslant t^{-n}\mathcal{L}^n\bigl(T_j(F_j^i)\bigr)\\
+&=t^{-n}\lvert\det T_j\rvert\mathcal{L}^n(F_j^i)\\
+&\leqslant\int_{F_j^i}Jf\diff x\\
+&\leqslant t^n\lvert\det T_j\rvert\mathcal{L}^n(F_j^i)\\
+&=t^n\mathcal{L}^n\bigl(T_j(F_j^i)\bigr)\\
+&\leqslant t^{2n}\mathcal{H}^n(f(F_j^i)),
+\end{align*}
+其中反复使用了\cref{lemma:ch03-3-1}与\cref{lemma:ch03-3-3}。现在对 $i$ 与 $j$ 求和：% XREF p=136 "where we repeatedly used Lemmas 3.1 and 3.3" | p=136 "Lemmas 3.1 and 3.3"
+\begin{align*}
+t^{-2n}\sum_{i,j=1}^{\infty}\mathcal{H}^n(f(F_j^i))\leqslant\int_AJf\diff x\leqslant t^{2n}\sum_{i,j=1}^{\infty}\mathcal{H}^n(f(F_j^i)).
+\end{align*}
+令 $k\to\infty$ 并利用断言 1：
+\begin{align*}
+t^{-2n}\int_{\mathbb{R}^m}\mathcal{H}^0(A\cap f^{-1}\{y\})\diff\mathcal{H}^n
+&\leqslant\int_AJf\diff x\\
+&\leqslant t^{2n}\int_{\mathbb{R}^m}\mathcal{H}^0(A\cap f^{-1}\{y\})\diff\mathcal{H}^n .
+\end{align*}
+最后令 $t\to1^+$。
+
+（5）情形 2：$A\subseteq\{Jf=0\}$。固定 $0<\varepsilon\leqslant1$。作分解
+\begin{align*}
+f=p\circ g,
+\end{align*}
+其中 $g:\mathbb{R}^n\to\mathbb{R}^m\times\mathbb{R}^n$ 为映射
+\begin{align*}
+g(x):=(f(x),\varepsilon x),
+\end{align*}
+而 $p:\mathbb{R}^m\times\mathbb{R}^n\to\mathbb{R}^m$ 为投影
+\begin{align*}
+p(y,z)=y .
+\end{align*}
+
+（6）断言 2：存在常数 $C$，使得
+\begin{align*}
+0<Jg(x)\leqslant C\varepsilon
+\end{align*}
+对一切 $x\in A$ 成立。
+断言的证明：写 $g=(f^1,\cdots,f^m,\varepsilon x_1,\cdots,\varepsilon x_n)$；则
+\begin{align*}
+Dg(x)=\begin{pmatrix}Df(x)\\ \varepsilon I\end{pmatrix}_{(n+m)\times n}.
+\end{align*}
+由于 $Jg(x)^2$ 等于 $Dg(x)$ 的一切 $(n\times n)$-子行列式的平方和，由 Binet--Cauchy 公式，$Jg(x)^2\geqslant\varepsilon^{2n}>0$。此外，由于 $\lvert Df\rvert\leqslant\Lip(f)<\infty$，同样用 Binet--Cauchy 公式可以算出
+\begin{align*}
+Jg(x)^2=Jf(x)^2+\bigl\{\text{每一项至少含一个 }\varepsilon\text{ 的项之平方和}\bigr\}\leqslant C\varepsilon^2
+\end{align*}
+对每个 $x\in A$ 成立。
+
+（7）由于 $p:\mathbb{R}^m\times\mathbb{R}^n\to\mathbb{R}^m$ 是投影，利用上面的情形 1 可以算出
+\begin{align*}
+\mathcal{H}^n(f(A))&\leqslant\mathcal{H}^n(g(A))\\
+&\leqslant\int_{\mathbb{R}^{m+n}}\mathcal{H}^0\bigl(A\cap g^{-1}\{y,z\}\bigr)\diff\mathcal{H}^n(y,z)\\
+&=\int_AJg(x)\diff x\\
+&\leqslant\varepsilon C\mathcal{L}^n(A).
+\end{align*}
+令 $\varepsilon\to0$ 得 $\mathcal{H}^n(f(A))=0$，从而
+\begin{align*}
+\int_{\mathbb{R}^m}\mathcal{H}^0(A\cap f^{-1}\{y\})\diff\mathcal{H}^n=0,
+\end{align*}
+因为 $\operatorname{spt}\mathcal{H}^0(A\cap f^{-1}\{y\})\subseteq f(A)$。于是
+\begin{align*}
+\int_{\mathbb{R}^m}\mathcal{H}^0(A\cap f^{-1}\{y\})\diff\mathcal{H}^n=0=\int_AJf\diff x .
+\end{align*}
+
+（8）一般情形：写 $A=A_1\cup A_2$，其中 $A_1\subseteq\{Jf>0\}$、$A_2\subseteq\{Jf=0\}$，并应用上面的情形 1 与情形 2。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-3-8; kind=proof; 补足两处「可以假设」的化归、各 $E_k$ 与 $F_j^i$ 的不交性、断言 1 中 $g_k$ 的单调性与逐点收敛、逐片求和的合法性，以及情形 2 与一般情形的细节
+\begin{proof}
+（1）关于 $Df$ 与 $Jf$ 的化归。由\cref{theorem:ch03-3-2}，$f$ 在 $\mathcal{L}^n$-a.e. 点处可微。令 $N:=\{x\in A\mid Df(x)\text{ 不存在}\}$，则 $\mathcal{L}^n(N)=0$。在 $A$ 上把 $Jf$ 任取为 $0$（置 $Jf:=0$ 于 $N$），则 $\int_AJf$ 的积分值与 $Jf$ 在 $N$ 上的取值无关，且 $\int_AJf\diff x=\int_{A-N}Jf\diff x$。另一方面，由\cref{lemma:ch03-3-2}(iii) 与 $f(N)$ 的 $\mathcal{H}^n$ 零测性， % XREF internal
+\begin{align*}
+\int_{\mathbb{R}^m}\mathcal{H}^0(N\cap f^{-1}\{y\})\diff\mathcal{H}^n\leqslant(\Lip(f))^n\mathcal{L}^n(N)=0,
+\end{align*}
+故 $\mathcal{H}^0(A\cap f^{-1}\{y\})=\mathcal{H}^0((A-N)\cap f^{-1}\{y\})$ 对 $\mathcal{H}^n$-a.e. $y$ 成立。于是公式对 $A$ 成立当且仅当它对 $A-N$ 成立，故可设 $Df$、$Jf$ 在 $A$ 处处存在。% XREF internal
+
+（2）关于 $\mathcal{L}^n(A)<\infty$ 的化归。设 $A$ 为一般的 $\mathcal{L}^n$-可测集，令 $A^{(J)}:=A\cap B(0,J)$。各 $A^{(J)}$ 有界，故 $\mathcal{L}^n(A^{(J)})<\infty$。对每个 $J$，公式对 $A^{(J)}$ 成立。左端 $\int_{A^{(J)}}Jf\diff x$ 随 $J$ 单调递增趋于 $\int_AJf\diff x$（$Jf\geqslant0$，单调收敛定理）。右端由重数函数对 $A$ 的可数可加性，
+\begin{align*}
+\int_{\mathbb{R}^m}\mathcal{H}^0(A^{(J)}\cap f^{-1}\{y\})\diff\mathcal{H}^n
+\longrightarrow\int_{\mathbb{R}^m}\mathcal{H}^0(A\cap f^{-1}\{y\})\diff\mathcal{H}^n ,
+\end{align*}
+故公式对 $A$ 成立。
+
+（3）各 $E_k$ 与 $F_j^i$ 的不交性。若\cref{lemma:ch03-3-3}给出的 $E_k$ 不两两不交，则把 $E_k$ 替换为% XREF internal
+\begin{align*}
+E_k':=E_k-\bigcup_{j<k}E_j ,
+\end{align*}
+则各 $E_k'$ 是两两不交的 Borel 集，仍覆盖 $B$，且 $f|_{E_k'}$ 单射、$(\star\star\star\star)$ 及其后的估计对 $E_k'$ 仍成立（$E_k'\subseteq E_k$）。对固定的 $k$，立方体族 $B_k$ 中的 $Q_i$ 两两不交，各 $E_j$ 两两不交，故 $F_j^i=E_j\cap Q_i\cap A$ 两两不交；又 $A\subseteq B\subseteq\bigcup_jE_j$ 且 $\bigcup_iQ_i=\mathbb{R}^n$，故 $A\subseteq\bigcup_{i,j}F_j^i$，反向包含由 $F_j^i\subseteq A$ 得到，于是 $A=\bigcup_{i,j}F_j^i$。
+
+（4）断言 1 的单调性与逐点收敛。$B_{k+1}$ 加细 $B_k$，每个 $Q_i\in B_k$ 是若干 $Q_{i'}\in B_{k+1}$ 的不交并；又 $E_j$ 固定，故 $F_j^{i}=E_j\cap Q_i\cap A$ 是相应的 $F_j^{i'}$ 的不交并，$f(F_j^i)=\bigcup_{i'}f(F_j^{i'})$，从而 $g_k\leqslant g_{k+1}$。对固定的 $y$，若 $y\notin f(A)$ 则 $g_k(y)=0=\mathcal{H}^0(A\cap f^{-1}\{y\})$；若 $y\in f(A)$，则 $A\cap f^{-1}\{y\}$ 中不同的点属于不同的 $E_j$（因各 $E_j$ 不交），而每个 $E_j$ 上 $f$ 是单射，故 $A\cap f^{-1}\{y\}$ 中落在同一 $E_j$ 的点至多一个。于是当 $k$ 充分大时，$A\cap f^{-1}\{y\}$ 中不同的点落在不同的立方体 $Q_i$ 中，且每个与 $f^{-1}\{y\}$ 相交的 $F_j^i$ 恰含 $A\cap f^{-1}\{y\}$ 中一个点，故 $g_k(y)$ 最终等于 $\mathcal{H}^0(A\cap f^{-1}\{y\})$。
+
+（5）逐片求和的合法性。对每个 $i,j$，第（4）步给出的双边估计
+\begin{align*}
+t^{-2n}\mathcal{H}^n(f(F_j^i))\leqslant\int_{F_j^i}Jf\diff x\leqslant t^{2n}\mathcal{H}^n(f(F_j^i))
+\end{align*}
+成立。对 $i,j$ 求和时，左端与右端的级数由
+\begin{align*}
+\sum_{i,j=1}^{\infty}\mathcal{H}^n(f(F_j^i))=\sum_{i,j=1}^{\infty}\int_{\mathbb{R}^m}\chi_{f(F_j^i)}\diff\mathcal{H}^n
+=\int_{\mathbb{R}^m}\sum_{i,j=1}^{\infty}\chi_{f(F_j^i)}\diff\mathcal{H}^n=\int_{\mathbb{R}^m}g_k\diff\mathcal{H}^n\leqslant(\Lip(f))^n\mathcal{L}^n(A)
+\end{align*}
+控制（逐项非负，用单调收敛定理；最后一步用\cref{lemma:ch03-3-2}(iii)），其中 $g_k$ 的定义与断言 1 中的相同。又 $Jf\geqslant0$ 且 $F_j^i$ 两两不交、并为 $A$，由积分的可数可加性得 $\sum_{i,j}\int_{F_j^i}Jf\diff x=\int_AJf\diff x$。% XREF internal
+
+（6）第（7）步的第一个不等式。由 $f=p\circ g$ 与 $p$ 为 $1$-Lipschitz 映射（$\lvert p(y,z)-p(y',z')\rvert=\lvert y-y'\rvert\leqslant\lvert(y,z)-(y',z')\rvert$），再用\cref{theorem:ch02-2-8}（取 $s=n$）得 $\mathcal{H}^n(f(A))=\mathcal{H}^n(p(g(A)))\leqslant\mathcal{H}^n(g(A))$。第二个不等号是断言 1 所给等式的右端：情形 1 的结论对映射 $g$ 与集合 $A$ 适用（$A\subseteq\{Jg>0\}$，由断言 2），故% XREF internal
+\begin{align*}
+\int_AJg\diff x=\int_{\mathbb{R}^{m+n}}\mathcal{H}^0(A\cap g^{-1}\{y,z\})\diff\mathcal{H}^n(y,z),
+\end{align*}
+而 $g$ 在 $A$ 上单射（$g(x)=(f(x),\varepsilon x)$ 的第一分量与 $x$ 一起决定 $x$），故右端的被积函数在 $g(A)$ 上恒等于 $1$，在 $g(A)$ 之外为 $0$，从而右端等于 $\mathcal{H}^n(g(A))$。
+
+（7）第（8）步。令 $A_1:=A\cap\{Jf>0\}$、$A_2:=A\cap\{Jf=0\}$，则 $A_1,A_2$ 是 $\mathcal{L}^n$-可测集，$A=A_1\cup A_2$ 且 $A_1\cap A_2=\varnothing$。由 $Jf\geqslant0$ 得 $\int_AJf=\int_{A_1}Jf+\int_{A_2}Jf$；由重数函数对不交并的可加性得 $\mathcal{H}^0(A\cap f^{-1}\{y\})=\mathcal{H}^0(A_1\cap f^{-1}\{y\})+\mathcal{H}^0(A_2\cap f^{-1}\{y\})$，故右端积分也可加。情形 1 与情形 2 已分别对 $A_1$、$A_2$ 建立等式，相加即得对 $A$ 的等式。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-3-8; kind=motivation; 说明面积公式的几何内容、两边各自的含义、证明的两大情形划分与 $t\to1^+$ 的作用
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-8-动机}
+面积公式是本章的核心结论，它把「像集的 $n$ 维面积（按覆盖重数计）」与「原像集上 Jacobi 行列式的积分」等同起来。左边 $\int_AJf$ 是纯微分量：$Jf(x)$ 度量 $f$ 在 $x$ 处把 $n$ 维体积放大的倍数，它只依赖 $f$ 的一阶导数；右边 $\int_{\mathbb{R}^m}\mathcal{H}^0(A\cap f^{-1}\{y\})\diff\mathcal{H}^n(y)$ 是纯几何量：它沿像集逐点累加「多少个 $x\in A$ 映到 $y$」。公式断言二者相等，因而把难以直接计算的像集测度化为原像集上的积分。$n=m$ 且 $f$ 为 $C^1$ 微分同胚时它就是通常的变量替换公式；$n<m$ 时它计算 $n$ 维曲面（如曲线、曲面）的面积，这正是本节应用部分的来源。
+
+证明的结构由 $Jf$ 的符号决定。在 $Jf>0$ 处，$f$ 局部是「近似线性且单射」的，用\cref{lemma:ch03-3-3}把它切成可数多个近似线性的片，在每片上用线性情形的\cref{lemma:ch03-3-1}作双边估计，误差是 $t^{\pm2n}$，最后令 $t\to1^+$ 消去误差。在 $Jf=0$ 处，$f$ 把 $n$ 维体积压成零，于是人为地把映射「加厚」为 $g(x)=(f(x),\varepsilon x)$，使 $Jg>0$，再对 $g$ 用第一种情形并令 $\varepsilon\to0$，得 $\mathcal{H}^n(f(A))=0$，而此时 $\int_AJf=0$，等式平凡成立。% XREF internal
+
+公式还蕴含一条经常被引用的事实：对 $\mathcal{H}^n$-a.e. $y$，纤维 $f^{-1}\{y\}$ 至多可数。事实上由\cref{lemma:ch03-3-2}(iii)（对每个有界可测集 $A$）知重数函数 $\mathcal{H}^n$-a.e. 有限，而有界集的原像纤维有限、$\mathbb{R}^n$ 可数多个有界集之并，故全空间的纤维至多可数。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch03-3-8; kind=hypotheses; 逐条分析 Lipschitz 条件、$n\leqslant m$、$A$ 的 $\mathcal{L}^n$-可测性、有限测度与可微性的辅助假设，并说明结论中各量可能取无穷的情形
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-8-条件}
+\begin{enumerate}[(i)]
+\item $f$ 的 Lipschitz 连续性不可减弱为连续性。若 $f$ 只连续，$Jf$ 几乎处处不存在（Rademacher 定理失效），公式的两端都无从定义；即使改用别的「面积」概念，像集也可能被连续映射填满高维区域（Peano 曲线），此时 $\mathcal{H}^n(f(A))>0$ 而 $\int_AJf=0$，公式不成立。
+\item 条件 $n\leqslant m$ 保证 $Jf$ 由 $Df$ 的 $n\times n$ 子行列式定义、$\mathcal{H}^n$ 在 $\mathbb{R}^m$ 中是「中间维数」的测度。若 $n>m$，则 $\mathcal{H}^n(f(A))=0$ 而 $\int_AJf$ 可以为正，等式不成立。
+\item $A$ 只要求 $\mathcal{L}^n$-可测，不要求开、闭、有界或 Borel。可测性用于\cref{lemma:ch03-3-2}与\cref{lemma:ch03-3-3}中的可测性论证，以及 $\int_AJf$ 的可积性；有界性不是假设，证明中通过 $A\cap B(0,J)$ 的化归去掉。% XREF internal
+\item 证明中的两个辅助假设（$Df$、$Jf$ 在 $A$ 上处处存在；$\mathcal{L}^n(A)<\infty$）都不是结论所需的实质条件，而是化归：前者用 $\{Df\text{ 不存在}\}$ 为 $\mathcal{L}^n$-零测集且其像为 $\mathcal{H}^n$-零测集去掉，后者用 $A\cap B(0,J)$ 逼近并令 $J\to\infty$ 去掉（细节见定理证明之后的论证）。
+\item 公式两端允许同时为 $+\infty$：若 $\mathcal{L}^n(A)=\infty$ 且 $Jf$ 在 $A$ 上不几乎处处为零，则两端都为 $+\infty$，等式按扩展实数理解。若 $\mathcal{L}^n(A)<\infty$，则由 $Jf\leqslant(\Lip(f))^n$ 知左端有限，此时右端也有限，且 $N(f,A,y)<\infty$ 对 $\mathcal{H}^n$-a.e. $y$ 成立。
+\item $f$ 只需定义在 $A$ 的邻域上：由\cref{theorem:ch03-3-1}可把 $A$ 上的 Lipschitz 映射延拓为 $\mathbb{R}^n$ 上的 Lipschitz 映射而不改变 $\Lip(f)$，故要求 $f$ 定义在全空间不损失一般性。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\subsection{变量替换公式}\label{subsection:ch03-03-3}
+
+\begin{theorem}[变量替换]\label{theorem:ch03-3-9}
+设 $n,m$ 为正整数，$n\leqslant m$，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为 Lipschitz 连续映射。则对每个 $\mathcal{L}^n$-可和函数 $g:\mathbb{R}^n\to\mathbb{R}$ 有
+\begin{align*}
+\int_{\mathbb{R}^n}g(x)Jf(x)\diff x=\int_{\mathbb{R}^m}\Bigl[\sum_{x\in f^{-1}\{y\}}g(x)\Bigr]\diff\mathcal{H}^n(y).
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+（1）情形 1：$g\geqslant0$。由\cref{theorem:ch01-1-12}，可以写% XREF p=122 "According to Theorem 1.12, we can write"
+\begin{align*}
+g=\sum_{i=1}^{\infty}\frac1i\chi_{A_i}
+\end{align*}
+其中 $\{A_i\}_{i=1}^{\infty}$ 为适当的 $\mathcal{L}^n$-可测集。则单调收敛定理给出
+\begin{align*}
+\int_{\mathbb{R}^n}gJf\diff x&=\sum_{i=1}^{\infty}\frac1i\int_{\mathbb{R}^n}\chi_{A_i}Jf\diff x\\
+&=\sum_{i=1}^{\infty}\frac1i\int_{A_i}Jf\diff x\\
+&=\sum_{i=1}^{\infty}\frac1i\int_{\mathbb{R}^m}\mathcal{H}^0(A_i\cap f^{-1}\{y\})\diff\mathcal{H}^n(y)\\
+&=\int_{\mathbb{R}^m}\sum_{i=1}^{\infty}\frac1i\sum_{x\in f^{-1}\{y\}}\chi_{A_i}(x)\diff\mathcal{H}^n(y)\\
+&=\int_{\mathbb{R}^m}\sum_{x\in f^{-1}\{y\}}\sum_{i=1}^{\infty}\frac1i\chi_{A_i}(x)\diff\mathcal{H}^n(y)\\
+&=\int_{\mathbb{R}^m}\Bigl[\sum_{x\in f^{-1}\{y\}}g(x)\Bigr]\diff\mathcal{H}^n(y).
+\end{align*}
+
+（2）情形 2：$g$ 为任意 $\mathcal{L}^n$-可和函数。写 $g=g^+-g^-$ 并应用情形 1。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-3-9; kind=proof; 补足各步求和号与积分号交换的依据、计数测度下的重写、纤维和的绝对收敛性，以及情形 2 中两个积分有限的论证
+\begin{proof}
+（1）第（1）步第一行。由\cref{theorem:ch01-1-12}，对 $\mathcal{L}^n$-可测函数 $g\geqslant0$ 存在 $\mathcal{L}^n$-可测集 $A_i$，使 $g=\sum_{i=1}^{\infty}\frac1i\chi_{A_i}$ 处处成立。部分和 $g_i:=\sum_{j=1}^{i}\frac1j\chi_{A_j}$ 单调递增趋于 $g$，且 $Jf\geqslant0$，故由单调收敛定理% XREF internal
+\begin{align*}
+\int_{\mathbb{R}^n}gJf\diff x=\lim_{i\to\infty}\int_{\mathbb{R}^n}g_iJf\diff x=\sum_{i=1}^{\infty}\frac1i\int_{A_i}Jf\diff x .
+\end{align*}
+
+（2）第三行。对每个 $i$，$A_i$ 是 $\mathcal{L}^n$-可测集，故由\cref{theorem:ch03-3-8}（面积公式） % XREF internal
+\begin{align*}
+\int_{A_i}Jf\diff x=\int_{\mathbb{R}^m}\mathcal{H}^0(A_i\cap f^{-1}\{y\})\diff\mathcal{H}^n(y),
+\end{align*}
+这给出了第三行；右端非负，故第三行到第四行的求和与积分交换由单调收敛定理保证。
+
+（3）第四行到第五行。对每个 $y$，由 $\mathcal{H}^0$ 的定义
+\begin{align*}
+\mathcal{H}^0(A_i\cap f^{-1}\{y\})=\sum_{x\in f^{-1}\{y\}}\chi_{A_i}(x),
+\end{align*}
+其中右端按计数测度理解（对不可数的纤维取上确界，即 $\sum_{x\in E}1=\#E$，可取 $+\infty$）。又对每个 $x$，$\sum_{i=1}^{\infty}\frac1i\chi_{A_i}(x)=g(x)$，故被积函数逐点等于 $\sum_{x\in f^{-1}\{y\}}g(x)$。第四行到第五行交换两个非负和（关于 $i$ 与关于纤维中的点），这是计数测度上的 Tonelli 定理：所有项非负，交换不改变值。
+
+（4）情形 2 的合法性。设 $g$ 为 $\mathcal{L}^n$-可和函数，$g=g^+-g^-$，其中 $g^\pm\geqslant0$ 且 $\mathcal{L}^n$-可和。由情形 1，
+\begin{align*}
+\int_{\mathbb{R}^n}g^{\pm}Jf\diff x=\int_{\mathbb{R}^m}\Bigl[\sum_{x\in f^{-1}\{y\}}g^{\pm}(x)\Bigr]\diff\mathcal{H}^n(y).
+\end{align*}
+两边都有限：由 $Jf(x)\leqslant(\Lip(f))^n$（$Jf$ 不超过 $Df$ 的算子范数的 $n$ 次幂）得 $\int g^{\pm}Jf\leqslant(\Lip(f))^n\int g^{\pm}\diff x<\infty$，故
+\begin{align*}
+\sum_{x\in f^{-1}\{y\}}g^{\pm}(x)<\infty\qquad\text{对 }\mathcal{H}^n\text{-a.e. }y
+\end{align*}
+成立，从而 $\sum_{x\in f^{-1}\{y\}}g(x)$ 对 $\mathcal{H}^n$-a.e. $y$ 绝对收敛。于是可逐点相减并利用积分的线性得
+\begin{align*}
+\int_{\mathbb{R}^n}gJf\diff x=\int_{\mathbb{R}^n}g^+Jf\diff x-\int_{\mathbb{R}^n}g^-Jf\diff x=\int_{\mathbb{R}^m}\Bigl[\sum_{x\in f^{-1}\{y\}}g(x)\Bigr]\diff\mathcal{H}^n(y).
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-3-9; kind=motivation; 说明变量替换公式与面积公式的关系、右端纤维和的含义，以及它在 $f$ 单射时退化为经典变量替换公式
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-9-动机}
+本定理是面积公式的加权形式：在\cref{theorem:ch03-3-8}中取 $g=\chi_A$ 即得面积公式；反过来，本定理把任意 $\mathcal{L}^n$-可和函数 $g$ 在原像集上的加权积分 $\int gJf$ 表示为像空间上的积分，权重是「纤维上 $g$ 的取值之和」。这使得「先在 $\mathbb{R}^n$ 上积分、再按重数推到 $\mathbb{R}^m$」与「直接在 $\mathbb{R}^m$ 上积分」这两种算法一致，因而可以把高维空间中的积分计算转化为像集（通常是低维流形）上的积分。% XREF internal
+
+当 $f$ 在 $A$ 上单射时，每个 $y$ 的纤维至多含一点，右端化为 $\int_{f(A)}g(f^{-1}(y))\diff\mathcal{H}^n(y)$，本定理就是通常的变量替换公式 $\int_AgJf\diff x=\int_{f(A)}g\circ f^{-1}\diff\mathcal{H}^n$；当 $f$ 是线性映射 $L$ 时，$Jf=\llbracket L\rrbracket$ 为常数，本定理即线性变量替换公式。
+
+证明的策略是把一般 $g$ 拆成特征函数的非负级数（\cref{theorem:ch01-1-12}），对每个特征函数用面积公式，再用单调收敛定理与计数测度上的 Tonelli 定理把求和搬到积分号内。这一「先对特征函数证明、再用单调收敛延拓」的模式是测度论中证明积分恒等式的标准路线。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch03-3-9; kind=hypotheses; 逐条分析 $g$ 的可和性、$Jf$ 的有界性、纤维和的收敛性、$n\leqslant m$ 与 $f$ 的 Lipschitz 性，并说明非负情形无须可和性
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-9-条件}
+\begin{enumerate}[(i)]
+\item $g$ 的 $\mathcal{L}^n$-可和性在情形 2 中使用：只有 $g^\pm$ 可和，才能保证 $\int g^\pm Jf<\infty$，从而两个积分可以相减、纤维和 $\sum_{x\in f^{-1}\{y\}}g(x)$ 对 $\mathcal{H}^n$-a.e. $y$ 绝对收敛。若 $g$ 仅 $\mathcal{L}^n$-可测且非负（不必可和），情形 1 的论证仍成立，此时两端都可为 $+\infty$。
+\item $Jf$ 的有界性来自 $f$ 的 Lipschitz 连续性：$\lvert Jf(x)\rvert\leqslant(\Lip(f))^n$，它是「$g$ 可和推出 $gJf$ 可和」的依据。若 $f$ 只是局部 Lipschitz，则须对 $A$ 加有界性或用截断函数。
+\item 右端的纤维和按计数测度理解：$\sum_{x\in f^{-1}\{y\}}g(x):=\int_{f^{-1}\{y\}}g\diff\mathcal{H}^0$。由\cref{lemma:ch03-3-2}(iii)，当 $g$ 可和时该和在 $\mathcal{H}^n$-a.e. $y$ 处绝对收敛，故右端被积函数 $\mathcal{H}^n$-a.e. 有定义；在使纤维不可数或级数不收敛的零测集上可任意取值，不影响积分。% XREF internal
+\item 条件 $n\leqslant m$ 与面积公式相同，不可删除：$n>m$ 时 $\mathcal{H}^n(f(A))=0$ 而 $\int_AJf$ 可正，公式失效（见\cref{remark:ch03-thm-3-8-条件}）。% XREF internal
+\item 定理不要求 $f$ 单射，也不要求 $A$ 与 $f(A)$ 是开集或流形；重数函数自动计及覆盖次数。若 $f$ 在 $A$ 上单射，则 $N(f,A,y)\in\{0,1\}$，公式退化为经典形式，此时右端无须计数权重。
+\end{enumerate}
+\end{remark}
+
+\subsection{应用}\label{subsection:ch03-03-4}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.68\textwidth]{ch03-3-3-curve-length.png}
+\end{figure}
+
+\begin{example}[曲线的长度]\label{example:ch03-app-曲线长度}
+设 $m\geqslant1$，$n=1$，$f:\mathbb{R}\to\mathbb{R}^m$ 为 Lipschitz 连续的单射。写
+\begin{align*}
+f=(f^1,\cdots,f^m),\qquad Df=(\dot f^1,\cdots,\dot f^m)\qquad\Bigl(\cdot=\frac{\diff}{\diff t}\Bigr);
+\end{align*}
+于是
+\begin{align*}
+Jf=\lvert Df\rvert=\lvert\dot f\rvert .
+\end{align*}
+对 $-\infty<a<b<\infty$，定义曲线 $C:=f([a,b])\subseteq\mathbb{R}^m$。则
+\begin{align*}
+\mathcal{H}^1(C)=\text{$C$ 的长度}=\int_a^b\lvert\dot f\rvert\diff t .
+\end{align*}
+\end{example}
+
+% SUPPLEMENT: parent=example:ch03-app-曲线长度; kind=proof; 由面积公式与单射性补出该公式的一行推导
+\begin{proof}
+在\cref{theorem:ch03-3-8}中取 $n=1$、$A=[a,b]$。由于 $f$ 在 $[a,b]$ 上单射，重数函数 $N(f,[a,b],y)$ 在 $f([a,b])$ 上恒等于 $1$、在其余点等于 $0$，故 % XREF internal
+\begin{align*}
+\int_a^b\lvert\dot f\rvert\diff t=\int_a^bJf\diff t=\int_{\mathbb{R}^m}N(f,[a,b],y)\diff\mathcal{H}^1(y)=\mathcal{H}^1\bigl(f([a,b])\bigr)=\mathcal{H}^1(C).
+\end{align*}
+\end{proof}
+
+\begin{example}[函数图像的面积]\label{example:ch03-app-图像面积}
+设 $n\geqslant1$，$m=n+1$，$g:\mathbb{R}^n\to\mathbb{R}$ 为 Lipschitz 连续函数，并定义 $f:\mathbb{R}^n\to\mathbb{R}^{n+1}$ 为
+\begin{align*}
+f(x):=(x,g(x)).
+\end{align*}
+则
+\begin{align*}
+Df=\begin{pmatrix}I_{n\times n}\\ Dg\end{pmatrix}_{(n+1)\times n},
+\end{align*}
+从而
+\begin{align*}
+(Jf)^2=\text{$n\times n$ 子行列式的平方和}=1+\lvert Dg\rvert^2 .
+\end{align*}
+对每个开集 $U\subseteq\mathbb{R}^n$，定义 $g$ 在 $U$ 上的图像
+\begin{align*}
+G=G(g;U):=\{(x,g(x))\mid x\in U\}\subset\mathbb{R}^{n+1}.
+\end{align*}
+则
+\begin{align*}
+\mathcal{H}^n(G)=\text{$G$ 的面积}=\int_U\bigl(1+\lvert Dg\rvert^2\bigr)^{\frac12}\diff x .
+\end{align*}
+\end{example}
+
+% SUPPLEMENT: parent=example:ch03-app-图像面积; kind=proof; 补出 $(Jf)^2=1+\lvert Dg\rvert^2$ 的子行列式计算与面积公式的套用
+\begin{proof}
+（1）$Df$ 的上 $n$ 行构成单位矩阵，最下一行为 $Dg=(g_{x_1},\cdots,g_{x_n})$。取 $Df$ 的 $n$ 个行所成的 $n\times n$ 子矩阵：若取全部 $n$ 个单位矩阵的行，则得单位矩阵，其行列式平方为 $1$；若把其中第 $k$ 行换成最后一行 $Dg$，则所得矩阵与单位矩阵只差第 $k$ 行，其行列式为 $g_{x_k}$，平方为 $g_{x_k}^2$。共有 $n$ 个这样的子矩阵，且 $Df$ 只有 $n+1$ 行，故
+\begin{align*}
+(Jf)^2=1+\sum_{k=1}^n g_{x_k}^2=1+\lvert Dg\rvert^2 .
+\end{align*}
+
+（2）映射 $f$ 是单射，且 $f(U)=G$。在\cref{theorem:ch03-3-8}中取 $A=U$，由 $f$ 在 $U$ 上单射得 % XREF internal
+\begin{align*}
+\mathcal{H}^n(G)=\int_{\mathbb{R}^{n+1}}N(f,U,y)\diff\mathcal{H}^n(y)=\int_UJf\diff x=\int_U\bigl(1+\lvert Dg\rvert^2\bigr)^{\frac12}\diff x .
+\end{align*}
+\end{proof}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.66\textwidth]{ch03-3-3-hypersurface.png}
+\end{figure}
+
+\begin{example}[参数超曲面的面积]\label{example:ch03-app-超曲面面积}
+设 $n\geqslant1$，$m=n+1$，$f:\mathbb{R}^n\to\mathbb{R}^{n+1}$ 为 Lipschitz 连续的单射。写
+\begin{align*}
+f=(f^1,\cdots,f^{n+1}),
+\end{align*}
+\begin{align*}
+Df=\begin{pmatrix}f^1_{x_1}&\cdots&f^1_{x_n}\\ \vdots&\ddots&\vdots\\ f^{n+1}_{x_1}&\cdots&f^{n+1}_{x_n}\end{pmatrix}_{(n+1)\times n};
+\end{align*}
+于是
+\begin{align*}
+(Jf)^2&=\text{$n\times n$ 子行列式的平方和}\\
+&=\sum_{k=1}^{n+1}\Bigl[\frac{\partial\bigl(f^1,\cdots,f^{k-1},f^{k+1},\cdots,f^{n+1}\bigr)}{\partial\bigl(x_1,\cdots,x_n\bigr)}\Bigr]^2 .
+\end{align*}
+对每个开集 $U\subseteq\mathbb{R}^n$，记
+\begin{align*}
+S:=f(U)\subseteq\mathbb{R}^{n+1}.
+\end{align*}
+则
+\begin{align*}
+\mathcal{H}^n(S)&=\text{$S$ 的 $n$ 维曲面面积}\\
+&=\int_U\Biggl(\sum_{k=1}^{n+1}\Bigl[\frac{\partial\bigl(f^1,\cdots,f^{k-1},f^{k+1},\cdots,f^{n+1}\bigr)}{\partial\bigl(x_1,\cdots,x_n\bigr)}\Bigr]^2\Biggr)^{\frac12}\diff x .
+\end{align*}
+\end{example}
+
+% SUPPLEMENT: parent=example:ch03-app-超曲面面积; kind=proof; 说明子行列式与 Jacobi 因子的关系及面积公式的套用
+\begin{proof}
+$Df$ 是 $(n+1)\times n$ 矩阵，其 $n\times n$ 子行列式恰有 $n+1$ 个，第 $k$ 个是删去第 $k$ 行所得矩阵的行列式，即 $\partial(f^1,\cdots,f^{k-1},f^{k+1},\cdots,f^{n+1})/\partial(x_1,\cdots,x_n)$。由 Jacobi 因子的定义，$Jf$ 等于这些子行列式平方和的平方根，故第一组公式成立。再由 $f$ 在 $U$ 上单射及\cref{theorem:ch03-3-8}，取 $A=U$ 得 % XREF internal
+\begin{align*}
+\mathcal{H}^n(S)=\int_UN(f,U,y)\diff\mathcal{H}^n(y)=\int_UJf\diff x,
+\end{align*}
+代入 $Jf$ 的表达式即得第二组公式。
+\end{proof}
+
+\begin{example}[子流形]\label{example:ch03-app-子流形}
+设 $m$ 为正整数，$n\leqslant m$，$M\subseteq\mathbb{R}^m$ 为 $n$ 维 Lipschitz 连续嵌入子流形。设 $U\subseteq\mathbb{R}^n$ 为开集，$f:U\to M$ 为 $M$ 的坐标卡。设 $A\subseteq f(U)$ 为 Borel 集，并令 $B:=f^{-1}(A)$。定义
+\begin{align*}
+g_{ij}:=f_{x_i}\cdot f_{x_j}\qquad(i,j=1,\cdots,n).
+\end{align*}
+则
+\begin{align*}
+(Df)^{*}\circ Df=((g_{ij}))
+\end{align*}
+从而
+\begin{align*}
+Jf=g^{\frac12}\qquad\bigl(g:=\det((g_{ij}))\bigr).
+\end{align*}
+于是
+\begin{align*}
+\mathcal{H}^n(A)=\text{$A$ 在 $M$ 中的体积}=\int_Bg^{\frac12}\diff x .
+\end{align*}
+\end{example}
+
+% SUPPLEMENT: parent=example:ch03-app-子流形; kind=proof; 补出 Gram 矩阵与 Jacobi 因子的关系以及面积公式在坐标卡上的套用
+\begin{proof}
+（1）矩阵恒等式。$Df$ 是 $m\times n$ 矩阵，其第 $j$ 列为 $f_{x_j}\in\mathbb{R}^m$。于是 $(Df)^{*}\circ Df$ 是 $n\times n$ 矩阵，其 $(i,j)$ 元为列向量 $f_{x_i}$ 与 $f_{x_j}$ 的内积，即 $g_{ij}$。
+
+（2）Jacobi 因子。由\cref{section:ch03-02}中 Jacobi 因子的定义，$\llbracket Df\rrbracket^2=\det\bigl((Df)^{*}\circ Df\bigr)=\det((g_{ij}))=g$，故 $Jf=\llbracket Df\rrbracket=g^{1/2}$。% XREF internal
+
+（3）面积公式的套用。坐标卡 $f$ 在 $U$ 上是单射，$B=f^{-1}(A)$ 是 $U$ 的 Borel 子集，故 $\mathcal{L}^n$-可测；由\cref{theorem:ch03-3-8}取 $A:=B$ 得 % XREF internal
+\begin{align*}
+\mathcal{H}^n\bigl(f(B)\bigr)=\int_{\mathbb{R}^m}N(f,B,y)\diff\mathcal{H}^n(y)=\int_BJf\diff x=\int_Bg^{\frac12}\diff x .
+\end{align*}
+又 $f(B)=f(f^{-1}(A))=A$，故 $\mathcal{H}^n(A)=\int_Bg^{1/2}\diff x$。
+\end{proof}
+
+\end{document}

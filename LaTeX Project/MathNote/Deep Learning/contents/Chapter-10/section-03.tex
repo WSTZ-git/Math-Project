@@ -59,7 +59,7 @@ Hubel 和 Wiesel 还发现了“复杂细胞”的存在，这些细胞会响应
         $M_l\times M_l$ 局部感受野，$M_l\geqslant1$，且同一片内所有单元共享同一组权重；
   \item 每个卷积型层之后紧跟一个局部平均或局部最大池化层，池化窗口与步幅由该层给定，
         池化层不含可学习参数；
-  \item 各层以无监督聚类算法逐层贪婪训练：第 $l$ 层的参数在第 $1,\dots,l-1$ 层参数
+  \item 各层以无监督聚类算法逐层贪婪训练：第 $l$ 层的参数在第 $1,\cdots,l-1$ 层参数
         固定之后单独确定，训练目标不是端到端最小化统一损失。
 \end{enumerate}
 \end{definition}
@@ -117,9 +117,9 @@ Hubel 和 Wiesel 还发现了“复杂细胞”的存在，这些细胞会响应
 \begin{definition}[显著性图与 Grad-CAM]\label{definition:ch10-显著性图}
 设最后一个卷积层有 $C$ 个通道，第 $k$ 个通道的空间尺寸为 $H\times W$，
 $a_{ij}^{(k)}\in\mathbb{R}$ 为该通道在位置 $(i,j)$ 处的预激活，
-$i=1,\dots,H$、$j=1,\dots,W$、$k=1,\dots,C$；设 $a^{(c)}\in\mathbb{R}$ 为类别 $c$ 在
+$i=1,\cdots,H$、$j=1,\cdots,W$、$k=1,\cdots,C$；设 $a^{(c)}\in\mathbb{R}$ 为类别 $c$ 在
 softmax 之前的预激活，$M_k=HW$，并设 $a^{(c)}$ 对每个 $a_{ij}^{(k)}$ 都可微。对
-$k=1,\dots,C$，按
+$k=1,\cdots,C$，按
 \eqref{align:ch10-GradCAM通道权重}定义
 $\alpha_k=\frac{1}{M_k}\sum_{i=1}^{H}\sum_{j=1}^{W}
 \partial a^{(c)}/\partial a_{ij}^{(k)}$，$\alpha_k$ 称为通道 $k$ 对类别 $c$ 的
@@ -151,8 +151,8 @@ $a_{ij}^{(k)}$ 为元素；$L$ 称为类别 $c$ 的 \textbf{Grad-CAM 显著性�
 这里的 $t$ 是 $\mathbf{x}$ 的真实标签，误差 $E(\mathbf{x},t)$ 举例来说可以是 $\mathbf{x}$ 的负对数似然。使用反向传播可以有效地计算所需梯度（参见\cref{chapter:ch08-反向传播}）。在神经网络的常规训练中，可以通过调整网络参数来最小化误差，而\eqref{align:ch10-快速梯度符号}定义的修改会改变图像（同时保持训练好的网络参数固定），从而导致误差增加。通过保持 $\varepsilon$ 为较小的值，可以确保人眼无法察觉图像的变化。值得注意的是，这可以使网络以较高的置信度将图像分类错误，如\cref{figure:ch10-对抗攻击}中的示例所示。
 
 \begin{definition}[对抗攻击与快速梯度符号法]\label{definition:ch10-对抗攻击}
-设分类器为 $f:\mathbb{R}^{D}\to\{1,\dots,K\}$，输入为 $\mathbf{x}\in\mathbb{R}^{D}$，
-真实标签为 $t\in\{1,\dots,K\}$，误差函数为 $E(\cdot,t):\mathbb{R}^{D}\to\mathbb{R}$，
+设分类器为 $f:\mathbb{R}^{D}\to\{1,\cdots,K\}$，输入为 $\mathbf{x}\in\mathbb{R}^{D}$，
+真实标签为 $t\in\{1,\cdots,K\}$，误差函数为 $E(\cdot,t):\mathbb{R}^{D}\to\mathbb{R}$，
 扰动预算为 $\varepsilon>0$。若 $\boldsymbol{\delta}\in\mathbb{R}^{D}$ 满足
 $\|\boldsymbol{\delta}\|_{\infty}\leqslant\varepsilon$ 且
 $f(\mathbf{x}+\boldsymbol{\delta})\neq t$，则 $\boldsymbol{\delta}$ 称为该分类器在
@@ -235,14 +235,14 @@ $\mathrm{sign}$ 逐元素作用、$\mathrm{sign}(0)=0$。
 
 \begin{definition}[DeepDream]\label{definition:ch10-DeepDream}
 设训练好的网络对输入 $I\in\mathbb{R}^{H\times W\times C}$ 在第 $l$ 层给出预激活
-$a_{ijk}(I)\in\mathbb{R}$，$i=1,\dots,H_l$、$j=1,\dots,W_l$、$k=1,\dots,C_l$，目标函数
+$a_{ijk}(I)\in\mathbb{R}$，$i=1,\cdots,H_l$、$j=1,\cdots,W_l$、$k=1,\cdots,C_l$，目标函数
 $F$ 由\eqref{align:ch10-DeepDream目标}定义。从图像
 $I_0\in\mathbb{R}^{H\times W\times C}$ 出发，按
 \begin{align}
 I_{\tau+1}=I_{\tau}+\eta\nabla_IF(I_{\tau}),
 \label{align:ch10-DeepDream更新}
 \end{align}
-迭代，$\tau=0,1,2,\dots$，其中 $\eta>0$ 为步长，并在每一步之后施加空间平滑算子、
+迭代，$\tau=0,1,2,\cdots$，其中 $\eta>0$ 为步长，并在每一步之后施加空间平滑算子、
 再把像素值截断到图像的合法取值区间。这一迭代
 过程称为 \textbf{DeepDream}。
 \end{definition}

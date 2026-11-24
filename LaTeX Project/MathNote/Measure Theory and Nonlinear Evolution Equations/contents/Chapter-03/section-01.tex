@@ -15,43 +15,64 @@
 
 \section{函数空间}\label{section:ch03-函数空间}
 
-本节回顾标量分布论与 Sobolev 空间的若干基本概念，以固定记号并使叙述足够自足。相关主题的详尽阐述请读者参见文献~\cite{ref01,ref64}。
+本节回顾标量分布论与 Sobolev 空间的若干基本概念，以固定记号并使叙述足够自足。相关主题的清晰而详尽的阐述可参见文献~\cite{ref01,ref64}。
 
 \subsection{分布导数}\label{subsection:ch03-分布导数}
 
 设 $U\subseteq\mathbb{R}^N$ 为开集。置
 \begin{align*}
-C^m(U) \triangleq  \{f:U\to\mathbb{R}\mid \exists D^\alpha f,\ D^\alpha f\in C(U)\ \forall|\alpha|\leqslant m\}
-\quad (m\in\mathbb{N}),
+C^m(U)\triangleq \{f:U\to\mathbb{R}\mid \exists D^\alpha f,\ D^\alpha f\in C(U)\ \forall\alpha\in(\mathbb{N}^*)^N,\ |\alpha|\leqslant m\}\qquad(m\in\mathbb{N}^*),
 \end{align*}
-其中 $\mathbb{N}^*\triangleq \mathbb{N}\cup\{0\}$，$\alpha\equiv(\alpha_1,\cdots ,\alpha_N)$，$\alpha_k\in\mathbb{N}^*$（$k=1,\cdots ,N$），$|\alpha|\triangleq \sum_{k=1}^N\alpha_k$，且
+其中 $\mathbb{N}^*\triangleq\mathbb{N}\cup\{0\}$，$\alpha\equiv(\alpha_1,\cdots ,\alpha_N)$，$\alpha_k\in\mathbb{N}^*$（$k=1,\cdots ,N$），$|\alpha|\triangleq \sum_{k=1}^N\alpha_k$，且
 \begin{align*}
 D^\alpha\equiv\frac{\partial^{|\alpha|}}{\partial^{\alpha_1}x_1\cdots\partial^{\alpha_N}x_N}
 \end{align*}
-（若 $|\alpha|=0$，则置 $D^\alpha f\equiv f$）。我们也记 $x^\alpha\equiv x_1^{\alpha_1}\cdots x_N^{\alpha_N}$。此外置 $C^0(U)\equiv C(U)$，$C^\infty(U)\triangleq \bigcap_{m=0}^\infty C^m(U)$，$C^\infty_c(U)\triangleq C^\infty(U)\cap C_c(U)$。
+（若 $|\alpha|=0$，则置 $D^\alpha f\equiv f$）。也记 $x^\alpha\equiv x_1^{\alpha_1}\cdots x_N^{\alpha_N}$。此外置 $C^0(U)\equiv C(U)$，$C^\infty(U)\triangleq \bigcap_{m=0}^\infty C^m(U)$，$C^\infty_c(U)\triangleq C^\infty(U)\cap C_c(U)$。
 
 \begin{definition}\label{definition:ch03-分布与检验函数}
-设 $U\subseteq\mathbb{R}^N$ 为开集。
+设 $U\subseteq\mathbb{R}^N$ 为非空开集，多重指标集取为 $(\mathbb{N}^*)^N$，$|\alpha|\triangleq\sum_{k=1}^N\alpha_k$。
 \begin{enumerate}[(i)]
-\item\label{item:ch03-分布-i} 检验函数空间 $\mathcal{D}(U)$ 即赋以如下收敛概念的 $C^\infty_c(U)$ 空间：序列 $\{\zeta_k\}\subseteq C^\infty_c(U)$ 在 $\mathcal{D}(U)$ 中收敛于 $\zeta$，若存在紧集 $K\subset U$ 包含 $\operatorname{supp}\zeta$ 与 $\operatorname{supp}\zeta_k$（$k\in\mathbb{N}$），且对所有 $\alpha\in(\mathbb{N}^*)^N$，$D^\alpha\zeta_k$ 在 $K$ 上一致收敛于 $D^\alpha\zeta$。
-\item\label{item:ch03-分布-ii} 函数 $f\in C^\infty(U)$ 属于 Schwartz 类 $\mathcal{S}(U)$，若对所有 $\alpha,\beta\in(\mathbb{N}^*)^N$ 有 $\sup_{x\in U}|x^\alpha D^\beta f(x)|<\infty$。
-\item\label{item:ch03-分布-iii} 分布空间（记为 $\mathcal{D}'(U)$）是 $\mathcal{D}(U)$ 上连续线性泛函的对偶空间。即 $T\in\mathcal{D}'(U)$ 当且仅当 $T:\mathcal{D}(U)\to\mathbb{R}$ 为线性，且对任意 $\zeta_k\to\zeta$ 在 $\mathcal{D}(U)$ 中，有 $|\langle T,\zeta_k\rangle-\langle T,\zeta\rangle|\to0$。
+\item\label{item:ch03-分布-i} 检验函数空间 $\mathcal{D}(U)$ 是 $C^\infty_c(U)$ 配以下述收敛概念所得的空间：序列 $\{\zeta_k\}\subseteq C^\infty_c(U)$ 在 $\mathcal{D}(U)$ 中收敛于 $\zeta\in C^\infty_c(U)$，若存在紧集 $K\subset U$ 使 $\operatorname{supp}\zeta\subseteq K$ 且 $\operatorname{supp}\zeta_k\subseteq K$ 对所有 $k\in\mathbb{N}$ 成立，并且对每个 $\alpha\in(\mathbb{N}^*)^N$，$D^\alpha\zeta_k$ 在 $K$ 上一致收敛于 $D^\alpha\zeta$。
+\item\label{item:ch03-分布-ii} 函数 $f\in C^\infty(U)$ 属于 Schwartz 类 $\mathcal{S}(U)$，若 $\sup_{x\in U}|x^\alpha D^\beta f(x)|<\infty$ 对所有 $\alpha,\beta\in(\mathbb{N}^*)^N$ 成立。
+\item\label{item:ch03-分布-iii} 分布空间（记作 $\mathcal{D}'(U)$）是 $\mathcal{D}(U)$ 上连续线性泛函的对偶空间：$T\in\mathcal{D}'(U)$ 当且仅当 $T:\mathcal{D}(U)\to\mathbb{R}$ 为线性映射，且对 $\mathcal{D}(U)$ 中每个收敛序列 $\zeta_k\to\zeta$ 有 $|\langle T,\zeta_k\rangle-\langle T,\zeta\rangle|\to0$。
+\end{enumerate}
+在 (iii) 及下文，$\mathcal{D}(U)$ 与 $\mathcal{D}'(U)$ 之间的对偶映射记作 $(T,\zeta)\mapsto\langle T,\zeta\rangle\in\mathbb{R}$（$T\in\mathcal{D}'(U)$，$\zeta\in\mathcal{D}(U)$）。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch03-分布与检验函数; kind=motivation; basis=定义 3.1.1 三条条件的对照与半范数族 $p_{K,m}$，加上支撑逃逸、缺少高阶导数收敛的两个反例
+\begin{remark}\phantomsection\label{remark:ch03-检验函数动机}
+(i) 动机。$\mathcal{D}(U)$ 在本书中充当探针：把待研究对象 $T$ 与全部无穷可微紧支函数配对，就把它化为数值 $\langle T,\zeta\rangle$。分布导数之所以总能定义，靠的正是这种配对加上分部积分；而要使求导在极限下封闭，收敛概念必须强于逐点收敛。
+
+(ii) 各项条件的作用。
+\begin{enumerate}[(1)]
+\item 公共紧集 $K$：它排除支撑逃向 $\partial U$ 的情形。去掉该要求，取 $\zeta\in C^\infty_c(\mathbb{R}^N)$、$\zeta\not\equiv0$ 并置 $\zeta_k\triangleq k^{-1}\zeta(\cdot/k)$，则 $D^\alpha\zeta_k=k^{-1-|\alpha|}D^\alpha\zeta$ 在 $\mathbb{R}^N$ 上一致趋于 $0$，而线性泛函 $T(\zeta)\triangleq\int_{\mathbb{R}^N}\zeta\,\mathrm{d}x$（其支撑为 $\mathbb{R}^N$）满足 $\langle T,\zeta_k\rangle=\int_{\mathbb{R}^N}\zeta\,\mathrm{d}x\neq0$，故 $T$ 将不连续。
+\item 全部阶导数的一致收敛：若只要求 $\zeta_k$ 本身一致收敛，则线性泛函 $T(\zeta)\triangleq\int_{\mathbb{R}}\zeta'\,\mathrm{d}\lambda$ 不再连续：取 $\varphi\in C^\infty_c(\mathbb{R})$、$\varphi\not\equiv0$ 并置 $\zeta_k\triangleq k^{-1}\sin(k^2x)\varphi(x)$，则 $\|\zeta_k\|_\infty\leqslant k^{-1}\|\varphi\|_\infty\to0$，而 $|\langle T,\zeta_k\rangle|$ 与 $k$ 同阶。
+\item (ii) 中全部矩 $\sup_{x\in U}|x^\alpha D^\beta f(x)|$ 有界：它使 Fourier 变换与卷积在 $\mathcal{S}$ 内封闭。$e^{-|x|^2}\in\mathcal{S}(\mathbb{R}^N)$；而 $f(x)=e^{x}$（$U=\mathbb{R}$）虽有各阶导数，却因 $\sup_{\mathbb{R}}|f|=\infty$ 不属于 $\mathcal{S}(\mathbb{R})$。
 \end{enumerate}
 
-在\eqref{item:ch03-分布-iii}及下文，$\mathcal{D}(U)$ 与 $\mathcal{D}'(U)$ 之间的对偶映射记为 $(T,\zeta)\mapsto\langle T,\zeta\rangle\in\mathbb{R}$（$T\in\mathcal{D}'(U)$，$\zeta\in\mathcal{D}(U)$）。
-\end{definition}
+(iii) 边界。$\mathcal{D}(U)$ 的拓扑由半范数族 $p_{K,m}(\zeta)\triangleq\sup_{|\alpha|\leqslant m}\sup_{x\in K}|D^\alpha\zeta(x)|$（$K\Subset U$，$m\in\mathbb{N}^*$）的归纳极限给出，不能由可数族代替，故 $\mathcal{D}(U)$ 不是 Fréchet 空间；又 $\mathcal{D}(U)\subsetneq\mathcal{S}(U)$，因为 $\mathcal{S}(U)$ 的元素一般没有紧支撑（如 $e^{-|x|^2}$）。
+\end{remark}
 
 \begin{definition}\label{definition:ch03-分布收敛}
-分布序列 $\{T_k\}\subseteq\mathcal{D}'(U)$ 在 $\mathcal{D}'(U)$ 中收敛于 $T\in\mathcal{D}'(U)$（记作 $T_k\to T$ 在 $\mathcal{D}'(U)$ 中），若对所有 $\zeta\in C^\infty_c(U)$ 有 $|\langle T_k,\zeta\rangle-\langle T,\zeta\rangle|\to0$。
+设 $U\subseteq\mathbb{R}^N$ 为开集。序列 $\{T_k\}\subseteq\mathcal{D}'(U)$ 在 $\mathcal{D}'(U)$ 中收敛于 $T\in\mathcal{D}'(U)$（记作 $T_k\to T$ 在 $\mathcal{D}'(U)$ 中），若 $|\langle T_k,\zeta\rangle-\langle T,\zeta\rangle|\to0$ 对所有 $\zeta\in C^\infty_c(U)$ 成立。该收敛即 $\mathcal{D}(U)$ 的对偶空间上的弱*收敛。
 \end{definition}
 
+% SUPPLEMENT: parent=definition:ch03-分布收敛; kind=motivation; basis=定义 3.1.2 与弱*拓扑的对照，加上 $\delta_{x_k}\to0$ 与 $k\chi_{(0,1/k)}\to\delta_0$ 两个例子
+\begin{remark}\phantomsection\label{remark:ch03-分布收敛动机}
+(i) 动机。分布空间没有自然的范数（$\mathcal{D}(U)$ 不是赋范空间的对偶），可用的拓扑只有弱*拓扑：逐点检验配对值。\cref{definition:ch03-分布收敛}把该拓扑的序列收敛逐字写出，从而记号 $T_k\to T$ 总有意义。
+
+(ii) 假设的作用。定义对每个 $\zeta$ 单独要求收敛，不要求关于 $\zeta$ 一致；由 Banach--Steinhaus 定理，$\mathcal{D}'(U)$ 中的弱*收敛序列自动等度连续：对每个紧集 $K\Subset U$ 与每个 $m$ 存在 $C_{K,m}<\infty$ 使 $|\langle T_k,\zeta\rangle|\leqslant C_{K,m}p_{K,m}(\zeta)$。定义中只列 $\zeta\in C^\infty_c(U)$，因为 $\mathcal{D}(U)$ 与 $C^\infty_c(U)$ 是同一集合，差别只在拓扑。
+
+(iii) 边界与例。弱*收敛极弱，不控制质量：$\delta_{x_k}\to0$ 在 $\mathcal{D}'(\mathbb{R}^N)$ 中对任何 $|x_k|\to\infty$ 成立，因为 $\zeta$ 有紧支撑；而 $T_k\triangleq k\chi_{(0,1/k)}$ 满足 $\langle T_k,\zeta\rangle\to\zeta(0)$，即 $T_k\to\delta_0$，尽管 $\|T_k\|_{L^1}=1$ 不趋于 $0$。另一方面 $T_k\triangleq\sin(kx)$ 在 $\mathcal{D}'(\mathbb{R})$ 中不收敛（对 $\zeta$ 作 Fourier 变换可看出其配对值不收敛），故定义中的收敛并非自动成立。
+\end{remark}
+
 \begin{definition}\label{definition:ch03-分布导数定义}
-设 $T\in\mathcal{D}'(U)$。对任意 $\alpha\in(\mathbb{N}^*)^N$，$T$ 的 $\alpha$ 阶分布导数（记为 $D^\alpha T$）指如下分布：
+设 $U\subseteq\mathbb{R}^N$ 为开集，$T\in\mathcal{D}'(U)$。对任意 $\alpha\in(\mathbb{N}^*)^N$，$T$ 的 $\alpha$ 阶分布导数（记作 $D^\alpha T$）指如下分布：
 \begin{align*}
 \langle D^\alpha T,\zeta\rangle \triangleq  (-1)^{|\alpha|}\langle T,D^\alpha\zeta\rangle
 \quad \text{对所有 }\zeta\in C^\infty_c(U).
 \end{align*}
-若 $|\alpha|=0$，则 $D^\alpha T=T$。若 $|\alpha|=1$，$\alpha_k=1$，且对所有 $l\neq k$ 有 $\alpha_l=0$（$k,l=1,\cdots ,N$），则写 $\dfrac{\partial T}{\partial x_k}$（若 $N=1$ 则写 $\dfrac{\mathrm{d}T}{\mathrm{d}x}$）以代替 $D^\alpha T$。我们记
+若 $|\alpha|=0$，则 $D^\alpha T=T$。若 $|\alpha|=1$，$\alpha_k=1$，且对所有 $l\neq k$ 有 $\alpha_l=0$（$k,l=1,\cdots ,N$），则写 $\dfrac{\partial T}{\partial x_k}$（若 $N=1$ 则写 $\dfrac{\mathrm{d}T}{\mathrm{d}x}$）以代替 $D^\alpha T$。记
 \begin{align*}
 \nabla T\equiv\left(\frac{\partial T}{\partial x_1},\cdots ,\frac{\partial T}{\partial x_N}\right)
 \end{align*}
@@ -62,27 +83,105 @@ D^\alpha\equiv\frac{\partial^{|\alpha|}}{\partial^{\alpha_1}x_1\cdots\partial^{\
 为 $T\equiv(T_1,\cdots ,T_N)\in(\mathcal{D}'(U))^N$ 的分布散度。
 \end{definition}
 
+% SUPPLEMENT: parent=definition:ch03-分布导数定义; kind=motivation; basis=定义 3.1.3 的良定义性核验（线性与连续性）、符号因子的作用与 Heaviside 反例
+\begin{remark}\phantomsection\label{remark:ch03-分布导数动机}
+(i) 动机。\cref{definition:ch03-分布导数定义}是分部积分的转写：对 $f\in C^1(U)$ 与 $\zeta\in C^\infty_c(U)$ 有 $\int_U\partial_kf\,\zeta\,\mathrm{d}x=-\int_Uf\,\partial_k\zeta\,\mathrm{d}x$，右端只用到 $f$ 的局部可积性。把右端取作左端的定义，就使每个分布无穷次可微，且与经典导数在 $C^1$ 情形一致。
+
+(ii) 良定义性与各要素的作用。对固定 $T$，映射 $\zeta\mapsto(-1)^{|\alpha|}\langle T,D^\alpha\zeta\rangle$ 线性且连续：若 $\zeta_j\to\zeta$ 在 $\mathcal{D}(U)$ 中（公共紧集 $K$、各阶导数一致收敛），则 $D^\alpha\zeta_j\to D^\alpha\zeta$ 在 $\mathcal{D}(U)$ 中，故配对值收敛。因子 $(-1)^{|\alpha|}$ 保证与经典公式一致；去掉它，$D^\alpha T$ 与 $\partial^\alpha f$ 对 $f\in C^1$ 相差 $(-1)^{|\alpha|}$ 倍。高阶导数满足 $D^\alpha(D^\beta T)=D^{\alpha+\beta}T$，该等式由定义直接验证，故定义无循环。
+
+(iii) 边界与例。每个分布无穷次可微，但"分布导数等于某个 $L^p$ 函数"是附加信息：Heaviside 函数 $H=\chi_{[0,\infty)}$ 的分布导数是 Dirac 测度 $\delta_0$，不是函数；$\operatorname{sign}$ 的分布导数为 $2\delta_0$。此外 $D^\alpha T$ 只依赖 $T$ 的局部行为：若 $T$ 在开集 $V\subseteq U$ 上为零（即 $\langle T,\zeta\rangle=0$ 对所有满足 $\operatorname{supp}\zeta\subset V$ 的 $\zeta$ 成立），则 $D^\alpha T$ 在 $V$ 上为零。
+\end{remark}
+
 \begin{definition}\label{definition:ch03-乘积与卷积}
 \label{definition:ch03-磨光}
 \begin{enumerate}[(i)]
-\item $T\in\mathcal{D}'(U)$ 与函数 $f\in C^\infty(U)$ 的乘积定义为 $\langle fT,\zeta\rangle\triangleq \langle T,f\zeta\rangle$，$\zeta\in C^\infty_c(U)$。
-\item $T\in\mathcal{D}'(\mathbb{R}^N)$ 与 $\rho\in C^\infty_c(\mathbb{R}^N)$ 的卷积定义为 $\langle T*\rho,\zeta\rangle\triangleq \langle T,\zeta*\widetilde\rho\rangle$，$\zeta\in C^\infty_c(\mathbb{R}^N)$，其中 $\widetilde\rho(x)\triangleq \rho(-x)$（$x\in\mathbb{R}^N$）。
+\item 设 $U\subseteq\mathbb{R}^N$ 为开集，$T\in\mathcal{D}'(U)$，$f\in C^\infty(U)$。$T$ 与 $f$ 的乘积定义为
+\begin{align*}
+\langle fT,\zeta\rangle\triangleq \langle T,f\zeta\rangle\qquad(\zeta\in C^\infty_c(U));
+\end{align*}
+该式定义 $\mathcal{D}'(U)$ 的一个元素，因为 $f\zeta\in C^\infty_c(U)$ 且 $\zeta\mapsto f\zeta$ 保持 $\mathcal{D}(U)$ 中的收敛。
+\item 设 $T\in\mathcal{D}'(\mathbb{R}^N)$，$\rho\in C^\infty_c(\mathbb{R}^N)$。$T$ 与 $\rho$ 的卷积定义为
+\begin{align*}
+\langle T*\rho,\zeta\rangle\triangleq \langle T,\zeta*\widetilde\rho\rangle\qquad(\zeta\in C^\infty_c(\mathbb{R}^N)),
+\end{align*}
+其中 $\widetilde\rho(x)\triangleq \rho(-x)$（$x\in\mathbb{R}^N$），$(\zeta*\widetilde\rho)(y)\triangleq\int_{\mathbb{R}^N}\zeta(x)\widetilde\rho(y-x)\,\mathrm{d}x$。
 \end{enumerate}
 \end{definition}
 
-若 $T=f\in L^1_{\mathrm{loc}}(\mathbb{R}^N)$，则易见 $(T*\rho)=\int_{\mathbb{R}^N}\rho(\cdot-y)f(y)\,\mathrm{d}y$（即定义\ref{definition:ch03-乘积与卷积}(ii)化归为局部可积函数的定义，由 Fubini 定理保证适定）。
+% SUPPLEMENT: parent=definition:ch03-乘积与卷积; kind=proof; basis=原书"it is easily seen"一句的展开：Fubini 定理把定义 3.1.4(ii) 与局部可积函数的经典卷积对齐
+\begin{proof}
+设 $T=f\in L^1_{\mathrm{loc}}(\mathbb{R}^N)$。对 $\zeta\in C^\infty_c(\mathbb{R}^N)$，由\cref{definition:ch03-乘积与卷积}(ii) 与 $\widetilde\rho$ 的定义，
+\begin{align*}
+\langle T*\rho,\zeta\rangle
+=\int_{\mathbb{R}^N}\left(\int_{\mathbb{R}^N}\zeta(x)\widetilde\rho(y-x)\,\mathrm{d}x\right)f(y)\,\mathrm{d}y
+=\int_{\mathbb{R}^N}\zeta(x)\left(\int_{\mathbb{R}^N}\rho(x-y)f(y)\,\mathrm{d}y\right)\mathrm{d}x,
+\end{align*}
+其中第一个等号用 $T$ 的积分表示，第二个等号用 Fubini 定理：被积函数 $(x,y)\mapsto\zeta(x)\rho(x-y)f(y)$ 关于 $\mathrm{d}x\otimes\mathrm{d}y$ 绝对可积，因为 $\zeta,\rho$ 有界且具紧支撑，而 $f\in L^1_{\mathrm{loc}}(\mathbb{R}^N)$。故所定义的分布由局部可积函数 $x\mapsto\int_{\mathbb{R}^N}\rho(x-y)f(y)\,\mathrm{d}y$ 表示，即与经典卷积一致。
+\end{proof}
 
-设 $\rho_\epsilon$ 为标准磨光子，即 $\rho_\epsilon(x)\triangleq \epsilon^{-N}\rho(x/\epsilon)$（$\epsilon>0$），其中 $\rho\in C^\infty_c(\mathbb{R}^N)$，$\rho\geqslant0$，且 $\int_{\mathbb{R}^N}\rho\,\mathrm{d}x=1$。
+% SUPPLEMENT: parent=definition:ch03-乘积与卷积; kind=motivation; basis=乘积与卷积的良定义性、Leibniz 法则与 $f\notin C^\infty$ 时乘积失效的原因
+\begin{remark}\phantomsection\label{remark:ch03-乘积与卷积动机}
+(i) 动机。两种运算把 $\mathcal{D}'(U)$ 变成 $C^\infty(U)$-模并允许"平移平均"：卷积是磨光的代数形式，乘积则是 Leibniz 法则的来源。
+
+(ii) 各项假设的作用。$f\in C^\infty(U)$ 不能减弱为 $f\in L^\infty(U)$：若 $f=H$（Heaviside 函数），则 $H\delta_0$ 无典范定义，乘积与 $T$ 的分布导数可能不相容（$H\cdot\delta_0$ 与 $H\cdot\mathrm{d}H/\mathrm{d}x$ 不能同时赋值）。$\rho\in C^\infty_c(\mathbb{R}^N)$ 的紧支撑保证 $\zeta*\widetilde\rho\in C^\infty_c(\mathbb{R}^N)$，从而\cref{definition:ch03-乘积与卷积}(ii) 的右端有意义。
+
+(iii) 边界。乘积满足 Leibniz 法则 $\partial_k(fT)=(\partial_kf)T+f\partial_kT$（由定义与 $\partial_k(f\zeta)=(\partial_kf)\zeta+f\partial_k\zeta$ 直接验证）；卷积满足 $\operatorname{supp}(T*\rho)\subseteq\operatorname{supp}T+\operatorname{supp}\rho$。卷积只在 $\mathbb{R}^N$ 上定义：在一般开集 $U$ 上作平移会使 $\zeta$ 跑出 $U$。
+\end{remark}
+
+设 $\rho_\varepsilon$ 为标准磨光子，即 $\rho_\varepsilon(x)\triangleq \varepsilon^{-N}\rho(x/\varepsilon)$（$\varepsilon>0$），其中 $\rho\in C^\infty_c(\mathbb{R}^N)$，$\rho\geqslant0$，且 $\int_{\mathbb{R}^N}\rho\,\mathrm{d}x=1$。
 
 \begin{proposition}\label{proposition:ch03-磨光逼近}\label{proposition:ch03-磨光性质}
+设 $T\in\mathcal{D}'(\mathbb{R}^N)$，$f\in L^p(\mathbb{R}^N)$（$p\in[1,\infty)$），$g\in C(\mathbb{R}^N)$。则下列陈述成立：
 \begin{enumerate}[(i)]
-\item 设 $T\in\mathcal{D}'(\mathbb{R}^N)$。则 $T*\rho_\epsilon\in C^\infty(\mathbb{R}^N)$，且对所有 $\alpha\in(\mathbb{N}^*)^N$，$(D^\alpha T)*\rho_\epsilon\to D^\alpha T$ 在 $\mathcal{D}'(\mathbb{R}^N)$ 中当 $\epsilon\to0^+$。
-\item 设 $f\in L^p(\mathbb{R}^N)$（$p\in[1,\infty)$）。则 $\{\rho_\epsilon*f\}\subset L^p(\mathbb{R}^N)\cap C^\infty(\mathbb{R}^N)$，$\|\rho_\epsilon*f\|_p\leqslant\|f\|_p$ 对所有 $\epsilon>0$，且 $\rho_\epsilon*f\to f$ 在 $L^p(\mathbb{R}^N)$ 中当 $\epsilon\to0^+$。
-\item 设 $f\in C(\mathbb{R}^N)$。则 $\rho_\epsilon*f\to f$ 当 $\epsilon\to0^+$ 在 $\mathbb{R}^N$ 的紧子集上一致成立。
+\item 设 $T\in\mathcal{D}'(\mathbb{R}^N)$。则函数 $x\mapsto(T*\rho_\varepsilon)(x)\triangleq\langle T,\rho_\varepsilon(x-\cdot)\rangle$ 属于 $C^\infty(\mathbb{R}^N)$，且 $(D^\alpha T)*\rho_\varepsilon\to D^\alpha T$ 在 $\mathcal{D}'(\mathbb{R}^N)$ 中当 $\varepsilon\to0^+$，对所有 $\alpha\in(\mathbb{N}^*)^N$ 成立。
+\item 设 $f\in L^p(\mathbb{R}^N)$（$p\in[1,\infty)$）。则 $\{\rho_\varepsilon*f\}\subset L^p(\mathbb{R}^N)\cap C^\infty(\mathbb{R}^N)$，$\|\rho_\varepsilon*f\|_p\leqslant\|f\|_p$ 对所有 $\varepsilon>0$ 成立，且 $\rho_\varepsilon*f\to f$ 在 $L^p(\mathbb{R}^N)$ 中当 $\varepsilon\to0^+$。
+\item 设 $f\in C(\mathbb{R}^N)$。则 $\rho_\varepsilon*f\to f$ 当 $\varepsilon\to0^+$ 在 $\mathbb{R}^N$ 的紧子集上一致成立。
 \end{enumerate}
 \end{proposition}
 
-\begin{remark}\label{remark:ch03-Radon即分布}
+% SUPPLEMENT: parent=proposition:ch03-磨光逼近; kind=proof; basis=原书未给证明；按定义 3.1.4 展开差商、Riemann 和、Young 不等式与平移连续性的论证
+\begin{proof}
+(i) 固定 $x\in\mathbb{R}^N$ 与 $k\in\{1,\cdots ,N\}$。当 $h\to0$ 时，差商 $h^{-1}[\rho_\varepsilon(x+he_k-\cdot)-\rho_\varepsilon(x-\cdot)]$ 的各阶导数在公共紧集 $\overline{B(x,1)}-\operatorname{supp}\rho_\varepsilon$ 上一致收敛于 $\partial_k\rho_\varepsilon(x-\cdot)$ 的各阶导数，故由\cref{definition:ch03-分布与检验函数}(iii) 与 $T$ 的连续性，
+\begin{align*}
+\lim_{h\to0}\frac{(T*\rho_\varepsilon)(x+he_k)-(T*\rho_\varepsilon)(x)}{h}=\langle T,\partial_k\rho_\varepsilon(x-\cdot)\rangle=(T*\partial_k\rho_\varepsilon)(x).
+\end{align*}
+逐次重复即得 $T*\rho_\varepsilon\in C^\infty(\mathbb{R}^N)$ 与 $D^\alpha(T*\rho_\varepsilon)=(D^\alpha T)*\rho_\varepsilon$。
+
+对 $\zeta\in C^\infty_c(\mathbb{R}^N)$，用 Riemann 和逼近 $\int_{\mathbb{R}^N}(T*\rho_\varepsilon)(x)\zeta(x)\,\mathrm{d}x$（被积函数连续且具紧支撑）并利用 $T$ 的连续性，得
+\begin{align*}
+\langle (D^\alpha T)*\rho_\varepsilon,\zeta\rangle
+=\langle D^\alpha T,\zeta*\widetilde\rho_\varepsilon\rangle
+=(-1)^{|\alpha|}\langle T,D^\alpha(\zeta*\widetilde\rho_\varepsilon)\rangle
+=(-1)^{|\alpha|}\langle T,(D^\alpha\zeta)*\widetilde\rho_\varepsilon\rangle.
+\end{align*}
+由于 $D^\alpha\zeta\in C^\infty_c(\mathbb{R}^N)$，(iii) 的论证给出 $(D^\alpha\zeta)*\widetilde\rho_\varepsilon\to D^\alpha\zeta$ 在 $\mathcal{D}(\mathbb{R}^N)$ 中：两者的支撑含于 $\operatorname{supp}\zeta+\overline{B(0,1)}$，且各阶导数一致收敛。故右端趋于 $(-1)^{|\alpha|}\langle T,D^\alpha\zeta\rangle=\langle D^\alpha T,\zeta\rangle$。
+
+(ii) 由 $\|\rho_\varepsilon\|_1=\|\rho\|_1=1$ 与 Young 不等式得 $\|\rho_\varepsilon*f\|_p\leqslant\|\rho_\varepsilon\|_1\|f\|_p=\|f\|_p$；$\rho_\varepsilon*f\in C^\infty(\mathbb{R}^N)$ 由积分号下求导并用 Hölder 不等式控制得到。为证收敛，先设 $f\in C_c(\mathbb{R}^N)$：此时 $f$ 一致连续，故
+\begin{align*}
+|(\rho_\varepsilon*f)(x)-f(x)|\leqslant\int_{\mathbb{R}^N}\rho_\varepsilon(y)|f(x-y)-f(x)|\,\mathrm{d}y\leqslant\sup_{|y|\leqslant\varepsilon}|f(x-y)-f(x)|\to0
+\end{align*}
+关于 $x\in\mathbb{R}^N$ 一致成立，且 $\operatorname{supp}(\rho_\varepsilon*f)\subset\operatorname{supp}f+\overline{B(0,1)}$。对一般 $f\in L^p(\mathbb{R}^N)$ 与 $\delta>0$，取 $g\in C_c(\mathbb{R}^N)$ 使 $\|f-g\|_p<\delta$（由 $C_c$ 在 $L^p$ 中稠密），则
+\begin{align*}
+\|\rho_\varepsilon*f-f\|_p\leqslant\|\rho_\varepsilon*(f-g)\|_p+\|\rho_\varepsilon*g-g\|_p+\|g-f\|_p\leqslant 2\delta+\|\rho_\varepsilon*g-g\|_p,
+\end{align*}
+令 $\varepsilon\to0^+$ 再令 $\delta\to0^+$ 即得结论。
+
+(iii) 设 $K\Subset\mathbb{R}^N$。$f$ 在紧集 $K_1\triangleq\{x\in\mathbb{R}^N\mid\operatorname{dist}(x,K)\leqslant1\}$ 上一致连续，故
+\begin{align*}
+\sup_{x\in K}|(\rho_\varepsilon*f)(x)-f(x)|\leqslant\sup_{\substack{x\in K\\|y|\leqslant\varepsilon}}|f(x-y)-f(x)|\to0\qquad(\varepsilon\to0^+).
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-磨光逼近; kind=motivation; basis=命题 3.1.1 三条陈述的用途与假设作用；$T\equiv1$ 说明 $C_c^\infty$ 与 $C^\infty$ 的差别
+\begin{remark}\phantomsection\label{remark:ch03-磨光动机}
+(i) 动机。\cref{proposition:ch03-磨光逼近}把三类对象（分布、$L^p$ 函数、连续函数）分别用光滑函数逼近，是本书一切稠密性论证的技术核心：$W^{m,p}_0$ 的定义（\cref{definition:ch03-W0}）以及 $W^{1,\infty}$ 与 Lipschitz 函数的等同（\cref{theorem:ch03-W1infty=Lip}）都由此出发。
+
+(ii) 各项假设的作用。$p\in[1,\infty)$ 不能换成 $p=\infty$：$f=\chi_{[0,1]}\in L^\infty(\mathbb{R})$ 时 $\rho_\varepsilon*f$ 只在弱*意义下收敛，收敛不在 $L^\infty$ 范数下成立；(iii) 中"紧子集上一致"不能换成"全空间一致"，除非 $f$ 一致连续：$f(x)=x^2$ 时 $\rho_\varepsilon*f-f$ 在 $\mathbb{R}$ 上不一致趋于 $0$。(i) 中 $T*\rho_\varepsilon\in C^\infty(\mathbb{R}^N)$ 不能加强为 $C^\infty_c(\mathbb{R}^N)$：取 $T\equiv1$，则 $T*\rho_\varepsilon\equiv1$ 无紧支撑；仅当 $T$ 具紧支撑时才有 $T*\rho_\varepsilon\in C^\infty_c(\mathbb{R}^N)$。
+
+(iii) 边界。恒等式 $D^\alpha(T*\rho_\varepsilon)=(D^\alpha T)*\rho_\varepsilon$ 表明磨光与求导可交换，故 (i) 的收敛可对任意阶导数取得；(ii) 的范数估计中的常数 $1$ 不能改进。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch03-Radon即分布}
 \begin{enumerate}[(i)]
 \item $U$ 上的每个 Radon 测度定义一个正分布：即对每个 $\mu\in\mathscr{R}^+(U)$，存在 $T_\mu\in\mathcal{D}'(U)$ 使对任意非负 $\zeta\in\mathcal{D}(U)$ 有 $\langle T_\mu,\zeta\rangle\geqslant0$，其中
 \begin{align}
@@ -90,7 +189,7 @@ D^\alpha\equiv\frac{\partial^{|\alpha|}}{\partial^{\alpha_1}x_1\cdots\partial^{\
 \quad (\zeta\in C^\infty_c(U)).\label{align:ch03-3.1}
 \end{align}
 类似地，$U$ 上每个带号 Radon 测度通过\eqref{align:ch03-3.1}定义一个分布，即 $\mathscr{R}(U)\subseteq\mathcal{D}'(U)$。
-\item 反之，对每个正的 $T\in\mathcal{D}'(U)$，存在 $\mu_T\in\mathscr{R}^+(U)$ 使
+\item 反之，\cref{theorem:ch02-Riesz正泛函}的一个精细版本（细节可参见文献~[64]）证明：对每个正的 $T\in\mathcal{D}'(U)$，存在 $\mu_T\in\mathscr{R}^+(U)$ 使
 \begin{align*}
 \langle T,\zeta\rangle=\langle\mu_T,\zeta\rangle=\int_U\zeta\,\mathrm{d}\mu_T
 \quad (\zeta\in\mathcal{D}(U)).
@@ -98,8 +197,28 @@ D^\alpha\equiv\frac{\partial^{|\alpha|}}{\partial^{\alpha_1}x_1\cdots\partial^{\
 \end{enumerate}
 \end{remark}
 
+% SUPPLEMENT: parent=remark:ch03-Radon即分布; kind=motivation; basis=注 3.1.1 的动机与 $\mathscr{R}(U)\subsetneq\mathcal{D}'(U)$ 的原因（$\partial_k\delta_0$ 不是测度）
+\begin{remark}\phantomsection\label{remark:ch03-Radon即分布动机}
+(i) 动机。\hyperref[remark:ch03-Radon即分布]{该注记}把测度论与分布论对齐：测度是零阶正分布，而分布的求导把测度类扩大。\cref{chapter:ch06}中取值于 $\mathscr{R}_f(U)$ 的解正是在这一框架下与 $W^{-1,q}(U)$ 比较的。
+
+(ii) 各要素的作用。(i) 中"非负 $\zeta$ 给出非负配对"正是正分布的定义；积分\eqref{align:ch03-3.1}由 $\zeta$ 的紧支撑与 $\mu$ 在紧集上有限而适定。(ii) 是 (i) 的逆向陈述，其证明依赖\cref{theorem:ch02-Riesz正泛函}与正泛函在 $\mathcal{D}(U)$ 上的局部有界性；没有正性假设，(ii) 只给出带号测度，即 $\mathscr{R}(U)$ 的情形。
+
+(iii) 边界。包含 $\mathscr{R}(U)\subseteq\mathcal{D}'(U)$ 是严格的：$T=\partial_k\delta_0$ 是分布而非测度，故 $\mathscr{R}(U)\subsetneq\mathcal{D}'(U)$。测度有全变差结构而分布没有，故 $\mathscr{R}(U)$ 上的弱*收敛（narrow 收敛）比 $\mathcal{D}'(U)$ 中的收敛更强。
+\end{remark}
+
 \begin{proposition}\label{proposition:ch03-分布函数导数}
-设 $\mu$ 为 $\mathbb{R}$ 上的 Radon 测度，$\phi_\mu:\mathbb{R}\to\mathbb{R}$ 为 $\mu$ 的分布函数。则 $\phi_\mu$ 的分布导数等于 $\mu$。
+设 $\mu$ 为 $\mathbb{R}$ 上的 Radon 测度，$\phi_\mu:\mathbb{R}\to\mathbb{R}$ 为 $\mu$ 的分布函数，即给定 $c\in\mathbb{R}$，
+\begin{align*}
+\phi_\mu(x)\triangleq\begin{cases}
+\mu((c,x]) & \text{若 }x>c,\\
+0 & \text{若 }x=c,\\
+-\mu((x,c]) & \text{若 }x<c.
+\end{cases}
+\end{align*}
+则 $\phi_\mu$ 的分布导数等于 $\mu$：
+\begin{align*}
+\left\langle\frac{\mathrm{d}\phi_\mu}{\mathrm{d}x},\zeta\right\rangle=\langle\mu,\zeta\rangle\qquad(\zeta\in C^\infty_c(\mathbb{R})).
+\end{align*}
 \end{proposition}
 
 \begin{proof}
@@ -112,20 +231,68 @@ D^\alpha\equiv\frac{\partial^{|\alpha|}}{\partial^{\alpha_1}x_1\cdots\partial^{\
 =-\int_a^b\mathrm{d}\mu(y)\int_y^b\zeta'(x)\,\mathrm{d}x\\
 &=\int_a^b\zeta(y)\,\mathrm{d}\mu(y)=\langle\mu,\zeta\rangle.
 \end{align*}
-故结论成立。
+其中第三个等号用 $\phi_\mu(x)-\phi_\mu(a)=\mu((a,x])$（$x\in[a,b]$；常数差在求导后消失），第四个等号用 Fubini 定理（被积函数 $\zeta'(x)\chi_{(a,x]}(y)$ 关于 $\mathrm{d}x\otimes\mathrm{d}\mu$ 绝对可积，因为 $\zeta'$ 有界且 $\mu$ 在 $[a,b]$ 上有限），第五个等号用 $\int_y^b\zeta'\,\mathrm{d}\lambda=\zeta(b)-\zeta(y)=-\zeta(y)$。故结论成立。
 \end{proof}
 
-\begin{remark}\label{remark:ch03-阶梯函数导数}
-由\cref{proposition:ch03-分布函数导数}，阶梯函数的分布导数为有限带号 Radon 测度 $\sum_{p=1}^n[c_p-c_{p-1}]\delta_{x_p}$。类似地，Cantor--Vitali 函数 $V$ 的分布导数为 Radon 测度 $\lambda_V$。
+% SUPPLEMENT: parent=proposition:ch03-分布函数导数; kind=motivation; basis=命题 3.1.2 的动机、基点 $c$ 的作用与反例（$\phi=x^2$ 的导数不是测度）
+\begin{remark}\phantomsection\label{remark:ch03-分布函数导数动机}
+(i) 动机。\cref{proposition:ch03-分布函数导数}是 $1$ 维情形的核心桥梁：它把"求分布导数"化为"取 Stieltjes 测度"，从而使 $1$ 维的 $BV$ 理论与 Radon 测度论完全等同（\cref{theorem:ch03-Lebesgue分解1D}）。
+
+(ii) 各要素的作用。基点 $c$ 是规范化常数：换 $c$ 只改变 $\phi_\mu$ 的常数值，$\phi_\mu$ 的分布导数不变，故结论与 $c$ 的选取无关。$\mu$ 的 Radon 性只用在其在紧集上有限，从而使 $\phi_\mu$ 局部有界、积分 $\int_a^b\phi_\mu\zeta'\,\mathrm{d}\lambda$ 绝对收敛。
+
+(iii) 边界。逆命题不成立：$\mathrm{d}\phi/\mathrm{d}x$ 是 Radon 测度当且仅当 $\phi$ 局部有界变差（\cref{proposition:ch03-变差比较}）；$\phi(x)=x^2$ 的分布导数为 $2x\,\mathrm{d}x$，不是 Radon 测度，故 $\phi$ 不是任何 Radon 测度的分布函数。同一 $\mu$ 的分布函数全体恰为 $\phi_\mu+c$（$c\in\mathbb{R}$）。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch03-阶梯函数导数}
+由\cref{proposition:ch03-分布函数导数}，阶梯函数
+\begin{align*}
+\phi\triangleq c_0\chi_{(-\infty,x_1)}+\sum_{p=1}^{n-1}c_p\chi_{[x_p,x_{p+1})}+c_n\chi_{[x_n,\infty)}
+\qquad(c_p\in\mathbb{R};\ p=0,\cdots ,n)
+\end{align*}
+的分布导数为有限带号 Radon 测度 $\sum_{p=1}^n[c_p-c_{p-1}]\delta_{x_p}$。类似地，Cantor--Vitali 函数 $V$ 的分布导数为 Radon 测度 $\lambda_V$（见\hyperref[remark:ch01-Cantor-Vitali]{Cantor--Vitali 函数的注记}）。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch03-阶梯函数导数; kind=proof; basis=原书"by Proposition 3.1.2"一句的直接配对计算与总质量核对
+\begin{proof}
+设 $-\infty<x_1<\cdots <x_n<\infty$，并置 $x_0\triangleq-\infty$，$x_{n+1}\triangleq+\infty$，$c_{-1}\triangleq0$，$\zeta(\pm\infty)\triangleq0$。取 $\zeta\in C^\infty_c(\mathbb{R})$，则
+\begin{align*}
+\left\langle\frac{\mathrm{d}\phi}{\mathrm{d}x},\zeta\right\rangle
+=-\int_{\mathbb{R}}\phi\,\zeta'\,\mathrm{d}\lambda
+=-\sum_{p=0}^{n}c_p\int_{x_p}^{x_{p+1}}\zeta'\,\mathrm{d}\lambda
+=-\sum_{p=0}^{n}c_p[\zeta(x_{p+1})-\zeta(x_p)],
+\end{align*}
+其中若某个 $x_p=\pm\infty$，则相应端点项消失。整理 $\zeta(x_p)$（$p=1,\cdots ,n$）的系数得 $c_p-c_{p-1}$，故
+\begin{align*}
+\left\langle\frac{\mathrm{d}\phi}{\mathrm{d}x},\zeta\right\rangle=\sum_{p=1}^{n}[c_p-c_{p-1}]\zeta(x_p)=\left\langle\sum_{p=1}^{n}[c_p-c_{p-1}]\delta_{x_p},\zeta\right\rangle.
+\end{align*}
+该测度的总质量为 $\sum_{p=1}^{n}[c_p-c_{p-1}]=c_n-c_0=\phi(+\infty)-\phi(-\infty)$，与 $\phi$ 在无穷远端的跃度一致。
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch03-阶梯函数导数; kind=motivation; basis=注 3.1.2 的用途：离散部分与奇异连续部分的原型
+\begin{remark}\phantomsection\label{remark:ch03-阶梯函数导数动机}
+(i) 动机。\hyperref[remark:ch03-阶梯函数导数]{该注记}给出两类极端的分布导数：阶梯函数的导数是纯原子测度（离散部分），Cantor--Vitali 函数的导数是奇异连续测度。它们正是\cref{theorem:ch03-三分分解}中 $\nu_N$ 与 $\nu_{sc}$ 的原型，也是说明"绝对连续部分不能由 $\phi'$ 单独刻画"的标准例子。
+
+(ii) 各要素的作用。系数 $c_p-c_{p-1}$ 是 $\phi$ 在 $x_p$ 处的跃度；若 $c_p=c_{p-1}$，该原子消失，故只有真正的跳跃点贡献测度质量。$\lambda_V$ 满足 $\lambda_V\perp\lambda$ 且 $\lambda_V(\{x\})=0$（$x\in\mathbb{R}$），故它不是离散的。
+
+(iii) 边界。若把 $c_p$ 取为 $\phi$ 在 $[x_p,x_{p+1})$ 上的常值，则分布导数是纯原子测度；一般 $BV$ 函数（如\cref{proposition:ch03-变差比较}中的好代表）的导数可含连续部分，此时分布导数不再是纯原子测度。
 \end{remark}
 
 \subsection{Sobolev 空间}\label{subsection:ch03-Sobolev空间}
 
-\begin{definition}\label{definition:ch03-Sobolev空间定义}\label{subsection:ch03-Sobolev定义}
-设 $U\subseteq\mathbb{R}^N$ 为开集，$m\in\mathbb{N}^*$，$p\in[1,\infty]$。函数 $f\in L^p(U)$ 属于 Sobolev 空间 $W^{m,p}(U)$，若对所有满足 $|\alpha|\leqslant m$ 的 $\alpha\in(\mathbb{N}^*)^N$ 有 $D^\alpha f\in L^p(U)$。空间 $W^{m,p}_{\mathrm{loc}}(U)$ 由将 $L^p(U)$ 换为 $L^p_{\mathrm{loc}}(U)$ 定义。$W^{m,p}_{\mathrm{loc}}(U)$ 的元素称为 Sobolev 函数。
+\begin{definition}\label{definition:ch03-Sobolev空间定义}
+设 $U\subseteq\mathbb{R}^N$ 为开集，$m\in\mathbb{N}^*$，$p\in[1,\infty]$。若 $f\in L^p(U)$，且对所有满足 $|\alpha|\leqslant m$ 的 $\alpha\in(\mathbb{N}^*)^N$，分布导数 $D^\alpha f$（按\cref{definition:ch03-分布导数定义}理解，$f$ 经\eqref{align:ch03-3.1}视为 $U$ 上的分布）属于 $L^p(U)$，即存在 $g_\alpha\in L^p(U)$ 使 $D^\alpha f=g_\alpha$ 在 $\mathcal{D}'(U)$ 中成立，则称 $f$ 属于 Sobolev 空间 $W^{m,p}(U)$，并称满足上述条件的函数全体为 $W^{m,p}(U)$。空间 $W^{m,p}_{\mathrm{loc}}(U)$ 由将 $L^p(U)$ 换为 $L^p_{\mathrm{loc}}(U)$ 定义。$W^{m,p}_{\mathrm{loc}}(U)$ 的元素称为 Sobolev 函数。
 \end{definition}
 
-显然 $W^{0,p}(U)\equiv L^p(U)$。$W^{m,p}(U)$ 是向量空间，映射 $f\mapsto\|f\|_{m,p}$，其中
+% SUPPLEMENT: parent=definition:ch03-Sobolev空间定义; kind=motivation; basis=定义 3.1.5 的动机（弱导数与完备性）、$p=\infty$ 情形与 $\chi_{[0,1]}\notin W^{1,1}$ 的反例
+\begin{remark}\phantomsection\label{remark:ch03-Sobolev定义动机}
+(i) 动机。$W^{m,p}(U)$ 把"$m$ 阶导数属于 $L^p$"这一要求从经典函数搬到 $L^p$ 等价类上：导数按分布理解，但只要它恰是 $L^p$ 函数，就仍可作范数估计。这使空间完备（见定义后的范数段落），从而可用泛函分析工具。
+
+(ii) 各项假设的作用。$f\in L^p(U)$（而非仅 $L^1_{\mathrm{loc}}$）保证 $\|f\|_{m,p}<\infty$；$p\in[1,\infty]$ 全范围允许，但 $p=1,\infty$ 时失去自反性（\cref{theorem:ch03-Sobolev可分}）。"$D^\alpha f$ 属于 $L^p$"是存在性陈述，故 $W^{m,p}(U)$ 的元素是等价类，逐点性质须另行讨论（\cref{definition:ch03-强可微}）。
+
+(iii) 边界。$W^{1,1}_{\mathrm{loc}}(U)$ 的元素不必连续：$U=\mathbb{R}$ 时 $f=\chi_{[0,1]}$ 的分布导数 $\delta_0-\delta_1\notin L^1$，故 $f\notin W^{1,1}(\mathbb{R})$；而 $W^{1,p}_{\mathrm{loc}}(U)$（$p>N$）的元素有 Hölder 连续代表（\cref{proposition:ch03-a.e.可微}）。此外 $W^{m,p}_{\mathrm{loc}}(U)\subseteq W^{m,p}(V)$ 对 $V\Subset U$ 成立，但整体包含一般不成立。
+\end{remark}
+
+显然 $W^{0,p}(U)\equiv L^p(U)$，$W^{0,p}_{\mathrm{loc}}(U)\equiv L^p_{\mathrm{loc}}(U)$（$p\in[1,\infty]$）。$W^{m,p}(U)$ 是向量空间，映射 $f\mapsto\|f\|_{m,p}$，其中
 \begin{align}
 \|f\|_{m,p}\triangleq \left(\sum_{|\alpha|\leqslant m}\|D^\alpha f\|_p^p\right)^{1/p}
 \quad (p\in[1,\infty)),\label{align:ch03-3.2a}\\
@@ -135,47 +302,128 @@ D^\alpha\equiv\frac{\partial^{|\alpha|}}{\partial^{\alpha_1}x_1\cdots\partial^{\
 为范数。赋以此范数的空间 $W^{m,p}(U)$ 是 Banach 空间。
 
 \begin{definition}\label{definition:ch03-W0}
-设 $U\subseteq\mathbb{R}^N$ 为开集，$m\in\mathbb{N}^*$，$p\in[1,\infty]$。$W^{m,p}_0(U)$ 指 $C^\infty_c(U)$ 关于范数 $\|\cdot\|_{m,p}$ 的闭包。
+设 $U\subseteq\mathbb{R}^N$ 为开集，$m\in\mathbb{N}^*$，$p\in[1,\infty]$。称 $W^{m,p}_0(U)$ 为 $C^\infty_c(U)$ 关于范数 $\|\cdot\|_{m,p}$（\eqref{align:ch03-3.2a}--\eqref{align:ch03-3.2b}）的闭包，亦即 $W^{m,p}(U)$ 中一切可写成 $C^\infty_c(U)$ 中序列之 $\|\cdot\|_{m,p}$-极限的元素组成的子空间。
 \end{definition}
 
-当 $p=2$ 时，$H^m(U)\equiv W^{m,2}(U)$ 是 Hilbert 空间。我们也记 $H^m_{\mathrm{loc}}(U)\equiv W^{m,2}_{\mathrm{loc}}(U)$，$H^m_0(U)\equiv W^{m,2}_0(U)$。
+% SUPPLEMENT: parent=definition:ch03-W0; kind=motivation; basis=定义 3.1.6 的动机：零边值、与 $W^{m,p}$ 的严格包含、$W^{m,p}_0(\mathbb{R}^N)=W^{m,p}(\mathbb{R}^N)$ 的边界
+\begin{remark}\phantomsection\label{remark:ch03-W0动机}
+(i) 动机。$W^{m,p}_0(U)$ 是"在 $\partial U$ 上为零"的 Sobolev 函数空间；它使 Dirichlet 问题的弱形式有正确的试探函数类，并作为对偶空间 $W^{-m,q}(U)$ 的出发点（\cref{proposition:ch03-W-1q刻画}）。
+
+(ii) 各项假设的作用。$\|\cdot\|_{m,p}$ 在 $p\in[1,\infty]$ 下完备，故闭包仍是 Banach 空间，且 $W^{m,p}_0(U)\subseteq W^{m,p}(U)$ 为闭子空间。$C^\infty_c(U)$ 的紧支撑是"边值为零"的实现方式；若 $U$ 无界或边界不正则，$W^{m,p}_0(U)$ 一般真小于 $W^{m,p}(U)$。
+
+(iii) 边界。$U=\mathbb{R}^N$、$p\in[1,\infty)$ 时 $C^\infty_c(\mathbb{R}^N)$ 在 $W^{m,p}(\mathbb{R}^N)$ 中稠密，故 $W^{m,p}_0(\mathbb{R}^N)=W^{m,p}(\mathbb{R}^N)$；$U=(0,1)$ 时常数函数 $1\notin W^{1,p}_0((0,1))$。$p=\infty$ 时 $W^{1,\infty}_0(U)$ 由\cref{theorem:ch03-W1infty=Lip}刻画为在 $\partial U$ 上（适当意义下）为零的 Lipschitz 函数。
+\end{remark}
+
+当 $p=2$ 时，范数 $\|\cdot\|_{m,2}$ 由内积
+\begin{align*}
+(f,g)\mapsto(f,g)_{m,2}\triangleq\left(\sum_{|\alpha|\leqslant m}\int_U D^\alpha f\,D^\alpha g\,\mathrm{d}x\right)
+\end{align*}
+诱导，故 $H^m(U)\equiv W^{m,2}(U)$ 是 Hilbert 空间。也记 $H^m_{\mathrm{loc}}(U)\equiv W^{m,2}_{\mathrm{loc}}(U)$，$H^m_0(U)\equiv W^{m,2}_0(U)$。如 $m=0$ 的情形一样，有下述结果。
 
 \begin{theorem}\label{theorem:ch03-Sobolev可分}
-$W^{m,p}(U)$ 当 $p\in[1,\infty)$ 时可分，当 $p\in(1,\infty)$ 时自反且一致凸。
+设 $U\subseteq\mathbb{R}^N$ 为开集，$m\in\mathbb{N}^*$，$p\in[1,\infty]$。则 $W^{m,p}(U)$ 当 $p\in[1,\infty)$ 时可分，当 $p\in(1,\infty)$ 时自反且一致凸。
 \end{theorem}
 
-对所有 $m\in\mathbb{N}^*$，$p\in[1,\infty)$，我们记 $W^{-m,q}(U)$（$q$ 为 $p$ 的 H\"older 共轭指数）为 $W^{m,p}_0(U)$ 的对偶空间。
+% SUPPLEMENT: parent=theorem:ch03-Sobolev可分; kind=proof; basis=原书未给证明；按等距嵌入 $(L^p)^{N_m}$、闭子空间遗传性与 Clarkson 定理补出
+\begin{proof}
+置 $\mathcal{A}_m\triangleq\{\alpha\in(\mathbb{N}^*)^N\mid|\alpha|\leqslant m\}$，$N_m\triangleq\operatorname{card}\mathcal{A}_m$，并令
+\begin{align*}
+\Phi:W^{m,p}(U)\to[L^p(U)]^{N_m},\qquad \Phi(f)\triangleq(D^\alpha f)_{\alpha\in\mathcal{A}_m}.
+\end{align*}
+由\cref{definition:ch03-Sobolev空间定义}，$\Phi$ 的值含于 $[L^p(U)]^{N_m}$；$\Phi$ 线性、单射（$D^0f=f$），且按\eqref{align:ch03-3.2a}--\eqref{align:ch03-3.2b} 为等距：
+\begin{align*}
+\|\Phi(f)\|_{[L^p]^{N_m}}=\Big(\sum_{\alpha\in\mathcal{A}_m}\|D^\alpha f\|_p^p\Big)^{1/p}=\|f\|_{m,p}\quad(p\in[1,\infty)),
+\end{align*}
+$p=\infty$ 时以最大值代替上式右端，同样成立。
 
-\begin{proposition}\label{proposition:ch03-W-1q刻画}\label{theorem:ch03-扩散部分H负1}
-\label{remark:ch03-H负1测度}
-设 $q\in(1,\infty]$。下列陈述等价：
+设 $p\in[1,\infty)$。$L^p(U)$ 可分：$(U,\mathcal{B}(U),\lambda_N)$ 为可分可测空间且 $\lambda_N$ 在 $U$ 上 $\sigma$-有限，故由\cref{theorem:ch02-Lp可分}得 $L^p(U)$ 可分，有限乘积保持可分。$\Phi(W^{m,p}(U))$ 是 $[L^p(U)]^{N_m}$ 的闭子集（$\Phi$ 等距），故可分；由 $\Phi$ 的等距性，可分性传回 $W^{m,p}(U)$。
+
+设 $p\in(1,\infty)$。$L^p(U)$ 自反且一致凸（Clarkson 定理），有限 $\ell^p$-和 $[L^p(U)]^{N_m}$ 亦然。自反空间的闭子空间自反，故 $\Phi(W^{m,p}(U))$ 自反，从而 $W^{m,p}(U)$ 自反。一致凸性由闭子空间继承（限制在凸子集上的模函数不增），故 $W^{m,p}(U)$ 一致凸。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-Sobolev可分; kind=motivation; basis=定理 3.1.3 的动机与 $p=1,\infty$ 的边界（$L^\infty$ 不可分、$L^1$ 非自反非一致凸）
+\begin{remark}\phantomsection\label{remark:ch03-Sobolev可分动机}
+(i) 动机。可分性给出可数稠密集，用于取极限与构造逼近序列；自反性把有界序列化为弱收敛子列，是\cref{chapter:ch06}弱解存在性的标准工具；一致凸性使范数最小化问题有唯一解。
+
+(ii) 各项假设的作用。$p<\infty$ 是可分性的边界：$L^\infty(U)$ 不可分（$U=\mathbb{R}$ 时 $\{\chi_{[0,t]}\mid t>0\}$ 两两距离为 $1$），故 $W^{m,\infty}(U)$ 一般不可分。$p>1$ 是自反性的边界：$L^1(U)$ 非自反，故 $W^{m,1}(U)$ 一般非自反；$L^1$ 也非一致凸（$\|\chi_{[0,1]}+\chi_{[1,2]}\|_1=2=\|\chi_{[0,1]}-\chi_{[1,2]}\|_1$）。结论与 $U$ 的边界正则性无关。
+
+(iii) 边界。可分性与自反性都源自 $L^p$，不涉及 $U$ 的几何；紧嵌入（Rellich--Kondrachov 型结果）依赖 $\partial U$ 的正则性，不在本定理范围之内。
+\end{remark}
+
+对所有 $m\in\mathbb{N}^*$ 与 $p\in[1,\infty)$，记 $W^{-m,q}(U)$（$q$ 为 $p$ 的 Hölder 共轭指数，即 $1/p+1/q=1$，约定 $p=1$ 时 $q=\infty$）为 $W^{m,p}_0(U)$ 的对偶空间，即 $W^{-m,q}(U)\triangleq(W^{m,p}_0(U))^*$；当 $p=2$ 时置 $H^{-m}(U)\triangleq(H^m_0(U))^*$。下面证明 $W^{-1,q}(U)$ 的如下刻画（对任意 $m\in\mathbb{N}^*$ 的 $W^{-m,q}(U)$ 有类似结果，例如可参见文献~[1, Theorem 3.8]）。
+
+\begin{proposition}\label{proposition:ch03-W-1q刻画}
+
+设 $U\subseteq\mathbb{R}^N$ 为开集，$q\in(1,\infty]$，$p\triangleq q/(q-1)\in[1,\infty)$ 为 $q$ 的 Hölder 共轭指数。下列陈述等价：
 \begin{enumerate}[(i)]
-\item $\omega\in W^{-1,q}(U)$；
+\item $\omega\in W^{-1,q}(U)$，即 $\omega:W^{1,p}_0(U)\to\mathbb{R}$ 线性且连续；
 \item 存在 $f\equiv(f_0,f_1,\cdots ,f_N)\in[L^q(U)]^{N+1}$ 使在 $\mathcal{D}'(U)$ 中
 \begin{align*}
-\omega=f_0+\sum_{k=1}^N\frac{\partial f_k}{\partial x_k}.
+\omega=f_0+\sum_{k=1}^N\frac{\partial f_k}{\partial x_k},
 \end{align*}
+即 $\langle\omega,\zeta\rangle=\int_U\big(f_0\zeta-\sum_{k=1}^Nf_k\,\partial_k\zeta\big)\mathrm{d}x$ 对所有 $\zeta\in C^\infty_c(U)$ 成立。
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-我们仅证 (i)$\Rightarrow$(ii)，逆命题是直接的。令 $X\triangleq [L^p(U)]^{N+1}$ 赋范 $f\mapsto\|f\|_X\triangleq (\sum_{k=0}^N\|f_k\|_p^p)^{1/p}$。映射 $T:W^{1,p}_0(U)\to[L^p(U)]^{N+1}$，$T(f)\triangleq (f,\partial f/\partial x_1,\cdots ,\partial f/\partial x_N)$ 为等距。
-
-设 $\omega\in W^{-1,q}(U)$。由 Hahn--Banach 定理存在 $U\in X^*$ 延拓 $\omega$。由 Riesz 定理存在 $(f_0,-f_1,\cdots ,-f_N)\in[L^q(U)]^{N+1}$ 使
+先证 (ii)$\Rightarrow$(i)。设 $f\in[L^q(U)]^{N+1}$，置 $\omega\triangleq f_0+\sum_{k=1}^N\partial_kf_k$。对 $\zeta\in C^\infty_c(U)\subseteq W^{1,p}_0(U)$，由 Hölder 不等式，
 \begin{align*}
-\langle U,\zeta\rangle_{X^*,X}=\int_U\left(f_0\zeta-\sum_{k=1}^N f_k\frac{\partial\zeta}{\partial x_k}\right)\mathrm{d}x
+|\langle\omega,\zeta\rangle|
+\leqslant\|f_0\|_q\|\zeta\|_p+\sum_{k=1}^N\|f_k\|_q\|\partial_k\zeta\|_p
+\leqslant\Big(\sum_{k=0}^N\|f_k\|_q^q\Big)^{1/q}\|\zeta\|_{1,p},
+\end{align*}
+故 $\omega$ 在 $C^\infty_c(U)$ 上关于 $\|\cdot\|_{1,p}$ 连续；由 $C^\infty_c(U)$ 在 $W^{1,p}_0(U)$ 中稠密（\cref{definition:ch03-W0}），$\omega$ 唯一延拓为 $W^{1,p}_0(U)$ 上的连续线性泛函，即 $\omega\in W^{-1,q}(U)$。
+
+再证 (i)$\Rightarrow$(ii)。令 $X\triangleq[L^p(U)]^{N+1}$ 赋范 $f\mapsto\|f\|_X\triangleq(\sum_{k=0}^N\|f_k\|_p^p)^{1/p}$。映射
+\begin{align*}
+T:W^{1,p}_0(U)\to X,\qquad T(f)\triangleq(f,\partial_1f,\cdots ,\partial_Nf)
+\end{align*}
+为线性等距：$\|T(f)\|_X=\|f\|_{1,p}$。故 $T(W^{1,p}_0(U))$ 是 $X$ 的闭子空间，$W^{1,p}_0(U)$ 可与之等同。
+
+设 $\omega\in W^{-1,q}(U)$。由 Hahn--Banach 定理，存在 $U_0\in X^*$ 使 $U_0|_{W^{1,p}_0(U)}=\omega$ 且 $\|U_0\|_{X^*}=\|\omega\|$。由 Riesz 表示定理，$X^*=[L^q(U)]^{N+1}$（$q$ 为 $p$ 的 Hölder 共轭指数），故存在 $(f_0,-f_1,\cdots ,-f_N)\in[L^q(U)]^{N+1}$ 使
+\begin{align*}
+\langle U_0,\zeta\rangle_{X^*,X}=\int_U\left(f_0\zeta-\sum_{k=1}^Nf_k\frac{\partial\zeta}{\partial x_k}\right)\mathrm{d}x
 \quad \text{对所有 }\zeta\in W^{1,p}_0(U).
 \end{align*}
-故结论成立。
+限制到 $C^\infty_c(U)\subseteq W^{1,p}_0(U)$ 并与 $\langle\omega,\zeta\rangle$ 比较，得 $\omega=f_0+\sum_{k=1}^N\partial_kf_k$ 在 $\mathcal{D}'(U)$ 中成立。
 \end{proof}
 
+% SUPPLEMENT: parent=proposition:ch03-W-1q刻画; kind=motivation; basis=命题 3.1.4 的动机、$q=\infty$ 情形的说明与表示不唯一性
+\begin{remark}\phantomsection\label{remark:ch03-W-1q刻画动机}
+(i) 动机。\cref{proposition:ch03-W-1q刻画}把抽象的对偶空间具体化为"零阶项 $+$ 一阶散度项"，这正是本书把测度与 $W^{-1,q}$ 相联系的入口：$\mathscr{R}_f(U)\cap W^{-1,q}(U)$ 中的元素可用 $L^q$ 向量场表示。
+
+(ii) 各项假设的作用。$q>1$（即 $p<\infty$）保证 $[L^p(U)]^{N+1}$ 自反、$X^*=[L^q]^{N+1}$ 且 $C^\infty_c$ 在 $W^{1,p}_0$ 中稠密；$q=\infty$（$p=1$）时结论仍成立，改用 $X^*=[L^\infty]^{N+1}$ 的表示。Hahn--Banach 延拓保持范数，故 $\|\omega\|_{W^{-1,q}}\leqslant\|f\|_{[L^q]^{N+1}}$。
+
+(iii) 边界。表示不唯一：若 $g_k\in W^{1,q}(U)$（$k=1,\cdots ,N$），则 $(f_0,f_k+\partial_kg_k)$ 给出同一 $\omega$ 的另一表示，故范数只能在等价类上取下确界。$W^{-m,q}(U)$（$m\geqslant2$）的刻画须用 $m$ 阶导数，形式不同。
+\end{remark}
+
+下面回顾 Lipschitz 连续性的定义。
+
 \begin{definition}\label{definition:ch03-Lipschitz}
-称 $f:U\subseteq\mathbb{R}^N\to\mathbb{R}$ 为 Lipschitz 连续，记作 $f\in\operatorname{Lip}(U)$，若
+设 $U\subseteq\mathbb{R}^N$ 为非空集合。称 $f:U\to\mathbb{R}$ 为 Lipschitz 连续，记作 $f\in\operatorname{Lip}(U)$，若
 \begin{align*}
 L_U(f)\triangleq \sup_{\substack{x,y\in U\\x\neq y}}\frac{|f(x)-f(y)|}{|x-y|}<\infty.
 \end{align*}
-称 $f$ 为局部 Lipschitz 连续，记作 $f\in\operatorname{Lip}_{\mathrm{loc}}(U)$，若对任意紧集 $K\subset U$，$L_K(f)<\infty$。
+称 $f$ 为局部 Lipschitz 连续，记作 $f\in\operatorname{Lip}_{\mathrm{loc}}(U)$，若对任意紧集 $K\subset U$ 有
+\begin{align*}
+L_K(f)\triangleq \sup_{\substack{x,y\in K\\x\neq y}}\frac{|f(x)-f(y)|}{|x-y|}<\infty.
+\end{align*}
 \end{definition}
+
+% SUPPLEMENT: parent=definition:ch03-Lipschitz; kind=motivation; basis=定义 3.1.7 的动机、点值依赖性、$L_U$ 是半范数、$\operatorname{Lip}\not\subseteq L^\infty$ 的反例与 Banach 空间断言的正确表述
+\begin{remark}\phantomsection\label{remark:ch03-Lipschitz动机}
+(i) 动机。$\operatorname{Lip}(U)$ 是"导数有界"的逐点版本：$L_U(f)$ 是 $f$ 的最优 Lipschitz 常数，它在\cref{theorem:ch03-W1infty=Lip}中与 $\|\nabla f\|_\infty$ 相当，在\cref{corollary:ch03-Rademacher}中提供 a.e. 可微性。与 Sobolev 空间不同，$\operatorname{Lip}(U)$ 的元素是逐点定义的函数，故可以与 $C(U)$、$L^\infty(U)$ 直接比较。
+
+(ii) 各要素的作用。$U$ 只需非空即可，无需开或凸；商 $|f(x)-f(y)|/|x-y|$ 要求 $x\neq y$，故 $L_U(f)$ 只度量不同点之间的增量率。$L_U$ 是半范数而非范数（$L_U(\text{常数})=0$），且 $L_U(f)=L_U(-f)$。$\operatorname{Lip}_{\mathrm{loc}}(U)$ 用"对每个紧集 $K\subset U$ 有 $L_K(f)<\infty$"局部化，容纳了无界区域上斜率局部有界而整体无界的函数（$U=\mathbb{R}$ 时的 $f(x)=x$）。
+
+(iii) 边界与反例。$U$ 无界时 $\operatorname{Lip}(U)\not\subseteq L^\infty(U)$，且 $\|f\|_\infty+L_U(f)$ 可取 $\infty$：$U=\mathbb{R}$、$f(x)=x$ 给出 $L_U(f)=1$ 而 $\|f\|_\infty=\infty$。因此"$\operatorname{Lip}(U)$ 以 $\|f\|_{\operatorname{Lip}(U)}\triangleq\|f\|_\infty+L_U(f)$ 为范数成为 Banach 空间"应理解为对子空间 $\operatorname{Lip}(U)\cap L^\infty(U)$ 成立；该子空间完备（一致收敛保持 Lipschitz 常数不增，且极限仍在 $L^\infty$ 中）。$U$ 有界时 $\operatorname{Lip}(U)\subseteq C_b(U)$，上述断言对整个 $\operatorname{Lip}(U)$ 成立。
+\end{remark}
+
+按定义，每个 $f\in\operatorname{Lip}_{\mathrm{loc}}(U)$ 都在经典意义下处处有定义。此外每个 $f\in\operatorname{Lip}(U)$ 一致连续；若 $U$ 有界，则 $f$ 在 $U$ 上有界。向量空间 $\operatorname{Lip}(U)\cap L^\infty(U)$ 赋范
+\begin{align*}
+f\mapsto\|f\|_{\operatorname{Lip}(U)}\triangleq\|f\|_\infty+L_U(f)
+\end{align*}
+后是 Banach 空间。
 
 \subsection{Bessel 位势空间}\label{subsection:ch03-Bessel位势}
 
@@ -184,7 +432,7 @@ L_U(f)\triangleq \sup_{\substack{x,y\in U\\x\neq y}}\frac{|f(x)-f(y)|}{|x-y|}<\i
 g_r(x)\triangleq \frac{1}{2^{\frac{N+r-2}{2}}\pi^{\frac{N}{2}}\Gamma(r/2)}|x|^{\frac{r-N}{2}}K_{\frac{N-r}{2}}(|x|)
 \quad (x\in\mathbb{R}^N),\label{align:ch03-3.3}
 \end{align}
-其中 $\Gamma$ 为 gamma 函数，$K_\nu$ 为 $\nu$ 阶第三类修正 Bessel 函数。$g_r$ 的下列性质：
+其中 $\Gamma$ 为 gamma 函数，$K_\nu$ 为 $\nu$ 阶第三类修正 Bessel 函数。$g_r$ 具有下列性质：
 \begin{enumerate}[(i)]
 \item $g_r>0$，$g_r(x)=g_r(|x|)$ 为 $|x|$ 的减函数；
 \item $g_r\in L^1(\mathbb{R}^N)$，$\|g_r\|_1=1$，其 Fourier 变换
@@ -192,7 +440,7 @@ g_r(x)\triangleq \frac{1}{2^{\frac{N+r-2}{2}}\pi^{\frac{N}{2}}\Gamma(r/2)}|x|^{\
 \widehat g_r(\xi)\triangleq \frac{1}{(2\pi)^{N/2}}\int_{\mathbb{R}^N}g_r(x)e^{-\mathrm{i}\xi\cdot x}\,\mathrm{d}x
 =\frac{1}{(2\pi)^{N/2}}(1+|\xi|^2)^{r/2};\label{align:ch03-3.4}
 \end{align}
-\item 由\eqref{align:ch03-3.4}得 $g_r*g_s=g_{r+s}$；
+\item 由\eqref{align:ch03-3.4}得 $g_r*g_s=g_{r+s}$（$r,s>0$）；
 \item 卷积 $g_r$ 将 Schwartz 类 $\mathcal{S}(\mathbb{R}^N)$ 一一地映到自身；
 \item 当 $|x|\to0^+$ 时，不计常数因子，
 \begin{align}
@@ -200,7 +448,8 @@ g_r(x)\sim\begin{cases}
 |x|^{r-N} & \text{若 }r\in(0,N),\\
 -\log|x| & \text{若 }r=N,\\
 \text{在 }x=0\text{ 处连续} & \text{若 }r>N;
-\end{cases}\label{align:ch03-3.5}
+\end{cases}
+\label{align:ch03-3.5}
 \end{align}
 \item 当 $|x|\to\infty$ 时，不计常数因子，
 \begin{align}
@@ -218,68 +467,155 @@ g_r(x)\sim|x|^{\frac{r-N-1}{2}}e^{-|x|}.\label{align:ch03-3.6}
 \begin{align*}
 L^{r,p}(\mathbb{R}^N)\triangleq \{g_r*f\mid f\in L^p(\mathbb{R}^N)\}
 \end{align*}
-赋范 $\|g_r*f\|_{L^{r,p}(\mathbb{R}^N)}\triangleq \|f\|_p$。
+赋范 $\|g_r*f\|_{L^{r,p}(\mathbb{R}^N)}\triangleq \|f\|_p$。这些空间的主要性质可参见文献~[1, Theorem 7.63]。特别是下列结果。
 
 \begin{theorem}[Calder\'on]\label{theorem:ch03-Calderon}
-设 $m\in\mathbb{N}^*$，$p\in(1,\infty)$。则 $L^{m,p}(\mathbb{R}^N)=W^{m,p}(\mathbb{R}^N)$，且存在 $M>0$（依赖于 $m,p,N$）使
+设 $m\in\mathbb{N}^*$，$p\in(1,\infty)$。则 $L^{m,p}(\mathbb{R}^N)=W^{m,p}(\mathbb{R}^N)$（作为集合），且存在 $M>0$（依赖于 $m,p,N$）使
 \begin{align}
 M^{-1}\|h\|_{L^{m,p}(\mathbb{R}^N)}\leqslant\|h\|_{m,p}\leqslant M\|h\|_{L^{m,p}(\mathbb{R}^N)}
 \quad \text{对所有 }h\in W^{m,p}(\mathbb{R}^N).\label{align:ch03-3.8}
 \end{align}
 \end{theorem}
 
-\begin{remark}\label{remark:ch03-Riesz核}
+% SUPPLEMENT: parent=theorem:ch03-Calderon; kind=proof; basis=原书未给证明；按\eqref{align:ch03-3.4} 的乘子刻画与 Mikhlin 乘子定理补出骨架
+\begin{proof}
+由\eqref{align:ch03-3.4}，$g_m$ 是 Fourier 乘子 $(1+|\xi|^2)^{m/2}$ 对应的位势核：$\widehat g_m(\xi)=(2\pi)^{-N/2}(1+|\xi|^2)^{m/2}$。置 $\Lambda_m\triangleq(1-\Delta)^{m/2}$（Fourier 乘子为 $(1+|\xi|^2)^{m/2}$）。对 $h=g_m*f$（$f\in L^p(\mathbb{R}^N)$）有
+\begin{align*}
+\|h\|_{L^{m,p}(\mathbb{R}^N)}=\|f\|_p=\big\|(1+|\xi|^2)^{-m/2}\widehat{\Lambda_mh}\big\|_p.
+\end{align*}
+
+第一步：$W^{m,p}(\mathbb{R}^N)\subseteq L^{m,p}(\mathbb{R}^N)$ 且右不等式成立。对 $|\alpha|\leqslant m$，$D^\alpha h$ 的 Fourier 乘子为 $\mathrm{i}^{|\alpha|}\xi^\alpha\widehat h$，而 $|\xi^\alpha|\leqslant(1+|\xi|^2)^{m/2}$。由 Mikhlin 乘子定理，$\Lambda_m$ 与 $\Lambda_m^{-1}$ 都是 $L^p(\mathbb{R}^N)$ 上的有界算子（$p\in(1,\infty)$），故
+\begin{align*}
+\|h\|_{m,p}\leqslant C_1\big\|(1+|\xi|^2)^{m/2}\widehat h\big\|_p=C_1\|\Lambda_mh\|_p\leqslant C_1C_2\|h\|_{m,p},
+\end{align*}
+其中 $C_1$ 只依赖 $m,N$，$C_2$ 只依赖 $m,p,N$。
+
+第二步：$L^{m,p}(\mathbb{R}^N)\subseteq W^{m,p}(\mathbb{R}^N)$。设 $h=g_m*f$，$f\in L^p(\mathbb{R}^N)$。对 $|\alpha|\leqslant m$，$\xi^\alpha(1+|\xi|^2)^{-m/2}$ 是有界 $C^\infty$ 函数且满足 Mikhlin 条件，故 $D^\alpha h$ 是 $f$ 经有界乘子变换所得，从而 $D^\alpha h\in L^p(\mathbb{R}^N)$ 且
+\begin{align*}
+\|D^\alpha h\|_p\leqslant C_3\|f\|_p=C_3\|h\|_{L^{m,p}(\mathbb{R}^N)},
+\end{align*}
+$C_3$ 只依赖 $m,p,N$。两式合并即得\eqref{align:ch03-3.8}，其中 $M\triangleq\max\{C_1C_2,C_3\}$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-Calderon; kind=motivation; basis=定理 3.1.5 的动机与 $p=1$、$p=\infty$ 的失效说明
+\begin{remark}\phantomsection\label{remark:ch03-Calderon动机}
+(i) 动机。Calderón 定理把内蕴定义（弱导数属于 $L^p$）与位势定义（Bessel 位势的像）等同，并由\eqref{align:ch03-3.8} 给出两种范数的等价。\cref{section:ch03-特殊容量}的 Bessel 容量以 $\|f\|_p^p$（位势范数）定义，正依赖于此等价。
+
+(ii) 各项假设的作用。$p\in(1,\infty)$ 是必要的：$p=1$ 时 Mikhlin 乘子定理的 $L^1$ 版本失效，$\Lambda_m$ 不是 $L^1(\mathbb{R}^N)$ 上的有界算子，此时 $L^{m,1}(\mathbb{R}^N)\subsetneq W^{m,1}(\mathbb{R}^N)$；$p=\infty$ 时 $g_m*f$ 一般不为连续函数，等号亦不成立。$m\in\mathbb{N}^*$ 保证乘子 $\Lambda_m$ 光滑。
+
+(iii) 边界。等价常数 $M$ 依赖 $m,p,N$，当 $p\to1$ 或 $p\to\infty$ 时 $M\to\infty$；定理只给出集合相等与范数等价，不含迹或边界值的信息。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch03-Riesz核}
 与 Bessel 核 $g_r$ 密切相关的是 Riesz 核
 \begin{align}
 \gamma_r(x)\triangleq \frac{\Gamma((N-r)/2)}{2^r\pi^{N/2}\Gamma(r/2)}|x|^{r-N}
 \equiv\Gamma_r|x|^{r-N}
 \quad (r\in(0,N),\ x\in\mathbb{R}^N).\label{align:ch03-3.9}
 \end{align}
-对任意 $r\in(0,N)$，
+对 $\mathbb{R}^N$ 上任意 Borel 可测的 $f\geqslant0$，（密度为 $f$ 的）Riesz 位势是卷积 $\gamma_r*f$。Riesz 核与 Bessel 核的积分表示（可参见文献~[2, Section V1.2.4]）表明，对任意 $r\in(0,N)$，
 \begin{align}
 0<g_r(x)<\gamma_r(x)\quad (x\in\mathbb{R}^N).\label{align:ch03-3.10}
 \end{align}
-非齐次 Riesz 核 $\gamma_{r,\rho}$（$\rho\in(0,\infty)$）：
+下面还将用到非齐次 Riesz 核 $\gamma_{r,\rho}$（$\rho\in(0,\infty)$）：
 \begin{align}
-\gamma_{r,\rho}(x)\triangleq \begin{cases}
-\Gamma_r|x|^{r-N} & \text{若 }0<|x|<\rho,\\
-0 & \text{否则}
-\end{cases}\quad (r\in(0,N),\ x\in\mathbb{R}^N).\label{align:ch03-3.11}
+\gamma_{r,\rho}(x)\triangleq \Gamma_r|x|^{r-N}\chi_{(0,\rho)}(|x|)\quad (r\in(0,N),\ \rho\in(0,\infty),\ x\in\mathbb{R}^N),\label{align:ch03-3.11}
 \end{align}
-由\eqref{align:ch03-3.5}，对任意 $r\in(0,N)$，$\rho\in(0,\infty)$，存在 $M>0$ 使
+由\eqref{align:ch03-3.5}，对任意 $r\in(0,N)$ 与 $\rho\in(0,\infty)$，存在 $M>0$（依赖于 $r,\rho,N$）使
 \begin{align}
 0<M\gamma_{r,\rho}(x)<g_r(x)\quad (x\in\mathbb{R}^N).\label{align:ch03-3.12}
 \end{align}
 \end{remark}
 
+% SUPPLEMENT: parent=remark:ch03-Riesz核; kind=proof; basis=\eqref{align:ch03-3.10} 按文献 [2] 的积分表示引用并核对两端渐近；(3.12) 用 (3.5) 与 $g_r$ 的正性、连续性完整证明
+\begin{proof}
+\eqref{align:ch03-3.10} 的严格不等式由文献~[2, Section V1.2.4] 中两核的积分表示得到；它与渐近式\eqref{align:ch03-3.5}--\eqref{align:ch03-3.6} 相容：当 $|x|\to0^+$ 时二者同阶 $|x|^{r-N}$，当 $|x|\to\infty$ 时 $g_r$ 按 $e^{-|x|}$ 指数衰减而 $\gamma_r$ 仅按 $|x|^{r-N}$ 代数衰减。
+
+下证\eqref{align:ch03-3.12}。由\eqref{align:ch03-3.5}，$g_r(x)/|x|^{r-N}\to\Gamma_r$（$|x|\to0^+$，不计公共常数因子时该极限为正的常数），故存在 $\rho_0\in(0,\rho)$ 与 $M_1>0$ 使
+\begin{align*}
+g_r(x)>M_1\Gamma_r|x|^{r-N}=M_1\gamma_{r,\rho}(x)\qquad(0<|x|<\rho_0).
+\end{align*}
+在环域 $|x|\geqslant\rho_0$ 上，由性质 (i)（$g_r>0$、连续且为 $|x|$ 的减函数）得 $g_r(x)\geqslant g_r(\rho)>0$，而 $\gamma_{r,\rho}(x)\leqslant\Gamma_r\rho^{r-N}$，故取 $M_2\triangleq g_r(\rho)/(\Gamma_r\rho^{r-N})>0$ 便有 $g_r\geqslant M_2\gamma_{r,\rho}$。令 $M\triangleq\min\{M_1,M_2\}>0$ 即得\eqref{align:ch03-3.12}。
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch03-Riesz核; kind=motivation; basis=注 3.1.3 的动机：Riesz 位势与 Bessel 位势的可比性、$r\geqslant N$ 的退化、$\gamma_{r,\rho}$ 的不连续性
+\begin{remark}\phantomsection\label{remark:ch03-Riesz核动机}
+(i) 动机。Riesz 位势是齐次的，$g_r$ 是它的非齐次替代物；\eqref{align:ch03-3.10} 说明 Bessel 位势被 Riesz 位势控制，\eqref{align:ch03-3.12} 说明在原点附近二者只差常数因子，故 Riesz 容量与 Bessel 容量等价（\cref{section:ch03-特殊容量}）。
+
+(ii) 各项假设的作用。$r\in(0,N)$ 保证 $\gamma_r$ 在无穷远处可积（衰减阶 $N-r>0$）且 $\gamma_r>0$ 处处成立；$r\geqslant N$ 时 $\gamma_r$ 在无穷远处不可积，Riesz 位势对一般 $f\in L^p$ 可能发散，故\eqref{align:ch03-3.9} 只对 $r\in(0,N)$ 定义。$\rho\in(0,\infty)$ 使 $\gamma_{r,\rho}$ 具紧支撑，便于球上的局部化估计。
+
+(iii) 边界。$\gamma_{r,\rho}$ 在 $|x|=\rho$ 处不连续，故它不是下半连续核，\cref{section:ch03-核容量}中的核理论不能直接用于它；\eqref{align:ch03-3.12} 的作用正是把 $\gamma_{r,\rho}$ 夹在 $g_r$ 之间，从而把 Riesz 容量的估计转给 Bessel 容量。
+\end{remark}
+
 \subsection{有界变差函数}\label{subsection:ch03-BV}
 
 \begin{definition}\label{definition:ch03-BV}
-设 $U\subseteq\mathbb{R}^N$ 为开集，$f\in L^1(U)$。称 $f$ 在 $U$ 中为有界变差函数，记作 $f\in BV(U)$，若对每个 $k=1,\cdots ,N$，分布导数 $\partial f/\partial x_k$ 是 $U$ 上的有限带号 Radon 测度。量
+设 $U\subseteq\mathbb{R}^N$ 为开集，$f\in L^1(U)$。称 $f$ 在 $U$ 中为有界变差函数，记作 $f\in BV(U)$，若对每个 $k=1,\cdots ,N$，分布导数 $\partial f/\partial x_k$（按\cref{definition:ch03-分布导数定义}理解）都是 $U$ 上的有限带号 Radon 测度。量
 \begin{align}
 V(f;U)\triangleq \sum_{k=1}^N\left|\frac{\partial f}{\partial x_k}\right|(U)<\infty\label{align:ch03-3.13}
 \end{align}
-称为 $f$ 在 $U$ 中的总变差。
-
-称 $f\in L^1_{\mathrm{loc}}(U)$ 在 $U$ 中为局部有界变差，记作 $f\in BV_{\mathrm{loc}}(U)$，若对任意开集 $W\Subset U$，$f$ 在 $W$ 中有界变差。
-
-$BV(U)$ 赋范
+称为 $f$ 在 $U$ 中的总变差，其中 $|\partial f/\partial x_k|(U)$ 表示测度 $\partial f/\partial x_k$ 在 $U$ 中的全变差。称 $f\in L^1_{\mathrm{loc}}(U)$ 在 $U$ 中为局部有界变差，记作 $f\in BV_{\mathrm{loc}}(U)$，若对任意开集 $W\Subset U$，$f$ 在 $W$ 中有界变差。赋范
 \begin{align*}
 \|f\|_{BV(U)}\triangleq \|f\|_{L^1(U)}+V(f;U)
-=\|f\|_{L^1(U)}+\sum_{k=1}^N\left|\frac{\partial f}{\partial x_k}\right|(U).
+=\|f\|_{L^1(U)}+\sum_{k=1}^N\left|\frac{\partial f}{\partial x_k}\right|(U)
 \end{align*}
+的空间 $BV(U)$ 是 Banach 空间。
 \end{definition}
 
-\begin{remark}\label{remark:ch03-BV等价}
-\label{remark:ch03-3.1.4}
+% SUPPLEMENT: parent=definition:ch03-BV; kind=motivation; basis=定义 3.1.8 的动机、$f\in L^1$ 与"有限"的作用，以及 $BV\not\subseteq W^{1,1}$ 的反例
+\begin{remark}\phantomsection\label{remark:ch03-BV定义动机}
+(i) 动机。$BV(U)$ 是"导数是有符号测度"的最小扩张：它包含 $W^{1,1}(U)$（此时 $\partial_kf\in L^1\subseteq\mathscr{R}(U)$），又在弱*拓扑下具有紧性（\cref{remark:ch03-BV等价}(ii) 的下半连续性是第一步），故适合处理守恒律与自由边界问题中的跳跃。
+
+(ii) 各项假设的作用。$f\in L^1(U)$（而非仅 $L^1_{\mathrm{loc}}$）使 $\|f\|_{BV(U)}<\infty$，从而 $BV(U)$ 是 Banach 空间；$BV_{\mathrm{loc}}(U)$ 用 $W\Subset U$ 局部化，以容纳无界区域上的常数函数等。每个 $\partial_kf$ 是有限带号 Radon 测度，即 $|\partial_kf|(U)<\infty$；若只要求局部有限，得到的是 $BV_{\mathrm{loc}}$。范数中同时含 $\|f\|_{L^1}$ 与 $V(f;U)$：只取 $V(f;U)$ 不是范数（非零常数的变差为零而范数应为正）。
+
+(iii) 边界。$BV(U)\not\subseteq W^{1,1}(U)$：$U=(-1,1)$ 时 $f=\chi_{(0,1)}$ 满足 $\partial f/\partial x=\delta_0$，故 $f\in BV(U)$ 而 $f\notin W^{1,1}(U)$。$BV(U)\subseteq L^1(U)$ 是定义的一部分，但 $U$ 无界时 $BV(U)\not\subseteq L^\infty(U)$。$N=1$ 时 $BV$ 与 $BV^J$ 在取"好代表"的意义下一致（\cref{proposition:ch03-变差比较}）。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch03-BV等价}\label{remark:ch03-3.1.4}
 \begin{enumerate}[(i)]
-\item 设 $f\in L^1(U)$。$f\in BV(U)$ 当且仅当
+\item 设 $f\in L^1(U)$。如文献~[5, Section 3.1] 那样论证可得：$f\in BV(U)$ 当且仅当
 \begin{align*}
 \Gamma(f;U)\triangleq \sup\left\{\int_U f\operatorname{div}\varphi\,\mathrm{d}x\ \middle|\ \varphi\in C^\infty_c(U;\mathbb{R}^N),\ |\varphi|\leqslant1\right\}<\infty;
 \end{align*}
 此外 $V(f;U)=\Gamma(f;U)$。
-\item 映射 $BV(U)\ni f\mapsto\Gamma(f;U)$ 关于 $L^1(U)$ 拓扑下半连续。
+\item 映射 $BV(U)\ni f\mapsto\Gamma(f;U)$ 关于 $L^1(U)$ 拓扑下半连续。事实上，设 $\{f_k\}\subseteq BV(U)$ 满足 $f_k\to f$ 在 $L^1(U)$ 中。则由 (i)，对任意 $\varepsilon>0$ 存在 $\varphi_\varepsilon\in C^\infty_c(U;\mathbb{R}^N)$ 使 $|\varphi_\varepsilon|\leqslant1$ 且
+\begin{align*}
+\Gamma(f;U)-\varepsilon\leqslant\int_Uf\operatorname{div}(\varphi_\varepsilon)\,\mathrm{d}x,
+\end{align*}
+于是
+\begin{align*}
+\Gamma(f;U)-\varepsilon\leqslant\int_Uf\operatorname{div}(\varphi_\varepsilon)\,\mathrm{d}x=\lim_{k\to\infty}\int_Uf_k\operatorname{div}(\varphi_\varepsilon)\,\mathrm{d}x\leqslant\liminf_{k\to\infty}\Gamma(f_k;U).
+\end{align*}
+由 $\varepsilon$ 任意，结论成立。
 \end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch03-BV等价; kind=proof; basis=原书"Arguing as in [5]"一句的展开：用 Riesz 表示定理把 $\Gamma$ 实现为向量测度的全变差
+\begin{proof}
+设 $\Gamma(f;U)<\infty$。置 $L(\varphi)\triangleq\int_Uf\operatorname{div}\varphi\,\mathrm{d}x$（$\varphi\in C^\infty_c(U;\mathbb{R}^N)$）。$L$ 线性，且由 $|\int_Uf\operatorname{div}\varphi|\leqslant\Gamma(f;U)\|\varphi\|_\infty$（$\|\varphi\|_\infty\triangleq\sup_U|\varphi|$）与 $C^\infty_c(U;\mathbb{R}^N)$ 在 $C_0(U;\mathbb{R}^N)$ 中关于 $\|\cdot\|_\infty$ 的稠密性，$L$ 延拓为 $(C_0(U;\mathbb{R}^N),\|\cdot\|_\infty)$ 上的连续线性泛函，且 $\|L\|=\Gamma(f;U)$。由 Riesz 表示定理（$C_0$ 的对偶为有限向量值 Radon 测度），存在 $\mu\equiv(\mu_1,\cdots ,\mu_N)\in(\mathscr{R}(U))^N$ 使
+\begin{align*}
+L(\varphi)=\sum_{k=1}^N\int_U\varphi_k\,\mathrm{d}\mu_k,\qquad |\mu|(U)=\|L\|=\Gamma(f;U),
+\end{align*}
+其中 $|\mu|$ 为向量测度的全变差。另一方面，对 $\varphi\in C^\infty_c(U;\mathbb{R}^N)$ 用分布导数的定义作分部积分得
+\begin{align*}
+\int_Uf\operatorname{div}\varphi\,\mathrm{d}x=\sum_{k=1}^N\left\langle\frac{\partial f}{\partial x_k},\varphi_k\right\rangle,
+\end{align*}
+故 $\partial f/\partial x_k=\mu_k$（$k=1,\cdots ,N$），从而 $f\in BV(U)$ 且 $V(f;U)\leqslant|\mu|(U)=\Gamma(f;U)$。
+
+反之设 $f\in BV(U)$。对 $\varphi\in C^\infty_c(U;\mathbb{R}^N)$，$|\varphi|\leqslant1$，有
+\begin{align*}
+\left|\int_Uf\operatorname{div}\varphi\,\mathrm{d}x\right|=\left|\sum_{k=1}^N\left\langle\frac{\partial f}{\partial x_k},\varphi_k\right\rangle\right|\leqslant\sum_{k=1}^N\left|\frac{\partial f}{\partial x_k}\right|(U)=V(f;U),
+\end{align*}
+故 $\Gamma(f;U)\leqslant V(f;U)$；结合上段的反向不等式得 $\Gamma(f;U)=V(f;U)$。
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch03-BV等价; kind=motivation; basis=注 3.1.4 的动机：为何用 $\Gamma$ 刻画 $BV$，以及下半连续性的用途与反例
+\begin{remark}\phantomsection\label{remark:ch03-BV等价动机}
+(i) 动机。$\Gamma(f;U)$ 只用 $f$ 本身（不涉及导数），使"$BV$ 是 $W^{1,1}$ 在 $L^1$ 中的自然扩张"一目了然；等式 $V=\Gamma$ 则把抽象的测度全变差化为可直接估计的上确界，这是\cref{chapter:ch06}、\cref{chapter:ch07}变差估计的常用形式。
+
+(ii) 各项假设的作用。$|\varphi|\leqslant1$ 是规范化条件，使 $\Gamma$ 与 $V$ 数值相等而非只差常数倍。$f\in L^1(U)$ 保证 $\int_Uf\operatorname{div}\varphi\,\mathrm{d}x$ 有意义。(ii) 中 $L^1$ 收敛是必要的：若只有弱收敛，等式 $\Gamma(f)=\lim\Gamma(f_k)$ 一般不成立。
+
+(iii) 边界。$\Gamma$ 关于 $L^1$ 下半连续但不连续：$f_k(x)\triangleq\chi_{(0,1/k)}(x)$ 满足 $f_k\to0$ 在 $L^1(\mathbb{R})$ 中而 $\Gamma(f_k;\mathbb{R})=2$、$\Gamma(0;\mathbb{R})=0$。$BV(U)$ 在 $\|\cdot\|_{BV}$ 下完备，但其有界序列一般只在 $L^1_{\mathrm{loc}}$ 中相对紧。
 \end{remark}
 
 若 $N=1$，则有经典函数的另一种变差概念。
@@ -290,36 +626,142 @@ $BV(U)$ 赋范
 \begin{align}
 V^J(f;I)\triangleq \sup\left\{\sum_{k=1}^m|f(x_k)-f(x_{k-1})|\ \middle|\ m\geqslant2,\ a\equiv x_0<x_1<\cdots<x_m\equiv b\right\}\label{align:ch03-3.14}
 \end{align}
-称为 $f$ 在 $I$ 中的 Jordan 变差。若 $V^J(f;I)<\infty$，称 $f\in BV^J(I)$。
-\item 设 $U\subseteq\mathbb{R}$ 为开集，$f:U\to\mathbb{R}$。称 $f\in BV^J_{\mathrm{loc}}(U)$，若对任意 $I\equiv[a,b]\subset U$ 有 $f\in BV^J(I)$。
+称为 $f$ 在 $I$ 中的 Jordan 变差。若 $V^J(f;I)<\infty$，则称 $f$ 在 $I$ 中为有界 Jordan 变差，记作 $f\in BV^J(I)$。
+\item 设 $U\subseteq\mathbb{R}$ 为开集，$f:U\to\mathbb{R}$。称 $f$ 在 $U$ 中为局部有界 Jordan 变差（记作 $f\in BV^J_{\mathrm{loc}}(U)$），若对任意 $I\equiv[a,b]\subset U$ 有 $f\in BV^J(I)$。
 \end{enumerate}
 \end{definition}
 
-\begin{remark}\label{remark:ch03-Stieltjes}
+% SUPPLEMENT: parent=definition:ch03-Jordan变差; kind=motivation; basis=定义 3.1.9 的动机、$\mathbb{Q}$-指示函数说明 $V^J$ 依赖代表
+\begin{remark}\phantomsection\label{remark:ch03-Jordan变差动机}
+(i) 动机。$V^J$ 是 Riemann 意义下的变差：只用到 $f$ 在区间上的点值，因而适用于经典函数；$V$ 是测度论意义下的变差（\cref{definition:ch03-BV}），只依赖 $L^1$ 等价类。\cref{proposition:ch03-变差比较}证明在 $1$ 维情形二者由"取下确界"相联系。
+
+(ii) 各项假设的作用。$m\geqslant2$ 与 $a\equiv x_0<\cdots<x_m\equiv b$ 表示一切有限分割；允许无穷分割不改变上确界（有限和是无穷和的上确界）。$I\equiv[a,b]$ 有界使 $V^J(f;I)<\infty$ 成为实质条件；$BV^J_{\mathrm{loc}}(U)$ 对每个紧子区间要求有限，规范了无界区间上的情形。
+
+(iii) 边界。$V^J$ 对代表敏感：$I=[0,1]$、$f=\chi_{\mathbb{Q}\cap[0,1]}$ 满足 $V^J(f;I)=\infty$，而 $f=0$ a.e.、零函数的 $V^J$ 为 $0$，故\cref{definition:ch03-BV}与\cref{definition:ch03-Jordan变差}不可逐字等同。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch03-Stieltjes}
 \begin{enumerate}[(i)]
-\item $\mathbb{R}$ 上每个带号 Radon 测度 $\nu\equiv(\nu_1,\nu_2)$ 是两个 Stieltjes 测度 $\lambda_{\phi_{\nu_i}}$（$i=1,2$）的有序偶，其中 $\phi_{\nu_i}$ 为 $\nu_i$ 的分布函数。函数 $\phi_\nu\triangleq \phi_{\nu_1}-\phi_{\nu_2}$ 在 $\mathbb{R}$ 中有局部有界 Jordan 变差。
-\item 若 $f\in BV^J(I)$，则 $\sup_{x\in I}|f(x)|\leqslant|f(a)|+V^J(f;I)<\infty$。故 $BV^J_{\mathrm{loc}}(U)\subseteq L^\infty_{\mathrm{loc}}(U)$。
+\item $\mathbb{R}$ 上每个带号 Radon 测度 $\nu\equiv(\nu_1,\nu_2)$ 是两个 Stieltjes 测度 $\lambda_{\phi_{\nu_i}}$（$i=1,2$）的有序偶，其中
+\begin{align*}
+\phi_{\nu_i}(x)\triangleq\begin{cases}
+\nu_i((c,x]) & \text{若 }x>c,\\
+0 & \text{若 }x=c,\\
+-\nu_i((x,c]) & \text{若 }x<c
+\end{cases}
+\end{align*}
+而 $c\in\mathbb{R}$ 任意固定（见\cref{proposition:ch01-Stieltjes等于Radon}）。由于函数 $\phi_{\nu_i}$ 非减，众所周知 $\phi_\nu\triangleq\phi_{\nu_1}-\phi_{\nu_2}$ 在 $\mathbb{R}$ 中有局部有界 Jordan 变差。
+\item 若 $f\in BV^J(I)$，则 $\sup_{x\in I}|f(x)|\leqslant|f(a)|+V^J(f;I)<\infty$。故 $BV^J_{\mathrm{loc}}(U)\subseteq L^\infty_{\mathrm{loc}}(U)$，且 $BV^J(U)\subseteq L^\infty(U)$。
 \end{enumerate}
 \end{remark}
+
+% SUPPLEMENT: parent=remark:ch03-Stieltjes; kind=proof; basis=注 3.1.5 两款的展开：单调函数的变差上界、三角不等式与端点估计
+\begin{proof}
+(i) 设 $g:I\to\mathbb{R}$ 非减，$\{a\equiv x_0<x_1<\cdots<x_m\equiv b\}$ 为分割。则每个 $g(x_k)-g(x_{k-1})\geqslant0$，故
+\begin{align*}
+\sum_{k=1}^m|g(x_k)-g(x_{k-1})|=\sum_{k=1}^m[g(x_k)-g(x_{k-1})]=g(b)-g(a),
+\end{align*}
+从而 $V^J(g;I)=g(b)-g(a)<\infty$。对 $f=f_1-f_2$ 用三角不等式得
+\begin{align*}
+V^J(f;I)\leqslant V^J(f_1;I)+V^J(f_2;I)=[f_1(b)-f_1(a)]+[f_2(b)-f_2(a)]<\infty.
+\end{align*}
+取 $f_i\triangleq\phi_{\nu_i}$（非减）即得 $\phi_\nu$ 在 $\mathbb{R}$ 中局部有界 Jordan 变差。
+
+(ii) 对任意 $x\in I$，当 $x>a$ 时取分割 $\{a<x\}$ 得 $|f(x)-f(a)|\leqslant V^J(f;I)$（$x=a$ 时两端为零），故
+\begin{align*}
+|f(x)|\leqslant|f(a)|+|f(x)-f(a)|\leqslant|f(a)|+V^J(f;I)<\infty.
+\end{align*}
+关于 $x\in I$ 取上确界即得第一款；对每个紧子区间应用得 $BV^J_{\mathrm{loc}}(U)\subseteq L^\infty_{\mathrm{loc}}(U)$，取 $I=U$ 得 $BV^J(U)\subseteq L^\infty(U)$。
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch03-Stieltjes; kind=motivation; basis=注 3.1.5 的动机：$BV^J$ 与测度的对应、常数 $c$ 与分解不唯一性
+\begin{remark}\phantomsection\label{remark:ch03-Stieltjes动机}
+(i) 动机。\hyperref[remark:ch03-Stieltjes]{该注记}(i) 把带号 Radon 测度与"两个非减函数之差"对应起来，这是 $1$ 维 $BV$ 理论的全部内容：\cref{proposition:ch03-Jordan性质}(ii) 的 Jordan 分解与\cref{theorem:ch03-Lebesgue分解1D}的 Lebesgue 分解都建立在它之上。
+
+(ii) 各要素的作用。常数 $c$ 只是规范化基点，换 $c$ 使 $\phi_{\nu_i}$ 相差常数，不影响 Stieltjes 测度。$\nu_i$ 的 Radon 性保证 $\phi_{\nu_i}$ 在紧区间上有界、从而变差有限。$\phi_{\nu_i}$ 非减是 $\nu_i\geqslant0$ 的直接推论，这一点使变差计算化为端点之差（见上款证明）。
+
+(iii) 边界。$\phi_\nu$ 的选取不唯一（差常数），而 $V^J(\phi_\nu;I)$ 只对紧区间 $I$ 有限；$\nu$ 为带号时分解 $\nu=(\nu_1,\nu_2)$ 不唯一，故 $\phi_\nu$ 及 $\lambda^{\phi_\nu}$ 依赖分解的选取。
+\end{remark}
+
+下面的事实是熟知的。
 
 \begin{proposition}\label{proposition:ch03-Jordan性质}
 设 $I\equiv[a,b]$，$-\infty<a<b<\infty$。
 \begin{enumerate}[(i)]
-\item 设 $f\in BV^J(I)$。则映射 $x\mapsto V^J(f;[a,x])$（$x\in[a,b]$）非减。
+\item 设 $f\in BV^J(I)$。则映射 $x\mapsto V^J(f;[a,x])$（$x\in[a,b]$）非减，且在 $f$ 右连续（相应地，左连续）的点处右连续（相应地，左连续）。
 \item $f\in BV^J(I)$ 当且仅当 $f=f_1-f_2$，其中 $f_1,f_2:I\to\mathbb{R}$ 非减。
-\item 设 $f\in BV^J(I)$。则 $f$ 在 $I$ 中 $\lambda$-a.e. 可微。
+\item 设 $f\in BV^J(I)$。则 $f$ 在 $I$ 中 $\lambda$-a.e. 可微，即对 $\lambda$-a.e. $x_0\in I$，极限 $\lim_{r\to0}\frac{f(x_0+r)-f(x_0)}{r}$ 存在且有限。
 \end{enumerate}
 \end{proposition}
 
-\begin{remark}\label{remark:ch03-RN导数}
-对每个函数 $f=f_1-f_2\in BV^J_{\mathrm{loc}}(\mathbb{R})$，相伴一个带号 Radon 测度 $\nu_f\triangleq (\lambda_{f_1},\lambda_{f_2})$。对 $\lambda$-a.e. $x_0\in\mathbb{R}$，
-\begin{align}
-D_\lambda\nu_f(x_0)=f'(x_0).\label{align:ch03-3.15}
-\end{align}
-反之，对任意带号 Radon 测度 $\nu\equiv(\nu_1,\nu_2)$，\eqref{align:ch03-3.15} 中将 $\nu_f$ 换为 $\nu$、$f$ 换为 $\phi_\nu\triangleq \phi_{\nu_1}-\phi_{\nu_2}$ 后成立。
+% SUPPLEMENT: parent=proposition:ch03-Jordan性质; kind=proof; basis=原书"The following result is well known"一句的展开：变差加性、Jordan 分解的显式构造与单调函数的 Lebesgue 定理
+\begin{proof}
+(i) 设 $a\leqslant x\leqslant y\leqslant b$。$[a,x]$ 的任一分割都是 $[a,y]$ 的分割，故 $V^J(f;[a,x])\leqslant V^J(f;[a,y])$，即 $x\mapsto V^J(f;[a,x])$ 非减。又分割中插入一点使总和只增不减（三角不等式），故可只考虑含给定分点的分割，得加性
+\begin{align*}
+V^J(f;[a,y])=V^J(f;[a,x])+V^J(f;[x,y])\qquad(a\leqslant x\leqslant y\leqslant b),
+\end{align*}
+于是 $V(y)-V(x)=V^J(f;[x,y])\geqslant|f(y)-f(x)|$，其中 $V(x)\triangleq V^J(f;[a,x])$。
+
+设 $f$ 在 $x_0$ 右连续。由 (ii) 写 $f=f_1-f_2$，$f_1,f_2$ 非减；以右连续正则化 $f_i^+(x)\triangleq f_i(x+)$ 代替 $f_i$（非减且右连续），由 $f$ 的右连续性得 $f_1^+(x_0)-f_2^+(x_0)=f(x_0)$，故仍可设 $f_i$ 非减且右连续。于是每个 $f_i$ 对应 Stieltjes 测度 $\lambda^{f_i}$（\cref{definition:ch01-Stieltjes测度}），且对任意分割 $\{x_0\equiv t_0<\cdots<t_m\equiv y\}$，
+\begin{align*}
+\sum_{k=1}^m|f(t_k)-f(t_{k-1})|\leqslant\sum_{k=1}^m\sum_{i=1}^2|f_i(t_k)-f_i(t_{k-1})|=\sum_{i=1}^2\lambda^{f_i}((x_0,y]),
+\end{align*}
+取上确界得 $V(y)-V(x_0)=V^J(f;[x_0,y])\leqslant\lambda^{f_1}((x_0,y])+\lambda^{f_2}((x_0,y])$。由于 $\lambda^{f_i}$ 在 $[x_0,b]$ 上有限，测度关于集列 $(x_0,x_0+1/n]$ 的上连续性给出右端当 $y\downarrow x_0$ 时趋于 $0$，故 $V$ 在 $x_0$ 右连续。左连续情形同理（把区间取为 $[x,x_0]$ 并用 $f$ 的左连续性）。
+
+(ii) 设 $f=f_1-f_2$ 且 $f_1,f_2$ 非减。对任意分割，
+\begin{align*}
+\sum_{k=1}^m|f(x_k)-f(x_{k-1})|\leqslant\sum_{k=1}^m|f_1(x_k)-f_1(x_{k-1})|+\sum_{k=1}^m|f_2(x_k)-f_2(x_{k-1})|=[f_1(b)-f_1(a)]+[f_2(b)-f_2(a)],
+\end{align*}
+故 $V^J(f;I)<\infty$。反之设 $f\in BV^J(I)$。置 $f_1(x)\triangleq V^J(f;[a,x])$（$x\in I$），$f_2\triangleq f_1-f$。由 (i)，$f_1$ 非减且 $f_1\leqslant V^J(f;I)<\infty$。对 $a\leqslant x\leqslant y\leqslant b$，
+\begin{align*}
+f_2(y)-f_2(x)=[V(y)-V(x)]-[f(y)-f(x)]\geqslant|f(y)-f(x)|-[f(y)-f(x)]\geqslant0,
+\end{align*}
+故 $f_2$ 非减，且 $f=f_1-f_2$。
+
+(iii) 由 (ii) 写 $f=f_1-f_2$，$f_1,f_2$ 非减。由单调函数的 Lebesgue 定理，每个 $f_i$ 在 $I$ 中 $\lambda$-a.e. 可微且导数有限（非减函数的导数在可微点处非负，且 $\int_If_i'\,\mathrm{d}\lambda\leqslant f_i(b)-f_i(a)<\infty$）。故 $f$ 在 $I$ 中 $\lambda$-a.e. 可微且 $f'=f_1'-f_2'$ 有限。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-Jordan性质; kind=motivation; basis=命题 3.1.6 的动机与三条断言的边界
+\begin{remark}\phantomsection\label{remark:ch03-Jordan性质动机}
+(i) 动机。\cref{proposition:ch03-Jordan性质}是 $1$ 维 $BV$ 的三条支柱：单调性使 $V$ 可作分布函数（从而\cref{proposition:ch03-变差比较}中的好代表存在）、Jordan 分解使 $BV^J$ 与单调函数论相联系、a.e. 可微性把 $BV^J$ 与 Sobolev 空间对接（\cref{proposition:ch03-W11=AC}）。
+
+(ii) 各项假设的作用。$I$ 有界闭是本质的：$I=\mathbb{R}$ 时 $f(x)=x$ 在每个紧子区间上变差有限而在 $\mathbb{R}$ 上变差无限，故结论须逐区间陈述。(i) 中"$f$ 右连续"不可去掉：$f=\chi_{(x_0,b]}$ 在 $x_0$ 不右连续，而 $V^J(f;[a,x])$ 在 $x_0$ 处跳跃。(ii) 的分解不唯一（可同加一个非减函数），故该款只是存在性陈述。
+
+(iii) 边界。(iii) 的 a.e. 可微性不能加强为处处可微：Cantor--Vitali 函数 $V$ 属于 $BV^J([0,1])$ 而在 Cantor 集上不可微。$V^J$ 的连续性只保证 $V$ 是分布函数，不保证 $f$ 连续。
 \end{remark}
 
-由 Radon--Nikod\'ym 定理，有如下结果。
+\begin{remark}\phantomsection\label{remark:ch03-RN导数}
+由\cref{proposition:ch03-Jordan性质}(ii)，对每个函数 $f=f_1-f_2\in BV^J_{\mathrm{loc}}(\mathbb{R})$ 相伴一个带号 Radon 测度 $\nu^f\triangleq(\lambda^{f_1},\lambda^{f_2})$，其中 $\lambda^{f_i}$（$i=1,2$）为 $\mathbb{R}$ 上的 Stieltjes 测度。则由\cref{corollary:ch02-带号Radon微分}，对 $\lambda$-a.e. $x_0\in\mathbb{R}$ 极限
+\begin{align}
+D_\lambda\nu^f(x_0)=\lim_{r\to0^+}\left(\frac{f_1(x_0+r)-f_1(x_0-r)}{2r}-\frac{f_2(x_0+r)-f_2(x_0-r)}{2r}\right)
+=(f_1)'(x_0)-(f_2)'(x_0)=f'(x_0)\label{align:ch03-3.15}
+\end{align}
+存在。反之，对任意带号 Radon 测度 $\nu\equiv(\nu_1,\nu_2)$，等式\eqref{align:ch03-3.15}在将 $\nu^f$ 换为 $\nu$、$f$ 换为 $\phi_\nu\triangleq\phi_{\nu_1}-\phi_{\nu_2}$（其中 $\phi_{\nu_i}$ 为 $\nu_i$ 的任一分布函数，$i=1,2$）后成立。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch03-RN导数; kind=proof; basis=注 3.1.6 中"反之"一句的展开：对称差商、Radon--Nikodym 导数与线性性
+\begin{proof}
+设 $\nu\equiv(\nu_1,\nu_2)$ 为带号 Radon 测度，$\phi_{\nu_i}$ 为 $\nu_i$ 的分布函数。由\hyperref[remark:ch03-Stieltjes]{注记 3.1.5}(i)，$\phi_{\nu_i}$ 非减，故 $\nu_i$ 的 Stieltjes 测度即 $\lambda^{\phi_{\nu_i}}$。对 $\nu_i$ 用\cref{corollary:ch02-带号Radon微分}（Radon--Nikodym 导数可由对称差商取得），得
+\begin{align*}
+D_\lambda\nu_i(x_0)=\lim_{r\to0^+}\frac{\phi_{\nu_i}(x_0+r)-\phi_{\nu_i}(x_0-r)}{2r}=\phi_{\nu_i}'(x_0)\qquad\text{对 }\lambda\text{-a.e. }x_0\in\mathbb{R}.
+\end{align*}
+由 Radon--Nikodym 导数的线性性与 $\phi_\nu=\phi_{\nu_1}-\phi_{\nu_2}$ 得
+\begin{align*}
+D_\lambda\nu(x_0)=D_\lambda\nu_1(x_0)-D_\lambda\nu_2(x_0)=\phi_{\nu_1}'(x_0)-\phi_{\nu_2}'(x_0)=\phi_\nu'(x_0)
+\end{align*}
+对 $\lambda$-a.e. $x_0$ 成立，这正是\eqref{align:ch03-3.15}的"反之"部分。
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch03-RN导数; kind=motivation; basis=注 3.1.6 的动机：$BV$ 的经典导数与 Radon--Nikodym 导数一致
+\begin{remark}\phantomsection\label{remark:ch03-RN导数动机}
+(i) 动机。\eqref{align:ch03-3.15} 说明 $BV^J_{\mathrm{loc}}$ 函数的经典导数恰是其相伴测度关于 $\lambda$ 的 Radon--Nikodym 导数；这使"$f'$ 是 $f$ 的弱导数"在 $1$ 维情形成为定理而非定义。
+
+(ii) 各项假设的作用。$f=f_1-f_2$ 的 Jordan 分解保证 $\nu^f$ 是带号 Radon 测度（\hyperref[remark:ch03-Stieltjes]{注记 3.1.5}）；$f\in BV^J_{\mathrm{loc}}(\mathbb{R})$ 保证每个紧区间上变差有限，从而 $\nu^f$ 局部有限。"对 $\lambda$-a.e. $x_0$"不可改进为处处：Cantor--Vitali 函数在 Cantor 集上不可微，而其相伴测度关于 $\lambda$ 的 Radon--Nikodym 导数为 $0$ a.e.。
+
+(iii) 边界。\eqref{align:ch03-3.15} 只是 a.e. 等式：在跳跃点处两侧都可能不存在。$\nu^f$ 依赖 Jordan 分解的选取，而 $D_\lambda\nu^f=f'$ 不依赖（因 $f$ 固定）。
+\end{remark}
+
+由 Lebesgue 分解定理（\cref{theorem:ch01-Lebesgue分解}）、Radon--Nikodym 定理（\cref{theorem:ch02-RadonNikodym}）及其推论（\cref{corollary:ch02-带号Radon微分}）以及等式\eqref{align:ch03-3.15}，有如下结果。
 
 \begin{theorem}\label{theorem:ch03-Lebesgue分解1D}
 设 $\nu$ 为 $\mathbb{R}$ 上的带号 Radon 测度，$\phi_\nu$ 为 $\nu$ 的任意分布函数。则
@@ -334,26 +776,96 @@ D_\lambda\nu_f(x_0)=f'(x_0).\label{align:ch03-3.15}
 其中 $\nu_{\mathrm{ac}}\ll\lambda$ 与 $\nu_s\perp\lambda$ 分别为 $\nu$ 关于 Lebesgue 测度 $\lambda$ 的绝对连续部分与奇异部分。
 \end{theorem}
 
-\begin{remark}\label{remark:ch03-分布导数分解}
-设 $\nu$ 为 $\mathbb{R}$ 上的带号 Radon 测度。由于 $\nu$ 与函数 $\phi_\nu$ 的分布导数 $\mathrm{d}\phi_\nu/\mathrm{d}x$ 相等，由\eqref{align:ch03-3.16}，$D_\lambda\nu=\phi_\nu'$ 是 $\mathrm{d}\phi_\nu/\mathrm{d}x$ 关于 $\lambda$ 的 Radon--Nikod\'ym 导数。由\eqref{align:ch03-3.17}，得
+% SUPPLEMENT: parent=theorem:ch03-Lebesgue分解1D; kind=proof; basis=原书以定理引用给出；按 Lebesgue--Radon--Nikodym 分解与注 3.1.6 重组证明
+\begin{proof}
+由 Lebesgue--Radon--Nikodym 分解定理（\cref{theorem:ch01-Lebesgue分解}），把 $\nu$ 唯一分解为 $\nu=\nu_{\mathrm{ac}}+\nu_s$，其中 $\nu_{\mathrm{ac}}\ll\lambda$，$\nu_s\perp\lambda$。
+
+第一步：$\phi_\nu'=D_\lambda\nu$ 于 $\lambda$-a.e.。这正是\eqref{align:ch03-3.15}（由\hyperref[remark:ch03-RN导数]{注记 3.1.6}）。
+
+第二步：$D_\lambda\nu=D_\lambda\nu_{\mathrm{ac}}$ 于 $\lambda$-a.e.。由 $\nu_s\perp\lambda$，存在 Borel 集 $N$ 使 $\lambda(N)=0$ 且 $|\nu_s|(\mathbb{R}\setminus N)=0$。对 $x_0\notin N$ 与任意 $r>0$，$B(x_0,r)\setminus N$ 与 $N$ 的 $\lambda$-测度分别为 $\lambda(B(x_0,r))$ 与 $0$，且 $\nu_s$ 集中于 $N$，故
+\begin{align*}
+|\nu_s|(B(x_0,r))=\int_{B(x_0,r)}\chi_N\,\mathrm{d}|\nu_s|=0,
+\end{align*}
+于是商 $\nu_s(B(x_0,r))/\lambda(B(x_0,r))=0$ 对一切 $x_0\notin N$ 成立，从而 $D_\lambda\nu_s(x_0)=0$ 对 $\lambda$-a.e. $x_0$。由 Radon--Nikodym 导数的线性性得 $D_\lambda\nu=D_\lambda\nu_{\mathrm{ac}}$ 于 $\lambda$-a.e.。
+
+第三步：\eqref{align:ch03-3.17}。由 $\nu_{\mathrm{ac}}\ll\lambda$ 与 Radon--Nikodym 定理，存在密度 $g\in L^1_{\mathrm{loc}}(\mathbb{R})$ 使 $\nu_{\mathrm{ac}}(E)=\int_Eg\,\mathrm{d}\lambda$，且 $g=D_\lambda\nu_{\mathrm{ac}}=\phi_\nu'$ 于 $\lambda$-a.e.；故 $\nu_{\mathrm{ac}}(E)=\int_E\phi_\nu'\,\mathrm{d}\lambda$。再由 $\nu=\nu_{\mathrm{ac}}+\nu_s$ 得第一式。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-Lebesgue分解1D; kind=motivation; basis=定理 3.1.7 的动机、$E$ 有界的作用与奇异部分的反例
+\begin{remark}\phantomsection\label{remark:ch03-Lebesgue分解1D动机}
+(i) 动机。\cref{theorem:ch03-Lebesgue分解1D}把测度分解与函数可微性合为一体：分布函数 $\phi_\nu$ 的 a.e. 导数就是 $\nu$ 的绝对连续部分的密度，而奇异部分在导数中不可见。这是 $1$ 维守恒律与 $BV$ 理论中追踪跳跃的基础。
+
+(ii) 各项假设的作用。$\nu$ 为 Radon 测度保证 $\phi_\nu$ 局部有界、$\nu_{\mathrm{ac}}$ 有密度；$\phi_\nu$ 的选取只差常数，不影响 $\phi_\nu'$。$E$ 有界是必要的：$E=\mathbb{R}$ 时 $\int_{\mathbb{R}}\phi_\nu'\,\mathrm{d}\lambda$ 可能为 $\infty$，而 $\nu(\mathbb{R})$ 有限。
+
+(iii) 边界。$\nu_s\neq0$ 时 $\phi_\nu$ 不绝对连续：$H=\chi_{[0,\infty)}$ 满足 $\phi_\nu'=0$ a.e. 而 $\nu=\delta_0$，故 $\nu_s=\delta_0$。$N\geqslant2$ 时没有"分布函数"概念，本定理不能直接推广，须改用\cref{definition:ch03-BV}的测度语言与\cref{theorem:ch03-三分分解}。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch03-分布导数分解}
+设 $\nu$ 为 $\mathbb{R}$ 上的带号 Radon 测度。由\cref{proposition:ch03-分布函数导数}，$\nu$ 与函数 $\phi_\nu$ 的分布导数 $\mathrm{d}\phi_\nu/\mathrm{d}x$ 相等，故由\eqref{align:ch03-3.16}，$D_\lambda\nu=\phi_\nu'$ 是 $\mathrm{d}\phi_\nu/\mathrm{d}x$ 关于 $\lambda$ 的 Radon--Nikodym 导数。由\eqref{align:ch03-3.17}，得
 \begin{align*}
 \left\langle\frac{\mathrm{d}\phi_\nu}{\mathrm{d}x},\zeta\right\rangle
 =\int_{\mathbb{R}}\phi_\nu'(x)\zeta(x)\,\mathrm{d}x
-+\left\langle\left(\frac{\mathrm{d}\phi_\nu}{\mathrm{d}x}\right)_s,\zeta\right\rangle.
++\left\langle\left(\frac{\mathrm{d}\phi_\nu}{\mathrm{d}x}\right)_s,\zeta\right\rangle
+\qquad(\zeta\in C^\infty_c(\mathbb{R})),
 \end{align*}
+其中 $(\mathrm{d}\phi_\nu/\mathrm{d}x)_s$ 为 $\mathrm{d}\phi_\nu/\mathrm{d}x$ 关于 $\lambda$ 的奇异部分。
 \end{remark}
 
-下面给出\cref{theorem:ch03-Lebesgue分解1D} 的一个精细版本。
+% SUPPLEMENT: parent=remark:ch03-分布导数分解; kind=proof; basis=注 3.1.7 中分解式的展开：按绝对连续/奇异部分拆分后配对
+\begin{proof}
+由\cref{proposition:ch03-分布函数导数}，分布 $\mathrm{d}\phi_\nu/\mathrm{d}x$ 由测度 $\nu$ 表示。由\eqref{align:ch03-3.17}，$\nu=\phi_\nu'\,\mathrm{d}\lambda+\nu_s$，且 $\nu_s$ 恰为 $\nu$ 的奇异部分，即 $(\mathrm{d}\phi_\nu/\mathrm{d}x)_s$。于是对 $\zeta\in C^\infty_c(\mathbb{R})$，
+\begin{align*}
+\left\langle\frac{\mathrm{d}\phi_\nu}{\mathrm{d}x},\zeta\right\rangle=\langle\nu,\zeta\rangle=\int_{\mathbb{R}}\phi_\nu'(x)\zeta(x)\,\mathrm{d}x+\langle\nu_s,\zeta\rangle,
+\end{align*}
+其中第一个等号用\cref{proposition:ch03-分布函数导数}，第二个等号用\eqref{align:ch03-3.17}（$\nu_s$ 为 Radon 测度，$\zeta$ 有界紧支，故配对有意义）。
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch03-分布导数分解; kind=motivation; basis=注 3.1.7 的动机：把分布导数拆成函数部分与奇异部分
+\begin{remark}\phantomsection\label{remark:ch03-分布导数分解动机}
+(i) 动机。\hyperref[remark:ch03-分布导数分解]{该注记}把分布导数显式拆成"$L^1$ 密度 $+$ 奇异部分"，这是\cref{chapter:ch06}把测度解写成 $f+\omega$（$f\in L^1$，$\omega$ 集中于容量零集）的原型。
+
+(ii) 各项假设的作用。$\nu$ 为带号 Radon 测度使 $\phi_\nu$ 的分布导数存在且为测度（\cref{proposition:ch03-分布函数导数}）；$\zeta\in C^\infty_c(\mathbb{R})$ 使两个配对都有意义。
+
+(iii) 边界。$(\mathrm{d}\phi_\nu/\mathrm{d}x)_s$ 一般不是离散测度（可含 Cantor 部分），故不能写成有限和 $\sum_pc_p\delta_{x_p}$；这正是\cref{theorem:ch03-三分分解}把 $\nu_s$ 再分为 $\nu_{sc}$ 与 $\nu_N$ 的原因。
+\end{remark}
+
+下面给出\cref{theorem:ch03-Lebesgue分解1D}的一个精细版本，其中（正）Radon 测度 $\nu$ 的奇异部分 $\nu_s$ 被分成两个测度之和：关于 Lebesgue 测度 $\lambda$ 的离散测度 $\nu_N$（即 $\nu_N$ 集中于可数集 $S\subset\mathbb{R}$，从而 $\nu_N\perp\lambda$）与奇异连续测度 $\nu_{sc}$（即 $\nu_{sc}(\{x\})=0$ 对所有 $x\in\mathbb{R}$ 成立）。
 
 \begin{theorem}\label{theorem:ch03-三分分解}
-设 $\nu$ 为 $\mathbb{R}$ 上的（正）Radon 测度。则存在唯一的三元组 $(\nu_{\mathrm{ac}},\nu_{sc},\nu_N)$ 使：
+设 $\nu$ 为 $\mathbb{R}$ 上的（正）Radon 测度。则存在唯一的（正）Radon 测度三元组 $(\nu_{\mathrm{ac}},\nu_{sc},\nu_N)$ 使：
 \begin{enumerate}[(i)]
 \item $\nu_{\mathrm{ac}}\ll\lambda$，$\nu_{sc}\perp\lambda$，$\nu_N\perp\lambda$，$\nu_{sc}\perp\nu_N$；
 \item $\nu_N$ 离散，$\nu_{sc}$ 奇异连续；
 \item $\nu=\nu_{\mathrm{ac}}+\nu_{sc}+\nu_N$。
 \end{enumerate}
-对带号 Radon 测度 $\nu\equiv(\nu_1,\nu_2)$，类似结论通过对 $\nu_1$ 与 $\nu_2$ 分别应用得到。
+对带号 Radon 测度 $\nu\equiv(\nu_1,\nu_2)$ 的类似结论通过对 $\nu_1$ 与 $\nu_2$ 分别应用本定理得到。
 \end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch03-三分分解; kind=proof; basis=原书未给证明；按 $\nu_s$ 的原子/非原子分解与唯一性补出
+\begin{proof}
+存在性。由\cref{theorem:ch01-Lebesgue分解}分解 $\nu=\nu_{\mathrm{ac}}+\nu_s$，$\nu_{\mathrm{ac}}\ll\lambda$，$\nu_s\perp\lambda$；由 $\nu\geqslant0$ 得 $\nu_s\geqslant0$。置
+\begin{align*}
+S\triangleq\{x\in\mathbb{R}\mid\nu_s(\{x\})>0\},\qquad \nu_N(E)\triangleq\nu_s(E\cap S),\qquad \nu_{sc}\triangleq\nu_s-\nu_N.
+\end{align*}
+$S$ 至多可数：对每个 $n\in\mathbb{N}$，集合 $\{x\mid\nu_s(\{x\})>1/n\}$ 的元素个数不超过 $n\nu_s(\mathbb{R})<\infty$。故 $\nu_N$ 集中于可数集 $S$，为离散测度，且 $\nu_N\perp\lambda$（因 $\lambda(S)=0$）。对 $x\in\mathbb{R}$，$\nu_{sc}(\{x\})=\nu_s(\{x\})-\nu_N(\{x\})=0$，故 $\nu_{sc}$ 无原子，即奇异连续；又 $\nu_{sc}\leqslant\nu_s$ 且 $\nu_s\perp\lambda$，故 $\nu_{sc}\perp\lambda$；而 $\nu_{sc}(S)=\sum_{x\in S}\nu_{sc}(\{x\})=0$，故 $\nu_{sc}\perp\nu_N$。
+
+唯一性。设 $(\tilde\nu_{\mathrm{ac}},\tilde\nu_{sc},\tilde\nu_N)$ 亦满足 (i)--(iii)。由 (i) 与 (iii)，$\tilde\nu_{\mathrm{ac}}=\nu-\tilde\nu_{sc}-\tilde\nu_N\ll\lambda$，故由 Lebesgue 分解的唯一性得 $\tilde\nu_{\mathrm{ac}}=\nu_{\mathrm{ac}}$，于是 $\tilde\nu_{sc}+\tilde\nu_N=\nu_s$。设 $\tilde\nu_N$ 集中于可数集 $S'$。由 (ii)，$\tilde\nu_N(\{x\})=\nu_s(\{x\})$ 对每个 $x\in\mathbb{R}$ 成立，故 $S'\subseteq S$ 且
+\begin{align*}
+\tilde\nu_N(E)=\sum_{x\in E\cap S'}\nu_s(\{x\})=\sum_{x\in E\cap S}\nu_s(\{x\})=\nu_N(E)
+\end{align*}
+对任意 Borel 集 $E$ 成立，即 $\tilde\nu_N=\nu_N$，从而 $\tilde\nu_{sc}=\nu_{sc}$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-三分分解; kind=motivation; basis=定理 3.1.8 的动机、三个假设的作用与三部分均非零的例子
+\begin{remark}\phantomsection\label{remark:ch03-三分分解动机}
+(i) 动机。三分分解是与容量理论对接的桥梁：\cref{section:ch03-容量关系}的 $(m,p)$-容量把测度分成"关于容量绝对连续"与"集中于容量零集"两部分，而 $1$ 维的 $\nu_N$ 与 $\nu_{sc}$ 给出了后者的两个原型。
+
+(ii) 各项假设的作用。$\nu\geqslant0$ 使 $\nu_s\geqslant0$，从而 $\nu_N,\nu_{sc}\geqslant0$；对带号测度须对 $\nu_1,\nu_2$ 分别分解。若去掉 (ii) 中"$\nu_N$ 离散、$\nu_{sc}$ 奇异连续"的定性要求而只保留 (i) 的相互奇异性与 $\perp\lambda$，则分解不唯一：可把 $\nu_s$ 任意拆成两个关于 $\lambda$ 奇异的测度之和。条件 $\nu_{sc}\perp\nu_N$ 由 (ii) 自动满足（$\nu_{sc}$ 无原子而 $\nu_N$ 纯原子），列出它是为了强调三个部分相互独立。
+
+(iii) 边界。三个部分都可能非零：$\nu=\lambda|_{[0,1]}+\lambda_V+\delta_0$ 中 $\nu_{\mathrm{ac}}=\lambda|_{[0,1]}$，$\nu_{sc}=\lambda_V$（Cantor 测度），$\nu_N=\delta_0$。$\nu_{sc}$ 的支撑可以没有 Lebesgue 测度而仍无原子（Cantor 集），故"奇异"不等于"离散"。
+\end{remark}
+
+比较\eqref{align:ch03-3.13}与\eqref{align:ch03-3.14}给出的两种变差概念，对后续讨论是有益的。这就是下述命题的内容。
 
 \begin{proposition}\label{proposition:ch03-变差比较}
 设 $U\subseteq\mathbb{R}$ 为开集。则对任意 $f\in L^1_{\mathrm{loc}}(U)$ 及任意 $I\equiv[a,b]\subset U$，
@@ -363,131 +875,301 @@ D_\lambda\nu_f(x_0)=f'(x_0).\label{align:ch03-3.15}
 \end{proposition}
 
 \begin{proof}
-设 $g$ 在 $I$ 的每一点有定义，$g=f$ 在 $I$ 中 $\lambda$-a.e.，故 $\Gamma(f;I)=\Gamma(g;I)$。先证 $\Gamma(f;I)\leqslant V^J(g;I)$。设 $V^J(g;I)<\infty$。置 $\Delta\equiv\{a\equiv x_0<x_1<\cdots<x_m\equiv b\}$，$|\Delta|\triangleq \max_{i=1,\cdots ,m}|x_i-x_{i-1}|$。置
+设 $g$ 在 $I$ 的每一点有定义，且 $g=f$ 在 $I$ 中 $\lambda$-a.e.，故 $\Gamma(f;I)=\Gamma(g;I)$。先证 $\Gamma(f;I)\leqslant V^J(g;I)$。设 $V^J(g;I)<\infty$，否则结论平凡。置 $\Delta\equiv\{a\equiv x_0<x_1<\cdots<x_m\equiv b\}$，$|\Delta|\triangleq\max_{i=1,\cdots ,m}|x_i-x_{i-1}|$，并置
 \begin{align*}
-g_\Delta(x)\triangleq \sum_{i=0}^{m-1}g(x_i)\chi_{[x_i,x_{i+1})}(x)
+g_\Delta(x)\triangleq \sum_{i=0}^{m-1}g(x_i)\chi_{[x_i,x_{i+1})}(x).
 \end{align*}
-其分布导数 $\mathrm{d}g_\Delta/\mathrm{d}x=\sum_{i=1}^m[g(x_i)-g(x_{i-1})]\delta_{x_i}$。由\eqref{align:ch03-3.13}，
+其分布导数 $\mathrm{d}g_\Delta/\mathrm{d}x=\sum_{i=1}^m[g(x_i)-g(x_{i-1})]\delta_{x_i}$（\hyperref[remark:ch03-阶梯函数导数]{注记 3.1.2}）。由\eqref{align:ch03-3.13}，
 \begin{align}
 V(g_\Delta;I)=\sum_{i=1}^m|g(x_i)-g(x_{i-1})|\leqslant V^J(g;I)\label{align:ch03-3.19}
 \end{align}
-对 $I$ 的每个分割 $\Delta$ 成立。注意当 $|\Delta|\to0$ 时 $g_\Delta\to g$ 在 $L^1(I)$ 中。由下半连续性与不等式\eqref{align:ch03-3.19}，
+对 $I$ 的每个分割 $\Delta$ 成立。当 $|\Delta|\to0$ 时 $g_\Delta\to g$ 在 $I$ 中逐点成立，从而在 $L^1(I)$ 中成立，因为族 $\{g_\Delta\}$ 在 $L^\infty(I)$ 中有界（见\hyperref[remark:ch03-Stieltjes]{注记 3.1.5}(ii)）。于是由下半连续性（\hyperref[remark:ch03-BV等价]{注记 3.1.4}(ii)）与不等式\eqref{align:ch03-3.19}，
 \begin{align*}
 V(f;I)=V(g;I)\leqslant\liminf_{|\Delta|\to0}V(g_\Delta;I)\leqslant V^J(g;I).
 \end{align*}
-由 $g$ 任意，$\Gamma(f;I)\leqslant\inf\{V^J(g;I)\}$。
+由 $g$ 任意，得 $\Gamma(f;I)\leqslant\inf\{V^J(g;I)\mid g\text{ 为 }f\text{ 的经典代表}\}$。
 
-反之，展示 $f$ 的一个经典代表 $g$ 使 $\Gamma(f;I)\geqslant V^J(g;I)$。设 $\Gamma(f;I)<\infty$，$f\in BV(I)$。考虑相伴于 $\mathrm{d}f/\mathrm{d}x$ 的分布函数 $F:I\to\mathbb{R}$，$F(x)\triangleq \mathrm{d}f/\mathrm{d}x([a,x))$。存在 $c\in\mathbb{R}$ 使 $f=F+c$ 在 $I$ 中 $\lambda$-a.e.，故 $g\triangleq F+c$ 为 $f$ 的经典代表。对 $I$ 的每个分割 $\{a\equiv x_0<x_1<\cdots<x_m\equiv b\}$，
+反之，须展示 $f$ 的一个经典代表 $g$ 使 $\Gamma(f;I)\geqslant V^J(g;I)$。只需设 $\Gamma(f;I)<\infty$，于是由\hyperref[remark:ch03-BV等价]{注记 3.1.4} $f\in BV(I)$ 且 $\Gamma(f;I)=V(f;I)\triangleq\|\mathrm{d}f/\mathrm{d}x\|_{\mathscr{R}(I)}$。考虑相伴于 $\mathrm{d}f/\mathrm{d}x$ 的分布函数 $F:I\to\mathbb{R}$，$F(x)\triangleq\mathrm{d}f/\mathrm{d}x([a,x))$（$x\in I$）。则由\cref{proposition:ch03-分布函数导数}与\cref{remark:ch01-分布函数}，存在 $c\in\mathbb{R}$ 使 $f=F+c$ 在 $I$ 中 $\lambda$-a.e.，故 $g\triangleq F+c$ 为 $f$ 在 $I$ 中的经典代表。此外，对 $I$ 的每个分割 $\{a\equiv x_0<x_1<\cdots<x_m\equiv b\}$，
 \begin{align*}
 \sum_{k=1}^m|g(x_k)-g(x_{k-1})|
+=\sum_{k=1}^m|F(x_k)-F(x_{k-1})|
 =\sum_{k=1}^m\left|\frac{\mathrm{d}f}{\mathrm{d}x}([x_{k-1},x_k))\right|
-\leqslant V(f;I).
+\leqslant V(f;I),
 \end{align*}
-对左端取上确界，得 $V(f;I)\geqslant V^J(g;I)$。故结论成立。
+其中末步用 $V(f;I)=|\mathrm{d}f/\mathrm{d}x|(I)$ 与全变差的次可加性。对左端关于 $I$ 的一切分割取上确界，得 $V(f;I)\geqslant V^J(g;I)$。故结论成立。
 \end{proof}
 
-\begin{remark}\label{remark:ch03-好代表}
-等式\eqref{align:ch03-3.18}的证明表明，对每个 $f\in BV_{\mathrm{loc}}(U)$ 及 $I=[a,b]\subset U$，右端的下确界可达到，即存在 $f$ 的经典代表 $\widetilde f$ 使 $V(f;I)=V^J(\widetilde f;I)$。具有此性质的代表称为好代表。测度 $\mathrm{d}f/\mathrm{d}x$ 关于 Lebesgue 测度的 Radon--Nikod\'ym 导数等于 $\widetilde f'$。
+% SUPPLEMENT: parent=proposition:ch03-变差比较; kind=motivation; basis=命题 3.1.9 的动机：为何取下确界而非上确界、好代表的存在性
+\begin{remark}\phantomsection\label{remark:ch03-变差比较动机}
+(i) 动机。\cref{proposition:ch03-变差比较}是\cref{definition:ch03-BV}与\cref{definition:ch03-Jordan变差}之间的字典：测度论变差 $V$ 等于一切经典代表中 Jordan 变差的最小值。故 $BV$ 函数的经典版本可以选得使变差不再增大。
+
+(ii) 各项假设的作用。$f\in L^1_{\mathrm{loc}}(U)$ 保证 $\Gamma(f;I)$ 有意义；$I\equiv[a,b]\subset U$ 紧使 $V^J$ 定义良好。右端不能换成上确界：$f$ 的代表在零测集上被修改后 $V^J$ 可任意增大（例如在 Cantor 集上重新赋值），故只有下确界稳定。
+
+(iii) 边界。下确界可由\hyperref[remark:ch03-好代表]{注记 3.1.8}中的好代表达到，但并非每个代表都达到；两端可同时为 $\infty$（如 $\Gamma(f;I)=\infty$ 且所有代表的 $V^J$ 均为 $\infty$）。$N\geqslant2$ 时没有类似等式，因为不存在"分割"意义下的变差。
 \end{remark}
 
+\begin{remark}\phantomsection\label{remark:ch03-好代表}
+等式\eqref{align:ch03-3.18}的证明表明，对每个 $f\in BV_{\mathrm{loc}}(U)$ 与 $I=[a,b]\subset U$，右端的下确界可达到，即存在 $f$ 的经典代表 $\widetilde f$ 使 $V(f;I)=V^J(\widetilde f;I)$。具有此性质的 $f$ 的任一代表称为好代表。$f\in BV_{\mathrm{loc}}(U)$ 当且仅当 $\widetilde f\in BV^J_{\mathrm{loc}}(U)$。此外，测度 $\mathrm{d}f/\mathrm{d}x$ 关于 Lebesgue 测度 $\lambda$ 的 Radon--Nikodym 导数等于 $\widetilde f'$。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch03-好代表; kind=proof; basis=注 3.1.8 各断言的展开：好代表的存在性、$BV_{\mathrm{loc}}\leftrightarrow BV^J_{\mathrm{loc}}$ 的等价与 RN 导数
+\begin{proof}
+存在性已在\cref{proposition:ch03-变差比较}的证明中给出：取 $g=F+c$，其中 $F(x)=\mathrm{d}f/\mathrm{d}x([a,x))$，则 $V^J(g;I)=V(f;I)$。
+
+等价性。设 $f\in BV_{\mathrm{loc}}(U)$ 且 $\widetilde f$ 为其好代表。对每个 $I\subset U$，$V^J(\widetilde f;I)=V(f;I)<\infty$，故 $\widetilde f\in BV^J(I)$，即 $\widetilde f\in BV^J_{\mathrm{loc}}(U)$。反之设 $\widetilde f\in BV^J_{\mathrm{loc}}(U)$。由\cref{proposition:ch03-Jordan性质}(ii)，在 $I$ 上 $\widetilde f=f_1-f_2$ 为两非减函数之差；由\hyperref[remark:ch03-Stieltjes]{注记 3.1.5}(i)，每个 $f_i$ 对应 Stieltjes 测度 $\lambda^{f_i}$，其分布导数为 $\lambda^{f_i}$。故 $\mathrm{d}\widetilde f/\mathrm{d}x=\lambda^{f_1}-\lambda^{f_2}$ 为有限带号 Radon 测度，即 $\widetilde f\in BV(I)$，从而 $f\in BV_{\mathrm{loc}}(U)$。
+
+Radon--Nikodym 导数。由 $F(x)=\mathrm{d}f/\mathrm{d}x([a,x))$ 与\cref{proposition:ch03-分布函数导数}，$\mathrm{d}F/\mathrm{d}x=\mathrm{d}f/\mathrm{d}x$ 为测度；由\cref{theorem:ch03-Lebesgue分解1D}，该测度关于 $\lambda$ 的 Radon--Nikodym 导数等于 $F'=\widetilde f'$。
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch03-好代表; kind=motivation; basis=注 3.1.8 的动机：好代表使 $BV$ 函数的逐点运算成为可能
+\begin{remark}\phantomsection\label{remark:ch03-好代表动机}
+(i) 动机。好代表把 $BV$ 等价类中的元素选成一个逐点确定的函数，使逐点运算（乘积、复合、$u^+$、截断）在 $BV$ 中封闭；这是\cref{chapter:ch06}处理测度值初值时把 $u_0$ 的 Jordan 分解 $u_0=u_0^+-u_0^-$ 落到实处的前提。
+
+(ii) 各项假设的作用。$f\in BV_{\mathrm{loc}}(U)$ 使每个紧区间上的变差有限，从而 $F$ 局部有界、$g=F+c$ 逐点有定义。$I$ 取紧区间使 $F$ 的跃度有限。
+
+(iii) 边界。好代表一般连续（$f=\chi_{(0,1)}$ 的好代表在 $0,1$ 处有跳跃）；$U$ 无界时好代表未必有界。好代表之间的差异必须保持 $V^J$ 不变，故不能任意修改其在 Lebesgue 零集上的取值。
+\end{remark}
+
+下面回顾绝对连续函数的定义。
+
 \begin{definition}\label{definition:ch03-绝对连续}
+设 $I\equiv[a,b]$（$-\infty<a<b<\infty$），$U\subseteq\mathbb{R}$ 为开集，$f$ 为定义在 $I$ 或 $U$ 上的实值函数。
 \begin{enumerate}[(i)]
-\item 设 $I\equiv[a,b]$，$-\infty<a<b<\infty$。称 $f:I\to\mathbb{R}$ 为绝对连续，记作 $f\in AC(I)$，若对任意 $\epsilon>0$，存在 $\delta>0$，使对任意有限个互不相交的子区间族 $(a_k,b_k)\subseteq I$（$k=1,\cdots ,m$），
+\item 设 $I\equiv[a,b]$，$-\infty<a<b<\infty$。称 $f:I\to\mathbb{R}$ 为绝对连续，记作 $f\in AC(I)$，若对任意 $\varepsilon>0$，存在 $\delta>0$，使对 $I$ 中任意有限个互不相交的子区间族 $(a_k,b_k)\subseteq I$（$k=1,\cdots ,m$），
 \begin{align*}
-\sum_{k=1}^m(b_k-a_k)<\delta\Rightarrow\sum_{k=1}^m|f(b_k)-f(a_k)|<\epsilon.
+\sum_{k=1}^m(b_k-a_k)<\delta\Rightarrow\sum_{k=1}^m|f(b_k)-f(a_k)|<\varepsilon.
 \end{align*}
 \item 设 $U\subseteq\mathbb{R}$ 为开集，$f:U\to\mathbb{R}$。称 $f\in AC_{\mathrm{loc}}(U)$，若对任意 $I\equiv[a,b]\subset U$ 有 $f\in AC(I)$。
 \end{enumerate}
 \end{definition}
 
-熟知\eqref{align:ch03-3.17}在 $\nu_s=0$（即 $\nu=\nu_{\mathrm{ac}}$）时成立当且仅当 $\phi_\nu\in AC_{\mathrm{loc}}(\mathbb{R})$。
+% SUPPLEMENT: parent=definition:ch03-绝对连续; kind=motivation; basis=定义 3.1.10 的动机、区间族互不相交的必要性与 Cantor--Vitali 函数反例
+\begin{remark}\phantomsection\label{remark:ch03-绝对连续动机}
+(i) 动机。$AC(I)$ 正是"微积分基本定理成立"的函数类：$f\in AC(I)$ 当且仅当 $f'\in L^1(I)$ 且 $f(d)-f(c)=\int_c^df'\,\mathrm{d}\lambda$（微积分基本定理）。它把\cref{proposition:ch03-变差比较}中的好代表与 $W^{1,1}$ 联系起来（\cref{proposition:ch03-W11=AC}）。
+
+(ii) 各项假设的作用。$\varepsilon$-$\delta$ 条件须对一切互不相交区间族一致成立，这比一致连续强：Cantor--Vitali 函数 $V$ 一致连续但不绝对连续（Cantor 集补区间总长可任意小，而 $V$ 在其上的增量总和为 $1$）。区间族互不相交是本质要求：若允许重叠，条件将迫使 $f$ 为常数。$I$ 有界闭使 $\delta$ 与区间族无关。
+
+(iii) 边界。$AC(I)\subsetneq BV^J(I)$：$f=\chi_{(0,1)}$ 属于 $BV^J([0,1])$ 而不属于 $AC([0,1])$。$AC(I)\subsetneq C(I)$：$f(x)=x\sin(1/x)$（$x\neq0$）、$f(0)=0$ 连续但变差无限，故不绝对连续。
+\end{remark}
+
+众所周知，等式\eqref{align:ch03-3.17}在 $\nu_s=0$（即 $\nu=\nu_{\mathrm{ac}}$）时成立当且仅当 $\phi_\nu\in AC_{\mathrm{loc}}(\mathbb{R})$（例如可参见文献~[45]）。另一方面，由\eqref{align:ch03-3.17}可见 $\nu=\nu_s$ 当且仅当 $\phi_\nu'=0$ 在 $\mathbb{R}$ 中 $\lambda$-a.e.，即当且仅当分布函数 $\phi_\nu$ 奇异。奇异函数的原型是 Heaviside 函数 $H$ 与 Cantor--Vitali 函数 $V$，故相应的 Stieltjes 测度 $\lambda_H$ 与 $\lambda_V$ 关于 $\lambda$ 奇异（见\cref{subsection:ch01-Stieltjes}）；此外 $\lambda_H$ 离散，而 $\lambda_V$ 奇异连续（见\cref{corollary:ch01-Stieltjes连续}）。
+
+鉴于 $H$ 与 $V$ 都不满足 Lusin 条件，下述绝对连续函数的刻画提供了进一步的信息（见文献~[7, Theorem 3.9]）。
 
 \begin{theorem}[Vitali--Banach--Zaretskii]\label{theorem:ch03-VBZ}
-设 $I\equiv[a,b]$，$-\infty<a<b<\infty$。下列陈述等价：
+设 $I\equiv[a,b]$，$-\infty<a<b<\infty$。则下列陈述等价：
 \begin{enumerate}[(i)]
 \item $f\in AC(I)$；
-\item $f\in C(I)\cap BV^J(I)$ 且满足 Lusin 条件。
+\item $f\in C(I)\cap BV^J(I)$ 且 $f$ 满足 Lusin 条件，即对任意 $\varepsilon>0$ 存在 $\delta>0$，使对任意 Borel 集 $E\subseteq I$，由 $\lambda(E)<\delta$ 可推出 $\lambda(f(E))<\varepsilon$（见\cref{definition:ch01-Lusin条件}）。
 \end{enumerate}
 \end{theorem}
 
-\begin{remark}\label{remark:ch03-AC蕴含}
-显然 $AC(I)\subset BV^J(I)$。故每个 $f\in AC(I)$ 在 $I$ 中 $\lambda$-a.e. 可微，且对所有 $a\leqslant c\leqslant d\leqslant b$ 有
+% SUPPLEMENT: parent=theorem:ch03-VBZ; kind=proof; basis=原书未给证明（仅引 [7, Theorem 3.9]）；按 Lusin 条件与绝对连续定义的双向推导补出
+\begin{proof}
+(i)$\Rightarrow$(ii)。设 $f\in AC(I)$。$AC$ 条件的 $\varepsilon$-$\delta$ 形式直接给出连续性；对单个区间族用 $AC$ 条件即得 $V^J(f;I)<\infty$，故 $f\in BV^J(I)$。为证 Lusin 条件，设 $\varepsilon>0$ 并取\cref{definition:ch03-绝对连续}中的 $\delta>0$。设 $E\subseteq I$ 为 Borel 集且 $\lambda(E)<\delta/2$。由外正则性，存在开集 $G\supseteq E$ 使 $\lambda(G)<\delta$，且 $G$ 可写成互不相交区间的并 $G=\bigcup_k(a_k,b_k)$（$G\subseteq I$ 时可取这些区间含于 $I$）。对任意有限子族，$\sum_k(b_k-a_k)\leqslant\lambda(G)<\delta$，故由 $AC$ 条件 $\sum_k|f(b_k)-f(a_k)|<\varepsilon$，从而
 \begin{align*}
-f(d)-f(c)=\int_c^d f'\,\mathrm{d}\lambda.
+\lambda(f(E))\leqslant\lambda(f(G))\leqslant\sum_k|f(b_k)-f(a_k)|\leqslant\varepsilon,
 \end{align*}
+即 $f$ 满足 Lusin 条件。
+
+(ii)$\Rightarrow$(i)。设 $f\in C(I)\cap BV^J(I)$ 满足 Lusin 条件。由\cref{proposition:ch03-Jordan性质}(ii) 写 $f=f_1-f_2$，$f_1,f_2$ 非减；由\cref{proposition:ch03-Jordan性质}(i) 与 $f$ 的连续性，$f_1\triangleq V^J(f;[a,\cdot])$ 连续，故 $f_2=f_1-f$ 亦连续。对连续非减的 $f_1$，其 Stieltjes 测度满足 $\lambda^{f_1}(E)=\lambda(f_1(E))$ 对 Borel 集 $E$ 成立（\cref{proposition:ch01-Stieltjes像}）。于是 $f$ 的 Lusin 条件给出 $\lambda^{f_1}$ 与 $\lambda^{f_2}$ 关于 $\lambda$ 绝对连续；由 Radon--Nikodym 定理，存在 $g_i\in L^1(I)$ 使 $f_i(x)-f_i(a)=\int_a^xg_i\,\mathrm{d}\lambda$（$x\in I$，$i=1,2$），故 $f_i$ 绝对连续，从而 $f=f_1-f_2\in AC(I)$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-VBZ; kind=motivation; basis=定理 3.1.10 的动机与三条假设不可减弱的反例
+\begin{remark}\phantomsection\label{remark:ch03-VBZ动机}
+(i) 动机。Vitali--Banach--Zaretskii 定理把"绝对连续"分解为连续、有界变差与 Lusin 条件三条更易验证的性质，是判断"某函数是否为 $W^{1,1}$ 的代表"（\cref{proposition:ch03-W11=AC}）的实用准则。
+
+(ii) 各项假设的作用。$C(I)$ 不可去掉：$f=\chi_{(0,1]}$ 属于 $BV^J([0,1])$ 且 Lusin 条件对 $\lambda(E)=0$ 的 $E$ 自动满足，但 $f\notin AC([0,1])$。$BV^J(I)$ 不可去掉：$f(x)=x\sin(1/x)$（$f(0)=0$）连续且把零测集映为零测集，而变差无限，故不绝对连续。Lusin 条件不可去掉：Cantor--Vitali 函数 $V$ 连续、$V\in BV^J([0,1])$，但 $V$ 把 Cantor 集（零测集）映到 $[0,1]$，不满足 Lusin 条件。
+
+(iii) 边界。$N\geqslant2$ 时 Lusin 条件对应 $W^{1,p}$ 的 ACL 性质，但"有界变差"须换为\cref{definition:ch03-BV}的测度条件，此时结论形式不同（\cref{theorem:ch03-W1infty=Lip}只处理 $p=\infty$）。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch03-AC蕴含}
+由\cref{definition:ch03-Jordan变差}与\cref{definition:ch03-绝对连续}可见 $AC(I)\subset BV^J(I)$ 对任意 $I\equiv[a,b]$（$-\infty<a<b<\infty$）成立。故每个 $f\in AC(I)$ 在 $I$ 中 $\lambda$-a.e. 可微，且对所有 $a\leqslant c\leqslant d\leqslant b$ 有
+\begin{align*}
+f(d)-f(c)=\int_c^df'\,\mathrm{d}\lambda.
+\end{align*}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch03-AC蕴含; kind=proof; basis=注 3.1.9 的展开：由 $AC$ 的 $\varepsilon$-$\delta$ 条件得变差有限，并核对微积分基本定理
+\begin{proof}
+设 $f\in AC(I)$。取 $\varepsilon=1$ 与相应的 $\delta>0$，置 $m_0\triangleq\lceil(b-a)/\delta\rceil+1$。对 $I$ 的任一分割，把它按顺序分成至多 $m_0$ 组，使每组内相邻区间的长度之和不超过 $\delta$（贪心分组，因每个区间长度不超过 $b-a$ 而总长不超过 $b-a$）。由 $AC$ 条件，每组对应的增量绝对值之和小于 $1$，故总和不超过 $m_0$，即 $V^J(f;I)\leqslant m_0<\infty$，从而 $f\in BV^J(I)$。a.e. 可微性由\cref{proposition:ch03-Jordan性质}(iii) 得到。至于微积分基本定理：由 $AC$ 条件，$f$ 的相伴测度（\cref{proposition:ch03-变差比较}的构造）关于 $\lambda$ 绝对连续，故由 Radon--Nikodym 定理 $f(d)-f(c)=\int_c^df'\,\mathrm{d}\lambda$（$a\leqslant c\leqslant d\leqslant b$）。
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch03-AC蕴含; kind=motivation; basis=注 3.1.9 的动机与逆包含的反例
+\begin{remark}\phantomsection\label{remark:ch03-AC蕴含动机}
+(i) 动机。$AC(I)\subset BV^J(I)$ 使绝对连续函数自动继承\cref{proposition:ch03-Jordan性质}的结论（a.e. 可微、Jordan 分解），从而 $W^{1,1}$ 的函数可按 $BV$ 的工具处理；微积分基本定理则保证 Sobolev 弱导数与经典导数一致。
+
+(ii) 各项假设的作用。$I$ 有界闭使 $\delta$ 与分割无关；$f:I\to\mathbb{R}$ 逐点有定义（$AC$ 是经典函数类）使 $\int_c^df'\,\mathrm{d}\lambda$ 与 $f(d)-f(c)$ 可直接比较。
+
+(iii) 边界。逆包含不成立：$f=\chi_{(0,1]}$ 属于 $BV^J([0,1])$ 而不属于 $AC([0,1])$；$f(x)=x^{1/2}$ 在 $[0,1]$ 上绝对连续（其导数属于 $L^1$），而 $f(x)=x^{1/2}\sin(1/x)$ 不绝对连续。
 \end{remark}
 
 \subsection{Sobolev 函数}\label{subsection:ch03-Sobolev函数}
 
+按如下定义的意义研究 Sobolev 函数的 a.e. 可微性是很有意思的（这方面可参见文献~[47]）。
+
 \begin{definition}\label{definition:ch03-强可微}
-设 $f:U\subseteq\mathbb{R}^N\to\mathbb{R}$ 在 $U$ 中 a.e. 有定义。称 $f$ 在 $x_0\in U$ 处可微，若存在 $Df(x_0)\in\mathbb{R}^N$，使
+设 $f:U\subseteq\mathbb{R}^N\to\mathbb{R}$ 在 $U$ 中 a.e. 有定义。称 $f$ 在 $x_0\in U$ 处可微，若存在 $Df(x_0)\in\mathbb{R}^N$（称为 $f$ 在 $x_0$ 处的微分），使
 \begin{align*}
-\operatorname*{ess\,lim}_{x\to x_0}\frac{|f(x)-f(x_0)-Df(x_0)\cdot(x-x_0)|}{|x-x_0|}=0.
+\operatorname*{ess\,lim}_{x\to x_0}\frac{|f(x)-f(x_0)-Df(x_0)\cdot(x-x_0)|}{|x-x_0|}=0,
 \end{align*}
+即存在 $\lambda_N$-零集 $N\subset U$，使沿 $U\setminus N$ 中趋于 $x_0$ 的 $x$，上述商趋于 $0$。若 $N=1$，则 $Df(x_0)\equiv f'(x_0)$ 为 $f$ 在 $x_0$ 处的导数。
 \end{definition}
 
+% SUPPLEMENT: parent=definition:ch03-强可微; kind=motivation; basis=定义 3.1.11 的动机：为何用 ess lim 而非 lim，以及唯一性
+\begin{remark}\phantomsection\label{remark:ch03-强可微动机}
+(i) 动机。$f$ 只在 a.e. 有定义（Sobolev 函数是 $L^p$ 等价类），故不能在每个 $x$ 处取极限；$\operatorname{ess\,lim}$ 允许先去掉一个零测集再取极限，这正是"a.e. 可微"的严格含义。
+
+(ii) 各项假设的作用。$f$ 在 $U$ 中 a.e. 有定义使 $f(x_0)$ 对 a.e. $x_0$ 有意义（否则商式无意义），故结论只能是 a.e. 的。$Df(x_0)\in\mathbb{R}^N$ 的线性主部形式是 $1$ 阶 Taylor 展开；$N=1$ 时它化为通常的导数。
+
+(iii) 边界。$\operatorname{ess\,lim}$ 与 $\lim$ 不同：$f=\chi_{\mathbb{Q}}$ 在每点不连续，但 $f=0$ a.e.，故 $f$ 在 a.e. 点处按上述意义可微（微分为 $0$），这说明该定义只依赖等价类。$Df(x_0)$ 若存在则唯一（两个零测集之并仍是零测集）。
+\end{remark}
+
 \begin{proposition}\label{proposition:ch03-a.e.可微}
-设 $f\in W^{1,p}_{\mathrm{loc}}(U)$，$N<p\leqslant\infty$。则 $f$ 在 $U$ 中 a.e. 可微，且 $Df=\nabla f$ a.e.
+设 $U\subseteq\mathbb{R}^N$ 为开集，$f\in W^{1,p}_{\mathrm{loc}}(U)$ 且 $N<p\leqslant\infty$。则 $f$ 在 $U$ 中 a.e. 可微，且 $Df=\nabla f$ a.e.。
 \end{proposition}
 
 \begin{proof}
-由于 $W^{1,\infty}_{\mathrm{loc}}(U)\subseteq W^{1,p}_{\mathrm{loc}}(U)$，不妨设 $N<p<\infty$。由 Morrey 不等式，存在 $C=C(m,p)>0$ 使对 a.e. $x_0,x\in U$，
+由于 $W^{1,\infty}_{\mathrm{loc}}(U)\subseteq W^{1,p}_{\mathrm{loc}}(U)$，不妨设 $N<p<\infty$。由 Morrey 不等式，存在 $C=C(N,p)>0$ 使对 a.e. $x_0,x\in U$，
 \begin{align*}
 \frac{|f(x)-f(x_0)-\nabla f(x_0)\cdot(x-x_0)|}{|x-x_0|}
 \leqslant\left(\frac{C}{\lambda_N(B_{|x-x_0|}(x_0))}\int_{B_{|x-x_0|}(x_0)}|\nabla f(y)-\nabla f(x_0)|^p\,\mathrm{d}y\right)^{1/p}.
 \end{align*}
-由于 $\nabla f\in L^p_{\mathrm{loc}}(U)$，令 $|x-x_0|\to0$，结论成立。
+由于 $\nabla f\in L^p_{\mathrm{loc}}(U)$，由 Lebesgue 微分定理（\cref{theorem:ch02-Lebesgue微分}），对 a.e. $x_0\in U$ 有
+\begin{align*}
+\lim_{r\to0^+}\frac{1}{\lambda_N(B_r(x_0))}\int_{B_r(x_0)}|\nabla f(y)-\nabla f(x_0)|^p\,\mathrm{d}y=0,
+\end{align*}
+故上述右端当 $|x-x_0|\to0$ 时趋于 $0$。因此 $f$ 在 a.e. $x_0$ 处可微且 $Df(x_0)=\nabla f(x_0)$。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-a.e.可微; kind=motivation; basis=命题 3.1.11 的动机与 $p\leqslant N$ 的失效
+\begin{remark}\phantomsection\label{remark:ch03-a.e.可微动机}
+(i) 动机。\cref{proposition:ch03-a.e.可微}说明 Sobolev 函数的弱梯度就是经典微分：当 $p>N$ 时 $W^{1,p}_{\mathrm{loc}}$ 函数（经连续代表）a.e. 可微，这使链式法则、极值原理等经典工具可用。
+
+(ii) 各项假设的作用。$p>N$ 保证 Morrey 不等式成立，从而 $f$ 有 Hölder 连续代表；$p\leqslant N$ 时结论失效：$f(x)=\log\log(1/|x|)$（在原点附近截断）属于 $W^{1,N}_{\mathrm{loc}}$ 而在 $0$ 附近无界，故不可微。$p=\infty$ 由 $W^{1,\infty}_{\mathrm{loc}}\subseteq W^{1,p}_{\mathrm{loc}}$ 化归。
+
+(iii) 边界。结论只给 a.e. 可微，不给处处可微：$f(x)=|x|$ 在 $0$ 处不可微，而其等价类在 a.e. 点可微。$Df=\nabla f$ a.e. 中的 $\nabla f$ 可取任一代表，因为等式只在 a.e. 意义下成立。
+\end{remark}
 
 \begin{theorem}\label{theorem:ch03-W1infty=Lip}
 设 $U\subseteq\mathbb{R}^N$ 为开集。则 $f\in W^{1,\infty}_{\mathrm{loc}}(U)$ 当且仅当 $f$ 有经典代表 $g\in\operatorname{Lip}_{\mathrm{loc}}(U)$。
 \end{theorem}
 
 \begin{proof}
-(i) 设 $g\in\operatorname{Lip}_{\mathrm{loc}}(U)$，$V,W$ 为开有界集使 $V\Subset W\Subset U$。显然 $g\in L^\infty(V)$。设 $e_k$ 为第 $k$ 个单位向量，对任意 $h>0$，定义 $g_h^{(k)}(x)\triangleq \frac{g(x+he_k)-g(x)}{h}$（$x\in V$）。对任意 $\zeta\in C^1_c(V)$，
+(i) 设 $g\in\operatorname{Lip}_{\mathrm{loc}}(U)$，$V,W$ 为开有界集使 $V\Subset W\Subset U$。则 $g\in L^\infty(V)$。设 $e_k$ 为第 $k$ 个单位向量，对任意 $h\in(0,\operatorname{dist}(V,\partial W))$ 定义
+\begin{align*}
+g_h^{(k)}:V\to\mathbb{R},\qquad g_h^{(k)}(x)\triangleq\frac{g(x+he_k)-g(x)}{h}.
+\end{align*}
+则对任意 $\zeta\in C^1_c(V)$，
 \begin{align}
 \int_V g_h^{(k)}(x)\zeta(x+he_k)\,\mathrm{d}x
 =-\int_V g(x)\frac{\zeta(x+he_k)-\zeta(x)}{h}\,\mathrm{d}x.\label{align:ch03-3.20}
 \end{align}
-另一方面，$\|g_h^{(k)}\|_{L^p(V)}\leqslant[\lambda_N(V)]^{1/p}L_W(g)<\infty$。由自反性，存在序列 $\{h_m\}$ 与 $g^{(k)}\in L^\infty(V)$ 使 $g_{h_m}^{(k)}\rightharpoonup g^{(k)}$ 在 $L^p(V)$ 中。在\eqref{align:ch03-3.20}中取 $h=h_m$ 并令 $m\to\infty$，得 $g^{(k)}=\partial g/\partial x_k$，故结论成立。
-
-(ii) 设 $f\in W^{1,\infty}_{\mathrm{loc}}(U)$，$B\Subset U$ 为任意球。置 $f_\epsilon(x)\triangleq \int_U f(y)\rho_\epsilon(x-y)\,\mathrm{d}y$。对任意 $x,x+h\in B$ 及充分小 $\epsilon$，
+另一方面，对任意 $p\in(1,\infty)$，
 \begin{align*}
-|f_\epsilon(x+h)-f_\epsilon(x)|
-=\left|\int_0^1\nabla f_\epsilon(x+th)\cdot h\,\mathrm{d}t\right|
-\leqslant\|\nabla f\|_{L^\infty(B)}|h|
+\sup_{h\in(0,\operatorname{dist}(V,\partial W))}\|g_h^{(k)}\|_{L^p(V)}
+\leqslant[\lambda_N(V)]^{1/p}\sup_{h\in(0,\operatorname{dist}(V,\partial W))}\|g_h^{(k)}\|_{L^\infty(V)}
+\leqslant[\lambda_N(V)]^{1/p}L_W(g)<\infty,
 \end{align*}
-对 $\lambda$-a.e. $x\in B$。令 $\epsilon\to0$，得 $|f(x+h)-f(x)|\leqslant\|\nabla f\|_{L^\infty(B)}|h|$。结论易得。
+其中 $L_W(g)$ 为 $g$ 在 $W$ 中的 Lipschitz 常数（见\cref{definition:ch03-Lipschitz}）。由 Banach--Alaoglu 定理与 $L^p(V)$ 的自反性，存在序列 $\{h_m\}$ 与函数 $g^{(k)}\in L^\infty(V)$ 使 $g_{h_m}^{(k)}\rightharpoonup g^{(k)}$ 在 $L^p(V)$ 中（$m\to\infty$）。在\eqref{align:ch03-3.20}中取 $h=h_m$ 并令 $m\to\infty$：左端趋于 $\int_Vg^{(k)}\zeta\,\mathrm{d}x$（弱收敛与 $\zeta\in L^{p'}(V)$ 配对），右端趋于 $-\int_Vg\,\partial_k\zeta\,\mathrm{d}x$（差商一致收敛于 $\partial_k\zeta$），故 $g^{(k)}=\partial g/\partial x_k$，从而 $\partial g/\partial x_k\in L^\infty(V)$。由 $V\Subset U$ 任意得 $g\in W^{1,\infty}_{\mathrm{loc}}(U)$。
+
+(ii) 设 $f\in W^{1,\infty}_{\mathrm{loc}}(U)$，$B\Subset U$ 为任意球，故 $\|\nabla f\|_{L^\infty(B)}<\infty$。对 $x\in U$ 与 $\varepsilon\in(0,\operatorname{dist}(x,\partial U))$ 置 $f_\varepsilon(x)\triangleq\int_Uf(y)\rho_\varepsilon(x-y)\,\mathrm{d}y$，其中 $\rho_\varepsilon$ 为标准磨光子。则对任意 $x,x+h\in B$ 与充分小的 $\varepsilon$，
+\begin{align*}
+|f_\varepsilon(x+h)-f_\varepsilon(x)|=\left|\int_0^1\nabla f_\varepsilon(x+th)\cdot h\,\mathrm{d}t\right|\leqslant\|\nabla f\|_{L^\infty(B)}|h|
+\qquad\text{对 }\lambda_N\text{-a.e. }x\in B.
+\end{align*}
+令 $\varepsilon\to0$（用\cref{proposition:ch03-磨光逼近}(ii) 的 $L^1$ 收敛并取 a.e. 收敛子列），得
+\begin{align*}
+|f(x+h)-f(x)|\leqslant\|\nabla f\|_{L^\infty(B)}|h|\qquad\text{对 a.e. }x\in B.
+\end{align*}
+故存在零测集 $N_B\subset B$，使上式对一切 $x,x+h\in B\setminus N_B$ 成立；把 $f$ 在 $N_B$ 上重新定义后，所得代表在 $B$ 上 Lipschitz 连续，且与 $f$ 在 $B$ 中 a.e. 相等。由 $B\Subset U$ 任意，结论成立。
 \end{proof}
 
-\begin{remark}\label{remark:ch03-Lip含W1infty}
-易见每个 $f\in\operatorname{Lip}(U)\cap L^\infty(U)$ 属于 $W^{1,\infty}(U)$。然而逆命题一般不成立。
+% SUPPLEMENT: parent=theorem:ch03-W1infty=Lip; kind=motivation; basis=定理 3.1.12 的动机、经典代表的必要性以及 $p<\infty$ 时的失效
+\begin{remark}\phantomsection\label{remark:ch03-W1infty=Lip动机}
+(i) 动机。\cref{theorem:ch03-W1infty=Lip}是 Sobolev 空间与 Lipschitz 函数之间的桥：它把 $W^{1,\infty}$ 的等价类问题化为 Lipschitz 代表的存在性，从而\cref{corollary:ch03-Rademacher}（Rademacher 定理）可由\cref{proposition:ch03-a.e.可微}直接得到。
+
+(ii) 各项假设的作用。"经典代表"不可去掉：$W^{1,\infty}_{\mathrm{loc}}(U)$ 的元素是等价类，本身没有点值；断言的是存在 $g\in\operatorname{Lip}_{\mathrm{loc}}(U)$ 与 $f$ a.e. 相等。$\mathrm{loc}$ 不可去掉：$f(x)=x$ 属于 $W^{1,\infty}(\mathbb{R})$ 与 $\operatorname{Lip}(\mathbb{R})$，但 $\|f\|_\infty=\infty$，故不属于 $W^{1,\infty}(\mathbb{R})$ 的"有界"版本（见\cref{remark:ch03-Lip含W1infty}）。
+
+(iii) 边界。$p<\infty$ 时结论不成立：$f(x)=|x|^{\alpha}$（$\alpha\in(0,1)$）属于 $W^{1,p}_{\mathrm{loc}}(\mathbb{R})$（$p<1/(1-\alpha)$）而非 $\operatorname{Lip}_{\mathrm{loc}}(\mathbb{R})$。定理是局部的，不能给出整体的 Lipschitz 常数估计。
 \end{remark}
 
-由\cref{theorem:ch03-W1infty=Lip}与\cref{proposition:ch03-a.e.可微}，立即得：
+\begin{remark}\phantomsection\label{remark:ch03-Lip含W1infty}
+易见每个 $f\in\operatorname{Lip}(U)\cap L^\infty(U)$ 属于 $W^{1,\infty}(U)$。然而逆命题一般不成立（见文献~[5, Section 2.3]）。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch03-Lip含W1infty; kind=proof; basis=注 3.1.10 前一句的展开：差商有界 + 弱极限，以及逆命题的反例
+\begin{proof}
+设 $f\in\operatorname{Lip}(U)\cap L^\infty(U)$，$L\triangleq L_U(f)$。对 $k=1,\cdots ,N$ 与 $h>0$，差商 $f_h^{(k)}(x)\triangleq h^{-1}[f(x+he_k)-f(x)]$（$x\in U_h\triangleq\{x\in U\mid x+he_k\in U\}$）满足 $|f_h^{(k)}|\leqslant L$。由\cref{theorem:ch03-W1infty=Lip}证明中的弱紧性论证，$\partial_kf$ 由 $L^\infty(U)$ 中函数表示且 $\|\partial_kf\|_\infty\leqslant L$；又 $f\in L^\infty(U)$，故 $f\in W^{1,\infty}(U)$ 且 $\|f\|_{1,\infty}\leqslant\|f\|_\infty+L$。
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch03-Lip含W1infty; kind=motivation; basis=注 3.1.10 的动机：$L^\infty$ 假设的作用与逆命题的反例
+\begin{remark}\phantomsection\label{remark:ch03-Lip含W1infty动机}
+(i) 动机。\hyperref[remark:ch03-Lip含W1infty]{该注记}指出 $W^{1,\infty}$ 与 $\operatorname{Lip}$ 的差别仅在整体有界性：两者在局部意义下相同（\cref{theorem:ch03-W1infty=Lip}），差别来自范数中是否含 $\|f\|_\infty$。
+
+(ii) 各项假设的作用。$f\in L^\infty(U)$ 保证 $\|f\|_{1,\infty}<\infty$；去掉它，$f$ 仍属于 $W^{1,\infty}_{\mathrm{loc}}(U)$ 但不属于 $W^{1,\infty}(U)$。$\operatorname{Lip}(U)$ 的 $L_U(f)<\infty$ 提供梯度估计。
+
+(iii) 边界。逆命题的失效例：$U=\mathbb{R}$、$f(x)=x$ 满足 $f\in\operatorname{Lip}(U)\cap W^{1,\infty}(U)$ 而 $f\notin L^\infty(U)$，故 $f\notin\operatorname{Lip}(U)\cap L^\infty(U)$；同理 $U=(0,\infty)$、$f(x)=\log x$ 属于 $W^{1,\infty}_{\mathrm{loc}}(U)$ 而不属于 $L^\infty(U)$。$W^{1,\infty}(U)\cap C(U)$ 中仍可有非整体 Lipschitz 的函数（$U$ 非凸时，如 $U=\mathbb{R}^2\setminus\{0\}$ 上的极角函数）。
+\end{remark}
+
+由\cref{theorem:ch03-W1infty=Lip}与\cref{proposition:ch03-a.e.可微}立即得到：
 
 \begin{corollary}[Rademacher]\label{corollary:ch03-Rademacher}
-设 $f\in\operatorname{Lip}_{\mathrm{loc}}(U)$。则 $f$ 在 $U$ 中 a.e. 可微。
+设 $U\subseteq\mathbb{R}^N$ 为开集，$f\in\operatorname{Lip}_{\mathrm{loc}}(U)$。则 $f$ 在 $U$ 中 a.e. 可微。
 \end{corollary}
+
+% SUPPLEMENT: parent=corollary:ch03-Rademacher; kind=proof; basis=由\cref{theorem:ch03-W1infty=Lip}与\cref{proposition:ch03-a.e.可微}的直接合成
+\begin{proof}
+设 $f\in\operatorname{Lip}_{\mathrm{loc}}(U)$。由\cref{theorem:ch03-W1infty=Lip}，$f\in W^{1,\infty}_{\mathrm{loc}}(U)$；对该 $p=\infty>N$ 用\cref{proposition:ch03-a.e.可微}，得 $f$ 在 $U$ 中 a.e. 可微且 $Df=\nabla f$ a.e.。
+\end{proof}
+
+% SUPPLEMENT: parent=corollary:ch03-Rademacher; kind=motivation; basis=推论 3.1.13 的动机与"a.e."不可改进
+\begin{remark}\phantomsection\label{remark:ch03-Rademacher动机}
+(i) 动机。Rademacher 定理是几何测度论的基本工具：它使 Lipschitz 映射的 Jacobian、面积公式与 $BV$ 理论中的链式法则成为可能。此处它由 Sobolev 理论导出，体现本节的统一观点。
+
+(ii) 各项假设的作用。$\mathrm{loc}$ 只要求局部 Lipschitz，故结论是局部 a.e. 可微；$U$ 开保证每点有球邻域。
+
+(iii) 边界。"a.e."不可改进为"处处"：$f(x)=|x|$ 在 $0$ 处不可微。Lipschitz 性不可减弱为连续性：$f=\chi_{\mathbb{Q}\cap[0,1]}$ 不连续，但在 a.e. 点处按\cref{definition:ch03-强可微}的意义可微（微分为 $0$），故"可微"在此只是等价类性质。
+\end{remark}
 
 \begin{proposition}\label{proposition:ch03-W11=AC}\label{proposition:ch03-Sobolev刻画}
 设 $U\subseteq\mathbb{R}$ 为开集。则 $f\in W^{1,1}_{\mathrm{loc}}(U)$ 当且仅当 $f$ 有经典代表 $g\in AC_{\mathrm{loc}}(U)$。
 \end{proposition}
 
 \begin{proof}
-固定 $I=[a,b]\subset U$。若 $g\in AC(I)$，则 $\mathrm{d}g/\mathrm{d}x\in L^1(I)$，$g\in L^\infty(I)\subseteq L^1(I)$，故 $g\in W^{1,1}(I)$。
-
-反之，设 $f\in W^{1,1}(I)$。考虑相伴于 $\mathrm{d}f/\mathrm{d}x$ 的分布函数 $F(x)\triangleq \mathrm{d}f/\mathrm{d}x([a,x))=\int_a^x\mathrm{d}f/\mathrm{d}x\,\mathrm{d}\lambda$。存在 $c\in\mathbb{R}$ 使 $f=F+c$ 在 $I$ 中 $\lambda$-a.e.，故 $g\triangleq F+c$ 为 $f$ 的经典代表。令 $E\triangleq \bigcup_{k=1}^N[x_{k-1},x_k]$，则
+固定 $I=[a,b]\subset U$。若 $g\in AC(I)$，则由\hyperref[remark:ch03-AC蕴含]{注记 3.1.9}，$\mathrm{d}g/\mathrm{d}x=g'\in L^1(I)$，$g$ 在 $I$ 中 $\lambda$-a.e. 可微，且
 \begin{align*}
-\sum_{k=1}^N|g(x_k)-g(x_{k-1})|
-\leqslant\int_E\left|\frac{\mathrm{d}f}{\mathrm{d}x}\right|\mathrm{d}\lambda.
+\frac{\mathrm{d}g}{\mathrm{d}x}=g'\quad\lambda\text{-a.e. 于 }I,\qquad \int_I|g'|\,\mathrm{d}\lambda=V^J(g;I)<\infty.
 \end{align*}
-由初等结果，结论成立。
+又 $g\in L^\infty(I)\subseteq L^1(I)$（因 $g$ 连续于紧区间），故 $g\in W^{1,1}(I)$。
+
+反之，设 $f\in W^{1,1}(I)$。考虑相伴于 $\mathrm{d}f/\mathrm{d}x$ 的分布函数 $F:I\to\mathbb{R}$，$F(x)\triangleq\mathrm{d}f/\mathrm{d}x([a,x))=\int_a^x\frac{\mathrm{d}f}{\mathrm{d}x}\,\mathrm{d}\lambda$（$x\in I$）。如\cref{proposition:ch03-变差比较}的证明那样，存在 $c\in\mathbb{R}$ 使 $f=F+c$ 在 $I$ 中 $\lambda$-a.e.，故 $g\triangleq F+c$ 为 $f$ 在 $I$ 中的经典代表。
+
+令 $E\triangleq\bigcup_{k=1}^m[x_{k-1},x_k]$，其中 $\{a\equiv x_0<x_1<\cdots<x_m\equiv b\}$ 为 $I$ 的分割。则 $\lambda(E)=\sum_{k=1}^m(x_k-x_{k-1})$，且
+\begin{align*}
+\sum_{k=1}^m|g(x_k)-g(x_{k-1})|\leqslant\sum_{k=1}^m\int_{x_{k-1}}^{x_k}\left|\frac{\mathrm{d}f}{\mathrm{d}x}\right|\mathrm{d}\lambda=\int_E\left|\frac{\mathrm{d}f}{\mathrm{d}x}\right|\mathrm{d}\lambda.
+\end{align*}
+故 $g$ 在 $I$ 上绝对连续：对 $\varepsilon>0$，由 $\mathrm{d}f/\mathrm{d}x\in L^1(I)$ 的绝对连续性存在 $\delta>0$，使 $\lambda(E)<\delta$ 时 $\int_E|\mathrm{d}f/\mathrm{d}x|\,\mathrm{d}\lambda<\varepsilon$；而对互不相交的区间族 $(a_k,b_k)\subseteq I$ 有 $\sum_k(b_k-a_k)=\lambda\big(\bigcup_k(a_k,b_k)\big)$。由 $I\subset U$ 任意，$g\in AC_{\mathrm{loc}}(U)$。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-W11=AC; kind=motivation; basis=命题 3.1.14 的动机与 $N\geqslant2$ 时的失效
+\begin{remark}\phantomsection\label{remark:ch03-W11=AC动机}
+(i) 动机。\cref{proposition:ch03-W11=AC}把 $W^{1,1}_{\mathrm{loc}}$ 完全刻画为"有绝对连续代表"，这是 $1$ 维 Sobolev 空间的经典特征；它使 $W^{1,1}$ 的链式法则与截断（$u^+$）可用经典工具验证。
+
+(ii) 各项假设的作用。$p=1$ 时 $W^{1,1}(I)\subseteq L^1(I)$，且紧区间上连续函数有界，故 $AC(I)\subseteq L^\infty(I)\subseteq L^1(I)$；$p>1$ 时结论由 $W^{1,p}_{\mathrm{loc}}\subseteq W^{1,1}_{\mathrm{loc}}$ 化归。"经典代表"不可去掉：$f$ 是等价类。
+
+(iii) 边界。$N\geqslant2$ 时 $W^{1,1}_{\mathrm{loc}}(U)$ 的元素不必有连续代表（$f(x)=\log\log(1/|x|)$），故"绝对连续代表"无意义；此时替代品是\cref{definition:ch03-BV}的 $BV$ 类与 $W^{1,1}$ 的 ACL 刻画。
+\end{remark}
 
 \cref{theorem:ch03-W1infty=Lip}与\cref{proposition:ch03-W11=AC}通常分别陈述为：$f\in\operatorname{Lip}_{\mathrm{loc}}(U)$ 当且仅当 $f\in W^{1,\infty}_{\mathrm{loc}}(U)$，以及 $f\in W^{1,1}_{\mathrm{loc}}(U)$ 当且仅当 $f\in AC_{\mathrm{loc}}(U)$。
 
 
-
+% SUPPLEMENT: parent=definition:ch03-磨光; kind=motivation; alias=definition:ch03-乘积与卷积; basis=同一对象的别名 label（供第 5 章引用），动机与条件说明见 remark:ch03-乘积与卷积动机
+% SUPPLEMENT: parent=proposition:ch03-磨光性质; kind=motivation; alias=proposition:ch03-磨光逼近; basis=同一对象的别名 label（供第 5 章引用），动机与条件说明见 remark:ch03-磨光动机
+% SUPPLEMENT: parent=definition:ch03-Sobolev空间定义; kind=motivation; alias=definition:ch03-Sobolev空间定义; basis=同一对象的别名 label（供第 4 章引用），动机与条件说明见 remark:ch03-Sobolev定义动机
+% SUPPLEMENT: parent=proposition:ch03-W-1q刻画; kind=motivation; alias=proposition:ch03-W-1q刻画; basis=同一对象的别名 label（供\cref{chapter:ch06}引用），动机与条件说明见 remark:ch03-W-1q刻画动机
+% SUPPLEMENT: parent=proposition:ch03-W-1q刻画; kind=motivation; alias=proposition:ch03-W-1q刻画; basis=同一对象的别名 label（供\cref{chapter:ch06}引用），用于以对偶空间 $H^{-1}(U)$ 表述该刻画，动机与条件说明见 remark:ch03-W-1q刻画动机
+% SUPPLEMENT: parent=proposition:ch03-Sobolev刻画; kind=motivation; alias=proposition:ch03-W11=AC; basis=同一对象的别名 label（供第 4 章引用），动机与条件说明见 remark:ch03-W11=AC动机
 
 \end{document}

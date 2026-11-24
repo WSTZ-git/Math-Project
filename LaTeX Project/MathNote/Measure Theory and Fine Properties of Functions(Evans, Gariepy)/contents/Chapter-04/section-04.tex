@@ -1,0 +1,260 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{延拓}\label{section:ch04-04}
+
+\begin{theorem}[Sobolev 函数的延拓]\label{theorem:ch04-4-7}
+设 $n\geqslant2$ 为正整数，$U\subseteq\mathbb{R}^n$ 为非空有界开集，$\partial U$ 为 Lipschitz 边界，$1\leqslant p<\infty$。设 $V\subseteq\mathbb{R}^n$ 为开集且 $U\subset\subset V$。则存在有界线性算子
+\begin{align*}
+E:W^{1,p}(U)\to W^{1,p}(\mathbb{R}^n),
+\end{align*}
+使得对一切 $f\in W^{1,p}(U)$ 有
+\begin{align*}
+Ef=f\quad\text{于 }U,\qquad \spt(Ef)\subseteq V,
+\end{align*}
+并且存在仅依赖 $U,n,p$ 的常数 $C$，使得
+\begin{align*}
+\lVert Ef\rVert_{W^{1,p}(\mathbb{R}^n)}\leqslant C\lVert f\rVert_{W^{1,p}(U)}
+\end{align*}
+对一切 $f\in W^{1,p}(U)$ 成立。
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch04-4-7; kind=motivation; 说明延拓算子的用途、支集条件与范数估计的意义，并描述边界反射的几何图景
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-7-动机}
+$W^{1,p}(U)$ 的元素只定义在有界区域 $U$ 上，而磨光、平移、伸缩以及整体 Sobolev 不等式都在全空间 $\mathbb{R}^n$ 上表述。本定理把 $U$ 上的 Sobolev 函数延拓为 $\mathbb{R}^n$ 上的 Sobolev 函数，并用原函数的 $W^{1,p}$ 范数控制延拓的范数，从而把 $U$ 上的问题化为 $\mathbb{R}^n$ 上的问题。支集条件 $\spt(Ef)\subseteq V$ 使延拓保持局部化：$V$ 可取为 $U$ 的任意小邻域，延拓在 $U$ 上不改变函数值，在 $V$ 外为零。范数估计中的常数只依赖 $U,n,p$ 而不依赖 $f$，这保证 $E$ 是有界算子，因而可以用逼近序列与极限论证。
+
+构造的几何图景如下。在边界点 $x$ 附近取柱体 $C=C(x,r,h)$，其内部小柱体 $C'=C(x,r/2,h/2)$ 被边界图 $y_n=\gamma(y')$ 分成两块：位于图上方的 $U^+=C'\cap U$ 与位于图下方的 $U^-=C'\setminus\overline{U}$。把 $U^-$ 中的点 $(y',y_n)$ 沿 $e_n$ 方向关于该图作镜面反射，所得点 $(y',2\gamma(y')-y_n)$ 落在 $U\cap C$ 内。反射是对合，其 Jacobi 行列式的绝对值为 $1$，故保持 Lebesgue 测度；链式法则把反射后函数的梯度控制为 $\lVert D\gamma\rVert_{L^\infty}$ 的常数倍。于是在 $U^+$ 上取 $f$、在 $U^-$ 上取 $f$ 的反射，所得函数在 $\partial U\cap C'$ 上两侧相等，拼接处不产生跳跃。最后用单位分解把各个柱体上的局部延拓拼成整体延拓。
+
+两条断言的分工如下：断言 1 给出反射部分的 $W^{1,p}$ 估计；断言 2 用迹定理（\cref{theorem:ch04-4-6}）证明拼接后的函数属于 $W^{1,p}(\mathbb{R}^n)$，并给出整体范数估计与支集包含关系。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-7; kind=hypotheses; 逐条分析有界性、Lipschitz 边界、p 的范围、U ⊂⊂ V 与线性有界性的作用
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-7-条件}
+\begin{enumerate}[(i)]
+\item $U$ 有界且 $\partial U$ 为 Lipschitz 边界：有界性使 $\partial U$ 紧，从而可用有限个柱体覆盖 $\partial U$，并使单位分解只有有限项；Lipschitz 图表示使反射 $y_n\mapsto2\gamma(y')-y_n$ 有定义，而 $\lVert D\gamma\rVert_{L^\infty}<\infty$ 保证断言 1 中的常数有限。陈述中 $n\geqslant2$ 的限制与\cref{definition:ch04-4-4}中对 Lipschitz 边界的约定一致。% XREF internal
+\item $1\leqslant p<\infty$：证明中有两处用到 $p<\infty$。其一，第（7）步用\cref{theorem:ch04-4-3}在 $W^{1,p}(U)$ 中逼近 $f$，该定理要求 $p<\infty$；其二，断言 1 与断言 2 都是 $L^p$ 估计，变量替换公式给出的是 $\lvert Df\rvert^p$ 的积分估计。$p=\infty$ 的情形不在本节论证范围内。% XREF internal
+\item $U\subset\subset V$：即 $\overline{U}$ 是 $V$ 的紧子集，故 $\operatorname{dist}(\overline{U},\mathbb{R}^n\setminus V)>0$。于是覆盖 $\partial U$ 的柱体可以取得使 $C(x,r,h)\subseteq V$，这正是第（1）步中第三个条件的来源；同时 $U$ 内部的点不受影响，$Ef=f$ 于 $U$ 才成立。$V$ 可以取得任意接近 $U$，而估计中的常数与 $V$ 无关。
+\item 线性与有界性：线性来自构造对 $f$ 的线性依赖以及极限的唯一性；有界性由 $\lVert Ef\rVert\leqslant C\lVert f\rVert$ 给出。常数 $C=C(U,n,p)$ 只依赖区域与指标，不依赖 $f$，也不依赖 $V$，这是延拓算子能用于逼近论证的关键。
+\item $C^1$ 边界蕴含 Lipschitz 边界，反之不然（多边形的边界即为一例）。论证只用到局部图表示与 $\lVert D\gamma\rVert_{L^\infty}<\infty$，边界的光滑性不能再减弱到完全没有图表示的程度，否则反射无定义。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[延拓]\label{definition:ch04-4-6}
+设 $n\geqslant2$ 为正整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$1\leqslant p<\infty$，$E:W^{1,p}(U)\to W^{1,p}(\mathbb{R}^n)$ 为算子。若对每个 $f\in W^{1,p}(U)$ 都有 $Ef=f$ 于 $U$（等号按 $W^{1,p}(U)$ 中的元素理解，即 $Ef$ 在 $U$ 上的限制与 $f$ 几乎处处相等且有相同的弱导数），则 $Ef$ 称为 $f$ 到 $\mathbb{R}^n$ 的延拓，$E$ 称为延拓算子。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch04-4-6; kind=motivation; 说明区分「延拓算子」与「延拓」的意义，以及延拓不唯一
+\begin{remark}\phantomsection\label{remark:ch04-def-4-6-动机}
+这一定义把「延拓算子 $E$」与「函数 $Ef$ 是 $f$ 的延拓」区分开：对每个 $f\in W^{1,p}(U)$，$Ef$ 是定义在整个 $\mathbb{R}^n$ 上的 $W^{1,p}$ 函数，并且限制在 $U$ 上等于 $f$。\cref{theorem:ch04-4-7}进一步要求 $E$ 线性、有界且支集落在预先给定的 $V$ 内，这些都不是「延拓」一词本身的内容。% XREF internal
+
+延拓一般不唯一：若 $f=0$ 于 $U$，则任何支集含于 $V\setminus\overline{U}$ 的 $W^{1,p}(\mathbb{R}^n)$ 函数都在 $U$ 上等于 $f$，因而都是 $f$ 的延拓；\cref{theorem:ch04-4-7}所构造的是其中由线性算子选出的一个。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-6; kind=hypotheses; 逐条分析等式成立的含义、线性有界性是否为定义的一部分，以及目标空间的作用
+\begin{remark}\phantomsection\label{remark:ch04-def-4-6-条件}
+\begin{enumerate}[(i)]
+\item 定义要求 $Ef\in W^{1,p}(\mathbb{R}^n)$ 且 $Ef=f$ 于 $U$。由于 $W^{1,p}$ 的元素是等价类，等式 $Ef=f$ 于 $U$ 按 $W^{1,p}(U)$ 中的元素理解，即二者在 $U$ 上几乎处处相等且有相同的弱导数；逐点相等一般无意义。
+\item 定义本身不要求 $E$ 线性或有界，也不要求 $\spt(Ef)$ 落在某个指定集合内。这些是定理（\cref{theorem:ch04-4-7}）的附加结论，也是延拓算子能用于整体估计的原因。% XREF internal
+\item 目标空间 $W^{1,p}(\mathbb{R}^n)$ 是定义的一部分。同一个 $f$ 的连续延拓、$L^p$ 延拓与 $W^{1,p}$ 延拓是不同的概念，本定义专指 Sobolev 空间意义下的延拓。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）首先引入一些记号。
+
+\begin{enumerate}[(a)]
+\item 给定 $x=(x_1,\cdots,x_n)\in\mathbb{R}^n$，记
+\begin{align*}
+x=(x',x_n),
+\end{align*}
+其中 $x'=(x_1,\cdots,x_{n-1})\in\mathbb{R}^{n-1}$，$x_n\in\mathbb{R}$；对 $y\in\mathbb{R}^n$ 同样记 $y=(y',y_n)$。
+\item 给定 $x\in\mathbb{R}^n$ 与 $r,h>0$，定义开柱体
+\begin{align*}
+C(x,r,h):=\{y\in\mathbb{R}^n\mid\lvert y'-x'\rvert<r,\ \lvert y_n-x_n\rvert<h\}.
+\end{align*}
+\end{enumerate}
+
+由于 $\partial U$ 是 Lipschitz 连续的，对每个 $x\in\partial U$，在必要时旋转并重新标号坐标轴之后，存在 $r,h>0$ 与 Lipschitz 连续函数 $\gamma:\mathbb{R}^{n-1}\to\mathbb{R}$，使得
+\begin{align*}
+\begin{cases}
+\max_{\lvert x'-y'\rvert<r}\lvert\gamma(y')-x_n\rvert<\dfrac{h}{4},\\[6pt]
+U\cap C(x,r,h)=\{y\mid\lvert x'-y'\rvert<r,\ \gamma(y')<y_n<x_n+h\},\\[2pt]
+C(x,r,h)\subseteq V.
+\end{cases}
+\end{align*}
+
+固定 $x\in\partial U$，取如上得到的 $r,h,\gamma$，记
+\begin{align*}
+C&:=C(x,r,h),\qquad C':=C\Bigl(x,\frac{r}{2},\frac{h}{2}\Bigr),\\
+U^+&:=C'\cap U,\qquad U^-:=C'\setminus\overline{U}.
+\end{align*}
+
+（2）设 $f\in C^1(\overline{U})$，并暂时假设 $\spt f\subseteq C'\cap\overline{U}$。令
+\begin{align*}
+\begin{cases}
+f^+(y)=f(y), & y\in\overline{U^+},\\[2pt]
+f^-(y)=f(y',2\gamma(y')-y_n), & y\in U^-.
+\end{cases}
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-7; kind=proof; 补出反射映射的几何性质：对合、Jacobi 行列式绝对值为 1、把 U^- 映到 U^+ 并固定边界
+映射 $\Phi(y',y_n):=(y',2\gamma(y')-y_n)$ 是 $\mathbb{R}^n$ 到自身的对合，即 $\Phi\circ\Phi$ 为恒等映射。由 $\gamma$ 的 Lipschitz 连续性，$\Phi$ 是 Lipschitz 映射，且其 Jacobi 矩阵
+\begin{align*}
+D\Phi(y)=\begin{pmatrix}I_{n-1}&0\\ 2D\gamma(y')&-1\end{pmatrix}
+\end{align*}
+的行列式为 $-1$，故 $\lvert\det D\Phi\rvert=1$。点 $y$ 满足 $y_n<\gamma(y')$ 当且仅当 $\Phi(y)$ 的最后一个坐标 $2\gamma(y')-y_n>\gamma(y')$，因此 $\Phi$ 把 $U^-=C'\setminus\overline{U}$ 映入 $U\cap C$；又 $y_n=\gamma(y')$ 时 $\Phi(y)=y$，故 $\Phi$ 在 $\partial U\cap C'$ 上为恒等映射。
+
+这是一个反射延拓。由定义，$f^-=f^+$ 于 $\partial U\cap C'$。
+
+（3）断言 1：$\lVert f^-\rVert_{W^{1,p}(U^-)}\leqslant C\lVert f\rVert_{W^{1,p}(U)}$。
+
+断言之证明：设 $\phi\in C_c^1(U^-)$，并设 $\{\gamma_k\}_{k=1}^{\infty}$ 为一列 $C^\infty$ 函数，满足
+\begin{align*}
+\begin{cases}
+\gamma_k\geqslant\gamma,\qquad\gamma_k\to\gamma\ \text{一致},\\
+D\gamma_k\to D\gamma\quad\mathcal{L}^{n-1}\text{-a.e.},\qquad\sup_k\lVert D\gamma_k\rVert_{L^\infty}<\infty.
+\end{cases}
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-7; kind=proof; 补出满足上述条件的 γ_k 的构造：对 γ 作磨光并加上 (Lip(γ)+1)/k
+这样的序列存在：取 $\mathbb{R}^{n-1}$ 上的标准磨光核 $\eta$，令
+\begin{align*}
+\gamma_k:=\eta_{1/k}*\gamma+\frac{\Lip(\gamma)+1}{k}.
+\end{align*}
+由于 $\gamma$ 是 Lipschitz 函数，$\lvert\eta_{1/k}*\gamma-\gamma\rvert\leqslant\Lip(\gamma)/k$，故 $\gamma_k\geqslant\gamma$ 且 $\gamma_k\to\gamma$ 一致。又 $D\gamma_k=\eta_{1/k}*D\gamma$，当 $k\to\infty$ 时在 $L^1_{\loc}(\mathbb{R}^{n-1})$ 中收敛到 $D\gamma$，从而存在子列几乎处处收敛；将序列换成该子列后即有 $D\gamma_k\to D\gamma$ 几乎处处成立。最后，由磨光的性质，
+\begin{align*}
+\lVert D\gamma_k\rVert_{L^\infty}\leqslant\lVert D\gamma\rVert_{L^\infty}<\infty
+\end{align*}
+对一切 $k$ 成立。
+
+于是对 $i=1,\cdots,n-1$，
+\begin{align*}
+\int_{U^-}f^-\phi_{y_i}\diff y
+&=\int_{U^-}f(y',2\gamma(y')-y_n)\phi_{y_i}\diff y\\
+&=\lim_{k\to\infty}\int_{U^-}f(y',2\gamma_k(y')-y_n)\phi_{y_i}\diff y\\
+&=-\lim_{k\to\infty}\int_{U^-}\Bigl(f_{y_i}(y',2\gamma_k(y')-y_n)\\
+&\qquad\qquad\qquad\qquad+2f_{y_n}(y',2\gamma_k(y')-y_n)\gamma_{k,y_i}(y')\Bigr)\phi\diff y\\
+&=-\int_{U^-}\Bigl(f_{y_i}(y',2\gamma(y')-y_n)\\
+&\qquad\qquad\qquad\qquad+2f_{y_n}(y',2\gamma(y')-y_n)\gamma_{y_i}(y')\Bigr)\phi\diff y.
+\end{align*}
+
+上面第三个等号处，对每个固定的 $k$，$y\mapsto f(y',2\gamma_k(y')-y_n)$ 是 $C^1$ 函数，故可对 $y_i$ 分部积分；第四个等号处用 $\gamma_k\to\gamma$ 一致、$D\gamma_k\to D\gamma$ 几乎处处以及 $\sup_k\lVert D\gamma_k\rVert_{L^\infty}<\infty$，由控制收敛定理取极限。
+
+同样地，对 $y_n$ 方向分部积分；此时 $y_n\mapsto2\gamma(y')-y_n$ 的行列式为 $-1$，故
+\begin{align*}
+\int_{U^-}f^-\phi_{y_n}\diff y=\int_{U^-}f_{y_n}(y',2\gamma(y')-y_n)\phi\diff y.
+\end{align*}
+
+现在回忆 $\lVert D\gamma\rVert_{L^\infty}<\infty$，于是由变量替换公式（\cref{theorem:ch03-3-9}），% XREF p=176 "by the change of variables formula (Theorem 3.9)"
+\begin{align*}
+\int_{U^-}\lvert Df(y',2\gamma(y')-y_n)\rvert^p\diff y\leqslant C\int_U\lvert Df\rvert^p\diff y<\infty.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-7; kind=proof; 补出由两个分部积分恒等式与变量替换公式得到断言 1 的过程
+由上面的两个恒等式，$f^-$ 在 $U^-$ 内的弱偏导数为
+\begin{align*}
+(f^-)_{y_i}(y)&=f_{y_i}(\Phi(y))+2f_{y_n}(\Phi(y))\gamma_{y_i}(y')\quad(i=1,\cdots,n-1),\\
+(f^-)_{y_n}(y)&=-f_{y_n}(\Phi(y)).
+\end{align*}
+由 $\lvert\det D\Phi\rvert=1$ 与 $\Phi(U^-)\subseteq U$ 得
+\begin{align*}
+\int_{U^-}\lvert f^-\rvert^p\diff y=\int_{\Phi(U^-)}\lvert f\rvert^p\diff y\leqslant\int_U\lvert f\rvert^p\diff y,
+\end{align*}
+且存在只依赖 $n$ 的常数 $C_n$，使 $\lvert Df^-\rvert\leqslant C_n(1+\lVert D\gamma\rVert_{L^\infty})\lvert Df(\Phi)\rvert$，故
+\begin{align*}
+\int_{U^-}\lvert Df^-\rvert^p\diff y\leqslant C\int_{\Phi(U^-)}\lvert Df\rvert^p\diff y\leqslant C\int_U\lvert Df\rvert^p\diff y.
+\end{align*}
+两式相加即得断言 1，其中 $C$ 只依赖 $n,p$ 与 $\lVert D\gamma\rVert_{L^\infty}$。
+
+（4）定义
+\begin{align*}
+Ef:=\overline{f}=
+\begin{cases}
+f^+ & \text{于 }\overline{U^+},\\
+f^- & \text{于 }\overline{U^-},\\
+0 & \text{于 }\mathbb{R}^n\setminus(\overline{U^+}\cup\overline{U^-}),
+\end{cases}
+\end{align*}
+且 $\overline{f}$ 在 $\mathbb{R}^n$ 上连续。
+
+% SUPPLEMENT: parent=theorem:ch04-4-7; kind=proof; 补出 \bar f 在内部界面 ∂U∩C' 上连续性的验证；人为边界 ∂C' 处的跳跃由截断函数修补，见 remark:ch04-thm-4-7-边界
+$\overline{f}$ 在 $\overline{U^+}$ 上等于 $f$，在 $\overline{U^-}$ 上等于 $f\circ\Phi$，二者都连续。在 $\partial U\cap C'$ 上，$y_n=\gamma(y')$ 给出
+\begin{align*}
+f^-(y)=f(y',\gamma(y'))=f(y)=f^+(y),
+\end{align*}
+故两侧的极限相等，$\overline{f}$ 在 $\partial U\cap C'$ 上连续。在人为边界 $\partial C'$ 上，$f\circ\Phi$ 的极限一般不为零：当 $\gamma(y')<x_n$ 时，$U^-$ 中趋向底面 $y_n=x_n-h/2$ 的点经 $\Phi$ 映入 $C'\cap U$，而 $f$ 在该处可以非零。因此第（4）步的连续性断言需把分片定义乘以适当的截断函数，见\cref{remark:ch04-def-4-6-边界}。% XREF internal
+
+（5）断言 2：$E(f)\in W^{1,p}(\mathbb{R}^n)$，$\spt E(f)\subseteq C'\subseteq V$，且
+\begin{align*}
+\lVert E(f)\rVert_{W^{1,p}(\mathbb{R}^n)}\leqslant C\lVert f\rVert_{W^{1,p}(U)}.
+\end{align*}
+
+断言之证明：设 $\phi\in C_c^1(C')$。对 $1\leqslant i\leqslant n$，
+\begin{align*}
+\int_{C'}\overline{f}\phi_{y_i}\diff y
+&=\int_{U^+}f^+\phi_{y_i}\diff y+\int_{U^-}f^-\phi_{y_i}\diff y\\
+&=-\int_{U^+}f^+_{y_i}\phi\diff y-\int_{U^-}f^-_{y_i}\phi\diff y\\
+&\qquad+\int_{\partial U}\bigl(T(f^+)-T(f^-)\bigr)\phi\nu_i\diff\mathcal{H}^{n-1}.
+\end{align*}
+上式由\cref{theorem:ch04-4-6}得到，其中 $T$ 为迹算子。% XREF p=176 "by Theorem 4.6"
+但 $T(f^+)=T(f^-)=f|_{\partial U}$，故最后一项为零。
+
+% SUPPLEMENT: parent=theorem:ch04-4-7; kind=proof; 补出由分部积分恒等式得到弱导数并推出 E(f) ∈ W^{1,p} 与支集包含的细节
+上述恒等式表明：对每个 $i$，存在函数 $g_i\in L^p(\mathbb{R}^n)$（在 $U^+$ 上等于 $f^+_{y_i}$，在 $U^-$ 上等于 $f^-_{y_i}$，在其余处为零），使得
+\begin{align*}
+\int_{C'}\overline{f}\phi_{y_i}\diff y=-\int_{C'}g_i\phi\diff y
+\end{align*}
+对一切 $\phi\in C_c^1(C')$ 成立；这正是 $\overline{f}$ 的弱偏导数存在且等于 $g_i$ 的定义。由断言 1 与 $f\in W^{1,p}(U)$ 得 $g_i\in L^p(\mathbb{R}^n)$，故 $\overline{f}\in W^{1,p}(\mathbb{R}^n)$。又 $\overline{f}$ 的支集含于 $\overline{C'}\subseteq C\subseteq V$，且由断言 1 与 $L^p$ 部分的估计得
+\begin{align*}
+\lVert \overline{f}\rVert_{W^{1,p}(\mathbb{R}^n)}\leqslant C\lVert f\rVert_{W^{1,p}(U)}.
+\end{align*}
+
+这一计算与断言 1 一起完成了 $f$ 为 $C^1$、支集含于 $C'\cap\overline{U}$ 时的证明。
+
+（6）现设 $f\in C^1(\overline{U})$，但去掉对其支集的限制。由于 $\partial U$ 紧，可用有限个柱体 $C_k=C(x_k,r_k,h_k)$（$k=1,\cdots,N$）覆盖 $\partial U$，使与上述相应的断言对这些柱体成立。设 $\{\zeta_k\}_{k=0}^{N}$ 为\cref{theorem:ch04-4-3}的证明中所用的单位分解，按上述方式定义 $E(\zeta_kf)$（$k=1,2,\cdots,N$），并令% XREF p=176 "as in the proof of Theorem 4.3"
+\begin{align*}
+Ef:=\sum_{k=1}^{N}E(\zeta_kf)+\zeta_0f.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-7; kind=proof; 补出拼接的验证：ζ_k f 的支集含于 C'_k ∩ \bar U，逐项用断言 2 求和得到范数估计与支集包含
+对每个 $k=1,\cdots,N$，由上述单位分解的取法，$\spt\zeta_k\subseteq C'_k$，故 $\spt(\zeta_kf)\subseteq C'_k\cap\overline{U}$，断言 2 适用于 $\zeta_kf$，给出
+\begin{align*}
+\lVert E(\zeta_kf)\rVert_{W^{1,p}(\mathbb{R}^n)}\leqslant C_k\lVert\zeta_kf\rVert_{W^{1,p}(U)}.
+\end{align*}
+又 $\spt\zeta_0\subseteq U$，故 $\zeta_0f\in W^{1,p}(U)$。于是
+\begin{align*}
+\lVert Ef\rVert_{W^{1,p}(\mathbb{R}^n)}
+&\leqslant\sum_{k=1}^{N}\lVert E(\zeta_kf)\rVert_{W^{1,p}(\mathbb{R}^n)}+\lVert\zeta_0f\rVert_{W^{1,p}(\mathbb{R}^n)}\\
+&\leqslant C\sum_{k=0}^{N}\lVert\zeta_kf\rVert_{W^{1,p}(U)}\leqslant C'\lVert f\rVert_{W^{1,p}(U)},
+\end{align*}
+其中 $C'$ 只依赖 $U,n,p$ 与单位分解的选取，而单位分解只依赖 $U$ 与所取覆盖。支集方面，$\spt(E(\zeta_kf))\subseteq C'_k\subseteq C_k\subseteq V$ 且 $\spt(\zeta_0f)\subseteq U\subset V$，故 $\spt(Ef)\subseteq V$，且由构造 $Ef=f$ 于 $U$。
+
+（7）最后，若 $f\in W^{1,p}(U)$，用函数 $f_k\in W^{1,p}(U)\cap C^1(\overline{U})$ 逼近 $f$，并令
+\begin{align*}
+Ef:=\lim_{k\to\infty}Ef_k.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-7; kind=proof; 补出第（7）步极限的存在性、与逼近序列的无关性、线性性与范数估计，以及 Ef=f 与支集条件
+由\cref{theorem:ch04-4-3}(i)，对每个 $f\in W^{1,p}(U)$ 存在序列 $f_k\in W^{1,p}(U)\cap C^\infty(\overline{U})$，使得 $f_k\to f$ 于 $W^{1,p}(U)$。% XREF internal
+由第（6）步的估计，$\lVert Ef_k-Ef_l\rVert\leqslant C\lVert f_k-f_l\rVert$，故 $\{Ef_k\}$ 是 $W^{1,p}(\mathbb{R}^n)$ 中的 Cauchy 列，其极限存在，记为 $Ef$。若 $\{f_k'\}$ 是另一列这样的逼近，则
+\begin{align*}
+\lVert Ef_k-Ef_k'\rVert\leqslant C\bigl(\lVert f_k-f\rVert_{W^{1,p}(U)}+\lVert f-f_k'\rVert_{W^{1,p}(U)}\bigr)\to0,
+\end{align*}
+故 $Ef$ 与逼近序列的选取无关。极限的唯一性还给出 $E$ 的线性：对 $f,g\in W^{1,p}(U)$ 与 $\alpha,\beta\in\mathbb{R}$，取逼近列 $f_k\to f$、$g_k\to g$，则 $\alpha f_k+\beta g_k\to\alpha f+\beta g$，于是
+\begin{align*}
+E(\alpha f+\beta g)=\lim_{k\to\infty}E(\alpha f_k+\beta g_k)=\alpha Ef+\beta Eg.
+\end{align*}
+由于 $Ef_k=f_k$ 于 $U$ 且 $f_k\to f$ 于 $W^{1,p}(U)$，限制映射的连续性给出 $Ef=f$ 于 $U$。又第（6）步的构造给出一个紧集 $K\subseteq V$，使每个 $Ef_k$ 在 $\mathbb{R}^n\setminus K$ 上为零，故 $Ef$ 在开集 $\mathbb{R}^n\setminus K$ 上几乎处处为零，于是 $\spt(Ef)\subseteq K\subseteq V$。最后，
+\begin{align*}
+\lVert Ef\rVert_{W^{1,p}(\mathbb{R}^n)}=\lim_{k\to\infty}\lVert Ef_k\rVert_{W^{1,p}(\mathbb{R}^n)}\leqslant C\lim_{k\to\infty}\lVert f_k\rVert_{W^{1,p}(U)}=C\lVert f\rVert_{W^{1,p}(U)}.
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-7; kind=proof; 补出人为边界 ∂C' 处连续性的截断修补，并验证 Ef=f、连续性与两个断言的估计不变
+\begin{remark}\phantomsection\label{remark:ch04-def-4-6-边界}
+第（4）步的连续性断言需作如下技术修补。取截断函数 $\chi\in C_c^\infty(C')$，使 $\chi=1$ 于 $\spt f$ 的一个邻域内，并把 $\overline{f}$ 的分片定义整体乘以 $\chi$，在 $\overline{C'}$ 外仍取零。此时 $\chi=0$ 于 $\partial C'$ 的一个邻域，故修补后的 $\overline{f}$ 在 $\partial C'$ 附近为零；内部界面 $\partial U\cap C'$ 上两侧仍都等于 $f|_{\partial U}$；于是 $\overline{f}$ 在 $\mathbb{R}^n$ 上连续。又因 $\chi=1$ 于 $\spt f$，在 $U$ 上 $\overline{f}=f$，即 $Ef=f$ 于 $U$ 仍成立。第（5）步的积分恒等式对 $\chi\overline{f}$ 同样成立：把 $\overline{f}$ 换成 $\chi\overline{f}$ 后，$\partial U$ 上的边界项仍由 $T(f^+)=T(f^-)$ 相消，另多出含 $D\chi$ 的项；这些项的支集有界，由 $\lVert D\chi\rVert_{L^\infty}$ 与变量替换控制。因此 $\chi\overline{f}\in W^{1,p}(\mathbb{R}^n)$，$\spt(\chi\overline{f})\subseteq C'$，且范数估计中的常数只增加一个依赖 $\chi$ 的因子；$\chi$ 只依赖 $U$ 与局部柱体的选取，故定理中的常数仍只依赖 $U,n,p$。
+\end{remark}
+
+\end{document}

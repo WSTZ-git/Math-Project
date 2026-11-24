@@ -1,0 +1,365 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{乘积测度、Fubini 定理与 Lebesgue 测度}\label{section:ch01-04}
+
+设 $X$ 与 $Y$ 为非空集合。
+
+\begin{definition}[乘积测度]\label{definition:ch01-1-16}
+设 $X$ 与 $Y$ 为非空集合，$\mu$ 为 $X$ 上的测度，$\nu$ 为 $Y$ 上的测度。对每个 $S\subseteq X\times Y$，令
+\begin{align*}
+(\mu\times\nu)(S):=\inf\left\{\sum_{i=1}^{\infty}\mu(A_i)\nu(B_i)\right\},
+\end{align*}
+其中下确界取遍满足
+\begin{align*}
+S\subseteq\bigcup_{i=1}^{\infty}(A_i\times B_i)
+\end{align*}
+的一切族 $\{A_i\times B_i\}_{i=1}^{\infty}$，而 $A_i\subseteq X$ 为 $\mu$-可测集，$B_i\subseteq Y$ 为 $\nu$-可测集（$i=1,2,\cdots$）。由此得到定义在 $X\times Y$ 的全部子集上、取值于 $[0,\infty]$ 的函数 $\mu\times\nu$；把 $\mu\times\nu$ 称为 $\mu$ 与 $\nu$ 的乘积测度。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-16; kind=motivation; 说明以可数可测矩形覆盖的下确界定义乘积测度的动机与必要性
+\begin{remark}\phantomsection\label{remark:ch01-def-1-16-动机}
+乘积测度要解决的问题是：在两个测度空间上构造一个测度，使每个可测矩形 $A\times B$ 的测度恰为 $\mu(A)\nu(B)$，从而把乘积空间上的积分化为累次积分。若只允许有限个两两不相交的可测矩形之并，则许多集合不能由这样的并覆盖，故须取可数覆盖并以下确界定义。允许可数覆盖之后，定义对 $X\times Y$ 的每个子集都有意义，于是得到全部子集上的函数。下确界在矩形处不损失信息：矩形自身构成一个覆盖，故 $(\mu\times\nu)(A\times B)\leqslant\mu(A)\nu(B)$；反向不等式的证明与 $A\times B$ 的可测性一并给出，见\cref{theorem:ch01-1-22}的断言 (ii)。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-16; kind=hypotheses; 逐条分析非空性、覆盖的可测性限制与扩展值约定
+\begin{remark}\phantomsection\label{remark:ch01-def-1-16-条件}
+\begin{enumerate}[(i)]
+\item 假设 $X$ 与 $Y$ 非空。截面记号 $S_y$、$S_x$ 与 $\sigma$-有限性的讨论都建立在乘积集合非空之上；若其中一个集合为空，则 $X\times Y$ 为空，全部断言退化为零测度空间上的恒等陈述。
+\item 覆盖只允许由 $\mu$-可测的 $A_i$ 与 $\nu$-可测的 $B_i$ 构成的矩形。证明中的族 $\mathcal{P}_1$ 正是这种矩形的可数并，积分泛函 $\rho$ 在该族上由累次积分给出，故可测性限制是该证明框架的组成部分。
+\item 覆盖是可数族而非有限族。有限个矩形之并不能覆盖一般集合，可数性与测度的可数可加性相匹配，也是证明中取可数交以构造 $\mathcal{P}_2$ 的前提。
+\item $\mu(A_i)$ 与 $\nu(B_i)$ 允许取 $\infty$，此时乘积与和按扩展实数运算处理。证明中在 $(\mu\times\nu)(S)=\infty$ 的情形取 $R=X\times Y$，相应的 $\rho(R)=\infty$，故扩展值约定不可省略。
+\item 按本书约定，测度定义在所在集合的全部子集上。因此 $(\mu\times\nu)(S)$ 对一切 $S\subseteq X\times Y$ 有定义，截面测度 $\mu(S_y)$ 即使在 $S_y$ 尚未证为可测时也有值；这项约定在 Fubini 定理的断言 (iii) 中用到。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[$\sigma$-有限]\label{definition:ch01-1-17}
+设 $X$ 为非空集合，$\mu$ 为 $X$ 上的测度。
+\begin{enumerate}[(i)]
+\item 称集合 $A\subseteq X$ 关于 $\mu$ 是 $\sigma$-有限的，是指存在一列 $X$ 中的 $\mu$-可测集 $\{B_k\}_{k=1}^{\infty}$，满足 $\mu(B_k)<\infty$（$k=1,2,\cdots$）且
+\begin{align*}
+A=\bigcup_{k=1}^{\infty}B_k.
+\end{align*}
+\item 称函数 $f:X\to[-\infty,\infty]$ 关于 $\mu$ 是 $\sigma$-有限的，是指 $f$ 为 $\mu$-可测，且集合 $\{x\in X\mid f(x)\neq0\}$ 关于 $\mu$ 是 $\sigma$-有限的。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-17; kind=motivation; 说明 σ-有限性在乘积测度与累次积分中的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-17-动机}
+$\sigma$-有限性把关于有限测度的论证推广到可数并。在乘积测度的理论中它承担两项任务：其一，它使一般集合可以按可数多块有限测度集合分块处理，从而把控制收敛定理用于截面的积分；其二，它使累次积分与乘积测度之间的等式在 $(\mu\times\nu)(S)=\infty$ 的情形仍可通过逐块求和得到。对函数而言，$\sigma$-有限性只约束支集 $\{f\neq0\}$，因为积分不感知零测集上的取值，故它恰好是「积分可逐块化归为有限测度情形」这一要求的最小结构条件。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-17; kind=hypotheses; 逐条分析可测性、可数性、函数值域与可和性的关系
+\begin{remark}\phantomsection\label{remark:ch01-def-1-17-条件}
+\begin{enumerate}[(i)]
+\item 每个 $B_k$ 必须 $\mu$-可测且 $\mu(B_k)<\infty$。可测性使测度的可加性与单调性可用于 $B_k$；有限性是 Fubini 定理中对截面使用控制收敛定理时所需的控制函数可积性来源。
+\item 允许可数多个 $B_k$，且不要求两两不相交。若 $A=\bigcup_k B_k$，把 $B_k$ 换成 $B_k\setminus\bigcup_{j<k}B_j$ 即得不交分解，各块仍 $\mu$-可测、测度有限，故不交要求可以加上而不改变定义的内容。
+\item 对函数的要求是 $f$ 为 $\mu$-可测，且取值于 $[-\infty,\infty]$。允许取 $\pm\infty$ 与积分可为 $\pm\infty$ 的情形相容；Fubini 定理的断言 (iv) 正是在这一取值范围内陈述的。
+\item 可和性蕴含 $\sigma$-有限性：若 $\int\lvert f\rvert\,\diff\mu<\infty$，则
+$\{f\neq0\}\subseteq\bigcup_{k=1}^{\infty}\{|f|>1/k\}\cup\{|f|=\infty\}$，其中每个 $\{|f|>1/k\}$ 的测度不超过 $k\int\lvert f\rvert\,\diff\mu$，而 $\{|f|=\infty\}$ 是零测集。反向蕴含不成立：在 $\mathbb{R}$ 上取 Lebesgue 测度与 $f\equiv1$，则 $f$ 关于该测度是 $\sigma$-有限的而并不可和。因此 Fubini 定理断言 (iv) 括号中的「特别地」成立。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Fubini 定理]\label{theorem:ch01-1-22}
+设 $X$ 与 $Y$ 为非空集合，$\mu$ 为 $X$ 上的测度，$\nu$ 为 $Y$ 上的测度，$\mu\times\nu$ 为\cref{definition:ch01-1-16}所定义的乘积测度。% XREF internal
+\begin{enumerate}[(i)]
+\item $\mu\times\nu$ 是 $X\times Y$ 上的正则测度，即使 $\mu$ 与 $\nu$ 并不正则。
+\item 若 $A\subseteq X$ 是 $\mu$-可测集，$B\subseteq Y$ 是 $\nu$-可测集，则 $A\times B$ 是 $(\mu\times\nu)$-可测集，且
+\begin{align*}
+(\mu\times\nu)(A\times B)=\mu(A)\nu(B).
+\end{align*}
+\item 若 $S\subseteq X\times Y$ 关于 $\mu\times\nu$ 是 $\sigma$-有限的，则截面
+\begin{align*}
+S_y:=\{x\mid(x,y)\in S\}
+\end{align*}
+对 $\nu$-a.e. $y\in Y$ 是 $\mu$-可测集，截面
+\begin{align*}
+S_x:=\{y\mid(x,y)\in S\}
+\end{align*}
+对 $\mu$-a.e. $x\in X$ 是 $\nu$-可测集，$\mu(S_y)$ 是 $\nu$-可积的，$\nu(S_x)$ 是 $\mu$-可积的，并且
+\begin{align*}
+(\mu\times\nu)(S)=\int_Y\mu(S_y)\,\diff\nu(y)=\int_X\nu(S_x)\,\diff\mu(x).
+\end{align*}
+\item 若 $f:X\times Y\to[-\infty,\infty]$ 是 $(\mu\times\nu)$-可积的，且 $f$ 关于 $\mu\times\nu$ 是 $\sigma$-有限的（特别地，若 $f$ 是 $(\mu\times\nu)$-可和的），则映射
+\begin{align*}
+y\mapsto\int_X f(x,y)\,\diff\mu(x)
+\end{align*}
+是 $\nu$-可积的，映射
+\begin{align*}
+x\mapsto\int_Y f(x,y)\,\diff\nu(y)
+\end{align*}
+是 $\mu$-可积的，并且
+\begin{align*}
+\int_{X\times Y}f\,\diff(\mu\times\nu)&=\int_Y\left[\int_X f(x,y)\,\diff\mu(x)\right]\diff\nu(y)\\
+&=\int_X\left[\int_Y f(x,y)\,\diff\nu(y)\right]\diff\mu(x).
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-22-余面积}
+后文将研究余面积公式\cref{theorem:ch03-3-10}，它是 Fubini 定理的一种「曲线」形式。% XREF p=31 "We will later study the coarea formula (Theorem 3.10), which is a kind of curvilinear version of Fubini's Theorem."
+\end{remark}
+
+\begin{proof}
+\textbf{1.} 设 $\mathcal{F}$ 为满足下述条件的集合 $S\subseteq X\times Y$ 的全体：对每个 $y\in Y$，映射 $x\mapsto\chi_S(x,y)$ 是 $\mu$-可积的；且映射
+\begin{align*}
+y\mapsto\int_X\chi_S(x,y)\,\diff\mu(x)
+\end{align*}
+是 $\nu$-可积的。对 $S\in\mathcal{F}$，记
+\begin{align*}
+\rho(S):=\int_Y\left[\int_X\chi_S(x,y)\,\diff\mu(x)\right]\diff\nu(y).
+\end{align*}
+
+\textbf{2.} 令
+\begin{align*}
+\mathcal{P}_0&:=\{A\times B\mid A\subseteq X\ \mu\text{-可测},\ B\subseteq Y\ \nu\text{-可测}\},\\
+\mathcal{P}_1&:=\left\{\bigcup_{j=1}^{\infty}S_j\ \middle|\ S_j\in\mathcal{P}_0\ (j=1,2,\cdots)\right\},\\
+\mathcal{P}_2&:=\left\{\bigcap_{j=1}^{\infty}S_j\ \middle|\ S_j\in\mathcal{P}_1\ (j=1,2,\cdots)\right\}.
+\end{align*}
+注意 $\mathcal{P}_0\subseteq\mathcal{F}$，且当 $A\times B\in\mathcal{P}_0$ 时 $\rho(A\times B)=\mu(A)\nu(B)$。若 $A_1\times B_1,A_2\times B_2\in\mathcal{P}_0$，则
+\begin{align*}
+(A_1\times B_1)\cap(A_2\times B_2)=(A_1\cap A_2)\times(B_1\cap B_2)\in\mathcal{P}_0,
+\end{align*}
+且
+\begin{align*}
+(A_1\times B_1)-(A_2\times B_2)=\bigl((A_1-A_2)\times B_1\bigr)\cup\bigl((A_1\cap A_2)\times(B_1-B_2)\bigr)
+\end{align*}
+是 $\mathcal{P}_0$ 中成员的不相交并。由此，$\mathcal{P}_1$ 中每个集合都是 $\mathcal{P}_0$ 中集合的可数不相交并，于是 $\mathcal{P}_1\subseteq\mathcal{F}$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-22; kind=proof; 补出 ρ 在可数不相交并上的可加性，以说明 𝒫_1 ⊆ ℱ
+上面最后一步用到 $\rho$ 在可数不相交并上的可加性。设 $\{S_j\}_{j=1}^{\infty}\subseteq\mathcal{F}$ 两两不相交，$S=\bigcup_{j=1}^{\infty}S_j$。对固定的 $y\in Y$，由 $\chi_S(x,y)=\sum_{j=1}^{\infty}\chi_{S_j}(x,y)$ 及部分和关于 $j$ 单调上升，单调收敛定理给出
+\begin{align*}
+\int_X\chi_S(x,y)\,\diff\mu(x)=\sum_{j=1}^{\infty}\int_X\chi_{S_j}(x,y)\,\diff\mu(x);
+\end{align*}
+右端作为 $\nu$-可测函数的单调上升极限是 $\nu$-可测的，再对 $y$ 用一次单调收敛定理得
+\begin{align*}
+\rho(S)=\sum_{j=1}^{\infty}\rho(S_j),
+\end{align*}
+两端同时取 $\infty$ 或同时有限。对 $\mathcal{P}_1$ 中集合取它在 $\mathcal{P}_0$ 中的不交分解，即得 $\mathcal{P}_1\subseteq\mathcal{F}$，且 $\rho$ 在 $\mathcal{P}_1$ 上等于各块 $\mu(A)\nu(B)$ 之和。
+
+\textbf{3. 断言 1.} 对每个 $S\subseteq X\times Y$，
+\begin{align*}
+(\mu\times\nu)(S)=\inf\{\rho(R)\mid S\subseteq R\in\mathcal{P}_1\}.
+\end{align*}
+断言的证明：首先注意，若 $S\subseteq R=\bigcup_{i=1}^{\infty}(A_i\times B_i)$，则
+\begin{align*}
+\rho(R)\leqslant\sum_{i=1}^{\infty}\rho(A_i\times B_i)=\sum_{i=1}^{\infty}\mu(A_i)\nu(B_i).
+\end{align*}
+因此
+\begin{align*}
+\inf\{\rho(R)\mid S\subseteq R\in\mathcal{P}_1\}\leqslant(\mu\times\nu)(S).
+\end{align*}
+另一方面，存在 $\mathcal{P}_0$ 中一列两两不相交的集合 $\{A_j'\times B_j'\}_{j=1}^{\infty}$ 使
+\begin{align*}
+R=\bigcup_{j=1}^{\infty}(A_j'\times B_j').
+\end{align*}
+于是
+\begin{align*}
+\rho(R)=\sum_{j=1}^{\infty}\mu(A_j')\nu(B_j')\geqslant(\mu\times\nu)(S).
+\end{align*}
+
+\textbf{4.} 固定 $A\times B\in\mathcal{P}_0$。则对一切满足 $A\times B\subseteq R$ 的 $R\in\mathcal{P}_1$ 有
+\begin{align*}
+(\mu\times\nu)(A\times B)\leqslant\mu(A)\nu(B)=\rho(A\times B)\leqslant\rho(R).
+\end{align*}
+于是由断言 1 得
+\begin{align*}
+(\mu\times\nu)(A\times B)=\mu(A)\nu(B).
+\end{align*}
+
+\textbf{5.} 其次证明 $A\times B$ 是 $(\mu\times\nu)$-可测的。设 $T\subseteq X\times Y$ 且 $T\subseteq R\in\mathcal{P}_1$。则 $R-(A\times B)$ 与 $R\cap(A\times B)$ 不相交，且都属于 $\mathcal{P}_1$。因此
+\begin{align*}
+&(\mu\times\nu)\bigl(T-(A\times B)\bigr)+(\mu\times\nu)\bigl(T\cap(A\times B)\bigr)\\
+&\qquad\leqslant\rho\bigl(R-(A\times B)\bigr)+\rho\bigl(R\cap(A\times B)\bigr)=\rho(R),
+\end{align*}
+从而由断言 1 得
+\begin{align*}
+(\mu\times\nu)\bigl(T-(A\times B)\bigr)+(\mu\times\nu)\bigl(T\cap(A\times B)\bigr)\leqslant(\mu\times\nu)(T).
+\end{align*}
+故 $A\times B$ 是 $(\mu\times\nu)$-可测的，即 (ii) 成立。
+
+\textbf{6. 断言 2.} 对每个 $S\subseteq X\times Y$，存在 $R\in\mathcal{P}_2$ 使 $S\subseteq R$ 且
+\begin{align*}
+\rho(R)=(\mu\times\nu)(S).
+\end{align*}
+断言的证明：若 $(\mu\times\nu)(S)=\infty$，取 $R=X\times Y$。若 $(\mu\times\nu)(S)<\infty$，则由断言 1，对每个 $j=1,2,\cdots$ 存在 $R_j\in\mathcal{P}_1$ 使 $S\subseteq R_j$ 且
+\begin{align*}
+\rho(R_j)<(\mu\times\nu)(S)+\frac1j.
+\end{align*}
+令
+\begin{align*}
+R:=\bigcap_{j=1}^{\infty}R_j\in\mathcal{P}_2.
+\end{align*}
+则 $R\in\mathcal{F}$，且由控制收敛定理，
+\begin{align*}
+(\mu\times\nu)(S)\leqslant\rho(R)=\lim_{k\to\infty}\rho\Bigl(\bigcap_{j=1}^{k}R_j\Bigr)\leqslant(\mu\times\nu)(S).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-22; kind=proof; 补出断言 2 中控制收敛定理的适用条件与两次取极限的细节
+上述极限的推导如下。函数列 $\chi_{\bigcap_{j\leqslant k}R_j}(x,y)$ 关于 $k$ 单调下降且以 $\chi_R(x,y)$ 为极限，并受 $\chi_{R_1}(x,y)$ 控制，而 $\rho(R_1)=\int_Y\mu\bigl((R_1)_y\bigr)\,\diff\nu(y)<\infty$，故对 $\nu$-a.e. $y$ 有 $\mu\bigl((R_1)_y\bigr)<\infty$，对该 $y$ 先关于 $x$ 用控制收敛定理；再关于 $y$ 用一次控制收敛定理，控制函数为 $y\mapsto\mu\bigl((R_1)_y\bigr)$，即得 $\rho(R)=\lim_{k\to\infty}\rho\bigl(\bigcap_{j\leqslant k}R_j\bigr)$。另一方面 $\bigcap_{j\leqslant k}R_j\in\mathcal{P}_1$ 且包含 $S$，故由断言 1 有 $(\mu\times\nu)(S)\leqslant\rho\bigl(\bigcap_{j\leqslant k}R_j\bigr)$，取 $k\to\infty$ 的极限即得末端的双向不等式。
+
+\textbf{7.} 由 (ii) 可见 $\mathcal{P}_2$ 的每个成员都是 $(\mu\times\nu)$-可测的，于是 (i) 由断言 2 推出。
+
+\textbf{8.} 若 $S\subseteq X\times Y$ 且 $(\mu\times\nu)(S)=0$，则由断言 2 存在 $R\in\mathcal{P}_2$ 使 $S\subseteq R$ 且 $\rho(R)=0$；于是 $S\in\mathcal{F}$ 且 $\rho(S)=0$。
+
+现设 $S\subseteq X\times Y$ 是 $(\mu\times\nu)$-可测的且 $(\mu\times\nu)(S)<\infty$。则存在 $R\in\mathcal{P}_2$ 使 $S\subseteq R$ 且
+\begin{align*}
+(\mu\times\nu)(R-S)=0;
+\end{align*}
+从而
+\begin{align*}
+\rho(R-S)=0.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-22; kind=proof; 补出 (μ×ν)(R-S)=0 的依据以及截面测度相等的推导
+此处第一式依据如下。由断言 2 取 $R\in\mathcal{P}_2$ 使 $S\subseteq R$ 且 $\rho(R)=(\mu\times\nu)(S)<\infty$。对 $\mathcal{P}_1$ 中的集合 $A$，由断言 1 与 $\rho$ 的单调性得 $(\mu\times\nu)(A)=\rho(A)$；又 $\bigcap_{j\leqslant k}R_j\in\mathcal{P}_1$ 关于 $k$ 递减且 $(\mu\times\nu)\bigl(\bigcap_{j\leqslant 1}R_j\bigr)=\rho(R_1)<\infty$，故测度的上连续性给出
+\begin{align*}
+(\mu\times\nu)(R)=\lim_{k\to\infty}(\mu\times\nu)\Bigl(\bigcap_{j=1}^{k}R_j\Bigr)=\lim_{k\to\infty}\rho\Bigl(\bigcap_{j=1}^{k}R_j\Bigr)=\rho(R)=(\mu\times\nu)(S),
+\end{align*}
+于是由 $S$ 的 $(\mu\times\nu)$-可测性得 $(\mu\times\nu)(R-S)=(\mu\times\nu)(R)-(\mu\times\nu)(S)=0$。再由本步第一段的结果，$\rho(R-S)=0$。
+
+由于 $\rho(R-S)=0$，存在 $\nu$-零测集 $N$ 使 $y\notin N$ 时 $\mu\bigl((R-S)_y\bigr)=0$。此时 $(R-S)_y=R_y-S_y$ 是 $\mu$-可测的零测集，故 $S_y=R_y-(R-S)_y$ 是 $\mu$-可测集，且
+\begin{align*}
+\mu(S_y)=\mu(R_y).
+\end{align*}
+因此对 $\nu$-a.e. $y\in Y$ 有
+\begin{align*}
+\mu(\{x\mid(x,y)\in S\})=\mu(\{x\mid(x,y)\in R\}),
+\end{align*}
+且
+\begin{align*}
+(\mu\times\nu)(S)=\rho(R)=\int\mu(\{x\mid(x,y)\in S\})\,\diff\nu(y).
+\end{align*}
+在 $(\mu\times\nu)(S)<\infty$ 的前提下即可推出断言 (iii)。若 $S$ 关于 $\mu\times\nu$ 是 $\sigma$-有限的，则把 $S$ 分解为可数多个有限测度集。
+
+% SUPPLEMENT: parent=theorem:ch01-1-22; kind=proof; 补出断言 (iii) 在 σ-有限情形下的分解与另一累次积分等式
+取 $S$ 的 $\sigma$-有限分解 $S=\bigcup_{k=1}^{\infty}B_k$，其中 $B_k$ 是 $(\mu\times\nu)$-可测集且 $(\mu\times\nu)(B_k)<\infty$，并令 $S_k:=S\cap B_k$。对每个 $k$，上述有限测度情形给出：存在 $\nu$-零测集 $N_k$，使 $y\notin N_k$ 时 $S_{k,y}$ 是 $\mu$-可测集，且 $(\mu\times\nu)(S_k)=\int_Y\mu(S_{k,y})\,\diff\nu(y)$。令 $N=\bigcup_{k=1}^{\infty}N_k$，则 $y\notin N$ 时全部截面 $S_{k,y}$ 可测，由单调收敛定理 $\mu(S_y)=\sum_{k=1}^{\infty}\mu(S_{k,y})$，从而
+\begin{align*}
+(\mu\times\nu)(S)=\sum_{k=1}^{\infty}(\mu\times\nu)(S_k)=\int_Y\mu(S_y)\,\diff\nu(y).
+\end{align*}
+把 $X$ 与 $Y$、$\mu$ 与 $\nu$ 互换，同一论证给出 $(\mu\times\nu)(S)=\int_X\nu(S_x)\,\diff\mu(x)$。
+
+\textbf{9.} 当 $f=\chi_S$ 时，断言 (iv) 化为 (iii)。若 $f$ 是 $(\mu\times\nu)$-可积的、非负的，且关于 $\mu\times\nu$ 是 $\sigma$-有限的，则由\cref{theorem:ch01-1-12}可写% XREF p=34 "we use Theorem 1.12 to write"
+\begin{align*}
+f=\sum_{k=1}^{\infty}\frac1k\chi_{A_k}.
+\end{align*}
+于是由单调收敛定理，断言 (iv) 对 $f$ 成立。最后，对一般的 $f$ 写
+\begin{align*}
+f=f^+-f^-,
+\end{align*}
+即可推出一般情形下的 (iv)。
+
+% SUPPLEMENT: parent=theorem:ch01-1-22; kind=proof; 补出非负情形与一般情形的单调收敛定理与控制不等式
+非负情形：$f=\sum_{k=1}^{\infty}\frac1k\chi_{A_k}$ 中每个 $A_k$ 满足 $A_k\subseteq\{f\neq0\}$，故 $A_k$ 关于 $\mu\times\nu$ 是 $\sigma$-有限的，(iii) 适用于 $A_k$。由单调收敛定理，
+\begin{align*}
+\int_{X\times Y}f\,\diff(\mu\times\nu)=\sum_{k=1}^{\infty}\frac1k(\mu\times\nu)(A_k)=\sum_{k=1}^{\infty}\frac1k\int_Y\mu(A_{k,y})\,\diff\nu(y)=\int_Y\Bigl[\int_X f\,\diff\mu\Bigr]\diff\nu(y),
+\end{align*}
+其中最后一个等号再用一次单调收敛定理；同一论证给出关于 $x$ 的累次积分，且两个累次积分都有限，故两个累次积分函数分别 $\nu$-可积与 $\mu$-可积。一般情形：$f^+$ 与 $f^-$ 都非负、$(\mu\times\nu)$-可积，且支集含于 $\{f\neq0\}$，故都关于 $\mu\times\nu$ 是 $\sigma$-有限的；对二者分别用非负情形并相减，再由 $\bigl\lvert\int_X f\,\diff\mu\bigr\rvert\leqslant\int_X\lvert f\rvert\,\diff\mu$ 知两个累次积分函数仍然可积，且两个累次积分相等。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-22; kind=motivation; 说明逐类逼近的证明骨架与 ρ 的作用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-22-动机}
+本定理把乘积空间上的积分化为累次积分。证明的骨架是对集合逐类逼近：$\mathcal{P}_0$ 是可测矩形，$\mathcal{P}_1$ 是它的可数并，$\mathcal{P}_2$ 是 $\mathcal{P}_1$ 的可数交。断言 1 说明 $\mu\times\nu$ 可由 $\mathcal{P}_1$ 中的集合从上方以 $\rho$ 逼近；断言 2 说明这种逼近可以在 $\mathcal{P}_2$ 中实现而不损失精度。泛函 $\rho$ 表示「先对 $x$ 积分、再对 $y$ 积分」，故对 $\mathcal{P}_2$ 的控制把乘积测度与累次积分联系起来，断言 (iii) 与 (iv) 由此得到。断言 (i) 的实质是：乘积测度自动具有上方的可测逼近性质，而 $\mu$ 与 $\nu$ 本身无须具备任何正则性。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-22; kind=hypotheses; 逐条分析四款断言的条件、σ-有限性的必要性反例与可积性约定
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-22-条件}
+\begin{enumerate}[(i)]
+\item 断言 (i) 与 (ii) 不需要 $\mu$、$\nu$ 的任何有限性或正则性假设，只需二者为测度。断言 (ii) 中 $A$、$B$ 的可测性是本质的：第 5 步用 $A\times B$ 与 $\mathcal{P}_1$ 中集合的差与交验证 Carathéodory 条件，可测性保证这些运算的结果仍落在 $\mathcal{P}_1$ 内。
+\item 断言 (iii) 中的 $\sigma$-有限性不可删除。取 $X=Y=[0,1]$，$\mu=\mathcal{L}^1$，$\nu$ 为计数测度，$S=\{(x,x)\mid x\in[0,1]\}$。设 $S\subseteq\bigcup_i(A_i\times B_i)$ 且 $\sum_i\mu(A_i)\nu(B_i)<\infty$。若 $B_i$ 无限，则 $\nu(B_i)=\infty$，故必有 $\mu(A_i)=0$；把这种下标组成的集合记为 $J$，则 $N:=\bigcup_{i\in J}A_i$ 是 $\mu$-零测集。若 $x\notin N$，则覆盖 $(x,x)$ 的矩形满足 $x\in A_i\cap B_i$ 且 $B_i$ 有限，于是 $[0,1]\setminus N\subseteq\bigcup_{i\notin J}B_i$ 是可数集，与 $\mathcal{L}^1([0,1]\setminus N)=1$ 矛盾。因此 $(\mu\times\nu)(S)=\infty$。另一方面 $\nu(S_x)=\nu(\{x\})=1$ 给出 $\int_X\nu(S_x)\,\diff\mu(x)=1$，$\mu(S_y)=\mu(\{y\})=0$ 给出 $\int_Y\mu(S_y)\,\diff\nu(y)=0$，两式不相等，断言 (iii) 的结论失效。同一论证还说明 $S$ 关于 $\mu\times\nu$ 不是 $\sigma$-有限的：若 $B\subseteq S$ 且 $(\mu\times\nu)(B)<\infty$，则 $B$ 的投影是 $\mu$-零测集，故可数多个这样的集合之并的投影仍是 $\mu$-零测集，不能等于 $[0,1]$。
+\item 断言 (iv) 中 $f$ 的 $\sigma$-有限性一般不能由 $(\mu\times\nu)$-可积性推出（当 $\int f$ 允许取 $\pm\infty$ 时），它与可积性共同保证 $f$ 的正部与负部可分别化归为断言 (iii)。若 $f$ 可和，则 $\{f\neq0\}\subseteq\bigcup_k\{\lvert f\rvert>1/k\}\cup\{\lvert f\rvert=\infty\}$ 是 $\sigma$-有限的，故括号中的特例成立。
+\item 断言 (iii) 中 $\mu(S_y)$ 与 $\nu(S_x)$ 的「可积」按积分存在理解；由所证等式，两个积分都等于 $(\mu\times\nu)(S)$，可以为 $\infty$。
+\item 断言 (i) 中的正则性指：$X\times Y$ 的每个子集都含于一个测度相同的 $(\mu\times\nu)$-可测集之中，这正是第 7 步由断言 2 推出的内容，其中不含关于拓扑或紧集的假设。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[Lebesgue 测度]\label{definition:ch01-1-18}
+设 $n\geqslant1$ 为整数。
+\begin{enumerate}[(i)]
+\item 对每个 $A\subseteq\mathbb{R}$，令
+\begin{align*}
+\mathcal{L}^1(A):=\inf\left\{\sum_{i=1}^{\infty}\operatorname{diam}C_i\ \middle|\ A\subseteq\bigcup_{i=1}^{\infty}C_i,\ C_i\subseteq\mathbb{R}\right\},
+\end{align*}
+其中 $\operatorname{diam}C_i:=\sup\{\lvert x-y\rvert\mid x,y\in C_i\}$（$\operatorname{diam}\varnothing:=0$）；把 $\mathbb{R}$ 上的函数 $\mathcal{L}^1$ 称为一维 Lebesgue 测度。
+\item 归纳地定义 $\mathbb{R}^n$ 上的 $n$ 维 Lebesgue 测度 $\mathcal{L}^n$ 为
+\begin{align*}
+\mathcal{L}^n:=\mathcal{L}^{n-1}\times\mathcal{L}^1=\underbrace{\mathcal{L}^1\times\cdots\times\mathcal{L}^1}_{n\ \text{个}},
+\end{align*}
+其中 $\mathcal{L}^{n-1}\times\mathcal{L}^1$ 为乘积测度。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-18; kind=motivation; 说明一维以区间覆盖定义、高维以乘积测度归纳定义的动机
+\begin{remark}\phantomsection\label{remark:ch01-def-1-18-动机}
+一维 Lebesgue 测度用可数覆盖的总长度取下确界定义，是外测度构造在一维的具体化：它把「长度」从区间推广到 $\mathbb{R}$ 的每个子集，且对区间的有限并、可数并保持自然的值。高维情形不再重复用立方体覆盖定义，而是以乘积测度归纳地定义：这样\cref{theorem:ch01-1-22}立即适用于 $\mathcal{L}^n$，把 $n$ 重积分化为累次积分，也使 $n$ 维体积自动具有乘性。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-18; kind=hypotheses; 逐条分析覆盖族、直径约定、归纳起点与因子次序
+\begin{remark}\phantomsection\label{remark:ch01-def-1-18-条件}
+\begin{enumerate}[(i)]
+\item (i) 中的覆盖由 $\mathbb{R}$ 的任意子集 $C_i$ 组成，只要求 $A\subseteq\bigcup_iC_i$。把 $C_i$ 换成闭区间 $[\inf C_i,\sup C_i]$ 不改变其直径，故用任意子集与用区间给出相同的下确界。
+\item 直径取 $\operatorname{diam}C_i=\sup\{\lvert x-y\rvert\mid x,y\in C_i\}$，且约定 $\operatorname{diam}\varnothing=0$；无界集的直径为 $\infty$，相应的项按扩展实数运算处理。
+\item 归纳定义的起点是 (i) 中的 $\mathcal{L}^1$；(ii) 对 $n\geqslant2$ 给出 $\mathcal{L}^n$。定义所得的 $\mathcal{L}^n$ 定义在 $\mathbb{R}^n$ 的全部子集上，与本书测度定义在全部子集上的约定一致。
+\item (ii) 的写法把坐标分成后一个与其余 $n-1$ 个，表面上依赖因子的次序；\cref{theorem:ch01-1-23}证明任意分裂都给出同一个测度。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Lebesgue 测度的另一刻画]\label{theorem:ch01-1-23}
+设 $n\geqslant2$ 为整数。则对每个 $k\in\{1,\cdots,n-1\}$ 有
+\begin{align*}
+\mathcal{L}^n=\mathcal{L}^{n-k}\times\mathcal{L}^k.
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+设 $L>0$，令 $Q:=[-L,L]^n$ 为各边平行于坐标轴的闭立方体，并令
+\begin{align*}
+\mu:=\mathcal{L}^n\llcorner Q,\qquad \nu:=(\mathcal{L}^{n-k}\times\mathcal{L}^k)\llcorner Q.
+\end{align*}
+则对每个矩形
+\begin{align*}
+R:=\{x\mid -\infty\leqslant a_i\leqslant x_i\leqslant b_i\leqslant\infty,\ i=1,\cdots,n\}
+\end{align*}
+有 $\mu(R)=\nu(R)<\infty$。于是由\cref{theorem:ch01-1-5}，$\mu$ 与 $\nu$ 在所有 Borel 集上相等。% XREF p=35 "According then to Theorem 1.5, μ and ν agree on all Borel sets."
+这一结论对每个如上所述的立方体 $Q$ 都成立，故 $\mathcal{L}^n$ 与 $\mathcal{L}^{n-k}\times\mathcal{L}^k$ 在 $\mathbb{R}^n$ 的 Borel 子集上相等。由于二者都是 Radon 测度，它们在 $\mathbb{R}^n$ 的一切子集上相等。
+
+% SUPPLEMENT: parent=theorem:ch01-1-23; kind=proof; 补出矩形上的相等、对立方体取极限与由 Borel 集扩充到全部子集三步细节
+以下补出上述三步。第一步，$R\cap Q=\prod_{i=1}^{n}\bigl[\max\{a_i,-L\},\min\{b_i,L\}\bigr]$ 是有界矩形；对坐标个数用归纳法并逐次使用\cref{theorem:ch01-1-22}的断言 (ii)，可知 $\mathcal{L}^n(R\cap Q)$ 与 $(\mathcal{L}^{n-k}\times\mathcal{L}^k)(R\cap Q)$ 都等于% XREF internal
+\begin{align*}
+\prod_{i=1}^{n}\bigl(\min\{b_i,L\}-\max\{a_i,-L\}\bigr),
+\end{align*}
+故 $\mu(R)=\nu(R)<\infty$。第二步，取 $Q_j=[-j,j]^n$ 与相应的 $\mu_j$、$\nu_j$。对 Borel 集 $B$，集列 $\{B\cap Q_j\}_{j=1}^{\infty}$ 单调上升且并为 $B$，由测度的下连续性得
+\begin{align*}
+\mathcal{L}^n(B)=\lim_{j\to\infty}\mu_j(B)=\lim_{j\to\infty}\nu_j(B)=(\mathcal{L}^{n-k}\times\mathcal{L}^k)(B).
+\end{align*}
+第三步，Radon 测度具有 Borel 正则性，故对每个 $A\subseteq\mathbb{R}^n$ 存在 Borel 集 $B\supseteq A$ 使 $\mathcal{L}^n(B)=\mathcal{L}^n(A)$。于是
+\begin{align*}
+\mathcal{L}^n(A)=\mathcal{L}^n(B)=(\mathcal{L}^{n-k}\times\mathcal{L}^k)(B)\geqslant(\mathcal{L}^{n-k}\times\mathcal{L}^k)(A),
+\end{align*}
+交换两个测度即得反向不等式，故二者在一切子集上相等。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-23; kind=motivation; 说明该刻画使 n 维体积可按任意方式分解与迭代
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-23-动机}
+本定理说明 $\mathcal{L}^n$ 的归纳定义不依赖把坐标分成「后 $k$ 个」与「其余 $n-k$ 个」的方式：任意分裂都给出同一个测度，故 $\mathcal{L}^n$ 就是 $n$ 个一维 Lebesgue 测度的乘积。由此，$n$ 重积分可按任意方式写成累次积分，$n$ 维体积也可按任意坐标分组逐块计算，这正是把 $\diff x$ 写作 $\diff x'\,\diff x''$ 的依据。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-23; kind=hypotheses; 逐条分析指标范围、截断立方体与 Radon 性的作用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-23-条件}
+\begin{enumerate}[(i)]
+\item 指标范围 $k\in\{1,\cdots,n-1\}$ 使两个因子都非空。$n=1$ 时该集合为空，断言无内容，故假设 $n\geqslant2$ 不缩小结论的适用范围。
+\item 证明先把两个测度限制在同一个立方体 $Q=[-L,L]^n$ 上。截断使二者在每个矩形上取有限值，这是比较两个测度并应用\cref{theorem:ch01-1-5}的前提；不截断时矩形上的值可能为 $\infty$，比较失去意义。% XREF internal
+\item $L>0$ 任意，结论对每个 $L$ 成立，故最终结论与 $L$ 无关。
+\item 由 Borel 集扩充到全部子集依赖两个测度的 Radon 性，即每个集合都含于测度相同的 Borel 集。若缺少这一性质，Borel 集上的相等不能推出全部子集上的相等。
+\end{enumerate}
+\end{remark}
+
+此后假设读者熟悉 $\mathcal{L}^n$ 的一切常用性质。
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-23-记号}
+凡关于 $\mathcal{L}^n$ 的积分，一律写作 $\int f(x)\,\diff x$、$\int g(y)\,\diff y$ 等形式，而不写作 $\diff\mathcal{L}^n$；并把 $L^1(\mathbb{R}^n,\mathcal{L}^n)$ 简记为 $L^1(\mathbb{R}^n)$，等等。
+\end{remark}
+
+\end{document}

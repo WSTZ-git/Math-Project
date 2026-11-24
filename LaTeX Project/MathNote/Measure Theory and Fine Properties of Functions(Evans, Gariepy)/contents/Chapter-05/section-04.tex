@@ -1,0 +1,146 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{延拓}\label{section:ch05-04}
+
+\begin{theorem}[$\BV$ 函数的延拓]\label{theorem:ch05-5-8}
+设 $n\geqslant2$ 为整数，$U\subseteq\mathbb{R}^n$ 为非空有界开集，$\partial U$ 为 Lipschitz 边界（见\cref{definition:ch04-4-4}），$f_1\in\BV(U)$，$f_2\in\BV(\mathbb{R}^n\setminus\overline{U})$。定义 $\bar f:\mathbb{R}^n\to\mathbb{R}$ 为% XREF internal
+\begin{align*}
+\bar f(x):=
+\begin{cases}
+f_1(x), & x\in U,\\
+0, & x\in\partial U,\\
+f_2(x), & x\in\mathbb{R}^n\setminus\overline{U}.
+\end{cases}
+\end{align*}
+则 $\bar f\in\BV(\mathbb{R}^n)$，且
+\begin{align*}
+\lVert D\bar f\rVert(\mathbb{R}^n)=\lVert Df_1\rVert(U)+\lVert Df_2\rVert(\mathbb{R}^n\setminus\overline{U})+\int_{\partial U}\lvert Tf_1-Tf_2\rvert\diff\mathcal{H}^{n-1},
+\end{align*}
+其中 $\lVert Df_1\rVert$、$\lVert Df_2\rVert$ 与 $\lVert D\bar f\rVert$ 表示相应的变差测度，$Tf_1$ 与 $Tf_2$ 分别为 $f_1$ 与 $f_2$ 在 $\partial U$ 上的迹（见\cref{section:ch05-03}），$\mathcal{H}^{n-1}$ 为 $(n-1)$ 维 Hausdorff 测度。% XREF internal
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-8-零延拓}
+特别地，在关于 $U$ 的上述假设下，若 $f\in\BV(U)$ 且集合 $U$ 具有有限周长，则延拓
+\begin{align*}
+Ef:=
+\begin{cases}
+f, & \text{在 }U\text{ 上},\\
+0, & \text{在 }\mathbb{R}^n\setminus U\text{ 上}
+\end{cases}
+\end{align*}
+属于 $\BV(\mathbb{R}^n)$，并且
+\begin{align*}
+\lVert\partial U\rVert(\mathbb{R}^n)=\mathcal{H}^{n-1}(\partial U).
+\end{align*}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-8; kind=motivation; 说明沿边界拼接两个 BV 函数的几何意义、全变差恰为两块内部变差与迹的跳跃之和、与 Sobolev 延拓定理的对照，以及证明的两段结构
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-8-动机}
+本定理解决的是沿一条 Lipschitz 边界把两个 $\BV$ 函数拼接起来的问题：$U$ 内的 $f_1$ 与 $U$ 外的 $f_2$ 各自只有测度意义下的一阶导数，拼接后的 $\bar f$ 仍是 $\BV$ 函数，并且其变差测度的总质量恰由三部分组成，即 $U$ 内的一阶导数、$\mathbb{R}^n\setminus\overline{U}$ 内的一阶导数，以及边界上两个迹之差的大小。第三项是 $\BV$ 理论特有的：$f_1$ 与 $f_2$ 在 $\partial U$ 上的迹未必相同，这种差异表现为 $\bar f$ 穿过边界时的跳跃，而跳跃在变差测度中贡献 $\lvert Tf_1-Tf_2\rvert\diff\mathcal{H}^{n-1}$。以下记 $\nu$ 为 $\partial U$ 关于 $U$ 的单位外法向量。
+
+公式是精确等式而非不等式，这一点与\cref{section:ch04-04}中 Sobolev 函数的延拓形成对照：那里只能断言延拓后的梯度范数不超过原函数梯度范数的常数倍，即 $\lVert D\tilde u\rVert(\mathbb{R}^n)\leqslant C\lVert Du\rVert(U)$；这里既不损失常数，也不需要辅助的截断函数，因为跳跃本身被边界项精确计量。若 $Tf_1=Tf_2$ $\mathcal{H}^{n-1}$-a.e. 于 $\partial U$，则边界项消失，$\bar f$ 的变差等于两块变差之和。% XREF internal
+
+证明分两段。第一段用满足 $\lvert\phi\rvert\leqslant1$ 的检验向量场估计 $\int_{\mathbb{R}^n}\bar f\diver\phi\diff x$：把积分拆到 $U$ 与 $\mathbb{R}^n\setminus\overline{U}$ 上，对每一块用 Gauss--Green 公式（\cref{section:ch05-03}），两块沿 $\partial U$ 的外法向量方向相反，故边界项以 $Tf_1-Tf_2$ 的形式合并；由此得到 $\bar f\in\BV(\mathbb{R}^n)$ 与变差的一个上界。第二段把该上界提升为等式：由恒等式 $(\star)$ 定出 $[D\bar f]$ 在 $U$ 与 $\mathbb{R}^n\setminus\overline{U}$ 上分别等于 $[Df_1]$ 与 $[Df_2]$，余下支撑在 $\partial U$ 上的部分由边界积分给出，其总变差正是 $\int_{\partial U}\lvert Tf_1-Tf_2\rvert\diff\mathcal{H}^{n-1}$。% XREF internal
+
+定理的直接推论是零延拓：当 $f\in\BV(U)$ 且 $U$ 具有有限周长时，把 $f$ 在 $U$ 外取零值所得的 $Ef$ 属于 $\BV(\mathbb{R}^n)$，且 $\lVert\partial U\rVert(\mathbb{R}^n)=\mathcal{H}^{n-1}(\partial U)$。这一构造把只在 $U$ 上给定的 $\BV$ 函数提升为全空间上的 $\BV$ 函数，是后文把局部结论推广到 $\mathbb{R}^n$ 的常用手段，因而能在 $\mathbb{R}^n$ 上对它使用本章后续的整体结论（\cref{section:ch05-05}、\cref{section:ch05-06}）。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-8; kind=hypotheses; 逐条分析 U 的非空有界开、∂U 为 Lipschitz 边界、f_1 与 f_2 的 BV 假设、∂U 上取值的任意性、边界项的必要性以及该定理与零延拓的关系
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-8-条件}
+\begin{enumerate}[(i)]
+\item 假设 $U$ 为非空有界开集：$U$ 为开集使 $\BV(U)$、$C_c^1(U;\mathbb{R}^n)$ 与迹算子都有定义；$U$ 有界使 $\partial U$ 紧，从而在 Lipschitz 边界条件下 $\mathcal{H}^{n-1}(\partial U)<\infty$，边界积分 $\int_{\partial U}\lvert Tf_1-Tf_2\rvert\diff\mathcal{H}^{n-1}$ 才有意义。若 $U$ 无界，则 $\mathcal{H}^{n-1}(\partial U)$ 可能等于 $+\infty$，右端的边界项可能发散，结论须改为局部形式。
+\item 假设 $\partial U$ 为 Lipschitz 边界（\cref{definition:ch04-4-4}）：这是迹与 Gauss--Green 公式成立的正则性门槛。该条件比 $C^1$ 边界弱，多面体以及由 Lipschitz 图像围成的区域都具有 Lipschitz 边界；它保证 $\partial U$ 在 $\mathcal{H}^{n-1}$-a.e. 点处有单位外法向量 $\nu$，并使迹算子 $T$ 有定义（\cref{section:ch05-03}）。若边界在一点附近不是 Lipschitz 图像（如尖点区域的尖点），迹与边界项都失去意义。% XREF internal
+\item 假设 $f_1\in\BV(U)$、$f_2\in\BV(\mathbb{R}^n\setminus\overline{U})$：两侧的函数各自须在相应区域上具有有界变差，否则其变差测度无定义，定理右端关于两块区域的变差项都无从谈起。又 $\mathbb{R}^n\setminus\overline{U}$ 无界，故 $f_2\in\BV(\mathbb{R}^n\setminus\overline{U})$ 蕴含 $f_2\in L^1(\mathbb{R}^n\setminus\overline{U})$，这与 $f_1\in L^1(U)$ 一起给出 $\bar f\in L^1(\mathbb{R}^n)$。
+\item 定义中 $\partial U$ 上的取值是任意的：$\mathcal{L}^n(\partial U)=0$，而 $\BV$ 类不区分 $\mathcal{L}^n$-a.e. 相等的函数（\cref{definition:ch05-5-1}），故把 $\bar f$ 在 $\partial U$ 上取为 $0$ 只是为了得到一个在 $\mathbb{R}^n$ 上处处有定义的函数，不影响 $\bar f$ 的变差测度。% XREF internal
+\item 边界项不可省略。取 $n=2$、$U=B(0,1)$、$f_1\equiv1$、$f_2\equiv0$，则 $f_1\in\BV(U)$、$f_2\in\BV(\mathbb{R}^2\setminus\overline{U})$，$\lVert Df_1\rVert(U)=\lVert Df_2\rVert(\mathbb{R}^2\setminus\overline{U})=0$，而 $Tf_1-Tf_2\equiv1$，故 $\lVert D\bar f\rVert(\mathbb{R}^2)=\mathcal{H}^1(\partial U)=2\pi$：变差完全来自边界上的跳跃。
+\item 定理的等式蕴含零延拓的结论：取 $f_2\equiv0$ 于 $\mathbb{R}^n\setminus\overline{U}$，则 $Tf_2=0$，公式给出
+\begin{align*}
+\lVert D(Ef)\rVert(\mathbb{R}^n)=\lVert Df\rVert(U)+\int_{\partial U}\lvert Tf\rvert\diff\mathcal{H}^{n-1},
+\end{align*}
+其中 $Ef$ 为定理后的注记中定义的零延拓。注记中「$U$ 具有有限周长」这一条件在本定理关于 $U$ 的假设下自动满足，并且 $\lVert\partial U\rVert(\mathbb{R}^n)=\mathcal{H}^{n-1}(\partial U)$，故上述两项都有限。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+1. 设 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$，$\lvert\phi\rvert\leqslant1$。则
+\begin{align*}
+\int_{\mathbb{R}^n}\bar f\diver\phi\diff x
+&=\int_U f_1\diver\phi\diff x+\int_{\mathbb{R}^n\setminus\overline{U}}f_2\diver\phi\diff x\\
+&=-\int_U\phi\cdot\diff[Df_1]-\int_{\mathbb{R}^n\setminus\overline{U}}\phi\cdot\diff[Df_2]+\int_{\partial U}(Tf_1-Tf_2)\phi\cdot\nu\diff\mathcal{H}^{n-1}\\
+&\leqslant\lVert Df_1\rVert(U)+\lVert Df_2\rVert(\mathbb{R}^n\setminus\overline{U})+\int_{\partial U}\lvert Tf_1-Tf_2\rvert\diff\mathcal{H}^{n-1}.
+\end{align*}
+于是 $\bar f\in\BV(\mathbb{R}^n)$，且
+\begin{align*}
+\lVert D\bar f\rVert(\mathbb{R}^n)\leqslant\lVert Df_1\rVert(U)+\lVert Df_2\rVert(\mathbb{R}^n\setminus\overline{U})+\int_{\partial U}\lvert Tf_1-Tf_2\rvert\diff\mathcal{H}^{n-1}.
+\end{align*}
+
+2. 为证等号，注意对一切 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 有
+\begin{align*}
+-\int_{\mathbb{R}^n}\phi\cdot\diff[D\bar f]
+&=-\int_U\phi\cdot\diff[Df_1]-\int_{\mathbb{R}^n\setminus\overline{U}}\phi\cdot\diff[Df_2]\\
+&\quad+\int_{\partial U}(Tf_1-Tf_2)\phi\cdot\nu\diff\mathcal{H}^{n-1}\qquad(\star)
+\end{align*}
+于是
+\begin{align*}
+[D\bar f]=
+\begin{cases}
+[Df_1], & \text{在 }U\text{ 上},\\
+[Df_2], & \text{在 }\mathbb{R}^n\setminus\overline{U}\text{ 上}.
+\end{cases}
+\end{align*}
+从而 $(\star)$ 给出
+\begin{align*}
+-\int_{\partial U}\phi\cdot\diff[D\bar f]=\int_{\partial U}(Tf_1-Tf_2)\phi\cdot\nu\diff\mathcal{H}^{n-1},
+\end{align*}
+因此
+\begin{align*}
+\lVert D\bar f\rVert(\partial U)=\int_{\partial U}\lvert Tf_1-Tf_2\rvert\diff\mathcal{H}^{n-1}.
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-8; kind=proof; 补出 Gauss--Green 公式在两块区域上的应用与符号、由检验向量场恒等式推出测度等式、由 ∂U 上的变差得到全空间等式
+\begin{proof}
+以下补出上述论证所略去的环节。
+
+（1）边界项的来源。由\cref{section:ch05-03}中的 Gauss--Green 公式，对 $f_1\in\BV(U)$ 与 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 有% XREF internal
+\begin{align*}
+\int_U f_1\diver\phi\diff x=-\int_U\phi\cdot\diff[Df_1]+\int_{\partial U}Tf_1\,\phi\cdot\nu\diff\mathcal{H}^{n-1},
+\end{align*}
+其中 $\nu$ 为 $\partial U$ 关于 $U$ 的单位外法向量。对 $f_2\in\BV(\mathbb{R}^n\setminus\overline{U})$，区域 $\mathbb{R}^n\setminus\overline{U}$ 沿 $\partial U$ 的单位外法向量为 $-\nu$，故
+\begin{align*}
+\int_{\mathbb{R}^n\setminus\overline{U}}f_2\diver\phi\diff x=-\int_{\mathbb{R}^n\setminus\overline{U}}\phi\cdot\diff[Df_2]-\int_{\partial U}Tf_2\,\phi\cdot\nu\diff\mathcal{H}^{n-1}.
+\end{align*}
+两式相加即得证明第 1 步中的第二个等号。
+
+（2）由 $(\star)$ 到 $[D\bar f]$ 的分段值。设 $\phi\in C_c^1(U;\mathbb{R}^n)$，把 $\phi$ 在 $U$ 外取零值，则 $(\star)$ 中关于 $\mathbb{R}^n\setminus\overline{U}$ 的积分与关于 $\partial U$ 的积分都为零，于是
+\begin{align*}
+\int_U\phi\cdot\diff[D\bar f]=\int_U\phi\cdot\diff[Df_1]
+\end{align*}
+对一切 $\phi\in C_c^1(U;\mathbb{R}^n)$ 成立。取单位向量 $e\in\mathbb{R}^n$ 与 $\psi\in C_c(U)$，并取 $C_c^1(U)$ 中一致收敛到 $\psi$ 的序列 $\{\psi_k\}_{k=1}^{\infty}$；在恒等式中取 $\phi=\psi_ke$ 并令 $k\to\infty$，得
+\begin{align*}
+\int_U\psi\,e\cdot\diff([D\bar f]-[Df_1])=0.
+\end{align*}
+由 $\psi$ 的任意性，带号测度 $e\cdot([D\bar f]-[Df_1])$ 为零；取 $e=e_1,\cdots,e_n$ 得 $[D\bar f]=[Df_1]$ 于 $U$ 上。把 $\phi$ 取在 $C_c^1(\mathbb{R}^n\setminus\overline{U};\mathbb{R}^n)$ 中，作同样的论证得 $[D\bar f]=[Df_2]$ 于 $\mathbb{R}^n\setminus\overline{U}$ 上。
+
+（3）$\partial U$ 上的变差。由于 $\mathcal{L}^n(\partial U)=0$，向量值测度 $[D\bar f]$ 在 $\partial U$ 上的限制等于 $[D\bar f]$ 减去它在 $U$ 与 $\mathbb{R}^n\setminus\overline{U}$ 上的限制。记 $\lambda:=[D\bar f]\llcorner\partial U$ 与 $g:=(Tf_1-Tf_2)\nu$，并用 $\lambda^i$ 记 $\lambda$ 的第 $i$ 个分量。在 $(\star)$ 中取 $\phi=\zeta e_i$（$\zeta\in C_c^1(\mathbb{R}^n)$，$i=1,\cdots,n$）并代入第 (2) 步的两个等式，得
+\begin{align*}
+-\int_{\mathbb{R}^n}\zeta\diff\lambda^i
+&=\int_{\partial U}\zeta\,(Tf_1-Tf_2)\nu^i\diff\mathcal{H}^{n-1}\\
+&=\int_{\mathbb{R}^n}\zeta\,g^i\diff(\mathcal{H}^{n-1}\llcorner\partial U).
+\end{align*}
+由 $C_c^1(\mathbb{R}^n)$ 在 $C_c(\mathbb{R}^n)$ 中按一致范数的稠密性，上式对一切 $\zeta\in C_c(\mathbb{R}^n)$ 成立，故 $\lambda^i=-g^i\mathcal{H}^{n-1}\llcorner\partial U$；于是 $\lambda=-g\,\mathcal{H}^{n-1}\llcorner\partial U$，从而 $\lvert\lambda\rvert=\lvert g\rvert\mathcal{H}^{n-1}\llcorner\partial U$。由 $\lvert g\rvert=\lvert Tf_1-Tf_2\rvert$ 得
+\begin{align*}
+\lVert D\bar f\rVert(\partial U)=\lvert\lambda\rvert(\mathbb{R}^n)=\int_{\partial U}\lvert Tf_1-Tf_2\rvert\diff\mathcal{H}^{n-1}.
+\end{align*}
+
+（4）$\mathbb{R}^n$ 上的等式。集合 $U$、$\mathbb{R}^n\setminus\overline{U}$ 与 $\partial U$ 两两不交且并为 $\mathbb{R}^n$，故变差测度在它们上的值相加；由第 (2) 步 $[D\bar f]=[Df_1]$ 于 $U$ 上、$[D\bar f]=[Df_2]$ 于 $\mathbb{R}^n\setminus\overline{U}$ 上，以及第 (3) 步的边界值，得
+\begin{align*}
+\lVert D\bar f\rVert(\mathbb{R}^n)&=\lVert D\bar f\rVert(U)+\lVert D\bar f\rVert(\mathbb{R}^n\setminus\overline{U})+\lVert D\bar f\rVert(\partial U)\\
+&=\lVert Df_1\rVert(U)+\lVert Df_2\rVert(\mathbb{R}^n\setminus\overline{U})+\int_{\partial U}\lvert Tf_1-Tf_2\rvert\diff\mathcal{H}^{n-1}.
+\end{align*}
+\end{proof}
+
+\end{document}

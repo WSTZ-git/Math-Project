@@ -1,0 +1,815 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{容量}\label{section:ch04-07}
+
+下面引入\emph{容量}，用以研究 $\mathbb{R}^n$ 的某些「小」子集。后文将看到，容量恰好适合刻画 Sobolev 函数的精细性质。本节固定
+\begin{align*}
+1\leqslant p<n .
+\end{align*}
+
+\subsection{定义与初等性质}\label{subsection:ch04-07-1}
+
+\begin{definition}\label{definition:ch04-4-9}
+设 $n\geqslant2$ 为整数，$1\leqslant p<n$ 为实数，$p^*:=\frac{np}{n-p}$ 为 $p$ 的 Sobolev 共轭指数。记 $K^p$ 为满足下列三条的函数 $f:\mathbb{R}^n\to\mathbb{R}$ 的全体：$f\geqslant0$；$f\in L^{p^*}(\mathbb{R}^n)$；$f$ 的弱梯度 $Df$ 属于 $L^p(\mathbb{R}^n;\mathbb{R}^n)$。即
+\begin{align*}
+K^p:=\bigl\{f:\mathbb{R}^n\to\mathbb{R}\bigm|f\geqslant0,\ f\in L^{p^*}(\mathbb{R}^n),\ Df\in L^p(\mathbb{R}^n;\mathbb{R}^n)\bigr\}.
+\end{align*}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch04-4-9; kind=motivation; 说明 K^p 的引入动机：把能量有限且能在集合上取到 1 的容许函数汇成一类，容量即其 Dirichlet 能量的下确界
+\begin{remark}\phantomsection\label{remark:ch04-def-4-9-动机}
+$K^p$ 收集的是这样一类函数：$p$ 次 Dirichlet 能量 $\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x$ 有限，取值非负，并且可积性足以让上水平集 $\{f\geqslant1\}$ 承载一个给定的集合。\cref{definition:ch04-4-10}把 $A$ 的 $p$-容量定义为这类函数在约束 $A\subseteq\{f\geqslant1\}^{\circ}$ 下的能量下确界，因此 $K^p$ 的选取直接决定容量的数值：容许函数越多，下确界越小。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-9; kind=hypotheses; 逐条分析非负性、L^{p*} 可积性与 L^p 弱梯度三条要求，并说明代表元选取不影响容量的定义
+\begin{remark}\phantomsection\label{remark:ch04-def-4-9-条件}
+\begin{enumerate}[(i)]
+\item 非负性 $f\geqslant0$ 使上水平集 $\{f\geqslant1\}$ 成为「$f$ 把集合覆盖到高度 $1$」的直接刻画。若去掉非负性，$\{f\geqslant1\}$ 不再具有这种意义，而且下文关于 $\max$ 与 $\min$ 的封闭性（\cref{theorem:ch04-4-13}）也不再成立，而该封闭性是容量次可加性（\cref{theorem:ch04-4-14}）与\cref{theorem:ch04-4-15}(vii) 的唯一来源。% XREF internal
+\item $f\in L^{p^*}(\mathbb{R}^n)$ 与 $Df\in L^p(\mathbb{R}^n;\mathbb{R}^n)$ 两条合起来说明 $f$ 是 $\mathbb{R}^n$ 上的 $W^{1,p}$ 函数，$L^{p^*}$ 正是 $W^{1,p}$ 在 $1\leqslant p<n$ 时的自然目标空间：由\cref{theorem:ch04-4-12}(ii)，能量控制范数，% XREF internal
+\begin{align*}
+\lVert f\rVert_{L^{p^*}(\mathbb{R}^n)}\leqslant C_1\lVert Df\rVert_{L^p(\mathbb{R}^n)}.
+\end{align*}
+把 $L^{p^*}$ 换成 $L^p$ 会使 $K^p$ 变大、容量变小，并使上述估计失去来源。
+\item 指数范围 $1\leqslant p<n$：$p<n$ 使 $p^*=\frac{np}{n-p}$ 有限且大于 $p$；$p>1$ 使 $L^p$ 自反，\cref{theorem:ch04-4-15}(viii) 的证明据此抽取弱收敛的梯度子列。% XREF internal
+$p=n$ 与 $p>n$ 时 $p^*$ 无定义或为无穷，$K^p$ 的上述定义不再适用，本节的结论不覆盖这两种情形。
+\item 定义不要求 $f$ 连续，也不要求 $f$ 具有紧支集：只要求弱梯度存在且 $p$ 次可和。紧支集光滑函数作为另一类容许函数出现在\cref{remark:ch04-def-4-10-性质}的 (ii) 中。% XREF internal
+\item 上水平集 $\{f\geqslant1\}$ 按所选代表元逐点取定。把 $f$ 在一个 $\mathcal{L}^n$ 零测集上改大不改变 $\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x$，只使约束 $A\subseteq\{f\geqslant1\}^{\circ}$ 变松，故\cref{definition:ch04-4-10}中的下确界与代表元的选取无关，$\Cap_p(A)$ 只依赖于 $f$ 的等价类。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{definition}\label{definition:ch04-4-10}
+设 $n\geqslant2$，$1\leqslant p<n$，$p^*=\frac{np}{n-p}$，$K^p$ 如\cref{definition:ch04-4-9}所定义，% XREF internal
+$A\subseteq\mathbb{R}^n$ 为任意子集，不要求 $A$ 为 Borel 集或 $\mathcal{L}^n$-可测集。令
+\begin{align*}
+\Cap_p(A):=\inf\Bigl\{\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x\Bigm|f\in K^p,\ A\subseteq\{f\geqslant1\}^{\circ}\Bigr\},
+\end{align*}
+其中 $\{f\geqslant1\}^{\circ}$ 表示 $\mathbb{R}^n$ 中集合 $\{f\geqslant1\}$ 的内部。称 $\Cap_p(A)$ 为 $A$ 的 $p$-容量。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch04-4-10; kind=motivation; 说明容量的意义：以 Dirichlet 能量的下确界度量集合的「小」，并解释为何它适合刻画 Sobolev 函数的例外集
+\begin{remark}\phantomsection\label{remark:ch04-def-4-10-动机}
+容量把一个集合 $A$ 的大小换算成一个能量：若不存在能量有限的容许函数使 $A$ 落在 $\{f\geqslant1\}^{\circ}$ 之内，则 $\Cap_p(A)=+\infty$；若对每个 $\varepsilon>0$ 都能找到能量小于 $\varepsilon$ 的容许函数，则 $\Cap_p(A)=0$。因此「$\Cap_p(A)=0$」是一种比「$\mathcal{L}^n(A)=0$」更强的「小」：它要求把 $A$ 抬到高度 $1$ 所需的 $p$ 次能量可以任意小。函数 $f\equiv0$ 属于 $K^p$，故 $A=\varnothing$ 时 $\Cap_p(\varnothing)=0$；对非空 $A$，取一个在 $A$ 的某点附近不小于 $1$ 的紧支集光滑函数即知约束集非空，因此上式中的下确界总是对非空集合取的，$\Cap_p(A)\in[0,+\infty]$。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-10; kind=hypotheses; 逐条分析任意子集、内部约束与 p 的作用，并说明约束为何写成内部
+\begin{remark}\phantomsection\label{remark:ch04-def-4-10-条件}
+\begin{enumerate}[(i)]
+\item $A$ 取任意子集而不要求可测：容量的定义只用到「$A$ 落在某个开集之内」这一几何事实，与 $A$ 的可测性无关。这一取舍使 $\Cap_p$ 成为外测度型的量（\cref{theorem:ch04-4-14}），也使它可以从外部用开集逼近（\cref{theorem:ch04-4-15}(i)）。% XREF internal
+\item 约束写成 $A\subseteq\{f\geqslant1\}^{\circ}$ 而非 $A\subseteq\{f\geqslant1\}$：要求 $A$ 落在开集 $\{f\geqslant1\}^{\circ}$ 之内，等价于要求 $f$ 在 $A$ 的某个邻域上不小于 $1$。这样容许函数在 $A$ 附近留有正余量，磨光与截断不会破坏约束；而条件 $f\geqslant\chi_K$（$f\in C_c^{\infty}$）经常数放大 $(1+\delta)$ 后正给出「$f$ 在 $K$ 的某邻域上大于 $1$」，见\cref{remark:ch04-def-4-10-性质}的 (ii)。% XREF internal
+\item 被积函数取 $\lvert Df\rvert^p$ 而非 $\lvert Df\rvert$：指数 $p$ 与 $K^p$ 中的可积指数一致，使容量在伸缩下有齐次性 $\Cap_p(\lambda A)=\lambda^{n-p}\Cap_p(A)$（\cref{theorem:ch04-4-15}(ii)），% XREF internal
+并使容量与 $p$ 次能量泛函的变分问题相容。
+\item 指数范围与 $K^p$ 相同：$1\leqslant p<n$。$p\to n$ 时 $n-p\to0$，容量的齐次次数趋于 $0$，与 Hausdorff 测度 $\mathcal{H}^{n-p}$ 的比较（\cref{theorem:ch04-4-15}(v)、\cref{theorem:ch04-4-16}）也随之退化。% XREF internal
+\item 下确界取在 $[0,+\infty]$ 中，且不要求达到：即使 $A$ 为紧集，一般也不存在使下确界取到的容许函数，因此下文一律以下确界而不是极小元作论证。
+\end{enumerate}
+\end{remark}
+
+
+\begin{remark}\phantomsection\label{remark:ch04-def-4-10-性质}
+\begin{enumerate}[(i)]
+\item 须特别注意，定义要求 $A$ 落在区域 $\{f\geqslant1\}^{\circ}$ 之内，即集合 $\{f\geqslant1\}$ 的内部。
+\item 由正则化可得，对每个紧集 $K\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\Cap_p(K)=\inf\Bigl\{\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x\Bigm|f\in C_c^{\infty}(\mathbb{R}^n),\ f\geqslant\chi_K\Bigr\}.
+\end{align*}
+\item 由定义直接得到，$A\subseteq B$ 蕴含
+\begin{align*}
+\Cap_p(A)\leqslant\Cap_p(B).
+\end{align*}
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch04-def-4-10-性质; kind=proof; 补出 (ii) 中「由正则化可得」的完整论证：一个方向用 (1+δ)f 把约束化到邻域上，另一个方向用截断与磨光构造紧支集光滑容许函数
+\begin{proof}
+记 (ii) 右端的下确界为 $C(K)$。
+
+（1）$\Cap_p(K)\leqslant C(K)$。设 $f\in C_c^{\infty}(\mathbb{R}^n)$ 满足 $f\geqslant\chi_K$，$\delta>0$。由 $f$ 连续与 $f\geqslant1$ 于 $K$ 上，集合 $O_\delta:=\{f>1/(1+\delta)\}$ 是含 $K$ 的开集。令 $f_\delta:=(1+\delta)f$。则 $f_\delta\in C_c^{\infty}(\mathbb{R}^n)\subseteq K^p$，且于 $O_\delta$ 上 $f_\delta>1$，故 $K\subseteq O_\delta\subseteq\{f_\delta\geqslant1\}^{\circ}$。于是
+\begin{align*}
+\Cap_p(K)\leqslant\int_{\mathbb{R}^n}\lvert Df_\delta\rvert^p\diff x=(1+\delta)^p\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x .
+\end{align*}
+先令 $\delta\to0$，再对满足 $f\geqslant\chi_K$ 的 $f$ 取下确界，得 $\Cap_p(K)\leqslant C(K)$。
+
+（2）$C(K)\leqslant\Cap_p(K)$。固定 $\varepsilon>0$，取 $f\in K^p$ 使 $K\subseteq\{f\geqslant1\}^{\circ}$ 且
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x\leqslant\Cap_p(K)+\varepsilon .
+\end{align*}
+记 $U:=\{f\geqslant1\}^{\circ}$。则 $U$ 为开集、$K\subseteq U$，且按代表元逐点有 $f\geqslant1$ 于 $U$ 上。取 $\zeta\in C_c^{\infty}(\mathbb{R}^n)$ 满足 $0\leqslant\zeta\leqslant1$、$\zeta\equiv1$ 于 $B(1)$ 上、$\spt\zeta\subseteq B(2)$、$\lvert D\zeta\rvert\leqslant2$，令 $\zeta_k(x):=\zeta(x/k)$、$f_k:=f\zeta_k$。如\cref{theorem:ch04-4-12}的证明所示，取 $k$ 充分大可使% XREF internal
+\begin{align*}
+f_k\in W^{1,p}(\mathbb{R}^n),\qquad \spt f_k\subseteq B(2k),\qquad \int_{\mathbb{R}^n}\lvert Df_k\rvert^p\diff x\leqslant\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x+\varepsilon ,
+\end{align*}
+且 $f_k=f$ 于 $B(k)$ 上，从而 $f_k\geqslant1$ 于开集 $O:=U\cap B^{0}(k)$ 上，而 $K\subseteq O$。
+
+（3）令 $\rho:=\operatorname{dist}(K,\mathbb{R}^n-O)$。由 $K$ 紧、$O$ 开与 $K\subseteq O$ 得 $\rho>0$。取标准磨光核 $\eta$ 与 $0<\varepsilon'<\rho$，令 $g:=\eta_{\varepsilon'}*f_k$。由于 $f_k$ 具有紧支集，$g\in C_c^{\infty}(\mathbb{R}^n)$。对 $x\in K$，平均值只涉及 $y\in B(x,\varepsilon')\subseteq O$，而在 $O$ 上 $f_k\geqslant1$，故
+\begin{align*}
+g(x)=\int_{B(x,\varepsilon')}\eta_{\varepsilon'}(x-y)f_k(y)\diff y\geqslant\int_{B(x,\varepsilon')}\eta_{\varepsilon'}(x-y)\diff y=1 ,
+\end{align*}
+即 $g\geqslant\chi_K$。另一方面，磨光在 $W^{1,p}(\mathbb{R}^n)$ 中收敛给出 $\lVert Dg\rVert_{L^p}\to\lVert Df_k\rVert_{L^p}$（$\varepsilon'\to0$），故取 $\varepsilon'$ 充分小可使 $\int_{\mathbb{R}^n}\lvert Dg\rvert^p\diff x\leqslant\int_{\mathbb{R}^n}\lvert Df_k\rvert^p\diff x+\varepsilon$。合并以上估计得
+\begin{align*}
+C(K)\leqslant\int_{\mathbb{R}^n}\lvert Dg\rvert^p\diff x\leqslant\Cap_p(K)+3\varepsilon .
+\end{align*}
+令 $\varepsilon\to0$ 即得 $C(K)\leqslant\Cap_p(K)$。
+\end{proof}
+
+\begin{theorem}[$K^p$ 中的逼近]\label{theorem:ch04-4-12}
+设 $n\geqslant2$ 为整数，$1\leqslant p<n$，$p^*=\frac{np}{n-p}$，$K^p$ 如\cref{definition:ch04-4-9}所定义。% XREF internal
+\begin{enumerate}[(i)]
+\item 若 $f\in K^p$，则存在序列 $\{f_k\}_{k=1}^{\infty}\subseteq W^{1,p}(\mathbb{R}^n)$，使得
+\begin{align*}
+\lVert f-f_k\rVert_{L^{p^*}(\mathbb{R}^n)}\to0
+\end{align*}
+与
+\begin{align*}
+\lVert Df-Df_k\rVert_{L^p(\mathbb{R}^n)}\to0
+\end{align*}
+当 $k\to\infty$ 时成立。
+\item 若 $f\in K^p$，则
+\begin{align*}
+\lVert f\rVert_{L^{p^*}(\mathbb{R}^n)}\leqslant C_1\lVert Df\rVert_{L^p(\mathbb{R}^n)},
+\end{align*}
+其中 $C_1$ 为 Gagliardo--Nirenberg--Sobolev 不等式（\cref{theorem:ch04-4-8}）中的常数。% XREF p=172 "where C_1 is the constant from the Gagliardo–Nirenberg–Sobolev inequality"
+\end{enumerate}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch04-4-12; kind=motivation; 说明该定理的作用：用紧支集截断把 K^p 中的函数在两种范数下逼近，从而把 GNS 不等式从 W^{1,p} 搬到 K^p
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-12-动机}
+$K^p$ 的定义只要求 $f\in L^{p^*}$ 与 $Df\in L^p$，并未要求 $f$ 具有紧支集。本定理的 (i) 说明 $K^p$ 中的函数可以用截断后的 $f\zeta_k$ 同时在 $L^{p^*}$ 与梯度的 $L^p$ 两种意义下逼近，且逼近过程不增加能量；这是把只对 $W^{1,p}$ 函数成立的 GNS 不等式迁移到 $K^p$ 上的桥梁，迁移的结果就是 (ii)。由于\cref{definition:ch04-4-10}的约束是 $A\subseteq\{f\geqslant1\}^{\circ}$，而 (ii) 用梯度范数控制函数本身，容量才可以用梯度能量从上、从下估计；这是\cref{theorem:ch04-4-15}(vi) 与\cref{theorem:ch04-4-17}中一切估计的出发点。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-12; kind=hypotheses; 逐条分析 1<=p<n、f 在 K^p 中的两条可积性要求与常数 C_1 的依赖
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-12-条件}
+\begin{enumerate}[(i)]
+\item $1\leqslant p<n$ 保证 $p^*=\frac{np}{n-p}$ 有限且 $p^*>p$，从而\cref{theorem:ch04-4-8}可用；若 $p\geqslant n$，(ii) 中的估计没有对应的可积指数。% XREF internal
+\item (i) 中的逼近序列取为 $f_k=f\zeta_k$：先用伸缩后的紧支集截断函数乘 $f$。$f$ 在 $K^p$ 中的非负性不参与本定理的估计，但保证 $f_k\geqslant0$、从而 $f_k\in K^p$，这正是 (ii) 可以由 (i) 与 GNS 不等式衔接的原因：每个 $f_k$ 既是 $W^{1,p}$ 函数又是 $K^p$ 的元素。
+\item $f\in L^{p^*}(\mathbb{R}^n)$ 与 $Df\in L^p(\mathbb{R}^n;\mathbb{R}^n)$ 给出两条尾部积分的收敛性：
+\begin{align*}
+\int_{\mathbb{R}^n-B(k)}\lvert f\rvert^{p^*}\diff y\to0,\qquad\int_{\mathbb{R}^n-B(k)}\lvert Df\rvert^p\diff y\to0\qquad(k\to\infty).
+\end{align*}
+这两条收敛性即 (i) 的全部内容；若 $f$ 只在局部可积，两个极限都不必为零。
+\item (ii) 中的常数 $C_1$ 只依赖于 $p$ 与 $n$，与 $f$ 无关。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+取 $\zeta\in C_c^{1}(\mathbb{R}^n)$ 使得
+\begin{align*}
+0\leqslant\zeta\leqslant1,\qquad\zeta\equiv1\ \text{于}\ B(1)\ \text{上},\qquad\spt\zeta\subseteq B(2),\qquad\lvert D\zeta\rvert\leqslant2 .
+\end{align*}
+对每个 $k=1,2,\cdots$，令 $\zeta_k(x):=\zeta\bigl(\frac{x}{k}\bigr)$。
+
+给定 $f\in K^p$，记 $f_k:=f\zeta_k$。则 $f_k\in W^{1,p}(\mathbb{R}^n)$，并且
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert f-f_k\rvert^{p^*}\diff y\leqslant\int_{\mathbb{R}^n-B(k)}\lvert f\rvert^{p^*}\diff y ,
+\end{align*}
+以及
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df-Df_k\rvert^p\diff y
+&\leqslant2^{p-1}\Bigl\{\int_{\mathbb{R}^n}\lvert(1-\zeta_k)Df\rvert^p+\lvert fD\zeta_k\rvert^p\diff y\Bigr\}\\
+&\leqslant2^{p-1}\Bigl\{\int_{\mathbb{R}^n-B(k)}\lvert Df\rvert^p\diff y+\frac{2^p}{k^p}\int_{B(2k)-B(k)}\lvert f\rvert^p\diff y\Bigr\}\\
+&\leqslant C\int_{\mathbb{R}^n-B(k)}\lvert Df\rvert^p\diff y+C\Bigl(\int_{\mathbb{R}^n-B(k)}\lvert f\rvert^{p^*}\diff y\Bigr)^{1-\frac{p}{n}} .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-12; kind=proof; 补出 f_k 属于 W^{1,p} 与第一个不等式的依据：乘积法则、Hölder 不等式与 ζ_k 在 B(k) 上恒等于 1
+$f_k\in W^{1,p}(\mathbb{R}^n)$ 的依据如下。由乘积法则 $Df_k=\zeta_kDf+fD\zeta_k$；$\zeta_k$ 有界且 $\spt\zeta_k\subseteq B(2k)$，故 $f_k\in L^p(\mathbb{R}^n)$（在 $B(2k)$ 上用 Hölder 不等式把 $L^{p^*}$ 可积性降为 $L^p$ 可积性，在 $B(2k)$ 之外 $f_k=0$），而 $Df_k$ 的两个加项分别属于 $L^p(\mathbb{R}^n;\mathbb{R}^n)$。第一个不等式的依据是 $\zeta_k\equiv1$ 于 $B(k)$ 上：于是 $f_k=f$ 于 $B(k)$ 上，且 $0\leqslant\zeta_k\leqslant1$ 给出 $\lvert f-f_k\rvert=(1-\zeta_k)\lvert f\rvert\leqslant\lvert f\rvert$，故左端不超过 $\int_{\mathbb{R}^n-B(k)}\lvert f\rvert^{p^*}\diff y$。
+
+% SUPPLEMENT: parent=theorem:ch04-4-12; kind=proof; 补出第二个不等式链的三处推导：二项式不等式、|Dζ_k|<=2/k 与支集位置、以及环域上的 Hölder 估计与幂次计算
+第二个不等式链的三处推导如下。其一，由 $Df-Df_k=(1-\zeta_k)Df-fD\zeta_k$ 与初等不等式 $\lvert a+b\rvert^p\leqslant2^{p-1}(\lvert a\rvert^p+\lvert b\rvert^p)$ 得第一个不等号。其二，$1-\zeta_k$ 于 $B(k)$ 上为零且 $\lvert1-\zeta_k\rvert\leqslant1$，而 $\lvert D\zeta_k(x)\rvert=\frac1k\lvert D\zeta(x/k)\rvert\leqslant\frac2k$、$\spt D\zeta_k\subseteq B(2k)-B(k)$，得第二个不等号。其三，由 $p<p^*$ 与 Hölder 不等式，
+\begin{align*}
+\int_{B(2k)-B(k)}\lvert f\rvert^p\diff y\leqslant\mathcal{L}^n\bigl(B(2k)-B(k)\bigr)^{1-\frac{p}{p^*}}\Bigl(\int_{B(2k)-B(k)}\lvert f\rvert^{p^*}\diff y\Bigr)^{\frac{p}{p^*}},
+\end{align*}
+其中 $1-\frac{p}{p^*}=1-\frac{n-p}{n}=\frac pn$，而 $\mathcal{L}^n(B(2k)-B(k))\leqslant\mathcal{L}^n(B(2k))=Ck^n$，故
+\begin{align*}
+\frac{2^p}{k^p}\int_{B(2k)-B(k)}\lvert f\rvert^p\diff y\leqslant C\Bigl(\int_{\mathbb{R}^n-B(k)}\lvert f\rvert^{p^*}\diff y\Bigr)^{\frac{p}{p^*}};
+\end{align*}
+由 $\frac{p}{p^*}=1-\frac pn$，这正是第三个不等号。
+
+% SUPPLEMENT: parent=theorem:ch04-4-12; kind=proof; 补出右端两项随 k 趋于零的依据，从而完成 (i)
+右端两项当 $k\to\infty$ 时都趋于零：$Df\in L^p(\mathbb{R}^n;\mathbb{R}^n)$ 与 $f\in L^{p^*}(\mathbb{R}^n)$ 使相应的尾部积分趋于零，而 $1-\frac pn>0$ 使第二个加项随尾部积分一同趋于零。
+
+由此断言 (i) 成立。断言 (ii) 由 (i) 与 Gagliardo--Nirenberg--Sobolev 不等式（\cref{theorem:ch04-4-8}）推出。% XREF p=173 "This proves assertion (i). Assertion (ii) follows from (i) and the Gagliardo–Nirenberg–Sobolev inequality (Theorem 4.8)."
+
+% SUPPLEMENT: parent=theorem:ch04-4-12; kind=proof; 补出 (ii) 由 (i) 与 GNS 不等式推出的极限过程
+断言 (ii) 的推导如下。由 (i)，$f_k\to f$ 于 $L^{p^*}(\mathbb{R}^n)$ 中、$Df_k\to Df$ 于 $L^p(\mathbb{R}^n;\mathbb{R}^n)$ 中，故 $\lVert f_k\rVert_{L^{p^*}}\to\lVert f\rVert_{L^{p^*}}$ 与 $\lVert Df_k\rVert_{L^p}\to\lVert Df\rVert_{L^p}$。对每个 $k$，把\cref{theorem:ch04-4-8}用于 $f_k\in W^{1,p}(\mathbb{R}^n)$ 得 $\lVert f_k\rVert_{L^{p^*}}\leqslant C_1\lVert Df_k\rVert_{L^p}$；% XREF internal
+在此式两端令 $k\to\infty$ 即得 (ii)。
+\end{proof}
+
+\begin{theorem}[$K^p$ 的性质]\label{theorem:ch04-4-13}
+设 $n\geqslant2$ 为整数，$1\leqslant p<n$，$p^*=\frac{np}{n-p}$，$K^p$ 如\cref{definition:ch04-4-9}所定义。% XREF internal
+\begin{enumerate}[(i)]
+\item 设 $f,g\in K^p$。则 $h:=\max\{f,g\}\in K^p$，且
+\begin{align*}
+Dh=
+\begin{cases}
+Df & \mathcal{L}^n\text{-a.e. 于 }\{f\geqslant g\}\ \text{上},\\[2pt]
+Dg & \mathcal{L}^n\text{-a.e. 于 }\{f\leqslant g\}\ \text{上}.
+\end{cases}
+\end{align*}
+对 $\min\{f,g\}$ 有相应的断言。
+\item 设 $f\in K^p$ 且 $t\geqslant0$。则 $h:=\min\{f,t\}\in K^p$。
+\item 设 $\{f_k\}_{k=1}^{\infty}\subseteq K^p$，定义
+\begin{align*}
+g:=\sup_{1\leqslant k<\infty}f_k,\qquad h:=\sup_{1\leqslant k<\infty}\lvert Df_k\rvert .
+\end{align*}
+若 $h\in L^p(\mathbb{R}^n)$，则 $g\in K^p$ 且
+\begin{align*}
+\lvert Dg\rvert\leqslant h\qquad\mathcal{L}^n\text{-a.e.}
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch04-4-13; kind=motivation; 说明 K^p 在 max/min 运算下的封闭性是容量的次可加性与强次可加性的唯一来源
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-13-动机}
+容量要对可数并作估计（\cref{theorem:ch04-4-14}），还要满足\cref{theorem:ch04-4-15}(vii) 的强次可加性，这两件事都要求能从两个容许函数造出覆盖并集、交集的容许函数。$\max$ 与 $\min$ 恰好承担这个任务：若 $f$ 覆盖 $A$、$g$ 覆盖 $B$，则 $\max\{f,g\}$ 覆盖 $A\cup B$，$\min\{f,g\}$ 覆盖 $A\cap B$，而 (i) 中关于弱梯度的公式说明这一替换不增加能量，反而把两个能量精确相加。断言 (iii) 把这个封闭性推广到可数上确界，是可数次可加性（\cref{theorem:ch04-4-14}）与单调收敛性（\cref{theorem:ch04-4-15}(viii)）的技术核心。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-13; kind=hypotheses; 逐条分析非负性、max/min 的弱梯度公式、t>=0 与 h in L^p 的作用
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-13-条件}
+\begin{enumerate}[(i)]
+\item $f,g\in K^p$ 提供 $f,g\geqslant0$、$f,g\in L^{p^*}$ 与 $Df,Dg\in L^p$ 三组信息。非负性使极大值与极小值仍非负，从而 $\max\{f,g\},\min\{f,g\}\in K^p$ 的非负性部分成立；$L^{p^*}$ 可积性由 $0\leqslant\min\{f,g\}\leqslant\max\{f,g\}\leqslant f+g$ 得到。
+\item (i) 中的弱梯度公式在集合 $\{f=g\}$ 上两种取值都成立，因此只需在 $\{f>g\}$ 与 $\{f<g\}$ 上分别验证；该公式的依据是\cref{theorem:ch04-4-4}(iii) 中 $u^+$ 的弱梯度公式。% XREF internal
+\item (ii) 中 $t\geqslant0$ 使 $\min\{f,t\}\geqslant0$，从而落在 $K^p$ 的非负约束之内；若 $t<0$，则 $\min\{f,t\}\equiv t<0$，不再属于 $K^p$。$\min$ 在\cref{theorem:ch04-4-15}的证明中用于把交集 $A\cap B$ 与 $A_{m-1}$ 的约束化为单个容许函数。% XREF internal
+\item (iii) 中 $h:=\sup_k\lvert Df_k\rvert$ 属于 $L^p$ 是本质假设：它保证上确界 $g$ 的弱梯度存在且满足 $\lvert Dg\rvert\leqslant h$。若只有每个 $\lvert Df_k\rvert\in L^p$ 而无一致可和的上界，能量可能沿序列逃逸，$g$ 未必属于 $K^p$。
+\item (iii) 中的 $g$ 是非负函数的单调上升上确界，故 $g=\lim_l g_l$ 逐点存在（取值于 $[0,+\infty]$）；$g\in L^{p^*}$ 由单调收敛定理与 $g_l$ 的 $L^{p^*}$ 范数的一致有界性得到。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）为证 (i)，注意
+\begin{align*}
+h=\max\{f,g\}=f+(g-f)^+ .
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch04-4-13; kind=proof; 补出由定理 4.4 得到 Dh 公式的推导：h=f+(g-f)^+，对 u=g-f 用 u^+ 的弱梯度公式
+记 $u:=g-f\in W^{1,p}(\mathbb{R}^n)$，则 $(g-f)^+=u^+$，且 $h=f+u^+$。由\cref{theorem:ch04-4-4}(iii)，% XREF internal
+\begin{align*}
+Du^+=
+\begin{cases}
+Du & \mathcal{L}^n\text{-a.e. 于 }\{u>0\},\\
+0 & \mathcal{L}^n\text{-a.e. 于 }\{u\leqslant0\},
+\end{cases}
+\end{align*}
+故 $Dh=Df+Du=Dg$ $\mathcal{L}^n$-a.e. 于 $\{g>f\}$ 上，$Dh=Df$ $\mathcal{L}^n$-a.e. 于 $\{g\leqslant f\}$ 上；这正是所断言的公式：$\{g>f\}$ 与 $\{g\leqslant f\}$ 覆盖 $\mathbb{R}^n$，而在 $\{f=g\}$ 上 $D(g-f)=0$ $\mathcal{L}^n$-a.e.（\cref{theorem:ch04-4-4}(iv)），故两种取值一致。% XREF internal
+于是由\cref{theorem:ch04-4-4}得% XREF p=173 "Hence Theorem 4.4 implies"
+\begin{align*}
+Dh=
+\begin{cases}
+Df & \mathcal{L}^n\text{-a.e. 于 }\{f\geqslant g\}\ \text{上},\\[2pt]
+Dg & \mathcal{L}^n\text{-a.e. 于 }\{f\leqslant g\}\ \text{上}.
+\end{cases}
+\end{align*}
+从而 $Dh\in L^p$。由于 $0\leqslant h\leqslant f+g$，又有 $h\in L^{p^*}$。
+
+（2）(ii) 的证明与此相同；只需注意
+\begin{align*}
+0\leqslant h=\min\{f,t\}\leqslant f,
+\end{align*}
+从而 $h\in L^{p^*}$。
+
+% SUPPLEMENT: parent=theorem:ch04-4-13; kind=proof; 补出 (ii) 的完整推导：min{f,t}=f-(f-t)^+ 与 |Dmin{f,t}|<=|Df| 的弱梯度依据
+(ii) 的弱梯度部分如下。设 $t\geqslant0$ 并记 $v:=f-t$，则 $\min\{f,t\}=f-v^+\in W^{1,p}(\mathbb{R}^n)$，且由\cref{theorem:ch04-4-4}(iii)，% XREF internal
+\begin{align*}
+Dv^+=
+\begin{cases}
+Df & \mathcal{L}^n\text{-a.e. 于 }\{f>t\},\\
+0 & \mathcal{L}^n\text{-a.e. 于 }\{f\leqslant t\},
+\end{cases}
+\end{align*}
+故 $Dh=0$ $\mathcal{L}^n$-a.e. 于 $\{f>t\}$ 上、$Dh=Df$ $\mathcal{L}^n$-a.e. 于 $\{f\leqslant t\}$ 上，特别地 $\lvert Dh\rvert\leqslant\lvert Df\rvert$ $\mathcal{L}^n$-a.e.，从而 $Dh\in L^p(\mathbb{R}^n;\mathbb{R}^n)$。
+
+（3）为证 (iii)，置
+\begin{align*}
+g_l:=\sup_{1\leqslant k\leqslant l}f_k .
+\end{align*}
+利用断言 (i) 可知 $g_l\in K^p$，且
+\begin{align*}
+\lvert Dg_l\rvert\leqslant\sup_{1\leqslant k\leqslant l}\lvert Df_k\rvert\leqslant h .
+\end{align*}
+由于 $g_l\to g$ 单调上升，可用\cref{theorem:ch04-4-12}计算得% XREF p=173 "Since g_l → g monotonically, we can use Theorem 4.12 to calculate that"
+\begin{align*}
+\lVert g\rVert_{L^{p^*}(\mathbb{R}^n)}&=\lim_{l\to\infty}\lVert g_l\rVert_{L^{p^*}(\mathbb{R}^n)}\\
+&\leqslant C_1\liminf_{l\to\infty}\lVert Dg_l\rVert_{L^p(\mathbb{R}^n)}\\
+&\leqslant C_1\lVert h\rVert_{L^p(\mathbb{R}^n)} .
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch04-4-13; kind=proof; 补出上式的三个依据：g_l 属于 K^p 的归纳、单调收敛定理给出范数极限、以及定理 4.12(ii) 给出中间不等式
+上式三处的依据如下。其一，$g_l=\max\{g_{l-1},f_l\}$ 且 $g_0:=0\in K^p$，故由 (i) 归纳得 $g_l\in K^p$；又 $\lvert Dg_l\rvert\leqslant\sup_{k\leqslant l}\lvert Df_k\rvert\leqslant h$ 由 (i) 中的弱梯度公式与归纳得到。其二，$0\leqslant g_1\leqslant g_2\leqslant\cdots$ 且 $g_l\to g$ 逐点，故由单调收敛定理 $\lVert g_l\rVert_{L^{p^*}}\uparrow\lVert g\rVert_{L^{p^*}}$，第一个等号成立。其三，对每个 $l$ 把\cref{theorem:ch04-4-12}(ii) 用于 $g_l\in K^p$ 得 $\lVert g_l\rVert_{L^{p^*}}\leqslant C_1\lVert Dg_l\rVert_{L^p}$，% XREF internal
+再取下极限即得第二个不等号；最后一个不等号由 $\lvert Dg_l\rvert\leqslant h$ 与范数的单调性得到。
+
+于是 $g\in L^{p^*}$。对每个 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$，
+\begin{align*}
+\int_{\mathbb{R}^n}g\diver\phi\diff y&=\lim_{l\to\infty}\int_{\mathbb{R}^n}g_l\diver\phi\diff y\\
+&=-\lim_{l\to\infty}\int_{\mathbb{R}^n}\phi\cdot Dg_l\diff y\\
+&\leqslant\int_{\mathbb{R}^n}\lvert\phi\rvert h\diff y .
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch04-4-13; kind=proof; 补出上式三行的依据：g_l 在 L^{p*} 中的强收敛、弱梯度的定义式、以及由 |Dg_l|<=h 与列紧性得到的绝对值估计
+上式的依据如下。第一行：$\diver\phi\in C_c(\mathbb{R}^n)\subseteq L^{q}(\mathbb{R}^n)$ 对一切 $q\geqslant1$ 成立，而 $g_l\to g$ 于 $L^{p^*}(\mathbb{R}^n)$ 中（由 $\lvert g-g_l\rvert\leqslant g\in L^{p^*}$ 与控制收敛定理），故积分收敛。第二行：每个 $g_l\in W^{1,p}(\mathbb{R}^n)$ 的弱梯度定义给出 $\int g_l\diver\phi=-\int\phi\cdot Dg_l$。第三行：$\lvert\phi\cdot Dg_l\rvert\leqslant\lvert\phi\rvert h$ 且 $\lvert\phi\rvert h\in L^1(\mathbb{R}^n)$，故 $-\int\phi\cdot Dg_l\leqslant\int\lvert\phi\rvert h$；同样的估计用于 $-\phi$ 也成立。
+
+由此，由
+\begin{align*}
+L(\phi):=\int_{\mathbb{R}^n}g\diver\phi\diff y\qquad\bigl(\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)\bigr)
+\end{align*}
+定义的线性泛函 $L$ 有唯一延拓 $\bar L$ 至 $C_c(\mathbb{R}^n;\mathbb{R}^n)$，使得
+\begin{align*}
+\bar L(\phi)\leqslant\int_{\mathbb{R}^n}\lvert\phi\rvert h\diff y
+\end{align*}
+对 $\phi\in C_c(\mathbb{R}^n;\mathbb{R}^n)$ 成立。应用 Riesz 表示定理（\cref{theorem:ch01-1-38}），并注意其证明中构造的测度 $\mu$ 满足% XREF p=174 "We apply Riesz Representation Theorem 1.38 and note the measure μ constructed in its proof satisfies"
+\begin{align*}
+\mu(A)\leqslant\int_A h\diff y
+\end{align*}
+对每个 Lebesgue 可测集 $A\subseteq\mathbb{R}^n$ 成立。由此
+\begin{align*}
+\bar L(\phi)=\int_{\mathbb{R}^n}\phi\cdot k\diff y
+\end{align*}
+其中 $k\in L^p(\mathbb{R}^n;\mathbb{R}^n)$ 且 $\lvert k\rvert\leqslant h$ $\mathcal{L}^n$-a.e.。于是 $g\in K^p$ 且 $\lvert Dg\rvert=\lvert k\rvert\leqslant h$ $\mathcal{L}^n$-a.e.。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-13; kind=proof; 补出第三段的延拓与表示论证：C_c^1 在 C_c 中的稠密性给出唯一延拓，Riesz 表示定理给出测度与密度 k，并由测度上界得到 |k|<=h
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-13-延拓}
+第三段中延拓与表示两步的细节如下。其一，$C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 在 $C_c(\mathbb{R}^n;\mathbb{R}^n)$ 中按上确界范数稠密，而 $\phi\mapsto\int\lvert\phi\rvert h\diff y$ 是 $C_c(\mathbb{R}^n;\mathbb{R}^n)$ 上的半范数，且 $L$ 关于它有界，故 $L$ 唯一地延拓为关于该半范数连续的线性泛函 $\bar L$；对 $\phi$ 与 $-\phi$ 分别用第三行的估计即得 $\lvert\bar L(\phi)\rvert\leqslant\int\lvert\phi\rvert h\diff y$。其二，Riesz 表示定理把 $C_c(\mathbb{R}^n)$ 上的正线性泛函表示为一个 Radon 测度的积分；把 $\bar L$ 分解为正部与负部并对正部应用该定理，所得 Radon 测度 $\mu$ 满足 $\mu(A)\leqslant\int_A h\diff y$（因为在 $\mu$ 的构造中每个紧集上的值由满足 $\lvert\phi\rvert\leqslant1$ 的试验函数的泛函值上确界给出，而该值不超过 $\int\lvert\phi\rvert h$）。其三，由 $\mu(A)\leqslant\int_A h\diff y$ 得 $\mu\ll\mathcal{L}^n$，故 Radon--Nikodym 定理给出密度 $k\in L^1_{\mathrm{loc}}(\mathbb{R}^n;\mathbb{R}^n)$ 使 $\bar L(\phi)=\int\phi\cdot k\diff y$，且 $\lvert k\rvert\leqslant h$ $\mathcal{L}^n$-a.e.，于是 $\lVert k\rVert_{L^p}\leqslant\lVert h\rVert_{L^p}<\infty$。其四，$g\in L^{p^*}$、$k\in L^p$ 与对所有 $\phi\in C_c^1$ 的等式 $\int g\diver\phi=-\int\phi\cdot k$ 合起来说明 $k$ 是 $g$ 的弱梯度，即 $Dg=k$，从而 $g\in K^p$。
+\end{remark}
+
+\begin{theorem}[容量是测度]\label{theorem:ch04-4-14}
+设 $n\geqslant2$ 为整数，$1\leqslant p<n$，$\Cap_p$ 如\cref{definition:ch04-4-10}所定义。% XREF internal
+则 $\Cap_p:\mathcal{P}(\mathbb{R}^n)\to[0,+\infty]$ 是 $\mathbb{R}^n$ 上的测度（\cref{definition:ch01-1-1}），即满足：% XREF internal
+\begin{enumerate}[(i)]
+\item $\Cap_p(\varnothing)=0$；
+\item 若 $A\subseteq B\subseteq\mathbb{R}^n$，则 $\Cap_p(A)\leqslant\Cap_p(B)$；
+\item 对任意可数族 $\{A_k\}_{k=1}^{\infty}\subseteq\mathcal{P}(\mathbb{R}^n)$，
+\begin{align*}
+\Cap_p\Bigl(\bigcup_{k=1}^{\infty}A_k\Bigr)\leqslant\sum_{k=1}^{\infty}\Cap_p(A_k).
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-14-警告}
+$\Cap_p$ \emph{不是} Borel 测度。事实上，若 $A\subseteq\mathbb{R}^n$ 满足 $0<\Cap_p(A)<\infty$，则 $A$ 不是 $\Cap_p$-可测集。还须记住，此处所谓的测度在其它文献中通常称为「外测度」。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-14; kind=motivation; 说明容量作为测度的意义：可数次可加性是把容量估计从单个集合搬到可数并的唯一工具，也是与 Hausdorff 测度比较的入口
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-14-动机}
+容量的定义是能量的下确界，本身并不显露出可加或次可加的结构。本定理说明它满足测度的公理，其中真正有内容的是可数次可加性：把可数多个集合的容量上界合并成一个集合的容量上界。这条性质在\cref{theorem:ch04-4-15}(v) 中被用来把 $\Cap_p(A)$ 与球的覆盖求和比较，从而得到与 $\mathcal{H}^{n-p}$ 的比较；在\cref{theorem:ch04-4-16}与\cref{theorem:ch04-4-17}中则用于处理可数并。单调性与 $\Cap_p(\varnothing)=0$ 直接来自定义（\cref{remark:ch04-def-4-10-性质}），可数次可加性的证明则是\cref{theorem:ch04-4-13}(iii) 的直接应用：取各 $A_k$ 的容许函数的上确界，一次得到覆盖并集的单个容许函数。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-14; kind=hypotheses; 逐条分析三条测度公理的来源与可数次可加性证明中「和有限」这一化归
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-14-条件}
+\begin{enumerate}[(i)]
+\item 公理 (i) $\Cap_p(\varnothing)=0$：$f\equiv0\in K^p$ 满足 $\varnothing\subseteq\{f\geqslant1\}^{\circ}$，故 $\Cap_p(\varnothing)\leqslant\int\lvert Df\rvert^p\diff x=0$。
+\item 公理 (ii) 单调性：若 $A\subseteq B$ 且 $f$ 满足 $B\subseteq\{f\geqslant1\}^{\circ}$，则 $A\subseteq\{f\geqslant1\}^{\circ}$，故 $B$ 的容许函数类含于 $A$ 的容许函数类，$A$ 的下确界不超过 $B$ 的下确界；此即\cref{remark:ch04-def-4-10-性质}的 (iii)。% XREF internal
+\item 公理 (iii) 可数次可加性：只需考虑 $\sum_k\Cap_p(A_k)<\infty$ 的情形，因为右端为 $+\infty$ 时不等式自动成立。此时由 $\Cap_p(A_k)<\infty$ 与下确界的定义可对每个 $k$ 取到满足 $\int\lvert Df_k\rvert^p\diff x\leqslant\Cap_p(A_k)+\varepsilon/2^k$ 的 $f_k\in K^p$，且 $\sum_k\lVert Df_k\rVert_{L^p}^p<\infty$。
+\item 证明中不要求 $A$ 与 $A_k$ 可测，也不要求它们互不相交或具有任何正则性；可数次可加性对任意子集成立，这正是容量可以充当「外测度」的原因。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+设 $A\subseteq\bigcup_{k=1}^{\infty}A_k$ 且 $\sum_{k=1}^{\infty}\Cap_p(A_k)<\infty$。固定 $\varepsilon>0$。对每个 $k=1,\cdots$，取 $f_k\in K^p$ 使
+\begin{align*}
+A_k\subseteq\{f_k\geqslant1\}^{\circ}
+\end{align*}
+且
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df_k\rvert^p\diff x\leqslant\Cap_p(A_k)+\frac{\varepsilon}{2^k}.
+\end{align*}
+令 $g:=\sup_{1\leqslant k<\infty}f_k$。则 $A\subseteq\{g\geqslant1\}^{\circ}$，由\cref{theorem:ch04-4-13}有 $g\in K^p$，且% XREF p=175 "Then A ⊆ {g ≥ 1}^0, g ∈ K^p by Theorem 4.13, and"
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Dg\rvert^p\diff x&\leqslant\int_{\mathbb{R}^n}\sup_{1\leqslant k<\infty}\lvert Df_k\rvert^p\diff x\\
+&\leqslant\sum_{k=1}^{\infty}\int_{\mathbb{R}^n}\lvert Df_k\rvert^p\diff x\\
+&\leqslant\sum_{k=1}^{\infty}\Cap_p(A_k)+\varepsilon .
+\end{align*}
+于是
+\begin{align*}
+\Cap_p(A)\leqslant\sum_{k=1}^{\infty}\Cap_p(A_k)+\varepsilon .
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-14; kind=proof; 补出证明中三处未写明的依据：上确界 h 属于 L^p 使定理 4.13(iii) 可用、A 含于 {g>=1} 的内部、以及最后令 ε→0
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-14-补充}
+证明中三处的依据如下。其一，$h:=\sup_k\lvert Df_k\rvert$ 满足
+\begin{align*}
+\int_{\mathbb{R}^n}h^p\diff x\leqslant\sum_{k=1}^{\infty}\int_{\mathbb{R}^n}\lvert Df_k\rvert^p\diff x\leqslant\sum_{k=1}^{\infty}\Cap_p(A_k)+\varepsilon<\infty ,
+\end{align*}
+故 $h\in L^p(\mathbb{R}^n)$，\cref{theorem:ch04-4-13}(iii) 的假设满足，$g\in K^p$ 且 $\lvert Dg\rvert\leqslant h$ $\mathcal{L}^n$-a.e.。% XREF internal
+其二，对 $x\in A$，存在 $k$ 使 $x\in A_k\subseteq\{f_k\geqslant1\}^{\circ}$，于是 $f_k>1$ 于 $x$ 的某个邻域上，故 $g\geqslant f_k>1$ 于该邻域上；这说明 $\{g>1\}$ 是含 $A$ 的开集，且 $\{g>1\}\subseteq\{g\geqslant1\}$，故 $A\subseteq\{g\geqslant1\}^{\circ}$。其三，$\varepsilon>0$ 任意，令 $\varepsilon\to0$ 即得 $A\subseteq\bigcup_kA_k$ 情形的可数次可加性；对一般的 $A$ 再用单调性。
+\end{remark}
+
+\begin{theorem}[容量的性质]\label{theorem:ch04-4-15}
+设 $n\geqslant2$ 为整数，$1\leqslant p<n$，$\Cap_p$ 如\cref{definition:ch04-4-10}所定义，% XREF internal
+$A,B\subseteq\mathbb{R}^n$ 为任意子集。
+\begin{enumerate}[(i)]
+\item $\Cap_p(A)=\inf\{\Cap_p(U)\mid U\ \text{开},\ A\subseteq U\}$。
+\item $\Cap_p(\lambda A)=\lambda^{n-p}\Cap_p(A)$（$\lambda>0$），其中 $\lambda A:=\{\lambda x\mid x\in A\}$。
+\item $\Cap_p(L(A))=\Cap_p(A)$ 对每个仿射等距 $L:\mathbb{R}^n\to\mathbb{R}^n$ 成立。
+\item $\Cap_p(B(x,r))=r^{n-p}\Cap_p(B(1))$ 对每个 $x\in\mathbb{R}^n$ 与 $r>0$ 成立，其中 $B(1):=B(0,1)$。
+\item $\Cap_p(A)\leqslant C\mathcal{H}^{n-p}(A)$，其中 $C$ 为只依赖于 $p$ 与 $n$ 的常数。
+\item $\mathcal{L}^n(A)\leqslant C\Cap_p(A)^{\frac{n}{n-p}}$，其中 $C$ 为只依赖于 $p$ 与 $n$ 的常数。
+\item $\Cap_p(A\cup B)+\Cap_p(A\cap B)\leqslant\Cap_p(A)+\Cap_p(B)$。
+\item 若 $A_1\subseteq\cdots\subseteq A_k\subseteq A_{k+1}\subseteq\cdots$，则
+\begin{align*}
+\lim_{k\to\infty}\Cap_p(A_k)=\Cap_p\Bigl(\bigcup_{k=1}^{\infty}A_k\Bigr).
+\end{align*}
+\item 若 $A_1\supseteq\cdots\supseteq A_k\supseteq A_{k+1}\supseteq\cdots$ 且每个 $A_k$ 为紧集，则
+\begin{align*}
+\lim_{k\to\infty}\Cap_p(A_k)=\Cap_p\Bigl(\bigcap_{k=1}^{\infty}A_k\Bigr).
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-15-注}
+若集合 $\{A_k\}_{k=1}^{\infty}$ 不是紧集，(ix) 可能失效。(v) 的改进见\cref{theorem:ch04-4-16}。% XREF p=176 "Assertion (ix) may be false if the sets {A_k} are not compact. See Theorem 4.16 for an improvement of (v)."
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-15; kind=motivation; 说明九条性质各自的作用：外部正则性、齐次性、与 Hausdorff 测度的双向比较、强次可加性与两种连续性
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-15-动机}
+这九条性质把容量变成一个可以计算的量。(i) 说明容量可以从外部用开集逼近，因此下确界的定义可以换成开集上的下确界；(ii) 与 (iii) 说明容量在伸缩与等距下按 $n-p$ 次幂齐次，这解释了为何容量的临界维数是 $n-p$；(iv) 是 (ii)、(iii) 在球上的特殊形式，用于把一般的覆盖估计化为球的求和；(v) 与 (vi) 是容量与 Hausdorff 测度、Lebesgue 测度的双向比较，\cref{theorem:ch04-4-16}与\cref{theorem:ch04-4-17}把它们分别加强为零容量的判据与零测度的判据；(vii) 是比次可加性更强的「强次可加性」，它使 $\max$ 与 $\min$ 的能量分解成为可能；(viii) 与 (ix) 是容量沿单调集合族的连续性，其中 (ix) 需要紧性，其反例正是\cref{remark:ch04-thm-4-15-注}所指出的。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-15; kind=hypotheses; 逐条分析 1<=p<n 的范围、A、B 无需可测、常数 C 的依赖、以及 (ix) 中紧性条件的作用
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-15-条件}
+\begin{enumerate}[(i)]
+\item $1\leqslant p<n$ 是全节固定的范围：$p<n$ 使 $\mathcal{H}^{n-p}$ 的维数指标为正，(v) 与 (vi) 中的指数 $n-p$ 与 $\frac{n}{n-p}$ 才有意义；$p\to n$ 时这两个指数分别趋于 $0$ 与 $\infty$。
+\item $A,B$ 是任意子集，不要求 Borel 或 Lebesgue 可测：(i) 表达的正是「容量由外部开集决定」，(v) 与 (vi) 则把任意集合的容量与测度比较。
+\item (v)、(vi) 中的常数 $C$ 只依赖于 $p$ 与 $n$，与 $A$ 无关：(v) 中的常数来自 $\Cap_p(B(1))$ 与覆盖的归一化因子，(vi) 中的常数来自 GNS 不等式（\cref{theorem:ch04-4-8}）的常数 $C_1$。% XREF internal
+\item (viii) 不需要单调上升的集合可测，也不需要它们有界；证明只用到\cref{theorem:ch04-4-13}(iii) 与 $L^p$ 的弱紧性，故要求 $p>1$。% XREF internal
+\item (ix) 中「$A_k$ 为紧集」不可省：紧性通过有限交性质把 $\bigcap_kA_k\subseteq U$（$U$ 开）转化为某个 $A_m\subseteq U$，若 $A_k$ 只是一般闭集或 Borel 集，这一转化失效，\cref{remark:ch04-thm-4-15-注}说明此时结论可能不成立。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）由单调性，$\Cap_p(A)\leqslant\inf\{\Cap_p(U)\mid U\ \text{开},\ U\supseteq A\}$。另一方面，对每个 $\varepsilon>0$，存在 $f\in K^p$ 使 $A\subseteq\{f\geqslant1\}^{\circ}=:U$ 且
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x\leqslant\Cap_p(A)+\varepsilon .
+\end{align*}
+但此时
+\begin{align*}
+\Cap_p(U)\leqslant\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x ,
+\end{align*}
+故 (i) 成立。
+
+% SUPPLEMENT: parent=theorem:ch04-4-15; kind=proof; 补出第 (1) 段两处的依据：单调性给出第一个不等号，U 的开性与 f 对 U 的容许性给出 Cap_p(U) 的上界
+第 (1) 段的两处依据如下。$A\subseteq U$ 与\cref{remark:ch04-def-4-10-性质}的 (iii) 给出 $\Cap_p(A)\leqslant\Cap_p(U)$，对一切含 $A$ 的开集 $U$ 取下确界即得 $\Cap_p(A)\leqslant\inf\{\cdots\}$。另一方面，所取的 $U:=\{f\geqslant1\}^{\circ}$ 是开集且含 $A$，而 $f$ 满足 $U\subseteq\{f\geqslant1\}^{\circ}$，故 $f$ 是 $U$ 的容许函数，于是 $\Cap_p(U)\leqslant\int\lvert Df\rvert^p\diff x$；合并两式得 $\inf\{\Cap_p(U)\}\leqslant\Cap_p(A)+\varepsilon$，令 $\varepsilon\to0$ 即得 (i)。% XREF internal
+
+（2）固定 $\varepsilon>0$ 并如上选取 $f\in K^p$。令 $g(x):=f\bigl(\frac{x}{\lambda}\bigr)$。则 $g\in K^p$、$\lambda A\subseteq\{g\geqslant1\}^{\circ}$，且
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Dg\rvert^p\diff x=\lambda^{n-p}\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x .
+\end{align*}
+于是 $\Cap_p(\lambda A)\leqslant\lambda^{n-p}\bigl(\Cap_p(A)+\varepsilon\bigr)$。另一个方向同理，故 (ii) 成立。
+
+% SUPPLEMENT: parent=theorem:ch04-4-15; kind=proof; 补出第 (2) 段的变量替换计算与「另一个方向」的具体论证
+第 (2) 段的两点补充如下。其一，$Dg(x)=\lambda^{-1}Df(x/\lambda)$，故由变量替换 $y=x/\lambda$、$\diff x=\lambda^n\diff y$
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Dg\rvert^p\diff x=\lambda^{-p}\int_{\mathbb{R}^n}\Bigl\lvert Df\Bigl(\frac{x}{\lambda}\Bigr)\Bigr\rvert^p\diff x=\lambda^{n-p}\int_{\mathbb{R}^n}\lvert Df(y)\rvert^p\diff y ,
+\end{align*}
+且 $\lambda A\subseteq\{g\geqslant1\}^{\circ}$ 等价于 $A\subseteq\{f\geqslant1\}^{\circ}$；又 $g\geqslant0$、$g\in L^{p^*}(\mathbb{R}^n)$（由变量替换 $\lVert g\rVert_{L^{p^*}}^{p^*}=\lambda^n\lVert f\rVert_{L^{p^*}}^{p^*}$），故 $g\in K^p$。其二，「另一个方向」是把已证的方向用于 $1/\lambda$ 与集合 $\lambda A$：由 $\Cap_p(\lambda A)\leqslant\lambda^{n-p}\bigl(\Cap_p(A)+\varepsilon\bigr)$ 与 $A=\frac1\lambda(\lambda A)$ 得 $\Cap_p(A)\leqslant\lambda^{-(n-p)}\bigl(\Cap_p(\lambda A)+\varepsilon\bigr)$，即 $\Cap_p(\lambda A)\geqslant\lambda^{n-p}\Cap_p(A)-\varepsilon$；与前式合并并令 $\varepsilon\to0$ 即得 (ii)。
+
+（3）断言 (iii) 由定义可得；(iv) 是 (ii) 与 (iii) 的推论。
+
+% SUPPLEMENT: parent=theorem:ch04-4-15; kind=proof; 补出 (iii) 的仿射等距不变性与 (iv) 由 (ii)、(iii) 推出的计算
+(iii) 的依据如下。设 $L(x)=Ox+b$，其中 $O$ 为 $\mathbb{R}^n$ 的正交变换、$b\in\mathbb{R}^n$。对 $f\in K^p$ 令 $g:=f\circ L^{-1}$，则 $g\geqslant0$、$\lVert g\rVert_{L^{p^*}}=\lvert\det O\rvert^{-1/p^*}\lVert f\rVert_{L^{p^*}}=\lVert f\rVert_{L^{p^*}}$，且 $Dg(x)=O^{\mathrm{T}}Df(L^{-1}x)$，故由 $\lvert O^{\mathrm{T}}v\rvert=\lvert v\rvert$ 与 $\lvert\det O\rvert=1$ 得 $\int\lvert Dg\rvert^p\diff x=\int\lvert Df\rvert^p\diff x$；又 $L(A)\subseteq\{g\geqslant1\}^{\circ}$ 等价于 $A\subseteq\{f\geqslant1\}^{\circ}$。于是 $f\mapsto f\circ L^{-1}$ 给出两个容许函数类之间的能量保持的双射，(iii) 成立。(iv) 的依据是：$B(x,r)=x+rB(1)$，先由 (iii)（平移是仿射等距）得 $\Cap_p(B(x,r))=\Cap_p(rB(1))$，再由 (ii)（取 $\lambda=r$、$A=B(1)$）得 $\Cap_p(rB(1))=r^{n-p}\Cap_p(B(1))$。
+
+（4）为证 (v)，固定 $\delta>0$ 并设
+\begin{align*}
+A\subseteq\bigcup_{k=1}^{\infty}B(x_k,r_k),
+\end{align*}
+其中 $2r_k<\delta$（$k=1,\cdots$）。则
+\begin{align*}
+\Cap_p(A)\leqslant\sum_{k=1}^{\infty}\Cap_p(B(x_k,r_k))=\Cap_p(B(1))\sum_{k=1}^{\infty}r_k^{n-p}.
+\end{align*}
+于是
+\begin{align*}
+\Cap_p(A)\leqslant C\mathcal{H}^{n-p}(A).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-15; kind=proof; 补出 (v) 中由球的覆盖到 Hausdorff 测度的过渡：可数次可加性、(iv) 的齐次性与 H^{n-p}_δ 的定义
+(v) 中的过渡如下。由\cref{theorem:ch04-4-14}的可数次可加性与 (iv)，% XREF internal
+\begin{align*}
+\Cap_p(A)\leqslant\sum_{k=1}^{\infty}\Cap_p(B(x_k,r_k))=\Cap_p(B(1))\sum_{k=1}^{\infty}r_k^{n-p}.
+\end{align*}
+下面把这个估计与 $\mathcal{H}^{n-p}_\delta$ 的定义衔接起来。设 $\{C_k\}_{k=1}^{\infty}$ 是 $A$ 的任意覆盖，其元素满足 $\operatorname{diam}C_k<\delta/2$。对每个 $k$，取以 $C_k$ 中一点 $x_k$ 为心、以 $r_k:=\operatorname{diam}C_k$ 为半径的闭球，则 $C_k\subseteq B(x_k,r_k)$ 且 $2r_k<\delta$，故上式对这样的球族给出
+\begin{align*}
+\Cap_p(A)\leqslant\Cap_p(B(1))\sum_{k=1}^{\infty}(\operatorname{diam}C_k)^{n-p}=\frac{\Cap_p(B(1))2^{n-p}}{\alpha(n-p)}\sum_{k=1}^{\infty}\alpha(n-p)\Bigl(\frac{\operatorname{diam}C_k}{2}\Bigr)^{n-p},
+\end{align*}
+其中 $\alpha(n-p)$ 为 $n-p$ 维单位球的 $\mathcal{H}^{n-p}$ 测度。对一切这样的覆盖取下确界即得
+\begin{align*}
+\Cap_p(A)\leqslant\frac{\Cap_p(B(1))2^{n-p}}{\alpha(n-p)}\mathcal{H}^{n-p}_{\delta/2}(A),
+\end{align*}
+再令 $\delta\to0$（此时 $\mathcal{H}^{n-p}_{\delta/2}(A)\to\mathcal{H}^{n-p}(A)$），即得 $\Cap_p(A)\leqslant C\mathcal{H}^{n-p}(A)$，其中 $C:=\Cap_p(B(1))2^{n-p}/\alpha(n-p)$ 只依赖于 $p$ 与 $n$。
+
+取 $\varepsilon>0$ 与第 (1) 段中的 $f\in K^p$。则由\cref{theorem:ch04-4-12}，% XREF p=176 "Then by Theorem 4.12"
+\begin{align*}
+\mathcal{L}^n(A)^{\frac{1}{p^*}}&\leqslant\Bigl(\int_{\mathbb{R}^n}f^{p^*}\diff x\Bigr)^{\frac{1}{p^*}}\\
+&\leqslant C_1\Bigl(\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x\Bigr)^{\frac{1}{p}}\\
+&\leqslant C_1\bigl(\Cap_p(A)+\varepsilon\bigr)^{\frac{1}{p}} .
+\end{align*}
+于是
+\begin{align*}
+\mathcal{L}^n(A)\leqslant C\Cap_p(A)^{\frac{p^*}{p}},
+\end{align*}
+此即 (vi)。
+
+% SUPPLEMENT: parent=theorem:ch04-4-15; kind=proof; 补出 (vi) 中两个估计的依据：f>=1 于 A 上给出 Lebesgue 测度的下界，定理 4.12(ii) 给出 L^{p*} 与 L^p 范数的比较，以及指数恒等式 p*/p=n/(n-p)
+(vi) 中的依据如下。其一，$A\subseteq\{f\geqslant1\}^{\circ}$ 给出 $f\geqslant1$ 于 $A$ 上（按代表元逐点），故 $\int_{\mathbb{R}^n}f^{p^*}\diff x\geqslant\int_Af^{p^*}\diff x\geqslant\mathcal{L}^n(A)$，第一个不等号成立。其二，$f\in K^p$，把\cref{theorem:ch04-4-12}(ii) 用于 $f$ 得第二个不等号；% XREF internal
+第三个不等号由 $\int\lvert Df\rvert^p\diff x\leqslant\Cap_p(A)+\varepsilon$ 得到。最后由 $\frac{p^*}{p}=\frac{n}{n-p}$ 即得 (vi) 的陈述形式。
+
+（5）固定 $\varepsilon>0$，如上选取 $f\in K^p$，并另取 $g\in K^p$ 使
+\begin{align*}
+B\subseteq\{g\geqslant1\}^{\circ},\qquad\int_{\mathbb{R}^n}\lvert Dg\rvert^p\diff x\leqslant\Cap_p(B)+\varepsilon .
+\end{align*}
+则 $\max\{f,g\},\min\{f,g\}\in K^p$ 且
+\begin{align*}
+\lvert D(\max\{f,g\})\rvert^p+\lvert D(\min\{f,g\})\rvert^p=\lvert Df\rvert^p+\lvert Dg\rvert^p\qquad\mathcal{L}^n\text{-a.e.},
+\end{align*}
+依据是\cref{theorem:ch04-4-13}。% XREF p=177 "according to Theorem 4.13"
+此外，
+\begin{align*}
+A\cup B\subseteq\{\max\{f,g\}\geqslant1\}^{\circ},\qquad A\cap B\subseteq\{\min\{f,g\}\geqslant1\}^{\circ}.
+\end{align*}
+于是
+\begin{align*}
+\Cap_p(A\cup B)+\Cap_p(A\cap B)&\leqslant\int_{\mathbb{R}^n}\lvert D(\max\{f,g\})\rvert^p+\lvert D(\min\{f,g\})\rvert^p\diff x\\
+&=\int_{\mathbb{R}^n}\lvert Df\rvert^p+\lvert Dg\rvert^p\diff x\\
+&\leqslant\Cap_p(A)+\Cap_p(B)+2\varepsilon ,
+\end{align*}
+断言 (vii) 得证。
+
+% SUPPLEMENT: parent=theorem:ch04-4-15; kind=proof; 补出 (vii) 中能量恒等式的逐点依据、两个包含关系的验证，以及两端令 ε→0 的过程
+(vii) 的三处依据如下。其一，由\cref{theorem:ch04-4-13}(i)，$\max\{f,g\}$ 的弱梯度在 $\{f\geqslant g\}$ 上等于 $Df$、在 $\{f\leqslant g\}$ 上等于 $Dg$，而 $\min\{f,g\}$ 的取值相反；两个集合的并覆盖 $\mathbb{R}^n$（至多差零测集），故两式相加得 $\lvert D(\max\{f,g\})\rvert^p+\lvert D(\min\{f,g\})\rvert^p=\lvert Df\rvert^p+\lvert Dg\rvert^p$ $\mathcal{L}^n$-a.e.。% XREF internal
+其二，对 $x\in A\subseteq\{f\geqslant1\}^{\circ}$ 有 $f(x)>1$，故 $\max\{f,g\}(x)>1$，且该不等式在 $x$ 的某邻域上成立，于是 $A\subseteq\{\max\{f,g\}\geqslant1\}^{\circ}$；对 $x\in A\cap B$ 同时有 $f(x)>1$ 与 $g(x)>1$，故 $\min\{f,g\}(x)>1$，同理得 $A\cap B\subseteq\{\min\{f,g\}\geqslant1\}^{\circ}$。其三，$\max\{f,g\}$ 与 $\min\{f,g\}$ 分别是 $A\cup B$ 与 $A\cap B$ 的容许函数，故第一个不等号成立；两端对 $\varepsilon\to0$ 取下确界即得 (vii)。
+
+（6）只对 $1<p<n$ 的情形证明 (viii)；$p=1$ 的情形见 Federer 与 Ziemer\cite{federer1972}。假设 $\lim_{k\to\infty}\Cap_p(A_k)<\infty$ 且 $\varepsilon>0$。则对每个 $k=1,2,\cdots$，取 $f_k\in K^p$ 使
+\begin{align*}
+A_k\subseteq\{x\mid f_k(x)\geqslant1\}^{\circ}
+\end{align*}
+且
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df_k\rvert^p\diff x<\Cap_p(A_k)+\frac{\varepsilon}{2^k}.
+\end{align*}
+定义
+\begin{align*}
+h_m:=\max\{f_k\mid1\leqslant k\leqslant m\},\qquad h_0:=0 ,
+\end{align*}
+并由\cref{theorem:ch04-4-13}注意 $h_m=\max\{h_{m-1},f_m\}\in K^p$ 且% XREF p=178 "notice from Theorem 4.13 that"
+\begin{align*}
+A_{m-1}\subseteq\{x\mid\min\{h_{m-1},f_m\}\geqslant1\}^{\circ}.
+\end{align*}
+计算得
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Dh_m\rvert^p\diff x+\Cap_p(A_{m-1})
+&\leqslant\int_{\mathbb{R}^n}\lvert D(\max\{h_{m-1},f_m\})\rvert^p\diff x\\
+&\quad+\int_{\mathbb{R}^n}\lvert D(\min\{h_{m-1},f_m\})\rvert^p\diff x\\
+&=\int_{\mathbb{R}^n}\lvert Dh_{m-1}\rvert^p+\lvert Df_m\rvert^p\diff x\\
+&\leqslant\int_{\mathbb{R}^n}\lvert Dh_{m-1}\rvert^p\diff x+\Cap_p(A_m)+\frac{\varepsilon}{2^m}.
+\end{align*}
+于是
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Dh_m\rvert^p\diff x-\int_{\mathbb{R}^n}\lvert Dh_{m-1}\rvert^p\diff x\leqslant\Cap_p(A_m)-\Cap_p(A_{m-1})+\frac{\varepsilon}{2^m},
+\end{align*}
+由此相加即得
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Dh_m\rvert^p\diff x\leqslant\Cap_p(A_m)+\varepsilon\qquad(m=1,2,\cdots).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-15; kind=proof; 补出 (viii) 第一段计算的三处依据：min 对 A_{m-1} 的容许性、max/min 的能量分解、以及逐项相加的望远镜求和
+(viii) 第一段的依据如下。其一，由 $A_{m-1}\subseteq\{h_{m-1}\geqslant1\}^{\circ}$ 与 $A_{m-1}\subseteq\{f_m\geqslant1\}^{\circ}$ 得
+\begin{align*}
+A_{m-1}\subseteq\{\min\{h_{m-1},f_m\}\geqslant1\}^{\circ},
+\end{align*}
+故 $\min\{h_{m-1},f_m\}$ 是 $A_{m-1}$ 的容许函数，给出
+\begin{align*}
+\Cap_p(A_{m-1})\leqslant\int_{\mathbb{R}^n}\lvert D(\min\{h_{m-1},f_m\})\rvert^p\diff x;
+\end{align*}
+同时 $Dh_m=D(\max\{h_{m-1},f_m\})$，由此得到第一个不等号。其二，第二个等号是\cref{theorem:ch04-4-13}(i) 的能量分解。% XREF internal
+其三，把所得不等式写成
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Dh_m\rvert^p\diff x-\int_{\mathbb{R}^n}\lvert Dh_{m-1}\rvert^p\diff x\leqslant\Cap_p(A_m)-\Cap_p(A_{m-1})+\frac{\varepsilon}{2^m},
+\end{align*}
+对 $m=1,\cdots,M$ 相加，利用 $h_0=0$ 与 $\Cap_p(A_0):=0$（约定 $A_0=\varnothing$）得 $\int\lvert Dh_M\rvert^p\diff x\leqslant\Cap_p(A_M)+\varepsilon\sum_{m=1}^{M}2^{-m}\leqslant\Cap_p(A_M)+\varepsilon$。
+
+令 $f:=\lim_{m\to\infty}h_m$。则 $\bigcup_{k=1}^{\infty}A_k\subseteq\{x\mid f(x)\geqslant1\}^{\circ}$。此外，
+\begin{align*}
+\lVert f\rVert_{L^{p^*}(\mathbb{R}^n)}&=\lim_{m\to\infty}\lVert h_m\rVert_{L^{p^*}(\mathbb{R}^n)}\\
+&\leqslant C_1\liminf_{m\to\infty}\lVert Dh_m\rVert_{L^p(\mathbb{R}^n)}\\
+&\leqslant C\Bigl(\lim_{m\to\infty}\Cap_p(A_m)+\varepsilon\Bigr)^{\frac{1}{p}} .
+\end{align*}
+由于 $p>1$，序列 $\{Dh_m\}_{m=1}^{\infty}$ 的某个子列在 $L^p(\mathbb{R}^n)$ 中弱收敛于 $Df$（参看\cref{theorem:ch01-1-42}）；% XREF p=178 "(cf. Theorem 1.42)"
+从而 $f\in K^p$。于是
+\begin{align*}
+\Cap_p\Bigl(\bigcup_{k=1}^{\infty}A_k\Bigr)\leqslant\lVert Df\rVert_{L^p(\mathbb{R}^n)}^p\leqslant\lim_{m\to\infty}\Cap_p(A_m)+\varepsilon .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-15; kind=proof; 补出 (viii) 第二段的四个环节：包含关系、单调收敛与定理 4.12(ii)、弱紧性与弱下半连续性、以及由弱梯度识别 Df
+(viii) 第二段的四个环节如下。其一，对 $x\in A_k$ 有 $f_k(x)>1$，而 $h_m\geqslant f_k$ 对 $m\geqslant k$ 成立，故 $f(x)\geqslant f_k(x)>1$，且该不等式在 $x$ 的某邻域上成立（因为 $A_k\subseteq\{f_k\geqslant1\}^{\circ}$），于是 $\bigcup_kA_k\subseteq\{f\geqslant1\}^{\circ}$。其二，$0\leqslant h_1\leqslant h_2\leqslant\cdots$ 且 $h_m\uparrow f$，由单调收敛定理 $\lVert h_m\rVert_{L^{p^*}}\uparrow\lVert f\rVert_{L^{p^*}}$，第一个等号成立；对每个 $m$ 把\cref{theorem:ch04-4-12}(ii) 用于 $h_m\in K^p$ 得 $\lVert h_m\rVert_{L^{p^*}}\leqslant C_1\lVert Dh_m\rVert_{L^p}$，取上极限即得第一个不等号。% XREF internal
+其三，由 $\int\lvert Dh_m\rvert^p\diff x\leqslant\Cap_p(A_m)+\varepsilon$ 与 $\lim_m\Cap_p(A_m)<\infty$ 知 $\{Dh_m\}_{m=1}^{\infty}$ 在 $L^p(\mathbb{R}^n;\mathbb{R}^n)$ 中有界，而 $1<p<\infty$ 时 $L^p$ 自反，故由\cref{theorem:ch01-1-42}存在子列 $\{Dh_{m_j}\}$ 与 $k\in L^p(\mathbb{R}^n;\mathbb{R}^n)$ 使 $Dh_{m_j}\rightharpoonup k$。% XREF internal
+其四，对 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$，由 $h_{m_j}\to f$ 于 $L^{p^*}$ 中得 $\int h_{m_j}\diver\phi\to\int f\diver\phi$，而弱收敛给出 $-\int\phi\cdot Dh_{m_j}\to-\int\phi\cdot k$，故 $\int f\diver\phi=-\int\phi\cdot k$，即 $Df=k\in L^p$；又 $f\geqslant0$、$f\in L^{p^*}$，故 $f\in K^p$。最后由范数的弱下半连续性，$\lVert Df\rVert_{L^p}\leqslant\liminf_j\lVert Dh_{m_j}\rVert_{L^p}\leqslant\lim_m(\Cap_p(A_m)+\varepsilon)^{1/p}$，于是 $\Cap_p(\bigcup_kA_k)\leqslant\lVert Df\rVert_{L^p}^p\leqslant\lim_m\Cap_p(A_m)+\varepsilon$，令 $\varepsilon\to0$ 即得 (viii)。
+
+（7）为证 (ix)，先注意
+\begin{align*}
+\Cap_p\Bigl(\bigcap_{k=1}^{\infty}A_k\Bigr)\leqslant\lim_{k\to\infty}\Cap_p(A_k).
+\end{align*}
+另一方面，取任意开集 $U$ 使 $\bigcap_{k=1}^{\infty}A_k\subseteq U$。由于 $\bigcap_{k=1}^{\infty}A_k$ 是紧集，存在正整数 $m$ 使 $A_k\subseteq U$ 对 $k\geqslant m$ 成立。于是
+\begin{align*}
+\lim_{k\to\infty}\Cap_p(A_k)\leqslant\Cap_p(U).
+\end{align*}
+回顾 (i) 即完成 (ix) 的证明。
+
+% SUPPLEMENT: parent=theorem:ch04-4-15; kind=proof; 补出 (ix) 的两个依据：单调性给出第一个不等式，紧集的有限交性质给出 A_m 含于 U 这一步，最后用 (i) 对开集取下确界
+(ix) 的两个依据如下。其一，$\bigcap_kA_k\subseteq A_k$ 对每个 $k$ 成立，由单调性得 $\Cap_p(\bigcap_kA_k)\leqslant\Cap_p(A_k)$，对 $k$ 取极限即得第一个不等式。其二，若每个 $A_k$ 紧、$\bigcap_kA_k\subseteq U$ 而 $U$ 开，则紧集族 $\{A_k\setminus U\}$ 的交为空，由有限交性质存在 $m$ 使 $\bigcap_{k\leqslant m}(A_k\setminus U)=\varnothing$；由于 $\{A_k\}$ 递减，$A_m\setminus U\subseteq A_k\setminus U$ 对 $k\leqslant m$ 成立，故 $A_m\setminus U=\varnothing$，即 $A_m\subseteq U$，从而 $A_k\subseteq U$ 对一切 $k\geqslant m$ 成立。于是 $\lim_k\Cap_p(A_k)\leqslant\Cap_p(U)$ 对一切含 $\bigcap_kA_k$ 的开集 $U$ 成立，由 (i) 取下确界得 $\lim_k\Cap_p(A_k)\leqslant\Cap_p(\bigcap_kA_k)$；与第一个不等式合并即得 (ix)。
+\end{proof}
+
+\subsection{容量与 Hausdorff 维数}\label{subsection:ch04-07-2}
+
+如前面所述，容量被用来刻画 $\mathbb{R}^n$ 的某些「非常小」的子集。Hausdorff 测度提供了另一种途径，因此理解容量与 Hausdorff 测度之间的关系是重要的。
+
+本节从\cref{theorem:ch04-4-15}(v) 的一个改进开始：% XREF p=179 "We begin with a refinement of assertion (v) from Theorem 4.15"
+
+\begin{theorem}[容量与 Hausdorff 测度]\label{theorem:ch04-4-16}
+设 $n\geqslant2$ 为整数，$1<p<n$，$A\subseteq\mathbb{R}^n$ 为任意子集。若 $\mathcal{H}^{n-p}(A)<\infty$，则
+\begin{align*}
+\Cap_p(A)=0 .
+\end{align*}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch04-4-16; kind=motivation; 说明该定理的内容：与 H^{n-p} 相比容量是更精细的「小」的判据，并交代证明的两段结构与可数并化归
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-16-动机}
+\cref{theorem:ch04-4-15}(v) 只给出 $\Cap_p(A)\leqslant C\mathcal{H}^{n-p}(A)$，即 Hausdorff 测度有限的集合容量有限。本定理把这一比较加强为：$\mathcal{H}^{n-p}$ 有限的集合容量必为零，也就是在容量的尺度下 $\mathcal{H}^{n-p}$ 有限的集合仍是可忽略的。这说明零容量是比「$\mathcal{H}^{n-p}$ 测度有限」更弱的条件：凡 $\mathcal{H}^{n-p}$ 有限的集合在容量意义下都可忽略；反向的命题由\cref{theorem:ch04-4-17}给出。% XREF internal
+证明分两段：先用\cref{theorem:ch04-4-15}(viii) 把一般的 $A$ 化归为紧集，再构造一族能量一致有界的容许函数 $f_k$，使 $f_k=1$ 于 $A$ 的一列收缩邻域上；把这些 $f_k$ 以调和级数的权重平均，得到能量趋于零的容许函数序列，从而 $\Cap_p(A)=0$。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-16; kind=hypotheses; 逐条分析 1<p<n、H^{n-p}(A)<∞ 与紧性化归的作用，并说明为何 p=1 需要另行处理
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-16-条件}
+\begin{enumerate}[(i)]
+\item $1<p<n$：证明中第 (2) 段的平均权重 $1/k$ 与 $S_j=\sum_{k\leqslant j}1/k$ 要求 $\sum_k k^{-p}<\infty$，这只在 $p>1$ 时成立；$p=1$ 时级数 $\sum_k1/k$ 发散，构造失效，相应的结论需要另行论证。
+\item $\mathcal{H}^{n-p}(A)<\infty$：该条件在断言的证明中用于选取覆盖球族并使 $\sum_i\alpha(n-p)r_i^{n-p}$ 有界，从而使 $f$ 的能量有一致上界 $C$。若只有 $\mathcal{H}^{n-p}(A)=\infty$，断言中的常数 $C$ 不存在，但结论 $\Cap_p(A)=0$ 仍可能成立（$\mathcal{H}^{n-p}(A)=\infty$ 与 $\Cap_p(A)=0$ 并不矛盾）。
+\item 化归为紧集：\cref{theorem:ch04-4-15}(viii) 用于单调上升族 $A_k:=A\cap\overline{B^{0}(0,k)}$，得% XREF internal
+\begin{align*}
+\Cap_p(A)=\lim_{k\to\infty}\Cap_p(A_k).
+\end{align*}
+每个 $A_k$ 有界，且由 $\mathcal{H}^{n-p}(A_k)\leqslant\mathcal{H}^{n-p}(A)$ 知 $\mathcal{H}^{n-p}(A_k)<\infty$。紧性在断言的证明中只用于两点：$\operatorname{dist}(A,\mathbb{R}^n-V)>0$ 与从覆盖中选取有限个球。
+\item 结论中的 $0$ 是最优的：由\cref{theorem:ch04-4-15}(v) 的反向不等式不可能得到正的下界，$\Cap_p(A)$ 的下界只能是 $0$。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）由\cref{theorem:ch04-4-15}(viii)，可设 $A$ 为紧集。% XREF p=179 "According to Theorem 4.15, (viii), we may assume A is compact."
+
+\textbf{断言}：存在常数 $C$，它只依赖于 $n$ 与 $A$，使得若 $V$ 是任意含 $A$ 的开集，则存在开集 $W$ 与 $f\in K^p$ 使
+\begin{align*}
+A\subseteq W\subseteq\{f=1\},\qquad\spt(f)\subseteq V,\qquad\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x\leqslant C .
+\end{align*}
+
+\textbf{断言的证明}：设 $V$ 为含 $A$ 的开集，$\delta:=\frac12\operatorname{dist}(A,\mathbb{R}^n-V)$。由于 $\mathcal{H}^{n-p}(A)<\infty$ 且 $A$ 紧，存在开球族 $\{B^{0}(x_i,r_i)\}_{i=1}^m$ 使 $2r_i<\delta$、$B^{0}(x_i,r_i)\cap A\neq\varnothing$、$A\subseteq\bigcup_{i=1}^mB^{0}(x_i,r_i)$，且
+\begin{align*}
+\sum_{i=1}^m\alpha(n-p)r_i^{n-p}\leqslant C\mathcal{H}^{n-p}(A)+1
+\end{align*}
+其中 $C$ 为某个常数。
+
+% SUPPLEMENT: parent=theorem:ch04-4-16; kind=proof; 补出球族存在的依据：H^{n-p}_δ 的覆盖定义、A 的紧性给出有限子覆盖、以及半径与直径的换算
+球族的来源如下。由 $\mathcal{H}^{n-p}(A)=\sup_{\delta>0}\mathcal{H}^{n-p}_{\delta}(A)<\infty$，对上述 $\delta$ 可取 $A$ 的一个覆盖，其中每个覆盖元的直径小于 $\delta$；把覆盖元换成含它的开球 $B^{0}(x_i,r_i)$，使 $2r_i$ 等于该覆盖元的直径并使之与 $A$ 相交（必要时略去与 $A$ 不相交的球），则 $\sum_i\alpha(n-p)r_i^{n-p}\leqslant\mathcal{H}^{n-p}_\delta(A)\leqslant\mathcal{H}^{n-p}(A)$。该覆盖是可数的，而 $A$ 紧，故其中有限个球已经覆盖 $A$；把这有限个球重新编号为 $i=1,\cdots,m$，则部分和不超过整个级数，于是 $\sum_{i=1}^m\alpha(n-p)r_i^{n-p}\leqslant\mathcal{H}^{n-p}(A)$，所断言的不等式对 $C:=1$ 成立。
+
+现在置 $W:=\bigcup_{i=1}^mB^{0}(x_i,r_i)$，并定义 $f_i\in K^p$ 为
+\begin{align*}
+f_i(x)=
+\begin{cases}
+1 & \text{若}\ \lvert x-x_i\rvert\leqslant r_i,\\[2pt]
+2-\dfrac{\lvert x-x_i\rvert}{r_i} & \text{若}\ r_i\leqslant\lvert x-x_i\rvert\leqslant2r_i,\\[2pt]
+0 & \text{若}\ 2r_i\leqslant\lvert x-x_i\rvert .
+\end{cases}
+\end{align*}
+则
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df_i\rvert^p\diff x\leqslant Cr_i^{n-p} .
+\end{align*}
+令 $f:=\max_{1\leqslant i\leqslant m}f_i$。则 $f\in K^p$、$W\subseteq\{f=1\}$、$\spt(f)\subseteq V$，且
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x\leqslant\sum_{i=1}^m\int_{\mathbb{R}^n}\lvert Df_i\rvert^p\diff x\leqslant C\sum_{i=1}^m r_i^{n-p}\leqslant C\bigl(\mathcal{H}^{n-p}(A)+1\bigr).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-16; kind=proof; 补出 f_i 的能量估计、f 的容许性、W 与支集的包含关系
+本段的四处依据如下。其一，$f_i$ 在环域 $B(x_i,2r_i)-B(x_i,r_i)$ 上等于 $2-\lvert x-x_i\rvert/r_i$，故 $\lvert Df_i\rvert=1/r_i$ 于该环域上、在别处为 $0$，于是
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df_i\rvert^p\diff x=\frac{1}{r_i^p}\mathcal{L}^n\bigl(B(x_i,2r_i)-B(x_i,r_i)\bigr)\leqslant\frac{\alpha(n)(2r_i)^n}{r_i^p}=2^n\alpha(n)r_i^{n-p}.
+\end{align*}
+其二，每个 $f_i$ 非负、具有紧支集且有界，故 $f_i\in L^{p^*}(\mathbb{R}^n)$，而 $Df_i\in L^p$ 由上式计算，因此 $f_i\in K^p$；由\cref{theorem:ch04-4-13}(i) 归纳得 $f=\max_i f_i\in K^p$。% XREF internal
+其三，每个 $f_i$ 在 $B^{0}(x_i,r_i)$ 上等于 $1$，故 $f=1$ 于 $W$ 上，即 $W\subseteq\{f=1\}$。其四，$\spt f\subseteq\bigcup_iB(x_i,2r_i)$：对 $y\in B(x_i,2r_i)$ 取 $a\in A\cap B^{0}(x_i,r_i)$，则 $\lvert y-a\rvert\leqslant\lvert y-x_i\rvert+\lvert x_i-a\rvert<2r_i+r_i=3r_i<\frac32\delta=\frac34\operatorname{dist}(A,\mathbb{R}^n-V)<\operatorname{dist}(A,\mathbb{R}^n-V)$，故 $y\in V$。
+
+（2）反复使用断言，可得开集族 $\{V_k\}_{k=1}^{\infty}$ 与函数 $f_k\in K^p$ 使
+\begin{align*}
+&A\subseteq V_{k+1}\subset V_k,\qquad\bar V_{k+1}\subseteq\{f_k=1\}^{\circ},\\
+&\spt(f_k)\subseteq V_k,\qquad\int_{\mathbb{R}^n}\lvert Df_k\rvert^p\diff x\leqslant C .
+\end{align*}
+置
+\begin{align*}
+S_j:=\sum_{k=1}^j\frac1k
+\end{align*}
+以及
+\begin{align*}
+g_j:=\frac{1}{S_j}\sum_{k=1}^j\frac{f_k}{k}.
+\end{align*}
+则 $g_j\in K^p$，且 $g_j\geqslant1$ 于 $V_{j+1}$ 上。由于 $\spt\lvert Df_k\rvert\subseteq V_k-\bar V_{k+1}$，可得
+\begin{align*}
+\Cap_p(A)&\leqslant\int_{\mathbb{R}^n}\lvert Dg_j\rvert^p\diff x=\frac{1}{S_j^p}\sum_{k=1}^j\frac{1}{k^p}\int_{\mathbb{R}^n}\lvert Df_k\rvert^p\diff x\\
+&\leqslant\frac{C}{S_j^p}\sum_{k=1}^j\frac{1}{k^p}\to0\qquad(j\to\infty),
+\end{align*}
+因为 $p>1$。
+
+% SUPPLEMENT: parent=theorem:ch04-4-16; kind=proof; 补出第 (2) 段的归纳构造细节、g_j 的容许性、以及支集互不相交导致能量可加这一步
+第 (2) 段的细节如下。其一，归纳构造：取 $V_1$ 为任一含 $A$ 的开集，把断言用于 $V_1$ 得 $W$ 与 $f_1$；再取开集 $V_2$ 使 $A\subseteq V_2\subset\subset W$，则 $\bar V_2\subseteq W\subseteq\{f_1=1\}$，而 $W$ 是开集，故 $\bar V_2\subseteq\{f_1=1\}^{\circ}$，且 $\spt(f_1)\subseteq V_1$。把断言用于 $V_2$ 得 $W_2$ 与 $f_2$，再取 $V_3$ 使 $A\subseteq V_3\subset\subset W_2$，如此继续即得所述开集族与函数族。其二，$g_j$ 是 $f_1,\cdots,f_j$ 的非负系数组合（系数 $1/(kS_j)$ 之和为 $1$），故 $g_j\geqslant0$ 且 $g_j\in L^{p^*}(\mathbb{R}^n)$，而 $Dg_j=\frac{1}{S_j}\sum_{k\leqslant j}Df_k/k\in L^p(\mathbb{R}^n;\mathbb{R}^n)$，因此 $g_j\in K^p$。其三，对 $k\leqslant j$ 有 $V_{j+1}\subseteq V_{k+1}\subseteq\{f_k=1\}$（集合族递减），故于 $V_{j+1}$ 上 $g_j=\frac{1}{S_j}\sum_{k\leqslant j}\frac1k=1$；又 $A\subseteq V_{j+1}$，故 $g_j$ 是 $A$ 的容许函数，给出 $\Cap_p(A)\leqslant\int\lvert Dg_j\rvert^p\diff x$。其四，$\spt\lvert Df_k\rvert\subseteq V_k-\bar V_{k+1}$：$Df_k=0$ 于 $V_k$ 之外（因为 $\spt f_k\subseteq V_k$），又 $Df_k=0$ 于 $\bar V_{k+1}$ 的某邻域上（因为 $\bar V_{k+1}\subseteq\{f_k=1\}^{\circ}$）；而 $\{V_k-\bar V_{k+1}\}_{k}$ 两两不交（$k<l$ 时 $V_l\subseteq V_{k+1}$），故在每一点处至多一个 $Df_k$ 非零，于是
+\begin{align*}
+\int_{\mathbb{R}^n}\Bigl\lvert\sum_{k=1}^j\frac{Df_k}{k}\Bigr\rvert^p\diff x=\sum_{k=1}^j\frac{1}{k^p}\int_{\mathbb{R}^n}\lvert Df_k\rvert^p\diff x ,
+\end{align*}
+两边除以 $S_j^p$ 即得等式。其五，$\sum_k k^{-p}$ 收敛（$p>1$）而 $S_j\to\infty$，故右端趋于 $0$；令 $j\to\infty$ 得 $\Cap_p(A)=0$。
+\end{proof}
+
+\begin{theorem}[容量与 Hausdorff 测度的进一步关系]\label{theorem:ch04-4-17}
+设 $n\geqslant2$ 为整数，$1\leqslant p<\infty$，$A\subseteq\mathbb{R}^n$ 为任意子集，$\mathcal{H}^s$ 为 $s$ 维 Hausdorff 测度。若 $\Cap_p(A)=0$，则
+\begin{align*}
+\mathcal{H}^s(A)=0\qquad\text{对一切 }s>n-p .
+\end{align*}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-17-注}
+后文\cref{section:ch05-06}将证明：$\Cap_1(A)=0$ 当且仅当 $\mathcal{H}^{n-1}(A)=0$。% XREF p=181 "We will prove later in Section 5.6 that Cap_1(A) = 0 if and only if H^{n-1}(A) = 0."
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-17; kind=motivation; 说明该定理的方向与 4.16 相反：零容量推出所有高于 n-p 维的 Hausdorff 测度为零，即容量的临界维数不超过 n-p
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-17-动机}
+\cref{theorem:ch04-4-16}断言 $\mathcal{H}^{n-p}$ 有限的集合容量为零，本定理断言零容量的集合在一切高于 $n-p$ 的维数上 Hausdorff 测度为零；两条合起来说明容量的临界维数恰为 $n-p$：容量为零的集合不能承载 $s>n-p$ 维的 Hausdorff 测度，而 $\mathcal{H}^{n-p}$ 有限的集合必为零容量。证明的思路是把零容量展开为能量按 $2^{-i}$ 衰减的一列容许函数之和 $g$，于是 $g$ 在 $A$ 的每一点附近以任意高的高度被「堆起来」；再用球上的 Poincaré 不等式（\cref{theorem:ch04-4-9}）证明这种堆高会使 $s$ 阶的球上平均能量发散，从而 $A$ 含于\cref{theorem:ch02-2-10}的例外集 $\Lambda_s$ 之内。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-17; kind=hypotheses; 逐条分析 1<=p<∞、零容量假设、s>n-p 的范围，并说明 s>=n 时结论自动成立
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-17-条件}
+\begin{enumerate}[(i)]
+\item $1\leqslant p<\infty$：本节只在 $1\leqslant p<n$ 的范围内定义 $K^p$ 与 $\Cap_p$（\cref{definition:ch04-4-9}），且 $p^*=\frac{np}{n-p}$ 只在 $p<n$ 时存在，故下面的证明在 $1\leqslant p<n$ 内进行。$p=1$ 时取 $1^*=\frac{n}{n-1}$，论证同样可行；$p\geqslant n$ 时须以 Morrey 型嵌入代替 GNS 不等式，其论证不在本证明的范围内。% XREF internal
+\item $\Cap_p(A)=0$：该假设使对每个 $i$ 存在 $f_i\in K^p$ 使 $A\subseteq\{f_i\geqslant1\}^{\circ}$ 且能量小于 $2^{-i}$，从而级数 $\sum_i\lVert Df_i\rVert_{L^p}$ 收敛。若 $\Cap_p(A)>0$，则能量不能按几何速率衰减，$g$ 的能量可能无穷，构造失效。
+\item $s>n-p$：这是结论中 Hausdorff 测度的维数范围；$\theta:=s-(n-p)>0$ 使几何级数 $\sum_l(2^{-l})^{\theta/p}$ 收敛，这是第 (3) 段反证的关键。$s=n-p$ 时 $\theta=0$，该论证只给出平均值的对数型增长，不能得到矛盾。
+\item 结论对一切子集 $A$ 成立，不要求 $A$ 可测。$s>n$ 时结论对每个 $A$ 自动成立；$s=n$ 时由 $\Cap_p(A)=0$ 与\cref{theorem:ch04-4-15}(vi) 得 $\mathcal{L}^n(A)=0$，从而 $\mathcal{H}^n(A)=0$。故实质内容在 $n-p<s<n$ 的范围。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）设 $\Cap_p(A)=0$ 且 $n-p<s<\infty$。则对一切 $i\geqslant1$，存在 $f_i\in K^p$ 使 $A\subseteq\{f_i\geqslant1\}^{\circ}$ 且
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df_i\rvert^p\diff x\leqslant\frac{1}{2^i}.
+\end{align*}
+令 $g:=\sum_{i=1}^{\infty}f_i$。则
+\begin{align*}
+\Bigl(\int_{\mathbb{R}^n}\lvert Dg\rvert^p\diff x\Bigr)^{\frac1p}\leqslant\sum_{i=1}^{\infty}\Bigl(\int_{\mathbb{R}^n}\lvert Df_i\rvert^p\diff x\Bigr)^{\frac1p}<\infty ,
+\end{align*}
+且由 Gagliardo--Nirenberg--Sobolev 不等式（\cref{theorem:ch04-4-8}），% XREF p=181 "and by the Gagliardo–Nirenberg–Sobolev inequality (Theorem 4.8)"
+\begin{align*}
+\Bigl(\int_{\mathbb{R}^n}\lvert g\rvert^{p^*}\diff x\Bigr)^{\frac{1}{p^*}}&\leqslant\sum_{i=1}^{\infty}\Bigl(\int_{\mathbb{R}^n}\lvert f_i\rvert^{p^*}\diff x\Bigr)^{\frac{1}{p^*}}\\
+&\leqslant\sum_{i=1}^{\infty}C_1\Bigl(\int_{\mathbb{R}^n}\lvert Df_i\rvert^p\diff x\Bigr)^{\frac1p}<\infty .
+\end{align*}
+于是 $g\in K^p$。
+
+% SUPPLEMENT: parent=theorem:ch04-4-17; kind=proof; 补出第 (1) 段三处的依据：级数的 L^p 与 L^{p*} 收敛、弱梯度的可加性、以及 g>=0 使 g 落在 K^p 中
+第 (1) 段的三处依据如下。其一，两个级数都绝对收敛：由 $\sum_i\lVert Df_i\rVert_{L^p}\leqslant\sum_i2^{-i/p}<\infty$ 与 $f_i\in L^{p^*}$，三角不等式对部分和成立再取极限即得两个不等式。其二，$Dg=\sum_iDf_i$：部分和 $g_N:=\sum_{i\leqslant N}f_i$ 满足 $Dg_N=\sum_{i\leqslant N}Df_i$，且 $g_N\to g$ 于 $L^{p^*}$、$Dg_N\to\sum_iDf_i$ 于 $L^p$，故对 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 取极限得 $\int g\diver\phi=-\int\phi\cdot\sum_iDf_i$，即 $Dg=\sum_iDf_i$。其三，$g\geqslant0$ 由 $f_i\geqslant0$ 得，$g\in L^{p^*}$ 与 $Dg\in L^p$ 由上两式得，故 $g\in K^p$。
+
+（2）注意 $A\subseteq\{g\geqslant m\}^{\circ}$ 对一切 $m\geqslant1$ 成立。固定任意 $a\in A$。则当 $r$ 充分小、使 $B(a,r)\subseteq\{g\geqslant m\}^{\circ}$ 时，$(g)_{a,r}\geqslant m$；于是 $(g)_{a,r}\to\infty$（$r\to0$）。
+
+% SUPPLEMENT: parent=theorem:ch04-4-17; kind=proof; 补出 (2) 中两个断言的依据：每个 f_i 在 A 的邻域上不小于 1 给出 g>=m，以及平均值随 r→0 单调趋于 g(a) 的下界
+第 (2) 段的依据如下。对 $x\in A$，一切 $i$ 都满足 $x\in\{f_i\geqslant1\}^{\circ}$，即 $f_i>1$ 于 $x$ 的某个邻域上；取 $i=1,\cdots,m$ 的相应邻域之交，得 $x$ 的一个邻域使每个 $f_i>1$，于是该邻域上 $g=\sum_i f_i\geqslant\sum_{i\leqslant m}f_i>m$，故 $A\subseteq\{g>m\}$，而 $\{g>m\}$ 是开集。当 $B(a,r)\subseteq\{g\geqslant m\}^{\circ}$ 时，对一切 $y\in B(a,r)$ 有 $g(y)\geqslant m$，故平均值 $(g)_{a,r}\geqslant m$；由于 $a\in A$ 固定而 $m$ 任意，$(g)_{a,r}\to\infty$（$r\to0$）。
+
+（3）\textbf{断言}：对每个 $a\in A$，
+\begin{align*}
+\limsup_{r\to0}\frac{1}{r^s}\int_{B(a,r)}\lvert Dg\rvert^p\diff x=+\infty .
+\end{align*}
+
+\textbf{断言的证明}：设 $a\in A$ 且
+\begin{align*}
+\limsup_{r\to0}\frac{1}{r^s}\int_{B(a,r)}\lvert Dg\rvert^p\diff x<\infty .
+\end{align*}
+则存在常数 $M<\infty$ 使
+\begin{align*}
+\frac{1}{r^s}\int_{B(a,r)}\lvert Dg\rvert^p\diff x\leqslant M
+\end{align*}
+对一切 $0<r\leqslant1$ 成立。则对 $0<r\leqslant1$，
+\begin{align*}
+\fint_{B(a,r)}\lvert g-(g)_{a,r}\rvert^p\diff x\leqslant C_2r^p\fint_{B(a,r)}\lvert Dg\rvert^p\diff x\leqslant Cr^\theta ,
+\end{align*}
+其中 $\theta:=s-(n-p)>0$。于是
+\begin{align*}
+\lvert(g)_{a,\frac r2}-(g)_{a,r}\rvert&=\frac{1}{\mathcal{L}^n(B(a,\frac r2))}\Bigl\lvert\int_{B(a,\frac r2)}g-(g)_{a,r}\diff x\Bigr\rvert\\
+&\leqslant2^n\fint_{B(a,r)}\lvert g-(g)_{a,r}\rvert\diff x\\
+&\leqslant2^n\Bigl(\fint_{B(a,r)}\lvert g-(g)_{a,r}\rvert^p\diff x\Bigr)^{\frac1p}\\
+&=Cr^{\frac\theta p} .
+\end{align*}
+于是若 $k>j$，
+\begin{align*}
+\lvert(g)_{a,\frac1{2^k}}-(g)_{a,\frac1{2^j}}\rvert\leqslant\sum_{l=j+1}^k\lvert(g)_{a,\frac1{2^l}}-(g)_{a,\frac1{2^{l-1}}}\rvert\leqslant C\sum_{l=j+1}^k\Bigl(\frac{1}{2^{l-1}}\Bigr)^{\frac\theta p}.
+\end{align*}
+最后一个和是几何级数的尾部，故 $\{(g)_{a,\frac1{2^k}}\}_{k=1}^{\infty}$ 是 Cauchy 序列。于是 $(g)_{a,\frac1{2^k}}\not\to\infty$，这与 $(g)_{a,r}\to\infty$（$r\to0$）矛盾。
+
+% SUPPLEMENT: parent=theorem:ch04-4-17; kind=proof; 补出断言证明中的四处依据：M 的存在性、Poincaré 不等式与 θ 的计算、平均值差估计的三个不等号、以及 Cauchy 序列与发散到无穷的矛盾
+断言证明的四步依据如下。其一，若上极限有限，则可取 $M$ 为比该上极限大的数，使所述不等式对一切充分小的 $r$ 成立；必要时增大 $M$ 使其对 $0<r\leqslant1$ 全部成立。其二，第一个不等号是球上的 Poincaré 不等式（\cref{theorem:ch04-4-9}(ii)），其中 $g\in W^{1,p}(B^{0}(a,r))$ 由 $g\in K^p$ 得到；第二个不等号由 $\fint_{B(a,r)}\lvert Dg\rvert^p\diff x=\frac{1}{\alpha(n)r^n}\int_{B(a,r)}\lvert Dg\rvert^p\diff x\leqslant\frac{M}{\alpha(n)}r^{s-n}$ 得到，% XREF internal
+于是右端不超过 $Cr^{p+s-n}=Cr^{\theta}$，这正是 $\theta=s-(n-p)>0$ 的定义。其三，平均值差估计中，第一个等号是平均值的定义，第一个不等号由 $B(a,\frac r2)\subseteq B(a,r)$ 与 $\mathcal{L}^n(B(a,r))=2^n\mathcal{L}^n(B(a,\frac r2))$ 得到，第二个不等号是 Hölder 不等式（或 Jensen 不等式）用于概率测度 $\fint_{B(a,r)}\diff x$，最后的等号即前式。其四，$\frac\theta p>0$ 使 $\sum_l(2^{-l})^{\theta/p}<\infty$，故 $k,j\to\infty$ 时右端趋于 $0$，序列为 Cauchy 序列从而有界；而 $(g)_{a,r}\to\infty$（$r\to0$）说明沿 $r=2^{-k}$ 该序列发散到 $+\infty$，两者矛盾。
+
+于是
+\begin{align*}
+A&\subseteq\Bigl\{a\in\mathbb{R}^n\Bigm|\limsup_{r\to0}\frac{1}{r^s}\int_{B(a,r)}\lvert Dg\rvert^p\diff x=+\infty\Bigr\}\\
+&\subseteq\Bigl\{a\in\mathbb{R}^n\Bigm|\limsup_{r\to0}\frac{1}{r^s}\int_{B(a,r)}\lvert Dg\rvert^p\diff x>0\Bigr\}=:\Lambda_s .
+\end{align*}
+但由于 $\lvert Dg\rvert^p$ 是 $\mathcal{L}^n$-可和的，按\cref{theorem:ch02-2-10}有 $\mathcal{H}^s(\Lambda_s)=0$。% XREF p=182 "But since |Dg|^p is L^n-summable, H^s(Λ_s) = 0, according to Theorem 2.10."
+
+% SUPPLEMENT: parent=theorem:ch04-4-17; kind=proof; 补出最后一步的两点：s>=n 时结论自动成立，故可设 s<n 以应用定理 2.10，以及 Λ_s 与该定理中集合的同一性
+最后一步的两点补充如下。其一，若 $s>n$，则用直径趋于零的覆盖即得 $\mathcal{H}^s(A)=0$，结论自动成立；若 $s=n$，则由\cref{theorem:ch04-4-15}(vi) 得 $\mathcal{L}^n(A)\leqslant C\Cap_p(A)^{n/(n-p)}=0$，故 $\mathcal{H}^n(A)=0$（$\mathcal{H}^n$ 与 $\mathcal{L}^n$ 只差一个常数因子）。于是可设 $n-p<s<n$，此时\cref{theorem:ch02-2-10}的维数条件 $0\leqslant s<n$ 满足。其二，$\lvert Dg\rvert^p\in L^1(\mathbb{R}^n)\subseteq L^1_{\mathrm{loc}}(\mathbb{R}^n)$，且上面定义的 $\Lambda_s$ 与\cref{theorem:ch02-2-10}中的集合逐字相同（取该定理中的 $f:=\lvert Dg\rvert^p$），故由该定理得 $\mathcal{H}^s(\Lambda_s)=0$；又 $A\subseteq\Lambda_s$，故 $\mathcal{H}^s(A)=0$。% XREF internal
+\end{proof}
+
+\end{document}

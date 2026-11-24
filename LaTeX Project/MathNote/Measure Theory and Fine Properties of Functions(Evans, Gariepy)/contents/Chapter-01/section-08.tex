@@ -1,0 +1,310 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{Riesz 表示定理}\label{section:ch01-08}
+
+在本书中，前述抽象理论将应用于两类主要的测度来源。它们是：(a) 由\cref{chapter:ch02}构造的 Hausdorff 测度；(b) 刻画某些线性泛函的 Radon 测度。它们如下产生：% XREF p=74 "Hausdorff measures, constructed in Chapter 2"
+
+% SUPPLEMENT: parent=theorem:ch01-1-38; kind=hypotheses; 预先说明本节使用的函数空间与支集记号，使定理与定义的陈述自足
+本节使用如下记号：$C_c(\mathbb{R}^n;\mathbb{R}^m)$ 表示 $\mathbb{R}^n$ 上具有紧支集的连续 $\mathbb{R}^m$-值函数全体，$C_c(\mathbb{R}^n):=C_c(\mathbb{R}^n;\mathbb{R})$，$C_c^{\infty}(\mathbb{R}^n)$ 表示 $\mathbb{R}^n$ 上具有紧支集的无穷次可微实值函数全体；对 $f\in C_c(\mathbb{R}^n;\mathbb{R}^m)$，记 $\spt(f):=\overline{\{x\in\mathbb{R}^n\mid f(x)\neq0\}}$ 为 $f$ 的支集。
+
+\begin{theorem}[Riesz 表示定理]\label{theorem:ch01-1-38}
+设 $n,m$ 为正整数，$L:C_c(\mathbb{R}^n;\mathbb{R}^m)\to\mathbb{R}$ 为线性泛函，且对每个紧集 $K\subseteq\mathbb{R}^n$ 满足
+\begin{align*}
+\sup\{L(f)\mid f\in C_c(\mathbb{R}^n;\mathbb{R}^m),\ \lvert f\rvert\leqslant1,\ \spt(f)\subseteq K\}<\infty. \qquad(\star)
+\end{align*}
+则存在 $\mathbb{R}^n$ 上的 Radon 测度 $\mu$ 与 $\mu$-可测函数 $\sigma:\mathbb{R}^n\to\mathbb{R}^m$，使得
+\begin{align*}
+\lvert\sigma(x)\rvert=1\quad\text{对 }\mu\text{-a.e. }x,
+\end{align*}
+并且
+\begin{align*}
+L(f)=\int_{\mathbb{R}^n}f\cdot\sigma\diff\mu
+\end{align*}
+对一切 $f\in C_c(\mathbb{R}^n;\mathbb{R}^m)$ 成立。
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch01-1-38; kind=motivation; 说明 Riesz 表示定理如何把 C_c 上的线性泛函与 Radon 测度及单位向量值密度对应起来，并概括八步证明的构造线索
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-38-动机}
+\cref{theorem:ch01-1-38}给出 $C_c(\mathbb{R}^n;\mathbb{R}^m)$ 上线性泛函的积分表示：泛函的全貌由一对对象决定，即一个 Radon 测度 $\mu$ 与一个 $\mu$-可测的向量值密度 $\sigma$，且 $\sigma$ 在 $\mu$-a.e. 意义下取单位长度。条件 $(\star)$ 正是 $L$ 在每个紧集上按一致范数的局部有界性，因此定理可以读作「$C_c$ 的对偶空间由 Radon 测度与有界密度刻画」。% XREF internal
+证明的主线如下。第一步用 $L$ 在开集上定义 $\mu$，即取 $L$ 在支集含于该开集、模不超过 $1$ 的函数上的上确界，并用外逼近把 $\mu$ 扩充到一切集合；断言 1 与断言 2 验证 $\mu$ 是 Radon 测度。其后引入 $\lambda(f)=\sup_{\lvert g\rvert\leqslant f}\lvert L(g)\rvert$：断言 3 证明 $\lambda$ 在 $C_c^+$ 上可加，断言 4 证明 $\lambda(f)=\int_{\mathbb{R}^n}f\diff\mu$，这一步用紧集从内部逼近水平集 $U_j$，并把 $f$ 用阶梯函数夹住。断言 5 对每个单位向量 $e$ 考虑 $\lambda_e(f)=L(fe)$，用 $L^1(\mu)$ 的对偶定理得到 $\sigma_e$，再拼成 $\sigma$。断言 6 用开集 $U$ 上的恒等式 $\mu(U)=\int_U\lvert\sigma\rvert\diff\mu$ 定出 $\lvert\sigma\rvert=1$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-38; kind=hypotheses; 逐条分析线性性、局部有界条件 (⋆)、Radon 测度的紧集有限性与结论中的几乎处处归一化，并说明 (⋆) 不可删除
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-38-条件}
+\begin{enumerate}[(i)]
+\item 线性性贯穿全部论证：$\mu$ 的定义、$\lambda$ 的齐次性与可加性、$\lambda_e$ 的线性性以及最终把 $\sigma_e$ 拼成 $\sigma$，都依赖 $L$ 的线性性。若 $L$ 只满足次线性或凸性，对应的表示定理需要另行陈述。
+\item 条件 $(\star)$ 是 $L$ 在 $C_c(\mathbb{R}^n;\mathbb{R}^m)$ 上的局部有界性，等价于 $L$ 按「在每个紧集上一致收敛」的拓扑连续。它保证 $\mu(K)<\infty$ 对每个紧集 $K$ 成立，从而使 $\mu$ 为 Radon 测度，同时保证 $\lambda(f)<\infty$ 对 $f\in C_c^+(\mathbb{R}^n)$ 成立。
+\item 条件 $(\star)$ 不可删除。取 $n=m=1$ 与 $L(f):=f'(0)$，则 $L$ 是 $C_c(\mathbb{R};\mathbb{R})$ 上的线性泛函。取 $\varphi\in C_c^{\infty}(\mathbb{R})$ 使 $\varphi\equiv1$ 于 $[-1,1]$、$\spt(\varphi)\subseteq[-2,2]$，并令 $f_k(x):=\sin(kx)\varphi(x)$、$K:=[-2,2]$，则 $\lvert f_k\rvert\leqslant1$、$\spt(f_k)\subseteq K$ 而 $L(f_k)=k$，故 $(\star)$ 不成立。此时不存在 Radon 测度 $\mu$ 与 $\mu$-可测函数 $\sigma$ 使 $L(f)=\int f\sigma\diff\mu$：这样的表示将给出 $\lvert L(f)\rvert\leqslant\mu(\spt f)\lVert f\rVert_{L^{\infty}}$，与 $L(f_k)=k$ 矛盾。
+\item 结论中的 $\lvert\sigma\rvert=1$ 是密度的规范形式。若某个表示 $L(f)=\int f\cdot\nu\diff\mu$ 中的 $\nu$ 不取单位长度，则把 $\lvert\nu\rvert$ 并入测度并令 $\sigma=\nu/\lvert\nu\rvert$（在 $\nu\neq0$ 处），即可化为定理的形式；此时 $\mu$ 正是\cref{definition:ch01-1-30}的变差测度。% XREF internal
+\item $m=1$ 时结论化为 $L(f)=\int f\sigma\diff\mu$，其中 $\sigma=\pm1$ $\mu$-a.e.；若进一步设 $L$ 非负，则 $\sigma=1$，这正是\cref{theorem:ch01-1-39}的内容。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[变差测度]\label{definition:ch01-1-30}
+设 $L:C_c(\mathbb{R}^n;\mathbb{R}^m)\to\mathbb{R}$ 为线性泛函。称定义在 $\mathbb{R}^n$ 的开子集上的集函数 $\mu$ 为与 $L$ 相伴的\emph{变差测度}，是指对每个开集 $V\subseteq\mathbb{R}^n$，
+\begin{align*}
+\mu(V):=\sup\{L(f)\mid f\in C_c(\mathbb{R}^n;\mathbb{R}^m),\ \lvert f\rvert\leqslant1,\ \spt(f)\subseteq V\},
+\end{align*}
+其中 $\lvert f\rvert$ 表示向量值函数 $f$ 的欧氏范数，右端的上确界取遍 $C_c(\mathbb{R}^n;\mathbb{R}^m)$ 中满足 $\lvert f\rvert\leqslant1$ 且 $\spt(f)\subseteq V$ 的一切 $f$。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-30; kind=motivation; 说明变差测度的含义：它把线性泛函在每个开集上的局部大小量化，并在表示定理中恰为测度 μ
+\begin{remark}\phantomsection\label{remark:ch01-def-1-30-动机}
+\cref{definition:ch01-1-30}把线性泛函 $L$ 的局部大小量化为一个集函数：$\mu(V)$ 是 $L$ 在 $C_c(\mathbb{R}^n;\mathbb{R}^m)$ 中支集含于 $V$、模不超过 $1$ 的函数上取值的上确界，因此它度量的是 $L$ 在 $V$ 内的强度。在\cref{theorem:ch01-1-38}的表示 $L(f)=\int f\cdot\sigma\diff\mu$ 中，若 $\lvert\sigma\rvert=1$，则对每个开集 $V$，% XREF internal
+\begin{align*}
+\sup\{L(f)\mid\lvert f\rvert\leqslant1,\ \spt(f)\subseteq V\}
+&=\sup\Bigl\{\int_{\mathbb{R}^n}f\cdot\sigma\diff\mu\mid\lvert f\rvert\leqslant1,\ \spt(f)\subseteq V\Bigr\}\\
+&=\mu(V),
+\end{align*}
+故定义中的集函数与定理结论中的 Radon 测度 $\mu$ 一致；这个等式也是断言 6 证明 $\lvert\sigma\rvert=1$ 的出发点。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-30; kind=hypotheses; 说明定义只用到线性性、上确界取在开集上，并说明它在定理证明第 1 步如何扩充为全空间上的 Radon 测度
+\begin{remark}\phantomsection\label{remark:ch01-def-1-30-条件}
+\begin{enumerate}[(i)]
+\item 定义只用到 $L$ 的线性性，未用到条件 $(\star)$。若 $(\star)$ 不成立，则存在开集 $V$ 使 $\mu(V)=\infty$：取 $L(f)=f'(0)$ 与包含 $0$ 的开集 $V$，并取一列 $f_k$ 支集含于 $V$、$\lvert f_k\rvert\leqslant1$ 而 $f_k'(0)\to\infty$，即知 $\mu(V)=\infty$。
+\item 上确界只取在开集 $V$ 上，因此定义本身给出的是开集上的集函数；在\cref{theorem:ch01-1-38}的证明第 1 步中，它通过% XREF internal
+\begin{align*}
+\mu(A):=\inf\{\mu(V)\mid A\subseteq V,\ V\text{ 为开集}\}\qquad(A\subseteq\mathbb{R}^n)
+\end{align*}
+扩充到 $\mathbb{R}^n$ 的一切子集，扩充后的集函数在 $(\star)$ 成立时是 Radon 测度。
+\item 上确界中的约束是 $\lvert f\rvert\leqslant1$ 而非 $\lVert f\rVert\leqslant1$：对向量值函数，$\lvert f\rvert$ 取逐点的欧氏范数。若把 $L$ 换成 $cL$，则相应的变差测度变为 $\lvert c\rvert\mu$，故定义关于 $L$ 是正齐次的。
+\item $m=1$ 时 $\mu$ 是 $L$ 的全变差测度：对非负的 $L$，$\mu(V)$ 等于 $L$ 在 $C_c^{\infty}$ 中支集含于 $V$、模不超过 $1$ 的非负函数上取值的上确界，且\cref{theorem:ch01-1-39}给出 $L(f)=\int f\diff\mu$。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+1. 按\cref{definition:ch01-1-30}在开集 $V$ 上定义 $\mu$，再对任意 $A\subseteq\mathbb{R}^n$ 令% XREF p=75 "Define μ on open sets V as above and then set"
+\begin{align*}
+\mu(A):=\inf\{\mu(V)\mid A\subseteq V,\ V\text{ 为开集}\}.
+\end{align*}
+
+2. \emph{断言 1：$\mu$ 是测度。}
+
+\emph{断言 1 的证明：}设 $V,\{V_i\}_{i=1}^{\infty}$ 为 $\mathbb{R}^n$ 的开子集，且 $V\subseteq\bigcup_{i=1}^{\infty}V_i$。取 $g\in C_c(\mathbb{R}^n;\mathbb{R}^m)$ 使 $\lvert g\rvert\leqslant1$ 且 $\spt(g)\subseteq V$。由于 $\spt(g)$ 紧，存在指标 $k$ 使 $\spt(g)\subseteq\bigcup_{j=1}^{k}V_j$。
+
+取从属于开覆盖 $\{V_1,\cdots,V_k\}$ 的单位分解，即光滑非负函数 $\zeta_1,\cdots,\zeta_k$ 满足 $\spt\zeta_j\subset V_j$（$1\leqslant j\leqslant k$）且 $\sum_{j=1}^{k}\zeta_j=1$ 于 $\spt g$ 上。于是 $g=\sum_{j=1}^{k}g\zeta_j$，从而
+\begin{align*}
+\lvert L(g)\rvert\leqslant\sum_{j=1}^{k}\lvert L(g\zeta_j)\rvert\leqslant\sum_{j=1}^{\infty}\mu(V_j).
+\end{align*}
+对 $g$ 取上确界，得 $\mu(V)\leqslant\sum_{j=1}^{\infty}\mu(V_j)$。
+
+现设 $\{A_j\}_{j=1}^{\infty}$ 为任意集合族，且 $A\subseteq\bigcup_{j=1}^{\infty}A_j$。固定 $\varepsilon>0$，取开集 $V_j$ 使 $A_j\subseteq V_j$ 且 $\mu(A_j)+\varepsilon/2^j\geqslant\mu(V_j)$。则
+\begin{align*}
+\mu(A)\leqslant\mu\Bigl(\bigcup_{j=1}^{\infty}V_j\Bigr)\leqslant\sum_{j=1}^{\infty}\mu(V_j)\leqslant\sum_{j=1}^{\infty}\mu(A_j)+\varepsilon.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-38; kind=proof; 给出断言 1 中其余两条测度公理的验证：空集测度为零与单调性
+此外，由定义 $\mu(\varnothing)=0$；又当 $A\subseteq B$ 时，覆盖 $B$ 的开集也覆盖 $A$，故 $\mu(A)\leqslant\mu(B)$。结合上述次可加性，$\mu$ 是测度。
+
+3. \emph{断言 2：$\mu$ 是 Radon 测度。}
+
+\emph{断言 2 的证明：}设 $U_1,U_2$ 为开集且 $\operatorname{dist}(U_1,U_2)>0$。对满足 $\lvert g\rvert\leqslant1$、$\spt(g)\subseteq U_1\cup U_2$ 的 $g$，取从属于 $\{U_1,U_2\}$ 的单位分解 $\zeta_1+\zeta_2=1$ 于 $\spt(g)$ 上，则 $g=g\zeta_1+g\zeta_2$、$\spt(g\zeta_j)\subseteq U_j$，于是
+\begin{align*}
+\lvert L(g)\rvert\leqslant\lvert L(g\zeta_1)\rvert+\lvert L(g\zeta_2)\rvert\leqslant\mu(U_1)+\mu(U_2),
+\end{align*}
+故 $\mu(U_1\cup U_2)\leqslant\mu(U_1)+\mu(U_2)$。反之，取 $g_j\in C_c(\mathbb{R}^n;\mathbb{R}^m)$ 使 $\lvert g_j\rvert\leqslant1$、$\spt(g_j)\subseteq U_j$ 且 $L(g_j)\geqslant\mu(U_j)-\varepsilon$（必要时以 $-g_j$ 代替 $g_j$），并令 $g:=g_1+g_2$，则 $\lvert g\rvert\leqslant1$、$\spt(g)\subseteq U_1\cup U_2$ 且 $L(g)\geqslant\mu(U_1)+\mu(U_2)-2\varepsilon$，故 $\mu(U_1\cup U_2)\geqslant\mu(U_1)+\mu(U_2)$。因此
+\begin{align*}
+\mu(U_1\cup U_2)=\mu(U_1)+\mu(U_2).
+\end{align*}
+对一般的集合 $A_1,A_2\subseteq\mathbb{R}^n$ 且 $\operatorname{dist}(A_1,A_2)>0$，取距离大于零的开集 $V_1\supseteq A_1$、$V_2\supseteq A_2$，应用上式后对 $V_1,V_2$ 取下确界，得 $\mu(A_1\cup A_2)=\mu(A_1)+\mu(A_2)$。根据 Carathéodory 判据（\cref{theorem:ch01-1-9}），$\mu$ 是 Borel 测度。% XREF p=75 "According to Carathéodory's criterion (Theorem 1.9)"
+
+此外，由定义，$\mu$ 是 Borel 正则的；事实上，给定 $A\subseteq\mathbb{R}^n$，存在递减开集列 $\{V_k\}$ 使 $A\subseteq V_k$ 且 $\mu(V_k)\leqslant\mu(A)+1/k$ 对一切 $k$ 成立，于是 $\mu(A)=\mu\bigl(\bigcap_{k=1}^{\infty}V_k\bigr)$。最后，有界性条件 $(\star)$ 蕴含 $\mu(K)<\infty$ 对每个紧集 $K$ 成立。
+
+4. 现令 $C_c^+(\mathbb{R}^n):=\{f\in C_c(\mathbb{R}^n)\mid f\geqslant0\}$；对 $f\in C_c^+(\mathbb{R}^n)$，令
+\begin{align*}
+\lambda(f):=\sup\{\lvert L(g)\rvert\mid g\in C_c(\mathbb{R}^n;\mathbb{R}^m),\ \lvert g\rvert\leqslant f\}.
+\end{align*}
+对一切 $f_1,f_2\in C_c^+(\mathbb{R}^n)$，由 $f_1\leqslant f_2$ 得 $\lambda(f_1)\leqslant\lambda(f_2)$；又对一切 $c\geqslant0$ 与 $f\in C_c^+(\mathbb{R}^n)$ 有 $\lambda(cf)=c\lambda(f)$。
+
+5. \emph{断言 3：对一切 $f_1,f_2\in C_c^+(\mathbb{R}^n)$，$\lambda(f_1+f_2)=\lambda(f_1)+\lambda(f_2)$。}
+
+\emph{断言 3 的证明：}若 $g_1,g_2\in C_c(\mathbb{R}^n;\mathbb{R}^m)$ 满足 $\lvert g_1\rvert\leqslant f_1$、$\lvert g_2\rvert\leqslant f_2$，则 $\lvert g_1+g_2\rvert\leqslant f_1+f_2$。必要时以 $-g_1$、$-g_2$ 代替 $g_1$、$g_2$，可设 $L(g_1),L(g_2)\geqslant0$。于是
+\begin{align*}
+\lvert L(g_1)\rvert+\lvert L(g_2)\rvert=L(g_1+g_2)=\lvert L(g_1+g_2)\rvert\leqslant\lambda(f_1+f_2).
+\end{align*}
+对满足上述条件的 $g_1,g_2$ 取上确界，得
+\begin{align*}
+\lambda(f_1)+\lambda(f_2)\leqslant\lambda(f_1+f_2).
+\end{align*}
+现固定 $g\in C_c(\mathbb{R}^n;\mathbb{R}^m)$，$\lvert g\rvert\leqslant f_1+f_2$，并令
+\begin{align*}
+g_i:=
+\begin{cases}
+\dfrac{f_ig}{f_1+f_2}, & f_1+f_2>0,\\[4pt]
+0, & f_1+f_2=0,
+\end{cases}
+\qquad i=1,2.
+\end{align*}
+则 $g_1,g_2\in C_c(\mathbb{R}^n;\mathbb{R}^m)$ 且 $g=g_1+g_2$；又 $\lvert g_i\rvert\leqslant f_i$（$i=1,2$），从而
+\begin{align*}
+\lvert L(g)\rvert\leqslant\lvert L(g_1)\rvert+\lvert L(g_2)\rvert\leqslant\lambda(f_1)+\lambda(f_2).
+\end{align*}
+于是
+\begin{align*}
+\lambda(f_1+f_2)\leqslant\lambda(f_1)+\lambda(f_2).
+\end{align*}
+
+6. \emph{断言 4：对一切 $f\in C_c^+(\mathbb{R}^n)$，$\lambda(f)=\int_{\mathbb{R}^n}f\diff\mu$。}
+
+\emph{断言 4 的证明：}固定 $\varepsilon>0$。取 $0=t_0<t_1<\cdots<t_N$，使得 $t_N=2\lVert f\rVert_{L^{\infty}}$、$0<t_i-t_{i-1}<\varepsilon$（$i=1,\cdots,N$）且 $\mu(f^{-1}\{t_i\})=0$（$i=1,\cdots,N$）。令 $U_j:=f^{-1}((t_{j-1},t_j))$，则 $U_j$ 是开集且 $\mu(U_j)<\infty$。
+
+由\cref{theorem:ch01-1-8}，存在紧集 $K_j$ 使 $K_j\subseteq U_j$ 且 $\mu(U_j-K_j)<\varepsilon/N$（$j=1,2,\cdots,N$）。% XREF p=76 "By Theorem 1.8, there exist compact sets"
+此外，存在函数 $g_j\in C_c(\mathbb{R}^n;\mathbb{R}^m)$，满足 $\lvert g_j\rvert\leqslant1$、$\spt(g_j)\subseteq U_j$ 且 $\lvert L(g_j)\rvert\geqslant\mu(U_j)-\varepsilon/N$。又存在函数 $h_j\in C_c^+(\mathbb{R}^n)$，使得 $\spt(h_j)\subseteq U_j$、$0\leqslant h_j<1$ 且 $h_j\equiv1$ 于紧集 $K_j\cup\spt(g_j)$ 上。于是
+\begin{align*}
+\lambda(h_j)\geqslant\lvert L(g_j)\rvert\geqslant\mu(U_j)-\frac{\varepsilon}{N}
+\end{align*}
+并且
+\begin{align*}
+\lambda(h_j)&=\sup\{\lvert L(g)\rvert\mid g\in C_c(\mathbb{R}^n;\mathbb{R}^m),\ \lvert g\rvert\leqslant h_j\}\\
+&\leqslant\sup\{\lvert L(g)\rvert\mid g\in C_c(\mathbb{R}^n;\mathbb{R}^m),\ \lvert g\rvert\leqslant1,\ \spt(g)\subseteq U_j\}\\
+&=\mu(U_j);
+\end{align*}
+从而 $\mu(U_j)-\varepsilon/N\leqslant\lambda(h_j)\leqslant\mu(U_j)$。
+
+定义
+\begin{align*}
+A:=\Bigl\{x\mid f(x)\Bigl(1-\sum_{j=1}^{N}h_j(x)\Bigr)>0\Bigr\}.
+\end{align*}
+则 $A$ 是开集，且
+\begin{align*}
+\mu(A)=\mu\Bigl(\bigcup_{j=1}^{N}(U_j-\{h_j=1\})\Bigr)\leqslant\sum_{j=1}^{N}\mu(U_j-K_j)\leqslant\varepsilon.
+\end{align*}
+于是
+\begin{align*}
+\lambda\Bigl(f-f\sum_{j=1}^{N}h_j\Bigr)
+&=\sup\Bigl\{\lvert L(g)\rvert\mid g\in C_c(\mathbb{R}^n;\mathbb{R}^m),\ \lvert g\rvert\leqslant f-f\sum_{j=1}^{N}h_j\Bigr\}\\
+&\leqslant\sup\{\lvert L(g)\rvert\mid g\in C_c(\mathbb{R}^n;\mathbb{R}^m),\ \lvert g\rvert\leqslant\lVert f\rVert_{L^{\infty}}\chi_A\}\\
+&=\lVert f\rVert_{L^{\infty}}\sup\{L(g)\mid g\in C_c(\mathbb{R}^n;\mathbb{R}^m),\ \lvert g\rvert\leqslant\chi_A\}\\
+&=\lVert f\rVert_{L^{\infty}}\mu(A)\\
+&\leqslant\varepsilon\lVert f\rVert_{L^{\infty}}.
+\end{align*}
+因此
+\begin{align*}
+\lambda(f)&=\lambda\Bigl(f-f\sum_{j=1}^{N}h_j\Bigr)+\lambda\Bigl(f\sum_{j=1}^{N}h_j\Bigr)\\
+&\leqslant\varepsilon\lVert f\rVert_{L^{\infty}}+\sum_{j=1}^{N}\lambda(fh_j)
+\leqslant\varepsilon\lVert f\rVert_{L^{\infty}}+\sum_{j=1}^{N}t_j\mu(U_j)
+\end{align*}
+并且
+\begin{align*}
+\lambda(f)&\geqslant\sum_{j=1}^{N}\lambda(fh_j)\\
+&\geqslant\sum_{j=1}^{N}t_{j-1}\Bigl(\mu(U_j)-\frac{\varepsilon}{N}\Bigr)\\
+&\geqslant\sum_{j=1}^{N}t_{j-1}\mu(U_j)-t_N\varepsilon.
+\end{align*}
+最后，由
+\begin{align*}
+\sum_{j=1}^{N}t_{j-1}\mu(U_j)\leqslant\int_{\mathbb{R}^n}f\diff\mu\leqslant\sum_{j=1}^{N}t_j\mu(U_j)
+\end{align*}
+得
+\begin{align*}
+\Bigl\lvert\lambda(f)-\int_{\mathbb{R}^n}f\diff\mu\Bigr\rvert
+&\leqslant\sum_{j=1}^{N}(t_j-t_{j-1})\mu(U_j)+\varepsilon\lVert f\rVert_{L^{\infty}}+\varepsilon t_N\\
+&\leqslant\varepsilon\mu(\spt(f))+3\varepsilon\lVert f\rVert_{L^{\infty}}.
+\end{align*}
+由于 $\varepsilon>0$ 任意，断言 4 得证。
+
+7. \emph{断言 5：存在 $\mu$-可测函数 $\sigma:\mathbb{R}^n\to\mathbb{R}^m$，使定理结论中的积分表示成立。}
+
+\emph{断言 5 的证明：}固定 $e\in\mathbb{R}^m$，$\lvert e\rvert=1$，并对 $f\in C_c(\mathbb{R}^n)$ 定义 $\lambda_e(f):=L(fe)$。则 $\lambda_e$ 是线性的，且
+\begin{align*}
+\lvert\lambda_e(f)\rvert&=\lvert L(fe)\rvert\\
+&\leqslant\sup\{\lvert L(g)\rvert\mid g\in C_c(\mathbb{R}^n;\mathbb{R}^m),\ \lvert g\rvert\leqslant\lvert f\rvert\}\\
+&=\lambda(\lvert f\rvert)=\int_{\mathbb{R}^n}\lvert f\rvert\diff\mu;
+\end{align*}
+于是 $\lambda_e$ 延拓为 $L^1(\mathbb{R}^n;\mu)$ 上的有界线性泛函。从而存在 $\sigma_e\in L^{\infty}(\mu)$，使得
+\begin{align*}
+\lambda_e(f)=\int_{\mathbb{R}^n}f\sigma_e\diff\mu
+\end{align*}
+对 $f\in C_c(\mathbb{R}^n)$ 成立。
+
+取 $\mathbb{R}^m$ 的标准基 $e_1,\cdots,e_m$，并令 $\sigma:=\sum_{j=1}^{m}\sigma_{e_j}e_j$。则对 $f\in C_c(\mathbb{R}^n;\mathbb{R}^m)$ 有
+\begin{align*}
+L(f)&=\sum_{j=1}^{m}L((f\cdot e_j)e_j)\\
+&=\sum_{j=1}^{m}\int_{\mathbb{R}^n}(f\cdot e_j)\sigma_{e_j}\diff\mu\\
+&=\int_{\mathbb{R}^n}f\cdot\sigma\diff\mu.
+\end{align*}
+
+8. \emph{断言 6：$\lvert\sigma\rvert=1$ $\mu$-a.e.}
+
+\emph{断言 6 的证明：}设 $U\subseteq\mathbb{R}^n$ 为开集，$\mu(U)<\infty$。由定义，
+\begin{align*}
+\mu(U)=\sup\Bigl\{\int_{\mathbb{R}^n}f\cdot\sigma\diff\mu\mid f\in C_c(\mathbb{R}^n;\mathbb{R}^m),\ \lvert f\rvert\leqslant1,\ \spt(f)\subseteq U\Bigr\}. \qquad(\star\star)
+\end{align*}
+现取 $f_k\in C_c(\mathbb{R}^n;\mathbb{R}^m)$，使得 $\lvert f_k\rvert\leqslant1$、$\spt(f_k)\subseteq U$ 且 $f_k\cdot\sigma\to\lvert\sigma\rvert$ $\mu$-a.e.；这样的函数由\cref{theorem:ch01-1-15}保证存在。% XREF p=78 "such functions exist according to Theorem 1.15"
+则
+\begin{align*}
+\int_{U}\lvert\sigma\rvert\diff\mu=\lim_{k\to\infty}\int_{\mathbb{R}^n}f_k\cdot\sigma\diff\mu\leqslant\mu(U),
+\end{align*}
+其中不等号由 $(\star\star)$ 得到。
+
+另一方面，若 $f\in C_c(\mathbb{R}^n;\mathbb{R}^m)$ 满足 $\lvert f\rvert\leqslant1$ 且 $\spt f\subseteq U$，则
+\begin{align*}
+\int_{\mathbb{R}^n}f\cdot\sigma\diff\mu\leqslant\int_{U}\lvert\sigma\rvert\diff\mu.
+\end{align*}
+从而 $(\star\star)$ 蕴含
+\begin{align*}
+\mu(U)\leqslant\int_{U}\lvert\sigma\rvert\diff\mu.
+\end{align*}
+于是 $\mu(U)=\int_{U}\lvert\sigma\rvert\diff\mu$ 对一切开集 $U\subseteq\mathbb{R}^n$ 成立；由此 $\lvert\sigma\rvert=1$ $\mu$-a.e.。
+\end{proof}
+
+上述 Riesz 表示定理的一个直接而有用的应用，是下述关于非负线性泛函的刻画。
+
+\begin{theorem}[非负线性泛函]\label{theorem:ch01-1-39}
+设 $n$ 为正整数，$L:C_c^{\infty}(\mathbb{R}^n)\to\mathbb{R}$ 为线性泛函，且 $L$ 把非负函数映为非负实数，即
+\begin{align*}
+L(f)\geqslant0\quad\text{对一切 }f\in C_c^{\infty}(\mathbb{R}^n),\ f\geqslant0. \qquad(\star)
+\end{align*}
+则存在 $\mathbb{R}^n$ 上的 Radon 测度 $\mu$，使得
+\begin{align*}
+L(f)=\int_{\mathbb{R}^n}f\diff\mu
+\end{align*}
+对一切 $f\in C_c^{\infty}(\mathbb{R}^n)$ 成立。
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch01-1-39; kind=motivation; 说明非负线性泛函必由正 Radon 测度表示，并解释非负性如何自动给出 Riesz 表示定理的局部有界条件
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-39-动机}
+\cref{theorem:ch01-1-39}是\cref{theorem:ch01-1-38}在 $L$ 非负时的特殊情形：此时密度可取 $\sigma=1$，泛函就是关于某个 Radon 测度的积分。定理的实质在于，非负性使条件 $(\star)$ 自动成立：对每个紧集 $K$，用光滑截断函数 $\zeta$ 把 $\lVert f\rVert_{L^{\infty}}\zeta-f$ 变成非负函数，即可由 $L$ 的非负性得到 $\lvert L(f)\rvert\leqslant L(\zeta)\lVert f\rVert_{L^{\infty}}$。因此非负线性泛函与正 Radon 测度之间存在一一对应，这正是 Riesz--Markov 定理的内容。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-39; kind=hypotheses; 逐条说明非负性、光滑紧支集定义域与截断函数的作用，并说明非负性不可删除
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-39-条件}
+\begin{enumerate}[(i)]
+\item 非负性 $(\star)$ 不可删除。取 $L(f):=f'(0)$，则 $L$ 是 $C_c^{\infty}(\mathbb{R})$ 上的线性泛函，但 $L$ 不是非负泛函；若存在 Radon 测度 $\mu$ 使 $L(f)=\int f\diff\mu$，则对 $f_k(x)=\sin(kx)\varphi(x)$（$\varphi\in C_c^{\infty}(\mathbb{R})$，$\varphi\equiv1$ 于 $[-1,1]$，$\spt(\varphi)\subseteq[-2,2]$）有
+\begin{align*}
+k=L(f_k)\leqslant\int\lvert f_k\rvert\diff\mu\leqslant\mu([-2,2])\lVert f_k\rVert_{L^{\infty}}\leqslant\mu([-2,2]),
+\end{align*}
+与 $k$ 可取任意大矛盾。
+\item 定义域取 $C_c^{\infty}(\mathbb{R}^n)$ 而不是 $C_c(\mathbb{R}^n)$：证明先用截断函数在 $C_c^{\infty}$ 上得到局部估计 $\lvert L(f)\rvert\leqslant C(K)\lVert f\rVert_{L^{\infty}}$，再把 $L$ 延拓到 $C_c(\mathbb{R}^n)$，从而可以引用\cref{theorem:ch01-1-38}。% XREF internal
+\item 截断函数 $\zeta$ 的存在性：对紧集 $K$，取包含 $K$ 的开集 $U$ 与光滑函数 $\zeta$，使 $0\leqslant\zeta\leqslant1$、$\zeta\equiv1$ 于 $K$、$\spt(\zeta)\subseteq U$。常数 $C=L(\zeta)$ 依赖于 $K$，不是全局常数。
+\item 结论中的 $\sigma=1$：\cref{theorem:ch01-1-38}给出 $\lvert\sigma\rvert=1$ $\mu$-a.e.；若 $\sigma=-1$ 于某个正测度集上，取支集在该集内的非负 $f$ 即得 $L(f)<0$，与 $(\star)$ 矛盾。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+任取紧集 $K\subseteq\mathbb{R}^n$，选取光滑函数 $\zeta$，使得 $\zeta$ 具有紧支集、$\zeta\equiv1$ 于 $K$ 上且 $0\leqslant\zeta\leqslant1$。
+
+对任意满足 $\spt f\subseteq K$ 的 $f\in C_c^{\infty}(\mathbb{R}^n)$，令 $g:=\lVert f\rVert_{L^{\infty}}\zeta-f\geqslant0$。则由 $(\star)$ 得
+\begin{align*}
+0\leqslant L(g)=\lVert f\rVert_{L^{\infty}}L(\zeta)-L(f),
+\end{align*}
+从而
+\begin{align*}
+L(f)\leqslant C\lVert f\rVert_{L^{\infty}},
+\end{align*}
+其中 $C:=L(\zeta)$。以 $-f$ 代替 $f$，得
+\begin{align*}
+\lvert L(f)\rvert\leqslant C\lVert f\rVert_{L^{\infty}}.
+\end{align*}
+于是 $L$ 延拓为 $C_c(\mathbb{R}^n)$ 到 $\mathbb{R}$ 的线性映射，且满足\cref{theorem:ch01-1-38}的假设。% XREF p=79 "satisfying the hypothesis of the Riesz Representation Theorem"
+因此存在如上所述的 $\mu,\sigma$，使得
+\begin{align*}
+L(f)=\int_{\mathbb{R}^n}f\sigma\diff\mu
+\end{align*}
+对 $f\in C_c^{\infty}(\mathbb{R}^n)$ 成立，其中 $\sigma=\pm1$ $\mu$-a.e.。但此时 $(\star)$ 蕴含 $\sigma=1$ $\mu$-a.e.。
+\end{proof}
+
+\end{document}

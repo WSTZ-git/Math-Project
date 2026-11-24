@@ -21,51 +21,107 @@
 \partial_t u_n+\partial_x[\phi(u_n)]=0 & \text{在 }S,\\
 u_n=u_{0n} & \text{在 }\mathbb{R}\times\{0\}
 \end{cases}
-\qquad(Pn)
+\qquad(P_n)\quad(n\in\mathbb{N}),
 \end{align*}
-研究序列 $\{u_n\}$ 的极限点，我们将证明下列结果。
+其中初值 $u_{0n}\in L^1(\mathbb{R})\cap L^\infty(\mathbb{R})$ 按\eqref{align:ch07-7.44}--\eqref{align:ch07-7.45}逼近 $u_0$（其构造见\cref{section:ch07-逼近问题}），$u_n$ 为 $(P_n)$ 的熵解（见\cref{definition:ch07-Pn熵解}）。研究序列 $\{u_n\}$ 的极限点，我们将证明下列结果。
 
 \begin{theorem}\label{theorem:ch07-7.3.1}
-设 (A0)--(A1) 成立。则问题 (P) 有解 $u$，它是问题 (Pn) 的熵解序列 $\{u_n\}$ 的一个极限点。此外，$u$ 是 (P) 的 Young 测度熵解。
+设 (A0)--(A1) 成立，$\{u_{0n}\}\subseteq L^1(\mathbb{R})\cap L^\infty(\mathbb{R})$ 满足\eqref{align:ch07-7.44}--\eqref{align:ch07-7.45}，$u_n$ 为问题 $(P_n)$ 的熵解（$n\in\mathbb{N}$）。则问题 (P) 存在解 $u$，它由序列 $\{u_n\}$ 的极限点得到，即存在子列 $\{u_{n_k}\}\subseteq\{u_n\}$ 使 $u_{n_k}\stackrel{*}{\rightharpoonup}u$ 于 $L^\infty_{w^*}(0,T;\mathscr{R}_f^+(\mathbb{R}))$。此外，$u$ 是 (P) 的 Young 测度熵解。
 \end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch07-7.3.1; kind=motivation; location=定理 7.3.1 后的注记; basis=定理 7.3.1 的逼近构造思想、(A0)--(A1) 与初值逼近条件的作用、极限只到 Young 测度熵解的原因，以及证明位置
+\begin{remark}\phantomsection\label{remark:ch07-7.3.1动机}
+(i) 动机。直接对测度值初值构造 (P) 的解是困难的：$\phi(u_0)$ 对测度没有定义。本定理改用逼近：先取 $L^1\cap L^\infty$ 中的初值 $u_{0n}$，对每个 $n$ 用 Kružkov 理论得到 $(P_n)$ 的熵解 $u_n$，再利用 $\{u_n\}$ 的一致估计抽取弱*收敛子列；其极限 $u$ 满足 (P) 的弱形式。由于 $u_n$ 的振荡在极限中可能不消失，极限一般只给出 Young 测度熵解，而不直接是熵解。
+
+(ii) 各假设的作用。(A0) 使 $u_0$ 为有限正测度，从而 $\|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$ 给出与 $n$ 无关的 $L^1$ 界；(A1) 中 $\phi$ 的 Lipschitz 性与次线性增长使 $\phi(u_n)$ 具有与 $u_n$ 同阶的界（\eqref{align:ch07-7.1}），这是紧性论证与极限方程中 $\phi(u_r)$ 可积的基础。初值逼近条件\eqref{align:ch07-7.44}--\eqref{align:ch07-7.45}保证 $u_{0n}\geqslant0$、质量受控、$u_{0n}\to u_{0r}$ 几乎处处且在 $\operatorname{supp}u_{0s}$ 之外 $L^1$ 收敛，从而使初值项在取极限时收敛到 $u_0$。
+
+(iii) 边界。极限点的拓扑是 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\mathbb{R}))$ 的弱*拓扑（见\cref{section:ch07-存在性证明}），故 $u$ 的正性来自 $u_n\geqslant0$ 的弱*闭性；“极限点”一般依赖子列的选取，定理只断言存在性。若不假设 (A1)，而允许 $\phi$ 超线性增长，则 $\phi(u_n)$ 不再被 $u_n$ 控制，弱极限可能出现集中，此时须另行处理（超线性情形见文献~\cite{ref67}）。
+\end{remark}
 
 \begin{theorem}\label{theorem:ch07-7.3.2}
-设 (A0)--(A2) 成立，$u$ 为由\cref{theorem:ch07-7.3.1}给出的 (P) 的解。则 $u$ 是 (P) 的熵解。
+设 (A0)--(A2) 成立（即除 (A0)--(A1) 外，$\phi\in C^1([0,\infty))$ 且在每点附近 $\phi'$ 严格单调，见\cref{subsection:ch07-假设}），$u$ 为由\cref{theorem:ch07-7.3.1}给出的 (P) 的解。则 $u$ 是 (P) 的熵解。
 \end{theorem}
 
-下列定义是\cref{definition:ch06-构造解}的对应物。
+% SUPPLEMENT: parent=theorem:ch07-7.3.2; kind=motivation; location=定理 7.3.2 后的注记; basis=定理 7.3.2 的动机：用 (A2) 排除 Young 测度的非平凡纤维，使 Young 测度熵解退化为熵解；各假设的作用与证明位置
+\begin{remark}\phantomsection\label{remark:ch07-7.3.2动机}
+(i) 动机。\cref{theorem:ch07-7.3.1}只给出 Young 测度熵解，其中纤维 $\nu_{(x,t)}$ 可以非平凡，从而 $\phi^*$ 与 $\phi(u_r)$ 可能不同。本定理说明：只要 $\phi'$ 在每点附近严格单调，(P) 的 Young 测度熵解就满足 $\nu_{(x,t)}=\delta_{u_r(x,t)}$，于是 $\phi^*=\phi(u_r)$，熵不等式\eqref{align:ch07-7.5}化为\eqref{align:ch07-7.8}，$u$ 是熵解。
+
+(ii) 各假设的作用。(A2) 是排除振荡的关键：若 $\phi'$ 在 $\nu_{(x,t)}$ 的支撑集上严格单调，则由熵不等式迫使该支撑集为单点（证明见\cref{proposition:ch07-7.5.7}及\cref{section:ch07-存在性证明}）。(A0)--(A1) 由\cref{theorem:ch07-7.3.1}继承，用于保证 $u$ 是解、$\phi^*$ 与 $\phi(u_r)$ 可积。条件 (A2) 只要求逐点的局部严格单调性，比 (A2') 弱得多，因而覆盖了 (A2') 之外的大量流。
+
+(iii) 边界。若去掉 (A2)，结论一般不成立：当 $\phi'$ 在某个区间上为常数时，Young 测度可以沿该区间振荡而不被熵条件排除（见\cref{remark:ch07-7.5.3}）。\cref{theorem:ch07-7.3.2}不声称唯一性：熵解的唯一性需要 (A0') 与相容条件（\cref{theorem:ch07-唯一性}）。
+\end{remark}
 
 \begin{definition}\label{definition:ch07-构造解}
-由\cref{theorem:ch07-7.3.1}与\cref{theorem:ch07-7.3.2}给出的 (P) 的解分别称为所构造解与所构造熵解。
+由\cref{theorem:ch07-7.3.1}给出的 (P) 的解称为 (P) 的\emph{所构造解}（constructed solution）；由\cref{theorem:ch07-7.3.2}给出的 (P) 的解称为 (P) 的\emph{所构造熵解}（constructed entropy solution）。
 \end{definition}
 
-如\cref{section:ch06-存在正则}，(P) 的所构造熵解有若干重要性质。特别地，在附加条件 (A2')（它反过来蕴含 (A1) 与 (A2)）下，它们满足相容条件。这就是下列定理的内容。
+% SUPPLEMENT: parent=definition:ch07-构造解; kind=motivation; location=定义 7.3.1 后的注记; basis=定义 7.3.1 的命名动机：把"由逼近程序得到的解"与"任意熵解"区分开，因为定理 7.3.3 与唯一性结果只对所构造解成立；并说明该类的边界
+\begin{remark}\phantomsection\label{remark:ch07-构造解动机}
+(i) 动机。\cref{theorem:ch07-7.3.1}与\cref{theorem:ch07-7.3.2}给出的解依赖于逼近序列的选取，本定义给这类解一个名称，使后文可以陈述仅对它们成立的性质（\cref{theorem:ch07-7.3.3}的相容条件、\cref{theorem:ch07-存在唯一}的存在唯一性），而不把这些性质错误地归于任意熵解。
+
+(ii) 术语的作用。"所构造解"只要求它是某个逼近序列的弱*极限点并满足 (P) 的解的定义；"所构造熵解"则进一步要求它是熵解。由\cref{theorem:ch07-7.3.2}，在 (A2) 下每个所构造解都是所构造熵解；在只假设 (A1) 时，所构造解可能只是 Young 测度熵解。
+
+(iii) 边界。所构造解的类一般严格小于熵解类：由\cref{remark:ch07-7.2.6}可构造不满足相容条件、从而不是所构造解的熵解。因此\cref{theorem:ch07-存在唯一}的唯一性只在所构造熵解中成立，而不能推广到一切熵解。
+\end{remark}
+
+与\cref{section:ch06-存在正则}一样，(P) 的所构造熵解具有若干重要性质。特别地，在附加要求 (A2')（它反过来蕴含 (A1) 与 (A2)，见\cref{remark:ch07-7.1.1}）下，它们满足相容条件。这就是下列命题的内容。
 
 \begin{theorem}\label{theorem:ch07-7.3.3}
-设 (A0) 与 (A2') 成立，$u$ 为问题 (P) 的所构造熵解。则对每个 $\tau\in(0,T)$：
+设 (A0) 与 (A2') 成立，$u$ 为问题 (P) 的所构造熵解（见\cref{definition:ch07-构造解}）。则对每个 $\tau\in(0,T)$：
 \begin{enumerate}[(i)]
-\item 若 $\phi$ 有界，则 $u$ 在 $[0,\tau]$ 上于每个点 $x_j\in\operatorname{supp}u_s(\cdot,\tau)$ 处满足相容条件 (C$^\pm$)；
+\item 若 $\phi$ 有界，则 $u$ 在 $[0,\tau]$ 上于每个点 $x_j\in\operatorname{supp}u_s(\cdot,\tau)$ 处满足\cref{definition:ch07-相容条件}所定义的相容条件 $(C^\pm)$；
 \item 若 $\phi$ 无界，则 $u=u_r\in L^\infty(\mathbb{R}\times(\tau,T))$。
 \end{enumerate}
 \end{theorem}
 
-\begin{remark}\label{remark:ch07-7.3.1}
-若 $\phi$ 无界且满足 (A2')，则由文献~\cite{ref67} 定理 1.1 与\cref{theorem:ch07-7.3.3}(ii)，对每个 $u_0\in\mathscr{R}_f^+(\mathbb{R})$ 存在问题 (P) 的唯一熵解，其等待时间 $t_0=0$。事实上，由\cref{theorem:ch07-7.3.3}(ii)，每个所构造熵解 $u$ 是文献~\cite{ref67}意义下的解，因对每个 $\tau\in(0,T)$ 有 $u=u_r\in L^\infty(\mathbb{R}\times(\tau,T))$，且 $\operatorname*{ess\,lim}_{t\to0^+}u(\cdot,t)=u_0$ 在 $\mathscr{R}_f(\mathbb{R})$ 中窄收敛（见\cref{definition:ch05-窄收敛}）。这由\eqref{align:ch07-7.12}与\cref{proposition:ch07-7.1.2}(ii) 得到（另见文献~\cite{ref53} 命题 2，第 38 页）。
+% SUPPLEMENT: parent=theorem:ch07-7.3.3; kind=motivation; location=定理 7.3.3 后的注记; basis=定理 7.3.3 的两项正则性结论、(A2') 与 (A0) 的作用、有界/无界 $\phi$ 的二分及其边界；证明在后续小节
+\begin{remark}\phantomsection\label{remark:ch07-7.3.3动机}
+(i) 动机。唯一性证明需要比较两个熵解在奇异点附近的单侧行为；本定理 (i) 说明所构造熵解在 $u_s(\cdot,\tau)$ 的每个支撑点处满足相容条件 (C$^\pm$)，这正是\cref{theorem:ch07-唯一性}所要求的。\cref{theorem:ch07-7.3.3}(ii) 则说明当 $\phi$ 无界时，所构造熵解在任意正时刻之后不再有奇异部分，即发生瞬时正则化。
 
-当 $\phi$ 有界且 $u_0$ 如 (A0') 时，由文献~\cite{ref17} 命题 3.20，(P) 的每个所构造熵解满足 $u\in C([0,T];\mathscr{R}_f^+(\Omega))$ 且 $u(\cdot,0)=u_0$。故由\cref{theorem:ch07-7.3.3}与\cref{theorem:ch07-唯一性}得下列存在唯一性结果。
+(ii) 各假设的作用。(A0) 保证初值为有限正测度，使 $u_s$ 的支撑有意义。(A2') 是实质假设：它使 $\phi'$ 在 $[0,\infty)$ 上不变号且严格单调（\cref{remark:ch07-7.1.1}），从而使构造中出现的辅助函数 $Z$ 可逆、比较原理可用；它还蕴含 (A1) 与 (A2)，故\cref{theorem:ch07-7.3.1}与 7.3.2 的结论可用。所构造性（而非任意熵解）在证明中用于把 $u$ 与逼近解 $u_{n_k}$ 的性态联系起来。
+
+(iii) 边界。(i) 只断言相容条件，不断言强连续性；强连续性另由文献~\cite{ref17} 命题 3.20 给出（见本节下文）。(ii) 的正则化只在 $t>\tau>0$ 上成立，不排除 $t=0$ 处的奇异部分；且 $\phi$ 无界时 (i) 不适用，因为此时 $u_s(\cdot,\tau)=0$，其支撑为空集。证明分别见\cref{section:ch07-存在性证明}与\cref{section:ch07-正则证明}。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch07-7.3.1}
+若 $\phi$ 无界且满足 (A2')，则由文献~\cite{ref67} 定理 1.1 与\cref{theorem:ch07-7.3.3}(ii)，对每个 $u_0\in\mathscr{R}_f^+(\mathbb{R})$ 存在问题 (P) 的唯一熵解，其等待时间 $t_0=0$。事实上，由\cref{theorem:ch07-7.3.3}(ii)，每个所构造熵解 $u$ 是文献~\cite{ref67} 意义下的解：对每个 $\tau\in(0,T)$ 有 $u=u_r\in L^\infty(\mathbb{R}\times(\tau,T))$，且 $\operatorname*{ess\,lim}_{t\to0^+}u(\cdot,t)=u_0$ 在 $\mathscr{R}_f(\mathbb{R})$ 中窄收敛（见\cref{definition:ch05-窄收敛}）。后者由\eqref{align:ch07-7.12}与\cref{proposition:ch07-7.1.2}(ii) 得到（另见文献~\cite{ref53} 命题 2，第 38 页）。
+
+当 $\phi$ 有界且 $u_0$ 如 (A0') 时，由文献~\cite{ref17} 命题 3.20，(P) 的每个所构造熵解满足 $u\in C([0,T];\mathscr{R}_f^+(\mathbb{R}))$ 且 $u(\cdot,0)=u_0$。故由\cref{theorem:ch07-7.3.3}与\cref{theorem:ch07-唯一性}得下列存在唯一性结果。
 \end{remark}
 
 \begin{theorem}\label{theorem:ch07-存在唯一}
-设 $\phi$ 有界，(A0')--(A2') 成立。则问题 (P) 存在唯一熵解 $u\in C([0,T];\mathscr{R}_f^+(\Omega))$，它满足相容条件。
+设 $\phi$ 有界，(A0')--(A2') 成立。则问题 (P) 存在唯一熵解 $u\in C([0,T];\mathscr{R}_f^+(\mathbb{R}))$，它在 $[0,T]$ 上满足\cref{definition:ch07-相容条件}所定义的相容条件。
 \end{theorem}
 
-最后提及下列正则化结果。
+% SUPPLEMENT: parent=theorem:ch07-存在唯一; kind=proof; location=定理 7.3.4 之后的补写证明; basis=原书在定理 7.3.4 前只给出证明思路（由 [17, Proposition 3.20]、定理 7.3.3 与 7.2.4 得到）；此处把三步依赖逐项写出并核对各自假设
+\begin{proof}
+由\cref{theorem:ch07-7.3.1}与\cref{theorem:ch07-7.3.2}，所构造解 $u$ 是 (P) 的熵解（此处 (A2') 蕴含 (A1) 与 (A2)，见\cref{remark:ch07-7.1.1}）。由\cref{theorem:ch07-7.3.3}(i)，对每个 $\tau\in(0,T)$，$u$ 在 $[0,\tau]$ 上于每个 $x_j\in\operatorname{supp}u_s(\cdot,\tau)$ 处满足相容条件 $(C^\pm)$；特别地，取 $\tau=t_j$ 得 $u$ 在 $[0,t_j]$ 上于每个 $x_j\in\operatorname{supp}u_{0s}$ 处满足相容条件。
+
+由文献~\cite{ref17} 命题 3.20（见本节上文），$u\in C([0,T];\mathscr{R}_f^+(\mathbb{R}))$ 且 $u(\cdot,0)=u_0$。于是 $u$ 属于\cref{theorem:ch07-唯一性}所考虑的解类：$\phi$ 有界、(A0')--(A1) 成立，$u\in C([0,T];\mathscr{R}_f^+(\mathbb{R}))$，且在每个 $x_j$ 处于 $[0,t_j]$ 上满足相容条件。由该唯一性定理，(P) 的这类熵解至多一个；结合已证的存在性，所构造熵解 $u$ 就是唯一的熵解。结论得证。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch07-存在唯一; kind=motivation; location=定理 7.3.4 后的注记; basis=定理 7.3.4 的动机、$u\in C([0,T];\mathscr{R}_f^+(\mathbb{R}))$ 与书中 $\Omega$ 记号的关系、(A0')--(A2') 的作用及边界
+\begin{remark}\phantomsection\label{remark:ch07-存在唯一动机}
+(i) 动机。本定理把存在性（\cref{theorem:ch07-7.3.1}、\cref{theorem:ch07-7.3.2}）、正则性（\cref{theorem:ch07-7.3.3}）与唯一性（\cref{theorem:ch07-唯一性}）合并为一个完整的存在唯一性定理，是本章关于有界流的主要结论。
+
+(ii) 各假设的作用。$\phi$ 有界是唯一性定理\cref{theorem:ch07-唯一性}的前提；若 $\phi$ 无界，唯一性由\cref{remark:ch07-7.3.1}给出，但解类与等待时间不同。(A0') 保证 $u_{0s}$ 为有限个正 Dirac 质量之和，从而使相容条件可以逐点陈述，也使唯一性证明中的分段论证可行。(A2') 蕴含 (A1) 与 (A2)（\cref{remark:ch07-7.1.1}），既保证所构造解是熵解，又保证它满足相容条件。
+
+(iii) 边界与记号。定理陈述中的解空间印作 $C([0,T];\mathscr{R}_f^+(\Omega))$，其中 $\Omega$ 是\cref{section:ch07-问题提法}中引入的任意开集记号；本节讨论的是 $\mathbb{R}$ 上的 Cauchy 问题，且\cref{theorem:ch07-唯一性}与文献~\cite{ref17} 命题 3.20 中的解空间均为 $C([0,T];\mathscr{R}_f^+(\mathbb{R}))$，故此处按 $\Omega=\mathbb{R}$ 理解。若 $u_0$ 不满足 (A0')（奇异部分不是有限个 Dirac 质量），\cref{theorem:ch07-存在唯一}的相容条件表述失去对象，唯一性须另行讨论。
+\end{remark}
+
+最后提及下列正则化结果；其证明见\cref{section:ch07-正则证明}。
 
 \begin{proposition}\label{proposition:ch07-7.3.5}
-设 (A0) 与 (A2') 成立。则对几乎所有 $t\in(0,T)$，奇异部分 $u_s(\cdot,t)$ 的支撑集为零测集。
+设 (A0) 与 (A2') 成立，$u$ 为 (P) 的所构造熵解。则对几乎所有 $t\in(0,T)$，奇异部分 $u_s(\cdot,t)$ 的支撑集为 Lebesgue 零测集。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch07-7.3.5; kind=motivation; location=命题 7.3.5 后的注记; basis=命题 7.3.5 的正则化含义：奇异测度的支撑本身为 Lebesgue 零集，强于"关于 Lebesgue 测度奇异"；并说明 (A0)、(A2') 与所构造性的作用
+\begin{remark}\phantomsection\label{remark:ch07-7.3.5动机}
+(i) 动机。测度 $u_s(\cdot,t)$ 关于 Lebesgue 测度奇异，只说明它集中在某个 Lebesgue 零集上，其支撑集本身仍可能有正测度。本命题断言支撑集本身为零测集，这是更强的正则性：奇异部分不能"铺满"任何正测度集，只能集中在 Lebesgue 零集上。
 
+(ii) 各假设的作用。(A0) 使 $u_s(\cdot,t)$ 为有限正测度，其支撑为闭集因而可测。(A2') 提供 $\phi'$ 的严格单调性与符号（\cref{remark:ch07-7.1.1}），这是证明中对奇异点作局部估计、进而用覆盖论证控制支撑集测度的基础。$u$ 为所构造熵解这一要求使\cref{theorem:ch07-7.3.3}的相容条件可用，后者是证明的出发点。
 
+(iii) 边界。结论只对几乎所有 $t$ 成立；零测集依赖 $u$，不能去掉。结论不给出支撑集的任何维数或测度衰减速率。对线性流 $\phi(y)=Cy$，$u_s(\cdot,t)$ 是 $u_{0s}$ 的平移，其支撑为有限集，故命题的结论平凡成立，这说明该正则性在非线性情形才非平凡。
+\end{remark}
 
 \end{document}

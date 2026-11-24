@@ -13,16 +13,16 @@
 
 \begin{document}
 
-\section{Young 测度再探}
+\section{Young 测度再探}\label{section:ch05-Young再探}
 
-设 $X$ 为局部紧 Hausdorff 空间，$\{u_k\}\subseteq L^1(X,\mathscr{B}(X),\mu)$ 弱收敛。已观察到（见\cref{example:ch02-弱收敛振荡}(i)），对非线性 $h$（使 $\{h\circ u_k\}\subseteq L^1(X,\mathscr{B}(X),\mu)$），$\{h\circ u_k\}$ 未必如此。为获得 $\{h\circ u_k\}$ 性态的信息，\cref{remark:ch05-函数转测度}建议我们处理与 $\{h\circ u_k\}$ 相伴的序列 $\{\nu_k\}\subseteq\mathscr{R}_f(X)$，如\eqref{align:ch05-5.5}。在此框架中，与 $\{u_k\}$ 相伴的 Young 测度序列 $\{\nu_{u_k}\}$ 起重要作用。
+设 $X$ 为局部紧 Hausdorff 空间，$\{u_k\}\subseteq L^1(X,\mathscr{B}(X),\mu)$ 弱收敛。对非线性 $h$（使 $\{h\circ u_k\}\subseteq L^1(X,\mathscr{B}(X),\mu)$），$\{h\circ u_k\}$ 未必弱收敛（见\cref{example:ch02-弱收敛振荡}(i)）。为获得 $\{h\circ u_k\}$ 性态的信息，\hyperref[remark:ch05-函数转测度]{注记}建议处理与 $\{h\circ u_k\}$ 相伴的序列 $\{\nu_k\}\subseteq\mathscr{R}_f(X)$（如\eqref{align:ch05-5.5}）。在此框架中，与 $\{u_k\}$ 相伴的 Young 测度序列 $\{\nu_{u_k}\}$ 起重要作用。
 
 设 $\mu\in\mathscr{R}^+_f(X)$，$\nu\in\mathcal{Y}^+(X,\mathscr{B}(X),\mu;Y)\equiv\mathcal{Y}^+(X;Y)$ 为 Young 测度。由定义 $\nu_{p_X}=\mu$（见\cref{definition:ch02-Young测度}），且由于 $\mathcal{Y}^+(X;Y)\subseteq\mathscr{R}^+_f(X\times Y)$，由\cref{theorem:ch05-离散分解}得如下结果。
 
 \begin{proposition}[Young 测度的离散分解]\label{proposition:ch05-离散分解}
-设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。设 $\mu\in\mathscr{R}^+_f(X)$，$\nu\in\mathcal{Y}^+(X;Y)$。则存在 $Y$ 上的参数化测度 $\nu\equiv\{\nu_x\}_{x\in X}$ 具有下列性质：
+设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间，$\mathscr{B}(X)$、$\mathscr{B}(Y)$ 为相应的 Borel $\sigma$-代数。设 $\mu\in\mathscr{R}^+_f(X)$，$\nu\in\mathcal{Y}^+(X;Y)$，即 $\nu\in\mathscr{R}^+_f(X\times Y)$ 且 $\nu(E\times Y)=\mu(E)$ 对所有 $E\in\mathscr{B}(X)$ 成立（见\cref{definition:ch02-Young测度}）。则存在 $Y$ 上的参数化测度 $\nu\equiv\{\nu_x\}_{x\in X}$ 具有下列性质：
 \begin{enumerate}[(i)]
-\item\label{item:ch05-youdis-i} $\nu_x\in P(Y)\subseteq\mathscr{R}^+_f(Y)$ 对 $\mu$-几乎所有 $x\in X$；
+\item\label{item:ch05-youdis-i} $\nu_x\in\mathcal{P}(Y)\subseteq\mathscr{R}^+_f(Y)$ 对 $\mu$-几乎所有 $x\in X$；
 \item\label{item:ch05-youdis-ii} 对每个 $h\in L^1(X\times Y,\mathscr{B}(X\times Y),\nu)$，
 \begin{align}
 h(x,\cdot)\in L^1(Y,\mathscr{B}(Y),\nu_x)
@@ -49,45 +49,87 @@ h(x,\cdot)\in L^1(Y,\mathscr{B}(Y),\nu_x)
 对每个有界 $\mathscr{B}(X\times Y)$-可测、紧支撑的 $h:X\times Y\to\mathbb{R}$ 成立，则 $\nu'_x=\nu_x$ 对 $\mu$-几乎所有 $x\in X$。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch05-离散分解; kind=proof; location=命题 5.3.1 前（由定理 5.2.1 的推导）; basis=原书以“from Theorem 5.2.1 we obtain”一句略去推导：需验证 $\nu\geqslant0$ 时 $|\nu|=\nu$、$|\nu|_{p_X}=\nu_{p_X}=\mu$，并把定理 5.2.1 的 (i)(ii) 与唯一性逐项翻译为 (i)(5.48)--(5.50)(5.51)--(5.52)，特别要用注 5.2.3(i) 把 $|\nu_x|(Y)=1$ 加强为 $\nu_x(Y)=1$
+\begin{proof}[证明\cref{proposition:ch05-离散分解}]
+由 $\nu\geqslant0$ 得 $|\nu|=\nu$，故 $|\nu|_{p_X}=\nu_{p_X}$；再由 Young 测度的定义 $\nu_{p_X}=\mu$，得 $|\nu|_{p_X}=\mu$。于是\cref{theorem:ch05-离散分解}的假设对 $\nu$ 与 $|\nu|_{p_X}=\mu$ 全部满足，故存在 $Y$ 上的参数化测度 $\{\nu_x\}_{x\in X}$ 使
+\begin{align*}
+|\nu_x|(Y)=1\quad\text{对 }\mu\text{-几乎所有 }x\in X,
+\end{align*}
+且对每个 $h\in L^1(X\times Y,\mathscr{B}(X\times Y),\nu)$，\eqref{align:ch05-5.48}、\eqref{align:ch05-5.49}与\eqref{align:ch05-5.50}成立（它们分别是\eqref{align:ch05-5.34}、\eqref{align:ch05-5.35}与\eqref{align:ch05-5.36}在 $|\nu|=\nu$、$|\nu|_{p_X}=\mu$ 时的写法）。
+
+再由\hyperref[remark:ch05-离散分解注]{注记}(i)：$\nu\geqslant0$ 蕴含 $\nu_x\geqslant0$ 对 $\mu$-几乎所有 $x\in X$ 成立。对这样的 $x$ 有 $|\nu_x|=\nu_x$，故 $|\nu_x|(Y)=1$ 即 $\nu_x(Y)=1$，从而 $\nu_x\in\mathcal{P}(Y)$，断言 (i) 得证。
+
+最后，\eqref{align:ch05-5.51}--\eqref{align:ch05-5.52}恰是\cref{theorem:ch05-离散分解}的唯一性断言在 $|\nu|=\nu$、$|\nu|_{p_X}=\mu$ 时的写法，故由该唯一性得 $\nu'_x=\nu_x$ 对 $\mu$-几乎所有 $x\in X$ 成立。命题得证。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-离散分解; kind=motivation; location=命题 5.3.1 后的注记; basis=命题 5.3.1 与 (5.48)--(5.52) + 把 Young 测度的“乘积测度”定义改写为“条件分布族”的动机、$\mu$ 有限性与 $\nu\geqslant0$ 的作用，以及纤维非原子（$\nu=\lambda_2$）与纤维为 Dirac（$\nu_u$）的对比、唯一性只在 $\mu$-几乎处处成立的边界
+\begin{remark}\phantomsection\label{remark:ch05-Young离散分解动机}
+(i) 动机。\cref{definition:ch02-Young测度}把 Young 测度定义为 $\mathscr{R}^+_f(X\times Y)$ 中满足 $\nu(E\times Y)=\mu(E)$ 的元素，这是一个“整体”对象；\cref{proposition:ch05-离散分解}把它改写为“纤维族” $\{\nu_x\}_{x\in X}$，即一族以 $x$ 为参数的概率测度。这一改写是 Young 测度理论的基本工具：振荡信息被逐点地存放在 $\nu_x$ 中，非线性泛函的极限可用 $\nu_x$ 的矩表示（见\cref{section:ch05-收敛}）。\cref{corollary:ch05-Young一一对应}将进一步说明这一改写是双射。
+
+(ii) 假设的作用。$\mu$ 的有限性不可省：由 $\nu(X\times Y)=\mu(X)$，$\mu$ 有限与 $\nu\in\mathscr{R}^+_f(X\times Y)$ 是同一件事；若 $\mu(X)=\infty$，则 $\mathcal{Y}^+(X;Y)=\varnothing$，命题无对象可言。$\nu$ 的正性（而非仅是带号测度）是把 $|\nu_x|(Y)=1$ 加强为 $\nu_x(Y)=1$、即得到 $\nu_x\in\mathcal{P}(Y)$ 的唯一位置：对带号 $\nu$，\cref{theorem:ch05-离散分解}(i) 只给出 $|\nu_x|(Y)=1$，而纤维可以是负测度（\hyperref[remark:ch05-离散分解动机]{注记}(iii)）。$X$ 与 $Y$ 的可数基假设用于 $\mathscr{B}(X\times Y)=\mathscr{B}(X)\otimes\mathscr{B}(Y)$ 与 $C_0(Y)$ 的可分性，与\cref{theorem:ch05-离散分解}相同。$h\in L^1(\nu)$ 是使\eqref{align:ch05-5.50}两端有意义的精确函数类。
+
+(iii) 边界与例。纤维可以是非原子的：$X=Y=[0,1]$、$\mu=\lambda|_{[0,1]}$、$\nu=\lambda_2|_{\mathscr{B}([0,1]^2)}\in\mathcal{Y}^+(X;Y)$ 的纤维为 $\nu_x=\lambda|_{[0,1]}$，它在 $Y$ 上无原子，反映的是“高频振荡”而不是“逐点收敛”。纤维也可以是 Dirac 测度：对 $(\mathscr{B}(X),\mathscr{B}(Y))$-可测的 $u:X\to Y$，与 $u$ 相伴的 Young 测度 $\nu_u$ 的纤维满足 $(\nu_u)_x=\delta_{u(x)}$（\cref{proposition:ch05-Dirac测度}），此时 $\nu_u$ 集中于 $u$ 的图。唯一性只在 $\mu$-几乎处处的意义下成立：在 $\mu$-零测集上 $\nu_x$ 可任意改变而不影响 $\nu$，故 $\{\nu_x\}_{x\in X}$ 的“取值”只在几乎处处意义下确定。
+\end{remark}
+
 刻画与函数相伴的 Young 测度的离散分解是有趣的（见\cref{definition:ch02-Young测度}）。回忆与 $u$ 相伴的 Young 测度 $\nu_u$ 定义为
 \begin{align*}
 \nu_u(E\times F)\triangleq \mu(E\cap u^{-1}(F))
 \quad\text{对所有 }E\in\mathscr{B}(X),\ F\in\mathscr{B}(Y).
 \end{align*}
 
-\begin{proposition}\label{proposition:ch05-Dirac测度}
-设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。设 $\mu\in\mathscr{R}^+_f(X)$，$u:X\to Y$ 为 $(\mathscr{B}(X),\mathscr{B}(Y))$-可测，$\nu_u\in\mathcal{Y}^+(X;Y)$ 为与 $u$ 相伴的 Young 测度。则
+\begin{proposition}[与函数相伴的 Young 测度的纤维]\label{proposition:ch05-Dirac测度}
+设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。设 $\mu\in\mathscr{R}^+_f(X)$，$u:X\to Y$ 为 $(\mathscr{B}(X),\mathscr{B}(Y))$-可测，$\nu_u\in\mathcal{Y}^+(X;Y)$ 为与 $u$ 相伴的 Young 测度（即满足上式者，见\cref{definition:ch02-Young测度}）。则
 \begin{align}
 (\nu_u)_x=\delta_{u(x)}
-\quad\text{对 }\mu\text{-几乎所有 }x\in X.\label{align:ch05-5.53}
+\quad\text{对 }\mu\text{-几乎所有 }x\in X,\label{align:ch05-5.53}
 \end{align}
+其中 $\{(\nu_u)_x\}_{x\in X}$ 为 $\nu_u$ 的离散分解（\cref{definition:ch05-离散分解定义}）。
 \end{proposition}
 
-\begin{proof}
-对任意 $F\in\mathscr{B}(Y)$，由\eqref{align:ch05-5.36}得
+% SUPPLEMENT: parent=proposition:ch05-Dirac测度; kind=proof; location=命题 5.3.2 的证明; basis=原证明只对 $E=X$ 使用 (5.39)（这只能给出 $\int_X(\cdots)=0$，不足以推出被积函数为零），且以“standard argument”略去零测集对 $F$ 的一致性；此处改用任意 $E\in\mathscr{B}(X)$ 的 (5.39)，并以 $Y$ 的可数代数生成 $\mathscr{B}(Y)$、单调类定理统一零测集
+\begin{proof}[证明\cref{proposition:ch05-Dirac测度}]
+固定 $F\in\mathscr{B}(Y)$ 与 $E\in\mathscr{B}(X)$。在\eqref{align:ch05-5.39}中取 $G=E\times F$（注意 $G_x=F$ 对 $x\in E$ 成立，$G_x=\varnothing$ 对 $x\notin E$ 成立），得
 \begin{align*}
-\nu_u(X\times F)=\int_{X\times Y}\chi_F(y)\,\mathrm{d}\nu_u(x,y)
-=\int_X(\nu_u)_x(F)\,\mathrm{d}\mu(x).
+\nu_u(E\times F)=\int_E(\nu_u)_x(F)\,\mathrm{d}\mu(x).
 \end{align*}
-另一方面，由定义
+另一方面，由 $\nu_u$ 的定义，
 \begin{align*}
-\nu_u(X\times F)=\mu(u^{-1}(F))
-=\int_X\chi_{u^{-1}(F)}(x)\,\mathrm{d}\mu(x).
+\nu_u(E\times F)=\mu(E\cap u^{-1}(F))=\int_E\chi_{u^{-1}(F)}(x)\,\mathrm{d}\mu(x).
 \end{align*}
-由\eqref{align:ch02-2.29}，对每个 $F\in\mathscr{B}(Y)$，存在 $\mu$-零测集 $N\subseteq X$ 使对所有 $x\in N^c$，
+两式相减，得
+\begin{align*}
+\int_E\bigl[(\nu_u)_x(F)-\chi_{u^{-1}(F)}(x)\bigr]\,\mathrm{d}\mu(x)=0
+\quad\text{对所有 }E\in\mathscr{B}(X).
+\end{align*}
+由积分的零测集刻画——取 $E=\{\varphi>0\}$ 与 $E=\{\varphi<0\}$（其中 $\varphi$ 为方括号内的被积函数，它可测且积分有限）分别得 $\varphi\leqslant0$ 与 $\varphi\geqslant0$ 于 $E$ 上几乎处处——得 $\varphi=0$ $\mu$-几乎处处；由 $E$ 的任意性，存在 $\mu$-零测集 $N_F$ 使
 \begin{align*}
 (\nu_u)_x(F)=\chi_{u^{-1}(F)}(x)=
 \begin{cases}
 1 & \text{若 }u(x)\in F,\\
-0 & \text{否则}.
+0 & \text{否则}
 \end{cases}
+\quad\text{对所有 }x\in N_F^c.
 \end{align*}
-由于 $X$ 具有可数基，可测空间 $(X,\mathscr{B}(X))$ 可分（见\cref{definition:ch01-可分空间}），故由标准论证，$\mu$-零测集 $N$ 的选取可独立于 $F\in\mathscr{B}(Y)$。结论得证。
+
+现去掉 $F$ 的依赖性。由于 $Y$ 具可数基，存在由可数基中开集的有限并构成的可数代数 $\mathcal{A}\subseteq\mathscr{B}(Y)$，使 $\sigma_0(\mathcal{A})=\mathscr{B}(Y)$（见\cref{definition:ch01-可分空间}）。置 $N\triangleq\bigcup_{A\in\mathcal{A}}N_A$；$\mathcal{A}$ 可数，故 $N$ 为 $\mu$-零测集，且对每个 $x\in N^c$ 与每个 $A\in\mathcal{A}$，
+\begin{align*}
+(\nu_u)_x(A)=\chi_{u^{-1}(A)}(x)=\delta_{u(x)}(A).
+\end{align*}
+固定 $x\in N^c$。由\cref{proposition:ch05-离散分解}(i)，$(\nu_u)_x$ 与 $\delta_{u(x)}$ 都是 $Y$ 上的概率测度；它们在代数 $\mathcal{A}$ 上相等，而 $\mathcal{A}$ 生成 $\mathscr{B}(Y)$，故由单调类定理（\cref{theorem:ch01-测度延拓}的唯一性部分）两者在 $\mathscr{B}(Y)$ 上相等，即 $(\nu_u)_x=\delta_{u(x)}$。由 $x\in N^c$ 的任意性，\eqref{align:ch05-5.53}得证。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-Dirac测度; kind=motivation; location=命题 5.3.2 后的注记; basis=命题 5.3.2 与 (5.53) + “函数是测度的特例”的动机、$u$ 的 Borel 可测性与 $\mu$ 有限性的作用，以及 $u$ 非单射、$u$ 仅 $\mu$-几乎处处有定义与 $\nu_x$ 可以不是 Dirac 的边界
+\begin{remark}\phantomsection\label{remark:ch05-Dirac测度动机}
+(i) 动机。\eqref{align:ch05-5.53}说明“函数”是“Young 测度”的特例：与 $u$ 相伴的 Young 测度在每条纤维上只把单位质量放在单点 $u(x)$ 上，故它完全由 $u$ 的图决定。反之，若一个 Young 测度的所有纤维都是 Dirac 测度，则它必与某个函数相伴（$u(x)$ 取 $\nu_x$ 的支撑点），于是“逐点收敛的函数列”与“纤维退化为 Dirac 的 Young 测度列”是同一现象（见\cref{proposition:ch05-逐点窄收敛}与\cref{section:ch05-收敛}）。
+
+(ii) 假设的作用。$u$ 的 $(\mathscr{B}(X),\mathscr{B}(Y))$-可测性是 $\nu_u$ 存在的唯一显式条件：它保证 $u^{-1}(F)\in\mathscr{B}(X)$，从而 $\nu_u(E\times F)=\mu(E\cap u^{-1}(F))$ 有意义，并由乘积集上的值唯一确定 $\nu_u$。$\mu$ 的有限性使 $\nu_u\in\mathscr{R}^+_f(X\times Y)$，即 $\nu_u(X\times Y)=\mu(X)<\infty$。$X$ 与 $Y$ 的可数基假设在证明中用于两处：$Y$ 的可数代数生成 $\mathscr{B}(Y)$（统一零测集），以及\cref{proposition:ch05-离散分解}(i)（纤维为概率测度）。
+
+(iii) 边界。$u$ 不必单射：若 $u(x_1)=u(x_2)=\bar{y}$，则 $(\nu_u)_{x_1}=(\nu_u)_{x_2}=\delta_{\bar{y}}$，故 $\{\nu_u\}_x$ 只记录 $u$ 的像点，不记录 $x$ 本身。$u$ 只在 $\mu$-几乎处处有定义也足够：改变 $u$ 于 $\mu$-零测集不改变 $\nu_u$（由 $\nu_u(E\times F)=\mu(E\cap u^{-1}(F))$）。最后，纤维为 Dirac 是特殊性质而非普遍性质：\hyperref[remark:ch05-Young离散分解动机]{注记}(iii)中的 $\nu=\lambda_2$ 的纤维 $\lambda|_{[0,1]}$ 不是 Dirac 测度，故 $\nu$ 不与任何函数相伴；这说明\cref{proposition:ch05-Dirac测度}的逆命题需要“所有纤维都是 Dirac 测度”这一附加假设。
+\end{remark}
 
 由等式\eqref{align:ch05-5.36}与\eqref{align:ch05-5.53}立即得如下结果。
 
-\begin{corollary}\label{corollary:ch05-Young积分}
+\begin{corollary}[与函数相伴的 Young 测度的积分表示]\label{corollary:ch05-Young积分}
 设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。设 $\mu\in\mathscr{R}^+_f(X)$，$u:X\to Y$ 为 $(\mathscr{B}(X),\mathscr{B}(Y))$-可测，$\nu_u\in\mathcal{Y}^+(X,\mathscr{B}(X),\mu;Y)$ 为与 $u$ 相伴的 Young 测度。则对每个 $h\in L^1(X\times Y,\mathscr{B}(X\times Y),\nu_u)$，
 \begin{align}
 \int_{X\times Y}h(x,y)\,\mathrm{d}\nu_u(x,y)
@@ -95,35 +137,74 @@ h(x,\cdot)\in L^1(Y,\mathscr{B}(Y),\nu_x)
 \end{align}
 \end{corollary}
 
-鉴于\cref{proposition:ch05-离散分解}，考虑从 $X$ 到 $\mathscr{R}_f(Y)$ 的弱$^*$可测函数集是有趣的，这些函数对 $\mu$-几乎所有 $x\in X$ 取 $Y$ 上概率测度集 $P(Y)\subseteq\mathscr{R}^+_f(Y)$ 中的值。我们记 $P(X;Y)\equiv P(X,\mathscr{B}(X),\mu;Y)$ 为该集，称为 $Y$ 上的\textbf{参数化概率}集。易见 $P(X;Y)$ 是空间 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 的单位球
+% SUPPLEMENT: parent=corollary:ch05-Young积分; kind=proof; location=推论 5.3.3 前（由 (5.36) 与 (5.53) 的推导）; basis=原书以“immediately obtain”略去推导：需把 (5.50) 的纤维积分在 $(\nu_u)_x=\delta_{u(x)}$ 处化为 $h(x,u(x))$，并核对 $h(x,u(x))$ 的 $\mu$-可积性来自 (5.49)
+\begin{proof}[证明\cref{corollary:ch05-Young积分}]
+设 $h\in L^1(X\times Y,\mathscr{B}(X\times Y),\nu_u)$。由\cref{proposition:ch05-离散分解}(ii)，$h(x,\cdot)\in L^1(Y,\mathscr{B}(Y),(\nu_u)_x)$ 对 $\mu$-几乎所有 $x\in X$ 成立，且 $x\mapsto\int_Y h(x,y)\,\mathrm{d}(\nu_u)_x(y)$ 属于 $L^1(\mu)$，并有
+\begin{align*}
+\int_{X\times Y}h\,\mathrm{d}\nu_u
+=\int_X\mathrm{d}\mu(x)\int_Y h(x,y)\,\mathrm{d}(\nu_u)_x(y).
+\end{align*}
+由\eqref{align:ch05-5.53}，对 $\mu$-几乎所有 $x$ 有 $(\nu_u)_x=\delta_{u(x)}$，故对该 $x$，
+\begin{align*}
+\int_Y h(x,y)\,\mathrm{d}(\nu_u)_x(y)=\int_Y h(x,y)\,\mathrm{d}\delta_{u(x)}(y)=h(x,u(x)).
+\end{align*}
+于是 $x\mapsto h(x,u(x))$ 属于 $L^1(\mu)$（等于上述 $L^1(\mu)$ 中的映射），且\eqref{align:ch05-5.54}成立。
+\end{proof}
+
+% SUPPLEMENT: parent=corollary:ch05-Young积分; kind=motivation; location=推论 5.3.3 后的注记; basis=推论 5.3.3 与 (5.54) + 把 $\nu_u$ 上的积分化为 $\mu$ 上复合函数积分的动机（换元公式的测度论版本）、$h\in L^1(\nu_u)$ 的必要性，以及 $h$ 仅 $\nu_u$-可积而在 $\mu$ 下不可积的边界
+\begin{remark}\phantomsection\label{remark:ch05-Young积分动机}
+(i) 动机。\eqref{align:ch05-5.54}是“换元公式”的测度论版本：它把乘积空间上关于 $\nu_u$ 的积分化为 $X$ 上关于 $\mu$ 的积分，被积函数沿 $u$ 的图取值。这正是 Young 测度用于变分法的基本机制：当 $u_j\rightharpoonup u$ 时，$f(u_j)$ 的弱极限由 $\int f(y)\,\mathrm{d}\nu_x(y)$ 给出，而对与函数相伴的 $\nu_u$ 该积分退化为 $f(u(x))$。
+
+(ii) 假设的作用。$h\in L^1(\nu_u)$ 是使左端有意义且使\eqref{align:ch05-5.54}两端同时有限的精确条件：由\eqref{align:ch05-5.54}，$h\in L^1(\nu_u)$ 等价于 $h(\cdot,u(\cdot))\in L^1(\mu)$。$u$ 的 Borel 可测性保证 $h(x,u(x))$ 是 $\mathscr{B}(X)$-可测函数；$\mu$ 的有限性保证 $\nu_u$ 为有限测度。注意 $h$ 只需关于 $\nu_u$ 可积，而不必关于 $\mu\otimes$（任一测度）可积。
+
+(iii) 边界。等式只对 $\nu_u$-可积的 $h$ 成立，而不能对任意 Borel 函数断言。取 $X=Y=[0,1]$、$\mu=\lambda$、$u(x)=x$，则 $\nu_u$ 为对角线测度，\eqref{align:ch05-5.54}读作
+\begin{align*}
+\int_{[0,1]^2}h\,\mathrm{d}\nu_u=\int_0^1h(x,x)\,\mathrm{d}x.
+\end{align*}
+函数 $h(x,y)\triangleq(y-x)^{-1}$ 在 $y=x$ 处无定义，而 $\nu_u$ 集中于对角线，故 $h\notin L^1(\nu_u)$，等式对它无意义；相比之下，$h(x,y)\triangleq\chi_{\{y=x\}}$ 属于 $L^1(\nu_u)$ 且 $h(x,u(x))=1$，\eqref{align:ch05-5.54}给出 $1=1$。若 $h\geqslant0$ 只可测而 $\nu_u$-不可积，则\eqref{align:ch05-5.54}两端同为 $\infty$，等式仍成立（由单调收敛定理）；若 $h$ 变号且 $\nu_u$-不可积，则两端均无意义。
+\end{remark}
+
+鉴于\cref{proposition:ch05-离散分解}，考虑从 $X$ 到 $\mathscr{R}_f(Y)$ 的弱$^*$可测函数集是有趣的，这些函数对 $\mu$-几乎所有 $x\in X$ 取 $Y$ 上概率测度集 $\mathcal{P}(Y)\subseteq\mathscr{R}^+_f(Y)$ 中的值。记 $\mathcal{P}(X;Y)\equiv\mathcal{P}(X,\mathscr{B}(X),\mu;Y)$ 为该集，称为 $Y$ 上的\textbf{参数化概率}集。$\mathcal{P}(X;Y)$ 是空间 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 的单位球
 \begin{align}
 U\triangleq \left\{\nu\in L^\infty_{w^*}(X;\mathscr{R}_f(Y))\ \middle|\
 \operatorname*{ess\,sup}_{x\in X}\|\nu_x\|_{\mathscr{R}_f(Y)}\leqslant1\right\}\label{align:ch05-5.55}
 \end{align}
-的闭凸子集。
+的凸子集：凸性由 $\mathcal{P}(Y)$ 的凸性与弱$^*$可测性对线性组合的封闭性得到。$\mathcal{P}(X;Y)$ 一般不是弱$^*$闭的：弱$^*$极限可以损失质量（见\hyperref[remark:ch05-弱星损失质量]{注记}），故其弱$^*$闭包包含 $U$ 中纤维质量 $\leqslant1$ 的元素。
 
-\begin{corollary}\label{corollary:ch05-Young一一对应}
-设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。则 $\mathcal{Y}^+(X;Y)$ 与 $P(X;Y)$ 之间存在一一对应。
+\begin{corollary}[Young 测度与参数化概率的一一对应]\label{corollary:ch05-Young一一对应}
+设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。则 $\mathcal{Y}^+(X;Y)$ 与 $\mathcal{P}(X;Y)$ 之间存在一一对应。
 \end{corollary}
 
+% SUPPLEMENT: parent=corollary:ch05-Young一一对应; kind=proof; location=推论 5.3.4 的证明; basis=原证明只写出 $\Psi$ 的定义与“choosing $G=E\times Y$”一步，未验证 $\nu$ 的 $\sigma$-可加性与 Radon 性，也未验证 $\Phi$ 与 $\Psi$ 互逆；此处补出可数可加性（单调收敛定理）、有限 Borel 测度即 Radon 测度（\hyperref[remark:ch01-BorelRadon一致]{注记}），以及两个复合等于恒等的论证
 \begin{proof}
-由\cref{proposition:ch05-离散分解}，每个 $\nu\in\mathcal{Y}^+(X;Y)$ 对应 $Y$ 上的一个参数化概率。反之，设 $\{\nu_x\}_{x\in X}\in P(X;Y)$，置
-\begin{align*}
+由\cref{proposition:ch05-离散分解}，每个 $\nu\in\mathcal{Y}^+(X;Y)$ 对应 $Y$ 上的一个参数化概率，记为 $\Phi(\nu)\triangleq\{\nu_x\}_{x\in X}$。反之，设 $\{\nu_x\}_{x\in X}\in\mathcal{P}(X;Y)$，置
+\begin{align}
 \nu:\mathscr{B}(X\times Y)\to[0,\infty),\quad
 \nu(G)\triangleq \int_X\nu_x(G_x)\,\mathrm{d}\mu(x)
-\quad(G\in\mathscr{B}(X\times Y))
-\end{align*}
-（注意由\cref{remark:ch05-参数测度等价}该定义良定）。由\cref{proposition:ch01-Radon投影}，$\nu\in\mathscr{R}^+_f(X\times Y)$，取 $G=E\times Y$（$E\in\mathscr{B}(X)$）得
+\quad(G\in\mathscr{B}(X\times Y)).\label{align:ch05-5.55a}
+\end{align}
+此定义良定：由\hyperref[remark:ch05-参数测度等价]{注记}，$x\mapsto\nu_x(G_x)$ 为 $\mathscr{B}(X)$-可测，且 $0\leqslant\nu_x(G_x)\leqslant\nu_x(Y)=1$，故积分有限。$\nu$ 的可数可加性由 $\nu_x$ 的可数可加性与 $G\mapsto G_x$ 保持不交并、再用单调收敛定理得到；由\hyperref[remark:ch01-BorelRadon一致]{注记}，有限 Borel 测度 $\nu$ 是 Radon 测度，故 $\nu\in\mathscr{R}^+_f(X\times Y)$。取 $G=E\times Y$（$E\in\mathscr{B}(X)$），注意 $(E\times Y)_x=Y$ 对 $x\in E$ 成立、$=\varnothing$ 对 $x\notin E$ 成立，得
 \begin{align*}
 \nu(E\times Y)=\int_E\nu_x(Y)\,\mathrm{d}\mu(x)=\mu(E).
 \end{align*}
-故 $\nu\in\mathcal{Y}^+(X;Y)$（见\cref{definition:ch02-Young测度}），结论得证。
+故 $\nu\in\mathcal{Y}^+(X;Y)$（见\cref{definition:ch02-Young测度}），记 $\Psi(\{\nu_x\}_{x\in X})\triangleq\nu$。
+
+最后验证 $\Phi$ 与 $\Psi$ 互逆。设 $\nu\in\mathcal{Y}^+(X;Y)$，$\{\nu_x\}_{x\in X}=\Phi(\nu)$。由\eqref{align:ch05-5.39}，对每个 $G\in\mathscr{B}(X\times Y)$ 有 $\nu(G)=\int_X\nu_x(G_x)\,\mathrm{d}\mu(x)$，即 $\Psi(\Phi(\nu))=\nu$。反之，设 $\{\nu_x\}_{x\in X}\in\mathcal{P}(X;Y)$，$\nu\triangleq\Psi(\{\nu_x\}_{x\in X})$；由\eqref{align:ch05-5.55a}，$\{\nu_x\}_{x\in X}$ 满足\eqref{align:ch05-5.50}，故由\cref{proposition:ch05-离散分解}的唯一性，$\Phi(\nu)$ 与 $\{\nu_x\}_{x\in X}$ 在 $\mu$-几乎处处相等。于是 $\Phi$ 与 $\Psi$ 在几乎处处意义下互逆，对应为一一对应。结论得证。
 \end{proof}
 
-由\cref{corollary:ch05-Young一一对应}与前述注记，自然赋予 $\mathcal{Y}^+(X;Y)$ 以 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 上弱$^*$收敛的拓扑（见\cref{subsection:ch05-Young弱星}）。$\mathcal{Y}^+(X;Y)$ 上另一种与窄收敛相关的拓扑将在\cref{subsection:ch05-Young窄}中引入。为此，我们需要如下定义。
+% SUPPLEMENT: parent=corollary:ch05-Young一一对应; kind=motivation; location=推论 5.3.4 后的注记; basis=推论 5.3.4 + 把 Young 测度视为 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 的单位球中的点的动机、$\mu$ 有限性的作用（否则 $\mathcal{Y}^+$ 为空），以及“一一对应”只在 $\mu$-几乎处处意义下成立、$\mathcal{P}(X;Y)$ 不是弱$^*$闭的边界
+\begin{remark}\phantomsection\label{remark:ch05-Young一一对应动机}
+(i) 动机。\cref{corollary:ch05-Young一一对应}把 $\mathcal{Y}^+(X;Y)$ 与 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 的单位球中的子集 $\mathcal{P}(X;Y)$ 等同起来，从而可以把泛函分析中弱$^*$拓扑的工具直接用于 Young 测度：紧性由 Banach--Alaoglu 定理得到（\cref{theorem:ch05-Young弱星紧}），收敛性由逐试验函数的收敛刻画（\cref{definition:ch05-Young弱星}）。这是本节余下部分（弱$^*$与窄两种拓扑）的基础。
 
-\begin{definition}\label{definition:ch05-Caratheodory}
-设 $(X,\mathcal{A},\mu)$ 为有限测度空间，$Y$ 为拓扑空间。
+(ii) 假设的作用。$\mu$ 的有限性使 $\mathcal{Y}^+(X;Y)\neq\varnothing$ 且 $\mathcal{P}(X;Y)$ 中的元素范数不超过 $1$（因为 $\nu_x(Y)=1$），从而是单位球 $U$ 的子集；若 $\mu$ 无限，则 $\mathcal{Y}^+(X;Y)=\varnothing$ 而对应关系退化。$X$、$Y$ 的可数基假设保证\cref{proposition:ch05-离散分解}可用，从而使 $\Phi$ 有定义。对应关系 $\Psi$ 的像落在 $\mathcal{Y}^+(X;Y)$ 中，用到了 $\nu_x(Y)=1$（而非仅 $\leqslant1$）：若允许 $\nu_x(Y)<1$，则 $\nu(X\times Y)=\int\nu_x(Y)\,\mathrm{d}\mu<\mu(X)$，$\Psi$ 的像不再是 Young 测度。
+
+(iii) 边界。“一一对应”是在 $\mu$-几乎处处意义下的：$\mathcal{P}(X;Y)$ 中的两个元素若在 $\mu$-零测集上不同，则对应同一个 $\nu$，故严格的陈述是 $\mathcal{Y}^+(X;Y)$ 与 $\mathcal{P}(X;Y)$ 的几乎处处等价类之间的双射。$\mathcal{P}(X;Y)$ 是 $U$ 的凸子集，但本身不必是弱$^*$闭的：弱$^*$极限的纤维可以“损失质量”，即 $\nu_x(Y)<1$（见\hyperref[remark:ch05-弱星损失质量]{注记}），故 $\mathcal{Y}^+(X;Y)$ 的弱$^*$闭包严格大于 $\mathcal{Y}^+(X;Y)$；这正是\cref{theorem:ch05-Young弱星紧}的极限只属于 $U$ 而不必属于 $\mathcal{Y}^+(X;Y)$ 的原因。
+\end{remark}
+
+由\cref{corollary:ch05-Young一一对应}与前述注记，自然赋予 $\mathcal{Y}^+(X;Y)$ 以 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 上弱$^*$收敛的拓扑（见\cref{subsection:ch05-Young弱星}）。$\mathcal{Y}^+(X;Y)$ 上另一种与窄收敛相关的拓扑将在\cref{subsection:ch05-Young窄}中引入。为此，需要如下定义。
+
+\begin{definition}[Carathéodory 函数与有界 Carathéodory 被积函数]\label{definition:ch05-Caratheodory}
+设 $(X,\mathcal{A},\mu)$ 为有限测度空间（即 $\mu(X)<\infty$），$Y$ 为拓扑空间。
 \begin{enumerate}[(i)]
 \item\label{item:ch05-car-i} \textbf{Carathéodory 函数}是指任意 $h:X\times Y\to\mathbb{R}$ 满足
 \begin{align*}
@@ -148,25 +229,39 @@ $C_0$-Carathéodory 被积函数由在 (a) 中将 $C_b(Y)$ 替换为 $C_0(Y)$ �
 
 Carathéodory 函数（等价类）所成的向量空间记作 $\mathcal{C}(X\times Y)$，有界 Carathéodory 被积函数与 $C_0$-Carathéodory 被积函数所成的空间分别记作 $\mathcal{C}_b(X\times Y)$ 与 $\mathcal{C}_0(X\times Y)$。
 
+% SUPPLEMENT: parent=definition:ch05-Caratheodory; kind=motivation; location=注（定义 5.3.1 后的注记）; basis=定义 5.3.1 与 (5.56) + 以 Carathéodory 条件作为“随 $x$ 变化的被积函数”的动机、(a) 与 (b) 各自不可去的作用、$\mu$ 有限性的作用，以及 $C_b$ 与 $C_0$ 的差别与反例
+\begin{remark}\phantomsection\label{remark:ch05-Caratheodory动机}
+(i) 动机。讨论 $\nu\mapsto\int_{X\times Y}h\,\mathrm{d}\nu$ 的连续性时，$h$ 必须对每个 $x$ 关于 $y$ 连续，否则 $\nu_x$ 的弱$^*$扰动无法控制积分；同时 $h$ 必须关于 $x$ 可测，否则 $x\mapsto\int_Yh(x,y)\,\mathrm{d}\nu_x(y)$ 不可测，无法对 $\mu$ 积分。Carathéodory 条件正是这两条要求的最弱组合，因而它是 Young 测度弱$^*$、窄两种拓扑的试验函数类。
+
+(ii) 假设的作用。(a) 的“$\mu$-几乎处处”不可去掉：若只假设 $h(x,\cdot)$ 对每个 $x$ 连续，则 $x\mapsto\|h(x,\cdot)\|_\infty$ 未必可测；反过来 (b) 不可去掉：取非可测集 $A\subseteq X$ 与 $g\in C_b(Y)$，$g\neq0$，令 $h(x,y)\triangleq\chi_A(x)g(y)$，则 $h(x,\cdot)\in C_b(Y)$ 对所有 $x$ 成立，但 $h(\cdot,y)$ 不可测，$\int_Yh(x,y)\,\mathrm{d}\nu_x(y)=\chi_A(x)\int g\,\mathrm{d}\nu_x$ 也不可测，从而 $h$ 不属于任何 $L^1(X;C_b(Y))$，积分 $\int_{X\times Y}h\,\mathrm{d}\nu$ 无意义。$\mu$ 的有限性在 (ii)(b) 中用于保证 $\|h(x,\cdot)\|_\infty$ 的积分有限时 $h\in L^1(X;C_b(Y))$；在 $\mu$ 无限时须把 (b) 换成局部可积性。(ii)(b) 中的可测性不能由 (ii)(a) 推出，理由与 (i)(b) 相同。
+
+(iii) 边界。$\mathcal{C}_b(X\times Y)\neq\mathcal{C}_0(X\times Y)$：$h\equiv1$ 属于前者而不属于后者（$\|h(x,\cdot)\|_\infty=1$ 不衰减），而 $h(x,y)\triangleq g(y)$（$g\in C_0(Y)$）属于后者。两者都是 $\mathcal{C}(X\times Y)$ 的子空间，且 $\mathcal{C}_0(X\times Y)\subseteq\mathcal{C}_b(X\times Y)$。\cref{proposition:ch05-Caratheodory同构}将证明 $\mathcal{C}_0(X\times Y)$ 等距同构于 $L^1(X;C_0(Y))$，而 $\mathcal{C}_b(X\times Y)$ 只在 $Y$ 紧时才有类似结论（\hyperref[remark:ch05-紧空间同构]{注记}）。等价类的引入是必要的：\eqref{align:ch05-5.56}只定义半范数，商去 $\mu$-几乎处处为零的函数后才成为范数。
+\end{remark}
+
 立即可见，映射 $\mathcal{C}_b(X\times Y)\to[0,\infty)$，
 \begin{align}
 h\mapsto\|h\|_{\mathcal{C}_b(X\times Y)}
-\triangleq \int_X\|h(x,\cdot)\|_\infty\,\mathrm{d}\mu(x),\label{align:ch05-5.56}
+\triangleq \int_X\|h(x,\cdot)\|_\infty\,\mathrm{d}\mu(x)\label{align:ch05-5.56}
 \end{align}
-是一个范数。于是我们有如下结果。
+是一个范数（在等价类空间上）。对 $h\in\mathcal{C}_0(X\times Y)$，$\|h\|_{\mathcal{C}_0(X\times Y)}$ 由\eqref{align:ch05-5.56}把 $\mathcal{C}_b$ 换成 $\mathcal{C}_0$ 定义；由于 $C_0(Y)\subseteq C_b(Y)$，两者的数值相同。于是有如下结果。
 
-\begin{proposition}\label{proposition:ch05-Caratheodory同构}
+\begin{proposition}[Carathéodory 被积函数与向量值 $L^1$ 的等距同构]\label{proposition:ch05-Caratheodory同构}
 设 $(X,\mathcal{A},\mu)$ 为有限测度空间，$Y$ 为具可数基的局部紧 Hausdorff 空间。则映射
 \begin{align}
 T:\mathcal{C}_0(X\times Y)\to L^1(X;C_0(Y)),\qquad
 (Th)(x)\triangleq h(x,\cdot)
-\quad\text{对 }\mu\text{-几乎所有 }x\in X,\label{align:ch05-5.57}
+\quad\text{对 }\mu\text{-几乎所有 }x\in X\label{align:ch05-5.57}
 \end{align}
 是 $(\mathcal{C}_0(X\times Y),\|\cdot\|_{\mathcal{C}_0(X\times Y)})$ 到 $L^1(X;C_0(Y))$ 的等距同构。特别地，$\mathcal{C}_0(X\times Y)$ 赋以范数 $\|\cdot\|_{\mathcal{C}_b(X\times Y)}$ 为 Banach 空间。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch05-Caratheodory同构; kind=proof; location=命题 5.3.5 的证明; basis=原证明以“thus the set ... belongs to $\mathcal{A}$”带过上确界可数化的关键步骤；此处补出 $D_Y$ 可数稠密、$\|h(x,\cdot)-g\|_\infty=\sup_{y\in D_Y}|h(x,y)-g(y)|$ 与可数上确界可测的论证
 \begin{proof}
-我们先证算子 $T$ 良定。对任意 $h\in\mathcal{C}_0(X\times Y)$ 与 $g\in C_0(Y)$，函数 $(x,y)\mapsto h(x,y)-g(y)$ 属于 $\mathcal{C}_0(X\times Y)$，故对每个 $\alpha\in\mathbb{R}$，集合 $\{x\in X\mid\|h(x,\cdot)-g\|_\infty<\alpha\}$ 属于 $\mathcal{A}$（见\cref{definition:ch05-Caratheodory}(ii)）。另一方面，$C_0(Y)$ 可分（见附录 A,\cref{subsection:appA-可分}），故 Borel $\sigma$-代数 $\mathscr{B}\equiv\mathscr{B}(C_0(Y))$ 由可数开球基 $B(g_k,\alpha)\triangleq \{g\in C_0(Y)\mid\|g-g_k\|_\infty<\alpha\}$（$k\in\mathbb{N}$）生成。由此映射 $x\mapsto h(x,\cdot)=(Th)(x)$ 为 $(\mathcal{A},\mathscr{B})$-可测，因而由\cref{proposition:ch04-可测性}为 $\mu$-可测，因为 $C_0(Y)$ 可分。此外，
+先证算子 $T$ 良定。对任意 $h\in\mathcal{C}_0(X\times Y)$ 与 $g\in C_0(Y)$，函数 $(x,y)\mapsto h(x,y)-g(y)$ 属于 $\mathcal{C}_0(X\times Y)$，故对每个 $\alpha\in\mathbb{R}$，集合 $\{x\in X\mid\|h(x,\cdot)-g\|_\infty<\alpha\}$ 属于 $\mathcal{A}$。这里用到
+\begin{align*}
+\|h(x,\cdot)-g\|_\infty=\sup_{y\in D_Y}|h(x,y)-g(y)|,
+\end{align*}
+其中 $D_Y\subseteq Y$ 为可数稠密子集（由 $Y$ 具可数基，见\cref{definition:ch01-可分空间}）：由 $h(x,\cdot)$ 与 $g$ 连续，上确界可在 $D_Y$ 上取到，而每个 $x\mapsto|h(x,y)-g(y)|$ 为 $\mathcal{A}$-可测（见\cref{definition:ch05-Caratheodory}(ii)(b)），故可数上确界可测。另一方面，$C_0(Y)$ 可分（见附录 A,\cref{proposition:appA-Cb可分}），故 Borel $\sigma$-代数 $\mathscr{B}\equiv\mathscr{B}(C_0(Y))$ 由可数开球基 $B(g_k,\alpha)\triangleq \{g\in C_0(Y)\mid\|g-g_k\|_\infty<\alpha\}$（$k\in\mathbb{N}$，$\alpha>0$）生成。由此映射 $x\mapsto h(x,\cdot)=(Th)(x)$ 为 $(\mathcal{A},\mathscr{B})$-可测：每个 $B(g_k,\alpha)$ 的原像属于 $\mathcal{A}$，而可数族生成 $\mathscr{B}$。因而由\cref{proposition:ch04-可测性}，$(Th)$ 为 $\mu$-可测，因为 $C_0(Y)$ 可分。此外，
 \begin{align}
 \|h\|_{\mathcal{C}_b(X\times Y)}
 =\int_X\|h(x,\cdot)\|_\infty\,\mathrm{d}\mu(x)
@@ -175,69 +270,130 @@ T:\mathcal{C}_0(X\times Y)\to L^1(X;C_0(Y)),\qquad
 \end{align}
 故 $Th\in L^1(X;C_0(Y))$，断言得证。
 
-由于 $T$ 线性且等距（见\eqref{align:ch05-5.58}），它单射。为证满射，固定任意 $\hat{h}\in L^1(X;C_0(Y))$。则对 $\mu$-几乎所有 $x\in X$，$\hat{h}(x)\in C_0(Y)$，且映射 $x\mapsto\|\hat{h}(x)\|_\infty$ 属于 $L^1(X)$。此外，对任意 $y\in Y$，映射 $x\mapsto\hat{h}(x)(y)$ 为 $\mathcal{A}$-可测，因为映射 $x\mapsto\|\hat{h}(x)\|_\infty$ 为 $\mathcal{A}$-可测，且映射 $C_0(Y)\to\mathbb{R}$，$g\mapsto g(y)$（$g\in C_0(Y)$，$y\in Y$）连续。因此函数 $(x,y)\mapsto\hat{h}(x)(y)$ 属于 $\mathcal{C}_0(X\times Y)$，故 $T$ 满射。结论得证。
+由于 $T$ 线性且等距（见\eqref{align:ch05-5.58}），它单射。为证满射，固定任意 $\hat{h}\in L^1(X;C_0(Y))$。则对 $\mu$-几乎所有 $x\in X$，$\hat{h}(x)\in C_0(Y)$，且映射 $x\mapsto\|\hat{h}(x)\|_\infty$ 属于 $L^1(X)$。此外，对任意 $y\in Y$，映射 $x\mapsto\hat{h}(x)(y)$ 为 $\mathcal{A}$-可测，因为映射 $x\mapsto\|\hat{h}(x)\|_\infty$ 为 $\mathcal{A}$-可测，且求值映射 $C_0(Y)\to\mathbb{R}$，$g\mapsto g(y)$，连续（从而 Borel 可测）。因此函数 $(x,y)\mapsto\hat{h}(x)(y)$ 属于 $\mathcal{C}_0(X\times Y)$，且 $T\hat{h}=\hat{h}$，故 $T$ 满射。结论得证。
 \end{proof}
 
-由\cref{proposition:ch05-Caratheodory同构}、\cref{theorem:ch04-可分}与\cref{proposition:ch04-对偶}得如下结果。
+% SUPPLEMENT: parent=proposition:ch05-Caratheodory同构; kind=motivation; location=命题 5.3.5 后的注记; basis=命题 5.3.5 与 (5.57)--(5.58) + 把 Carathéodory 被积函数视为向量值 $L^1$ 的动机、$\mu$ 有限性与 $Y$ 可数基的作用，以及 $C_0$ 与 $C_b$、$Y$ 非紧时的边界
+\begin{remark}\phantomsection\label{remark:ch05-Caratheodory同构动机}
+(i) 动机。\eqref{align:ch05-5.57}说明“随 $x$ 变化的 $C_0(Y)$-值函数”与“$X\times Y$ 上的 $C_0$-Carathéodory 被积函数”是同一对象，且范数相同。这使得 Young 测度的对偶理论可归入向量值 $L^1$ 空间的对偶理论：由\cref{proposition:ch05-Caratheodory同构}与\cref{theorem:ch04-Lp对偶刻画}，$(\mathcal{C}_0(X\times Y))^*=L^\infty_{w^*}(X;\mathscr{R}_f(Y))$（\cref{corollary:ch05-Caratheodory对偶}(ii)），这正是弱$^*$收敛的试验函数类。
 
-\begin{corollary}\label{corollary:ch05-Caratheodory对偶}
+(ii) 假设的作用。$Y$ 的可数基假设用于 $C_0(Y)$ 的可分性，从而使其 Borel $\sigma$-代数由可数族生成，$(Th)$ 的可测性才可检验；若 $C_0(Y)$ 不可分（例如 $Y$ 为不可分紧空间），则强可测性与弱$^*$可测性可能不同，等距同构仍成立而可测性论证需另行处理。$\mu$ 的有限性在\eqref{align:ch05-5.58}中用于保证 $\|h\|_{\mathcal{C}_b(X\times Y)}<\infty$；若 $\mu$ 无限，则须把 $\mathcal{C}_0$ 换成局部可积的相应空间。满射性的证明用到求值映射 $g\mapsto g(y)$ 的连续性，这只要求 $Y$ 为拓扑空间。
+
+(iii) 边界。命题只对 $C_0$ 成立；对 $C_b$，类似的映射 $T:\mathcal{C}_b(X\times Y)\to L^1(X;C_b(Y))$ 一般不是满射，因为 $C_b(Y)$ 非可分时其 Borel $\sigma$-代数不可数生成（参见\hyperref[remark:ch05-紧空间同构]{注记}中对 $Y$ 紧情形的讨论）。此外，$L^1(X;C_0(Y))$ 的元素是 $\mu$-等价类，故 $T$ 的等距同构应理解为等价类空间之间的同构；逐点陈述 $T h(x)=h(x,\cdot)$ 只在 $\mu$-几乎处处意义下成立。
+\end{remark}
+
+由\cref{proposition:ch05-Caratheodory同构}、\cref{theorem:ch04-可分}与\cref{theorem:ch04-Lp对偶刻画}得如下结果。
+
+\begin{corollary}[Carathéodory 空间的可分性与对偶]\label{corollary:ch05-Caratheodory对偶}
 设 $(X,\mathcal{A},\mu)$ 为有限测度空间，$Y$ 为具可数基的局部紧 Hausdorff 空间。则：
 \begin{enumerate}[(i)]
 \item\label{item:ch05-cd-i} 空间 $\mathcal{C}_0(X\times Y)$ 可分；
-\item\label{item:ch05-cd-ii} 我们有
-\begin{align*}
-(\mathcal{C}_0(X\times Y))^*=L^\infty_{w^*}(X;\mathscr{R}_f(Y)).
-\end{align*}
+\item\label{item:ch05-cd-ii} 有
+\begin{align}
+(\mathcal{C}_0(X\times Y))^*=L^\infty_{w^*}(X;\mathscr{R}_f(Y)).\label{align:ch05-5.58a}
+\end{align}
 \end{enumerate}
 \end{corollary}
 
-\begin{remark}\label{remark:ch05-紧空间同构}
-设 $(X,\mathcal{A},\mu)$ 为有限测度空间，$Y$ 为紧空间。则 $C_b(Y)$ 可分，且\cref{proposition:ch05-Caratheodory同构}的证明表明映射
+% SUPPLEMENT: parent=corollary:ch05-Caratheodory对偶; kind=proof; location=推论 5.3.6 前（由命题 5.3.5、定理 4.3.7、命题 4.4.16 的推导）; basis=原书只写“By Proposition 5.3.5, Theorem 4.3.7, and Proposition 4.4.16 we have”，此处补出 (i) 由等距同构与 $L^1(X;C_0(Y))$ 的可分性、(ii) 由 $L^1(X;C_0(Y))^*=L^\infty_{w^*}(X;(C_0(Y))^*)$ 与 Riesz 表示定理的逐步论证
+\begin{proof}[证明\cref{corollary:ch05-Caratheodory对偶}]
+(i) 由\cref{proposition:ch05-Caratheodory同构}，$\mathcal{C}_0(X\times Y)$ 等距同构于 $L^1(X;C_0(Y))$。由 $Y$ 具可数基，$C_0(Y)$ 为可分 Banach 空间（附录 A,\cref{proposition:appA-Cb可分}）；又 $X$ 为有限测度空间，故由\cref{theorem:ch04-可分}，$L^1(X;C_0(Y))$ 可分。等距同构保持可分性，故 $\mathcal{C}_0(X\times Y)$ 可分。
+
+(ii) 由\cref{proposition:ch05-Caratheodory同构}，$\mathcal{C}_0(X\times Y)$ 与 $L^1(X;C_0(Y))$ 等距同构，故其对偶空间等距同构。由\cref{theorem:ch04-Lp对偶刻画}（取 $p=1$），
+\begin{align*}
+(L^1(X;C_0(Y)))^*=L^\infty_{w^*}(X;(C_0(Y))^*).
+\end{align*}
+再由 Riesz 表示定理（\cref{theorem:ch02-Rf对偶}），$(C_0(Y))^*=\mathscr{R}_f(Y)$，故
+\begin{align*}
+(\mathcal{C}_0(X\times Y))^*=L^\infty_{w^*}(X;\mathscr{R}_f(Y)).
+\end{align*}
+结论得证。
+\end{proof}
+
+% SUPPLEMENT: parent=corollary:ch05-Caratheodory对偶; kind=motivation; location=推论 5.3.6 后的注记; basis=推论 5.3.6 与 (5.58a) + 对偶等式作为弱$^*$拓扑定义的动机、$\mu$ 有限与 $Y$ 可数基的作用，以及对偶等式不能推广到 $\mathcal{C}_b$ 与 $p\neq1$ 的边界
+\begin{remark}\phantomsection\label{remark:ch05-Caratheodory对偶动机}
+(i) 动机。(ii) 是本节弱$^*$收敛定义的依据：$\mathcal{Y}^+(X;Y)\subseteq\mathscr{R}^+_f(X\times Y)$ 的元素可视为 $\mathcal{C}_0(X\times Y)$ 上的正泛函，故“$\nu_k$ 弱$^*$收敛于 $\nu$”就是“$\int h\,\mathrm{d}\nu_k\to\int h\,\mathrm{d}\nu$ 对一切 $h\in\mathcal{C}_0(X\times Y)$”，即 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 中的弱$^*$收敛（\cref{definition:ch05-Young弱星}）。(i) 则给出紧性论证所需的空间可分性（Banach--Alaoglu 定理与弱$^*$度量化的前提）。
+
+(ii) 假设的作用。$\mu$ 的有限性是 $L^1(X;C_0(Y))$ 的对偶恰为 $L^\infty_{w^*}$ 的前提（\cref{theorem:ch04-Lp对偶刻画}要求有限测度空间）；$Y$ 的可数基保证 $C_0(Y)$ 可分且 $\mathscr{R}_f(Y)=(C_0(Y))^*$，从而使 (ii) 的右端有意义。若去掉 $\mu$ 的有限性，(ii) 仍成立但须把 $L^\infty_{w^*}$ 换成 $L^\infty_{\mathrm{loc}}$ 型的空间，且弱$^*$拓扑不再由单位球刻画。
+
+(iii) 边界。(ii) 中的等号是空间层面的等同而非仅包含：每个 $\nu\in L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 都通过 $h\mapsto\int_{X\times Y}h\,\mathrm{d}\nu$ 定义一个 $\mathcal{C}_0(X\times Y)$ 上的有界线性泛函，反之亦然。对 $\mathcal{C}_b$ 的类似等式需要 $C_b(Y)$ 的可分性（$Y$ 紧且具可数基时成立，见\hyperref[remark:ch05-紧空间同构修正]{注记}）；$Y$ 不紧时 $\mathcal{C}_b(X\times Y)$ 不与 $L^1(X;C_b(Y))$ 等距同构，故不能把 (ii) 中的 $\mathcal{C}_0$ 直接换成 $\mathcal{C}_b$。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-紧空间同构}
+设 $(X,\mathcal{A},\mu)$ 为有限测度空间，$Y$ 为紧空间。则 $C_b(Y)=C(Y)$ 可分（例如由 Stone--Weierstrass 定理，$Y$ 紧度量时成立），且\cref{proposition:ch05-Caratheodory同构}的证明表明映射
 \begin{align}
 T:\mathcal{C}_b(X\times Y)\to L^1(X;C_b(Y)),\qquad
 (Th)(x)\triangleq h(x,\cdot)
-\quad\text{对 }\mu\text{-几乎所有 }x\in X,\label{align:ch05-5.59}
+\quad\text{对 }\mu\text{-几乎所有 }x\in X\label{align:ch05-5.59}
 \end{align}
 是 $(\mathcal{C}_b(X\times Y),\|\cdot\|_{\mathcal{C}_b(X\times Y)})$ 到 $L^1(X;C_b(Y))$ 的等距同构。
 \end{remark}
 
+% SUPPLEMENT: parent=remark:ch05-紧空间同构; kind=proof; location=注 5.3.1 中“the proof of Proposition 5.3.5 shows”; basis=原书称命题 5.3.5 的证明同时给出 $\mathcal{C}_b$ 的情形，此处补出 $Y$ 紧时 $C_b(Y)=C(Y)$ 可分、可数稠密集与求值映射连续性两处论证，并说明 $Y$ 仅紧而不可度量时该结论需要可分性假设
+\begin{remark}\phantomsection\label{remark:ch05-紧空间同构修正}
+上述等距同构的论证与\cref{proposition:ch05-Caratheodory同构}的证明逐字相同：(i) 对 $h\in\mathcal{C}_b(X\times Y)$ 与 $g\in C_b(Y)$，由
+\begin{align*}
+\|h(x,\cdot)-g\|_\infty=\sup_{y\in D_Y}|h(x,y)-g(y)|
+\end{align*}
+（$D_Y\subseteq Y$ 为可数稠密子集）得 $\{x\mid\|h(x,\cdot)-g\|_\infty<\alpha\}\in\mathcal{A}$；(ii) 若 $C_b(Y)$ 可分，则 $\mathscr{B}(C_b(Y))$ 由可数球族生成，故 $(Th)$ 可测；(iii) \eqref{align:ch05-5.58}的范数等式逐字成立，满射性由求值映射 $g\mapsto g(y)$ 的连续性得到。需要补充的是：$Y$ 紧且具有可数基（例如紧度量空间）时 $C(Y)=C_b(Y)$ 才可分，从而上述 (ii) 可用；若 $Y$ 紧但不可分，则 $C_b(Y)$ 不可分，$\mathcal{C}_b(X\times Y)$ 与 $L^1(X;C_b(Y))$ 之间的一般等距同构须以 $C_b(Y)$ 的可分性为前提。因此\hyperref[remark:ch05-紧空间同构]{注记}的结论应理解为：在 $Y$ 紧且 $C_b(Y)$ 可分的假设下，$\mathcal{C}_b$ 版本与 $\mathcal{C}_0$ 版本同样成立。
+\end{remark}
+
 \subsection{弱$^*$收敛}\label{subsection:ch05-Young弱星}
 
-如已观察到的，由\cref{corollary:ch05-Young一一对应}与前述注记，自然赋予 $\mathcal{Y}^+(X;Y)$ 以 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 上弱$^*$收敛的拓扑。于是由\cref{corollary:ch05-Caratheodory对偶}(ii)得如下定义（回忆由定义 $\mathcal{Y}^+(X;Y)\subseteq\mathscr{R}^+_f(X\times Y)$）。
+由\cref{corollary:ch05-Young一一对应}与前述注记，自然赋予 $\mathcal{Y}^+(X;Y)$ 以 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 上弱$^*$收敛的拓扑。于是由\cref{corollary:ch05-Caratheodory对偶}(ii)得如下定义（回忆由定义 $\mathcal{Y}^+(X;Y)\subseteq\mathscr{R}^+_f(X\times Y)$）。
 
-\begin{definition}\label{definition:ch05-Young弱星}
+\begin{definition}[弱$^*$收敛]\label{definition:ch05-Young弱星}
 设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。序列 $\{\nu_k\}\subseteq\mathcal{Y}^+(X;Y)$ \textbf{弱$^*$收敛}于 $\nu\in L^\infty_{w^*}(X;\mathscr{R}_f(Y))$（记作 $\nu_k\stackrel{*}{\rightharpoonup}\nu$），若
-\begin{align*}
+\begin{align}
 \lim_{k\to\infty}\int_{X\times Y}h\,\mathrm{d}\nu_k
 =\int_{X\times Y}h\,\mathrm{d}\nu
-\quad\text{对所有 }h\in\mathcal{C}_0(X\times Y).
-\end{align*}
+\quad\text{对所有 }h\in\mathcal{C}_0(X\times Y).\label{align:ch05-5.59a}
+\end{align}
 $\mathcal{Y}^+(X;Y)$ 上的弱$^*$拓扑，记作 $\mathcal{T}_{w^*}$，是使所有映射 $\nu\mapsto\int_{X\times Y}h\,\mathrm{d}\nu$（$h\in\mathcal{C}_0(X\times Y)$）连续的最弱拓扑。
 
 $\mathcal{T}_{w^*}$ 的一组基为子集族
 \begin{align}
-B_{h_1,\cdots ,h_n;\epsilon}(\nu_0)
+B_{h_1,\cdots ,h_n;\varepsilon}(\nu_0)
 \triangleq \left\{\nu\in\mathcal{Y}^+(X;Y)\ \middle|\
-\left|\int_{X\times Y}h_j\,\mathrm{d}\nu-\int_{X\times Y}h_j\,\mathrm{d}\nu_0\right|<\epsilon
+\left|\int_{X\times Y}h_j\,\mathrm{d}\nu-\int_{X\times Y}h_j\,\mathrm{d}\nu_0\right|<\varepsilon
 \ \forall j=1,\cdots ,n\right\},\label{align:ch05-5.60}
 \end{align}
-其中 $h_1,\cdots ,h_n\in\mathcal{C}_0(X\times Y)$，$\nu_0\in\mathcal{Y}^+(X;Y)$，$n\in\mathbb{N}$，$\epsilon>0$。
+其中 $h_1,\cdots ,h_n\in\mathcal{C}_0(X\times Y)$，$\nu_0\in\mathcal{Y}^+(X;Y)$，$n\in\mathbb{N}$，$\varepsilon>0$。
 \end{definition}
 
-\begin{remark}\label{remark:ch05-弱星损失质量}
-由\cref{definition:ch05-Young弱星}与 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 中范数的下半连续性，弱$^*$极限 $\nu$ 属于单位球 $U\subseteq L^\infty_{w^*}(X;\mathscr{R}_f(Y))$（见\eqref{align:ch05-5.55}）。然而，由于可能的“质量损失”，$\nu$ 不必是 $Y$ 上的参数化概率（见\cref{remark:ch05-范数下半连续}）。还注意 $\nu\in L^\infty_{w^*}(X;\mathscr{R}^+_f(Y))$，因为 $\{\nu_k\}\subseteq\mathcal{Y}^+(X;Y)$。
+\begin{remark}\phantomsection\label{remark:ch05-弱星损失质量}
+由\cref{definition:ch05-Young弱星}与 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 中范数的下半连续性，弱$^*$极限 $\nu$ 属于单位球 $U\subseteq L^\infty_{w^*}(X;\mathscr{R}_f(Y))$（见\eqref{align:ch05-5.55}）。然而，由于可能的“质量损失”，$\nu$ 不必是 $Y$ 上的参数化概率（见\hyperref[remark:ch05-范数下半连续]{注记}）。此外 $\nu\in L^\infty_{w^*}(X;\mathscr{R}^+_f(Y))$，因为 $\{\nu_k\}\subseteq\mathcal{Y}^+(X;Y)$。
 \end{remark}
 
-\begin{theorem}\label{theorem:ch05-Young弱星紧}
+% SUPPLEMENT: parent=definition:ch05-Young弱星; kind=motivation; location=注 5.3.2 后（定义 5.3.2 的动机注记）; basis=定义 5.3.2 与 (5.59a)--(5.60) + 弱$^*$收敛作为“逐试验函数收敛”的动机、$\mathcal{C}_0$ 试验函数类的作用、$L^\infty_{w^*}$ 极限的质量损失，以及弱$^*$收敛不蕴含窄收敛（$\mu_k=\delta_k$ 型）的边界
+\begin{remark}\phantomsection\label{remark:ch05-Young弱星动机}
+(i) 动机。弱$^*$收敛是 $\mathcal{Y}^+(X;Y)\subseteq L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 上的自然弱拓扑：它只检验 $\mathcal{C}_0(X\times Y)$ 中的试验函数，故比窄收敛弱，却足以由 Banach--Alaoglu 定理得到序列紧性（\cref{theorem:ch05-Young弱星紧}）。在应用中，$u_j$ 的有界性（而非紧性）就足以保证 $\{\nu_{u_j}\}$ 弱$^*$收敛（\cref{theorem:ch05-ball}）。
+
+(ii) 假设的作用。试验函数类取 $\mathcal{C}_0(X\times Y)$ 而非 $\mathcal{C}_b(X\times Y)$，正是为了使 $\mathcal{Y}^+(X;Y)$ 成为 $(\mathcal{C}_0(X\times Y))^*$ 中单位球的子集（\cref{corollary:ch05-Caratheodory对偶}(ii)），从而 Banach--Alaoglu 定理适用；取更大的试验函数类会削弱紧性。$\nu_k$ 取 Young 测度（而非任意 Radon 测度）保证 $\|\nu_k\|\leqslant\mu(X)$，使极限落在有界集中。定义中对极限 $\nu$ 只要求属于 $L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 而不要求 $\nu\in\mathcal{Y}^+(X;Y)$，因为极限可能损失质量（见 \hyperref[remark:ch05-弱星损失质量]{注记}）。
+
+(iii) 边界。弱$^*$收敛严格弱于窄收敛：取 $X=\{0\}$、$Y=\mathbb{R}$、$\mu=\delta_0$、$\nu_k\triangleq\delta_0\otimes\delta_k$（即 $\nu_k=\delta_{(0,k)}$），则对 $h\in\mathcal{C}_0(X\times Y)$ 有 $\int h\,\mathrm{d}\nu_k=h(0,k)\to0$，故 $\nu_k\stackrel{*}{\rightharpoonup}0$，但 $\nu_k(X\times\mathbb{R})=1\not\to0$，故 $\nu_k$ 不窄收敛于 $0$，且极限 $0$ 不属于 $\mathcal{Y}^+(X;Y)$。这正是“质量逃逸到无穷”的现象，说明弱$^*$收敛的极限只能保证属于单位球 $U$。
+\end{remark}
+
+\begin{theorem}[弱$^*$序列紧性]\label{theorem:ch05-Young弱星紧}
 设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。则对每个序列 $\{\nu_k\}\subseteq\mathcal{Y}^+(X;Y)$，存在子列 $\{\nu_{k_l}\}\subseteq\{\nu_k\}$ 与 $\nu\in U\subseteq L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 使 $\nu_{k_l}\stackrel{*}{\rightharpoonup}\nu$。
 \end{theorem}
 
-\begin{proof}
-由\cref{theorem:ch04-可分}，空间 $L^1(X;C_0(Y))$ 可分，故由\cref{proposition:ch04-对偶}与 Banach 定理，单位球 $U\subseteq L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 弱$^*$紧。于是由\cref{corollary:ch05-Caratheodory对偶}结论得证。
+% SUPPLEMENT: parent=theorem:ch05-Young弱星紧; kind=proof; location=定理 5.3.7 的证明; basis=原证明只写“单位球弱$^*$紧，故结论成立”，未处理“紧性只给子网”与“需取子列”的差别；此处补出 $\mathcal{C}_0(X\times Y)$ 可分蕴含 $U$ 上相对弱$^*$拓扑可度量化（注 5.3.3），从而弱$^*$紧蕴含弱$^*$序列紧
+\begin{proof}[证明\cref{theorem:ch05-Young弱星紧}]
+由\cref{theorem:ch04-可分}，空间 $L^1(X;C_0(Y))$ 可分，故由\cref{theorem:ch04-Lp对偶刻画}与 Banach--Alaoglu 定理，单位球 $U\subseteq L^\infty_{w^*}(X;\mathscr{R}_f(Y))$ 弱$^*$紧。另一方面，由\hyperref[remark:ch05-Young弱星度量]{注记}，$U$ 上的相对弱$^*$拓扑 $\mathcal{T}_{w^*}\cap U$ 可度量化：它由\eqref{align:ch05-5.61}中的度量诱导。可度量的紧空间是序列紧的，故对每个序列 $\{\nu_k\}\subseteq U$（特别地，对 $\{\nu_k\}\subseteq\mathcal{Y}^+(X;Y)\subseteq U$）存在子列 $\{\nu_{k_l}\}$ 与 $\nu\in U$ 使 $\nu_{k_l}\stackrel{*}{\rightharpoonup}\nu$。再由\cref{corollary:ch05-Caratheodory对偶}，此弱$^*$收敛即\cref{definition:ch05-Young弱星}意义下的收敛。结论得证。
 \end{proof}
 
-\begin{remark}\label{remark:ch05-Young弱星度量}
-由于 $L^1(X;C_0(Y))=\mathcal{C}_0(X\times Y)$ 可分，相对弱$^*$拓扑 $\mathcal{T}_{w^*}\cap U$ 可度量化。事实上，由\cref{proposition:appA-弱星可度量化}，它与由范数
+% SUPPLEMENT: parent=theorem:ch05-Young弱星紧; kind=motivation; location=定理 5.3.7 后的注记; basis=定理 5.3.7 与 (5.55) + 弱$^*$紧性作为 Young 测度存在性定理的动机、$\mathcal{Y}^+$ 有界（$\|\nu\|\leqslant\mu(X)$）的作用，以及极限不必属于 $\mathcal{Y}^+$、$X$ 不具备可数基时结论的边界
+\begin{remark}\phantomsection\label{remark:ch05-Young弱星紧动机}
+(i) 动机。\cref{theorem:ch05-Young弱星紧}是 Young 测度存在性定理的抽象形式：任何 Young 测度序列都有弱$^*$收敛子列，其极限是 $L^\infty_{w^*}$ 单位球中的元素。它把“取弱极限”这一操作从函数列转移到测度列，从而绕开了非线性函数与弱收敛不相容的困难（\cref{example:ch02-弱收敛振荡}(i)）。
+
+(ii) 假设的作用。$\{\nu_k\}\subseteq\mathcal{Y}^+(X;Y)$ 的成员范数为 $\mu(X)$（\hyperref[remark:ch02-Young有界]{注记}），故序列落在固定单位球的伸缩中，Banach--Alaoglu 定理适用；若不作 Young 测度假设而只假设 $\{\nu_k\}\subseteq\mathscr{R}^+_f(X\times Y)$ 有界，结论同样成立。$X$、$Y$ 的可数基假设用于 $L^1(X;C_0(Y))$ 的可分性，从而单位球上的弱$^*$拓扑可度量化、紧性可降为序列紧性；若 $L^1(X;C_0(Y))$ 不可分，则只能得到子网而非子列。
+
+(iii) 边界。极限 $\nu$ 一般不属于 $\mathcal{Y}^+(X;Y)$：如\hyperref[remark:ch05-Young弱星动机]{注记}(iii)中的 $\nu_k=\delta_{(0,k)}$ 弱$^*$收敛于 $0$，而 $0\notin\mathcal{Y}^+(X;Y)$。若附加胎紧性，则极限仍为 Young 测度且收敛可加强为窄收敛（\cref{theorem:ch05-弱紧Young}）。此外，弱$^*$极限不唯一（取决于子列），且不同的子列可以有不同的极限。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-Young弱星度量}
+由于 $L^1(X;C_0(Y))=\mathcal{C}_0(X\times Y)$ 可分，相对弱$^*$拓扑 $\mathcal{T}_{w^*}\cap U$ 可度量化。事实上，由\cref{proposition:appA-弱星可度量化}，它与由
 \begin{align}
 \nu\mapsto|||\nu|||
 \triangleq \sum_{k=1}^\infty\frac{1}{2^k}
@@ -249,7 +405,7 @@ B_{h_1,\cdots ,h_n;\epsilon}(\nu_0)
 
 \subsection{窄收敛与胎紧性}\label{subsection:ch05-Young窄}
 
-\begin{definition}\label{definition:ch05-Young窄}
+\begin{definition}[窄收敛]\label{definition:ch05-Young窄}
 设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。序列 $\{\nu_k\}\subseteq\mathcal{Y}^+(X;Y)$ \textbf{窄收敛}于 $\nu\in\mathcal{Y}^+(X;Y)$（记作 $\nu_k\stackrel{n}{\rightharpoonup}\nu$），若
 \begin{align*}
 \lim_{k\to\infty}\int_{X\times Y}h\,\mathrm{d}\nu_k
@@ -261,64 +417,202 @@ $\mathcal{Y}^+(X;Y)$ 上的窄拓扑，记作 $\mathcal{T}_n$，是使所有映�
 $\mathcal{T}_n$ 的一组基为子集族\eqref{align:ch05-5.60}，只是其中 $h_1,\cdots ,h_n\in\mathcal{C}_b(X\times Y)$。
 \end{definition}
 
+% SUPPLEMENT: parent=definition:ch05-Young窄; kind=motivation; location=定义 5.3.3 后的注记; basis=定义 5.3.3 与 (5.60) + 窄收敛作为“不损失质量”的拓扑的动机、把试验函数类从 $\mathcal{C}_0$ 换成 $\mathcal{C}_b$ 的作用，以及窄极限必属于 $\mathcal{Y}^+$（质量守恒）而弱$^*$极限不然的边界
+\begin{remark}\phantomsection\label{remark:ch05-Young窄动机}
+(i) 动机。窄收敛用 $\mathcal{C}_b(X\times Y)$ 作试验函数类，故它比弱$^*$收敛强：检验函数不含“在 $Y$ 的无穷远处衰减”的函数，于是质量的逃逸会被察觉。定义要求极限 $\nu$ 仍属于 $\mathcal{Y}^+(X;Y)$，即 $\nu(X\times Y)=\mu(X)$，这正是“没有质量损失”的表述；因此窄收敛是讨论 Young 测度序列紧性（\cref{theorem:ch05-弱紧Young}）与非线性泛函极限（\cref{proposition:ch05-Caratheodory下半连续}）的正确拓扑。
+
+(ii) 假设的作用。试验函数类取 $\mathcal{C}_b(X\times Y)$ 而非 $\mathcal{C}_0(X\times Y)$ 是窄收敛与弱$^*$收敛的唯一差别；由 $\mathcal{C}_0\subseteq\mathcal{C}_b$，窄收敛蕴含弱$^*$收敛。要求极限属于 $\mathcal{Y}^+(X;Y)$（而非 $L^\infty_{w^*}$）使 $\nu_x(Y)=1$ 几乎处处成立，从而\eqref{align:ch05-5.50}对 $\nu$ 可用。$\mu$ 的有限性使 $\nu_k(X\times Y)=\mu(X)$ 一致有界，这是窄紧性的来源。
+
+(iii) 边界。窄收敛严格强于弱$^*$收敛：取 $X=\{0\}$、$Y=\mathbb{R}$、$\mu=\delta_0$、$\nu_k=\delta_{(0,k)}$，则 $\nu_k\stackrel{*}{\rightharpoonup}0$ 但 $\nu_k$ 不窄收敛（$\int1\,\mathrm{d}\nu_k=1\not\to0$）。反过来，在胎紧集上两种拓扑一致（\cref{proposition:ch05-Young胎紧一致}）。此外，窄极限若存在则必唯一（拓扑的 Hausdorff 性由 $\mathcal{C}_b(X\times Y)$ 分离 $\mathscr{R}_f(X\times Y)$ 中的点得到）。
+\end{remark}
+
 如下半连续性结果将被使用。
 
-\begin{proposition}\label{proposition:ch05-Caratheodory下半连续}
-设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间，$h:X\times Y\to[0,\infty)$ 为 Carathéodory 函数。则映射 $\mathcal{Y}^+(X;Y)\to[0,\infty]$，$\nu\mapsto\int_{X\times Y}h\,\mathrm{d}\nu$，在窄拓扑中下半连续。
+\begin{proposition}[Carathéodory 泛函的窄下半连续性]\label{proposition:ch05-Caratheodory下半连续}
+设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间，$h:X\times Y\to[0,\infty)$ 为 Carathéodory 函数（即 $h(x,\cdot)\in C(Y)$ 对 $\mu$-几乎所有 $x\in X$，$h(\cdot,y)$ 为 $\mathscr{B}(X)$-可测对所有 $y\in Y$）。则映射 $\mathcal{Y}^+(X;Y)\to[0,\infty]$，$\nu\mapsto\int_{X\times Y}h\,\mathrm{d}\nu$，在窄拓扑中下半连续。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch05-Caratheodory下半连续; kind=proof; location=命题 5.3.8 的证明; basis=原书以“It is easily seen”略去 $h_n$ 的三项性质；此处补出 $n$-Lipschitz 连续性、$D_Y$ 上的可数次下确界给出可测性、$h_n\leqslant h$ 与 $h_n\to h$ 的逐点估计，以及用 $h_n$ 的连续性推出 (5.62) 的收尾
 \begin{proof}
-我们须证明：若在 $\mathcal{Y}^+(X;Y)$ 中 $\nu_k\stackrel{n}{\rightharpoonup}\nu$，则
+须证：若在 $\mathcal{Y}^+(X;Y)$ 中 $\nu_k\stackrel{n}{\rightharpoonup}\nu$，则
 \begin{align}
 \int_{X\times Y}h(x,y)\,\mathrm{d}\nu(x,y)
 \leqslant\liminf_{k\to\infty}\int_X\mathrm{d}\mu(x)\int_Y h(x,y)\,\mathrm{d}(\nu_k)_x(y).\label{align:ch05-5.62}
 \end{align}
-设 $d$ 为空间 $Y$ 上的相容度量（由\cref{proposition:appA-紧生成}，$Y$ 可度量化）。对每个 $n\in\mathbb{N}$，定义 $h_n:X\times Y\to[0,\infty)$ 为
+设 $d$ 为空间 $Y$ 上的相容度量（由\cref{proposition:appA-紧生成}，具可数基的局部紧 Hausdorff 空间 $Y$ 可度量化）。对每个 $n\in\mathbb{N}$，定义 $h_n:X\times Y\to[0,\infty)$ 为
 \begin{align*}
 h_n(x,y)\triangleq \min\left\{\inf_{\zeta\in Y}[h(x,\zeta)+n\,d(\zeta,y)],\ n\right\}
 \qquad(x\in X,\ y\in Y).
 \end{align*}
-易见对每个 $n\in\mathbb{N}$，$h_n$ 为 $\mathscr{B}(X\times Y)$-可测，$h_n\in\mathcal{C}_b(X\times Y)$，$h_n\leqslant h_{n+1}$，且 $h_n\to h$ 在 $X\times Y$ 上逐点收敛。于是由单调收敛定理，
+对每个 $n\in\mathbb{N}$，验证 $h_n\in\mathcal{C}_b(X\times Y)$ 且 $h_n\leqslant h_{n+1}$、$h_n\to h$ 逐点成立。
+\begin{enumerate}[(1)]
+\item 关于 $y$ 的连续性：对固定 $x$，函数 $y\mapsto h(x,\zeta)+n d(\zeta,y)$ 对每个 $\zeta$ 是 $n$-Lipschitz 的，故其下确界也是 $n$-Lipschitz 的：由三角不等式 $|d(\zeta,y)-d(\zeta,y')|\leqslant d(y,y')$ 得
+\begin{align*}
+\left|\inf_{\zeta}[h(x,\zeta)+n d(\zeta,y)]-\inf_{\zeta}[h(x,\zeta)+n d(\zeta,y')]\right|\leqslant n d(y,y').
+\end{align*}
+于是 $y\mapsto h_n(x,y)$ 连续，且 $0\leqslant h_n(x,\cdot)\leqslant n$，故 $h_n(x,\cdot)\in C_b(Y)$。
+\item 关于 $x$ 的可测性与 $\|h_n(x,\cdot)\|_\infty$ 的可积性：设 $D_Y\subseteq Y$ 为可数稠密子集。对固定 $(x,y)$，由 $h(x,\cdot)$ 与 $d(\cdot,y)$ 的连续性，$\inf_{\zeta\in Y}[h(x,\zeta)+n d(\zeta,y)]=\inf_{\zeta\in D_Y}[h(x,\zeta)+n d(\zeta,y)]$。右端是可数个 $\mathscr{B}(X\times Y)$-可测函数的下确界，故 $(x,y)\mapsto h_n(x,y)$ 为 $\mathscr{B}(X\times Y)$-可测；特别地，$x\mapsto\|h_n(x,\cdot)\|_\infty$ 为 $\mathscr{B}(X)$-可测且 $\leqslant n$，故 $\int_X\|h_n(x,\cdot)\|_\infty\,\mathrm{d}\mu(x)\leqslant n\mu(X)<\infty$（$\mu$ 有限）。于是 $h_n\in\mathcal{C}_b(X\times Y)$。
+\item 单调性与收敛：由 $h\geqslant0$ 得 $n\,d(\zeta,y)\leqslant(n+1)d(\zeta,y)$，故 $\inf_\zeta[h(x,\zeta)+n d(\zeta,y)]\leqslant\inf_\zeta[h(x,\zeta)+(n+1)d(\zeta,y)]$，从而 $h_n\leqslant h_{n+1}$；又取 $\zeta=y$ 得 $\inf_\zeta[h(x,\zeta)+n d(\zeta,y)]\leqslant h(x,y)$，故 $h_n\leqslant h$。最后，固定 $(x,y)$ 与 $\varepsilon>0$；由 $h(x,\cdot)$ 在 $y$ 处连续，存在 $\delta>0$ 使 $d(\zeta,y)<\delta$ 时 $h(x,\zeta)\geqslant h(x,y)-\varepsilon$；而对 $d(\zeta,y)\geqslant\delta$ 有 $h(x,\zeta)+n d(\zeta,y)\geqslant n\delta$。取 $n$ 使 $n\delta\geqslant h(x,y)$，则对一切 $\zeta$ 有 $h(x,\zeta)+n d(\zeta,y)\geqslant h(x,y)-\varepsilon$，故 $h_n(x,y)\geqslant\min\{h(x,y)-\varepsilon,n\}=h(x,y)-\varepsilon$（$n\geqslant h(x,y)$ 时）。结合 $h_n\leqslant h$ 得 $h_n(x,y)\to h(x,y)$。
+\end{enumerate}
+于是由单调收敛定理，
 \begin{align*}
 \int_{X\times Y}h\,\mathrm{d}\nu
 =\lim_{n\to\infty}\int_{X\times Y}h_n\,\mathrm{d}\nu
 =\sup_{n\in\mathbb{N}}\int_{X\times Y}h_n\,\mathrm{d}\nu.
 \end{align*}
-对每个 $n\in\mathbb{N}$，映射 $\nu\mapsto\int_{X\times Y}h_n\,\mathrm{d}\nu$ 由\cref{definition:ch05-Young窄}连续，因为 $h_n\in\mathcal{C}_b(X\times Y)$。故映射 $\nu\mapsto\int_{X\times Y}h\,\mathrm{d}\nu$ 作为连续函数序列的上确界为下半连续。结果得证。
+对每个 $n\in\mathbb{N}$，映射 $\nu\mapsto\int_{X\times Y}h_n\,\mathrm{d}\nu$ 由\cref{definition:ch05-Young窄}连续，因为 $h_n\in\mathcal{C}_b(X\times Y)$。故映射 $\nu\mapsto\int_{X\times Y}h\,\mathrm{d}\nu$ 作为连续函数列的上确界为下半连续。
+
+最后说明\eqref{align:ch05-5.62}。对固定 $n$，由 $h_n\stackrel{n}{\rightharpoonup}$ 意义下的连续性（即 $\nu_k\stackrel{n}{\rightharpoonup}\nu$ 蕴含 $\int h_n\,\mathrm{d}\nu_k\to\int h_n\,\mathrm{d}\nu$）与 $h_n\leqslant h$ 得
+\begin{align*}
+\int_{X\times Y}h_n\,\mathrm{d}\nu
+=\lim_{k\to\infty}\int_{X\times Y}h_n\,\mathrm{d}\nu_k
+\leqslant\liminf_{k\to\infty}\int_{X\times Y}h\,\mathrm{d}\nu_k.
+\end{align*}
+对 $n$ 取上确界，并用\eqref{align:ch05-5.50}把 $\int_{X\times Y}h\,\mathrm{d}\nu_k$ 写成 $\int_X\mathrm{d}\mu(x)\int_Yh(x,y)\,\mathrm{d}(\nu_k)_x(y)$，即得\eqref{align:ch05-5.62}。结果得证。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-Caratheodory下半连续; kind=motivation; location=命题 5.3.8 后的注记; basis=命题 5.3.8 与 (5.62) + 下半连续性作为变分法直接方法（极小化序列的极限）的动机、$h\geqslant0$ 与 Carathéodory 条件的作用，以及去掉非负性后结论失效、$h$ 仅 Borel 可测时 $h_n$ 不连续的边界
+\begin{remark}\phantomsection\label{remark:ch05-Caratheodory下半连续动机}
+(i) 动机。下半连续性是变分法直接方法的核心：若泛函 $\nu\mapsto\int h\,\mathrm{d}\nu$ 沿窄收敛序列下半连续，则极小化序列的极限仍是极小点。\cref{proposition:ch05-Caratheodory下半连续}给出的正是这一性质，其中 $h$ 可以只关于 $x$ 可测、关于 $y$ 连续，从而覆盖 $h(x,y)=|y-u(x)|^p$ 型的被积函数。
+
+(ii) 假设的作用。$h\geqslant0$ 不可去：若 $h$ 变号，则 $h_n$ 的构造（截断于 $n$ 并作下卷积）不再保证单调收敛到 $h$，且 $\int h\,\mathrm{d}\nu$ 可能为 $-\infty$，下半连续性失去意义。$h$ 的 Carathéodory 性质（关于 $y$ 连续、关于 $x$ 可测）用于两点：$h_n$ 关于 $y$ 的连续性（使 $h_n\in\mathcal{C}_b$，从而 $\nu\mapsto\int h_n\,\mathrm{d}\nu$ 在窄拓扑中连续）与 $h_n$ 关于 $x$ 的可测性（使 $h_n$ 属于 $\mathcal{C}_b(X\times Y)$）。度量 $d$ 的存在性由 $Y$ 具可数基保证（\cref{proposition:appA-紧生成}）。
+
+(iii) 边界。$h\geqslant0$ 不可去：取 $X=\{0\}$、$Y=\mathbb{R}$、$\mu=\delta_0$、
+\begin{align*}
+h(x,y)\triangleq-|y|,\qquad
+\nu_k\triangleq\left(1-\tfrac1k\right)\delta_{(0,0)}+\tfrac1k\delta_{(0,k)}\quad(k\in\mathbb{N}),
+\end{align*}
+则 $\nu_k\stackrel{n}{\rightharpoonup}\delta_{(0,0)}$（对 $g\in\mathcal{C}_b(X\times Y)$，$\int g\,\mathrm{d}\nu_k=(1-1/k)g(0,0)+(1/k)g(0,k)\to g(0,0)$），但
+\begin{align*}
+\int h\,\mathrm{d}\nu_k=-1\quad(k\in\mathbb{N}),
+\qquad
+\int h\,\mathrm{d}\delta_{(0,0)}=0,
+\end{align*}
+故下半连续性 $0\leqslant\liminf(-1)$ 不成立；原因是 $h$ 不非负时 $h_n$ 的单调收敛失效。$h$ 关于 $y$ 的连续性也不可去：取 $h(x,y)\triangleq\chi_{\{0\}}(y)$（Borel 可测但不连续）、$X=\{0\}$、$\mu=\delta_0$、$\nu_k\triangleq\delta_{(0,1/k)}$，则 $\nu_k\stackrel{n}{\rightharpoonup}\delta_{(0,0)}$ 而 $\int h\,\mathrm{d}\nu_k=0\to1=\int h\,\mathrm{d}\delta_{(0,0)}$，下半连续性同样失效。
+\end{remark}
 
 对 Young 测度，胎紧性定义如下。
 
-\begin{definition}\label{definition:ch05-Young胎紧}
-设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。子集 $N\subseteq\mathcal{Y}^+(X;Y)$ 称为\textbf{胎紧的}，若对任意 $\epsilon>0$，存在紧子集 $K\subseteq Y$ 使对所有 $\nu\in N$ 有 $\nu(X\times K^c)<\epsilon$。
+\begin{definition}[胎紧性]\label{definition:ch05-Young胎紧}
+设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。子集 $N\subseteq\mathcal{Y}^+(X;Y)$ 称为\textbf{胎紧的}，若对任意 $\varepsilon>0$，存在紧子集 $K\subseteq Y$ 使对所有 $\nu\in N$ 有 $\nu(X\times K^c)<\varepsilon$。
 \end{definition}
 
-\begin{remark}\label{remark:ch05-Young胎紧投影}
+\begin{remark}\phantomsection\label{remark:ch05-Young胎紧投影}
 由\cref{definition:ch05-Young胎紧}，子集 $N\subseteq\mathcal{Y}^+(X;Y)$ 胎紧，当且仅当投影到 $Y$ 的集合 $\{\nu_{p_Y}\mid\nu\in N\}\subseteq\mathscr{R}^+_f(Y)$ 在\cref{definition:ch05-胎紧}意义下胎紧。
 \end{remark}
 
-如下结果的证明与\cref{proposition:ch05-胎紧拓扑一致}严格类似，故我们略去。
+% SUPPLEMENT: parent=definition:ch05-Young胎紧; kind=motivation; location=注 5.3.4 后（定义 5.3.4 的动机注记）; basis=定义 5.3.4 与注 5.3.4 + 胎紧性作为窄紧性判据（Prokhorov 型定理）的动机、$K$ 只取在 $Y$ 中而非 $X\times Y$ 中的作用，以及不胎紧序列（质量沿 $Y$ 逃逸）的反例
+\begin{remark}\phantomsection\label{remark:ch05-Young胎紧动机}
+(i) 动机。胎紧性刻画“质量不向 $Y$ 的无穷远处逃逸”的 Young 测度族。它是窄相对序列紧的充要条件（\cref{theorem:ch05-弱紧Young}），正如 $\mathscr{R}^+_f(Y)$ 中胎紧性之于 Prokhorov 定理（\cref{theorem:ch05-prokhorov}）。由于 Young 测度在 $X$ 方向的质量分布固定为 $\mu$，唯一可能逃逸的方向是 $Y$，故定义中的紧集只需取在 $Y$ 中。
 
-\begin{proposition}\label{proposition:ch05-Young胎紧一致}\label{proposition:ch05-矩估计}
+(ii) 假设的作用。$N\subseteq\mathcal{Y}^+(X;Y)$ 的成员满足 $\nu(X\times Y)=\mu(X)$，故 $\nu(X\times K^c)=\nu_{p_Y}(K^c)$：胎紧性完全是 $\nu$ 在 $Y$ 方向边缘的性质（\hyperref[remark:ch05-Young胎紧投影]{注记}）。$\varepsilon$ 与 $K$ 的选取不依赖于 $\nu$，而是一致地对 $N$ 成立，这正是紧性论证所需的一致性。若 $Y$ 紧，则取 $K=Y$ 使条件自动满足，即 $\mathcal{Y}^+(X;Y)$ 整体胎紧。
+
+(iii) 边界。胎紧性不可由逐点有界代替：取 $X=\{0\}$、$Y=\mathbb{R}$、$\mu=\delta_0$、$\nu_k=\delta_{(0,k)}$，则每个 $\nu_k$ 的总质量为 $1$，但 $\{\nu_k\}$ 不胎紧（任何紧集 $K\subseteq\mathbb{R}$ 之外的质量为 $1$），且 $\{\nu_k\}$ 无窄收敛子列。在 $\mathcal{Y}^+(X;Y)$ 中 $\|\nu\|_{\mathscr{R}_f(X\times Y)}=\mu(X)$ 对所有 $\nu$ 成立，故有界性自动满足，胎紧性成为唯一的紧性障碍（\cref{proposition:ch05-有界胎紧紧}）。
+\end{remark}
+
+如下结果的证明与\cref{proposition:ch05-胎紧拓扑一致}严格类似。
+
+% SUPPLEMENT: parent=proposition:ch05-矩估计; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+\begin{proposition}[胎紧集上窄拓扑与弱$^*$拓扑一致]\label{proposition:ch05-Young胎紧一致}\label{proposition:ch05-矩估计}
 设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间，$N\subseteq\mathcal{Y}^+(X;Y)$ 胎紧。则 $N$ 上的窄拓扑与 $N$ 上的弱$^*$拓扑一致，即 $\mathcal{T}_n\cap N=\mathcal{T}_{w^*}\cap N$。
 \end{proposition}
 
-作为胎紧性判据，由\cref{remark:ch05-Young胎紧投影}与\cref{proposition:ch05-胎紧判据}得如下结果。
+% SUPPLEMENT: parent=proposition:ch05-Young胎紧一致; kind=proof; location=命题 5.3.9（原书称“与命题 5.1.8 严格类似，故略去”）; basis=补出完整论证：把命题 5.1.8 中对 $C_b(X)$ 的截断论证逐字搬到 $\mathcal{C}_b(X\times Y)$，用 $f\in C_c(Y)$、$f|_K=1$ 与 $X$ 的内正则性处理 $\|h(x,\cdot)\|_\infty$ 依赖 $x$ 造成的困难
+\begin{proof}[证明\cref{proposition:ch05-Young胎紧一致}]
+只需证明：对任意序列 $\{\nu_k\}\subseteq N$ 与 $\nu\in N$，若 $\nu_k\stackrel{*}{\rightharpoonup}\nu$，则 $\nu_k\stackrel{n}{\rightharpoonup}\nu$（两种拓扑都由序列收敛刻画，且 $\mathcal{C}_0\subseteq\mathcal{C}_b$ 使窄收敛蕴含弱$^*$收敛）。固定 $h\in\mathcal{C}_b(X\times Y)$，固定 $\varepsilon>0$。
 
-\begin{proposition}\label{proposition:ch05-Young胎紧判据}
-设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。则下列命题等价：
+由假设与\hyperref[remark:ch05-Young胎紧投影]{注记}，存在紧子集 $K\subseteq Y$ 使
+\begin{align*}
+\nu_k(X\times K^c)<\varepsilon\quad\text{对所有 }k\in\mathbb{N},
+\qquad
+\nu(X\times K^c)<\varepsilon.
+\end{align*}
+由\cref{proposition:appA-Urysohn}，存在 $f\in C_c(Y)$ 使 $f(Y)\subseteq[0,1]$、$f|_K=1$。则 $(1-f)(y)=0$ 对 $y\in K$ 成立，故 $\operatorname{supp}(1-f)\subseteq K^c$。先估计 $\nu$ 一侧的余项。函数 $(x,y)\mapsto1-f(y)$ 属于 $\mathcal{C}_0(X\times Y)\subseteq\mathcal{C}_b(X\times Y)$（$1-f\in C_c(Y)$ 且与 $x$ 无关），故由 $\nu_k\stackrel{*}{\rightharpoonup}\nu$ 得 $\int(1-f)\,\mathrm{d}\nu_k\to\int(1-f)\,\mathrm{d}\nu$，从而
+\begin{align*}
+\nu(X\times K^c)\leqslant\int_{X\times Y}(1-f)\,\mathrm{d}\nu
+=\lim_{k\to\infty}\int_{X\times Y}(1-f)\,\mathrm{d}\nu_k
+\leqslant\limsup_{k\to\infty}\nu_k(X\times K^c)\leqslant\varepsilon.
+\end{align*}
+此即 $\nu(X\times K^c)\leqslant\varepsilon$。
+
+由 $\mu$ 为 Radon 测度与 $x\mapsto\|h(x,\cdot)\|_\infty$ 的可积性，存在紧子集 $E\subseteq X$ 使
+\begin{align*}
+\int_{X\setminus E}\|h(x,\cdot)\|_\infty\,\mathrm{d}\mu(x)<\varepsilon.
+\end{align*}
+并且可要求 $E\subseteq\{x\in X\mid\|h(x,\cdot)\|_\infty\leqslant n\}$ 对某个 $n\in\mathbb{N}$ 成立：由于 $x\mapsto\|h(x,\cdot)\|_\infty$ 属于 $L^1(\mu)$ 而 $\mu$ 为 Radon 测度，先取 $n$ 使 $\int_{\{\|h\|_\infty>n\}}\|h(x,\cdot)\|_\infty\,\mathrm{d}\mu(x)<\varepsilon$，再用内正则性在 $\{\|h\|_\infty\leqslant n\}$ 内取紧集 $E$。置 $C\triangleq n$。对任意 $k\in\mathbb{N}$，由\eqref{align:ch05-5.50}与 $(\nu_k)_x(Y)=1$（$\mu$-几乎处处），对 $\mu$-几乎所有 $x$ 有逐点估计
+\begin{align*}
+\left|\int_Yh(x,y)(1-f)(y)\,\mathrm{d}(\nu_k)_x(y)\right|
+\leqslant\|h(x,\cdot)\|_\infty(\nu_k)_x(K^c),
+\end{align*}
+故
+\begin{align*}
+\left|\int_{X\times Y}h(1-f)\,\mathrm{d}\nu_k\right|
+\leqslant\int_X\|h(x,\cdot)\|_\infty(\nu_k)_x(K^c)\,\mathrm{d}\mu(x)
+\leqslant C\,\nu_k(X\times K^c)+\int_{X\setminus E}\|h(x,\cdot)\|_\infty\,\mathrm{d}\mu(x)
+\leqslant(C+1)\varepsilon,
+\end{align*}
+其中第二个不等号把 $X$ 分为 $E$ 与 $X\setminus E$ 并利用 $\int_E(\nu_k)_x(K^c)\,\mathrm{d}\mu(x)\leqslant\nu_k(X\times K^c)$。同法，对 $\nu$ 有
+\begin{align*}
+\left|\int_{X\times Y}h(1-f)\,\mathrm{d}\nu\right|\leqslant(C+1)\varepsilon.
+\end{align*}
+另一方面，$hf\in\mathcal{C}_0(X\times Y)$（$f$ 有紧支撑，$h(x,\cdot)$ 有界连续），故由 $\nu_k\stackrel{*}{\rightharpoonup}\nu$，存在 $k_0\in\mathbb{N}$ 使
+\begin{align*}
+\left|\int_{X\times Y}hf\,\mathrm{d}\nu_k-\int_{X\times Y}hf\,\mathrm{d}\nu\right|<\varepsilon
+\quad\text{对所有 }k>k_0.
+\end{align*}
+于是对 $k>k_0$，
+\begin{align*}
+\left|\int_{X\times Y}h\,\mathrm{d}\nu_k-\int_{X\times Y}h\,\mathrm{d}\nu\right|
+\leqslant(2C+3)\varepsilon.
+\end{align*}
+由 $\varepsilon>0$ 的任意性得 $\int h\,\mathrm{d}\nu_k\to\int h\,\mathrm{d}\nu$，故 $\nu_k\stackrel{n}{\rightharpoonup}\nu$。结论得证。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-Young胎紧一致; kind=motivation; location=命题 5.3.9 后的注记; basis=命题 5.3.9 + 胎紧集上两种拓扑一致的意义（弱$^*$紧性可升级为窄紧性）、胎紧性的作用，以及在非胎紧集上两种拓扑严格不同（$\delta_{(0,k)}$）的边界
+\begin{remark}\phantomsection\label{remark:ch05-Young胎紧一致动机}
+(i) 动机。\cref{proposition:ch05-Young胎紧一致}说明：在胎紧族上，弱$^*$收敛与窄收敛是同一件事。结合\cref{theorem:ch05-Young弱星紧}（弱$^*$序列紧）与\cref{theorem:ch05-弱紧Young}（胎紧 $\Leftrightarrow$ 窄相对序列紧），它给出 Young 测度序列紧性理论的两条等价通道：先取弱$^*$极限再用胎紧性升级，或直接用窄紧性。
+
+(ii) 假设的作用。胎紧性是本质的：它保证质量不逃逸到 $Y$ 的无穷远处，从而 $\mathcal{C}_0$ 试验函数与 $\mathcal{C}_b$ 试验函数给出相同的收敛（证明中 $f$ 的截断把 $h$ 化为 $hf\in\mathcal{C}_0$，余项由 $\nu_k(X\times K^c)<\varepsilon$ 控制）。$h\in\mathcal{C}_b(X\times Y)$ 的界 $\|h(x,\cdot)\|_\infty\in L^1(\mu)$ 用于把余项按 $X$ 上的积分估计；$X$ 的内正则性（$\mu$ 为 Radon 测度）用于把 $\|h(x,\cdot)\|_\infty$ 的积分集中到紧集 $E$ 上。
+
+(iii) 边界。去掉胎紧性后两种拓扑严格不同：$X=\{0\}$、$Y=\mathbb{R}$、$\mu=\delta_0$、$\nu_k=\delta_{(0,k)}$ 满足 $\nu_k\stackrel{*}{\rightharpoonup}0$ 但不窄收敛。此外，命题只断言 $N$ 上的拓扑一致；取 $N$ 的弱$^*$闭包（其中含质量损失的极限点）后两种拓扑便不再一致，如 $\nu_k=\delta_{(0,k)}$ 所示。
+\end{remark}
+
+作为胎紧性判据，由\hyperref[remark:ch05-Young胎紧投影]{注记}与\cref{proposition:ch05-胎紧判据}得如下结果。
+
+\begin{proposition}[Young 测度族的胎紧性判据]\label{proposition:ch05-Young胎紧判据}
+设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间，$N\subseteq\mathcal{Y}^+(X;Y)$。则下列命题等价：
 \begin{enumerate}[(i)]
-\item\label{item:ch05-ytight-i} $N\subseteq\mathcal{Y}^+(X;Y)$ 胎紧；
-\item\label{item:ch05-ytight-ii} 存在下紧函数 $\varphi:Y\to[0,\infty)$ 使
+\item\label{item:ch05-ytight-i} $N$ 胎紧；
+\item\label{item:ch05-ytight-ii} 存在下紧函数 $\varphi:Y\to[0,\infty)$（即对每个 $r\in\mathbb{R}$，集合 $\{\varphi\leqslant r\}$ 紧，见\cref{definition:ch05-下紧}）使
 \begin{align}
 \sup_{\nu\in N}\int_Y\varphi\,\mathrm{d}\nu_{p_Y}<\infty.\label{align:ch05-5.63}
 \end{align}
 \end{enumerate}
 \end{proposition}
 
-对 Young 测度，我们有\cref{theorem:ch05-prokhorov}的如下对应物。
+% SUPPLEMENT: parent=proposition:ch05-Young胎紧判据; kind=proof; location=命题 5.3.10（原书由注 5.3.4 与命题 5.1.12 直接得到）; basis=补出两步等价：$N$ 胎紧 $\Leftrightarrow$ $\{\nu_{p_Y}\mid\nu\in N\}$ 在 $\mathscr{R}^+_f(Y)$ 中胎紧（注 5.3.4），再用命题 5.1.12 把后者等价于存在下紧 $\varphi$ 使 (5.63) 成立
+\begin{proof}[证明\cref{proposition:ch05-Young胎紧判据}]
+由\hyperref[remark:ch05-Young胎紧投影]{注记}，$N$ 胎紧当且仅当集合 $N'\triangleq\{\nu_{p_Y}\mid\nu\in N\}\subseteq\mathscr{R}^+_f(Y)$ 按\cref{definition:ch05-胎紧}的意义胎紧。注意 $N'$ 有界：由 $\nu_{p_Y}(Y)=\nu(X\times Y)=\mu(X)$（\hyperref[remark:ch02-Young投影]{注记}(i)），$\sup_{\sigma\in N'}\|\sigma\|_{\mathscr{R}_f(Y)}=\mu(X)<\infty$。
 
-\begin{theorem}\label{theorem:ch05-弱紧Young}\label{proposition:ch05-弱紧YoungL1}
+由\cref{proposition:ch05-胎紧判据}，对 $M\subseteq\mathscr{R}^+_f(Y)$ 有：$M$ 胎紧当且仅当存在下紧函数 $\varphi:Y\to[0,\infty)$ 使 $\sup_{\sigma\in M}\int_Y\varphi\,\mathrm{d}\sigma<\infty$。取 $M=N'$，则 $N$ 胎紧当且仅当存在这样的 $\varphi$ 使
+\begin{align*}
+\sup_{\nu\in N}\int_Y\varphi\,\mathrm{d}\nu_{p_Y}<\infty,
+\end{align*}
+即 (ii) 成立。结论得证。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-Young胎紧判据; kind=motivation; location=命题 5.3.10 后的注记; basis=命题 5.3.10 与 (5.63) + 用矩条件检验胎紧性的动机、下紧性的作用（水平集紧），以及 $\varphi$ 不能取为仅下方有界、$\sup$ 不能换成逐点有界的边界
+\begin{remark}\phantomsection\label{remark:ch05-Young胎紧判据动机}
+(i) 动机。\cref{proposition:ch05-Young胎紧判据}把“对一切 $\nu$ 一致地找紧集”这一难以直接检验的条件，换成“存在一个下紧的 $\varphi$ 使一族积分一致有界”这一矩条件。在应用中 $\varphi$ 常取为 $\varphi(y)\triangleq|y|^p$（$Y=\mathbb{R}^d$），此时 (5.63) 就是 $p$ 阶矩的一致有界性，从而 $L^p$ 有界的函数列产生的 Young 测度族胎紧（见\cref{theorem:ch05-ball}与\cref{section:ch05-收敛}）。
+
+(ii) 假设的作用。$\varphi$ 必须下紧：只有水平集 $\{\varphi\leqslant r\}$ 紧，才能由 $\sup_\nu\int\varphi\,\mathrm{d}\nu_{p_Y}<\infty$ 与 Chebyshev 不等式推出 $\nu_{p_Y}(\{\varphi>r\})\leqslant r^{-1}\sup\int\varphi$，从而取 $K\triangleq\{\varphi\leqslant r\}$ 得胎紧性；若 $\varphi$ 只满足 $\varphi\to\infty$ 而不下紧，则水平集不紧，Chebyshev 估计给不出紧集。条件 (5.63) 中的上确界必须对 $\nu\in N$ 一致，逐点有界不足以保证胎紧（取 $\nu_k=\delta_{(0,k)}$、$\varphi(y)=|y|$，则 $\int\varphi\,\mathrm{d}(\nu_k)_{p_Y}=k$ 不一致有界）。
+
+(iii) 边界。命题断言的是等价性而非构造：$\varphi$ 的存在性由胎紧性本身保证（\cref{proposition:ch05-胎紧判据}的证明中取 $\varphi=\sum_n\chi_{K_n^c}$ 型函数），故该判据的实用价值在于“验证 (ii) 通常比验证定义容易”。此外，命题的证明只用\cref{proposition:ch05-胎紧判据}与\hyperref[remark:ch05-Young胎紧投影]{注记}，不需要额外假设：$Y$ 的 $\sigma$-紧性由“具可数基的局部紧 Hausdorff 空间”自动给出（\cref{proposition:appA-紧生成}）。
+\end{remark}
+
+对 Young 测度，有\cref{theorem:ch05-prokhorov}的如下对应物。
+
+\begin{theorem}[Young 测度的窄相对序列紧性]\label{theorem:ch05-弱紧Young}
 设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。设 $N\subseteq\mathcal{Y}^+(X;Y)$。则下列命题等价：
 \begin{enumerate}[(i)]
 \item\label{item:ch05-youngcomp-i} $N$ 在窄拓扑中相对序列紧；
@@ -326,6 +620,7 @@ h_n(x,y)\triangleq \min\left\{\inf_{\zeta\in Y}[h(x,\zeta)+n\,d(\zeta,y)],\ n\ri
 \end{enumerate}
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch05-弱紧Young; kind=proof; location=定理 5.3.11 的证明; basis=原证明以“It is easily seen that $\nu\in\mathcal{Y}^+(X;Y)$”与“the equality in (5.65) holds for all $g\in\mathcal{C}_0$”带过关键步骤；此处补出 $\nu_{p_X}=\mu$ 的 $C_c(X)$ 试验函数论证、$\mathcal{C}_0\subseteq\mathcal{C}_b$ 的包含关系，以及用 (5.50) 与纤维质量为 $1$ 估计两个余项
 \begin{proof}
 (i)$\Rightarrow$(ii)。由假设，对任意序列 $\{\nu_k\}\subseteq N$，存在子列 $\{\nu_{k_j}\}\subseteq\{\nu_k\}$ 与 $\nu\in\mathcal{Y}^+(X;Y)$ 使
 \begin{align}
@@ -335,82 +630,84 @@ h_n(x,y)\triangleq \min\left\{\inf_{\zeta\in Y}[h(x,\zeta)+n\,d(\zeta,y)],\ n\ri
 \end{align}
 取 $h(x,y)=g(y)$，$g\in C_b(Y)$。由于
 \begin{align*}
-\int_{X\times Y}g(y)\,\mathrm{d}\nu(x,y)=\int_Y g(y)\,\mathrm{d}\nu_{p_Y}(y),\\
+\int_{X\times Y}g(y)\,\mathrm{d}\nu(x,y)=\int_Y g(y)\,\mathrm{d}\nu_{p_Y}(y),
+\qquad
 \int_{X\times Y}g(y)\,\mathrm{d}\nu_{k_j}(x,y)=\int_Y g(y)\,\mathrm{d}(\nu_{k_j})_{p_Y}(y)
 \end{align*}
-（见\cref{remark:ch02-Young投影}(i)），由\eqref{align:ch05-5.64}得
+（见\hyperref[remark:ch02-Young投影]{注记}(i)），由\eqref{align:ch05-5.64}得
 \begin{align*}
 \lim_{j\to\infty}\int_Y g(y)\,\mathrm{d}(\nu_{k_j})_{p_Y}(y)
 =\int_Y g(y)\,\mathrm{d}\nu_{p_Y}(y)
 \quad\text{对所有 }g\in C_b(Y).
 \end{align*}
-由此集合 $\{\nu_{p_Y}\mid\nu\in N\}$ 在 $\mathscr{R}^+_f(Y)$ 的窄拓扑中相对序列紧，故由\cref{theorem:ch05-prokhorov}胎紧。于是由\cref{remark:ch05-Young胎紧投影}断言得证。
+由此集合 $\{\nu_{p_Y}\mid\nu\in N\}$ 在 $\mathscr{R}^+_f(Y)$ 的窄拓扑中相对序列紧，故由\cref{theorem:ch05-prokhorov}胎紧。于是由\hyperref[remark:ch05-Young胎紧投影]{注记}断言得证。
 
-(ii)$\Rightarrow$(i)。由\cref{remark:ch02-Young投影}，$N$ 是 $\mathscr{R}^+_f(X\times Y)$ 的有界子集。我们证明它也是 $\mathscr{R}^+_f(X\times Y)$ 的胎紧子集，即对任意 $\epsilon>0$，存在紧子集 $\tilde{K}\subseteq X\times Y$ 使对所有 $\nu\in N$ 有 $\nu(\tilde{K}^c)<\epsilon$（见\cref{definition:ch05-胎紧}）。由假设，对任意 $\epsilon>0$，存在紧子集 $K\subseteq Y$ 使对所有 $\nu\in N$ 有 $\nu_{p_Y}(K^c)=\nu(X\times K^c)<\epsilon/2$。此外，由\cref{proposition:appA-紧生成}，$X$ 为 $\sigma$-紧，故存在紧子集 $K_0\subseteq X$ 使 $\mu(K_0^c)<\epsilon/2$。注意由 Young 测度定义，对每个 $\nu\in N$ 有 $\nu_{p_X}(K_0^c)=\nu(K_0^c\times Y)=\mu(K_0^c)$。置 $\tilde{K}\triangleq K_0\times K\subseteq X\times Y$。显然 $\tilde{K}$ 紧，且 $\tilde{K}^c\subseteq(X\times K^c)\cup(K_0^c\times Y)$。则对所有 $\nu\in N$，
+(ii)$\Rightarrow$(i)。由\hyperref[remark:ch02-Young投影]{注记}，$N$ 是 $\mathscr{R}^+_f(X\times Y)$ 的有界子集。证明它也是 $\mathscr{R}^+_f(X\times Y)$ 的胎紧子集，即对任意 $\varepsilon>0$，存在紧子集 $\tilde{K}\subseteq X\times Y$ 使对所有 $\nu\in N$ 有 $\nu(\tilde{K}^c)<\varepsilon$（见\cref{definition:ch05-胎紧}）。由假设，对任意 $\varepsilon>0$，存在紧子集 $K\subseteq Y$ 使对所有 $\nu\in N$ 有 $\nu_{p_Y}(K^c)=\nu(X\times K^c)<\varepsilon/2$。此外，由\cref{proposition:appA-紧生成}，$X$ 为 $\sigma$-紧，故存在紧子集 $K_0\subseteq X$ 使 $\mu(K_0^c)<\varepsilon/2$。注意由 Young 测度定义，对每个 $\nu\in N$ 有 $\nu_{p_X}(K_0^c)=\nu(K_0^c\times Y)=\mu(K_0^c)$。置 $\tilde{K}\triangleq K_0\times K\subseteq X\times Y$。则 $\tilde{K}$ 紧，且 $\tilde{K}^c\subseteq(X\times K^c)\cup(K_0^c\times Y)$。于是对所有 $\nu\in N$，
 \begin{align*}
 \nu(\tilde{K}^c)\leqslant\nu(X\times K^c)+\nu(K_0^c\times Y)
-=\nu_{p_Y}(K^c)+\mu(K_0^c)<\epsilon,
+=\nu_{p_Y}(K^c)+\mu(K_0^c)<\varepsilon,
 \end{align*}
 断言得证。
 
-由上述注记与\cref{proposition:ch05-有界胎紧紧}（另见\cref{remark:ch05-polish}），对任意序列 $\{\nu_k\}\subseteq N$，存在子列 $\{\nu_{k_j}\}\subseteq\{\nu_k\}$ 与 $\nu\in\mathscr{R}^+_f(X\times Y)$ 使
+由上述注记与\cref{proposition:ch05-有界胎紧紧}（另见\hyperref[remark:ch05-polish]{注记}），对任意序列 $\{\nu_k\}\subseteq N$，存在子列 $\{\nu_{k_j}\}\subseteq\{\nu_k\}$ 与 $\nu\in\mathscr{R}^+_f(X\times Y)$ 使
 \begin{align}
 \lim_{j\to\infty}\int_{X\times Y}g\,\mathrm{d}\nu_{k_j}
 =\int_{X\times Y}g\,\mathrm{d}\nu
 \quad\text{对所有 }g\in C_b(X\times Y).\label{align:ch05-5.65}
 \end{align}
-易见 $\nu\in\mathcal{Y}^+(X;Y)$。事实上，由于 $\{\nu_{k_j}\}\subseteq N\subseteq\mathcal{Y}^+(X;Y)$，由离散分解定理，等式\eqref{align:ch05-5.65}读作
+下面证明 $\nu\in\mathcal{Y}^+(X;Y)$。由于 $\{\nu_{k_j}\}\subseteq N\subseteq\mathcal{Y}^+(X;Y)$，由离散分解（\cref{proposition:ch05-离散分解}）等式\eqref{align:ch05-5.65}读作
 \begin{align*}
 \lim_{j\to\infty}\int_X\mathrm{d}\mu(x)\int_Y g(x,y)\,\mathrm{d}(\nu_{k_j})_x(y)
 =\int_X\mathrm{d}\nu_{p_X}(x)\int_Y g(x,y)\,\mathrm{d}\nu_x(y)
 \end{align*}
-对所有 $g\in\mathcal{C}_b(X\times Y)$。在此等式中取 $g=g(x)$，得
+对所有 $g\in\mathcal{C}_b(X\times Y)$。在此等式中取 $g=g(x)$（与 $y$ 无关），得
 \begin{align*}
 \int_X g(x)\,\mathrm{d}\mu(x)=\int_X g(x)\,\mathrm{d}\nu_{p_X}(x)
 \quad\text{对所有 }g\in C_b(X).
 \end{align*}
-由\cref{proposition:ch04-稠密}(ii)（另见\cref{proposition:appA-紧生成}），由此等式显然得 $\nu_{p_X}(E)=\mu(E)$ 对所有 $E\in\mathscr{B}(X)$。断言得证。
+由于 $C_c(X)\subseteq C_b(X)$，由此得 $\int_Xg\,\mathrm{d}\nu_{p_X}=\int_Xg\,\mathrm{d}\mu$ 对所有 $g\in C_c(X)$ 成立；而两个有限 Radon 测度在 $C_c(X)$ 上一致即相等（Riesz 表示定理的唯一性，\cref{theorem:ch02-Rf对偶}）。故 $\nu_{p_X}(E)=\mu(E)$ 对所有 $E\in\mathscr{B}(X)$ 成立。于是 $\nu\in\mathcal{Y}^+(X;Y)$。
 
-特别地，等式\eqref{align:ch05-5.65}对所有 $g\in\mathcal{C}_0(X\times Y)$ 成立。由于空间 $\mathcal{C}_0(X\times Y)$ 在 $L^1(X;C_0(Y))$ 中稠密（见\cref{proposition:ch04-稠密}(ii)与\cref{proposition:ch05-Caratheodory同构}），对任意 $h\in L^1(X;C_0(Y))$，存在序列 $\{g_m\}\subseteq\mathcal{C}_0(X\times Y)$ 使 $\lim_{m\to\infty}\|g_m-h\|_{L^1(X;C_0(Y))}=0$。固定 $\epsilon>0$，取 $m_0\in\mathbb{N}$ 充分大使 $\|g_{m_0}-h\|_{L^1(X;C_0(Y))}<\epsilon/3$。另一方面，由\eqref{align:ch05-5.65}存在 $j_0\in\mathbb{N}$ 使
+特别地，由于 $\mathcal{C}_0(X\times Y)\subseteq\mathcal{C}_b(X\times Y)$（$C_0(Y)\subseteq C_b(Y)$，且两者的可积性条件相同），等式\eqref{align:ch05-5.65}对所有 $g\in\mathcal{C}_0(X\times Y)$ 成立。由于空间 $\mathcal{C}_0(X\times Y)$ 在 $L^1(X;C_0(Y))$ 中稠密（见\cref{proposition:ch04-稠密}(ii)与\cref{proposition:ch05-Caratheodory同构}），对任意 $h\in L^1(X;C_0(Y))$，存在序列 $\{g_m\}\subseteq\mathcal{C}_0(X\times Y)$ 使 $\lim_{m\to\infty}\|g_m-h\|_{L^1(X;C_0(Y))}=0$。固定 $\varepsilon>0$，取 $m_0\in\mathbb{N}$ 充分大使 $\|g_{m_0}-h\|_{L^1(X;C_0(Y))}<\varepsilon/3$。由\eqref{align:ch05-5.65}存在 $j_0\in\mathbb{N}$ 使
 \begin{align*}
-\left|\int_{X\times Y}g_{m_0}\,\mathrm{d}\nu_{k_j}-\int_{X\times Y}g_{m_0}\,\mathrm{d}\nu\right|<\frac{\epsilon}{3}
+\left|\int_{X\times Y}g_{m_0}\,\mathrm{d}\nu_{k_j}-\int_{X\times Y}g_{m_0}\,\mathrm{d}\nu\right|<\frac{\varepsilon}{3}
 \quad\text{对所有 }j>j_0.
 \end{align*}
 则对所有 $j>j_0$，
 \begin{align*}
-\left|\int_{X\times Y}h\,\mathrm{d}\nu_{k_j}-\int_{X\times Y}h\,\mathrm{d}\nu\right|
-\leqslant\left|\int_{X\times Y}(h-g_{m_0})\,\mathrm{d}\nu_{k_j}\right|
-+\left|\int_{X\times Y}(h-g_{m_0})\,\mathrm{d}\nu\right|
-+\left|\int_{X\times Y}g_{m_0}\,\mathrm{d}\nu_{k_j}-\int_{X\times Y}g_{m_0}\,\mathrm{d}\nu\right|\\
-<\left|\int_{X\times Y}(h-g_{m_0})\,\mathrm{d}\nu_{k_j}\right|
-+\left|\int_{X\times Y}(h-g_{m_0})\,\mathrm{d}\nu\right|
-+\frac{\epsilon}{3}.
+&\left|\int_{X\times Y}h\,\mathrm{d}\nu_{k_j}-\int_{X\times Y}h\,\mathrm{d}\nu\right|\\
+&\leqslant\left|\int_{X\times Y}(h-g_{m_0})\,\mathrm{d}\nu_{k_j}\right|
++\left|\int_{X\times Y}(h-g_{m_0})\,\mathrm{d}\nu\right|\\
+&\quad+\left|\int_{X\times Y}g_{m_0}\,\mathrm{d}\nu_{k_j}-\int_{X\times Y}g_{m_0}\,\mathrm{d}\nu\right|
+<\frac{\varepsilon}{3}+\frac{\varepsilon}{3}+\frac{\varepsilon}{3}=\varepsilon.
 \end{align*}
-由于 $\{\nu_{k_j}\}\subseteq N\subseteq\mathcal{Y}^+(X;Y)$，由离散分解定理得
+这里用到：由于 $\{\nu_{k_j}\}\subseteq N\subseteq\mathcal{Y}^+(X;Y)$，由离散分解与 $(\nu_{k_j})_x(Y)=1$（$\mu$-几乎处处）得
 \begin{align*}
 \left|\int_{X\times Y}(h-g_{m_0})\,\mathrm{d}\nu_{k_j}\right|
-=\left|\int_X\mathrm{d}\mu(x)\int_Y(h-g_{m_0})(x,y)\,\mathrm{d}(\nu_{k_j})_x(y)\right|
-\leqslant\|g_{m_0}-h\|_{L^1(X;C_0(Y))}<\frac{\epsilon}{3}.
+\leqslant\int_X\|(h-g_{m_0})(x,\cdot)\|_\infty\,\mathrm{d}\mu(x)
+=\|g_{m_0}-h\|_{L^1(X;C_0(Y))}<\frac{\varepsilon}{3};
 \end{align*}
-由于 $\nu\in\mathcal{Y}^+(X;Y)$，我们类似地得
+同理，由于 $\nu\in\mathcal{Y}^+(X;Y)$，
 \begin{align*}
 \left|\int_{X\times Y}(h-g_{m_0})\,\mathrm{d}\nu\right|
-=\left|\int_X\mathrm{d}\mu(x)\int_Y(h-g_{m_0})(x,y)\,\mathrm{d}\nu_x(y)\right|
-\leqslant\|g_{m_0}-h\|_{L^1(X;C_0(Y))}<\frac{\epsilon}{3}.
+\leqslant\|g_{m_0}-h\|_{L^1(X;C_0(Y))}<\frac{\varepsilon}{3}.
 \end{align*}
 
-鉴于上述不等式，对任意 $\epsilon>0$，存在 $j_0\in\mathbb{N}$ 使对所有 $j>j_0$，
-\begin{align*}
-\left|\int_{X\times Y}h\,\mathrm{d}\nu_{k_j}-\int_{X\times Y}h\,\mathrm{d}\nu\right|<\epsilon
-\quad\text{对所有 }h\in\mathcal{C}_0(X\times Y).
-\end{align*}
-综上，我们证明了：对任意序列 $\{\nu_k\}\subseteq N$，存在子列 $\{\nu_{k_j}\}\subseteq\{\nu_k\}$ 与 $\nu\in\mathcal{Y}^+(X;Y)$ 使 $\nu_{k_j}\stackrel{*}{\rightharpoonup}\nu$。由于 $N$ 胎紧，由\cref{proposition:ch05-Young胎紧一致}结论得证。
+综上，对任意 $h\in\mathcal{C}_0(X\times Y)$（从而对任意 $h\in L^1(X;C_0(Y))$）有 $\int h\,\mathrm{d}\nu_{k_j}\to\int h\,\mathrm{d}\nu$，即 $\nu_{k_j}\stackrel{*}{\rightharpoonup}\nu$。由于 $N$ 胎紧，由\cref{proposition:ch05-Young胎紧一致}得 $\nu_{k_j}\stackrel{n}{\rightharpoonup}\nu$。故 $N$ 在窄拓扑中相对序列紧，(i) 得证。
 \end{proof}
 
-如下结果类似地证明。
+% SUPPLEMENT: parent=theorem:ch05-弱紧Young; kind=motivation; location=定理 5.3.11 后的注记; basis=定理 5.3.11 与 (5.64)--(5.65) + Prokhorov 型紧性定理的动机、胎紧性的作用（把弱$^*$极限升级为窄极限）、$N\subseteq\mathcal{Y}^+$ 保证边缘为 $\mu$ 的作用，以及不胎紧时窄相对紧性失效的边界
+\begin{remark}\phantomsection\label{remark:ch05-弱紧Young动机}
+(i) 动机。\cref{theorem:ch05-弱紧Young}是 Young 测度理论的 Prokhorov 定理：它把窄相对序列紧性完全归结为胎紧性。配合\cref{proposition:ch05-Young胎紧判据}，可用矩条件验证紧性，这是偏微分方程中取 Young 测度极限（\cref{theorem:ch05-ball}及其在\cref{section:ch05-收敛}中的应用）的标准手段。
 
-\begin{proposition}\label{proposition:ch05-逐点窄收敛}
-设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。设 $\{\nu_k\}\subseteq\mathcal{Y}^+(X;Y)$，$\nu\in\mathcal{Y}^+(X;Y)$ 满足对 $\mu$-几乎所有 $x\in X$，$(\nu_k)_x\stackrel{n}{\rightharpoonup}\nu_x$ 在 $\mathscr{R}^+_f(Y)$ 中。则 $\nu_k\stackrel{n}{\rightharpoonup}\nu$ 在 $\mathcal{Y}^+(X;Y)$ 中。
+(ii) 假设的作用。$N\subseteq\mathcal{Y}^+(X;Y)$（而非任意 Radon 测度集）保证每个 $\nu$ 的边缘 $\nu_{p_X}=\mu$ 固定，从而 $N$ 在 $\mathscr{R}^+_f(X\times Y)$ 中有界（$\nu(X\times Y)=\mu(X)$），这是\cref{proposition:ch05-有界胎紧紧}的前提。胎紧性在 (ii)$\Rightarrow$(i) 中用于两处：把 $N$ 升级为 $\mathscr{R}^+_f(X\times Y)$ 的胎紧集（从而可取窄收敛子列），以及把弱$^*$收敛升级为窄收敛（\cref{proposition:ch05-Young胎紧一致}）。$X$ 的 $\sigma$-紧性由可数基保证（\cref{proposition:appA-紧生成}），用于选取紧集 $K_0$。
+
+(iii) 边界。胎紧性不可去：$X=\{0\}$、$Y=\mathbb{R}$、$\mu=\delta_0$、$\nu_k=\delta_{(0,k)}$ 的集合 $N$ 不胎紧且无窄收敛子列（其唯一的弱$^*$极限为 $0\notin\mathcal{Y}^+(X;Y)$）。此外，定理给出的是相对序列紧性而非紧性：$N$ 的窄闭包含质量损失点（例如 $0$），故 $\mathcal{Y}^+(X;Y)$ 本身不是窄紧的，除非 $Y$ 紧（此时整体胎紧）。
+\end{remark}
+
+如下结果的证明与\cref{theorem:ch05-弱紧Young}的证明技巧相同。
+
+\begin{proposition}[逐点窄收敛蕴含窄收敛]\label{proposition:ch05-逐点窄收敛}
+设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间。设 $\{\nu_k\}\subseteq\mathcal{Y}^+(X;Y)$，$\nu\in\mathcal{Y}^+(X;Y)$ 满足对 $\mu$-几乎所有 $x\in X$，$(\nu_k)_x\stackrel{n}{\rightharpoonup}\nu_x$ 在 $\mathscr{R}^+_f(Y)$ 中（见\cref{definition:ch05-窄收敛}）。则 $\nu_k\stackrel{n}{\rightharpoonup}\nu$ 在 $\mathcal{Y}^+(X;Y)$ 中。
 \end{proposition}
 
 \begin{proof}
@@ -427,12 +724,18 @@ h_n(x,y)\triangleq \min\left\{\inf_{\zeta\in Y}[h(x,\zeta)+n\,d(\zeta,y)],\ n\ri
 且由\cref{definition:ch05-Caratheodory}(ii)，映射 $x\mapsto\|h(x,\cdot)\|_\infty$ 属于 $L^1(X)$。于是由控制收敛定理，
 \begin{align*}
 \lim_{k\to\infty}\int_X\mathrm{d}\mu(x)\int_Y h(x,y)\,\mathrm{d}(\nu_k)_x(y)
-=\int_X\mathrm{d}\mu(x)\int_Y h(x,y)\,\mathrm{d}\nu_x(y),
+=\int_X\mathrm{d}\mu(x)\int_Y h(x,y)\,\mathrm{d}\nu_x(y).
 \end{align*}
-结论得证。
+再由\eqref{align:ch05-5.50}（对 $\nu_k$ 与 $\nu$）得 $\int_{X\times Y}h\,\mathrm{d}\nu_k\to\int_{X\times Y}h\,\mathrm{d}\nu$，结论得证。
 \end{proof}
 
+% SUPPLEMENT: parent=proposition:ch05-逐点窄收敛; kind=motivation; location=命题 5.3.12 后的注记; basis=命题 5.3.12 + 逐点（纤维）收敛与整体窄收敛之间关系的动机、控制函数 $\|h(x,\cdot)\|_\infty\in L^1(\mu)$ 的作用，以及逐点收敛不能换成几乎处处弱$^*$收敛（需胎紧性）的边界
+\begin{remark}\phantomsection\label{remark:ch05-逐点窄收敛动机}
+(i) 动机。\cref{proposition:ch05-逐点窄收敛}给出从纤维到整体的提升：若每条纤维上的概率测度窄收敛，则整体 Young 测度窄收敛。它是\cref{proposition:ch05-几乎处处收敛}（见\cref{section:ch05-收敛}）的技术核心：$u_j\to u$ 几乎处处蕴含 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu_u$，正是逐纤维地 $(\nu_{u_j})_x=\delta_{u_j(x)}\stackrel{n}{\rightharpoonup}\delta_{u(x)}$。
 
+(ii) 假设的作用。$h\in\mathcal{C}_b(X\times Y)$ 的可积控制 $\|h(x,\cdot)\|_\infty\in L^1(\mu)$ 是控制收敛定理的前提；它由\cref{definition:ch05-Caratheodory}(ii)(b) 保证。纤维收敛对 $\mu$-几乎所有 $x$ 成立即可，零测集上的行为不影响积分。$\mathcal{C}_b$ 试验函数类与窄收敛的定义一致（\cref{definition:ch05-Young窄}）。
 
+(iii) 边界。逐点收敛是充分条件而非必要条件：整体窄收敛的 Young 测度序列不必逐纤维收敛（例如 $\nu_k\triangleq\delta_{(0,k)}$ 型序列整体弱$^*$收敛而逐纤维不收敛）。此外，把假设减弱为“$(\nu_k)_x\stackrel{*}{\rightharpoonup}\nu_x$ 对几乎所有 $x$”不能保证整体窄收敛，除非附加胎紧性（此时由\cref{proposition:ch05-Young胎紧一致}两种收敛一致）。
+\end{remark}
 
 \end{document}

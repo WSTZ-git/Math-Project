@@ -1,0 +1,921 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{弱收敛}\label{section:ch01-09}
+
+\subsection{测度的弱收敛}\label{subsection:ch01-09-1}
+
+接下来引入测度的弱收敛概念。
+
+\begin{theorem}[测度的弱收敛]\label{theorem:ch01-1-40}
+设 $n$ 为正整数，$\mu,\mu_k$（$k=1,2,\cdots$）为 $\mathbb{R}^n$ 上的 Radon 测度。则下列三个命题等价：
+\begin{enumerate}[(i)]
+\item 对每个 $f\in C_c(\mathbb{R}^n)$ 有
+\begin{align*}
+\lim_{k\to\infty}\int_{\mathbb{R}^n}f\diff\mu_k=\int_{\mathbb{R}^n}f\diff\mu;
+\end{align*}
+\item 对每个紧集 $K\subseteq\mathbb{R}^n$ 有 $\limsup_{k\to\infty}\mu_k(K)\leqslant\mu(K)$，且对每个开集 $U\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\mu(U)\leqslant\liminf_{k\to\infty}\mu_k(U);
+\end{align*}
+\item 对每个满足 $\mu(\partial B)=0$ 的有界 Borel 集 $B\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\lim_{k\to\infty}\mu_k(B)=\mu(B).
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch01-1-40; kind=motivation; 说明三种等价刻画各自的作用与测度弱收敛的直观含义
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-40-动机}
+三条断言给出同一概念的三种刻画。条件 (i) 把 Radon 测度看作 $C_c(\mathbb{R}^n)$ 上的线性泛函，要求泛函值收敛；这一形式最便于运算，因为它把测度与固定集合解耦，只要求与测试函数的积分收敛。条件 (ii) 用集合的测度值刻画：紧集上的质量在极限过程中不增加，开集上的质量在极限过程中不减少，两者合起来即「质量既不凭空产生、也不凭空消失」的定量表述。条件 (iii) 说明在边界不承载质量的集合上测度值本身收敛；边界条件 $\mu(\partial B)=0$ 排除质量恰好落在 $B$ 的边界上时造成的跳跃。
+
+弱收敛与逐集收敛有本质差别：要求 $\mu_k(A)\to\mu(A)$ 对每个可测集 $A$ 成立过于苛刻，一般并不成立；而要求积分收敛恰好给出既便于取极限、又具有紧性的收敛。这种紧性正是\cref{theorem:ch01-1-41}的内容，也是本节后续在 $L^p$、$L^1$ 与 Young 测度中反复使用的工具。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-40; kind=hypotheses; 逐条分析 Radon 正则性、紧集与开集、边界零测条件以及无一致有界性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-40-条件}
+\begin{enumerate}[(i)]
+\item Radon 测度的两条性质在证明中各司其职。紧集上有限使 (ii) 中的 $\mu_k(K)$、$\mu(K)$ 都有意义，且使 $\mu(U)$ 可由内部紧集的上确界表示；Borel 正则性给出内逼近与外逼近。若只假设 $\mu$ 是 Borel 测度且在某个紧集上取值为 $\infty$，则 (ii) 右端可能为 $\infty$，(i) 中的积分也可能无意义。
+\item 条件 (iii) 中的 $\mu(\partial B)=0$ 不可去掉。取 $n=1$、$\mu:=\delta_0$、$\mu_k:=\delta_{1/k}$，则对每个 $f\in C_c(\mathbb{R})$ 有 $\int f\diff\mu_k=f(1/k)\to f(0)=\int f\diff\mu$，故 (i) 成立。取 $B:=\{0\}$，它是有界 Borel 集，$\mu_k(B)=0$ 对一切 $k$ 成立，而 $\mu(B)=1$，故 $\mu_k(B)\not\to\mu(B)$。原因正是 $\mu(\partial B)=\mu(\{0\})=1\neq0$。
+\item 断言 (ii) 中的紧集不能换成任意闭集。仍取 $\mu_k=\delta_{1/k}$、$\mu=\delta_0$，并取闭集 $F=(0,1]$，则 $\mu(F)=0$，而当 $k\geqslant2$ 时 $1/k\in F$，故 $\mu_k(F)=1$，于是 $\limsup_k\mu_k(F)=1>\mu(F)$。紧性保证 $F$ 与质量所在点 $0$ 之间有正距离，这一距离在极限过程中不被破坏。
+\item 定理的三条断言都不含一致有界性假设，允许 $\mu_k(\mathbb{R}^n)\to\infty$。例如 $\mu_k:=k\,\delta_{1/k}$ 不弱收敛于任何 Radon 测度：若 $\mu_k\weakto\mu$，则由断言 (ii) 取 $K=\{0\}$ 得 $\limsup_k k=\limsup_k\mu_k(K)\leqslant\mu(K)<\infty$，矛盾。这说明弱收敛本身不含紧性，紧性需要\cref{theorem:ch01-1-41}中的局部一致有界条件。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[测度的弱收敛]\label{definition:ch01-1-31}
+设 $n$ 为正整数，$\mu,\mu_k$（$k=1,2,\cdots$）为 $\mathbb{R}^n$ 上的 Radon 测度。若对每个 $f\in C_c(\mathbb{R}^n)$ 都有
+\begin{align*}
+\lim_{k\to\infty}\int_{\mathbb{R}^n}f\diff\mu_k=\int_{\mathbb{R}^n}f\diff\mu,
+\end{align*}
+则称测度列 $\{\mu_k\}_{k=1}^{\infty}$ 弱收敛于测度 $\mu$，记作
+\begin{align*}
+\mu_k\weakto\mu .
+\end{align*}
+由\cref{theorem:ch01-1-40}，这一条件与下列两条各自等价：对每个紧集 $K\subseteq\mathbb{R}^n$ 有 $\limsup_{k\to\infty}\mu_k(K)\leqslant\mu(K)$ 且对每个开集 $U\subseteq\mathbb{R}^n$ 有 $\mu(U)\leqslant\liminf_{k\to\infty}\mu_k(U)$；对每个满足 $\mu(\partial B)=0$ 的有界 Borel 集 $B\subseteq\mathbb{R}^n$ 有 $\mu_k(B)\to\mu(B)$。% XREF internal
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-31; kind=motivation; 说明弱收敛与弱*收敛、$C_c$ 与 $C_b$ 上收敛的区别，以及局部紧性的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-31-动机}
+记号 $\mu_k\weakto\mu$ 与 Banach 空间中的弱收敛、弱*收敛都有关系，须分清三层含义。
+
+第一层是一般 Banach 空间中的两种收敛。设 $X$ 为 Banach 空间，$x_k,x\in X$，$x_k^* ,x^*\in X^*$。称 $x_k$ 弱收敛于 $x$（记 $x_k\weakto x$），是指对每个 $x^*\in X^*$ 有 $\langle x^*,x_k\rangle\to\langle x^*,x\rangle$；称 $x_k^*$ 弱*收敛于 $x^*$（记 $x_k^*\weakstar x^*$），是指对每个 $x\in X$ 有 $\langle x_k^*,x\rangle\to\langle x^*,x\rangle$。两者的区别在于检验所用的对象：弱收敛用全部有界线性泛函检验，弱*收敛只用 $X$ 中的向量检验；因此弱*收敛弱于弱收敛，且在 $X$ 自反时二者在 $X^*$ 的单位球上一致。
+
+第二层是 Radon 测度的情形。Radon 测度可看作 $C_c(\mathbb{R}^n)$ 上的正线性泛函，而 $C_c(\mathbb{R}^n)$ 按 $\lVert\cdot\rVert_{L^\infty}$ 不完备，故更准确的表述是把测度看作 $C_0(\mathbb{R}^n)$（无穷远处趋于 $0$ 的连续函数）的对偶中的元素。本定义只要求对 $f\in C_c(\mathbb{R}^n)$ 检验，即只要求 $\int f\diff\mu_k\to\int f\diff\mu$；若 $\mu$ 有限，由 $C_c$ 在 $C_0$ 中的稠密性，这与对每个 $f\in C_0(\mathbb{R}^n)$ 检验等价，也就是 $\{\mu_k\}$ 在 $(C_0)'$ 中弱*收敛于 $\mu$。本书因此把这一收敛记作 $\mu_k\weakto\mu$：它是「测度作为泛函」的弱*收敛，与 $L^p$ 空间中的弱收敛（见\cref{definition:ch01-1-32}）是两套不同语境下的记号，不可混用。% XREF internal
+
+第三层是与更强的收敛比较。若把 $C_c(\mathbb{R}^n)$ 换成有界连续函数空间 $C_b(\mathbb{R}^n)$，即要求对每个 $f\in C_b(\mathbb{R}^n)$ 积分收敛，则取 $f\equiv1$ 得 $\mu_k(\mathbb{R}^n)\to\mu(\mathbb{R}^n)$，即总质量必须收敛。本定义不要求总质量收敛，只要求局部（紧集上）的质量控制：例如 $\mu_k:=\delta_k$ 对 $C_b$ 中的 $f$ 有 $\int f\diff\mu_k=f(k)$，一般不收敛，但它弱收敛于零测度。$\mathbb{R}^n$ 的局部紧性在这里是关键：它使 $C_c(\mathbb{R}^n)$ 足够丰富，能在每个紧集上分辨测度，同时又不约束测度在无穷远处的行为。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-31; kind=hypotheses; 逐条说明检验函数类、Radon 性与记号的适用边界
+\begin{remark}\phantomsection\label{remark:ch01-def-1-31-条件}
+\begin{enumerate}[(i)]
+\item 检验函数类取 $C_c(\mathbb{R}^n)$：它包含一切在紧集外为零的连续函数，故条件只涉及每个有界区域上的质量分布。若把检验函数类换成 $C_c^\infty(\mathbb{R}^n)$，由 $C_c^\infty$ 在 $C_c$ 中按 $\lVert\cdot\rVert_{L^\infty}$ 的稠密性，所得条件与定义等价。
+\item Radon 性保证每个 $\mu_k$ 在紧集上有限，从而积分 $\int f\diff\mu_k$ 对 $f\in C_c(\mathbb{R}^n)$ 有意义；若允许 $\mu_k(K)=\infty$，则积分可能出现 $\infty-\infty$，定义失效。
+\item 定义只对 $\mathbb{R}^n$ 上的 Radon 测度陈述，但论证只用到 $\mathbb{R}^n$ 的局部紧性与第二可数性；在一般局部紧的第二可数空间上，同样的定义与\cref{theorem:ch01-1-40}的等价性依然成立。% XREF internal
+\item 弱收敛的极限若存在则唯一：若 $\mu_k\weakto\mu$ 且 $\mu_k\weakto\mu'$，则对每个 $f\in C_c(\mathbb{R}^n)$ 有 $\int f\diff\mu=\int f\diff\mu'$，由 Riesz 表示定理得 $\mu=\mu'$。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）设 (i) 成立。取开集 $U\subseteq\mathbb{R}^n$ 与紧集 $K\subseteq U$。由 $K$ 紧、$U$ 开，可取 $f\in C_c(\mathbb{R}^n)$ 使得
+\begin{align*}
+\spt f\subseteq U,\qquad 0\leqslant f\leqslant1,\qquad f\equiv1\ \text{在 }K\text{ 上};
+\end{align*}
+这样的 $f$ 存在：由 $K$ 紧与 $U$ 开得 $\delta:=\operatorname{dist}(K,\mathbb{R}^n\setminus U)>0$，令 $f(x):=\max\{0,1-2\operatorname{dist}(x,K)/\delta\}$ 即可。于是
+\begin{align*}
+\mu(K)\leqslant\int_{\mathbb{R}^n}f\diff\mu=\lim_{k\to\infty}\int_{\mathbb{R}^n}f\diff\mu_k\leqslant\liminf_{k\to\infty}\mu_k(U).
+\end{align*}
+对 $U$ 的一切紧子集 $K$ 取上确界，并利用 $\mu$ 的正则性（开集可由内部紧集逼近），得
+\begin{align*}
+\mu(U)=\sup\{\mu(K)\mid K\text{ 紧},\ K\subseteq U\}\leqslant\liminf_{k\to\infty}\mu_k(U).
+\end{align*}
+此即 (ii) 的第二部分。
+
+% SUPPLEMENT: parent=theorem:ch01-1-40; kind=proof; 补出 (i)⇒(ii) 中紧集估计 $\limsup_k\mu_k(K)\leqslant\mu(K)$ 的完整论证
+（2）(ii) 的第一部分（紧集估计）与上述论证对称，其过程如下。设 (i) 成立，取紧集 $K\subseteq\mathbb{R}^n$ 与 $\varepsilon>0$。由 $\mu$ 的正则性，存在开集 $V\supseteq K$ 使得 $\mu(V)\leqslant\mu(K)+\varepsilon$。取 $f\in C_c(\mathbb{R}^n)$ 满足 $\spt f\subseteq V$、$0\leqslant f\leqslant1$、$f\equiv1$ 在 $K$ 上，则 $\chi_K\leqslant f\leqslant\chi_V$，故
+\begin{align*}
+\mu_k(K)=\int_{\mathbb{R}^n}\chi_K\diff\mu_k\leqslant\int_{\mathbb{R}^n}f\diff\mu_k,
+\end{align*}
+从而由 (i) 得
+\begin{align*}
+\limsup_{k\to\infty}\mu_k(K)\leqslant\lim_{k\to\infty}\int_{\mathbb{R}^n}f\diff\mu_k=\int_{\mathbb{R}^n}f\diff\mu\leqslant\mu(V)\leqslant\mu(K)+\varepsilon .
+\end{align*}
+令 $\varepsilon\to0$ 即得 $\limsup_{k\to\infty}\mu_k(K)\leqslant\mu(K)$。至此 (i) 蕴含 (ii)。
+
+（3）设 (ii) 成立。取有界 Borel 集 $B\subseteq\mathbb{R}^n$ 满足 $\mu(\partial B)=0$，并记 $B^0$ 为 $B$ 的内部。则 $B^0$ 开、$\bar B$ 紧，且 $B^0\subseteq B\subseteq\bar B$；又 $\partial B=\bar B\setminus B^0$，故由 $\mu(\partial B)=0$ 得
+\begin{align*}
+\mu(B)=\mu(B^0)=\mu(\bar B).
+\end{align*}
+由 (ii) 及 $\mu_k(B^0)\leqslant\mu_k(B)\leqslant\mu_k(\bar B)$ 得
+\begin{align*}
+\mu(B)=\mu(B^0)\leqslant\liminf_{k\to\infty}\mu_k(B^0)\leqslant\limsup_{k\to\infty}\mu_k(\bar B)\leqslant\mu(\bar B)=\mu(B),
+\end{align*}
+故 $\lim_{k\to\infty}\mu_k(B)=\mu(B)$，即 (iii) 成立。
+
+（4）设 (iii) 成立。先设 $f\in C_c^+(\mathbb{R}^n)$，即 $f\in C_c(\mathbb{R}^n)$ 且 $f\geqslant0$，并固定 $\varepsilon>0$。取 $R>0$ 使得 $\spt f\subseteq B(0,R)$ 且 $\mu(\partial B(0,R))=0$；这样的 $R$ 存在，因为 $\{\partial B(0,r)\mid r>0\}$ 是两两不交的一族集合，而 $\mu$ 在紧集上有限，故使 $\mu(\partial B(0,r))>0$ 的 $r>0$ 至多可数。以下记 $B(R):=B(0,R)$。
+
+选取分点 $0=t_0<t_1<\cdots<t_N$，使得
+\begin{align*}
+t_N:=2\lVert f\rVert_{L^\infty},\qquad 0<t_i-t_{i-1}<\varepsilon,\qquad \mu\bigl(f^{-1}\{t_i\}\bigr)=0\quad(i=1,\cdots,N).
+\end{align*}
+这样的分点存在：对每个正整数 $j$，使 $\mu(f^{-1}\{t\})>1/j$ 的 $t\in[0,2\lVert f\rVert_{L^\infty}]$ 至多有限多个，否则由 $\mu$ 在紧集 $f^{-1}([0,2\lVert f\rVert_{L^\infty}])\subseteq\spt f$ 上有限而导出矛盾；故使 $\mu(f^{-1}\{t\})>0$ 的 $t$ 至多可数，可在每段长度小于 $\varepsilon$ 的小区间内避开这些 $t$。
+
+令
+\begin{align*}
+C_i:=f^{-1}\bigl([t_{i-1},t_i)\bigr)\ (i=1,\cdots,N-1),\qquad C_N:=f^{-1}\bigl([t_{N-1},t_N]\bigr).
+\end{align*}
+对 $i\geqslant2$，由 $f$ 连续得
+\begin{align*}
+\partial C_i\subseteq f^{-1}\{t_{i-1}\}\cup f^{-1}\{t_i\},
+\end{align*}
+故 $\mu(\partial C_i)\leqslant\mu(f^{-1}\{t_{i-1}\})+\mu(f^{-1}\{t_i\})=0$；又 $C_i\subseteq\spt f\subseteq B(R)$ 有界。于是由 (iii) 得
+\begin{align*}
+\lim_{k\to\infty}\mu_k(C_i)=\mu(C_i)\qquad(i=2,\cdots,N).
+\end{align*}
+各 $C_i$ 两两不交，且由 $t_N=2\lVert f\rVert_{L^\infty}$ 得 $\spt f\subseteq\bigcup_{i=1}^{N}C_i$；对 $x\in C_i$（$i\geqslant2$）有 $t_{i-1}\leqslant f(x)\leqslant t_i$，而对 $x\in C_1$ 有 $0\leqslant f(x)<t_1$。因此对每个 $k$ 有
+\begin{align*}
+\sum_{i=2}^{N}t_{i-1}\mu_k(C_i)\leqslant\int_{\mathbb{R}^n}f\diff\mu_k\leqslant\sum_{i=2}^{N}t_i\mu_k(C_i)+t_1\mu_k(B(R)),
+\end{align*}
+把 $\mu_k$ 换成 $\mu$ 则得
+\begin{align*}
+\sum_{i=2}^{N}t_{i-1}\mu(C_i)\leqslant\int_{\mathbb{R}^n}f\diff\mu\leqslant\sum_{i=2}^{N}t_i\mu(C_i)+t_1\mu(B(R)).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-40; kind=proof; 补出由 (iii) 与两串不等式推出 $\limsup\lvert\int f\diff\mu_k-\int f\diff\mu\rvert\leqslant2\varepsilon\mu(B(R))$ 的代数细节
+（5）由 (iii) 及 $\mu(\partial C_i)=0$ 得 $\mu_k(C_i)\to\mu(C_i)$（$i=2,\cdots,N$）。由第 (4) 步的两串不等式，
+\begin{align*}
+\int_{\mathbb{R}^n}f\diff\mu_k-\int_{\mathbb{R}^n}f\diff\mu
+&\leqslant\Bigl(\sum_{i=2}^{N}t_i\mu_k(C_i)+t_1\mu_k(B(R))\Bigr)-\sum_{i=2}^{N}t_{i-1}\mu(C_i)\\
+&=\sum_{i=2}^{N}(t_i-t_{i-1})\mu_k(C_i)+\sum_{i=2}^{N}t_{i-1}\bigl(\mu_k(C_i)-\mu(C_i)\bigr)+t_1\mu_k(B(R)).
+\end{align*}
+取上极限，并利用 $t_i-t_{i-1}<\varepsilon$、$\sum_{i=2}^{N}\mu_k(C_i)\leqslant\mu_k(B(R))$、$t_1<\varepsilon$ 以及 $\mu_k(C_i)-\mu(C_i)\to0$，得
+\begin{align*}
+\limsup_{k\to\infty}\Bigl(\int_{\mathbb{R}^n}f\diff\mu_k-\int_{\mathbb{R}^n}f\diff\mu\Bigr)
+\leqslant\varepsilon\,\mu(B(R))+0+\varepsilon\,\mu(B(R))=2\varepsilon\,\mu(B(R)).
+\end{align*}
+对差 $\int_{\mathbb{R}^n}f\diff\mu-\int_{\mathbb{R}^n}f\diff\mu_k$ 重复同一估计，得到反向不等式，于是
+\begin{align*}
+\limsup_{k\to\infty}\Bigl\lvert\int_{\mathbb{R}^n}f\diff\mu_k-\int_{\mathbb{R}^n}f\diff\mu\Bigr\rvert\leqslant2\varepsilon\,\mu(B(R)).
+\end{align*}
+由于 $\varepsilon>0$ 任意，故 (i) 对 $f\geqslant0$ 成立。
+
+（6）对一般的 $f\in C_c(\mathbb{R}^n)$，写 $f=f^+-f^-$，其中 $f^\pm\in C_c^+(\mathbb{R}^n)$，并对 $f^+$ 与 $f^-$ 分别应用第 (4)、(5) 步，即得 (i)。
+\end{proof}
+
+测度弱收敛的最大优点是紧性较易得到。
+
+\begin{theorem}[测度的弱紧性]\label{theorem:ch01-1-41}
+设 $n$ 为正整数，$\{\mu_k\}_{k=1}^{\infty}$ 为 $\mathbb{R}^n$ 上的一列 Radon 测度，且对每个紧集 $K\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\sup_k\mu_k(K)<\infty .
+\end{align*}
+则存在子列 $\{\mu_{k_j}\}_{j=1}^{\infty}$ 与 $\mathbb{R}^n$ 上的 Radon 测度 $\mu$，使得
+\begin{align*}
+\mu_{k_j}\weakto\mu .
+\end{align*}
+其中 $\mu_{k_j}\weakto\mu$ 表示按\cref{definition:ch01-1-31}的意义弱收敛，即对每个 $f\in C_c(\mathbb{R}^n)$ 有 $\int_{\mathbb{R}^n}f\diff\mu_{k_j}\to\int_{\mathbb{R}^n}f\diff\mu$。% XREF internal
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch01-1-41; kind=motivation; 说明弱收敛拓扑下局部有界测度族的相对紧性及其在后续论证中的作用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-41-动机}
+本定理断言：局部一致有界的 Radon 测度族在弱收敛意义下是相对序列紧的。这一点使弱收敛成为测度论中处理极限过程的主要工具：只要先验地控制各个紧集上的质量，就能从任意序列中抽出收敛子列，再对极限测度作进一步分析。与函数空间的强收敛相比，弱收敛放弃了对每一点的逐点控制，换来的是不依赖任何可数稠密子集或等度连续性假设的紧性。
+
+定理的证明分两步。第一步在 $\sup_k\mu_k(\mathbb{R}^n)<\infty$ 下用 $C_c(\mathbb{R}^n)$ 的可数稠密子集与对角线抽取，把无穷多个实数列的收敛问题压缩为可数个，再用 Riesz 表示定理把极限泛函还原为测度；第二步用截断测度 $\mu_k\llcorner B(l)$ 与对角论证处理一般情形。这一「先整体有界、后局部截断」的模式在\cref{theorem:ch01-1-42}与\cref{theorem:ch01-1-43}中都会重现。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-41; kind=hypotheses; 逐条分析局部一致有界条件的作用、必要性与不可替换为整体有界
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-41-条件}
+\begin{enumerate}[(i)]
+\item 条件「对每个紧集 $K$ 有 $\sup_k\mu_k(K)<\infty$」是局部一致有界性，只控制每个有界区域上的质量，不控制总质量。$\mathbb{R}^n$ 的每个紧集含于某个球 $B(l)$，故该条件等价于 $\sup_k\mu_k(B(l))<\infty$ 对每个正整数 $l$ 成立。
+\item 该条件不可去掉。取 $\mu_k:=k\,\delta_0$，则 $\sup_k\mu_k(\{0\})=\infty$；若存在子列 $\mu_{k_j}\weakto\mu$，则由\cref{theorem:ch01-1-40}的条件 (ii) 取 $K=\{0\}$ 得 $\limsup_j k_j\leqslant\mu(\{0\})<\infty$，矛盾。% XREF internal
+\item 该条件不能替换为整体一致有界性 $\sup_k\mu_k(\mathbb{R}^n)<\infty$，后者只是它的特例；定理对一般情形同样成立，证明第 (8)–(10) 步用截断测度处理。
+\item 结论中的极限 $\mu$ 是 Radon 测度，不必是概率测度，其总质量可以小于 $\liminf_k\mu_k(\mathbb{R}^n)$：取 $\mu_k:=\delta_{k e_1}$，则对每个紧集 $K$ 只有有限多个 $k$ 使 $k e_1\in K$，故 $\sup_k\mu_k(K)\leqslant1$，而 $\mu_k\weakto0$，其中 $0$ 为零测度。该例说明质量可以向无穷远处逃逸，弱收敛不保持总质量。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）先设
+\begin{align*}
+\sup_k\mu_k(\mathbb{R}^n)<\infty .\qquad(\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-41; kind=proof; 补出 $C_c(\mathbb{R}^n)$ 存在可数稠密子集的构造
+（2）$C_c(\mathbb{R}^n)$ 按 $\lVert\cdot\rVert_{L^\infty}$ 有可数稠密子集。事实上，对每个正整数 $l$，取 $\zeta_l\in C_c(\mathbb{R}^n)$ 使得 $0\leqslant\zeta_l\leqslant1$、$\zeta_l\equiv1$ 在 $B(0,l)$ 上、$\spt\zeta_l\subseteq B(0,2l)$；由 Weierstrass 逼近定理，一切形如 $\zeta_l\,p$（$l$ 为正整数，$p$ 为有理系数多项式）的函数构成 $C_c(\mathbb{R}^n)$ 的可数稠密子集：对 $f\in C_c(\mathbb{R}^n)$ 与 $\varepsilon>0$，取 $l$ 使 $\spt f\subseteq B(0,l)$，再取有理系数多项式 $p$ 使 $\lVert f-\zeta_lp\rVert_{L^\infty}<\varepsilon$。以下固定这样的可数稠密子集 $\{f_k\}_{k=1}^{\infty}$。
+
+（3）由 $(\star)$ 知数列 $\{\int f_1\diff\mu_j\}_{j=1}^{\infty}$ 有界，故存在子列 $\{\mu_j^1\}_{j=1}^{\infty}$ 与 $a_1\in\mathbb{R}$，使得
+\begin{align*}
+\int f_1\diff\mu_j^1\to a_1 .
+\end{align*}
+依此继续，可取 $\{\mu_j^{k-1}\}_{j=1}^{\infty}$ 的子列 $\{\mu_j^{k}\}_{j=1}^{\infty}$ 与 $a_k\in\mathbb{R}$，使得
+\begin{align*}
+\int f_k\diff\mu_j^k\to a_k .
+\end{align*}
+
+（4）令 $\nu_j:=\mu_j^j$。对每个固定的 $k$，当 $j\geqslant k$ 时 $\nu_j=\mu_j^j$ 是第 $k$ 个子列 $\{\mu_j^{k}\}_{j}$ 中的元素，故
+\begin{align*}
+\int f_k\diff\nu_j\to a_k\qquad(j\to\infty)
+\end{align*}
+对一切 $k\geqslant1$ 成立。
+
+（5）定义 $L(f_k):=a_k$。对任意有限线性组合 $\sum_{i}c_if_{k_i}$，由 $(\star)$ 与 $M:=\sup_k\mu_k(\mathbb{R}^n)$ 得
+\begin{align*}
+\Bigl\lvert\sum_{i}c_ia_{k_i}\Bigr\rvert=\lim_{j\to\infty}\Bigl\lvert\int\sum_{i}c_if_{k_i}\diff\nu_j\Bigr\rvert\leqslant M\Bigl\lVert\sum_{i}c_if_{k_i}\Bigr\rVert_{L^\infty},
+\end{align*}
+故 $L$ 在 $\{f_k\}_{k=1}^{\infty}$ 的线性包上良定义且线性，并满足 $\lvert L(f_k)\rvert\leqslant\lVert f_k\rVert_{L^\infty}M$。于是 $L$ 在该线性包上一致连续，从而唯一地延拓为 $C_c(\mathbb{R}^n)$ 上的有界线性泛函 $\bar L$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-41; kind=proof; 补出 $\bar L$ 的正性，使 Riesz 表示定理的假设得到满足
+（6）$\bar L$ 是非负泛函：若 $f\in C_c(\mathbb{R}^n)$ 且 $f\geqslant0$，则对每个 $j$ 有 $\int f\diff\nu_j\geqslant0$，而 $\bar L(f)=\lim_{j\to\infty}\int f\diff\nu_j$，故 $\bar L(f)\geqslant0$。于是由 Riesz 表示定理，存在 $\mathbb{R}^n$ 上的 Radon 测度 $\mu$，使得
+\begin{align*}
+\bar L(f)=\int f\diff\mu
+\end{align*}
+对一切 $f\in C_c(\mathbb{R}^n)$ 成立。
+
+（7）取任意 $f\in C_c(\mathbb{R}^n)$。由 $\{f_k\}_{k=1}^{\infty}$ 的稠密性，存在子列 $\{f_{i}\}_{i=1}^{\infty}$ 使得 $f_i\to f$ 一致。固定 $\varepsilon>0$，取 $i$ 充分大，使得
+\begin{align*}
+\lVert f-f_i\rVert_{L^\infty}<\frac{\varepsilon}{4M}.
+\end{align*}
+再取 $J$，使得 $j>J$ 时
+\begin{align*}
+\Bigl\lvert\int f_i\diff\nu_j-\int f_i\diff\mu\Bigr\rvert<\frac{\varepsilon}{2}.
+\end{align*}
+则当 $j>J$ 时
+\begin{align*}
+\Bigl\lvert\int f\diff\nu_j-\int f\diff\mu\Bigr\rvert
+&\leqslant\Bigl\lvert\int(f-f_i)\diff\nu_j\Bigr\rvert+\Bigl\lvert\int(f-f_i)\diff\mu\Bigr\rvert+\Bigl\lvert\int f_i\diff\nu_j-\int f_i\diff\mu\Bigr\rvert\\
+&\leqslant2M\lVert f-f_i\rVert_{L^\infty}+\frac{\varepsilon}{2}<\varepsilon .
+\end{align*}
+故 $\nu_j\weakto\mu$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-41; kind=proof; 补出一般情形：先截断到球 $B(l)$，再作对角抽取并拼接极限测度
+（8）下面处理 $(\star)$ 不成立的一般情形，此时只设对每个紧集 $K$ 有 $\sup_k\mu_k(K)<\infty$。对正整数 $l$ 定义
+\begin{align*}
+\mu_k^l:=\mu_k\llcorner B(l)\qquad(k,l=1,2,\cdots),
+\end{align*}
+即 $\mu_k^l(A):=\mu_k\bigl(A\cap B(l)\bigr)$。则对固定的 $l$ 有
+\begin{align*}
+\sup_k\mu_k^l(\mathbb{R}^n)=\sup_k\mu_k(B(l))<\infty,
+\end{align*}
+故由第 (1)–(7) 步，存在 $\mathbb{R}^n$ 上的 Radon 测度 $\mu^l$ 与子列使 $\mu_k^l\weakto\mu^l$。作对角抽取：先取子列使 $l=1$ 的情形收敛，再从其子列中取子列使 $l=2$ 的情形收敛，依此类推；最后取第 $j$ 个子列的第 $j$ 项，得到子列 $\{k_j\}$，使得对每个 $l$ 都有
+\begin{align*}
+\mu_{k_j}^l\weakto\mu^l\qquad(j\to\infty).
+\end{align*}
+
+（9）诸极限测度相容。若 $l'\geqslant l$，则对每个满足 $\spt f\subseteq B(l)$ 的 $f\in C_c(\mathbb{R}^n)$ 有
+\begin{align*}
+\int f\diff\mu^l=\lim_{j\to\infty}\int f\diff\mu_{k_j}^l=\lim_{j\to\infty}\int f\diff\mu_{k_j}=\lim_{j\to\infty}\int f\diff\mu_{k_j}^{l'}=\int f\diff\mu^{l'},
+\end{align*}
+其中第二个与第三个等号用到 $\spt f\subseteq B(l)\subseteq B(l')$。于是两个 Radon 测度 $\mu^l$ 与 $\mu^{l'}$ 在 $C_c(B(l))$ 上给出的泛函相同，故 $\mu^l(A)=\mu^{l'}\bigl(A\cap B(l)\bigr)$ 对每个有界 Borel 集 $A\subseteq\mathbb{R}^n$ 成立。据此对 $A\subseteq B(l)$ 为 Borel 集定义
+\begin{align*}
+\mu(A):=\mu^l(A),
+\end{align*}
+则该定义与 $l$ 的选取无关，$\mu$ 是 $\mathbb{R}^n$ 上的 Radon 测度，且 $\mu\llcorner B(l)=\mu^l$。
+
+（10）最后，对 $f\in C_c(\mathbb{R}^n)$ 取 $l$ 使 $\spt f\subseteq B(l)$，则
+\begin{align*}
+\int f\diff\mu=\int f\diff\mu^l=\lim_{j\to\infty}\int f\diff\mu_{k_j}^l=\lim_{j\to\infty}\int f\diff\mu_{k_j},
+\end{align*}
+故 $\mu_{k_j}\weakto\mu$。定理证毕。
+\end{proof}
+
+\subsection{函数的弱收敛}\label{subsection:ch01-09-2}
+
+设 $U\subseteq\mathbb{R}^n$ 为开集，$1\leqslant p<\infty$。
+
+\begin{definition}[$L^p$ 中的弱收敛]\label{definition:ch01-1-32}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^n$ 为开集，$1\leqslant p<\infty$，$q$ 为 $p$ 的共轭指数，即 $1/p+1/q=1$ 且 $1<q\leqslant\infty$；设 $\{f_k\}_{k=1}^{\infty}\subseteq L^p(U)$ 为一列函数，$f\in L^p(U)$。若对每个 $g\in L^q(U)$ 都有
+\begin{align*}
+\lim_{k\to\infty}\int_U f_kg\diff x=\int_U fg\diff x,
+\end{align*}
+则称 $f_k$ 在 $L^p(U)$ 中弱收敛于 $f$，记作
+\begin{align*}
+f_k\weakto f\quad\text{于 }L^p(U).
+\end{align*}
+条件 $1<q\leqslant\infty$ 保证 $L^q(U)$ 是 $L^p(U)$ 的对偶；当 $p=1$ 时 $q=\infty$，当 $1<p<\infty$ 时 $q=p/(p-1)$。上述定义只涉及积分值，不要求 $f_k$ 逐点收敛或按范数收敛。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-32; kind=motivation; 说明弱收敛即在对偶空间上的逐点收敛，并与强收敛、测度弱收敛比较
+\begin{remark}\phantomsection\label{remark:ch01-def-1-32-动机}
+对 $1<p<\infty$，$(L^p(U))'=L^q(U)$，故本定义正是 Banach 空间弱收敛的一般定义在 $L^p$ 中的具体形式：$f_k\weakto f$ 当且仅当对每个有界线性泛函 $\ell\in(L^p)'$ 有 $\ell(f_k)\to\ell(f)$。$p=1$ 时 $(L^1)'=L^\infty$，定义同样适用。
+
+弱收敛弱于按范数收敛：若 $\lVert f_k-f\rVert_{L^p}\to0$，则由 Hölder 不等式得 $f_k\weakto f$；反之不然。范数在弱收敛下只具有下半连续性，即 $\lVert f\rVert_{L^p}\leqslant\liminf_k\lVert f_k\rVert_{L^p}$，质量可以在极限过程中逃逸或集中。
+
+与测度的弱收敛相比，本定义要求对一切 $g\in L^q(U)$ 积分收敛，而\cref{theorem:ch01-1-40}只要求对 $C_c$ 中的测试函数收敛；由于 $C_c(U)$ 在 $L^q(U)$ 中稠密（$q<\infty$），两者的差别恰好体现为「极限是否为函数」：把 $f_k$ 视为测度 $\mathcal{L}^n\llcorner f_k$ 时，测度弱收敛的极限可以是一个奇异测度，而 $L^p$ 弱收敛要求该极限由 $L^p$ 函数给出。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-32; kind=hypotheses; 逐条说明 $p$ 的范围、共轭指数 $q$、测试函数类与空间 $U$ 的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-32-条件}
+\begin{enumerate}[(i)]
+\item 条件 $1\leqslant p<\infty$ 保证共轭指数 $q$ 满足 $1<q\leqslant\infty$，从而 $L^q(U)$ 是 $L^p(U)$ 的对偶；$p=\infty$ 不在讨论范围内，因为 $(L^\infty)'$ 严格大于 $L^1$，以 $L^1$ 为测试函数类的收敛不再等同于弱收敛。
+\item 测试函数类取为整个 $L^q(U)$ 而不只是 $C_c(U)$。若只对 $g\in C_c(U)$ 要求收敛，得到的是测度意义下的弱收敛，极限可能不属于 $L^p(U)$；取整个 $L^q(U)$ 才能保证极限仍是 $L^p$ 函数，这正是\cref{theorem:ch01-1-42}的结论所要求的。% XREF internal
+\item $U$ 只须是可测集即可使定义有意义；要求 $U$ 开是为了在证明中使用 $C_c(U)$ 在 $L^q(U)$ 中的稠密性与\cref{theorem:ch01-1-42}中把函数在 $U$ 外补充定义为 $0$ 的延拓。% XREF internal
+\item 定义只要求每个测试函数上的积分收敛，不要求 $\lVert f_k\rVert_{L^p}$ 收敛，也不要求 $f_k\to f$ 几乎处处；因此弱极限一般不能由逐点信息读出。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[$L^p$ 中的弱紧性]\label{theorem:ch01-1-42}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^n$ 为开集，$1<p<\infty$。设 $\{f_k\}_{k=1}^{\infty}$ 为 $L^p(U)$ 中的一列函数，且满足
+\begin{align*}
+\sup_k\lVert f_k\rVert_{L^p(U)}<\infty .\qquad(\star)
+\end{align*}
+则存在子列 $\{f_{k_j}\}_{j=1}^{\infty}$ 与函数 $f\in L^p(U)$，使得
+\begin{align*}
+f_{k_j}\weakto f\quad\text{于 }L^p(U).
+\end{align*}
+其中 $q$ 为 $p$ 的共轭指数，$f_{k_j}\weakto f$ 表示按\cref{definition:ch01-1-32}的意义弱收敛，即对每个 $g\in L^q(U)$ 有 $\int_Uf_{k_j}g\diff x\to\int_Ufg\diff x$。% XREF internal
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-42-p1}
+当 $p=1$ 时上述断言一般不成立，但见下文\cref{subsection:ch01-09-3}。% XREF p=83 "This assertion is in general false for p = 1, but see Section 1.9.3 below."
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-42; kind=motivation; 说明 $L^p$ 弱紧性的证明思路：把函数看成测度再用测度弱紧性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-42-动机}
+本定理是 $L^p$ 空间自反性的序列形式：$1<p<\infty$ 时 $L^p$ 自反，故其单位球弱序列紧。证明并不直接引用自反性，而是把函数 $f_k$ 解释为绝对连续的 Radon 测度 $\mu_k=\mathcal{L}^n\llcorner f_k$，用测度弱紧性\cref{theorem:ch01-1-41}抽出弱收敛的测度子列，再证明该极限测度绝对连续、其密度属于 $L^p$，最后把测度弱收敛提升为 $L^p$ 弱收敛。这一路线把「函数空间的弱紧性」归结为「测度的弱紧性＋绝对连续性＋密度估计」，是本书处理弱收敛问题的基本模式。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-42; kind=hypotheses; 逐条分析 $1<p<\infty$、$L^p$ 有界性与 $U$ 的开性的作用及 $p=1$ 的反例
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-42-条件}
+\begin{enumerate}[(i)]
+\item 条件 $1<p<\infty$ 在证明中有两处作用：其一，$p>1$ 使共轭指数 $q=p/(p-1)\in(1,\infty)$，从而 $C_c$ 在 $L^q$ 中稠密，第 (6) 步的逼近论证才能进行；其二，$p<\infty$ 使 $L^p$ 中 $C_c$ 稠密，第 (5) 步才能用 $C_c$ 中的测试函数计算 $\lVert f\rVert_{L^p}$。
+\item 条件 $(\star)$ 不可去掉。取 $U=(0,1)$、$f_k:=k\,\chi_{(0,1/k)}$，则 $\lVert f_k\rVert_{L^1}=1$ 对一切 $k$ 成立，但无子列在 $L^1(0,1)$ 中弱收敛：若有 $f_{k_j}\weakto f$，则对每个 $g\in C_c(0,1)$ 有 $\int_0^1f g\diff x=\lim_j\int_0^1f_{k_j}g\diff x=g(0)$，而 $L^1$ 函数不可能满足这一等式（否则绝对连续测度 $f\diff x$ 与 $\delta_0$ 在 $C_c$ 上一致，与 $\delta_0(\{0\})=1$、$\mathcal{L}^1(\{0\})=0$ 矛盾）。这正是 $p=1$ 时定理失效的典型机制：有界性仍成立，但质量集中到一点。
+\item $U$ 只须可测；要求 $U$ 开是为了把 $f_k$ 在 $U$ 外补充定义为 $0$ 后仍属于 $L^p(\mathbb{R}^n)$，并在第 (7) 步用 $C_c(U)$ 的稠密性把 $\mathbb{R}^n$ 上的结论搬回 $U$。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）若 $U\neq\mathbb{R}^n$，把每个 $f_k$ 在 $\mathbb{R}^n\setminus U$ 上补充定义为 $0$，仍记其延拓为 $f_k$；此后设 $U=\mathbb{R}^n$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-42; kind=proof; 补出正负部分拆分后重新取子列的细节
+进一步，可设
+\begin{align*}
+f_k\geqslant0\quad\mathcal{L}^n\text{-a.e.};
+\end{align*}
+否则对正部 $f_k^+$ 与负部 $f_k^-$ 分别施行以下论证：先取子列使 $f_{k_j}^+\weakto f^+$，再取该子列的子列使 $f_{k_j}^-\weakto f^-$，则由
+\begin{align*}
+\int_{\mathbb{R}^n}f_{k_j}g\diff x=\int_{\mathbb{R}^n}f_{k_j}^+g\diff x-\int_{\mathbb{R}^n}f_{k_j}^-g\diff x\to\int_{\mathbb{R}^n}(f^+-f^-)g\diff x
+\end{align*}
+得 $f_{k_j}\weakto f^+-f^-$；又 $\lVert f_k^\pm\rVert_{L^p}\leqslant\lVert f_k\rVert_{L^p}$，故 $(\star)$ 对 $f_k^\pm$ 同样成立。
+
+（2）定义 Radon 测度
+\begin{align*}
+\mu_k:=\mathcal{L}^n\llcorner f_k\qquad(k=1,2,\cdots),
+\end{align*}
+即 $\mu_k(A):=\int_Af_k\diff x$（$A\subseteq\mathbb{R}^n$ 为 Borel 集）；由 $f_k\in L^p(\mathbb{R}^n)\subseteq L^1_{\loc}(\mathbb{R}^n)$ 知 $\mu_k$ 是 Radon 测度。对每个紧集 $K\subseteq\mathbb{R}^n$，由 Hölder 不等式
+\begin{align*}
+\mu_k(K)=\int_Kf_k\diff x\leqslant\Bigl(\int_Kf_k^p\diff x\Bigr)^{\frac{1}{p}}\mathcal{L}^n(K)^{1-\frac{1}{p}},
+\end{align*}
+故
+\begin{align*}
+\sup_k\mu_k(K)\leqslant C\,\mathcal{L}^n(K)^{1-\frac{1}{p}}<\infty,\qquad C:=\sup_k\lVert f_k\rVert_{L^p(\mathbb{R}^n)} .
+\end{align*}
+于是由\cref{theorem:ch01-1-41}，存在 $\mathbb{R}^n$ 上的 Radon 测度 $\mu$ 与子列 $\mu_{k_j}\weakto\mu$。% XREF p=84 "Accordingly, we may apply Theorem 1.41, to find a Radon measure"
+
+（3）断言 1：$\mu\ll\mathcal{L}^n$。证明：设 $A\subseteq\mathbb{R}^n$ 有界且 $\mathcal{L}^n(A)=0$。固定 $\varepsilon>0$，取有界开集 $V\supseteq A$ 使 $\mathcal{L}^n(V)<\varepsilon$。则
+\begin{align*}
+\mu(V)&\leqslant\liminf_{j\to\infty}\mu_{k_j}(V)
+=\liminf_{j\to\infty}\int_Vf_{k_j}\diff x\\
+&\leqslant\liminf_{j\to\infty}\Bigl(\int_Vf_{k_j}^p\diff x\Bigr)^{\frac{1}{p}}\mathcal{L}^n(V)^{1-\frac{1}{p}}\leqslant C\varepsilon^{1-\frac{1}{p}}.
+\end{align*}
+故 $\mu(A)\leqslant\mu(V)\leqslant C\varepsilon^{1-1/p}$ 对一切 $\varepsilon>0$ 成立，于是 $\mu(A)=0$。
+
+（4）由 $\mu\ll\mathcal{L}^n$ 及\cref{theorem:ch01-1-30}，存在 $f\in L^1_{\loc}(\mathbb{R}^n)$，使得% XREF p=84 "In view of Theorem 1.30, there exists a function"
+\begin{align*}
+\mu(A)=\int_Af\diff x
+\end{align*}
+对一切 Borel 集 $A\subseteq\mathbb{R}^n$ 成立。
+
+（5）断言 2：$f\in L^p(\mathbb{R}^n)$。证明：设 $\phi\in C_c(\mathbb{R}^n)$。则
+\begin{align*}
+\int_{\mathbb{R}^n}\phi f\diff x=\int_{\mathbb{R}^n}\phi\diff\mu=\lim_{j\to\infty}\int_{\mathbb{R}^n}\phi\diff\mu_{k_j}
+=\lim_{j\to\infty}\int_{\mathbb{R}^n}\phi f_{k_j}\diff x\leqslant C\lVert\phi\rVert_{L^q},
+\end{align*}
+其中 $1/p+1/q=1$，$1<q<\infty$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-42; kind=proof; 补出由 $C_c$ 上的估计推出 $f\in L^p$ 的对偶论证与范数表示
+由此可得 $f\in L^p(\mathbb{R}^n)$ 且 $\lVert f\rVert_{L^p}\leqslant C$。事实上，$C_c(\mathbb{R}^n)$ 在 $L^q(\mathbb{R}^n)$ 中稠密，而线性泛函 $g\mapsto\int_{\mathbb{R}^n}gf\diff x$ 在 $C_c$ 上按 $\lVert\cdot\rVert_{L^q}$ 的范数不超过 $C$，故它唯一延拓为 $L^q(\mathbb{R}^n)$ 上的有界线性泛函；由 $(L^q)'=L^p$，存在 $F\in L^p(\mathbb{R}^n)$ 使
+\begin{align*}
+\int_{\mathbb{R}^n}gF\diff x=\int_{\mathbb{R}^n}gf\diff x
+\end{align*}
+对一切 $g\in L^q(\mathbb{R}^n)$ 成立，从而 $f=F$ 于 $\mathcal{L}^n$-a.e. 成立。因此
+\begin{align*}
+\lVert f\rVert_{L^p}=\lVert F\rVert_{L^p}=\sup_{\substack{\phi\in C_c(\mathbb{R}^n)\\ \lVert\phi\rVert_{L^q}\leqslant1}}\int_{\mathbb{R}^n}\phi f\diff x<\infty .
+\end{align*}
+
+（6）断言 3：$f_{k_j}\weakto f$ 于 $L^p(\mathbb{R}^n)$。证明：由第 (5) 步已得
+\begin{align*}
+\int_{\mathbb{R}^n}f_{k_j}\phi\diff x\to\int_{\mathbb{R}^n}f\phi\diff x
+\end{align*}
+对一切 $\phi\in C_c(\mathbb{R}^n)$ 成立。给定 $g\in L^q(\mathbb{R}^n)$，固定 $\varepsilon>0$，取 $\phi\in C_c(\mathbb{R}^n)$ 使
+\begin{align*}
+\lVert g-\phi\rVert_{L^q(\mathbb{R}^n)}<\varepsilon .
+\end{align*}
+则
+\begin{align*}
+\int_{\mathbb{R}^n}(f_{k_j}-f)g\diff x=\int_{\mathbb{R}^n}(f_{k_j}-f)\phi\diff x+\int_{\mathbb{R}^n}(f_{k_j}-f)(g-\phi)\diff x .
+\end{align*}
+右端第一项当 $j\to\infty$ 时趋于 $0$，最后一项由
+\begin{align*}
+\lVert f_{k_j}-f\rVert_{L^p}\lVert g-\phi\rVert_{L^q}\leqslant C\varepsilon
+\end{align*}
+估计。
+
+（7）最后去掉 $U=\mathbb{R}^n$ 的假设：若 $U\subseteq\mathbb{R}^n$ 为开集，把 $g\in L^q(U)$ 在 $\mathbb{R}^n\setminus U$ 上补充定义为 $0$，则 $g\in L^q(\mathbb{R}^n)$，且
+\begin{align*}
+\int_Uf_{k_j}g\diff x=\int_{\mathbb{R}^n}f_{k_j}g\diff x\to\int_{\mathbb{R}^n}fg\diff x=\int_Ufg\diff x,
+\end{align*}
+故 $f_{k_j}\weakto f$ 于 $L^p(U)$。
+\end{proof}
+
+\subsection{$L^1$ 中的弱收敛}\label{subsection:ch01-09-3}
+
+$L^p$ 的弱紧性定理（\cref{theorem:ch01-1-42}）对 $L^1$ 不成立，因为 $L^1$ 的对偶空间 $L^\infty$ 不可分。要找出 $L^1$ 中的弱收敛子列，需要进一步的信息：% XREF p=85 "The $L^p$ weak compactness Theorem 1.42 fails for $L^1$, since its dual space $L^\infty$ is not separable. We need more information to find weakly convergent sequences in $L^1$"
+
+\begin{theorem}[一致可积性与弱收敛]\label{theorem:ch01-1-43}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^n$ 为有界开集，$\{f_k\}_{k=1}^{\infty}$ 为 $L^1(U)$ 中的一列函数，且满足
+\begin{align*}
+\sup_k\lVert f_k\rVert_{L^1(U)}<\infty .\qquad(\star)
+\end{align*}
+又设
+\begin{align*}
+\lim_{l\to\infty}\sup_k\int_{\{\lvert f_k\rvert\geqslant l\}}\lvert f_k\rvert\diff x=0 .\qquad(\star\star)
+\end{align*}
+则存在子列 $\{f_{k_j}\}_{j=1}^{\infty}$ 与函数 $f\in L^1(U)$，使得
+\begin{align*}
+f_{k_j}\weakto f\quad\text{于 }L^1(U).
+\end{align*}
+此处 $(\star\star)$ 即一致可积性，$f_{k_j}\weakto f$ 表示按\cref{definition:ch01-1-32}的意义弱收敛。% XREF internal
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-43-命名}
+称条件 $(\star\star)$ 为一致可积性。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-43; kind=motivation; 说明一致可积性如何排除质量集中，从而在 $L^1$ 中恢复弱紧性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-43-动机}
+$L^1$ 有界列可能以两种方式失去弱紧性：质量逃向无穷远，或质量集中到越来越小的集合上。$U$ 有界排除了第一种情形，一致可积性 $(\star\star)$ 则排除第二种：它要求 $f_k$ 在 $\{\lvert f_k\rvert\geqslant l\}$ 上的质量关于 $k$ 一致地随 $l\to\infty$ 消失，即不存在一列函数把越来越大的质量压在越来越高的水平集上。典型例子是 $f_k:=k\,\chi_{(0,1/k)}$：其 $L^1$ 范数恒为 $1$，但 $\int_{\{\lvert f_k\rvert\geqslant l\}}\lvert f_k\rvert\diff x=1$ 对一切 $l\leqslant k$ 成立，故 $(\star\star)$ 失效，而该列在 $L^1$ 中不弱收敛（在第 (3) 步的意义下其弱极限只能是 $\delta_0$）。
+
+证明的结构与\cref{theorem:ch01-1-42}一致：先把 $f_k$ 视为测度 $\mathcal{L}^n\llcorner f_k$，用测度弱紧性抽取子列，再证明极限测度绝对连续从而由 $L^1$ 函数表示；关键的新增步骤是断言 1，它把一致可积性翻译为「积分关于测度绝对连续且关于 $k$ 一致」，正是 Vitali 型收敛定理的典型条件。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-43; kind=hypotheses; 逐条分析 $U$ 有界、$(\star)$ 与 $(\star\star)$ 的作用与必要性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-43-条件}
+\begin{enumerate}[(i)]
+\item $U$ 有界在证明中有两处作用：其一，$\mathcal{L}^n(U)<\infty$，从而\cref{theorem:ch01-1-16}（Egoroff 定理）可应用于 $U$ 上的可测函数列；其二，$L^\infty(U)\subseteq L^1(U)$，从而第 (3) 步可以用 $L^\infty$ 中的测试函数刻画 $L^1$ 弱收敛。% XREF internal
+\item 条件 $(\star)$ 给出常数 $M$、$C$，在第 (2) 步用于对 $\mu_k(U)$ 作一致估计，在第 (3) 步用于估计 $\int_E\lvert f\rvert$ 与 $\int_U\lvert f_{k_j}-f\rvert$。它不能替代 $(\star\star)$：取 $f_k:=k\,\chi_{(0,1/k)}$，则 $(\star)$ 成立而 $(\star\star)$ 失效，且该列无弱收敛子列。
+\item 条件 $(\star\star)$ 不可去掉。承上例，若 $f_{k_j}\weakto f$ 于 $L^1(0,1)$，则对每个 $g\in C_c(0,1)$ 有 $\int_0^1fg\diff x=\lim_j\int_0^1f_{k_j}g\diff x=g(0)$；但 $f\in L^1(0,1)$ 时测度 $f\diff x$ 关于 $\mathcal{L}^1$ 绝对连续，而 $\delta_0$ 不绝对连续：取开集 $V\ni0$ 使 $\mathcal{L}^1(V)<\varepsilon$，则 $\int_Vf\diff x=\delta_0(V)=1$，而 $\lvert\int_Vf\diff x\rvert\leqslant\int_V\lvert f\rvert\diff x\to0$（$\varepsilon\to0$），矛盾。
+\item 结论中的 $f$ 必满足 $\lVert f\rVert_{L^1(U)}\leqslant\liminf_k\lVert f_k\rVert_{L^1(U)}$，即范数在弱极限下只能下降；当 $f_k\geqslant0$ 时第 (2) 步的 $\mu$ 满足 $\mu(U)=\int_Uf\diff x$，故质量可以严格减少。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）断言 1：对每个 $\varepsilon>0$，存在 $\delta>0$，使得
+\begin{align*}
+\mathcal{L}^n(E)<\delta\quad\Longrightarrow\quad\sup_k\int_E\lvert f_k\rvert\diff x<\varepsilon
+\end{align*}
+对每个 $\mathcal{L}^n$-可测集 $E\subseteq U$ 成立。
+
+证明：对每个 $j=1,2,\cdots$，
+\begin{align*}
+\int_E\lvert f_j\rvert\diff x&=\int_{E\cap\{\lvert f_j\rvert\geqslant l\}}\lvert f_j\rvert\diff x+\int_{E\cap\{\lvert f_j\rvert<l\}}\lvert f_j\rvert\diff x\\
+&\leqslant\sup_k\int_{\{\lvert f_k\rvert\geqslant l\}}\lvert f_k\rvert\diff x+l\,\mathcal{L}^n(E)\\
+&<\varepsilon,
+\end{align*}
+只要用 $(\star\star)$ 取 $l$ 充分大使
+\begin{align*}
+\sup_k\int_{\{\lvert f_k\rvert\geqslant l\}}\lvert f_k\rvert\diff x<\frac{\varepsilon}{2},
+\end{align*}
+再取 $\delta=\frac{\varepsilon}{2l}$。
+
+（2）与\cref{theorem:ch01-1-42}的证明相同，可设 $f_k\geqslant0$，并定义 Radon 测度% XREF internal
+\begin{align*}
+\mu_k:=\mathcal{L}^n\llcorner f_k\qquad(k=1,2,\cdots),
+\end{align*}
+其中 $f_k$ 在 $U$ 外补充定义为 $0$。则
+\begin{align*}
+\sup_k\mu_k(U)\leqslant\sup_k\lVert f_k\rVert_{L^1(U)}<\infty .
+\end{align*}
+由\cref{theorem:ch01-1-41}，存在 $\mathbb{R}^n$ 上的 Radon 测度 $\mu$ 与子列 $\mu_{k_j}\weakto\mu$。利用断言 1 可以证明 $\mu\ll\mathcal{L}^n\llcorner U$；于是由\cref{theorem:ch01-1-30}，存在 $f\in L^1(U)$，使得% XREF p=86 "We invoke Theorem 1.41, to find a Radon measure" | p=86 "and consequently, according to Theorem 1.30, there exists a function"
+\begin{align*}
+\mu(E)=\int_Ef\diff x
+\end{align*}
+对每个 Borel 集 $E\subseteq\mathbb{R}^n$ 成立。
+
+% SUPPLEMENT: parent=theorem:ch01-1-43; kind=proof; 补出由断言 1 推出 $\mu\ll\mathcal{L}^n\llcorner U$ 的论证
+事实上，设 $E\subseteq U$ 为 $\mathcal{L}^n$-可测集且 $\mathcal{L}^n(E)=0$，取 $\varepsilon>0$ 及断言 1 给出的 $\delta>0$，再取开集 $V\supseteq E$ 使 $\mathcal{L}^n(V\cap U)<\delta$。则
+\begin{align*}
+\mu(E)\leqslant\mu(V\cap U)\leqslant\liminf_{j\to\infty}\mu_{k_j}(V\cap U)=\liminf_{j\to\infty}\int_{V\cap U}f_{k_j}\diff x<\varepsilon,
+\end{align*}
+故 $\mu(E)=0$；又 $f_k$ 在 $U$ 外为 $0$，故 $\mu(\mathbb{R}^n\setminus\bar U)=0$。因此 $\mu\ll\mathcal{L}^n\llcorner U$。
+
+（3）断言 2：$f_{k_j}\weakto f$ 于 $L^1(U)$。
+
+证明：取任意 $g\in L^\infty(U)$，须证
+\begin{align*}
+\int_Uf_{k_j}g\diff x\to\int_Ufg\diff x .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-43; kind=proof; 补出磨光逼近的存在性、一致界与 Egoroff 定理的适用条件
+把 $g$ 在 $\mathbb{R}^n\setminus U$ 上补充定义为 $0$，则 $g\in L^\infty(\mathbb{R}^n)$ 且 $\spt g\subseteq\bar U$。取磨光核 $\eta\in C_c^\infty(\mathbb{R}^n)$ 满足 $\eta\geqslant0$、$\spt\eta\subseteq B(0,1)$、$\int\eta\diff x=1$，令 $\eta_i(x):=i^n\eta(ix)$、$g_i:=\eta_i*g$。则 $g_i$ 有界连续，$\lVert g_i\rVert_{L^\infty}\leqslant\lVert g\rVert_{L^\infty}$，且由\cref{theorem:ch04-4-1}（磨光）得 $g_i\to g$ 于 $\mathcal{L}^n$-a.e.。% XREF p=86 "Using mollifiers (see Theorem 4.1 later) we obtain a sequence"
+
+固定 $\varepsilon>0$，取断言 1 对应的 $\delta>0$，必要时把 $\delta$ 取得更小，使 $\mathcal{L}^n(E)<\delta$ 时同时有 $\int_E\lvert f\rvert\diff x<\varepsilon$（这由 $f\in L^1(U)$ 的积分绝对连续性保证）。由于 $U$ 有界，$\mathcal{L}^n(U)<\infty$；由 Egoroff 定理（\cref{theorem:ch01-1-16}），存在可测集 $E\subseteq U$，使得% XREF p=86 "According the Egoroff's Theorem, there exists a measurable set E ⊂ U such that"
+\begin{align*}
+g_i\to g\quad\text{于 }U-E\text{ 上一致},\qquad\mathcal{L}^n(E)\leqslant\delta .
+\end{align*}
+则
+\begin{align*}
+\Bigl\lvert\int_U(f_{k_j}-f)g\diff x\Bigr\rvert
+&\leqslant\int_U\lvert f_{k_j}-f\rvert\lvert g-g_i\rvert\diff x+\Bigl\lvert\int_U(f_{k_j}-f)g_i\diff x\Bigr\rvert\\
+&\leqslant\int_E\lvert f_{k_j}-f\rvert\lvert g-g_i\rvert\diff x+\int_{U-E}\lvert f_{k_j}-f\rvert\lvert g-g_i\rvert\diff x+\Bigl\lvert\int_U(f_{k_j}-f)g_i\diff x\Bigr\rvert\\
+&\leqslant C\int_E\bigl(\lvert f_{k_j}\rvert+\lvert f\rvert\bigr)\diff x+C\sup_{U-E}\lvert g-g_i\rvert+\Bigl\lvert\int_U(f_{k_j}-f)g_i\diff x\Bigr\rvert\\
+&\leqslant C\varepsilon+C\sup_{U-E}\lvert g-g_i\rvert+\Bigl\lvert\int_U(f_{k_j}-f)g_i\diff x\Bigr\rvert,
+\end{align*}
+其中第三步用到 $\lvert g-g_i\rvert\leqslant2\lVert g\rVert_{L^\infty}$ 与 $\int_{U-E}\lvert f_{k_j}-f\rvert\diff x\leqslant2M+\lVert f\rVert_{L^1(U)}$，常数 $C$ 只依赖于 $g$、$f$ 与 $M$；第四步用断言 1 与 $\int_E\lvert f\rvert\diff x<\varepsilon$。取 $i$ 充分大使右端第二项小于 $\varepsilon$。由 $g_i$ 有界连续及 $\mu_{k_j}\weakto\mu$ 得
+\begin{align*}
+\int_Uf_{k_j}g_i\diff x=\int_{\mathbb{R}^n}g_i\diff\mu_{k_j}\to\int_{\mathbb{R}^n}g_i\diff\mu=\int_Ufg_i\diff x,
+\end{align*}
+故第三项当 $j\to\infty$ 时趋于 $0$。于是
+\begin{align*}
+\limsup_{j\to\infty}\Bigl\lvert\int_Uf_{k_j}g\diff x-\int_Ufg\diff x\Bigr\rvert\leqslant C\varepsilon .
+\end{align*}
+由于 $\varepsilon>0$ 任意，得 $\int_Uf_{k_j}g\diff x\to\int_Ufg\diff x$。由 $g\in L^\infty(U)$ 的任意性，$f_{k_j}\weakto f$ 于 $L^1(U)$。
+\end{proof}
+
+若 $L^1$ 中的有界列不满足\cref{theorem:ch01-1-43}中的一致可积条件 $(\star\star)$，仍可找到一个子列，它在从 $U$ 中咬去一块 $\mathcal{L}^n$ 测度任意小的集合之后弱收敛：% XREF p=87 "If a sequence bounded in $L^1$ fails to satisfy the uniform integrability condition"
+
+\begin{theorem}[咬去引理]\label{theorem:ch01-1-44}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^n$ 为有界开集，$\{f_k\}_{k=1}^{\infty}$ 为 $L^1(U)$ 中的一列函数，且满足
+\begin{align*}
+\sup_k\lVert f_k\rVert_{L^1(U)}<\infty .\qquad(\star)
+\end{align*}
+则存在子列 $\{f_{k_j}\}_{j=1}^{\infty}$ 与函数 $f\in L^1(U)$，使得对每个 $\delta>0$ 存在 $\mathcal{L}^n$-可测集 $E\subseteq U$ 满足
+\begin{align*}
+\mathcal{L}^n(E)\leqslant\delta
+\end{align*}
+并且
+\begin{align*}
+f_{k_j}\weakto f\quad\text{于 }L^1(U-E).
+\end{align*}
+其中 $E$ 依给定的 $\delta>0$ 选取、其测度不超过 $\delta$，而 $f_{k_j}\weakto f$ 表示按\cref{definition:ch01-1-32}的意义弱收敛。% XREF internal
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch01-1-44; kind=motivation; 说明咬去引理的思路：把一致可积性在子列上「近似恢复」
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-44-动机}
+一致可积性 $(\star\star)$ 是 $L^1$ 弱紧性的充分条件，但它不是有界性的推论。咬去引理说明：即使 $(\star\star)$ 失效，失效的部分也只能集中在一个测度任意小的集合上，把它咬掉之后剩下的部分就是一致可积的，从而可以用\cref{theorem:ch01-1-43}抽出弱收敛子列。% XREF internal
+
+实现这一想法的工具是函数 $\phi_k(l):=\int_{\{\lvert f_k\rvert\geqslant l\}}\lvert f_k\rvert\diff x$。它关于 $l$ 不增，且一致有界，故沿子列有逐点极限 $\alpha(l)$ 及其极限 $\alpha_\infty$。量 $\alpha_\infty$ 正是「无法被一致可积性控制的残余质量」：$\alpha_\infty=0$ 就是一致可积性成立，此时无须咬去任何集合；$\alpha_\infty>0$ 时，逐项选取水平 $l_j$ 使 $\phi_{k_j}(l_j)\to\alpha_\infty$，则 $\{\lvert f_{k_j}\rvert\geqslant l_j\}$ 上的质量恰是集中部分，咬去它们的并集 $E$ 之后剩余部分的一致可积性由断言 2 给出，而 $E$ 的测度由 $\sum_j1/l_j$ 控制。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-44; kind=hypotheses; 逐条分析 $U$ 有界、$(\star)$ 与「咬去集合依赖于 $\delta$」的含义
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-44-条件}
+\begin{enumerate}[(i)]
+\item 条件 $(\star)$ 在证明中给出常数 $M:=\sup_k\lVert f_k\rVert_{L^1(U)}$，它同时控制 $\phi_k$ 的一致有界性与 $E$ 的测度估计：$\mathcal{L}^n(\{\lvert f_{k_j}\rvert\geqslant l_j\})\leqslant\frac{1}{l_j}\int_U\lvert f_{k_j}\rvert\diff x\leqslant M/l_j$。
+\item $U$ 有界用于两处：一是 $\mathcal{L}^n(U)<\infty$，使 $E\subseteq U$ 的测度估计有意义；二是第 (8) 步对 $U-E$ 应用\cref{theorem:ch01-1-43}时该定理要求定义域有界。% XREF internal
+\item 结论中的集合 $E$ 依赖于 $\delta$，且子列 $\{f_{k_j}\}$ 不依赖于 $\delta$：这正是本定理与\cref{theorem:ch01-1-43}的差别，也是「咬去」一词的含义——同一条子列在咬去任意小的集合后弱收敛。% XREF internal
+\item 条件 $(\star)$ 不可去掉。取 $U=(0,1)$、$f_k:=k\,\chi_{(0,1/k)}$，则 $(\star)$ 成立而结论中的 $f$ 不存在（理由与\cref{theorem:ch01-1-43}条件注记中的论证相同）：即使咬去测度任意小的集合 $E$，只要 $0\notin E$，就有 $f_{k_j}$ 在 $U-E$ 上仍不弱收敛。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）对 $k=1,2,\cdots$ 与整数 $l\geqslant0$ 定义
+\begin{align*}
+\phi_k(l):=\int_{\{\lvert f_k\rvert\geqslant l\}}\lvert f_k\rvert\diff x .
+\end{align*}
+则对每个 $k$，映射 $l\mapsto\phi_k(l)$ 不增，且函数族 $\{\phi_k\}_{k=1}^{\infty}$ 在 $\mathbb{Z}^+$ 上一致有界：由 $(\star)$ 有
+\begin{align*}
+\phi_k(l)\leqslant\lVert f_k\rVert_{L^1(U)}\leqslant M,\qquad M:=\sup_k\lVert f_k\rVert_{L^1(U)} .
+\end{align*}
+
+（2）用标准的对角论证，可取到子列 $k_j\to\infty$，使得极限
+\begin{align*}
+\alpha(l):=\lim_{j\to\infty}\phi_{k_j}(l)
+\end{align*}
+对一切整数 $l=0,1,\cdots$ 存在。进一步，$l\mapsto\alpha(l)$ 不增，从而极限
+\begin{align*}
+\alpha_\infty:=\lim_{\substack{l\to\infty\\ l\ \text{为整数}}}\alpha(l)
+\end{align*}
+存在。
+
+% SUPPLEMENT: parent=theorem:ch01-1-44; kind=proof; 补出对角论证的构造：逐层取子列使 $\phi_{k_j}(l)$ 收敛
+对角论证的构造如下：对 $l=0$，数列 $\{\phi_k(0)\}_{k=1}^{\infty}$ 有界，取子列 $\{k_j^{(0)}\}$ 使 $\phi_{k_j^{(0)}}(0)$ 收敛；再取 $\{k_j^{(0)}\}$ 的子列 $\{k_j^{(1)}\}$ 使 $\phi_{k_j^{(1)}}(1)$ 收敛；依此类推。最后令 $k_j:=k_j^{(j)}$，则对每个固定的 $l$，$\{k_j\}_{j\geqslant l}$ 是 $\{k_j^{(l)}\}$ 的子列，故 $\phi_{k_j}(l)$ 收敛。
+
+（3）情形 1：$\alpha_\infty=0$。此时
+\begin{align*}
+\lim_{l\to\infty}\sup_j\int_{\{\lvert f_{k_j}\rvert\geqslant l\}}\lvert f_{k_j}\rvert\diff x=0,
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-44; kind=proof; 补出由 $\alpha_\infty=0$ 推出子列一致可积性的估计
+事实上，对任意整数 $m\geqslant0$ 与 $l\geqslant m$ 有 $\phi_{k_j}(l)\leqslant\phi_{k_j}(m)$，故对每个 $j_0$ 有
+\begin{align*}
+\limsup_{l\to\infty}\sup_j\phi_{k_j}(l)\leqslant\sup_j\phi_{k_j}(m)\leqslant\sup_{j\leqslant j_0}\phi_{k_j}(m)+\sup_{j>j_0}\phi_{k_j}(m).
+\end{align*}
+先令 $j_0\to\infty$，右端第二项不超过 $\alpha(m)$；再令 $m\to\infty$，右端第一项趋于 $0$（对固定的 $j$ 有 $\phi_{k_j}(m)\to0$），第二项趋于 $\alpha_\infty=0$。故所证极限为 $0$。
+
+于是 $L^1$ 弱收敛定理（\cref{theorem:ch01-1-43}）适用。因此，必要时再取子列并重新编号，有% XREF p=88 "and hence the L^1 weak convergence Theorem 1.43 applies"
+\begin{align*}
+f_{k_j}\weakto f\quad\text{于 }L^1(U),
+\end{align*}
+此时取 $E=\emptyset$ 即可。
+
+（4）情形 2：$\alpha_\infty>0$。须构造测度任意小的集合 $E$，使子列在去掉 $E$ 之后弱收敛。
+
+（5）断言 1：存在整数列 $\{l_j\}_{j=1}^{\infty}$，使得
+\begin{align*}
+l_j\to\infty,\qquad\phi_{k_j}(l_j)\to\alpha_\infty .
+\end{align*}
+证明：定义
+\begin{align*}
+l_j:=\max\Bigl\{l\in\mathbb{Z}^+\Bigm|\phi_{k_j}(l)\geqslant\alpha_\infty-\frac{1}{l}\Bigr\};
+\end{align*}
+最大值存在，因为对每个 $k$ 有 $\lim_{l\to\infty}\phi_k(l)=0$（由控制收敛定理）。又若 $\sup_jl_j$ 有限，则对 $l'>\sup_jl_j$ 有
+\begin{align*}
+\phi_{k_j}(l')<\alpha_\infty-\frac{1}{l'}
+\end{align*}
+对一切 $j$ 成立，于是 $\alpha(l')\leqslant\alpha_\infty-\frac{1}{l'}$，这与 $l\mapsto\alpha(l)$ 不增且 $\alpha(l)\geqslant\alpha_\infty$ 矛盾。故必要时再取子列并重新编号，可设 $l_j\to\infty$。
+
+（6）现固定正整数 $m$。当 $j$ 充分大时 $l_j\geqslant m$，故
+\begin{align*}
+\alpha_\infty-\frac{1}{l_j}\leqslant\phi_{k_j}(l_j)\leqslant\phi_{k_j}(m),
+\end{align*}
+于是
+\begin{align*}
+\alpha_\infty\leqslant\liminf_{j\to\infty}\phi_{k_j}(l_j)\leqslant\limsup_{j\to\infty}\phi_{k_j}(l_j)\leqslant\alpha(m).
+\end{align*}
+令 $m\to\infty$，即得 $\lim_{j\to\infty}\phi_{k_j}(l_j)=\alpha_\infty$。断言 1 证毕。
+
+（7）断言 2：
+\begin{align*}
+\lim_{m\to\infty}\sup_j\int_{\{m\leqslant\lvert f_{k_j}\rvert\leqslant l_j\}}\lvert f_{k_j}\rvert\diff x=0 .
+\end{align*}
+证明：取任意 $\varepsilon>0$，再取 $m_0\in\mathbb{Z}^+$ 使 $\alpha(m_0)<\alpha_\infty+\varepsilon$。再取 $j_0$，使得 $j\geqslant j_0$ 时
+\begin{align*}
+\phi_{k_j}(m_0)\leqslant\alpha(m_0)+\varepsilon,\qquad\phi_{k_j}(l_j)\geqslant\alpha_\infty-\varepsilon .
+\end{align*}
+则
+\begin{align*}
+\phi_{k_j}(m_0)-\phi_{k_j}(l_j)\leqslant\alpha(m_0)-\alpha_\infty+2\varepsilon\leqslant3\varepsilon .
+\end{align*}
+于是若 $m_1\geqslant\max\{m_0,\max_{0\leqslant j\leqslant j_0}l_j\}$，对一切 $j$ 与一切 $m\geqslant m_1$ 便有
+\begin{align*}
+\int_{\{m\leqslant\lvert f_{k_j}\rvert\leqslant l_j\}}\lvert f_{k_j}\rvert\diff x\leqslant\phi_{k_j}(m_1)-\phi_{k_j}(l_j)\leqslant3\varepsilon,
+\end{align*}
+即
+\begin{align*}
+\sup_j\int_{\{m_1\leqslant\lvert f_{k_j}\rvert\leqslant l_j\}}\lvert f_{k_j}\rvert\diff x\leqslant3\varepsilon .
+\end{align*}
+上式给出的实际上是 $\{m_1\leqslant\lvert f_{k_j}\rvert<l_j\}$ 上的估计：端点集 $\{\lvert f_{k_j}\rvert=l_j\}$ 同时含于 $\phi_{k_j}(m_1)$ 与 $\phi_{k_j}(l_j)$ 所积分的集合中，故在差中消去；而第 (8) 步所用的集合 $\{\lvert f_{k_j}\rvert\geqslant m\}-E$ 含于 $\{\lvert f_{k_j}\rvert<l_j\}$，因此这一端点差别不影响结论。断言 2 证毕。
+
+（8）现给定 $\delta>0$。必要时再取子列，可保证
+\begin{align*}
+\sum_{j=1}^{\infty}\frac{1}{l_j}\leqslant\delta .
+\end{align*}
+定义
+\begin{align*}
+E:=\bigcup_{j=1}^{\infty}\{\lvert f_{k_j}\rvert\geqslant l_j\}.
+\end{align*}
+则
+\begin{align*}
+\mathcal{L}^n(E)&\leqslant\sum_{j=1}^{\infty}\mathcal{L}^n\bigl(\{\lvert f_{k_j}\rvert\geqslant l_j\}\bigr)
+\leqslant\sum_{j=1}^{\infty}\frac{1}{l_j}\int_U\lvert f_{k_j}\rvert\diff x\leqslant M\sum_{j=1}^{\infty}\frac{1}{l_j}\leqslant M\delta .
+\end{align*}
+又由 $\{\lvert f_{k_j}\rvert\geqslant m\}-E\subseteq\{m\leqslant\lvert f_{k_j}\rvert<l_j\}$ 与断言 2 得
+\begin{align*}
+\lim_{m\to\infty}\sup_j\int_{\{\lvert f_{k_j}\rvert\geqslant m\}-E}\lvert f_{k_j}\rvert\diff x
+\leqslant\lim_{m\to\infty}\sup_j\int_{\{m\leqslant\lvert f_{k_j}\rvert\leqslant l_j\}}\lvert f_{k_j}\rvert\diff x=0,
+\end{align*}
+即数列 $\{f_{k_j}\}$ 在 $U-E$ 上满足一致可积条件 $(\star\star)$；又 $U-E$ 有界且 $\sup_j\lVert f_{k_j}\rVert_{L^1(U-E)}\leqslant M$。故由\cref{theorem:ch01-1-43}，存在进一步的子列在 $L^1(U-E)$ 中弱收敛。% XREF p=90 "We now apply Theorem 1.43 to extract a further subsequence weakly convergent in L^1(U − E)"
+
+（9）对 $\delta=1,\frac{1}{2},\cdots,\frac{1}{m},\cdots$ 重复上述构造并重新编号，即得所需子列。
+
+% SUPPLEMENT: parent=theorem:ch01-1-44; kind=proof; 补出把不同 $\delta$ 的构造拼成同一子列的细节：使集合列单调并作对角抽取
+事实上，第 $m$ 次构造给出子列 $\{f_{k_j^{(m)}}\}$ 与集合 $E_m$（$\mathcal{L}^n(E_m)\leqslant M/m$），使该子列在 $L^1(U-E_m)$ 中弱收敛。把 $E_m$ 换成 $E_1\cup\cdots\cup E_m$，其测度不超过 $M\sum_{i\leqslant m}1/i\leqslant2M$，可设 $\{E_m\}$ 关于 $m$ 单调递增而相应子列逐层嵌套。取第 $m$ 个子列的第 $m$ 项构成对角子列 $\{g_j\}$；则对每个 $m$，$\{g_j\}_{j\geqslant m}$ 是第 $m$ 个子列的子列，故 $\{g_j\}$ 在 $L^1(U-E_m)$ 中弱收敛于某个 $f_m$。由 $\{E_m\}$ 单调递增，$f_m$ 与 $f_{m'}$ 在 $U-E_{m'}$（$m'\geqslant m$）上几乎处处相等；又 $\mathcal{L}^n\bigl(\bigcap_mE_m\bigr)\leqslant\lim_m\mathcal{L}^n(E_m)=0$，故可定义 $f:=f_m$ 于 $U-E_m$ 上而相容。对给定的 $\delta>0$ 取 $m$ 使 $2M/m\leqslant\delta$，则 $\mathcal{L}^n(E_m)\leqslant\delta$ 且 $g_j\weakto f$ 于 $L^1(U-E_m)$，即所述子列满足要求。
+\end{proof}
+
+\subsection{测度的振荡}\label{subsection:ch01-09-4}
+
+设 $\mu$ 为 $\mathbb{R}^{n+m}$ 上的有限 Radon 测度。
+
+\begin{definition}[投影]\label{definition:ch01-1-33}
+设 $n,m$ 为正整数，$\mu$ 为 $\mathbb{R}^{n+m}$ 上的有限 Radon 测度。对每个 Borel 集 $A\subseteq\mathbb{R}^n$，$\sigma(A)$ 定义为
+\begin{align*}
+\sigma(A):=\mu\bigl(A\times\mathbb{R}^m\bigr).
+\end{align*}
+称测度 $\sigma$ 为 $\mu$ 在 $\mathbb{R}^n$ 上的投影；它是 $\mathbb{R}^n$ 上的有限 Radon 测度，且满足 $\sigma(\mathbb{R}^n)=\mu(\mathbb{R}^{n+m})$，即 $\sigma$ 记录 $\mu$ 在 $x$ 方向上的质量分布。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-33; kind=motivation; 说明投影测度的作用：把高维测度压到低维并配合纤维分解
+\begin{remark}\phantomsection\label{remark:ch01-def-1-33-动机}
+投影 $\sigma$ 是 $\mu$ 在投影映射 $(x,y)\mapsto x$ 下的像测度，它把 $\mathbb{R}^{n+m}$ 上的质量压缩到 $\mathbb{R}^n$ 上，记录「质量分布在哪些 $x$ 上」。定义本身只用到矩形 $A\times\mathbb{R}^m$ 的测度，但由于这些矩形生成的 $\sigma$-代数正是 Borel 集，$\sigma$ 由 $\mu$ 唯一确定。
+
+引入 $\sigma$ 的目的是作纤维分解：\cref{theorem:ch01-1-45}证明，在 $\sigma$-a.e. 点 $x$ 处可以定义 $\mathbb{R}^m$ 上的概率测度 $\nu_x$（即沿纤维 $\{x\}\times\mathbb{R}^m$ 的条件测度），使得 $\mu$ 等于「先按 $\sigma$ 取 $x$，再按 $\nu_x$ 取 $y$」的迭代积分。这与概率论中条件分布的存在性定理是同一件事的测度论形式。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-33; kind=hypotheses; 逐条说明有限性、Borel 集与 $\sigma$-代数的选取
+\begin{remark}\phantomsection\label{remark:ch01-def-1-33-条件}
+\begin{enumerate}[(i)]
+\item 要求 $\mu$ 有限，使 $\sigma(\mathbb{R}^n)=\mu(\mathbb{R}^{n+m})<\infty$，从而 $\sigma$ 是有限测度。这一步并非定义本身所必需（$\mu$ 为 Radon 测度时 $\sigma$ 仍是 Radon 测度），但它保证\cref{theorem:ch01-1-45}中的归一化 $\nu_x(\mathbb{R}^m)=1$ 与\cref{theorem:ch01-1-46}中的弱收敛论证可以在 $\sigma$-a.e. 的意义下进行。% XREF internal
+\item $A$ 取 Borel 集而不取任意集，是因为 $A\times\mathbb{R}^m$ 需为 $\mu$-可测集；由于 $\mu$ 是 Radon 测度从而是 Borel 测度，Borel 集 $A$ 的柱集是 Borel 集，故 $\sigma(A)$ 有定义。对 $\sigma$-可测集，可取 Borel 集与之相差一个 $\sigma$-零测集。
+\item 定义只涉及 $A\times\mathbb{R}^m$ 型的柱集，故 $\sigma$ 只记录 $x$ 方向的质量分布，不含 $y$ 方向的信息；纤维方向的全部信息被 $\nu_x$ 承担。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[切片测度]\label{theorem:ch01-1-45}
+设 $n,m$ 为正整数，$\mu$ 为 $\mathbb{R}^{n+m}$ 上的有限 Radon 测度，$\sigma$ 为 $\mu$ 在 $\mathbb{R}^n$ 上的投影。则对 $\sigma$-a.e. 点 $x\in\mathbb{R}^n$，存在 $\mathbb{R}^m$ 上的 Radon 测度 $\nu_x$，使得
+\begin{align*}
+\nu_x(\mathbb{R}^m)=1\qquad\sigma\text{-a.e.};
+\end{align*}
+并且对每个有界连续函数 $f:\mathbb{R}^n\times\mathbb{R}^m\to\mathbb{R}$，映射 $x\mapsto\int_{\mathbb{R}^m}f(x,y)\diff\nu_x(y)$ 是 $\sigma$-可测的，且
+\begin{align*}
+\int_{\mathbb{R}^{n+m}}f\diff\mu=\int_{\mathbb{R}^n}\Bigl(\int_{\mathbb{R}^m}f\diff\nu_x\Bigr)\diff\sigma .\qquad(\star)
+\end{align*}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch01-1-45; kind=motivation; 说明切片测度定理的内容：把 μ 分解为投影与纤维条件测度的迭代
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-45-动机}
+本定理把 $\mathbb{R}^{n+m}$ 上的测度 $\mu$ 分解为两步：先按投影 $\sigma$ 抽取 $x$，再按纤维上的概率测度 $\nu_x$ 抽取 $y$。等式 $(\star)$ 即迭代积分公式，它把高维积分化为低维积分与纤维积分的复合，与 Fubini 定理的形式相似，但不需要 $\mu$ 是乘积测度：$\nu_x$ 随 $x$ 变化，恰好承担了 $y$ 方向分布对 $x$ 的依赖。
+
+证明的思路是「先用 $C_c(\mathbb{R}^m)$ 的可数稠密子集构造纤维上的积分泛函，再还原为测度」。对每个测试函数 $f_k$，把 $A\mapsto\int_{A\times\mathbb{R}^m}f_k\diff\mu$ 看作 $\mathbb{R}^n$ 上的符号测度 $\gamma^k$；它关于 $\sigma$ 绝对连续，故由测度微分定理存在密度 $D_\sigma\gamma^k$。这些密度在 $f_k\to f$ 时按 $\lVert\cdot\rVert_{L^\infty}$ 一致收敛，其极限给出 $\mathbb{R}^m$ 上的正线性泛函 $\Lambda_x$，再由 Riesz 表示定理得到 $\nu_x$。由于纤维上的总质量恒为 $1$，$\nu_x$ 是概率测度，这正是「条件分布」的测度论版本。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-45; kind=hypotheses; 逐条分析 $\mu$ 的有限性、投影 $\sigma$ 与有界连续函数类的作用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-45-条件}
+\begin{enumerate}[(i)]
+\item $\mu$ 有限使 $\sigma$ 有限，从而 $\sigma(B(x,r))$ 在 $r\to0$ 时的行为可由测度微分定理控制；同时它保证 $\nu_x(\mathbb{R}^m)=1$ 的归一化在整个 $\mathbb{R}^n$ 上成立（而不是只在 $\sigma$-有限的部分上成立）。
+\item 归一化 $\nu_x(\mathbb{R}^m)=1$ 只对 $\sigma$-a.e. $x$ 成立，不能对每个 $x$ 成立：若 $x$ 属于某个 $\sigma$-零测集，则纤维 $\{x\}\times\mathbb{R}^m$ 上的行为完全不影响 $\mu$，$\nu_x$ 可以任意选取。
+\item 结论对每个有界连续函数 $f$ 成立，而不只是对 $C_c$ 中的 $f$：先对 $f\in C_c(\mathbb{R}^{n+m})$ 得到 $(\star)$，再对 $x$ 与 $y$ 分别作截断与一致逼近，把等式推广到有界连续函数。若 $f$ 无界，则两端都可能为 $\infty$，需另加可积性假设。
+\item 结论中的 $\sigma$-可测性是等式 $(\star)$ 有意义的必要条件；它由 $D_\sigma\gamma^k$ 的 $\sigma$-可测性与一致收敛保持可测性得到。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）设 $\{f_k\}_{k=1}^{\infty}$ 为 $C_c(\mathbb{R}^m)$ 的可数稠密子集。对每个 $k=1,2,\cdots$ 定义符号测度 $\gamma^k$ 为
+\begin{align*}
+\gamma^k(A):=\int_{A\times\mathbb{R}^m}f_k(y)\diff\mu\qquad(A\text{ 为 Borel 集},\ A\subseteq\mathbb{R}^n).
+\end{align*}
+则 $\gamma^k\ll\sigma$。于是由\cref{theorem:ch01-1-29,theorem:ch01-1-30}，对 $k=1,2,\cdots$ 极限% XREF p=90 "Then $\gamma^k\ll\sigma$. Hence Theorems 1.29 and 1.30 imply that for $k=1,\cdots$"
+\begin{align*}
+D_\sigma\gamma^k(x):=\lim_{r\to0}\frac{\gamma^k(B(x,r))}{\sigma(B(x,r))}\qquad(\star\star)
+\end{align*}
+对 $\sigma$-a.e. $x$ 存在；映射 $x\mapsto D_\sigma\gamma^k(x)$ 是 $\sigma$-可测且有界的；并且
+\begin{align*}
+\int_{A\times\mathbb{R}^m}f_k(y)\diff\mu=\gamma^k(A)=\int_AD_\sigma\gamma^k\diff\sigma\qquad(\star\star\star)
+\end{align*}
+对一切 $k$ 与一切 Borel 集 $A\subseteq\mathbb{R}^n$ 成立。
+
+% SUPPLEMENT: parent=theorem:ch01-1-45; kind=proof; 补出 $\gamma^k$ 为符号测度、$\gamma^k\ll\sigma$ 与 $D_\sigma\gamma^k$ 有界的论证
+这里补出上述几条断言的依据。$\gamma^k$ 是符号测度：由 $\lvert f_k\rvert\leqslant\lVert f_k\rVert_{L^\infty}$ 与 $\mu$ 有限得 $\lvert\gamma^k(A)\rvert\leqslant\lVert f_k\rVert_{L^\infty}\mu(\mathbb{R}^{n+m})<\infty$，而可数可加性由 $\mu$ 的可数可加性与 $f_k$ 在柱集上的积分给出。$\gamma^k\ll\sigma$：若 $\sigma(A)=0$，则 $\mu(A\times\mathbb{R}^m)=0$，故 $\gamma^k(A)=0$。有界性：由 $(\star\star\star)$ 与 $\lvert\gamma^k(B(x,r))\rvert\leqslant\lVert f_k\rVert_{L^\infty}\sigma(B(x,r))$ 得 $\lvert D_\sigma\gamma^k(x)\rvert\leqslant\lVert f_k\rVert_{L^\infty}$ 于 $\sigma$-a.e. 成立。
+
+（2）由于
+\begin{align*}
+\Bigl\lvert\frac{\gamma^k(B(x,r))}{\sigma(B(x,r))}-\frac{\gamma^l(B(x,r))}{\sigma(B(x,r))}\Bigr\rvert\leqslant\max_{\mathbb{R}^m}\lvert f_k-f_l\rvert,
+\end{align*}
+故在使 $(\star\star)$ 成立的每个点 $x$ 处有
+\begin{align*}
+\lvert D_\sigma\gamma^k(x)-D_\sigma\gamma^l(x)\rvert\leqslant\max_{\mathbb{R}^m}\lvert f_k-f_l\rvert .
+\end{align*}
+给定函数 $f\in C_c(\mathbb{R}^m)$，取子列 $\{f_{k_j}\}_{j=1}^{\infty}\subseteq\{f_k\}_{k=1}^{\infty}$ 使 $f_{k_j}\to f$ 一致（$j\to\infty$）。则
+\begin{align*}
+\Lambda_x(f):=\lim_{j\to\infty}D_\sigma\gamma^{k_j}(x)
+\end{align*}
+对每个满足 $(\star\star)$ 的点 $x$ 存在，且与子列 $f_{k_j}\to f$ 的选取无关。
+
+（3）对这样的点 $x$，映射 $f\mapsto\Lambda_x(f)$ 是线性的，并且
+\begin{align*}
+\lvert\Lambda_x(f)\rvert\leqslant\max_{\mathbb{R}^m}\lvert f\rvert
+\end{align*}
+对每个 $f\in C_c(\mathbb{R}^m)$ 成立。于是由 Riesz 表示定理，存在 $\mathbb{R}^m$ 上的 Radon 测度 $\nu_x$，使得
+\begin{align*}
+\Lambda_x(f)=\int_{\mathbb{R}^m}f\diff\nu_x .
+\end{align*}
+在 $(\star\star\star)$ 中令 $k=k_j\to\infty$，得
+\begin{align*}
+\int_{A\times\mathbb{R}^m}f(y)\diff\mu=\int_A\Bigl(\int_{\mathbb{R}^m}f\diff\nu_x\Bigr)\diff\sigma .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-45; kind=proof; 补出线性性与有界性的验证、由柱集到一般函数的一致逼近，以及归一化 $\nu_x(\mathbb{R}^m)=1$
+上述几条断言的依据如下。线性性：对 $f,g\in C_c(\mathbb{R}^m)$ 与 $\alpha,\beta\in\mathbb{R}$，取共同的子列使 $f_{k_j}\to f$、$g_{k_j}\to g$ 一致，则 $D_\sigma\gamma^{k_j}$ 对 $\alpha f+\beta g$ 的极限等于 $\alpha\Lambda_x(f)+\beta\Lambda_x(g)$，故 $\Lambda_x$ 线性。有界性：由第 (1) 步的 $\lvert D_\sigma\gamma^{k}(x)\rvert\leqslant\lVert f_k\rVert_{L^\infty}$ 取极限即得 $\lvert\Lambda_x(f)\rvert\leqslant\lVert f\rVert_{L^\infty}$。由柱集推广到一般连续函数：线性组合 $\sum_ig_i(x)F_i(y)$（$g_i\in C_c(\mathbb{R}^n)$，$F_i\in C_c(\mathbb{R}^m)$）满足相应的等式，而对紧集上一致逼近的这类线性组合取极限即得
+\begin{align*}
+\int_{\mathbb{R}^{n+m}}g(x)f(y)\diff\mu=\int_{\mathbb{R}^n}g(x)\Bigl(\int_{\mathbb{R}^m}f\diff\nu_x\Bigr)\diff\sigma
+\end{align*}
+对连续函数 $f$、$g$ 成立。归一代：在上式中取 $f\equiv1$、$g$ 任意，得 $\int_{\mathbb{R}^n}g\diff\sigma=\int_{\mathbb{R}^n}g(x)\nu_x(\mathbb{R}^m)\diff\sigma$，故 $\nu_x(\mathbb{R}^m)=1$ 于 $\sigma$-a.e. 成立。最后，对一般的有界连续 $f:\mathbb{R}^n\times\mathbb{R}^m\to\mathbb{R}$，先用 $\chi\in C_c(\mathbb{R}^n)$ 截断 $x$ 方向（由 $\mu$ 与 $\sigma$ 的有限性，截断误差可任意小），再在紧集上对 $f$ 作形如 $\sum_ig_i(x)F_i(y)$ 的一致逼近，取极限即得 $(\star)$。
+\end{proof}
+
+弱收敛列 $f_k\weakto f$ 不必几乎处处收敛，即使取子列也未必几乎处处收敛。例如函数 $f_k$ 可以随 $k\to\infty$ 振荡得越来越快。然而可以在几乎每一点 $x$ 附近引入测度 $\nu_x$ 来「记录」这些振荡。
+
+\begin{theorem}[弱极限与 Young 测度]\label{theorem:ch01-1-46}
+设 $n,m$ 为正整数，$U\subseteq\mathbb{R}^n$ 为有界开集，$\{f_k\}_{k=1}^{\infty}$ 为 $U$ 上的一列 $\mathcal{L}^n$-可测映射，取值于 $\mathbb{R}^m$，且
+\begin{align*}
+\sup_k\lVert f_k\rVert_{L^\infty(U;\mathbb{R}^m)}<\infty .
+\end{align*}
+则存在子列 $\{f_{k_j}\}_{j=1}^{\infty}\subseteq\{f_k\}_{k=1}^{\infty}$，以及对 $\mathcal{L}^n$-a.e. $x\in U$ 定义的 $\mathbb{R}^m$ 上的 Radon 测度 $\nu_x$，使得
+\begin{align*}
+\nu_x(\mathbb{R}^m)=1
+\end{align*}
+并且对每个 $\mathbb{R}^m$ 上的连续函数 $F$，函数 $F(f_{k_j})$ 在 $L^2(U)$ 中弱收敛于 $\bar F$，其中
+\begin{align*}
+\bar F(x):=\int_{\mathbb{R}^m}F(y)\diff\nu_x(y).
+\end{align*}
+\end{theorem}
+
+\begin{definition}[Young 测度]\label{definition:ch01-1-34}
+设 $n,m$ 为正整数，$U\subseteq\mathbb{R}^n$ 为有界开集，$\{f_{k_j}\}_{j=1}^{\infty}$ 为 $U$ 上取值于 $\mathbb{R}^m$ 的一列 $\mathcal{L}^n$-可测映射，$\{\nu_x\}_{x\in U}$ 为一族 $\mathbb{R}^m$ 上的 Radon 测度，满足 $\nu_x(\mathbb{R}^m)=1$ 对 $\mathcal{L}^n$-a.e. $x\in U$ 成立，且使\cref{theorem:ch01-1-46}的结论成立，则称 $\{\nu_x\}_{x\in U}$ 为与子列 $\{f_{k_j}\}_{j=1}^{\infty}$ 相伴的 Young 测度；等价地说，这样的族 $\{\nu_x\}_{x\in U}$ 称为该子列的 Young 测度，其中每个 $\nu_x$ 都是概率测度。% XREF internal
+\end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch01-def-1-34-补充}
+$F(f_{k_j})\weakto\bar F$ 实际上对每个 $1<p<\infty$ 在 $L^p(U)$ 中成立。又若 $f_k\to f$ 于 $\mathcal{L}^n$-a.e.，则 $\nu_x=\delta_{f(x)}$ 于 $\mathcal{L}^n$-a.e. 成立。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-46; kind=motivation; 说明 Young 测度如何把弱收敛中丢失的振荡信息编码为纤维上的概率测度
+\begin{remark}\phantomsection\label{remark:ch01-def-1-34-动机}
+$L^\infty$ 有界的函数列在 $L^2$ 中总有弱收敛子列，但弱极限只记录「平均值」，不记录函数值的分布。例如 $f_k(x):=\sin(kx)$ 在 $L^2(0,2\pi)$ 中弱收敛于 $0$，而它与任何子列都不几乎处处收敛；$f_k$ 的振荡信息在弱极限中完全丢失。Young 测度 $\nu_x$ 正是这些丢失信息的载体：$\nu_x$ 是 $\mathbb{R}^m$ 上的概率测度，给出「$f_{k_j}(x)$ 在极限中取各个值的比例」，而等式 $\bar F(x)=\int F\diff\nu_x$ 说明非线性函数 $F$ 的弱极限由 $\nu_x$ 的矩决定。当 $f_k\to f$ 几乎处处时，$\nu_x$ 退化为单点质量 $\delta_{f(x)}$，此时弱收敛与几乎处处收敛的差别消失。
+
+证明的构造是切片测度定理（\cref{theorem:ch01-1-45}）的一次应用：把 $f_k$ 的图像测度 $\mu_k$ 定义为 $\chi_A(x,f_k(x))$ 关于 $\mathcal{L}^n$ 的积分，则 $\mu_k$ 弱收敛于某个 $\mu$，其投影恰为 $\mathcal{L}^n\llcorner U$，于是由切片定理存在纤维测度 $\nu_x$，使得对 $f(x,y)=g(x)F(y)$ 的积分给出 $F(f_{k_j})$ 的弱极限。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-46; kind=hypotheses; 逐条分析 $U$ 有界、$L^\infty$ 有界、$F$ 连续与结论中 $L^2$ 的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-34-条件}
+\begin{enumerate}[(i)]
+\item $U$ 有界给出 $\mathcal{L}^n(U)<\infty$，从而使 $L^\infty(U)\subseteq L^2(U)$，且 $\mathcal{L}^n\llcorner U$ 是有限测度，可作为\cref{theorem:ch01-1-45}中的投影 $\sigma$。% XREF internal
+\item 条件 $\sup_k\lVert f_k\rVert_{L^\infty(U;\mathbb{R}^m)}<\infty$ 有两重作用：其一，它使图像测度 $\mu_k$ 的支撑含于同一个柱体 $\bar U\times B(R)$ 中，从而 $\sup_k\mu_k(\mathbb{R}^{n+m})\leqslant\mathcal{L}^n(U)<\infty$，\cref{theorem:ch01-1-41}可用；其二，对连续函数 $F$，函数 $F(f_k)$ 一致有界，故在 $L^2(U)$ 中有界，弱收敛才有意义。若 $f_k$ 只在 $L^p$ 中有界而无 $L^\infty$ 界，则图像测度可能不局部有界，结论需另行陈述。% XREF internal
+\item $F$ 只须连续，无须有界：$U$ 有界、$f_k$ 有界，故 $F(f_k)$ 必有界；而 $\bar F$ 由概率测度 $\nu_x$ 积分给出，也有界。
+\item 结论中的收敛是 $L^2(U)$ 中的弱收敛，而非几乎处处收敛或强收敛；对每个 $1<p<\infty$ 结论同样成立（见紧随其后的注记），$p=2$ 只是陈述时的选取。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-34; kind=motivation; 说明 Young 测度这一名称所指的对象与其依赖子列的特性
+\begin{remark}\phantomsection\label{remark:ch01-def-1-34-b}
+Young 测度不是单个测度，而是一族以 $x\in U$ 为参数的概率测度 $\{\nu_x\}$，它把 $\{f_{k_j}\}$ 的振荡在每一点附近的极限分布编码出来。它与\cref{theorem:ch01-1-45}中的切片测度是同一类对象：$\nu_x$ 是图像测度 $\mu$ 沿纤维 $\{x\}\times\mathbb{R}^m$ 的条件测度。% XREF internal
+
+定义中强调「与子列相伴」，因为 Young 测度依赖于所取的子列：不同的子列可以给出不同的 $\nu_x$。这一点与弱极限的选取相同，说明 Young 测度只记录该子列的极限行为，而不是原序列的某种内在性质。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-34; kind=hypotheses; 逐条说明 $\nu_x$ 的定义域、归一化、Radon 性与可测依赖
+\begin{remark}\phantomsection\label{remark:ch01-def-1-34-b-b}
+\begin{enumerate}[(i)]
+\item $\nu_x$ 只须对 $\mathcal{L}^n$-a.e. $x\in U$ 定义：$U$ 的零测子集上的纤维不影响图像测度 $\mu$，故 $\nu_x$ 在这些点上可以任意选取。
+\item 归一化 $\nu_x(\mathbb{R}^m)=1$ 使 $\nu_x$ 成为概率测度，从而 $\bar F(x)$ 是 $F$ 关于 $\nu_x$ 的平均值，满足 $\lvert\bar F(x)\rvert\leqslant\max_{\mathbb{R}^m}\lvert F\rvert$。
+\item 要求 $\nu_x$ 是 Radon 测度（而不只是一般测度），是为了使 $\int F\diff\nu_x$ 对连续函数 $F$ 有定义并可对 $x$ 积分；这也与\cref{theorem:ch01-1-45}中由 Riesz 表示定理得到的测度一致。% XREF internal
+\item 定义只要求 $\nu_x$ 使\cref{theorem:ch01-1-46}的结论成立，不要求 $\nu_x$ 唯一；在相差一个 $\mathcal{L}^n$-零测集的意义下，$\nu_x$ 由该子列唯一确定。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）对每个 Borel 集 $A\subseteq\mathbb{R}^{n+m}$ 定义
+\begin{align*}
+\mu_k(A):=\int_U\chi_A\bigl(x,f_k(x)\bigr)\diff x .
+\end{align*}
+由\cref{theorem:ch01-1-10}的断言 (iii)，被积函数是 $\mathcal{L}^n$-可测的。把 $\mu_k$ 延拓为 $\mathbb{R}^{n+m}$ 上的 Radon 测度，并注意到% XREF p=92 "According to Theorem 1.10,(iii), the integrand is"
+\begin{align*}
+\sup_k\mu_k(\mathbb{R}^{n+m})\leqslant\mathcal{L}^n(U)<\infty .
+\end{align*}
+于是存在子列 $\{\mu_{k_j}\}_{j=1}^{\infty}$ 与有限 Radon 测度 $\mu$，使得
+\begin{align*}
+\mu_{k_j}\weakto\mu\quad\text{于 }\mathbb{R}^{n+m}\text{ 上弱收敛}.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-46; kind=proof; 补出 $\mu_k$ 确为 Radon 测度、其支撑含于固定柱体以及弱紧性的适用条件
+这里补出上述步骤的依据。$\mu_k$ 是 $\mathcal{L}^n\llcorner U$ 在 Borel 映射 $\Phi_k(x):=(x,f_k(x))$ 下的像测度，故为 $\mathbb{R}^{n+m}$ 上的有限 Borel 测度；$\mathbb{R}^{n+m}$ 是完备可分度量空间，其上每个有限 Borel 测度都是 Radon 测度（Ulam 定理），由此是「延拓为 Radon 测度」的含义。又由 $\lvert f_k(x)\rvert\leqslant M:=\sup_k\lVert f_k\rVert_{L^\infty(U;\mathbb{R}^m)}$ 于 $\mathcal{L}^n$-a.e. 成立，得 $\spt\mu_k\subseteq\bar U\times\bar B(0,M)$，故 $\sup_k\mu_k(\mathbb{R}^{n+m})\leqslant\mathcal{L}^n(U)<\infty$，\cref{theorem:ch01-1-41}的条件满足，从而可取到弱收敛子列。% XREF internal
+
+（2）断言：$\mu$ 在 $\mathbb{R}^n$ 上的投影是 $\sigma:=\mathcal{L}^n\llcorner U$。
+
+证明：设 $V\subseteq U$ 为开集。则
+\begin{align*}
+\sigma(V)=\mu\bigl(V\times\mathbb{R}^m\bigr)\leqslant\liminf_{j\to\infty}\mu_{k_j}\bigl(V\times\mathbb{R}^m\bigr)=\mathcal{L}^n(V).
+\end{align*}
+故 $\sigma\leqslant\mathcal{L}^n\llcorner U$。现取紧集 $K\Subset U$。存在闭球 $B(R)\subseteq\mathbb{R}^m$，使得
+\begin{align*}
+\spt(\mu),\ \spt(\mu_{k_j})\subseteq\bar U\times B(R)\qquad(j=1,2,\cdots).
+\end{align*}
+于是
+\begin{align*}
+\sigma(K)&=\mu\bigl(K\times\mathbb{R}^m\bigr)=\mu\bigl(K\times B(R)\bigr)\\
+&\geqslant\limsup_{j\to\infty}\mu_{k_j}\bigl(K\times B(R)\bigr)=\mathcal{L}^n(K);
+\end{align*}
+因此 $\sigma\geqslant\mathcal{L}^n\llcorner U$。结合两个不等式得 $\sigma=\mathcal{L}^n\llcorner U$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-46; kind=proof; 补出 $B(R)$ 的选取、两处等号的依据与由开集、紧集过渡到一般 Borel 集
+上述论证的细节如下。取 $R>M$，由第 (1) 步的支撑包含关系得 $\spt(\mu_{k_j})\subseteq\bar U\times\bar B(0,R)$，而 $\spt(\mu)\subseteq\varlimsup_j\spt(\mu_{k_j})\subseteq\bar U\times\bar B(0,R)$，由此是 $B(R)$ 的选取（必要时把 $R$ 放大为 $2M$）。第一个等号用投影的定义；第二个等号用 $\spt(\mu)\subseteq\bar U\times B(R)$ 及 $K\subseteq U$，此时 $K\times\mathbb{R}^m$ 与 $\spt(\mu)$ 的交含于 $K\times B(R)$；不等号由\cref{theorem:ch01-1-40}的条件 (ii) 应用于紧集 $K\times B(R)$ 得到；最后的等号由 $\lvert f_{k_j}(x)\rvert\leqslant M<R$ 于 $\mathcal{L}^n$-a.e. $x\in K$ 成立给出。由于 $\sigma$ 与 $\mathcal{L}^n\llcorner U$ 都是 Radon 测度，且在开集上 $\sigma\leqslant\mathcal{L}^n\llcorner U$、在紧集上 $\sigma\geqslant\mathcal{L}^n\llcorner U$，由正则性即得二者相等。% XREF internal
+
+（3）于是由\cref{theorem:ch01-1-45}，有% XREF p=93 "According therefore to Theorem 1.45, we have"
+\begin{align*}
+\int_{\mathbb{R}^{n+m}}f\diff\mu=\int_U\Bigl(\int_{\mathbb{R}^m}f\diff\nu_x\Bigr)\diff x
+\end{align*}
+对每个有界连续函数 $f\in C(\mathbb{R}^{n+m})$ 成立。取 $f(x,y)=g(x)F(y)$，其中 $g\in C_c(U)$、$F\in C(\mathbb{R}^m)$。则
+\begin{align*}
+\lim_{j\to\infty}\int_UF\bigl(f_{k_j}\bigr)g\diff x&=\lim_{j\to\infty}\int_{\mathbb{R}^{n+m}}f\diff\mu_{k_j}\\
+&=\int_{\mathbb{R}^{n+m}}f\diff\mu\\
+&=\int_U\Bigl(\int_{\mathbb{R}^m}f\diff\nu_x\Bigr)\diff x\\
+&=\int_Ug\bar F\diff x .
+\end{align*}
+该等式对每个 $g\in C_c(U)$ 成立，从而对每个 $g\in L^2(U)$ 成立。因此 $F(f_{k_j})\weakto\bar F$ 于 $L^2(U)$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-46; kind=proof; 补出由 $C_c(U)$ 过渡到 $L^2(U)$ 的依据与 $L^2$ 中弱收敛的定义核对
+这里补出最后一步的依据。由 $\lvert F(f_{k_j})\rvert\leqslant\max_{\mathbb{R}^m}\lvert F\rvert$ 与 $\lvert\bar F\rvert\leqslant\max_{\mathbb{R}^m}\lvert F\rvert$ 知 $F(f_{k_j})$ 与 $\bar F$ 都在 $L^2(U)$ 中且范数一致有界；$C_c(U)$ 在 $L^2(U)$ 中稠密，故对给定的 $g\in L^2(U)$ 取 $g_i\in C_c(U)$ 使 $\lVert g-g_i\rVert_{L^2}\to0$，则
+\begin{align*}
+\Bigl\lvert\int_U\bigl(F(f_{k_j})-\bar F\bigr)g\diff x\Bigr\rvert\leqslant 2\max_{\mathbb{R}^m}\lvert F\rvert\,\lVert g-g_i\rVert_{L^2}+\Bigl\lvert\int_U\bigl(F(f_{k_j})-\bar F\bigr)g_i\diff x\Bigr\rvert,
+\end{align*}
+先令 $j\to\infty$ 再令 $i\to\infty$，即得 $\int_UF(f_{k_j})g\diff x\to\int_U\bar Fg\diff x$。这正是 $L^2(U)$ 中弱收敛的定义。
+\end{proof}
+
+\end{document}
+

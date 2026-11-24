@@ -916,8 +916,7 @@ u_m\in C^\infty(U)\cap W^{k,p}(U),\quad
 \end{align*}
 \end{proof}
 
-
-\begin{proposition}[弱导数链式法则]\label{proposition:弱导数链式法则}
+\begin{proposition}[一阶弱导数链式法则]\label{proposition:一阶弱导数链式法则}
 设 $U\subseteq\mathbb{R}^{n}$ 为有界开集, $1\leqslant p\leqslant\infty$, $F\in C^{1}(\mathbb{R})$, 且
 \begin{align*}
 M\triangleq\sup\limits_{t\in\mathbb{R}}|F'(t)|<\infty.
@@ -1572,7 +1571,7 @@ C\triangleq \sum\limits_{i=0}^{N}C_i.
 \end{align*}
 
 综上,对每个正整数 $m$, 取$\delta_m\triangleq\frac{1}{mC},$
-根据$\mathbf{Step}\mathbf{1}-\mathbf{Step}\mathbf{6}$相应构造出在$\mathbb{R}^n$上的光滑函数$v^{(\delta_m)}$,并记$u_m\triangleq v^{(\delta_m)}|_{\overline{U}}$,则
+根据$\mathbf{Step}\mathbf{1}$--$\mathbf{6}$相应构造出在$\mathbb{R}^n$上的光滑函数$v^{(\delta_m)}$,并记$u_m\triangleq v^{(\delta_m)}|_{\overline{U}}$,则
 \begin{align*}
 u_m\in C^{\infty}(\overline{U}),\quad
 \|u_m-u\|_{W^{k,p}(U)}<\frac{1}{m}.
@@ -1789,7 +1788,208 @@ $u_m\in C^\infty(\overline{U})$. 同时还有
 因此, 所选取的同一函数列既在 $W^{k,p}(U)$ 中收敛于 $u$, 又在 $\overline{U}$ 上一致收敛于 $u$.
 \end{proof}
 
+\begin{proposition}[$C^{k}$微分同胚下的复合函数的弱导数]\label{proposition:ch05-复合Wkp}
+设 $W,B\subseteq\mathbb{R}^{n}$ 为有界开集，$k\geqslant1$，$\Phi:W\to B$ 为 $C^{k}$ 微分同胚，$\Psi=\Phi^{-1}:B\to W$ 也为 $C^{k}$ 微分同胚，且
+\begin{align*}
+M\triangleq\max\left\{\|D^{\alpha}\Phi\|_{L^{\infty}(W)},\|D^{\alpha}\Psi\|_{L^{\infty}(B)}:1\leqslant|\alpha|\leqslant k\right\}<\infty.
+\end{align*}
+设 $1\leqslant p\leqslant\infty$，$u\in W^{k,p}(B)$。则 $u\circ\Phi\in W^{k,p}(W)$，且存在只依赖于 $n,k,p,M$ 的常数 $C$，使得
+\begin{align}
+\|u\circ\Phi\|_{W^{k,p}(W)}\leqslant C\|u\|_{W^{k,p}(B)}.
+\label{eq:ch05-复合估计}
+\end{align}
+更精确地，对每个满足 $1\leqslant|\alpha|\leqslant k$ 的多重指标 $\alpha$，存在非负整数 $c_{\alpha,\beta,\gamma^{1},\cdots,\gamma^{|\beta|}}$（只依赖于 $\alpha,\beta$ 与 $\gamma^{1},\cdots,\gamma^{|\beta|}$），使得对 $u\in C^{k}(\overline{B})$ 及 $x\in W$，
+\begin{align}
+D^{\alpha}(u\circ\Phi)(x)
+=\sum_{\substack{\beta\in\mathbb{N}^{n}\setminus\{0\}\\ 1\leqslant|\beta|\leqslant|\alpha|}}
+\sum_{\substack{\gamma^{1},\cdots,\gamma^{|\beta|}\in\mathbb{N}^{n}\setminus\{0\}\\ \gamma^{1}+\cdots+\gamma^{|\beta|}=\alpha}}
+c_{\alpha,\beta,\gamma^{1},\cdots,\gamma^{|\beta|}}
+(D^{\beta}u)(\Phi(x))\prod_{r=1}^{|\beta|}D^{\gamma^{r}}\Phi(x).
+\label{eq:ch05-复合显式}
+\end{align}
+特别地，
+\begin{align}
+D_i(u\circ\Phi)(x)&=\sum_{l=1}^{n}(D_lu)(\Phi(x))D_i\Phi_l(x),\label{eq:ch05-复合一阶}\\
+D_{ij}(u\circ\Phi)(x)&=\sum_{l,m=1}^{n}(D_{lm}u)(\Phi(x))D_i\Phi_l(x)D_j\Phi_m(x)
++\sum_{l=1}^{n}(D_lu)(\Phi(x))D_{ij}\Phi_l(x).\label{eq:ch05-复合二阶}
+\end{align}
+且对 $u\in W^{k,p}(B)$，公式 \eqref{eq:ch05-复合显式} 几乎处处成立。
+\end{proposition}
+\begin{proof}
+\noindent$\mathbf{Step}\bm{1}$.{\heiti 证明 $|\alpha|=1$ 的显式公式.}
 
+设 $u\in C^{1}(\overline{B})$。由\hyperref[theorem:向量求导基本性质]{向量求导基本性质\ref{theorem:向量求导基本性质-4}}，对 $x\in W$，
+\begin{align*}
+D_i(u\circ\Phi)(x)=\sum_{l=1}^{n}(D_lu)(\Phi(x))D_i\Phi_l(x).
+\end{align*}
+这正是 \eqref{eq:ch05-复合一阶}。在 \eqref{eq:ch05-复合显式} 中取 $|\alpha|=1$，则 $\alpha=e_i$，$\beta=e_l$（$1\leqslant l\leqslant n$），$|\beta|=1$，$\gamma^{1}=e_i$，系数 $c_{e_i,e_l,e_i}=1$，故 \eqref{eq:ch05-复合显式} 与 \eqref{eq:ch05-复合一阶} 一致。
+
+\noindent$\mathbf{Step}\bm{2}$.{\heiti 对 $|\alpha|$ 归纳证明显式公式 \eqref{eq:ch05-复合显式}.}
+
+设公式 \eqref{eq:ch05-复合显式} 对一切 $|\tilde\alpha|\leqslant m$ 成立，其中 $m\geqslant1$。固定 $|\alpha|=m+1$，写 $\alpha=\tilde\alpha+e_i$，其中 $|\tilde\alpha|=m$。由归纳假设，
+\begin{align}
+D^{\tilde\alpha}(u\circ\Phi)(x)
+=\sum_{\substack{\beta\in\mathbb{N}^{n}\setminus\{0\}\\ 1\leqslant|\beta|\leqslant|\tilde\alpha|}}
+\sum_{\substack{\gamma^{1},\cdots,\gamma^{|\beta|}\in\mathbb{N}^{n}\setminus\{0\}\\ \gamma^{1}+\cdots+\gamma^{|\beta|}=\tilde\alpha}}
+c_{\tilde\alpha,\beta,\gamma^{1},\cdots,\gamma^{|\beta|}}
+(D^{\beta}u)(\Phi(x))\prod_{r=1}^{|\beta|}D^{\gamma^{r}}\Phi(x).
+\label{eq:ch05-归纳假设}
+\end{align}
+对上式两端求 $D_i$。由乘积法则，对每一项
+\begin{align*}
+(D^{\beta}u)(\Phi(x))\prod_{r=1}^{|\beta|}D^{\gamma^{r}}\Phi(x)
+\end{align*}
+求 $D_i$ 得到两类项：
+\begin{align}
+&\sum_{l=1}^{n}(D^{\beta+e_l}u)(\Phi(x))D_i\Phi_l(x)\prod_{r=1}^{|\beta|}D^{\gamma^{r}}\Phi(x),\label{eq:ch05-第一类}\\
+&\sum_{s=1}^{|\beta|}(D^{\beta}u)(\Phi(x))D^{\gamma^{s}+e_i}\Phi(x)\prod_{r\ne s}D^{\gamma^{r}}\Phi(x).\label{eq:ch05-第二类}
+\end{align}
+第一类项对应新的 $\beta'=\beta+e_l$（于是 $|\beta'|=|\beta|+1$）与新的元组
+\begin{align*}
+(\gamma'^{1},\cdots,\gamma'^{|\beta'|})\triangleq(\gamma^{1},\cdots,\gamma^{|\beta|},e_i),
+\end{align*}
+其和仍为 $\tilde\alpha+e_i=\alpha$。第二类项对应同一个 $\beta$ 与把第 $s$ 个 $\gamma^{s}$ 换成 $\gamma^{s}+e_i$ 的元组，其和仍为 $\alpha$。因此求导后的每一项都具有 \eqref{eq:ch05-复合显式} 右端的形式。将同类项合并，即得存在非负整数 $c_{\alpha,\beta,\gamma^{1},\cdots}$ 使 \eqref{eq:ch05-复合显式} 对 $\alpha$ 成立。具体地，系数满足递推式
+\begin{align}
+c_{\alpha,\beta,\gamma^{1},\cdots,\gamma^{|\beta|}}
+&=\sum_{l=1}^{n}c_{\tilde\alpha,\beta-e_l,\gamma^{1},\cdots,\gamma^{|\beta|-1}}
++\sum_{s=1}^{|\beta|}c_{\tilde\alpha,\beta,\gamma^{1},\cdots,\gamma^{s}-e_i,\cdots,\gamma^{|\beta|}},
+\label{eq:ch05-系数递推}
+\end{align}
+其中约定：若 $\beta-e_l\notin\mathbb{N}^{n}$、或 $\beta-e_l=0$ 而右端第一项中出现零个 $\gamma$、或 $\gamma^{s}-e_i\notin\mathbb{N}^{n}\setminus\{0\}$，则相应的 $c$ 取 $0$。递推 \eqref{eq:ch05-系数递推} 与初始条件 $c_{e_i,e_l,e_i}=1$ 唯一确定了所有系数。归纳完成。
+
+\noindent$\mathbf{Step}\bm{3}$.{\heiti 写出 $|\alpha|=2$ 的显式公式并验证.}
+
+取 $\alpha=(i,j)$，不妨设 $i\neq j$；$i=j$ 时同理。在 \eqref{eq:ch05-复合显式} 中，$\beta$ 与 $\gamma^{1},\cdots,\gamma^{|\beta|}$ 满足 $\gamma^{1}+\cdots+\gamma^{|\beta|}=\alpha$。可能的情形只有：
+\begin{enumerate}[(1)]
+\item $\beta=e_l+e_m$（$|\beta|=2$），$\gamma^{1}=e_j$，$\gamma^{2}=e_i$（或交换），系数按递推为 $1$；
+\item $\beta=e_l$（$|\beta|=1$），$\gamma^{1}=\alpha$，系数为 $1$。
+\end{enumerate}
+于是
+\begin{align*}
+D_{ij}(u\circ\Phi)(x)
+&=\sum_{l,m=1}^{n}(D_{lm}u)(\Phi(x))D_i\Phi_l(x)D_j\Phi_m(x)
++\sum_{l=1}^{n}(D_lu)(\Phi(x))D_{ij}\Phi_l(x),
+\end{align*}
+这正是 \eqref{eq:ch05-复合二阶}。当 $i=j$ 时，第一类项中 $\gamma^{1}=\gamma^{2}=e_i$，系数仍为 $1$，公式不变。直接求导验证：由 \eqref{eq:ch05-复合一阶}，
+\begin{align*}
+D_jD_i(u\circ\Phi)
+=D_j\left[\sum_{l=1}^{n}(D_lu)(\Phi)D_i\Phi_l\right]=\sum_{l=1}^{n}\left[\sum_{m=1}^{n}(D_mD_lu)(\Phi)D_j\Phi_m\right]D_i\Phi_l
++\sum_{l=1}^{n}(D_lu)(\Phi)D_{ji}\Phi_l,
+\end{align*}
+与 \eqref{eq:ch05-复合二阶} 一致（注意 $D_{lm}u=D_{ml}u$，$D_{ij}\Phi_l=D_{ji}\Phi_l$）。
+
+\noindent$\mathbf{Step}\bm{4}$.{\heiti 由显式公式得到逐点估计.}
+
+由 \eqref{eq:ch05-复合显式} 及 $|D^{\gamma}\Phi(x)|\leqslant M$（$1\leqslant|\gamma|\leqslant k$，$x\in W$），对 $x\in W$，
+\begin{align}
+|D^{\alpha}(u\circ\Phi)(x)|
+&\leqslant\sum_{\substack{\beta\in\mathbb{N}^{n}\setminus\{0\}\\ 1\leqslant|\beta|\leqslant|\alpha|}}
+\left(\sum_{\substack{\gamma^{1},\cdots,\gamma^{|\beta|}\in\mathbb{N}^{n}\setminus\{0\}\\ \gamma^{1}+\cdots+\gamma^{|\beta|}=\alpha}}
+c_{\alpha,\beta,\gamma^{1},\cdots,\gamma^{|\beta|}}M^{|\beta|}\right)
+|(D^{\beta}u)(\Phi(x))|
+\nonumber\\
+&\leqslant C_{\alpha}\sum_{1\leqslant|\beta|\leqslant|\alpha|}|(D^{\beta}u)(\Phi(x))|,
+\label{eq:ch05-复合逐点}
+\end{align}
+其中
+\begin{align}
+C_{\alpha}\triangleq\max_{1\leqslant|\beta|\leqslant|\alpha|}
+\left(\sum_{\substack{\gamma^{1},\cdots,\gamma^{|\beta|}\in\mathbb{N}^{n}\setminus\{0\}\\ \gamma^{1}+\cdots+\gamma^{|\beta|}=\alpha}}
+c_{\alpha,\beta,\gamma^{1},\cdots,\gamma^{|\beta|}}M^{|\beta|}\right)
+\label{eq:ch05-Calpha}
+\end{align}
+只依赖于 $n,k,M$（因为 $\alpha$ 只取有限多个值）。
+
+\noindent$\mathbf{Step}\bm{5}$.{\heiti 对光滑 $u$ 建立 $L^{p}$ 估计.}
+
+设 $N$ 为满足 $1\leqslant|\beta|\leqslant k$ 的多重指标 $\beta$ 的个数（只依赖于 $n,k$）。当 $1\leqslant p<\infty$ 时，由 \eqref{eq:ch05-复合逐点} 及\hyperref[Basis of Analytics-proposition:凸性不等式]{凸性不等式}得
+\begin{align*}
+\left(\sum_{j=1}^{N}a_j\right)^{p}\leqslant N^{p-1}\sum_{j=1}^{N}a_j^{p}\qquad(a_j\geqslant0),
+\end{align*}
+得
+\begin{align}
+\int_{W}|D^{\alpha}(u\circ\Phi)|^{p}\,\mathrm{d}x
+&\leqslant C_{\alpha}^{p}\int_{W}\left(\sum_{1\leqslant|\beta|\leqslant|\alpha|}|(D^{\beta}u)(\Phi(x))|\right)^{p}\mathrm{d}x
+\nonumber\\
+&\leqslant C_{\alpha}^{p}N^{p-1}\sum_{1\leqslant|\beta|\leqslant|\alpha|}\int_{W}|(D^{\beta}u)(\Phi(x))|^{p}\,\mathrm{d}x.
+\label{eq:ch05-复合Lp1}
+\end{align}
+作变量替换 $y=\Phi(x)$，即 $x=\Psi(y)$。由于 $\Phi$ 是 $C^{1}$ 微分同胚，变量替换公式给出
+\begin{align*}
+\int_{W}|(D^{\beta}u)(\Phi(x))|^{p}\,\mathrm{d}x
+=\int_{B}|D^{\beta}u(y)|^{p}|\det D\Psi(y)|\,\mathrm{d}y.
+\end{align*}
+因 $B$ 有界、$\Psi\in C^{1}$ 且 $D\Psi$ 在 $\overline{B}$ 上连续,所以可设
+\begin{align*}
+C_{M}\triangleq\sup_{y\in B}|\det D\Psi(y)|<\infty,
+\end{align*}
+则
+\begin{align}
+\int_{W}|D^{\alpha}(u\circ\Phi)|^{p}\,\mathrm{d}x
+\leqslant C_{\alpha}^{p}N^{p-1}C_{M}\sum_{1\leqslant|\beta|\leqslant|\alpha|}\int_{B}|D^{\beta}u(y)|^{p}\,\mathrm{d}y.
+\label{eq:ch05-复合Lp}
+\end{align}
+又
+\begin{align}
+\int_{W}|u\circ\Phi|^{p}\,\mathrm{d}x
+=\int_{B}|u(y)|^{p}|\det D\Psi(y)|\,\mathrm{d}y
+\leqslant C_{M}\int_{B}|u|^{p}\,\mathrm{d}y.
+\label{eq:ch05-复合Lp0}
+\end{align}
+将 \eqref{eq:ch05-复合Lp} 对一切 $|\alpha|\leqslant k$ 求和，并与 \eqref{eq:ch05-复合Lp0} 合并，即得光滑情形的 \eqref{eq:ch05-复合估计}。
+
+当 $p=\infty$ 时，由 \eqref{eq:ch05-复合逐点} 直接得到
+\begin{align*}
+\|D^{\alpha}(u\circ\Phi)\|_{L^{\infty}(W)}
+\leqslant C_{\alpha}\sum_{1\leqslant|\beta|\leqslant|\alpha|}\|D^{\beta}u\|_{L^{\infty}(B)},
+\end{align*}
+再对 $|\alpha|\leqslant k$ 求和即得 \eqref{eq:ch05-复合估计}式$p=\infty$的情形。
+
+\noindent$\mathbf{Step}\bm{6}$.{\heiti $1\leqslant p<\infty$：用 $C^{\infty}(\overline{B})$ 逼近.}
+
+由于 $B$ 是球，$\partial B$ 为 $C^{\infty}$，由\hyperref[theorem:ch05-直到边界光滑的函数整体逼近定理]{直到边界光滑的函数整体逼近定理}，存在 $u_m\in C^{\infty}(\overline{B})$，使得
+\begin{align}\label{eqNVJZNJNZNNN}
+\|u_m-u\|_{W^{k,p}(B)}\longrightarrow0,\quad m\to\infty.
+\end{align}
+对 $u_m-u_l$ 应用已证的光滑情形估计 \eqref{eq:ch05-复合估计}，得
+\begin{align*}
+\|(u_m-u_l)\circ\Phi\|_{W^{k,p}(W)}
+\leqslant C\|u_m-u_l\|_{W^{k,p}(B)}.
+\end{align*}
+故 $\{u_m\circ\Phi\}$ 是 $W^{k,p}(W)$ 中的 Cauchy 列。由于\hyperref[theorem:ch05-WkpBanach]{Sobolev空间都是Banach空间}，故存在 $v\in W^{k,p}(W)$，使得
+\begin{align}\label{eqJNLKZSKLASASAS}
+u_m\circ\Phi\longrightarrow v\quad\text{于 }W^{k,p}(W).
+\end{align}
+另一方面，把\eqref{eq:ch05-复合Lp0}式中$u$ 换成 $u_m-u$，得
+\begin{align*}
+\|u_m\circ\Phi-u\circ\Phi\|_{L^{p}(W)}
+\leqslant C_{M}^{\frac{1}{p}}\|u_m-u\|_{L^{p}(B)}\longrightarrow0,
+\end{align*}
+故 $u_m\circ\Phi\to u\circ\Phi$ 于 $L^{p}(W)$。由 $L^{p}(W)$ 中极限的唯一性知, 几乎处处有$v=u\circ\Phi$。于是 $u\circ\Phi\in W^{k,p}(W)$.再3把\eqref{eq:ch05-复合估计}式$u$换成$u_m$,并令$m\to \infty$得,\eqref{eq:ch05-复合估计}式对 $u$ 成立。
+
+\noindent$\mathbf{Step}\bm{7}$.{\heiti 把显式公式过渡到 $W^{k,p}$ 函数.}
+
+对每个 $|\beta|\leqslant k$，由变量替换和\eqref{eqNVJZNJNZNNN}式可得
+\begin{align*}
+\int_{W}|(D^{\beta}u_m)(\Phi(x))-(D^{\beta}u)(\Phi(x))|^{p}\,\mathrm{d}x
+\leqslant C_{M}\int_{B}|D^{\beta}u_m-D^{\beta}u|^{p}\,\mathrm{d}y\longrightarrow0,
+\end{align*}
+故 $D^{\beta}u_m\circ\Phi\to D^{\beta}u\circ\Phi$ 于 $L^{p}(W)$。在 \eqref{eq:ch05-复合显式}式中令 $m\to\infty$,由\eqref{eqJNLKZSKLASASAS}式知,\eqref{eq:ch05-复合显式}式左端 $D^{\alpha}(u_m\circ\Phi)\to D^{\alpha}(u\circ\Phi)$ 于 $L^{p}(W)$；\eqref{eq:ch05-复合显式}式右端每一项
+\begin{align*}
+(D^{\beta}u_m)(\Phi(x))\prod_{r=1}^{|\beta|}D^{\gamma^{r}}\Phi(x)\to (D^{\beta}u)(\Phi(x))\prod_{r=1}^{|\beta|}D^{\gamma^{r}}\Phi(x)\quad\text{于 }L^p(W).
+\end{align*}
+中，第一因子于 $L^{p}(W)$ 收敛，由$\Phi\in C^{k}$知第二因子有界且逐点收敛，故乘积于 $L^{p}(W)$ 收敛。于是 \eqref{eq:ch05-复合显式}式对一般的$u\in W^{k,p}(W)$ 几乎处处成立。特别地，取 $|\alpha|=1,2$ 即得 \eqref{eq:ch05-复合一阶}\eqref{eq:ch05-复合二阶}式。
+
+\noindent$\mathbf{Step}\bm{8}$.{\heiti $p=\infty$ 的情形.}
+
+设 $u\in W^{k,\infty}(B)$,则 $u\in W^{k,2}(B)$。由 $\mathbf{Step}\bm{6}$--$\mathbf{7}$（取 $p=2$），$u\circ\Phi\in W^{k,2}(W)$，且对每个 $|\alpha|\leqslant k$，$D^{\alpha}(u\circ\Phi)$ 几乎处处等于 \eqref{eq:ch05-复合显式}式的右端。由 \eqref{eq:ch05-复合逐点}式，得
+\begin{align*}
+|D^{\alpha}(u\circ\Phi)(x)|
+\leqslant C_{\alpha}\sum_{1\leqslant|\beta|\leqslant|\alpha|}\|D^{\beta}u\|_{L^{\infty}(B)},
+\quad\text{a.e. }x\in W.
+\end{align*}
+故 $D^{\alpha}(u\circ\Phi)\in L^{\infty}(W)$，从而 $u\circ\Phi\in W^{k,\infty}(W)$，且由上式对 $|\alpha|\leqslant k$ 求和即得 \eqref{eq:ch05-复合估计}式$p=\infty$的情形。
+\end{proof}
 
 
 

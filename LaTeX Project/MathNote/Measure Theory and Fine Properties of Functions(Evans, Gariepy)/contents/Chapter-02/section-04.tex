@@ -1,0 +1,476 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{函数与 Hausdorff 测度}\label{section:ch02-04}
+
+本节记录若干简单性质，用以说明函数的行为与 Hausdorff 测度之间的关系，供后文使用。
+
+\subsection{Hausdorff 测度与 Lipschitz 映射}\label{subsection:ch02-04-1}
+
+\begin{definition}[Lipschitz 连续与 Lipschitz 常数]\label{definition:ch02-2-4}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为映射，$\mathbb{R}^n$ 与 $\mathbb{R}^m$ 上取 Euclid 范数，均记作 $\lvert\cdot\rvert$。
+\begin{enumerate}[(i)]
+\item 若存在常数 $C\geqslant0$，使得对一切 $x,y\in\mathbb{R}^n$ 成立
+\begin{align*}
+\lvert f(x)-f(y)\rvert\leqslant C\lvert x-y\rvert ,
+\end{align*}
+则称 $f$ 为 \textbf{Lipschitz 连续}的。
+\item 设 $f$ 为 Lipschitz 连续。使 (i) 中的不等式对一切 $x,y\in\mathbb{R}^n$ 成立的最小常数 $C$ 称为 $f$ 的 \textbf{Lipschitz 常数}，记作
+\begin{align*}
+\Lip(f):=\sup\left\{\frac{\lvert f(x)-f(y)\rvert}{\lvert x-y\rvert}\Biggm|x,y\in\mathbb{R}^n,\ x\neq y\right\}.
+\end{align*}
+\end{enumerate}
+\end{definition}
+
+后文有时把 Lipschitz 连续函数简称为 Lipschitz 函数。
+
+% SUPPLEMENT: parent=definition:ch02-2-4; kind=motivation; 说明为何以差商的全局上界作正则性假设、Lipschitz 常数作为像集直径的最优放大倍数在测度估计中的作用，以及它与 C^1 类和相似映射的联系
+\begin{remark}\phantomsection\label{remark:ch02-def-2-4-动机}
+Hausdorff 测度只由覆盖集的直径算出，因此在讨论映射 $f$ 如何改变测度时，所需的信息只有一条：像集直径与原像集直径的比较。Lipschitz 条件给出的正是这一比较，即对每个 $C\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\operatorname{diam}f(C)\leqslant\Lip(f)\operatorname{diam}C ,
+\end{align*}
+其中 $f(C)$ 的直径按 $\mathbb{R}^m$ 的 Euclid 距离计算（论证见\cref{theorem:ch02-2-8}）。% XREF internal
+于是覆盖 $A$ 的任一集合族 $\{C_j\}$ 被映为覆盖 $f(A)$ 的集合族 $\{f(C_j)\}$，而和式 $\sum_j\alpha(s)(\operatorname{diam}f(C_j)/2)^s$ 至多被放大 $\Lip(f)^s$ 倍；\cref{theorem:ch02-2-8}就是把这一直径比较逐字翻译成测度不等式的结果。% XREF internal
+
+Lipschitz 常数取为差商的上确界，因而是使上述比较成立的最优倍数：$m=n=1$ 时它等于图像斜率绝对值的上确界，对相似映射 $f(x)=\lambda x+b$（$\lambda>0$，$b\in\mathbb{R}^m$）它等于 $\lambda$。这一「最优倍数」的刻画使测度估计中的常数可显式写出，并且在复合之下仍受控制：$\Lip(f\circ g)\leqslant\Lip(f)\Lip(g)$。
+
+Lipschitz 条件是测度论与微分学之间的恰当折中。它比 $C^1$ 弱，因而包含 $\lvert x\rvert$ 这类带角点的函数；它比一致连续强，因为一致连续只控制同一尺度上的增量，并不给出增量与距离的线性比较。梯度有界的 $C^1$ 函数为 Lipschitz，此时 $\Lip(f)\leqslant\sup_{\mathbb{R}^n}\lvert Df\rvert$；反向的几乎处处可微性在\cref{section:ch03-01}中讨论。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch02-2-4; kind=hypotheses; 逐条分析定义域与值域的范围、常数 C 的符号与最小性、不等式对一切点对成立的含义、范数选取的影响，并给出连续而非 Lipschitz 的反例
+\begin{remark}\phantomsection\label{remark:ch02-def-2-4-条件}
+\begin{enumerate}[(i)]
+\item 定义域取全空间 $\mathbb{R}^n$，值域取 $\mathbb{R}^m$，$n,m$ 为正整数。定义本身不假设 $f$ 可测、有界或连续；满足 (i) 的映射自动连续，故连续性不是额外假设，(i) 本身只是关于差商的不等式。
+\item 常数 $C$ 取非负实数。若 $C<0$，取 $x\neq y$，则 $\lvert f(x)-f(y)\rvert\geqslant0>C\lvert x-y\rvert$，不等式不成立。$C=0$ 时不等式化为 $\lvert f(x)-f(y)\rvert=0$，即 $f$ 为常值映射；反之常值映射可取 $C=0$。
+\item 不等式须对一切 $x,y\in\mathbb{R}^n$ 成立。$x=y$ 时两端为零，不等式自动成立，故其有效内容是 $x\neq y$ 时的差商估计 $\lvert f(x)-f(y)\rvert/\lvert x-y\rvert\leqslant C$；Lipschitz 常数正是这些差商的上确界。
+\item 最小常数存在，且等于 (ii) 中的上确界。记 $S:=\{C\geqslant0\mid$上述不等式对一切 $x,y\in\mathbb{R}^n$ 成立$\}$。若 $C\in S$，则对 $x\neq y$ 有差商 $\leqslant C$，故 $C\geqslant\Lip(f)$；反之差商的上确界本身使不等式成立，故 $\Lip(f)=\min S$，且
+\begin{align*}
+\lvert f(x)-f(y)\rvert\leqslant\Lip(f)\lvert x-y\rvert\qquad(x,y\in\mathbb{R}^n).
+\end{align*}
+\item $\Lip(f)$ 依赖范数的选取。把 $\mathbb{R}^n$ 或 $\mathbb{R}^m$ 的 Euclid 范数换成任一等价范数，Lipschitz 连续性不变而常数值改变；$\mathbb{R}^n$ 上一切范数等价，故「$f$ 为 Lipschitz 连续」这一性质与范数的选取无关。
+\item Lipschitz 连续蕴含一致连续：当 $\Lip(f)>0$ 时取 $\delta:=\varepsilon/\Lip(f)$，则 $\lvert x-y\rvert<\delta$ 蕴含 $\lvert f(x)-f(y)\rvert<\varepsilon$；当 $\Lip(f)=0$ 时 $f$ 为常值映射，结论直接成立。
+\item 连续映射不必 Lipschitz 连续。取 $n=m=1$ 与 $f(x):=\sqrt{\lvert x\rvert}$。则 $f$ 在 $\mathbb{R}$ 上连续，而对 $x>0$ 有
+\begin{align*}
+\frac{\lvert f(x)-f(0)\rvert}{\lvert x-0\rvert}=\frac{1}{\sqrt{x}}\longrightarrow+\infty\qquad(x\to0+),
+\end{align*}
+故不存在使 (i) 中不等式成立的常数 $C$，即 $f$ 不是 Lipschitz 连续的。
+\item 值域可换成任意赋范向量空间：定义只用范数的三角不等式与正齐次性，故上述论证全部保持。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Lipschitz 映射下的 Hausdorff 测度]\label{theorem:ch02-2-8}
+设 $n,m$ 为正整数，$0\leqslant s<\infty$，$\mathcal{H}^s$ 为相应 Euclid 空间上的 $s$ 维 Hausdorff 测度。
+\begin{enumerate}[(i)]
+\item 设 $f:\mathbb{R}^n\to\mathbb{R}^m$ 为 Lipschitz 连续映射，$A\subseteq\mathbb{R}^n$。则
+\begin{align*}
+\mathcal{H}^s(f(A))\leqslant(\Lip(f))^s\mathcal{H}^s(A).
+\end{align*}
+\item 设 $n>k$，$P:\mathbb{R}^n\to\mathbb{R}^k$ 为到前 $k$ 个坐标的标准投影，即 $P(x_1,\cdots,x_n):=(x_1,\cdots,x_k)$，$A\subseteq\mathbb{R}^n$。则
+\begin{align*}
+\mathcal{H}^s(P(A))\leqslant\mathcal{H}^s(A),
+\end{align*}
+其中左端的 $\mathcal{H}^s$ 为 $\mathbb{R}^k$ 上的、右端的 $\mathcal{H}^s$ 为 $\mathbb{R}^n$ 上的 $s$ 维 Hausdorff 测度。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）固定 $\delta>0$，取集合族 $\{C_i\}_{i=1}^{\infty}\subseteq\mathbb{R}^n$，使得 $\operatorname{diam}C_i\leqslant\delta$ 且 $A\subseteq\bigcup_{i=1}^{\infty}C_i$。则 $\operatorname{diam}f(C_i)\leqslant\Lip(f)\operatorname{diam}C_i\leqslant\Lip(f)\delta$，且 $f(A)\subseteq\bigcup_{i=1}^{\infty}f(C_i)$。于是
+\begin{align*}
+\mathcal{H}^s_{\Lip(f)\delta}(f(A))
+&\leqslant\sum_{i=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}f(C_i)}{2}\Bigr)^s\\
+&\leqslant(\Lip(f))^s\sum_{i=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_i}{2}\Bigr)^s .
+\end{align*}
+对一切这样的集合族 $\{C_i\}_{i=1}^{\infty}$ 取下确界，得
+\begin{align*}
+\mathcal{H}^s_{\Lip(f)\delta}(f(A))\leqslant(\Lip(f))^s\mathcal{H}^s_\delta(A).
+\end{align*}
+令 $\delta\to0$ 即完成 (i) 的证明。
+
+（2）断言 (ii) 由 $\Lip(P)=1$ 与 (i) 直接得到。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-2-8; kind=proof; 补出像集直径估计、覆盖族在映射下的容许性、取下确界与令 δ→0 时两侧的单调性依据、s=0 与 Lip(f)=0 的边界情形，并核验 Lip(P)=1
+\begin{proof}
+（1）像集直径的估计。设 $C\subseteq\mathbb{R}^n$ 且 $\operatorname{diam}C<\infty$。对 $u,v\in C$，由 $f$ 的 Lipschitz 连续性与 $\lvert u-v\rvert\leqslant\operatorname{diam}C$ 得
+\begin{align*}
+\lvert f(u)-f(v)\rvert\leqslant\Lip(f)\lvert u-v\rvert\leqslant\Lip(f)\operatorname{diam}C .
+\end{align*}
+对 $u,v\in C$ 取上确界，得 $\operatorname{diam}f(C)\leqslant\Lip(f)\operatorname{diam}C$；特别地 $f(C)$ 有界。$C=\varnothing$ 时两端为零。
+
+（2）覆盖族在映射下的容许性。$\mathcal{H}^s_\delta(A)$ 的定义中所取的族满足 $\operatorname{diam}C_i\leqslant\delta<\infty$，故由（1）得 $\operatorname{diam}f(C_i)\leqslant\Lip(f)\delta$，且 $\{f(C_i)\}_{i=1}^{\infty}$ 覆盖 $f(A)$；于是它是 $\mathcal{H}^s_{\Lip(f)\delta}(f(A))$ 的定义中的一个容许覆盖，从而
+\begin{align*}
+\mathcal{H}^s_{\Lip(f)\delta}(f(A))\leqslant\sum_{i=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}f(C_i)}{2}\Bigr)^s .
+\end{align*}
+
+（3）取下确界。设 $\Lip(f)>0$。固定 $\delta>0$，对 $A$ 的每个满足 $\operatorname{diam}C_i\leqslant\delta$ 的覆盖 $\{C_i\}_{i=1}^{\infty}$，由（2）与 $f$ 的 Lipschitz 连续性得
+\begin{align*}
+\mathcal{H}^s_{\Lip(f)\delta}(f(A))
+\leqslant(\Lip(f))^s\sum_{i=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_i}{2}\Bigr)^s .
+\end{align*}
+左端不依赖覆盖的选取，故对一切容许覆盖取下确界即得
+\begin{align*}
+\mathcal{H}^s_{\Lip(f)\delta}(f(A))\leqslant(\Lip(f))^s\mathcal{H}^s_\delta(A),
+\end{align*}
+其中当 $\mathcal{H}^s_\delta(A)=+\infty$ 时右端取 $+\infty$，不等式自动成立。
+
+（4）令 $\delta\to0$。对固定的集合 $E\subseteq\mathbb{R}^n$，$\delta\mapsto\mathcal{H}^s_\delta(E)$ 随 $\delta$ 减小而单调不减，且 $\lim_{\delta\to0}\mathcal{H}^s_\delta(E)=\mathcal{H}^s(E)$。由 $\Lip(f)>0$ 知 $\delta\to0$ 时 $\Lip(f)\delta\to0$，故
+\begin{align*}
+\mathcal{H}^s(f(A))=\lim_{\delta\to0}\mathcal{H}^s_{\Lip(f)\delta}(f(A))
+\leqslant(\Lip(f))^s\lim_{\delta\to0}\mathcal{H}^s_\delta(A)=(\Lip(f))^s\mathcal{H}^s(A).
+\end{align*}
+
+（5）$\Lip(f)=0$ 的情形。此时 $f$ 为常值映射，$f(A)$ 至多含一个点。$s>0$ 时两端都为零；$s=0$ 时 $\mathcal{H}^0$ 为计数测度，$\mathcal{H}^0(f(A))\leqslant1\leqslant\mathcal{H}^0(A)$（$A\neq\varnothing$）或两端为零（$A=\varnothing$）。又按约定 $x^0=1$（$x\geqslant0$，含 $x=0$），故 $(\Lip(f))^0=1$，不等式与 (i) 一致。
+
+（6）(ii) 的核验。对 $x,y\in\mathbb{R}^n$ 有
+\begin{align*}
+\lvert P(x)-P(y)\rvert=\Bigl(\sum_{i=1}^{k}\lvert x_i-y_i\rvert^2\Bigr)^{\frac12}\leqslant\Bigl(\sum_{i=1}^{n}\lvert x_i-y_i\rvert^2\Bigr)^{\frac12}=\lvert x-y\rvert ,
+\end{align*}
+故 $\Lip(P)\leqslant1$；又 $P$ 在 $\mathbb{R}^k\times\{0\}$ 上为恒等映射，故 $\Lip(P)=1$。对 $P$ 应用 (i) 即得 (ii)。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-2-8; kind=motivation; 说明测度在映射下的变换问题、本定理作为最粗上界估计的定位、由双 Lipschitz 对应得到的测度等价性，以及投影款在后续论证中的作用
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-8-动机}
+测度在映射下的变换是几何测度论的中心问题。对一般的可测映射，像集的测度可以完全不受原像集测度控制；Lipschitz 条件则给出一个只依赖 $\Lip(f)$ 的上界，因而是最粗却最普适的定量估计。证明的策略是把测度不等式「拉回」到覆盖族上：不比较测度本身，只逐项比较覆盖集的直径；两个 $\delta$ 层在映射下同步变为 $\Lip(f)\delta$ 层，故极限过程与不等式相容。
+
+本定理有两种用法。其一是化归：若 $f:\mathbb{R}^n\to\mathbb{R}^n$ 为双 Lipschitz 双射，即存在 $c,C>0$ 使 $c\lvert x-y\rvert\leqslant\lvert f(x)-f(y)\rvert\leqslant C\lvert x-y\rvert$，则对 $f$ 与 $f^{-1}$ 分别应用 (i) 得
+\begin{align*}
+c^{s}\mathcal{H}^s(A)\leqslant\mathcal{H}^s(f(A))\leqslant C^{s}\mathcal{H}^s(A),
+\end{align*}
+故 Hausdorff 测度的零性、有限性与维数在双 Lipschitz 对应下不变。其二是投影不增加测度：断言 (ii) 说明 $\mathcal{H}^s$ 在标准投影下不会增大，这正是\cref{theorem:ch02-2-9}中维数下界的来源，也是把高维集合的估计化为低维截面的常用手段。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-8; kind=hypotheses; 逐条分析 A 的任意性、s 的范围、常数的最优性与可取等号的情形、0^0 约定、局部 Lipschitz 的弱化以及 n>k 超出所需
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-8-条件}
+\begin{enumerate}[(i)]
+\item $A$ 只需是 $\mathbb{R}^n$ 的任意子集，不要求可测、有界或 Borel。证明只用到覆盖的定义与 $f(A)$ 的覆盖由 $A$ 的覆盖经 $f$ 得到，故结论对一切子集成立。
+\item $0\leqslant s<\infty$：$s$ 可取 $0$ 与非整数。$s=0$ 时结论为计数测度的不等式 $\mathcal{H}^0(f(A))\leqslant\mathcal{H}^0(A)$，此时必须约定 $0^0=1$，否则常值映射（$\Lip(f)=0$）会使右端出现没有意义的 $0\cdot\mathcal{H}^0(A)$。$s=\infty$ 不在讨论范围之内。
+\item 常数 $(\Lip(f))^s$ 不可改进：对 $m=n$ 时的相似映射 $f(x)=\lambda x$（$\lambda>0$），由\cref{theorem:ch02-2-2}的齐次性得 $\mathcal{H}^s(f(A))=\lambda^s\mathcal{H}^s(A)=(\Lip(f))^s\mathcal{H}^s(A)$，等号成立。% XREF internal
+\item 不等式一般严格。取 $n=2$、$m=1$、$s=2$、$A=[0,1]^2$ 与 $P(x,y)=x$。由\cref{theorem:ch02-2-5}得 $\mathcal{H}^2(A)=\mathcal{L}^2(A)=1$；而 $P(A)=[0,1]$ 含于 $\mathbb{R}^1$，由\cref{theorem:ch02-2-2}(iii) 得 $\mathcal{H}^2(P(A))=0$，故 $0<1$。% XREF internal
+\item 假设 $f$ 在 $\mathbb{R}^n$ 上 Lipschitz 连续可弱化为局部 Lipschitz 连续，只要 $A$ 有界：若 $A\subseteq B(0,R)$ 且 $f$ 在 $B(0,R+1)$ 上以常数 $C$ 为 Lipschitz，则把覆盖集换成 $C_i\cap B(0,R+1)$ 后，像集直径的估计仍成立，结论为 $\mathcal{H}^s(f(A))\leqslant C^s\mathcal{H}^s(A)$。
+\item (ii) 中的条件 $n>k$ 强于所需：$P$ 有定义只要求 $k\leqslant n$，而不等式只用到 $\Lip(P)=1$。单列 (ii) 是因为投影在图像、截面与逐层分解的论证中反复出现，且其证明不需要任何计算。
+\end{enumerate}
+\end{remark}
+
+\subsection{Lipschitz 函数的图像}\label{subsection:ch02-04-2}
+
+\begin{definition}[图像]\label{definition:ch02-2-5}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为映射，$A\subseteq\mathbb{R}^n$。记
+\begin{align*}
+G(f;A):=\{(x,f(x))\mid x\in A\}\subset\mathbb{R}^n\times\mathbb{R}^m=\mathbb{R}^{n+m},
+\end{align*}
+其中 $\mathbb{R}^n\times\mathbb{R}^m$ 与 $\mathbb{R}^{n+m}$ 通过 $(x,y)\mapsto(x_1,\cdots,x_n,y_1,\cdots,y_m)$ 等同，即点 $(x,f(x))$ 的前 $n$ 个坐标即为 $x$，后 $m$ 个坐标是 $f(x)$ 的各分量，而 $\mathbb{R}^{n+m}$ 上取 Euclid 范数；又将 $f$ 的分量记作 $f=(f^1,\cdots,f^m)$。称 $G(f;A)$ 为 $f$ 在 $A$ 上的 \textbf{图像}。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch02-2-5; kind=motivation; 说明把函数换成其图像这一集合的意义、图像作为典型 n 维集合的地位，以及记号中同时记录 f 与 A 的理由
+\begin{remark}\phantomsection\label{remark:ch02-def-2-5-动机}
+图像把一个函数的问题换成集合的问题。函数 $f$ 本身无法直接度量「大小」，而它的图像是 $\mathbb{R}^{n+m}$ 的子集，于是 Hausdorff 测度与 Hausdorff 维数都可以作用其上。$G(f;A)$ 是最典型的 $n$ 维集合：当 $f$ 为 Lipschitz 连续且 $\mathcal{L}^n(A)>0$ 时它的维数恰为 $n$（\cref{theorem:ch02-2-9}），而它的 $n$ 维测度应当与 $A$ 的 $n$ 维体积相容，这正是\cref{section:ch03-03}中面积公式的内容。% XREF internal
+
+记号 $G(f;A)$ 同时记录映射与集合二者。取 $A=\mathbb{R}^n$ 时得整个图像 $G(f;\mathbb{R}^n)$；一般情形下
+\begin{align*}
+G(f;A)=G(f;\mathbb{R}^n)\cap(A\times\mathbb{R}^m),
+\end{align*}
+故 $A$ 的作用是把图像限制在 $A$ 上方的那一部分。特别地，当 $f$ 为 Borel 可测（例如 $f$ 连续）且 $A$ 为 Borel 集时，$G(f;A)$ 是两个 Borel 集 $G(f;\mathbb{R}^n)$ 与 $A\times\mathbb{R}^m$ 的交，从而是 Borel 集。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch02-2-5; kind=hypotheses; 逐条说明 f 与 A 没有正则性要求、维数与坐标顺序无关、图像与 A 的同胚关系以及由此得到的测度等价性
+\begin{remark}\phantomsection\label{remark:ch02-def-2-5-条件}
+\begin{enumerate}[(i)]
+\item 定义对 $f$ 与 $A$ 都没有正则性要求：$f$ 是任意映射，$A$ 是任意子集。因此 $G(f;A)$ 总有定义，而\cref{theorem:ch02-2-9}的断言 (i) 所给维数下界也不需要 $f$ 的任何正则性。% XREF internal
+\item 等同 $\mathbb{R}^n\times\mathbb{R}^m=\mathbb{R}^{n+m}$ 依赖坐标的排列顺序。改变顺序由 $\mathbb{R}^{n+m}$ 的一个坐标置换实现，而坐标置换是正交变换，由\cref{theorem:ch02-2-2}(v) 知 Hausdorff 测度与维数在正交变换下不变，故结论与坐标顺序的选取无关。% XREF internal
+\item 图像与 $A$ 通过投影同胚。记 $\pi:\mathbb{R}^{n+m}\to\mathbb{R}^n$，$\pi(x,y):=x$。则 $\pi(G(f;A))=A$，且 $\pi$ 在 $G(f;A)$ 上的限制是单射，其逆为 $x\mapsto(x,f(x))$。$\pi$ 是 $1$-Lipschitz 的；当 $f$ 为 Lipschitz 连续时，逆映射满足
+\begin{align*}
+\lvert(x,f(x))-(y,f(y))\rvert^2=\lvert x-y\rvert^2+\lvert f(x)-f(y)\rvert^2\leqslant\bigl(1+(\Lip(f))^2\bigr)\lvert x-y\rvert^2 ,
+\end{align*}
+故 $\iota(x):=(x,f(x))$ 是 $\sqrt{1+(\Lip(f))^2}$-Lipschitz 映射，而 $\pi$ 是 $1$-Lipschitz 映射，且 $\pi\circ\iota$ 在 $A$ 上为恒等映射。于是由\cref{theorem:ch02-2-8}得% XREF internal
+\begin{align*}
+\mathcal{H}^s(A)\leqslant\mathcal{H}^s(G(f;A))\leqslant\bigl(1+(\Lip(f))^2\bigr)^{\frac{s}{2}}\mathcal{H}^s(A),
+\end{align*}
+即二者的 Hausdorff 测度互相控制、维数相等。
+\item 记号对 $A$ 单调：$A_1\subseteq A_2$ 时 $G(f;A_1)\subseteq G(f;A_2)$，故 $\mathcal{H}^s(G(f;A_1))\leqslant\mathcal{H}^s(G(f;A_2))$。又 $A=\bigcup_{j=1}^{\infty}A_j$ 时 $G(f;A)=\bigcup_{j=1}^{\infty}G(f;A_j)$，故由可数次可加性得 $\mathcal{H}^s(G(f;A))\leqslant\sum_{j=1}^{\infty}\mathcal{H}^s(G(f;A_j))$。这两条估计是把 $A$ 分成可数块、逐块计算图像测度的依据。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[图像的 Hausdorff 维数]\label{theorem:ch02-2-9}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为映射，$A\subseteq\mathbb{R}^n$，$\mathcal{L}^n$ 为 $\mathbb{R}^n$ 上的 $n$ 维 Lebesgue 测度，$\mathcal{L}^n(A)>0$；$\mathcal{H}_{\dim}$ 表示\cref{definition:ch02-2-2}中定义的 Hausdorff 维数。% XREF internal
+\begin{enumerate}[(i)]
+\item 则
+\begin{align*}
+\mathcal{H}_{\dim}(G(f;A))\geqslant n .
+\end{align*}
+\item 若 $f$ 为 Lipschitz 连续，则
+\begin{align*}
+\mathcal{H}_{\dim}(G(f;A))=n .
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-9-期望维数}
+由此可知，Lipschitz 连续函数的图像具有符合预期的 Hausdorff 维数。由\cref{section:ch03-03}中的面积公式还将得出，$\mathcal{H}^n(G(f;A))$ 可按通常的微积分法则计算。% XREF p=98 "from the area formula in Section 3.3"
+\end{remark}
+
+\begin{proof}
+（1）设 $P:\mathbb{R}^{n+m}\to\mathbb{R}^n$ 为标准投影。则
+\begin{align*}
+\mathcal{H}^n(G(f;A))\geqslant\mathcal{H}^n(A)>0 ,
+\end{align*}
+从而 $\mathcal{H}_{\dim}(G(f;A))\geqslant n$。
+
+（2）设 $Q$ 为 $\mathbb{R}^n$ 中任一边长为 $1$ 的立方体。把 $Q$ 分成 $k^n$ 个边长为 $1/k$ 的子立方体，记这些子立方体为 $Q_1,\cdots,Q_{k^n}$。注意
+\begin{align*}
+\operatorname{diam}Q_i=\frac{\sqrt{n}}{k}.
+\end{align*}
+定义
+\begin{align*}
+a_j^i:=\min_{x\in Q_j}f^i(x),\qquad b_j^i:=\max_{x\in Q_j}f^i(x)
+\end{align*}
+（$i=1,\cdots,m$，$j=1,\cdots,k^n$）。由于 $f$ 为 Lipschitz 连续，
+\begin{align*}
+\lvert b_j^i-a_j^i\rvert\leqslant\Lip(f)\operatorname{diam}Q_j=\Lip(f)\frac{\sqrt{n}}{k}.
+\end{align*}
+其次，令 $C_j:=Q_j\times\prod_{i=1}^{m}[a_j^i,b_j^i]$。则
+\begin{align*}
+\{(x,f(x))\mid x\in Q_j\cap A\}\subseteq C_j ,
+\end{align*}
+且 $\operatorname{diam}C_j<\frac{C}{k}$。由于 $G(f;A\cap Q)\subseteq\bigcup_{j=1}^{k^n}C_j$，有
+\begin{align*}
+\mathcal{H}^n_{\frac{C}{k}}(G(f;A\cap Q))
+&\leqslant\sum_{j=1}^{k^n}\alpha(n)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^n\\
+&\leqslant k^n\alpha(n)\Bigl(\frac{C}{2k}\Bigr)^n=\alpha(n)\Bigl(\frac{C}{2}\Bigr)^n .
+\end{align*}
+然后令 $k\to\infty$，得 $\mathcal{H}^n(G(f;A\cap Q))<\infty$，从而 $\mathcal{H}_{\dim}(G(f;A\cap Q))\leqslant n$。这一估计对 $\mathbb{R}^n$ 中每个边长为 $1$ 的立方体 $Q$ 成立，故 $\mathcal{H}_{\dim}(G(f;A))\leqslant n$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-2-9; kind=proof; 补出第 (1) 步所用投影估计与由 H^n>0 推出维数下界的依据，第 (2) 步中箱体直径的显式计算、由单位立方体拼出全空间时对可数并的处理，以及 (ii) 中下界与上界的合并
+\begin{proof}
+（1）第 (1) 步的依据。取 $P:\mathbb{R}^{n+m}\to\mathbb{R}^n$，$P(x,y):=x$。则 $P$ 为 $1$-Lipschitz 映射且 $P(G(f;A))=A$，故由\cref{theorem:ch02-2-8}(ii)（取 $s=n$）得 $\mathcal{H}^n(G(f;A))\geqslant\mathcal{H}^n(A)$。又由\cref{theorem:ch02-2-5}得 $\mathcal{H}^n(A)=\mathcal{L}^n(A)>0$，故 $\mathcal{H}^n(G(f;A))>0$。% XREF internal
+
+（2）由 $\mathcal{H}^n(G(f;A))>0$ 推出维数下界。对 $0\leqslant s<n$，\cref{lemma:ch02-2-2}(i) 的逆否形式给出：若 $\mathcal{H}^n(G(f;A))>0$，则 $\mathcal{H}^s(G(f;A))=+\infty\neq0$。故使 $\mathcal{H}^s(G(f;A))=0$ 的 $s$ 都不小于 $n$，按\cref{definition:ch02-2-2}得 $\mathcal{H}_{\dim}(G(f;A))\geqslant n$。% XREF internal
+
+（3）第 (2) 步中箱体的直径。设 $C>0$ 待定。由于 $Q_j$ 的边长为 $1/k$，箱体 $C_j$ 的 $n+m$ 个边长分别是 $1/k$（$n$ 个坐标方向）与 $b_j^i-a_j^i$（$i=1,\cdots,m$），故
+\begin{align*}
+(\operatorname{diam}C_j)^2=\frac{n}{k^2}+\sum_{i=1}^{m}\lvert b_j^i-a_j^i\rvert^2\leqslant\frac{n}{k^2}+\frac{mn(\Lip(f))^2}{k^2}=\frac{C^2}{k^2},
+\end{align*}
+其中 $C:=\sqrt{n\bigl(1+m(\Lip(f))^2\bigr)}$。于是 $\operatorname{diam}C_j\leqslant C/k$，即常数 $C$ 只依赖 $n,m,\Lip(f)$。
+
+（4）包含关系与覆盖。由于 $Q_j$ 紧、$f^i$ 连续，$a_j^i$ 与 $b_j^i$ 都在 $Q_j$ 上取到，故 $f^i(Q_j)\subseteq[a_j^i,b_j^i]$（$i=1,\cdots,m$），于是
+\begin{align*}
+\{(x,f(x))\mid x\in Q_j\cap A\}\subseteq Q_j\times\prod_{i=1}^{m}[a_j^i,b_j^i]=C_j .
+\end{align*}
+又 $Q=\bigcup_{j=1}^{k^n}Q_j$，故 $G(f;A\cap Q)\subseteq\bigcup_{j=1}^{k^n}C_j$。由 $\operatorname{diam}C_j\leqslant C/k$ 知 $\{C_j\}_{j=1}^{k^n}$ 是 $\mathcal{H}^n_{C/k}(G(f;A\cap Q))$ 的定义中的一个容许覆盖，从而
+\begin{align*}
+\mathcal{H}^n_{\frac{C}{k}}(G(f;A\cap Q))
+\leqslant\sum_{j=1}^{k^n}\alpha(n)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^n
+\leqslant k^n\alpha(n)\Bigl(\frac{C}{2k}\Bigr)^n=\alpha(n)\Bigl(\frac{C}{2}\Bigr)^n .
+\end{align*}
+
+（5）令 $k\to\infty$。此时 $C/k\to0$，而 $\mathcal{H}^n_\delta(E)$ 随 $\delta$ 减小单调不减，故
+\begin{align*}
+\mathcal{H}^n(G(f;A\cap Q))=\lim_{k\to\infty}\mathcal{H}^n_{\frac{C}{k}}(G(f;A\cap Q))\leqslant\alpha(n)\Bigl(\frac{C}{2}\Bigr)^n<\infty .
+\end{align*}
+由\cref{lemma:ch02-2-2}(i)，对每个 $t>n$ 有 $\mathcal{H}^t(G(f;A\cap Q))=0$，故 $\mathcal{H}_{\dim}(G(f;A\cap Q))\leqslant n$。% XREF internal
+
+（6）由单位立方体拼出全空间。对 $z\in\mathbb{Z}^n$ 令 $Q_z:=z+[0,1]^n$，则 $\{Q_z\}_{z\in\mathbb{Z}^n}$ 是可数族且 $\mathbb{R}^n=\bigcup_{z\in\mathbb{Z}^n}Q_z$。于是 $G(f;A)=\bigcup_{z\in\mathbb{Z}^n}G(f;A\cap Q_z)$。对每个 $t>n$，由（5）与 $\mathcal{H}^t$ 的可数次可加性得
+\begin{align*}
+\mathcal{H}^t(G(f;A))\leqslant\sum_{z\in\mathbb{Z}^n}\mathcal{H}^t(G(f;A\cap Q_z))=0 ,
+\end{align*}
+故 $\mathcal{H}_{\dim}(G(f;A))\leqslant n$。
+
+（7）(ii) 的合并。$f$ 为 Lipschitz 连续且 $\mathcal{L}^n(A)>0$ 时，(1)（2）给出下界 $n$，（6）给出上界 $n$，合并即得 $\mathcal{H}_{\dim}(G(f;A))=n$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-2-9; kind=correction; 说明第 (2) 步中箱体下标须为 j、箱体须取闭区间、常数 C 的显式取法，否则所写包含关系不成立
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-9-箱体与常数}
+第 (2) 步有两处必须补明。其一，箱体须取闭区间 $[a_j^i,b_j^i]$ 而非开区间 $(a_j^i,b_j^i)$：由于 $Q_j$ 紧、$f^i$ 连续，$a_j^i$ 与 $b_j^i$ 都在 $Q_j$ 上取到，若取开区间，则取到极值的点 $(x,f(x))$ 不属于箱体，包含关系
+\begin{align*}
+\{(x,f(x))\mid x\in Q_j\cap A\}\subseteq C_j
+\end{align*}
+失效；开区间与闭区间的直径相同，故改用闭区间不影响任何估计。
+
+其二，箱体的下标须为 $j$。第 (2) 步对 $j=1,\cdots,k^n$ 求和并逐项估计 $\operatorname{diam}C_j$，故每个子立方体 $Q_j$ 对应一个箱体 $C_j$；若把箱体记为 $C_i$，则下标 $i=1,\cdots,m$ 已被分量 $f^i$ 占用，求和号下的 $\operatorname{diam}C_j$ 也失去所指。
+
+此外，证明中出现的常数 $C$ 只依赖 $n,m,\Lip(f)$，可取
+\begin{align*}
+C:=\sqrt{n\bigl(1+m(\Lip(f))^2\bigr)},
+\end{align*}
+推导即箱体各边长的平方和：$C_j$ 的 $n+m$ 个边长分别是 $1/k$（$n$ 个坐标方向）与 $b_j^i-a_j^i$（$i=1,\cdots,m$），由 $\lvert b_j^i-a_j^i\rvert\leqslant\Lip(f)\sqrt{n}/k$ 得 $(\operatorname{diam}C_j)^2\leqslant n/k^2+mn(\Lip(f))^2/k^2=C^2/k^2$。这个常数进入最终估计 $\mathcal{H}^n(G(f;A\cap Q))\leqslant\alpha(n)(C/2)^n$，因而是估计中唯一依赖 $f$ 的量。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-9; kind=motivation; 说明维数下界只靠投影、上界只靠立方体分割这一不对称结构，以及为何该定理是面积公式的前奏
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-9-动机}
+定理的证明由两个方向组成，二者的信息来源完全不同。下界只用投影：图像在投影下还原为 $A$，而投影不增加 Hausdorff 测度，故 $\mathcal{H}^n(G(f;A))\geqslant\mathcal{H}^n(A)>0$，维数因而不小于 $n$。这一步不需要 $f$ 的任何正则性，说明「图像至少与 $A$ 同维」是几何事实而非微分事实。上界则用覆盖：把 $A$ 所在的单位立方体细分为 $k^n$ 个子立方体，在每个子立方体上方用一个边长由 $\Lip(f)/k$ 控制的箱体覆盖图像，得到 $\mathcal{H}^n$ 的一致上界 $\alpha(n)(C/2)^n$，与 $k$ 无关。
+
+两方向合起来给出：Lipschitz 函数的图像恰是 $n$ 维的。这一步只确定维数，不给出测度的值。面积的精确计算需要 Jacobi 行列式，即\cref{section:ch03-03}中的面积公式；本定理因而是该公式的前奏。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-9; kind=hypotheses; 逐条分析 L^n(A)>0 的作用与必要性、f 的正则性在两款中的不同要求、维数下界与上界各自的条件，以及 n,m 的范围
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-9-条件}
+\begin{enumerate}[(i)]
+\item 条件 $\mathcal{L}^n(A)>0$ 只用于下界：它经\cref{theorem:ch02-2-5}给出 $\mathcal{H}^n(A)>0$，从而使 $\mathcal{H}^n(G(f;A))>0$。若 $\mathcal{L}^n(A)=0$，下界失效：取 $A=\{0\}$ 与任意 $f$，则 $G(f;A)$ 是单点集，$\mathcal{H}_{\dim}(G(f;A))=0<n$。% XREF internal
+\item 上界不需要 $\mathcal{L}^n(A)>0$，也不需要 $n,m$ 以外的任何条件：对 Lipschitz 连续（乃至局部 Lipschitz 连续）的 $f$，总有 $\mathcal{H}_{\dim}(G(f;A))\leqslant n$，无论 $A$ 的大小如何。故 (ii) 中的等式由「下界需要 $\mathcal{L}^n(A)>0$、上界需要 $\Lip(f)<\infty$」两部分拼成，两个条件缺一不可。
+\item 断言 (i) 对 $f$ 没有任何正则性要求：$f$ 是任意映射。断言 (ii) 要求 $f$ Lipschitz 连续；若 $f$ 只是连续，等式可以不成立，例如把 $[0,1]$ 映满 $[0,1]^2$ 的 Peano 型曲线，其图像维数大于 $1$。
+\item $n,m$ 为正整数，$m$ 可任意大。$m$ 只进入上界中的常数 $C=\sqrt{n(1+m(\Lip(f))^2)}$，不改变维数 $n$；这与直观相符：图像是「$n$ 维的」，与所处空间的维数 $n+m$ 无关。
+\item 下界所用的是 $n$ 维 Hausdorff 测度而非 $A$ 的 Lebesgue 测度，故结论对 $\mathcal{L}^n$-不可测的 $A$ 同样成立：$\mathcal{L}^n$ 在外测度意义下取正值即可。
+\end{enumerate}
+\end{remark}
+
+\subsection{球上的积分}\label{subsection:ch02-04-3}
+
+若函数为局部可和，则可估计该函数局部取值较大的集合的 Hausdorff 测度。
+
+\begin{theorem}[Hausdorff 测度与球上的积分]\label{theorem:ch02-2-10}
+设 $n$ 为正整数，$f\in L^1_{\mathrm{loc}}(\mathbb{R}^n)$ 为局部可和函数，即 $f$ 为 $\mathcal{L}^n$-可测且在 $\mathbb{R}^n$ 的每个紧集上可积；设 $0\leqslant s<n$；设 $B(x,r)$ 为 $\mathbb{R}^n$ 中以 $x$ 为球心、以 $r>0$ 为半径的闭球，$\mathcal{H}^s$ 为 $\mathbb{R}^n$ 上的 $s$ 维 Hausdorff 测度，积分均按 $\mathcal{L}^n$ 计算。定义集合
+\begin{align*}
+\Lambda_s:=\left\{x\in\mathbb{R}^n\Biggm|\limsup_{r\to0}\frac{1}{r^s}\int_{B(x,r)}\lvert f\rvert\diff y>0\right\},
+\end{align*}
+即 $\Lambda_s$ 由使上述比式的上极限为正的点 $x$ 组成。则
+\begin{align*}
+\mathcal{H}^s(\Lambda_s)=0 .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+（1）可先设 $f\in L^1(\mathbb{R}^n)$。由\cref{theorem:ch01-1-32}，% XREF p=99 "According to the Lebesgue–Besicovitch Differentiation Theorem"
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert f\rvert\diff y=\lvert f(x)\rvert ,
+\end{align*}
+从而
+\begin{align*}
+\lim_{r\to0}\frac{1}{r^s}\int_{B(x,r)}\lvert f\rvert\diff y=0
+\end{align*}
+对 $\mathcal{L}^n$-a.e. 的 $x$ 成立，因为 $0\leqslant s<n$。于是
+\begin{align*}
+\mathcal{L}^n(\Lambda_s)=0 .
+\end{align*}
+
+（2）现固定 $\varepsilon>0$、$\delta>0$、$\sigma>0$。由于 $f$ 为 $\mathcal{L}^n$-可和，存在 $\eta>0$，使得 $\mathcal{L}^n(U)\leqslant\eta$ 蕴含
+\begin{align*}
+\int_U\lvert f\rvert\diff x<\sigma .
+\end{align*}
+定义
+\begin{align*}
+\Lambda_s^\varepsilon:=\left\{x\in\mathbb{R}^n\Biggm|\lim_{r\to0}\frac{1}{r^s}\int_{B(x,r)}\lvert f\rvert\diff y>\varepsilon\right\};
+\end{align*}
+则
+\begin{align*}
+\mathcal{L}^n(\Lambda_s^\varepsilon)=0 .
+\end{align*}
+于是存在开集 $U$，使得 $U\supset\Lambda_s^\varepsilon$ 且 $\mathcal{L}^n(U)<\eta$。定义
+\begin{align*}
+\mathcal{F}:=\left\{B(x,r)\Biggm|x\in\Lambda_s^\varepsilon,\ 0<r<\delta,\ B(x,r)\subseteq U,\ \int_{B(x,r)}\lvert f\rvert\diff y>\varepsilon r^s\right\}.
+\end{align*}
+由\cref{theorem:ch01-1-24}，存在 $\mathcal{F}$ 中两两不交的球 $\{B_i\}_{i=1}^{\infty}$，使得% XREF p=99 "By the Vitali Covering Theorem"
+\begin{align*}
+\Lambda_s^\varepsilon\subseteq\bigcup_{i=1}^{\infty}\hat B_i .
+\end{align*}
+于是，记 $r_i$ 为 $B_i$ 的半径，计算得
+\begin{align*}
+\mathcal{H}^s_{10\delta}(\Lambda_s^\varepsilon)
+&\leqslant\sum_{i=1}^{\infty}\alpha(s)(5r_i)^s\\
+&\leqslant\frac{\alpha(s)5^s}{\varepsilon}\sum_{i=1}^{\infty}\int_{B_i}\lvert f\rvert\diff y\\
+&\leqslant\frac{\alpha(s)5^s}{\varepsilon}\int_U\lvert f\rvert\diff y\\
+&\leqslant\frac{\alpha(s)5^s}{\varepsilon}\sigma .
+\end{align*}
+令 $\delta\to0$，再令 $\sigma\to0$，得
+\begin{align*}
+\mathcal{H}^s(\Lambda_s^\varepsilon)=0 .
+\end{align*}
+这一结论对一切 $\varepsilon>0$ 成立，故 $\mathcal{H}^s(\Lambda_s)=0$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-2-10; kind=proof; 补出把 f 约化为可和函数的论证、由微分定理到 L^n(Λ_s)=0 的逐步推导、开集 U 的存在性、Vitali 覆盖的适用性核验、和式与积分估计的逐项依据以及两次极限过程
+\begin{proof}
+（1）约化为可和函数。对每个正整数 $N$ 令 $f_N:=f\chi_{B(0,N)}$。由 $f\in L^1_{\mathrm{loc}}(\mathbb{R}^n)$ 与 $\mathcal{L}^n(B(0,N))<\infty$ 得 $f_N\in L^1(\mathbb{R}^n)$。设 $x\in B(0,N-1)$ 且 $0<r<1$，则 $B(x,r)\subseteq B(0,N)$，故
+\begin{align*}
+\int_{B(x,r)}\lvert f\rvert\diff y=\int_{B(x,r)}\lvert f_N\rvert\diff y ,
+\end{align*}
+从而 $\Lambda_s(f)\cap B(0,N-1)=\Lambda_s(f_N)\cap B(0,N-1)$。若结论对每个 $f_N$ 成立，则由 $\Lambda_s(f)\subseteq\bigcup_{N=1}^{\infty}B(0,N-1)$ 与可数次可加性得
+\begin{align*}
+\mathcal{H}^s\bigl(\Lambda_s(f)\bigr)\leqslant\sum_{N=1}^{\infty}\mathcal{H}^s\bigl(\Lambda_s(f)\cap B(0,N-1)\bigr)=0 .
+\end{align*}
+故只需讨论 $f\in L^1(\mathbb{R}^n)$ 的情形。
+
+（2）由微分定理推出 $\mathcal{L}^n(\Lambda_s)=0$。对 $\mathcal{L}^n$-a.e. 的 $x$，由\cref{theorem:ch01-1-32}（取 $\mu=\mathcal{L}^n$）有 $\lvert f(x)\rvert<\infty$ 且 $\fint_{B(x,r)}\lvert f\rvert\diff y\to\lvert f(x)\rvert$（$r\to0$），故存在 $r_x>0$ 与 $M_x<\infty$，使得 $0<r<r_x$ 时 $\fint_{B(x,r)}\lvert f\rvert\diff y\leqslant M_x$。由 $\mathcal{L}^n(B(x,r))=\alpha(n)r^n$ 得% XREF internal
+\begin{align*}
+\frac{1}{r^s}\int_{B(x,r)}\lvert f\rvert\diff y
+=\alpha(n)r^{n-s}\fint_{B(x,r)}\lvert f\rvert\diff y
+\leqslant\alpha(n)M_xr^{n-s}\longrightarrow0\qquad(r\to0),
+\end{align*}
+其中用到 $n-s>0$。故这样的 $x$ 不属于 $\Lambda_s$，即 $\mathcal{L}^n(\Lambda_s)=0$；又 $\Lambda_s^\varepsilon\subseteq\Lambda_s$，故 $\mathcal{L}^n(\Lambda_s^\varepsilon)=0$。
+
+（3）开集 $U$ 的存在性。$\mathcal{L}^n$ 是 Borel 正则测度，故对 $\mathcal{L}^n$-零集 $\Lambda_s^\varepsilon$ 与 $\eta>0$ 存在开集 $U\supseteq\Lambda_s^\varepsilon$ 使 $\mathcal{L}^n(U)<\eta$。
+
+（4）$\mathcal{F}$ 满足覆盖定理的条件。$\mathcal{F}$ 中每个元素是非退化闭球，且 $\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}\leqslant2\delta<\infty$。又 $\Lambda_s^\varepsilon\subseteq\bigcup_{B\in\mathcal{F}}B$：设 $x\in\Lambda_s^\varepsilon$，由 $\varepsilon>0$ 与极限的定义，存在 $r_0>0$，使得 $0<r<r_0$ 时 $\int_{B(x,r)}\lvert f\rvert\diff y>\varepsilon r^s$；又 $U$ 开且 $x\in U$，故
+\begin{align*}
+\rho:=\min\Bigl\{r_0,\ \delta,\ \operatorname{dist}(x,\mathbb{R}^n\setminus U)\Bigr\}>0 ,
+\end{align*}
+于是对 $0<r<\rho$ 有 $B(x,r)\in\mathcal{F}$ 且 $x\in B(x,r)$。由\cref{theorem:ch01-1-24}，存在 $\mathcal{F}$ 中两两不交的球 $\{B_i\}_{i=1}^{\infty}$，使得 $\Lambda_s^\varepsilon\subseteq\bigcup_{i=1}^{\infty}\hat B_i$。% XREF internal
+
+（5）由覆盖得到测度估计。记 $B_i=B(x_i,r_i)$，则 $\hat B_i=B(x_i,5r_i)$ 且 $r_i<\delta$，故 $\operatorname{diam}\hat B_i=10r_i<10\delta$；于是 $\{\hat B_i\}_{i=1}^{\infty}$ 是 $\mathcal{H}^s_{10\delta}(\Lambda_s^\varepsilon)$ 的定义中的一个容许覆盖，从而
+\begin{align*}
+\mathcal{H}^s_{10\delta}(\Lambda_s^\varepsilon)\leqslant\sum_{i=1}^{\infty}\alpha(s)\Bigl(\frac{10r_i}{2}\Bigr)^s=\sum_{i=1}^{\infty}\alpha(s)(5r_i)^s .
+\end{align*}
+
+（6）逐项估计与积分估计。由 $B_i\in\mathcal{F}$ 得 $\int_{B_i}\lvert f\rvert\diff y>\varepsilon r_i^s$，故
+\begin{align*}
+\alpha(s)(5r_i)^s=5^s\alpha(s)r_i^s<\frac{\alpha(s)5^s}{\varepsilon}\int_{B_i}\lvert f\rvert\diff y .
+\end{align*}
+对 $i$ 求和，并用 $B_i$ 两两不交、$B_i\subseteq U$ 与 $\lvert f\rvert\geqslant0$ 得
+\begin{align*}
+\sum_{i=1}^{\infty}\alpha(s)(5r_i)^s
+\leqslant\frac{\alpha(s)5^s}{\varepsilon}\sum_{i=1}^{\infty}\int_{B_i}\lvert f\rvert\diff y
+\leqslant\frac{\alpha(s)5^s}{\varepsilon}\int_U\lvert f\rvert\diff y
+\leqslant\frac{\alpha(s)5^s}{\varepsilon}\sigma .
+\end{align*}
+
+（7）两次极限过程。对固定的集合 $E$，$\delta\mapsto\mathcal{H}^s_\delta(E)$ 随 $\delta$ 减小而单调不减，且 $\lim_{\delta\to0}\mathcal{H}^s_\delta(E)=\mathcal{H}^s(E)$，故令 $\delta\to0$ 得 $\mathcal{H}^s(\Lambda_s^\varepsilon)\leqslant\alpha(s)5^s\sigma/\varepsilon$；再令 $\sigma\to0$（此时 $\eta$ 随之变小而估计式不变）得 $\mathcal{H}^s(\Lambda_s^\varepsilon)=0$。
+
+（8）由 $\varepsilon$ 到全集的过渡。把上述论证中的 $\lim$ 换成 $\limsup$，即把 $\Lambda_s^\varepsilon$ 换成上极限超过 $\varepsilon$ 的点集 $\widetilde\Lambda_s^\varepsilon$，则每一步仍成立：由 $\limsup_{r\to0}$ 超过 $\varepsilon$ 知存在一列 $r_j\to0$ 使 $\int_{B(x,r_j)}\lvert f\rvert\diff y>\varepsilon r_j^s$，故第 (4) 步的覆盖论证照旧；又 $\widetilde\Lambda_s^\varepsilon\subseteq\Lambda_s$，故 $\mathcal{L}^n(\widetilde\Lambda_s^\varepsilon)=0$。于是 $\mathcal{H}^s(\widetilde\Lambda_s^\varepsilon)=0$ 对一切 $\varepsilon>0$ 成立，而 $\Lambda_s=\bigcup_{k=1}^{\infty}\widetilde\Lambda_s^{1/k}$，故由可数次可加性得
+\begin{align*}
+\mathcal{H}^s(\Lambda_s)\leqslant\sum_{k=1}^{\infty}\mathcal{H}^s\bigl(\widetilde\Lambda_s^{1/k}\bigr)=0 .
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-2-10; kind=correction; 说明定理中的集合以 limsup 定义而证明中的 Λ_s^ε 须同样以 limsup 定义，否则无法由各 Λ_s^ε 的零测性推出 Λ_s 的零测性
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-10-上极限}
+定理中的集合 $\Lambda_s$ 由 $\limsup_{r\to0}$ 定义，而证明中的集合 $\Lambda_s^\varepsilon$ 若以 $\lim_{r\to0}$ 定义，则二者之间只有包含关系
+\begin{align*}
+\Lambda_s^\varepsilon\subseteq\widetilde\Lambda_s^\varepsilon:=\left\{x\in\mathbb{R}^n\Biggm|\limsup_{r\to0}\frac{1}{r^s}\int_{B(x,r)}\lvert f\rvert\diff y>\varepsilon\right\},
+\end{align*}
+反向包含一般不成立：平均值 $\frac{1}{r^s}\int_{B(x,r)}\lvert f\rvert\diff y$ 可能沿一列 $r_j\to0$ 趋于 $0$ 而沿另一列 $r_j'\to0$ 趋于正数；此时该点的上极限为正而极限不存在，故它属于 $\widetilde\Lambda_s^\varepsilon$ 而不属于 $\Lambda_s^\varepsilon$。因此仅由 $\mathcal{H}^s(\Lambda_s^\varepsilon)=0$ 不能推出 $\mathcal{H}^s(\Lambda_s)=0$。
+
+把证明中的集合改取为上极限所定义者，论证逐步保持：由 $\limsup>\varepsilon$ 知存在一列 $r_j\to0$ 使 $\int_{B(x,r_j)}\lvert f\rvert\diff y>\varepsilon r_j^s$，故 $\widetilde\Lambda_s^\varepsilon$ 中的每一点都落在某个体 $\mathcal{F}$ 之中，第 (2) 步的 $\mathcal{L}^n(\widetilde\Lambda_s^\varepsilon)=0$（因 $\widetilde\Lambda_s^\varepsilon\subseteq\Lambda_s$）、第 (3) 步开集 $U$ 的存在性以及第 (5)(6)(7) 步的估计都逐字不变，于是 $\mathcal{H}^s(\widetilde\Lambda_s^\varepsilon)=0$ 对一切 $\varepsilon>0$ 成立。又
+\begin{align*}
+\Lambda_s=\bigcup_{k=1}^{\infty}\widetilde\Lambda_s^{\frac1k},
+\end{align*}
+故由可数次可加性得 $\mathcal{H}^s(\Lambda_s)=0$。定理的结论不因此改变，改变的是证明中必须与结论使用同一个上极限。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-10; kind=motivation; 说明该估计把逐点的大小信息提升为 Hausdorff 测度意义下的零测信息、两层论证结构（微分定理与 Vitali 覆盖）以及参数 ε,δ,σ 各自的作用
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-10-动机}
+集合 $\Lambda_s$ 刻画使 $\lvert f\rvert$ 在半径为 $r$ 的球上的积分相对于 $r^s$ 不趋于零的点。由 $f$ 的局部可和性，这一积分在 $r\to0$ 时趋于零的点集之外至多是一个 Lebesgue 零集；本定理把这个「$\mathcal{L}^n$-零」加强为「$\mathcal{H}^s$-零」，即把测度意义下的例外集缩小到维数不超过 $s$ 的集合。这类加强在后文处理低维例外集时反复出现：证明某性质在除去一个 $\mathcal{H}^s$-零集后成立，需要的正是这种由 Lebesgue 测度信息到 Hausdorff 测度信息的转换。
+
+证明分两层。第一层只用\cref{theorem:ch01-1-32}：平均值的极限为 $\lvert f(x)\rvert$，乘以球的 Lebesgue 测度后得到因子 $r^{n-s}$，故 $s<n$ 时该积分趋于零，于是 $\mathcal{L}^n(\Lambda_s)=0$。第二层把「逐点大」翻译成覆盖：对每个点取一个满足 $\int_{B(x,r)}\lvert f\rvert>\varepsilon r^s$ 的小球，用\cref{theorem:ch01-1-24}选出两两不交的子族，其膨胀球覆盖 $\Lambda_s^\varepsilon$；球的直径受 $\delta$ 控制，故 $\mathcal{H}^s_{10\delta}$ 可以用这些球的 $s$ 次幂之和估计，而每个球又被 $\int_{B_i}\lvert f\rvert$ 控制、总和又被 $\int_U\lvert f\rvert$ 控制、后者又被 $\sigma$ 控制。% XREF internal
+
+三个参数的作用各不相同：$\varepsilon$ 把「上极限为正」离散化为「超过 $\varepsilon$」；$\delta$ 是覆盖的尺度，经 $\delta\to0$ 得到 $\mathcal{H}^s$；$\sigma$ 是积分的小量，经 $\sigma\to0$ 把估计化为零。三者次序不可交换：先 $\delta$ 后 $\sigma$，因为 $\sigma$ 只控制 $\int_U\lvert f\rvert$，而 $U$ 的选取依赖 $\eta$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-10; kind=hypotheses; 逐条分析局部可和性的作用、0≤s<n 的必要性与 s=n 的反例、s=0 与 s>n 的退化情形、Λ_s 的可测性，以及结论对 f 的等价类的依赖
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-10-条件}
+\begin{enumerate}[(i)]
+\item 条件 $f\in L^1_{\mathrm{loc}}(\mathbb{R}^n)$ 保证每个球上的积分 $\int_{B(x,r)}\lvert f\rvert\diff y$ 有限，从而 $\Lambda_s$ 的定义有意义；同时它使第 (2) 步中「$f$ 为 $\mathcal{L}^n$-可和」成立，从而给出 $\eta$ 的存在性。结论是局部的：$f$ 在远处的取值只影响 $\Lambda_s$ 在远处的部分，而 Hausdorff 测度由可数次可加性处理这部分。
+\item 条件 $0\leqslant s<n$ 是核心。它使 $r^{n-s}\to0$，从而第 (1) 步的极限为零；$s=n$ 时该论证失效，且结论确实可以不成立：取 $f\equiv1$ 与 $s=n$，则对一切 $x$ 与 $r>0$ 有
+\begin{align*}
+\frac{1}{r^n}\int_{B(x,r)}1\diff y=\alpha(n)>0 ,
+\end{align*}
+故 $\Lambda_n=\mathbb{R}^n$，而由\cref{theorem:ch02-2-5}得 $\mathcal{H}^n(\Lambda_n)=\mathcal{L}^n(\mathbb{R}^n)=+\infty$。% XREF internal
+\item $s>n$ 时结论自动成立而无需任何论证：由\cref{theorem:ch02-2-2}(iii) 得 $\mathcal{H}^s(\mathbb{R}^n)=0$，故 $\mathcal{H}^s(\Lambda_s)=0$。因此假设 $s<n$ 的真正作用只是排除临界值 $s=n$；结论实际上对一切 $0\leqslant s\neq n$ 成立。% XREF internal
+\item $s=0$ 时结论平凡成立：对每个 $x$，由控制收敛定理（\cref{theorem:ch01-1-19}）（取控制函数 $\lvert f\rvert\chi_{B(x,1)}\in L^1$）得 $\int_{B(x,r)}\lvert f\rvert\diff y\to0$（$r\to0$），故 $\Lambda_0=\varnothing$，$\mathcal{H}^0(\Lambda_0)=0$。此情形下第 (1) 步只给出较弱的 $\mathcal{L}^n(\Lambda_0)=0$。% XREF internal
+\item $\Lambda_s$ 不必事先假设可测：对固定的 $r>0$，函数 $x\mapsto\int_{B(x,r)}\lvert f\rvert\diff y$ 连续，因为 $\lvert f\rvert\chi_{B(x_k,r)}\to\lvert f\rvert\chi_{B(x,r)}$ 关于 $\mathcal{L}^n$-a.e. 的 $y$ 成立（仅可能在球面 $\partial B(x,r)$ 上不成立，而它是零测集），且被 $\lvert f\rvert\chi_{B(x,2r)}\in L^1$ 控制，可由控制收敛定理（\cref{theorem:ch01-1-19}）取极限。于是 $\Lambda_s$ 是可数个连续函数的上水平集的可数交并，从而是 Borel 集，$\mathcal{H}^s(\Lambda_s)$ 有意义。% XREF internal
+\item 结论只依赖 $\lvert f\rvert$ 的 $\mathcal{L}^n$ 等价类：改变 $f$ 在一个 $\mathcal{L}^n$-零集上的取值不改变任何积分，故不改变 $\Lambda_s$。
+\end{enumerate}
+\end{remark}
+
+\end{document}

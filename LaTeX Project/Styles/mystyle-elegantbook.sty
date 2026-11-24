@@ -365,6 +365,30 @@
   \fi
 }
 
+% 正文开头是列表环境时不插入 \noindent：否则锚点/OCG whatsit 会单独成行，形成空行
+% 允许正文以 \phantomsection、\label、\par 开头后再判断；\remarkbody 必须放在 \fi 之后
+\makeatletter
+\newcommand{\remarkbody}{%
+  \@ifnextchar\begin{\remarkbody@env}{%
+    \@ifnextchar\phantomsection{\remarkbody@anchor}{%
+      \@ifnextchar\label{\remarkbody@label}{%
+        \@ifnextchar\par{\remarkbody@par}{\noindent\ignorespaces}}}}}
+\def\remarkbody@env\begin#1{%
+  \def\@tempa{#1}%
+  \def\@tempb{enumerate}%
+  \ifx\@tempa\@tempb\else
+    \def\@tempb{itemize}%
+    \ifx\@tempa\@tempb\else
+      \def\@tempb{description}%
+      \ifx\@tempa\@tempb\else\noindent\fi
+    \fi
+  \fi
+  \begin{#1}}
+\def\remarkbody@anchor\phantomsection{\phantomsection\remarkbody}
+\def\remarkbody@label\label#1{\label{#1}\remarkbody}
+\def\remarkbody@par\par{\remarkbody}
+\makeatother
+
 % 注环境 remark
 \renewenvironment{remark}{%
   \stepcounter{ocgcount}%
@@ -374,7 +398,6 @@
     \begin{ocg}{rm\theocgcount}{rm\theocgcount}{off}%
       \textbf{\color{second}\remarkname} \citshape\quad
       \par\nobreak
-      \noindent\ignorespaces
   \else
     % 显示模式：带按钮的交互
     \textbf{\color{second}\remarkname} \citshape\quad
@@ -382,8 +405,8 @@
     \par\nobreak
     \begin{ocg}{rm\theocgcount}{rm\theocgcount}{on}%
       \begin{ocg}{}{global}{on}%
-        \noindent\ignorespaces
   \fi
+  \remarkbody
 }{%
   \ifHideEnvContent
       \leavevmode

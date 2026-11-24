@@ -1,4 +1,4 @@
-\documentclass[../../main.tex]{subfiles}% 注意这里的文件路径不能用 ./main.tex ,否则用latexmk编译子文件会报错
+﻿\documentclass[../../main.tex]{subfiles}% 注意这里的文件路径不能用 ./main.tex ,否则用latexmk编译子文件会报错
 \graphicspath{{\subfix{./image/}}{\subfix{../../image/}}} % 指定图片引用路径,后续可以直接使用图片文件名
 % 如果图片存放在上级目录,则使用 ../../image/ 作为备用路径
 
@@ -15,133 +15,316 @@
 
 \section{存在性结果的证明：逼近问题}\label{section:ch07-逼近问题}
 
-设 (Pn) 的初值 $u_{0n}\in L^1(\mathbb{R})\cap L^\infty(\mathbb{R})$ 满足下列性质（见\cref{lemma:ch06-6.5.1}与\eqref{align:ch6-6.49b}--\eqref{align:ch6-6.49c}）：
+设问题 (Pn) 的初值 $u_{0n}\in L^1(\mathbb{R})\cap L^\infty(\mathbb{R})$ 满足下列性质（见\cref{lemma:ch06-6.5.1}与\eqref{align:ch6-6.49b}--\eqref{align:ch6-6.49c}）：
 \begin{align}
 u_{0n}\geqslant0\ \text{在 }\mathbb{R},\qquad
 \|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})}, \label{align:ch07-7.44}
 \end{align}
 \begin{align}
-u_{0n}\stackrel{*}{\rightharpoonup}u_0,\quad
+u_{0n}\stackrel{*}{\rightharpoonup}u_0\ \text{在 }\mathscr{R}_f(\mathbb{R})\text{ 中},\quad
 u_{0n}\to u_{0r}\ \text{在 }\mathbb{R}\text{ 中几乎处处},\quad
 \|u_{0n}-u_{0r}\|_{L^1_{\mathrm{loc}}(\mathbb{R}\setminus\operatorname{supp}u_{0s})}\to0. \label{align:ch07-7.45}
 \end{align}
-设 $\{u_{0n}^\epsilon\}\subseteq C^\infty_c(\mathbb{R})$，$u_{0n}^\epsilon\geqslant0$，为满足
+设 $\{u_{0n}^\varepsilon\}\subseteq C^\infty_c(\mathbb{R})$，$u_{0n}^\varepsilon\geqslant0$，为任一满足下式的族：
 \begin{align}
-\|u_{0n}^\epsilon\|_{L^1(\mathbb{R})}\leqslant\|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})},\quad
-\|u_{0n}^\epsilon\|_{L^\infty(\mathbb{R})}\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})}, \label{align:ch07-7.46}
+\|u_{0n}^\varepsilon\|_{L^1(\mathbb{R})}\leqslant\|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})},\qquad
+\|u_{0n}^\varepsilon\|_{L^\infty(\mathbb{R})}\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})}, \label{align:ch07-7.46}
 \end{align}
 \begin{align}
-u_{0n}^\epsilon\to u_{0n}\ \text{在 }L^1(\mathbb{R}),\quad
-u_{0n}^\epsilon\stackrel{*}{\rightharpoonup}u_{0n}\ \text{在 }L^\infty(\mathbb{R})\ \text{当 }\epsilon\to0^+. \label{align:ch07-7.47}
+u_{0n}^\varepsilon\to u_{0n}\ \text{在 }L^1(\mathbb{R})\text{ 中},\qquad
+u_{0n}^\varepsilon\stackrel{*}{\rightharpoonup}u_{0n}\ \text{在 }L^\infty(\mathbb{R})\text{ 中，当 }\varepsilon\to0^+. \label{align:ch07-7.47}
 \end{align}
-设 $\eta\in C^\infty_c(\mathbb{R})$ 为标准磨光核。置 $\eta_\epsilon(y)\triangleq \frac1\epsilon\eta(y/\epsilon)$（$\epsilon>0$），
+设 $\eta\in C^\infty_c(\mathbb{R})$ 为标准磨光核。置 $\eta_\varepsilon(y)\triangleq\varepsilon^{-1}\eta(y/\varepsilon)$（$\varepsilon>0$）与
 \begin{align}
-\phi_\epsilon(y)\triangleq (\eta_\epsilon*\phi)(y)-(\eta_\epsilon*\phi)(0)\quad(y\in\mathbb{R}), \label{align:ch07-7.48}
+\phi_\varepsilon(y)\triangleq(\eta_\varepsilon*\phi)(y)-(\eta_\varepsilon*\phi)(0)\quad(y\in\mathbb{R}), \label{align:ch07-7.48}
 \end{align}
-其中 $\phi\triangleq \phi\chi_{[0,\infty)}$。与 (Pn) 相伴的正则化问题
+其中右端的 $\phi$ 表示把 $[0,\infty)$ 上给定的流零延拓到 $\mathbb{R}$ 所得的函数，即 $\phi\triangleq\phi\chi_{[0,\infty)}$。与 (Pn) 相伴的正则化问题为
 \begin{align*}
 \begin{cases}
-\partial_t u_n^\epsilon+\partial_x[\phi_\epsilon(u_n^\epsilon)]=\epsilon\,\partial_{xx}u_n^\epsilon & \text{在 }S,\\
-u_n^\epsilon=u_{0n}^\epsilon & \text{在 }\mathbb{R}\times\{0\},
+\partial_t u_n^\varepsilon+\partial_x[\phi_\varepsilon(u_n^\varepsilon)]=\varepsilon\,\partial_{xx}u_n^\varepsilon & \text{在 }S,\\
+u_n^\varepsilon=u_{0n}^\varepsilon & \text{在 }\mathbb{R}\times\{0\}.
 \end{cases}
-\qquad(Pn^\epsilon)
+\qquad(Pn^\varepsilon)
 \end{align*}
-有唯一强解 $u_n^\epsilon\in C([0,T];H^2(\mathbb{R}))\cap L^\infty(S)$，使 $\partial_t u_n^\epsilon\in L^2(S)$ 且 $u_n^\epsilon\geqslant0$（例如见文献~\cite{ref68}）。
+由拟线性抛物型方程的经典理论（例如见文献~\cite{ref68}），问题 (Pn$^\varepsilon$) 有唯一强解
+\begin{align*}
+u_n^\varepsilon\in C([0,T];H^2(\mathbb{R}))\cap L^\infty(S),\qquad \partial_t u_n^\varepsilon\in L^2(S),\qquad u_n^\varepsilon\geqslant0\ \text{在 }S.
+\end{align*}
 
-族 $\{u_n^\epsilon\}$ 的若干性质收集于下列引理。第一个引理的证明近乎标准（例如见文献~\cite{ref34}），故从略。
+% SUPPLEMENT: parent=section:ch07-逼近问题; kind=motivation; location=§7.4 开头（\eqref{align:ch07-7.44}--\eqref{align:ch07-7.48}与 (Pn$^\varepsilon$) 之后）; basis=原书只列出 \eqref{align:ch07-7.44}--\eqref{align:ch07-7.48} 并断言正则化问题有唯一强解，未说明两次逼近的分工、各项条件的逐处作用、\eqref{align:ch07-7.48} 中减项与零延拓的理由，也未给出失效的边界情形
+\begin{remark}\phantomsection\label{remark:ch07-初值逼近}
+\begin{enumerate}[(i)]
+\item 逼近程序的结构。\cref{theorem:ch07-7.3.1}的证明分三层。第一层把测度初值 $u_0\in\mathscr{R}_f^+(\mathbb{R})$ 换成 $L^1(\mathbb{R})\cap L^\infty(\mathbb{R})$ 函数 $u_{0n}$，使\eqref{align:ch07-7.44}--\eqref{align:ch07-7.45}成立；这样的序列由\cref{lemma:ch06-6.5.1}提供（它是\eqref{align:ch6-6.49b}--\eqref{align:ch6-6.49c}在 $\Omega=\mathbb{R}$ 的相应物）。第二层把 $u_{0n}$ 磨光成 $u_{0n}^\varepsilon\in C^\infty_c(\mathbb{R})$，使\eqref{align:ch07-7.46}--\eqref{align:ch07-7.47}成立，从而 (Pn$^\varepsilon$) 的初值落在 $H^2(\mathbb{R})$ 中。第三层先取 $\varepsilon\to0^+$ 得到 (Pn) 的熵解（\cref{lemma:ch07-7.4.5}--\cref{proposition:ch07-7.4.7}），再取 $n\to\infty$ 得到 (P) 的解（\cref{section:ch07-存在性证明}）。两次极限的次序不可交换：\eqref{align:ch07-7.51}与\eqref{align:ch07-7.52}右端的界只含 $u_{0n}$，故对每个固定的 $n$ 才能在 $\varepsilon$ 上取极限；而 $u_{0n}$ 本身只在 $n\to\infty$ 时才趋于测度 $u_0$。
+\item \eqref{align:ch07-7.44}--\eqref{align:ch07-7.45}的作用。(a) 非负性 $u_{0n}\geqslant0$ 经\cref{lemma:ch07-7.4.1}传给 $u_n^\varepsilon$ 与 $u_n$，是\eqref{align:ch07-7.77}中水平 $l$ 只取 $[0,\infty)$ 的依据，也是\eqref{align:ch07-7.53}中截断能量 $(1+u_n^\varepsilon)^{p-2}$ 有意义的依据。(b) $\|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$ 使\eqref{align:ch07-7.51}的界与 $n$ 无关，这是 Fréchet--Kolmogorov 定理在 $L^1(I_L)$ 上可用的前提。(c) 弱*收敛 $u_{0n}\stackrel{*}{\rightharpoonup}u_0$ 把极限测度识别为 $u_0$：它保证\eqref{align:ch07-7.45}中的极限与\cref{theorem:ch07-7.3.1}所要求的初值一致，且奇异部分 $u_{0s}$ 的质量在 $n\to\infty$ 时不丢失。(d) 几乎处处收敛 $u_{0n}\to u_{0r}$ 用于\eqref{align:ch07-7.70}一类几乎处处收敛的断言；若只有弱*收敛，极限可能是非退化的 Young 测度。(e) 条件 $\|u_{0n}-u_{0r}\|_{L^1_{\mathrm{loc}}(\mathbb{R}\setminus\operatorname{supp}u_{0s})}\to0$ 说明强 $L^1$ 收敛只在奇异部分的支撑集之外成立：$u_{0n}$ 必须用振幅逃逸到无穷的方式携带 $u_{0s}$ 的质量，故在 $\operatorname{supp}u_{0s}$ 的任何邻域内不可能强收敛。
+\item \eqref{align:ch07-7.46}--\eqref{align:ch07-7.47}的作用。(a) \eqref{align:ch07-7.46}中两个不等式把磨光前后的 $L^1$ 与 $L^\infty$ 范数逐个比较，其中第一个与\eqref{align:ch07-7.44}串联后给出与 $\varepsilon$、$n$ 都无关的常数 $\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$。(b) \eqref{align:ch07-7.47}的 $L^1$ 强收敛用于\eqref{align:ch07-7.81}的初值项 $\int_{\mathbb{R}}E_l(u_{0n}^\varepsilon)\zeta(x,0)\,\mathrm{d}x$ 的取极限（$E_l$ 为 Lipschitz 函数，$L^1$ 收敛即可），弱*收敛则用于\eqref{align:ch07-7.47}与\eqref{align:ch07-7.80}中与 $u_{0n}$ 有关的比较。(c) $u_{0n}^\varepsilon\in C^\infty_c(\mathbb{R})$ 使 (Pn$^\varepsilon$) 的初值属于 $H^2(\mathbb{R})$ 并具紧支撑，这是强解存在性定理的假设；同时它使\eqref{align:ch07-7.81}中 $E_l(u_{0n}^\varepsilon)$ 的支集紧，从而该积分有限。
+\item \eqref{align:ch07-7.48}中磨光与减项的作用。(a) 零延拓：给定的流 $\phi$ 只定义在 $[0,\infty)$ 上，而卷积 $(\eta_\varepsilon*\phi)(y)=\int\phi(y-z)\eta_\varepsilon(z)\,\mathrm{d}z$ 需在 $z$ 取值使 $y-z<0$ 时也有定义，故先取零延拓 $\phi\chi_{[0,\infty)}$；由于 $u_n^\varepsilon\geqslant0$，实际的复合 $\phi_\varepsilon(u_n^\varepsilon)$ 只用到 $\phi_\varepsilon$ 在 $[0,\infty)$ 上的值。(b) 磨光使 $\phi_\varepsilon\in C^\infty(\mathbb{R})$ 且 $\operatorname{Lip}(\phi_\varepsilon)\leqslant M$、$|\phi_\varepsilon(y)|\leqslant M|y|$：因为 $\phi$ 的几乎处处导数满足 $|\phi'|\leqslant M$（\eqref{align:ch07-7.1}），而 $\phi_\varepsilon'=\eta_\varepsilon*\phi'$ 是 $L^\infty$ 函数与概率核的卷积；$C^\infty$ 光滑性使 (Pn$^\varepsilon$) 成为经典意义下的拟线性抛物型方程。(c) 减项 $(\eta_\varepsilon*\phi)(0)$ 的唯一作用是规范化 $\phi_\varepsilon(0)=0$：\eqref{align:ch07-7.48}给出 $\phi_\varepsilon(0)=0$，从而常数是 (Pn$^\varepsilon$) 的解、\eqref{align:ch07-7.56}中的 $\Lambda_{U,\varepsilon}$ 在 $y=0$ 处取 $\vartheta_U$，且当 $\varepsilon\to0^+$ 时 $\phi_\varepsilon\to\phi$ 在每个紧集上一致（因 $\phi(0)=0$，而 $(\eta_\varepsilon*\phi)(y)\to\phi(y)$ 在 $[0,\infty)$ 的紧集上一致）。若省去该减项，则 $\phi_\varepsilon\to\phi-c$（$c$ 为 $(\eta_\varepsilon*\phi)(0)$ 的极限），\eqref{align:ch07-7.70}中第二个收敛将给出与\eqref{align:ch07-7.77}不符的熵通量。
+\item 边界。\eqref{align:ch07-7.45}中的弱*收敛不能换成 $L^1$ 强收敛：若 $u_{0s}\neq0$，则任何 $L^1$ 函数列都不可能在 $L^1(\mathbb{R})$ 中收敛到测度 $u_0$，因为 $\mathscr{R}_f(\mathbb{R})\setminus L^1(\mathbb{R})$ 在 $L^1$ 中不闭。同理\eqref{align:ch07-7.46}中第二个不等式不能加强为与 $n$ 无关的界：$\|u_{0n}\|_{L^\infty(\mathbb{R})}$ 一般随 $n$ 发散（奇异部分的质量须由逃逸到无穷的振幅承载），这正是\eqref{align:ch07-7.49}的界含 $n$ 的原因。
+\end{enumerate}
+\end{remark}
+
+族 $\{u_n^\varepsilon\}$ 的若干性质收集于下列引理。第一个引理的证明近乎标准（例如见文献~\cite{ref34}），原书从略。
 
 \begin{lemma}\label{lemma:ch07-7.4.1}
-设 $u_n^\epsilon$ 为问题 (Pn$^\epsilon$) 的解（$\epsilon>0$，$n\in\mathbb{N}$）。则：
+设 $\varepsilon>0$、$n\in\mathbb{N}$，$u_n^\varepsilon\in C([0,T];H^2(\mathbb{R}))\cap L^\infty(S)$ 为问题 (Pn$^\varepsilon$) 满足 $\partial_t u_n^\varepsilon\in L^2(S)$ 的唯一强解，其初值 $u_{0n}^\varepsilon\in C_c^\infty(\mathbb{R})$ 满足\eqref{align:ch07-7.46}--\eqref{align:ch07-7.47}。则下列四条成立：
+\begin{enumerate}[(i)]
+\item 非负性与 $L^\infty$ 界：
 \begin{align}
-u_n^\epsilon\geqslant0\ \text{在 }S,\qquad
-\|u_n^\epsilon\|_{L^\infty(S)}\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})}, \label{align:ch07-7.49}
+u_n^\varepsilon\geqslant0\ \text{在 }S,\qquad
+\|u_n^\varepsilon\|_{L^\infty(S)}\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})}; \label{align:ch07-7.49}
 \end{align}
+\item 质量守恒：对所有 $t\in(0,T)$，
 \begin{align}
-\|u_n^\epsilon(\cdot,t)\|_{L^1(\mathbb{R})}=\|u_{0n}^\epsilon\|_{L^1(\mathbb{R})}\quad(t\in(0,T)), \label{align:ch07-7.50}
+\|u_n^\varepsilon(\cdot,t)\|_{L^1(\mathbb{R})}=\|u_{0n}^\varepsilon\|_{L^1(\mathbb{R})}; \label{align:ch07-7.50}
 \end{align}
+\item 时空 $L^1$ 估计：
 \begin{align}
-\|u_n^\epsilon\|_{L^\infty(0,T;L^1(\mathbb{R}))}\leqslant\|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})}, \label{align:ch07-7.51}
+\|u_n^\varepsilon\|_{L^\infty(0,T;L^1(\mathbb{R}))}\leqslant\|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})}; \label{align:ch07-7.51}
 \end{align}
+\item 平移估计：
 \begin{align}
-\|u_n^\epsilon(\cdot+h,\cdot)-u_n^\epsilon\|_{L^\infty(0,T;L^1(\mathbb{R}))}
-\leqslant\|u_{0n}^\epsilon(\cdot+h)-u_{0n}^\epsilon\|_{L^1(\mathbb{R})}\quad\forall h\in\mathbb{R}. \label{align:ch07-7.52}
+\|u_n^\varepsilon(\cdot+h,\cdot)-u_n^\varepsilon\|_{L^\infty(0,T;L^1(\mathbb{R}))}
+\leqslant\|u_{0n}^\varepsilon(\cdot+h)-u_{0n}^\varepsilon\|_{L^1(\mathbb{R})}
+\quad\text{对所有 }h\in\mathbb{R}. \label{align:ch07-7.52}
 \end{align}
+\end{enumerate}
 \end{lemma}
 
+% SUPPLEMENT: parent=lemma:ch07-7.4.1; kind=proof; location=引理 7.4.1 之后（原书称证明近乎标准而从略）; basis=$L^1$ 压缩性（Kružkov 双重变量论证）的完整陈述与假设核验、由压缩性导出非负性与 $L^\infty$ 界的方式、质量守恒的截断函数论证与单调收敛定理、\eqref{align:ch07-7.52} 由平移不变性得到的一步
+\begin{proof}[补证：\cref{lemma:ch07-7.4.1}]
+先记录 $\phi_\varepsilon$ 的三条性质。由\eqref{align:ch07-7.48}与\eqref{align:ch07-7.1}，$\phi'$ 在 $(0,\infty)$ 上几乎处处存在且 $|\phi'|\leqslant M$，零延拓后在 $\mathbb{R}\setminus\{0\}$ 上几乎处处满足同一不等式，故
+\begin{align*}
+\phi_\varepsilon\in C^\infty(\mathbb{R}),\qquad
+\phi_\varepsilon(0)=0,\qquad
+\operatorname{Lip}(\phi_\varepsilon)\leqslant M,\qquad
+|\phi_\varepsilon(y)|\leqslant M|y|\ \ (y\in\mathbb{R}).
+\end{align*}
+第一式由磨光得到，第二式由\eqref{align:ch07-7.48}的减项给出，第三式由 $\phi_\varepsilon'=\eta_\varepsilon*\phi'$ 与 $\|\phi'\|_{L^\infty(\mathbb{R})}\leqslant M$ 给出，第四式由 $\phi_\varepsilon(0)=0$ 与第三式给出。
+
+第一步：$L^1$ 压缩性。设 $u,v\in C([0,T];H^2(\mathbb{R}))\cap L^\infty(S)$ 为 (Pn$^\varepsilon$) 的两个强解，初值分别为 $u_0,v_0\in C^\infty_c(\mathbb{R})$。对 $k\in\mathbb{R}$ 置
+\begin{align*}
+E_k(y)\triangleq|y-k|,\qquad F_k(y)\triangleq\operatorname{sgn}(y-k)[\phi_\varepsilon(y)-\phi_\varepsilon(k)]\quad(y\in\mathbb{R}).
+\end{align*}
+由于 $u$ 光滑且 $\partial_tu=\varepsilon\partial_{xx}u-\phi_\varepsilon'(u)\partial_xu$ 在 $S$ 上几乎处处成立，在 $u\neq k$ 处有
+\begin{align*}
+\partial_tE_k(u)+\partial_xF_k(u)=\operatorname{sgn}(u-k)(\partial_tu+\phi_\varepsilon'(u)\partial_xu)=\varepsilon\operatorname{sgn}(u-k)\partial_{xx}u;
+\end{align*}
+在 $u=k$ 处 $E_k$ 的二阶复合导数含非负测度 $2\delta_{u=k}|\partial_xu|^2$。于是
+\begin{align*}
+\partial_tE_k(u)+\partial_xF_k(u)\leqslant\varepsilon\,\partial_{xx}E_k(u)\quad\text{在 }\mathscr{D}'(S)\text{ 中},
+\end{align*}
+其中不等式来自 $(\partial_{xx}E_k)(u)=\operatorname{sgn}(u-k)\partial_{xx}u+2\delta_{u=k}|\partial_xu|^2$ 与 $\delta_{u=k}\geqslant0$。$v$ 满足同样的不等式。取 $\rho_\delta$ 为标准磨光核（$\delta>0$），$\beta\in C^1_c(0,T)$，$\beta\geqslant0$。把 $u$ 的不等式在水平 $k=v(y,s)$ 处乘以 $\rho_\delta(x-y)\beta(s)$，把 $v$ 的不等式在水平 $k=u(x,s)$ 处乘以 $\rho_\delta(x-y)\beta(s)$，分别在 $(x,s)$ 与 $(y,s)$ 上积分后相加。三重积分中含 $\partial_x\rho_\delta$ 与 $\partial_y\rho_\delta$ 的项的系数为 $\pm\operatorname{sgn}(u(x,s)-v(y,s))[\phi_\varepsilon(u(x,s))-\phi_\varepsilon(v(y,s))]$，其绝对值不超过 $M|u(x,s)-v(y,s)|$；含 $\varepsilon$ 的二阶项相应为 $\varepsilon|\partial_{xx}\rho_\delta|$ 与 $\varepsilon|\partial_{yy}\rho_\delta|$ 的倍数。令 $\delta\to0^+$，利用 $u(\cdot,s),v(\cdot,s)\in H^2(\mathbb{R})\subseteq W^{1,1}(\mathbb{R})$ 的平移连续性（即 $\int_{\mathbb{R}}|v(x)-v(y)||\rho_\delta'(x-y)|\,\mathrm{d}x\to0$），上述各项消失，只剩
+\begin{align*}
+\int_0^T\beta(s)\frac{\mathrm{d}}{\mathrm{d}s}\left[\int_{\mathbb{R}}(u-v)^+(x,s)\,\mathrm{d}x\right]\mathrm{d}s\leqslant0.
+\end{align*}
+由 $\beta\geqslant0$ 任意，得 $\frac{\mathrm{d}}{\mathrm{d}t}\int_{\mathbb{R}}(u-v)^+(\cdot,t)\,\mathrm{d}x\leqslant0$ 在 $(0,T)$ 中几乎处处成立，故
+\begin{align*}
+\int_{\mathbb{R}}(u-v)^+(x,t)\,\mathrm{d}x\leqslant\int_{\mathbb{R}}(u_0-v_0)^+(x)\,\mathrm{d}x\quad(t\in(0,T)).
+\end{align*}
+交换 $u$ 与 $v$ 的地位又得 $(u-v)^-$ 的同类不等式，相加即得
+\begin{align*}
+\|(u-v)(\cdot,t)\|_{L^1(\mathbb{R})}\leqslant\|u_0-v_0\|_{L^1(\mathbb{R})}\quad(t\in(0,T)).
+\end{align*}
+第二步：非负性与 $L^\infty$ 界。常数是 (Pn$^\varepsilon$) 的解，因为 $\partial_x[\phi_\varepsilon(c)]=0$。在第一步中取 $v\equiv M_\infty\triangleq\|u_{0n}\|_{L^\infty(\mathbb{R})}$；由\eqref{align:ch07-7.46}有 $u_{0n}^\varepsilon\leqslant M_\infty$，故
+\begin{align*}
+\int_{\mathbb{R}}(u_n^\varepsilon-M_\infty)^+(x,t)\,\mathrm{d}x\leqslant\int_{\mathbb{R}}(u_{0n}^\varepsilon-M_\infty)^+(x)\,\mathrm{d}x=0,
+\end{align*}
+即 $u_n^\varepsilon\leqslant M_\infty$ 在 $S$ 中几乎处处成立；因 $H^2(\mathbb{R})\subseteq C_b(\mathbb{R})$（$N=1$），取连续代表后该不等式在 $S$ 上处处成立。再取 $v\equiv0$、$u_0=u_{0n}^\varepsilon\geqslant0$，得 $\int_{\mathbb{R}}(u_n^\varepsilon)^+(x,t)\,\mathrm{d}x\leqslant\|u_{0n}^\varepsilon\|_{L^1(\mathbb{R})}$。又由第三步的\eqref{align:ch07-7.50}有 $\int_{\mathbb{R}}u_n^\varepsilon\,\mathrm{d}x=\int_{\mathbb{R}}u_{0n}^\varepsilon\,\mathrm{d}x=\int_{\mathbb{R}}(u_{0n}^\varepsilon)^+\,\mathrm{d}x$，于是
+\begin{align*}
+\int_{\mathbb{R}}(u_n^\varepsilon)^-\,\mathrm{d}x=\int_{\mathbb{R}}(u_n^\varepsilon)^+\,\mathrm{d}x-\int_{\mathbb{R}}u_n^\varepsilon\,\mathrm{d}x\leqslant0,
+\end{align*}
+故 $u_n^\varepsilon\geqslant0$ 在 $S$ 中（几乎处处，取连续代表后处处成立）。
+第三步：质量守恒。取截断函数 $\zeta_R\in C^2_c(\mathbb{R})$，$0\leqslant\zeta_R\leqslant1$，$\zeta_R=1$ 在 $[-R,R]$ 上，$\zeta_R=0$ 在 $[-R-1,R+1]$ 外，$|\zeta_R'|\leqslant2$，$|\zeta_R''|\leqslant4$。在 (Pn$^\varepsilon$) 两端乘以 $\zeta_R(x)$ 并在 $S_t\triangleq\mathbb{R}\times(0,t)$ 上分部积分；因 $u_n^\varepsilon\in C([0,T];H^2(\mathbb{R}))$，函数 $s\mapsto\int_{\mathbb{R}}u_n^\varepsilon\zeta_R\,\mathrm{d}x$ 绝对连续，故
+\begin{align*}
+\int_{\mathbb{R}}u_n^\varepsilon(x,t)\zeta_R(x)\,\mathrm{d}x-\int_{\mathbb{R}}u_{0n}^\varepsilon(x)\zeta_R(x)\,\mathrm{d}x
+=\int_0^t\int_{\mathbb{R}}\big[\phi_\varepsilon(u_n^\varepsilon)\zeta_R'+\varepsilon u_n^\varepsilon\zeta_R''\big](x,s)\,\mathrm{d}x\,\mathrm{d}s.
+\end{align*}
+右端的绝对值不超过 $(2M+4\varepsilon)\int_0^T\int_{\{|x|\geqslant R\}}|u_n^\varepsilon|\,\mathrm{d}x\,\mathrm{d}s$，由\eqref{align:ch07-7.51}知 $u_n^\varepsilon\in L^1(S)$，故由控制收敛定理该量当 $R\to\infty$ 时趋于零。左端两项中 $u_n^\varepsilon\geqslant0$、$u_{0n}^\varepsilon\geqslant0$，由单调收敛定理分别趋于 $\int_{\mathbb{R}}u_n^\varepsilon(x,t)\,\mathrm{d}x$ 与 $\int_{\mathbb{R}}u_{0n}^\varepsilon(x)\,\mathrm{d}x$。故 $\|u_n^\varepsilon(\cdot,t)\|_{L^1(\mathbb{R})}=\|u_{0n}^\varepsilon\|_{L^1(\mathbb{R})}$，即\eqref{align:ch07-7.50}。
+第四步：\eqref{align:ch07-7.51}与\eqref{align:ch07-7.52}。由\eqref{align:ch07-7.50}与\eqref{align:ch07-7.46}中第一个不等式，对每个 $t\in(0,T)$ 有 $\|u_n^\varepsilon(\cdot,t)\|_{L^1}\leqslant\|u_{0n}\|_{L^1}\leqslant\|u_0\|_{\mathscr{R}_f}$，取上确界即得\eqref{align:ch07-7.51}。最后固定 $h\in\mathbb{R}$。因 (Pn$^\varepsilon$) 的系数与 $x$ 无关，函数 $v(x,t)\triangleq u_n^\varepsilon(x+h,t)$ 也是 (Pn$^\varepsilon$) 的强解，其初值为 $u_{0n}^\varepsilon(\cdot+h)$；对 $(u_n^\varepsilon,v)$ 用上式即得\eqref{align:ch07-7.52}。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch07-7.4.1; kind=motivation; location=引理 7.4.1 后的注记; basis=引理 7.4.1 的四款估计 + 它们各自在后续紧性论证中的作用、\eqref{align:ch07-7.48} 的规范化与 $u_{0n}^\varepsilon\geqslant0$ 的必要性、常数解在压缩性论证中的地位，以及去掉非负性或去掉磨光初值的边界情形
+\begin{remark}\phantomsection\label{remark:ch07-7.4.1解估计}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch07-7.49}--\eqref{align:ch07-7.52}是把 $\{u_n^\varepsilon\}$ 的极限过程组织起来所需的全部先验信息：\eqref{align:ch07-7.49}给出与 $\varepsilon$ 无关的 $L^\infty(S)$ 界，使 $\{u_n^\varepsilon\}$ 落在 $L^\infty(S)$ 的单位球内，从而可用 Banach--Alaoglu 定理抽取弱*收敛子列，并使\eqref{align:ch07-7.70}中的复合函数能用控制收敛定理取极限；\eqref{align:ch07-7.50}是精确的质量守恒，它排除质量损失，并把\eqref{align:ch07-7.79}的等号提前固定下来；\eqref{align:ch07-7.51}给出与 $n$ 也无关的 $L^\infty(0,T;L^1(\mathbb{R}))$ 界；\eqref{align:ch07-7.52}是平移估计，它与\eqref{align:ch07-7.51}一起正是 Fréchet--Kolmogorov 定理的两个假设，用于\cref{lemma:ch07-7.4.5}中的 $L^1(I_L)$ 紧性。
+\item 每项假设的作用。(a) $u_{0n}^\varepsilon\geqslant0$ 与质量守恒共同给出 $u_n^\varepsilon\geqslant0$：压缩性只给出上方界 $\int(u_n^\varepsilon-M_\infty)^+=0$，下方的非负性须同时用 $\int u_n^\varepsilon$ 不减少；若 $u_{0n}^\varepsilon$ 变号，则\eqref{align:ch07-7.50}与\eqref{align:ch07-7.49}仍成立，但\eqref{align:ch07-7.53}中 $(1+u_n^\varepsilon)^{p-2}$ 将在 $u_n^\varepsilon=-1$ 处发散。(b) $\phi_\varepsilon(0)=0$ 来自\eqref{align:ch07-7.48}的减项，它使 $u\equiv0$ 与一切常数都是 (Pn$^\varepsilon$) 的强解，第二步的压缩性比较用的正是这两个常数解；若 $\phi_\varepsilon(0)$ 是非零常数，常数仍是解（因 $\partial_x[\phi_\varepsilon(c)]=0$），非负性不受影响，但 $\phi_\varepsilon$ 在 $0$ 处的取值会改变\eqref{align:ch07-7.77}中水平 $l=0$ 的熵通量，见\cref{remark:ch07-初值逼近}(iv)。(c) $\operatorname{Lip}(\phi_\varepsilon)\leqslant M$ 是第一步中 $\int|u-v||\rho_\delta'|$ 项可被吸收的唯一依据；若 $\phi_\varepsilon$ 只有连续性，则不能由 $L^1$ 范数控制 $\phi_\varepsilon(u)-\phi_\varepsilon(v)$，压缩性失效。(d) $u_n^\varepsilon\in C([0,T];H^2(\mathbb{R}))\cap L^\infty(S)$ 与 $\partial_tu_n^\varepsilon\in L^2(S)$ 保证第三步的绝对连续性与分部积分合法；若只有弱解，$s\mapsto\int u_n^\varepsilon\zeta_R$ 的时间正则性不足。
+\item 边界与结论的限度。(a) \eqref{align:ch07-7.50}中的范数是 $L^1(\mathbb{R})$ 而非 $L^1_{\mathrm{loc}}$：由于 $u_n^\varepsilon\in L^1(S)$，截断误差 $\int_{|x|\geqslant R}|u_n^\varepsilon|$ 可任意小，故等号对全空间成立；若初值只在 $L^1_{\mathrm{loc}}$ 中，等号只能对每个有界区间成立。(b) \eqref{align:ch07-7.52}右端含 $u_{0n}^\varepsilon$ 而非 $u_{0n}$：对固定的 $n$，$\varepsilon\mapsto\|u_{0n}^\varepsilon(\cdot+h)-u_{0n}^\varepsilon\|_{L^1}$ 有界（由\eqref{align:ch07-7.47}的 $L^1$ 收敛与三角不等式），这正是它在 $\varepsilon$ 上可用的理由；但该量一般不对 $\varepsilon$ 单调，故不能直接对 $\varepsilon$ 取下确界。(c) 本引理的四款估计都与 $p$ 无关；含 $p$ 的估计在\cref{lemma:ch07-7.4.2}中才出现。
+\end{enumerate}
+\end{remark}
+
 \begin{lemma}\label{lemma:ch07-7.4.2}
-设\eqref{align:ch07-7.1}成立。则存在 $C>0$（仅依赖于 $\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$），使对任意 $n\in\mathbb{N}$、$\epsilon\in(0,1)$ 及 $p\in(0,1)$，
+设\eqref{align:ch07-7.1}成立，即 $\phi\in\operatorname{Lip}([0,\infty))$ 且 $|\phi'(y)|\leqslant M$、$|\phi(y)|\leqslant My$ 对 $y>0$ 成立。则存在常数 $C>0$（仅依赖于 $\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$、$M$ 与 $T$），使对任意 $n\in\mathbb{N}$、$\varepsilon\in(0,1)$ 及 $p\in(0,1)$，
 \begin{align}
-\epsilon\iint_S(1+u_n^\epsilon)^{p-2}(\partial_x u_n^\epsilon)^2\,\mathrm{d}x\,\mathrm{d}t
+\varepsilon\iint_S(1+u_n^\varepsilon)^{p-2}(\partial_xu_n^\varepsilon)^2\,\mathrm{d}x\,\mathrm{d}t
 \leqslant\frac{C}{p(1-p)}. \label{align:ch07-7.53}
 \end{align}
 \end{lemma}
 
 \begin{proof}
-设 $U\in C^2([0,\infty))$，$U'\geqslant0$ 在 $(0,\infty)$。置
+设 $U\in C^2([0,\infty))$ 满足 $U'\geqslant0$ 在 $(0,\infty)$ 上。置
 \begin{align}
-\Lambda_{U,\epsilon}(y)\triangleq \int_0^y U'(z)\phi_\epsilon'(z)\,\mathrm{d}z+\vartheta_U\quad(\vartheta_U\in\mathbb{R}). \label{align:ch07-7.54}
+\Lambda_{U,\varepsilon}(y)\triangleq\int_0^yU'(z)\phi_\varepsilon'(z)\,\mathrm{d}z+\vartheta_U\quad(\vartheta_U\in\mathbb{R}). \label{align:ch07-7.54}
 \end{align}
-由\eqref{align:ch07-7.1}与\eqref{align:ch07-7.48}，对所有 $y\geqslant0$，
+由\eqref{align:ch07-7.1}与\eqref{align:ch07-7.48}，对所有 $y\geqslant0$ 有
 \begin{align}
-|\Lambda_{U,\epsilon}(y)|\leqslant\int_0^y U'(z)|\phi_\epsilon'(z)|\,\mathrm{d}z+|\vartheta_U|
+|\Lambda_{U,\varepsilon}(y)|\leqslant\int_0^yU'(z)|\phi_\varepsilon'(z)|\,\mathrm{d}z+|\vartheta_U|
 \leqslant M[U(y)-U(0)]+|\vartheta_U|. \label{align:ch07-7.55}
 \end{align}
-将 (Pn$^\epsilon$) 第一式乘以 $U'(u_n^\epsilon)$，得
+将 (Pn$^\varepsilon$) 的第一式乘以 $U'(u_n^\varepsilon)$，得
 \begin{align}
-\partial_t[U(u_n^\epsilon)]+\partial_x[\Lambda_{U,\epsilon}(u_n^\epsilon)]
-=\epsilon\,\partial_{xx}[U(u_n^\epsilon)]-\epsilon U''(u_n^\epsilon)(\partial_x u_n^\epsilon)^2
-\quad\text{在 }S. \label{align:ch07-7.56}
+\partial_t[U(u_n^\varepsilon)]+\partial_x[\Lambda_{U,\varepsilon}(u_n^\varepsilon)]
+=\varepsilon\,\partial_{xx}[U(u_n^\varepsilon)]-\varepsilon U''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2
+\quad\text{在 }S\text{ 中}. \label{align:ch07-7.56}
 \end{align}
-于是对所有 $\zeta\in C^1([0,T];C^2_c(\mathbb{R}))$，
+于是对所有 $\zeta\in C^1([0,T];C^2_c(\mathbb{R}))$ 有
 \begin{align}
 \begin{aligned}
-\epsilon\iint_S&U''(u_n^\epsilon)(\partial_x u_n^\epsilon)^2\zeta\,\mathrm{d}x\,\mathrm{d}t+\int_{\mathbb{R}}U(u_n^\epsilon(x,T))\zeta(x,T)\,\mathrm{d}x\\
-&=\int_{\mathbb{R}}U(u_{0n}^\epsilon)\zeta(x,0)\,\mathrm{d}x
-+\iint_S[U(u_n^\epsilon)\partial_t\zeta+\Lambda_{U,\epsilon}(u_n^\epsilon)\partial_x\zeta+\epsilon U(u_n^\epsilon)\partial_{xx}\zeta]\,\mathrm{d}x\,\mathrm{d}t.
-\end{aligned} \label{align:ch07-7.57}
+&\varepsilon\iint_SU''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2\zeta\,\mathrm{d}x\,\mathrm{d}t
++\int_{\mathbb{R}}U(u_n^\varepsilon(x,T))\zeta(x,T)\,\mathrm{d}x\\
+&\quad=\int_{\mathbb{R}}U(u_{0n}^\varepsilon)\zeta(x,0)\,\mathrm{d}x
++\iint_S[U(u_n^\varepsilon)\partial_t\zeta+\Lambda_{U,\varepsilon}(u_n^\varepsilon)\partial_x\zeta
++\varepsilon U(u_n^\varepsilon)\partial_{xx}\zeta]\,\mathrm{d}x\,\mathrm{d}t.
+\end{aligned} 
+\label{align:ch07-7.57}
 \end{align}
-取 $\vartheta_U=0$，$U(y)=(1+u)^p-1$（$p\in(0,1)$），及
+取 $\vartheta_U=0$、$U(y)=(1+y)^p-1$（$p\in(0,1)$）及
 \begin{align*}
-\zeta=\rho_k\triangleq \chi_{[-k,k]}+\rho(\cdot-k)\chi_{[k,k+1)}+\rho(\cdot+k)\chi_{(-k-1,-k]}\quad(k\in\mathbb{N})
+\zeta=\rho_k\triangleq\chi_{[-k,k]}+\rho(\cdot-k)\chi_{[k,k+1)}+\rho(\cdot+k)\chi_{(-k-1,-k]}\quad(k\in\mathbb{N}),
 \end{align*}
-其中 $\rho\in C^2_c((-1,1))$ 满足 $\rho(0)=1$、$0\leqslant\rho\leqslant1$、$\rho'(0)=\rho''(0)=0$。则 $0\leqslant U(y)\leqslant y$（$y\geqslant0$），由\eqref{align:ch07-7.51}、\eqref{align:ch07-7.55}与\eqref{align:ch07-7.57}得
+其中 $\rho\in C^2_c((-1,1))$ 满足 $\rho(0)=1$、$0\leqslant\rho\leqslant1$、$\rho'(0)=\rho''(0)=0$。则 $0\leqslant U(y)\leqslant y$ 对 $y\geqslant0$ 成立，且由\eqref{align:ch07-7.51}、\eqref{align:ch07-7.55}与\eqref{align:ch07-7.57}得
 \begin{align*}
-\epsilon p(1-p)\iint_S(1+u_n^\epsilon)^{p-2}(\partial_x u_n^\epsilon)^2\rho_k\,\mathrm{d}x\,\mathrm{d}t
-\leqslant\int_{\mathbb{R}}u_{0n}^\epsilon(x)\,\mathrm{d}x
-+\iint_S[Mu_n^\epsilon|\rho_k'|+\epsilon u_n^\epsilon|\rho_k''|]\,\mathrm{d}x\,\mathrm{d}t
+&\varepsilon p(1-p)\iint_S(1+u_n^\varepsilon)^{p-2}(\partial_xu_n^\varepsilon)^2\rho_k\,\mathrm{d}x\,\mathrm{d}t\\
+&\quad\leqslant\int_{\mathbb{R}}u_{0n}^\varepsilon(x)\,\mathrm{d}x
++\iint_S[Mu_n^\varepsilon|\rho_k'|+\varepsilon u_n^\varepsilon|\rho_k''|]\,\mathrm{d}x\,\mathrm{d}t
 \leqslant[1+(M+1)T\|\rho\|_{C^2([-1,1])}]\|u_0\|_{\mathscr{R}_f(\mathbb{R})}=:C
 \end{align*}
-对所有 $\epsilon\in(0,1)$ 与 $k\in\mathbb{N}$ 成立。令 $k\to\infty$ 得\eqref{align:ch07-7.53}，结论得证。
+对所有 $\varepsilon\in(0,1)$ 与 $k\in\mathbb{N}$ 成立。令 $k\to\infty$，由单调收敛定理得\eqref{align:ch07-7.53}，结论得证。
 \end{proof}
+
+% SUPPLEMENT: parent=lemma:ch07-7.4.2; kind=proof; location=引理 7.4.2 证明中由 (Pn$^\varepsilon$) 到 \eqref{align:ch07-7.56}、由 \eqref{align:ch07-7.56} 到 \eqref{align:ch07-7.57}、以及代入选定的 $U$ 后得到常数 $C$ 三处跳跃; basis=链式法则逐项计算、$x$ 与 $t$ 方向的分部积分与端点项、$U(y)=(1+y)^p-1$ 时 $U''=-p(1-p)(1+y)^{p-2}$ 与 $0\leqslant U(y)\leqslant y$ 的核验、$\rho_k$ 的 $C^2$ 范数估计与 $k\to\infty$ 时的单调收敛
+\begin{proof}[补证：\eqref{align:ch07-7.56}、\eqref{align:ch07-7.57}与常数 $C$ 的来源]
+第一步：\eqref{align:ch07-7.56}。由 $u_n^\varepsilon\in C([0,T];H^2(\mathbb{R}))$ 与 $\phi_\varepsilon\in C^\infty(\mathbb{R})$，在 $S$ 上几乎处处可用链式法则。由 $\Lambda_{U,\varepsilon}'=U'\phi_\varepsilon'$ 得
+\begin{align*}
+\partial_x[\Lambda_{U,\varepsilon}(u_n^\varepsilon)]=\Lambda_{U,\varepsilon}'(u_n^\varepsilon)\partial_xu_n^\varepsilon
+=U'(u_n^\varepsilon)\phi_\varepsilon'(u_n^\varepsilon)\partial_xu_n^\varepsilon,
+\end{align*}
+而
+\begin{align*}
+\varepsilon\,\partial_{xx}[U(u_n^\varepsilon)]
+=\varepsilon U'(u_n^\varepsilon)\partial_{xx}u_n^\varepsilon+\varepsilon U''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2.
+\end{align*}
+以 $U'(u_n^\varepsilon)$ 乘 $\partial_tu_n^\varepsilon+\phi_\varepsilon'(u_n^\varepsilon)\partial_xu_n^\varepsilon=\varepsilon\partial_{xx}u_n^\varepsilon$，并把上两式代入，即得\eqref{align:ch07-7.56}。
+第二步：\eqref{align:ch07-7.57}。设 $\zeta\in C^1([0,T];C^2_c(\mathbb{R}))$，以 $\zeta$ 乘\eqref{align:ch07-7.56}的两端并在 $S$ 上积分：
+\begin{align*}
+\iint_S\partial_t[U(u_n^\varepsilon)]\zeta\,\mathrm{d}x\,\mathrm{d}t
++\iint_S\partial_x[\Lambda_{U,\varepsilon}(u_n^\varepsilon)]\zeta\,\mathrm{d}x\,\mathrm{d}t
+=\varepsilon\iint_S\partial_{xx}[U(u_n^\varepsilon)]\zeta\,\mathrm{d}x\,\mathrm{d}t
+-\varepsilon\iint_SU''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2\zeta\,\mathrm{d}x\,\mathrm{d}t.
+\end{align*}
+第一项对 $t$ 分部积分：因 $U(u_n^\varepsilon)\in C([0,T];L^2(\mathbb{R}))$ 且 $\partial_t[U(u_n^\varepsilon)]=U'(u_n^\varepsilon)\partial_tu_n^\varepsilon\in L^2(S)$，
+\begin{align*}
+\iint_S\partial_t[U(u_n^\varepsilon)]\zeta\,\mathrm{d}x\,\mathrm{d}t
+=\int_{\mathbb{R}}U(u_n^\varepsilon(x,T))\zeta(x,T)\,\mathrm{d}x-\int_{\mathbb{R}}U(u_{0n}^\varepsilon)\zeta(x,0)\,\mathrm{d}x
+-\iint_SU(u_n^\varepsilon)\partial_t\zeta\,\mathrm{d}x\,\mathrm{d}t.
+\end{align*}
+第二、三项对 $x$ 分部积分（支集在 $x$ 方向紧，无边界项）：
+\begin{align*}
+\iint_S\partial_x[\Lambda_{U,\varepsilon}(u_n^\varepsilon)]\zeta\,\mathrm{d}x\,\mathrm{d}t
+=-\iint_S\Lambda_{U,\varepsilon}(u_n^\varepsilon)\partial_x\zeta\,\mathrm{d}x\,\mathrm{d}t,\qquad
+\varepsilon\iint_S\partial_{xx}[U(u_n^\varepsilon)]\zeta\,\mathrm{d}x\,\mathrm{d}t
+=\varepsilon\iint_SU(u_n^\varepsilon)\partial_{xx}\zeta\,\mathrm{d}x\,\mathrm{d}t.
+\end{align*}
+把三式代回并把 $-\varepsilon\iint_SU''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2\zeta$ 移到左端，即得\eqref{align:ch07-7.57}。
+第三步：$U(y)=(1+y)^p-1$ 的初等性质。设 $p\in(0,1)$、$y\geqslant0$。则 $U(0)=0$、$U'(y)=p(1+y)^{p-1}\geqslant0$，
+\begin{align*}
+U''(y)=p(p-1)(1+y)^{p-2}=-p(1-p)(1+y)^{p-2},
+\end{align*}
+且由 $0<p<1$ 与 $1+y\geqslant1$ 得 $(1+y)^p\leqslant1+y$，故 $0\leqslant U(y)\leqslant y$。又 $\vartheta_U=0$ 与 $U'\geqslant0$ 给出 $\Lambda_{U,\varepsilon}(y)\leqslant M[U(y)-U(0)]=M[(1+y)^p-1]\leqslant My$。
+第四步：常数 $C$。把第三步诸式代入\eqref{align:ch07-7.57}并取 $\zeta=\rho_k$（与 $t$ 无关，故 $\partial_t\rho_k=0$）：
+\begin{align*}
+&-\varepsilon p(1-p)\iint_S(1+u_n^\varepsilon)^{p-2}(\partial_xu_n^\varepsilon)^2\rho_k\,\mathrm{d}x\,\mathrm{d}t
++\int_{\mathbb{R}}U(u_n^\varepsilon(x,T))\rho_k(x)\,\mathrm{d}x\\
+&\quad=\int_{\mathbb{R}}U(u_{0n}^\varepsilon)\rho_k(x)\,\mathrm{d}x
++\iint_S[\Lambda_{U,\varepsilon}(u_n^\varepsilon)\rho_k'+\varepsilon U(u_n^\varepsilon)\rho_k'']\,\mathrm{d}x\,\mathrm{d}t.
+\end{align*}
+把左端第一项移到右端，并用 $0\leqslant U(y)\leqslant y$、$\Lambda_{U,\varepsilon}(u_n^\varepsilon)\leqslant Mu_n^\varepsilon$、$u_n^\varepsilon\geqslant0$ 与 $\rho_k\geqslant0$：
+\begin{align*}
+&\varepsilon p(1-p)\iint_S(1+u_n^\varepsilon)^{p-2}(\partial_xu_n^\varepsilon)^2\rho_k\,\mathrm{d}x\,\mathrm{d}t\\
+&\quad\leqslant\int_{\mathbb{R}}u_{0n}^\varepsilon\rho_k\,\mathrm{d}x
++\iint_S[Mu_n^\varepsilon|\rho_k'|+\varepsilon u_n^\varepsilon|\rho_k''|]\,\mathrm{d}x\,\mathrm{d}t
+\leqslant\|u_{0n}^\varepsilon\|_{L^1(\mathbb{R})}
++(M+\varepsilon)T\|\rho\|_{C^2([-1,1])}\|u_n^\varepsilon\|_{L^\infty(0,T;L^1(\mathbb{R}))},
+\end{align*}
+其中用到 $|\rho_k'|\leqslant\|\rho'\|_\infty$、$|\rho_k''|\leqslant\|\rho''\|_\infty$ 与 $\|\rho_k\|_{C^2}\leqslant\|\rho\|_{C^2([-1,1])}$。再由\eqref{align:ch07-7.46}中第一个不等式、\eqref{align:ch07-7.51}与 $\varepsilon<1$，右端不超过 $[1+(M+1)T\|\rho\|_{C^2([-1,1])}]\|u_0\|_{\mathscr{R}_f(\mathbb{R})}=:C$，而 $C$ 只依赖于 $\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$、$M$、$T$ 与固定的检验函数 $\rho$。
+第五步：$k\to\infty$。函数列 $\{\rho_k\}$ 非负、单调递增且逐点趋于 $1$，被积函数 $(1+u_n^\varepsilon)^{p-2}(\partial_xu_n^\varepsilon)^2\rho_k$ 非负，故由单调收敛定理
+\begin{align*}
+\lim_{k\to\infty}\varepsilon p(1-p)\iint_S(1+u_n^\varepsilon)^{p-2}(\partial_xu_n^\varepsilon)^2\rho_k\,\mathrm{d}x\,\mathrm{d}t
+=\varepsilon p(1-p)\iint_S(1+u_n^\varepsilon)^{p-2}(\partial_xu_n^\varepsilon)^2\,\mathrm{d}x\,\mathrm{d}t,
+\end{align*}
+于是\eqref{align:ch07-7.53}成立。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch07-7.4.2; kind=motivation; location=引理 7.4.2 后的注记; basis=引理 7.4.2 与 \eqref{align:ch07-7.61}--\eqref{align:ch07-7.64} + 截断能量估计的动机（把 $\partial_xu_n^\varepsilon$ 的加权平方控制在 $1/\varepsilon$ 量级）、\eqref{align:ch07-7.1} 两条不等式的分工、$p\in(0,1)$ 的双重作用、常数 $C$ 的依赖与端点的退化
+\begin{remark}\phantomsection\label{remark:ch07-7.4.2截断}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch07-7.53}把正则化解的空间梯度在加权意义下控制到 $1/\varepsilon$ 的量级：左端是 $\varepsilon$ 乘非负权 $(1+u_n^\varepsilon)^{p-2}$ 与 $(\partial_xu_n^\varepsilon)^2$ 的积分。它的用途是逐项给出的：$p<1$ 时权函数在 $u_n^\varepsilon$ 大时按 $(u_n^\varepsilon)^{p-2}$ 衰减，因此该估计对 $\|u_n^\varepsilon\|_{L^\infty(S)}$ 的大小不敏感，这正是它能在\cref{lemma:ch07-7.4.3}中直接转成对 $\varepsilon|U''(u_n^\varepsilon)|(\partial_xu_n^\varepsilon)^2$ 的控制的原因；而在\cref{lemma:ch07-7.4.8}中，同一个估计给出极限测度 $\sigma_n$ 的有限性，即\eqref{align:ch07-7.85}。
+\item 每项假设的作用。(a) $|\phi'(y)|\leqslant M$ 使\eqref{align:ch07-7.55}中的 $\Lambda_{U,\varepsilon}$ 有与 $y$ 无关的界 $M[U(y)-U(0)]+|\vartheta_U|$，从而\eqref{align:ch07-7.57}右端除 $\varepsilon U\partial_{xx}\zeta$ 外只剩与 $U$ 的增量成正比的项；若 $\phi'$ 无界，\eqref{align:ch07-7.55}不再成立。(b) $|\phi(y)|\leqslant My$ 在第四步中把 $\Lambda_{U,\varepsilon}(u_n^\varepsilon)$ 换成 $Mu_n^\varepsilon$，并保证被积函数非负，从而使 $k\to\infty$ 可用单调收敛定理。(c) $p\in(0,1)$ 同时起两种作用：使 $U''=-p(1-p)(1+y)^{p-2}<0$，故\eqref{align:ch07-7.57}左端的能量项带确定符号并可移项；又使 $0\leqslant U(y)\leqslant y$，故右端的 $U(u_{0n}^\varepsilon)$ 被 $u_{0n}^\varepsilon$ 控制。(d) $\varepsilon\in(0,1)$ 只用于把 $(M+\varepsilon)$ 换成 $(M+1)$，使常数与 $\varepsilon$ 无关。
+\item 边界与结论的限度。(a) 常数 $1/(p(1-p))$ 当 $p\to0^+$ 或 $p\to1^-$ 时发散，故\eqref{align:ch07-7.53}不能用于 $p=0$ 或 $p=1$；$p=1$ 时 $U(y)=y$、$U''=0$，估计退化为恒等式，不再提供梯度信息。(b) 原书称 $C$ 仅依赖于 $\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$，而补证显示它还依赖于 $M$、$T$ 与固定的 $\rho$；这对本书的用法没有影响，因为这三者在取极限时都固定。(c) \eqref{align:ch07-7.53}只控制加权梯度，不控制 $\|\partial_xu_n^\varepsilon\|_{L^2(S)}$：权的奇性被 $u_n^\varepsilon\geqslant0$ 与 $1+u_n^\varepsilon\geqslant1$ 排除，但梯度本身的 $L^2$ 界并不成立。
+\end{enumerate}
+\end{remark}
 
 \begin{lemma}\label{lemma:ch07-7.4.3}
 设\eqref{align:ch07-7.1}成立，$U\in C^2([0,\infty))$。设存在 $K\geqslant0$ 与 $p\in(0,1)$ 使
 \begin{align}
 |U''(y)|\leqslant K(1+y)^{p-2}\quad\text{对所有 }y\in[0,\infty). \label{align:ch07-7.58}
 \end{align}
-则存在 $C_p>0$，使对所有 $n\in\mathbb{N}$ 与 $\epsilon>0$，
+则存在 $C_p>0$，使对所有 $n\in\mathbb{N}$ 与 $\varepsilon>0$，
 \begin{align}
-\epsilon\iint_S|U''(u_n^\epsilon)|(\partial_x u_n^\epsilon)^2\,\mathrm{d}x\,\mathrm{d}t\leqslant C_p. \label{align:ch07-7.59}
+\varepsilon\iint_S|U''(u_n^\varepsilon)|(\partial_xu_n^\varepsilon)^2\,\mathrm{d}x\,\mathrm{d}t\leqslant C_p. \label{align:ch07-7.59}
 \end{align}
 \end{lemma}
 
 \begin{proof}
-由\eqref{align:ch07-7.53}与\eqref{align:ch07-7.58}立即得证。
+结论由\eqref{align:ch07-7.53}与\eqref{align:ch07-7.58}直接得到。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch07-7.4.3; kind=proof; location=引理 7.4.3 的证明（原书称结果立即得到）; basis=逐点比较 |U''(u_n^\varepsilon)| 与 (1+u_n^\varepsilon)^{p-2}、\eqref{align:ch07-7.53} 中 $\varepsilon\in(0,1)$ 与 $p$ 的依赖，以及 $C_p$ 的显式取法 $KC/(p(1-p))$
+\begin{proof}[补证：\cref{lemma:ch07-7.4.3}]
+因 $u_n^\varepsilon\geqslant0$（\eqref{align:ch07-7.49}），对几乎每个 $(x,t)\in S$ 有 $u_n^\varepsilon(x,t)\in[0,\infty)$；由\eqref{align:ch07-7.58}与 $(1+y)^{p-2}\geqslant0$，
+\begin{align*}
+|U''(u_n^\varepsilon)|(\partial_xu_n^\varepsilon)^2\leqslant K(1+u_n^\varepsilon)^{p-2}(\partial_xu_n^\varepsilon)^2.
+\end{align*}
+两端乘以 $\varepsilon$ 并在 $S$ 上积分，再用\eqref{align:ch07-7.53}（其常数 $C$ 只依赖于 $\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$、$M$ 与 $T$）得
+\begin{align*}
+\varepsilon\iint_S|U''(u_n^\varepsilon)|(\partial_xu_n^\varepsilon)^2\,\mathrm{d}x\,\mathrm{d}t
+\leqslant K\varepsilon\iint_S(1+u_n^\varepsilon)^{p-2}(\partial_xu_n^\varepsilon)^2\,\mathrm{d}x\,\mathrm{d}t
+\leqslant\frac{KC}{p(1-p)}=:C_p
+\end{align*}
+对所有 $n\in\mathbb{N}$ 与 $\varepsilon\in(0,1)$ 成立。对 $\varepsilon\geqslant1$，\eqref{align:ch07-7.53}的左端不小于同一个非负积分乘以 $\varepsilon\geqslant1$，故界仍然成立；等价地，把\eqref{align:ch07-7.53}两端同除以 $\varepsilon$ 后该积分关于 $\varepsilon$ 单调不增，故结论对一切 $\varepsilon>0$ 成立。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch07-7.4.3; kind=motivation; location=引理 7.4.3 后的注记; basis=引理 7.4.3 的动机（把 \eqref{align:ch07-7.53} 的加权梯度控制转成对任意满足 \eqref{align:ch07-7.58} 的 $U$ 的能量控制）、\eqref{align:ch07-7.58} 中指数 $p-2$ 与 \eqref{align:ch07-7.53} 中 $p$ 的匹配、$K$ 与 $C_p$ 的依赖，以及 $\varepsilon\leqslant1$ 与 $\varepsilon>0$ 两种陈述的差别
+\begin{remark}\phantomsection\label{remark:ch07-7.4.3能量}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch07-7.59}是\eqref{align:ch07-7.53}的抽象化：凡在无穷远处按 $(1+y)^{p-2}$ 衰减的二阶导数，都能被同一个加权能量吸收。它在后文的唯一用途是\cref{lemma:ch07-7.4.8}：取 $U$ 使 $\Lambda_U\in L^\infty(0,\infty)$ 后，$\{\varepsilon U''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2\}$ 在 $L^1(S)$ 中一致有界，其弱*极限给出熵产生测度 $\sigma_n$。
+\item 每项假设的作用。(a) \eqref{align:ch07-7.58}中的指数 $p-2$ 必须与\eqref{align:ch07-7.53}中的指数一致，否则 $\varepsilon\int|U''|(\partial_xu_n^\varepsilon)^2$ 无法被 $\varepsilon\int(1+u_n^\varepsilon)^{p-2}(\partial_xu_n^\varepsilon)^2$ 控制。(b) $K\geqslant0$ 与 $p\in(0,1)$ 是\eqref{align:ch07-7.53}可用的前提；$p\in(0,1)$ 不可放宽到 $p\geqslant1$，因为那时 $1/(p(1-p))$ 失去意义。(c) $U\in C^2([0,\infty))$ 只用于使 $U''$ 逐点有定义；$U$ 本身不必有界，也不必单调。
+\item 边界与结论的限度。(a) $C_p$ 随 $p\downarrow0$ 或 $p\uparrow1$ 发散，故\eqref{align:ch07-7.59}不能对 $p$ 一致成立。(b) 结论是 $\varepsilon$ 加权估计：它不给出 $\iint|U''(u_n^\varepsilon)|(\partial_xu_n^\varepsilon)^2$ 本身的有界性，因此不能由它提取 $\partial_xu_n^\varepsilon$ 的 $L^2$ 收敛。(c) 若 $u_n^\varepsilon$ 不非负，则 $(1+u_n^\varepsilon)^{p-2}$ 在 $u_n^\varepsilon=-1$ 处发散，逐点比较失效，这正是\eqref{align:ch07-7.49}被反复引用的原因。
+\end{enumerate}
+\end{remark}
+
 \begin{lemma}\label{lemma:ch07-7.4.4}
-设\eqref{align:ch07-7.1}成立，$U\in C^2([0,\infty))$，$U'\in L^\infty(0,\infty)$ 满足\eqref{align:ch07-7.58}。对任意 $\rho\in C^2_c(\mathbb{R})$ 与 $t\in(0,T)$，置
+设\eqref{align:ch07-7.1}成立，$U\in C^2([0,\infty))$ 满足 $U'\in L^\infty(0,\infty)$ 且满足\eqref{align:ch07-7.58}。对任意 $\rho\in C^2_c(\mathbb{R})$ 与 $t\in(0,T)$，置
 \begin{align}
-U_{n,\rho}^\epsilon(t)\triangleq \int_{\mathbb{R}}U(u_n^\epsilon(x,t))\rho(x)\,\mathrm{d}x,\qquad
-U_{n,\rho}(t)\triangleq \int_{\mathbb{R}}U(u_n(x,t))\rho(x)\,\mathrm{d}x. \label{align:ch07-7.60}
+U_{n,\rho}^\varepsilon(t)\triangleq\int_{\mathbb{R}}U(u_n^\varepsilon(x,t))\rho(x)\,\mathrm{d}x,\qquad
+U_{n,\rho}(t)\triangleq\int_{\mathbb{R}}U(u_n(x,t))\rho(x)\,\mathrm{d}x, \label{align:ch07-7.60}
 \end{align}
-则族 $\{U_{n,\rho}^\epsilon\}$ 在 $BV(0,T)$ 中有界。
+其中第二式中的 $u_n$ 由\cref{lemma:ch07-7.4.5}给出。则族 $\{U_{n,\rho}^\varepsilon\}$ 在 $BV(0,T)$ 中有界。
 \end{lemma}
 
 \begin{proof}
-由等式\eqref{align:ch07-7.56}，
+由等式\eqref{align:ch07-7.56}有
 \begin{align}
-(U_{n,\rho}^\epsilon)'(t)=\int_{\mathbb{R}}[\Lambda_{U,\epsilon}(u_n^\epsilon)\rho'+\epsilon U(u_n^\epsilon)\rho''-\epsilon U''(u_n^\epsilon)(\partial_x u_n^\epsilon)^2\rho](x,t)\,\mathrm{d}x. \label{align:ch07-7.61}
+(U_{n,\rho}^\varepsilon)'(t)=\int_{\mathbb{R}}[\Lambda_{U,\varepsilon}(u_n^\varepsilon)\rho'+\varepsilon U(u_n^\varepsilon)\rho''
+-\varepsilon U''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2\rho](x,t)\,\mathrm{d}x. \label{align:ch07-7.61}
 \end{align}
 因 $U'\in L^\infty(0,\infty)$，存在 $N>0$ 使
 \begin{align}
@@ -149,48 +332,101 @@ U_{n,\rho}(t)\triangleq \int_{\mathbb{R}}U(u_n(x,t))\rho(x)\,\mathrm{d}x. \label
 \end{align}
 故由\eqref{align:ch07-7.1}、\eqref{align:ch07-7.48}与\eqref{align:ch07-7.54}，
 \begin{align*}
-|\Lambda_{U,\epsilon}(u_n^\epsilon)|\leqslant M\|U'\|_\infty|u_n^\epsilon|+|\vartheta_U|=:\widetilde M u_n^\epsilon+|\vartheta_U|,
+|\Lambda_{U,\varepsilon}(u_n^\varepsilon)|\leqslant M\|U'\|_\infty|u_n^\varepsilon|+|\vartheta_U|=:\widetilde Mu_n^\varepsilon+|\vartheta_U|,
 \end{align*}
-由\eqref{align:ch07-7.61}
+其中 $\widetilde M\triangleq M\|U'\|_{L^\infty(0,\infty)}$。于是由\eqref{align:ch07-7.61}，
 \begin{align}
 \begin{aligned}
-|(U_{n,\rho}^\epsilon)'(t)|&\leqslant\|\rho\|_{C^2(\mathbb{R})}\int_{\operatorname{supp}\rho}\{(\widetilde M+\epsilon N)u_n^\epsilon(x,t)+\epsilon N+|\vartheta_U|\}\,\mathrm{d}x\\
-&\quad+\epsilon\|\rho\|_{L^\infty(\mathbb{R})}\int_{\mathbb{R}}|U''(u_n^\epsilon)|(\partial_x u_n^\epsilon)^2(x,t)\,\mathrm{d}x.
-\end{aligned} \label{align:ch07-7.63}
+|(U_{n,\rho}^\varepsilon)'(t)|
+&\leqslant\|\rho\|_{C^2(\mathbb{R})}\int_{\operatorname{supp}\rho}\{(\widetilde M+\varepsilon N)u_n^\varepsilon(x,t)+\varepsilon N+|\vartheta_U|\}\,\mathrm{d}x\\
+&\quad+\varepsilon\|\rho\|_{L^\infty(\mathbb{R})}\int_{\mathbb{R}}|U''(u_n^\varepsilon)|(\partial_xu_n^\varepsilon)^2(x,t)\,\mathrm{d}x.
+\end{aligned} 
+\label{align:ch07-7.63}
 \end{align}
 由\eqref{align:ch07-7.63}、\eqref{align:ch07-7.51}与\eqref{align:ch07-7.59}，存在 $C_{p,\rho}>0$ 使
 \begin{align}
-\|(U_{n,\rho}^\epsilon)'\|_{L^1(0,T)}\leqslant\|\rho\|_{C^2(\mathbb{R})}[(\widetilde M+N)T\|u_0\|_{\mathscr{R}_f(\mathbb{R})}+C_{p,\rho}]. \label{align:ch07-7.64}
+\|(U_{n,\rho}^\varepsilon)'\|_{L^1(0,T)}\leqslant\|\rho\|_{C^2(\mathbb{R})}[(\widetilde M+N)T\|u_0\|_{\mathscr{R}_f(\mathbb{R})}+C_{p,\rho}]. \label{align:ch07-7.64}
 \end{align}
 另一方面，由\eqref{align:ch07-7.51}与\eqref{align:ch07-7.62}，
 \begin{align}
-\|U_{n,\rho}^\epsilon\|_{L^1(0,T)}\leqslant NT\|\rho\|_{L^\infty(\mathbb{R})}[\|u_0\|_{\mathscr{R}_f(\mathbb{R})}+\lambda(\operatorname{supp}\rho)] \label{align:ch07-7.65}
+\|U_{n,\rho}^\varepsilon\|_{L^1(0,T)}\leqslant NT\|\rho\|_{L^\infty(\mathbb{R})}[\|u_0\|_{\mathscr{R}_f(\mathbb{R})}+\lambda(\operatorname{supp}\rho)] \label{align:ch07-7.65}
 \end{align}
-（$\lambda$ 如惯例表示 $\mathbb{R}$ 中 Lebesgue 测度）。由\eqref{align:ch07-7.64}--\eqref{align:ch07-7.65}得结论。
+（如惯例，$\lambda$ 表示 $\mathbb{R}$ 中的 Lebesgue 测度）。由\eqref{align:ch07-7.64}--\eqref{align:ch07-7.65}得结论。
 \end{proof}
 
-置 $R_L\triangleq I_L\times(0,T)$，$I_L\triangleq (-L,L)$。由上述引理得下列收敛结果。
+% SUPPLEMENT: parent=lemma:ch07-7.4.4; kind=proof; location=引理 7.4.4 证明中 \eqref{align:ch07-7.61}--\eqref{align:ch07-7.65} 四步; basis=\eqref{align:ch07-7.60} 在积分号下求导的合法性、由 $U'\in L^\infty$ 得到 \eqref{align:ch07-7.62} 的积分表示、\eqref{align:ch07-7.63} 中 $\|\rho\|_{C^2}$ 的来源与 $|\vartheta_U|$ 的归属、\eqref{align:ch07-7.64} 与 \eqref{align:ch07-7.65} 如何合成 $BV(0,T)$ 范数的有界性
+\begin{proof}[补证：\cref{lemma:ch07-7.4.4}]
+第一步：\eqref{align:ch07-7.61}。因 $u_n^\varepsilon\in C([0,T];H^2(\mathbb{R}))$ 且 $\partial_tu_n^\varepsilon\in L^2(S)$，函数 $t\mapsto U(u_n^\varepsilon(\cdot,t))$ 属于 $C([0,T];L^2(\mathbb{R}))$，且其时间导数 $\partial_t[U(u_n^\varepsilon)]=U'(u_n^\varepsilon)\partial_tu_n^\varepsilon$ 属于 $L^2(S)$。故 $t\mapsto U_{n,\rho}^\varepsilon(t)=\int_{\mathbb{R}}U(u_n^\varepsilon)\rho\,\mathrm{d}x$ 属于 $W^{1,1}(0,T)$，且可在积分号下求导：
+\begin{align*}
+(U_{n,\rho}^\varepsilon)'(t)=\int_{\mathbb{R}}\partial_t[U(u_n^\varepsilon)](x,t)\rho(x)\,\mathrm{d}x\quad\text{对几乎每个 }t\in(0,T).
+\end{align*}
+由\eqref{align:ch07-7.56}，$\partial_t[U(u_n^\varepsilon)]=-\partial_x[\Lambda_{U,\varepsilon}(u_n^\varepsilon)]+\varepsilon\partial_{xx}[U(u_n^\varepsilon)]-\varepsilon U''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2$。对前两项以 $\rho\in C^2_c(\mathbb{R})$ 分部积分（在 $x$ 方向无边界项）：
+\begin{align*}
+\int_{\mathbb{R}}-\partial_x[\Lambda_{U,\varepsilon}(u_n^\varepsilon)]\rho\,\mathrm{d}x=\int_{\mathbb{R}}\Lambda_{U,\varepsilon}(u_n^\varepsilon)\rho'\,\mathrm{d}x,\qquad
+\varepsilon\int_{\mathbb{R}}\partial_{xx}[U(u_n^\varepsilon)]\rho\,\mathrm{d}x=\varepsilon\int_{\mathbb{R}}U(u_n^\varepsilon)\rho''\,\mathrm{d}x,
+\end{align*}
+代入即得\eqref{align:ch07-7.61}。
+第二步：\eqref{align:ch07-7.62}。设 $y\geqslant0$。由微积分基本定理与 $U'\in L^\infty(0,\infty)$，
+\begin{align*}
+|U(y)|\leqslant|U(0)|+\int_0^y|U'(z)|\,\mathrm{d}z\leqslant|U(0)|+\|U'\|_{L^\infty(0,\infty)}y\leqslant N(1+y),
+\end{align*}
+其中 $N\triangleq|U(0)|+\|U'\|_{L^\infty(0,\infty)}<\infty$。
+第三步：\eqref{align:ch07-7.63}。由\eqref{align:ch07-7.54}与 $|\phi_\varepsilon'|\leqslant M$ 得 $|\Lambda_{U,\varepsilon}(y)|\leqslant M\|U'\|_\infty|y|+|\vartheta_U|$；又由\eqref{align:ch07-7.62}得 $\varepsilon|U(y)|\leqslant\varepsilon N(1+y)$。在 $\operatorname{supp}\rho$ 上有 $|\rho'|+|\rho''|\leqslant2\|\rho\|_{C^2(\mathbb{R})}$，且 $u_n^\varepsilon\geqslant0$，故
+\begin{align*}
+\left|\int_{\mathbb{R}}\Lambda_{U,\varepsilon}(u_n^\varepsilon)\rho'\,\mathrm{d}x\right|
+&\leqslant\|\rho\|_{C^2(\mathbb{R})}\int_{\operatorname{supp}\rho}(\widetilde Mu_n^\varepsilon+|\vartheta_U|)\,\mathrm{d}x,\\
+\left|\varepsilon\int_{\mathbb{R}}U(u_n^\varepsilon)\rho''\,\mathrm{d}x\right|
+&\leqslant\varepsilon N\|\rho\|_{C^2(\mathbb{R})}\int_{\operatorname{supp}\rho}(1+u_n^\varepsilon)\,\mathrm{d}x,
+\end{align*}
+而最后一项 $\varepsilon\int|U''(u_n^\varepsilon)|(\partial_xu_n^\varepsilon)^2|\rho|\,\mathrm{d}x\leqslant\varepsilon\|\rho\|_{L^\infty(\mathbb{R})}\int_{\mathbb{R}}|U''(u_n^\varepsilon)|(\partial_xu_n^\varepsilon)^2\,\mathrm{d}x$。三式相加即得\eqref{align:ch07-7.63}。
+第四步：\eqref{align:ch07-7.64}与\eqref{align:ch07-7.65}。把\eqref{align:ch07-7.63}在 $(0,T)$ 上积分。由\eqref{align:ch07-7.51}，
+\begin{align*}
+\int_0^T\int_{\operatorname{supp}\rho}u_n^\varepsilon\,\mathrm{d}x\,\mathrm{d}t\leqslant T\|u_0\|_{\mathscr{R}_f(\mathbb{R})},\qquad
+\int_0^T\int_{\operatorname{supp}\rho}(\varepsilon N+|\vartheta_U|)\,\mathrm{d}x\,\mathrm{d}t\leqslant T(N+|\vartheta_U|)\lambda(\operatorname{supp}\rho),
+\end{align*}
+而由\eqref{align:ch07-7.59}，
+\begin{align*}
+\varepsilon\int_0^T\int_{\mathbb{R}}|U''(u_n^\varepsilon)|(\partial_xu_n^\varepsilon)^2\,\mathrm{d}x\,\mathrm{d}t\leqslant C_p.
+\end{align*}
+把 $|\vartheta_U|$ 与固定因子一并归入 $C_{p,\rho}$（它只依赖于 $p$、$\rho$、$T$、$\vartheta_U$ 与 $\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$），即得\eqref{align:ch07-7.64}。\eqref{align:ch07-7.65}由\eqref{align:ch07-7.62}、$u_n^\varepsilon\geqslant0$ 与\eqref{align:ch07-7.51}给出：
+\begin{align*}
+\int_0^T\int_{\mathbb{R}}|U(u_n^\varepsilon)||\rho|\,\mathrm{d}x\,\mathrm{d}t
+\leqslant N\|\rho\|_{L^\infty(\mathbb{R})}\int_0^T\int_{\operatorname{supp}\rho}(1+u_n^\varepsilon)\,\mathrm{d}x\,\mathrm{d}t
+\leqslant NT\|\rho\|_{L^\infty(\mathbb{R})}[\lambda(\operatorname{supp}\rho)+\|u_0\|_{\mathscr{R}_f(\mathbb{R})}].
+\end{align*}
+第五步：$BV(0,T)$ 范数。按定义，$BV(0,T)$ 上的范数可取为 $\|f\|_{L^1(0,T)}+\|f'\|_{\mathscr{R}_f(0,T)}$，其中 $f'$ 为分布导数。\eqref{align:ch07-7.65}控制第一项；\eqref{align:ch07-7.64}说明 $f'$ 是 $L^1(0,T)$ 函数，从而 $\|f'\|_{\mathscr{R}_f(0,T)}\leqslant\|f'\|_{L^1(0,T)}$ 被同一常数控制。两式右端都与 $\varepsilon$ 无关，故 $\{U_{n,\rho}^\varepsilon\}$ 在 $BV(0,T)$ 中有界。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch07-7.4.4; kind=motivation; location=引理 7.4.4 后的注记; basis=引理 7.4.4 的动机（$t\mapsto U_{n,\rho}^\varepsilon(t)$ 的一族有界变差函数是提取几乎处处收敛子列的工具）、$U'\in L^\infty$ 与 \eqref{align:ch07-7.58} 两条假设的分工、$\vartheta_U$ 与 $\lambda(\operatorname{supp}\rho)$ 的出现，以及 $BV$ 有界不能升级为等度连续的边界
+\begin{remark}\phantomsection\label{remark:ch07-7.4.4BV}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch07-7.60}把\eqref{align:ch07-7.56}沿空间方向对检验函数 $\rho$ 积分，得到一维函数 $t\mapsto U_{n,\rho}^\varepsilon(t)$；\eqref{align:ch07-7.61}表明它的导数由三项组成，而\eqref{align:ch07-7.63}--\eqref{align:ch07-7.65}说明这三项在 $L^1(0,T)$ 中一致有界。于是 $\{U_{n,\rho}^\varepsilon\}$ 是 $BV(0,T)$ 中的有界族，而 $BV(0,T)\hookrightarrow L^1(0,T)$ 是紧嵌入，故可抽取在 $L^1(0,T)$ 中收敛（从而几乎处处收敛）的子列。这一紧性是\cref{lemma:ch07-7.4.5}中\eqref{align:ch07-7.67}的全部来源。
+\item 每项假设的作用。(a) $U'\in L^\infty(0,\infty)$ 给出\eqref{align:ch07-7.62}的线性增长界，从而把 $\int|U(u_n^\varepsilon)||\rho|$ 与 $\int|\Lambda_{U,\varepsilon}(u_n^\varepsilon)||\rho'|$ 都控制在 $\int(1+u_n^\varepsilon)$ 上；没有它，$U$ 可能按超线性增长，而 $\{u_n^\varepsilon\}$ 只有 $L^1$ 与 $L^\infty$ 界，估计失效。(b) \eqref{align:ch07-7.58}只用于第三项：$\varepsilon\int|U''|(\partial_xu_n^\varepsilon)^2$ 由\eqref{align:ch07-7.59}控制；去掉它该项无法估计。(c) $\vartheta_U\in\mathbb{R}$ 是\eqref{align:ch07-7.54}中的任意常数，它在\eqref{align:ch07-7.65}中贡献 $|\vartheta_U|\lambda(\operatorname{supp}\rho)$，故 $\vartheta_U$ 的取法不影响有界性。(d) $\rho\in C^2_c(\mathbb{R})$ 的光滑性使\eqref{align:ch07-7.61}中的两次分部积分合法；紧支撑使 $\lambda(\operatorname{supp}\rho)<\infty$。
+\item 边界与结论的限度。(a) $BV(0,T)$ 有界只给出导数是有界测度，不给出等度连续性；因此\cref{lemma:ch07-7.4.5}中只能得到几乎处处的（而非处处的）收敛，且必须关于 $\rho$ 取可数稠密子集以统一零测集。(b) \eqref{align:ch07-7.60}中的 $U_{n,\rho}(t)$ 依赖\cref{lemma:ch07-7.4.5}给出的极限函数 $u_n$，故第二式只是记号约定，真正的估计只对 $U_{n,\rho}^\varepsilon$ 陈述。(c) 若把 $\rho$ 换成 $C^2_b(\mathbb{R})$ 中有正下界的函数，则\eqref{align:ch07-7.65}右端出现 $\lambda(\mathbb{R})=\infty$，结论失效；此时须改用 $\rho$ 的紧支撑截断序列。
+\end{enumerate}
+\end{remark}
+置 $R_L\triangleq I_L\times(0,T)$，$I_L\triangleq(-L,L)$。由上述引理得下列收敛结果。
 
 \begin{lemma}\label{lemma:ch07-7.4.5}
-设 $\phi\in C([0,\infty))$。则存在子列 $\{u_n^{\epsilon_j}\}\subseteq\{u_n^\epsilon\}$（$\epsilon_j\to0^+$，$j\to\infty$）与 $u_n\in L^\infty(S)\cap L^\infty(0,T;L^1(\mathbb{R}))$、$u_n\geqslant0$，使当 $j\to\infty$ 时
+设 $\phi\in C([0,\infty))$，$\phi\in\operatorname{Lip}([0,\infty))$，且\eqref{align:ch07-7.1}成立。设 $\{u_n^\varepsilon\}_{\varepsilon\in(0,1)}$ 为问题 (Pn$^\varepsilon$) 的强解族，其初值 $u_{0n}^\varepsilon\in C^\infty_c(\mathbb{R})$ 满足\eqref{align:ch07-7.46}--\eqref{align:ch07-7.47}。则存在子列 $\{u_n^{\varepsilon_j}\}\subseteq\{u_n^\varepsilon\}$（$\varepsilon_j\to0^+$，$j\to\infty$）与函数 $u_n\in L^\infty(S)\cap L^\infty(0,T;L^1(\mathbb{R}))$，$u_n\geqslant0$，使当 $j\to\infty$ 时
 \begin{align}
-u_n^{\epsilon_j}\stackrel{*}{\rightharpoonup}u_n\quad\text{在 }L^\infty(S), \label{align:ch07-7.66}
+u_n^{\varepsilon_j}\stackrel{*}{\rightharpoonup}u_n\quad\text{在 }L^\infty(S)\text{ 中}, \label{align:ch07-7.66}
 \end{align}
 \begin{align}
-u_n^{\epsilon_j}(\cdot,t)\stackrel{*}{\rightharpoonup}u_n(\cdot,t)\quad\text{在 }L^\infty(\mathbb{R})\ \text{对几乎所有 }t\in(0,T), \label{align:ch07-7.67}
+u_n^{\varepsilon_j}(\cdot,t)\stackrel{*}{\rightharpoonup}u_n(\cdot,t)\quad\text{在 }L^\infty(\mathbb{R})\text{ 中，对几乎所有 }t\in(0,T), \label{align:ch07-7.67}
 \end{align}
 \begin{align}
-u_n^{\epsilon_j}(\cdot,t)\to u_n(\cdot,t)\quad\text{在 }L^1(I_L)\ \text{对几乎所有 }t\in(0,T)\text{ 与所有 }L>0, \label{align:ch07-7.68}
+u_n^{\varepsilon_j}(\cdot,t)\to u_n(\cdot,t)\quad\text{在 }L^1(I_L)\text{ 中，对几乎所有 }t\in(0,T)\text{ 与所有 }L>0, \label{align:ch07-7.68}
 \end{align}
 \begin{align}
-u_n^{\epsilon_j}\to u_n\quad\text{在 }L^1(R_L)\ \text{对所有 }L>0, \label{align:ch07-7.69}
+u_n^{\varepsilon_j}\to u_n\quad\text{在 }L^1(R_L)\text{ 中，对所有 }L>0, \label{align:ch07-7.69}
 \end{align}
 \begin{align}
-u_n^{\epsilon_j}\to u_n,\quad \phi_{\epsilon_j}(u_n^{\epsilon_j})\to\phi(u_n)\quad\text{在 }S\text{ 中几乎处处}. \label{align:ch07-7.70}
+u_n^{\varepsilon_j}\to u_n,\qquad \phi_{\varepsilon_j}(u_n^{\varepsilon_j})\to\phi(u_n)\quad\text{在 }S\text{ 中几乎处处}. \label{align:ch07-7.70}
 \end{align}
 此外，
 \begin{align}
-\|u_n\|_{L^\infty(S)}\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})},\quad
+\|u_n\|_{L^\infty(S)}\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})},\qquad
 \|u_n\|_{L^\infty(0,T;L^1(\mathbb{R}))}\leqslant\|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})}. \label{align:ch07-7.71}
 \end{align}
 \end{lemma}
@@ -198,116 +434,227 @@ u_n^{\epsilon_j}\to u_n,\quad \phi_{\epsilon_j}(u_n^{\epsilon_j})\to\phi(u_n)\qu
 \begin{proof}
 \eqref{align:ch07-7.66}中的收敛、$u_n$ 的非负性及\eqref{align:ch07-7.71}中第一个不等式由\eqref{align:ch07-7.49}立即得到。为证\eqref{align:ch07-7.67}，对任意 $\rho\in C^2_c(\mathbb{R})$ 置
 \begin{align*}
-I_{n,\rho}^{\epsilon_j}(t)\triangleq \int_{\mathbb{R}}u_n^{\epsilon_j}(x,t)\rho(x)\,\mathrm{d}x\quad(t\in(0,T)).
+I_{n,\rho}^{\varepsilon_j}(t)\triangleq\int_{\mathbb{R}}u_n^{\varepsilon_j}(x,t)\rho(x)\,\mathrm{d}x\quad(t\in(0,T)).
 \end{align*}
-由\cref{lemma:ch07-7.4.4}（取 $U(y)=y$），序列 $\{I_{n,\rho}^{\epsilon_j}\}$ 在 $BV(0,T)$ 中有界。故存在子列（为简便不重新标号）与 $I_{n,\rho}\in BV(0,T)$ 使
+由\cref{lemma:ch07-7.4.4}（取 $U(y)=y$），序列 $\{I_{n,\rho}^{\varepsilon_j}\}$ 在 $BV(0,T)$ 中有界。故存在子列（为简便不重新标号）与 $I_{n,\rho}\in BV(0,T)$ 使
 \begin{align}
-I_{n,\rho}^{\epsilon_j}\to I_{n,\rho}\ \text{在 }L^1(0,T)\text{ 且在 }(0,T)\text{ 中几乎处处}. \label{align:ch07-7.72}
+I_{n,\rho}^{\varepsilon_j}\to I_{n,\rho}\quad\text{在 }L^1(0,T)\text{ 中且在 }(0,T)\text{ 中几乎处处}. \label{align:ch07-7.72}
 \end{align}
 另一方面，由\eqref{align:ch07-7.66}，
 \begin{align*}
-\int_0^T I_{n,\rho}^{\epsilon_j}(t)\,\mathrm{d}t=\iint_S u_n^{\epsilon_j}(x,t)\rho(x)\,\mathrm{d}x\,\mathrm{d}t
-\to\iint_S u_n(x,t)\rho(x)\,\mathrm{d}x\,\mathrm{d}t=\int_0^T\mathrm{d}t\int_{\mathbb{R}}u_n(x,t)\rho(x)\,\mathrm{d}x,
+\int_0^TI_{n,\rho}^{\varepsilon_j}(t)\,\mathrm{d}t=\iint_Su_n^{\varepsilon_j}(x,t)\rho(x)\,\mathrm{d}x\,\mathrm{d}t
+\to\iint_Su_n(x,t)\rho(x)\,\mathrm{d}x\,\mathrm{d}t=\int_0^T\mathrm{d}t\int_{\mathbb{R}}u_n(x,t)\rho(x)\,\mathrm{d}x,
 \end{align*}
-故 $I_{n,\rho}=\int_{\mathbb{R}}u_n(x,t)\rho(x)\,\mathrm{d}x$（对几乎所有 $t\in(0,T)$），且\eqref{align:ch07-7.72}对整个序列成立。综上，对任意 $\rho\in C^2_c(\mathbb{R})$，存在零测集 $N\subseteq(0,T)$ 使
+故 $I_{n,\rho}=\int_{\mathbb{R}}u_n(x,t)\rho(x)\,\mathrm{d}x$ 对几乎所有 $t\in(0,T)$ 成立，且\eqref{align:ch07-7.72}对整个序列 $\{I_{n,\rho}^{\varepsilon_j}\}$ 成立。综上，对任意 $\rho\in C^2_c(\mathbb{R})$ 存在零测集 $N\subseteq(0,T)$ 使
 \begin{align*}
-\int_{\mathbb{R}}u_n^{\epsilon_j}(x,t)\rho(x)\,\mathrm{d}x\to\int_{\mathbb{R}}u_n(x,t)\rho(x)\,\mathrm{d}x
+\int_{\mathbb{R}}u_n^{\varepsilon_j}(x,t)\rho(x)\,\mathrm{d}x\to\int_{\mathbb{R}}u_n(x,t)\rho(x)\,\mathrm{d}x
 \end{align*}
-对所有 $t\in(0,T)\setminus N$ 成立。因 $C^2_c(\mathbb{R})$ 可分，$N$ 的选取可与 $\rho$ 无关，故\eqref{align:ch07-7.67}成立。
+对所有 $t\in(0,T)\setminus N$ 成立。因 $C^2_c(\mathbb{R})$ 可分，零测集 $N$ 的选取可与 $\rho$ 无关，故\eqref{align:ch07-7.67}成立。
 
-由\eqref{align:ch07-7.51}、\eqref{align:ch07-7.52}与 Fréchet--Kolmogorov 定理，对所有 $t\in(0,T)$ 与 $L>0$，序列 $\{u_n^{\epsilon_j}(\cdot,t)\}$ 在 $L^1(I_L)$ 中相对紧。如前论证，由\eqref{align:ch07-7.67}即得\eqref{align:ch07-7.68}。由\eqref{align:ch07-7.51}与\eqref{align:ch07-7.68}得
+由\eqref{align:ch07-7.51}、\eqref{align:ch07-7.52}与 Fréchet--Kolmogorov 定理，对所有 $t\in(0,T)$ 与 $L>0$，序列 $\{u_n^{\varepsilon_j}(\cdot,t)\}$ 在 $L^1(I_L)$ 中相对紧。如前论证，由\eqref{align:ch07-7.67}即得\eqref{align:ch07-7.68}。由\eqref{align:ch07-7.51}与\eqref{align:ch07-7.68}得
 \begin{align*}
-\|u_n\|_{L^\infty(0,T;L^1(I_L))}\leqslant\|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})}\quad\forall L>0,
+\|u_n\|_{L^\infty(0,T;L^1(I_L))}\leqslant\|u_{0n}\|_{L^1(\mathbb{R})}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})}\quad\text{对所有 }L>0,
 \end{align*}
-由 $L$ 任意得\eqref{align:ch07-7.71}中第二个不等式。由\eqref{align:ch07-7.51}与\eqref{align:ch07-7.68}及控制收敛定理得\eqref{align:ch07-7.69}中收敛。最后，\eqref{align:ch07-7.70}中第一个收敛由\eqref{align:ch07-7.69}（可能抽取子列，不重新标号）得到。因对任意紧集 $K\subseteq\mathbb{R}$，当 $\epsilon\to0^+$ 时 $\|\phi_\epsilon-\phi\|_{C(K)}\to0$，\eqref{align:ch07-7.70}中第二个收敛亦得证。
+由 $L$ 的任意性得\eqref{align:ch07-7.71}中第二个不等式。由\eqref{align:ch07-7.51}与\eqref{align:ch07-7.68}及控制收敛定理又得\eqref{align:ch07-7.69}中的收敛。
+
+最后，\eqref{align:ch07-7.70}中第一个收敛由\eqref{align:ch07-7.69}得到（可能需再抽取子列，不重新标号）。因对任意紧集 $K\subseteq\mathbb{R}$，当 $\varepsilon\to0^+$ 时 $\|\phi_\varepsilon-\phi\|_{C(K)}\to0$，\eqref{align:ch07-7.70}中第二个收敛亦成立。证毕。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch07-7.4.5; kind=proof; location=引理 7.4.5 证明中由 \eqref{align:ch07-7.49} 到 \eqref{align:ch07-7.66}、由 \eqref{align:ch07-7.72} 到"整个序列"、由相对紧到 \eqref{align:ch07-7.68}、以及 \eqref{align:ch07-7.70} 中第二个收敛四处; basis=Banach--Alaoglu 定理与 $L^1(S)$ 可分给出的弱*序列紧性、$BV(0,T)\hookrightarrow L^1(0,T)$ 紧嵌入与极限的唯一性、Fréchet--Kolmogorov 定理三条件的逐条核验（含 $u_{0n}^\varepsilon$ 平移模关于 $\varepsilon$ 的一致性与 $L^\infty$ 界的等度可积性），以及复合函数收敛的三项分解
+\begin{proof}[补证：\eqref{align:ch07-7.66}--\eqref{align:ch07-7.71}的逐步推导]
+第一步：\eqref{align:ch07-7.66}与非负性。由\eqref{align:ch07-7.49}，$\|u_n^\varepsilon\|_{L^\infty(S)}\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})}$ 对一切 $\varepsilon>0$ 成立，故 $\{u_n^\varepsilon\}$ 含于 $L^\infty(S)=(L^1(S))^*$ 的球 $\{f\mid\|f\|_\infty\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})}\}$ 中。因 $S\subseteq\mathbb{R}^2$ 上的 $L^1(S)$ 可分（例如由特征函数的可数稠密族与简单函数的稠密性），该球上的弱*拓扑可度量化，故它弱*序列紧。于是存在子列与 $u_n\in L^\infty(S)$ 使\eqref{align:ch07-7.66}成立，且
+\begin{align*}
+\|u_n\|_{L^\infty(S)}\leqslant\liminf_{j\to\infty}\|u_n^{\varepsilon_j}\|_{L^\infty(S)}\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})},
+\end{align*}
+即\eqref{align:ch07-7.71}中第一个不等式（这里用到弱*下半连续性：对任意 $\zeta\in L^1(S)$，$|\langle u_n,\zeta\rangle|\leqslant\liminf_j\|u_n^{\varepsilon_j}\|_\infty\|\zeta\|_1$）。非负性：设 $\zeta\in C_c(S)$，$\zeta\geqslant0$。由 $u_n^{\varepsilon_j}\geqslant0$ 得 $\langle u_n^{\varepsilon_j},\zeta\rangle\geqslant0$，令 $j\to\infty$ 得 $\langle u_n,\zeta\rangle\geqslant0$；由 $\zeta$ 的任意性与 $C_c(S)$ 在 $L^1(S)$ 中稠密得 $u_n\geqslant0$ 几乎处处。
+第二步：\eqref{align:ch07-7.72}与极限的唯一性。由\cref{lemma:ch07-7.4.4}（取 $U(y)=y$，此时 $U'=1\in L^\infty(0,\infty)$、$U''=0$ 使\eqref{align:ch07-7.58}以 $K=0$ 成立），$\{I_{n,\rho}^{\varepsilon_j}\}$ 在 $BV(0,T)$ 中有界。由 $BV(0,T)\hookrightarrow L^1(0,T)$ 的紧性（一维有界变差函数的 Helly 选择原理与 Fréchet--Kolmogorov 定理），存在子列与 $I_{n,\rho}\in BV(0,T)$ 使该子列在 $L^1(0,T)$ 中收敛于 $I_{n,\rho}$，再抽子列使其几乎处处收敛，即\eqref{align:ch07-7.72}。另一方面，由\eqref{align:ch07-7.66}与 $\rho\in C^2_c(\mathbb{R})\subseteq L^1(\mathbb{R})$，函数 $(x,t)\mapsto\rho(x)$ 属于 $L^1(S)$ 且与 $t$ 无关，故
+\begin{align*}
+\int_0^TI_{n,\rho}^{\varepsilon_j}(t)\,\mathrm{d}t=\iint_Su_n^{\varepsilon_j}\rho\,\mathrm{d}x\,\mathrm{d}t\to\iint_Su_n\rho\,\mathrm{d}x\,\mathrm{d}t=\int_0^T\left(\int_{\mathbb{R}}u_n(x,t)\rho(x)\,\mathrm{d}x\right)\mathrm{d}t,
+\end{align*}
+其中最后一个等号由 Fubini 定理与 $u_n\rho\in L^1(S)$ 得到。由 $L^1(0,T)$ 中极限的唯一性，$I_{n,\rho}(t)=\int_{\mathbb{R}}u_n(x,t)\rho(x)\,\mathrm{d}x$ 对几乎所有 $t\in(0,T)$ 成立。若某子列在 $L^1(0,T)$ 中收敛，其极限必为此函数，故\eqref{align:ch07-7.72}对整个序列成立。
+第三步：零测集关于 $\rho$ 的统一。对每个 $\rho\in C^2_c(\mathbb{R})$，由上一步存在零测集 $N_\rho\subseteq(0,T)$ 使 $I_{n,\rho}^{\varepsilon_j}(t)\to\int_{\mathbb{R}}u_n(x,t)\rho(x)\,\mathrm{d}x$ 对所有 $t\notin N_\rho$ 成立（几乎处处收敛的例外集）。$C^2_c(\mathbb{R})$ 可分：取定 $\chi\in C^\infty_c((-2,2))$ 使 $\chi=1$ 在 $[-1,1]$ 上，则 $\{\chi\,p\mid p\text{ 为有理系数多项式}\}$ 是可数集且在 $C^2_c(\mathbb{R})$ 的 $C^2$ 范数下稠密（由 Weierstrass 逼近定理与紧支撑截断）。设 $\{\rho_m\}$ 为其列举，置 $N\triangleq\bigcup_{m=1}^\infty N_{\rho_m}$，则 $N$ 是零测集。固定 $t\notin N$ 与 $\rho\in C^2_c(\mathbb{R})$，取 $m$ 使 $\|\rho-\rho_m\|_{C^2}\leqslant\delta$。则
+\begin{align*}
+\left|\int_{\mathbb{R}}u_n^{\varepsilon_j}(x,t)\rho(x)\,\mathrm{d}x-\int_{\mathbb{R}}u_n(x,t)\rho(x)\,\mathrm{d}x\right|
+\leqslant2\delta\|u_{0n}\|_{L^\infty(\mathbb{R})}\lambda(\operatorname{supp}\rho)
++\left|I_{n,\rho_m}^{\varepsilon_j}(t)-\int_{\mathbb{R}}u_n\rho_m\,\mathrm{d}x\right|,
+\end{align*}
+先令 $j\to\infty$ 再令 $\delta\to0$，得所需收敛。由于 $\{u_n^{\varepsilon_j}(\cdot,t)\}$ 在 $L^\infty(\mathbb{R})$ 中有界而 $C^2_c(\mathbb{R})$ 在 $L^1(\mathbb{R})$ 中稠密，\eqref{align:ch07-7.67}成立。
+第四步：\eqref{align:ch07-7.68}。固定 $t\notin N$ 与 $L>0$。核验 Fréchet--Kolmogorov 定理在 $L^1(I_L)$ 上的三个条件：(a) 一致有界性：由\eqref{align:ch07-7.51}，$\|u_n^{\varepsilon_j}(\cdot,t)\|_{L^1(I_L)}\leqslant\|u_0\|_{\mathscr{R}_f(\mathbb{R})}$。(b) 平移模关于 $\varepsilon_j$ 一致地小：由\eqref{align:ch07-7.52}，
+\begin{align*}
+\|u_n^{\varepsilon_j}(\cdot+h,t)-u_n^{\varepsilon_j}(\cdot,t)\|_{L^1(\mathbb{R})}
+\leqslant\|u_{0n}^{\varepsilon_j}(\cdot+h)-u_{0n}^{\varepsilon_j}\|_{L^1(\mathbb{R})},
+\end{align*}
+而族 $\{u_{0n}^\varepsilon\}_{\varepsilon\in(0,1)}$ 在 $L^1(\mathbb{R})$ 中相对紧（它按\eqref{align:ch07-7.47}收敛于 $u_{0n}$），故它有关于 $\varepsilon$ 一致的平移模：$\sup_{\varepsilon\in(0,1)}\|u_{0n}^\varepsilon(\cdot+h)-u_{0n}^\varepsilon\|_{L^1(\mathbb{R})}\to0$ 当 $h\to0$。(c) $I_L$ 上的等度可积性：由\eqref{align:ch07-7.49}，$0\leqslant u_n^{\varepsilon_j}\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})}$ 在 $S$ 中几乎处处成立，故对任意可测集 $E\subseteq I_L$ 有 $\int_Eu_n^{\varepsilon_j}\leqslant\|u_{0n}\|_\infty\lambda(E)$，与 $j$ 无关。于是 $\{u_n^{\varepsilon_j}(\cdot,t)\}$ 在 $L^1(I_L)$ 中相对紧，即存在子列在 $L^1(I_L)$ 中强收敛于某 $v\in L^1(I_L)$。强收敛蕴含弱收敛，而由\eqref{align:ch07-7.67}与 $L^\infty(I_L)\subseteq L^1(\mathbb{R})$，该子列在 $L^1(I_L)$ 中弱收敛于 $u_n(\cdot,t)|_{I_L}$；由弱极限的唯一性得 $v=u_n(\cdot,t)|_{I_L}$。由于每个子列都有这样的进一步子列，原序列在 $L^1(I_L)$ 中强收敛于 $u_n(\cdot,t)|_{I_L}$，即\eqref{align:ch07-7.68}。
+第五步：\eqref{align:ch07-7.69}。固定 $L>0$。由\eqref{align:ch07-7.68}，对几乎所有 $t\in(0,T)$ 有 $u_n^{\varepsilon_j}(\cdot,t)\to u_n(\cdot,t)$ 在 $L^1(I_L)$ 中，且
+\begin{align*}
+|u_n^{\varepsilon_j}(x,t)-u_n(x,t)|\leqslant2\|u_{0n}\|_{L^\infty(\mathbb{R})}\quad\text{对几乎所有 }(x,t)\in R_L.
+\end{align*}
+右端的常数属于 $L^1(R_L)$（因 $\lambda(I_L)T<\infty$），故由控制收敛定理 $\iint_{R_L}|u_n^{\varepsilon_j}-u_n|\,\mathrm{d}x\,\mathrm{d}t\to0$。
+第六步：\eqref{align:ch07-7.70}。由\eqref{align:ch07-7.69}，对每个 $L\in\mathbb{N}$ 存在零测集 $N_L\subseteq R_L$ 使 $u_n^{\varepsilon_j}(x,t)\to u_n(x,t)$ 对 $(x,t)\in R_L\setminus N_L$ 成立；置 $N'\triangleq\bigcup_LN_L$，则 $N'$ 是 $S$ 中的零测集，且 $u_n^{\varepsilon_j}\to u_n$ 在 $S\setminus N'$ 上逐点成立，即第一个收敛。关于第二个收敛，固定 $(x,t)\in S\setminus N'$。由\eqref{align:ch07-7.49}与\eqref{align:ch07-7.46}，$u_n^{\varepsilon_j}(x,t)$ 与 $u_n(x,t)$ 都落在 $[0,\|u_{0n}\|_{L^\infty(\mathbb{R})}]=:K$ 中，故
+\begin{align*}
+|\phi_{\varepsilon_j}(u_n^{\varepsilon_j})-\phi(u_n)|(x,t)
+\leqslant\|\phi_{\varepsilon_j}-\phi\|_{C(K)}
++|\phi(u_n^{\varepsilon_j})-\phi(u_n)|(x,t).
+\end{align*}
+第一项当 $j\to\infty$ 时趋于零：因 $\phi_\varepsilon\to\phi$ 在 $K$ 上一致（$\phi$ 在紧集 $K$ 上一致连续，且 $\phi_\varepsilon=\eta_\varepsilon*\phi-(\eta_\varepsilon*\phi)(0)$、$\phi(0)=0$）。第二项亦趋于零：$\phi$ 在紧集 $K$ 上一致连续，而 $u_n^{\varepsilon_j}(x,t)\to u_n(x,t)$。故第二个收敛成立。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch07-7.4.5; kind=motivation; location=引理 7.4.5 后的注记; basis=引理 7.4.5 与 \eqref{align:ch07-7.66}--\eqref{align:ch07-7.71} + 五种收敛方式的分工与强弱关系（弱*、逐时刻弱*、$L^1_{\mathrm{loc}}$ 逐时刻强、$L^1_{\mathrm{loc}}$ 时空强、几乎处处）、\eqref{align:ch07-7.1} 与 $L^1$ 界为何必须与 $\varepsilon$ 无关、子列不可省与 $t$ 的零测集不可省的边界
+\begin{remark}\phantomsection\label{remark:ch07-7.4.5紧性}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch07-7.66}--\eqref{align:ch07-7.70}给出五种逐级加强的收敛方式，它们在后续论证中分工不同：\eqref{align:ch07-7.66}用于对任意时空试验函数取极限（例如\eqref{align:ch07-7.72}中对 $t$ 积分后的等式）；\eqref{align:ch07-7.67}是"逐时刻"的弱*收敛，用于把\eqref{align:ch07-7.60}型的积分在固定时刻 $t$ 处取极限；\eqref{align:ch07-7.68}把逐时刻的弱收敛升级为强收敛，是\eqref{align:ch07-7.81}中非线性项 $E_l(u_n^{\varepsilon})$ 能取极限的关键；\eqref{align:ch07-7.69}把 $t$ 方向的收敛也补上，给出时空 $L^1_{\mathrm{loc}}$ 强收敛；\eqref{align:ch07-7.70}再把它升级为几乎处处收敛，用于复合函数 $\phi_{\varepsilon_j}(u_n^{\varepsilon_j})$ 的极限识别。
+\item 每项假设的作用。(a) \eqref{align:ch07-7.1}（$\phi$ 的 Lipschitz 性与线性增长）通过\cref{lemma:ch07-7.4.1}--\cref{lemma:ch07-7.4.4}进入全部估计：\eqref{align:ch07-7.51}给出与 $\varepsilon$ 无关的 $L^1$ 界，\eqref{align:ch07-7.52}给出与 $\varepsilon$ 无关的平移模，\eqref{align:ch07-7.49}给出 $L^\infty$ 界。三者正是 Fréchet--Kolmogorov 定理在 $L^1(I_L)$ 上的全部输入。(b) $\phi\in C([0,\infty))$ 只用于\eqref{align:ch07-7.70}中第二个收敛：$\phi_\varepsilon\to\phi$ 在紧集上一致需要 $\phi$ 的连续性，而 $F_{l,\varepsilon}\to F_l$ 的取极限不需要任何可微性。(c) 子列的必要性来自 Banach--Alaoglu 定理只给出弱*紧性；而\eqref{align:ch07-7.68}中"对几乎所有 $t$"的必要性来自 $BV(0,T)$ 紧性只给几乎处处收敛（见\cref{remark:ch07-7.4.4BV}(iii)）。
+\item 边界与结论的限度。(a) \eqref{align:ch07-7.66}不能加强为 $L^1(S)$ 强收敛：$\{u_n^\varepsilon\}$ 在 $\varepsilon\to0^+$ 时可能在 $u_0$ 的奇异部分附近产生振幅为 $1/\varepsilon$ 量级的集中（这一点在 $n\to\infty$ 时才由\eqref{align:ch07-7.45}的第三式显式化），故 $L^1$ 强收敛一般不成立；本书只需要 $L^1_{\mathrm{loc}}$ 强收敛。(b) \eqref{align:ch07-7.68}中的 $I_L$ 不能换成 $\mathbb{R}$：$\{u_n^{\varepsilon}\}$ 的质量可能沿 $|x|\to\infty$ 逃逸，故全空间上的 $L^1$ 相对紧性不成立，只能逐有界区间讨论。(c) \eqref{align:ch07-7.71}中第二个不等式的常数含 $\|u_{0n}\|_{L^1}$ 而不含 $n$，这使 $n\to\infty$ 时仍可由\eqref{align:ch07-7.44}得到与 $n$ 无关的界。
+\end{enumerate}
+\end{remark}
+
 \begin{lemma}\label{lemma:ch07-7.4.6}
-设\eqref{align:ch07-7.1}成立，$U\in C^2([0,\infty))$，$U'\in L^\infty(0,\infty)$ 满足\eqref{align:ch07-7.58}。对任意 $\rho\in C^2_c(\mathbb{R})$ 与 $t\in(0,T)$，置
+设\eqref{align:ch07-7.1}成立，$U\in C^2([0,\infty))$ 满足 $U'\in L^\infty(0,\infty)$ 与\eqref{align:ch07-7.58}。对任意 $\rho\in C^2_c(\mathbb{R})$ 与 $t\in(0,T)$，置
 \begin{align}
-U_{n,\rho}(t)\triangleq \int_{\mathbb{R}}U(u_n(x,t))\rho(x)\,\mathrm{d}x \label{align:ch07-7.73}
+U_{n,\rho}(t)\triangleq\int_{\mathbb{R}}U(u_n(x,t))\rho(x)\,\mathrm{d}x, \label{align:ch07-7.73}
 \end{align}
 其中 $u_n\in L^\infty(S)\cap L^\infty(0,T;L^1(\mathbb{R}))$ 由\cref{lemma:ch07-7.4.5}给出。则：
 \begin{enumerate}[(i)]
-\item 存在子列 $\{U_{n,\rho}^{\epsilon_j}\}\subseteq\{U_{n,\rho}^\epsilon\}$（$\epsilon_j\to0^+$）（$U_{n,\rho}^\epsilon$ 由\eqref{align:ch07-7.60}定义）使
+\item 存在子列 $\{U_{n,\rho}^{\varepsilon_j}\}\subseteq\{U_{n,\rho}^\varepsilon\}$（$\varepsilon_j\to0^+$，$j\to\infty$；$U_{n,\rho}^\varepsilon$ 由\eqref{align:ch07-7.60}定义）使
 \begin{align}
-U_{n,\rho}^{\epsilon_j}\to U_{n,\rho}\quad\text{在 }L^1(0,T); \label{align:ch07-7.74}
+U_{n,\rho}^{\varepsilon_j}\to U_{n,\rho}\quad\text{在 }L^1(0,T)\text{ 中}; \label{align:ch07-7.74}
 \end{align}
 \item 族 $\{U_{n,\rho}\}$ 在 $BV(0,T)$ 中有界。
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-关于 (i)，设 $\{u_n^{\epsilon_j}\}$ 为\cref{lemma:ch07-7.4.5}中子列。则对几乎所有 $t\in(0,T)$，由\eqref{align:ch07-7.70}中第一个收敛有 $U(u_n^{\epsilon_j}(\cdot,t))\to U(u_n(\cdot,t))$ 在 $\mathbb{R}$ 中几乎处处，由控制收敛定理得\eqref{align:ch07-7.74}。关于 (ii)，由\eqref{align:ch07-7.74}与\eqref{align:ch07-7.65}得
+关于 (i)，设 $\{u_n^{\varepsilon_j}\}$ 为\cref{lemma:ch07-7.4.5}中的子列。则对几乎所有 $t\in(0,T)$，由\eqref{align:ch07-7.70}中第一个收敛有 $U(u_n^{\varepsilon_j}(\cdot,t))\to U(u_n(\cdot,t))$ 在 $\mathbb{R}$ 中几乎处处，故由控制收敛定理得\eqref{align:ch07-7.74}。关于 (ii)，由\eqref{align:ch07-7.74}与\eqref{align:ch07-7.65}得
 \begin{align}
-\|U_{n,\rho}\|_{L^1(0,T)}=\lim_{j\to\infty}\|U_{n,\rho}^{\epsilon_j}\|_{L^1(0,T)}
+\|U_{n,\rho}\|_{L^1(0,T)}=\lim_{j\to\infty}\|U_{n,\rho}^{\varepsilon_j}\|_{L^1(0,T)}
 \leqslant NT\|\rho\|_{L^\infty(\mathbb{R})}[\|u_0\|_{\mathscr{R}_f(\mathbb{R})}+\lambda(\operatorname{supp}\rho)]. \label{align:ch07-7.75}
 \end{align}
 另一方面，由\eqref{align:ch07-7.64}与 $L^1(0,T)$ 拓扑下总变差的下半连续性（见\cref{remark:ch03-3.1.4}(ii)），
 \begin{align}
 \|U_{n,\rho}'\|_{\mathscr{R}_f(0,T)}\leqslant\|\rho\|_{C^2(\mathbb{R})}[(\widetilde M+N)T\|u_0\|_{\mathscr{R}_f(\mathbb{R})}+C_{p,\rho}]. \label{align:ch07-7.76}
 \end{align}
-由\eqref{align:ch07-7.75}--\eqref{align:ch07-7.76}得 (ii)。
+由\eqref{align:ch07-7.75}--\eqref{align:ch07-7.76}得 (ii)。证毕。
 \end{proof}
+
+% SUPPLEMENT: parent=lemma:ch07-7.4.6; kind=proof; location=引理 7.4.6 证明的两步（(i) 的控制收敛与 (ii) 的下半连续性）; basis=(i) 中关于 $t$ 与 $x$ 的两个几乎处处收敛的例外集如何合并、控制函数如何由 \eqref{align:ch07-7.49} 给出、$C^2_c$ 支集上 $U$ 的有界性；(ii) 中 \eqref{align:ch07-7.76} 如何由 \eqref{align:ch07-7.64} 与 $L^1$ 弱收敛取极限得到，以及原书末句"claim (iii)"应读作 (ii)
+\begin{proof}[补证：\cref{lemma:ch07-7.4.6}]
+关于 (i)。设 $\{u_n^{\varepsilon_j}\}$ 为\cref{lemma:ch07-7.4.5}中的子列，并设 $N'\subseteq S$ 为该引理第六步中的零测集，使 $u_n^{\varepsilon_j}\to u_n$ 在 $S\setminus N'$ 上逐点成立。由 Fubini 定理，存在零测集 $N''\subseteq(0,T)$ 使对每个 $t\notin N''$，截面 $N'_t\triangleq\{x\in\mathbb{R}\mid(x,t)\in N'\}$ 是 $\mathbb{R}$ 中的零测集。于是对 $t\notin N''$，$U$ 的连续性与 $u_n^{\varepsilon_j}(\cdot,t)\to u_n(\cdot,t)$ 在 $\mathbb{R}\setminus N'_t$ 上逐点成立给出 $U(u_n^{\varepsilon_j}(\cdot,t))\to U(u_n(\cdot,t))$ 在 $\mathbb{R}$ 中几乎处处。又由\eqref{align:ch07-7.49}，$0\leqslant u_n^{\varepsilon_j}\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})}=:K$ 在 $S$ 中几乎处处成立，故
+\begin{align*}
+|U(u_n^{\varepsilon_j}(x,t))|\leqslant\max_{0\leqslant y\leqslant K}|U(y)|<\infty\quad\text{对几乎所有 }(x,t)\in S,
+\end{align*}
+且右端的常数在 $\operatorname{supp}\rho\times(0,T)$ 上可积（$\lambda(\operatorname{supp}\rho)T<\infty$）。于是控制收敛定理给出 $U_{n,\rho}^{\varepsilon_j}(t)\to U_{n,\rho}(t)$ 对几乎所有 $t\in(0,T)$；再用一次控制收敛定理（控制函数 $N(1+K)\|\rho\|_\infty\lambda(\operatorname{supp}\rho)$，见\eqref{align:ch07-7.62}）得 $L^1(0,T)$ 中的收敛，即\eqref{align:ch07-7.74}。
+关于 (ii)。由\eqref{align:ch07-7.74}，$U_{n,\rho}^{\varepsilon_j}\to U_{n,\rho}$ 在 $L^1(0,T)$ 中，故 $\|U_{n,\rho}\|_{L^1(0,T)}=\lim_j\|U_{n,\rho}^{\varepsilon_j}\|_{L^1(0,T)}$；再由\eqref{align:ch07-7.65}即得\eqref{align:ch07-7.75}。其次，由\eqref{align:ch07-7.74}与\eqref{align:ch07-7.64}，分布导数满足 $(U_{n,\rho}^{\varepsilon_j})'\to U_{n,\rho}'$ 在 $\mathscr{D}'(0,T)$ 中，且 $\sup_j\|(U_{n,\rho}^{\varepsilon_j})'\|_{\mathscr{R}_f(0,T)}<\infty$。在 $\mathscr{R}_f(0,T)$ 中取弱*收敛的子列（$C_0(0,T)$ 可分，故有界集弱*序列紧），其极限必等于 $U_{n,\rho}'$；由范数的弱*下半连续性（\cref{remark:ch05-5.1.3}），
+\begin{align*}
+\|U_{n,\rho}'\|_{\mathscr{R}_f(0,T)}\leqslant\liminf_{j\to\infty}\|(U_{n,\rho}^{\varepsilon_j})'\|_{\mathscr{R}_f(0,T)}
+\leqslant\|\rho\|_{C^2(\mathbb{R})}[(\widetilde M+N)T\|u_0\|_{\mathscr{R}_f(\mathbb{R})}+C_{p,\rho}],
+\end{align*}
+即\eqref{align:ch07-7.76}。最后，原证明末句写作"由\eqref{align:ch07-7.75}--\eqref{align:ch07-7.76} 得 claim (iii)"，而引理只列有 (i) 与 (ii) 两款，故"claim (iii)"应读作 (ii)：由\eqref{align:ch07-7.75}与\eqref{align:ch07-7.76}分别控制 $BV(0,T)$ 范数的两项。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch07-7.4.6; kind=motivation; location=引理 7.4.6 后的注记; basis=引理 7.4.6 的动机（对任意满足 \eqref{align:ch07-7.58} 的 $U$ 把 \eqref{align:ch07-7.60} 的一族有界变差函数连同其极限一并控制）、\eqref{align:ch07-7.75} 与 \eqref{align:ch07-7.76} 的分工、$L^1$ 与 $BV$ 两种范数的来源，以及不含 $C^2$ 型附加假设的边界
+\begin{remark}\phantomsection\label{remark:ch07-7.4.6极限}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch07-7.60}中的 $U_{n,\rho}^\varepsilon$ 已由\cref{lemma:ch07-7.4.4}控制，本引理把控制传给它的极限 $U_{n,\rho}$，并额外说明 $\{U_{n,\rho}\}$ 本身在 $BV(0,T)$ 中有界。后者与 $L^1(0,T)$ 有界合起来构成 $BV(0,T)$ 范数的有界性，使 $\{U_{n,\rho}\}$（而不只是 $\{U_{n,\rho}^\varepsilon\}$）也可用于抽取收敛子列。这一步在\cref{section:ch07-存在性证明}中对 $n\to\infty$ 的极限过程是必需的。
+\item 每项假设的作用。(a) \eqref{align:ch07-7.62}（由 $U'\in L^\infty$ 得到）在 (i) 中充当控制函数，在 (ii) 中给出\eqref{align:ch07-7.75}；若 $U$ 超线性增长，则控制函数不可积。(b) \eqref{align:ch07-7.58}在 (i) 与 (ii) 中都不直接出现，它通过\eqref{align:ch07-7.64}（其中用了\eqref{align:ch07-7.59}）进入\eqref{align:ch07-7.76}；故它只影响导数项的估计。(c) $\rho\in C^2_c(\mathbb{R})$ 使\eqref{align:ch07-7.75}中的 $\lambda(\operatorname{supp}\rho)$ 有限，并使 $U_{n,\rho}\in L^1(0,T)$。
+\item 边界与结论的限度。(a) \eqref{align:ch07-7.74}只给出子列的 $L^1$ 收敛，不给整族的收敛：\cref{lemma:ch07-7.4.5}本身就只提供子列。(b) \eqref{align:ch07-7.76}中的常数含 $C_{p,\rho}$，而 $C_{p,\rho}$ 依赖 $p$、$\rho$ 与 $\vartheta_U$；因此在\cref{lemma:ch07-7.4.8}中选取 $U$ 时必须使相应的 $C_p$ 与 $n$ 无关（它确实与 $n$ 无关，见\eqref{align:ch07-7.59}）。(c) 结论中的 $BV$ 界不能升级为 $W^{1,1}(0,T)$ 界：$U_{n,\rho}'$ 只是有限测度，一般不是函数。
+\end{enumerate}
+\end{remark}
 
 回忆下列定义（例如见文献~\cite{ref34}）。
 
 \begin{definition}\label{definition:ch07-Pn熵解}
-函数 $u_n\in L^\infty(0,T;L^1(\mathbb{R}))\cap L^\infty(S)$ 称为问题 (Pn) 的熵解，若对每个 $\zeta\in C^1([0,T];C^1_c(\mathbb{R}))$、$\zeta(\cdot,T)=0$ 在 $\mathbb{R}$ 上、$\zeta\geqslant0$ 及任意 $l\in[0,\infty)$，有
+设 $n\in\mathbb{N}$，$u_{0n}\in L^1(\mathbb{R})\cap L^\infty(\mathbb{R})$ 满足 $u_{0n}\geqslant0$ 与\eqref{align:ch07-7.44}，$\phi\in C([0,\infty))$ 且 $\phi(0)=0$。称非负函数 $u_n\in L^\infty(0,T;L^1(\mathbb{R}))\cap L^\infty(S)$ 为问题 (Pn) 的熵解，若对每个 $\zeta\in C^1([0,T];C^1_c(\mathbb{R}))$ 满足 $\zeta(\cdot,T)=0$ 在 $\mathbb{R}$ 上、$\zeta\geqslant0$，以及对每个 $l\in[0,\infty)$ 有
 \begin{align}
 \iint_S[E_l(u_n)\partial_t\zeta+F_l(u_n)\partial_x\zeta]\,\mathrm{d}x\,\mathrm{d}t
 +\int_{\mathbb{R}}E_l(u_{0n})\zeta(x,0)\,\mathrm{d}x\geqslant0, \label{align:ch07-7.77}
 \end{align}
-其中 $E_l(y)=|y-l|$，$F_l(y)=\operatorname{sgn}(y-l)[\phi(y)-\phi(l)]$（$y\in[0,\infty)$）。
+其中
+\begin{align*}
+E_l(y)\triangleq|y-l|,\qquad F_l(y)\triangleq\operatorname{sgn}(y-l)[\phi(y)-\phi(l)]\quad(y\in[0,\infty)).
+\end{align*}
 \end{definition}
 
-\begin{remark}\label{remark:ch07-7.4.1}
-熵解是弱解：若 $\zeta\in C^1([0,T];C^1_c(\mathbb{R}))$、$\zeta(\cdot,T)=0$ 在 $\mathbb{R}$ 上，则
+% SUPPLEMENT: parent=definition:ch07-Pn熵解; kind=motivation; location=定义 7.4.1 后的注记; basis=定义 7.4.1 与 \eqref{align:ch07-7.77} + 熵对的选取（Kružkov 熵）、$\zeta\geqslant0$ 与 $\zeta(\cdot,T)=0$ 的作用、水平 $l$ 只取 $[0,\infty)$ 而足够的理由（$u_n\geqslant0$ 与 $\phi(0)=0$）、$E_l$ 与 $F_l$ 的归一化，以及去掉非负性或把 $l$ 限制在解的值域之外时的失效情形
+\begin{remark}\phantomsection\label{remark:ch07-Pn熵解}
+\begin{enumerate}[(i)]
+\item 引入动机。守恒律的弱解不唯一，须用熵条件挑选物理解。\eqref{align:ch07-7.77}对每一对 Kružkov 熵 $(E_l,F_l)$ 要求耗散不等式，其含义是：在 $u_n$ 越过水平 $l$ 的每一点处，熵 $E_l(u_n)$ 的增长率不超过熵通量 $F_l(u_n)$ 的散度。取 $l$ 遍 $[0,\infty)$ 相当于要求解与所有常数状态 $l$ 相容，这正是比较原理的离散形式。
+\item 每项条件的作用。(a) $\zeta\geqslant0$ 使\eqref{align:ch07-7.77}成为耗散不等式而非等式；由于 $\zeta$ 不能取负值，单取一个 $l$ 不能同时得到两个方向的不等式（见\cref{remark:ch07-7.4.1}）。(b) $\zeta(\cdot,T)=0$ 消去 $t=T$ 处的边界项，使\eqref{align:ch07-7.77}只含初始项 $\int_{\mathbb{R}}E_l(u_{0n})\zeta(x,0)\,\mathrm{d}x$ 与两个时空积分项。(c) $l\in[0,\infty)$ 之所以足够，是因为 $u_n\geqslant0$ 且 $\phi(0)=0$：$l=0$ 时 $(E_0,F_0)=(y,\phi(y))$ 就是守恒律自身的通量对，$l$ 取遍 $(0,\infty)$ 则给出跨越各个水平 $l$ 的耗散；若 $u_n$ 可变号，则须令 $l$ 取遍 $\mathbb{R}$。(d) $F_l(l)=0$ 与 $E_l(l)=0$ 使常数 $u_n\equiv c$ 自动是熵解：把 $u_n\equiv c=l$ 代入\eqref{align:ch07-7.77}得 $0\geqslant0$。这一自洽性正是定义中 $E_l$、$F_l$ 取绝对值与符号因子的理由。
+\item 边界与反例。(a) \eqref{align:ch07-7.77}是弱形式的不等式，它不要求 $u_n$ 有任何可微性；反之，若把\eqref{align:ch07-7.77}中的 $\geqslant$ 换成 $=$，则得到的是弱解（\cref{remark:ch07-7.4.1}），而弱解一般不唯一。(b) 若把 $l$ 只取在解的值域之外（例如只取 $l>\|u_n\|_{L^\infty(S)}$），则\eqref{align:ch07-7.77}退化为单一方向的不等式，不足以刻画熵解；这也说明定义中 $l$ 遍历整个 $[0,\infty)$ 而非某个上水平集。(c) 若 $u_n$ 不可积（例如只属于 $L^\infty(S)$），则\eqref{align:ch07-7.77}中的 $E_l(u_n)\partial_t\zeta$ 项可能不可积，故 $u_n\in L^\infty(0,T;L^1(\mathbb{R}))$ 是定义的一部分。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch07-7.4.1}
+熵解是弱解：若 $\zeta\in C^1([0,T];C^1_c(\mathbb{R}))$ 满足 $\zeta(\cdot,T)=0$ 在 $\mathbb{R}$ 上，则
 \begin{align}
-\iint_S[u_n\partial_t\zeta+\phi(u_n)\partial_x\zeta]\,\mathrm{d}x\,\mathrm{d}t
-+\int_{\mathbb{R}}u_{0n}\zeta(x,0)\,\mathrm{d}x=0. \label{align:ch07-7.78}
+\iint_S[u_n\partial_t\zeta+\phi(u_n)\partial_x\zeta]\,\mathrm{d}x\,\mathrm{d}t+\int_{\mathbb{R}}u_{0n}\zeta(x,0)\,\mathrm{d}x=0. \label{align:ch07-7.78}
 \end{align}
 \end{remark}
 
+% SUPPLEMENT: parent=remark:ch07-7.4.1; kind=proof; location=注 7.4.1 之后（原书只断言"熵解是弱解"而未给推导）; basis=在 \eqref{align:ch07-7.77} 中分别取 $l=0$ 与 $l\geqslant\|u_n\|_{L^\infty(S)}$ 得到 \eqref{align:ch07-7.78} 的两个方向，再用 $l$ 项与 $\phi(l)$ 项因 $\zeta(\cdot,T)=0$ 与 $\zeta$ 的紧支撑而消失的显式计算，最后把 $\zeta$ 分解为正部与负部
+\begin{proof}[补证：由\eqref{align:ch07-7.77}导出\eqref{align:ch07-7.78}]
+设 $\zeta\in C^1([0,T];C^1_c(\mathbb{R}))$，$\zeta(\cdot,T)=0$ 在 $\mathbb{R}$ 上。因 $\zeta$ 在 $x$ 方向紧支撑，对每个 $t\in[0,T]$ 有
+\begin{align*}
+\int_0^T\int_{\mathbb{R}}\partial_t\zeta(x,s)\,\mathrm{d}x\,\mathrm{d}s=-\int_{\mathbb{R}}\zeta(x,0)\,\mathrm{d}x,\qquad
+\int_0^T\int_{\mathbb{R}}\partial_x\zeta(x,s)\,\mathrm{d}x\,\mathrm{d}s=0.
+\end{align*}
+第一步：$l=0$。因 $u_n\geqslant0$、$u_{0n}\geqslant0$ 与 $\phi(0)=0$，有 $E_0(y)=y$ 与 $F_0(y)=\operatorname{sgn}(y)\phi(y)=\phi(y)$ 对 $y\geqslant0$ 成立。\eqref{align:ch07-7.77}（取 $l=0$）即
+\begin{align*}
+\iint_S[u_n\partial_t\zeta+\phi(u_n)\partial_x\zeta]\,\mathrm{d}x\,\mathrm{d}t+\int_{\mathbb{R}}u_{0n}\zeta(x,0)\,\mathrm{d}x\geqslant0,
+\end{align*}
+记其左端为 $R(\zeta)$，则 $R(\zeta)\geqslant0$。
+第二步：$l\geqslant M_n\triangleq\max\{\|u_n\|_{L^\infty(S)},\|u_{0n}\|_{L^\infty(\mathbb{R})}\}$。此时 $E_l(y)=l-y$ 与 $F_l(y)=-\,[\phi(y)-\phi(l)]$ 对一切 $y\in[0,M_n]$ 成立，故\eqref{align:ch07-7.77}的左端为
+\begin{align*}
+&\iint_S[(l-u_n)\partial_t\zeta-(\phi(u_n)-\phi(l))\partial_x\zeta]\,\mathrm{d}x\,\mathrm{d}t+\int_{\mathbb{R}}(l-u_{0n})\zeta(x,0)\,\mathrm{d}x\\
+&\quad=-R(\zeta)+l\left[\iint_S\partial_t\zeta\,\mathrm{d}x\,\mathrm{d}t+\int_{\mathbb{R}}\zeta(x,0)\,\mathrm{d}x\right]
++\phi(l)\iint_S\partial_x\zeta\,\mathrm{d}x\,\mathrm{d}t=-R(\zeta),
+\end{align*}
+其中两个方括号都为零（见上面两式）。故 $R(\zeta)\leqslant0$。
+第三步：合成。由第一、二步，$R(\zeta)=0$ 对每个满足 $\zeta\geqslant0$ 的上述试验函数成立。对一般的 $\zeta$（不必非负），把 $\zeta$ 分解为 $\zeta=\zeta^+-\zeta^-$，其中 $\zeta^\pm\triangleq\max\{\pm\zeta,0\}\in C^1([0,T];C^1_c(\mathbb{R}))$ 且 $\zeta^\pm(\cdot,T)=0$（因 $\zeta(\cdot,T)=0$）。由 $R$ 关于 $\zeta$ 的线性性与第一、二步应用于 $\zeta^\pm$ 得
+\begin{align*}
+R(\zeta)=R(\zeta^+)-R(\zeta^-)=0-0=0,
+\end{align*}
+即\eqref{align:ch07-7.78}。
+\end{proof}
+
 \begin{proposition}\label{proposition:ch07-7.4.7}
-设 $\phi\in C([0,\infty))$。则\cref{lemma:ch07-7.4.5}给出的函数 $u_n$ 是问题 (Pn)（$n\in\mathbb{N}$）的熵解。此外，
+设 $\phi\in C([0,\infty))$ 且\eqref{align:ch07-7.1}成立，$n\in\mathbb{N}$，$u_{0n}\in L^1(\mathbb{R})\cap L^\infty(\mathbb{R})$ 非负且满足\eqref{align:ch07-7.44}--\eqref{align:ch07-7.45}。设 $u_n$ 为\cref{lemma:ch07-7.4.5}给出的函数。则 $u_n$ 是问题 (Pn) 的熵解（\cref{definition:ch07-Pn熵解}）。此外
 \begin{align}
 \|u_n(\cdot,t)\|_{L^1(\mathbb{R})}=\|u_{0n}\|_{L^1(\mathbb{R})}\quad\text{对几乎所有 }t\in(0,T) \label{align:ch07-7.79}
 \end{align}
 且
 \begin{align}
 \|u_n(\cdot+h,\cdot)-u_n\|_{L^\infty(0,T;L^1(\mathbb{R}))}
-\leqslant\|u_{0n}(\cdot+h)-u_{0n}\|_{L^1(\mathbb{R})}\quad\forall h\in\mathbb{R}. \label{align:ch07-7.80}
+\leqslant\|u_{0n}(\cdot+h)-u_{0n}\|_{L^1(\mathbb{R})}\quad\text{对所有 }h\in\mathbb{R}. \label{align:ch07-7.80}
 \end{align}
 若 $\phi$ 局部 Lipschitz 连续，则 $u_n$ 是 (Pn) 的唯一熵解。
 \end{proposition}
 
 \begin{proof}
-设 $\zeta$ 如\cref{definition:ch07-Pn熵解}，$E_l(y)=|y-l|$，$F_{l,\epsilon}(y)=\operatorname{sgn}(y-l)[\phi_\epsilon(y)-\phi_\epsilon(l)]$（$y,l\in[0,\infty)$）。由 (Pn$^\epsilon$) 作标准计算得
+设 $\zeta$ 如\cref{definition:ch07-Pn熵解}，$E_l(y)=|y-l|$，$F_{l,\varepsilon}(y)=\operatorname{sgn}(y-l)[\phi_\varepsilon(y)-\phi_\varepsilon(l)]$（$y,l\in[0,\infty)$）。由 (Pn$^\varepsilon$) 经标准计算得
 \begin{align}
-\iint_S\{E_l(u_n^\epsilon)(\partial_t\zeta+\epsilon\zeta_{xx})+F_{l,\epsilon}(u_n^\epsilon)\partial_x\zeta\}\,\mathrm{d}x\,\mathrm{d}t
-+\int_{\mathbb{R}}E_l(u_{0n}^\epsilon)\zeta(x,0)\,\mathrm{d}x\geqslant0. \label{align:ch07-7.81}
+\iint_S\{E_l(u_n^\varepsilon)(\partial_t\zeta+\varepsilon\zeta_{xx})+F_{l,\varepsilon}(u_n^\varepsilon)\partial_x\zeta\}\,\mathrm{d}x\,\mathrm{d}t
++\int_{\mathbb{R}}E_l(u_{0n}^\varepsilon)\zeta(x,0)\,\mathrm{d}x\geqslant0. \label{align:ch07-7.81}
 \end{align}
-设 $\{u_n^{\epsilon_j}\}\subseteq\{u_n^\epsilon\}$ 由\cref{lemma:ch07-7.4.5}给出。由\eqref{align:ch07-7.48}--\eqref{align:ch07-7.49}，
+设 $\{u_n^{\varepsilon_j}\}\subseteq\{u_n^\varepsilon\}$ 由\cref{lemma:ch07-7.4.5}给出。由\eqref{align:ch07-7.48}--\eqref{align:ch07-7.49}，
 \begin{align*}
-\|\phi_{\epsilon_j}(u_n^{\epsilon_j})\|_{L^\infty(S)}
-\leqslant\sup_{|y|\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})}}|\phi_{\epsilon_j}(y)|
+\|\phi_{\varepsilon_j}(u_n^{\varepsilon_j})\|_{L^\infty(S)}
+\leqslant\sup_{|y|\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})}}|\phi_{\varepsilon_j}(y)|
 \leqslant\sup_{|y|\leqslant\|u_{0n}\|_{L^\infty(\mathbb{R})}}|\phi(y)|.
 \end{align*}
-由\eqref{align:ch07-7.70}、上式与控制收敛定理，
+于是由\eqref{align:ch07-7.70}、上式与控制收敛定理，
 \begin{align*}
-\iint_S F_{l,\epsilon_j}(u_n^{\epsilon_j})\partial_x\zeta\,\mathrm{d}x\,\mathrm{d}t
-\to\iint_S F_l(u_n)\partial_x\zeta\,\mathrm{d}x\,\mathrm{d}t.
+\iint_SF_{l,\varepsilon_j}(u_n^{\varepsilon_j})\partial_x\zeta\,\mathrm{d}x\,\mathrm{d}t
+\to\iint_SF_l(u_n)\partial_x\zeta\,\mathrm{d}x\,\mathrm{d}t.
 \end{align*}
-由\eqref{align:ch07-7.69}与\eqref{align:ch07-7.47}亦有
+由\eqref{align:ch07-7.69}与\eqref{align:ch07-7.47}又分别得
 \begin{align*}
-\iint_S E_l(u_n^{\epsilon_j})(\partial_t\zeta+\epsilon_j\zeta_{xx})\,\mathrm{d}x\,\mathrm{d}t
-\to\iint_S E_l(u_n)\partial_t\zeta\,\mathrm{d}x\,\mathrm{d}t,
+\iint_SE_l(u_n^{\varepsilon_j})(\partial_t\zeta+\varepsilon_j\zeta_{xx})\,\mathrm{d}x\,\mathrm{d}t
+\to\iint_SE_l(u_n)\partial_t\zeta\,\mathrm{d}x\,\mathrm{d}t,
 \end{align*}
 \begin{align*}
-\int_{\mathbb{R}}E_l(u_{0n}^{\epsilon_j})\zeta(x,0)\,\mathrm{d}x\to\int_{\mathbb{R}}E_l(u_{0n})\zeta(x,0)\,\mathrm{d}x.
+\int_{\mathbb{R}}E_l(u_{0n}^{\varepsilon_j})\zeta(x,0)\,\mathrm{d}x\to\int_{\mathbb{R}}E_l(u_{0n})\zeta(x,0)\,\mathrm{d}x.
 \end{align*}
-在\eqref{align:ch07-7.81}（取 $\epsilon=\epsilon_j$）中令 $j\to\infty$ 得\eqref{align:ch07-7.77}，故 $u_n$ 是 (Pn) 的熵解。唯一性由 Kružkov 唯一性定理得到（例如见文献~\cite{ref91}）。
+在\eqref{align:ch07-7.81}（取 $\varepsilon=\varepsilon_j$）中令 $j\to\infty$ 即得\eqref{align:ch07-7.77}，故 $u_n$ 是问题 (Pn) 的熵解。唯一性由 Kružkov 唯一性定理得到（例如见文献~\cite{ref91}）。
 
 不等式\eqref{align:ch07-7.80}由\eqref{align:ch07-7.52}与\eqref{align:ch07-7.68}得到。关于\eqref{align:ch07-7.79}，由\eqref{align:ch07-7.78}经标准论证得，对几乎所有 $t\in(0,T)$ 与所有 $\rho\in C^1_c(\mathbb{R})$，
 \begin{align}
@@ -325,24 +672,70 @@ U_{n,\rho}^{\epsilon_j}\to U_{n,\rho}\quad\text{在 }L^1(0,T); \label{align:ch07
 \end{align*}
 另一方面，由单调收敛定理，
 \begin{align*}
-\int_{\mathbb{R}}u_n(x,t)\rho_k(x)\,\mathrm{d}x\to\int_{\mathbb{R}}u_n(x,t)\,\mathrm{d}x,\quad
+\int_{\mathbb{R}}u_n(x,t)\rho_k(x)\,\mathrm{d}x\to\int_{\mathbb{R}}u_n(x,t)\,\mathrm{d}x,\qquad
 \int_{\mathbb{R}}u_{0n}(x)\rho_k(x)\,\mathrm{d}x\to\int_{\mathbb{R}}u_{0n}(x)\,\mathrm{d}x.
 \end{align*}
-由\eqref{align:ch07-7.82}得等式\eqref{align:ch07-7.79}。
+于是由\eqref{align:ch07-7.82}得等式\eqref{align:ch07-7.79}。证毕。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch07-7.4.7; kind=proof; location=命题 7.4.7 证明中 \eqref{align:ch07-7.81} 的"标准计算"、三项取极限、唯一性、\eqref{align:ch07-7.80} 与 \eqref{align:ch07-7.82} 的推导; basis=以 $E_l$ 的凸性与 Kato 不等式导出 \eqref{align:ch07-7.81}、符号因子在 $\{u_n=l\}$ 上的处理、Kružkov 定理所需假设的核验、\eqref{align:ch07-7.80} 中弱下半连续性与三角不等式、\eqref{align:ch07-7.82} 中时间截断函数的逼近
+\begin{proof}[补证：\cref{proposition:ch07-7.4.7}的细节]
+第一步：\eqref{align:ch07-7.81}。固定 $l\in[0,\infty)$。因 $E_l\in C(\mathbb{R})$ 凸、$E_l'=\operatorname{sgn}(\cdot-l)$ 分段常值，而 $u_n^\varepsilon$ 光滑且 $u_n^\varepsilon\geqslant0$，在 $u_n^\varepsilon\neq l$ 处由链式法则
+\begin{align*}
+\partial_tE_l(u_n^\varepsilon)=\operatorname{sgn}(u_n^\varepsilon-l)\partial_tu_n^\varepsilon,\qquad
+\partial_xF_{l,\varepsilon}(u_n^\varepsilon)=\operatorname{sgn}(u_n^\varepsilon-l)\phi_\varepsilon'(u_n^\varepsilon)\partial_xu_n^\varepsilon,
+\end{align*}
+而在 $u_n^\varepsilon=l$ 处 $E_l$ 的二阶复合导数含非负测度 $2\delta_{u_n^\varepsilon=l}|\partial_xu_n^\varepsilon|^2$。故以 $\operatorname{sgn}(u_n^\varepsilon-l)$ 乘 (Pn$^\varepsilon$) 的第一式并整理得
+\begin{align*}
+\partial_tE_l(u_n^\varepsilon)+\partial_xF_{l,\varepsilon}(u_n^\varepsilon)
+=\varepsilon\,\partial_{xx}E_l(u_n^\varepsilon)-2\varepsilon\delta_{u_n^\varepsilon=l}|\partial_xu_n^\varepsilon|^2
+\leqslant\varepsilon\,\partial_{xx}E_l(u_n^\varepsilon)\quad\text{在 }\mathscr{D}'(S)\text{ 中}.
+\end{align*}
+以 $\zeta\geqslant0$ 乘两端并在 $S$ 上积分，对 $\partial_tE_l$ 与 $\partial_xF_{l,\varepsilon}$ 分部积分、对 $\varepsilon\partial_{xx}E_l$ 两次分部积分（端点项 $t=T$ 消失，$x$ 方向无边界项），即得\eqref{align:ch07-7.81}；不等号方向由丢弃非正项 $-2\varepsilon\delta_{u_n^\varepsilon=l}|\partial_xu_n^\varepsilon|^2$ 得到。
+第二步：三项取极限。(a) $F$ 项：由\eqref{align:ch07-7.70}第二个收敛，$\phi_{\varepsilon_j}(u_n^{\varepsilon_j})\to\phi(u_n)$ 几乎处处，且 $\phi_{\varepsilon_j}(l)\to\phi(l)$（$l$ 固定），故 $F_{l,\varepsilon_j}(u_n^{\varepsilon_j})\to F_l(u_n)$ 几乎处处：在 $u_n\neq l$ 处 $\operatorname{sgn}(u_n^{\varepsilon_j}-l)\to\operatorname{sgn}(u_n-l)$；在 $u_n=l$ 处 $\phi_{\varepsilon_j}(u_n^{\varepsilon_j})-\phi_{\varepsilon_j}(l)\to\phi(u_n)-\phi(l)=0$，故乘积趋于 $0=F_l(u_n)$。又由 $\|\phi_{\varepsilon_j}\|_{L^\infty([0,K])}\leqslant\sup_{[0,K]}|\phi|$（$K\triangleq\|u_{0n}\|_{L^\infty(\mathbb{R})}$）得一致有界，控制收敛定理给出该积分收敛。(b) $E$ 项：由 Lipschitz 性 $|E_l(u_n^{\varepsilon_j})-E_l(u_n)|\leqslant|u_n^{\varepsilon_j}-u_n|$ 与\eqref{align:ch07-7.69}，
+\begin{align*}
+\left|\iint_S(E_l(u_n^{\varepsilon_j})-E_l(u_n))\partial_t\zeta\,\mathrm{d}x\,\mathrm{d}t\right|
+\leqslant\|\partial_t\zeta\|_{L^\infty(S)}\|u_n^{\varepsilon_j}-u_n\|_{L^1(R_L)}\to0,
+\end{align*}
+其中 $L$ 使 $\operatorname{supp}\zeta\subseteq\bar I_L\times[0,T]$；而 $\varepsilon_j\iint_SE_l(u_n^{\varepsilon_j})\zeta_{xx}\to0$，因 $|E_l(u_n^{\varepsilon_j})|\leqslant\max\{l,K\}$ 而 $\varepsilon_j\to0$。(c) 初始项：由\eqref{align:ch07-7.47}的 $L^1$ 收敛与 $|E_l(u_{0n}^{\varepsilon_j})-E_l(u_{0n})|\leqslant|u_{0n}^{\varepsilon_j}-u_{0n}|$，并用 $|\zeta(x,0)|\leqslant\|\zeta\|_\infty$ 得该积分收敛。
+第三步：唯一性。Kružkov 定理（文献~\cite{ref91}）适用于下述框架：$u_{0n}\in L^1(\mathbb{R})\cap L^\infty(\mathbb{R})$，$\phi\in W^{1,\infty}_{\mathrm{loc}}([0,\infty))$，$u_n\in L^\infty(0,T;L^1(\mathbb{R}))\cap L^\infty(S)$ 满足对一切 $l\in[0,\infty)$ 与一切 $\zeta\geqslant0$ 的\eqref{align:ch07-7.77}。它断言这样的熵解唯一，且对两个这样的解有 $L^1$ 压缩性。故 $u_n$ 是 (Pn) 的唯一熵解。$\phi$ 的局部 Lipschitz 性正是该定理所需的全部正则性，而本命题第一部分的假设只要求 $\phi$ 连续。
+第四步：\eqref{align:ch07-7.80}。固定 $h\in\mathbb{R}$ 与 $t\in(0,T)$ 使\eqref{align:ch07-7.68}成立。由 $L^1(I_L)$ 中的强收敛与范数的连续性，对每个 $L>0$ 有 $\|u_n(\cdot+h,t)-u_n(\cdot,t)\|_{L^1(I_L)}\leqslant\liminf_j\|u_n^{\varepsilon_j}(\cdot+h,t)-u_n^{\varepsilon_j}(\cdot,t)\|_{L^1(I_L)}$，再由\eqref{align:ch07-7.52}得
+\begin{align*}
+\|u_n(\cdot+h,t)-u_n(\cdot,t)\|_{L^1(I_L)}\leqslant\liminf_{j\to\infty}\|u_{0n}^{\varepsilon_j}(\cdot+h)-u_{0n}^{\varepsilon_j}\|_{L^1(\mathbb{R})}.
+\end{align*}
+由\eqref{align:ch07-7.47}的 $L^1$ 收敛与三角不等式，$\|u_{0n}^{\varepsilon}(\cdot+h)-u_{0n}^{\varepsilon}\|_{L^1}\leqslant2\|u_{0n}^\varepsilon-u_{0n}\|_{L^1}+\|u_{0n}(\cdot+h)-u_{0n}\|_{L^1}$，故上式的右端不超过 $\|u_{0n}(\cdot+h)-u_{0n}\|_{L^1(\mathbb{R})}$。令 $L\to\infty$（单调收敛）并对几乎所有 $t$ 取上确界，即得\eqref{align:ch07-7.80}。
+第五步：\eqref{align:ch07-7.82}。设 $\rho\in C^1_c(\mathbb{R})$、$t\in(0,T)$ 为函数 $s\mapsto\int_{\mathbb{R}}u_n(x,s)\rho(x)\,\mathrm{d}x$ 的 Lebesgue 点（几乎所有 $t$ 满足）。取 $\beta_j\in C^1([0,T])$ 使 $0\leqslant\beta_j\leqslant1$、$\beta_j=1$ 在 $[0,t]$ 上、$\beta_j=0$ 在 $[t+1/j,T]$ 上、$\beta_j'\leqslant0$。在\eqref{align:ch07-7.78}中取 $\zeta(x,s)=\rho(x)\beta_j(s)$：
+\begin{align*}
+\iint_Su_n\rho\beta_j'\,\mathrm{d}x\,\mathrm{d}s+\iint_S\phi(u_n)\rho'\beta_j\,\mathrm{d}x\,\mathrm{d}s+\int_{\mathbb{R}}u_{0n}\rho\,\mathrm{d}x=0.
+\end{align*}
+由 $\beta_j'\to-\delta_t$（在 $\mathscr{D}'(0,T)$ 中）、$\beta_j\to\chi_{[0,t]}$ 与被积函数的可积性，令 $j\to\infty$ 得
+\begin{align*}
+-\int_{\mathbb{R}}u_n(x,t)\rho(x)\,\mathrm{d}x+\int_0^t\int_{\mathbb{R}}\phi(u_n)(x,s)\rho'(x)\,\mathrm{d}x\,\mathrm{d}s+\int_{\mathbb{R}}u_{0n}\rho\,\mathrm{d}x=0,
+\end{align*}
+移项即\eqref{align:ch07-7.82}。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch07-7.4.7; kind=motivation; location=命题 7.4.7 后的注记; basis=命题 7.4.7 的三项结论 + 它们与 \cref{definition:ch07-Pn熵解}、\eqref{align:ch07-7.79}、\eqref{align:ch07-7.80} 的关系、$\phi$ 连续与局部 Lipschitz 两种假设的分工（存在性 vs 唯一性），以及质量守恒只在几乎每个 $t$ 成立、平移估计不能升级为等度连续
+\begin{remark}\phantomsection\label{remark:ch07-7.4.7熵解}
+\begin{enumerate}[(i)]
+\item 引入动机。本命题完成 $\varepsilon\to0^+$ 的极限过程：\cref{lemma:ch07-7.4.5}给出收敛的子列，本命题说明其极限恰好满足\cref{definition:ch07-Pn熵解}的熵不等式，从而 (Pn) 的熵解存在。\eqref{align:ch07-7.79}与\eqref{align:ch07-7.80}把\eqref{align:ch07-7.50}与\eqref{align:ch07-7.52}的信息传给极限 $u_n$，它们是 $n\to\infty$ 时\cref{theorem:ch07-7.5.1}所需的紧性输入。
+\item 每项假设的作用。(a) $\phi\in C([0,\infty))$ 是\eqref{align:ch07-7.77}能陈述的最低要求（$F_l$ 只用到 $\phi$ 的值）；(b) \eqref{align:ch07-7.1}通过\cref{lemma:ch07-7.4.5}的估计进入证明，用于\eqref{align:ch07-7.70}与\eqref{align:ch07-7.69}；(c) $u_{0n}$ 的非负性与 $u_{0n}\in L^1\cap L^\infty$ 使\eqref{align:ch07-7.77}中的初始项有限，并使 $E_l(u_{0n}^{\varepsilon_j})$ 的支集紧；(d) 局部 Lipschitz 连续是 Kružkov 定理的假设，不能由 $\phi$ 的连续性代替：仅有连续性时熵解可能不唯一（\cref{definition:ch07-Pn熵解}的熵条件本身是充分的，但唯一性证明需要 $\phi$ 的 Lipschitz 性以控制 $\phi(u)-\phi(v)$）。
+\item 边界与结论的限度。(a) \eqref{align:ch07-7.79}只能对几乎所有 $t$ 成立：$u_n\in L^\infty(0,T;L^1(\mathbb{R}))$ 只是 $t$ 的可测函数，逐点值无意义。(b) \eqref{align:ch07-7.80}不能加强为 $u\mapsto u(\cdot+h,\cdot)$ 的等度连续性（即 $h\to0$ 时的一致收敛速度）：右端是 $\|u_{0n}\|_{L^1}$ 的模，它只保证 $h\to0$ 时趋于零，不给出速率。(c) 若 $u_{0n}$ 不非负，则\eqref{align:ch07-7.79}中的范数不能写成积分，\eqref{align:ch07-7.82}的单调收敛步骤失效；此时须改用 $\mathbb{R}$ 上的截断函数 $\rho_k\to1$ 且 $\rho_k\geqslant0$ 直接估计，结论仍成立但需 $\phi(0)=0$。
+\end{enumerate}
+\end{remark}
 
 为后文引用，证明下列结果。
 
 \begin{lemma}\label{lemma:ch07-7.4.8}
 设\eqref{align:ch07-7.1}成立，$U\in C^2([0,\infty))\cap L^\infty(0,\infty)$ 满足\eqref{align:ch07-7.58}。置
 \begin{align}
-\Lambda_U(y)\triangleq \int_0^y U'(z)\phi'(z)\,\mathrm{d}z+\vartheta_U\quad(y,\vartheta_U\in\mathbb{R}), \label{align:ch07-7.83}
+\Lambda_U(y)\triangleq\int_0^yU'(z)\phi'(z)\,\mathrm{d}z+\vartheta_U\quad(y,\vartheta_U\in\mathbb{R}), \label{align:ch07-7.83}
 \end{align}
-并设 $\Lambda_U\in L^\infty(0,\infty)$。设 $u_n$ 为由\cref{proposition:ch07-7.4.7}给出的问题 (Pn)（$n\in\mathbb{N}$）的熵解。则对任意 $n\in\mathbb{N}$，存在 $\sigma_n\in\mathscr{R}_f(S)$，使对所有 $\zeta\in C^1_c(S)$，
+并设 $\Lambda_U\in L^\infty(0,\infty)$。设 $u_n$ 为由\cref{proposition:ch07-7.4.7}给出的问题 (Pn)（$n\in\mathbb{N}$）的熵解。则对任意 $n\in\mathbb{N}$ 存在 $\sigma_n\in\mathscr{R}_f(S)$，使对所有 $\zeta\in C^1_c(S)$ 有
 \begin{align}
 \iint_S\{U(u_n)\partial_t\zeta+\Lambda_U(u_n)\partial_x\zeta\}\,\mathrm{d}x\,\mathrm{d}t=\langle\sigma_n,\zeta\rangle. \label{align:ch07-7.84}
 \end{align}
-此外有
+此外，
 \begin{align}
 \|\sigma_n\|_{\mathscr{R}_f(S)}\leqslant C_p \label{align:ch07-7.85}
 \end{align}
@@ -350,25 +743,60 @@ U_{n,\rho}^{\epsilon_j}\to U_{n,\rho}\quad\text{在 }L^1(0,T); \label{align:ch07
 \end{lemma}
 
 \begin{proof}
-由不等式\eqref{align:ch07-7.59}，对任意固定的 $n\in\mathbb{N}$，族 $\{\epsilon U''(u_n^\epsilon)(\partial_x u_n^\epsilon)^2\}$ 在 $L^1(S)\subseteq\mathscr{R}_f(S)$ 中有界。故由 Banach--Alaoglu 定理，存在序列 $\{\epsilon_k\}$（$\epsilon_k\to0^+$，$k\to\infty$）与 $\sigma_n\in\mathscr{R}_f(S)$ 使
+由不等式\eqref{align:ch07-7.59}，对任意固定的 $n\in\mathbb{N}$，族 $\{\varepsilon U''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2\}$ 在 $L^1(S)\subseteq\mathscr{R}_f(S)$ 中有界。故由 Banach--Alaoglu 定理存在序列 $\{\varepsilon_k\}$（$\varepsilon_k\to0^+$，$k\to\infty$）与 $\sigma_n\in\mathscr{R}_f(S)$ 使
 \begin{align}
-\epsilon_k U''(u_n^{\epsilon_k})(\partial_x u_n^{\epsilon_k})^2\stackrel{*}{\rightharpoonup}\sigma_n\quad\text{当 }k\to\infty. \label{align:ch07-7.86}
+\varepsilon_kU''(u_n^{\varepsilon_k})(\partial_xu_n^{\varepsilon_k})^2\stackrel{*}{\rightharpoonup}\sigma_n\quad\text{当 }k\to\infty. \label{align:ch07-7.86}
 \end{align}
-由范数的下半连续性（见\cref{remark:ch05-5.1.3}），从\eqref{align:ch07-7.86}得不等式\eqref{align:ch07-7.85}。
+不等式\eqref{align:ch07-7.85}由\eqref{align:ch07-7.86}与范数的下半连续性得到（见\cref{remark:ch05-5.1.3}）。
 
-设 $\zeta\in C^2_c(S)$。由\eqref{align:ch07-7.56}，
+设 $\zeta\in C^2_c(S)$。由\eqref{align:ch07-7.56}得
 \begin{align}
-\epsilon\iint_S U''(u_n^\epsilon)(\partial_x u_n^\epsilon)^2\zeta\,\mathrm{d}x\,\mathrm{d}t
-=\iint_S[U(u_n^\epsilon)\partial_t\zeta+\Lambda_{U,\epsilon}(u_n^\epsilon)\partial_x\zeta+\epsilon U(u_n^\epsilon)\partial_{xx}\zeta]\,\mathrm{d}x\,\mathrm{d}t \label{align:ch07-7.87}
+\varepsilon\iint_SU''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2\zeta\,\mathrm{d}x\,\mathrm{d}t
+=\iint_S[U(u_n^\varepsilon)\partial_t\zeta+\Lambda_{U,\varepsilon}(u_n^\varepsilon)\partial_x\zeta+\varepsilon U(u_n^\varepsilon)\partial_{xx}\zeta]\,\mathrm{d}x\,\mathrm{d}t, \label{align:ch07-7.87}
 \end{align}
-其中 $\Lambda_{U,\epsilon}$ 由\eqref{align:ch07-7.54}定义。由\eqref{align:ch07-7.1}与\eqref{align:ch07-7.49}中第二个不等式，对任意固定的 $n\in\mathbb{N}$，
+其中 $\Lambda_{U,\varepsilon}$ 由\eqref{align:ch07-7.54}定义。由\eqref{align:ch07-7.1}与\eqref{align:ch07-7.49}中第二个不等式，对任意固定的 $n\in\mathbb{N}$ 有
 \begin{align*}
-|\Lambda_{U,\epsilon}(u_n^\epsilon)|\leqslant M\int_0^{\|u_{0n}\|_{L^\infty(\mathbb{R})}}|U'(z)|\,\mathrm{d}z+|\vartheta_U|<\infty,
+|\Lambda_{U,\varepsilon}(u_n^\varepsilon)|\leqslant M\int_0^{\|u_{0n}\|_{L^\infty(\mathbb{R})}}|U'(z)|\,\mathrm{d}z+|\vartheta_U|<\infty,
 \end{align*}
-故对固定的 $n$，族 $\{\Lambda_{U,\epsilon}(u_n^\epsilon)\}$ 在 $L^\infty(S)$ 中有界。在\eqref{align:ch07-7.87}（取 $\epsilon=\epsilon_k$）中令 $k\to\infty$，如\cref{proposition:ch07-7.4.7}证明中那样论证，即得等式\eqref{align:ch07-7.84}。
+故对固定的 $n$，族 $\{\Lambda_{U,\varepsilon}(u_n^\varepsilon)\}$ 在 $L^\infty(S)$ 中有界。在\eqref{align:ch07-7.87}（取 $\varepsilon=\varepsilon_k$）中令 $k\to\infty$，并按\cref{proposition:ch07-7.4.7}证明中的方式论证，即得等式\eqref{align:ch07-7.84}。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch07-7.4.8; kind=proof; location=引理 7.4.8 证明中 \eqref{align:ch07-7.86} 的序列化、\eqref{align:ch07-7.87} 的推导、$\Lambda_{U,\varepsilon}$ 的有界性以及在 \eqref{align:ch07-7.87} 中令 $k\to\infty$ 的三项取极限; basis=$C_0(S)$ 可分使弱*拓扑在球上可度量化（网升级为序列）、\eqref{align:ch07-7.57} 的端点项在 $\zeta\in C^2_c(S)$ 时消失、$\Lambda_{U,\varepsilon}(y)\to\Lambda_U(y)$ 的一致估计与复合函数的几乎处处收敛、以及由 $C^2_c(S)$ 到 $C^1_c(S)$ 的稠密性延拓
+\begin{proof}[补证：\cref{lemma:ch07-7.4.8}]
+第一步：\eqref{align:ch07-7.86}的序列化。由\eqref{align:ch07-7.59}，对固定的 $n$ 有
+\begin{align*}
+\left\|\varepsilon U''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2\right\|_{L^1(S)}
+=\varepsilon\iint_S|U''(u_n^\varepsilon)|(\partial_xu_n^\varepsilon)^2\,\mathrm{d}x\,\mathrm{d}t\leqslant C_p\quad(\varepsilon>0).
+\end{align*}
+因 $S$ 有界，$L^1(S)\subseteq\mathscr{R}_f(S)$ 且 $\|f\|_{\mathscr{R}_f(S)}=\|f\|_{L^1(S)}$，故该族含于 $\mathscr{R}_f(S)=(C_0(S))^*$ 的球 $\{T\mid\|T\|\leqslant C_p\}$ 中。$C_0(S)$ 可分（$S\subseteq\mathbb{R}^2$，多项式基），故该球上的弱*拓扑可度量化，从而弱*序列紧；这给出\eqref{align:ch07-7.86}（若只知弱*紧性，则只能得到网，可度量化把网换成序列）。
+第二步：\eqref{align:ch07-7.87}。在\eqref{align:ch07-7.57}中取 $\zeta\in C^2_c(S)$。此时 $\zeta(x,T)=\zeta(x,0)=0$（因 $\operatorname{supp}\zeta\subseteq S$ 与 $t$ 方向紧），故\eqref{align:ch07-7.57}中两个端点项都消失，只剩
+\begin{align*}
+\varepsilon\iint_SU''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2\zeta\,\mathrm{d}x\,\mathrm{d}t
+=\iint_S[U(u_n^\varepsilon)\partial_t\zeta+\Lambda_{U,\varepsilon}(u_n^\varepsilon)\partial_x\zeta+\varepsilon U(u_n^\varepsilon)\partial_{xx}\zeta]\,\mathrm{d}x\,\mathrm{d}t,
+\end{align*}
+即\eqref{align:ch07-7.87}。
+第三步：$\Lambda_{U,\varepsilon}$ 的一致界。由\eqref{align:ch07-7.1}，$|\phi_\varepsilon'|\leqslant M$；由\eqref{align:ch07-7.49}，$0\leqslant u_n^\varepsilon\leqslant K\triangleq\|u_{0n}\|_{L^\infty(\mathbb{R})}$。故
+\begin{align*}
+|\Lambda_{U,\varepsilon}(u_n^\varepsilon)|\leqslant M\int_0^{u_n^\varepsilon}|U'(z)|\,\mathrm{d}z+|\vartheta_U|
+\leqslant M\|U'\|_{L^\infty(0,\infty)}K+|\vartheta_U|=:\widetilde C_n<\infty,
+\end{align*}
+其中 $\widetilde C_n$ 只依赖于 $n$、$U$、$M$ 与 $\vartheta_U$。
+第四步：在\eqref{align:ch07-7.87}中令 $k\to\infty$。(a) 左端：由\eqref{align:ch07-7.86}与 $\zeta\in C^2_c(S)\subseteq C_0(S)$，左端收敛于 $\langle\sigma_n,\zeta\rangle$。(b) 第一项：由\eqref{align:ch07-7.69}（$U$ Lipschitz 于紧集、$u_n^{\varepsilon_k}\to u_n$ 在 $L^1_{\mathrm{loc}}$ 中）与 $|\partial_t\zeta|\leqslant\|\zeta\|_{C^1}$，$\iint_SU(u_n^{\varepsilon_k})\partial_t\zeta\to\iint_SU(u_n)\partial_t\zeta$；第三项由 $|\varepsilon_k\iint_SU(u_n^{\varepsilon_k})\partial_{xx}\zeta|\leqslant\varepsilon_k\|U\|_\infty\iint_S|\partial_{xx}\zeta|\to0$ 而消失。(c) 第二项：先证逐点收敛。由\eqref{align:ch07-7.54}与 $|\phi_\varepsilon'|\leqslant M$、$U'\in L^\infty$，控制收敛定理给出 $\Lambda_{U,\varepsilon}(y)\to\Lambda_U(y)$ 对每个 $y\geqslant0$（因 $\phi_\varepsilon'(z)\to\phi'(z)$ 对几乎所有 $z$，而 $|U'(z)\phi_\varepsilon'(z)|\leqslant M\|U'\|_\infty$）。又 $y\mapsto\Lambda_U(y)=\int_0^yU'\phi'$ 连续，故由\eqref{align:ch07-7.70}得 $\Lambda_{U,\varepsilon_k}(u_n^{\varepsilon_k})\to\Lambda_U(u_n)$ 几乎处处；再由第三步的一致界 $\widetilde C_n$ 与控制收敛定理得 $\iint_S\Lambda_{U,\varepsilon_k}(u_n^{\varepsilon_k})\partial_x\zeta\to\iint_S\Lambda_U(u_n)\partial_x\zeta$。三步合起来给出\eqref{align:ch07-7.84}对 $\zeta\in C^2_c(S)$ 成立。
+第五步：延拓到 $C^1_c(S)$。设 $\zeta\in C^1_c(S)$。取 $\zeta_j\in C^2_c(S)$ 使 $\zeta_j\to\zeta$ 在 $C^1$ 范数下（$C^2_c$ 在 $C^1_c$ 中稠密：磨光后截断，截断函数取在 $\operatorname{supp}\zeta$ 的邻域内为 $1$）。\eqref{align:ch07-7.84}的两端都关于 $\zeta$ 的 $C^1$ 范数连续：左端
+\begin{align*}
+\left|\iint_S\{U(u_n)\partial_t(\zeta-\zeta_j)+\Lambda_U(u_n)\partial_x(\zeta-\zeta_j)\}\right|
+\leqslant(\|U\|_\infty+\|\Lambda_U\|_\infty)\|\zeta-\zeta_j\|_{C^1}\lambda(S),
+\end{align*}
+右端 $|\langle\sigma_n,\zeta-\zeta_j\rangle|\leqslant\|\sigma_n\|_{\mathscr{R}_f(S)}\|\zeta-\zeta_j\|_{C^0}$。故\eqref{align:ch07-7.84}对一切 $\zeta\in C^1_c(S)$ 成立。
+\end{proof}
 
-
+% SUPPLEMENT: parent=lemma:ch07-7.4.8; kind=motivation; location=引理 7.4.8 后的注记; basis=引理 7.4.8 与 \eqref{align:ch07-7.83}--\eqref{align:ch07-7.85} + 把 \eqref{align:ch07-7.84} 理解为"熵等式带熵产生测度"的动机、$\Lambda_U\in L^\infty$ 与 $U\in L^\infty$ 两条假设的分工、$\sigma_n$ 的符号与集中现象，以及 $\sigma_n$ 只在 $n$ 固定时可构造的边界
+\begin{remark}\phantomsection\label{remark:ch07-7.4.8测度}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch07-7.84}是\cref{lemma:ch07-7.4.2}中\eqref{align:ch07-7.56}的极限形式：把\eqref{align:ch07-7.56}对 $\zeta\in C^1_c(S)$ 积分，左端的 $\varepsilon U''(u_n^\varepsilon)(\partial_xu_n^\varepsilon)^2$ 在 $\varepsilon\to0^+$ 时不消失，而是弱*收敛为一个有限 Radon 测度 $\sigma_n$。因此\eqref{align:ch07-7.84}不是齐次守恒律的弱形式，而是"熵等式加熵产生"：$\sigma_n$ 精确记录了正则化所耗散的能量。它在\cref{section:ch07-存在性证明}中用于识别 Young 测度极限的奇异部分。
+\item 每项假设的作用。(a) $U\in L^\infty(0,\infty)$ 使\eqref{align:ch07-7.87}右端第一、三项中的 $U(u_n^\varepsilon)$ 一致有界，从而 $\varepsilon U\partial_{xx}\zeta$ 项随 $\varepsilon\to0^+$ 消失。(b) $\Lambda_U\in L^\infty(0,\infty)$ 使\eqref{align:ch07-7.84}左端第二项可积，并使第五步的延拓估计成立；若 $\Lambda_U$ 只在 $L^\infty_{\mathrm{loc}}$ 中，则 $\Lambda_U(u_n)$ 未必属于 $L^1(S)$，等式右端的配对无意义。(c) \eqref{align:ch07-7.58}通过\eqref{align:ch07-7.59}给出\eqref{align:ch07-7.85}的常数，从而使 $\{\sigma_n\}$ 的质量与 $n$ 无关；这正是 $n\to\infty$ 时仍能取弱*极限的原因。
+\item 边界与结论的限度。(a) $\sigma_n$ 只是正测度（\eqref{align:ch07-7.86}的左端非负），故\eqref{align:ch07-7.84}中的符号是确定的：$\sigma_n\geqslant0$。(b) $\sigma_n$ 依赖 $n$ 且只对固定的 $n$ 构造；\eqref{align:ch07-7.85}给出的界 $C_p$ 与 $n$ 无关，这是 $\{\sigma_n\}$ 在 $\mathscr{R}_f(S)$ 中有界的依据，但 $\sigma_n$ 本身一般不为零（除非 $u_n$ 是 $\phi$ 的线性情形下的解）。(c) \eqref{align:ch07-7.84}不能对 $\zeta$ 取 $C_c(S)$：左端需要 $\partial_t\zeta$ 与 $\partial_x\zeta$ 的 $L^\infty$ 界以配合 $U(u_n),\Lambda_U(u_n)\in L^\infty(S)$，而 $C^1_c(S)\subseteq C_c(S)$ 的稠密性只保证 $C^1$ 范数下的逼近。
+\end{enumerate}
+\end{remark}
 
 \end{document}

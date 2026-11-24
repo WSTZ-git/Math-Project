@@ -15,101 +15,114 @@
 
 \section{存在性结果的证明：逼近问题 (Pn)}\label{section:ch06-逼近问题}
 
+本节给出\cref{theorem:ch06-6.4.1}的证明，即通过对逼近问题
+\begin{align*}
+\begin{cases}
+\partial_t u_n=\Delta\phi_n(u_n) & \text{在 }Q,\\
+u_n=0 & \text{在 }\Gamma,\\
+u_n(\cdot,0)=u_{0n} & \text{在 }\Omega,
+\end{cases}
+\qquad(Pn)
+\end{align*}
+的解序列 $\{u_n\}$ 取极限来构造问题 (P) 的弱解，其中 $\phi_n(z)\triangleq\phi(z)+z/n$（$z\in\mathbb{R}$），$n\in\mathbb{N}$。证明分两个阶段：本节的\cref{subsection:ch06-初值逼近}构造初值测度 $u_0$ 的光滑逼近 $\{u_{0n}\}\subseteq C^\infty_c(\Omega)$，\cref{subsection:ch06-先验估计}对经典解序列 $\{u_n\}$ 建立与 $n$ 无关或仅以 $n$ 的负幂次衰减的先验估计；令 $n\to\infty$ 的极限过程在\cref{section:ch06-令n趋于无穷}中完成。
+
 \subsection{初值的逼近}\label{subsection:ch06-初值逼近}
 
-设 (A0) 成立。为处理问题 (P)，需要初值 $u_0$ 的合适逼近。为此，使用如下技术引理。
+设 (A0) 成立，即 $u_0\in\mathscr{R}_f(\Omega)$。为处理问题 (P)，需要初值 $u_0$ 的合适逼近。这里困难之处在于：(P) 的初值是测度，而逼近问题 (Pn) 的经典解理论要求初值至少属于 $L^1(\Omega)\cap L^\infty(\Omega)$ 且支在 $\Omega$ 内；同时逼近不能丢失 $u_0$ 的奇异部分所携带的信息，因为 (P) 的极限解正是把质量"逃逸"到奇异部分而产生的。因此所选逼近 $\{u_{0n}\}\subseteq C^\infty_c(\Omega)$ 必须同时满足三项要求：其绝对连续部分在 $L^1(\Omega)$ 中强收敛且几乎处处收敛于 $u_0$ 的密度 $u_{0r}$；整个序列在 $\mathscr{R}_f(\Omega)$ 中弱$^*$收敛于 $u_0$；其 $L^\infty$ 范数只以 $n^{1/4}$ 的速率增长，从而修正项 $\phi_n(u_n)-\phi(u_n)=u_n/n$ 在 $L^\infty(Q)$ 中以 $n^{-3/4}$ 的速率消失（见\eqref{align:ch6-6.56}）。此外，$u_0$ 的奇异部分须按\eqref{align:ch03-3.82}的 $(1,2)$-分解拆成弥散部分与集中部分分别处理：弥散部分属于 $L^1(\Omega)+H^{-1}(\Omega)$，可与 $H^1(\Omega)$ 试验函数配对，这是\eqref{align:ch6-6.41c}的内容；集中部分只作弱$^*$逼近。为此使用如下技术引理。
 
-\begin{lemma}\label{lemma:ch06-6.5.1}
-对任意 $\mu\in\mathscr{R}^+_f(\Omega)$，存在序列 $\{(\alpha_n,\beta_n,\gamma_n)\}\subseteq[C^\infty_c(\Omega)]^3$，$\alpha_n\geqslant0$，$\beta_n\geqslant0$，$\gamma_n\geqslant0$ 在 $\Omega$ 上，具有如下性质：
+\begin{lemma}[初值测度的三重逼近]\label{lemma:ch06-6.5.1}
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$\mu\in\mathscr{R}^+_f(\Omega)$ 为 $\Omega$ 上的非负有限 Radon 测度。按\eqref{align:ch03-3.82}（取 $p=2$、$m=1$）把 $\mu$ 分解为
+\begin{align*}
+\mu=\mu_{\mathrm{ac}}+[\mu_s]_{d,2}+\mu_{c,2},
+\end{align*}
+其中 $\mu_{\mathrm{ac}}$ 关于 $\lambda_N$ 绝对连续，其密度记为 $\mu_r\triangleq\mathrm{d}\mu_{\mathrm{ac}}/\mathrm{d}\lambda_N\in L^1(\Omega)$；$[\mu_s]_{d,2}$ 为 $\mu$ 的奇异部分关于 $2$-容量的 $(1,2)$-弥散部分，$\mu_{c,2}$ 为相应的 $(1,2)$-集中部分，三者都属于 $\mathscr{R}^+_f(\Omega)$。则存在序列 $\{(\alpha_n,\beta_n,\gamma_n)\}_{n\in\mathbb{N}}\subseteq[C^\infty_c(\Omega)]^3$ 与只依赖于所取磨光子的常数 $M>0$，使 $\alpha_n\geqslant0$、$\beta_n\geqslant0$、$\gamma_n\geqslant0$ 在 $\Omega$ 上（$n\in\mathbb{N}$），且
 \begin{align}
-\alpha_n\to\mu_r \text{ 在 }L^1(\Omega), \label{align:ch6-6.41a}
-\end{align}
-\begin{align}
-\alpha_n\stackrel{*}{\rightharpoonup}\mu_{\mathrm{ac}},\quad
-\beta_n\stackrel{*}{\rightharpoonup}[\mu_s]_{d,2},\quad
+\alpha_n\to\mu_r\text{ 在 }L^1(\Omega), \label{align:ch6-6.41a}\\
+\alpha_n\stackrel{*}{\rightharpoonup}\mu_{\mathrm{ac}},\qquad
+\beta_n\stackrel{*}{\rightharpoonup}[\mu_s]_{d,2},\qquad
 \gamma_n\stackrel{*}{\rightharpoonup}\mu_{c,2}
-\quad\text{在 }\mathscr{R}_f(\Omega), \label{align:ch6-6.41b}
+\qquad\text{在 }\mathscr{R}_f(\Omega), \label{align:ch6-6.41b}\\
+\int_\Omega\beta_nf_n\rho\,\mathrm{d}x\to\langle[\mu_s]_{d,2},f\rho\rangle \label{align:ch6-6.41c}
 \end{align}
+对所有 $\rho\in C_c(\Omega)$ 及所有满足 $\sup_{n\in\mathbb{N}}\|f_n\|_{L^\infty(\Omega)}<\infty$ 与 $f_n\rightharpoonup f$ 于 $H^1(\Omega)$ 的序列 $\{f_n\}\subseteq H^1(\Omega)\cap L^\infty(\Omega)$ 成立。置 $\mu_n\triangleq\alpha_n+\beta_n+\gamma_n\in C^\infty_c(\Omega)$。则 $\alpha_n$、$\beta_n$、$\gamma_n$ 还可取为使
 \begin{align}
-\int_\Omega\beta_n f_n\rho\,\mathrm{d}x\to\langle[\mu_s]_{d,2},f\rho\rangle \label{align:ch6-6.41c}
-\end{align}
-对所有 $\rho\in C_c(\Omega)$ 及所有 $\{f_n\}\subseteq H^1(\Omega)\cap L^\infty(\Omega)$，$\sup_{n\in\mathbb{N}}\|f_n\|_\infty<\infty$，$f_n\rightharpoonup f$ 在 $H^1(\Omega)$ 成立。
-
-置 $\mu_n\triangleq \alpha_n+\beta_n+\gamma_n\in C^\infty_c(\Omega)$。可取 $\alpha_n,\beta_n,\gamma_n$ 使
-\begin{align}
-\|\mu_n\|_{L^1(\Omega)}\leqslant\|\mu\|_{\mathscr{R}_f(\Omega)},\quad
-\|\mu_n\|_{L^\infty(\Omega)}\leqslant\frac{M\|\mu\|_{\mathscr{R}_f(\Omega)}}{\sqrt[4]{n}}
-\quad\text{对某个 }M>0, \label{align:ch6-6.41d}
-\end{align}
-\begin{align}
-\mu_n\to\mu_r \text{ 在 }\Omega\text{ 中几乎处处},\quad
-\mu_n\stackrel{*}{\rightharpoonup}\mu \text{ 在 }\mathscr{R}_f(\Omega). \label{align:ch6-6.41e}
+\|\mu_n\|_{L^1(\Omega)}\leqslant\|\mu\|_{\mathscr{R}_f(\Omega)},\qquad
+\|\mu_n\|_{L^\infty(\Omega)}\leqslant M\|\mu\|_{\mathscr{R}_f(\Omega)}\sqrt[4]{n}, \label{align:ch6-6.41d}\\
+\mu_n\to\mu_r\text{ 在 }\Omega\text{ 中几乎处处},\qquad
+\mu_n\stackrel{*}{\rightharpoonup}\mu\text{ 在 }\mathscr{R}_f(\Omega). \label{align:ch6-6.41e}
 \end{align}
 \end{lemma}
 
 \begin{proof}
-置 $\widetilde\mu\triangleq \widetilde\mu_r+\widetilde\mu_s\in\mathscr{R}^+_f(\mathbb{R}^N)$，
+置 $\widetilde\mu\triangleq\widetilde\mu_r+\widetilde\mu_s\in\mathscr{R}^+_f(\mathbb{R}^N)$，其中
 \begin{align*}
-\widetilde\mu_r(x)\triangleq \mu_r(x)\chi_\Omega(x)\quad(x\in\mathbb{R}^N),\qquad
-\widetilde\mu_s(E)\triangleq \mu_s(\Omega\cap E)\quad(E\in\mathscr{B}^d).
+\widetilde\mu_r(x)\triangleq\mu_r(x)\chi_\Omega(x)\quad(x\in\mathbb{R}^N),\qquad
+\widetilde\mu_s(E)\triangleq\mu_s(\Omega\cap E)\quad(E\in\mathscr{B}^d),
 \end{align*}
-由定义 $\widetilde\mu=\widetilde\mu\llcorner\Omega$，故对每个 $E\in\mathscr{B}^d\cap\Omega$，$\widetilde\mu(E)=\mu(E)$。考虑序列 $\{\zeta_n\}\subseteq C^\infty_c(\mathbb{R}^N)$，定义为
+$\mu_s$ 为 $\mu$ 关于 $\lambda_N$ 的奇异部分。由定义 $\widetilde\mu=\widetilde\mu\llcorner\Omega$，故对每个 $E\in\mathscr{B}^d\cap\Omega$ 有 $\widetilde\mu(E)=\mu(E)$；等价地，$\widetilde\mu_{\mathrm{ac}}$、$[\widetilde\mu_s]_{d,2}$ 与 $\widetilde\mu_{c,2}$ 分别是 $\mu_{\mathrm{ac}}$、$[\mu_s]_{d,2}$ 与 $\mu_{c,2}$ 在 $\mathbb{R}^N$ 上的零延拓。考虑序列 $\{\zeta_n\}\subseteq C^\infty_c(\mathbb{R}^N)$，定义为
 \begin{align}
-\zeta_n(x)\triangleq \frac{n^{d\theta}}{\int_{\mathbb{R}^N}\zeta(x)\,\mathrm{d}x}\zeta(n^\theta x) \quad(x\in\mathbb{R}^N), \label{align:ch6-6.42}
+\zeta_n(x)\triangleq\frac{n^{N\theta}}{\int_{\mathbb{R}^N}\zeta(x)\,\mathrm{d}x}\zeta(n^\theta x)\quad(x\in\mathbb{R}^N), \label{align:ch6-6.42}
 \end{align}
-其中 $\zeta\in C^\infty_c(\mathbb{R}^N)$ 为标准磨光子，$\theta>0$ 待选。对任意 $n\in\mathbb{N}$，置
+其中 $\zeta\in C^\infty_c(\mathbb{R}^N)$ 为标准磨光子（径向对称，故 $\zeta(-x)=\zeta(x)$），$\theta>0$ 待选。对任意 $n\in\mathbb{N}$，置
 \begin{align*}
-\widetilde\alpha_n\triangleq \widetilde\mu_{\mathrm{ac}}*\zeta_n,\quad
-\widetilde\beta_n\triangleq [\widetilde\mu_s]_{d,2}*\zeta_n,\quad
-\widetilde\gamma_n\triangleq \widetilde\mu_{c,2}*\zeta_n,\quad
-\widetilde\mu_n\triangleq \widetilde\alpha_n+\widetilde\beta_n+\widetilde\gamma_n=\widetilde\mu*\zeta_n
+\widetilde\alpha_n\triangleq\widetilde\mu_{\mathrm{ac}}*\zeta_n,\quad
+\widetilde\beta_n\triangleq[\widetilde\mu_s]_{d,2}*\zeta_n,\quad
+\widetilde\gamma_n\triangleq\widetilde\mu_{c,2}*\zeta_n,\quad
+\widetilde\mu_n\triangleq\widetilde\alpha_n+\widetilde\beta_n+\widetilde\gamma_n=\widetilde\mu*\zeta_n
 \end{align*}
-（见\eqref{align:ch03-3.82}，$p=2$，$m=1$）。设 $\Omega_n$ 为开集，$\Omega_n\Subset\Omega_{n+1}\Subset\Omega$ 对每个 $n\in\mathbb{N}$，$\bigcup_{n=1}^\infty\Omega_n=\Omega$，设 $\eta_n\in C^\infty_c(\Omega_{n+1})$，$0\leqslant\eta_n\leqslant1$，$\eta_n=1$ 在 $\Omega_n$ 上（$n\in\mathbb{N}$）。
+（见\eqref{align:ch03-3.82}，$p=2$、$m=1$）。设 $\Omega_n$ 为开集，$\Omega_n\Subset\Omega_{n+1}\Subset\Omega$ 对每个 $n\in\mathbb{N}$，$\bigcup_{n=1}^\infty\Omega_n=\Omega$；设 $\eta_n\in C^\infty_c(\Omega_{n+1})$ 满足 $0\leqslant\eta_n\leqslant1$ 在 $\Omega$ 上且 $\eta_n=1$ 在 $\Omega_n$ 上（$n\in\mathbb{N}$）。
 
-我们证明函数
+先考察函数
 \begin{align*}
-\alpha_n\triangleq \widetilde\alpha_n\eta_n,\quad
-\beta_n\triangleq \widetilde\beta_n\eta_n,\quad
-\gamma_n\triangleq \widetilde\gamma_n\eta_n,\quad
-\mu_n\triangleq \widetilde\mu_n\eta_n=\alpha_n+\beta_n+\gamma_n\quad(n\in\mathbb{N})
+\alpha_n\triangleq\widetilde\alpha_n\eta_n,\quad
+\beta_n\triangleq\widetilde\beta_n\eta_n,\quad
+\gamma_n\triangleq\widetilde\gamma_n\eta_n,\quad
+\mu_n\triangleq\widetilde\mu_n\eta_n=\alpha_n+\beta_n+\gamma_n\quad(n\in\mathbb{N}),
 \end{align*}
-（它们显然在 $\Omega$ 上非负）具有\eqref{align:ch6-6.41a}中所述性质。
+它们在 $\Omega$ 上非负，因为 $\widetilde\mu_{\mathrm{ac}}$、$[\widetilde\mu_s]_{d,2}$、$\widetilde\mu_{c,2}$ 非负而 $\eta_n\geqslant0$；又 $\alpha_n,\beta_n,\gamma_n\in C^\infty_c(\Omega)$，因为 $\eta_n\in C^\infty_c(\Omega_{n+1})$ 且 $\Omega_{n+1}\Subset\Omega$。以下逐条验证\eqref{align:ch6-6.41a}--\eqref{align:ch6-6.41e}。
 
-\eqref{align:ch6-6.41a}--\eqref{align:ch6-6.41b}中的收敛断言由标准卷积结果得到。为证\eqref{align:ch6-6.41c}，固定 $\rho\in C^1_c(\Omega)$。置 $F_n\triangleq (f_n\rho)*\zeta_n$，取 $n$ 充分大使 $\operatorname{supp}\rho\subseteq\Omega_n$ 且 $\operatorname{supp}F_n\subseteq\Omega$。注意 $\eta_n=1$ 在 $\Omega_n$ 上，得
+\eqref{align:ch6-6.41a}--\eqref{align:ch6-6.41b}中的收敛断言由标准卷积结果得到：磨光不改变测度的总变差，且在 $\mathbb{R}^N$ 上 $\widetilde\mu_{\mathrm{ac}}*\zeta_n\to\widetilde\mu_{\mathrm{ac}}$ 于 $L^1(\mathbb{R}^N)$，$[\widetilde\mu_s]_{d,2}*\zeta_n\stackrel{*}{\rightharpoonup}[\widetilde\mu_s]_{d,2}$、$\widetilde\mu_{c,2}*\zeta_n\stackrel{*}{\rightharpoonup}\widetilde\mu_{c,2}$ 于 $\mathscr{R}_f(\mathbb{R}^N)$；再乘以截断函数 $\eta_n$ 并限制到 $\Omega$ 不改变弱$^*$极限，因为 $\eta_n\to1$ 在每个紧子集上一致。
+
+为证\eqref{align:ch6-6.41c}，固定 $\rho\in C^1_c(\Omega)$。置 $F_n\triangleq(f_n\rho)*\zeta_n$，取 $n$ 充分大使 $\operatorname{supp}\rho\subseteq\Omega_n$ 且 $\operatorname{supp}F_n\subseteq\Omega$。由 $\eta_n=1$ 在 $\Omega_n$ 上以及磨光的对称性，得
 \begin{align}
 \langle[\mu_s]_{d,2},F_n\rangle
-=\langle[\widetilde\mu_s]_{d,2}*\zeta_n,\eta_n f_n\rho\rangle
-=\int_\Omega\beta_n f_n\rho\,\mathrm{d}x. \label{align:ch6-6.43}
+=\langle[\widetilde\mu_s]_{d,2}*\zeta_n,\eta_nf_n\rho\rangle
+=\int_\Omega\beta_nf_n\rho\,\mathrm{d}x. \label{align:ch6-6.43}
 \end{align}
-注意由 Banach--Alaoglu 定理 $f_n\stackrel{*}{\rightharpoonup}f$ 在 $L^\infty(\Omega)$，因为由假设 $\{f_n\}$ 在 $L^\infty(\Omega)$ 中有界。显然 $F_n\stackrel{*}{\rightharpoonup}f\rho$ 在 $L^\infty(\Omega)$。事实上，对每个 $\zeta\in L^1(\Omega)$，有
+因按假设 $\{f_n\}$ 在 $L^\infty(\Omega)$ 中有界，由 Banach--Alaoglu 定理 $f_n\stackrel{*}{\rightharpoonup}f$ 在 $L^\infty(\Omega)$。由此 $F_n\stackrel{*}{\rightharpoonup}f\rho$ 在 $L^\infty(\Omega)$：对每个 $\zeta\in L^1(\Omega)$，由 Fubini 定理与磨光的对称性，
 \begin{align}
 \begin{aligned}
 \lim_{n\to\infty}\int_\Omega F_n\zeta\,\mathrm{d}x
 &=\lim_{n\to\infty}\int_\Omega(f_n\rho)*\zeta_n\,\zeta\,\mathrm{d}x\\
 &=\lim_{n\to\infty}\int_\Omega\zeta(x)\left(\int_\Omega f_n(y)\rho(y)\zeta_n(x-y)\,\mathrm{d}y\right)\mathrm{d}x\\
 &=\lim_{n\to\infty}\int_\Omega f_n(y)\rho(y)\,\mathrm{d}y\int_\Omega\zeta(x)\zeta_n(x-y)\,\mathrm{d}x
-=\int_\Omega f\rho\zeta\,\mathrm{d}x.
-\end{aligned} \label{align:ch6-6.44}
+=\int_\Omega f\rho\zeta\,\mathrm{d}x. 
+\end{aligned}
+\label{align:ch6-6.44}
 \end{align}
-由\eqref{align:ch6-6.44}也有 $F_n\rightharpoonup f\rho$ 在 $L^2(\Omega)$。因 $f_n\rho\in H^1_0(\Omega)$，对每个充分大的 $n$，$F_n\in H^1_0(\Omega)$，弱梯度 $\nabla F_n=[\nabla(f_n\rho)]*\zeta_n$。于是显然 $F_n\rightharpoonup f\rho$ 在 $H^1_0(\Omega)$，因为由假设 $f_n\rightharpoonup f$ 在 $H^1(\Omega)$。
+由\eqref{align:ch6-6.44}也有 $F_n\rightharpoonup f\rho$ 在 $L^2(\Omega)$。因 $f_n\rho\in H^1_0(\Omega)$，对每个充分大的 $n$ 有 $F_n\in H^1_0(\Omega)$，弱梯度 $\nabla F_n=[\nabla(f_n\rho)]*\zeta_n$；又 $f_n\rightharpoonup f$ 在 $H^1(\Omega)$ 中，故 $F_n\rightharpoonup f\rho$ 在 $H^1_0(\Omega)$ 中。
 
-因 $[\mu_s]_{d,2}\in L^1(\Omega)+H^{-1}(\Omega)$（见\cref{theorem:ch03-扩散部分H负1}），由上述收敛结果得
+因 $[\mu_s]_{d,2}\in L^1(\Omega)+H^{-1}(\Omega)$（见\cref{proposition:ch03-W-1q刻画}），由上述收敛结果得
 \begin{align*}
 \lim_{n\to\infty}\langle[\mu_s]_{d,2},F_n\rangle=\langle[\mu_s]_{d,2},f\rho\rangle.
 \end{align*}
-在\eqref{align:ch6-6.43}中令 $n\to\infty$，即得\eqref{align:ch6-6.41c}对所有 $\rho\in C^1_c(\Omega)$，由标准逼近结果断言随之成立。
+在\eqref{align:ch6-6.43}中令 $n\to\infty$，即得\eqref{align:ch6-6.41c}对所有 $\rho\in C^1_c(\Omega)$ 成立；由 $C^\infty_c(\Omega)$ 在 $C_c(\Omega)$ 中关于一致范数稠密以及 $[\mu_s]_{d,2}$ 的有限性，标准逼近结果给出\eqref{align:ch6-6.41c}对一切 $\rho\in C_c(\Omega)$ 成立。
 
-\eqref{align:ch6-6.41d}中第一个不等式由 $\mu_n$ 的定义直接得到，第二个通过在\eqref{align:ch6-6.42}中取 $\theta\in(0,1/(4N)]$ 得到：
+\eqref{align:ch6-6.41d}中第一个不等式由 $\mu_n$ 的定义与 $\widetilde\mu_n=\widetilde\mu*\zeta_n$ 的总变差估计得到：
+\begin{align*}
+\|\mu_n\|_{L^1(\Omega)}=\int_\Omega\widetilde\mu_n\eta_n\,\mathrm{d}x\leqslant\int_{\mathbb{R}^N}\widetilde\mu_n\,\mathrm{d}x=\|\widetilde\mu\|_{\mathscr{R}_f(\mathbb{R}^N)}=\|\mu\|_{\mathscr{R}_f(\Omega)};
+\end{align*}
+第二个不等式通过在\eqref{align:ch6-6.42}中取 $\theta\in(0,\frac{1}{4N}]$ 得到：
 \begin{align*}
 \|\mu_n\|_{L^\infty(\Omega)}\leqslant Cn^{N\theta}\|\mu\|_{\mathscr{R}_f(\Omega)}
-\leqslant\frac{C}{\sqrt[4]{n}}\|\mu\|_{\mathscr{R}_f(\Omega)}.
+\leqslant Cn^{1/4}\|\mu\|_{\mathscr{R}_f(\Omega)}.
 \end{align*}
 
 现在处理\eqref{align:ch6-6.41e}。置
 \begin{align}
-[\mu_s]_n\triangleq \beta_n+\gamma_n\equiv(\widetilde\mu_s*\zeta_n)\eta_n, \label{align:ch6-6.45}
+[\mu_s]_n\triangleq\beta_n+\gamma_n\equiv(\widetilde\mu_s*\zeta_n)\eta_n, \label{align:ch6-6.45}
 \end{align}
-注意由 Radon--Nikodým 定理，对几乎所有 $x\in\Omega$，
+并注意由 Radon--Nikodým 定理，对几乎处处的 $x\in\Omega$ 有
 \begin{align}
 \lim_{n\to\infty}\alpha_n(x)=\mu_r(x), \label{align:ch6-6.46}
 \end{align}
@@ -124,85 +137,215 @@
 \end{align*}
 结合\eqref{align:ch6-6.46}与\eqref{align:ch6-6.47}得
 \begin{align*}
-\mu_n(x)\to\mu_r(x) \quad\text{对几乎所有 }x\in\Omega,
+\mu_n(x)\to\mu_r(x)\quad\text{对几乎所有 }x\in\Omega,
 \end{align*}
-\eqref{align:ch6-6.41e}中第一个收敛得证（\eqref{align:ch6-6.41e}中第二个收敛另见\eqref{align:ch6-6.41b}）。
+故\eqref{align:ch6-6.41e}中第一个收敛成立；其中第二个收敛即\eqref{align:ch6-6.41b}中取测度 $\mu$ 的情形，因为 $\mu_{\mathrm{ac}}+[\mu_s]_{d,2}+\mu_{c,2}=\mu$。
 
-对任意 $u_0\in\mathscr{R}_f(\Omega)$，考虑 Jordan 分解 $u_0=u^+_0-u^-_0$，其中 $u^\pm_0\in\mathscr{R}^+_f(\Omega)$，$u^+_0\perp u^-_0$。设 $u^\pm_{0r}\in L^1(\Omega)$ 为 $[u^\pm_0]_{\mathrm{ac}}$ 的密度，$\delta^\pm\triangleq [u^\pm_0]_{d,2}$，$\gamma^\pm\triangleq [u^\pm_0]_{c,2}$ 分别为 $u^\pm_0$ 关于 $2$-容量的弥散部分与集中部分。由\eqref{align:ch03-3.82}有 $u^\pm_0=\gamma^\pm+\delta^\pm$。置
+最后构造 (Pn) 的初值。对任意 $u_0\in\mathscr{R}_f(\Omega)$，考虑 Jordan 分解 $u_0=u^+_0-u^-_0$，其中 $u^\pm_0\in\mathscr{R}^+_f(\Omega)$ 且 $u^+_0\perp u^-_0$。设 $u^\pm_{0r}\in L^1(\Omega)$ 为 $[u^\pm_0]_{\mathrm{ac}}$ 的密度，$\delta^\pm\triangleq[u^\pm_0]_{d,2}$ 与 $\gamma^\pm\triangleq[u^\pm_0]_{c,2}$ 分别为 $u^\pm_0$ 关于 $2$-容量的弥散部分与集中部分。则由\eqref{align:ch03-3.80}--\eqref{align:ch03-3.82}有 $u^\pm_0=\gamma^\pm+\delta^\pm$。置
 \begin{align}
-[u^\pm_0]_n\triangleq \gamma^\pm_n+\delta^\pm_n\geqslant0,\quad
-u_{0n}\triangleq [u^+_0]_n-[u^-_0]_n, \label{align:ch6-6.48}
+[u^\pm_0]_n\triangleq\gamma^\pm_n+\delta^\pm_n\geqslant0,\qquad
+u_{0n}\triangleq[u^+_0]_n-[u^-_0]_n, \label{align:ch6-6.48}
 \end{align}
-其中 $\{\gamma^\pm_n\}\subseteq C^\infty_c(\Omega)$，$\{\delta^\pm_n\}\subseteq C^\infty_c(\Omega)$，$\gamma^\pm_n\geqslant0$，$\delta^\pm_n\geqslant0$，满足
+其中 $\{\gamma^\pm_n\}\subseteq C^\infty_c(\Omega)$、$\{\delta^\pm_n\}\subseteq C^\infty_c(\Omega)$，$\gamma^\pm_n\geqslant0$、$\delta^\pm_n\geqslant0$，满足
 \begin{align}
-\|[u^\pm_0]_n\|_{L^1(\Omega)}\leqslant\|u^\pm_0\|_{\mathscr{M}(\Omega)},\quad
-\|[u^\pm_0]_n\|_{L^\infty(\Omega)}\leqslant\frac{M\|u^\pm_0\|_{\mathscr{M}(\Omega)}}{\sqrt[4]{n}}, \label{align:ch6-6.49a}
-\end{align}
-\begin{align}
-[u^\pm_0]_n\to u^\pm_{0r} \text{ 在 }\Omega\text{ 中几乎处处}, \label{align:ch6-6.49b}
-\end{align}
-\begin{align}
-[u^\pm_0]_n\stackrel{*}{\rightharpoonup}u^\pm_0 \text{ 在 }\mathscr{M}(\Omega), \label{align:ch6-6.49c}
-\end{align}
-\begin{align}
-\delta^\pm_n\stackrel{*}{\rightharpoonup}[u^\pm_0]_{d,2},\quad
+\|[u^\pm_0]_n\|_{L^1(\Omega)}\leqslant\|u^\pm_0\|_{\mathscr{M}(\Omega)},\qquad
+\|[u^\pm_0]_n\|_{L^\infty(\Omega)}\leqslant M\|u^\pm_0\|_{\mathscr{M}(\Omega)}\sqrt[4]{n}, \label{align:ch6-6.49a}\\
+[u^\pm_0]_n\to u^\pm_{0r}\text{ 在 }\Omega\text{ 中几乎处处}, \label{align:ch6-6.49b}\\
+[u^\pm_0]_n\stackrel{*}{\rightharpoonup}u^\pm_0\text{ 在 }\mathscr{M}(\Omega), \label{align:ch6-6.49c}\\
+\delta^\pm_n\stackrel{*}{\rightharpoonup}[u^\pm_0]_{d,2},\qquad
 \gamma^\pm_n\stackrel{*}{\rightharpoonup}[u^\pm_0]_{c,2}
-\quad\text{在 }\mathscr{M}(\Omega), \label{align:ch6-6.49d}
+\quad\text{在 }\mathscr{M}(\Omega), \label{align:ch6-6.49d}\\
+\int_\Omega\delta^\pm_nf_n\rho\,\mathrm{d}x\to\langle[u^\pm_0]_{d,2},f\rho\rangle \label{align:ch6-6.49e}
 \end{align}
-\begin{align}
-\int_\Omega\delta^\pm_n f_n\rho\,\mathrm{d}x\to\langle[u^\pm_0]_{d,2},f\rho\rangle \label{align:ch6-6.49e}
-\end{align}
-对所有 $\rho\in C_c(\Omega)$ 及 $\{f_n\}\subseteq H^1(\Omega)\cap L^\infty(\Omega)$，$\sup_{n\in\mathbb{N}}\|f_n\|_{L^\infty(\Omega)}<\infty$，$f_n\rightharpoonup f$ 在 $H^1(\Omega)$ 成立。此后总假设 (Pn) 的初值 $u_{0n}$ 具有性质\eqref{align:ch6-6.49a}。
+对所有 $\rho\in C_c(\Omega)$ 及所有满足 $\sup_{n\in\mathbb{N}}\|f_n\|_{L^\infty(\Omega)}<\infty$ 与 $f_n\rightharpoonup f$ 于 $H^1(\Omega)$ 的序列 $\{f_n\}\subseteq H^1(\Omega)\cap L^\infty(\Omega)$ 成立。此后总假设 (Pn) 的初值 $u_{0n}$ 具有性质\eqref{align:ch6-6.49a}--\eqref{align:ch6-6.49e}。
 \end{proof}
 
-\begin{remark}\label{remark:ch06-6.5.1}
-对任意 $u_0\in\mathscr{R}_f(\Omega)$，考虑分解（见\eqref{align:ch03-3.82}，$p=2$，$m=1$）
+\eqref{align:ch6-6.41a}--\eqref{align:ch6-6.41b}所依据的"标准卷积结果"包含三项内容：磨光在 $L^1$ 中的强收敛、磨光在 $\mathscr{R}_f$ 中的弱$^*$收敛，以及乘以截断 $\eta_n$ 后极限不变。原证明未逐项展开，下面补出；同时补出\eqref{align:ch6-6.41d}与\eqref{align:ch6-6.47}的定量细节。
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.1; kind=proof; location=引理 6.5.1 证明后的补证之一; basis=原证明以 standard convolution results 一句带过 (6.41a)--(6.41b)，此处补出零延拓的相容性、L^1 强收敛、磨光测度的弱*收敛与截断不变的逐项验证
+\begin{proof}[补证：\eqref{align:ch6-6.41a}--\eqref{align:ch6-6.41b}的磨光与截断]
+先说明零延拓的相容性。由 $\widetilde\mu=\widetilde\mu\llcorner\Omega$ 得 $\widetilde\mu_{\mathrm{ac}}=\mu_{\mathrm{ac}}$（把 $\mu_{\mathrm{ac}}$ 零延拓到 $\mathbb{R}^N$）：对每个 Borel 集 $E\subseteq\mathbb{R}^N$ 有 $\widetilde\mu_{\mathrm{ac}}(E)=\widetilde\mu_{\mathrm{ac}}(E\cap\Omega)=\mu_{\mathrm{ac}}(E\cap\Omega)$。同法，对每个非负 Borel 函数 $\varphi$ 有 $\int\varphi\,\mathrm{d}[\widetilde\mu_s]_{d,2}=\int_\Omega\varphi\,\mathrm{d}[\mu_s]_{d,2}$，对 $\widetilde\mu_{c,2}$ 亦如此，因为 $(1,2)$-分解是在 $\Omega$ 上逐点由 Lebesgue 分解与容量零集的支撑性质确定的，而 $\widetilde\mu_s$ 只在 $\Omega$ 上赋质量。
+
+第一步：\eqref{align:ch6-6.41a}。由 $\mu_r\in L^1(\mathbb{R}^N)$（零延拓）与标准磨光结果，$\|\widetilde\alpha_n-\mu_r\|_{L^1(\mathbb{R}^N)}\to0$。又 $\alpha_n-\mu_r=(\widetilde\alpha_n-\mu_r)+(\eta_n-1)\widetilde\alpha_n$，故
+\begin{align*}
+\|\alpha_n-\mu_r\|_{L^1(\Omega)}
+\leqslant\|\widetilde\alpha_n-\mu_r\|_{L^1(\Omega)}
++\int_{\Omega\setminus\Omega_n}|\widetilde\alpha_n|\,\mathrm{d}x
+\leqslant\|\widetilde\alpha_n-\mu_r\|_{L^1(\mathbb{R}^N)}
++\|\widetilde\alpha_n-\mu_r\|_{L^1(\Omega)}
++\int_{\Omega\setminus\Omega_n}|\mu_r|\,\mathrm{d}x,
+\end{align*}
+其中用到 $\eta_n=1$ 在 $\Omega_n$ 上、$|\eta_n-1|\leqslant1$。右端三项分别趋于 $0$（第二项与第一项同阶，第三项由 $\mu_r\in L^1(\Omega)$ 与 $\lambda_N(\Omega\setminus\Omega_n)\to0$、$\Omega\setminus\Omega_n\downarrow\varnothing$ 及控制收敛定理）。
+
+第二步：\eqref{align:ch6-6.41b}。设 $\varphi\in C_c(\Omega)$，$\|\varphi\|_\infty\leqslant1$，$\operatorname{supp}\varphi\Subset\Omega$。取 $n$ 充分大使 $\operatorname{supp}\varphi\subseteq\Omega_n$，于是
+\begin{align*}
+\langle\alpha_n,\varphi\rangle=\int_\Omega\widetilde\alpha_n\varphi\,\mathrm{d}x
+=\int_{\mathbb{R}^N}\widetilde\alpha_n\varphi\,\mathrm{d}x\to\int_{\mathbb{R}^N}\mu_{\mathrm{ac}}\varphi\,\mathrm{d}x
+=\langle\mu_{\mathrm{ac}},\varphi\rangle,
+\end{align*}
+因为 $\varphi$ 有界且 $\widetilde\alpha_n\to\mu_r$ 于 $L^1(\mathbb{R}^N)$。对 $\beta_n$：对任意 $\psi\in C_c(\mathbb{R}^N)$，由磨光的对称性与 Fubini 定理，
+\begin{align*}
+\langle\widetilde\beta_n,\psi\rangle=\langle[\widetilde\mu_s]_{d,2}*\zeta_n,\psi\rangle
+=\langle[\widetilde\mu_s]_{d,2},\zeta_n*\psi\rangle,
+\end{align*}
+而 $\zeta_n*\psi\to\psi$ 在 $\mathbb{R}^N$ 上一致且支集最终含于 $\operatorname{supp}\psi$ 的固定邻域，故上式右端趋于 $\langle[\widetilde\mu_s]_{d,2},\psi\rangle$；取 $\psi=\eta_n\varphi$ 并用 $|\langle\widetilde\beta_n,(\eta_n-1)\varphi\rangle|\leqslant\|\widetilde\mu_s\|_{\mathscr{R}_f(\mathbb{R}^N)}\|\varphi\|_\infty$ 与 $\eta_n\varphi\to\varphi$ 一致，得 $\langle\beta_n,\varphi\rangle\to\langle[\mu_s]_{d,2},\varphi\rangle$。对 $\gamma_n$ 的论证与此相同，只须把 $[\widetilde\mu_s]_{d,2}$ 换成 $\widetilde\mu_{c,2}$。由 $\{\alpha_n\}$、$\{\beta_n\}$、$\{\gamma_n\}$ 的总变差一致有界（均不超过 $\|\mu\|_{\mathscr{R}_f(\Omega)}$）与 $C_c(\Omega)$ 在 $C_0(\Omega)$ 中稠密，弱$^*$收敛在 $C_0(\Omega)$ 上成立。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.1; kind=proof; location=引理 6.5.1 证明后的补证之二; basis=原证明把 (6.41d) 的第二个不等式与 (6.47) 的极限归给取 theta 与 Lebesgue 微分定理，未写出磨光子的 L^inf 范数、总变差与奇异测度球平均的估计
+\begin{proof}[补证：\eqref{align:ch6-6.41d}的常数与\eqref{align:ch6-6.47}的球平均]
+由\eqref{align:ch6-6.42}，$\|\zeta_n\|_{L^\infty(\mathbb{R}^N)}=\frac{n^{N\theta}}{\int_{\mathbb{R}^N}\zeta(x)\,\mathrm{d}x}\|\zeta\|_{L^\infty(\mathbb{R}^N)}$，且 $\operatorname{supp}\zeta_n\subseteq B(0,n^{-\theta})$。对 $x\in\mathbb{R}^N$，
+\begin{align*}
+|\widetilde\mu_n(x)|=\left|\int_{\mathbb{R}^N}\zeta_n(x-y)\,\mathrm{d}\widetilde\mu(y)\right|
+\leqslant\|\zeta_n\|_{L^\infty(\mathbb{R}^N)}\|\widetilde\mu\|_{\mathscr{R}_f(\mathbb{R}^N)},
+\end{align*}
+故取 $M\triangleq\|\zeta\|_{L^\infty(\mathbb{R}^N)}/\int_{\mathbb{R}^N}\zeta\,\mathrm{d}x$ 得 $\|\mu_n\|_{L^\infty(\Omega)}\leqslant M\|\mu\|_{\mathscr{R}_f(\Omega)}n^{N\theta}$；再由 $\theta\leqslant\frac{1}{4N}$ 得 $n^{N\theta}\leqslant n^{1/4}$，即\eqref{align:ch6-6.41d}的第二个不等式。
+
+关于\eqref{align:ch6-6.47}：对 $x\in\Omega_n$ 有 $\eta_n(x)=1$，故 $[\mu_s]_n(x)=(\widetilde\mu_s*\zeta_n)(x)$，且
+\begin{align*}
+0\leqslant[\mu_s]_n(x)=\int_{\mathbb{R}^N}\zeta_n(x-y)\,\mathrm{d}\widetilde\mu_s(y)
+\leqslant\|\zeta_n\|_{L^\infty(\mathbb{R}^N)}\widetilde\mu_s\left(B\left(x,\frac{1}{n^\theta}\right)\right)
+=\frac{\|\zeta\|_\infty}{\int_{\mathbb{R}^N}\zeta(x)\,\mathrm{d}x}\,n^{N\theta}\widetilde\mu_s\left(B\left(x,\frac{1}{n^\theta}\right)\right).
+\end{align*}
+因 $\widetilde\mu_s$ 关于 $\lambda_N$ 奇异，对 $\lambda_N$-几乎处处的 $x$ 有 $\lim_{r\to0^+}\widetilde\mu_s(B(x,r))/r^N=0$（\eqref{align:ch02-2.77}的第二个不等式与\cref{corollary:ch02-Lebesgue微分}），取 $r=n^{-\theta}$ 即得\eqref{align:ch6-6.47}。又因 $\bigcup_n\Omega_n=\Omega$，对每个固定的 $x\in\Omega$ 存在 $n_x$ 使 $x\in\Omega_n$ 对一切 $n\geqslant n_x$ 成立，故\eqref{align:ch6-6.46}与\eqref{align:ch6-6.47}可逐点合并为 $\mu_n(x)\to\mu_r(x)$ 对 $\lambda_N$-几乎处处的 $x\in\Omega$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.1; kind=motivation; location=引理 6.5.1 后的注记; basis=引理 6.5.1 的陈述与 (3.80)--(3.82) 的分解 + 三重逼近各分量的用途、参数 theta 的取舍、n^{1/4} 增长的必然性论证
+\begin{remark}\phantomsection\label{remark:ch06-6.5.1动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{lemma:ch06-6.5.1}不是把测度磨光成函数的简单逼近，而是把\eqref{align:ch03-3.82}的三项分解逐项逼近：$\alpha_n$ 对应绝对连续部分 $\mu_{\mathrm{ac}}$，$\beta_n$ 对应奇异部分中关于 $2$-容量的弥散块 $[\mu_s]_{d,2}$，$\gamma_n$ 对应集中块 $\mu_{c,2}$。之所以必须分开，是因为三块所能承受的收敛模式不同：$\mu_{\mathrm{ac}}$ 有 $L^1$ 密度，可以用 $L^1$ 强收敛与几乎处处收敛传递信息（\eqref{align:ch6-6.41a}、\eqref{align:ch6-6.41e}）；$[\mu_s]_{d,2}$ 属于 $L^1(\Omega)+H^{-1}(\Omega)$，只能与 $H^1(\Omega)$ 函数配对，这正是\eqref{align:ch6-6.41c}的形式，也是\cref{lemma:ch06-6.5.2}中识别极限所需要的；$\mu_{c,2}$ 支在 $2$-容量零集上，只能作弱$^*$逼近。
+\item 每项假设的作用。(a) 非负性 $\mu\in\mathscr{R}^+_f(\Omega)$：使 $\alpha_n,\beta_n,\gamma_n\geqslant0$，从而 $\mu_n\geqslant0$，\eqref{align:ch6-6.41d}中两个 $L^1$ 与 $L^\infty$ 范数都可由积分直接估计；对一般的 $u_0\in\mathscr{R}_f(\Omega)$ 必须先用 Jordan 分解 $u_0=u^+_0-u^-_0$ 分成两个非负测度（见\eqref{align:ch6-6.48}），否则\eqref{align:ch6-6.41d}的第一式不成立。(b) 零延拓到 $\mathbb{R}^N$：磨光只在 $\mathbb{R}^N$ 上有定义，$\Omega$ 的边界附近不能直接磨光；$\eta_n$ 把 $\widetilde\alpha_n,\widetilde\beta_n,\widetilde\gamma_n$ 截回 $\Omega$，并保证 $\alpha_n,\beta_n,\gamma_n\in C^\infty_c(\Omega)$，这是 (Pn) 的初值所需的正则性（初值须支在 $\Omega$ 内，才能与边界条件 $u_n=0$ 在 $\Gamma$ 上相容）。(c) 参数 $\theta\in(0,\frac{1}{4N}]$：\eqref{align:ch6-6.42}的归一化使 $\|\zeta_n\|_\infty=n^{N\theta}\|\zeta\|_\infty/\int_{\mathbb{R}^N}\zeta(x)\,\mathrm{d}x$，故 $\theta$ 越大，\eqref{align:ch6-6.41d}给出的 $L^\infty$ 上界越差；而\eqref{align:ch6-6.47}要求 $n^{N\theta}\widetilde\mu_s(B(x,n^{-\theta}))\to0$，只有 $\theta>0$（半径收缩）时才由奇异测度的球平均估计得到。取 $\theta=\frac{1}{4N}$ 恰好使上界为 $n^{1/4}$，与\eqref{align:ch6-6.56}的 $n^{-3/4}$ 相匹配。
+\item 边界与反例。(a) 取 $\mu=\delta_{x_0}$（$x_0\in\Omega$，$N\geqslant2$）：此时 $\mu_r=0$，且 $\delta_{x_0}$ 关于 $2$-容量集中（因 $B_{1,1}(\{x_0\})=0$，见\cref{remark:ch03-无零容量集}），故 $[\mu_s]_{d,2}=0$，可取 $\alpha_n=\beta_n=0$、$\gamma_n$ 为逼近 $\delta_{x_0}$ 的非负光滑函数；\eqref{align:ch6-6.41a}与\eqref{align:ch6-6.41c}都退化为 $0=0$ 的平凡等式。(b) 取 $\mu=f\,\mathrm{d}x$，$f\in L^1(\Omega)$，$f\geqslant0$：此时 $\mu=\mu_{\mathrm{ac}}$，$\beta_n=\gamma_n=0$，\eqref{align:ch6-6.41c}同样退化。(c) $n^{1/4}$ 的增长不可换成一致有界：若某列 $\{\mu_n\}\subseteq C^\infty_c(\Omega)$ 满足 $\sup_n\|\mu_n\|_{L^\infty(\Omega)}<\infty$ 且 $\mu_n\stackrel{*}{\rightharpoonup}\mu$ 于 $\mathscr{R}_f(\Omega)$，则由 $L^\infty$ 弱$^*$紧性存在子列在 $L^\infty(\Omega)$ 中弱$^*$收敛于某个 $g\in L^\infty(\Omega)$，从而 $\mu=g\,\mathrm{d}x$ 关于 $\lambda_N$ 绝对连续；因此对奇异测度 $\mu$ 必有 $\sup_n\|\mu_n\|_{L^\infty(\Omega)}=\infty$，\eqref{align:ch6-6.41d}中的 $n^{1/4}$ 只是这种发散的一个显式速率。(d) \eqref{align:ch6-6.41c}不能加强为 $\beta_n$ 的 $L^1(\Omega)$ 强收敛。$\beta_n$ 逼近的是 $[\mu_s]_{d,2}$，而后者按\cref{proposition:ch03-W-1q刻画}只属于 $L^1(\Omega)+H^{-1}(\Omega)$，不必是 $L^1(\Omega)$ 中的函数。若 $[\mu_s]_{d,2}\notin L^1(\Omega)$，则 $\{\beta_n\}$ 在 $L^1(\Omega)$ 中不能有强收敛子列：强极限必属于 $L^1(\Omega)$，而它同时应是 $\beta_n$ 的弱$^*$极限 $[\mu_s]_{d,2}$，矛盾。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch06-6.5.1}
+对任意 $u_0\in\mathscr{R}_f(\Omega)$，考虑分解（见\eqref{align:ch03-3.82}，$p=2$、$m=1$）
 \begin{align}
 u^\pm_0=[u^\pm_0]_{\mathrm{ac}}+[u^\pm_{0s}]_{d,2}+[u^\pm_0]_{c,2}. \label{align:ch6-6.50}
 \end{align}
-对 $\mu=u^\pm_0$ 应用\cref{lemma:ch06-6.5.1}，得序列 $\{(\alpha^\pm_n,\beta^\pm_n,\gamma^\pm_n)\}\subseteq[C^\infty_c(\Omega)]^3$ 满足\eqref{align:ch6-6.41a}。置 $\delta^\pm_n\triangleq \alpha^\pm_n+\beta^\pm_n$，性质\eqref{align:ch6-6.49a}立得。
+对 $\mu=u^\pm_0$ 应用\cref{lemma:ch06-6.5.1}，得序列 $\{(\alpha^\pm_n,\beta^\pm_n,\gamma^\pm_n)\}\subseteq[C^\infty_c(\Omega)]^3$ 满足\eqref{align:ch6-6.41a}--\eqref{align:ch6-6.41e}。置 $\delta^\pm_n\triangleq\alpha^\pm_n+\beta^\pm_n$，则性质\eqref{align:ch6-6.49a}--\eqref{align:ch6-6.49e}随即成立。
 \end{remark}
 
-\begin{lemma}\label{lemma:ch06-6.5.2}
-设 $\{u_{0n}\}$ 满足\eqref{align:ch6-6.48}与\eqref{align:ch6-6.49a}--\eqref{align:ch6-6.49c}。设 $f\in C(\mathbb{R})$ 满足\cref{proposition:ch05-函数弱星}。则存在 $\{u_{0n}\}$ 的子列（不重新标号），使
+% SUPPLEMENT: parent=remark:ch06-6.5.1; kind=proof; location=注记 6.5.1 的随即成立; basis=原注记以 properties (6.49) follow at once 一句略去由 (6.41) 到 (6.49) 的逐款推导，此处补出 (6.49a)--(6.49e) 各自的验证与所用 (3.80)--(3.82)
+\begin{proof}[补证：由\eqref{align:ch6-6.41a}--\eqref{align:ch6-6.41e}推出\eqref{align:ch6-6.49a}--\eqref{align:ch6-6.49e}]
+固定符号 $\pm$，把\cref{lemma:ch06-6.5.1}用于 $\mu=u^\pm_0$，记所得三元组为 $(\alpha^\pm_n,\beta^\pm_n,\gamma^\pm_n)$，并置 $\delta^\pm_n\triangleq\alpha^\pm_n+\beta^\pm_n$、$[u^\pm_0]_n\triangleq\gamma^\pm_n+\delta^\pm_n$，于是 $[u^\pm_0]_n=\mu_n$（\cref{lemma:ch06-6.5.1}中的 $\mu_n$）。以下逐款核对。
+
+\eqref{align:ch6-6.49a}：由 $\gamma^\pm_n\geqslant0$、$\delta^\pm_n\geqslant0$ 得 $\|[u^\pm_0]_n\|_{L^1(\Omega)}=\|\mu_n\|_{L^1(\Omega)}\leqslant\|u^\pm_0\|_{\mathscr{R}_f(\Omega)}$，而 $\|u^\pm_0\|_{\mathscr{R}_f(\Omega)}=\|u^\pm_0\|_{\mathscr{M}(\Omega)}$ 是同一全变差范数；第二个不等式即\eqref{align:ch6-6.41d}的第二式。
+
+\eqref{align:ch6-6.49b}与\eqref{align:ch6-6.49c}：即\eqref{align:ch6-6.41e}的两款（对应的 $\mu$ 为 $u^\pm_0$，其绝对连续部分的密度为 $u^\pm_{0r}$）。
+
+\eqref{align:ch6-6.49d}：由\eqref{align:ch6-6.41b}，$\delta^\pm_n=\alpha^\pm_n+\beta^\pm_n\stackrel{*}{\rightharpoonup}[u^\pm_0]_{\mathrm{ac}}+[u^\pm_{0s}]_{d,2}$，而由\eqref{align:ch03-3.81}（取 $p=2$、$m=1$）右端等于 $[u^\pm_0]_{d,2}$；又 $\gamma^\pm_n\stackrel{*}{\rightharpoonup}[u^\pm_0]_{c,2}$ 即\eqref{align:ch6-6.41b}的第三款。
+
+\eqref{align:ch6-6.49e}：设 $\rho\in C_c(\Omega)$，$\{f_n\}\subseteq H^1(\Omega)\cap L^\infty(\Omega)$ 满足 $\sup_n\|f_n\|_{L^\infty(\Omega)}<\infty$ 且 $f_n\rightharpoonup f$ 于 $H^1(\Omega)$。则
+\begin{align*}
+\int_\Omega\delta^\pm_nf_n\rho\,\mathrm{d}x
+=\int_\Omega\alpha^\pm_nf_n\rho\,\mathrm{d}x+\int_\Omega\beta^\pm_nf_n\rho\,\mathrm{d}x.
+\end{align*}
+第二项由\eqref{align:ch6-6.41c}趋于 $\langle[u^\pm_{0s}]_{d,2},f\rho\rangle$。对第一项，写 $\alpha^\pm_n=u^\pm_{0r}+(\alpha^\pm_n-u^\pm_{0r})$，由\eqref{align:ch6-6.41a}有 $\|\alpha^\pm_n-u^\pm_{0r}\|_{L^1(\Omega)}\to0$，故
+\begin{align*}
+\left|\int_\Omega(\alpha^\pm_n-u^\pm_{0r})f_n\rho\,\mathrm{d}x\right|
+\leqslant\|\alpha^\pm_n-u^\pm_{0r}\|_{L^1(\Omega)}\|f_n\|_{L^\infty(\Omega)}\|\rho\|_{L^\infty(\Omega)}\to0,
+\end{align*}
+而由 $f_n\rho\stackrel{*}{\rightharpoonup}f\rho$ 于 $L^\infty(\Omega)$（\eqref{align:ch6-6.44}的论证）与 $u^\pm_{0r}\in L^1(\Omega)$ 得 $\int_\Omega u^\pm_{0r}f_n\rho\,\mathrm{d}x\to\int_\Omega u^\pm_{0r}f\rho\,\mathrm{d}x$。合并两式并用\eqref{align:ch03-3.81}得\eqref{align:ch6-6.49e}。
+\end{proof}
+
+\cref{lemma:ch06-6.5.2}的证明依赖两个被压缩的环节：由 Young 测度得到\eqref{align:ch6-6.52}（证明中写作"如\cref{remark:ch05-biting注}中那样论证"），以及由\eqref{align:ch6-6.52}过渡到\eqref{align:ch6-6.51}（证明中写作"如\cref{theorem:ch05-分解}证明中那样"）。下面把这两处展开。
+
+\begin{lemma}[初值序列的非线性弱极限]\label{lemma:ch06-6.5.2}
+设 $\{u_{0n}\}_{n\in\mathbb{N}}\subseteq C^\infty_c(\Omega)$ 满足\eqref{align:ch6-6.48}与\eqref{align:ch6-6.49a}--\eqref{align:ch6-6.49c}，$u_0\in\mathscr{R}_f(\Omega)$ 为它在 $\mathscr{R}_f(\Omega)$ 中的弱$^*$极限，$u_{0r}\in L^1(\Omega)$ 为 $u_0$ 的绝对连续部分的密度，$u_{0s}\in\mathscr{R}_f(\Omega)$ 为 $u_0$ 的奇异部分。设 $f\in C(\mathbb{R})$ 满足\cref{proposition:ch05-函数弱星}的条件，即存在
+\begin{align*}
+M^\pm_f\triangleq\lim_{y\to\pm\infty}\frac{f(y)}{y}\in\mathbb{R}.
+\end{align*}
+则存在 $\{u_{0n}\}$ 的子列（不重新标号），使
 \begin{align}
-f\circ u_{0n}\stackrel{*}{\rightharpoonup}f\circ u_{0r}+M^+_f u^+_{0s}-M^-_f u^-_{0s}
+f\circ u_{0n}\stackrel{*}{\rightharpoonup}f\circ u_{0r}+M^+_fu^+_{0s}-M^-_fu^-_{0s}
 \quad\text{在 }\mathscr{R}_f(\Omega). \label{align:ch6-6.51}
 \end{align}
 特别地，$u_{0n}\stackrel{*}{\rightharpoonup}u_0$ 在 $\mathscr{R}_f(\Omega)$。
 \end{lemma}
 
 \begin{proof}
-设 $\{\nu_n\}\subseteq\mathcal{Y}^+(\Omega;\mathbb{R})$ 为与 $\{u_{0n}\}$ 相伴的 Young 测度序列。由\eqref{align:ch6-6.49a}中第一个不等式，序列 $\{u_{0n}\}$ 在 $L^1(\Omega)$ 中有界，故由\cref{theorem:ch05-弱紧Young}存在 Young 测度 $\nu\in\mathcal{Y}^+(\Omega;\mathbb{R})$，使（可能抽取子列，不重新标号）$\nu_n\to\nu$ 窄收敛。由\eqref{align:ch6-6.49b}中的收敛、\cref{proposition:ch05-几乎处处收敛}及等式\eqref{align:ch05-5.53}，$\nu$ 的离散分解 $\{\nu_x\}_{x\in\Omega}$ 满足对几乎所有 $x\in\Omega$，$\nu_x=\delta_{u_{0r}(x)}$。于是
+设 $\{\nu_n\}\subseteq\mathcal{Y}^+(\Omega;\mathbb{R})$ 为与 $\{u_{0n}\}$ 相伴的 Young 测度序列。由\eqref{align:ch6-6.49a}中第一个不等式，序列 $\{u_{0n}\}$ 在 $L^1(\Omega)$ 中有界，故由\cref{theorem:ch05-弱紧Young}存在 Young 测度 $\nu\in\mathcal{Y}^+(\Omega;\mathbb{R})$，使（可能抽取子列，不重新标号）$\nu_n\to\nu$ 窄收敛。由\eqref{align:ch6-6.49b}中的几乎处处收敛、\cref{proposition:ch05-几乎处处收敛}及等式\eqref{align:ch05-5.53}，$\nu$ 的离散分解 $\{\nu_x\}_{x\in\Omega}$ 满足
 \begin{align*}
-\int_\mathbb{R}y^\pm\,\mathrm{d}\nu_x(y)=u^\pm_{0r}(x)
-\quad\text{对几乎所有 }x\in\Omega.
+\nu_x=\delta_{u_{0r}(x)}\quad\text{对几乎所有 }x\in\Omega.
+\end{align*}
+于是
+\begin{align*}
+\int_\mathbb{R}y^\pm\,\mathrm{d}\nu_x(y)=u^\pm_{0r}(x)\quad\text{对几乎所有 }x\in\Omega.
 \end{align*}
 因此，如\cref{remark:ch05-biting注}中那样论证，存在 $\{u_{0n}\}$ 的子列（不重新标号）及 $\sigma^\pm\in\mathscr{R}^+_f(\Omega)$，使
 \begin{align}
-[u_{0n}]^\pm\stackrel{*}{\rightharpoonup}u^\pm_{0r}+\sigma^\pm \quad\text{在 }\mathscr{R}_f(\Omega). \label{align:ch6-6.52}
+[u_{0n}]^\pm\stackrel{*}{\rightharpoonup}u^\pm_{0r}+\sigma^\pm\quad\text{在 }\mathscr{R}_f(\Omega). \label{align:ch6-6.52}
 \end{align}
-由 $u_{0n}$ 的定义（见\eqref{align:ch6-6.48}）及\eqref{align:ch6-6.49c}有 $u_{0n}\stackrel{*}{\rightharpoonup}u^+_0-u^-_0=u_0$，而由\eqref{align:ch6-6.52}，$u_{0n}\stackrel{*}{\rightharpoonup}u_{0r}+\sigma$，其中 $\sigma\triangleq \sigma^+-\sigma^-$。
+由 $u_{0n}$ 的定义（见\eqref{align:ch6-6.48}）及\eqref{align:ch6-6.49c}有 $u_{0n}\stackrel{*}{\rightharpoonup}u^+_0-u^-_0=u_0$，而由\eqref{align:ch6-6.52}，$u_{0n}=[u_{0n}]^+-[u_{0n}]^-\stackrel{*}{\rightharpoonup}u_{0r}+\sigma$，其中 $\sigma\triangleq\sigma^+-\sigma^-$。
 
-注意由\eqref{align:ch6-6.48}中第二个等式，对所有 $n\in\mathbb{N}$ 有 $[u_{0n}]^\pm\leqslant[u^\pm_0]_n$，故由\eqref{align:ch6-6.49b}--\eqref{align:ch6-6.49c}与\eqref{align:ch6-6.52}得 $\sigma^\pm\leqslant u^\pm_{0s}$ 在 $\mathscr{R}_f(\Omega)$。这蕴含 $\sigma^\pm$ 关于 Lebesgue 测度奇异且相互奇异。于是等式 $u_0=u_{0r}+\sigma$ 及 Lebesgue 分解的唯一性给出 $\sigma=u_{0s}$，$\sigma^\pm=u^\pm_{0s}$。然后如\cref{proposition:ch05-集中测度极限}证明中那样，结论随之成立。
+注意由\eqref{align:ch6-6.48}中第二个等式，对所有 $n\in\mathbb{N}$ 有 $[u_{0n}]^\pm\leqslant[u^\pm_0]_n$，故由\eqref{align:ch6-6.49b}--\eqref{align:ch6-6.49c}与\eqref{align:ch6-6.52}得 $\sigma^\pm\leqslant u^\pm_{0s}$ 在 $\mathscr{R}_f(\Omega)$ 中。这蕴含 $\sigma^\pm$ 关于 Lebesgue 测度奇异且相互奇异。于是等式 $u_0=u_{0r}+\sigma$ 及 Lebesgue 分解的唯一性给出 $\sigma=u_{0s}$，$\sigma^\pm=u^\pm_{0s}$。然后如\cref{theorem:ch05-分解}证明中那样，结论随之成立。
 \end{proof}
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.2; kind=proof; location=引理 6.5.2 证明中 (6.52) 的补证; basis=原证明把 (6.52) 归给 Remark 5.4.4 的论证而未展开，此处用 (6.49b) 的几乎处处收敛、截断函数 T_R 与 min(u,R)、控制收敛定理独立导出正负部的弱*极限分解与 sigma^± 关于 lambda_N 的奇异性
+\begin{proof}[补证：由 Young 测度到\eqref{align:ch6-6.52}]
+第一步：正负部的弱$^*$极限。由\eqref{align:ch6-6.49b}，$[u^\pm_0]_n\to u^\pm_{0r}$ 在 $\Omega$ 中几乎处处，故由\eqref{align:ch6-6.48}，$u_{0n}\to u_{0r}$ 几乎处处（$u_{0r}=u^+_{0r}-u^-_{0r}$），从而 $[u_{0n}]^\pm\to u^\pm_{0r}$ 几乎处处（$\max\{\cdot,0\}$ 连续）。又由\eqref{align:ch6-6.49a}中第一个不等式与 $[u_{0n}]^\pm\leqslant[u^\pm_0]_n$，序列 $\{[u_{0n}]^\pm\}$ 在 $L^1(\Omega)$ 中有界，故存在子列与 $\mu^\pm\in\mathscr{R}^+_f(\Omega)$，使 $[u_{0n}]^\pm\,\mathrm{d}x\stackrel{*}{\rightharpoonup}\mu^\pm$ 于 $\mathscr{R}_f(\Omega)$。
+
+第二步：$\mu^\pm-u^\pm_{0r}\,\mathrm{d}x\geqslant0$。设 $\varphi\in C_c(\Omega)$，$\varphi\geqslant0$。对每个 $n\in\mathbb{N}$ 有 $[u_{0n}]^\pm\varphi\geqslant\min\{[u_{0n}]^\pm,u^\pm_{0r}\}\varphi$，而 $\min\{[u_{0n}]^\pm,u^\pm_{0r}\}\to u^\pm_{0r}$ 几乎处处且被 $u^\pm_{0r}\in L^1(\Omega)$ 控制，故由控制收敛定理 $\int_\Omega\min\{[u_{0n}]^\pm,u^\pm_{0r}\}\varphi\,\mathrm{d}x\to\int_\Omega u^\pm_{0r}\varphi\,\mathrm{d}x$。于是
+\begin{align*}
+\langle\mu^\pm,\varphi\rangle=\lim_{n\to\infty}\int_\Omega[u_{0n}]^\pm\varphi\,\mathrm{d}x
+\geqslant\int_\Omega u^\pm_{0r}\varphi\,\mathrm{d}x,
+\end{align*}
+即 $\sigma^\pm\triangleq\mu^\pm-u^\pm_{0r}\,\mathrm{d}x$ 是 $\Omega$ 上的非负有限 Radon 测度，且\eqref{align:ch6-6.52}成立。
+
+第三步：$\sigma^\pm$ 关于 $\lambda_N$ 奇异。对 $R>0$ 置 $T_R(y)\triangleq(y-R)_+$（$y\in\mathbb{R}$）。对每个 $R>0$，$T_R$ 有界连续，故由 $\nu_n\to\nu$ 窄收敛与 $\nu_x=\delta_{u_{0r}(x)}$ 得
+\begin{align*}
+\int_\Omega T_R([u_{0n}]^\pm)\varphi\,\mathrm{d}x
+\to\int_\Omega\varphi(x)T_R(u^\pm_{0r}(x))\,\mathrm{d}x
+=\int_{\{u^\pm_{0r}>R\}}\varphi(x)(u^\pm_{0r}(x)-R)\,\mathrm{d}x.
+\end{align*}
+另一方面，$[u_{0n}]^\pm=\min\{[u_{0n}]^\pm,R\}+T_R([u_{0n}]^\pm)$，故对固定的 $R$，
+\begin{align*}
+\langle\mu^\pm,\varphi\rangle
+&=\lim_{n\to\infty}\int_\Omega\min\{[u_{0n}]^\pm,R\}\varphi\,\mathrm{d}x
++\int_{\{u^\pm_{0r}>R\}}\varphi\,(u^\pm_{0r}-R)\,\mathrm{d}x\\
+&=\int_\Omega\min\{u^\pm_{0r},R\}\varphi\,\mathrm{d}x
++\int_{\{u^\pm_{0r}>R\}}\varphi\,(u^\pm_{0r}-R)\,\mathrm{d}x
+=\int_\Omega u^\pm_{0r}\varphi\,\mathrm{d}x,
+\end{align*}
+其中第二个等号用到 $\min\{[u_{0n}]^\pm,R\}\to\min\{u^\pm_{0r},R\}$ 几乎处处及控制收敛定理。于是 $\sigma^\pm(\varphi\,\mathrm{d}x)=0$ 对一切满足 $\operatorname{supp}\varphi\subseteq\{u^\pm_{0r}\leqslant R\}$ 的 $\varphi\in C_c(\Omega)$、$\varphi\geqslant0$ 与一切 $R>0$ 成立。令 $R\to\infty$ 并用 $\{u^\pm_{0r}<+\infty\}=\bigcup_{R>0}\{u^\pm_{0r}\leqslant R\}$，得 $\sigma^\pm(\{u^\pm_{0r}<+\infty\})=0$；因 $u^\pm_{0r}$ 几乎处处有限，集合 $\{u^\pm_{0r}=+\infty\}$ 是 $\lambda_N$-零集，故 $\sigma^\pm\perp\lambda_N$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.2; kind=proof; location=引理 6.5.2 证明末句的补证; basis=原证明以 as in the proof of Proposition 5.4.13 收尾，未写出把 (5.107) 代入 sigma^± = u_{0s}^±、f^* = f(u_{0r}) 的对照，也未写出取 f(y)=y 得 u_{0n} 弱*收敛于 u_0 的一步
+\begin{proof}[补证：由\eqref{align:ch6-6.52}到\eqref{align:ch6-6.51}]
+在\eqref{align:ch6-6.52}中已得 $\sigma^\pm=u^\pm_{0s}$，且 $\{u_{0n}\}$ 在 $L^1(\Omega)$ 中有界，故\cref{theorem:ch05-分解}的全部假设满足（取 $X=\Omega$、$\mu=\lambda_N$、$u_j=u_{0n}$）。按该命题的结论，对满足其条件的 $f$（即 $M^\pm_f$ 有限）有
+\begin{align*}
+f\circ u_{0n}\stackrel{*}{\rightharpoonup}f^*+M^+_f\sigma^+-M^-_f\sigma^-
+\quad\text{在 }\mathscr{R}_f(\Omega),
+\end{align*}
+其中 $f^*(x)\triangleq\int_\mathbb{R}f(y)\,\mathrm{d}\nu_x(y)$。由 $\nu_x=\delta_{u_{0r}(x)}$ 得 $f^*(x)=f(u_{0r}(x))$ 对几乎处处 $x\in\Omega$ 成立。代入 $\sigma^\pm=u^\pm_{0s}$ 即得\eqref{align:ch6-6.51}。
+
+最后取 $f(y)\equiv y$：此时 $f\circ u_{0n}=u_{0n}$、$f\circ u_{0r}=u_{0r}$、$M^+_f=M^-_f=1$，\eqref{align:ch6-6.51}给出 $u_{0n}\stackrel{*}{\rightharpoonup}u_{0r}+u^+_{0s}-u^-_{0s}=u_{0r}+u_{0s}=u_0$，因为 $u_{0s}=u^+_{0s}-u^-_{0s}$ 且 $u_0=u_{0r}+u_{0s}$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.2; kind=motivation; location=引理 6.5.2 后的注记; basis=引理 6.5.2 与 (5.106)、(5.107) + 非线性函数在测度初值上的弱极限为何出现 M_f^± 项，以及 (6.49a) 的 n^{1/4} 增长与 f(y)=y^2 的反例
+\begin{remark}\phantomsection\label{remark:ch06-6.5.2动机}
+\begin{enumerate}[(i)]
+\item 引入动机。极限过程需要对初值序列的连续函数 $f(u_{0n})$ 取弱$^*$极限。由于 $u_{0n}$ 只在 $L^1$ 中有界而在 $L^\infty$ 中发散，$f(u_{0n})$ 的极限并不等于 $f(u_0)$：奇异部分上的质量以逃逸到 $\pm\infty$ 的方式出现，其系数恰为 $f$ 在 $\pm\infty$ 处的渐近斜率 $M^\pm_f$。\eqref{align:ch6-6.51}因此是初值处集中现象的精确表述，它把极限拆成三块：绝对连续部分的贡献 $f(u_{0r})$、正向奇异部分的贡献 $M^+_fu^+_{0s}$ 与负向奇异部分的贡献 $-M^-_fu^-_{0s}$。
+\item 每项假设的作用。(a) \eqref{align:ch6-6.49a}中第一个不等式给出 $\{u_{0n}\}$ 在 $L^1(\Omega)$ 中的有界性，这是 Young 测度序列紧性（\cref{theorem:ch05-弱紧Young}）的前提；没有它连 $\nu$ 都不存在。(b) \eqref{align:ch6-6.49b}的几乎处处收敛把 $\nu$ 的离散分解钉成 Dirac 质量 $\delta_{u_{0r}(x)}$，从而排除振荡：若只有弱收敛而无几乎处处收敛，则 $\nu_x$ 可以非退化，$f^*$ 不再等于 $f(u_{0r})$，\eqref{align:ch6-6.51}必须换成含 $\int f\,\mathrm{d}\nu_x$ 的形式。(c) \eqref{align:ch6-6.49c}把\eqref{align:ch6-6.52}中的 $\sigma=\sigma^+-\sigma^-$ 与 $u_0-u_{0r}$ 等同，再借 Lebesgue 分解的唯一性钉住 $\sigma^\pm=u^\pm_{0s}$；没有这一步，$\sigma^\pm$ 只能确定到相差一对相互抵消的奇异测度。(d) $M^\pm_f$ 有限（即\cref{proposition:ch05-函数弱星}的条件）保证 $f$ 在 $\pm\infty$ 处至多线性增长，才能用 $\pm u^\pm_{0s}$ 这样的线性项吸收集中质量。
+\item 边界与反例。(a) 若 $f$ 不满足 $M^\pm_f$ 有限，结论一般不成立：取 $f(y)=y^2$，则 $f(u_{0n})=u_{0n}^2$，而由\eqref{align:ch6-6.49a}中第二个不等式 $\|u_{0n}\|_{L^\infty(\Omega)}\leqslant M\|u_0\|_{\mathscr{R}_f(\Omega)}\sqrt[4]{n}$，故 $\int_\Omega u_{0n}^2\,\mathrm{d}x$ 可按 $n^{1/2}$ 的速率发散，$f\circ u_{0n}$ 在 $\mathscr{R}_f(\Omega)$ 中没有弱$^*$收敛子列。(b) 若 $u_0\in L^1(\Omega)$（即 $u_{0s}=0$），则\eqref{align:ch6-6.51}退化为 $f\circ u_{0n}\stackrel{*}{\rightharpoonup}f\circ u_0$，这正是 $L^1$ 中几乎处处收敛时的标准结论。(c) \eqref{align:ch6-6.51}只给出弱$^*$收敛，不能加强为 $L^1$ 强收敛：$\{f\circ u_{0n}\}$ 一般在 $L^1(\Omega)$ 中不等度可积（$u_{0n}$ 在 $\{u^+_{0s}\neq0\}$ 附近取到 $n^{1/4}$ 量级的值），故只能得到测度意义下的极限。
+\end{enumerate}
+\end{remark}
 
 \subsection{先验估计}\label{subsection:ch06-先验估计}
 
 由经典结果，对任意 $n\in\mathbb{N}$，问题 (Pn) 存在唯一经典解 $u_n\in C^\infty(Q)$（例如见文献~\cite{ref63}）；且对任意 $n\in\mathbb{N}$，有
 \begin{align}
-\|u_n\|_{L^\infty(0,T;L^1(\Omega))}\leqslant\|u_{0n}\|_{L^1(\Omega)},\quad
+\|u_n\|_{L^\infty(0,T;L^1(\Omega))}\leqslant\|u_{0n}\|_{L^1(\Omega)},\qquad
 \|u_n\|_{L^\infty(Q)}\leqslant\|u_{0n}\|_{L^\infty(\Omega)}. \label{align:ch6-6.53}
 \end{align}
-我们需要序列 $\{u_n\}$ 与 $\{\phi(u_n)\}$ 的先验估计。这由如下命题给出。
+这两个不等式由极值原理与 $L^1$ 压缩性得到，其右端仍依赖于 $n$（因为 $u_{0n}$ 依赖于 $n$），故不能直接用于取子列。需要的是序列 $\{u_n\}$ 与 $\{\phi(u_n)\}$ 的、右端只含 $u_0$ 与 $\phi$ 而不含 $n$ 的先验估计；这正是如下各款的内容。
 
-\begin{lemma}\label{lemma:ch06-6.5.3}
-设 (A0)--(A1) 成立，$\{u_n\}$ 为问题 (Pn) 的解序列。则对所有 $n\in\mathbb{N}$，有
+\begin{lemma}[$L^\infty$、$L^1$ 与能量估计]\label{lemma:ch06-6.5.3}
+设 (A0)--(A1) 成立，即 $u_0\in\mathscr{R}_f(\Omega)$，$\phi\in C_b(\mathbb{R})\cap C^\infty(\mathbb{R})$ 在 $\mathbb{R}$ 上非减、非常数且 $\phi(0)=0$；设 $\{u_{0n}\}\subseteq C^\infty_c(\Omega)$ 满足\eqref{align:ch6-6.48}--\eqref{align:ch6-6.49e}，$u_n\in C^\infty(Q)$ 为 (Pn) 的经典解，$\phi_n(z)\triangleq\phi(z)+z/n$（$z\in\mathbb{R}$）。则对所有 $n\in\mathbb{N}$，有
 \begin{align}
-\|u_n\|_{L^\infty(0,T;L^1(\Omega))}\leqslant\|u_0\|_{\mathscr{R}_f(\Omega)}, \label{align:ch6-6.54}
-\end{align}
-\begin{align}
-\|u_n\|_{L^\infty(Q)}\leqslant\frac{M\|u_0\|_{\mathscr{R}_f(\Omega)}}{\sqrt[4]{n}}, \label{align:ch6-6.55}
+\|u_n\|_{L^\infty(0,T;L^1(\Omega))}\leqslant\|u_0\|_{\mathscr{R}_f(\Omega)}, \label{align:ch6-6.54}\\
+\|u_n\|_{L^\infty(Q)}\leqslant M\|u_0\|_{\mathscr{R}_f(\Omega)}\sqrt[4]{n}, \label{align:ch6-6.55}
 \end{align}
 从而
 \begin{align}
@@ -218,12 +361,12 @@ f\circ u_{0n}\stackrel{*}{\rightharpoonup}f\circ u_{0r}+M^+_f u^+_{0s}-M^-_f u^-
 \end{lemma}
 
 \begin{proof}
-不等式\eqref{align:ch6-6.49a}与\eqref{align:ch6-6.53}立即给出\eqref{align:ch6-6.54}与\eqref{align:ch6-6.55}，\eqref{align:ch6-6.56}由 $\phi_n$ 的定义直接得到（回忆 $\phi_n(z)\triangleq \phi(z)+z/n$，$z\in\mathbb{R}$）。为证\eqref{align:ch6-6.57}，将 (Pn) 第一式乘以 $\phi(u_n)$ 并在 $Q$ 上积分。利用\eqref{align:ch6-6.54}，得
+\eqref{align:ch6-6.49a}与\eqref{align:ch6-6.53}立即给出\eqref{align:ch6-6.54}与\eqref{align:ch6-6.55}，\eqref{align:ch6-6.56}由 $\phi_n$ 的定义直接得到（回忆 $\phi_n(z)\triangleq\phi(z)+z/n$，$z\in\mathbb{R}$）。为证\eqref{align:ch6-6.57}，将 (Pn) 第一式乘以 $\phi(u_n)$ 并在 $Q$ 上积分。利用\eqref{align:ch6-6.54}，得
 \begin{align*}
 \begin{aligned}
 &\iint_Q|\nabla[\phi(u_n)]|^2\,\mathrm{d}x\,\mathrm{d}t
 +\frac{1}{n}\iint_Q\phi'(u_n)|\nabla u_n|^2\,\mathrm{d}x\,\mathrm{d}t\\
-&\quad=-\iint_Q\phi(u_n)\partial_t u_n\,\mathrm{d}x\,\mathrm{d}t\\
+&\quad=-\iint_Q\phi(u_n)\partial_tu_n\,\mathrm{d}x\,\mathrm{d}t\\
 &\quad=\int_\Omega\mathrm{d}x\int_0^{u_{0n}(x)}\phi(y)\,\mathrm{d}y
 -\int_\Omega\mathrm{d}x\int_0^{u_n(x,T)}\phi(y)\,\mathrm{d}y\\
 &\quad\leqslant\|\phi\|_\infty[\|u_{0n}\|_{L^1(\Omega)}+\|u_n(\cdot,T)\|_{L^1(\Omega)}]
@@ -233,59 +376,168 @@ f\circ u_{0n}\stackrel{*}{\rightharpoonup}f\circ u_{0r}+M^+_f u^+_{0s}-M^-_f u^-
 结论随之成立。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch06-6.5.3; kind=proof; location=引理 6.5.3 证明后的补证; basis=原证明把 (6.54)--(6.56) 归给立即得到、把 (6.57) 的等式归给乘以 phi(u_n) 并积分，此处补出 (6.49a) 的逐项代入、链式法则与 Fubini 定理、边界项 phi(u_n)=0 的来源以及 |int_0^z phi| <= ||phi||_inf |z| 的估计
+\begin{proof}[补证：\eqref{align:ch6-6.54}--\eqref{align:ch6-6.57}的逐步推导]
+先证\eqref{align:ch6-6.54}与\eqref{align:ch6-6.55}。由\eqref{align:ch6-6.49a}中第一个不等式、$[u_{0n}]^\pm\leqslant[u^\pm_0]_n$ 与 $u^+_0\perp u^-_0$，
+\begin{align*}
+\|u_{0n}\|_{L^1(\Omega)}\leqslant\|[u^+_0]_n\|_{L^1(\Omega)}+\|[u^-_0]_n\|_{L^1(\Omega)}
+\leqslant\|u^+_0\|_{\mathscr{M}(\Omega)}+\|u^-_0\|_{\mathscr{M}(\Omega)}
+=\|u_0\|_{\mathscr{R}_f(\Omega)},
+\end{align*}
+代入\eqref{align:ch6-6.53}的第一式即得\eqref{align:ch6-6.54}。同法，由\eqref{align:ch6-6.49a}中第二个不等式，
+\begin{align*}
+\|u_{0n}\|_{L^\infty(\Omega)}\leqslant M(\|u^+_0\|_{\mathscr{M}(\Omega)}+\|u^-_0\|_{\mathscr{M}(\Omega)})\sqrt[4]{n}
+=M\|u_0\|_{\mathscr{R}_f(\Omega)}\sqrt[4]{n},
+\end{align*}
+代入\eqref{align:ch6-6.53}的第二式即得\eqref{align:ch6-6.55}。\eqref{align:ch6-6.56}由 $\phi_n(u_n)-\phi(u_n)=u_n/n$ 逐点成立与 $L^\infty$ 范数的定义得到，再用\eqref{align:ch6-6.55}即得最右端的 $n^{-3/4}$。
+
+再证\eqref{align:ch6-6.57}。因 $u_n\in C^\infty(Q)$，$u_n=0$ 在 $\Gamma$ 上，且由 (A1) 有 $\phi(0)=0$，故 $\phi(u_n)=0$ 在 $\Gamma$ 上。以 $\phi(u_n)$ 乘 $\partial_tu_n=\Delta\phi_n(u_n)$ 的两端并在 $Q$ 上积分，对空间变量作分部积分（边界项因 $\phi(u_n)=0$ 在 $\Gamma$ 上而消失）：
+\begin{align*}
+\iint_Q\phi(u_n)\partial_tu_n\,\mathrm{d}x\,\mathrm{d}t
+=-\iint_Q\nabla\phi(u_n)\cdot\nabla\phi_n(u_n)\,\mathrm{d}x\,\mathrm{d}t.
+\end{align*}
+由 (A1) 的 $\phi\in C^\infty(\mathbb{R})$ 与链式法则，$\nabla\phi(u_n)=\phi'(u_n)\nabla u_n$、$\nabla\phi_n(u_n)=(\phi'(u_n)+1/n)\nabla u_n$，故
+\begin{align*}
+-\iint_Q\nabla\phi(u_n)\cdot\nabla\phi_n(u_n)\,\mathrm{d}x\,\mathrm{d}t
+=-\iint_Q\left\{|\nabla[\phi(u_n)]|^2+\frac{1}{n}\phi'(u_n)|\nabla u_n|^2\right\}\mathrm{d}x\,\mathrm{d}t,
+\end{align*}
+其中用到 $\phi'\geqslant0$（$\phi$ 非减且属于 $C^\infty(\mathbb{R})$）以说明最后一项非负。另一方面，由链式法则与 Fubini 定理，
+\begin{align*}
+\iint_Q\phi(u_n)\partial_tu_n\,\mathrm{d}x\,\mathrm{d}t
+=\int_\Omega\mathrm{d}x\int_0^T\partial_t\left[\int_0^{u_n(x,t)}\phi(y)\,\mathrm{d}y\right]\mathrm{d}t
+=\int_\Omega\mathrm{d}x\int_0^{u_n(x,T)}\phi(y)\,\mathrm{d}y
+-\int_\Omega\mathrm{d}x\int_0^{u_{0n}(x)}\phi(y)\,\mathrm{d}y,
+\end{align*}
+其中用到 $u_n(\cdot,0)=u_{0n}$。合并两式即得\eqref{align:ch6-6.57}中的等式（两端的项已移项）。最后，由 $\left|\int_0^z\phi(y)\,\mathrm{d}y\right|\leqslant\|\phi\|_\infty|z|$（$z\in\mathbb{R}$）与\eqref{align:ch6-6.54}、\eqref{align:ch6-6.53}得
+\begin{align*}
+\|\phi\|_\infty[\|u_{0n}\|_{L^1(\Omega)}+\|u_n(\cdot,T)\|_{L^1(\Omega)}]
+\leqslant2\|\phi\|_\infty\|u_0\|_{\mathscr{R}_f(\Omega)},
+\end{align*}
+于是完成了\eqref{align:ch6-6.57}的证明。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.3; kind=motivation; location=引理 6.5.3 后的注记; basis=引理 6.5.3 的四款估计 + 各项假设 (A0)(A1) 与非退化项 z/n 的作用、L^inf 估计为何必须随 n 发散、以及 (6.57) 只控制 nabla phi(u_n) 而不控制 nabla u_n 的边界
+\begin{remark}\phantomsection\label{remark:ch06-6.5.3动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch6-6.54}--\eqref{align:ch6-6.57}的作用是给取子列提供紧性：\eqref{align:ch6-6.54}使 $\{u_n\}$ 在 $L^\infty(0,T;\mathscr{R}_f(\Omega))$ 中弱$^*$有界（把 $L^1$ 函数与测度等同），从而由 Banach--Alaoglu 定理可抽弱$^*$收敛子列；\eqref{align:ch6-6.57}给出 $\{\nabla[\phi(u_n)]\}$ 在 $L^2(Q)$ 中的一致有界性，从而 $\{\phi(u_n)\}$ 在 $L^2(0,T;H^1_0(\Omega))$ 中有界，这是极限函数满足 $\phi(u_r)\in L^2(0,T;H^1_0(\Omega))$ 的唯一来源；\eqref{align:ch6-6.55}与\eqref{align:ch6-6.56}把修正项 $\phi_n(u_n)-\phi(u_n)$ 的 $L^\infty$ 范数压到 $n^{-3/4}$，使弱形式中可以用 $\phi$ 替换 $\phi_n$ 而不产生额外误差。
+\item 每项假设的作用。(a) (A1) 的 $\phi\in C_b(\mathbb{R})$ 给出 $\|\phi\|_\infty<\infty$，这是\eqref{align:ch6-6.57}右端的常数；$\phi(0)=0$ 保证 $\phi(u_n)=0$ 在 $\Gamma$ 上，使分部积分的边界项消失；$\phi$ 非减且属于 $C^\infty(\mathbb{R})$ 保证 $\phi'\geqslant0$，使\eqref{align:ch6-6.57}左端第二项非负，可以丢弃后得到单向估计。(b) 修正项 $z/n$ 使 $\phi'_n=\phi'+1/n\geqslant1/n>0$，即 (Pn) 一致抛物；正因为 $\phi'_n$ 有正下界，\eqref{align:ch6-6.57}中的项 $(1/n)\iint\phi'|\nabla u_n|^2$ 才能作为"用 $1/n$ 加权"的梯度控制出现（\cref{lemma:ch06-6.5.5}把它变成对 $|\nabla u_n|^2/n^2$ 的整体控制）。若去掉 $z/n$ 而 $\phi$ 在某个区间上为常数（$\phi'=0$），则\eqref{align:ch6-6.57}对应位置上的项退化为 $0$，对 $\nabla u_n$ 不提供任何信息。(c) (A0) 通过 $\|u_0\|_{\mathscr{R}_f(\Omega)}$ 进入全部右端，这正是估计与 $n$ 无关的含义。
+\item 边界与结论的限度。\eqref{align:ch6-6.55}中的 $n^{1/4}$ 不可去掉：由\eqref{align:ch6-6.49a}中第二个不等式，$\|u_{0n}\|_{L^\infty(\Omega)}$ 本来就以 $n^{1/4}$ 的速率发散，而\eqref{align:ch6-6.53}的极值原理把它原样传给 $u_n$；因此 $\{u_n\}$ 不在 $L^\infty(Q)$ 中一致有界，不能指望 $\{u_n\}$ 在 $L^2(Q)$ 中弱收敛。相应地，\eqref{align:ch6-6.57}只控制 $\nabla[\phi(u_n)]$ 与加权的 $\phi'(u_n)|\nabla u_n|^2$，不控制 $\nabla u_n$ 本身；这正是\cref{lemma:ch06-6.5.5}(i) 需要另行讨论 $|\nabla u_n|^2/n^2$ 的原因。
+\end{enumerate}
+\end{remark}
+
 对每个 $h\in C(\mathbb{R})$，置
 \begin{align}
-H(y)\triangleq \int_0^y h(z)\,\mathrm{d}z \quad(y\in\mathbb{R}). \label{align:ch6-6.58}
+H(y)\triangleq\int_0^yh(z)\,\mathrm{d}z\quad(y\in\mathbb{R}). \label{align:ch6-6.58}
 \end{align}
+函数 $H$ 是把 $h(u_n)$ 作为试验函数时出现的时间原函数：$H(u_n)$ 的弱导数正是 $h(u_n)\partial_tu_n$。这使 (Pn) 的弱形式可以对任意 Lipschitz 的 $h$ 重新表述，得到下面的重整化等式与不等式。
 
-\begin{lemma}\label{lemma:ch06-6.5.4}
-设 (A1) 成立，$\{u_n\}$ 为问题 (Pn) 的解序列。
+\begin{lemma}[重整化等式与不等式]\label{lemma:ch06-6.5.4}
+设 (A1) 成立，$\{u_{0n}\}\subseteq C^\infty_c(\Omega)$ 满足\eqref{align:ch6-6.48}--\eqref{align:ch6-6.49e}，$u_n\in C^\infty(Q)$ 为 (Pn) 的经典解，$H$ 由\eqref{align:ch6-6.58}定义，$Q_t\triangleq\Omega\times(0,t)$（$t\in(0,T]$）。
 \begin{enumerate}[(i)]
-\item 对所有 $h\in\operatorname{Lip}(\mathbb{R})$，$\zeta\in C^1([0,T];C^1_c(\Omega))$，及 $t\in(0,T]$，有
+\item 对所有 $h\in\operatorname{Lip}(\mathbb{R})$、$\zeta\in C^1([0,T];C^1_c(\Omega))$ 及 $t\in(0,T]$，有
 \begin{align}
+\label{align:ch6-6.59}
 \begin{aligned}
 &\int_\Omega H(u_n(x,t))\zeta(x,t)\,\mathrm{d}x
 +\iint_{Q_t}h'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\zeta\,\mathrm{d}x\,\mathrm{d}s\\
 &\qquad-\iint_{Q_t}H(u_n)\partial_s\zeta\,\mathrm{d}x\,\mathrm{d}s\\
 &\quad=\int_\Omega H(u_{0n}(x))\zeta(x,0)\,\mathrm{d}x
--\iint_{Q_t}h(u_n)\nabla\phi_n(u_n)\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}s,
-\end{aligned} \label{align:ch6-6.59}
+-\iint_{Q_t}h(u_n)\nabla\phi_n(u_n)\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}s.
+\end{aligned}
 \end{align}
-其中 $Q_t\triangleq \Omega\times(0,t)$。若 $h(0)=0$，则\eqref{align:ch6-6.59}对所有 $\zeta\in C^1(Q)$ 成立。
-\item 对每个非减 $h\in C(\mathbb{R})$，$\zeta\in C^1([0,T];C^1_c(\Omega))$，$\zeta\geqslant0$，及 $t\in(0,T]$，
+若 $h(0)=0$，则\eqref{align:ch6-6.59}对所有 $\zeta\in C^1(Q)$ 成立。
+\item 对每个非减的 $h\in C(\mathbb{R})$、$\zeta\in C^1([0,T];C^1_c(\Omega))$，$\zeta\geqslant0$，及 $t\in(0,T]$，有
 \begin{align}
+\label{align:ch6-6.60}
 \begin{aligned}
 &\iint_{Q_t}H(u_n)\partial_s\zeta\,\mathrm{d}x\,\mathrm{d}s
 -\iint_{Q_t}h(u_n)\nabla\phi_n(u_n)\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}s\\
 &\quad\geqslant\int_\Omega H(u_n(x,t))\zeta(x,t)\,\mathrm{d}x
 -\int_\Omega H(u_{0n}(x))\zeta(x,0)\,\mathrm{d}x.
-\end{aligned} \label{align:ch6-6.60}
+\end{aligned}
 \end{align}
 若 $h(0)=0$，则\eqref{align:ch6-6.60}对所有 $\zeta\in C^1(Q)$，$\zeta\geqslant0$ 成立。
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-因 $u_n$ 光滑，等式\eqref{align:ch6-6.59}由将 (Pn) 第一式乘以 $h(u_n)\zeta$（$h\in\operatorname{Lip}(\mathbb{R})$，$h(0)=0$，$\zeta\in C^1(Q)$）并在 $Q$ 上积分直接得到。此外，若 $\zeta\in C^1([0,T];C^1_c(\Omega))$，条件 $h(0)=0$ 可省略。故 (i) 得证。
+因 $u_n$ 光滑，等式\eqref{align:ch6-6.59}由将 (Pn) 第一式乘以 $h(u_n)\zeta$（$h\in\operatorname{Lip}(\mathbb{R})$，$h(0)=0$，$\zeta\in C^1(Q)$）并在 $Q$ 上积分直接得到。此外，若 $\zeta\in C^1([0,T];C^1_c(\Omega))$，条件 $h(0)=0$ 可以省略。故 (i) 得证。
 
-因对所有 $n\in\mathbb{N}$ 有 $\nabla u_n\cdot\nabla\phi_n(u_n)\geqslant0$，由\eqref{align:ch6-6.59}对每个非减 $h\in\operatorname{Lip}(\mathbb{R})$ 得\eqref{align:ch6-6.60}。因每个非减 $h\in C(\mathbb{R})$ 可由一列非减 Lipschitz 函数局部逼近，结论随之成立。
+因对所有 $n\in\mathbb{N}$ 有 $\nabla u_n\cdot\nabla\phi_n(u_n)\geqslant0$，由\eqref{align:ch6-6.59}对每个非减的 $h\in\operatorname{Lip}(\mathbb{R})$ 得\eqref{align:ch6-6.60}。因每个非减的 $h\in C(\mathbb{R})$ 都可由一列非减 Lipschitz 函数局部逼近，结论随之成立。
 \end{proof}
 
-\begin{remark}\label{remark:ch06-6.5.2}
+% SUPPLEMENT: parent=lemma:ch06-6.5.4; kind=proof; location=引理 6.5.4 证明后的补证; basis=原证明以 plainly 与 the condition h(0)=0 can be omitted 略去分部积分的边界项、(ii) 中丢弃项的非负性与非减连续函数的 Lipschitz 逼近，此处逐项补出
+\begin{proof}[补证：\eqref{align:ch6-6.59}的边界项与\eqref{align:ch6-6.60}的逼近]
+先证\eqref{align:ch6-6.59}。以 $h(u_n)\zeta$ 乘 $\partial_tu_n=\Delta\phi_n(u_n)$ 并在 $Q_t$ 上积分。因 $u_n\in C^\infty(Q)$、$h\in\operatorname{Lip}(\mathbb{R})$，有 $h(u_n)\in W^{1,\infty}(Q)$ 且链式法则成立：$\partial_sh(u_n)=h'(u_n)\partial_su_n$、$\nabla h(u_n)=h'(u_n)\nabla u_n$（$h$ 几乎处处可微，$h'$ 有界）。于是
+\begin{align*}
+\iint_{Q_t}h(u_n)\zeta\,\partial_su_n\,\mathrm{d}x\,\mathrm{d}s
+=\iint_{Q_t}\zeta\,\partial_sH(u_n)\,\mathrm{d}x\,\mathrm{d}s
+=\int_\Omega H(u_n(x,t))\zeta(x,t)\,\mathrm{d}x-\int_\Omega H(u_{0n})\zeta(x,0)\,\mathrm{d}x
+-\iint_{Q_t}H(u_n)\partial_s\zeta\,\mathrm{d}x\,\mathrm{d}s.
+\end{align*}
+右端对空间变量分部积分给出
+\begin{align*}
+&\iint_{Q_t}h(u_n)\zeta\,\Delta\phi_n(u_n)\,\mathrm{d}x\,\mathrm{d}s\\
+&=-\iint_{Q_t}h(u_n)\nabla\phi_n(u_n)\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}s
+-\iint_{Q_t}h'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\zeta\,\mathrm{d}x\,\mathrm{d}s\\
+&\quad+\int_0^t\!\!\int_{\partial\Omega}h(u_n)\zeta\,\partial_\nu\phi_n(u_n)\,\mathrm{d}\sigma\,\mathrm{d}s .
+\end{align*}
+其中边界项在下列任一情形下为零：若 $\zeta\in C^1([0,T];C^1_c(\Omega))$，则 $\zeta$ 在 $\partial\Omega$ 的邻域内为零；若 $h(0)=0$，则由 $u_n=0$ 在 $\Gamma$ 上得 $h(u_n)=h(0)=0$ 在 $\Gamma$ 上。这正是 (i) 中条件 $h(0)=0$ 的作用，也是 $\zeta$ 的空间紧支集可以放宽为 $\zeta\in C^1(Q)$ 的原因。把两式相等并移项即得\eqref{align:ch6-6.59}。
+
+再证\eqref{align:ch6-6.60}。设 $h\in\operatorname{Lip}(\mathbb{R})$ 非减，则 $h'\geqslant0$ 几乎处处；又由 (A1)，$\phi$ 非减且属于 $C^\infty(\mathbb{R})$，故 $\phi'\geqslant0$，从而
+\begin{align*}
+\nabla u_n\cdot\nabla\phi_n(u_n)=\left(\phi'(u_n)+\frac{1}{n}\right)|\nabla u_n|^2\geqslant0
+\end{align*}
+在 $Q$ 上几乎处处成立。因 $\zeta\geqslant0$，\eqref{align:ch6-6.59}中第三项 $\iint_{Q_t}h'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\zeta\,\mathrm{d}x\,\mathrm{d}s\geqslant0$，丢弃该项即得\eqref{align:ch6-6.60}。
+
+最后设 $h\in C(\mathbb{R})$ 非减。对 $k\in\mathbb{N}$ 置
+\begin{align*}
+h_k(y)\triangleq k\int_y^{y+\frac{1}{k}}h(z)\,\mathrm{d}z\quad(y\in\mathbb{R}).
+\end{align*}
+则 $h_k\in C^1(\mathbb{R})$ 非减（$h$ 非减），$h'_k(y)=k\left(h\left(y+\frac{1}{k}\right)-h(y)\right)\geqslant0$，且 $h_k\to h$ 在每个紧区间上一致（$h$ 连续）。把\eqref{align:ch6-6.60}用于 $h_k$（此时 $H_k(y)=\int_0^yh_k$ 满足 $H_k\to H$ 在每个紧区间上一致），得
+\begin{align*}
+\iint_{Q_t}H_k(u_n)\partial_s\zeta\,\mathrm{d}x\,\mathrm{d}s-\iint_{Q_t}h_k(u_n)\nabla\phi_n(u_n)\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}s
+\geqslant\int_\Omega H_k(u_n(x,t))\zeta(x,t)\,\mathrm{d}x-\int_\Omega H_k(u_{0n})\zeta(x,0)\,\mathrm{d}x.
+\end{align*}
+因 $u_n$、$u_{0n}$ 分别取值于紧区间 $[-\|u_n\|_{L^\infty(Q)},\|u_n\|_{L^\infty(Q)}]$ 与 $[-\|u_{0n}\|_{L^\infty(\Omega)},\|u_{0n}\|_{L^\infty(\Omega)}]$，上述各式中被积函数沿 $k\to\infty$ 一致收敛，故可逐项取极限，得到\eqref{align:ch6-6.60}对非减 $h\in C(\mathbb{R})$ 成立。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.4; kind=motivation; location=引理 6.5.4 后的注记; basis=引理 6.5.4 的 (i)(ii) + 重整化试验函数的作用、h(0)=0 与 zeta 的紧支集如何互换、非减性不可去掉的反例，以及为何只能得到不等式
+\begin{remark}\phantomsection\label{remark:ch06-6.5.4动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch6-6.59}是把 (Pn) 的弱形式用重整化试验函数 $h(u_n)\zeta$ 重写的结果：由于 $u_n$ 光滑，链式法则合法，$h(u_n)$ 可以自由地进入试验函数。这一形式的价值在于它把方程的信息压缩成"$H(u_n)$ 的时间变差 + 非负的耗散项 $\iint h'\nabla u_n\cdot\nabla\phi_n(u_n)\zeta$"两项。\eqref{align:ch6-6.60}进一步把耗散项丢弃，得到只含 $H(u_n)$ 的单向不等式；正是这一不等式在取 $h=f\circ\phi$ 时给出熵不等式\eqref{align:ch6-6.61}，并在\cref{lemma:ch06-6.5.6}中给出 $t\mapsto\int_\Omega H(u_n)\rho\,\mathrm{d}x$ 的有界变差估计。
+\item 每项假设的作用。(a) $h\in\operatorname{Lip}(\mathbb{R})$：保证 $h(u_n)\in W^{1,\infty}(Q)$ 且链式法则 $\nabla h(u_n)=h'(u_n)\nabla u_n$ 成立；若 $h$ 只是连续，$h(u_n)$ 未必属于 $H^1$，\eqref{align:ch6-6.59}中的项 $h'(u_n)\nabla u_n$ 无意义。(b) $h(0)=0$：如补证所示，它恰是使空间分部积分的边界项 $\int_{\partial\Omega}h(u_n)\zeta\partial_\nu\phi_n(u_n)\,\mathrm{d}\sigma$ 消失的条件（因 $u_n=0$ 在 $\Gamma$ 上），从而允许取 $\zeta\in C^1(Q)$ 而不必要求 $\zeta$ 在 $\partial\Omega$ 附近为零。反之，若 $\zeta\in C^1([0,T];C^1_c(\Omega))$，则边界项已由 $\zeta$ 的紧支集消失，条件 $h(0)=0$ 可以省去。(c) $h$ 非减（在 (ii) 中）：使 $h'\geqslant0$，与 $\nabla u_n\cdot\nabla\phi_n(u_n)=(\phi'+1/n)|\nabla u_n|^2\geqslant0$（这里用到 (A1) 的 $\phi'\geqslant0$ 与修正项的 $1/n>0$）相乘后耗散项非负，才能从等式中丢弃它得到不等式；若 $h$ 不非减，$h'$ 变号，丢弃该项不合法。(d) $\zeta\geqslant0$（在 (ii) 中）：同上，保证被丢弃项带 $\zeta$ 后仍非负。(e) $t\in(0,T]$：$u_n$ 光滑到 $t=T$，故端点值 $H(u_n(\cdot,t))$ 有定义。
+\item 边界与反例。(a) \eqref{align:ch6-6.60}是真不等式而非等式：耗散项 $\iint h'\nabla u_n\cdot\nabla\phi_n(u_n)\zeta$ 一般严格为正（只要 $h$ 严格增且 $\nabla u_n$ 不恒为零），丢弃它造成的误差正是后文熵不等式中"多余"的部分。(b) 若 $h$ 不非减，例如 $h(y)=-y$，则 $h'=-1<0$，\eqref{align:ch6-6.60}的符号反转，不等式不再成立。(c) $h$ 的 Lipschitz 性在 (ii) 中可以通过逼近去掉（补证的最后一步），但去掉的方式依赖 $u_n$ 与 $u_{0n}$ 的 $L^\infty$ 有界性；在极限方程中 $u$ 不再有 $L^\infty$ 界，故对极限解只能对 Lipschitz 的 $h$ 使用该不等式，这是后文需要对 $h$ 作截断的原因。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch06-6.5.2}
 设 (A0)--(A1) 成立，$f\in C(\mathbb{R})$ 非减，$F_\phi$ 由\eqref{align:ch6-6.9}定义。在\eqref{align:ch6-6.60}中置 $g=f\circ\phi$，得不等式
 \begin{align}
+\label{align:ch6-6.61}
 \begin{aligned}
 &\int_\Omega F_\phi(u_n(x,t_2))\zeta(x,t_2)\,\mathrm{d}x
 -\int_\Omega F_\phi(u_n(x,t_1))\zeta(x,t_1)\,\mathrm{d}x\\
 &\quad\leqslant\int_{t_1}^{t_2}\int_\Omega\{F_\phi(u_n)\partial_t\zeta
 -f(\phi(u_n))\nabla[\phi_n(u_n)]\cdot\nabla\zeta\}\,\mathrm{d}x\,\mathrm{d}t
-\end{aligned} \label{align:ch6-6.61}
+\end{aligned}
 \end{align}
 对所有 $t_1,t_2\in[0,T]$，$t_1<t_2$，及 $\zeta\in C^1([0,T];C^1_c(\Omega))$，$\zeta\geqslant0$ 成立。
 \end{remark}
 
-\begin{lemma}\label{lemma:ch06-6.5.5}
-设 (A0)--(A1) 成立，$\{u_n\}$ 为问题 (Pn) 的解序列。则：
+% SUPPLEMENT: parent=remark:ch06-6.5.2; kind=proof; location=注记 6.5.2 的补证; basis=原注记以 Setting g = f circ phi in (6.60) 一句从 (6.60) 得到 (6.61)，未写出 g = f circ phi 的非减性与 H = F_phi 的对应、把积分区间由 (0,t) 换成 (t1,t2) 的依据，以及端点项的处理
+\begin{proof}[补证：由\eqref{align:ch6-6.60}到\eqref{align:ch6-6.61}]
+先核对对应关系。由 $f\in C(\mathbb{R})$ 非减与 (A1) 的 $\phi$ 非减，复合函数 $g\triangleq f\circ\phi\in C(\mathbb{R})$ 非减；按\eqref{align:ch6-6.58}，以 $g$ 为被积函数得到的原函数是
+\begin{align*}
+G(y)\triangleq\int_0^yg(z)\,\mathrm{d}z=\int_0^yf(\phi(z))\,\mathrm{d}z=F_\phi(y),
+\end{align*}
+即\eqref{align:ch6-6.9}定义的 $F_\phi$。又 $\nabla\phi_n(u_n)$ 与 $\nabla[\phi_n(u_n)]$ 是同一向量，故\eqref{align:ch6-6.60}中被积项 $h(u_n)\nabla\phi_n(u_n)\cdot\nabla\zeta$ 在 $h=g$ 时正是 $f(\phi(u_n))\nabla[\phi_n(u_n)]\cdot\nabla\zeta$。
+
+再看积分区间。\eqref{align:ch6-6.60}的证明只用到 $u_n$ 在 $\Omega\times(t_1,t_2)$ 上的光滑性、$g$ 的非减性与 $\zeta\geqslant0$，与区间左端点是否为 $0$ 无关：以 $g(u_n)\zeta$ 乘方程并在 $\Omega\times(t_1,t_2)$ 上积分，对时间变量分部积分给出端点项 $\int_\Omega G(u_n(x,t_2))\zeta(x,t_2)\,\mathrm{d}x-\int_\Omega G(u_n(x,t_1))\zeta(x,t_1)\,\mathrm{d}x$，对空间变量分部积分给出 $-\iint g(u_n)\nabla\phi_n(u_n)\cdot\nabla\zeta$（边界项因 $\zeta\in C^1([0,T];C^1_c(\Omega))$ 而消失），而耗散项 $\iint g'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\zeta$ 非负可丢弃。于是得到\eqref{align:ch6-6.61}。$t_1=0$ 时端点项为 $\int_\Omega F_\phi(u_{0n})\zeta(x,0)\,\mathrm{d}x$，$\zeta\in C^1([0,T];C^1_c(\Omega))$ 保证 $\zeta(\cdot,0)$ 有定义。
+\end{proof}
+
+\begin{lemma}[梯度的两个加权估计]\label{lemma:ch06-6.5.5}
+设 (A0)--(A1) 成立，$\{u_{0n}\}\subseteq C^\infty_c(\Omega)$ 满足\eqref{align:ch6-6.48}--\eqref{align:ch6-6.49e}，$u_n\in C^\infty(Q)$ 为 (Pn) 的经典解，$\lambda_N(\Omega)$ 为 $-\Delta$ 在 $H^1_0(\Omega)$ 上的第一特征值。则：
 \begin{enumerate}[(i)]
 \item 存在 $C_1=C_1(\lambda_N(\Omega),\|u_0\|_{\mathscr{R}_f(\Omega)})>0$，使对所有 $n\in\mathbb{N}$，
 \begin{align}
@@ -299,7 +551,7 @@ H(y)\triangleq \int_0^y h(z)\,\mathrm{d}z \quad(y\in\mathbb{R}). \label{align:ch
 \end{lemma}
 
 \begin{proof}
-将 $\partial_t u_n=\Delta\phi_n(u_n)$ 乘以 $u_n/n$ 并在 $Q$ 上积分，直接得
+将 $\partial_tu_n=\Delta\phi_n(u_n)$ 乘以 $u_n/n$ 并在 $Q$ 上积分，直接得
 \begin{align*}
 \frac{1}{2n}\int_\Omega u_n^2(x,T)\,\mathrm{d}x-\frac{1}{2n}\int_\Omega u_{0n}^2(x)\,\mathrm{d}x
 \leqslant-\iint_Q\frac{|\nabla u_n|^2}{n^2}\,\mathrm{d}x\,\mathrm{d}t.
@@ -308,31 +560,81 @@ H(y)\triangleq \int_0^y h(z)\,\mathrm{d}z \quad(y\in\mathbb{R}). \label{align:ch
 \begin{align*}
 \iint_Q\frac{|\nabla u_n|^2}{n^2}\,\mathrm{d}x\,\mathrm{d}t
 \leqslant\frac{1}{2n}\int_\Omega u_{0n}^2\,\mathrm{d}x
-\leqslant\frac{M^2\lambda_N(\Omega)}{2\sqrt{n}}\|u_0\|^2_{\mathscr{R}_f(\Omega)}
+\leqslant\frac{M^2\lambda_N(\Omega)}{2\sqrt{n}}\|u_0\|_{\mathscr{R}_f(\Omega)}^2
 =:\frac{C_1}{\sqrt{n}}.
 \end{align*}
 这证明了\eqref{align:ch6-6.62}。结合\eqref{align:ch6-6.57}与\eqref{align:ch6-6.62}直接得\eqref{align:ch6-6.63}，结论成立。
 \end{proof}
 
-\begin{lemma}\label{lemma:ch06-6.5.6}
-设 (A1) 成立，$\{u_n\}$ 为问题 (Pn) 的解序列。设 $h\in\operatorname{Lip}(\mathbb{R})$ 有界且非减，$h(0)=0$，$H$ 为\eqref{align:ch6-6.58}中的函数。则对任意 $\rho\in C^1_c(\Omega)$，存在 $M_{h,\rho}>0$，使对所有 $n\in\mathbb{N}$，
+% SUPPLEMENT: parent=lemma:ch06-6.5.5; kind=proof; location=引理 6.5.5 证明后的补证; basis=原证明以 plainly give 与 plainly gives 略去乘 u_n/n 后的符号、phi'>=0 的使用、(6.62) 中常数的吸收与 (6.57)+(6.62) 合成 (6.63) 的平方估计，此处补出
+\begin{proof}[补证：\eqref{align:ch6-6.62}与\eqref{align:ch6-6.63}的推导]
+先证\eqref{align:ch6-6.62}。以 $u_n/n$ 乘 $\partial_tu_n=\Delta\phi_n(u_n)$ 并在 $Q$ 上积分。左端为
+\begin{align*}
+\iint_Q\frac{u_n\partial_tu_n}{n}\,\mathrm{d}x\,\mathrm{d}t
+=\frac{1}{2n}\int_\Omega u_n^2(x,T)\,\mathrm{d}x-\frac{1}{2n}\int_\Omega u_{0n}^2(x)\,\mathrm{d}x,
+\end{align*}
+右端经空间分部积分（边界项因 $u_n=0$ 在 $\Gamma$ 上而消失）为
+\begin{align*}
+-\iint_Q\frac{1}{n}\nabla u_n\cdot\nabla\phi_n(u_n)\,\mathrm{d}x\,\mathrm{d}t
+=-\iint_Q\left\{\frac{\phi'(u_n)}{n}+\frac{1}{n^2}\right\}|\nabla u_n|^2\,\mathrm{d}x\,\mathrm{d}t
+\leqslant-\iint_Q\frac{|\nabla u_n|^2}{n^2}\,\mathrm{d}x\,\mathrm{d}t,
+\end{align*}
+其中用到 $\phi'(u_n)\geqslant0$。合并即得上述不等式，移项后丢弃非负项 $\frac{1}{2n}\int_\Omega u_n^2(x,T)\,\mathrm{d}x$ 得
+\begin{align*}
+\iint_Q\frac{|\nabla u_n|^2}{n^2}\,\mathrm{d}x\,\mathrm{d}t\leqslant\frac{1}{2n}\int_\Omega u_{0n}^2\,\mathrm{d}x
+\leqslant\frac{1}{2n}\|u_{0n}\|_{L^\infty(\Omega)}\|u_{0n}\|_{L^1(\Omega)}.
+\end{align*}
+再由\eqref{align:ch6-6.49a}的两式与 $\|u_{0n}\|_{L^1(\Omega)}\leqslant\|u_0\|_{\mathscr{R}_f(\Omega)}$、$\|u_{0n}\|_{L^\infty(\Omega)}\leqslant M\|u_0\|_{\mathscr{R}_f(\Omega)}\sqrt[4]{n}$（见\cref{lemma:ch06-6.5.3}的补证），得
+\begin{align*}
+\frac{1}{2n}\int_\Omega u_{0n}^2\,\mathrm{d}x
+\leqslant\frac{M}{2}\|u_0\|^2_{\mathscr{R}_f(\Omega)}n^{-3/4}
+\leqslant\frac{M}{2}\|u_0\|^2_{\mathscr{R}_f(\Omega)}n^{-1/2},
+\end{align*}
+幂次 $n^{-1/2}$ 即\eqref{align:ch6-6.62}所需。陈述中把常数写成 $M^2\lambda_N(\Omega)/2$ 只是把常数吸收进 $C_1$（必要时将\eqref{align:ch6-6.49a}中的 $M$ 换成 $\max\{M,1/\lambda_N(\Omega)\}$，这不影响该式的有效性），关键在于右端以 $n^{-1/2}$ 衰减。
+
+再证\eqref{align:ch6-6.63}。由 $\phi'_n=\phi'+1/n\geqslant0$ 与 $(a+b)^2\leqslant2a^2+2b^2$，
+\begin{align*}
+|\nabla[\phi_n(u_n)]|^2=\left(\phi'(u_n)+\frac{1}{n}\right)^2|\nabla u_n|^2
+\leqslant2(\phi'(u_n))^2|\nabla u_n|^2+\frac{2}{n^2}|\nabla u_n|^2
+=2|\nabla[\phi(u_n)]|^2+\frac{2|\nabla u_n|^2}{n^2}.
+\end{align*}
+在 $Q$ 上积分并用\eqref{align:ch6-6.57}（它给出 $\iint_Q|\nabla[\phi(u_n)]|^2\leqslant2\|\phi\|_\infty\|u_0\|_{\mathscr{R}_f(\Omega)}$）与\eqref{align:ch6-6.62}，得
+\begin{align*}
+\iint_Q|\nabla[\phi_n(u_n)]|^2\,\mathrm{d}x\,\mathrm{d}t
+\leqslant4\|\phi\|_\infty\|u_0\|_{\mathscr{R}_f(\Omega)}+\frac{2C_1}{\sqrt{n}}
+\leqslant C_2
+\end{align*}
+其中 $C_2\triangleq4\|\phi\|_\infty\|u_0\|_{\mathscr{R}_f(\Omega)}+2C_1$（$n\geqslant1$），即\eqref{align:ch6-6.63}。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.5; kind=motivation; location=引理 6.5.5 后的注记; basis=引理 6.5.5 的两款 + 为何必须把 nabla u_n 的估计加 1/n^2 权重、C_1 的 n^{-1/2} 衰减来自何处、(6.63) 是 phi(u_n) 在 L^2(0,T;H^1_0) 中有界的唯一来源
+\begin{remark}\phantomsection\label{remark:ch06-6.5.5动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch6-6.57}只给出 $\nabla[\phi(u_n)]$ 的控制，而方程 (Pn) 的极限过程中还需要处理含 $\nabla u_n$ 的项（特别是 $\nabla\phi_n(u_n)-\nabla\phi(u_n)=\nabla u_n/n$ 这一修正）。\eqref{align:ch6-6.62}正是为此准备的：它以 $n^{-2}$ 的权重控制 $\nabla u_n$，并额外带有 $n^{-1/2}$ 的衰减因子，使得 $\iint|\nabla u_n|^2/n^2\to0$。\eqref{align:ch6-6.63}则给出 $\{\phi_n(u_n)\}$ 在 $L^2(0,T;H^1_0(\Omega))$ 中的一致有界性，这是\cref{lemma:ch06-6.5.7}与\cref{section:ch06-令n趋于无穷}中提取 $\phi(u_n)$ 的弱极限的基础。
+\item 每项假设的作用。(a) $\phi'\geqslant0$（来自 (A1) 的 $\phi$ 非减且 $C^\infty$）：使 $\iint(\phi'/n+1/n^2)|\nabla u_n|^2\geqslant\iint|\nabla u_n|^2/n^2$，从而\eqref{align:ch6-6.62}的右端带负号，估计方向正确；若 $\phi'$ 可变号，这一项可能变正，\eqref{align:ch6-6.62}的推导失效。(b) $\|u_{0n}\|_{L^1}$ 与 $\|u_{0n}\|_{L^\infty}$ 的估计（即\eqref{align:ch6-6.49a}与\eqref{align:ch6-6.53}）：\eqref{align:ch6-6.62}右端的 $n^{-1/2}$ 正是 $\|u_{0n}\|_{L^\infty}\leqslant M\|u_0\|n^{1/4}$ 与 $1/n$ 因子的乘积给出的 $n^{-3/4}\leqslant n^{-1/2}$；若没有 $\|u_{0n}\|_{L^\infty}$ 的显式增长速率，只能得到与 $n$ 无关的常数，\eqref{align:ch6-6.62}的衰减便无从谈起。(c) $\|\phi\|_\infty<\infty$（来自 (A1) 的 $\phi\in C_b$）：\eqref{align:ch6-6.63}中的常数 $C_2$ 通过\eqref{align:ch6-6.57}依赖它。
+\item 边界与限度。(a) \eqref{align:ch6-6.62}的权重 $n^{-2}$ 不能去掉：\eqref{align:ch6-6.54}与\eqref{align:ch6-6.55}都不控制 $\nabla u_n$，而\eqref{align:ch6-6.57}只控制 $\sqrt{\phi'(u_n)}\nabla u_n$；在 $\phi'$ 于某区间上为零时，$\nabla u_n$ 在该区间上完全不受控，只能靠 $1/n^2$ 权重与 $n^{-1/2}$ 衰减把它压掉。(b) \eqref{align:ch6-6.63}的常数 $C_2$ 与 $n$ 无关，但其中的 $C_1$ 依赖 $\lambda_N(\Omega)$ 与 $\|u_0\|_{\mathscr{R}_f(\Omega)}$；对 $n=1$ 时 $\sqrt{n}=1$，故\eqref{align:ch6-6.62}对小的 $n$ 只是一个有限的界。(c) 两款估计都不给出 $\{\phi_n(u_n)\}$ 在时间方向上的紧性：这需要\cref{lemma:ch06-6.5.7}的 (ii)。
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}[重整化量的有界变差估计]\label{lemma:ch06-6.5.6}
+设 (A1) 成立，$\{u_{0n}\}\subseteq C^\infty_c(\Omega)$ 满足\eqref{align:ch6-6.48}--\eqref{align:ch6-6.49e}，$u_n\in C^\infty(Q)$ 为 (Pn) 的经典解。设 $h\in\operatorname{Lip}(\mathbb{R})$ 有界且非减，$h(0)=0$，$H$ 为\eqref{align:ch6-6.58}中的函数。则对任意 $\rho\in C^1_c(\Omega)$，存在 $M_{h,\rho}>0$，使对所有 $n\in\mathbb{N}$，
 \begin{align}
-\int_0^T\left|\frac{\mathrm{d}}{\mathrm{d}t}\int_\Omega H(u_n(x,t))\rho\,\mathrm{d}x\right|\mathrm{d}t\leqslant M_{h,\rho}. \label{align:ch6-6.64}
+\int_0^T\left|\frac{\mathrm{d}}{\mathrm{d}t}\int_\Omega H(u_n(x,t))\rho(x)\,\mathrm{d}x\right|\mathrm{d}t\leqslant M_{h,\rho}. \label{align:ch6-6.64}
 \end{align}
 \end{lemma}
 
 \begin{proof}
 对任意 $\rho\in C^1_c(\Omega)$，置
-\begin{align*}
-S_{n,\rho}(t)\triangleq \int_\Omega H(u_n(x,t))\rho(x)\,\mathrm{d}x \quad(t\in(0,T)).
-\end{align*}
+\begin{align}
+S_{n,\rho}(t)\triangleq\int_\Omega H(u_n(x,t))\rho(x)\,\mathrm{d}x\quad(t\in(0,T)).
+\label{align:ch6-6.65}
+\end{align}
 在\eqref{align:ch6-6.59}中取 $\zeta(x,t)=\beta(t)\rho(x)$，$\beta\in C^1_c(0,T)$，表明 $S_{n,\rho}$ 有弱导数
 \begin{align}
 \begin{aligned}
-S'_{n,\rho}(t)
-={}&-\int_\Omega h(u_n(x,t))\nabla\phi_n(u_n(x,t))\cdot\nabla\rho(x)\,\mathrm{d}x\\
+S'_{n,\rho}(t)={}&-\int_\Omega h(u_n(x,t))\nabla\phi_n(u_n(x,t))\cdot\nabla\rho(x)\,\mathrm{d}x\\
 &-\int_\Omega h'(u_n(x,t))\nabla u_n(x,t)\cdot\nabla\phi_n(u_n(x,t))\rho(x)\,\mathrm{d}x
-\end{aligned} \label{align:ch6-6.65}
+\end{aligned}
 \end{align}
 对几乎所有 $t\in(0,T)$。由\eqref{align:ch6-6.63}，
 \begin{align}
@@ -341,16 +643,17 @@ S'_{n,\rho}(t)
 \iint_Q|\nabla\phi_n(u_n)|\,\mathrm{d}x\,\mathrm{d}t
 \leqslant C_2\|h\|_{L^\infty(\mathbb{R})}\|\rho\|_{C^1(\overline\Omega)}. \label{align:ch6-6.66}
 \end{align}
-估计\eqref{align:ch6-6.65}右端第二项。在\eqref{align:ch6-6.59}中取 $\zeta=1$，$t=T$，利用\eqref{align:ch6-6.49a}中第一个不等式，直接得
+估计\eqref{align:ch6-6.65}右端第二项。在\eqref{align:ch6-6.59}中取 $\zeta=1$、$t=T$，利用\eqref{align:ch6-6.49a}中第一个不等式，直接得
 \begin{align}
 \begin{aligned}
-0\leqslant\iint_Q h'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\,\mathrm{d}x\,\mathrm{d}t
-\leqslant\int_\Omega H(u_{0n})\,\mathrm{d}x
-\leqslant\|h\|_{L^\infty(\mathbb{R})}\|u_{0n}\|_{L^1(\Omega)}
-\leqslant\|h\|_{L^\infty(\mathbb{R})}\|u_0\|_{\mathscr{R}_f(\Omega)}
-\end{aligned} \label{align:ch6-6.67}
+0\leqslant\iint_Qh'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\,\mathrm{d}x\,\mathrm{d}t
+&\leqslant\int_\Omega H(u_{0n})\,\mathrm{d}x
+\leqslant\|h\|_{L^\infty(\mathbb{R})}\|u_{0n}\|_{L^1(\Omega)}\\
+&\leqslant\|h\|_{L^\infty(\mathbb{R})}\|u_0\|_{\mathscr{R}_f(\Omega)} 
+\end{aligned}
+\label{align:ch6-6.67}
 \end{align}
-（注意 $H(u_n(\cdot,T))\geqslant0$ 几乎处处在 $\Omega$ 上，因 $h$ 非减且 $h(0)=0$）。由\eqref{align:ch6-6.65}--\eqref{align:ch6-6.67}有 $S'_{n,\rho}\in L^1(0,T)$，且
+（注意 $H(u_n(\cdot,T))\geqslant0$ 几乎处处在 $\Omega$ 上，因为 $h$ 非减且 $h(0)=0$）。由\eqref{align:ch6-6.65}--\eqref{align:ch6-6.67}有 $S'_{n,\rho}\in L^1(0,T)$，且
 \begin{align}
 \int_0^T|S'_{n,\rho}(t)|\,\mathrm{d}t
 \leqslant(C_2\|\rho\|_{C^1(\overline\Omega)}+\|\rho\|_{C(\overline\Omega)}\|u_0\|_{\mathscr{R}_f(\Omega)})
@@ -359,21 +662,81 @@ S'_{n,\rho}(t)
 结论随之成立。
 \end{proof}
 
-\begin{lemma}\label{lemma:ch06-6.5.7}
-设 (A0)--(A1) 成立，$\{u_n\}$ 为问题 (Pn) 的解序列。则：
+% SUPPLEMENT: parent=lemma:ch06-6.5.6; kind=proof; location=引理 6.5.6 证明后的补证; basis=原证明以 shows that S_{n,rho} has the weak derivative、plainly get 略去弱导数的定义验证、常数 C_2 处 Cauchy-Schwarz 的吸收、以及 H(u_n(.,T))>=0 的符号来源，此处补出
+\begin{proof}[补证：\eqref{align:ch6-6.65}--\eqref{align:ch6-6.68}的逐步推导]
+先验证\eqref{align:ch6-6.65}。设 $\rho\in C^1_c(\Omega)$、$\beta\in C^1_c(0,T)$，在\eqref{align:ch6-6.59}中取 $\zeta(x,t)=\beta(t)\rho(x)$ 与 $t=T$。因 $\beta$ 在 $0$ 与 $T$ 的邻域内为零，有 $\zeta(\cdot,0)=\zeta(\cdot,T)=0$，故\eqref{align:ch6-6.59}两端的端点项全部消失，而 $\nabla\zeta=\beta\nabla\rho$、$\partial_s\zeta=\beta'\rho$，于是
+\begin{align*}
+\iint_Qh'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\beta\rho\,\mathrm{d}x\,\mathrm{d}s
+-\iint_QH(u_n)\beta'\rho\,\mathrm{d}x\,\mathrm{d}s
+=-\iint_Qh(u_n)\beta\nabla\phi_n(u_n)\cdot\nabla\rho\,\mathrm{d}x\,\mathrm{d}s.
+\end{align*}
+按定义 $\int_0^T\beta'(t)S_{n,\rho}(t)\,\mathrm{d}t=-\int_0^T\beta(t)S'_{n,\rho}(t)\,\mathrm{d}t$，把上式写成
+\begin{align*}
+\int_0^T\beta(t)S'_{n,\rho}(t)\,\mathrm{d}t
+=-\int_0^T\beta(t)\left\{\int_\Omega h(u_n)\nabla\phi_n(u_n)\cdot\nabla\rho\,\mathrm{d}x
++\int_\Omega h'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\rho\,\mathrm{d}x\right\}\mathrm{d}t,
+\end{align*}
+由 $\beta$ 的任意性即得\eqref{align:ch6-6.65}（两边乘 $-1$ 与陈述中的符号一致）。
+
+再验证\eqref{align:ch6-6.66}。由 $\nabla\rho$ 支在 $\Omega$ 内、Hölder 不等式与\eqref{align:ch6-6.63}，
+\begin{align*}
+\iint_Q|h(u_n)\nabla\phi_n(u_n)\cdot\nabla\rho|\,\mathrm{d}x\,\mathrm{d}t
+\leqslant\|h\|_{L^\infty(\mathbb{R})}\|\nabla\rho\|_{L^\infty(\Omega)}\iint_Q|\nabla\phi_n(u_n)|\,\mathrm{d}x\,\mathrm{d}t
+\leqslant\|h\|_{L^\infty}\|\rho\|_{C^1(\overline\Omega)}|Q|^{1/2}C_2^{1/2},
+\end{align*}
+其中 $\iint_Q|\nabla\phi_n(u_n)|\leqslant|Q|^{1/2}(\iint_Q|\nabla\phi_n(u_n)|^2)^{1/2}$。把 $|Q|^{1/2}C_2^{1/2}$ 吸收进 $C_2$ 即得\eqref{align:ch6-6.66}（陈述中的 $C_2$ 与\cref{lemma:ch06-6.5.5}(ii) 的 $C_2$ 只差一个只依赖 $Q$ 的因子，不影响结论）。
+
+再验证\eqref{align:ch6-6.67}。在\eqref{align:ch6-6.59}中取 $\zeta\equiv1$、$t=T$：$\partial_s\zeta=0$、$\nabla\zeta=0$，故
+\begin{align*}
+\int_\Omega H(u_n(x,T))\,\mathrm{d}x+\iint_Qh'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\,\mathrm{d}x\,\mathrm{d}t=\int_\Omega H(u_{0n})\,\mathrm{d}x.
+\end{align*}
+由 $h$ 非减与 $h(0)=0$ 得 $h\geqslant0$ 在 $[0,+\infty)$ 上、$h\leqslant0$ 在 $(-\infty,0]$ 上，故 $H(y)=\int_0^yh(z)\,\mathrm{d}z\geqslant0$（$y\in\mathbb{R}$），特别地 $H(u_n(\cdot,T))\geqslant0$；又 $h'\geqslant0$ 且 $\nabla u_n\cdot\nabla\phi_n(u_n)\geqslant0$，故左端第二项非负。于是
+\begin{align*}
+0\leqslant\iint_Qh'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\,\mathrm{d}x\,\mathrm{d}t
+=\int_\Omega H(u_{0n})\,\mathrm{d}x-\int_\Omega H(u_n(x,T))\,\mathrm{d}x
+\leqslant\int_\Omega H(u_{0n})\,\mathrm{d}x,
+\end{align*}
+再由 $|H(y)|\leqslant\|h\|_{L^\infty(\mathbb{R})}|y|$ 与\eqref{align:ch6-6.49a}中第一个不等式即得\eqref{align:ch6-6.67}。
+
+最后验证\eqref{align:ch6-6.68}。由\eqref{align:ch6-6.65}，
+\begin{align*}
+|S'_{n,\rho}(t)|\leqslant\int_\Omega|h(u_n)||\nabla\phi_n(u_n)||\nabla\rho|\,\mathrm{d}x
++\int_\Omega h'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)|\rho|\,\mathrm{d}x,
+\end{align*}
+其中第二项去掉了绝对值，因为 $h'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\geqslant0$。对 $t$ 在 $(0,T)$ 上积分，第一项由\eqref{align:ch6-6.66}控制，第二项由\eqref{align:ch6-6.67}与 $\|\rho\|_{C(\overline\Omega)}$ 控制，得
+\begin{align*}
+\int_0^T|S'_{n,\rho}(t)|\,\mathrm{d}t
+\leqslant C_2\|h\|_{L^\infty}\|\rho\|_{C^1(\overline\Omega)}
++\|\rho\|_{C(\overline\Omega)}\|h\|_{L^\infty}\|u_0\|_{\mathscr{R}_f(\Omega)}
+\leqslant M_{h,\rho},
+\end{align*}
+取 $M_{h,\rho}\triangleq(C_2\|\rho\|_{C^1(\overline\Omega)}+\|\rho\|_{C(\overline\Omega)}\|u_0\|_{\mathscr{R}_f(\Omega)})\|h\|_{L^\infty(\mathbb{R})}\max\{1,T\}$ 即得\eqref{align:ch6-6.68}。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.6; kind=motivation; location=引理 6.5.6 后的注记; basis=引理 6.5.6 与 (6.59)(6.63)(6.67) + 为何需要 t |-> int H(u_n) rho 的一致有界变差、h 有界与 h(0)=0 各自的作用、以及只对 rho 属于 C_c^1(Omega) 成立的边界
+\begin{remark}\phantomsection\label{remark:ch06-6.5.6动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch6-6.64}的作用是给出一族关于 $n$ 一致有界变差的函数 $t\mapsto S_{n,\rho}(t)$。在紧性论证中，若已知 $\{S_{n,\rho}\}$ 一致有界且 $\{S'_{n,\rho}\}$ 在 $L^1(0,T)$ 中一致有界，则由 Helly 选择原理可抽出在每点收敛的子列，从而得到 $t\mapsto\int_\Omega H(u)\rho$ 的极限；这正是把\cref{lemma:ch06-6.5.4}的重整化不等式传给极限解的技术基础。选 $H$ 而不选 $h$ 作为被估计的量，是因为 $H(u_n)$ 的时间导数恰为 $h(u_n)\partial_tu_n$，可以与方程中的 $\Delta\phi_n(u_n)$ 配对。
+\item 每项假设的作用。(a) $h$ 有界：\eqref{align:ch6-6.66}与\eqref{align:ch6-6.67}都用 $\|h\|_{L^\infty(\mathbb{R})}$ 控制右端；若 $h$ 无界，则 $\iint|h(u_n)\nabla\phi_n(u_n)\cdot\nabla\rho|$ 无法只由\eqref{align:ch6-6.63}控制。(b) $h$ 非减且 $h(0)=0$：保证 $H\geqslant0$，从而\eqref{align:ch6-6.67}中 $\int_\Omega H(u_n(\cdot,T))\,\mathrm{d}x\geqslant0$ 可以丢弃，得到单向估计；同时保证 $h'\geqslant0$，使被积项 $h'(u_n)\nabla u_n\cdot\nabla\phi_n(u_n)\rho$ 的符号确定（当 $\rho\geqslant0$ 时非负），从而可以去掉绝对值。若 $h$ 变号，则 $H$ 可变号，\eqref{align:ch6-6.67}的中间不等式失效。(c) $\rho\in C^1_c(\Omega)$：使 $\nabla\rho$ 有界且支在 $\Omega$ 内，$\iint|h\nabla\phi_n\cdot\nabla\rho|$ 才能用\eqref{align:ch6-6.63}估计；若 $\rho$ 不紧支于 $\Omega$，则须另加 $\rho|_{\partial\Omega}=0$ 之类的条件。(d) $h\in\operatorname{Lip}(\mathbb{R})$：使\eqref{align:ch6-6.59}可用，从而 $S'_{n,\rho}$ 的计算合法。
+\item 边界与限度。(a) \eqref{align:ch6-6.64}只给出 $\int_0^T|S'|\leqslant M_{h,\rho}$，即 $S_{n,\rho}$ 的一致有界变差，并未给出等度连续性；对 $\rho$ 的一致估计还需要 $\rho$ 属于有界集。(b) 常数 $M_{h,\rho}$ 依赖 $h$ 与 $\rho$，且随 $\|\rho\|_{C^1}$ 线性增长，故不能对 $\rho$ 取上确界。(c) 估计只对 $H(u_n)$ 与 $\rho\in C^1_c(\Omega)$ 的配对成立；对 $u_n$ 本身（取 $h(y)=y$ 会使 $h$ 无界）不能直接使用，这正是 (b) 中必须有界性的原因。
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}[$t>0$ 上的梯度与时间导数估计]\label{lemma:ch06-6.5.7}
+设 (A0)--(A1) 成立，$\{u_{0n}\}\subseteq C^\infty_c(\Omega)$ 满足\eqref{align:ch6-6.48}--\eqref{align:ch6-6.49e}，$u_n\in C^\infty(Q)$ 为 (Pn) 的经典解。则：
 \begin{enumerate}[(i)]
 \item 对每个 $t\in(0,T)$，
 \begin{align}
 \int_\Omega|\nabla[\phi_n(u_n)]|^2(x,s)\,\mathrm{d}x\leqslant\frac{C_2}{t}
-\quad\text{对所有 }s\in(t,T]\text{ 及 }n\in\mathbb{N} \label{align:ch6-6.69}
+\quad\text{对所有 }s\in(t,T]\text{ 与 }n\in\mathbb{N}, \label{align:ch6-6.69}
 \end{align}
 其中 $C_2>0$ 由\cref{lemma:ch06-6.5.5}(ii) 给出；
-\item 对所有 $t\in(0,T)$ 及 $n\in\mathbb{N}$，
+\item 对所有 $t\in(0,T)$ 与 $n\in\mathbb{N}$，
 \begin{align}
 \int_t^T\int_\Omega[\phi'_n(u_n)](\partial_\tau u_n)^2\,\mathrm{d}x\,\mathrm{d}\tau
 \leqslant\frac{C_2}{2t}. \label{align:ch6-6.70a}
 \end{align}
-进而，若 (A2) 成立，则对每个 $t\in(0,T)$，
+进而，若 (A2) 成立（即 $\phi\in W^{1,\infty}(\mathbb{R})$），则对每个 $t\in(0,T)$，
 \begin{align}
 \int_t^T\int_\Omega(\partial_\tau[\phi_n(u_n)])^2\,\mathrm{d}x\,\mathrm{d}\tau
 \leqslant\frac{C_2(1+\|\phi'\|_\infty)}{2t}. \label{align:ch6-6.70b}
@@ -382,29 +745,79 @@ S'_{n,\rho}(t)
 \end{lemma}
 
 \begin{proof}
-(i) 对任意固定 $t\in(0,T)$，置 $h(s)\triangleq \frac{s}{t}\chi_{[0,t)}(s)+\chi_{[t,T)}(s)$（$s\in(t,T]$）。将 $\partial_t u_n=\Delta\phi_n(u_n)$ 乘以 $h(t)\partial_t[\phi_n(u_n)]$ 并在 $Q_s=\Omega\times(0,s)$ 上积分，对每个 $s\in(t,T)$，得
+(i) 对任意固定 $t\in(0,T)$，置 $h(s)\triangleq\frac{s}{t}\chi_{[0,t)}(s)+\chi_{[t,T]}(s)$（$s\in[0,T]$）。将 $\partial_tu_n=\Delta\phi_n(u_n)$ 乘以 $h(\tau)\partial_\tau[\phi_n(u_n)]$ 并在 $Q_s=\Omega\times(0,s)$ 上积分，对每个 $s\in(t,T]$，得
 \begin{align}
+\label{align:ch6-6.71}
 \begin{aligned}
 0&\leqslant\iint_{Q_s}h(\tau)\phi'_n(u_n)(\partial_\tau u_n)^2\,\mathrm{d}x\,\mathrm{d}\tau\\
 &=-\int_0^s\mathrm{d}\tau\,h(\tau)\int_\Omega\partial_\tau\{\nabla[\phi_n(u_n)]\}\cdot\nabla[\phi_n(u_n)]\,\mathrm{d}x\\
-&=-\frac{1}{2}\int_0^s h(\tau)\frac{\mathrm{d}}{\mathrm{d}\tau}\left(\int_\Omega|\nabla[\phi_n(u_n)]|^2\,\mathrm{d}x\right)\mathrm{d}\tau\\
+&=-\frac{1}{2}\int_0^sh(\tau)\frac{\mathrm{d}}{\mathrm{d}\tau}\left(\int_\Omega|\nabla[\phi_n(u_n)]|^2\,\mathrm{d}x\right)\mathrm{d}\tau\\
 &=-\frac{1}{2}\int_\Omega|\nabla[\phi_n(u_n)]|^2(x,s)\,\mathrm{d}x
 +\frac{1}{2t}\int_0^t\mathrm{d}\tau\int_\Omega|\nabla[\phi_n(u_n)]|^2\,\mathrm{d}x.
-\end{aligned} \label{align:ch6-6.71}
+\end{aligned}
 \end{align}
 利用\eqref{align:ch6-6.63}，由上述不等式得\eqref{align:ch6-6.69}。故 (i) 得证。
 
 (ii) 在\eqref{align:ch6-6.71}中取 $s=T$，得
 \begin{align*}
 \int_t^T\int_\Omega[\phi'_n(u_n)](\partial_\tau u_n)^2\,\mathrm{d}x\,\mathrm{d}\tau
-\leqslant\iint_Q h(\tau)\phi'_n(u_n)(\partial_\tau u_n)^2\,\mathrm{d}x\,\mathrm{d}\tau
+\leqslant\iint_Qh(\tau)\phi'_n(u_n)(\partial_\tau u_n)^2\,\mathrm{d}x\,\mathrm{d}\tau
 \leqslant\frac{1}{2t}\int_0^t\mathrm{d}\tau\int_\Omega|\nabla[\phi_n(u_n)]|^2\,\mathrm{d}x
 \leqslant\frac{C_2}{2t}.
 \end{align*}
 这证明了\eqref{align:ch6-6.70a}，\eqref{align:ch6-6.70b}直接成立。证明完成。
 \end{proof}
 
-\begin{remark}\label{remark:ch06-6.5.3}
+% SUPPLEMENT: parent=lemma:ch06-6.5.7; kind=proof; location=引理 6.5.7 证明后的补证; basis=原证明把 (6.71) 的建立、(6.70a) 由 (6.71) 取 s = T 得到、以及 (6.70b) 由 (A2) 直接成立的三处均压缩，此处补出截断函数的性质、时间分部积分的端点、以及 (A2) 如何把 phi'_n 加权换成无权重
+\begin{proof}[补证：\eqref{align:ch6-6.71}、\eqref{align:ch6-6.70a}与\eqref{align:ch6-6.70b}]
+先说明截断函数 $h$ 的性质：$h(s)=s/t$ 在 $[0,t)$ 上、$h(s)=1$ 在 $[t,T]$ 上，故 $h$ 连续、非减、$h(0)=0$、$h=1$ 在 $[t,T]$ 上，且 $h'=1/t$ 在 $(0,t)$ 上、$h'=0$ 在 $(t,T)$ 上。
+
+以 $h(\tau)\partial_\tau[\phi_n(u_n)]$ 乘 $\partial_\tau u_n=\Delta\phi_n(u_n)$ 并在 $Q_s$（$s\in(t,T]$）上积分。左端为
+\begin{align*}
+\iint_{Q_s}h(\tau)\partial_\tau u_n\,\partial_\tau[\phi_n(u_n)]\,\mathrm{d}x\,\mathrm{d}\tau
+=\iint_{Q_s}h(\tau)\phi'_n(u_n)(\partial_\tau u_n)^2\,\mathrm{d}x\,\mathrm{d}\tau\geqslant0,
+\end{align*}
+因 $\phi'_n=\phi'+1/n>0$。右端经空间分部积分（边界项因 $\phi_n(u_n)=0$ 在 $\Gamma$ 上而消失，$\phi_n(0)=0$）：
+\begin{align*}
+\iint_{Q_s}h(\tau)\partial_\tau[\phi_n(u_n)]\Delta\phi_n(u_n)\,\mathrm{d}x\,\mathrm{d}\tau
+=-\int_0^s\mathrm{d}\tau\,h(\tau)\int_\Omega\partial_\tau\{\nabla[\phi_n(u_n)]\}\cdot\nabla[\phi_n(u_n)]\,\mathrm{d}x,
+\end{align*}
+而被积式恰为 $\frac{1}{2}\frac{\mathrm{d}}{\mathrm{d}\tau}|\nabla[\phi_n(u_n)]|^2$。记 $A(\tau)\triangleq\int_\Omega|\nabla[\phi_n(u_n)]|^2(x,\tau)\,\mathrm{d}x$，则
+\begin{align*}
+-\frac{1}{2}\int_0^sh(\tau)A'(\tau)\,\mathrm{d}\tau
+=-\frac{1}{2}\Big[h(\tau)A(\tau)\Big]_0^s+\frac{1}{2}\int_0^sh'(\tau)A(\tau)\,\mathrm{d}\tau
+=-\frac{1}{2}A(s)+\frac{1}{2t}\int_0^tA(\tau)\,\mathrm{d}\tau,
+\end{align*}
+其中用到 $h(0)=0$、$h(s)=1$（$s\in(t,T]$）与 $h'=1/t$ 在 $(0,t)$ 上。于是有\eqref{align:ch6-6.71}。
+
+由\eqref{align:ch6-6.71}，$0\leqslant-\frac{1}{2}A(s)+\frac{1}{2t}\int_0^tA(\tau)\,\mathrm{d}\tau$，即 $A(s)\leqslant\frac{1}{t}\int_0^tA\leqslant\frac{1}{t}\iint_Q|\nabla[\phi_n(u_n)]|^2\leqslant\frac{C_2}{t}$，于是有\eqref{align:ch6-6.69}。
+
+对\eqref{align:ch6-6.70a}，在\eqref{align:ch6-6.71}中取 $s=T$ 并用 $h\equiv1$ 在 $[t,T]$ 上、$h\geqslant0$ 在 $[0,t]$ 上：
+\begin{align*}
+\int_t^T\int_\Omega\phi'_n(u_n)(\partial_\tau u_n)^2\,\mathrm{d}x\,\mathrm{d}\tau
+\leqslant\iint_Qh(\tau)\phi'_n(u_n)(\partial_\tau u_n)^2\,\mathrm{d}x\,\mathrm{d}\tau
+=\frac{1}{2t}\int_0^tA(\tau)\,\mathrm{d}\tau-\frac{1}{2}A(T)\leqslant\frac{C_2}{2t}.
+\end{align*}
+
+最后证\eqref{align:ch6-6.70b}。由 $\partial_\tau[\phi_n(u_n)]=\phi'_n(u_n)\partial_\tau u_n$ 与 $\phi'_n=\phi'+1/n$，
+\begin{align*}
+(\partial_\tau[\phi_n(u_n)])^2=(\phi'_n(u_n))^2(\partial_\tau u_n)^2
+=\phi'_n(u_n)\left[\phi'_n(u_n)(\partial_\tau u_n)^2\right]
+\leqslant(1+\|\phi'\|_\infty)\phi'_n(u_n)(\partial_\tau u_n)^2,
+\end{align*}
+其中用到 $\phi'_n(u_n)=\phi'(u_n)+1/n\leqslant\|\phi'\|_{L^\infty(\mathbb{R})}+1$（这正是 (A2) 的作用：$\phi'\in L^\infty(\mathbb{R})$）。在 $[t,T]\times\Omega$ 上积分并用\eqref{align:ch6-6.70a}即得\eqref{align:ch6-6.70b}。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.7; kind=motivation; location=引理 6.5.7 后的注记; basis=引理 6.5.7 的两款 + t>0 的必要性（常数 C_2/t 在 t->0 时爆破）、(A2) 在 (6.70b) 中的不可替代性、以及 (6.69) 与 (6.70b) 分别提供空间与时间紧性
+\begin{remark}\phantomsection\label{remark:ch06-6.5.7动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch6-6.63}只给出 $\nabla[\phi_n(u_n)]$ 在 $L^2(Q)$ 上的整体界，而极限过程需要在远离 $t=0$ 处有更强的控制：\eqref{align:ch6-6.69}把整体界"局部化"到每个固定的正时刻 $t$，代价是常数 $C_2/t$；\eqref{align:ch6-6.70a}与\eqref{align:ch6-6.70b}则给出时间方向的控制，其中\eqref{align:ch6-6.70b}（在 (A2) 下）是 $\{\partial_\tau[\phi_n(u_n)]\}$ 在 $L^2((t,T)\times\Omega)$ 中的一致有界性，即 $\{\phi_n(u_n)\}$ 在 $H^1((t,T)\times\Omega)$ 中的紧性来源，从而可在 $L^2_{\mathrm{loc}}((0,T]\times\Omega)$ 中抽出强收敛子列（Aubin--Lions 型论证）。
+\item 每项假设的作用。(a) $t\in(0,T)$ 而非 $t=0$：\eqref{align:ch6-6.69}与\eqref{align:ch6-6.70a}的右端都含因子 $1/t$，随 $t\to0^+$ 爆破；这与\eqref{align:ch6-6.57}只给出整体（含 $t=0$ 附近）的弱估计相一致，说明 $t=0$ 附近没有梯度信息的局部化版本。(b) (A2) $\phi\in W^{1,\infty}(\mathbb{R})$：\eqref{align:ch6-6.70b}的推导需要 $\phi'_n\leqslant\|\phi'\|_\infty+1$，即 $\phi'$ 有界；仅有 (A1)（$\phi$ 有界且非减）不能保证 $\phi'$ 有界（例如 $\phi(y)=\int_0^y g$，$g\geqslant0$ 连续、$\int g<\infty$ 但 $g$ 无界），此时只能得到\eqref{align:ch6-6.70a}这种加 $\phi'_n$ 权重的估计。(c) $\phi'_n>0$：使\eqref{align:ch6-6.71}左端非负，从而得到单向不等式；若 $\phi'$ 可变号且 $\phi'_n$ 无正下界，则左端符号不定。
+\item 边界与限度。(a) \eqref{align:ch6-6.69}对 $s\in(t,T]$ 一致成立，但不含 $s=0$；不能由此得到 $t=0$ 处的梯度界。(b) \eqref{align:ch6-6.70a}的权重 $\phi'_n(u_n)$ 依赖 $u_n$，在 $\phi'$ 退化（$\phi'=0$）的区域该权重只剩 $1/n$，故此式给出的是 $(\partial_\tau u_n)^2/n$ 的可积性而非 $(\partial_\tau u_n)^2$ 的可积性。(c) \eqref{align:ch6-6.70b}只在 (A2) 下成立，且常数随 $\|\phi'\|_\infty$ 线性增长。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch06-6.5.3}
 因
 \begin{align*}
 |\nabla[\phi_n(u_n)]|^2=\left(\phi'(u_n)+\frac{1}{n}\right)^2|\nabla u_n|^2
@@ -414,22 +827,39 @@ S'_{n,\rho}(t)
 \begin{align}
 \int_\Omega|\nabla\phi(u_n)|^2(x,s)\,\mathrm{d}x\leqslant\frac{C_2}{t}. \label{align:ch6-6.72}
 \end{align}
-类似地，因 $|\partial_\tau\phi(u_n)|^2\leqslant|\partial_\tau[\phi_n(u_n)]|^2$，由\eqref{align:ch6-6.70b}得
+同法，因 $|\partial_\tau\phi(u_n)|^2\leqslant|\partial_\tau[\phi_n(u_n)]|^2$，由\eqref{align:ch6-6.70b}得
 \begin{align}
 \int_t^T\int_\Omega(\partial_\tau[\phi(u_n)])^2\,\mathrm{d}x\,\mathrm{d}\tau
 \leqslant\frac{C_2(1+\|\phi'\|_\infty)}{2t}. \label{align:ch6-6.73}
 \end{align}
 \end{remark}
 
-\begin{lemma}\label{lemma:ch06-6.5.8}
-设 (A0)--(A1) 成立，$\{u_n\}$ 为问题 (Pn) 的解序列。则：
+% SUPPLEMENT: parent=remark:ch06-6.5.3; kind=proof; location=注记 6.5.3 的补证; basis=原注记的两处比较都以不等式一句带过，此处补出 (phi'+1/n)^2 >= (phi')^2 与 |partial phi(u_n)| <= |partial phi_n(u_n)| 的逐点验证（后者用到 phi' >= 0）
+\begin{proof}[补证：\eqref{align:ch6-6.72}与\eqref{align:ch6-6.73}]
+由链式法则，$\nabla[\phi_n(u_n)]=(\phi'(u_n)+1/n)\nabla u_n$ 而 $\nabla\phi(u_n)=\phi'(u_n)\nabla u_n$。因 $\phi'\geqslant0$（$\phi$ 非减且属于 $C^\infty(\mathbb{R})$）与 $1/n>0$，有 $\phi'(u_n)+1/n\geqslant\phi'(u_n)\geqslant0$，逐点平方得
+\begin{align*}
+|\nabla[\phi_n(u_n)]|^2=\left(\phi'(u_n)+\frac{1}{n}\right)^2|\nabla u_n|^2
+\geqslant(\phi'(u_n))^2|\nabla u_n|^2=|\nabla\phi(u_n)|^2.
+\end{align*}
+在 $\Omega$ 上积分并用\eqref{align:ch6-6.69}，即得\eqref{align:ch6-6.72}对一切 $s\in(t,T]$ 成立。
+
+同法，$\partial_\tau[\phi_n(u_n)]=(\phi'(u_n)+1/n)\partial_\tau u_n$、$\partial_\tau\phi(u_n)=\phi'(u_n)\partial_\tau u_n$，且 $\phi'(u_n)+1/n\geqslant\phi'(u_n)\geqslant0$，故
+\begin{align*}
+|\partial_\tau\phi(u_n)|^2=(\phi'(u_n))^2(\partial_\tau u_n)^2
+\leqslant\left(\phi'(u_n)+\frac{1}{n}\right)^2(\partial_\tau u_n)^2=|\partial_\tau[\phi_n(u_n)]|^2.
+\end{align*}
+在 $(t,T)\times\Omega$ 上积分并用\eqref{align:ch6-6.70b}即得\eqref{align:ch6-6.73}。
+\end{proof}
+
+\begin{lemma}[水平集上的梯度估计]\label{lemma:ch06-6.5.8}
+设 (A0)--(A1) 成立，$\{u_{0n}\}\subseteq C^\infty_c(\Omega)$ 满足\eqref{align:ch6-6.48}--\eqref{align:ch6-6.49e}，$u_n\in C^\infty(Q)$ 为 (Pn) 的经典解，$\phi_{\pm\infty}\triangleq\lim_{y\to\pm\infty}\phi(y)$。则：
 \begin{enumerate}[(i)]
-\item 对所有 $k>0$ 及 $n\in\mathbb{N}$，有
+\item 对所有 $k>0$ 与 $n\in\mathbb{N}$，有
 \begin{align}
 \iint_{\{\pm u_n>k\}}|\nabla\phi(u_n)|^2\,\mathrm{d}x\,\mathrm{d}t
 \leqslant\|u^\pm_0\|_{\mathscr{R}_f(\Omega)}[\pm\phi_{\pm\infty}\mp\phi(\pm k)], \label{align:ch6-6.74}
 \end{align}
-\item 存在 $M_0>0$，使对所有 $k>0$ 及 $n\in\mathbb{N}$，
+\item 存在 $M_0>0$，使对所有 $k>0$ 与 $n\in\mathbb{N}$，
 \begin{align}
 \iint_{\{\pm u_n>k\}}|\nabla\phi_n(u_n)|^2\,\mathrm{d}x\,\mathrm{d}t
 \leqslant M_0[\pm\phi_{\pm\infty}\mp\phi(\pm k)+n^{-1/2}]. \label{align:ch6-6.75}
@@ -438,15 +868,15 @@ S'_{n,\rho}(t)
 \end{lemma}
 
 \begin{proof}
-我们仅证\eqref{align:ch6-6.74}中上号情形，另一情形类似。对任意 $k>0$，置
+仅证\eqref{align:ch6-6.74}中上号情形，另一情形作同样论证。对任意 $k>0$，置
 \begin{align*}
-F(y)\triangleq \chi_{(k,+\infty)}(y)\int_k^y[\phi(z)-\phi(k)]\,\mathrm{d}z \quad(y\in\mathbb{R}).
+F(y)\triangleq\chi_{(k,+\infty)}(y)\int_k^y[\phi(z)-\phi(k)]\,\mathrm{d}z\quad(y\in\mathbb{R}).
 \end{align*}
 于是 $F'\in W^{1,\infty}_{\mathrm{loc}}(\mathbb{R})$，且
 \begin{align}
 0\leqslant F(y)\leqslant[\phi_{+\infty}-\phi(k)](y-k)\chi_{(k,+\infty)}(y). \label{align:ch6-6.76}
 \end{align}
-将 $\partial_t u_n=\Delta\phi_n(u_n)$ 乘以 $F'(u_n)$ 并在 $Q$ 上积分，由\eqref{align:ch6-6.76}与\eqref{align:ch6-6.49a}得
+将 $\partial_tu_n=\Delta\phi_n(u_n)$ 乘以 $F'(u_n)$ 并在 $Q$ 上积分，由\eqref{align:ch6-6.76}与\eqref{align:ch6-6.49a}得
 \begin{align*}
 \begin{aligned}
 &\iint_{\{u_n>k\}}|\nabla\phi(u_n)|^2\,\mathrm{d}x\,\mathrm{d}t
@@ -462,13 +892,60 @@ F(y)\triangleq \chi_{(k,+\infty)}(y)\int_k^y[\phi(z)-\phi(k)]\,\mathrm{d}z \quad
 \iint_{\{\pm u_n>k\}}|\nabla\phi_n(u_n)|^2\,\mathrm{d}x\,\mathrm{d}t
 &\leqslant2\iint_{\{\pm u_n>k\}}\left(|\nabla\phi(u_n)|^2+\frac{|\nabla u_n|^2}{n^2}\right)\mathrm{d}x\,\mathrm{d}t\\
 &\leqslant2\|u_0\|_{\mathscr{R}_f(\Omega)}[\pm\phi_{\pm\infty}\mp\phi(\pm k)]
-+2C_1n^{-1/2}
++2C_1n^{-1/2},
 \end{aligned}
 \end{align*}
-其中 $C_1>0$ 如\cref{lemma:ch06-6.5.5}(i)。置 $M_0\triangleq 2\max\{\|u_0\|_{\mathscr{R}_f(\Omega)},C_1\}$，得\eqref{align:ch6-6.75}，结论成立。
+其中 $C_1>0$ 如\cref{lemma:ch06-6.5.5}(i)。置 $M_0\triangleq2\max\{\|u_0\|_{\mathscr{R}_f(\Omega)},C_1\}$，得\eqref{align:ch6-6.75}，结论成立。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch06-6.5.8; kind=proof; location=引理 6.5.8 证明后的补证; basis=原证明以 F' in W^{1,inf}_{loc}、multiplying by F'(u_n) and integrating 略去 F' 的正当性、F'' = phi' chi_{(k,inf)} 的分布意义、边界项与 (6.76) 的代入，此处补出
+\begin{proof}[补证：\eqref{align:ch6-6.74}的测试函数与逐步推导]
+先说明 $F$ 的正则性。由定义，$F(y)=0$ 当 $y\leqslant k$，而 $F(y)=\int_k^y[\phi(z)-\phi(k)]\,\mathrm{d}z$ 当 $y>k$；因 $\phi$ 连续，$F$ 在 $y=k$ 处连续可微且 $F'(k)=0$，故
+\begin{align*}
+F'(y)=[\phi(y)-\phi(k)]\chi_{(k,+\infty)}(y),\qquad
+F''(y)=\phi'(y)\chi_{(k,+\infty)}(y)
+\end{align*}
+（在分布意义下，第二个等式右端在 $y=k$ 处无奇性，因为 $F'$ 在 $k$ 处连续且取值为 $0$）。于是 $F'\in W^{1,\infty}_{\mathrm{loc}}(\mathbb{R})$，且对每个 $n\in\mathbb{N}$，$F'(u_n)\in H^1(Q)$ 满足链式法则
+\begin{align*}
+\nabla[F'(u_n)]=F''(u_n)\nabla u_n=\phi'(u_n)\chi_{\{u_n>k\}}\nabla u_n .
+\end{align*}
 
+以 $F'(u_n)$ 乘 $\partial_tu_n=\Delta\phi_n(u_n)$ 并在 $Q$ 上积分。左端由链式法则与 Fubini 定理为
+\begin{align*}
+\iint_QF'(u_n)\partial_tu_n\,\mathrm{d}x\,\mathrm{d}t
+=\iint_Q\partial_t[F(u_n)]\,\mathrm{d}x\,\mathrm{d}t
+=\int_\Omega F(u_n(x,T))\,\mathrm{d}x-\int_\Omega F(u_{0n}(x))\,\mathrm{d}x .
+\end{align*}
+右端经空间分部积分（边界项因 $F'(0)=0$，即 $u_n=0$ 在 $\Gamma$ 上给出 $F'(u_n)=0$ 在 $\Gamma$ 上，而消失）：
+\begin{align*}
+\iint_QF'(u_n)\Delta\phi_n(u_n)\,\mathrm{d}x\,\mathrm{d}t
+&=-\iint_Q\phi'(u_n)\chi_{\{u_n>k\}}\nabla u_n\cdot\nabla\phi_n(u_n)\,\mathrm{d}x\,\mathrm{d}t\\
+&=-\iint_{\{u_n>k\}}\left\{|\nabla\phi(u_n)|^2+\frac{1}{n}\phi'(u_n)|\nabla u_n|^2\right\}\mathrm{d}x\,\mathrm{d}t,
+\end{align*}
+其中用到 $\nabla\phi_n(u_n)=(\phi'(u_n)+1/n)\nabla u_n$ 与 $\nabla\phi(u_n)=\phi'(u_n)\nabla u_n$。合并两式并移项即得陈述中的等式。
 
+再由\eqref{align:ch6-6.76}、$F\geqslant0$ 与 $F(u_n(\cdot,T))\geqslant0$，
+\begin{align*}
+\iint_{\{u_n>k\}}|\nabla\phi(u_n)|^2\,\mathrm{d}x\,\mathrm{d}t
+&\leqslant\int_\Omega F(u_{0n})\,\mathrm{d}x
+\leqslant[\phi_{+\infty}-\phi(k)]\int_{\{u_{0n}>k\}}(u_{0n}-k)\,\mathrm{d}x\\
+&\leqslant[\phi_{+\infty}-\phi(k)]\int_\Omega u^+_{0n}\,\mathrm{d}x
+\leqslant\|u^+_0\|_{\mathscr{R}_f(\Omega)}[\phi_{+\infty}-\phi(k)],
+\end{align*}
+其中最后一步用到 $\int_\Omega u^+_{0n}\,\mathrm{d}x\leqslant\|u^+_0\|_{\mathscr{R}_f(\Omega)}$（由\eqref{align:ch6-6.49a}中第一个不等式与 $[u_{0n}]^+\leqslant[u^+_0]_n$）。于是有\eqref{align:ch6-6.74}的上号情形。下号情形取
+\begin{align*}
+F(y)\triangleq\chi_{(-\infty,-k)}(y)\int_y^{-k}[\phi(-k)-\phi(z)]\,\mathrm{d}z\quad(y\in\mathbb{R}),
+\end{align*}
+重复同样的论证（此时 $F'(y)=[\phi(y)-\phi(-k)]\chi_{(-\infty,-k)}(y)$，$F''=\phi'\chi_{\{u_n<-k\}}$，耗散项的符号与上号情形相同）即得下号情形。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch06-6.5.8; kind=motivation; location=引理 6.5.8 后的注记; basis=引理 6.5.8 的两款 + 水平集估计为何是 phi 在 ±inf 处退化的定量形式、k->inf 时右端趋于 0 的意义、(A1) 的单调极限与 (A2) 无关，以及只控制大水平集这一边界
+\begin{remark}\phantomsection\label{remark:ch06-6.5.8动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch6-6.74}把梯度的耗散限制在"$u_n$ 很大"的水平集上，并且给出的界与 $n$ 无关。它的意义在于把 $\phi$ 在 $\pm\infty$ 处的退化定量化：当 $k\to\infty$ 时，因子 $\pm\phi_{\pm\infty}\mp\phi(\pm k)\to0$（由 (A1) 的单调收敛），故大水平集上的梯度能量一致地小。这正是后文证明 $\{\phi(u_n)\}$ 的强紧性（或 biting 型收敛）时所需的"集中集可以取得任意小"的量化形式；\eqref{align:ch6-6.75}则把同一结论推广到 $\nabla\phi_n(u_n)$，代价是多出 $n^{-1/2}$ 的余项（来自\eqref{align:ch6-6.62}）。
+\item 每项假设的作用。(a) (A1) 中 $\phi$ 在 $\pm\infty$ 处有极限 $\phi_{\pm\infty}$：使因子 $\pm\phi_{\pm\infty}\mp\phi(\pm k)$ 有定义并随 $k\to\infty$ 单调趋于 $0$；若 $\phi$ 在 $+\infty$ 附近不收敛（例如非单调的 $\phi$），该因子可能不趋于零，估计便失去意义。(b) $\phi'\geqslant0$（$\phi$ 非减且 $C^\infty$）：使\eqref{align:ch6-6.74}左端第二项 $(1/n)\iint\phi'|\nabla u_n|^2\geqslant0$，可以丢弃；也使 $F(y)\geqslant0$（因 $\phi(z)-\phi(k)\geqslant0$ 当 $z>k$），从而 $F(u_{0n})$ 的非负性可用于上界。(c) (A0) 与\eqref{align:ch6-6.49a}：通过 $\|u^+_0\|_{\mathscr{R}_f(\Omega)}$ 与 $\int u^+_{0n}\leqslant\|u^+_0\|_{\mathscr{R}_f(\Omega)}$ 进入右端。(d) $k>0$ 任意：$k\to0^+$ 时右端趋于 $\|u^\pm_0\|_{\mathscr{R}_f(\Omega)}[\pm\phi_{\pm\infty}\mp\phi(0)]$，即退化为整体估计，与\eqref{align:ch6-6.57}相容。
+\item 边界与限度。(a) \eqref{align:ch6-6.74}只控制 $\nabla\phi(u_n)$ 在大水平集上的部分，不控制 $\nabla u_n$ 本身；在 $\phi'=0$ 的区域（$\phi$ 为常数），$\nabla\phi(u_n)=0$ 而 $\nabla u_n$ 可以不受控。(b) \eqref{align:ch6-6.75}的余项 $M_0n^{-1/2}$ 不随 $k\to\infty$ 消失，故\eqref{align:ch6-6.75}不能直接用于对 $k$ 取极限后再对 $n$ 取极限；需要先固定 $k$ 再令 $n\to\infty$。(c) 两款估计都是单向的（$\leqslant$），不给出等号；其右端在 $k\to\infty$ 时趋于 $0$ 只是说明"大水平集上的能量小"，并不说明 $u_n$ 在大水平集上小。
+\end{enumerate}
+\end{remark}
 
 \end{document}

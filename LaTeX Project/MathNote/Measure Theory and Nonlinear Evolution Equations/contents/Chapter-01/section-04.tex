@@ -15,338 +15,543 @@
 
 \section{测度与外测度}\label{section:ch01-测度与外测度}
 
-\begin{definition}\label{definition:ch01-外测度}
-映射 $\mu^*:\mathcal{P}(X)\to[0,\infty]$ 称为一个外测度，若：
+\begin{definition}[外测度]\label{definition:ch01-外测度}
+设 $X$ 为一集合，$\mathcal{P}(X)$ 为其幂集，$\mu^*:\mathcal{P}(X)\to[0,\infty]$ 为定义在 $X$ 的全部子集上的集函数，取值于扩展非负实数半直线 $[0,\infty]$。称 $\mu^*$ 为 $X$ 上的一个\textbf{外测度}，若下列三条成立，它们依次称为规范化、单调性与可数次可加性：
 \begin{enumerate}[(i)]
 \item $\mu^*(\varnothing )=0$；
-\item 对任意 $E_1\subseteq E_2$，$\mu^*(E_1)\leqslant\mu^*(E_2)$；
-\item 对任意序列 $\{E_n\}\subseteq\mathcal{P}(X)$，
-\[
-\mu^*\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n=1}^\infty\mu^*(E_n).
-\]
+\item 对任意 $E_1,E_2\subseteq X$，由 $E_1\subseteq E_2$ 得 $\mu^*(E_1)\leqslant\mu^*(E_2)$；
+\item 对任意序列 $\{E_n\}_{n\in\mathbb{N}}\subseteq\mathcal{P}(X)$ 有
+\begin{align}
+\mu^*\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n=1}^\infty\mu^*(E_n).\label{align:ch01-外测度次可加}
+\end{align}
 \end{enumerate}
+此处 $\mu^*$ 对 $X$ 的每个子集都有定义，其值可等于 $\infty$，即不要求 $\mu^*(X)<\infty$；三条公理中不含任何可加性要求。
 \end{definition}
 
-如下文所示，外测度容易构造，且通过一个一般的限制程序可由外测度得到完备测度。
+% SUPPLEMENT: parent=definition:ch01-外测度; kind=motivation; 说明外测度的构造动机、三条公理在后续证明中的具体作用，并给出单调性与次可加性各自不可去掉的反例
+\begin{remark}\phantomsection\label{remark:ch01-外测度}
+\begin{enumerate}[(i)]
+\item 引入动机。测度要求定义域对可数并与补集封闭，而判断一个给定集合是否应属于该定义域并无先验标准。Carathéodory 的方案分两步：先对 $X$ 的每个子集指定一个“外部的大小”$\mu^*(E)$，其定义取遍 $\mathcal{C}$ 中集合的可数覆盖的代价之下确界（\cref{theorem:ch01-外测度生成}）；再由“分割可加性”筛出真正可测的集合（\cref{definition:ch01-外测度可测}）。外测度是第一步的产物：定义在全幂集上，只满足最弱的规范化、单调性与次可加性。
+\item 三条公理的作用。条件 (i) 是规范化，它排除了 $\mu^*\equiv\infty$ 这一退化映射（该映射满足 (ii)(iii) 而不满足 (i)），并为\cref{theorem:ch01-Caratheodory}(ii) 中 $\mu^*|_{\mathcal{L}}$ 成为测度提供 $\mu^*|_{\mathcal{L}}(\varnothing )=0$。条件 (ii) 使不同集合的大小可以比较，在\cref{theorem:ch01-Caratheodory} 的证明中用于两处：由 $S_n\subseteq S$ 得 $\mu^*(Z\cap S_n)\leqslant\mu^*(Z\cap S)$，由 $S^c\subseteq S_n^c$ 得 $\mu^*(Z\cap S^c)\leqslant\mu^*(Z\cap S_n^c)$。条件 (iii) 是三条公理中唯一联系不同集合取值的条件，在\cref{theorem:ch01-Caratheodory} 的证明中用于给出\eqref{align:ch01-Caratheodory证明3} 的反向不等式，并用于不等式\eqref{align:ch01-Caratheodory证明2} 的有限情形。
+\item 条件 (ii) 不能由 (i)(iii) 推出。令 $X=\{1,2\}$，置
+\begin{align*}
+\mu^*(\varnothing )\triangleq 0,\qquad \mu^*(\{1\})\triangleq 1,\qquad \mu^*(\{2\})\triangleq 0,\qquad \mu^*(X)\triangleq 0.
+\end{align*}
+则 $\mu^*(\varnothing )=0$；又对任意序列 $\{E_n\}\subseteq\mathcal{P}(X)$，若 $\bigcup_{n=1}^\infty E_n=\{1\}$，则某个 $E_n$ 含 $1$，即 $E_n=\{1\}$ 或 $E_n=X$，右端不小于 $1=\mu^*(\{1\})$，其余情形 $\mu^*\left(\bigcup_{n=1}^\infty E_n\right)=0$，故 (iii) 成立。但 $\{1\}\subseteq X$ 而 $\mu^*(\{1\})=1>\mu^*(X)=0$，故 (ii) 不成立。
+\item 条件 (iii) 不能加强为可加性，这正是外测度与测度的区别。令 $X=\{1,2\}$，置
+\begin{align*}
+\mu^*(\varnothing )\triangleq 0,\qquad \mu^*(\{1\})\triangleq\mu^*(\{2\})\triangleq 1,\qquad \mu^*(X)\triangleq 1.
+\end{align*}
+则 $\mu^*$ 是外测度，但 $\mu^*(X)=1<2=\mu^*(\{1\})+\mu^*(\{2\})$（逐条验证见\cref{example:ch01-有限外测度}）。此外，外测度的定义不涉及 $X$ 上的拓扑或 $\sigma$--代数结构，$X$ 只须是一个集合。
+\end{enumerate}
+\end{remark}
+
+下文将表明：外测度容易构造（\cref{theorem:ch01-外测度生成}），而完备测度可由外测度经一个一般的限制程序得到（\cref{theorem:ch01-Caratheodory}）。
 
 \subsection{Carathéodory 构造}\label{subsection:ch01-Caratheodory构造}
 
-\begin{definition}\label{definition:ch01-外测度可测}
-设 $\mu^*:\mathcal{P}(X)\to[0,\infty]$ 为一外测度。集合 $E\subseteq X$ 称为 $\mu^*$--可测的，若
+\begin{definition}[$\mu^*$--可测集]\label{definition:ch01-外测度可测}
+设 $X$ 为一集合，$\mu^*:\mathcal{P}(X)\to[0,\infty]$ 为 $X$ 上的一个外测度（按\cref{definition:ch01-外测度} 的意义，即满足规范化、单调性与可数次可加性）。集合 $E\subseteq X$ 称为 $\mu^*$--可测的（或关于 $\mu^*$ 可测），若对每个集合 $Z\subseteq X$ 都有
 \begin{align}
-\mu^*(Z)=\mu^*(Z\cap E)+\mu^*(Z\cap E^c)\qquad\text{对任意 }Z\subseteq X. \label{align:ch01-Caratheodory条件}
+\mu^*(Z)=\mu^*(Z\cap E)+\mu^*(Z\cap E^c),\qquad E^c\triangleq X\setminus E.\label{align:ch01-Caratheodory条件}
 \end{align}
+其中 $Z$ 称为测试集，取遍 $X$ 的全部子集；右端两项分别对应 $Z$ 落在 $E$ 内与落在 $E$ 外的部分。
 \end{definition}
 
-\begin{remark}\label{remark:ch01-外测度可测}
+\begin{remark}\phantomsection\label{remark:ch01-外测度可测}
 (i) 由 $\mu^*$ 的次可加性，集合 $E\subseteq X$ 是 $\mu^*$--可测的，当且仅当
 \begin{align}
-\mu^*(Z)\geqslant\mu^*(Z\cap E)+\mu^*(Z\cap E^c)\qquad\text{对任意 }Z\subseteq X. \label{align:ch01-Caratheodory等价}
+\mu^*(Z)\geqslant\mu^*(Z\cap E)+\mu^*(Z\cap E^c)\qquad\text{对每个 }Z\subseteq X.\label{align:ch01-Caratheodory等价}
 \end{align}
-(ii) 每个满足 $\mu^*(E)=0$ 的集合 $E$（特别地，空集）都是 $\mu^*$--可测的。事实上，由 $\mu^*$ 的单调性，对任意 $Z\subseteq X$，
-\[
-\mu^*(Z\cap E)+\mu^*(Z\cap E^c)\leqslant\mu^*(E)+\mu^*(Z)=\mu^*(Z).
-\]
+事实上，不等式 $\leqslant$ 方向无需任何假设：由 $Z=(Z\cap E)\cup(Z\cap E^c)$ 与\cref{definition:ch01-外测度}(iii)（取 $E_1=Z\cap E$、$E_2=Z\cap E^c$、$E_n=\varnothing $ 对 $n\geqslant 3$）得 $\mu^*(Z)\leqslant\mu^*(Z\cap E)+\mu^*(Z\cap E^c)$。因此\eqref{align:ch01-Caratheodory条件}等价于反向不等式\eqref{align:ch01-Caratheodory等价}。
+
+(ii) 每个满足 $\mu^*(E)=0$ 的集合 $E$（特别地，$\varnothing$）都是 $\mu^*$--可测的。事实上，由 $\mu^*$ 的单调性，对任意 $Z\subseteq X$，
+\begin{align*}
+\mu^*(Z\cap E)+\mu^*(Z\cap E^c)\leqslant\mu^*(E)+\mu^*(Z)=\mu^*(Z),
+\end{align*}
+其中用到 $Z\cap E\subseteq E$ 与 $Z\cap E^c\subseteq Z$；结合\eqref{align:ch01-Caratheodory等价} 即得 $E$ 的 $\mu^*$--可测性。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-外测度可测; kind=motivation; 说明分割条件的动机、测试集量词不可减弱的原因，以及可测集族可能退化为平凡 $\sigma$--代数的边界情形
+\begin{remark}\phantomsection\label{remark:ch01-可测性条件}
+\begin{enumerate}[(i)]
+\item 引入动机。外测度定义在全幂集上，但一般不可加（见\hyperref[remark:ch01-外测度]{关于外测度的注记}）。\eqref{align:ch01-Caratheodory条件} 要求 $E$ 把每个测试集 $Z$ 分割成两块，使两块的外部大小恰好相加，即 $\mu^*$ 在 $E$ 处不产生“损耗”。该条件只用到 $\mu^*$ 在单个集合上的取值，不预设 $\sigma$--代数，因而可用于筛选定义域；\cref{theorem:ch01-Caratheodory} 证明这样筛出的族自动对可数运算封闭。
+\item 量词的作用。“对每个 $Z\subseteq X$”不能减弱为对 $Z=E$ 或 $Z=X$ 验证。取 $X=\{1,2\}$、$E=\{1\}$，置 $\mu^*(\varnothing )=0$、$\mu^*(\{1\})=\mu^*(\{2\})=1$、$\mu^*(X)=1$。由\cref{example:ch01-有限外测度}，$\mu^*$ 是外测度；当 $Z=E$ 时
+\begin{align*}
+\mu^*(\{1\})=1=\mu^*(\{1\}\cap\{1\})+\mu^*(\{1\}\cap\{2\}),
+\end{align*}
+而当 $Z=X$ 时右端为 $1+1=2\neq 1=\mu^*(X)$，故 $\{1\}$ 不是 $\mu^*$--可测的。可见测试集必须取遍全部子集。
+\item 边界。把等式拆为两个不等式后，$\leqslant$ 方向由次可加性自动成立，实质内容是\eqref{align:ch01-Caratheodory等价}，故验证可测性只须验证一个方向的不等式。零测集自动可测（见 (ii)），因此可测集族必含全部零测集；但该族一般不是全幂集：在\cref{example:ch01-有限外测度} 中可测集族为 $\{\varnothing ,X\}$，而 $\{1\}$ 与 $\{2\}$ 均不可测。
+\end{enumerate}
 \end{remark}
 
 给定一个外测度 $\mu^*$，存在一个 $\sigma$--代数 $\mathcal{L}\subseteq\mathcal{P}(X)$ 使得限制 $\mu^*|_{\mathcal{L}}$ 是一个测度。这就是以下定理的内容。
 
-\begin{theorem}[Carathéodory]\label{theorem:ch01-Caratheodory}\label{remark:ch01-Caratheodory}
-设 $\mu^*$ 为一外测度。则：
+\begin{theorem}[Carathéodory]\label{theorem:ch01-Caratheodory}
+设 $X$ 为一集合，$\mu^*:\mathcal{P}(X)\to[0,\infty]$ 为 $X$ 上的一个外测度。则：
 \begin{enumerate}[(i)]
 \item 族
 \begin{align}
-\mathcal{L}\triangleq \{E\subseteq X\mid E\text{ 为 }\mu^*\text{--可测}\} \label{align:ch01-L族}
+\mathcal{L}\triangleq \{E\subseteq X\mid E\text{ 为 }\mu^*\text{--可测}\}\label{align:ch01-L族}
 \end{align}
-是一个 $\sigma$--代数；
-\item 限制 $\mu^*|_{\mathcal{L}}$ 是 $\mathcal{L}$ 上的一个完备测度。
+是 $X$ 上的一个 $\sigma$--代数；
+\item 限制 $\mu^*|_{\mathcal{L}}:\mathcal{L}\to[0,\infty]$，$\mu^*|_{\mathcal{L}}(E)\triangleq\mu^*(E)$（$E\in\mathcal{L}$），是 $\mathcal{L}$ 上的一个完备测度。
 \end{enumerate}
+此处 $\mathcal{L}$ 的元素按\cref{definition:ch01-外测度可测} 判定，即对每个 $Z\subseteq X$ 满足\eqref{align:ch01-Caratheodory条件}；“完备”指 $N\in\mathcal{L}$、$\mu^*(N)=0$、$E\subseteq N$ 蕴含 $E\in\mathcal{L}$。
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch01-Caratheodory; kind=proof; 原证明以“显然”略去 $E^c\in\mathcal{L}$ 的验证，并以“同理”略去把任意可数并化归为不交并的步骤，此处补出这两处论证并标明全部引用位置
 \begin{proof}
-(i) 我们首先证明 $\mathcal{L}$ 是一个代数。已经观察到空集是 $\mu^*$--可测的。此外，由\eqref{align:ch01-Caratheodory条件} 和\eqref{align:ch01-L族} 显然，对任意 $E\in\mathcal{L}$ 有 $E^c\in\mathcal{L}$。设 $E$ 和 $F$ 都是 $\mu^*$--可测的；则对任意 $Z\subseteq X$，有
-\[
-\mu^*(Z)=\mu^*(Z\cap E)+\mu^*(Z\cap E^c),\quad
-\mu^*(Z\cap E^c)=\mu^*(Z\cap E^c\cap F)+\mu^*(Z\cap E^c\cap F^c).
-\]
-因此
-\begin{align}
-\mu^*(Z)=\mu^*(Z\cap E)+\mu^*(Z\cap E^c\cap F)+\mu^*(Z\cap E^c\cap F^c). \label{align:ch01-Caratheodory证明1}
-\end{align}
-注意到
-\[
-(Z\cap E)\cup(Z\cap E^c\cap F)=Z\cap[E\cup(E^c\cap F)]=Z\cap[E\cup(F\setminus E)]=Z\cap(E\cup F),
-\]
-故由次可加性
-\begin{align}
-\mu^*(Z\cap(E\cup F))\leqslant\mu^*(Z\cap E)+\mu^*(Z\cap E^c\cap F). \label{align:ch01-Caratheodory证明2}
-\end{align}
-此外，由于 $Z\cap E^c\cap F^c=Z\cap(E\cup F)^c$，由\eqref{align:ch01-Caratheodory证明1}--\eqref{align:ch01-Caratheodory证明2}，对任意 $Z\subseteq X$，
-\[
-\mu^*(Z)\geqslant\mu^*(Z\cap(E\cup F))+\mu^*(Z\cap(E\cup F)^c).
-\]
-由此 $E\cup F$ 是 $\mu^*$--可测的，故 $\mathcal{L}$ 是一个代数。
+(i) 分四步。
 
-现证：若 $\{E_k\}$ 为一列 $\mu^*$--可测的不交集合且 $S\triangleq \bigcup_{k=1}^\infty E_k$，则
+第一步：$\mathcal{L}$ 是代数。由\cref{definition:ch01-外测度}(i) 有 $\mu^*(\varnothing )=0$，故由\hyperref[remark:ch01-外测度可测]{关于 $\mu^*$--可测性的注记}(ii) 得 $\varnothing\in\mathcal{L}$。设 $E\in\mathcal{L}$。对任意 $Z\subseteq X$，\eqref{align:ch01-Caratheodory条件} 给出
+\begin{align*}
+\mu^*(Z)=\mu^*(Z\cap E)+\mu^*(Z\cap E^c)=\mu^*(Z\cap E^c)+\mu^*(Z\cap(E^c)^c),
+\end{align*}
+右端正是把 $E$ 换成 $E^c$ 后的和式，故 $E^c\in\mathcal{L}$。
+
+设 $E,F\in\mathcal{L}$。对任意 $Z\subseteq X$，把\eqref{align:ch01-Caratheodory条件} 用于 $E$，再把同一等式用于 $F$ 与测试集 $Z\cap E^c$，得
 \begin{align}
-\mu^*(Z\cap S)=\sum_{k=1}^\infty\mu^*(Z\cap E_k)\qquad\text{对任意 }Z\subseteq X. \label{align:ch01-Caratheodory证明3}
+\mu^*(Z)=\mu^*(Z\cap E)+\mu^*(Z\cap E^c\cap F)+\mu^*(Z\cap E^c\cap F^c).\label{align:ch01-Caratheodory证明1}
 \end{align}
-令 $S_n\triangleq \bigcup_{k=1}^n E_k$（$n\in\mathbb{N}$）。我们首先证对任意 $n\in\mathbb{N}$，
+由
+\begin{align*}
+(Z\cap E)\cup(Z\cap E^c\cap F)=Z\cap[E\cup(E^c\cap F)]=Z\cap[E\cup(F\setminus E)]=Z\cap(E\cup F)
+\end{align*}
+与\cref{definition:ch01-外测度}(iii)（取 $E_1=Z\cap E$、$E_2=Z\cap E^c\cap F$、$E_n=\varnothing $ 对 $n\geqslant 3$）得
 \begin{align}
-\mu^*(Z\cap S_n)=\sum_{k=1}^n\mu^*(Z\cap E_k)\qquad\text{对任意 }Z\subseteq X. \label{align:ch01-Caratheodory证明4}
+\mu^*(Z\cap(E\cup F))\leqslant\mu^*(Z\cap E)+\mu^*(Z\cap E^c\cap F).\label{align:ch01-Caratheodory证明2}
 \end{align}
-由于 $\mathcal{L}$ 是代数，集合 $S_n$ 对任意 $n\in\mathbb{N}$ 是 $\mu^*$--可测的，且
-\[
-\mu^*(Z\cap S_{n+1})=\mu^*(Z\cap S_{n+1}\cap S_n)+\mu^*(Z\cap S_{n+1}\cap S_n^c)=\mu^*(Z\cap S_n)+\mu^*(Z\cap E_{n+1}).
-\]
+此外 $Z\cap E^c\cap F^c=Z\cap(E\cup F)^c$，故由\eqref{align:ch01-Caratheodory证明1}--\eqref{align:ch01-Caratheodory证明2} 得，对任意 $Z\subseteq X$，
+\begin{align*}
+\mu^*(Z)\geqslant\mu^*(Z\cap(E\cup F))+\mu^*(Z\cap(E\cup F)^c),
+\end{align*}
+于是由\hyperref[remark:ch01-外测度可测]{关于 $\mu^*$--可测性的注记}(i) 得 $E\cup F\in\mathcal{L}$。结合 $\varnothing\in\mathcal{L}$ 与补集封闭性，$\mathcal{L}$ 是代数；特别地，$\mathcal{L}$ 对有限交与差集封闭。
+
+第二步：不交序列的加性。设 $\{E_k\}\subseteq\mathcal{L}$ 两两不交，$S\triangleq\bigcup_{k=1}^\infty E_k$。断言
+\begin{align}
+\mu^*(Z\cap S)=\sum_{k=1}^\infty\mu^*(Z\cap E_k)\qquad\text{对每个 }Z\subseteq X.\label{align:ch01-Caratheodory证明3}
+\end{align}
+令 $S_n\triangleq\bigcup_{k=1}^n E_k$。先证对每个 $n\in\mathbb{N}$，
+\begin{align}
+\mu^*(Z\cap S_n)=\sum_{k=1}^n\mu^*(Z\cap E_k)\qquad\text{对每个 }Z\subseteq X.\label{align:ch01-Caratheodory证明4}
+\end{align}
+$n=1$ 时 $S_1=E_1$，\eqref{align:ch01-Caratheodory证明4} 成立。设它对某个 $n$ 成立。由第一步，$S_n\in\mathcal{L}$；在\eqref{align:ch01-Caratheodory条件} 中取 $E=S_n$、测试集为 $Z\cap S_{n+1}$，并注意 $S_{n+1}\cap S_n=S_n$ 与
+\begin{align*}
+S_{n+1}\cap S_n^c=(S_n\cup E_{n+1})\cap S_n^c=E_{n+1}\cap S_n^c=E_{n+1},
+\end{align*}
+其中末一步用到 $E_{n+1}\cap S_n=\varnothing$，得
+\begin{align*}
+\mu^*(Z\cap S_{n+1})=\mu^*(Z\cap S_n)+\mu^*(Z\cap E_{n+1}).
+\end{align*}
 若\eqref{align:ch01-Caratheodory证明4} 对某个 $n$ 成立，则由上述等式有
-\[
+\begin{align*}
 \mu^*(Z\cap S_{n+1})=\sum_{k=1}^n\mu^*(Z\cap E_k)+\mu^*(Z\cap E_{n+1}),
-\]
-故\eqref{align:ch01-Caratheodory证明4} 对 $n+1$ 成立。显然\eqref{align:ch01-Caratheodory证明4} 对 $n=1$ 成立，故由归纳法结论成立。
+\end{align*}
+故\eqref{align:ch01-Caratheodory证明4} 对 $n+1$ 成立。由数学归纳法，\eqref{align:ch01-Caratheodory证明4} 对一切 $n\in\mathbb{N}$ 成立。
 
-现证等式\eqref{align:ch01-Caratheodory证明3}。由于 $S_n\subseteq S$，由 $\mu^*$ 的单调性和\eqref{align:ch01-Caratheodory证明4} 有
-\[
-\mu^*(Z\cap S)\geqslant\mu^*(Z\cap S_n)=\sum_{k=1}^n\mu^*(Z\cap E_k)\qquad(n\in\mathbb{N}),
-\]
-令 $n\to\infty$，得 $\mu^*(Z\cap S)\geqslant\sum_{k=1}^\infty\mu^*(Z\cap E_k)$。反向不等式由 $\mu^*$ 的 $\sigma$--次可加性得到，因为 $Z\cap S=\bigcup_{k=1}^\infty(Z\cap E_k)$。于是\eqref{align:ch01-Caratheodory证明3} 成立。
+现证等式\eqref{align:ch01-Caratheodory证明3}。由 $S_n\subseteq S$、\cref{definition:ch01-外测度}(ii) 与\eqref{align:ch01-Caratheodory证明4} 得，对每个 $n\in\mathbb{N}$，
+\begin{align*}
+\mu^*(Z\cap S)\geqslant\mu^*(Z\cap S_n)=\sum_{k=1}^n\mu^*(Z\cap E_k),
+\end{align*}
+令 $n\to\infty$（部分和关于 $n$ 非减，因各项取值于 $[0,\infty]$）得 $\mu^*(Z\cap S)\geqslant\sum_{k=1}^\infty\mu^*(Z\cap E_k)$。反向不等式由\cref{definition:ch01-外测度}(iii) 与 $Z\cap S=\bigcup_{k=1}^\infty(Z\cap E_k)$ 得到。于是\eqref{align:ch01-Caratheodory证明3} 成立。
 
-现可证 $\mathcal{L}$ 是一个 $\sigma$--代数。由于对任意 $n\in\mathbb{N}$，集合 $S_n$ 是 $\mu^*$--可测的且 $S_n^c\supseteq S^c$，由\eqref{align:ch01-Caratheodory证明4} 和 $\mu^*$ 的单调性，对任意 $Z\subseteq X$ 有
-\[
-\mu^*(Z)=\mu^*(Z\cap S_n)+\mu^*(Z\cap S_n^c)\geqslant\sum_{k=1}^n\mu^*(Z\cap E_k)+\mu^*(Z\cap S^c)\qquad(n\in\mathbb{N}).
-\]
-在上述不等式中令 $n\to\infty$ 并利用\eqref{align:ch01-Caratheodory证明3}，得
-\[
-\mu^*(Z)\geqslant\sum_{k=1}^\infty\mu^*(Z\cap E_k)+\mu^*(Z\cap S^c)=\mu^*(Z\cap S)+\mu^*(Z\cap S^c).
-\]
-故集合 $S$ 是 $\mu^*$--可测的。任意可数并的 $\mu^*$--可测集合同理，结论成立。
+第三步：$\mathcal{L}$ 对可数并封闭。设 $\{E_k\}\subseteq\mathcal{L}$，令
+\begin{align*}
+F_1\triangleq E_1,\qquad F_k\triangleq E_k\setminus\bigcup_{j=1}^{k-1}E_j\quad(k\geqslant 2).
+\end{align*}
+由第一步，$\mathcal{L}$ 是代数，故 $\{F_k\}\subseteq\mathcal{L}$；诸 $F_k$ 两两不交，且 $\bigcup_{k=1}^\infty F_k=\bigcup_{k=1}^\infty E_k\triangleq S$。对每个 $n\in\mathbb{N}$，由第一步得 $S_n\triangleq\bigcup_{k=1}^n F_k\in\mathcal{L}$，且 $S_n^c\supseteq S^c$，故由\eqref{align:ch01-Caratheodory条件}（取 $E=S_n$）、\eqref{align:ch01-Caratheodory证明4} 与\cref{definition:ch01-外测度}(ii) 得，对任意 $Z\subseteq X$，
+\begin{align*}
+\mu^*(Z)=\mu^*(Z\cap S_n)+\mu^*(Z\cap S_n^c)\geqslant\sum_{k=1}^n\mu^*(Z\cap F_k)+\mu^*(Z\cap S^c).
+\end{align*}
+在上述不等式中令 $n\to\infty$，并利用\eqref{align:ch01-Caratheodory证明3}（用于不交序列 $\{F_k\}$ 及其并 $S$），得
+\begin{align*}
+\mu^*(Z)\geqslant\sum_{k=1}^\infty\mu^*(Z\cap F_k)+\mu^*(Z\cap S^c)=\mu^*(Z\cap S)+\mu^*(Z\cap S^c).
+\end{align*}
+故由\hyperref[remark:ch01-外测度可测]{关于 $\mu^*$--可测性的注记}(i) 得 $S\in\mathcal{L}$。结合 $\varnothing\in\mathcal{L}$ 与补集封闭性，$\mathcal{L}$ 是 $\sigma$--代数。
 
-(ii) 显然 $\mu^*|_{\mathcal{L}}(\varnothing )=\mu^*(\varnothing )=0$。设 $\{E_k\}$ 为一列 $\mu^*$--可测的不交集合。在等式\eqref{align:ch01-Caratheodory证明3} 中取 $Z=S\triangleq \bigcup_{k=1}^\infty E_k$，得
-\[
-\mu^*\left(\bigcup_{k=1}^\infty E_k\right)=\sum_{k=1}^\infty\mu^*(E_k).
-\]
-由于 $E_k,S\in\mathcal{L}$，故 $\mu^*|_{\mathcal{L}}$ 是 $\sigma$--可加的，因而是一个测度。
-
-为证其完备性，设 $N\in\mathcal{L}$ 满足 $\mu^*|_{\mathcal{L}}(N)=\mu^*(N)=0$，$E\subseteq N$。由 $\mu^*$ 的单调性有 $\mu^*(E)\leqslant\mu^*(N)=0$；故由\cref{remark:ch01-外测度可测}(ii) 得 $E\in\mathcal{L}$。证毕。
+(ii) 由 (i)，$\mathcal{L}$ 是 $\sigma$--代数，且 $\mu^*|_{\mathcal{L}}(\varnothing )=\mu^*(\varnothing )=0$。设 $\{E_k\}\subseteq\mathcal{L}$ 两两不交，$S\triangleq\bigcup_{k=1}^\infty E_k\in\mathcal{L}$（由 (i)）。在\eqref{align:ch01-Caratheodory证明3} 中取 $Z=S$，得
+\begin{align*}
+\mu^*\left(\bigcup_{k=1}^\infty E_k\right)=\sum_{k=1}^\infty\mu^*(E_k),
+\end{align*}
+故 $\mu^*|_{\mathcal{L}}$ 在 $\mathcal{L}$ 上 $\sigma$--可加，从而是 $\mathcal{L}$ 上的测度。为证完备性，设 $N\in\mathcal{L}$ 满足 $\mu^*|_{\mathcal{L}}(N)=\mu^*(N)=0$，$E\subseteq N$。由\cref{definition:ch01-外测度}(ii) 得 $\mu^*(E)\leqslant\mu^*(N)=0$，故由\hyperref[remark:ch01-外测度可测]{关于 $\mu^*$--可测性的注记}(ii) 得 $E\in\mathcal{L}$。证毕。
 \end{proof}
 
-构造外测度的一般程序如下。设 $\mathcal{C}\subseteq\mathcal{P}(X)$ 且 $\varnothing \in\mathcal{C}$，$\zeta:\mathcal{C}\to[0,\infty]$ 满足 $\zeta(\varnothing )=0$。定义映射 $\mu^*:\mathcal{P}(X)\to[0,\infty]$ 如下：
+% SUPPLEMENT: parent=theorem:ch01-Caratheodory; kind=motivation; 说明定理的构造意义、三条公理在证明中的位置、完备性与 Borel $\sigma$--代数不完备的对比，以及 $\mathcal{L}$ 可能退化的边界
+\begin{remark}\phantomsection\label{remark:ch01-可测集族}
+\begin{enumerate}[(i)]
+\item 结论的含义。定理把“构造测度”分解为两步：先给出一个定义在全幂集上的外测度，再取它在 $\mathcal{L}$ 上的限制。第二步只用到外测度的三条公理，与 $\mu^*$ 如何构造无关；因此任何满足这三条公理的集函数都自动给出一个完备测度空间。Lebesgue 测度、Hausdorff 测度与容量都按此模式构造。
+\item 三条公理在证明中的位置。条件 (i) 用于 $\varnothing\in\mathcal{L}$ 与 $\mu^*|_{\mathcal{L}}(\varnothing )=0$；条件 (ii) 用于\eqref{align:ch01-Caratheodory证明3} 的 $\geqslant$ 方向（$S_n\subseteq S$）与第三步（$S^c\subseteq S_n^c$）；条件 (iii) 用于\eqref{align:ch01-Caratheodory证明2} 与\eqref{align:ch01-Caratheodory证明3} 的 $\leqslant$ 方向。第一步与第二步合起来只用到 (iii) 的有限情形，故若把 (iii) 减弱为有限次可加，第一步仍成立，$\mathcal{L}$ 仍是代数；第三步必须控制无穷和，可数并的封闭性恰好依赖 (iii) 的 $\sigma$--形式。
+\item 完备性的来源。完备性的证明只用到单调性：零测集的子集仍为零测集，故由\hyperref[remark:ch01-外测度可测]{关于 $\mu^*$--可测性的注记}(ii) 自动属于 $\mathcal{L}$。这正是 $\mathcal{L}$ 大于 Borel $\sigma$--代数之处：在 $\mathbb{R}^N$ 中，Cantor 集 $C$ 是 Borel 零测集，$C$ 的子集共 $2^{2^{\aleph_0}}$ 个，而 $\mathbb{R}^N$ 的 Borel 集只有 $2^{\aleph_0}$ 个，故存在 $C$ 的非 Borel 子集，它属于 Lebesgue $\sigma$--代数而不属于 Borel $\sigma$--代数；而 Borel $\sigma$--代数上的 Lebesgue 测度因不含该子集而不完备。
+\item 边界。$\mathcal{L}$ 可以退化：在\cref{example:ch01-有限外测度} 中 $\mathcal{L}=\{\varnothing ,X\}$，此时 $\mu^*|_{\mathcal{L}}$ 只区分空集与全集。定理不给出 $\mathcal{L}$ 的显式描述，故具体集合的可测性仍需借助其它工具（下一节的覆盖论证）。此外定理对 $\mu^*(X)=\infty$ 的情形同样适用，$\mu^*|_{\mathcal{L}}$ 可以既非有限也非 $\sigma$--有限。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-外测度; kind=example; 补出使外测度公理逐条可检验的最小非可加实例
+% SUPPLEMENT: parent=theorem:ch01-Caratheodory; kind=example; 补出可测集族退化为平凡 $\sigma$--代数的实例
+\begin{example}\label{example:ch01-有限外测度}
+设 $X=\{1,2\}$，定义 $\mu^*:\mathcal{P}(X)\to[0,\infty)$ 为
+\begin{align*}
+\mu^*(\varnothing )\triangleq 0,\qquad \mu^*(\{1\})\triangleq 1,\qquad \mu^*(\{2\})\triangleq 1,\qquad \mu^*(X)\triangleq 1.
+\end{align*}
+则 $\mu^*$ 是 $X$ 上的外测度但不可加：$\mu^*(X)=1<2=\mu^*(\{1\})+\mu^*(\{2\})$。其 $\mu^*$--可测集族为 $\mathcal{L}=\{\varnothing ,X\}$，且 $\mu^*|_{\mathcal{L}}$ 是完备测度，取值为 $\mu^*|_{\mathcal{L}}(\varnothing )=0$、$\mu^*|_{\mathcal{L}}(X)=1$。
+\end{example}
+
+% SUPPLEMENT: parent=example:ch01-有限外测度; kind=proof; 逐条验证三条外测度公理、两个单点集的不可测性、$\mathcal{L}$ 的完全性与 $\mu^*|_{\mathcal{L}}$ 的完备性
+\begin{proof}
+规范化 $\mu^*(\varnothing )=0$ 由定义给出。单调性只需检查 $\varnothing\subseteq\{1\}\subseteq X$ 与 $\varnothing\subseteq\{2\}\subseteq X$：相应的值为 $0\leqslant 1\leqslant 1$，故\cref{definition:ch01-外测度}(ii) 成立。
+
+次可加性。设 $\{E_n\}\subseteq\mathcal{P}(X)$，$U\triangleq\bigcup_{n=1}^\infty E_n$。若 $U=\varnothing$，则所有 $E_n=\varnothing$，两端均为 $0$。若 $U=\{1\}$，则某个 $E_n$ 含 $1$，即 $E_n=\{1\}$ 或 $E_n=X$，故 $\sum_{n=1}^\infty\mu^*(E_n)\geqslant 1=\mu^*(U)$；$U=\{2\}$ 的情形同法。若 $U=X$，则某个 $E_n\neq\varnothing$，故 $\sum_{n=1}^\infty\mu^*(E_n)\geqslant 1=\mu^*(U)$。于是\cref{definition:ch01-外测度}(iii) 成立。不可加性由 $\mu^*(X)=1<1+1$ 直接得到。
+
+可测集。对任意 $Z\subseteq X$，由 $Z\cap\varnothing=\varnothing$ 与 $Z\cap X=Z$ 得
+\begin{align*}
+\mu^*(Z\cap\varnothing )+\mu^*(Z\cap X)=0+\mu^*(Z)=\mu^*(Z),
+\end{align*}
+故 $\varnothing\in\mathcal{L}$；又 $Z\cap X=Z$、$Z\cap\varnothing=\varnothing$，故 $X\in\mathcal{L}$。反之取 $E=\{1\}$ 与测试集 $Z=X$，得
+\begin{align*}
+\mu^*(X\cap\{1\})+\mu^*(X\cap\{2\})=1+1=2\neq 1=\mu^*(X),
+\end{align*}
+故 $\{1\}\notin\mathcal{L}$；把 $\{1\}$ 换成 $\{2\}$ 得同一结论。于是 $\mathcal{L}=\{\varnothing ,X\}$。
+
+测度与完备性。$\mathcal{L}$ 上的不交序列只能是各项为 $\varnothing$ 的序列，或某项为 $X$ 而其余为 $\varnothing$ 的序列，两种情形下 $\mu^*|_{\mathcal{L}}$ 的 $\sigma$--可加性均成立，故 $\mu^*|_{\mathcal{L}}$ 是测度。$\mathcal{L}$ 中的零测集只有 $\varnothing$，其唯一子集 $\varnothing$ 属于 $\mathcal{L}$，故该测度完备。
+\end{proof}
+
+构造外测度的一般程序如下。设 $\mathcal{C}\subseteq\mathcal{P}(X)$ 且 $\varnothing\in\mathcal{C}$，$\zeta:\mathcal{C}\to[0,\infty]$ 满足 $\zeta(\varnothing )=0$。定义映射 $\mu^*:\mathcal{P}(X)\to[0,\infty]$ 为
 \begin{align}
-\mu^*(E)\triangleq \inf\left\{\sum_{n=1}^\infty\zeta(E_n)\ \middle|\ E\subseteq\bigcup_{n=1}^\infty E_n,\ \{E_n\}\subseteq\mathcal{C}\right\} \label{align:ch01-外测度生成a}
+\mu^*(E)\triangleq\inf\left\{\sum_{n=1}^\infty\zeta(E_n)\ \middle|\ E\subseteq\bigcup_{n=1}^\infty E_n,\ \{E_n\}\subseteq\mathcal{C}\right\}\label{align:ch01-外测度生成a}
 \end{align}
-若 $E$ 可由 $\mathcal{C}$ 中集合的可数并覆盖，或
+若 $E$ 可由 $\mathcal{C}$ 中集合的可数并覆盖；而对不能如此覆盖的 $E$，置
 \begin{align}
-\mu^*(E)\triangleq \infty\qquad\text{否则}. \label{align:ch01-外测度生成b}
+\mu^*(E)\triangleq\infty.\label{align:ch01-外测度生成b}
 \end{align}
 则以下结论成立。
 
+% SUPPLEMENT: parent=theorem:ch01-外测度; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
 \begin{theorem}\label{theorem:ch01-外测度生成}
 \label{theorem:ch01-外测度}
-设 $\mathcal{C}\subseteq\mathcal{P}(X)$ 且 $\varnothing \in\mathcal{C}$，$\zeta:\mathcal{C}\to[0,\infty]$ 满足 $\zeta(\varnothing )=0$。则由\eqref{align:ch01-外测度生成a}--\eqref{align:ch01-外测度生成b} 定义的映射 $\mu^*$ 是 $X$ 上的一个外测度。
+设 $X$ 为一集合，$\mathcal{C}\subseteq\mathcal{P}(X)$ 且 $\varnothing\in\mathcal{C}$，$\zeta:\mathcal{C}\to[0,\infty]$ 满足 $\zeta(\varnothing )=0$。设 $\mu^*:\mathcal{P}(X)\to[0,\infty]$ 由\eqref{align:ch01-外测度生成a}--\eqref{align:ch01-外测度生成b} 定义，即对可被 $\mathcal{C}$ 中集合的可数并覆盖的 $E$，$\mu^*(E)$ 取覆盖代价 $\sum_{n=1}^\infty\zeta(E_n)$ 的下确界，对其余的 $E$ 取 $\infty$。则 $\mu^*$ 是 $X$ 上的一个外测度。
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch01-外测度生成; kind=proof; 补出 $\varnothing\in\mathcal{C}$ 在 $\mu^*(\varnothing )=0$ 中的作用、下确界可由覆盖逼近的细节与二重和的重排
 \begin{proof}
-由\eqref{align:ch01-外测度生成a} 有 $\mu^*(\varnothing )\leqslant\zeta(\varnothing )=0$。若 $E_1\subseteq E_2$，则当 $E_2$ 不能由 $\mathcal{C}$ 中集合的可数并覆盖时，由\eqref{align:ch01-外测度生成b} 得 $\mu^*(E_1)\leqslant\mu^*(E_2)$；否则，由于 $E_2$ 的每个可数覆盖也是 $E_1$ 的可数覆盖，由\eqref{align:ch01-外测度生成a} 得同样结论。
+由 $\varnothing\in\mathcal{C}$ 与 $\zeta(\varnothing )=0$，常序列 $E_n\triangleq\varnothing$（$n\in\mathbb{N}$）是 $\varnothing$ 的 $\mathcal{C}$--覆盖，其代价为 $\sum_{n=1}^\infty\zeta(\varnothing )=0$，故由\eqref{align:ch01-外测度生成a} 得 $\mu^*(\varnothing )\leqslant 0$，即 $\mu^*(\varnothing )=0$。
 
-现证对任意序列 $\{E_n\}\subseteq\mathcal{P}(X)$，有
-\[
-\mu^*\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n=1}^\infty\mu^*(E_n).
-\]
-若右端为无穷则显然。否则，对任意 $n\in\mathbb{N}$ 有 $\mu^*(E_n)<\infty$，故对任意 $\epsilon>0$ 和 $n\in\mathbb{N}$，存在序列 $\{E_{n,k}\}\subseteq\mathcal{C}$ 使得
-\[
-E_n\subseteq\bigcup_{k=1}^\infty E_{n,k},\qquad
-\mu^*(E_n)+\frac{\epsilon}{2^n}>\sum_{k=1}^\infty\zeta(E_{n,k}).
-\]
-由于 $\bigcup_{n=1}^\infty E_n\subseteq\bigcup_{n,k=1}^\infty E_{n,k}$ 且 $\{E_{n,k}\}\subseteq\mathcal{C}$（$n,k\in\mathbb{N}$），得
-\[
-\mu^*\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n,k=1}^\infty\zeta(E_{n,k})
-<\sum_{n=1}^\infty\left[\mu^*(E_n)+\frac{\epsilon}{2^n}\right]
-=\sum_{n=1}^\infty\mu^*(E_n)+\epsilon.
-\]
-由 $\epsilon$ 的任意性，结论成立。
+设 $E_1\subseteq E_2$。若 $E_2$ 不能由 $\mathcal{C}$ 中集合的可数并覆盖，则由\eqref{align:ch01-外测度生成b} 得 $\mu^*(E_2)=\infty$，故 $\mu^*(E_1)\leqslant\mu^*(E_2)$。否则 $E_2$ 的每个 $\mathcal{C}$--覆盖也是 $E_1$ 的 $\mathcal{C}$--覆盖，故\eqref{align:ch01-外测度生成a} 中 $E_1$ 的下确界取在更大的覆盖族上，从而 $\mu^*(E_1)\leqslant\mu^*(E_2)$。
+
+现证次可加性。设 $\{E_n\}\subseteq\mathcal{P}(X)$。若 $\sum_{n=1}^\infty\mu^*(E_n)=\infty$，则结论由 $\mu^*\geqslant 0$ 成立。否则 $\mu^*(E_n)<\infty$ 对每个 $n\in\mathbb{N}$ 成立，故每个 $E_n$ 可被 $\mathcal{C}$ 中集合的可数并覆盖，且对任意 $\varepsilon>0$ 与 $n\in\mathbb{N}$，由\eqref{align:ch01-外测度生成a} 中下确界的定义存在序列 $\{E_{n,k}\}_{k\in\mathbb{N}}\subseteq\mathcal{C}$ 使得
+\begin{align*}
+E_n\subseteq\bigcup_{k=1}^\infty E_{n,k},\qquad \mu^*(E_n)+\frac{\varepsilon}{2^n}>\sum_{k=1}^\infty\zeta(E_{n,k}).
+\end{align*}
+把 $\{E_{n,k}\}_{n,k\in\mathbb{N}}$ 排成一列，它是 $\bigcup_{n=1}^\infty E_n$ 的一个 $\mathcal{C}$--覆盖。于是由\eqref{align:ch01-外测度生成a}、各项非负（二重和与求和次序无关）得
+\begin{align*}
+\mu^*\left(\bigcup_{n=1}^\infty E_n\right)&\leqslant\sum_{n,k=1}^\infty\zeta(E_{n,k})=\sum_{n=1}^\infty\left[\sum_{k=1}^\infty\zeta(E_{n,k})\right]\\
+&<\sum_{n=1}^\infty\left[\mu^*(E_n)+\frac{\varepsilon}{2^n}\right]=\sum_{n=1}^\infty\mu^*(E_n)+\varepsilon.
+\end{align*}
+由 $\varepsilon$ 的任意性得
+\begin{align*}
+\mu^*\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n=1}^\infty\mu^*(E_n),
+\end{align*}
+即\cref{definition:ch01-外测度}(iii) 成立。证毕。
 \end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-外测度生成; kind=motivation; 说明该构造的输入输出、$\varnothing\in\mathcal{C}$ 与 $\zeta\geqslant 0$ 的必要性，以及 $\mu^*|_{\mathcal{C}}$ 一般不等于 $\zeta$ 的边界
+\begin{remark}\phantomsection\label{remark:ch01-外测度生成}
+\begin{enumerate}[(i)]
+\item 构造的含义。输入是一个便于计算的族 $\mathcal{C}$ 与其上的“预测量”$\zeta$，输出是定义在全幂集上的外测度 $\mu^*$：$\mu^*(E)$ 是覆盖 $E$ 的全部 $\mathcal{C}$--覆盖的代价之下确界。该构造不需要 $\zeta$ 具有任何可加性，因而适用于体积、直径、容量等各种“单集合上的量”。\cref{theorem:ch01-测度延拓} 将说明，当 $\mathcal{C}$ 是代数且 $\zeta$ 可加时，$\mu^*$ 在 $\mathcal{C}$ 上与 $\zeta$ 一致。
+\item $\varnothing\in\mathcal{C}$ 与 $\zeta(\varnothing )=0$ 的作用。二者只用于 $\mu^*(\varnothing )=0$：空集的每个 $\mathcal{C}$--覆盖的代价都不小于 $0$，只有把 $\varnothing$ 本身作为覆盖成员才能把代价压到 $0$。若 $\varnothing\notin\mathcal{C}$，则 $\mu^*(\varnothing )$ 可能为正甚至为 $\infty$：取 $X=\{1\}$、$\mathcal{C}=\{\{1\}\}$、$\zeta(\{1\})=1$，则 $\varnothing$ 的唯一 $\mathcal{C}$--覆盖是 $\{1\}$ 的重复，代价为 $\infty$，故 $\mu^*(\varnothing )=\infty$，$\mu^*$ 不是外测度。
+\item $\zeta\geqslant 0$ 的作用。非负性保证覆盖代价的下确界不会为 $-\infty$，并使二重和的重排合法。$\zeta$ 不必单调、不必可加、可以取 $\infty$ 值：取 $X=\{1,2\}$、$\mathcal{C}=\{\varnothing ,\{1\},\{2\},\{1,2\}\}$、$\zeta(\varnothing )=0$、$\zeta(\{1\})=\zeta(\{2\})=1$、$\zeta(\{1,2\})=10$，则 $\zeta(\{1,2\})>\zeta(\{1\})+\zeta(\{2\})$，而定理仍给出外测度 $\mu^*$（即 $\#E$）。
+\item 边界。$\mu^*|_{\mathcal{C}}=\zeta$ 一般不成立：上例中 $\mu^*(\{1,2\})=2\neq 10=\zeta(\{1,2\})$，因为最省覆盖可以避开 $\{1,2\}$。因此本定理只保证“存在外测度”，不保证它延拓 $\zeta$；延拓性需要 $\mathcal{C}$ 是代数且 $\zeta$ 在其上可加（\cref{theorem:ch01-测度延拓}(i)）。
+\end{enumerate}
+\end{remark}
 
 \begin{definition}\label{definition:ch01-外测度生成定义}
-由\cref{theorem:ch01-外测度生成} 给出的外测度 $\mu^*$ 称为由偶 $(\mathcal{C},\zeta)$ 生成的。
+设 $X$ 为一集合，$\mathcal{C}\subseteq\mathcal{P}(X)$ 满足 $\varnothing\in\mathcal{C}$，$\zeta:\mathcal{C}\to[0,\infty]$ 满足 $\zeta(\varnothing )=0$，$\mu^*$ 为由\eqref{align:ch01-外测度生成a}--\eqref{align:ch01-外测度生成b} 给出的外测度。该外测度称为由偶 $(\mathcal{C},\zeta)$ 生成的\textbf{外测度}，$(\mathcal{C},\zeta)$ 称为 $\mu^*$ 的一个生成偶。生成偶一般不唯一。
 \end{definition}
 
+% SUPPLEMENT: parent=definition:ch01-外测度生成定义; kind=motivation; 说明该命名的用途、生成偶的不唯一性，以及 $\mu^*$ 不能反过来决定 $\zeta$ 的边界
+\begin{remark}\phantomsection\label{remark:ch01-外测度生成定义}
+\begin{enumerate}[(i)]
+\item 命名的用途。该定义本身不含数学命题，其作用是把\eqref{align:ch01-外测度生成a}--\eqref{align:ch01-外测度生成b} 的构造简记为“由 $(\mathcal{C},\zeta)$ 生成的外测度”，从而可以谈论“由 $(\mathcal{A},\mu)$ 生成的外测度”这一特殊情形（\cref{theorem:ch01-测度延拓}），并区分“外测度”与“生成它的数据”。
+\item 生成偶不唯一。取 $X=\{1,2\}$，$\mathcal{C}=\{\varnothing ,\{1\},\{2\},\{1,2\}\}$，$\zeta(\varnothing )=0$、$\zeta(\{1\})=\zeta(\{2\})=1$、$\zeta(\{1,2\})=10$，则由 $(\mathcal{C},\zeta)$ 生成的外测度是计数测度 $\mu^*(E)=\#E$；而 $\mathcal{C}'\triangleq\{\varnothing ,\{1\},\{2\}\}\subseteq\mathcal{C}$ 与 $\zeta'\triangleq\zeta|_{\mathcal{C}'}$ 生成同一个 $\mu^*$，因为 $X$ 的最省覆盖由单点集给出。故“生成偶”只能是外测度的一个表示，不是外测度的函数。
+\item 边界。$\mu^*$ 不能反过来决定 $\zeta$：上例中 $\mu^*(\{1,2\})=2\neq 10=\zeta(\{1,2\})$。因此给出生成偶只是给出 $\mu^*$ 的一种描述；反过来，由 $\mu^*$ 的取值无法唯一恢复 $\zeta$，也无法唯一恢复 $\mathcal{C}$。
+\end{enumerate}
+\end{remark}
+
 \subsection{测度的延拓}\label{subsection:ch01-测度延拓}
-若偶 $(\mathcal{C},\zeta)$ 具有额外性质，则关于由其生成的外测度 $\mu^*$ 可以说得更多。我们首先证明以下结果。
+
+若偶 $(\mathcal{C},\zeta)$ 具有额外性质，则关于由其生成的外测度 $\mu^*$ 可以说得更多。以下先证明一个唯一性判据。
 
 \begin{proposition}[重合准则]\label{proposition:ch01-重合准则}
-设 $\mathcal{A}\subseteq\mathcal{P}(X)$ 为一代数，$\nu$ 为 $\mathcal{A}$ 上的 $\sigma$--有限测度。设 $\mu_1$ 和 $\mu_2$ 为最小 $\sigma$--代数 $\sigma_0(\mathcal{A})$ 上的两个测度，使得 $\mu_1|_{\mathcal{A}}=\mu_2|_{\mathcal{A}}=\nu$。则 $\mu_1=\mu_2$。
+设 $X$ 为一集合，$\mathcal{A}\subseteq\mathcal{P}(X)$ 为一代数，$\nu:\mathcal{A}\to[0,\infty]$ 为 $\mathcal{A}$ 上的 $\sigma$--有限测度，即 $\nu(\varnothing )=0$、$\nu$ 在 $\mathcal{A}$ 上 $\sigma$--可加，且存在序列 $\{A_k\}\subseteq\mathcal{A}$ 使 $X=\bigcup_{k=1}^\infty A_k$、$\nu(A_k)<\infty$。设 $\mu_1$ 与 $\mu_2$ 为最小 $\sigma$--代数 $\sigma_0(\mathcal{A})$ 上的两个测度，满足 $\mu_1|_{\mathcal{A}}=\mu_2|_{\mathcal{A}}=\nu$。则 $\mu_1=\mu_2$，即对每个 $F\in\sigma_0(\mathcal{A})$ 有 $\mu_1(F)=\mu_2(F)$。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch01-重合准则; kind=proof; 补出由 $\sigma$--有限性得到非减有限测度序列、$\mathcal{Z}_n$ 的两条单调封闭性、$\mathcal{A}\subseteq\mathcal{Z}_n$ 的验证，并改正原书非增情形极限指标写成 $n\to\infty$ 的笔误
 \begin{proof}
-由于 $\nu$ 是 $\mathcal{A}$ 上的 $\sigma$--有限测度，存在非减序列 $\{E_n\}\subseteq\mathcal{A}$ 使得 $X=\bigcup_{n=1}^\infty E_n$，对每个 $n\in\mathbb{N}$ 有 $\nu(E_n)<\infty$。令 $\mathcal{E}_n\triangleq \{E_n\cap F\mid F\in\sigma_0(\mathcal{A})\}$（$n\in\mathbb{N}$）。容易看出等式
+第一步：化归为有限测度。由 $\nu$ 的 $\sigma$--有限性，存在序列 $\{A_k\}\subseteq\mathcal{A}$ 使 $X=\bigcup_{k=1}^\infty A_k$、$\nu(A_k)<\infty$。令 $E_n\triangleq\bigcup_{k=1}^n A_k$。则 $\{E_n\}\subseteq\mathcal{A}$ 非减，$X=\bigcup_{n=1}^\infty E_n$，且由 $\nu$ 在 $\mathcal{A}$ 上的可加性与单调性得
+\begin{align*}
+\nu(E_n)\leqslant\sum_{k=1}^n\nu(A_k)<\infty\qquad(n\in\mathbb{N}).
+\end{align*}
+令 $\mathcal{E}_n\triangleq\{E_n\cap F\mid F\in\sigma_0(\mathcal{A})\}$，它是 $E_n$ 上的 $\sigma$--代数。对 $n\in\mathbb{N}$，记 $\mu_1|_{\mathcal{E}_n}$ 为 $\sigma_0(\mathcal{A})$ 上的集函数 $F\mapsto\mu_1(E_n\cap F)$，$\mu_2|_{\mathcal{E}_n}$ 为 $F\mapsto\mu_2(E_n\cap F)$。
+
+第二步：化归为\eqref{align:ch01-重合准则1}。只需证
 \begin{align}
-\mu_1|_{\mathcal{E}_n}=\mu_2|_{\mathcal{E}_n}\qquad\text{对任意 }n\in\mathbb{N} \label{align:ch01-重合准则1}
+\mu_1|_{\mathcal{E}_n}=\mu_2|_{\mathcal{E}_n}\qquad\text{对每个 }n\in\mathbb{N}.\label{align:ch01-重合准则1}
 \end{align}
-蕴含 $\mu_1=\mu_2$。事实上，若\eqref{align:ch01-重合准则1} 成立，则对任意 $F\in\sigma_0(\mathcal{A})$，
-\[
-\mu_1(F)=\lim_{n\to\infty}\mu_1(E_n\cap F)=\lim_{n\to\infty}\mu_2(E_n\cap F)=\mu_2(F),
-\]
-因为 $F=\bigcup_{n=1}^\infty(E_n\cap F)$ 且序列 $\{E_n\cap F\}$ 非减（见\cref{proposition:ch01-测度性质}(iv)）。
+设\eqref{align:ch01-重合准则1} 成立。对任意 $F\in\sigma_0(\mathcal{A})$，序列 $\{E_n\cap F\}$ 非减且 $F=\bigcup_{n=1}^\infty(E_n\cap F)$，故由\cref{proposition:ch01-测度性质}(iv) 得
+\begin{align*}
+\mu_1(F)=\lim_{n\to\infty}\mu_1(E_n\cap F)=\lim_{n\to\infty}\mu_2(E_n\cap F)=\mu_2(F).
+\end{align*}
+对每个 $n\in\mathbb{N}$ 与 $F\in\sigma_0(\mathcal{A})$，由 $E_n\in\mathcal{A}\subseteq\sigma_0(\mathcal{A})$、$\mu_1|_{\mathcal{A}}=\nu$ 与单调性得
+\begin{align*}
+\mu_1(E_n\cap F)\leqslant\mu_1(E_n)=\nu(E_n)<\infty,
+\end{align*}
+对 $\mu_2$ 同法，故 $\mu_1|_{\mathcal{E}_n}$ 与 $\mu_2|_{\mathcal{E}_n}$ 都是有限集函数。
 
-因此只需证等式\eqref{align:ch01-重合准则1}。注意对任意 $n\in\mathbb{N}$，有
-\[
-\mu_1(E_n\cap F)\leqslant\mu_1(E_n)=\nu(E_n)<\infty;
-\]
-类似地，$\mu_2(E_n\cap F)<\infty$，故 $\mu_1|_{\mathcal{E}_n}$ 和 $\mu_2|_{\mathcal{E}_n}$ 都是有限的。现证
-\[
-\mathcal{Z}_n\triangleq \{F\in\sigma_0(\mathcal{A})\mid\mu_1(E_n\cap F)=\mu_2(E_n\cap F)\}\qquad(n\in\mathbb{N})
-\]
-是一个单调类。事实上，对任意非减序列 $\{F_k\}\subseteq\mathcal{Z}_n$，有
-\[
-\mu_1\left(E_n\cap\left(\bigcup_{k=1}^\infty F_k\right)\right)=\lim_{k\to\infty}\mu_1(E_n\cap F_k)
-=\lim_{k\to\infty}\mu_2(E_n\cap F_k)=\mu_2\left(E_n\cap\left(\bigcup_{k=1}^\infty F_k\right)\right);
-\]
-而对任意非增序列 $\{F_k'\}\subseteq\mathcal{Z}_n$，由于 $\mu_1|_{\mathcal{E}_n}$ 和 $\mu_2|_{\mathcal{E}_n}$ 都是有限测度，
-\[
-\mu_1\left(E_n\cap\left(\bigcap_{k=1}^\infty F_k'\right)\right)=\lim_{n\to\infty}\mu_1(E_n\cap F_k')
-=\lim_{n\to\infty}\mu_2(E_n\cap F_k')=\mu_2\left(E_n\cap\left(\bigcap_{k=1}^\infty F_k'\right)\right)
-\]
-（见\cref{proposition:ch01-测度性质}(v)）。故结论成立。
+第三步：单调类。令
+\begin{align*}
+\mathcal{Z}_n\triangleq\{F\in\sigma_0(\mathcal{A})\mid\mu_1(E_n\cap F)=\mu_2(E_n\cap F)\}\qquad(n\in\mathbb{N}).
+\end{align*}
+设 $\{F_k\}\subseteq\mathcal{Z}_n$ 非减。由\cref{proposition:ch01-测度性质}(iv) 与 $F_k\in\mathcal{Z}_n$ 得
+\begin{align*}
+\mu_1\left(E_n\cap\left(\bigcup_{k=1}^\infty F_k\right)\right)=\lim_{k\to\infty}\mu_1(E_n\cap F_k)=\lim_{k\to\infty}\mu_2(E_n\cap F_k)=\mu_2\left(E_n\cap\left(\bigcup_{k=1}^\infty F_k\right)\right),
+\end{align*}
+故 $\bigcup_{k=1}^\infty F_k\in\mathcal{Z}_n$。设 $\{F_k'\}\subseteq\mathcal{Z}_n$ 非增。序列 $\{E_n\cap F_k'\}$ 非增，且 $\mu_1(E_n\cap F_1')\leqslant\nu(E_n)<\infty$，故由\cref{proposition:ch01-测度性质}(v) 得
+\begin{align*}
+\mu_1\left(E_n\cap\left(\bigcap_{k=1}^\infty F_k'\right)\right)=\lim_{k\to\infty}\mu_1(E_n\cap F_k')=\lim_{k\to\infty}\mu_2(E_n\cap F_k')=\mu_2\left(E_n\cap\left(\bigcap_{k=1}^\infty F_k'\right)\right),
+\end{align*}
+故 $\bigcap_{k=1}^\infty F_k'\in\mathcal{Z}_n$。于是 $\mathcal{Z}_n$ 是单调类。
 
-我们还有 $\mathcal{A}\subseteq\mathcal{Z}_n$。事实上，若 $F\in\mathcal{A}$，则由假设 $\mu_1|_{\mathcal{A}}=\mu_2|_{\mathcal{A}}$，有 $\mu_1(E_n\cap F)=\mu_2(E_n\cap F)$。于是由\cref{theorem:ch01-单调类定理} 得 $\sigma_0(\mathcal{A})\subseteq\mathcal{Z}_n$。由于由定义 $\mathcal{Z}_n\subseteq\sigma_0(\mathcal{A})$，故 $\mathcal{Z}_n=\sigma_0(\mathcal{A})$，即对任意 $F\in\sigma_0(\mathcal{A})$ 和 $n\in\mathbb{N}$，有 $\mu_1(E_n\cap F)=\mu_2(E_n\cap F)$。这就证明了\eqref{align:ch01-重合准则1}，证毕。
+第四步：$\mathcal{Z}_n=\sigma_0(\mathcal{A})$。设 $F\in\mathcal{A}$。由 $E_n\in\mathcal{A}$ 与 $\mathcal{A}$ 为代数得 $E_n\cap F\in\mathcal{A}$，故由 $\mu_1|_{\mathcal{A}}=\mu_2|_{\mathcal{A}}=\nu$ 得
+\begin{align*}
+\mu_1(E_n\cap F)=\nu(E_n\cap F)=\mu_2(E_n\cap F),
+\end{align*}
+即 $F\in\mathcal{Z}_n$。于是 $\mathcal{A}\subseteq\mathcal{Z}_n$，由\cref{theorem:ch01-单调类定理} 得 $\sigma_0(\mathcal{A})\subseteq\mathcal{Z}_n$。另一方面 $\mathcal{Z}_n\subseteq\sigma_0(\mathcal{A})$ 由定义成立，故 $\mathcal{Z}_n=\sigma_0(\mathcal{A})$，即\eqref{align:ch01-重合准则1} 成立。结合第二步得 $\mu_1=\mu_2$。证毕。
 \end{proof}
 
-借助\cref{proposition:ch01-重合准则} 给出的重合准则，我们可以证明\cref{theorem:ch01-Caratheodory} 的以下精细化结果。
+% SUPPLEMENT: parent=proposition:ch01-重合准则; kind=motivation; 说明重合准则的用途、$\mathcal{A}$ 为代数与 $\nu$ 为 $\sigma$--有限两项假设各自的作用，并给出去掉 $\sigma$--有限性后结论失效的完整反例
+\begin{remark}\phantomsection\label{remark:ch01-重合准则}
+\begin{enumerate}[(i)]
+\item 用途。该命题把“两个测度相等”化归为“在生成代数上相等”，是\cref{theorem:ch01-测度延拓}(iv) 的唯一性依据，也是证明 Lebesgue--Stieltjes 测度唯一性的标准工具。证明策略是良好集族方法：先截断到有限测度空间 $E_n$，再证等值集族 $\mathcal{Z}_n$ 是含 $\mathcal{A}$ 的单调类。
+\item $\mathcal{A}$ 为代数的作用。\cref{theorem:ch01-单调类定理} 要求生成族是代数（见\hyperref[remark:ch01-单调类定理]{关于单调类定理的注记}）；此外第四步中 $E_n\cap F\in\mathcal{A}$ 需要 $\mathcal{A}$ 对交封闭，而 $E_n$ 本身是 $\mathcal{A}$ 中有限并。
+\item $\sigma$--有限性的作用。它保证存在非减的 $\{E_n\}\subseteq\mathcal{A}$ 使 $\nu(E_n)<\infty$，从而 $\mu_1|_{\mathcal{E}_n}$ 与 $\mu_2|_{\mathcal{E}_n}$ 有限，第三步对非增序列才能使用连续性从上方（\cref{proposition:ch01-测度性质}(v) 要求首项有限）。去掉该假设后结论不成立：取 $X=(0,1]$，
+\begin{align*}
+\mathcal{A}\triangleq\left\{\bigcup_{k=1}^p(a_k,b_k]\ \middle|\ p\in\mathbb{N},\ 0\leqslant a_k<b_k\leqslant 1,\ a_k,b_k\in\mathbb{Q}\right\}\cup\{\varnothing\},
+\end{align*}
+它是代数且 $\sigma_0(\mathcal{A})$ 为 $(0,1]$ 的 Borel $\sigma$--代数。令
+\begin{align*}
+\mu_1\triangleq\sum_{q\in\mathbb{Q}\cap(0,1]}\delta_q,\qquad \mu_2\triangleq\text{计数测度},
+\end{align*}
+则 $\mu_1,\mu_2$ 都是 $\sigma_0(\mathcal{A})$ 上的测度。$\mathcal{A}$ 的每个非空成员含有长度为正的区间，故含无穷多个有理点与不可数多个点，于是 $\mu_1$ 与 $\mu_2$ 在该成员上都取值 $\infty$，在 $\varnothing$ 上都取值 $0$，即 $\mu_1|_{\mathcal{A}}=\mu_2|_{\mathcal{A}}=\nu$。但 $\nu$ 不是 $\sigma$--有限的（$\mathcal{A}$ 的每个非空成员都有 $\nu=\infty$），且 $\mu_1(\{\sqrt{2}/2\})=0\neq 1=\mu_2(\{\sqrt{2}/2\})$，故 $\mu_1\neq\mu_2$。
+\item 边界。结论对“两个测度”成立；若把其中一个换成外测度，即使在 $\mathcal{A}$ 上相等也不能推出在 $\sigma_0(\mathcal{A})$ 上相等，因为外测度不受 $\sigma$--可加性约束。此外，若 $\nu$ 在全空间上有限（即 $X\in\mathcal{A}$ 且 $\nu(X)<\infty$），则证明中的 $E_n$ 可取为 $X$，无需 $\sigma$--有限性。
+\end{enumerate}
+\end{remark}
+
+借助\cref{proposition:ch01-重合准则} 给出的重合准则，可以证明\cref{theorem:ch01-Caratheodory} 的以下精细化结果。
 
 \begin{theorem}\label{theorem:ch01-测度延拓}
-设 $\mathcal{A}\subseteq\mathcal{P}(X)$ 为一代数，$\mu$ 为 $\mathcal{A}$ 上的测度。设 $\mu^*:\mathcal{P}(X)\to[0,\infty]$ 为由偶 $(\mathcal{A},\mu)$ 生成的外测度。则：
+设 $X$ 为一集合，$\mathcal{A}\subseteq\mathcal{P}(X)$ 为一代数，$\mu:\mathcal{A}\to[0,\infty]$ 为 $\mathcal{A}$ 上的测度，$\mu^*:\mathcal{P}(X)\to[0,\infty]$ 为由偶 $(\mathcal{A},\mu)$ 生成的外测度，即在\eqref{align:ch01-外测度生成a}--\eqref{align:ch01-外测度生成b} 中取 $\mathcal{C}=\mathcal{A}$、$\zeta=\mu$。则：
 \begin{enumerate}[(i)]
 \item $\mu^*|_{\mathcal{A}}=\mu$；
-\item $\sigma_0(\mathcal{A})\subseteq\mathcal{L}$，其中 $\mathcal{L}$ 由\eqref{align:ch01-L族} 定义；
-\item $\widehat{\mu}\triangleq \mu^*|_{\sigma_0(\mathcal{A})}$ 是一个将 $\mu$ 延拓到最小 $\sigma$--代数 $\sigma_0(\mathcal{A})$ 的测度。
+\item $\sigma_0(\mathcal{A})\subseteq\mathcal{L}$，其中 $\mathcal{L}$ 是\eqref{align:ch01-L族} 给出的 $\mu^*$--可测集族；
+\item $\widehat{\mu}\triangleq\mu^*|_{\sigma_0(\mathcal{A})}$ 是 $\sigma_0(\mathcal{A})$ 上的测度，且 $\widehat{\mu}|_{\mathcal{A}}=\mu$，即 $\widehat{\mu}$ 把 $\mu$ 延拓到最小 $\sigma$--代数 $\sigma_0(\mathcal{A})$。
 \end{enumerate}
 此外，设 $\mu$ 为 $\sigma$--有限的。则：
 \begin{enumerate}[(iv)]
-\item $\widehat{\mu}$ 是 $\mu$ 在 $\sigma_0(\mathcal{A})$ 上的测度的唯一延拓；
-\item 测度空间 $(X,\mathcal{L},\mu^*|_{\mathcal{L}})$ 是 $(X,\sigma_0(\mathcal{A}),\widehat{\mu})$ 的完备化。
+\item $\widehat{\mu}$ 是 $\mu$ 在 $\sigma_0(\mathcal{A})$ 上的唯一测度延拓；
+\item 测度空间 $(X,\mathcal{L},\mu^*|_{\mathcal{L}})$ 是 $(X,\sigma_0(\mathcal{A}),\widehat{\mu})$ 的完备化，即 $\mathcal{L}=\overline{\sigma_0(\mathcal{A})}$ 且 $\mu^*|_{\mathcal{L}}$ 是 $\widehat{\mu}$ 在 $\mathcal{L}$ 上的完备化测度（按\cref{definition:ch01-Lebesgue完备化} 的意义）。
 \end{enumerate}
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch01-测度延拓; kind=proof; 补出 (i) 中覆盖 $\{E,\varnothing,\cdots\}$ 与 $F_n\in\mathcal{A}$ 的验证、(ii) 中 $E_n\cap E\in\mathcal{A}$ 与可加性细节、(v) 中断言构造的全部包含关系与等式链
 \begin{proof}
-(i) 由\eqref{align:ch01-外测度生成a} 有对任意 $E\in\mathcal{A}$ 有 $\mu^*(E)\leqslant\mu(E)$。为证反向不等式，设 $E\in\mathcal{A}$，$\{E_n\}\subseteq\mathcal{A}$ 为 $E$ 的一个覆盖。令
-\[
-F_1\triangleq E\cap E_1,\qquad F_n\triangleq E_n\cap\left[E\setminus\left(\bigcup_{k=1}^{n-1}E_k\right)\right]\qquad(n\in\mathbb{N},\ n\geqslant 2).
-\]
-则 $\{F_n\}\subseteq\mathcal{A}$，因为 $\mathcal{A}$ 是代数。此外，集合 $F_n$ 不交，对任意 $n\in\mathbb{N}$ 有 $F_n\subseteq E_n$，且 $E=\bigcup_{n=1}^\infty F_n$。于是由 $\mathcal{A}$ 上 $\mu$ 的单调性和 $\sigma$--可加性得
-\[
+(i) 在\eqref{align:ch01-外测度生成a} 中取覆盖 $E_1\triangleq E$、$E_n\triangleq\varnothing$（$n\geqslant 2$），这些集合属于 $\mathcal{A}$（因 $\mathcal{A}$ 是代数），故 $\mu^*(E)\leqslant\mu(E)$。为证反向不等式，设 $E\in\mathcal{A}$，$\{E_n\}\subseteq\mathcal{A}$ 为 $E$ 的覆盖。令
+\begin{align*}
+F_1\triangleq E\cap E_1,\qquad F_n\triangleq E_n\cap\left[E\setminus\left(\bigcup_{k=1}^{n-1}E_k\right)\right]\qquad(n\geqslant 2).
+\end{align*}
+由 $\mathcal{A}$ 是代数得 $\{F_n\}\subseteq\mathcal{A}$。诸 $F_n$ 两两不交，$F_n\subseteq E_n$ 对每个 $n$ 成立，且 $E=\bigcup_{n=1}^\infty F_n$：$F_n\subseteq E$ 给出 $\bigcup_{n=1}^\infty F_n\subseteq E$；反之设 $x\in E$，取最小的 $n$ 使 $x\in E_n$，则 $x\in E\setminus\bigcup_{k=1}^{n-1}E_k$，故 $x\in F_n$。于是由 $\mu$ 在 $\mathcal{A}$ 上的单调性与 $\sigma$--可加性得
+\begin{align*}
 \mu(E)=\sum_{n=1}^\infty\mu(F_n)\leqslant\sum_{n=1}^\infty\mu(E_n),
-\]
-故 $\mu(E)\leqslant\mu^*(E)$。结论 (i) 成立。
+\end{align*}
+故 $\mu(E)\leqslant\mu^*(E)$。结合反向不等式得 $\mu^*|_{\mathcal{A}}=\mu$。
 
-(ii) 由于 $\mathcal{L}$ 是一个 $\sigma$--代数（见\cref{theorem:ch01-Caratheodory}(i)），只需证 $\mathcal{A}\subseteq\mathcal{L}$，即对任意 $E\in\mathcal{A}$ 和 $Z\subseteq X$，不等式\eqref{align:ch01-Caratheodory等价} 成立。设 $\mu^*(Z)<\infty$（否则结论显然）；则对任意 $\epsilon>0$，存在序列 $\{E_n\}\subseteq\mathcal{A}$ 使得
-\[
-Z\subseteq\bigcup_{n=1}^\infty E_n,\qquad\sum_{n=1}^\infty\mu(E_n)<\mu^*(Z)+\epsilon.
-\]
-设 $E\in\mathcal{A}$。由 $\mu^*$ 的单调性和 $\sigma$--次可加性，结合 (i)，得
-\[
-\mu^*(Z\cap E)\leqslant\sum_{n=1}^\infty\mu(E_n\cap E),\quad
-\mu^*(Z\cap E^c)\leqslant\sum_{n=1}^\infty\mu(E_n\cap E^c).
-\]
-因此由 $\mu$ 的可加性有
-\[
-\mu^*(Z\cap E)+\mu^*(Z\cap E^c)
-\leqslant\sum_{n=1}^\infty\mu(E_n\cap E)+\sum_{n=1}^\infty\mu(E_n\cap E^c)
-=\sum_{n=1}^\infty\mu(E_n)<\mu^*(Z)+\epsilon.
-\]
-由 $\epsilon$ 的任意性，得 $E$ 是 $\mu^*$--可测的，结论成立。
+(ii) 由\cref{theorem:ch01-Caratheodory}(i)，$\mathcal{L}$ 是 $\sigma$--代数，故只需证 $\mathcal{A}\subseteq\mathcal{L}$，即对每个 $E\in\mathcal{A}$ 与每个 $Z\subseteq X$，不等式\eqref{align:ch01-Caratheodory等价} 成立。若 $\mu^*(Z)=\infty$，则\eqref{align:ch01-Caratheodory等价} 成立。设 $\mu^*(Z)<\infty$。对任意 $\varepsilon>0$，由\eqref{align:ch01-外测度生成a} 存在序列 $\{E_n\}\subseteq\mathcal{A}$ 使
+\begin{align*}
+Z\subseteq\bigcup_{n=1}^\infty E_n,\qquad\sum_{n=1}^\infty\mu(E_n)<\mu^*(Z)+\varepsilon.
+\end{align*}
+设 $E\in\mathcal{A}$。由 $\mathcal{A}$ 是代数得 $E_n\cap E\in\mathcal{A}$ 与 $E_n\cap E^c\in\mathcal{A}$，且 $Z\cap E\subseteq\bigcup_{n=1}^\infty(E_n\cap E)$。于是由 $\mu^*$ 的单调性、\cref{definition:ch01-外测度}(iii) 与 (i) 得
+\begin{align*}
+\mu^*(Z\cap E)\leqslant\sum_{n=1}^\infty\mu^*(E_n\cap E)=\sum_{n=1}^\infty\mu(E_n\cap E),
+\end{align*}
+同法得 $\mu^*(Z\cap E^c)\leqslant\sum_{n=1}^\infty\mu(E_n\cap E^c)$。因此由 $\mu$ 在 $\mathcal{A}$ 上的可加性得
+\begin{align*}
+\mu^*(Z\cap E)+\mu^*(Z\cap E^c)\leqslant\sum_{n=1}^\infty\mu(E_n\cap E)+\sum_{n=1}^\infty\mu(E_n\cap E^c)=\sum_{n=1}^\infty\mu(E_n)<\mu^*(Z)+\varepsilon.
+\end{align*}
+由 $\varepsilon$ 的任意性得\eqref{align:ch01-Caratheodory等价}，故 $E\in\mathcal{L}$，即 $\mathcal{A}\subseteq\mathcal{L}$。
 
-(iii)--(iv) 由\cref{theorem:ch01-Caratheodory}(ii)，$\mu^*|_{\mathcal{L}}$ 是 $\mathcal{L}$ 上的测度。于是，由于 $\sigma_0(\mathcal{A})\subseteq\mathcal{L}$，$\widehat{\mu}$ 是一个测度。此外，由 (i) 有 $\widehat{\mu}|_{\mathcal{A}}=\mu^*|_{\mathcal{A}}=\mu$，故结论 (iii) 成立。结论 (iv) 是\cref{proposition:ch01-重合准则} 的推论。
+(iii)--(iv) 由\cref{theorem:ch01-Caratheodory}(ii)，$\mu^*|_{\mathcal{L}}$ 是 $\mathcal{L}$ 上的测度；由 (ii)，$\sigma_0(\mathcal{A})\subseteq\mathcal{L}$，故 $\widehat{\mu}=\mu^*|_{\sigma_0(\mathcal{A})}$ 是 $\sigma_0(\mathcal{A})$ 上的测度，且由 (i) 得 $\widehat{\mu}|_{\mathcal{A}}=\mu^*|_{\mathcal{A}}=\mu$，即 (iii)。为证 (iv)，设 $\widetilde{\mu}$ 为 $\sigma_0(\mathcal{A})$ 上任一满足 $\widetilde{\mu}|_{\mathcal{A}}=\mu$ 的测度。对 $(\mathcal{A},\mu)$ 应用\cref{proposition:ch01-重合准则}（取 $\mu_1=\widehat{\mu}$、$\mu_2=\widetilde{\mu}$、$\nu=\mu$）得 $\widetilde{\mu}=\widehat{\mu}$。
 
-(v) 设 $\overline{\sigma_0(\mathcal{A})}$ 为 $\sigma_0(\mathcal{A})$ 的 Lebesgue 完备化。由于 $\sigma_0(\mathcal{A})\subseteq\mathcal{L}$，$\mu^*|_{\sigma_0(\mathcal{A})}=\widehat{\mu}$，且由\cref{theorem:ch01-Caratheodory}，$(X,\mathcal{L},\mu^*|_{\mathcal{L}})$ 是完备测度空间，故 $\overline{\sigma_0(\mathcal{A})}\subseteq\mathcal{L}$（见\cref{theorem:ch01-Lebesgue完备化}）。反之，现证 $\mathcal{L}\subseteq\overline{\sigma_0(\mathcal{A})}$。为此，考虑序列 $\{E_n\}\subseteq\mathcal{A}$ 使得 $X=\bigcup_{n=1}^\infty E_n$ 且对所有 $n\in\mathbb{N}$ 有 $\mu(E_n)<\infty$。设 $F\in\mathcal{L}$；只需证对任意 $n\in\mathbb{N}$ 有 $E_n\cap F\in\overline{\sigma_0(\mathcal{A})}$，因为这蕴含
-\[
-F=\bigcup_{n=1}^\infty(E_n\cap F)\in\overline{\sigma_0(\mathcal{A})}.
-\]
+(v) 由 $\mu$ 的 $\sigma$--有限性，存在序列 $\{A_k\}\subseteq\mathcal{A}$ 使 $X=\bigcup_{k=1}^\infty A_k$、$\mu(A_k)<\infty$。令 $E_n\triangleq\bigcup_{k=1}^n A_k$，则 $\{E_n\}\subseteq\mathcal{A}$ 非减，$X=\bigcup_{n=1}^\infty E_n$，且 $\mu(E_n)\leqslant\sum_{k=1}^n\mu(A_k)<\infty$。
 
-我们将证明如下断言。
+先证 $\overline{\sigma_0(\mathcal{A})}\subseteq\mathcal{L}$。设 $E\in\overline{\sigma_0(\mathcal{A})}$，即存在 $F,G\in\sigma_0(\mathcal{A})$ 使 $F\subseteq E\subseteq G$、$\widehat{\mu}(G\setminus F)=0$（\eqref{align:ch01-完备sigma代数}）。由 (ii) 得 $F,G\in\mathcal{L}$，故 $G\setminus F\in\mathcal{L}$ 且 $\mu^*(G\setminus F)=0$；由\cref{theorem:ch01-Caratheodory}(ii)，$(X,\mathcal{L},\mu^*|_{\mathcal{L}})$ 完备，而 $E\setminus F\subseteq G\setminus F$，故 $E\setminus F\in\mathcal{L}$。于是 $E=F\cup(E\setminus F)\in\mathcal{L}$。
 
-\textbf{断言。} 对每个 $n\in\mathbb{N}$，存在 $F_n'\in\sigma_0(\mathcal{A})$ 使得
+反之证 $\mathcal{L}\subseteq\overline{\sigma_0(\mathcal{A})}$。设 $F\in\mathcal{L}$。由于 $F=\bigcup_{n=1}^\infty(E_n\cap F)$ 且 $\overline{\sigma_0(\mathcal{A})}$ 是 $\sigma$--代数，只需证 $E_n\cap F\in\overline{\sigma_0(\mathcal{A})}$ 对每个 $n\in\mathbb{N}$ 成立。为此证明以下断言。
+
+\textbf{断言。} 对每个 $n\in\mathbb{N}$，存在 $F_n'\in\sigma_0(\mathcal{A})$ 使
 \begin{align}
-E_n\cap F\subseteq F_n'\subseteq E_n,\qquad\mu^*(E_n\cap F)=\widehat{\mu}(F_n'). \label{align:ch01-延拓断言}
+E_n\cap F\subseteq F_n'\subseteq E_n,\qquad\mu^*(E_n\cap F)=\widehat{\mu}(F_n').\label{align:ch01-延拓断言}
 \end{align}
-
-利用该断言即可完成证明。事实上，由于 $F^c\in\mathcal{L}$，也存在 $F_n''\in\sigma_0(\mathcal{A})$ 使得
+设断言成立。由 $F^c\in\mathcal{L}$，对 $F^c$ 用断言得 $F_n''\in\sigma_0(\mathcal{A})$ 使
 \begin{align}
-E_n\setminus F\subseteq F_n''\subseteq E_n,\qquad\mu^*(E_n\setminus F)=\widehat{\mu}(F_n''). \label{align:ch01-延拓断言2}
+E_n\setminus F\subseteq F_n''\subseteq E_n,\qquad\mu^*(E_n\setminus F)=\widehat{\mu}(F_n'').\label{align:ch01-延拓断言2}
 \end{align}
 由\eqref{align:ch01-延拓断言}--\eqref{align:ch01-延拓断言2} 得
 \begin{align}
-E_n=F_n'\cup F_n'',\qquad F_n'\setminus(E_n\cap F)\subseteq F_n'\cap F_n''. \label{align:ch01-延拓断言3}
+E_n=F_n'\cup F_n'',\qquad F_n'\setminus(E_n\cap F)\subseteq F_n'\cap F_n''.\label{align:ch01-延拓断言3}
 \end{align}
-由于 $E_n\in\mathcal{A}$，有 $\mu(E_n)=\mu^*(E_n)$（见 (i)）。由于 $E_n\cap F\in\mathcal{L}$、$E_n\setminus F\in\mathcal{L}$，且 $\mu^*|_{\mathcal{L}}$ 是测度，利用\eqref{align:ch01-延拓断言}--\eqref{align:ch01-延拓断言3} 中的等式，得
-\[
-\begin{aligned}
-\mu(E_n)&=\mu^*(E_n)=\mu^*(E_n\cap F)+\mu^*(E_n\setminus F)
-=\widehat{\mu}(F_n')+\widehat{\mu}(F_n'')\\
-&=\widehat{\mu}(F_n'\setminus F_n'')+\widehat{\mu}(F_n'\cap F_n'')
-+\widehat{\mu}(F_n''\setminus F_n')+\widehat{\mu}(F_n''\cap F_n')\\
-&=\widehat{\mu}(F_n'\triangle F_n'')+2\widehat{\mu}(F_n'\cap F_n'')
-=\widehat{\mu}(F_n'\cup F_n'')+\widehat{\mu}(F_n'\cap F_n'')\\
-&=\mu(E_n)+\widehat{\mu}(F_n'\cap F_n'')
-\end{aligned}
-\]
-（回忆 $F_n'\triangle F_n''\triangleq (F_n'\setminus F_n'')\cup(F_n''\setminus F_n')=F_n'\cup F_n''\setminus(F_n'\cap F_n'')$）。由于 $\mu(E_n)<\infty$，故 $\widehat{\mu}(F_n'\cap F_n'')=0$。
+事实上，$F_n'\supseteq E_n\cap F$ 与 $F_n''\supseteq E_n\setminus F$ 给出 $F_n'\cup F_n''\supseteq E_n$，而 $F_n',F_n''\subseteq E_n$ 给出反向包含；又若 $x\in F_n'$ 且 $x\notin E_n\cap F$，则由 $F_n'\subseteq E_n$ 得 $x\in E_n\setminus F\subseteq F_n''$，故 $x\in F_n'\cap F_n''$。
 
-由于 $F_n'\setminus(E_n\cap F)\subseteq F_n'\cap F_n''$（见\eqref{align:ch01-延拓断言3}），得 $\widehat{\mu}(F_n'\setminus(E_n\cap F))=0$。另一方面，由\eqref{align:ch01-延拓断言} 有
-\[
-F_n'\setminus F_n''\subseteq F_n'\setminus(E_n\cap F)\subseteq F_n',\quad
-\widehat{\mu}(F_n'\setminus(F_n'\setminus F_n''))=\widehat{\mu}(F_n'\cap F_n'')=0.
-\]
-由于 $F_n',F_n''\in\sigma_0(\mathcal{A})$，得 $F_n'\setminus(E_n\cap F)\in\overline{\sigma_0(\mathcal{A})}$（见\eqref{align:ch01-完备sigma代数}）。于是对任意 $n\in\mathbb{N}$，有
-\[
+由 $E_n\in\mathcal{A}$ 与 (i) 得 $\mu(E_n)=\mu^*(E_n)$。由 $E_n\cap F,E_n\setminus F\in\mathcal{L}$ 且 $\mu^*|_{\mathcal{L}}$ 是测度，并利用\eqref{align:ch01-延拓断言}--\eqref{align:ch01-延拓断言3}，得
+\begin{align*}
+\mu(E_n)&=\mu^*(E_n)=\mu^*(E_n\cap F)+\mu^*(E_n\setminus F)=\widehat{\mu}(F_n')+\widehat{\mu}(F_n'')\\
+&=\widehat{\mu}(F_n'\setminus F_n'')+\widehat{\mu}(F_n'\cap F_n'')+\widehat{\mu}(F_n''\setminus F_n')+\widehat{\mu}(F_n''\cap F_n')\\
+&=\widehat{\mu}(F_n'\triangle F_n'')+2\widehat{\mu}(F_n'\cap F_n'')=\widehat{\mu}(F_n'\cup F_n'')+\widehat{\mu}(F_n'\cap F_n'')\\
+&=\mu(E_n)+\widehat{\mu}(F_n'\cap F_n''),
+\end{align*}
+其中第二个等号把 $F_n'\cup F_n''$ 分成 $F_n'\setminus F_n''$、$F_n'\cap F_n''$、$F_n''\setminus F_n'$、$F_n''\cap F_n'$ 四个不交部分，第三个等号用到 $F_n'\cap F_n''=F_n''\cap F_n'$，第四个等号用到
+\begin{align*}
+F_n'\triangle F_n''\triangleq(F_n'\setminus F_n'')\cup(F_n''\setminus F_n')=F_n'\cup F_n''\setminus(F_n'\cap F_n''),
+\end{align*}
+第五个等号用到 $F_n'\cup F_n''=E_n$ 与 $\widehat{\mu}|_{\mathcal{A}}=\mu$。由于 $\mu(E_n)<\infty$，故 $\widehat{\mu}(F_n'\cap F_n'')=0$。
+
+由\eqref{align:ch01-延拓断言3} 得 $\widehat{\mu}(F_n'\setminus(E_n\cap F))=0$。另一方面由\eqref{align:ch01-延拓断言} 得
+\begin{align*}
+F_n'\setminus F_n''\subseteq F_n'\setminus(E_n\cap F)\subseteq F_n',\qquad\widehat{\mu}(F_n'\setminus(F_n'\setminus F_n''))=\widehat{\mu}(F_n'\cap F_n'')=0.
+\end{align*}
+由 $F_n',F_n''\in\sigma_0(\mathcal{A})$ 与\eqref{align:ch01-完备sigma代数} 得 $F_n'\setminus(E_n\cap F)\in\overline{\sigma_0(\mathcal{A})}$。于是对每个 $n\in\mathbb{N}$，
+\begin{align*}
 E_n\cap F=F_n'\setminus(F_n'\setminus(E_n\cap F))\in\overline{\sigma_0(\mathcal{A})},
-\]
-结论成立。
+\end{align*}
+故 $F\in\overline{\sigma_0(\mathcal{A})}$，即 $\mathcal{L}\subseteq\overline{\sigma_0(\mathcal{A})}$。
 
-还需证明该断言。为简便起见，省略对 $n$ 的依赖，于是有 $F\in\mathcal{L}$，$E\equiv E_n\in\mathcal{A}$，$G\triangleq F\cap E\in\mathcal{L}$（因为由 (ii) 有 $\mathcal{A}\subseteq\mathcal{L}$），且 $\mu(E)<\infty$。我们必须证明存在 $F'\in\sigma_0(\mathcal{A})$ 使得
-\[
+最后证明断言。以下省略对 $n$ 的依赖：设有 $F\in\mathcal{L}$、$E\in\mathcal{A}$、$G\triangleq F\cap E\in\mathcal{L}$（由 (ii) 有 $\mathcal{A}\subseteq\mathcal{L}$）与 $\mu(E)<\infty$，证明存在 $F'\in\sigma_0(\mathcal{A})$ 使
+\begin{align*}
 G\subseteq F'\subseteq E,\qquad\mu^*(G)=\widehat{\mu}(F').
-\]
-由于 $G\subseteq E$，有 $\mu^*(G)\leqslant\mu(E)<\infty$，故对任意固定的 $k\in\mathbb{N}$，存在序列 $\{G_n^k\}\subseteq\mathcal{A}$ 使得
-\[
-G\subseteq\bigcup_{n=1}^\infty G_n^k,\qquad
-\sum_{n=1}^\infty\mu(G_n^k)<\mu^*(G)+\frac{1}{k}.
-\]
-不失一般性，可设对所有 $k,n\in\mathbb{N}$ 有 $G_n^k\subseteq E$。
+\end{align*}
+由 $G\subseteq E$ 得 $\mu^*(G)\leqslant\mu(E)<\infty$，故对每个固定的 $k\in\mathbb{N}$，由\eqref{align:ch01-外测度生成a} 存在序列 $\{G_n^k\}\subseteq\mathcal{A}$ 使
+\begin{align*}
+G\subseteq\bigcup_{n=1}^\infty G_n^k,\qquad\sum_{n=1}^\infty\mu(G_n^k)<\mu^*(G)+\frac{1}{k}.
+\end{align*}
+不妨设 $G_n^k\subseteq E$ 对一切 $k,n$ 成立：否则以 $G_n^k\cap E\in\mathcal{A}$ 代替 $G_n^k$，此时 $G\subseteq\bigcup_{n=1}^\infty(G_n^k\cap E)$ 仍成立（因 $G\subseteq E$），且 $\mu(G_n^k\cap E)\leqslant\mu(G_n^k)$。
 
-令 $F'\triangleq \bigcap_{k=1}^\infty\left[\bigcup_{n=1}^\infty G_n^k\right]$。则 $F'\in\sigma_0(\mathcal{A})$，且对任意固定的 $\widetilde{k}\in\mathbb{N}$，有 $G\subseteq F'\subseteq\bigcup_{n=1}^\infty G_n^{\widetilde{k}}$。由此
-\[
-\widehat{\mu}(F')\leqslant\widehat{\mu}\left(\bigcup_{n=1}^\infty G_n^{\widetilde{k}}\right)
-\leqslant\sum_{n=1}^\infty\widehat{\mu}(G_n^{\widetilde{k}})
-<\mu^*(G)+\frac{1}{\widetilde{k}}
-\leqslant\widehat{\mu}(F')+\frac{1}{\widetilde{k}}.
-\]
-由于 $\widetilde{k}$ 任意，得 $\widehat{\mu}(F')=\mu^*(G)$，断言成立。证毕。
+令 $F'\triangleq\bigcap_{k=1}^\infty\left[\bigcup_{n=1}^\infty G_n^k\right]$。则 $F'\in\sigma_0(\mathcal{A})$，且 $G\subseteq F'\subseteq E$。对任意固定的 $\widetilde{k}\in\mathbb{N}$，由 $F'\subseteq\bigcup_{n=1}^\infty G_n^{\widetilde{k}}$、$G\subseteq F'$ 与 $\mu^*(G)\leqslant\mu^*(F')=\widehat{\mu}(F')$ 得
+\begin{align*}
+\widehat{\mu}(F')\leqslant\widehat{\mu}\left(\bigcup_{n=1}^\infty G_n^{\widetilde{k}}\right)\leqslant\sum_{n=1}^\infty\widehat{\mu}(G_n^{\widetilde{k}})=\sum_{n=1}^\infty\mu(G_n^{\widetilde{k}})<\mu^*(G)+\frac{1}{\widetilde{k}}\leqslant\widehat{\mu}(F')+\frac{1}{\widetilde{k}},
+\end{align*}
+其中 $\widehat{\mu}(G_n^{\widetilde{k}})=\mu(G_n^{\widetilde{k}})$ 用到 $G_n^{\widetilde{k}}\in\mathcal{A}$ 与 (i)，而 $\widehat{\mu}\left(\bigcup_{n=1}^\infty G_n^{\widetilde{k}}\right)\leqslant\sum_{n=1}^\infty\widehat{\mu}(G_n^{\widetilde{k}})$ 用到测度的 $\sigma$--次可加性（\cref{proposition:ch01-测度性质}(iii)）。由 $\widetilde{k}$ 的任意性得 $\widehat{\mu}(F')=\mu^*(G)$，断言成立。证毕。
 \end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-测度延拓; kind=motivation; 说明该定理作为 Carathéodory 构造正确性断言的地位、各款对 $\mathcal{A}$ 为代数与 $\mu$ 为 $\sigma$--有限的不同依赖，以及 (v) 中完备化为自动获得的边界
+\begin{remark}\phantomsection\label{remark:ch01-测度延拓}
+\begin{enumerate}[(i)]
+\item 结论的地位。本定理是 Carathéodory 构造的正确性断言：起点是代数上的真测度时，外测度在起点上与 $\mu$ 一致，生成的 $\sigma$--代数含 $\sigma_0(\mathcal{A})$，限制给出延拓。与\cref{theorem:ch01-Caratheodory} 合起来，只需在代数上验证可加性，即可得到 $\sigma$--代数上的完备测度；这是 Lebesgue 测度、Lebesgue--Stieltjes 测度与 Hausdorff 测度的共同构造原理。
+\item 各款对假设的依赖。(i)(ii)(iii) 只用到 $\mathcal{A}$ 是代数：$F_n\in\mathcal{A}$（(i) 中差集封闭）、$E_n\cap E\in\mathcal{A}$ 与 $E_n\cap E^c\in\mathcal{A}$（(ii)），以及 $\mu$ 在 $\mathcal{A}$ 上的有限可加性。$\sigma$--有限性只用于 (iv)(v)：(iv) 借助\cref{proposition:ch01-重合准则}；(v) 借助 $\{E_n\}$ 逐块化归为有限测度，因而可以作减法 $\mu(E_n)-\widehat{\mu}(F_n'\cap F_n'')$。
+\item $\sigma$--有限性不可去掉。若 $\mu$ 只是 $\mathcal{A}$ 上的测度而不 $\sigma$--有限，(i)(ii)(iii) 仍成立，但 (iv) 失效：在\hyperref[remark:ch01-重合准则]{关于重合准则的注记}(iii) 的例子中，$\nu$ 不 $\sigma$--有限，$\sigma_0(\mathcal{A})$ 上存在两个都延拓 $\nu$ 的测度。故定理中“此外”之后的结论不能省略 $\sigma$--有限性。
+\item (v) 的含义与边界。(v) 说明 Carathéodory 构造自动给出完备化：$\mathcal{L}$ 恰是 $\sigma_0(\mathcal{A})$ 关于 $\widehat{\mu}$ 的 Lebesgue 完备化，无需再执行一次完备化程序。这也解释了 Lebesgue 可测集族恰为 Borel $\sigma$--代数的完备化。反方向 $\mathcal{L}\subseteq\overline{\sigma_0(\mathcal{A})}$ 的证明是定理中最实质的部分，其核心是断言\eqref{align:ch01-延拓断言}：任一 $\mu^*$--可测集在有限测度块 $E_n$ 内可被 $\sigma_0(\mathcal{A})$ 中的集合从两侧夹住，误差为 $\widehat{\mu}$--零测。
+\end{enumerate}
+\end{remark}
 
 \begin{definition}\label{definition:ch01-Caratheodory延拓}
-由\cref{theorem:ch01-测度延拓} 给出的测度 $\widehat{\mu}$ 称为 $\mathcal{A}$ 上测度 $\mu$ 的 Carathéodory 延拓。
+设 $X$ 为一集合，$\mathcal{A}\subseteq\mathcal{P}(X)$ 为一代数，$\mu:\mathcal{A}\to[0,\infty]$ 为 $\mathcal{A}$ 上的测度，$\mu^*$ 为由偶 $(\mathcal{A},\mu)$ 生成的外测度，$\widehat{\mu}\triangleq\mu^*|_{\sigma_0(\mathcal{A})}$ 为\cref{theorem:ch01-测度延拓}(iii) 给出的最小 $\sigma$--代数 $\sigma_0(\mathcal{A})$ 上的测度。该测度 $\widehat{\mu}$ 称为 $\mathcal{A}$ 上测度 $\mu$ 的\textbf{Carathéodory 延拓}。
 \end{definition}
 
-以下结果表明，通过延拓定义在半代数 $\mathcal{S}\subseteq\mathcal{P}(X)$ 上的测度 $\mu$，可以精细化\cref{theorem:ch01-测度延拓} 的结论。
+% SUPPLEMENT: parent=definition:ch01-Caratheodory延拓; kind=motivation; 说明命名的内容、唯一性对 $\sigma$--有限性的依赖（含反例）以及该延拓与 Lebesgue 测度构造的关系
+\begin{remark}\phantomsection\label{remark:ch01-Caratheodory延拓}
+\begin{enumerate}[(i)]
+\item 命名的内容。该延拓不是由抽象延拓定理（如 Zorn 引理）得到的，而是由外测度在 $\mathcal{L}$ 上的限制显式给出：$\widehat{\mu}(E)=\mu^*(E)$ 对 $E\in\sigma_0(\mathcal{A})$，其中 $\mu^*$ 是覆盖代价的下确界。因此“Carathéodory 延拓”这一名称同时指明了构造方式与存在性来源。
+\item 唯一性依赖 $\sigma$--有限性。若 $\mu$ 是 $\mathcal{A}$ 上的 $\sigma$--有限测度，则\cref{theorem:ch01-测度延拓}(iv) 保证 $\widehat{\mu}$ 是唯一延拓。若 $\mu$ 不 $\sigma$--有限，延拓一般不唯一：在\hyperref[remark:ch01-重合准则]{关于重合准则的注记}(iii) 的例子中，$\widehat{\mu}$ 在每个非空集合上取 $\infty$、在 $\varnothing$ 上取 $0$，而计数测度 $\mu^{\#}$ 也延拓 $\nu$；二者在单点集上不同：$\widehat{\mu}(\{q\})=\infty$ 而 $\mu^{\#}(\{q\})=1$。
+\item 与 Lebesgue 测度的关系。由\cref{theorem:ch01-测度延拓}(iii)，$\mathcal{A}_0(\mathcal{I}_N)$ 上的体积测度 $\lambda_N$ 的 Carathéodory 延拓就是 $\lambda_N$ 在 Borel $\sigma$--代数上的限制，而 $\lambda_N$ 在 $\mathcal{L}_N$ 上的完备化即 Lebesgue 测度（\cref{definition:ch01-Lebesgue测度}）。故 Lebesgue 测度是 Carathéodory 延拓的最重要实例。
+\item 边界。若起点只是半代数 $\mathcal{S}$ 上的测度，则须先由\cref{proposition:ch01-半代数延拓} 把它扩张到 $\mathcal{A}_0(\mathcal{S})$，再作 Carathéodory 延拓；不能直接对 $(\mathcal{S},\nu)$ 使用\cref{theorem:ch01-测度延拓}，因为其证明中 $F_n\in\mathcal{A}$ 用到差集封闭性，半代数不具备该封闭性。
+\end{enumerate}
+\end{remark}
+
+以下结果表明，通过延拓定义在半代数 $\mathcal{S}\subseteq\mathcal{P}(X)$ 上的测度，可以精细化\cref{theorem:ch01-测度延拓} 的结论。
 
 \begin{proposition}\label{proposition:ch01-半代数延拓}
-设 $\mathcal{S}\subseteq\mathcal{P}(X)$ 为一包含 $\varnothing $ 的半代数，$\nu$ 为 $\mathcal{S}$ 上的测度。则存在 $\mathcal{S}$ 生成的最小代数 $\mathcal{A}_0(\mathcal{S})$ 上唯一的测度 $\mu$，使得 $\mu|_{\mathcal{S}}=\nu$。
+设 $X$ 为一集合，$\mathcal{S}\subseteq\mathcal{P}(X)$ 为包含 $\varnothing$ 的半代数（按\cref{definition:ch01-半代数代数} 的意义），$\mathcal{A}_0(\mathcal{S})$ 为由 $\mathcal{S}$ 生成的最小代数，$\nu:\mathcal{S}\to[0,\infty]$ 为 $\mathcal{S}$ 上的测度。则存在 $\mathcal{A}_0(\mathcal{S})$ 上唯一的测度 $\mu$ 使 $\mu|_{\mathcal{S}}=\nu$。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch01-半代数延拓; kind=proof; 原证明以“容易看出”略去 $\mathcal{A}_0(\mathcal{S})$ 的有限不交分解、$\mu$ 的良定义性与 $\sigma$--可加性，此处补出全部三步论证
 \begin{proof}
-对任意 $E\in\mathcal{A}_0(\mathcal{S})$，存在不交集合 $E_1,\cdots ,E_n\in\mathcal{S}$ 使得 $E=\bigcup_{k=1}^n E_k$。定义 $\mu:\mathcal{A}_0(\mathcal{S})\to[0,\infty]$ 为
-\[
-\mu(E)\triangleq \sum_{k=1}^n\nu(E_k).
-\]
-容易看出此定义不依赖于集合 $E_k$ 的选取，因而是适定的，且 $\mu$ 是 $\mathcal{A}_0(\mathcal{S})$ 上的测度。
+第一步：$\mathcal{A}_0(\mathcal{S})$ 的有限不交分解。令
+\begin{align*}
+\mathcal{D}\triangleq\left\{\bigcup_{k=1}^n E_k\ \middle|\ n\in\mathbb{N},\ E_1,\cdots ,E_n\in\mathcal{S}\text{ 两两不交}\right\}.
+\end{align*}
+由 $\varnothing\in\mathcal{S}$ 得 $\varnothing\in\mathcal{D}$，且 $\mathcal{S}\subseteq\mathcal{D}$。$\mathcal{D}$ 对有限交封闭：设 $E=\bigcup_{i=1}^p A_i$ 与 $F=\bigcup_{j=1}^q B_j$ 的右侧均为不交并，则
+\begin{align*}
+E\cap F=\bigcup_{i,j}(A_i\cap B_j),
+\end{align*}
+其中每个 $A_i\cap B_j\in\mathcal{S}$（由半代数对交封闭），且诸 $A_i\cap B_j$ 两两不交，故 $E\cap F\in\mathcal{D}$。
 
-设 $\widetilde{\mu}$ 为 $\mathcal{A}_0(\mathcal{S})$ 上的测度且 $\widetilde{\mu}|_{\mathcal{S}}=\nu$。对任意 $n$ 元不交集合 $E_1,\cdots ,E_n\in\mathcal{S}$，有
-\[
+$\mathcal{D}$ 对差集封闭。设 $A\in\mathcal{S}$、$B\in\mathcal{S}$。由半代数条件，存在两两不交的 $C_1,\cdots ,C_m\in\mathcal{S}$ 使 $B^c=\bigcup_{l=1}^m C_l$，故
+\begin{align*}
+A\setminus B=A\cap B^c=\bigcup_{l=1}^m(A\cap C_l),
+\end{align*}
+右侧是 $\mathcal{S}$ 中两两不交集合之并，属于 $\mathcal{D}$。于是对 $F=\bigcup_{j=1}^q B_j$ 有
+\begin{align*}
+A_i\setminus F=\bigcap_{j=1}^q(A_i\setminus B_j)\in\mathcal{D},
+\end{align*}
+因为有限个 $\mathcal{D}$ 中集合之交仍在 $\mathcal{D}$ 中；从而 $E\setminus F=\bigcup_{i=1}^p(A_i\setminus F)\in\mathcal{D}$。
+
+$\mathcal{D}$ 对并封闭：$E\cup F=E\cup(F\setminus E)$，右侧为 $\mathcal{D}$ 中两个不交集合之并，把它们的分解合并即得 $\mathcal{D}$ 中的成员。此外 $X\in\mathcal{D}$：由 $\varnothing\in\mathcal{S}$ 与半代数条件得 $X=\varnothing^c$ 是 $\mathcal{S}$ 中有限个两两不交集合之并。故 $\mathcal{D}$ 对补集封闭，从而是包含 $\mathcal{S}$ 的代数。由 $\mathcal{A}_0(\mathcal{S})$ 的最小性得 $\mathcal{A}_0(\mathcal{S})\subseteq\mathcal{D}$；反之 $\mathcal{D}$ 的每个成员是 $\mathcal{S}$ 中有限多个成员之并，故属于 $\mathcal{A}_0(\mathcal{S})$。于是
+\begin{align*}
+\mathcal{A}_0(\mathcal{S})=\mathcal{D},
+\end{align*}
+即 $\mathcal{A}_0(\mathcal{S})$ 的每个元素都有有限不交的 $\mathcal{S}$--分解。
+
+第二步：$\mu$ 的良定义性。对 $E\in\mathcal{A}_0(\mathcal{S})$，取第一步给出的有限不交分解 $E=\bigcup_{k=1}^n E_k$（$E_k\in\mathcal{S}$），置
+\begin{align*}
+\mu(E)\triangleq\sum_{k=1}^n\nu(E_k).
+\end{align*}
+设 $E=\bigcup_{j=1}^m F_j$ 是另一个这样的分解。对每个 $k$，由半代数对交封闭得 $E_k\cap F_j\in\mathcal{S}$，且 $E_k=\bigcup_{j=1}^m(E_k\cap F_j)$ 是 $\mathcal{S}$ 中不交集合的有限并，故由 $\nu$ 在 $\mathcal{S}$ 上的有限可加性（由 $\sigma$--可加性把余项取为 $\varnothing$ 得到）有 $\nu(E_k)=\sum_{j=1}^m\nu(E_k\cap F_j)$。于是由各项非负得
+\begin{align*}
+\sum_{k=1}^n\nu(E_k)=\sum_{k=1}^n\sum_{j=1}^m\nu(E_k\cap F_j)=\sum_{j=1}^m\sum_{k=1}^n\nu(E_k\cap F_j)=\sum_{j=1}^m\nu(F_j),
+\end{align*}
+故 $\mu(E)$ 与分解的选取无关。由定义 $\mu(\varnothing )=0$（取 $n=1$、$E_1=\varnothing$），且 $\mu|_{\mathcal{S}}=\nu$（取单元素分解）。
+
+第三步：$\mu$ 的 $\sigma$--可加性。设 $\{E_n\}\subseteq\mathcal{A}_0(\mathcal{S})$ 两两不交，$E\triangleq\bigcup_{n=1}^\infty E_n\in\mathcal{A}_0(\mathcal{S})$。取有限不交 $\mathcal{S}$--分解 $E=\bigcup_{i=1}^p G_i$ 与 $E_n=\bigcup_{k=1}^{k_n}E_{n,k}$。诸 $E_{n,k}$ 属于 $\mathcal{S}$ 且两两不交，而对每个 $i$ 有 $G_i=\bigcup_{n,k}(G_i\cap E_{n,k})$，其中 $G_i\cap E_{n,k}\in\mathcal{S}$ 且两两不交，故由 $\nu$ 在 $\mathcal{S}$ 上的 $\sigma$--可加性得
+\begin{align*}
+\nu(G_i)=\sum_{n,k}\nu(G_i\cap E_{n,k}).
+\end{align*}
+同理由 $E_{n,k}=\bigcup_{i=1}^p(G_i\cap E_{n,k})$ 与 $\nu$ 的有限可加性得 $\nu(E_{n,k})=\sum_{i=1}^p\nu(G_i\cap E_{n,k})$。于是由各项非负得
+\begin{align*}
+\mu(E)&=\sum_{i=1}^p\nu(G_i)=\sum_{i=1}^p\sum_{n,k}\nu(G_i\cap E_{n,k})=\sum_{n,k}\sum_{i=1}^p\nu(G_i\cap E_{n,k})\\
+&=\sum_{n,k}\nu(E_{n,k})=\sum_{n=1}^\infty\sum_{k=1}^{k_n}\nu(E_{n,k})=\sum_{n=1}^\infty\mu(E_n),
+\end{align*}
+故 $\mu$ 是 $\mathcal{A}_0(\mathcal{S})$ 上的测度。
+
+第四步：唯一性。设 $\widetilde{\mu}$ 为 $\mathcal{A}_0(\mathcal{S})$ 上的测度且 $\widetilde{\mu}|_{\mathcal{S}}=\nu$。对任意有限个两两不交的 $E_1,\cdots ,E_n\in\mathcal{S}$，由 $\widetilde{\mu}$ 的可加性得
+\begin{align*}
 \widetilde{\mu}\left(\bigcup_{k=1}^n E_k\right)=\sum_{k=1}^n\widetilde{\mu}(E_k)=\sum_{k=1}^n\nu(E_k)=\mu\left(\bigcup_{k=1}^n E_k\right).
-\]
-每个 $E\in\mathcal{A}_0(\mathcal{S})$ 都是这样一个 $n$ 元组的并，故 $\widetilde{\mu}=\mu$ 在 $\mathcal{A}_0(\mathcal{S})$ 上。这就证明了唯一性，证毕。
+\end{align*}
+由第一步，每个 $E\in\mathcal{A}_0(\mathcal{S})$ 都是这样的并，故 $\widetilde{\mu}=\mu$ 在 $\mathcal{A}_0(\mathcal{S})$ 上。证毕。
 \end{proof}
 
-
+% SUPPLEMENT: parent=proposition:ch01-半代数延拓; kind=motivation; 说明该命题在构造链中的位置、$\varnothing\in\mathcal{S}$ 与半代数分解性质的作用，并给出非半代数族上唯一性失效的完整反例
+\begin{remark}\phantomsection\label{remark:ch01-半代数延拓}
+\begin{enumerate}[(i)]
+\item 在构造链中的位置。半代数是体积最容易定义的族：$N$--胞腔只对交封闭，体积可直接计算。本命题完成第一级扩张“半代数 $\to$ 代数”（唯一），再与\cref{theorem:ch01-测度延拓} 复合即得“半代数 $\to$ $\sigma$--代数”的扩张。整条链
+\begin{align*}
+\mathcal{S}\ \longrightarrow\ \mathcal{A}_0(\mathcal{S})\ \longrightarrow\ \sigma_0(\mathcal{S})\ \longrightarrow\ \overline{\sigma_0(\mathcal{S})}
+\end{align*}
+正是 Lebesgue 测度的构造路线，其中最后一步由\cref{theorem:ch01-测度延拓}(v) 自动给出。
+\item 假设的作用。$\varnothing\in\mathcal{S}$ 用于两处：$X=\varnothing^c\in\mathcal{D}$，以及 $\mu(\varnothing )=0$ 的规范化。半代数的补集分解性质用于第一步，使 $\mathcal{D}$ 对差集封闭，从而 $\mathcal{A}_0(\mathcal{S})=\mathcal{D}$；若没有该性质，$\mathcal{A}_0(\mathcal{S})$ 的元素未必有有限不交的 $\mathcal{S}$--分解。$\nu$ 在 $\mathcal{S}$ 上的 $\sigma$--可加性只在第三步使用，用于对 $G_i$ 的可数分解求和；若 $\nu$ 仅有限可加，该步无法进行。
+\item 唯一性对半代数结构不可去掉。取 $X=\{1,2,3\}$、$\mathcal{F}=\{\{1,2\}\}\subseteq\mathcal{P}(X)$，它是只含一个非空成员的单元素族，不是半代数（$\{1,2\}$ 的补集 $\{3\}$ 不能分解为 $\mathcal{F}$ 中有限个成员之并）。$\mathcal{A}_0(\mathcal{F})=\{\varnothing ,\{1,2\},\{3\},X\}$。令 $\nu(\{1,2\})=1$。对任意 $a\in[0,\infty]$，置
+\begin{align*}
+\mu_a(\varnothing )\triangleq 0,\qquad \mu_a(\{1,2\})\triangleq 1,\qquad \mu_a(\{3\})\triangleq a,\qquad \mu_a(X)\triangleq 1+a.
+\end{align*}
+则 $\mu_a$ 是四元代数上的测度（有限可加性即 $\sigma$--可加性），且 $\mu_a|_{\mathcal{F}}=\nu$，故延拓不唯一。
+\item 边界。命题只断言 $\mathcal{A}_0(\mathcal{S})$ 上延拓的存在性与唯一性，不涉及 $\sigma_0(\mathcal{S})$；后者由\cref{theorem:ch01-测度延拓} 处理，并且只有在 $\nu$ 为 $\sigma$--有限时延拓才唯一。若 $\mathcal{S}$ 不含 $\varnothing$，可先添入 $\varnothing$ 并置 $\nu(\varnothing )=0$，命题的结论不变。
+\end{enumerate}
+\end{remark}
 
 \end{document}

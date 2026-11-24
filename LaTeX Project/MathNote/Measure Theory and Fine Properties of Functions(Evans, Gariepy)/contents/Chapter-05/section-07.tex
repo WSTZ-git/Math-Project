@@ -1,0 +1,879 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{约化边界}\label{section:ch05-07}
+
+本节与下一节研究局部有限周长集的细致结构，目标是验证这样的集合在测度论意义下具有「$C^1$ 边界」。
+
+\subsection{估计}\label{subsection:ch05-07-1}
+
+以下总假设 $E$ 是 $\mathbb{R}^n$ 中具有局部有限周长的集合。$\nu_E$、$\lVert\partial E\rVert$ 等记号的定义见\cref{definition:ch05-def-5-1-周长测度}。% XREF p=236 "Recall the definitions of ν_E, ||∂E||, etc., from Section 5.1."
+
+\begin{definition}[约化边界]\label{definition:ch05-5-4}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集且在 $\mathbb{R}^n$ 中具有局部有限周长，$\lVert\partial E\rVert$ 为 $E$ 的周长测度（$\mathbb{R}^n$ 上的 Radon 测度），$\nu_E:\mathbb{R}^n\to\mathbb{R}^n$ 为按\cref{definition:ch05-def-5-1-周长测度}取定的 $\lVert\partial E\rVert$-可测外法向量场，并设 $x\in\mathbb{R}^n$。对 $r>0$ 且 $\lVert\partial E\rVert(B(x,r))>0$，记 % XREF internal
+\begin{align*}
+\fint_{B(x,r)}\nu_E\diff\lVert\partial E\rVert:=\frac{1}{\lVert\partial E\rVert(B(x,r))}\int_{B(x,r)}\nu_E\diff\lVert\partial E\rVert
+\end{align*}
+为 $\nu_E$ 在 $B(x,r)$ 上关于 $\lVert\partial E\rVert$ 的平均值。若
+\begin{enumerate}[(i)]
+\item 对一切 $r>0$ 有 $\lVert\partial E\rVert(B(x,r))>0$；
+\item 极限 $\lim_{r\to0}\fint_{B(x,r)}\nu_E\diff\lVert\partial E\rVert$ 存在且等于 $\nu_E(x)$；
+\item $\lvert\nu_E(x)\rvert=1$，
+\end{enumerate}
+则称 $x$ 为 $E$ 的\textbf{约化边界点}，$E$ 的全体约化边界点之集
+\begin{align*}
+\partial^*E:=\bigl\{x\in\mathbb{R}^n\bigm|\text{条件 (i)、(ii)、(iii) 成立}\bigr\}
+\end{align*}
+称为 $E$ 的\textbf{约化边界}。
+\end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch05-def-5-4-补集}
+由\cref{theorem:ch01-1-32}，$\lVert\partial E\rVert(\mathbb{R}^n\setminus\partial^*E)=0$。% XREF p=236 "According to Theorem 1.32,"
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-4; kind=motivation; 说明约化边界用测度论语言取代光滑边界的作法：三条条件分别刻画支撑、外法向的方向与单位长度
+\begin{remark}\phantomsection\label{remark:ch05-def-5-4-动机}
+对具有 $C^1$ 边界的集合而言，边界上的每一点都有一致的切平面与单位外法向量，且边界面测度密度为正。定义把这三件事逐条翻译成关于测度 $\lVert\partial E\rVert$ 与向量场 $\nu_E$ 的陈述：条件 (i) 要求 $x$ 被 $\lVert\partial E\rVert$ 的支撑真正承载，条件 (ii) 要求 $\nu_E$ 在 $B(x,r)$ 上的平均值随 $r\to0$ 收敛到其在 $x$ 处的取值，即 $\nu_E$ 在 $x$ 处有一个与球平均相容的连续代表，条件 (iii) 要求该取值是单位向量。于是「边界的法向」不再依赖拓扑边界 $\partial E$ 的光滑性，而由弱导数给出的测度 $\lVert\partial E\rVert$ 及其 Radon--Nikodym 导数 $\nu_E$ 承担。条件 (ii) 的极限若存在，则它必是 $\nu_E$ 在 $x$ 处的 Lebesgue 微分值，因此在条件 (i) 下 (ii) 的含义是「$\nu_E$ 在 $x$ 处有近似连续的代表值」。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-4; kind=hypotheses; 逐条分析 (i)(ii)(iii) 的作用、代表元的选取与三条件的不可省略性
+\begin{remark}\phantomsection\label{remark:ch05-def-5-4-条件}
+\begin{enumerate}[(i)]
+\item 定义要求 $E$ 为 $\mathcal{L}^n$-可测集且在 $\mathbb{R}^n$ 中具有局部有限周长，即 $\chi_E\in\BV_{\loc}(\mathbb{R}^n)$。这保证 $\lVert\partial E\rVert$ 在每个有界 Borel 集上取有限值，从而是 $\mathbb{R}^n$ 上的 Radon 测度；条件 (ii) 中的平均积分与极限因此对每个 $r>0$ 有意义。若只假设 $E$ 可测而不假设局部有限周长，则 $\lVert\partial E\rVert$ 可能取 $+\infty$，比值 $\fint$ 无定义。
+\item 向量场 $\nu_E$ 只在 $\lVert\partial E\rVert$-a.e. 意义下确定：按\cref{definition:ch05-def-5-1-周长测度}取定一个代表元之后，定义中的三条条件才逐点有意义。改变 $\nu_E$ 在一个 $\lVert\partial E\rVert$-零测集上的取值，只会改变 $\partial^*E$ 中相应点的归属；而由\cref{theorem:ch01-1-32}，$\lVert\partial E\rVert(\mathbb{R}^n\setminus\partial^*E)=0$，故 $\partial^*E$ 的 $\lVert\partial E\rVert$-等价类与代表元的选取无关。 % XREF internal
+\item 条件 (i) 使 (ii) 中的分母为正，从而使平均积分有定义；它也排除 $\lVert\partial E\rVert$ 的支撑之外的点。若去掉 (i)，(ii) 中的比值可能为 $0/0$。
+\item 条件 (ii) 中「极限存在」不能减弱为「沿某列 $r_k\to0$ 收敛」：$\partial^*E$ 的定义要求球平均在通常意义下收敛。条件 (ii) 与 (iii) 合起来给出 $\lvert\nu_E(x)\rvert=1$ 的点；由结构定理，$\lvert\nu_E\rvert=1$ 只须在 $\lVert\partial E\rVert$-a.e. 处成立，而 (iii) 把它逐点化。
+\item 条件 (iii) 不可省略：若某点处 $\nu_E(x)=0$，则 (ii) 的极限为 $0$，该点不能充当边界法向。反之，若 (i) 与 (ii) 成立且 $\lVert\partial E\rVert$-a.e. 有 $\lvert\nu_E\rvert=1$，则在 (ii) 成立的点处自动有 (iii)，此时 (iii) 是冗余的。
+\end{enumerate}
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{ch05-5-7-ball.png}
+\end{figure}
+
+\begin{lemma}[球上的 Gauss--Green 公式]\label{lemma:ch05-5-2}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集且在 $\mathbb{R}^n$ 中具有局部有限周长，$\lVert\partial E\rVert$ 为其周长测度，$\nu_E$ 为其外法向量场，$\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$，$x\in\mathbb{R}^n$，$r>0$。记 $\nu(y):=(y-x)/\lvert y-x\rvert$ 为球面 $\partial B(x,r)$ 关于球 $B(x,r)$ 的外单位法向量，其中 $B(x,r)$ 为以 $x$ 为心、$r$ 为半径的开球。则
+\begin{align*}
+\int_{E\cap B(x,r)}\diver\phi\diff y=\int_{B(x,r)}\phi\cdot\nu_E\diff\lVert\partial E\rVert+\int_{E\cap\partial B(x,r)}\phi\cdot\nu\diff\mathcal{H}^{n-1}
+\end{align*}
+对 $\mathcal{L}^1$-a.e. 的 $r>0$ 成立。
+\end{lemma}
+
+\begin{proof}
+设 $h:\mathbb{R}^n\to\mathbb{R}$ 为光滑函数。由乘积法则
+\begin{align*}
+\diver(h\phi)=h\diver\phi+Dh\cdot\phi
+\end{align*}
+以及在 $E$ 上对向量场 $h\phi$ 的 Gauss--Green 公式（见\cref{definition:ch05-def-5-1-周长测度}），有% XREF internal
+\begin{align*}
+\int_E\diver(h\phi)\diff y=\int_E h\diver\phi\diff y+\int_E Dh\cdot\phi\diff y .
+\end{align*}
+于是
+\begin{align*}
+\int_{\mathbb{R}^n}h\phi\cdot\nu_E\diff\lVert\partial E\rVert=\int_E h\diver\phi\diff y+\int_E Dh\cdot\phi\diff y .\qquad(\star)
+\end{align*}
+% SUPPLEMENT: parent=lemma:ch05-5-2; kind=proof; 补出「由逼近 (★) 对 h_ε 也成立」的依据：分段线性的径向函数为 Lipschitz 且具紧支集，可用磨光核逼近并在三项中分别取极限
+函数 $h_\varepsilon(y):=g_\varepsilon(\lvert y-x\rvert)$ 为 Lipschitz 连续且具紧支集，其中
+\begin{align*}
+g_\varepsilon(s):=
+\begin{cases}
+1, & 0\leqslant s\leqslant r,\\[2pt]
+\dfrac{r-s+\varepsilon}{\varepsilon}, & r\leqslant s\leqslant r+\varepsilon,\\[2pt]
+0, & s\geqslant r+\varepsilon .
+\end{cases}
+\end{align*}
+取磨光核 $\eta_\delta$ 并令 $h_\varepsilon^\delta:=\eta_\delta*h_\varepsilon$，则 $h_\varepsilon^\delta$ 光滑、$\lvert h_\varepsilon^\delta\rvert\leqslant1$、$h_\varepsilon^\delta\to h_\varepsilon$ 在 $\mathbb{R}^n$ 上一致收敛且 $\lvert Dh_\varepsilon^\delta\rvert\leqslant\varepsilon^{-1}$、$Dh_\varepsilon^\delta\to Dh_\varepsilon$ 在 $\mathcal{L}^n$-a.e. 处成立。把 $h_\varepsilon^\delta$ 代入 $(\star)$ 后逐项取 $\delta\to0$：左端由 $\lvert h_\varepsilon^\delta\rvert\leqslant1$ 与 $\phi\cdot\nu_E\in L^1(\lVert\partial E\rVert)$ 及控制收敛定理收敛到 $h_\varepsilon$ 的相应积分；右端第一项由 $h_\varepsilon^\delta$ 的一致收敛与 $\lvert E\cap\operatorname{spt}\phi\rvert<\infty$ 收敛；第二项由 $\lvert Dh_\varepsilon^\delta\rvert\leqslant\varepsilon^{-1}$、$Dh_\varepsilon^\delta\to Dh_\varepsilon$ 的 $\mathcal{L}^n$-a.e. 收敛以及控制收敛定理收敛。因此 $(\star)$ 对 $h=h_\varepsilon$ 成立。
+于是
+\begin{align*}
+g_\varepsilon'(s)=
+\begin{cases}
+0, & 0\leqslant s<r\ \text{或}\ s>r+\varepsilon,\\[2pt]
+-\dfrac{1}{\varepsilon}, & r<s<r+\varepsilon,
+\end{cases}
+\end{align*}
+从而
+\begin{align*}
+Dh_\varepsilon(y)=
+\begin{cases}
+0, & \lvert y-x\rvert<r\ \text{或}\ \lvert y-x\rvert>r+\varepsilon,\\[2pt]
+-\dfrac{1}{\varepsilon}\dfrac{y-x}{\lvert y-x\rvert}, & r<\lvert y-x\rvert<r+\varepsilon .
+\end{cases}
+\end{align*}
+在 $(\star)$ 中取 $h=h_\varepsilon$，得
+\begin{align*}
+\int_{\mathbb{R}^n}h_\varepsilon\phi\cdot\nu_E\diff\lVert\partial E\rVert
+&=\int_E h_\varepsilon\diver\phi\diff y\\
+&\quad-\frac{1}{\varepsilon}\int_{E\cap\{y\mid r<\lvert y-x\rvert<r+\varepsilon\}}\phi\cdot\frac{y-x}{\lvert y-x\rvert}\diff y .
+\end{align*}
+% SUPPLEMENT: parent=lemma:ch05-5-2; kind=proof; 补出 ε→0 的三处极限：径向截断的单调收敛、球壳平均的 Lebesgue 微分（极坐标公式）以及球面法向的识别
+令 $\varepsilon\to0$。因 $0\leqslant h_\varepsilon\leqslant1$ 且 $h_\varepsilon\uparrow\chi_{B(x,r)}$，由控制收敛定理，左端收敛到 $\int_{B(x,r)}\phi\cdot\nu_E\diff\lVert\partial E\rVert$，右端第一项收敛到 $\int_{E\cap B(x,r)}\diver\phi\diff y$。对右端第二项用关于 $x$ 的极坐标公式（\cref{theorem:ch03-3-12}）：% XREF p=238 "recall Theorem 3.12 in Section 3.4"
+\begin{align*}
+\frac{1}{\varepsilon}\int_{E\cap\{y\mid r<\lvert y-x\rvert<r+\varepsilon\}}\phi\cdot\frac{y-x}{\lvert y-x\rvert}\diff y
+=\frac{1}{\varepsilon}\int_r^{r+\varepsilon}\left(\int_{E\cap\partial B(x,s)}\phi\cdot\frac{y-x}{\lvert y-x\rvert}\diff\mathcal{H}^{n-1}\right)\diff s .
+\end{align*}
+由 Lebesgue 微分定理，上式对 $\mathcal{L}^1$-a.e. 的 $r>0$ 收敛到
+\begin{align*}
+\int_{E\cap\partial B(x,r)}\phi\cdot\nu\diff\mathcal{H}^{n-1},
+\end{align*}
+其中 $\nu(y)=(y-x)/\lvert y-x\rvert$ 是 $\partial B(x,r)$ 的外单位法向量。把三处极限代入即得所证等式，它对 $\mathcal{L}^1$-a.e. 的 $r>0$ 成立。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-5-2; kind=motivation; 说明把 Gauss--Green 公式限制到球内的动机：边界分成球内部分与球面部分，为后面估计球面测度提供工具
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-2-动机}
+直接对集合 $E\cap B(x,r)$ 使用 Gauss--Green 公式会同时遇到两类边界：位于球内的 $\partial^*E$ 部分与位于球面上的 $\partial B(x,r)$ 部分。引理的作法是在 $E$ 上对截断后的向量场 $h\phi$ 使用公式，再把截断函数取为径向的分段线性函数：$h\equiv1$ 于 $B(x,r)$ 内使公式的左端只涉及球内的散度，而 $h$ 在球外的过渡带把 $E$ 的边界贡献全部集中到球壳 $r<\lvert y-x\rvert<r+\varepsilon$ 上；令 $\varepsilon\to0$ 时球壳上的平均收敛为球面上的面积分。结论把「$E$ 的周长在球内部分」与「球面截出的边界面积」分开，这正是\cref{lemma:ch05-5-3}中控制 $\lVert\partial(E\cap B(x,r))\rVert$ 的来源。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch05-5-2; kind=hypotheses; 逐条分析 φ 的正则性与紧支集、r 的几乎处处限制、以及 E 的局部有限周长假设
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-2-条件}
+\begin{enumerate}[(i)]
+\item 条件 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 使 $\diver\phi$ 连续且具紧支集，从而 $\int_E h\diver\phi\diff y$ 与 $\int_E Dh\cdot\phi\diff y$ 绝对收敛；紧支集还保证 $\lVert\partial E\rVert$ 只在一个紧集上被涉及，故局部有限性足够。若 $\phi$ 仅有紧支集的连续散度而无 $C^1$ 正则性，乘积法则与磨光逼近都需另行处理。
+\item 结论只对 $\mathcal{L}^1$-a.e. 的 $r>0$ 成立，这是因为球壳平均的极限由 Lebesgue 微分定理给出；使极限不存在的 $r$ 构成 $\mathcal{L}^1$-零测集。后面所有以 $r$ 为参数的估计都只在这样的 $r$ 上使用，并在取极限时用零测集的忽略处理。
+\item $E$ 的局部有限周长保证 $\nu_E$ 存在且 $\lvert\nu_E\rvert=1$ 于 $\lVert\partial E\rVert$-a.e.；若 $E$ 的周长在某个紧集上为无穷，则左端的面积分可能发散。
+\item 截断函数 $h_\varepsilon$ 的过渡带宽度为 $\varepsilon$ 而梯度为 $-\varepsilon^{-1}$，两者之积为 $1$；这正是球壳积分收敛到球面积分的机制。若把过渡带换成 $h\equiv1$ 于 $B(x,r)$、$h\equiv0$ 于 $B(x,r+\varepsilon)$ 的光滑截断，则须额外控制 $\lvert Dh\rvert$ 的上界。
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}[约化边界点处的局部估计]\label{lemma:ch05-5-3}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集且在 $\mathbb{R}^n$ 中具有局部有限周长，$\partial^*E$ 为其约化边界。则存在仅依赖于 $n$ 的正常数 $A_1,\cdots,A_5$，使得对每个 $x\in\partial^*E$ 有
+\begin{enumerate}[(i)]
+\item $\displaystyle\liminf_{r\to0}\frac{\mathcal{L}^n(B(x,r)\cap E)}{r^n}>A_1>0$；
+\item $\displaystyle\liminf_{r\to0}\frac{\mathcal{L}^n(B(x,r)\setminus E)}{r^n}>A_2>0$；
+\item $\displaystyle\liminf_{r\to0}\frac{\lVert\partial E\rVert(B(x,r))}{r^{n-1}}>A_3>0$；
+\item $\displaystyle\limsup_{r\to0}\frac{\lVert\partial E\rVert(B(x,r))}{r^{n-1}}\leqslant A_4$；
+\item $\displaystyle\limsup_{r\to0}\frac{\lVert\partial(E\cap B(x,r))\rVert(\mathbb{R}^n)}{r^{n-1}}\leqslant A_5$。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+（1）固定 $x\in\partial^*E$。由\cref{lemma:ch05-5-2}，对 $\mathcal{L}^1$-a.e. 的 $r>0$ 有% XREF internal
+\begin{align*}
+\lVert\partial(E\cap B(x,r))\rVert(\mathbb{R}^n)\leqslant\lVert\partial E\rVert(B(x,r))+\mathcal{H}^{n-1}(E\cap\partial B(x,r)) .\qquad(\star)
+\end{align*}
+% SUPPLEMENT: parent=lemma:ch05-5-3; kind=proof; 补出 (★) 的推导：对 |φ|≤1 用引理 5.2 的公式，再对 φ 取上确界
+事实上，对满足 $\lvert\phi\rvert\leqslant1$ 的 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$，\cref{lemma:ch05-5-2}给出% XREF internal
+\begin{align*}
+\int_{E\cap B(x,r)}\diver\phi\diff y=\int_{B(x,r)}\phi\cdot\nu_E\diff\lVert\partial E\rVert+\int_{E\cap\partial B(x,r)}\phi\cdot\nu\diff\mathcal{H}^{n-1},
+\end{align*}
+故由 $\lvert\phi\rvert\leqslant1$ 与 $\lvert\nu\rvert=1$ 得
+\begin{align*}
+\left\lvert\int_{E\cap B(x,r)}\diver\phi\diff y\right\rvert\leqslant\lVert\partial E\rVert(B(x,r))+\mathcal{H}^{n-1}(E\cap\partial B(x,r)) .
+\end{align*}
+对 $\lvert\phi\rvert\leqslant1$ 的 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 取上确界，即得 $\lVert\partial(E\cap B(x,r))\rVert(\mathbb{R}^n)$ 不超过右端，即 $(\star)$。
+
+现取 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 使
+\begin{align*}
+\phi\equiv\nu_E(x)\quad\text{于 }B(x,r)\text{ 上}.
+\end{align*}
+则\cref{lemma:ch05-5-2}的公式成为% XREF internal
+\begin{align*}
+\int_{B(x,r)}\nu_E(x)\cdot\nu_E\diff\lVert\partial E\rVert=-\int_{E\cap\partial B(x,r)}\nu_E(x)\cdot\nu\diff\mathcal{H}^{n-1} .\qquad(\star\star)
+\end{align*}
+
+（2）因 $x\in\partial^*E$，由\cref{definition:ch05-5-4}的条件 (ii) 与 (iii)，% XREF internal
+\begin{align*}
+\lim_{r\to0}\nu_E(x)\cdot\fint_{B(x,r)}\nu_E\diff\lVert\partial E\rVert=\lvert\nu_E(x)\rvert^2=1 ;
+\end{align*}
+故对 $\mathcal{L}^1$-a.e. 的充分小的 $r>0$，例如 $0<r<r_0=r_0(x)$，由 $(\star\star)$ 得
+\begin{align*}
+\frac{1}{2}\lVert\partial E\rVert(B(x,r))\leqslant\mathcal{H}^{n-1}(E\cap\partial B(x,r)) .\qquad(\star\star\star)
+\end{align*}
+% SUPPLEMENT: parent=lemma:ch05-5-3; kind=proof; 补出由 (★★) 推出 (★★★) 的一步：左端的球平均值趋于 1，故其绝对值不小于 1/2；右端用 |ν_E(x)·ν|≤1 放缩
+这里的第一步是对 $(\star\star)$ 左端用球平均：当 $0<r<r_0$ 时
+\begin{align*}
+\left\lvert\int_{B(x,r)}\nu_E(x)\cdot\nu_E\diff\lVert\partial E\rVert\right\rvert
+=\lVert\partial E\rVert(B(x,r))\left\lvert\fint_{B(x,r)}\nu_E(x)\cdot\nu_E\diff\lVert\partial E\rVert\right\rvert
+\geqslant\frac{1}{2}\lVert\partial E\rVert(B(x,r)),
+\end{align*}
+第二步是对 $(\star\star)$ 右端用 $\lvert\nu_E(x)\rvert=1$ 与 $\lvert\nu\rvert=1$，得
+\begin{align*}
+\left\lvert\int_{E\cap\partial B(x,r)}\nu_E(x)\cdot\nu\diff\mathcal{H}^{n-1}\right\rvert\leqslant\mathcal{H}^{n-1}(E\cap\partial B(x,r)) .
+\end{align*}
+把这两个估计代入 $(\star\star)$ 即得 $(\star\star\star)$。
+再由 $(\star)$ 与 $(\star\star\star)$ 得
+\begin{align*}
+\lVert\partial(E\cap B(x,r))\rVert(\mathbb{R}^n)\leqslant3\mathcal{H}^{n-1}(E\cap\partial B(x,r))\qquad(\star\star\star\star)
+\end{align*}
+对 a.e. 的 $0<r<r_0$ 成立。
+
+（3）记 $g(r):=\mathcal{L}^n(B(x,r)\cap E)$。则由关于 $x$ 的极坐标公式（\cref{theorem:ch03-3-12}）有% XREF internal
+\begin{align*}
+g(r)=\int_0^r\mathcal{H}^{n-1}(\partial B(x,s)\cap E)\diff s,
+\end{align*}
+从而 $g$ 绝对连续，且
+\begin{align*}
+g'(r)=\mathcal{H}^{n-1}(\partial B(x,r)\cap E)\qquad\text{对 a.e. }r>0 .
+\end{align*}
+现用等周不等式与 $(\star\star\star\star)$ 计算：
+\begin{align*}
+g(r)^{1-\frac{1}{n}}
+&=\mathcal{L}^n(B(x,r)\cap E)^{1-\frac{1}{n}}\\
+&\leqslant C\lVert\partial(B(x,r)\cap E)\rVert(\mathbb{R}^n)\\
+&\leqslant C\mathcal{H}^{n-1}(\partial B(x,r)\cap E)\\
+&=C_1g'(r)
+\end{align*}
+对 a.e. 的 $r\in(0,r_0)$ 成立。于是
+\begin{align*}
+\frac{1}{C_1}\leqslant g(r)^{\frac{1}{n}-1}g'(r)=n\bigl(g^{\frac{1}{n}}(r)\bigr)',
+\end{align*}
+从而
+\begin{align*}
+g^{\frac{1}{n}}(r)\geqslant\frac{r}{C_1n}.
+\end{align*}
+因此
+\begin{align*}
+g(r)\geqslant\frac{r^n}{(C_1n)^n}
+\end{align*}
+对 $0<r\leqslant r_0$ 成立。由此得到断言 (i)。
+% SUPPLEMENT: parent=lemma:ch05-5-3; kind=proof; 补出 (i) 的最后一环：绝对连续函数由导数下界推出函数值下界，以及等周不等式中常数 C 的来源
+上述推理的最后一步用到 $g^{\frac{1}{n}}(0)=0$：由 $g^{\frac{1}{n}}$ 绝对连续、$(g^{\frac{1}{n}})'(r)\geqslant\frac{1}{nC_1}$ 于 a.e. 的 $r\in(0,r_0)$ 成立，积分得 $g^{\frac{1}{n}}(r)\geqslant\frac{r}{nC_1}$。等周不等式给出 $\mathcal{L}^n(F)^{1-\frac{1}{n}}\leqslant C\lVert\partial F\rVert(\mathbb{R}^n)$，其中 $C$ 只依赖于 $n$；此处取 $F:=B(x,r)\cap E$，它由 $E$ 的局部有限周长与 $B(x,r)$ 的有界性知具有有限周长。
+
+（4）由于对一切 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 有
+\begin{align*}
+\int_E\diver\phi\diff x+\int_{\mathbb{R}^n\setminus E}\diver\phi\diff x=\int_{\mathbb{R}^n}\diver\phi\diff x=0,
+\end{align*}
+由这一恒等式得到
+\begin{align*}
+\lVert\partial E\rVert=\lVert\partial(\mathbb{R}^n\setminus E)\rVert,\qquad\nu_E=-\nu_{\mathbb{R}^n\setminus E}.
+\end{align*}
+% SUPPLEMENT: parent=lemma:ch05-5-3; kind=proof; 补出 ||∂E||=||∂(R^n−E)|| 与 ν_E=−ν_{R^n−E} 的推导：对检验向量场取上确界比较总变差，再比较 Radon–Nikodym 导数
+对满足 $\lvert\phi\rvert\leqslant1$ 的 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$，把 Gauss--Green 公式用于 $E$ 与 $\mathbb{R}^n\setminus E$ 得
+\begin{align*}
+\int_{\mathbb{R}^n}\phi\cdot\nu_E\diff\lVert\partial E\rVert=-\int_{\mathbb{R}^n}\phi\cdot\nu_{\mathbb{R}^n\setminus E}\diff\lVert\partial(\mathbb{R}^n\setminus E)\rVert .
+\end{align*}
+对 $\lvert\phi\rvert\leqslant1$ 取上确界，两端分别给出 $\lVert\partial E\rVert(V)$ 与 $\lVert\partial(\mathbb{R}^n\setminus E)\rVert(V)$（$V\subseteq\mathbb{R}^n$ 为开集），故两个测度相等；再由上式对一切 $\phi$ 成立，得 $\nu_E=-\nu_{\mathbb{R}^n\setminus E}$ 于 $\lVert\partial E\rVert$-a.e.。
+于是断言 (ii) 由 (i) 推出：把 (i) 用于集合 $\mathbb{R}^n\setminus E$，其中用到 $\mathcal{L}^n(B(x,r)\setminus E)=\mathcal{L}^n(B(x,r)\cap(\mathbb{R}^n\setminus E))$。
+
+（5）由相对等周不等式，
+\begin{align*}
+\frac{\lVert\partial E\rVert(B(x,r))}{r^{n-1}}
+\geqslant C\min\left\{\frac{\mathcal{L}^n(B(x,r)\cap E)}{r^n},\frac{\mathcal{L}^n(B(x,r)\setminus E)}{r^n}\right\}^{\frac{n-1}{n}},
+\end{align*}
+于是断言 (iii) 由 (i)、(ii) 推出。
+% SUPPLEMENT: parent=lemma:ch05-5-3; kind=proof; 补出相对等周不等式的形式与 (iii) 的推导：两密度的一致正下界经 n−1/n 次幂后给出周长密度的正下界
+相对等周不等式断言：存在只依赖于 $n$ 的常数 $C$，使得对每个 $x\in\mathbb{R}^n$、$r>0$ 有
+\begin{align*}
+\lVert\partial E\rVert(B(x,r))\geqslant C\min\left\{\mathcal{L}^n(B(x,r)\cap E),\mathcal{L}^n(B(x,r)\setminus E)\right\}^{\frac{n-1}{n}} .
+\end{align*}
+以 $r^{n-1}$ 除两端，右端化为 $\min\{\mathcal{L}^n(B(x,r)\cap E)/r^n,\mathcal{L}^n(B(x,r)\setminus E)/r^n\}^{\frac{n-1}{n}}$。由 (i)、(ii)，当 $r$ 充分小时两个密度都大于 $\min\{A_1,A_2\}/2$，故右端不小于 $C(\min\{A_1,A_2\}/2)^{\frac{n-1}{n}}$；取 $A_3$ 为该数的一半即可。
+
+（6）由 $(\star\star\star)$，
+\begin{align*}
+\lVert\partial E\rVert(B(x,r))\leqslant2\mathcal{H}^{n-1}(E\cap\partial B(x,r))\leqslant Cr^{n-1}\qquad(0<r<r_0);
+\end{align*}
+此即 (iv)。
+% SUPPLEMENT: parent=lemma:ch05-5-3; kind=proof; 补出 (iv) 中常数 C 的取法：H^{n−1}(∂B(x,r))=nα(n)r^{n−1}
+这里 $\mathcal{H}^{n-1}(\partial B(x,r))=n\alpha(n)r^{n-1}$，其中 $\alpha(n)$ 为 $\mathbb{R}^n$ 中单位球的体积；故 $(\star\star\star)$ 给出 (iv)，常数 $A_4$ 可取 $2n\alpha(n)$。
+
+（7）断言 (v) 是 $(\star)$ 与 (iv) 的推论。
+% SUPPLEMENT: parent=lemma:ch05-5-3; kind=proof; 补出 (v) 的合成：由 (★) 把 ||∂(E∩B)|| 用 ||∂E||(B) 与球面项控制，再用 (iv) 与球面测度公式
+由 $(\star)$ 与 $(\star\star\star\star)$，
+\begin{align*}
+\lVert\partial(E\cap B(x,r))\rVert(\mathbb{R}^n)\leqslant\lVert\partial E\rVert(B(x,r))+\mathcal{H}^{n-1}(E\cap\partial B(x,r))\leqslant A_4r^{n-1}+n\alpha(n)r^{n-1}
+\end{align*}
+对 a.e. 的 $0<r<r_0$ 成立，故 (v) 成立，常数 $A_5$ 可取 $2(A_4+n\alpha(n))$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-5-3; kind=motivation; 说明五款估计的几何含义：约化边界点在 E 内与 E 外都有正密度，周长密度有正下界与有限上界，且截断后的周长密度有界
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-3-动机}
+约化边界点的定义只涉及法向场 $\nu_E$ 的球平均，而本引理把它翻译成五条纯粹的密度估计。第 (i)、(ii) 款说明约化边界点在 $E$ 内与 $E$ 外都占有正比例的体积，因此该点既不是 $E$ 的内点也不是外点；第 (iii)、(iv) 款说明 $\lVert\partial E\rVert$ 在 $x$ 处的 $(n-1)$ 维密度既为正又有限；第 (v) 款说明用球截断 $E$ 之后周长不会突然增大。第 (v) 款是\cref{theorem:ch05-5-13}中紧性论证的关键：它保证膨胀集在 $BV$ 中有界，从而可以抽取收敛子列。第 (i)、(ii) 款则在\cref{theorem:ch05-5-13}的证明末尾用于排除膨胀极限的偏移。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch05-5-3; kind=hypotheses; 逐条分析五个常数只依赖 n、x 属于约化边界这一前提的使用位置、以及各款中 liminf 与 limsup 的区别
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-3-条件}
+\begin{enumerate}[(i)]
+\item 五个常数 $A_1,\cdots,A_5$ 都只依赖于 $n$，不依赖于 $E$ 与 $x$。这一点在\cref{theorem:ch05-5-13}中用于得到与 $r$ 无关的一致界，从而使紧性定理可用；若常数随 $E$ 变化，则沿序列 $E_{s_j}$ 无法得到一致的 $BV$ 界。% XREF internal
+\item 前提 $x\in\partial^*E$ 在证明中通过\cref{definition:ch05-5-4}的条件 (ii) 使用：球平均收敛到 $\nu_E(x)$ 且 $\lvert\nu_E(x)\rvert=1$，才有 $(\star\star\star)$ 中的系数 $1/2$。对一般的点 $x\in\mathbb{R}^n$，该系数不存在，五条估计不必成立。% XREF internal
+\item 第 (i)、(ii) 款的下界与第 (iii) 款的下界相互配合：等周不等式把体积密度转化为周长密度，因此 (iii) 只能由 (i) 与 (ii) 同时给出。若只有 (i) 而没有 (ii)，即 $E$ 在球内占满几乎全部体积，则周长密度可以趋于零，此时 (iii) 失效。
+\item 第 (iv)、(v) 款是上界而不是下界，因此用 $\limsup$ 陈述；第 (i)、(ii)、(iii) 款是下界，故用 $\liminf$ 陈述。上界成立的机制与下界不同：它来自球面面积的增长速度 $\mathcal{H}^{n-1}(\partial B(x,r))=n\alpha(n)r^{n-1}$。
+\item 各款都只对 $r\to0$ 陈述；半径的上界 $r_0=r_0(x)$ 依赖于 $x$，这一点在后续紧性论证中不影响结论，因为只用到 $r\leqslant1$ 时的一致常数。
+\end{enumerate}
+\end{remark}
+
+\subsection{膨胀}\label{subsection:ch05-07-2}
+
+\begin{definition}[超平面与半空间]\label{definition:ch05-5-5}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集且在 $\mathbb{R}^n$ 中具有局部有限周长，$\partial^*E$ 为其约化边界，$\nu_E$ 为其外法向量场，$x\in\partial^*E$。定义过 $x$、以 $\nu_E(x)$ 为法向的超平面
+\begin{align*}
+H(x):=\left\{y\in\mathbb{R}^n\middle|\nu_E(x)\cdot(y-x)=0\right\}
+\end{align*}
+以及由它分出的两个闭半空间
+\begin{align*}
+H^+(x):=\left\{y\in\mathbb{R}^n\middle|\nu_E(x)\cdot(y-x)\geqslant0\right\},\qquad
+H^-(x):=\left\{y\in\mathbb{R}^n\middle|\nu_E(x)\cdot(y-x)\leqslant0\right\}.
+\end{align*}
+则 $H(x)$ 称为 $E$ 在 $x$ 处的\textbf{切超平面}，$H^+(x)$ 与 $H^-(x)$ 分别称为 $E$ 在 $x$ 处的\textbf{外半空间}与\textbf{内半空间}。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch05-5-5; kind=motivation; 说明用 ν_E(x) 定义切平面与半空间的动机：它们正是膨胀极限中的半空间，代替光滑情形下的切平面
+\begin{remark}\phantomsection\label{remark:ch05-def-5-5-动机}
+在光滑边界的情形，$H(x)$ 就是 $\partial E$ 在 $x$ 处的切平面，$H^+(x)$ 是切平面朝外的一侧。定义把这一几何对象完全用 $\nu_E(x)$ 表达，因此即使 $\partial E$ 没有切平面，$H(x)$ 仍有意义。\cref{theorem:ch05-5-13}将证明：把 $E$ 在 $x$ 处按比例放大之后，$E$ 在测度意义下收敛到 $H^-(x)$。这正是「约化边界点在测度意义下具有切平面」的准确含义：切平面不是拓扑意义下的极限，而是膨胀集合的 $L^1_{\loc}$ 极限。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-5; kind=hypotheses; 说明 x∈∂*E 与 |ν_E(x)|=1 的作用、半空间取闭的原因以及 H^+ 与 H^- 的互补性
+\begin{remark}\phantomsection\label{remark:ch05-def-5-5-条件}
+\begin{enumerate}[(i)]
+\item 要求 $x\in\partial^*E$ 是为了保证 $\lvert\nu_E(x)\rvert=1$（\cref{definition:ch05-5-4}的条件 (iii)），从而使 $H(x)$ 是真正的超平面而不是整个空间或空集。若 $\nu_E(x)=0$，则 $H(x)=\mathbb{R}^n$，$H^+(x)=H^-(x)=\mathbb{R}^n$，三个对象都退化。% XREF internal
+\item $\nu_E$ 只在 $\lVert\partial E\rVert$-a.e. 处确定，但 $\partial^*E$ 的每一点都满足\cref{definition:ch05-5-4}的条件 (ii)，故 $\nu_E(x)$ 在该点有确定值；$H(x)$ 因此与代表元的选取无关。% XREF internal
+\item 两个半空间取为闭集，且 $H^+(x)\cup H^-(x)=\mathbb{R}^n$、$H^+(x)\cap H^-(x)=H(x)$。这一约定使\cref{theorem:ch05-5-14}中的两个极限分别控制 $H^+$ 一侧的 $E$ 部分与 $H^-$ 一侧的补集部分，二者的并覆盖整个球。% XREF internal
+\item $H^+(x)$ 与 $H^-(x)$ 的命名相对于 $\nu_E(x)$ 的方向：$\nu_E$ 指向 $H^+$ 一侧，故 $H^+$ 是「外侧」。若把 $\nu_E$ 换成 $-\nu_E$（即考虑补集），两个半空间互换。
+\end{enumerate}
+\end{remark}
+
+\begin{definition*}[膨胀集的记号]\phantomsection\label{definition:ch05-def-5-5-膨胀}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集且在 $\mathbb{R}^n$ 中具有局部有限周长，$x\in\partial^*E$，$r>0$。定义 $E$ 在 $x$ 处、尺度 $r$ 下的\textbf{膨胀集}
+\begin{align*}
+E_r:=\left\{y\in\mathbb{R}^n\middle|r(y-x)+x\in E\right\}
+\end{align*}
+以及相似映射
+\begin{align*}
+g_r(y):=\frac{y-x}{r}+x\qquad(y\in\mathbb{R}^n).
+\end{align*}
+则 $g_r$ 是 $\mathbb{R}^n$ 到自身的相似变换，$E_r=g_r^{-1}(E)$，且对每个 $y\in\mathbb{R}^n$ 有 $y\in E$ 当且仅当 $g_r(y)\in E_r$；特别地，$y\in E\cap B(x,r)$ 当且仅当 $g_r(y)\in E_r\cap B(x,1)$。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch05-def-5-5-膨胀; kind=motivation; 说明膨胀集的动机：把 x 附近尺度 r 的局部图像放大成单位尺度的图像，使 r→0 的极限成为「切平面」
+\begin{remark}\phantomsection\label{remark:ch05-def-5-5-膨胀-动机}
+膨胀把 $x$ 附近半径 $r$ 的窗口放大到单位尺度：$E_r$ 是 $E$ 在相似变换 $g_r^{-1}$ 下的像，$x$ 被送到原点，半径 $r$ 的球被送到单位球。于是「$E$ 在 $x$ 附近的局部形状」被编码为一族集合 $E_r$，而 $r\to0$ 的极限就描述了 $E$ 在 $x$ 处的无穷小结构。\cref{theorem:ch05-5-13}证明该极限恰为半空间 $H^-(x)$，即「测度论意义下的切平面」。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-def-5-5-膨胀; kind=hypotheses; 说明尺度参数 r>0 的作用、周长与体积在膨胀下的齐次性，以及 E_r 与 x 的依赖关系
+\begin{remark}\phantomsection\label{remark:ch05-def-5-5-膨胀-条件}
+\begin{enumerate}[(i)]
+\item 参数 $r$ 取遍 $(0,\infty)$；$r\to0$ 对应放大倍数趋于无穷，$r$ 越大则窗口越大。$E_r$ 同时依赖于 $x$ 与 $r$，但 $x$ 在\cref{theorem:ch05-5-13}中固定。 % XREF internal
+\item 在膨胀下体积与周长按齐次律变化：$\mathcal{L}^n(E_r\cap B(0,L))=\mathcal{L}^n(E\cap B(x,rL))/r^n$，$\lVert\partial E_r\rVert(B(0,L))=\lVert\partial E\rVert(B(x,rL))/r^{n-1}$。前一式使\cref{lemma:ch05-5-3}(i)(ii) 中的体积密度恰好是膨胀集在单位球中的体积；后一式使\cref{lemma:ch05-5-3}(v) 恰好是膨胀集在 $B(L)$ 上的周长。% XREF internal
+\item 定义只用到 $x\in\partial^*E$ 这一前提来保证 $\nu_E(x)$ 与 $H^{\pm}(x)$ 有意义；$E_r$ 本身对任意 $x\in\mathbb{R}^n$ 都可定义，但此时\cref{theorem:ch05-5-13}的结论不必成立。% XREF internal
+\item 相似映射 $g_r$ 把 $B(x,r)$ 双射到 $B(x,1)$，把 $\partial B(x,r)$ 双射到 $\partial B(x,1)$；这正是定义中「$y\in E\cap B(x,r)$ 当且仅当 $g_r(y)\in E_r\cap B(x,1)$」的来源。
+\end{enumerate}
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{ch05-5-7-halfspace.png}
+\end{figure}
+
+\begin{theorem}[约化边界的膨胀]\label{theorem:ch05-5-13}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集且在 $\mathbb{R}^n$ 中具有局部有限周长，$\partial^*E$ 为其约化边界，$x\in\partial^*E$，$E_r:=\{y\in\mathbb{R}^n\mid r(y-x)+x\in E\}$（$r>0$）为 $E$ 在 $x$ 处、尺度 $r$ 下的膨胀集，$H^-(x)$ 为\cref{definition:ch05-5-5}中的内半空间。则% XREF internal
+\begin{align*}
+\chi_{E_r}\to\chi_{H^-(x)}\qquad\text{于 }L^1_{\loc}(\mathbb{R}^n)\ \ (r\to0).
+\end{align*}
+\end{theorem}
+
+于是当 $r>0$ 充分小时，$E\cap B(x,r)$ 在测度意义下近似等于半个球 $H^-(x)\cap B(x,r)$。
+
+\begin{proof}
+（1）首先可以设
+\begin{align*}
+\begin{cases}
+x=0,\quad \nu_E(0)=e_n=(0,\cdots,0,1),\\[2pt]
+H(0)=\{y\in\mathbb{R}^n\mid y_n=0\},\\[2pt]
+H^+(0)=\{y\in\mathbb{R}^n\mid y_n\geqslant 0\},\\[2pt]
+H^-(0)=\{y\in\mathbb{R}^n\mid y_n\leqslant 0\}.
+\end{cases}
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=proof; 补出归一化的依据：平移与旋转保持周长测度、约化边界与外法向场，故可把 x 移到原点、把 ν_E(x) 转到 e_n
+事实上，平移 $y\mapsto y-x$ 与旋转 $y\mapsto Oy$（$O$ 为正交变换）都保持局部有限周长、约化边界与外法向场：若 $\Phi(y):=Oy+x$，则 $\chi_{\Phi^{-1}(E)}\in\BV_{\loc}$，$\lVert\partial\Phi^{-1}(E)\rVert=\Phi^*\lVert\partial E\rVert$，且 $\partial^*\Phi^{-1}(E)=\Phi^{-1}(\partial^*E)$、$\nu_{\Phi^{-1}(E)}(y)=O^{\mathsf{T}}\nu_E(\Phi(y))$。取 $O$ 使 $O^{\mathsf{T}}\nu_E(x)=e_n$ 并令 $x$ 为原点，即得上述四式；膨胀集与半空间在 $\Phi$ 下协变，故 $L^1_{\loc}$ 收敛性不变。
+
+（2）任取序列 $r_k\to0$。只须证明存在子列 $\{s_j\}_{j=1}^{\infty}\subseteq\{r_k\}_{k=1}^{\infty}$，使得
+\begin{align*}
+\chi_{E_{s_j}}\to\chi_{H^-(0)}\qquad\text{于 }L^1_{\loc}(\mathbb{R}^n).
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=proof; 补出「只须证明子列收敛」的依据：若每个序列都有收敛到同一极限的子列，则由子列原理整族在 r→0 时收敛
+若对每个 $r_k\to0$ 都存在子列使 $\chi_{E_{s_j}}$ 收敛到同一个极限 $\chi_{H^-(0)}$，则全族 $\{\chi_{E_r}\}_{r>0}$ 在 $r\to0$ 时按 $L^1_{\loc}$ 收敛到 $\chi_{H^-(0)}$：否则存在 $\varepsilon>0$、紧集 $K$ 与序列 $r_k\to0$ 使 $\lVert\chi_{E_{r_k}}-\chi_{H^-(0)}\rVert_{L^1(K)}\geqslant\varepsilon$，与该序列存在收敛子列矛盾。
+
+（3）固定 $L>0$，令
+\begin{align*}
+D_r:=E_r\cap B(L),\qquad g_r(y)=\frac{y}{r}.
+\end{align*}
+则对任意 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 且 $\lvert\phi\rvert\leqslant1$，有
+\begin{align*}
+\int_{D_r}\diver\phi\diff z
+&=\frac{1}{r^{n-1}}\int_{E\cap B(rL)}\diver(\phi\circ g_r)\diff y\\
+&=\frac{1}{r^{n-1}}\int_{\mathbb{R}^n}(\phi\circ g_r)\cdot\nu_{E\cap B(rL)}\diff\lVert\partial(E\cap B(rL))\rVert\\
+&\leqslant\frac{\lVert\partial(E\cap B(rL))\rVert(\mathbb{R}^n)}{r^{n-1}}\\
+&\leqslant C<\infty
+\end{align*}
+对一切 $r\in(0,1]$ 成立，其中最后一步用到\cref{lemma:ch05-5-3}的 (v)。% XREF internal
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=proof; 补出第一步的变量替换与第二步的 Gauss–Green 公式：z=y/r 使 φ∘g_r 的散度多出因子 1/r，与 Jacobi 因子 r^n 相消；E∩B(rL) 具有有限周长
+第一式的推导：由 $z=y/r$ 得 $\diff z=r^{-n}\diff y$，而 $\diver(\phi\circ g_r)(y)=r^{-1}(\diver\phi)(y/r)$，故
+\begin{align*}
+\int_{D_r}\diver\phi\diff z=\int_{E\cap B(rL)}\diver\phi\Bigl(\frac{y}{r}\Bigr)r^{-n}\diff y=\frac{1}{r^{n-1}}\int_{E\cap B(rL)}\diver(\phi\circ g_r)\diff y .
+\end{align*}
+第二式是\cref{definition:ch05-def-5-1-周长测度}中的 Gauss--Green 公式，用于集合 $E\cap B(rL)$；该集合具有有限周长，因为 $E$ 具有局部有限周长而 $B(rL)$ 有界。第三式由 $\lvert\phi\circ g_r\rvert\leqslant1$ 得到；第四式由\cref{lemma:ch05-5-3}(v) 在点 $0$、半径 $rL$ 处给出，常数 $C:=A_5L^{n-1}$ 只依赖于 $n$ 与 $L$。% XREF internal
+
+于是
+\begin{align*}
+\lVert\partial D_r\rVert(\mathbb{R}^n)\leqslant C<\infty\qquad(0<r\leqslant1).
+\end{align*}
+此外
+\begin{align*}
+\lVert\chi_{D_r}\rVert_{L^1(\mathbb{R}^n)}=\mathcal{L}^n(D_r)\leqslant\mathcal{L}^n(B(L))<\infty\qquad(r>0),
+\end{align*}
+故
+\begin{align*}
+\lVert\chi_{D_r}\rVert_{\BV(\mathbb{R}^n)}\leqslant C<\infty
+\end{align*}
+对一切 $0<r\leqslant1$ 成立。
+
+由这一估计与紧性\cref{theorem:ch05-5-5}，存在子列 $\{s_j\}_{j=1}^{\infty}\subseteq\{r_k\}_{k=1}^{\infty}$ 与 $f\in\BV_{\loc}(\mathbb{R}^n)$，使得% XREF p=227 "In view of this estimate and the compactness Theorem 5.5, there"
+\begin{align*}
+\chi_{E_j}\to f\qquad\text{于 }L^1_{\loc}(\mathbb{R}^n),
+\end{align*}
+其中 $E_j:=E_{s_j}$。
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=proof; 补出由局部紧性定理得到整体 L^1_loc 收敛子列的对角线抽取，以及估计只对 E_r∩B(L) 给出的原因
+紧性定理给出的是局部结论：对每个 $L=1,2,\cdots$，序列 $\{\chi_{D_r}\}_{0<r\leqslant1}$ 在 $\BV(B(L))$ 中有界，故存在子列在 $L^1(B(L))$ 中收敛。按 $L$ 逐次抽取子列并作对角线选取，可得同一子列 $\{s_j\}$ 使 $\chi_{E_{s_j}}$ 在每个 $L^1(B(L))$ 中收敛，即得 $L^1_{\loc}(\mathbb{R}^n)$ 中的收敛；此处用到 $\chi_{D_r}$ 与 $\chi_{E_r}$ 在 $B(L)$ 上一致。
+
+还可设 $\chi_{E_j}\to f$ 于 $\mathcal{L}^n$-a.e.。于是 $f(x)\in\{0,1\}$ 对 $\mathcal{L}^n$-a.e. 的 $x$ 成立，从而
+\begin{align*}
+f=\chi_F\qquad\mathcal{L}^n\text{-a.e.},
+\end{align*}
+其中 $F\subseteq\mathbb{R}^n$ 具有局部有限周长。于是对 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 有
+\begin{align*}
+\int_F\diver\phi\diff y=\int_{\mathbb{R}^n}\phi\cdot\nu_F\diff\lVert\partial F\rVert\qquad(\star)
+\end{align*}
+其中 $\nu_F$ 为某个 $\lVert\partial F\rVert$-可测函数，且 $\lvert\nu_F\rvert=1$ 于 $\lVert\partial F\rVert$-a.e.。以下证明 $F=H^-(0)$。
+
+（4）断言 1：$\nu_F=e_n$ 于 $\lVert\partial F\rVert$-a.e.
+证明：记 $\nu_j:=\nu_{E_j}$。则对 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 有
+\begin{align*}
+\int_{\mathbb{R}^n}\phi\cdot\nu_j\diff\lVert\partial E_j\rVert=\int_{E_j}\diver\phi\diff y\qquad(j=1,2,\cdots).
+\end{align*}
+由于 $\chi_{E_j}\to\chi_F$ 于 $L^1_{\loc}$，由上式与 $(\star)$ 得
+\begin{align*}
+\int_{\mathbb{R}^n}\phi\cdot\nu_j\diff\lVert\partial E_j\rVert\to\int_{\mathbb{R}^n}\phi\cdot\nu_F\diff\lVert\partial F\rVert
+\end{align*}
+当 $j\to\infty$。因此
+\begin{align*}
+\nu_j\lVert\partial E_j\rVert\rightharpoonup\nu_F\lVert\partial F\rVert
+\end{align*}
+按 Radon 测度的意义弱收敛。于是对每个满足 $\lVert\partial F\rVert(\partial B(L))=0$ 的 $L>0$（从而对除至多可数个之外的一切 $L>0$）有
+\begin{align*}
+\int_{B(L)}\nu_j\diff\lVert\partial E_j\rVert\to\int_{B(L)}\nu_F\diff\lVert\partial F\rVert .\qquad(\star\star)
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=proof; 补出「至多可数个 L 例外」的依据：函数 L↦||∂F||(B(L)) 单调，其间断点至多可数；弱收敛的向量测度在极限测度的零边界集上收敛
+函数 $L\mapsto\lVert\partial F\rVert(B(L))$ 单调不减，故其间断点至多可数；在这些点之外 $\lVert\partial F\rVert(\partial B(L))=0$。对这样的 $L$，向量测度 $\nu_F\lVert\partial F\rVert$ 在 $\partial B(L)$ 上不承载质量，故由 Radon 测度弱收敛的定义（对特征函数作单调逼近）得 $(\star\star)$。
+
+另一方面，对如上一切 $\phi$ 有
+\begin{align*}
+\int_{\mathbb{R}^n}\phi\cdot\nu_j\diff\lVert\partial E_j\rVert=\frac{1}{s_j^{n-1}}\int_{\mathbb{R}^n}(\phi\circ g_{s_j})\cdot\nu_E\diff\lVert\partial E\rVert ;
+\end{align*}
+由此
+\begin{align*}
+\begin{cases}
+\lVert\partial E_j\rVert(B^{0}(0,L))=\dfrac{1}{s_j^{n-1}}\lVert\partial E\rVert(B(0,s_jL)),\\[8pt]
+\displaystyle\int_{B(L)}\nu_j\diff\lVert\partial E_j\rVert=\frac{1}{s_j^{n-1}}\int_{B(0,s_jL)}\nu_E\diff\lVert\partial E\rVert .
+\end{cases}\qquad(\star\star\star)
+\end{align*}
+因此
+\begin{align*}
+\lim_{j\to\infty}\fint_{B(L)}\nu_j\diff\lVert\partial E_j\rVert
+=\lim_{j\to\infty}\fint_{B(0,s_jL)}\nu_E\diff\lVert\partial E\rVert
+=\nu_E(0)=e_n,
+\end{align*}
+因为 $0\in\partial^*E$。
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=proof; 补出两组平均值的比较：两个球只相差一个球面，而球面上的 ||∂E||-质量沿 s_j→0 趋于零，故相对误差可忽略；右端极限由约化边界的定义给出
+($\star\star\star$) 第一式中 $B^{0}(0,L)$ 与 $B(L)$ 只相差球面 $\partial B(L)$。由于 $s_j$ 两两不同且 $s_j\to0$，球面 $\partial B(0,s_jL)$ 两两不相交，故
+\begin{align*}
+\sum_{j=1}^{\infty}\lVert\partial E\rVert(\partial B(0,s_jL))\leqslant\lVert\partial E\rVert(B(0,s_1L))<\infty,
+\end{align*}
+从而 $\lVert\partial E\rVert(\partial B(0,s_jL))\to0$。于是 ($\star\star\star$) 两式相除后相对误差趋于零，得第一个等号；第二个等号由\cref{definition:ch05-5-4}的条件 (ii) 与 $s_jL\to0$ 给出。% XREF internal
+
+若 $\lVert\partial F\rVert(\partial B(L))=0$，则下半连续性\cref{theorem:ch05-5-2}蕴含% XREF p=228 "the lower semicontinuity Theorem 5.2 implies"
+\begin{align*}
+\lVert\partial F\rVert(B(L))
+&\leqslant\liminf_{j\to\infty}\lVert\partial E_j\rVert(B(L))\\
+&=\lim_{j\to\infty}\int_{B(L)}e_n\cdot\nu_j\diff\lVert\partial E_j\rVert\\
+&=\int_{B(L)}e_n\cdot\nu_F\diff\lVert\partial F\rVert,
+\end{align*}
+其中最后一步用到 $(\star\star)$。由于 $\lvert\nu_F\rvert=1$ 于 $\lVert\partial F\rVert$-a.e.，上式迫使
+\begin{align*}
+\nu_F=e_n\qquad\lVert\partial F\rVert\text{-a.e.}
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=proof; 补出三个等号与不等号的依据：下半连续性用于 χ_{E_j}→χ_F；中间一步用球平均值趋于 1 把 ||∂E_j||(B(L)) 换成 e_n·ν_j 的积分；最后一式由 e_n·ν_F≤1 且积分不小于全测度推出等号
+下半连续性定理用于 $f_j:=\chi_{E_j}\to\chi_F$ 于 $L^1_{\loc}$ 且 $\sup_j\lVert\partial E_j\rVert(B(L))<\infty$ 的情形，给出 $\lVert\partial F\rVert(B(L))\leqslant\liminf_j\lVert\partial E_j\rVert(B(L))$。中间一步的依据是
+\begin{align*}
+\int_{B(L)}e_n\cdot\nu_j\diff\lVert\partial E_j\rVert=\lVert\partial E_j\rVert(B(L))\fint_{B(L)}e_n\cdot\nu_j\diff\lVert\partial E_j\rVert
+\end{align*}
+以及 $\fint_{B(L)}e_n\cdot\nu_j\diff\lVert\partial E_j\rVert\to1$，而 $\lVert\partial E_j\rVert(B(L))$ 有界，故两列之差趋于零。最后一式中 $e_n\cdot\nu_F\leqslant\lvert\nu_F\rvert=1$，故 $\int_{B(L)}e_n\cdot\nu_F\diff\lVert\partial F\rVert\leqslant\lVert\partial F\rVert(B(L))$；结合上式得等号，从而 $e_n\cdot\nu_F=1$ 于 $B(L)$ 上 $\lVert\partial F\rVert$-a.e.；令 $L\to\infty$ 即得 $\nu_F=e_n$。
+
+由上述不等式还得到
+\begin{align*}
+\lVert\partial F\rVert(B(L))=\lim_{j\to\infty}\lVert\partial E_j\rVert(B(L))
+\end{align*}
+只要 $\lVert\partial F\rVert(\partial B(0,L))=0$。
+
+（5）断言 2：$F$ 是半空间。
+证明：由断言 1，对一切 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 有
+\begin{align*}
+\int_F\diver\phi\diff z=\int_{\mathbb{R}^n}\phi\cdot e_n\diff\lVert\partial F\rVert .
+\end{align*}
+固定 $\varepsilon>0$，令 $f^{\varepsilon}:=\eta_{\varepsilon}*\chi_F$，其中 $\eta_{\varepsilon}$ 为通常的磨光核。则 $f^{\varepsilon}\in C^{\infty}(\mathbb{R}^n)$，于是
+\begin{align*}
+\int_{\mathbb{R}^n}f^{\varepsilon}\diver\phi\diff z
+&=\int_F\diver(\eta_{\varepsilon}*\phi)\diff z\\
+&=\int_{\mathbb{R}^n}\eta_{\varepsilon}*(\phi\cdot e_n)\diff\lVert\partial F\rVert .
+\end{align*}
+另一方面
+\begin{align*}
+\int_{\mathbb{R}^n}f^{\varepsilon}\diver\phi\diff z=-\int_{\mathbb{R}^n}Df^{\varepsilon}\cdot\phi\diff z .
+\end{align*}
+因此
+\begin{align*}
+f^{\varepsilon}_{z_i}=0\ (i=1,\cdots,n-1),\qquad f^{\varepsilon}_{z_n}\leqslant0 .
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=proof; 补出两个积分恒等式与偏导数符号的推导：磨光与散度交换，磨光后的检验向量场仍具紧支集；由 φ 任意得梯度的逐分量等式与不等式
+第一式中把 $\diver$ 与磨光交换：$\diver(\eta_{\varepsilon}*\phi)=\eta_{\varepsilon}*(\diver\phi)$，且 $\eta_{\varepsilon}*\phi\in C_c^1$，故可对 $F$ 使用 $(\star)$，并用 $\nu_F=e_n$ 得第二式。第二个恒等式是分部积分，因为 $f^{\varepsilon}$ 光滑且 $\phi$ 具紧支集。由于 $\phi$ 任意，比较两式得
+\begin{align*}
+f^{\varepsilon}_{z_i}=0\ (i=1,\cdots,n-1),\qquad f^{\varepsilon}_{z_n}=-(\eta_{\varepsilon}*\lVert\partial F\rVert)\leqslant0 .
+\end{align*}
+由于 $f^{\varepsilon}\to\chi_F$ 于 $\mathcal{L}^n$-a.e.（$\varepsilon\to0$），且 $f^{\varepsilon}$ 关于 $z_n$ 单调不增、关于 $z_1,\cdots,z_{n-1}$ 为常值，故除去一个 $\mathcal{L}^n$-零测集之后
+\begin{align*}
+F=\{y\in\mathbb{R}^n\mid y_n\leqslant\gamma\}\qquad\text{对某个 }\gamma\in\mathbb{R}.
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=proof; 补出「单调且只依赖 z_n 的极限必为半空间」的推理：函数列对 z_n 单调不增、沿前 n−1 个方向为常值，其几乎处处极限具有同样性质，水平集即半空间
+对每个 $\varepsilon$，$f^{\varepsilon}$ 只依赖于 $z_n$ 且关于 $z_n$ 单调不增，故其 $\mathcal{L}^n$-a.e. 极限 $g$ 也具有这两个性质，且 $g=\chi_F$ 于 $\mathcal{L}^n$-a.e.。于是存在 $\gamma\in[-\infty,+\infty]$ 使 $g(z)=\chi_{(-\infty,\gamma]}(z_n)$。又由\cref{lemma:ch05-5-3}(i)(ii)，对每个 $r>0$ 与充分大的 $j$ 有 $\mathcal{L}^n(B(0,r)\cap E_j)/r^n> A_1$ 与 $\mathcal{L}^n(B(0,r)\setminus E_j)/r^n>A_2$；由 $\chi_{E_j}\to\chi_F$ 于 $L^1_{\loc}$ 取极限得同样的不等式，故 $F$ 与 $\mathbb{R}^n\setminus F$ 都含有正体积的球内部分，从而 $\gamma\in\mathbb{R}$。在 $\mathcal{L}^n$-零测集上修正 $F$ 之后即得所述形式。% XREF internal
+
+（6）断言 3：$F=H^-(0)$。
+证明：须证明上面的 $\gamma=0$。反之设 $\gamma>0$。由于 $\chi_{E_j}\to\chi_F$ 于 $L^1_{\loc}(\mathbb{R}^n)$，
+\begin{align*}
+\alpha(n)\gamma^n
+&=\mathcal{L}^n(B(0,\gamma)\cap F)=\lim_{j\to\infty}\mathcal{L}^n(B(0,\gamma)\cap E_j)\\
+&=\lim_{j\to\infty}\frac{\mathcal{L}^n(B(0,\gamma s_j)\cap E)}{s_j^n},
+\end{align*}
+这与\cref{lemma:ch05-5-3}(ii) 矛盾。% XREF internal
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=proof; 补出与引理 5.3(ii) 矛盾的具体计算：把极限写成 E 在半径 γs_j 的球中的体积密度，它趋于 α(n)，而 (ii) 断言补集的密度有正下界
+由上式，令 $r_j:=\gamma s_j\to0$，得
+\begin{align*}
+\frac{\mathcal{L}^n(B(0,r_j)\cap E)}{r_j^n}=\frac{\mathcal{L}^n(B(0,\gamma s_j)\cap E)}{\gamma^ns_j^n}\to\frac{\alpha(n)\gamma^n}{\gamma^n}=\alpha(n).
+\end{align*}
+另一方面 $\mathcal{L}^n(B(0,r_j))=\alpha(n)r_j^n$，故 $\mathcal{L}^n(B(0,r_j)\setminus E)/r_j^n\to0$，与\cref{lemma:ch05-5-3}(ii) 中 $\liminf>A_2>0$ 矛盾。% XREF internal
+
+$\gamma<0$ 的情形同样导致与\cref{lemma:ch05-5-3}(i) 的矛盾。% XREF internal
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=proof; 补出 γ<0 时的对称论证：此时球 B(0,|γ|) 与 F 不相交，E_j 在该球中的体积趋于零，与引理 5.3(i) 的正密度矛盾
+设 $\gamma<0$。则 $B(0,\lvert\gamma\rvert)\cap F=\varnothing$，故
+\begin{align*}
+0=\mathcal{L}^n(B(0,\lvert\gamma\rvert)\cap F)=\lim_{j\to\infty}\frac{\mathcal{L}^n(B(0,\lvert\gamma\rvert s_j)\cap E)}{s_j^n},
+\end{align*}
+即 $\mathcal{L}^n(B(0,r_j)\cap E)/r_j^n\to0$（$r_j:=\lvert\gamma\rvert s_j$），与\cref{lemma:ch05-5-3}(i) 中 $\liminf>A_1>0$ 矛盾。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=motivation; 说明膨胀定理是「测度论 C^1 边界」的核心：局部放大后集合趋于半空间，从而切平面在测度意义下存在
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-13-动机}
+本定理给出约化边界点的无穷小结构：把 $E$ 在 $x$ 处按尺度 $r$ 放大，所得集合 $E_r$ 在 $L^1_{\loc}$ 意义下收敛到半空间 $H^-(x)$。这正是「$E$ 在 $x$ 处有切平面」的测度论替代：不要求 $\partial E$ 在 $x$ 处有拓扑切平面，只要求体积在球内的分布趋于半球的分布。证明的策略是先对截断集合 $D_r=E_r\cap B(L)$ 建立与 $r$ 无关的 $BV$ 界（这一步正是\cref{lemma:ch05-5-3}(v) 的用途），再由紧性抽取收敛子列，最后用三条断言把极限集合 $F$ 逐次精确化为半空间：先用法向量的弱收敛与下半连续性定出 $\nu_F=e_n$，再用磨光与单调性把 $F$ 化为坐标半空间，最后用体积密度估计排除偏移。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-13; kind=hypotheses; 逐条分析 x∈∂*E、局部有限周长、L^1_loc 收敛方式与「r→0」的作用
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-13-条件}
+\begin{enumerate}[(i)]
+\item 前提 $x\in\partial^*E$ 在证明中有两处实质作用：其一定义了 $\nu_E(x)$ 与半空间 $H^{\pm}(x)$；其二通过\cref{definition:ch05-5-4}的条件 (ii) 给出球平均的极限 $e_n$，这是断言 1 中 $\nu_F=e_n$ 的唯一来源。若 $x\notin\partial^*E$，膨胀集合的极限可以不是半空间。% XREF internal
+\item $E$ 的局部有限周长保证 $\lVert\partial E\rVert$ 为 Radon 测度，从而\cref{lemma:ch05-5-3}的估计可用，且 $E\cap B(rL)$ 具有有限周长。若 $E$ 的周长在某个紧集上为无穷，则 $D_r$ 的 $BV$ 界不成立。% XREF internal
+\item 结论中的收敛是 $L^1_{\loc}(\mathbb{R}^n)$ 中的收敛，不是逐点收敛，也不是 $\mathcal{L}^n$-a.e. 收敛；证明中为取极限曾转到 $\mathcal{L}^n$-a.e. 收敛的子列，但最终结论是 $L^1_{\loc}$ 的。
+\item 极限只与 $x$ 处的 $\nu_E(x)$ 有关，与 $E$ 在 $x$ 远处的形状无关：$E_r$ 只涉及 $E$ 在 $B(x,rL)$ 中的部分，故这是纯局部结论。
+\item 归一化步骤用到平移与旋转不变性；二者保持 $\lVert\partial E\rVert$、$\partial^*E$ 与 $\nu_E$，故不改变结论。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[约化边界膨胀的进一步性质]\label{theorem:ch05-5-14}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集且在 $\mathbb{R}^n$ 中具有局部有限周长，$\partial^*E$ 为其约化边界，$\nu_E$ 为其外法向量场，$x\in\partial^*E$，$H^{\pm}(x)$ 为\cref{definition:ch05-5-5}中的两个半空间，$\alpha(n-1)$ 为 $\mathbb{R}^{n-1}$ 中单位球的体积。则% XREF internal
+\begin{enumerate}[(i)]
+\item $\displaystyle\lim_{r\to0}\frac{\mathcal{L}^n(B(x,r)\cap E\cap H^+(x))}{r^n}=0$；
+\item $\displaystyle\lim_{r\to0}\frac{\mathcal{L}^n\bigl((B(x,r)\setminus E)\cap H^-(x)\bigr)}{r^n}=0$；
+\item $\displaystyle\lim_{r\to0}\frac{\lVert\partial E\rVert(B(x,r))}{\alpha(n-1)r^{n-1}}=1$。
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[测度论单位外法向]\label{definition:ch05-5-6}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集且在 $\mathbb{R}^n$ 中具有局部有限周长，$\partial^*E$ 为其约化边界，$x\in\partial^*E$，$v\in\mathbb{R}^n$ 为单位向量，即 $\lvert v\rvert=1$。若
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(\{y\in B(x,r)\cap E\mid v\cdot(y-x)\geqslant0\}\bigr)}{r^n}=0,
+\end{align*}
+则 $v$ 称为 $E$ 在 $x$ 处的\textbf{测度论单位外法向}。由\cref{theorem:ch05-5-14}(i)，$\nu_E(x)$ 就是 $E$ 在 $x$ 处的测度论单位外法向。% XREF internal
+\end{definition}
+
+\begin{proof}
+（1）有
+\begin{align*}
+\frac{\mathcal{L}^n(B(x,r)\cap E\cap H^+(x))}{r^n}
+&=\mathcal{L}^n(B(x,1)\cap E_r\cap H^+(x))\\
+&\to\mathcal{L}^n\bigl(B(x,1)\cap H^-(x)\cap H^+(x)\bigr)=0
+\end{align*}
+当 $r\to0$。极限 (ii) 的论证与此相同。
+% SUPPLEMENT: parent=theorem:ch05-5-14; kind=proof; 补出 (i) 中变量替换与极限的依据：膨胀把球 B(x,r) 与体积因子 r^n 同时消去，再用定理 5.13 的 L^1 收敛；并补出 (ii) 的对称论证
+由膨胀的定义，$y\in B(x,r)\cap E$ 当且仅当 $g_r(y)\in B(x,1)\cap E_r$，且 $g_r$ 的 Jacobi 因子为 $r^{-n}$，故第一个等号成立。由\cref{theorem:ch05-5-13}，$\chi_{E_r}\to\chi_{H^-(x)}$ 于 $L^1_{\loc}$，故其在 $B(x,1)$ 上关于 $\chi_{H^+(x)}$ 的积分收敛，得极限为零。对 (ii)，$B(x,r)\setminus E$ 的膨胀是 $B(x,1)\setminus E_r$，把上面的论证用于 $\chi_{B(x,1)\setminus E_r}\to\chi_{B(x,1)}-\chi_{H^-(x)}$ 在 $H(x)$ 之外成立，以及半空间 $H^-(x)$ 即可。% XREF internal
+
+（2）设 $x=0$。由\cref{theorem:ch05-5-13}证明中的 ($\star\star\star$)，% XREF internal
+\begin{align*}
+\frac{\lVert\partial E\rVert(B(r))}{r^{n-1}}=\lVert\partial E_r\rVert(B(1)).
+\end{align*}
+由于 $\lVert\partial H^-(0)\rVert(\partial B(1))=\mathcal{H}^{n-1}(\partial B(1)\cap H(0))=0$，\cref{theorem:ch05-5-13}证明的第 (4) 步蕴含% XREF internal
+\begin{align*}
+\lim_{r\to0}\frac{\lVert\partial E\rVert(B(r))}{r^{n-1}}
+&=\lVert\partial H^-(0)\rVert(B(1))\\
+&=\mathcal{H}^{n-1}(B(1)\cap H(0))\\
+&=\alpha(n-1).
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-14; kind=proof; 补出 (iii) 的两处细节：膨胀下周长的齐次性给出第一式；球面 ∂B(1)∩H(0) 的 H^{n−1} 测度为零使弱收敛在 B(1) 上可取到，最后 B(1)∩H(0) 是 (n−1) 维单位球
+第一式是周长在相似变换下的齐次性：$\lVert\partial E_r\rVert(B(1))=\lVert\partial E\rVert(B(r))/r^{n-1}$。第二式用\cref{theorem:ch05-5-13}证明中已证的 $\lVert\partial F\rVert(B(L))=\lim_j\lVert\partial E_j\rVert(B(L))$（取 $F=H^-(0)$、$L=1$），其前提 $\lVert\partial F\rVert(\partial B(1))=0$ 由此处计算：$\partial B(1)\cap H(0)$ 是 $(n-1)$ 维球面中的一个「大圆」，其 $\mathcal{H}^{n-1}$ 测度为零，故 $\lVert\partial H^-(0)\rVert(\partial B(1))=\mathcal{H}^{n-1}(\partial B(1)\cap H(0))=0$。第三式中 $B(1)\cap H(0)$ 是 $\mathbb{R}^{n-1}$ 中的单位球，其 $\mathcal{H}^{n-1}$ 测度为 $\alpha(n-1)$。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-14; kind=motivation; 说明三款结论的几何含义：膨胀极限不仅是 L^1 收敛，而且给出体积密度与周长密度的精确渐近常数
+\begin{remark}\phantomsection\label{remark:ch05-def-5-6-动机}
+\cref{theorem:ch05-5-13}只给出膨胀集合的 $L^1_{\loc}$ 收敛，本定理把它量化为三条密度公式：在 $H^+(x)$ 一侧球内几乎不含 $E$ 的点，在 $H^-(x)$ 一侧球内几乎全被 $E$ 占据，而周长测度在球内的质量渐近等于超平面上的 $(n-1)$ 维单位球面积 $\alpha(n-1)r^{n-1}$。第三条是「边界面测度密度为 $1$」的精确版本，它在\cref{theorem:ch05-5-15}的证明中用于把 $\mathcal{H}^{n-1}\llcorner S_1$ 与 $\lVert\partial E\rVert$ 比较。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-14; kind=hypotheses; 逐条分析三款中量词与常数的来源、半空间取闭的作用以及 α(n−1) 的规范化
+\begin{remark}\phantomsection\label{remark:ch05-def-5-6-条件}
+\begin{enumerate}[(i)]
+\item 三款都对每个 $x\in\partial^*E$ 成立，极限中的常数只依赖于 $n$（通过 $\alpha(n-1)$）而不依赖于 $E$ 与 $x$；这与\cref{lemma:ch05-5-3}中常数只依赖 $n$ 的性质一致。% XREF internal
+\item 第 (i)、(ii) 款中的半空间取为闭集并不影响结论：$\mathcal{L}^n(H(x))=0$，故把 $H^+(x)$ 换成开半空间或去掉边界都不改变体积。
+\item 第 (iii) 款的分子是 $\lVert\partial E\rVert(B(x,r))$ 而不是 $\lVert\partial(E\cap B(x,r))\rVert$；后者只满足上界估计（\cref{lemma:ch05-5-3}(v)），其精确渐近常数一般不等于 $\alpha(n-1)$，因为球面截断会带来额外的边界贡献。% XREF internal
+\item 第 (iii) 款说明 $\lVert\partial E\rVert$ 在 $x$ 处的 $(n-1)$ 维密度恰为 $1$（相对于 $\mathcal{H}^{n-1}$ 的规范化）。这与\cref{theorem:ch05-5-15}(iii) 中 $\lVert\partial E\rVert=\mathcal{H}^{n-1}\llcorner\partial^*E$ 的等式相容。% XREF internal
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-6; kind=motivation; 说明为什么把「单位外法向」重新定义为一条体积密度条件：它只涉及 E 本身，不依赖 ν_E 的取法，因而可用于判别与唯一性
+\begin{remark}\phantomsection\label{remark:ch05-def-5-6-b}
+原始的法向量 $\nu_E$ 由 $\lVert\partial E\rVert$ 关于 $\lVert D\chi_E\rVert$ 的 Radon--Nikodym 导数给出，其定义依赖测度分解；而定义中的条件只涉及 $E$ 的体积分布，不涉及任何测度分解。这样定义的好处是：它把「外法向」变成一条可用体积密度检验的性质，从而可以独立地判定一个给定向量是否为外法向。\cref{theorem:ch05-5-14}(i) 说明 $\nu_E(x)$ 满足该条件，故两种描述在约化边界点上一致。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-6; kind=hypotheses; 说明单位性、x∈∂*E 前提、条件的可判定性以及唯一性的来源
+\begin{remark}\phantomsection\label{remark:ch05-def-5-6-b-b}
+\begin{enumerate}[(i)]
+\item 条件 $\lvert v\rvert=1$ 是定义的一部分：若允许 $v=0$，则半空间 $\{v\cdot(y-x)\geqslant0\}$ 为整个空间，条件化为 $\mathcal{L}^n(B(x,r)\cap E)/r^n\to0$，与约化边界点的正密度估计（\cref{lemma:ch05-5-3}(i)）矛盾，故单位性不可省略。% XREF internal
+\item 前提 $x\in\partial^*E$ 保证 $\mathcal{L}^n(B(x,r)\cap E)/r^n$ 与 $\mathcal{L}^n(B(x,r)\setminus E)/r^n$ 都有正的下极限（\cref{lemma:ch05-5-3}(i)(ii)），从而使「一侧体积密度为零」成为有内容的条件。% XREF internal
+\item 条件是可判定的：它只要求一个体积比的极限为零，不涉及除极限存在性以外的正则性。由\cref{theorem:ch05-5-14}(i)，$\nu_E(x)$ 满足该条件；若另有单位向量 $v$ 满足该条件且 $v\neq\nu_E(x)$，则由\cref{theorem:ch05-5-14}(ii)，$E$ 在 $B(x,r)\cap H^-(\nu_E(x))$ 中占满几乎全部体积；而 $H^+(v)\cap H^-(\nu_E(x))$ 含有体积比例为正常数的锥，故 $E\cap B(x,r)\cap H^+(v)$ 的体积与 $r^n$ 之比有正的下极限，与 $v$ 满足该条件矛盾，因此 $v=\nu_E(x)$。% XREF internal
+\item 定义中不要求 $E$ 的边界在 $x$ 处有切平面；条件只描述 $E$ 在球内的体积如何偏向 $v$ 的一侧。
+\end{enumerate}
+\end{remark}
+
+\subsection{有限周长集的结构定理}\label{subsection:ch05-07-3}
+
+\begin{lemma}[约化边界上的 Hausdorff 测度估计]\label{lemma:ch05-5-4}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集且在 $\mathbb{R}^n$ 中具有局部有限周长，$\lVert\partial E\rVert$ 为其周长测度，$\partial^*E$ 为其约化边界。$\mathcal{H}^{n-1}$ 表示 $(n-1)$ 维 Hausdorff 测度，$\lVert\partial E\rVert(B)$ 对 $B\subseteq\partial^*E$ 按外测度理解。则存在只依赖于 $n$ 的常数 $C$，使得
+\begin{align*}
+\mathcal{H}^{n-1}(B)\leqslant C\lVert\partial E\rVert(B)
+\end{align*}
+对一切 $B\subseteq\partial^*E$ 成立。
+\end{lemma}
+
+\begin{proof}
+设 $\varepsilon,\delta>0$，$B\subseteq\partial^*E$。由于 $\lVert\partial E\rVert$ 是 Radon 测度，存在开集 $U\supseteq B$，使得
+\begin{align*}
+\lVert\partial E\rVert(U)\leqslant\lVert\partial E\rVert(B)+\varepsilon .
+\end{align*}
+由\cref{lemma:ch05-5-3}，若 $x\in\partial^*E$，则% XREF internal
+\begin{align*}
+\liminf_{r\to0}\frac{\lVert\partial E\rVert(B(x,r))}{r^{n-1}}>A_3>0 .
+\end{align*}
+令
+\begin{align*}
+\mathcal{F}:=\left\{B(x,r)\middle|x\in B,\ B(x,r)\subseteq U,\ r<\frac{\delta}{10},\ \lVert\partial E\rVert(B(x,r))>A_3r^{n-1}\right\}.
+\end{align*}
+由 Vitali 覆盖定理，存在互不相交的球 $\{B(x_i,r_i)\}_{i=1}^{\infty}\subseteq\mathcal{F}$，使得
+\begin{align*}
+B\subseteq\bigcup_{i=1}^{\infty}B(x_i,5r_i).
+\end{align*}
+由于 $\operatorname{diam}B(x_i,5r_i)\leqslant\delta$ 对 $i=1,2,\cdots$ 成立，
+\begin{align*}
+\mathcal{H}^{n-1}_{\delta}(B)
+&\leqslant\sum_{i=1}^{\infty}\alpha(n-1)(5r_i)^{n-1}\\
+&\leqslant C\sum_{i=1}^{\infty}\lVert\partial E\rVert(B(x_i,r_i))\\
+&\leqslant C\lVert\partial E\rVert(U)\\
+&\leqslant C\bigl(\lVert\partial E\rVert(B)+\varepsilon\bigr).
+\end{align*}
+先令 $\varepsilon\to0$，再令 $\delta\to0$，即得 $\mathcal{H}^{n-1}(B)\leqslant C\lVert\partial E\rVert(B)$。
+% SUPPLEMENT: parent=lemma:ch05-5-4; kind=proof; 补出四步细节：U 由外正则性取到；Vitali 覆盖的选择条件；球半径放大 5 倍后 H^{n−1}_δ 的估计与并的测度估计；常数 C 的构成
+上述论证的细节如下。其一，由 $\lVert\partial E\rVert$ 的外正则性，开集 $U\supseteq B$ 可取到使 $\lVert\partial E\rVert(U)\leqslant\lVert\partial E\rVert(B)+\varepsilon$；同时可设 $U$ 有界，故 $\lVert\partial E\rVert(U)<\infty$。其二，族 $\mathcal{F}$ 中每个球的半径小于 $\delta/10$ 且含于 $U$，故 $\operatorname{diam}B(x_i,5r_i)=10r_i<\delta$，从而 $\{B(x_i,5r_i)\}$ 是 $B$ 的一个 $\delta$-覆盖，这给出第一式。其三，由 $\lVert\partial E\rVert(B(x_i,r_i))>A_3r_i^{n-1}$ 得 $r_i^{n-1}<A_3^{-1}\lVert\partial E\rVert(B(x_i,r_i))$，故 $\alpha(n-1)(5r_i)^{n-1}\leqslant\alpha(n-1)5^{n-1}A_3^{-1}\lVert\partial E\rVert(B(x_i,r_i))$，求和后由 $\{B(x_i,r_i)\}$ 互不相交且含于 $U$ 得第三式，常数 $C:=\alpha(n-1)5^{n-1}A_3^{-1}$。其四，令 $\delta\to0$ 时 $\mathcal{H}^{n-1}_{\delta}(B)$ 单调增加趋于 $\mathcal{H}^{n-1}(B)$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-5-4; kind=motivation; 说明引理的含义：周长测度控制约化边界上的 H^{n−1} 测度，因而是结构定理 (iii) 中 n−1 维面积公式的关键
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-4-动机}
+引理说明 $\lVert\partial E\rVert$ 是约化边界上 $\mathcal{H}^{n-1}$ 的控制测度：只要 $\lVert\partial E\rVert(B)=0$，就有 $\mathcal{H}^{n-1}(B)=0$。它的证明把\cref{lemma:ch05-5-3}(iii) 中的周长密度下界与 Vitali 覆盖定理结合：每个小球内的周长至少与半径的 $n-1$ 次幂成正比，故用一族互不相交的球覆盖 $B$ 时，$\mathcal{H}^{n-1}$ 的 $\delta$-逼近被周长测度控制。\cref{theorem:ch05-5-15}(iii) 中要证明的反向不等式 $\lVert\partial E\rVert\leqslant\mathcal{H}^{n-1}\llcorner\partial^*E$ 依赖本引理来排除零测集 $N$。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch05-5-4; kind=hypotheses; 说明 B 只须为 ∂*E 的任意子集、δ 与 ε 的次序、以及常数 C 只依赖 n 的原因
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-4-条件}
+\begin{enumerate}[(i)]
+\item 结论对 $\partial^*E$ 的任意子集 $B$ 成立，不要求 $B$ 是 Borel 集或 $\lVert\partial E\rVert$-可测集。这是因为右端 $\lVert\partial E\rVert(B)$ 按外测度理解，而证明中的覆盖论证只用到 $B$ 的集合论性质。
+\item 证明中先令 $\varepsilon\to0$ 再令 $\delta\to0$：固定 $\delta$ 时右端含 $\varepsilon$，只有先消去 $\varepsilon$ 才能得到与 $\delta$ 无关的估计 $\mathcal{H}^{n-1}_{\delta}(B)\leqslant C\lVert\partial E\rVert(B)$，再对 $\delta\to0$ 取上确界。
+\item 常数 $C=\alpha(n-1)5^{n-1}A_3^{-1}$ 只依赖于 $n$，因为 $A_3$ 只依赖于 $n$（\cref{lemma:ch05-5-3}）。若 $A_3$ 依赖于 $E$ 或 $x$，结论中的常数将不是一致的。% XREF internal
+\item 球半径放大 $5$ 倍来自 Vitali 覆盖定理的结论形式；放大倍数只影响常数 $C$，不影响论证。若改用 Besicovitch 覆盖定理，相应的常数需要按覆盖重数调整。
+\end{enumerate}
+\end{remark}
+
+下面证明：局部有限周长集在测度论意义下具有 $C^1$ 边界。
+
+\begin{theorem}[有限周长集的结构定理]\label{theorem:ch05-5-15}
+设 $n\geqslant1$ 为整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集且在 $\mathbb{R}^n$ 中具有局部有限周长，$\partial^*E$ 为其约化边界，$\nu_E$ 为其外法向量场。则下列结论成立。
+\begin{enumerate}[(i)]
+\item 存在紧集 $K_k$（$k=1,2,\cdots$）与集合 $N$，使得
+\begin{align*}
+\partial^*E=\bigcup_{k=1}^{\infty}K_k\cup N,
+\end{align*}
+其中 $\lVert\partial E\rVert(N)=0$，且每个 $K_k$ 是某个 $C^1$ 超曲面 $S_k$ 的紧子集（$k=1,2,\cdots$）。
+\item $\nu_E|_{S_k}$ 是 $S_k$ 的法向（$k=1,2,\cdots$），即对每个 $k$ 与每个 $x\in K_k$，$\nu_E(x)$ 是 $S_k$ 在 $x$ 处的单位法向。
+\item 此外，
+\begin{align*}
+\lVert\partial E\rVert=\mathcal{H}^{n-1}\llcorner\partial^*E .
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）对每个 $x\in\partial^*E$，由\cref{theorem:ch05-5-14}有% XREF internal
+\begin{align*}
+\begin{cases}
+\displaystyle\lim_{r\to0}\frac{\mathcal{L}^n(B(x,r)\cap E\cap H^+(x))}{r^n}=0,\\[8pt]
+\displaystyle\lim_{r\to0}\frac{\mathcal{L}^n\bigl((B(x,r)\setminus E)\cap H^-(x)\bigr)}{r^n}=0 .
+\end{cases}\qquad(\star)
+\end{align*}
+由 Egoroff 定理，存在互不相交的 $\lVert\partial E\rVert$-可测集 $\{F_i\}_{i=1}^{\infty}\subseteq\partial^*E$，使得
+\begin{align*}
+\begin{cases}
+\lVert\partial E\rVert\Bigl(\partial^*E\setminus\bigcup_{i=1}^{\infty}F_i\Bigr)=0,\quad\lVert\partial E\rVert(F_i)<\infty,\ \text{且}\\[6pt]
+(\star)\text{ 中的收敛对 }x\in F_i\text{ 一致}\ (i=1,2,\cdots).
+\end{cases}
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-15; kind=proof; 补出 Egoroff 定理的适用方式：在 ∂*E∩B(m) 这类有限测度集上对 r_j=1/j 的序列用 Egoroff，再按 m 重排；一致收敛与有限测度可同时满足
+Egoroff 定理用于序列而非连续参数，故先在 $\partial^*E\cap B(m)$（$m=1,2,\cdots$）上对序列 $r_j:=1/j$ 使用它：由\cref{theorem:ch01-1-16}，对每个 $m$ 与每个 $l$ 存在 $\lVert\partial E\rVert$-可测集 $F_{m,l}\subseteq\partial^*E\cap B(m)$，使 $\lVert\partial E\rVert\bigl((\partial^*E\cap B(m))\setminus F_{m,l}\bigr)<2^{-l}$ 且 $(\star)$ 中的两个极限对 $x\in F_{m,l}$ 一致收敛。把 $\{F_{m,l}\}$ 重排为互不相交的序列并令 $F_i$ 为其中第 $i$ 个集合减去前面各集之并，则 $\partial^*E\setminus\bigcup_iF_i$ 是 $\lVert\partial E\rVert$-零测集，且每个 $F_i$ 的 $\lVert\partial E\rVert$-测度有限（含于某个 $B(m)$）。% XREF internal
+
+再由 Lusin 定理，对每个 $i$ 存在互不相交的紧集 $\{E_i^j\}_{j=1}^{\infty}\subset F_i$，使得
+\begin{align*}
+\lVert\partial E\rVert\Bigl(F_i\setminus\bigcup_{j=1}^{\infty}E_i^j\Bigr)=0,\qquad \nu_E|_{E_i^j}\text{ 连续}.
+\end{align*}
+把集合族 $\{E_i^j\}_{i,j=1}^{\infty}$ 重新编号为 $\{K_k\}_{k=1}^{\infty}$。则
+\begin{align*}
+\begin{cases}
+\partial^*E=\bigcup_{k=1}^{\infty}K_k\cup N,\qquad\lVert\partial E\rVert(N)=0,\\[4pt]
+(\star)\text{ 中的收敛在 }K_k\text{ 上一致},\\[4pt]
+\nu_E|_{K_k}\text{ 连续}\ (k=1,2,\cdots).
+\end{cases}\qquad(\star\star)
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-15; kind=proof; 补出 Lusin 定理的使用：ν_E 在有限测度集 F_i 上取紧集使其上连续且余集测度任意小，再对 ε=1/l 取并得到零余测度
+Lusin 定理（\cref{theorem:ch01-1-14}）用于 $\lVert\partial E\rVert(F_i)<\infty$ 与 $\lVert\partial E\rVert$-可测映射 $\nu_E$：对每个 $l$ 存在紧集 $C_l\subseteq F_i$ 使 $\lVert\partial E\rVert(F_i\setminus C_l)<1/l$ 且 $\nu_E|_{C_l}$ 连续。令 $E_i^j:=C_j\setminus\bigcup_{l<j}C_l$，则 $\{E_i^j\}$ 互不相交、为紧集，且 $\nu_E|_{E_i^j}$ 连续；又 $\lVert\partial E\rVert\bigl(F_i\setminus\bigcup_jE_i^j\bigr)\leqslant\lVert\partial E\rVert(F_i\setminus C_l)<1/l$ 对一切 $l$ 成立，故余集为零测集。% XREF internal
+
+（2）对 $\delta>0$ 定义
+\begin{align*}
+\rho_k(\delta):=\sup\left\{\frac{\lvert\nu_E(x)\cdot(y-x)\rvert}{\lvert y-x\rvert}\,\middle|\,0<\lvert x-y\rvert\leqslant\delta,\ x,y\in K_k\right\}.
+\end{align*}
+
+（3）断言：对每个 $k=1,2,\cdots$，有 $\rho_k(\delta)\to0$（$\delta\to0$）。
+证明：先对 $k=1$ 论证，其余各 $k$ 只把 $K_1$ 换成 $K_k$。固定 $0<\varepsilon<1$。由 $(\star)$、$(\star\star)$，存在 $0<\delta<1$，使得当 $z\in K_1$ 且 $r<2\delta$ 时有
+\begin{align*}
+\begin{cases}
+\mathcal{L}^n(E\cap B(z,r)\cap H^+(z))<\dfrac{\varepsilon^n}{2^{n+2}}\alpha(n)r^n,\\[8pt]
+\mathcal{L}^n(E\cap B(z,r)\cap H^-(z))>\alpha(n)\Bigl(\dfrac{1}{2}-\dfrac{\varepsilon^n}{2^{n+2}}\Bigr)r^n .
+\end{cases}\qquad(\star\star\star)
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-15; kind=proof; 补出 (★★★) 中两个不等式的来源：第一式由 (★) 第一式的一致收敛，第二式由 (★) 第二式与半球的体积 α(n)r^n/2 相减
+第一式由 $(\star)$ 的第一式在 $K_1$ 上的一致收敛得到：当 $r<2\delta$ 时 $\mathcal{L}^n(B(z,r)\cap E\cap H^+(z))/r^n<\varepsilon^n/2^{n+2}$。第二式由 $(\star)$ 的第二式与体积恒等式
+\begin{align*}
+\mathcal{L}^n(E\cap B(z,r)\cap H^-(z))=\mathcal{L}^n(B(z,r)\cap H^-(z))-\mathcal{L}^n((B(z,r)\setminus E)\cap H^-(z))
+\end{align*}
+得到；其中 $\mathcal{L}^n(B(z,r)\cap H^-(z))=\alpha(n)r^n/2$，而第二项小于 $(\varepsilon^n/2^{n+2})\alpha(n)r^n$。
+
+现设 $x,y\in K_1$ 且 $0<\lvert x-y\rvert\leqslant\delta$。
+情形 1：$\nu_E(x)\cdot(y-x)>\varepsilon\lvert x-y\rvert$。则因 $\varepsilon<1$，
+\begin{align*}
+B(y,\varepsilon\lvert x-y\rvert)\subseteq H^+(x)\cap B(x,2\lvert x-y\rvert).\qquad(\star\star\star\star)
+\end{align*}
+为看出这一点，取 $z\in B(y,\varepsilon\lvert x-y\rvert)$，则 $z=y+w$，其中 $\lvert w\rvert\leqslant\varepsilon\lvert x-y\rvert$。于是
+\begin{align*}
+\nu_E(x)\cdot(z-x)=\nu_E(x)\cdot(y-x)+\nu_E(x)\cdot w>\varepsilon\lvert x-y\rvert-\lvert w\rvert\geqslant0 .
+\end{align*}
+另一方面，$(\star\star\star)$ 取 $z=x$ 给出
+\begin{align*}
+\mathcal{L}^n(E\cap B(x,2\lvert x-y\rvert)\cap H^+(x))
+&<\frac{\varepsilon^n}{2^{n+2}}\alpha(n)(2\lvert x-y\rvert)^n\\
+&=\frac{\varepsilon^n\alpha(n)}{4}\lvert x-y\rvert^n ;
+\end{align*}
+而 $(\star\star\star)$ 取 $z=y$ 给出
+\begin{align*}
+\mathcal{L}^n(E\cap B(y,\varepsilon\lvert x-y\rvert))
+&\geqslant\mathcal{L}^n(E\cap B(y,\varepsilon\lvert x-y\rvert)\cap H^-(y))\\
+&\geqslant\frac{\varepsilon^n\alpha(n)\lvert x-y\rvert^n}{2}\Bigl(1-\frac{\varepsilon^n}{2^{n+1}}\Bigr)\\
+&>\frac{\varepsilon^n\alpha(n)}{4}\lvert x-y\rvert^n .
+\end{align*}
+对 $(\star\star\star\star)$ 两端施加 $\mathcal{L}^n\llcorner E$，所得的估计与上面两个不等式矛盾。
+% SUPPLEMENT: parent=theorem:ch05-5-15; kind=proof; 补出最后一步：把 L^n⌊E 施于 (★★★★) 得 L^n(E∩B(y,ε|x−y|)) ≤ L^n(E∩B(x,2|x−y|)∩H^+(x))，与上下两个估计矛盾
+由 $\mathcal{L}^n\llcorner E$ 的单调性与 $(\star\star\star\star)$ 得
+\begin{align*}
+\mathcal{L}^n(E\cap B(y,\varepsilon\lvert x-y\rvert))\leqslant\mathcal{L}^n(E\cap B(x,2\lvert x-y\rvert)\cap H^+(x)),
+\end{align*}
+但左端大于 $\frac{\varepsilon^n\alpha(n)}{4}\lvert x-y\rvert^n$，右端小于同一数值，矛盾。
+
+情形 2：$\nu_E(x)\cdot(y-x)\leqslant-\varepsilon\lvert x-y\rvert$。这一情形同样导致矛盾。
+% SUPPLEMENT: parent=theorem:ch05-5-15; kind=proof; 补出情形 2 的化归：由 ν_E 在紧集 K_1 上的一致连续性，条件蕴含 ν_E(y)·(x−y) ≥ (ε/2)|x−y|，于是把情形 1 的论证用于点对 (y,x)
+因 $\nu_E|_{K_1}$ 连续而 $K_1$ 紧，$\nu_E$ 在 $K_1$ 上一致连续；取 $\delta$ 更小，使 $\lvert\nu_E(y)-\nu_E(x)\rvert<\varepsilon/2$ 当 $x,y\in K_1$ 且 $\lvert x-y\rvert\leqslant\delta$ 时成立。于是
+\begin{align*}
+\nu_E(y)\cdot(x-y)=\nu_E(x)\cdot(x-y)+\bigl(\nu_E(y)-\nu_E(x)\bigr)\cdot(x-y)\geqslant\varepsilon\lvert x-y\rvert-\frac{\varepsilon}{2}\lvert x-y\rvert=\frac{\varepsilon}{2}\lvert x-y\rvert .
+\end{align*}
+把情形 1 的论证用于点对 $(y,x)$，即以 $\varepsilon/2$ 代替 $\varepsilon$，并把 $H^{\pm}(x)$ 换成 $H^{\pm}(y)$，得同样的矛盾。
+
+（4）现在对
+\begin{align*}
+f=0,\qquad d=\nu_E\quad\text{于 }K_k
+\end{align*}
+应用 Whitney 延拓定理（见\cref{section:ch06-05}），得：存在 $C^1$ 函数 $\bar f_k:\mathbb{R}^n\to\mathbb{R}$，使得% XREF p=234 "Whitney's Extension Theorem (proved in Section 6.5)"
+\begin{align*}
+\bar f_k=0,\qquad D\bar f_k=\nu_E\quad\text{于 }K_k .
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-15; kind=proof; 补出 Whitney 延拓定理的相容性条件如何由断言 (3) 提供：ρ_k(δ)→0 正是 (f,d)=(0,ν_E) 在紧集 K_k 上的 Whitney 条件
+Whitney 延拓定理要求 $(f,d)$ 在闭集 $K_k$ 上满足：$f$ 与 $d$ 连续，且存在满足 $\rho(\delta)\to0$（$\delta\to0$）的函数 $\rho$，使对一切 $x,y\in K_k$ 有
+\begin{align*}
+\lvert f(x)-f(y)-d(y)\cdot(x-y)\rvert\leqslant\rho(\lvert x-y\rvert)\lvert x-y\rvert,\qquad \lvert d(x)-d(y)\rvert\leqslant\rho(\lvert x-y\rvert).
+\end{align*}
+此处 $f\equiv0$、$d=\nu_E$：第二个条件由 $\nu_E$ 在紧集 $K_k$ 上的一致连续性给出，第一个条件化为 $\lvert\nu_E(y)\cdot(x-y)\rvert\leqslant\rho(\lvert x-y\rvert)\lvert x-y\rvert$，这正是 (3) 中 $\rho_k(\delta)\to0$ 的内容。故存在所述的 $C^1$ 延拓 $\bar f_k$。
+
+令
+\begin{align*}
+S_k:=\left\{x\in\mathbb{R}^n\middle|\bar f_k(x)=0,\ \lvert D\bar f_k(x)\rvert>\frac{1}{2}\right\}\qquad(k=1,2,\cdots).
+\end{align*}
+由隐函数定理，$S_k$ 是 $\mathbb{R}^n$ 的 $C^1$ 的 $(n-1)$ 维子流形。又 $K_k\subseteq S_k$。由此得到 (i) 与 (ii)。
+% SUPPLEMENT: parent=theorem:ch05-5-15; kind=proof; 补出 K_k ⊆ S_k 的验证与 S_k 为 C^1 超曲面的理由：在 S_k 上 Df̄_k ≠ 0，隐函数定理给出局部图像表示
+对 $x\in K_k$ 有 $\bar f_k(x)=0$ 且 $\lvert D\bar f_k(x)\rvert=\lvert\nu_E(x)\rvert=1>1/2$，故 $K_k\subseteq S_k$。又 $S_k$ 是开集 $\{\lvert D\bar f_k\rvert>1/2\}$ 与水平集 $\{\bar f_k=0\}$ 的交，在其上 $D\bar f_k\neq0$，故由隐函数定理，$S_k$ 的每一点有邻域在其中 $S_k$ 是某个 $C^1$ 函数的图像，即 $S_k$ 为 $C^1$ 的 $(n-1)$ 维子流形。又因 $D\bar f_k=\nu_E$ 于 $K_k$ 上且 $\lvert\nu_E\rvert=1$，故对 $x\in K_k$，$\nu_E(x)=D\bar f_k(x)$ 就是 $S_k$ 在 $x$ 处的单位法向 $D\bar f_k(x)/\lvert D\bar f_k(x)\rvert$，即为 (ii)。
+
+（5）取 Borel 集 $B\subseteq\partial^*E$。由\cref{lemma:ch05-5-4}，% XREF internal
+\begin{align*}
+\mathcal{H}^{n-1}(B\cap N)\leqslant C\lVert\partial E\rVert(B\cap N)=0 .
+\end{align*}
+于是只须考虑 $B\subseteq\bigcup_{k=1}^{\infty}K_k$ 的情形，进而只须考虑 $B\subseteq K_1$ 的情形。由 (ii)，存在 $C^1$ 超曲面 $S_1\supset K_1$。令
+\begin{align*}
+\nu:=\mathcal{H}^{n-1}\llcorner S_1 .
+\end{align*}
+由于 $S_1$ 是 $C^1$ 的，
+\begin{align*}
+\lim_{r\to0}\frac{\nu(B(x,r))}{\alpha(n-1)r^{n-1}}=1\qquad(x\in B).
+\end{align*}
+% NOTE: 印刷 234 页此处印作 "Theorem 5.14,(ii)"；该步所需的是球内周长密度的极限（即 (iii)），故按 (iii) 实现并保留此说明。
+于是由\cref{theorem:ch05-5-14}(iii)，% XREF internal
+\begin{align*}
+\lim_{r\to0}\frac{\nu(B(x,r))}{\lVert\partial E\rVert(B(x,r))}=1\qquad(x\in B).
+\end{align*}
+由于 $\nu$ 与 $\lVert\partial E\rVert$ 都是 Radon 测度，由\cref{theorem:ch01-1-30}得% XREF p=234 "Since ν and ||∂E|| are Radon measures, Theorem 1.30 implies"
+\begin{align*}
+\lVert\partial E\rVert(B)=\nu(B)=\mathcal{H}^{n-1}(B).
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-15; kind=proof; 补出第 5 步的三处细节：由可数可加性把 B 化归到单个 K_1；C^1 超曲面的球密度为 α(n−1)；球密度比为 1 时两个 Radon 测度相等
+其一，$\{K_k\}$ 互不相交，故对每个 Borel 集 $B\subseteq\partial^*E$ 有 $\lVert\partial E\rVert(B)=\sum_k\lVert\partial E\rVert(B\cap K_k)$ 与 $\mathcal{H}^{n-1}(B)=\sum_k\mathcal{H}^{n-1}(B\cap K_k)$；由 $B\cap N$ 的 $\mathcal{H}^{n-1}$-测度为零，只须证明 $B\subseteq K_k$ 的情形，再平移指标即得一般情形。其二，$S_1$ 为 $C^1$ 超曲面时，对每个 $x\in S_1$ 有 $\mathcal{H}^{n-1}(S_1\cap B(x,r))/(\alpha(n-1)r^{n-1})\to1$，这是 $C^1$ 图形上面积公式的直接推论：把 $S_1$ 在 $x$ 附近写成超平面上的 $C^1$ 图像，其面积元连续且等于 $1$。其三，由球密度比为 $1$ 知 $D_{\lVert\partial E\rVert}\nu=1$ 于 $B$ 上 $\lVert\partial E\rVert$-a.e. 成立，特别地 $\nu\ll\lVert\partial E\rVert$ 于 $B$ 上，故\cref{theorem:ch01-1-30}（取 $\mu=\lVert\partial E\rVert$）给出 $\nu(B)=\int_B1\diff\lVert\partial E\rVert=\lVert\partial E\rVert(B)$；对称地 $\lVert\partial E\rVert\ll\nu$ 于 $B$ 上，故反向不等式也成立，于是 $\lVert\partial E\rVert(B)=\nu(B)$。 % XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-15; kind=motivation; 说明结构定理的总体图像：约化边界在测度意义下是可数多个 C^1 超曲面片之并，且周长测度就是这些片上的 H^{n−1}
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-15-动机}
+本节开头的目标是证明局部有限周长集在测度论意义下具有 $C^1$ 边界，本定理给出这一说法的准确形式。第 (i) 款说明除去一个 $\lVert\partial E\rVert$-零测集之后，$\partial^*E$ 是可数多个 $C^1$ 超曲面片的并：每个 $K_k$ 落在某个 $C^1$ 超曲面 $S_k$ 上，而 $S_k$ 由 Whitney 延拓所得的 $C^1$ 函数 $\bar f_k$ 的零水平集与 $\{\lvert D\bar f_k\rvert>1/2\}$ 的交给出。第 (ii) 款说明外法向场 $\nu_E$ 与这些超曲面的法向一致，因此 $\nu_E$ 在每一片上是连续的单位法向。第 (iii) 款把周长测度与 $\mathcal{H}^{n-1}$ 等同起来：$\lVert\partial E\rVert$ 在 $\partial^*E$ 上就是 $(n-1)$ 维面积测度，且 $\lVert\partial E\rVert$ 在 $\partial^*E$ 之外为零。证明的链条是：先用\cref{theorem:ch05-5-14}的密度估计得到逐点的半空间结构，再用 Egoroff 与 Lusin 定理把逐点信息提升为可数多个紧集上的一致信息，然后用 Whitney 延拓定理把这些紧集嵌入 $C^1$ 超曲面，最后用\cref{lemma:ch05-5-4}与\cref{theorem:ch01-1-30}证明测度等式。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-15; kind=hypotheses; 逐条分析三款结论的准确含义、零测集 N 的身份、ν_E 的定义范围以及 (ii) 中 S_k 与 K_k 的区别
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-15-条件}
+\begin{enumerate}[(i)]
+\item 前提是 $E$ 在 $\mathbb{R}^n$ 中具有局部有限周长，即 $\chi_E\in\BV_{\loc}(\mathbb{R}^n)$。这保证 $\lVert\partial E\rVert$ 是 Radon 测度，\cref{lemma:ch05-5-3}、\cref{lemma:ch05-5-4}与\cref{theorem:ch05-5-14}全部可用。若 $E$ 的周长在某个紧集上为无穷，则第 (iii) 款中的 $\lVert\partial E\rVert$ 不是 Radon 测度，论证失效。% XREF internal
+\item 第 (i) 款的分解只在一个 $\lVert\partial E\rVert$-零测集 $N$ 之外成立，$N$ 不必是 $\mathcal{H}^{n-1}$-零测集；但第 (iii) 款一旦成立，$\lVert\partial E\rVert(\mathbb{R}^n\setminus\partial^*E)=0$ 与 $\lVert\partial E\rVert=\mathcal{H}^{n-1}\llcorner\partial^*E$ 合起来说明 $N$ 实际上是 $\mathcal{H}^{n-1}$-零测集。
+\item 第 (ii) 款的准确含义是：对每个 $k$ 与每个 $x\in K_k$，$\nu_E(x)$ 是 $S_k$ 在 $x$ 处的单位法向。$\nu_E$ 只在 $\lVert\partial E\rVert$-a.e. 处有确定值，而 $S_k\setminus K_k$ 中的点不必属于 $\partial^*E$，故不能把断言理解为 $\nu_E$ 在整个 $S_k$ 上处处有定义；把 $S_k$ 换成更小的 $K_k$ 才是断言的实际内容。断言成立的理由是 $D\bar f_k=\nu_E$ 于 $K_k$ 上，而 $S_k$ 的法向为 $D\bar f_k/\lvert D\bar f_k\rvert$。
+\item 第 (iii) 款是测度的等式，不只是两个测度相互绝对连续。它同时给出两个方向：由\cref{lemma:ch05-5-4}得 $\mathcal{H}^{n-1}\llcorner\partial^*E\leqslant C\lVert\partial E\rVert$，由第 5 步的密度比较得反向不等式。% XREF internal
+\item 三款都不依赖于 $E$ 的拓扑边界 $\partial E$：当 $E$ 为开球时 $\partial E$ 与 $\partial^*E$ 只差一个 $\mathcal{H}^{n-1}$-零测集，而对一般的有限周长集，$\partial E$ 可以比 $\partial^*E$ 大得多；结论只描述承载周长测度的那部分边界。
+\end{enumerate}
+\end{remark}
+
+\end{document}

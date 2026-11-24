@@ -15,135 +15,461 @@
 
 \section{积分}\label{section:ch02-积分}
 
+本节按三个层次定义积分：先对非负简单函数（\cref{definition:ch02-简单函数积分}），再对非负可测函数（\cref{definition:ch02-非负可测积分}），最后对一般可测函数（\cref{definition:ch02-可积拟可积}）；随后给出单调收敛定理、Fatou 引理与控制收敛定理，并把积分推广到带号测度（\cref{definition:ch02-带号测度积分}）。全节固定测度空间 $(X,\mathscr A,\mu)$，并采用约定
+\begin{align*}
+0\cdot\infty\triangleq0,
+\end{align*}
+即当 $c=0$ 或 $\mu(E)=0$ 时，令 $c\,\mu(E)\triangleq0$。
+
 \subsection{积分的定义}\label{subsection:ch02-积分定义}
 
-设 $(X,\mathscr A,\mu)$ 为测度空间，$s\in\mathscr S^+(X)$，即 $s=\sum_{i=1}^n c_i\chi_{E_i}$，其中 $c_1,\cdots ,c_n\geqslant0$，$E_1,\cdots ,E_n$ 可测，$E_i\cap E_j=\varnothing $（$i\neq j$），$\bigcup_{i=1}^n E_i=X$。
-
-\begin{definition}\label{definition:ch02-简单函数积分}
-设 $s\in\mathscr S^+(X)$。量
+设 $(X,\mathscr A,\mu)$ 为测度空间，$s\in\mathscr S^+(X)$，即
 \begin{align*}
-\int_X s\,\mathrm{d}\mu\triangleq \sum_{i=1}^N c_i\,\mu(E_i)
+s=\sum_{i=1}^nc_i\chi_{E_i},
+\end{align*}
+其中 $c_1,\cdots ,c_n\geqslant0$，$E_1,\cdots ,E_n\in\mathscr A$，$E_i\cap E_j=\varnothing$（$i\neq j$），且 $\bigcup_{i=1}^nE_i=X$；此处 $\mathscr S^+(X)$ 表示 $X$ 上取非负值的简单函数之集（\cref{definition:ch02-简单函数}）。
+
+% SUPPLEMENT: parent=definition:ch02-Lebesgue; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+% SUPPLEMENT: parent=definition:ch02-Lebesgue积分; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+\begin{definition}\label{definition:ch02-简单函数积分}
+设 $(X,\mathscr A,\mu)$ 为测度空间，$s\in\mathscr S^+(X)$，$s=\sum_{i=1}^Nc_i\chi_{E_i}$ 为 $s$ 关于 $X$ 的有限 $\mathscr A$-可测划分 $\{E_1,\cdots ,E_N\}$ 的表示，其中 $N\in\mathbb N$，$c_1,\cdots ,c_N\geqslant0$，$E_i\cap E_j=\varnothing$（$i\neq j$），$\bigcup_{i=1}^NE_i=X$。量
+\begin{align*}
+\int_Xs\,\mathrm{d}\mu\triangleq\sum_{i=1}^Nc_i\,\mu(E_i)
 \end{align*}
 称为 $s$ 在 $X$ 上的积分。
 \end{definition}
 
-此定义是适定的，因为积分 $\int_X s\,\mathrm{d}\mu$ 不依赖于划分 $\{E_1,\cdots ,E_N\}$ 的选取。此外，$\int_X s\,\mathrm{d}\mu$ 具有通常性质：线性、可加、单调等。
+% SUPPLEMENT: parent=definition:ch02-简单函数积分; kind=proof; 补出“积分与划分的选取无关”的完整论证（加细不变性与公共加细），并逐条证明简单函数积分的单调性、可加性、齐性与 $\int_X\chi_E\,\mathrm{d}\mu=\mu(E)$
+\begin{proof}
+记 $I\big(\{E_i\},\{c_i\}\big)\triangleq\sum_{i=1}^Nc_i\,\mu(E_i)$。
 
+第一步：加细不变性。设 $\{F_1,\cdots ,F_M\}$ 为 $X$ 的另一 $\mathscr A$-可测划分且加细 $\{E_1,\cdots ,E_N\}$，即每个 $E_i$ 是某些 $F_j$ 之并，并设 $s$ 在 $F_j$ 上取值 $c_{i(j)}$（当 $F_j\subseteq E_i$ 时 $c_{i(j)}\triangleq c_i$）。则 $F_j\subseteq E_i$ 的那些 $F_j$ 构成 $E_i$ 的有限不交可测分解，由 $\mu$ 的有限可加性得 $\mu(E_i)=\sum_{j:\,F_j\subseteq E_i}\mu(F_j)$，于是
+\begin{align*}
+I\big(\{F_j\},\{c_{i(j)}\}\big)
+=\sum_{j=1}^Mc_{i(j)}\mu(F_j)
+=\sum_{i=1}^Nc_i\sum_{j:\,F_j\subseteq E_i}\mu(F_j)
+=\sum_{i=1}^Nc_i\,\mu(E_i),
+\end{align*}
+其中非负项之和的重排不影响其值（在 $[0,\infty]$ 中求和与次序无关）。
+
+第二步：任意两个表示给出同一值。设 $s$ 另有表示 $s=\sum_{j=1}^Md_j\chi_{F_j}$，其中 $\{F_1,\cdots ,F_M\}$ 为 $X$ 的 $\mathscr A$-可测划分，$d_j\geqslant0$。若 $E_i\cap F_j\neq\varnothing$，取 $x\in E_i\cap F_j$，则 $c_i=s(x)=d_j$。令 $G_{ij}\triangleq E_i\cap F_j$，并删去其中空集，则 $\{G_{ij}\}$ 是 $X$ 的划分，且同时加细 $\{E_i\}$ 与 $\{F_j\}$。在 $G_{ij}$ 上 $s$ 取常值 $c_i$（当 $G_{ij}\neq\varnothing$ 时亦等于 $d_j$；当 $G_{ij}=\varnothing$ 时任取其一），故由第一步
+\begin{align*}
+\sum_{i,j}c_i\,\mu(G_{ij})=\sum_{i=1}^Nc_i\sum_{j=1}^M\mu(G_{ij})=\sum_{i=1}^Nc_i\,\mu(E_i),
+\end{align*}
+其中用了 $\sum_{j=1}^M\mu(E_i\cap F_j)=\mu(E_i)$（有限可加性）与 $\mu(\varnothing)=0$。对 $\{F_j\}$ 作同样的计算，并利用 $G_{ij}\neq\varnothing$ 时 $c_i=d_j$，得
+\begin{align*}
+\sum_{i,j}c_i\,\mu(G_{ij})=\sum_{i,j}d_j\,\mu(G_{ij})=\sum_{j=1}^Md_j\,\mu(F_j).
+\end{align*}
+故两个表示给出同一值，所定义的量只依赖于 $s$。
+
+第三步：基本性质。设 $s,t\in\mathscr S^+(X)$ 分别由划分 $\{E_1,\cdots ,E_N\}$、$\{F_1,\cdots ,F_M\}$ 与值 $c_i,d_j\geqslant0$ 给出，并以 $\{G_{ij}\}$ 记公共加细。
+\begin{enumerate}[(i)]
+\item 单调性。若 $s\leqslant t$ 在 $X$ 上成立，则对 $G_{ij}\neq\varnothing$ 与 $x\in G_{ij}$ 有 $c_i=s(x)\leqslant t(x)=d_j$，故
+\begin{align*}
+\int_Xs\,\mathrm{d}\mu=\sum_{i,j}c_i\,\mu(G_{ij})\leqslant\sum_{i,j}d_j\,\mu(G_{ij})=\int_Xt\,\mathrm{d}\mu.
+\end{align*}
+\item 可加性。由 $s+t=\sum_{i,j}(c_i+d_j)\chi_{G_{ij}}$ 及第一步得
+\begin{align*}
+\int_X(s+t)\,\mathrm{d}\mu
+&=\sum_{i,j}(c_i+d_j)\mu(G_{ij})
+=\sum_{i=1}^Nc_i\sum_{j=1}^M\mu(G_{ij})+\sum_{j=1}^Md_j\sum_{i=1}^N\mu(G_{ij})\\
+&=\sum_{i=1}^Nc_i\,\mu(E_i)+\sum_{j=1}^Md_j\,\mu(F_j)
+=\int_Xs\,\mathrm{d}\mu+\int_Xt\,\mathrm{d}\mu.
+\end{align*}
+\item 齐性。对 $\alpha\geqslant0$，由 $\alpha s=\sum_{i=1}^N(\alpha c_i)\chi_{E_i}$ 得 $\int_X\alpha s\,\mathrm{d}\mu=\alpha\int_Xs\,\mathrm{d}\mu$。
+\item 特征函数。对 $E\in\mathscr A$，取划分 $\{E,E^c\}$ 与值 $\{1,0\}$ 得 $\int_X\chi_E\,\mathrm{d}\mu=1\cdot\mu(E)+0\cdot\mu(E^c)=\mu(E)$。
+\end{enumerate}
+\end{proof}
+
+由上述第一步与第二步，$\int_Xs\,\mathrm{d}\mu$ 不依赖于划分 $\{E_1,\cdots ,E_N\}$ 及其指标的排列，故此定义是适定的。此外，$\int_Xs\,\mathrm{d}\mu$ 具有通常性质：线性、可加、单调等，其证明已在上文第三步中逐项给出。
+
+% SUPPLEMENT: parent=definition:ch02-简单函数积分; kind=motivation; 说明以“取值乘层测度”定义简单函数积分的动机、非负性与划分条件的逐项作用、$0\cdot\infty=0$ 约定的必要性以及取值为 $\infty$ 的边界情形
+\begin{remark}\phantomsection\label{remark:ch02-简单函数积分动机}
+\begin{enumerate}[(i)]
+\item 引入动机。测度只对集合赋值，而积分要把“函数下方的面积”化为“取值与该取值所在层的测度之积”的总和。简单函数的值域有限，其“层”就是划分 $\{E_1,\cdots ,E_N\}$，于是积分可以直接由 $\mu$ 算出。这一层次是\cref{definition:ch02-非负可测积分}以非负简单函数之上的上确界定义一般积分的出发点。
+\item 非负性的作用。$c_i\geqslant0$ 使每个乘积 $c_i\mu(E_i)$ 落在 $[0,\infty]$ 中，从而和 $\sum_{i=1}^Nc_i\mu(E_i)$ 在 $[0,\infty]$ 中无条件确定。若允许负系数，则必须要求每个乘积 $c_i\mu(E_i)$ 有限，否则和式会出现 $\infty-\infty$ 而失去意义。
+\item 划分条件的作用。$E_i$ 两两不交且并为 $X$ 保证每个 $x\in X$ 恰属于一个 $E_i$，于是 $s$ 在每个 $E_i$ 上取常值 $c_i$，“取值乘层测度”正好覆盖 $X$ 而不重复计数。若 $\{E_i\}$ 只两两不交而不覆盖 $X$，则 $s$ 在 $\bigcup_{i=1}^NE_i$ 之外须另行规定取值，公式中须补上该层的贡献。可测性 $E_i\in\mathscr A$ 是 $\mu(E_i)$ 有定义的唯一依据。
+\item $0\cdot\infty=0$ 约定的作用。若某 $c_i=0$ 而 $\mu(E_i)=\infty$，则 $c_i\mu(E_i)$ 只能用约定 $0\cdot\infty\triangleq0$ 解释；$\int_X\chi_E\,\mathrm{d}\mu=\mu(E)$ 在 $E^c$ 上取零值时同样用到该约定。若不采用此约定，含无穷测度零值层的简单函数其积分将无定义。
+\item 边界情形。$\int_Xs\,\mathrm{d}\mu$ 可以等于 $+\infty$，例如 $X=\mathbb R$、$\mu=\lambda$、$s\equiv1$ 时 $\int_Xs\,\mathrm{d}\mu=\lambda(\mathbb R)=\infty$。又 $s=0$ 在 $X$ 上 $\mu$-a.e. 时 $\int_Xs\,\mathrm{d}\mu=0$，但反向不成立：$s$ 可在某个 $\mu$-零测集上取任意非负值而不改变积分。这正是 $L^1$ 空间须按 $\mu$-a.e. 相等作商的根源（\cref{definition:ch02-可积拟可积}）。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch02-Lebesgue; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
 \begin{definition}\label{definition:ch02-非负可测积分}\label{definition:ch02-Lebesgue}\label{definition:ch02-Lebesgue积分}
-设 $f:X\to[0,\infty]$ 为 $\mathscr A$-可测。量
+设 $(X,\mathscr A,\mu)$ 为测度空间，$f:X\to[0,\infty]$ 为 $\mathscr A$-可测。量
 \begin{align}
-\int_X f\,\mathrm{d}\mu\triangleq \sup_{\substack{s\in\mathscr S^+(X)\\ s\leqslant f}}\int_X s\,\mathrm{d}\mu \label{align:ch02-2.4}
+\int_Xf\,\mathrm{d}\mu\triangleq\sup_{\substack{s\in\mathscr S^+(X)\\ s\leqslant f}}\int_Xs\,\mathrm{d}\mu \label{align:ch02-2.4}
 \end{align}
-称为 $f$ 在 $X$ 上的积分。对每个可测集 $E\subseteq X$，令 $\int_E f\,\mathrm{d}\mu\triangleq \int_X f\chi_E\,\mathrm{d}\mu$。
+称为 $f$ 在 $X$ 上的积分。对每个可测集 $E\subseteq X$，令 $\int_Ef\,\mathrm{d}\mu\triangleq\int_Xf\chi_E\,\mathrm{d}\mu$。
 \end{definition}
 
-\begin{remark}\label{remark:ch02-简单逼近积分}
-\label{remark:ch02-简单积分}
-熟知，对任意 $\mathscr A$-可测 $f:X\to[0,\infty]$，集合 $\{s\in\mathscr S^+(X)\mid s\leqslant f\}$ 非空；事实上存在序列 $\{s_n\}\subseteq\mathscr S^+(X)$，使
+% SUPPLEMENT: parent=definition:ch02-非负可测积分; kind=motivation; 说明以上确界延拓积分的动机、$f\geqslant0$ 与可测性假设的作用、$\int_Ef\,\mathrm{d}\mu$ 的良定义性，以及“积分为零当且仅当几乎处处为零”等边界事实
+\begin{remark}\phantomsection\label{remark:ch02-非负可测积分动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{definition:ch02-简单函数积分}只覆盖值域有限的函数；对一般的非负可测 $f$，取其下方所有非负简单函数之积分的上确界，是与简单函数情形相容且保持单调性的延拓：当 $f\in\mathscr S^+(X)$ 时上确界由 $s=f$ 取到，故新旧定义一致。
+\item 假设的作用。$f\geqslant0$ 使集合 $\{s\in\mathscr S^+(X)\mid s\leqslant f\}$ 非空（含 $s\equiv0$），且其中各积分均非负，上确界在 $[0,\infty]$ 中存在。$f$ 的 $\mathscr A$-可测性使该集合含有足够多的元素以刻画 $f$（见\hyperref[remark:ch02-简单逼近积分]{关于简单函数逼近的注记}）；若 $f$ 不可测，上确界仍可写出，但它不再与后文的收敛定理相容。值域取 $[0,\infty]$ 允许积分等于 $+\infty$，故定义不需要任何可积性假设。
+\item $\int_Ef\,\mathrm{d}\mu$ 的良定义性。$E\in\mathscr A$ 时 $\chi_E$ 为 $\mathscr A$-可测，$f\chi_E\geqslant0$ 为 $\mathscr A$-可测，故 $\int_Xf\chi_E\,\mathrm{d}\mu$ 按\eqref{align:ch02-2.4}有定义；且 $E\mapsto\int_Ef\,\mathrm{d}\mu$ 是 $\mathscr A$ 上的测度（\hyperref[remark:ch02-测度密度]{关于测度密度的注记}）。
+\item 单调性。若 $0\leqslant f\leqslant g$ 且二者 $\mathscr A$-可测，则 $\{s\in\mathscr S^+(X)\mid s\leqslant f\}\subseteq\{s\in\mathscr S^+(X)\mid s\leqslant g\}$，故 $\int_Xf\,\mathrm{d}\mu\leqslant\int_Xg\,\mathrm{d}\mu$。特别地，$f=g$ 在 $X$ 上 $\mu$-a.e. 时两积分相等。
+\item 边界事实。$\int_Xf\,\mathrm{d}\mu=0$ 当且仅当 $f=0$ 在 $X$ 上 $\mu$-a.e.。若 $\int_Xf\,\mathrm{d}\mu=0$，则对 $k\in\mathbb N$，由 $k^{-1}\chi_{\{f\geqslant1/k\}}\leqslant f$ 与上确界定义得 $k^{-1}\mu(\{f\geqslant1/k\})\leqslant\int_Xf\,\mathrm{d}\mu=0$，故 $\mu(\{f\geqslant1/k\})=0$，从而 $\mu(\{f>0\})=\mu\big(\bigcup_{k=1}^\infty\{f\geqslant1/k\}\big)=0$；反向由 $0\leqslant f\leqslant\infty\cdot\chi_{\{f>0\}}$ 与 $0\cdot\infty\triangleq0$ 得到。此外，若 $\int_Xf\,\mathrm{d}\mu<\infty$，则 $\mu(\{f=\infty\})=0$，因为 $\infty\cdot\mu(\{f=\infty\})\leqslant\int_Xf\,\mathrm{d}\mu$。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch02-简单逼近积分; kind=proof; 补出 (2.5) 中非降简单函数列的显式构造（二进制截断）与逐点收敛性的验证，并给出 (2.6) 的独立论证（不依赖单调收敛定理，以避免与后文循环）
+\begin{remark}\phantomsection\label{remark:ch02-简单逼近积分}\label{remark:ch02-简单积分}
+设 $(X,\mathscr A,\mu)$ 为测度空间，$f:X\to[0,\infty]$ 为 $\mathscr A$-可测。则集合 $\{s\in\mathscr S^+(X)\mid s\leqslant f\}$ 非空；事实上存在序列 $\{s_n\}\subseteq\mathscr S^+(X)$，使
 \begin{align}
 0\leqslant s_n\leqslant s_{n+1}\leqslant f\ \text{在 }X\text{ 中对所有 }n\in\mathbb N,\qquad s_n\to f\text{ 在 }X\text{ 上逐点}. \label{align:ch02-2.5}
 \end{align}
-显然这蕴含
+这蕴含
 \begin{align}
-\int_X f\,\mathrm{d}\mu=\lim_{n\to\infty}\int_X s_n\,\mathrm{d}\mu. \label{align:ch02-2.6}
+\int_Xf\,\mathrm{d}\mu=\lim_{n\to\infty}\int_Xs_n\,\mathrm{d}\mu. \label{align:ch02-2.6}
 \end{align}
+
+第一段：构造。对 $n\in\mathbb N$，定义 $\varphi_n:[0,\infty]\to[0,\infty)$ 如下：当 $t\in[k/2^n,(k+1)/2^n)$ 且 $k\in\{0,1,\cdots ,n2^n-1\}$ 时令 $\varphi_n(t)\triangleq k/2^n$；当 $t\geqslant n$（含 $t=\infty$）时令 $\varphi_n(t)\triangleq n$。则 $\varphi_n$ 为 Borel 可测，且对任意 $t\in[0,\infty]$ 有
+\begin{align*}
+0\leqslant\varphi_n(t)\leqslant\varphi_{n+1}(t)\leqslant t,\qquad|\varphi_n(t)-t|\leqslant2^{-n}\ \text{若}\ t<n,\qquad\varphi_n(\infty)=n.
+\end{align*}
+事实上，$t\geqslant n$ 时 $\varphi_{n+1}(t)=n+1\geqslant n=\varphi_n(t)$；$t<n$ 时 $k/2^n=2k/2^{n+1}$，而 $t$ 所在的 $2^{-(n+1)}$ 层指标不小于 $2k$，故 $\varphi_{n+1}(t)\geqslant2k/2^{n+1}=\varphi_n(t)$；$\varphi_n(t)\leqslant t$ 与 $|\varphi_n(t)-t|\leqslant2^{-n}$ 由取整的定义直接得到；$t=\infty$ 时 $\varphi_n(\infty)=n\to\infty$。令
+\begin{align*}
+s_n\triangleq\varphi_n\circ f\qquad(n\in\mathbb N).
+\end{align*}
+则 $s_n$ 只取有限个值 $\{k/2^n\mid k=0,1,\cdots ,n2^n\}$，故 $s_n\in\mathscr S^+(X)$；又 $s_n$ 为可测函数的复合，故 $\mathscr A$-可测。由 $\varphi_n$ 的上述性质，对每个 $x\in X$ 有 $0\leqslant s_n(x)\leqslant s_{n+1}(x)\leqslant f(x)$，且当 $f(x)<\infty$ 时 $|s_n(x)-f(x)|\leqslant2^{-n}$、当 $f(x)=\infty$ 时 $s_n(x)=n$，故 $s_n(x)\to f(x)$。于是\eqref{align:ch02-2.5}成立，且 $\{s\in\mathscr S^+(X)\mid s\leqslant f\}$ 非空（含 $s\equiv0$）。
+
+第二段：\eqref{align:ch02-2.6}的上界方向。由 $s_n\leqslant f$ 与\cref{definition:ch02-非负可测积分}的上确界定义，$\int_Xs_n\,\mathrm{d}\mu\leqslant\int_Xf\,\mathrm{d}\mu$ 对一切 $n$ 成立，故 $\lim_{n\to\infty}\int_Xs_n\,\mathrm{d}\mu\leqslant\int_Xf\,\mathrm{d}\mu$。
+
+第三段：简单函数的下方连续性。设 $t\in\mathscr S^+(X)$，$t=\sum_{i=1}^Nc_i\chi_{E_i}$。对任意非降序列 $\{A_n\}\subseteq\mathscr A$，$A_n\uparrow X$，有
+\begin{align*}
+\int_{A_n}t\,\mathrm{d}\mu=\sum_{i=1}^Nc_i\,\mu(A_n\cap E_i)\longrightarrow\sum_{i=1}^Nc_i\,\mu(E_i)=\int_Xt\,\mathrm{d}\mu\qquad(n\to\infty),
+\end{align*}
+因为 $A_n\cap E_i\uparrow E_i$ 且 $\mu$ 关于非降序列连续，即 $\mu(E_i)=\lim_{n\to\infty}\mu(A_n\cap E_i)$，而 $c_i\geqslant0$ 与 $0\cdot\infty\triangleq0$ 保证有限和可以逐项取极限。
+
+第四段：\eqref{align:ch02-2.6}的下界方向。固定 $t\in\mathscr S^+(X)$，$t\leqslant f$，并固定 $\theta\in(0,1)$。令 $A_n\triangleq\{s_n\geqslant\theta t\}\in\mathscr A$。若 $t(x)=0$，则 $\theta t(x)=0\leqslant s_n(x)$ 对一切 $n$ 成立；若 $t(x)>0$，则 $s_n(x)\to f(x)\geqslant t(x)>\theta t(x)$，故 $x\in A_n$ 对充分大的 $n$ 成立。于是 $A_n\uparrow X$。由 $\theta t\chi_{A_n}\leqslant s_n$ 与\cref{definition:ch02-非负可测积分}的单调性，
+\begin{align*}
+\theta\int_{A_n}t\,\mathrm{d}\mu=\int_X\theta t\chi_{A_n}\,\mathrm{d}\mu\leqslant\int_Xs_n\,\mathrm{d}\mu\qquad(n\in\mathbb N).
+\end{align*}
+对 $n\to\infty$ 取上极限，并用第三段得 $\theta\int_Xt\,\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_Xs_n\,\mathrm{d}\mu$。令 $\theta\uparrow1$ 得 $\int_Xt\,\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_Xs_n\,\mathrm{d}\mu$。对满足 $t\leqslant f$ 的 $t\in\mathscr S^+(X)$ 取上确界，并用\cref{definition:ch02-非负可测积分}得 $\int_Xf\,\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_Xs_n\,\mathrm{d}\mu$。结合第二段即得\eqref{align:ch02-2.6}。该论证只用到上确界定义与 $\mu$ 关于非降序列的连续性，不依赖\cref{theorem:ch02-BeppoLevi}，故与后文无循环。
 \end{remark}
 
-对每个 $f:X\to[-\infty,\infty]$，令 $f^\pm\triangleq \max\{\pm f,0\}$。
+对每个 $f:X\to[-\infty,\infty]$，令 $f^\pm\triangleq\max\{\pm f,0\}$。
 
+% SUPPLEMENT: parent=definition:ch02-带号积分; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
 \begin{definition}\label{definition:ch02-可积拟可积}
-称 $\mathscr A$-可测函数 $f:X\to[-\infty,\infty]$ 为可积的，若 $\int_X f^\pm\,\mathrm{d}\mu<\infty$。称 $f$ 为拟可积的，若两积分 $\int_X f^\pm\,\mathrm{d}\mu$ 中至少一个有限。
+设 $(X,\mathscr A,\mu)$ 为测度空间，$f:X\to[-\infty,\infty]$ 为 $\mathscr A$-可测函数，$f^\pm\triangleq\max\{\pm f,0\}$。称 $f$ 为可积的，若两积分 $\int_Xf^+\,\mathrm{d}\mu$ 与 $\int_Xf^-\,\mathrm{d}\mu$ 均有限。称 $f$ 为拟可积的，若两积分 $\int_Xf^\pm\,\mathrm{d}\mu$ 中至少一个有限。可积函数之集记为 $L^1(X,\mathscr A,\mu)$。
 \end{definition}
 
 对每个拟可积函数 $f:X\to[-\infty,\infty]$，（可能为无穷的）量
 \begin{align*}
-\int_X f\,\mathrm{d}\mu\triangleq \int_X f^+\,\mathrm{d}\mu-\int_X f^-\,\mathrm{d}\mu
+\int_Xf\,\mathrm{d}\mu\triangleq\int_Xf^+\,\mathrm{d}\mu-\int_Xf^-\,\mathrm{d}\mu
 \end{align*}
-称为 $f$ 在 $X$ 上的积分。对每个可测集 $E\subseteq X$，令 $\int_E f\,\mathrm{d}\mu\triangleq \int_X f\chi_E\,\mathrm{d}\mu$。
+称为 $f$ 在 $X$ 上的积分。对每个可测集 $E\subseteq X$，令 $\int_Ef\,\mathrm{d}\mu\triangleq\int_Xf\chi_E\,\mathrm{d}\mu$。
 
-记可积函数 $f:X\to[-\infty,\infty]$ 的集合为 $L^1(X)\equiv L^1(X,\mathscr A,\mu)$。易见 $f\in L^1(X)$ 当且仅当
+记可积函数 $f:X\to[-\infty,\infty]$ 的集合为 $L^1(X)\equiv L^1(X,\mathscr A,\mu)$。则 $f\in L^1(X)$ 当且仅当
 \begin{align*}
-\|f\|_1\triangleq \int_X|f|\,\mathrm{d}\mu<\infty.
+\|f\|_1\triangleq\int_X|f|\,\mathrm{d}\mu<\infty.
 \end{align*}
 
-积分 $\int_X f\,\mathrm{d}\mu$ 的线性、可加、单调等通常性质易证。由积分线性性、不等式
+% SUPPLEMENT: parent=definition:ch02-可积拟可积; kind=proof; 补出“拟可积使积分有定义”“$f\in L^1$ 当且仅当 $\|f\|_1<\infty$”、$L^1(X)$ 为向量空间、线性性与单调性、$\left|\int_Xf\,\mathrm{d}\mu\right|\leqslant\|f\|_1$ 以及 $\int_Ef\,\mathrm{d}\mu$ 的良定义性的完整论证
+\begin{proof}
+设 $f:X\to[-\infty,\infty]$ 为 $\mathscr A$-可测。则 $f^\pm=\max\{\pm f,0\}$ 为非负 $\mathscr A$-可测函数，且
 \begin{align*}
-\left|\int_X f\,\mathrm{d}\mu\right|\leqslant\int_X|f|\,\mathrm{d}\mu
+f=f^+-f^-,\qquad|f|=f^++f^-,\qquad f^\pm\leqslant|f|.
 \end{align*}
-及三角不等式，$L^1(X)$ 为向量空间。
 
-\begin{remark}\label{remark:ch02-Riemann可积}
-任意 Riemann 可积函数 $f:D\subseteq\mathbb R^N\to\mathbb R$ 在\cref{definition:ch02-可积拟可积}意义下可积。按记号滥用，常使用通常符号 $\int_D f\,\mathrm{d}x$ 代替 $\int_D f\,\mathrm{d}\lambda_N$。
+第一，拟可积性使积分有定义。$f$ 拟可积时 $\int_Xf^+\,\mathrm{d}\mu$ 与 $\int_Xf^-\,\mathrm{d}\mu$ 中至少一个有限，故差 $\int_Xf^+\,\mathrm{d}\mu-\int_Xf^-\,\mathrm{d}\mu$ 在 $[-\infty,\infty]$ 中不出现 $\infty-\infty$ 之形，其值确定（可以为 $\pm\infty$）。
+
+第二，非负可测函数积分的可加性。设 $u,v:X\to[0,\infty]$ 为 $\mathscr A$-可测。取 $\{s_n\},\{t_n\}\subseteq\mathscr S^+(X)$ 如\eqref{align:ch02-2.5}分别逼近 $u,v$；则 $s_n+t_n\in\mathscr S^+(X)$ 且 $s_n+t_n\uparrow u+v$，由\eqref{align:ch02-2.6}与简单函数积分的可加性得
+\begin{align*}
+\int_X(u+v)\,\mathrm{d}\mu=\lim_{n\to\infty}\int_X(s_n+t_n)\,\mathrm{d}\mu=\int_Xu\,\mathrm{d}\mu+\int_Xv\,\mathrm{d}\mu.
+\end{align*}
+
+第三，$f\in L^1(X)$ 当且仅当 $\|f\|_1<\infty$。由第二段与 $|f|=f^++f^-$ 得 $\|f\|_1=\int_Xf^+\,\mathrm{d}\mu+\int_Xf^-\,\mathrm{d}\mu$。若 $f$ 可积，则右端为两个有限数之和，故 $\|f\|_1<\infty$；反之若 $\|f\|_1<\infty$，则非负项之和有限，故 $\int_Xf^\pm\,\mathrm{d}\mu\leqslant\|f\|_1<\infty$，$f$ 可积。
+
+第四，$L^1(X)$ 为向量空间且 $\|\cdot\|_1$ 为其上的半范数。$0\in L^1(X)$。设 $f,g\in L^1(X)$、$\alpha\in\mathbb R$。由 $|f+g|\leqslant|f|+|g|$、第二段与第三段得 $\|f+g\|_1\leqslant\|f\|_1+\|g\|_1<\infty$，故 $f+g\in L^1(X)$；又 $|\alpha f|=|\alpha|\,|f|$，故 $\|\alpha f\|_1=|\alpha|\,\|f\|_1<\infty$，即 $\alpha f\in L^1(X)$。齐性与三角不等式即上述两式。
+
+第五，线性性、单调性与三角不等式。设 $f,g\in L^1(X)$。由 $f+g=(f^++g^+)-(f^-+g^-)$ 与正部、负部的定义得 $(f+g)^+-(f+g)^-=(f^++g^+)-(f^-+g^-)$，于是由第二段
+\begin{align*}
+\int_X(f+g)\,\mathrm{d}\mu
+&=\int_X(f+g)^+\,\mathrm{d}\mu-\int_X(f+g)^-\,\mathrm{d}\mu\\
+&=\Big(\int_Xf^+\,\mathrm{d}\mu+\int_Xg^+\,\mathrm{d}\mu\Big)-\Big(\int_Xf^-\,\mathrm{d}\mu+\int_Xg^-\,\mathrm{d}\mu\Big)
+=\int_Xf\,\mathrm{d}\mu+\int_Xg\,\mathrm{d}\mu.
+\end{align*}
+对 $\alpha\geqslant0$，$(\alpha f)^\pm=\alpha f^\pm$，故 $\int_X\alpha f\,\mathrm{d}\mu=\alpha\int_Xf\,\mathrm{d}\mu$；对 $\alpha<0$，$(\alpha f)^+=|\alpha|f^-$、$(\alpha f)^-=|\alpha|f^+$，故 $\int_X\alpha f\,\mathrm{d}\mu=|\alpha|\int_Xf^-\,\mathrm{d}\mu-|\alpha|\int_Xf^+\,\mathrm{d}\mu=\alpha\int_Xf\,\mathrm{d}\mu$。单调性：若 $f\leqslant g$，则 $g-f\geqslant0$ 且 $g-f\in L^1(X)$，由线性性得 $\int_Xg\,\mathrm{d}\mu-\int_Xf\,\mathrm{d}\mu=\int_X(g-f)\,\mathrm{d}\mu\geqslant0$。三角不等式：$\int_Xf\,\mathrm{d}\mu=\int_Xf^+\,\mathrm{d}\mu-\int_Xf^-\,\mathrm{d}\mu\leqslant\int_Xf^+\,\mathrm{d}\mu\leqslant\|f\|_1$，对 $-f$ 用同一不等式得 $-\int_Xf\,\mathrm{d}\mu\leqslant\|f\|_1$，故 $\left|\int_Xf\,\mathrm{d}\mu\right|\leqslant\|f\|_1$。
+
+第六，$\int_Ef\,\mathrm{d}\mu$ 的良定义性。对 $E\in\mathscr A$ 有 $|f\chi_E|\leqslant|f|$，故 $f\chi_E\in L^1(X)$，$\int_Ef\,\mathrm{d}\mu$ 有定义；且 $E\mapsto\int_Ef\,\mathrm{d}\mu$ 是 $\mathscr A$ 上的有限带号测度（\hyperref[remark:ch02-测度密度]{关于测度密度的注记}），特别地 $\int_\varnothing f\,\mathrm{d}\mu=0$。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:ch02-可积拟可积; kind=motivation; 说明引入可积与拟可积两个层次的动机、$\int_Xf^\pm\,\mathrm{d}\mu<\infty$ 的必要性、$\|f\|_1$ 与 $L^1$ 按几乎处处相等作商的关系，以及 $f$ 取 $\pm\infty$ 的边界情形
+\begin{remark}\phantomsection\label{remark:ch02-可积拟可积动机}
+\begin{enumerate}[(i)]
+\item 引入动机。对变号的 $f$，$\int_Xf\,\mathrm{d}\mu$ 只能通过 $f=f^+-f^-$ 定义，而差式只在两端不同时为 $+\infty$ 时有意义。可积性（两端均有限）给出差值有限、可作代数运算的函数类 $L^1(X)$；拟可积性（至少一端有限）给出差式有确定的、可能为无穷的值这一较弱的层次。两者之差是实质性的：$f(x)=x^{-1}$ 在 $\big((0,1),\mathscr B\cap(0,1),\lambda\big)$ 上两端积分均为 $\infty$，既不可积也不拟可积，其积分无定义。
+\item 两端均有限的必要性。若 $\int_Xf^+\,\mathrm{d}\mu=\int_Xf^-\,\mathrm{d}\mu=\infty$，则 $\int_Xf\,\mathrm{d}\mu$ 形如 $\infty-\infty$，任何取值都无法与“$f$ 的积分”相容：例如截断函数 $f_n\triangleq f\chi_{\{|f|\leqslant n\}}$ 满足 $f_n\to f$ 且 $\int_Xf_n\,\mathrm{d}\mu=0$，故合理的积分应等于 $0$，而 $f^\pm$ 的形式却给不出确定的差。
+\item $\|f\|_1$ 与商空间。由\cref{definition:ch02-非负可测积分}，$\|f\|_1=0$ 当且仅当 $f=0$ 在 $X$ 上 $\mu$-a.e.（见\hyperref[remark:ch02-非负可测积分动机]{关于非负可测函数积分的注记}(v)），故 $\|\cdot\|_1$ 在 $L^1(X)$ 上只是半范数；通常把 $\mu$-a.e. 相等的可积函数视为同一元素，所得商空间才是赋范空间。本书的 $L^1(X)$ 沿用“函数之集”的记法，涉及范数时总按此约定理解。
+\item 边界情形。$f$ 可在某个 $\mu$-零测集上取 $\pm\infty$ 而仍属 $L^1(X)$：由\cref{definition:ch02-非负可测积分}，$f^\pm$ 在该零测集上的取值只影响 $\infty\cdot\mu(\cdot)$ 一项，而该项按约定为 $0$。反之，若 $\mu(\{f=\infty\})>0$ 且 $f\in L^1(X)$，则由 $\infty\cdot\mu(\{f=\infty\})\leqslant\int_Xf^+\,\mathrm{d}\mu<\infty$ 得矛盾，故此时必有 $\mu(\{f=\infty\})=0$。
+\item 与 Riemann 积分的关系。$L^1$ 是 Riemann 可积函数类的真扩充，见\hyperref[remark:ch02-Riemann可积]{关于 Riemann 积分的注记}；扩张的关键在于 $L^1$ 在控制收敛的意义下对逐点极限封闭（\cref{theorem:ch02-Lebesgue控制收敛}），而 Riemann 可积函数类不具备这一封闭性。
+\end{enumerate}
 \end{remark}
 
-\begin{remark}\label{remark:ch02-测度密度}
-设 $(X,\mathscr A,\mu)$ 为测度空间，$f\geqslant0$ 为 $\mathscr A$-可测。立即可见映射
+% SUPPLEMENT: parent=remark:ch02-Riemann可积; kind=proof; 补出“Riemann 可积函数属于 $L^1$ 且两积分相等”的论证：阶梯函数的逼近、几乎处处可测性、正负部分的上确界比较与极限过渡
+\begin{remark}\phantomsection\label{remark:ch02-Riemann可积}
+设 $D\subseteq\mathbb R^N$ 有界，$f:D\to\mathbb R$ 在 $D$ 上 Riemann 可积（Darboux 意义）。则 $f$ 有界，且 $f\in L^1\big(D,\mathscr B_N\cap D,\lambda_N|_{\mathscr B_N\cap D}\big)$，其 Lebesgue 积分等于 $f$ 的 Riemann 积分。按记号滥用，常使用通常符号 $\int_Df\,\mathrm{d}x$ 代替 $\int_Df\,\mathrm{d}\lambda_N$。
+\end{remark}
+
+\begin{proof}
+记 $\lambda\triangleq\lambda_N|_{\mathscr B_N\cap D}$。
+
+第一，逼近阶梯函数的存在性。由 Darboux 判据，对每个 $k\in\mathbb N$ 存在 $D$ 的有限矩形划分给出的阶梯函数 $u_k,v_k:D\to\mathbb R$，使 $u_k\leqslant f\leqslant v_k$ 在 $D$ 上成立，且
+\begin{align*}
+0\leqslant\int_D(v_k-u_k)\,\mathrm{d}\lambda\leqslant2^{-k},\qquad\int_Du_k\,\mathrm{d}\lambda\longrightarrow\int_Df\,\mathrm{d}x\quad(k\to\infty),
+\end{align*}
+其中右端为 $f$ 的 Riemann 积分。阶梯函数关于有限矩形划分取常值，故为 $\mathscr B_N\cap D$-可测的简单函数。
+
+第二，几乎处处收敛与可测性。由 $\sum_{k=1}^\infty\int_D(v_k-u_k)\,\mathrm{d}\lambda<\infty$ 与\hyperref[remark:ch02-非负可测积分动机]{关于非负可测函数积分的注记}(v)（应用于非负可测函数 $\sum_{k=1}^\infty(v_k-u_k)$），存在 $\lambda$-零测集 $Z\subseteq D$，使 $\sum_{k=1}^\infty(v_k-u_k)(x)<\infty$ 对 $x\in D\setminus Z$ 成立，从而 $(v_k-u_k)(x)\to0$；再由 $u_k\leqslant f\leqslant v_k$ 得 $u_k(x)\to f(x)$（$x\in D\setminus Z$）。于是 $f$ 与 $\mathscr B_N\cap D$-可测函数 $\limsup_{k\to\infty}u_k$ 在 $D\setminus Z$ 上相等；必要时修改 $f$ 在 $Z$ 上的值，可设 $f$ 为 $\mathscr B_N\cap D$-可测，而修改不改变 $f^\pm$ 的积分（\hyperref[remark:ch02-非负可测积分动机]{关于非负可测函数积分的注记}(iv)）。
+
+第三，$\int_Df^+\,\mathrm{d}\lambda$ 有限且等于 $\lim_{k\to\infty}\int_Du_k^+\,\mathrm{d}\lambda$。由 $t\mapsto t^+$ 的单调性，$u_k^+\leqslant f^+\leqslant v_k^+$；又对 $u\leqslant v$ 有 $v^+-u^+\leqslant v-u$（按 $u,v$ 与 $0$ 的位置分三种情形验证），故
+\begin{align*}
+0\leqslant\int_Df^+\,\mathrm{d}\lambda-\int_Du_k^+\,\mathrm{d}\lambda\leqslant\int_D(v_k^+-u_k^+)\,\mathrm{d}\lambda\leqslant\int_D(v_k-u_k)\,\mathrm{d}\lambda\leqslant2^{-k}.
+\end{align*}
+特别取 $k=1$ 得 $\int_Df^+\,\mathrm{d}\lambda\leqslant\int_Dv_1^+\,\mathrm{d}\lambda<\infty$（$v_1$ 为 $D$ 上的有界阶梯函数）。于是 $\int_Df^+\,\mathrm{d}\lambda=\lim_{k\to\infty}\int_Du_k^+\,\mathrm{d}\lambda$。
+
+第四，对 $f^-$ 作同样的论证。把 $u_k,v_k$ 换成 $-v_k,-u_k$（此时 $-v_k\leqslant-f\leqslant-u_k$）得 $\int_Df^-\,\mathrm{d}\lambda=\lim_{k\to\infty}\int_Du_k^-\,\mathrm{d}\lambda<\infty$。
+
+第五，两积分相等。由第三、四段，$f\in L^1(D,\mathscr B_N\cap D,\lambda)$，且
+\begin{align*}
+\int_Df\,\mathrm{d}\lambda=\int_Df^+\,\mathrm{d}\lambda-\int_Df^-\,\mathrm{d}\lambda
+=\lim_{k\to\infty}\Big(\int_Du_k^+\,\mathrm{d}\lambda-\int_Du_k^-\,\mathrm{d}\lambda\Big)
+=\lim_{k\to\infty}\int_Du_k\,\mathrm{d}\lambda=\int_Df\,\mathrm{d}x,
+\end{align*}
+其中用到 $u_k\in L^1(D,\lambda)$、$\int_Du_k\,\mathrm{d}\lambda=\int_Du_k^+\,\mathrm{d}\lambda-\int_Du_k^-\,\mathrm{d}\lambda$（\cref{definition:ch02-可积拟可积}）以及第一段中 $\int_Du_k\,\mathrm{d}\lambda$ 收敛到 Riemann 积分。
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch02-测度密度; kind=proof; 补出 $\nu$ 的 $\sigma$--可加性、带号测度条件（不出现 $\infty-\infty$）与 $\nu^\pm=\varphi^\pm$ 的完整论证，并说明 $|\nu|$ 的表达式
+\begin{remark}\phantomsection\label{remark:ch02-测度密度}
+设 $(X,\mathscr A,\mu)$ 为测度空间，$f\geqslant0$ 为 $\mathscr A$-可测。则映射
 \begin{align}
-\nu:\mathscr A\to[0,\infty],\qquad \nu(E)\triangleq \int_E f\,\mathrm{d}\mu\ (E\in\mathscr A) \label{align:ch02-2.7}
+\nu:\mathscr A\to[0,\infty],\qquad\nu(E)\triangleq\int_Ef\,\mathrm{d}\mu\ (E\in\mathscr A) \label{align:ch02-2.7}
 \end{align}
-为测度。类似地，映射
+是测度。类似地，映射
 \begin{align}
-\nu:\mathscr A\to[-\infty,\infty],\qquad \nu(E)\triangleq \int_E f\,\mathrm{d}\mu=\int_E f^+\,\mathrm{d}\mu-\int_E f^-\,\mathrm{d}\mu\ (E\in\mathscr A) \label{align:ch02-2.8}
+\nu:\mathscr A\to[-\infty,\infty],\qquad\nu(E)\triangleq\int_Ef\,\mathrm{d}\mu=\int_Ef^+\,\mathrm{d}\mu-\int_Ef^-\,\mathrm{d}\mu\ (E\in\mathscr A) \label{align:ch02-2.8}
 \end{align}
-当 $f$ 拟可积时为带号测度，当 $f\in L^1(X,\mathscr A,\mu)$ 时为有限带号测度。此外，
+当 $f$ 拟可积时为带号测度，当 $f\in L^1(X,\mathscr A,\mu)$ 时为有限带号测度。此外
 \begin{align}
-\nu^\pm(E)=\int_E f^\pm\,\mathrm{d}\mu, \label{align:ch02-2.9}
+\nu^\pm(E)=\int_Ef^\pm\,\mathrm{d}\mu, \label{align:ch02-2.9}
 \end{align}
-从而当 $f\in L^1(X,\mathscr A,\mu)$ 时 $|\nu|(E)=\int_E|f|\,\mathrm{d}\mu<\infty$。事实上，令 $\varphi^\pm(E)\triangleq \int_E f^\pm\,\mathrm{d}\mu$。则对任意 $F\subseteq E$、$F\in\mathscr A$，
+从而当 $f\in L^1(X,\mathscr A,\mu)$ 时 $|\nu|(E)=\int_E|f|\,\mathrm{d}\mu<\infty$。
+
+第一，\eqref{align:ch02-2.7}是测度。$\nu(\varnothing)=\int_Xf\chi_\varnothing\,\mathrm{d}\mu=0$。设 $\{E_k\}\subseteq\mathscr A$ 两两不交，$E\triangleq\bigcup_{k=1}^\infty E_k$。则 $f\chi_E=\sum_{k=1}^\infty f\chi_{E_k}$ 在 $X$ 上逐点成立，且部分和 $g_n\triangleq\sum_{k=1}^nf\chi_{E_k}$ 非负 $\mathscr A$-可测、非降、$g_n\uparrow f\chi_E$。对 $\{g_n\}$ 用\eqref{align:ch02-2.6}得
+\begin{align*}
+\nu(E)=\int_Xf\chi_E\,\mathrm{d}\mu=\lim_{n\to\infty}\sum_{k=1}^n\int_Xf\chi_{E_k}\,\mathrm{d}\mu=\sum_{k=1}^\infty\nu(E_k).
+\end{align*}
+
+第二，\eqref{align:ch02-2.8}在 $f$ 拟可积时是带号测度。对任意 $E\in\mathscr A$ 有 $\nu(E)=\varphi^+(E)-\varphi^-(E)$，其中 $\varphi^\pm(E)\triangleq\int_Ef^\pm\,\mathrm{d}\mu$ 为测度。因 $f$ 拟可积，$\varphi^+(X)$ 与 $\varphi^-(X)$ 中至少一个有限，故 $\nu$ 不会同时取 $+\infty$ 与 $-\infty$：若 $\varphi^-(X)<\infty$ 则 $\nu(E)\geqslant-\varphi^-(X)>-\infty$，若 $\varphi^+(X)<\infty$ 则 $\nu(E)\leqslant\varphi^+(X)<\infty$。$\sigma$--可加性由 $\varphi^\pm$ 的 $\sigma$--可加性得到：对两两不交的 $\{E_k\}$，
+\begin{align*}
+\sum_{k=1}^\infty\nu(E_k)=\sum_{k=1}^\infty\varphi^+(E_k)-\sum_{k=1}^\infty\varphi^-(E_k)=\varphi^+(E)-\varphi^-(E)=\nu(E),
+\end{align*}
+其中右端两项级数在 $[0,\infty]$ 中收敛，故其差按\cref{definition:ch02-可积拟可积}的约定有意义且等于 $\nu(E)$。当 $f\in L^1(X,\mathscr A,\mu)$ 时 $\varphi^\pm(X)<\infty$，故 $\nu$ 有限。
+
+第三，\eqref{align:ch02-2.9}。令 $\varphi^\pm(E)\triangleq\int_Ef^\pm\,\mathrm{d}\mu$，$H\triangleq\{f\geqslant0\}$。则 $\nu=\varphi^+-\varphi^-$。对任意 $F\subseteq E$、$F\in\mathscr A$，
 \begin{align*}
 \nu(F)=\varphi^+(F)-\varphi^-(F)\leqslant\varphi^+(F)\leqslant\varphi^+(E),
 \end{align*}
-故由\cref{proposition:ch01-正变差}知 $\nu^+(E)\leqslant\varphi^+(E)$。为证反向不等式，令 $H\triangleq \{f\geqslant0\}$。显然对任意 $E\in\mathscr A$，$\varphi^+(E\cap H^c)=0=\varphi^-(E\cap H)$，故
+故由\cref{proposition:ch01-正变差}得 $\nu^+(E)\leqslant\varphi^+(E)$。为证反向不等式，注意在 $H^c=\{f<0\}$ 上 $f^+=0$，故 $\varphi^+(E\cap H^c)=0$；在 $H$ 上 $f^-=0$，故 $\varphi^-(E\cap H)=0$。于是
 \begin{align*}
-\varphi^+(E)=\varphi^+(E\cap H)=\nu(E\cap H)\leqslant\nu^+(E\cap H)\leqslant\nu^+(E).
+\varphi^+(E)=\varphi^+(E\cap H)=\nu(E\cap H)\leqslant\nu^+(E\cap H)\leqslant\nu^+(E),
 \end{align*}
-由此 $\nu^+=\varphi^+$，从而 $\nu^-=(-\nu)^+=\varphi^-$。结论成立。
+从而 $\nu^+=\varphi^+$。又 $-\nu=\varphi^--\varphi^+$，且对 $F\subseteq E$ 有 $(-\nu)(F)=\varphi^-(F)-\varphi^+(F)\leqslant\varphi^-(E)$，同一论证给出 $\nu^-=(-\nu)^+=\varphi^-$。最后 $|\nu|=\nu^++\nu^-$，故 $|\nu|(E)=\int_E(f^++f^-)\,\mathrm{d}\mu=\int_E|f|\,\mathrm{d}\mu$，当 $f\in L^1(X,\mathscr A,\mu)$ 时该值有限。
 \end{remark}
 
-\begin{remark}\label{remark:ch02-简单函数稠密}
-由\cref{remark:ch02-简单逼近积分}（见\eqref{align:ch02-2.6}）知简单函数集合 $\mathscr S(X)$ 在 $L^1(X)$ 中稠密。
+% SUPPLEMENT: parent=remark:ch02-简单函数稠密; kind=proof; 补出“$\mathscr S(X)$ 在 $L^1(X)$ 中稠密”的论证：用上确界定义分别逼近正负部并估计 $\|f-s\|_1$
+\begin{remark}\phantomsection\label{remark:ch02-简单函数稠密}
+设 $(X,\mathscr A,\mu)$ 为测度空间。由\hyperref[remark:ch02-简单逼近积分]{关于简单函数逼近的注记}（见\eqref{align:ch02-2.6}），简单函数集合 $\mathscr S(X)$ 在 $L^1(X)$ 中稠密：对任意 $f\in L^1(X)$ 与任意 $\varepsilon>0$，存在 $s\in\mathscr S(X)$ 使 $\|f-s\|_1<\varepsilon$。
 \end{remark}
+
+\begin{proof}
+设 $f\in L^1(X)$，$\varepsilon>0$。由\eqref{align:ch02-2.4}的上确界定义，存在 $s_1,t_1\in\mathscr S^+(X)$，使 $s_1\leqslant f^+$、$t_1\leqslant f^-$，且
+\begin{align*}
+\int_X(f^+-s_1)\,\mathrm{d}\mu<\frac{\varepsilon}2,\qquad\int_X(f^--t_1)\,\mathrm{d}\mu<\frac{\varepsilon}2.
+\end{align*}
+令 $s\triangleq s_1-t_1\in\mathscr S(X)$。由 $f-s=(f^+-s_1)-(f^- -t_1)$ 与 $s_1\leqslant f^+$、$t_1\leqslant f^-$ 得
+\begin{align*}
+|f-s|\leqslant(f^+-s_1)+(f^--t_1),
+\end{align*}
+故由非负可测函数积分的可加性与单调性（\cref{definition:ch02-可积拟可积}后的证明第二段）
+\begin{align*}
+\|f-s\|_1=\int_X|f-s|\,\mathrm{d}\mu\leqslant\int_X(f^+-s_1)\,\mathrm{d}\mu+\int_X(f^--t_1)\,\mathrm{d}\mu<\varepsilon.
+\end{align*}
+于是 $\mathscr S(X)$ 在 $L^1(X)$ 中稠密。
+\end{proof}
 
 关于带号测度的积分定义如下（此概念的推广见\cref{subsection:ch04-带号测度积分}）。
 
 \begin{definition}\label{definition:ch02-带号测度积分}\label{definition:ch02-带号积分}
-设 $(X,\mathscr A)$ 为可测空间，$\mu$ 为 $\mathscr A$ 上的带号测度。称 $f\in L^1(X,\mathscr A,\mu)$，若 $f\in L^1(X,\mathscr A,\mu^\pm)$，并令
+设 $(X,\mathscr A)$ 为可测空间，$\mu$ 为 $\mathscr A$ 上的带号测度，$\mu=\mu^+-\mu^-$ 为其 Jordan 分解（\cref{definition:ch01-带号测度}）。称 $f\in L^1(X,\mathscr A,\mu)$，若 $f\in L^1(X,\mathscr A,\mu^+)$ 且 $f\in L^1(X,\mathscr A,\mu^-)$，并令
 \begin{align}
-\int_X f\,\mathrm{d}\mu\triangleq \int_X f\,\mathrm{d}\mu^+-\int_X f\,\mathrm{d}\mu^-. \label{align:ch02-2.10}
+\int_Xf\,\mathrm{d}\mu\triangleq\int_Xf\,\mathrm{d}\mu^+-\int_Xf\,\mathrm{d}\mu^-. \label{align:ch02-2.10}
 \end{align}
+此差记为 $f$ 在 $X$ 上关于 $\mu$ 的积分。
 \end{definition}
 
-由\eqref{align:ch02-2.10}易得
+由\eqref{align:ch02-2.10}得
 \begin{align}
-\left|\int_X f\,\mathrm{d}\mu\right|\leqslant\int_X|f|\,\mathrm{d}|\mu|. \label{align:ch02-2.11}
+\left|\int_Xf\,\mathrm{d}\mu\right|\leqslant\int_X|f|\,\mathrm{d}|\mu|. \label{align:ch02-2.11}
 \end{align}
 
+% SUPPLEMENT: parent=definition:ch02-带号测度积分; kind=proof; 补出 (2.11) 的推导：三角不等式、$\int_X|f|\,\mathrm{d}\mu^\pm$ 的估计、$\int_Xg\,\mathrm{d}(\nu_1+\nu_2)=\int_Xg\,\mathrm{d}\nu_1+\int_Xg\,\mathrm{d}\nu_2$ 的依据以及 $|\mu|=\mu^++\mu^-$
+\begin{proof}
+设 $f\in L^1(X,\mathscr A,\mu)$，即 $f\in L^1(X,\mathscr A,\mu^+)\cap L^1(X,\mathscr A,\mu^-)$。由\eqref{align:ch02-2.10}、三角不等式与\cref{definition:ch02-可积拟可积}后的证明第五段中的估计 $\left|\int_Xg\,\mathrm{d}\nu\right|\leqslant\int_X|g|\,\mathrm{d}\nu$（$\nu$ 为测度）得
+\begin{align*}
+\left|\int_Xf\,\mathrm{d}\mu\right|
+&\leqslant\left|\int_Xf\,\mathrm{d}\mu^+\right|+\left|\int_Xf\,\mathrm{d}\mu^-\right|
+\leqslant\int_X|f|\,\mathrm{d}\mu^++\int_X|f|\,\mathrm{d}\mu^-.
+\end{align*}
+对 $\nu_1\triangleq\mu^+$、$\nu_2\triangleq\mu^-$ 与非负可测的 $g\triangleq|f|$，由\eqref{align:ch02-2.6}与简单函数积分的可加性得 $\int_Xg\,\mathrm{d}(\nu_1+\nu_2)=\int_Xg\,\mathrm{d}\nu_1+\int_Xg\,\mathrm{d}\nu_2$。又由\cref{definition:ch01-带号测度}，$|\mu|=\mu^++\mu^-$。故
+\begin{align*}
+\left|\int_Xf\,\mathrm{d}\mu\right|\leqslant\int_X|f|\,\mathrm{d}(\mu^++\mu^-)=\int_X|f|\,\mathrm{d}|\mu|,
+\end{align*}
+即\eqref{align:ch02-2.11}。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:ch02-带号测度积分; kind=motivation; 说明用 Jordan 分解定义带号测度积分的动机、$f\in L^1(\mu^+)\cap L^1(\mu^-)$ 的必要性、与 (2.11) 的关系以及 $L^1(X,\mathscr A,\mu)$ 为向量空间的边界事实
+\begin{remark}\phantomsection\label{remark:ch02-带号测度积分动机}
+\begin{enumerate}[(i)]
+\item 引入动机。带号测度没有“密度函数关于 $\mu$ 的积分”这一先验含义，但 $\mu=\mu^+-\mu^-$ 把它分解为两个（正）测度，而正测度的积分已在\cref{definition:ch02-可积拟可积}中定义。把 $\int_Xf\,\mathrm{d}\mu$ 定义为一个线性泛函在 $\mu$ 上的取值，是使 $\mu\mapsto\int_Xf\,\mathrm{d}\mu$ 关于 $\mu$ 线性且与\eqref{align:ch02-2.7}--\eqref{align:ch02-2.8}相容的方式。
+\item 假设的作用。$f\in L^1(X,\mathscr A,\mu^+)$ 与 $f\in L^1(X,\mathscr A,\mu^-)$ 同时成立，保证\eqref{align:ch02-2.10}右端两项都是有限实数，从而其差有定义且有限。该条件等价于 $f\in L^1(X,\mathscr A,|\mu|)$（因为 $|\mu|=\mu^++\mu^-$，见\cref{definition:ch02-可积拟可积}后的证明第二段）；若只要求 $f$ 拟可积，则差可能出现 $\infty-\infty$。此处并不要求 $f\geqslant0$。
+\item 与 (2.11) 的关系。\eqref{align:ch02-2.11}说明 $\mu\mapsto\int_Xf\,\mathrm{d}\mu$ 是 $L^1(X,\mathscr A,|\mu|)$ 上的有界线性泛函，其范数不超过 $1$；它也保证 $\int_Xf\,\mathrm{d}\mu$ 对 Jordan 分解的选取不敏感，因为 $\mu^\pm$ 由 $\mu$ 唯一确定。
+\item 边界情形。$L^1(X,\mathscr A,\mu)\triangleq L^1(X,\mathscr A,\mu^+)\cap L^1(X,\mathscr A,\mu^-)$ 是向量空间：对 $f,g\in L^1(X,\mathscr A,\mu)$ 与 $\alpha\in\mathbb R$，由 $|f+g|\leqslant|f|+|g|$、$|\alpha f|=|\alpha||f|$ 及\cref{definition:ch02-可积拟可积}后的证明第四段即得。若 $\mu$ 为（正）测度，则 $\mu^-=0$，\eqref{align:ch02-2.10}化归为\cref{definition:ch02-可积拟可积}。
+\end{enumerate}
+\end{remark}
 回顾下列经典结果。
 
-\begin{theorem}[Beppo Levi]\label{theorem:ch02-BeppoLevi}\label{corollary:ch02-平均收敛}
-设 $(X,\mathscr A,\mu)$ 为测度空间。设 $f,f_n:X\to[0,\infty]$ 为 $\mathscr A$-可测。假设对任意 $n\in\mathbb N$，$f_n\leqslant f_{n+1}$ 在 $X$ 上 $\mu$-a.e.，且 $f$ 为序列 $\{f_n\}$ 在 $X$ 上的 $\mu$-逐点极限。则
+\begin{theorem}[Beppo Levi]\label{theorem:ch02-BeppoLevi}
+设 $(X,\mathscr A,\mu)$ 为测度空间，$f,f_n:X\to[0,\infty]$ 为 $\mathscr A$-可测。假设对任意 $n\in\mathbb N$，$f_n\leqslant f_{n+1}$ 在 $X$ 上 $\mu$-a.e. 成立，且 $f$ 为序列 $\{f_n\}$ 在 $X$ 上的 $\mu$-逐点极限。则 $f$ 与各 $f_n$ 在 $X$ 上的积分均存在（取值于 $[0,\infty]$），且极限与积分可交换次序：
 \begin{align*}
-\lim_{n\to\infty}\int_X f_n\,\mathrm{d}\mu=\int_X f\,\mathrm{d}\mu.
+\lim_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu=\int_Xf\,\mathrm{d}\mu.
 \end{align*}
 \end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch02-BeppoLevi; kind=proof; 补出单调收敛定理的完整证明：把几乎处处单调归约为处处单调、上界方向、简单函数的下方连续性与 $\theta\uparrow1$ 的极限过程
+\begin{proof}
+第一步：归约为处处单调。设 $N_n\triangleq\{f_n>f_{n+1}\}$（$n\in\mathbb N$）与 $N_0\triangleq\{x\in X\mid f_n(x)\not\to f(x)\}$，则 $\mu(N_n)=0$ 对一切 $n\geqslant0$ 成立。令 $N\triangleq\bigcup_{n=0}^\infty N_n$，则 $\mu(N)=0$，且在 $X\setminus N$ 上 $\{f_n\}$ 非降且 $f_n\to f$。令
+\begin{align*}
+\tilde f_n\triangleq f_n\chi_{N^c},\qquad\tilde f\triangleq f\chi_{N^c}\qquad(n\in\mathbb N).
+\end{align*}
+则 $\tilde f_n,\tilde f$ 非负 $\mathscr A$-可测，且 $0\leqslant\tilde f_n\leqslant\tilde f_{n+1}\leqslant\tilde f$、$\tilde f_n\to\tilde f$ 在 $X$ 上处处成立。又 $\tilde f_n=f_n$、$\tilde f=f$ 在 $X\setminus N$ 上成立，而 $\mu(N)=0$，故由\hyperref[remark:ch02-非负可测积分动机]{关于非负可测函数积分的注记}(iv)得
+\begin{align*}
+\int_X\tilde f_n\,\mathrm{d}\mu=\int_Xf_n\,\mathrm{d}\mu,\qquad\int_X\tilde f\,\mathrm{d}\mu=\int_Xf\,\mathrm{d}\mu\qquad(n\in\mathbb N).
+\end{align*}
+于是只需在处处单调的情形证明结论。
+
+第二步：上界方向。由 $f_n\leqslant f$ 与\cref{definition:ch02-非负可测积分}的单调性，$\int_Xf_n\,\mathrm{d}\mu\leqslant\int_Xf\,\mathrm{d}\mu$ 对一切 $n$ 成立，故
+\begin{align*}
+\limsup_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu\leqslant\int_Xf\,\mathrm{d}\mu.
+\end{align*}
+
+第三步：下界方向。固定 $s\in\mathscr S^+(X)$，$s\leqslant f$，并固定 $\theta\in(0,1)$。令 $A_n\triangleq\{f_n\geqslant\theta s\}\in\mathscr A$。若 $s(x)=0$，则 $\theta s(x)=0\leqslant f_n(x)$ 对一切 $n$ 成立；若 $s(x)>0$，则 $f_n(x)\to f(x)\geqslant s(x)>\theta s(x)$，故 $x\in A_n$ 对充分大的 $n$ 成立。因此 $A_n\uparrow X$。由 $\theta s\chi_{A_n}\leqslant f_n$ 与单调性，
+\begin{align*}
+\theta\int_{A_n}s\,\mathrm{d}\mu=\int_X\theta s\chi_{A_n}\,\mathrm{d}\mu\leqslant\int_Xf_n\,\mathrm{d}\mu\qquad(n\in\mathbb N).
+\end{align*}
+由\hyperref[remark:ch02-简单逼近积分]{关于简单函数逼近的注记}后的证明第三段（简单函数的下方连续性），$\int_{A_n}s\,\mathrm{d}\mu\to\int_Xs\,\mathrm{d}\mu$；故对 $n\to\infty$ 取上极限得 $\theta\int_Xs\,\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu$。令 $\theta\uparrow1$，再对满足 $s\leqslant f$ 的 $s\in\mathscr S^+(X)$ 取上确界，并用\cref{definition:ch02-非负可测积分}得
+\begin{align*}
+\int_Xf\,\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu.
+\end{align*}
+与第二步结合即得 $\lim_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu=\int_Xf\,\mathrm{d}\mu$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-BeppoLevi; kind=motivation; 说明单调收敛定理的动机、单调性假设不可去掉的反例（平移的特征函数列）、非负性假设不可去掉的反例（趋于零的非正函数列）、结论不蕴含 $L^1$ 收敛，以及几乎处处版本与单调下降版本
+\begin{remark}\phantomsection\label{remark:ch02-BeppoLevi动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{definition:ch02-非负可测积分}用上确界定义积分，本身不含任何极限运算；\cref{theorem:ch02-BeppoLevi}把“逐点极限”与“积分极限”交换，是此后所有收敛定理（Fatou 引理、控制收敛定理、Tonelli 定理）的引擎。\eqref{align:ch02-2.6}正是本定理在简单函数逼近情形下的特例。
+\item 单调性假设不可去掉。在 $(\mathbb R,\mathscr B,\lambda)$ 上取 $f_n\triangleq\chi_{[n,n+1]}$，$f\triangleq0$。则 $f_n\geqslant0$ 可测、$f_n\to f$ 在 $\mathbb R$ 上逐点成立，但 $\int_{\mathbb R}f_n\,\mathrm{d}\lambda=1$ 不趋于 $\int_{\mathbb R}f\,\mathrm{d}\lambda=0$；此处 $\{f_n\}$ 不满足 $f_n\leqslant f_{n+1}$。
+\item 非负性假设不可去掉。在 $(\mathbb R,\mathscr B,\lambda)$ 上取 $f_n\triangleq-\chi_{[n,\infty)}$，$f\triangleq0$。则 $f_n\leqslant f_{n+1}$ 且 $f_n\to f$ 在 $\mathbb R$ 上逐点成立，但 $\int_{\mathbb R}f_n\,\mathrm{d}\lambda=-\lambda([n,\infty))=-\infty$ 对一切 $n$ 成立，故 $\lim_{n\to\infty}\int_{\mathbb R}f_n\,\mathrm{d}\lambda=-\infty\neq0=\int_{\mathbb R}f\,\mathrm{d}\lambda$。非负性保证 $\int_Xf_n\,\mathrm{d}\mu$ 不取 $-\infty$，从而上确界定义的积分可与极限交换。
+\item 结论的限度。定理只断言数值极限 $\int_Xf_n\,\mathrm{d}\mu\to\int_Xf\,\mathrm{d}\mu$（允许两端为 $+\infty$），并不断言 $\int_X|f_n-f|\,\mathrm{d}\mu\to0$：取 (ii) 中的 $\{f_n\}$ 即得 $\int_{\mathbb R}|f_n-f|\,\mathrm{d}\lambda=1$ 对一切 $n$ 成立。$L^1$ 收敛需要控制收敛定理（\cref{theorem:ch02-Lebesgue控制收敛}）中的可积控制函数。
+\item 几乎处处版本与单调下降版本。由证明第一步，假设只在 $\mu$-a.e. 成立时结论不变，因为积分不察觉 $\mu$-零测集上的改动。若 $\{f_n\}$ 非增且 $f_1$ 可积，则对非负可测列 $f_1-f_n$ 应用本定理得 $\int_Xf_n\,\mathrm{d}\mu\downarrow\int_Xf\,\mathrm{d}\mu$，即单调下降情形。
+\end{enumerate}
+\end{remark}
 
 \begin{theorem}[Fatou]\label{theorem:ch02-Fatou}
-设 $(X,\mathscr A,\mu)$ 为测度空间。设 $f_n:X\to[0,\infty]$ 为 $\mathscr A$-可测。则
+设 $(X,\mathscr A,\mu)$ 为测度空间，$f_n:X\to[0,\infty]$ 为 $\mathscr A$-可测（$n\in\mathbb N$）。则下极限函数 $\liminf_{n\to\infty}f_n$ 为 $\mathscr A$-可测，其积分满足单向不等式
 \begin{align*}
-\int_X\left(\liminf_{n\to\infty}f_n\right)\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_X f_n\,\mathrm{d}\mu.
+\int_X\Big(\liminf_{n\to\infty}f_n\Big)\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu.
 \end{align*}
 \end{theorem}
 
-\begin{theorem}[Lebesgue 控制收敛]\label{theorem:ch02-Lebesgue控制收敛}\label{corollary:ch02-控制收敛}
-设 $(X,\mathscr A,\mu)$ 为测度空间。设 $f,f_n$ 为 $\mathscr A$-可测，$f_n\to f$ 在 $X$ 上 $\mu$-a.e.。假设存在 $g\in L^1(X)$、$g\geqslant0$，使对所有 $n\in\mathbb N$，$|f_n|\leqslant g$ 在 $X$ 上 $\mu$-a.e.。
+% SUPPLEMENT: parent=theorem:ch02-Fatou; kind=proof; 补出 Fatou 引理的完整证明：取 $g_n\triangleq\inf_{k\geqslant n}f_k$、验证 $g_n$ 可测非降且 $g_n\leqslant f_n$、用单调收敛定理过渡
+\begin{proof}
+对 $n\in\mathbb N$，令
+\begin{align*}
+g_n\triangleq\inf_{k\geqslant n}f_k.
+\end{align*}
+则 $g_n$ 为 $\mathscr A$-可测（可数族的下确界，见\cref{corollary:ch02-可测运算}），$0\leqslant g_n\leqslant g_{n+1}$ 在 $X$ 上处处成立，且 $g_n\leqslant f_n$。此外由下极限的定义，$g_n(x)\to\liminf_{k\to\infty}f_k(x)$ 对每个 $x\in X$ 成立，即 $g_n\uparrow\liminf_{n\to\infty}f_n$。由\cref{theorem:ch02-BeppoLevi}与积分的单调性（\cref{definition:ch02-非负可测积分}）
+\begin{align*}
+\int_X\Big(\liminf_{n\to\infty}f_n\Big)\mathrm{d}\mu
+=\lim_{n\to\infty}\int_Xg_n\,\mathrm{d}\mu
+=\liminf_{n\to\infty}\int_Xg_n\,\mathrm{d}\mu
+\leqslant\liminf_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu,
+\end{align*}
+其中最后一步用到 $g_n\leqslant f_n$ 对每个 $n$ 成立（故 $\int_Xg_n\,\mathrm{d}\mu\leqslant\int_Xf_n\,\mathrm{d}\mu$，再取下极限）。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-Fatou; kind=motivation; 说明 Fatou 引理的动机、非负性假设不可去掉的反例、不等式严格的反例（集中质量列），以及它在控制收敛定理证明中的位置
+\begin{remark}\phantomsection\label{remark:ch02-Fatou动机}
+\begin{enumerate}[(i)]
+\item 引入动机。逐点收敛不足以保证积分的收敛（见\hyperref[remark:ch02-BeppoLevi动机]{关于单调收敛定理的注记}(ii)），但极限函数不能有“过多”的质量：Fatou 引理给出单向不等式 $\int_X\liminf f_n\,\mathrm{d}\mu\leqslant\liminf\int_Xf_n\,\mathrm{d}\mu$，它是唯一不需要控制函数的极限定理，也是\cref{theorem:ch02-Lebesgue控制收敛}的证明工具。
+\item 不等式可以是严格的。在 $\big((0,1),\mathscr B\cap(0,1),\lambda\big)$ 上取 $f_n\triangleq n\chi_{(0,1/n)}$。则 $f_n\geqslant0$ 可测、$f_n\to0$ 在 $(0,1)$ 上逐点成立，故 $\int_{(0,1)}\liminf f_n\,\mathrm{d}\lambda=0$；而 $\int_{(0,1)}f_n\,\mathrm{d}\lambda=1$ 对一切 $n$ 成立，故 $\liminf\int_{(0,1)}f_n\,\mathrm{d}\lambda=1>0$。可见 Fatou 引理中的不等式一般不能取等号。
+\item 非负性假设不可去掉。在 $(\mathbb R,\mathscr B,\lambda)$ 上取 $f_n\triangleq-\chi_{[n,\infty)}$。则 $\liminf f_n=0$，$\int_{\mathbb R}\liminf f_n\,\mathrm{d}\lambda=0$，而 $\int_{\mathbb R}f_n\,\mathrm{d}\lambda=-\infty$，故 $\liminf\int_{\mathbb R}f_n\,\mathrm{d}\lambda=-\infty$，不等式 $0\leqslant-\infty$ 不成立。
+\item 常用形式。若 $f_n\to f$ 在 $X$ 上 $\mu$-a.e. 且 $f_n\geqslant0$ 可测，则 $\int_Xf\,\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu$；若另有 $\limsup_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu\leqslant\int_Xf\,\mathrm{d}\mu$，则 $\lim_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu=\int_Xf\,\mathrm{d}\mu$。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Lebesgue]\label{theorem:ch02-Lebesgue控制收敛}
+设 $(X,\mathscr A,\mu)$ 为测度空间，$f,f_n$（$n\in\mathbb N$）为 $\mathscr A$-可测，且 $f_n\to f$ 在 $X$ 上 $\mu$-a.e.。假设
 \begin{align}
-\text{存在 }g\in L^1(X),\ g\geqslant0\text{ 使 }\sup_{n\in\mathbb N}|f_n|\leqslant g\ \mu\text{-a.e.} \label{align:ch02-2.12}
+\text{存在 }g\in L^1(X),\ g\geqslant0,\ \text{使}\ |f_n|\leqslant g\ \text{在 }X\text{ 上 }\mu\text{-a.e. 对所有 }n\in\mathbb N\text{ 成立}. \label{align:ch02-2.12}
 \end{align}
-则 $f,f_n\in L^1(X)$，且
+则 $f$ 与各 $f_n$ 均属于 $L^1(X)$，且 $\{f_n\}$ 在 $L^1(X)$ 中强收敛于 $f$：
 \begin{align*}
 \lim_{n\to\infty}\int_X|f_n-f|\,\mathrm{d}\mu=0.
 \end{align*}
 \end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch02-Lebesgue控制收敛; kind=proof; 补出控制收敛定理的完整证明：归约为处处收敛、由控制函数得 $f,f_n\in L^1$、对 $g\pm f_n$ 两次应用 Fatou 引理得 $\int_Xf_n\,\mathrm{d}\mu\to\int_Xf\,\mathrm{d}\mu$，再对 $2g-|f_n-f|$ 应用 Fatou 引理得 $L^1$ 收敛
+\begin{proof}
+第一步：归约为处处成立。设 $N\subseteq X$ 为 $\mu$-零测集，使 $f_n\to f$ 在 $X\setminus N$ 上成立，且 $|f_n|\leqslant g$ 在 $X\setminus N$ 上对所有 $n$ 成立。把 $f_n$、$f$、$g$ 在 $N$ 上的值均改为 $0$，所得函数仍 $\mathscr A$-可测、$g$ 仍非负，且各积分不变（\hyperref[remark:ch02-非负可测积分动机]{关于非负可测函数积分的注记}(iv)）。故不妨设 $f_n\to f$ 与 $|f_n|\leqslant g$ 在 $X$ 上处处成立。
+
+第二步：$f,f_n\in L^1(X)$。由 $|f_n|\leqslant g$ 得 $\int_X|f_n|\,\mathrm{d}\mu\leqslant\int_Xg\,\mathrm{d}\mu<\infty$，故 $f_n\in L^1(X)$。又 $|f|=\lim_{n\to\infty}|f_n|\leqslant g$，故 $f\in L^1(X)$。
+
+第三步：对 $g+f_n$ 与 $g-f_n$ 应用 Fatou 引理。由 $|f_n|\leqslant g$ 得 $g\pm f_n\geqslant0$，故由\cref{theorem:ch02-Fatou}与线性性（\cref{definition:ch02-可积拟可积}后的证明第五段）
+\begin{align*}
+\int_X(g+f)\,\mathrm{d}\mu&\leqslant\liminf_{n\to\infty}\int_X(g+f_n)\,\mathrm{d}\mu
+=\int_Xg\,\mathrm{d}\mu+\liminf_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu,\\
+\int_X(g-f)\,\mathrm{d}\mu&\leqslant\liminf_{n\to\infty}\int_X(g-f_n)\,\mathrm{d}\mu
+=\int_Xg\,\mathrm{d}\mu-\limsup_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu.
+\end{align*}
+由 $\int_X(g\pm f)\,\mathrm{d}\mu=\int_Xg\,\mathrm{d}\mu\pm\int_Xf\,\mathrm{d}\mu$ 消去 $\int_Xg\,\mathrm{d}\mu$，得
+\begin{align*}
+\int_Xf\,\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu,\qquad
+\limsup_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu\leqslant\int_Xf\,\mathrm{d}\mu,
+\end{align*}
+故 $\lim_{n\to\infty}\int_Xf_n\,\mathrm{d}\mu=\int_Xf\,\mathrm{d}\mu$。
+
+第四步：$L^1$ 收敛。由 $|f_n-f|\leqslant|f_n|+|f|\leqslant2g$ 得 $2g-|f_n-f|\geqslant0$，且 $|f_n-f|\to0$ 在 $X$ 上处处成立。对非负可测列 $2g-|f_n-f|$ 应用\cref{theorem:ch02-Fatou}，
+\begin{align*}
+\int_X2g\,\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_X\big(2g-|f_n-f|\big)\mathrm{d}\mu
+=2\int_Xg\,\mathrm{d}\mu-\limsup_{n\to\infty}\int_X|f_n-f|\,\mathrm{d}\mu,
+\end{align*}
+故 $\limsup_{n\to\infty}\int_X|f_n-f|\,\mathrm{d}\mu\leqslant0$，即 $\lim_{n\to\infty}\int_X|f_n-f|\,\mathrm{d}\mu=0$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-Lebesgue控制收敛; kind=motivation; 说明控制收敛定理的动机、$L^1$ 控制函数排除质量集中与逃逸的作用、无控制函数与无几乎处处收敛的反例，以及假设可减弱的方向
+\begin{remark}\phantomsection\label{remark:ch02-Lebesgue控制收敛动机}
+\begin{enumerate}[(i)]
+\item 引入动机。逐点收敛不能阻止质量向“越来越窄、越来越高的峰”集中（\hyperref[remark:ch02-Fatou动机]{关于 Fatou 引理的注记}(ii)），也不能阻止质量向无穷远处逃逸（\hyperref[remark:ch02-BeppoLevi动机]{关于单调收敛定理的注记}(ii)）。一个与 $n$ 无关的可积控制函数 $g$ 同时排除这两种现象，于是把逐点收敛提升为 $L^1$ 收敛；这是本书最常用的“极限与积分交换”定理。
+\item 各项假设的作用。(2.12) 中的 $g\in L^1(X)$ 使 $f_n$ 的绝对值有一致的可积上界，结论中的 $f,f_n\in L^1(X)$ 由此得到；$g\geqslant0$ 使 $g\pm f_n\geqslant0$，从而 Fatou 引理可用；$|f_n|\leqslant g$ 对所有 $n$ 成立（而非仅对充分大的 $n$）保证取极限后仍有 $|f|\leqslant g$；$f_n\to f$ $\mu$-a.e. 用于确定极限函数并保证 $|f_n-f|\to0$ $\mu$-a.e.。
+\item 无控制函数的反例。在 $\big((0,1),\mathscr B\cap(0,1),\lambda\big)$ 上取 $f_n\triangleq n\chi_{(0,1/n)}$，$f\triangleq0$。则 $f_n\to f$ 在 $(0,1)$ 上逐点成立，但不存在 $g\in L^1(0,1)$ 使 $|f_n|\leqslant g$ 对一切 $n$ 成立：对 $x\in(0,1)$ 取 $n>1/x$，则 $x\in(0,1/n)$，故 $g(x)\geqslant f_n(x)=n$ 对充分大的 $n$ 成立，从而 $g\equiv\infty$，与 $g\in L^1(0,1)$ 矛盾。此时 $\int_{(0,1)}|f_n-f|\,\mathrm{d}\lambda=1$ 不趋于 $0$，结论失效。
+\item 无几乎处处收敛的反例。在 $\big((0,1),\mathscr B\cap(0,1),\lambda\big)$ 上取 $g\triangleq1\in L^1(0,1)$，并取“游动区间”的特征函数列 $f_n\triangleq\chi_{I_n}$，其中 $\{I_n\}$ 是 $(0,1)$ 中长度趋于 $0$ 的区间列，使每个 $x\in(0,1)$ 属于无穷多个 $I_n$ 且不属于无穷多个 $I_n$（例如按二进区间枚举）。则 $|f_n|\leqslant g$ 对一切 $n$ 成立，但 $\{f_n(x)\}$ 对每个 $x\in(0,1)$ 都不收敛，故不存在 $f$ 使 $f_n\to f$ 在 $(0,1)$ 上 $\lambda$-a.e. 成立。这说明 (2.12) 只控制函数的“大小”，不保证极限存在；$f_n\to f$ $\mu$-a.e. 的假设不可省略。
+\item 假设可减弱的方向。$f_n\to f$ $\mu$-a.e. 可减弱为依测度收敛，结论不变；控制条件 (2.12) 可减弱为 $\{f_n\}$ 的一致可积性（\cref{definition:ch02-p一致可积}），此时需以 Vitali 定理代替本定理。
+\end{enumerate}
+\end{remark}
 
 \cref{theorem:ch02-BeppoLevi}与\cref{theorem:ch02-Lebesgue控制收敛}通常分别称为单调收敛定理与控制收敛定理。利用\cref{theorem:ch02-BeppoLevi}可证下列结果。
 
@@ -152,29 +478,57 @@
 \begin{enumerate}[(i)]
 \item 设 $f:X\to[0,\infty)$ 为 $\mathscr A$-可测，$\nu$ 为由\eqref{align:ch02-2.7}定义的测度。则对任意 $\mathscr A$-可测 $g:X\to[0,\infty)$，有
 \begin{align}
-\int_X g\,\mathrm{d}\nu=\int_X fg\,\mathrm{d}\mu. \label{align:ch02-2.13}
+\int_Xg\,\mathrm{d}\nu=\int_Xfg\,\mathrm{d}\mu. \label{align:ch02-2.13}
 \end{align}
 \item 设 $f\in L^1(X,\mathscr A,\mu)$，$\nu$ 为由\eqref{align:ch02-2.8}定义的有限带号测度。则对任意 $g\in L^1(X,\mathscr A,\nu)$，有 $fg\in L^1(X,\mathscr A,\mu)$，且\eqref{align:ch02-2.13}成立。
 \end{enumerate}
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch02-变量替换积分; kind=proof; 展开原证明：$g=\chi_E$ 与简单函数情形、单调收敛定理过渡；带号情形按 (2.9)--(2.10) 展开 (2.14)、逐项用 (2.13)，并补出 $fg\in L^1(X,\mathscr A,\mu)$ 的验证
 \begin{proof}
-(i) 当 $g=\chi_E$ 时由定义\eqref{align:ch02-2.13}成立，从而当 $g=s\in\mathscr S^+(X)$ 时也成立。对任意 $\mathscr A$-可测 $g:X\to[0,\infty)$，存在\eqref{align:ch02-2.5}中的序列 $\{s_n\}\subseteq\mathscr S^+(X)$，由\cref{theorem:ch02-BeppoLevi}即得结论。
+(i) 当 $g=\chi_E$（$E\in\mathscr A$）时，由\eqref{align:ch02-2.7}与\cref{definition:ch02-Lebesgue}得
+\begin{align*}
+\int_X\chi_E\,\mathrm{d}\nu=\nu(E)=\int_Ef\,\mathrm{d}\mu=\int_Xf\chi_E\,\mathrm{d}\mu,
+\end{align*}
+故\eqref{align:ch02-2.13}成立。由简单函数积分的线性性（\cref{definition:ch02-简单函数积分}后的证明第三步），当 $g=s=\sum_{i=1}^Nc_i\chi_{E_i}\in\mathscr S^+(X)$ 时\eqref{align:ch02-2.13}亦成立。对任意 $\mathscr A$-可测 $g:X\to[0,\infty)$，取 $\{s_n\}\subseteq\mathscr S^+(X)$ 如\eqref{align:ch02-2.5}，则 $s_n\uparrow g$ 且 $fs_n\uparrow fg$（$f\geqslant0$）。由\cref{theorem:ch02-BeppoLevi}两次得
+\begin{align*}
+\int_Xg\,\mathrm{d}\nu=\lim_{n\to\infty}\int_Xs_n\,\mathrm{d}\nu
+=\lim_{n\to\infty}\int_Xfs_n\,\mathrm{d}\mu=\int_Xfg\,\mathrm{d}\mu.
+\end{align*}
 
 (ii) 由\eqref{align:ch02-2.9}--\eqref{align:ch02-2.10}有
 \begin{align}
-\int_X g\,\mathrm{d}\nu
+\int_Xg\,\mathrm{d}\nu
 &=\int_X(g^+-g^-)\,\mathrm{d}\nu^+-\int_X(g^+-g^-)\,\mathrm{d}\nu^- \nonumber\\
-&=\int_X g^+\,\mathrm{d}\nu^+-\int_X g^-\,\mathrm{d}\nu^+-\int_X g^+\,\mathrm{d}\nu^-+\int_X g^-\,\mathrm{d}\nu^-. \label{align:ch02-2.14}
+&=\int_Xg^+\,\mathrm{d}\nu^+-\int_Xg^-\,\mathrm{d}\nu^+-\int_Xg^+\,\mathrm{d}\nu^-+\int_Xg^-\,\mathrm{d}\nu^-. \label{align:ch02-2.14}
 \end{align}
-由\eqref{align:ch02-2.13}有 $\int_X g^\pm\,\mathrm{d}\nu^\pm=\int_X g^\pm f^\pm\,\mathrm{d}\mu$；又因假设 $g\in L^1(X,\mathscr A,\nu^\pm)$（见\cref{definition:ch02-带号测度积分}），故 $\int_X g^\pm\,\mathrm{d}\nu^\pm<\infty$。由\eqref{align:ch02-2.14}得
+由 (i)（以 $\nu^\pm$ 代替 $\nu$，见\eqref{align:ch02-2.9}）得
 \begin{align*}
-\int_X g\,\mathrm{d}\nu=\int_X(f^+-f^-)(g^+-g^-)\,\mathrm{d}\mu=\int_X fg\,\mathrm{d}\mu,
+\int_Xg^\pm\,\mathrm{d}\nu^\pm=\int_Xg^\pm f^\pm\,\mathrm{d}\mu;
 \end{align*}
-证毕。
+又由假设 $g\in L^1(X,\mathscr A,\nu)$ 及\cref{definition:ch02-带号测度积分}得 $g\in L^1(X,\mathscr A,\nu^+)\cap L^1(X,\mathscr A,\nu^-)$，故 $\int_Xg^\pm\,\mathrm{d}\nu^\pm<\infty$，从而\eqref{align:ch02-2.14}右端四项均有限。代入\eqref{align:ch02-2.14}并合并同类项得
+\begin{align*}
+\int_Xg\,\mathrm{d}\nu
+&=\int_X(g^+f^+-g^-f^+)\,\mathrm{d}\mu-\int_X(g^+f^--g^-f^-)\,\mathrm{d}\mu\\
+&=\int_X(f^+-f^-)(g^+-g^-)\,\mathrm{d}\mu=\int_Xfg\,\mathrm{d}\mu,
+\end{align*}
+其中第二步用到线性性（\cref{definition:ch02-可积拟可积}后的证明第五段）与\eqref{align:ch02-2.10}，第三步用到 $fg=(f^+-f^-)(g^+-g^-)$。
+
+最后验证 $fg\in L^1(X,\mathscr A,\mu)$。由 $|fg|\leqslant|f||g|=f^+g^++f^-g^-$（注意 $g^\pm\leqslant|g|$）与 $\int_Xf^\pm g^\pm\,\mathrm{d}\mu=\int_Xg^\pm\,\mathrm{d}\nu^\pm<\infty$ 得
+\begin{align*}
+\int_X|fg|\,\mathrm{d}\mu\leqslant\int_Xg^+\,\mathrm{d}\nu^++\int_Xg^-\,\mathrm{d}\nu^-<\infty,
+\end{align*}
+故 $fg\in L^1(X,\mathscr A,\mu)$。
 \end{proof}
 
-
-
+% SUPPLEMENT: parent=proposition:ch02-变量替换积分; kind=motivation; 说明以密度改换测度的动机（$g\mapsto\int_Xg\,\mathrm{d}\nu$ 即乘 $f$ 的算子）、(i) 与 (ii) 假设的差别、$fg\in L^1$ 为何是结论而非假设，以及它在 Radon--Nikodým 理论中的位置
+\begin{remark}\phantomsection\label{remark:ch02-变量替换积分动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch02-2.13}是说：若 $\nu$ 由密度 $f$ 给出（$f\geqslant0$ 可测，$\nu(E)=\int_Ef\,\mathrm{d}\mu$），则关于 $\nu$ 的积分等于关于 $\mu$ 的积分再乘 $f$。于是 $\nu$ 的全部信息都编码在 $f$ 中，而 $g\mapsto\int_Xg\,\mathrm{d}\nu=\int_Xfg\,\mathrm{d}\mu$ 就是“乘 $f$”这个算子。该等式是 Radon--Nikodým 定理（\cref{theorem:ch02-RadonNikodym}）中“$L^1$ 密度”方向的基本计算，也是概率论中换测度公式的原型。
+\item (i) 与 (ii) 的假设差别。(i) 只要求 $f\geqslant0$ 可测，此时 $\nu$ 是（正）测度且可以 $\nu(X)=\infty$；$g\geqslant0$ 可测使两端都在 $[0,\infty]$ 中，故不需要任何可积性。(ii) 要求 $f\in L^1(X,\mathscr A,\mu)$，使 $\nu$ 为有限带号测度，从而 $f^\pm\in L^1(\mu)$；$g\in L^1(X,\mathscr A,\nu)$ 即 $g\in L^1(\nu^+)\cap L^1(\nu^-)$，这保证\eqref{align:ch02-2.14}中各项有限，从而可以逐项相减。
+\item $fg\in L^1$ 是结论而非假设。(ii) 中若把 $fg\in L^1(X,\mathscr A,\mu)$ 也列为假设，命题将只对一部分 $g$ 成立而失去“换测度”的意义；证明末段表明它由 $g\in L^1(X,\mathscr A,\nu)$ 自动推出，因为 $|fg|\leqslant f^+g^++f^-g^-$，而两个积分分别等于 $\int_Xg^\pm\,\mathrm{d}\nu^\pm$。
+\item 边界情形。若 $f$ 只拟可积而不可积，则 $\nu$ 仍可为带号测度（\hyperref[remark:ch02-测度密度]{关于测度密度的注记}），但 $\nu$ 不必有限，$\int_Xg\,\mathrm{d}\nu=\int_Xfg\,\mathrm{d}\mu$ 的右端可能取 $\pm\infty$，此时须按拟可积的约定解释。若 $f=0$，则 $\nu=0$，\eqref{align:ch02-2.13}两端均为 $0$，与 $g$ 的选取无关。
+\end{enumerate}
+\end{remark}
 
 \end{document}

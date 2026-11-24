@@ -1,0 +1,372 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{迹}\label{section:ch05-03}
+
+本节始终假设 $U$ 为有界开集，$\partial U$ 为 Lipschitz 边界（\cref{definition:ch04-4-4}）。% XREF p=219 "Assume for this section that U is open and bounded, with Lipschitz boundary ∂U."
+注意，由于 $\partial U$ 的每一部分局部地是某个 Lipschitz 连续函数 $\gamma$ 的图像，由\cref{theorem:ch03-3-2}，外单位法向量 $\nu$ 在 $\partial U$ 上 $\mathcal{H}^{n-1}$-a.e. 存在。% XREF p=219 "the outer unit normal ν exists H^{n−1} almost everywhere on ∂U, according to Rademacher's Theorem"
+
+现把对 Sobolev 函数定义的迹的概念（见\cref{section:ch04-03}）推广到 $\BV$ 函数。% XREF p=219 "the notion of trace, defined in Section 4.3 for Sobolev functions"
+
+\begin{theorem}[$\BV$ 函数的迹]\label{theorem:ch05-5-6}
+设 $n\geqslant2$ 为整数，$U\subseteq\mathbb{R}^n$ 为有界开集，$\partial U$ 为 Lipschitz 边界，$\nu$ 为 $\partial U$ 的外单位法向量，它对 $\mathcal{H}^{n-1}$-a.e. 的 $x\in\partial U$ 有定义。则存在有界线性映射
+\begin{align*}
+T:\BV(U)\to L^1(\partial U;\mathcal{H}^{n-1}),
+\end{align*}
+即存在仅依赖于 $U$ 的常数 $C$，使得对一切 $f\in\BV(U)$ 有
+\begin{align*}
+\lVert Tf\rVert_{L^1(\partial U;\mathcal{H}^{n-1})}\leqslant C\lVert f\rVert_{\BV(U)},\qquad \lVert f\rVert_{\BV(U)}:=\lVert f\rVert_{L^1(U)}+\lVert Df\rVert(U),
+\end{align*}
+并且对一切 $f\in\BV(U)$ 与 $\phi\in C^1(\mathbb{R}^n;\mathbb{R}^n)$ 成立
+\begin{align}
+\int_U f\diver\phi\diff x=-\int_U\phi\cdot\diff[Df]+\int_{\partial U}(\phi\cdot\nu)Tf\diff\mathcal{H}^{n-1}.\label{align:ch05-5-6-迹公式}
+\end{align}
+\end{theorem}
+
+要点在于此时不要求 $\phi$ 在 $\partial U$ 附近为零。
+
+% SUPPLEMENT: parent=theorem:ch05-5-6; kind=motivation; 说明 BV 函数在边界上留下可积的迹、公式 (⋆) 把检验向量场放宽为在边界上非零、以及证明的局部化—拼接—逼近三层结构
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-6-动机}
+$\BV$ 函数的定义只涉及 $U$ 内部的积分，而 $\mathcal{L}^n(\partial U)=0$，故 $f$ 在 $\partial U$ 上的逐点取值被 $\mathcal{L}^n$ 等价类抹去；另一方面，$f$ 的一阶导数作为向量值 Radon 测度可以带有集中在边界附近的奇异部分，这一部分在边界上留下一个由 $f$ 唯一确定的可积函数 $Tf$。定理断言对应 $f\mapsto Tf$ 是 $\BV(U)$ 到 $L^1(\partial U;\mathcal{H}^{n-1})$ 的有界线性映射，即迹对 $\BV$ 范数连续：\eqref{align:ch05-5-6-迹公式}的两个体积项只涉及 $f$ 与 $[Df]$，边界项中的系数 $\phi\cdot\nu$ 光滑且有界，故 $\lVert Tf\rVert_{L^1(\partial U)}$ 被 $\lVert f\rVert_{\BV(U)}$ 控制。
+
+公式\eqref{align:ch05-5-6-迹公式}是定理的核心。它把\cref{definition:ch05-5-1}的分部积分公式从 $\phi\in C_c^1(U;\mathbb{R}^n)$ 推广到在 $\partial U$ 上不必为零的 $\phi\in C^1(\mathbb{R}^n;\mathbb{R}^n)$，代价是右端多出边界项 $\int_{\partial U}(\phi\cdot\nu)Tf\diff\mathcal{H}^{n-1}$。若 $\phi$ 的支集紧含于 $U$，边界项消失，公式退化为 $[Df]$ 的定义；因此 $Tf$ 正是使该等式对一切 $\phi$ 成立的那个边界函数。\cref{section:ch05-08}将把这一公式用于有限周长集的外法向量，从而得到 Gauss--Green 定理。% XREF internal
+
+证明分三层。第一层把问题局部化到柱体 $C(x,r,h)$ 内：沿 $e_n$ 方向把 $f$ 平移 $\varepsilon$，得到 $\partial U\cap C$ 上的函数 $f_{\varepsilon}$，由面积公式把 $\int_{\partial U\cap C}\lvert f_{\delta}-f_{\varepsilon}\rvert\diff\mathcal{H}^{n-1}$ 控制为 $\lVert Df\rVert(C_{\varepsilon,\delta})$，故 $\{f_{\varepsilon}\}$ 在 $L^1(\partial U\cap C;\mathcal{H}^{n-1})$ 中为 Cauchy 列，其极限即局部的迹。第二层在每个柱体内用散度定理得到局部公式，再用从属于有限覆盖的单位分解把局部公式拼成整体公式\eqref{align:ch05-5-6-迹公式}；柱体相交处的取值一致性由局部公式本身给出。第三层用\cref{section:ch05-02}中的逼近序列把结论从 $\BV(U)\cap C^{\infty}(U)$ 推广到 $\BV(U)$，其中 $\lVert Df_k\rVert(U)\to\lVert Df\rVert(U)$ 保证估计在极限中不退化。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-6; kind=hypotheses; 逐条分析 U 有界、∂U 为 Lipschitz 边界、f∈BV(U)、检验向量场类与常数 C 的作用，并给出 BV 假设不可删除的反例
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-6-条件}
+\begin{enumerate}[(i)]
+\item 条件「$U$ 有界」使 $\partial U$ 紧，从而证明第 3 步可用有限个柱体覆盖 $\partial U$、单位分解只有有限项；它同时保证 $\mathcal{H}^{n-1}(\partial U)<\infty$，使 $\partial U$ 上的积分对 $\phi\in C^1(\mathbb{R}^n;\mathbb{R}^n)$ 绝对收敛。若 $U$ 无界，则 $\partial U$ 不必紧，局部化只能给出依赖于各柱体的常数，定理中单一常数 $C$ 的存在性失去保证；同时 $\mathcal{H}^{n-1}(\partial U)$ 可以等于 $+\infty$（如 $U$ 为半空间），此时 $L^1(\partial U;\mathcal{H}^{n-1})$ 中连常值函数都不出现。
+\item 条件「$\partial U$ 为 Lipschitz 边界」在证明中承担三项任务。其一，它给出局部图像表示 $U\cap C(x,r,h)=\{y\mid\lvert x'-y'\rvert<r,\ \gamma(y')<y_n<x_n+h\}$，使沿 $e_n$ 方向平移后的点 $(y',\gamma(y')+\varepsilon)$ 仍落在 $U$ 内，因而 $f_{\varepsilon}$ 有定义。其二，由\cref{theorem:ch03-3-2}，Lipschitz 图像的外单位法向量在 $\mathcal{H}^{n-1}$-a.e. 点存在，这是边界项中 $\nu$ 的来源。其三，\cref{theorem:ch03-3-8}的面积公式在 $\mathcal{H}^{n-1}$ 与 $\mathcal{L}^{n-1}$ 之间给出等价控制，使边界上的积分被柱体内的变差测度控制。% XREF internal
+\item $C^1$ 边界是 Lipschitz 边界的特例：局部 $C^1$ 图表示中的 $\gamma$ 在每个紧集上 Lipschitz 连续，此时 $\nu$ 在 $\partial U$ 上连续，本定理的假设全部满足。Lipschitz 边界允许角点（例如 $U$ 为多面体的内部），故假设不能减弱为「$U$ 为任意有界开集」：对带尖点的区域，沿 $e_n$ 方向的平移可能移出 $U$，$f_{\varepsilon}$ 不再有定义。
+\item 条件「$f\in\BV(U)$」保证 $\lVert Df\rVert(U)<\infty$，使\eqref{align:ch05-5-6-估计}的右端有限，从而 $\{f_{\varepsilon}\}$ 为 Cauchy 列。若只假设 $f\in L^1(U)$，迹一般不存在：取 $U=B(0,1)\subseteq\mathbb{R}^2$ 与
+\begin{align*}
+f(x):=\sin\frac{1}{1-\lvert x\rvert},
+\end{align*}
+则 $f\in L^{\infty}(U)\subseteq L^1(U)$，但 $f$ 在 $\partial U$ 附近的振幅不衰减，$\lVert Df\rVert(U)=\infty$；同时 $f_{\varepsilon}(y)=f\bigl((1-\varepsilon)y\bigr)=\sin\frac{1}{\varepsilon}$ 在 $\partial U$ 上随 $\varepsilon\to0$ 振荡，故 $\{f_{\varepsilon}\}$ 在 $L^1(\partial U;\mathcal{H}^1)$ 中不收敛。
+\item 检验向量场取 $\phi\in C^1(\mathbb{R}^n;\mathbb{R}^n)$ 而不取 $C_c^1(U;\mathbb{R}^n)$，是本定理区别于\cref{definition:ch05-5-1}之处：后者的分部积分公式不含边界项，前者必须含边界项，而边界项的被积函数正是 $Tf$。$C^1$ 正则性使 $\diver\phi$ 与 $\phi|_{\partial U}$ 都有意义；若只假设 $\phi\in C(\mathbb{R}^n;\mathbb{R}^n)$，则 $\diver\phi$ 未必存在。 % XREF internal
+\item 常数 $C$ 只依赖 $U$：它由柱体的个数 $N$、各柱体的 $r_i$ 与 $h_i$、$\Lip(\gamma)$ 以及面积公式中的 Jacobi 因子共同决定，与 $f$ 无关。这正是映射 $T$ 有界性的定量形式，也是\eqref{align:ch05-5-6-迹公式}中边界项可以估计的原因。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[迹]\label{definition:ch05-5-3}
+设 $n\geqslant2$ 为整数，$U\subseteq\mathbb{R}^n$ 为有界开集，$\partial U$ 为 Lipschitz 边界，$f\in\BV(U)$，$T:\BV(U)\to L^1(\partial U;\mathcal{H}^{n-1})$ 为\cref{theorem:ch05-5-6}中的有界线性映射。% XREF p=219 "There exists a bounded linear mapping"
+则 $L^1(\partial U;\mathcal{H}^{n-1})$ 中的元素 $Tf$ 在相差一个 $\mathcal{H}^{n-1}\llcorner\partial U$ 零测集的意义下由 $f$ 唯一确定，这样的 $Tf$ 称为 $f$ 在 $\partial U$ 上的\textbf{迹}。
+\end{definition}
+
+把 $Tf$ 解释为 $f$ 在 $\partial U$ 上的「边界值」。
+
+\begin{remark}\phantomsection\label{remark:ch05-def-5-3-相容}
+设 $n\geqslant2$，$U\subseteq\mathbb{R}^n$ 为有界开集，$\partial U$ 为 Lipschitz 边界，$f\in W^{1,1}(U)\subset\BV(U)$。则上述迹的定义与\cref{section:ch04-03}中的定义一致。% XREF p=219 "the definition of trace above and that from Section 4.3 agree"
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-3; kind=motivation; 说明为何把边界值重新定义为满足迹公式的边界函数、零测集限定的两重作用，以及它与光滑情形限制及 Sobolev 迹的关系
+\begin{remark}\phantomsection\label{remark:ch05-def-5-3-动机}
+定义把「$f$ 在 $\partial U$ 上的值」重新定义为满足\eqref{align:ch05-5-6-迹公式}的边界函数 $Tf$。理由与 Sobolev 情形相同：$\BV$ 函数是 $\mathcal{L}^n$ 意义下的对象，而 $\mathcal{H}^{n-1}(\partial U)>0$ 且 $\mathcal{L}^n(\partial U)=0$，故 $f$ 本身在 $\partial U$ 上没有逐点意义；但\eqref{align:ch05-5-6-迹公式}表明 $f$ 与 $[Df]$ 一起在边界上留下一个由 $f$ 唯一确定的可积函数，定义把这一函数命名为迹。
+
+名称中的限定「相差一个 $\mathcal{H}^{n-1}\llcorner\partial U$ 零测集」承担两件事：其一，$Tf$ 是 $L^1(\partial U;\mathcal{H}^{n-1})$ 中的等价类，在 $\mathcal{H}^{n-1}$ 零测集上改值既不改变 $Tf$，也不改变\eqref{align:ch05-5-6-迹公式}的两端；其二，任何满足\eqref{align:ch05-5-6-迹公式}的映射都给出同一个等价类，故「迹」只依赖 $f$ 与 $U$，不依赖构造方式。
+
+这一定义确实推广了光滑情形的限制：当 $f\in\BV(U)\cap C(\overline{U})$ 时，\cref{theorem:ch05-5-7}给出 $Tf=f|_{\partial U}$ 于 $\mathcal{H}^{n-1}$-a.e. 点成立；当 $f\in W^{1,1}(U)$ 时，上面的注记说明它与\cref{section:ch04-03}的 Sobolev 迹一致。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-3; kind=hypotheses; 逐条分析定义所依赖的定理假设、零测集限定的含义、唯一性的来源，以及迹只依赖 f 的等价类与不依赖构造方式
+\begin{remark}\phantomsection\label{remark:ch05-def-5-3-条件}
+\begin{enumerate}[(i)]
+\item 定义中的假设全部来自\cref{theorem:ch05-5-6}的结论：$U$ 有界、$\partial U$ 为 Lipschitz 边界、$f\in\BV(U)$。缺少其中任何一项，迹映射 $T$ 的存在性都没有保证，$Tf$ 无从谈起。% XREF internal
+\item 「相差一个 $\mathcal{H}^{n-1}\llcorner\partial U$ 零测集」中的测度是 $(n-1)$ 维 Hausdorff 测度在 $\partial U$ 上的限制。当 $\partial U$ 为 $C^1$ 超曲面时它就是边界面测度；当 $U$ 为多面体时它是各面上面测度之和。零测集上的取值不影响 $Tf$ 作为 $L^1$ 元素的身份。
+\item 唯一性：若两个有界线性映射 $T_1,T_2$ 都满足\eqref{align:ch05-5-6-迹公式}，则对一切 $\phi\in C^1(\mathbb{R}^n;\mathbb{R}^n)$ 有
+\begin{align*}
+\int_{\partial U}(\phi\cdot\nu)(T_1f-T_2f)\diff\mathcal{H}^{n-1}=0.
+\end{align*}
+取 $\phi=\psi e_i$（$\psi\in C_c^1(\mathbb{R}^n)$，$i=1,\cdots,n$）得 $(T_1f-T_2f)\nu_i=0$ 于 $\mathcal{H}^{n-1}$-a.e. 点成立；由 $\lvert\nu\rvert=1$ 得 $T_1f=T_2f$ 于 $\mathcal{H}^{n-1}$-a.e. 点成立。
+\item $Tf$ 只依赖 $f$ 的 $\mathcal{L}^n$ 等价类：若 $f=g$ $\mathcal{L}^n$-a.e. 于 $U$，则 $\int_U f\diver\phi\diff x=\int_U g\diver\phi\diff x$ 且 $[Df]=[Dg]$，故\eqref{align:ch05-5-6-迹公式}对 $f$ 与 $g$ 给出同一个边界函数，即 $Tf=Tg$ 于 $\mathcal{H}^{n-1}$-a.e. 点成立。
+\item 定义不涉及 $T$ 的构造（柱体、单位分解、逼近序列），只涉及\eqref{align:ch05-5-6-迹公式}。这与\cref{definition:ch04-4-5}把迹定义为迹算子的像的做法一致，也是后文可以把 $Tf$ 当作 $f$ 的边界值来使用的原因。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+1. 先引入记号。
+\begin{enumerate}[(a)]
+\item 给定 $x=(x_1,\cdots,x_n)\in\mathbb{R}^n$，记 $x=(x',x_n)$，其中 $x':=(x_1,\cdots,x_{n-1})\in\mathbb{R}^{n-1}$、$x_n\in\mathbb{R}$；对 $y$ 同样记 $y=(y',y_n)$。
+\item 给定 $x\in\mathbb{R}^n$ 与 $r,h>0$，定义开柱体
+\begin{align*}
+C(x,r,h):=\{y\in\mathbb{R}^n\mid\lvert y'-x'\rvert<r,\ \lvert y_n-x_n\rvert<h\}.
+\end{align*}
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{ch05-5-3-cylinder.png}
+\end{figure}
+
+由于 $\partial U$ 是 Lipschitz 边界，对每个点 $x\in\partial U$ 存在 $r,h>0$ 与 Lipschitz 连续函数 $\gamma:\mathbb{R}^{n-1}\to\mathbb{R}$，使得
+\begin{align*}
+\max_{\lvert x'-y'\rvert\leqslant r}\lvert\gamma(y')-x_n\rvert\leqslant\frac{h}{4},
+\end{align*}
+并且在必要时旋转并重新标号坐标轴之后有
+\begin{align*}
+U\cap C(x,r,h)=\{y\mid\lvert x'-y'\rvert<r,\ \gamma(y')<y_n<x_n+h\}.
+\end{align*}
+
+2. 暂时设 $f\in\BV(U)\cap C^{\infty}(U)$。取 $x\in\partial U$，并按上述方式选取 $r,h,\gamma$ 等。记
+\begin{align*}
+C:=C(x,r,h).
+\end{align*}
+若 $0<\varepsilon<\frac{h}{2}$ 且 $y\in\partial U\cap C$，定义
+\begin{align*}
+f_{\varepsilon}(y):=f(y',\gamma(y')+\varepsilon).
+\end{align*}
+再令
+\begin{align*}
+C_{\varepsilon,\delta}:=\{y\in C\mid\gamma(y')+\delta<y_n<\gamma(y')+\varepsilon\},
+\end{align*}
+其中 $0\leqslant\delta<\varepsilon<\frac{h}{2}$，并定义 $C_{\varepsilon}:=C_{\varepsilon,0}$。记 $C^{\varepsilon}:=(C\cap U)-C_{\varepsilon}$。于是
+\begin{align*}
+\lvert f_{\delta}(y)-f_{\varepsilon}(y)\rvert&\leqslant\int_{\delta}^{\varepsilon}\lvert f_{x_n}(y',\gamma(y')+t)\rvert\diff t\\
+&\leqslant\int_{\delta}^{\varepsilon}\lvert Df(y',\gamma(y')+t)\rvert\diff t.
+\end{align*}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{ch05-5-3-band.png}
+\end{figure}
+
+因此，由 $\gamma$ 的 Lipschitz 连续性，\cref{theorem:ch03-3-8}的面积公式给出 % XREF p=221 "the area formula from Section 3.3 implies"
+\begin{align*}
+\int_{\partial U\cap C}\lvert f_{\delta}-f_{\varepsilon}\rvert\diff\mathcal{H}^{n-1}\leqslant C\int_{C_{\varepsilon,\delta}}\lvert Df\rvert\diff y=C\lVert Df\rVert(C_{\varepsilon,\delta}).
+\end{align*}
+于是 $\{f_{\varepsilon}\}_{\varepsilon>0}$ 在 $L^1(\partial U\cap C;\mathcal{H}^{n-1})$ 中为 Cauchy 列，从而极限
+\begin{align*}
+Tf:=\lim_{\varepsilon\to0}f_{\varepsilon}
+\end{align*}
+在该空间中存在。此外，在上述不等式中令 $\delta\to0$ 取极限，得到估计
+\begin{align}
+\int_{\partial U\cap C}\lvert Tf-f_{\varepsilon}\rvert\diff\mathcal{H}^{n-1}\leqslant C\lVert Df\rVert(C_{\varepsilon}).\label{align:ch05-5-6-估计}
+\end{align}
+其次固定 $\phi\in C_c^1(C;\mathbb{R}^n)$。则
+\begin{align*}
+\int_{C^{\varepsilon}}f\diver\phi\diff y=-\int_{C^{\varepsilon}}\phi\cdot Df\diff y+\int_{\partial U\cap C}f_{\varepsilon}\phi_{\varepsilon}\cdot\nu\diff\mathcal{H}^{n-1}.
+\end{align*}
+令 $\varepsilon\to0$ 得
+\begin{align}
+\int_{U\cap C}f\diver\phi\diff y=-\int_{U\cap C}\phi\cdot\sigma\diff\lVert Df\rVert+\int_{\partial U\cap C}Tf\,\phi\cdot\nu\diff\mathcal{H}^{n-1}.\label{align:ch05-5-6-局部}
+\end{align}
+
+3. 由于 $\partial U$ 紧，可用有限个柱体 $C_i=C(x_i,r_i,h_i)$（$i=1,\cdots,N$）覆盖 $\partial U$，使得把 $C$ 换成 $C_i$ 之后\eqref{align:ch05-5-6-估计}与\eqref{align:ch05-5-6-局部}仍然成立。利用从属于 $\{C_i\}_{i=1}^{N}$ 的单位分解作论证，即得公式\eqref{align:ch05-5-6-迹公式}。
+
+还应注意到，\eqref{align:ch05-5-6-局部}表明「$Tf$」的定义在 $\partial U$ 的任何同时落在两个或更多柱体 $C_i$ 中的部分上是相同的，至多相差一个 $\mathcal{H}^{n-1}\llcorner\partial U$ 零测集。
+
+4. 现只假设 $f\in\BV(U)$。在此一般情形下，取 $f_k\in\BV(U)\cap C^{\infty}(U)$（$k=1,2,\cdots$）使得
+\begin{align*}
+f_k\to f\quad\text{于 }L^1(U),\qquad\lVert Df_k\rVert(U)\to\lVert Df\rVert(U),
+\end{align*}
+并且
+\begin{align*}
+\mu_k\weakto\mu\qquad\text{弱收敛},
+\end{align*}
+其中测度 $\{\mu_k\}_{k=1}^{\infty}$ 与 $\mu$ 按\cref{theorem:ch05-5-4}定义。% XREF p=222 "where the measures ... are defined as in Theorem 5.4"
+
+5. 断言：$\{Tf_k\}_{k=1}^{\infty}$ 是 $L^1(\partial U;\mathcal{H}^{n-1})$ 中的 Cauchy 列。
+
+断言的证明：取前述证明部分中的柱体 $C$。固定 $\varepsilon>0$ 与 $y\in\partial U\cap C$，定义
+\begin{align*}
+f_k^{\varepsilon}(y):=\frac{1}{\varepsilon}\int_0^{\varepsilon}f_k(y',\gamma(y')+t)\diff t=\frac{1}{\varepsilon}\int_0^{\varepsilon}(f_k)^t(y)\diff t.
+\end{align*}
+则由\eqref{align:ch05-5-6-估计}得
+\begin{align*}
+\int_{\partial U\cap C}\lvert Tf_k-f_k^{\varepsilon}\rvert\diff\mathcal{H}^{n-1}&\leqslant\frac{1}{\varepsilon}\int_0^{\varepsilon}\int_{\partial U\cap C}\lvert Tf_k-(f_k)^t\rvert\diff\mathcal{H}^{n-1}\diff t\\
+&\leqslant C\lVert Df_k\rVert(C_{\varepsilon}).
+\end{align*}
+于是
+\begin{align*}
+\int_{\partial U\cap C}\lvert Tf_k-Tf_l\rvert\diff\mathcal{H}^{n-1}&\leqslant\int_{\partial U\cap C}\lvert Tf_k-f_k^{\varepsilon}\rvert\diff\mathcal{H}^{n-1}+\int_{\partial U\cap C}\lvert Tf_l-f_l^{\varepsilon}\rvert\diff\mathcal{H}^{n-1}\\
+&\quad+\int_{\partial U\cap C}\lvert f_k^{\varepsilon}-f_l^{\varepsilon}\rvert\diff\mathcal{H}^{n-1}\\
+&\leqslant C\bigl(\lVert Df_k\rVert+\lVert Df_l\rVert\bigr)(C_{\varepsilon})+\frac{C}{\varepsilon}\int_{C_{\varepsilon}}\lvert f_k-f_l\rvert\diff y,
+\end{align*}
+从而
+\begin{align*}
+\limsup_{k,l\to\infty}\int_{\partial U\cap C}\lvert Tf_k-Tf_l\rvert\diff\mathcal{H}^{n-1}\leqslant C\lVert Df\rVert\bigl(\overline{C}_{\varepsilon}\cap U\bigr).
+\end{align*}
+由于右端当 $\varepsilon\to0$ 时趋于零，断言得证。
+
+6. 由断言可定义
+\begin{align*}
+Tf:=\lim_{k\to\infty}Tf_k;
+\end{align*}
+此定义不依赖于逼近序列的选取。最后，公式\eqref{align:ch05-5-6-迹公式}对每个 $f_k$ 成立，从而对 $f$ 取极限后也成立。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-6; kind=proof; 补出第 2 步与第 3 步中省略的细节：φ_ε 与 f^t 的含义、γ(y')+ε 落在 U 内的理由、中间公式的散度定理推导、(⋆⋆⋆) 的极限过程，以及单位分解拼接
+\begin{remark}\phantomsection\label{remark:ch05-def-5-3-补全}
+\begin{enumerate}[(i)]
+\item 第 2 步的记号含义如下：$f_{\varepsilon}(y)=f(y',\gamma(y')+\varepsilon)$ 表示把边界点 $y$ 沿 $e_n$ 方向推入 $U$ 内部距离 $\varepsilon$ 后取值，$(f)^t(y):=f(y',\gamma(y')+t)$ 是同一构造的简写；相应地 $\phi_{\varepsilon}(y):=\phi(y',\gamma(y')+\varepsilon)$，即检验向量场在平移点处的取值。中间公式中的 $\int_{\partial U\cap C}f_{\varepsilon}\phi_{\varepsilon}\cdot\nu\diff\mathcal{H}^{n-1}$ 正是平移后的边界项。
+
+\item 平移点确实落在 $U\cap C$ 内：由 $\max_{\lvert x'-y'\rvert\leqslant r}\lvert\gamma(y')-x_n\rvert\leqslant h/4$ 与 $\varepsilon<h/2$ 得
+\begin{align*}
+\gamma(y')+\varepsilon<\gamma(y')+\frac{h}{2}\leqslant x_n+\frac{h}{4}+\frac{h}{2}<x_n+h,
+\end{align*}
+且 $\gamma(y')+\varepsilon>\gamma(y')$，故 $(y',\gamma(y')+\varepsilon)\in U\cap C$。这正是局部图像表示中 $h/4$ 这一常数的用途。
+
+\item 中间公式可由散度定理得到。由 $C^{\varepsilon}=(C\cap U)-C_{\varepsilon}=\{y\in C\mid\gamma(y')+\varepsilon<y_n<x_n+h\}$，在该区域上对 $f\phi$ 用散度定理：其边界由图像 $\Gamma_{\varepsilon}=\{y_n=\gamma(y')+\varepsilon\}$、平面 $\{y_n=x_n+h\}$ 与柱体的侧边界组成；由于 $\phi\in C_c^1(C;\mathbb{R}^n)$，侧边界与平面 $\{y_n=x_n+h\}$ 上的贡献为零。图像 $\Gamma_{\varepsilon}$ 是 $\partial U\cap C$ 沿 $e_n$ 方向的平移，而 $\mathcal{H}^{n-1}$ 与法向量在该平移下不变，故 $\Gamma_{\varepsilon}$ 上的积分即 $\int_{\partial U\cap C}f_{\varepsilon}\phi_{\varepsilon}\cdot\nu\diff\mathcal{H}^{n-1}$。
+
+\item 在中间公式中令 $\varepsilon\to0$：由 $C^{\varepsilon}\uparrow U\cap C$ 及 $\lVert Df\rVert(U)<\infty$ 得 $\int_{C^{\varepsilon}}\phi\cdot Df\diff y\to\int_{U\cap C}\phi\cdot\sigma\diff\lVert Df\rVert$；由 $f_{\varepsilon}\to Tf$ 于 $L^1(\partial U\cap C;\mathcal{H}^{n-1})$ 与 $\phi_{\varepsilon}\to\phi$ 的一致收敛得边界项收敛；由 $C_{\varepsilon}\downarrow\varnothing$ 得 $\lVert Df\rVert(C_{\varepsilon})\to0$。三者合起来即\eqref{align:ch05-5-6-局部}。
+
+\item 第 3 步的单位分解论证如下。取开集 $U_0\subset\subset U$ 使 $\partial U\subseteq\bigcup_{i=1}^{N}C_i$ 与 $U\subseteq U_0\cup\bigcup_{i=1}^{N}C_i$ 同时成立（由 $\partial U$ 紧，存在 $\delta>0$ 使 $\{x\in U\mid\operatorname{dist}(x,\partial U)\leqslant\delta\}\subseteq\bigcup_iC_i$，此时取 $U_0:=\{x\in U\mid\operatorname{dist}(x,\partial U)>\delta\}$；$U$ 有界使 $\overline{U_0}\subset U$ 紧）。取从属于 $\{U_0,C_1,\cdots,C_N\}$ 的单位分解 $\{\zeta_j\}_{j=0}^{N}$，即 $\zeta_j\in C_c^{\infty}(\mathbb{R}^n)$、$\spt\zeta_0\subset U_0$、$\spt\zeta_j\subset C_j$（$j\geqslant1$）且 $\sum_{j=0}^{N}\zeta_j=1$ 于 $\overline{U}$ 的邻域上。由 $\sum_{j=0}^{N}\nabla\zeta_j=0$ 于该邻域上得
+\begin{align*}
+\int_U f\diver\phi\diff x=\sum_{j=0}^{N}\int_U f\diver(\zeta_j\phi)\diff x .
+\end{align*}
+对 $j=0$，由 $\spt(\zeta_0\phi)\subset U$ 与 $[Df]$ 的定义得 $\int_U f\diver(\zeta_0\phi)\diff x=-\int_U\zeta_0\phi\cdot\diff[Df]$；对 $j\geqslant1$，由\eqref{align:ch05-5-6-局部}（把 $C$ 换成 $C_j$、把 $\phi$ 换成 $\zeta_j\phi$）得
+\begin{align*}
+\int_U f\diver(\zeta_j\phi)\diff x=-\int_U\zeta_j\phi\cdot\sigma\diff\lVert Df\rVert+\int_{\partial U}(\zeta_j\phi\cdot\nu)Tf\diff\mathcal{H}^{n-1}.
+\end{align*}
+对 $j$ 求和即得\eqref{align:ch05-5-6-迹公式}。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-6; kind=proof; 补出第 4 至第 6 步的细节：逼近序列的来源、f_k^ε 估计中第三项的因子 C/ε、limsup 估计的取极限，以及 Tf 与逼近序列无关
+\begin{remark}\phantomsection\label{remark:ch05-def-5-3-逼近}
+\begin{enumerate}[(i)]
+\item 第 4 步中逼近序列的存在性由\cref{theorem:ch05-5-3}给出，而 $\mu_k\weakto\mu$ 正是\cref{theorem:ch05-5-4}的内容；两个结论合起来给出第 4 步所要求的三条性质。% XREF internal
+\item 第 5 步中第三项的估计用到了面积公式：对 $y\in\partial U\cap C$，
+\begin{align*}
+\lvert f_k^{\varepsilon}(y)-f_l^{\varepsilon}(y)\rvert\leqslant\frac{1}{\varepsilon}\int_0^{\varepsilon}\lvert f_k-f_l\rvert(y',\gamma(y')+t)\diff t,
+\end{align*}
+把右端在 $\partial U\cap C$ 上积分并交换积分次序，即把 $\diff\mathcal{H}^{n-1}(y)\diff t$ 化为 $\diff y$ 在 $C_{\varepsilon}$ 上的积分，Jacobi 因子不超过 $C$，此即因子 $C/\varepsilon$ 的来源。
+\item 第 5 步末尾的 $\limsup$ 估计：由 $f_k\to f$ 于 $L^1(U)$ 得 $\int_{C_{\varepsilon}}\lvert f_k-f_l\rvert\diff y\to0$（$k,l\to\infty$）；由 $\mu_k\weakto\mu$ 与 $\lVert Df_k\rVert(U)\to\lVert Df\rVert(U)$ 得 $\lVert Df_k\rVert\weakto\lVert Df\rVert$，于是 $\limsup_k\lVert Df_k\rVert(C_{\varepsilon})\leqslant\lVert Df\rVert(\overline{C}_{\varepsilon}\cap U)$。$\varepsilon\to0$ 时 $\overline{C}_{\varepsilon}\cap U$ 递减趋于空集，故右端趋于零。
+\item 第 6 步中 $Tf$ 与逼近序列无关：若 $\{f_k\}$ 与 $\{g_k\}$ 都满足第 4 步的三条性质，则把两列交错排列为 $f_1,g_1,f_2,g_2,\cdots$，它同样满足第 4 步的性质，由第 5 步的断言其像序列为 Cauchy 列，故 $\lVert Tf_k-Tg_k\rVert_{L^1(\partial U)}\to0$。
+\item 最后一步取极限的依据是：$f_k\to f$ 于 $L^1(U)$ 给出 $\int_U f_k\diver\phi\diff x\to\int_U f\diver\phi\diff x$；$\mu_k\weakto\mu$ 给出 $-\int_U\phi\cdot\diff[Df_k]\to-\int_U\phi\cdot\diff[Df]$；$Tf_k\to Tf$ 于 $L^1(\partial U;\mathcal{H}^{n-1})$ 给出边界项的收敛。三者合起来即得\eqref{align:ch05-5-6-迹公式}对一般 $f\in\BV(U)$ 成立。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[迹的局部性质]\label{theorem:ch05-5-7}
+设 $n\geqslant2$ 为整数，$U\subseteq\mathbb{R}^n$ 为有界开集，$\partial U$ 为 Lipschitz 边界，$f\in\BV(U)$，$Tf\in L^1(\partial U;\mathcal{H}^{n-1})$ 为 $f$ 在 $\partial U$ 上的迹。则对 $\mathcal{H}^{n-1}$-a.e. 的 $x\in\partial U$ 有
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)\cap U}\lvert f-Tf(x)\rvert\diff y=0,
+\end{align*}
+从而
+\begin{align*}
+Tf(x)=\lim_{r\to0}\fint_{B(x,r)\cap U}f\diff y .
+\end{align*}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-7-连续}
+设 $n\geqslant2$，$U\subseteq\mathbb{R}^n$ 为有界开集，$\partial U$ 为 Lipschitz 边界，$f\in\BV(U)\cap C(\overline{U})$，$Tf$ 为 $f$ 在 $\partial U$ 上的迹。于是特别地有
+\begin{align*}
+Tf=f|_{\partial U}\qquad\mathcal{H}^{n-1}\text{-a.e.}
+\end{align*}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-7; kind=motivation; 说明迹的逐点刻画把测度论定义与平均值极限连接起来，以及证明所用的两个独立估计
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-7-动机}
+\cref{theorem:ch05-5-6}只把 $Tf$ 定义为 $L^1(\partial U;\mathcal{H}^{n-1})$ 中的元素，并没有说明它在边界点附近与 $f$ 的取值有什么关系。本定理给出这一关系：在 $\mathcal{H}^{n-1}$-a.e. 点 $x\in\partial U$，$Tf(x)$ 恰是 $f$ 在收缩区域 $B(x,r)\cap U$ 上的平均值的极限。换言之，迹就是 $f$ 在边界点处的 Lebesgue 意义下的值，而这正是「边界值」一词的精确含义。% XREF internal
+
+证明依赖两个彼此独立的估计。其一，变差测度在边界点处的密度估计 $\lVert Df\rVert(B(x,r)\cap U)=o(r^{n-1})$，它说明变差测度在 $\mathcal{H}^{n-1}$-a.e. 边界点处关于 $(n-1)$ 维 Hausdorff 测度是奇异的；其证明用 Vitali 覆盖定理把 $A_\sigma$ 用一列球覆盖，再用近似 Hausdorff 测度 $\mathcal{H}^{n-1}_{10\delta}$ 估计其大小。其二，柱体内 $f$ 与 $Tf$ 之差被垂直方向上的变差控制，其证明把 $f(y)-f(y',\gamma(y'))$ 写成沿 $e_n$ 方向的积分，再用面积公式把 $n$ 维积分化为柱体内变差测度的积分。
+
+两个估计合起来给出定理的结论：把 $\lvert f(y)-Tf(x)\rvert$ 拆成 $\lvert f(y)-Tf(y',\gamma(y'))\rvert$ 与 $\lvert Tf(y',\gamma(y'))-Tf(x)\rvert$ 两项，第一项由变差测度在柱体上的质量控制，第二项由 $Tf$ 在球面平均意义下的可微性控制。当 $f$ 连续到边界时，平均值收敛到 $f(x)$，故 $Tf=f|_{\partial U}$，这正是上面的注记。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-7; kind=hypotheses; 逐条分析 Lipschitz 边界与 f∈BV(U) 的作用、结论为何只能是几乎处处，并给出结论在单点失效的例子
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-7-条件}
+\begin{enumerate}[(i)]
+\item 条件「$\partial U$ 为 Lipschitz 边界」在证明中有两处作用：其一，它给出柱体 $C(x,r,h)$ 内的局部图像表示，使 $f(y',\gamma(y'))$ 有意义，并使 $U\cap C(x,r,h)$ 可沿 $e_n$ 方向分层；其二，它使柱体 $C(r)=C(x,r,h(r))$ 与球 $B(x,Kr)$ 相互包含（$K$ 只依赖 $\Lip(\gamma)$），从而球上的密度条件可以转移到柱体上。证明中取 $h(r)=2\max(1,4\Lip(\gamma))r$ 正是为了保证这一可比性以及 $C'(r)\subseteq C(r)$。
+\item 条件「$f\in\BV(U)$」是密度估计与余面积估计的前提：两者都以 $\lVert Df\rVert(U)<\infty$ 保证右端有限。若 $f\notin\BV(U)$，则\cref{theorem:ch05-5-6}不适用，$Tf$ 尚无定义，结论无从陈述。% XREF internal
+\item 结论只能是「$\mathcal{H}^{n-1}$-a.e.」：$Tf$ 是 $L^1(\partial U;\mathcal{H}^{n-1})$ 中的等价类，在 $\mathcal{H}^{n-1}$ 零测集上可以任意改值；而 $f$ 本身在 $\partial U$ 上没有逐点定义。故逐点等式不能期望在每一点成立。
+\item 结论不能加强为「对一切 $x\in\partial U$ 成立」。取 $n=2$、$U=(0,1)^2$ 与 $f:=\chi_{(0,1/2)\times(0,1)}$，则 $f\in\BV(U)$。在角点 $x=(1/2,0)$ 处，对每个 $r>0$（$r$ 充分小）区域 $B(x,r)\cap U$ 被直线 $\{y_1=1/2\}$ 分成面积相近的两部分，一部分上 $f=1$、另一部分上 $f=0$，故
+\begin{align*}
+\fint_{B(x,r)\cap U}f\diff y=\frac{1}{2}+o(1)\qquad(r\to0),
+\end{align*}
+于是 $\lim_{r\to0}\fint_{B(x,r)\cap U}\lvert f-Tf(x)\rvert\diff y\geqslant\frac{1}{2}$ 对 $Tf(x)=0$ 与 $Tf(x)=1$ 都成立，结论在该点失效。该点是 $\mathcal{H}^1$ 零测集，故与结论中的「$\mathcal{H}^{n-1}$-a.e.」并不矛盾。
+\item 若 $f\in\BV(U)\cap C(\overline{U})$，则定理中的平均值收敛到 $f(x)$ 于一切 $x\in\partial U$，故 $Tf=f|_{\partial U}$ 于 $\mathcal{H}^{n-1}$-a.e. 点成立；这时「迹」与「限制」在几乎处处的意义下重合，见上面的注记。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+1. 断言：对 $\mathcal{H}^{n-1}$-a.e. 的 $x\in\partial U$ 有
+\begin{align*}
+\lim_{r\to0}\frac{\lVert Df\rVert(B(x,r)\cap U)}{r^{n-1}}=0.
+\end{align*}
+
+断言的证明：固定 $\sigma>0$ 与 $\delta>\varepsilon>0$，并令
+\begin{align*}
+A_\sigma:=\left\{x\in\partial U\,\middle|\,\limsup_{r\to0}\frac{\lVert Df\rVert(B(x,r)\cap U)}{r^{n-1}}>\sigma\right\}.
+\end{align*}
+则对每个 $x\in A_\sigma$ 存在 $0<r<\varepsilon$，使得
+\begin{align}
+\frac{\lVert Df\rVert(B(x,r)\cap U)}{r^{n-1}}\geqslant\sigma.\label{align:ch05-5-7-密度}
+\end{align}
+由\cref{theorem:ch01-1-24}（Vitali 覆盖定理），可得一列互不相交的球 $\{B(x_i,r_i)\}_{i=1}^{\infty}$，它们满足\eqref{align:ch05-5-7-密度}，并且使 $A_\sigma\subseteq\bigcup_{i=1}^{\infty}B(x_i,5r_i)$。% XREF p=224 "Using Vitali's Covering Theorem, we obtain a countable collection of disjoint balls"
+于是
+\begin{align*}
+\mathcal{H}^{n-1}_{10\delta}(A_\sigma)&\leqslant\sum_{i=1}^{\infty}\alpha(n-1)(5r_i)^{n-1}\\
+&\leqslant\frac{C}{\sigma}\sum_{i=1}^{\infty}\lVert Df\rVert(B(x_i,r_i)\cap U)\\
+&\leqslant C\lVert Df\rVert(U^{\varepsilon}),
+\end{align*}
+其中
+\begin{align*}
+U^{\varepsilon}:=\{x\in U\mid\operatorname{dist}(x,\partial U)<\varepsilon\}.
+\end{align*}
+令 $\varepsilon\to0$ 得 $\mathcal{H}^{n-1}_{10\delta}(A_\sigma)=0$ 对一切 $\delta>0$ 成立。
+
+2. 现固定一点 $x\in\partial U$，使得
+\begin{align}
+\lim_{r\to0}\frac{\lVert Df\rVert(B(x,r)\cap U)}{r^{n-1}}=0,\label{align:ch05-5-7-好点}
+\end{align}
+并且
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)\cap\partial U}\lvert Tf-Tf(x)\rvert\diff\mathcal{H}^{n-1}=0.
+\end{align*}
+由断言的结论与\cref{theorem:ch01-1-32}（Lebesgue--Besicovitch 微分定理），$\mathcal{H}^{n-1}$-a.e. 的 $x\in\partial U$ 同时满足这两条。% XREF p=224 "According to the claim and the Lebesgue-Besicovitch Differentiation Theorem, H^{n−1}-a.e. x ∈ ∂U will do."
+令 $h=h(r):=2\max(1,4\Lip(\gamma))r$，并考虑柱体
+\begin{align*}
+C(r)=C(x,r,h).
+\end{align*}
+对充分小的 $r$，柱体 $C(r)$ 可以代替前一证明中的柱体 $C$。于是由该证明中相同的估计可得
+\begin{align*}
+\int_{\partial U\cap C(r)}\lvert Tf-f_{\varepsilon}\rvert\diff\mathcal{H}^{n-1}\leqslant C\lVert Df\rVert(C(r)\cap U),
+\end{align*}
+其中
+\begin{align*}
+f_{\varepsilon}(y):=f(y',\gamma(y')+\varepsilon)\qquad\left(y\in C(r)\cap\partial U,\ 0<\varepsilon<\frac{h(r)}{2}\right).
+\end{align*}
+
+3. 因此，可以用余面积公式估计 % XREF p=225 "we may employ the coarea formula to estimate"
+\begin{align*}
+\int_{B(x,r)\cap U}\lvert Tf(y',\gamma(y'))-f(y)\rvert\diff y\leqslant Cr\lVert Df\rVert(C(r)\cap U).
+\end{align*}
+于是计算
+\begin{align*}
+\fint_{B(x,r)\cap U}\lvert f(y)-Tf(x)\rvert\diff y&\leqslant\frac{C}{r^{n-1}}\int_{C(r)\cap\partial U}\lvert Tf-Tf(x)\rvert\diff\mathcal{H}^{n-1}\\
+&\quad+\frac{C}{r^n}\int_{B(x,r)\cap U}\lvert Tf(y',\gamma(y'))-f(y)\rvert\diff y\\
+&\leqslant o(1)+\frac{C}{r^{n-1}}\lVert Df\rVert(C(r)\cap U)\\
+&=o(1)\qquad(r\to0),
+\end{align*}
+其中最后一个等号由\eqref{align:ch05-5-7-好点}得到。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-7; kind=proof; 补出证明中省略的步骤：$\mathcal{H}^{n-1}_{10\delta}$ 与 $U^\varepsilon$ 的含义、$h(r)$ 的用途、余面积估计的推导，以及 $C/r^{n-1}$ 与 $C/r^n$ 两个因子的来源
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-7-补全}
+\begin{enumerate}[(i)]
+\item 第 1 步中的 $\mathcal{H}^{n-1}_{10\delta}$ 是\cref{definition:ch02-2-1}的 $\delta$-近似 Hausdorff 测度，其覆盖集只允许直径不超过 $10\delta$。球 $\{B(x_i,5r_i)\}$ 的直径为 $10r_i<10\varepsilon<10\delta$，故它们构成 $\mathcal{H}^{n-1}_{10\delta}$ 的容许覆盖；又 $\alpha(n-1)(5r_i)^{n-1}=\alpha(n-1)(\operatorname{diam}B(x_i,5r_i)/2)^{n-1}$，这正是第一行不等式的来源。% XREF internal
+\item 第一行到第二行用了\eqref{align:ch05-5-7-密度}：由 $\lVert Df\rVert(B(x_i,r_i)\cap U)\geqslant\sigma r_i^{n-1}$ 得 $r_i^{n-1}\leqslant\sigma^{-1}\lVert Df\rVert(B(x_i,r_i)\cap U)$，并把 $5^{n-1}$ 吸收到常数 $C$ 中。第二行到第三行用了球族互不相交，故 $\sum_i\lVert Df\rVert(B(x_i,r_i)\cap U)\leqslant\lVert Df\rVert(U^{\varepsilon})$，因为 $r_i<\varepsilon$ 给出 $B(x_i,r_i)\subseteq U^{\varepsilon}$。最后，$\varepsilon\to0$ 时 $U^{\varepsilon}\downarrow\varnothing$，而 $\lVert Df\rVert(U)<\infty$，故 $\lVert Df\rVert(U^{\varepsilon})\to0$。
+\item 第 2 步中 $h(r)$ 的用途是保证柱体与球可比。由 $L:=\Lip(\gamma)$ 得 $\lvert\gamma(x')-\gamma(y')\rvert\leqslant Lr$（$\lvert x'-y'\rvert<r$），故
+\begin{align*}
+C(r)\subseteq B\bigl(x,\sqrt{r^2+h(r)^2}\bigr)\subseteq B(x,Kr),\qquad K:=\sqrt{1+4\max(1,4L)^2},
+\end{align*}
+于是由\eqref{align:ch05-5-7-好点}得 $\lVert Df\rVert(C(r)\cap U)/r^{n-1}\to0$。同时 $h(r)=2\max(1,4L)r$ 还保证 $y\in B(x,r)\cap U$ 时 $y_n-\gamma(y')\leqslant(1+L)r\leqslant h(r)$，即 $B(x,r)\cap U\subseteq C(r)$，故前一证明中柱体 $C$ 上的估计全部可用。
+\item 第 3 步的余面积估计如下。设 $f\in\BV(U)\cap C^{\infty}(U)$，$y=(y',y_n)\in B(x,r)\cap U$，则 $\gamma(y')<y_n$ 且 $y_n-\gamma(y')\leqslant(1+L)r$，由微积分基本定理得
+\begin{align*}
+\lvert f(y',\gamma(y'))-f(y)\rvert\leqslant\int_{\gamma(y')}^{\gamma(y')+(1+L)r}\lvert Df(y',t)\rvert\diff t .
+\end{align*}
+在 $B(x,r)\cap U$ 上积分，先对 $y_n$ 积分（纤维长度不超过 $(1+L)r$），再对 $y'$ 积分，得
+\begin{align*}
+\int_{B(x,r)\cap U}\lvert f(y',\gamma(y'))-f(y)\rvert\diff y\leqslant(1+L)r\int_{C'(r)\cap U}\lvert Df\rvert\diff y\leqslant Cr\lVert Df\rVert(C(r)\cap U),
+\end{align*}
+其中 $C'(r):=\{y\mid\lvert y'-x'\rvert<r,\ \gamma(y')<y_n<\gamma(y')+(1+L)r\}\subseteq C(r)$。对一般的 $f\in\BV(U)$，把该估计用于\cref{theorem:ch05-5-3}的逼近序列并令 $k\to\infty$：左端由 $f_k\to f$ 于 $L^1(U)$ 与 $Tf_k\to Tf$ 于 $L^1(\partial U;\mathcal{H}^{n-1})$ 控制，右端在 $\lVert Df\rVert(\partial C(r)\cap U)=0$ 的 $r$ 上收敛；这样的 $r$ 除至多可数多个外全部适用，而在 $r\to0$ 的极限中只需一列趋于零的 $r$。% XREF internal
+\item 最后一步两个因子的来源如下。把 $\lvert f(y)-Tf(x)\rvert$ 拆成 $\lvert f(y)-Tf(y',\gamma(y'))\rvert$ 与 $\lvert Tf(y',\gamma(y'))-Tf(x)\rvert$ 两项。第二项的积分先对每个 $y'$ 沿 $y_n$ 方向进行（纤维长度不超过 $h(r)=O(r)$），再由面积公式把 $\diff y'$ 换成 $\diff\mathcal{H}^{n-1}$，得 $\leqslant Cr\int_{\partial U\cap C(r)}\lvert Tf-Tf(x)\rvert\diff\mathcal{H}^{n-1}$；除以 $\mathcal{L}^n(B(x,r)\cap U)\geqslant cr^n$ 即得因子 $C/r^{n-1}$。第一项由上一款的估计控制，除以 $r^n$ 即得因子 $C/r^n$。最后由 $r^{n-1}$ 的密度条件与第二个极限分别使两个因子趋于零，即得结论。
+\end{enumerate}
+\end{remark}
+
+\end{document}

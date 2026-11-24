@@ -17,149 +17,259 @@
 
 \subsection{容量}\label{subsection:ch01-容量}
 
-\begin{definition}\label{definition:ch01-容量}
-设 $(X,d)$ 为一度量空间，$\mathcal{F}\subseteq\mathcal{P}(X)$ 满足以下性质：(a) 紧子集族 $\mathcal{K}$ 包含于 $\mathcal{F}$；(b) 对每个序列 $\{E_n\}\subseteq\mathcal{F}$，有 $\bigcup_{n=1}^\infty E_n\in\mathcal{F}$。映射 $C:\mathcal{F}\to[0,\infty]$ 称为 $\mathcal{F}$ 上的一个容量，若：
-\begin{enumerate}[(i)]
-\item $C(\varnothing )=0$；
-\item 对任意 $E_1,E_2\in\mathcal{F}$、$E_1\subseteq E_2$，有 $C(E_1)\leqslant C(E_2)$；
-\item 对任意序列 $\{E_n\}\subseteq\mathcal{F}$，有
-\[
-C\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n=1}^\infty C(E_n).
-\]
+\begin{definition}[容量]\label{definition:ch01-容量}
+设 $(X,d)$ 为度量空间，$\mathcal{K}\subseteq\mathcal{P}(X)$ 为 $X$ 的紧子集族，$\mathcal{F}\subseteq\mathcal{P}(X)$ 满足：
+\begin{enumerate}[(a)]
+\item $\mathcal{K}\subseteq\mathcal{F}$，即 $X$ 的每个紧子集属于 $\mathcal{F}$；
+\item 对每个序列 $\{E_n\}_{n\in\mathbb{N}}\subseteq\mathcal{F}$，有 $\bigcup_{n=1}^\infty E_n\in\mathcal{F}$。
 \end{enumerate}
-$\mathcal{P}(X)$ 上的容量称为 $X$ 上的容量。
+映射 $C:\mathcal{F}\to[0,\infty]$ 称为 $\mathcal{F}$ 上的一个容量，若：
+\begin{enumerate}[(i)]
+\item $C(\varnothing)=0$；
+\item 对任意 $E_1,E_2\in\mathcal{F}$，$E_1\subseteq E_2$ 蕴涵 $C(E_1)\leqslant C(E_2)$；
+\item 对每个序列 $\{E_n\}_{n\in\mathbb{N}}\subseteq\mathcal{F}$，
+\begin{align}
+C\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n=1}^\infty C(E_n). \label{align:ch01-容量次可加}
+\end{align}
+\end{enumerate}
+$\mathcal{P}(X)$ 上的容量称为 $X$ 上的一个容量。
 \end{definition}
 
-\begin{remark}\label{remark:ch01-容量与外测度}
-若 $\mathcal{F}$ 满足上述性质 (a)--(b)，则由附录 A 知开子集族 $\mathcal{T}$ 包含于 $\mathcal{F}$。此外，由\cref{definition:ch01-外测度} 和\cref{definition:ch01-容量}，$X$ 上的容量是一个外测度，而度量空间 $X$ 上的外测度是一个容量。
+% SUPPLEMENT: parent=definition:ch01-容量; kind=motivation; basis=定义 1.6.1 与定义 1.4.1 的逐条对照，以及条件 (a)--(iii) 独立性的核验
+\begin{remark}\phantomsection\label{remark:ch01-容量动机}
+容量就是“把定义域从 $\mathcal{P}(X)$ 缩小到集族 $\mathcal{F}$”的外测度：公理 (i)--(iii) 与\cref{definition:ch01-外测度} 中的零化空集、单调性、$\sigma$--次可加性逐条相同，代价是必须用 (a)--(b) 保证定义域足够大、且在 (iii) 左端所需的可数并下封闭。这一放宽是必要的：本书\cref{section:ch03-特殊容量} 中的 Bessel、Riesz、Sobolev 容量只在 Borel 集上有定义，把它们强行延拓到 $\mathcal{P}(X)$ 会破坏 $\sigma$--次可加性。
+
+各项假设的作用。
+\begin{enumerate}[(1)]
+\item 条件 (a) 提供内逼近与取值位置：\cref{definition:ch01-内外容量} 中内容量的上确界取遍 $\mathcal{K}$，若 $\mathcal{K}\not\subseteq\mathcal{F}$，该上确界按约定为 $0$，于是内容量条件只对 $C(E)=0$ 的集合可能成立，“内正则”与“$C$--可容”便不含信息。(a) 同时保证 $\varnothing\in\mathcal{F}$（$\varnothing$ 紧），从而使 (i) 有意义。
+\item 条件 (b) 使 (iii) 的左端属于 $\mathcal{F}$，并使 $C$--零测集族对可数并封闭（本节关于 $C$--零测集的讨论依赖于此）。
+\item 公理 (i) 是规范化：它使 $\varnothing$ 成为 $C$--零测集，从而“性质 $P$ 在空集上成立”一类陈述可用 $C$--q.e. 表述。(i) 不由 (ii)(iii) 推出：取 $\mathcal{F}=\mathcal{P}(X)$、$C(\varnothing)=1$、$C(E)=1$（$E\neq\varnothing$）时 (ii)(iii) 仍成立而 (i) 不成立。
+\item 公理 (ii) 使两个逼近量有正确的方向：由 (ii) 恒有 $\inf\{C(A)\mid A\supseteq E,\ A\in\mathcal{T}\}\geqslant C(E)$ 与 $\sup\{C(K)\mid K\subseteq E,\ K\in\mathcal{K}\}\leqslant C(E)$，\cref{definition:ch01-内外容量} 中的等式才可能对非平凡集合成立。
+\item 公理 (iii) 只要求次可加而不要求可加：覆盖论证只需次可加性，而 Hausdorff 容量（\cref{definition:ch01-Hausdorff测度}）一般不可加。
+\end{enumerate}
+
+边界与反例。容量不必可加：$\mathcal{F}=\mathcal{P}(X)$、$C(\varnothing)=0$、$C(E)=1$（$E\neq\varnothing$）满足 (i)--(iii)，但对 $x\neq y$ 有 $C(\{x\})+C(\{y\})=2\neq 1=C(\{x,y\})$，故 $C$ 不是测度。容量允许取值 $\infty$，且不要求 $\mathcal{F}$ 对补集或可数交封闭。$\mathcal{F}=\mathcal{P}(X)$ 时“容量”与“外测度”是同一概念（\cref{remark:ch01-容量与外测度}）；$\mathcal{F}$ 严格小于 $\mathcal{P}(X)$ 时二者不同：Lebesgue 测度限制在 Lebesgue 可测集族上是容量，但不是 $X$ 上的外测度。
 \end{remark}
 
-\begin{definition}\label{definition:ch01-内外容量}
-一个容量称为外容量，若对任意 $E\in\mathcal{F}$，
-\[
-C(E)=\inf\{C(A)\mid A\supseteq E,\ A\in\mathcal{T}\};
-\]
-称为内容量，若对任意 $E\in\mathcal{F}$，
-\[
-C(E)=\sup\{C(K)\mid K\subseteq E,\ K\in\mathcal{K}\}.
-\]
+\begin{remark}\phantomsection\label{remark:ch01-容量与外测度}
+若 $\mathcal{F}$ 满足上述性质 (a)--(b)，则由附录中关于局部紧、第二可数空间 $\sigma$--紧性的注记，开子集族 $\mathcal{T}$ 包含于 $\mathcal{F}$（该注记要求 $X$ 为局部紧且具有可数基，例如 $X=\mathbb{R}^N$）。此外，由\cref{definition:ch01-外测度} 与\cref{definition:ch01-容量}，$X$ 上的容量是一个外测度，而度量空间 $X$ 上的外测度是一个容量。
+\end{remark}
+
+\begin{definition}[外容量、内容量与 $C$--可容集]\label{definition:ch01-内外容量}
+设 $(X,d)$ 为度量空间，$\mathcal{K}$ 为 $X$ 的紧子集族，$\mathcal{F}\subseteq\mathcal{P}(X)$ 满足\cref{definition:ch01-容量}(a)--(b)，$C:\mathcal{F}\to[0,\infty]$ 为 $\mathcal{F}$ 上的容量；设 $\mathcal{T}\subseteq\mathcal{F}$（由\cref{remark:ch01-容量与外测度}，当 $X$ 为局部紧且具有可数基的度量空间时成立），从而下列下确界中的 $A$ 属于 $\mathcal{F}$。容量 $C$ 称为外容量，若对每个 $E\in\mathcal{F}$，
+\begin{align}
+C(E)=\inf\{C(A)\mid A\supseteq E,\ A\in\mathcal{T}\}; \label{align:ch01-外容量}
+\end{align}
+称为内容量，若对每个 $E\in\mathcal{F}$，
+\begin{align}
+C(E)=\sup\{C(K)\mid K\subseteq E,\ K\in\mathcal{K}\}. \label{align:ch01-内容量}
+\end{align}
 集合 $E\in\mathcal{F}$ 称为 $C$--可容的，若
 \begin{align}
 C(E)=\inf\{C(A)\mid A\supseteq E,\ A\in\mathcal{T}\}=\sup\{C(K)\mid K\subseteq E,\ K\in\mathcal{K}\}. \label{align:ch01-可容}
 \end{align}
 \end{definition}
 
-\begin{remark}\label{remark:ch01-容量生成}
+% SUPPLEMENT: parent=definition:ch01-内外容量; kind=motivation; basis=定义 1.6.2 与定义 1.3.3(b)--(d) 的对照，加上外容量不成立的反例
+\begin{remark}\phantomsection\label{remark:ch01-内外容量动机}
+(i) 动机。\cref{definition:ch01-内外容量} 把测度的正则性（\cref{definition:ch01-Borel测度}(b)--(d)）逐字搬到容量上：外容量用开集从外部逼近，内容量用紧集从内部逼近，$C$--可容集则是两种逼近同时成功、且两侧都等于 $C(E)$ 的集合。位势论中真正需要的是可容性而非正则性：\cref{theorem:ch01-Choquet} 断言 $\mathbb{R}^N$ 的 Borel 集对满足两条连续性条件的容量都可容，从而可把 Borel 集的容量化归为紧集的容量。
+
+(ii) 各项假设的作用。由容量的单调性，两个逼近量分别满足 $\inf_{A\supseteq E}C(A)\geqslant C(E)$ 与 $\sup_{K\subseteq E}C(K)\leqslant C(E)$，故\eqref{align:ch01-可容} 等价于
+\begin{align*}
+\inf\{C(A)\mid A\supseteq E,\ A\in\mathcal{T}\}\leqslant C(E)\quad\text{且}\quad\sup\{C(K)\mid K\subseteq E,\ K\in\mathcal{K}\}\geqslant C(E).
+\end{align*}
+于是“外容量”只涉及开集族 $\mathcal{T}\subseteq\mathcal{F}$，“内容量”只涉及紧集族 $\mathcal{K}\subseteq\mathcal{F}$，这正是\cref{definition:ch01-容量}(a) 与 $\mathcal{T}\subseteq\mathcal{F}$ 的用处；去掉 $\mathcal{T}\subseteq\mathcal{F}$，\eqref{align:ch01-外容量} 中的下确界无意义。
+
+(iii) 边界。容量不必是外容量：在 $\mathbb{R}^N$ 上令 $C(E)=0$（$E$ 至多可数）、$C(E)=1$（$E$ 不可数），则 $C$ 是容量，但对 $E=\mathbb{Q}^N$ 有 $C(E)=0$ 而 $\inf\{C(A)\mid A\supseteq E,\ A\in\mathcal{T}\}=1$，故 $C$ 不是外容量。同一例子中 $\sup\{C(K)\mid K\subseteq E,\ K\in\mathcal{K}\}=0=C(E)$，即 $E$ 满足\eqref{align:ch01-可容} 的第二个等号却不满足第一个，故 $E$ 不是 $C$--可容的：可容性要求两个等号同时成立。两个反向不等式都不自动成立：$A\in\mathcal{T}$ 时 $A$ 自身虽在\eqref{align:ch01-外容量} 的下确界族中，但 $C(A)$ 未必能由内部的紧集逼近；$K\in\mathcal{K}$ 时 $K$ 自身虽在\eqref{align:ch01-内容量} 的上确界族中，但 $C(K)$ 未必能由外部的开集逼近。补全这两侧的逼近正是\cref{theorem:ch01-Choquet} 与\cref{proposition:ch01-测度上连续} 的内容。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch01-容量生成}
 设 $X$ 和 $\mathcal{F}\subseteq\mathcal{P}(X)$ 如\cref{definition:ch01-容量} 所述，$C$ 为 $\mathcal{F}$ 上的一个容量。对任意族 $\mathcal{F}_1\subseteq\mathcal{F}$，定义 $C_{\mathcal{F}_1}:\mathcal{P}(X)\to[0,\infty]$ 为
-\[
-C_{\mathcal{F}_1}(E)\triangleq \inf\{C(F)\mid F\supseteq E,\ F\in\mathcal{F}_1\}\qquad(E\subseteq X)
-\]
-若存在 $F\in\mathcal{F}_1$ 使得 $F\supseteq E$，否则令 $C_{\mathcal{F}_1}(E)\triangleq \infty$。由\cref{theorem:ch01-外测度生成}，$C_{\mathcal{F}_1}$ 是一个外测度，因而是 $X$ 上的一个容量（见\cref{remark:ch01-容量与外测度}）。特别地，若 $\mathcal{F}_1=\mathcal{T}$ 为 $X$ 上的拓扑，则 $C_{\mathcal{T}}$ 由定义是一个外容量，且 $C$ 是外容量当且仅当 $C=C_{\mathcal{T}}$。
+\begin{align*}
+C_{\mathcal{F}_1}(E)\triangleq\inf\{C(F)\mid F\supseteq E,\ F\in\mathcal{F}_1\}\qquad(E\subseteq X)
+\end{align*}
+若存在 $F\in\mathcal{F}_1$ 使得 $F\supseteq E$，否则令 $C_{\mathcal{F}_1}(E)\triangleq\infty$。由\cref{theorem:ch01-外测度生成}，$C_{\mathcal{F}_1}$ 是一个外测度，因而是 $X$ 上的一个容量（见\cref{remark:ch01-容量与外测度}）。特别地，若 $\mathcal{F}_1=\mathcal{T}$ 为 $X$ 上的拓扑，则 $C_{\mathcal{T}}$ 由定义是一个外容量，且 $C$ 是外容量当且仅当 $C=C_{\mathcal{T}}$。
 
 \cref{definition:ch01-内外容量} 中的概念与\cref{definition:ch01-Borel测度}(b)--(d) 中的概念类似。
 \end{remark}
 
-在第 3 章中，我们将使用以下结果（见文献~[2, Theorem 2.3.11]、[32]、[109] 及其中相关引文）。
+在后续关于容量的讨论中，将使用以下结果（见文献~[2, Theorem 2.3.11]、[32]、[109] 及其中相关引文）。
 
 \begin{theorem}[Choquet]\label{theorem:ch01-Choquet}
-设 $C$ 为 $\mathbb{R}^N$ 上的一个容量，满足：
+设 $N\in\mathbb{N}^*$，$C$ 为 $\mathbb{R}^N$ 上的容量（即 $\mathcal{P}(\mathbb{R}^N)$ 上的容量，见\cref{definition:ch01-容量}），满足：
 \begin{enumerate}[(i)]
-\item 对任意非增紧子集序列 $\{K_k\}\subseteq\mathbb{R}^N$，
+\item 对每个非增紧子集序列 $\{K_k\}_{k\in\mathbb{N}}\subseteq\mathcal{K}$，
 \begin{align}
 C\left(\bigcap_{k=1}^\infty K_k\right)=\lim_{k\to\infty}C(K_k); \label{align:ch01-Choquet上连续}
 \end{align}
-\item 对任意非减序列 $\{E_k\}\subseteq\mathcal{P}(\mathbb{R}^N)$，
+\item 对每个非减序列 $\{E_k\}_{k\in\mathbb{N}}\subseteq\mathcal{P}(\mathbb{R}^N)$，
 \begin{align}
 C\left(\bigcup_{k=1}^\infty E_k\right)=\lim_{k\to\infty}C(E_k). \label{align:ch01-Choquet下连续}
 \end{align}
 \end{enumerate}
-则每个 $E\in\mathcal{B}(\mathbb{R}^N)$ 都是 $C$--可容的。
+则每个 $E\in\mathcal{B}(\mathbb{R}^N)$ 都是 $C$--可容的，即\eqref{align:ch01-可容} 成立。
 \end{theorem}
 
-\begin{remark}\label{remark:ch01-Suslin集}
-\cref{theorem:ch01-Choquet} 的结论实际上对更大的 Suslin 集类成立。
+% SUPPLEMENT: parent=theorem:ch01-Choquet; kind=motivation; basis=Choquet 定理的标准证明结构，以及两个逐项核验的反例（(i) 与 (ii) 各自的必要性）
+\begin{remark}\phantomsection\label{remark:ch01-Choquet动机}
+(i) 动机。容量通常只在紧集上可直接计算（\cref{section:ch03-特殊容量} 中的 Bessel、Riesz、Sobolev 容量先对紧集定义，再由外容量性质延拓），而 Sobolev 函数、容量零集等对象需要 Borel 集的容量。\cref{theorem:ch01-Choquet} 是这一延拓的抽象依据：在 (i) 与 (ii) 之下，$\mathbb{R}^N$ 的每个 Borel 集 $E$ 都可由紧集从内、开集从外双向逼近，且两侧的极限都等于 $C(E)$。定理只使用容量的三条公理与两条连续性，$C$ 不必是测度、不必可加、可以取值 $\infty$。
+
+(ii) 条件的作用。条件 (i) 把“非增紧序列的容量收敛到交集的容量”这一紧性现象固定下来：对紧集 $K$ 与 $\delta_j\downarrow0$，集合 $\{x\in\mathbb{R}^N\mid d(x,K)\leqslant\delta_j\}$ 紧、非增、交为 $K$，故 (i) 给出 $C(\{d(\cdot,K)\leqslant\delta_j\})\to C(K)$，这正是紧集可由开集从外逼近的原因。条件 (ii) 提供内逼近：闭集 $F$ 可写成紧集的非减并 $F=\bigcup_{m=1}^\infty(F\cap\overline{B}(0,m))$，由 (ii) 得 $C(F\cap\overline{B}(0,m))\to C(F)$。一般 Borel 集的证明还用到 Suslin 运算与 (i)（见\cref{remark:ch01-Suslin集}）。
+
+(iii) 条件 (i) 不能去掉。在 $\mathbb{R}^N$ 上令 $C(E)=0$（$E$ 至多可数）、$C(E)=1$（$E$ 不可数）。则 $C(\varnothing)=0$，$C$ 单调；至多可数个至多可数集的并仍至多可数，故 $C$ 满足 $\sigma$--次可加性，$C$ 是 $\mathbb{R}^N$ 上的容量。(ii) 成立：若非减序列 $\{E_k\}$ 中某个 $E_k$ 不可数，则 $k\geqslant k_0$ 时 $C(E_k)=1$ 且 $\bigcup_kE_k$ 不可数，两端都等于 $1$；若所有 $E_k$ 至多可数，则并集至多可数，两端都等于 $0$。(i) 不成立：取 $K_k\triangleq\{x\in\mathbb{R}^N\mid|x|\leqslant1/k\}$，则 $K_k$ 紧且不可数，$C(K_k)=1$，而 $\bigcap_kK_k=\{0\}$、$C(\{0\})=0$。此时结论也失败：$E\triangleq\mathbb{Q}^N$ 是至多可数的 Borel 集，$C(E)=0$；但 $\mathbb{Q}^N$ 在 $\mathbb{R}^N$ 中稠密，每个包含它的开集非空因而是不可数的，故 $\inf\{C(A)\mid A\supseteq E,\ A\in\mathcal{T}\}=1\neq0=C(E)$，即 $E$ 不是 $C$--可容的。
+
+(iv) 条件 (ii) 不能去掉。令 $Q_k\triangleq[k,k+1]^N$（$k\in\mathbb{N}$），$C(E)\triangleq\limsup_{k\to\infty}\lambda_N(E\cap Q_k)$。则 $C(\varnothing)=0$，$C$ 单调；由 $\limsup_k\sum_na_{n,k}\leqslant\sum_n\limsup_ka_{n,k}$（先对有限和验证，再令项数趋于 $\infty$）得 $C$ 的 $\sigma$--次可加性，故 $C$ 是容量。(i) 成立：对非增紧序列 $\{K_k\}$ 与 $K=\bigcap_kK_k$，$K$ 有界，且对每个 $\varepsilon>0$，当 $k$ 充分大时 $K_k\subseteq K+[-\varepsilon,\varepsilon]^N$，故 $K_k$ 亦有界，于是 $C(K_k)=0=C(K)$。(ii) 不成立：取 $E_k\triangleq[0,k]^N$，则 $C(E_k)=0$ 而 $C(\mathbb{R}^N)=\limsup_k\lambda_N(Q_k)=1$。此时结论也失败：$\mathbb{R}^N$ 是 Borel 集，$C(\mathbb{R}^N)=1$，而每个紧集 $K\subseteq\mathbb{R}^N$ 有界，故 $C(K)=0$，$\sup\{C(K)\mid K\subseteq\mathbb{R}^N,\ K\in\mathcal{K}\}=0\neq1$，即 $\mathbb{R}^N$ 不是 $C$--可容的。
+
+(v) 边界。结论不能推广到全体子集：(iii) 中的 $\mathbb{Q}^N$ 就不是 $C$--可容的；把 Borel 集换成 Suslin 集后结论仍成立（\cref{remark:ch01-Suslin集}）。定理对 $\mathbb{R}^N$ 陈述，其中用到 $\mathbb{R}^N$ 的局部紧性、第二可数性以及“紧集有界、有界闭集紧”这一特征性质；在一般度量空间中需补充相应假设。此外 $C$ 可取 $\infty$：$C(\varnothing)=0$、$C(E)=\infty$（$E\neq\varnothing$）是满足 (i)(ii) 的容量。
 \end{remark}
 
-关于\cref{theorem:ch01-Choquet}，我们注意以下结果。
+\begin{remark}\phantomsection\label{remark:ch01-Suslin集}
+\cref{theorem:ch01-Choquet} 的结论实际上对更大的 Suslin 集类成立。Suslin 集（亦称解析集）是 Polish 空间在连续映射下的像；每个 Borel 集是 Suslin 集，Suslin 集族对可数并、可数交与连续像封闭，且严格包含 Borel 集族（存在非 Borel 的 Suslin 集）。\cref{theorem:ch01-Choquet} 的证明正是借助这一封闭性：对 Suslin 集的表示使用 Suslin 运算，并用 (i) 控制该运算中非增紧序列的极限（见文献~[2, Theorem 2.3.11]、[32]、[109]）。
+\end{remark}
 
+关于\cref{theorem:ch01-Choquet}，注意以下结果。
+
+% SUPPLEMENT: parent=proposition:ch01-外容量上连续; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
 \begin{proposition}\label{proposition:ch01-外容量上连续}\label{proposition:ch01-测度上连续}
-设 $X$ 和 $\mathcal{F}\subseteq\mathcal{P}(X)$ 如\cref{definition:ch01-容量} 所述，$C:\mathcal{F}\to[0,\infty]$ 为一外容量。则对任意非增紧集序列 $\{K_n\}\subseteq\mathcal{K}$，等式\eqref{align:ch01-Choquet上连续} 成立。
+设 $X$ 和 $\mathcal{F}\subseteq\mathcal{P}(X)$ 如\cref{definition:ch01-容量} 所述，设 $\mathcal{T}\subseteq\mathcal{F}$，$C:\mathcal{F}\to[0,\infty]$ 为一外容量。则对任意非增紧集序列 $\{K_n\}_{n\in\mathbb{N}}\subseteq\mathcal{K}$，等式\eqref{align:ch01-Choquet上连续} 成立。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch01-测度上连续; kind=proof; basis=原书 5 行证明中“由紧性得 K_n 最终落入 A”一步的完整展开
 \begin{proof}
-令 $K\triangleq \bigcap_{n=1}^\infty K_n$，考虑任意 $A\supseteq K$、$A\in\mathcal{T}$。由于 $\{K_n\}$ 非增，存在 $\bar{n}\in\mathbb{N}$ 使得对所有 $n>\bar{n}$ 有 $K_n\subseteq A$，故由 $C$ 的单调性显然有
-\[
-C(K)\leqslant\lim_{n\to\infty}C(K_n)\leqslant\inf_{A\supseteq K,\ A\in\mathcal{T}}C(A).
-\]
-另一方面，由假设有 $\inf_{A\supseteq K,\ A\in\mathcal{T}}C(A)=C(K)$。于是结论成立。
+令 $K\triangleq\bigcap_{n=1}^\infty K_n$。每个 $K_n$ 紧，$K$ 是 $K_1$ 的闭子集，故 $K$ 紧，$K\in\mathcal{K}\subseteq\mathcal{F}$，$C(K)$ 有定义。由 $K\subseteq K_n$ 与 $C$ 的单调性得 $C(K)\leqslant C(K_n)$ 对一切 $n$ 成立，故
+\begin{align*}
+C(K)\leqslant\liminf_{n\to\infty}C(K_n).
+\end{align*}
+现设 $A\supseteq K$、$A\in\mathcal{T}$。断言：存在 $\bar{n}\in\mathbb{N}$，使得 $K_n\subseteq A$ 对一切 $n\geqslant\bar n$ 成立。若不然，则对每个 $n\in\mathbb{N}$ 可取 $x_n\in K_n\setminus A$。由于 $\{x_n\}\subseteq K_1$ 而 $K_1$ 紧，存在子列 $x_{n_j}$ 收敛于某 $x\in K_1$。对任意固定的 $m\in\mathbb{N}$，当 $n_j\geqslant m$ 时 $x_{n_j}\in K_{n_j}\subseteq K_m$，而 $K_m$ 闭，故 $x\in K_m$；于是 $x\in\bigcap_{m=1}^\infty K_m=K\subseteq A$。另一方面 $x_{n_j}\in X\setminus A$ 而 $X\setminus A$ 闭，故 $x\in X\setminus A$，与 $x\in A$ 矛盾。断言成立。于是对 $n\geqslant\bar n$ 有 $C(K_n)\leqslant C(A)$，从而
+\begin{align*}
+\limsup_{n\to\infty}C(K_n)\leqslant C(A).
+\end{align*}
+由于 $A\supseteq K$、$A\in\mathcal{T}$ 任意，且 $C$ 是外容量，\eqref{align:ch01-外容量} 给出
+\begin{align*}
+\limsup_{n\to\infty}C(K_n)\leqslant\inf\{C(A)\mid A\supseteq K,\ A\in\mathcal{T}\}=C(K).
+\end{align*}
+结合第一式即得 $\lim_{n\to\infty}C(K_n)=C(K)$，即\eqref{align:ch01-Choquet上连续}。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch01-测度上连续; kind=motivation; basis=外容量假设不可去除（由 Choquet 注记中的容量核验）
+\begin{remark}\phantomsection\label{remark:ch01-外容量上连续动机}
+(i) 动机。\cref{theorem:ch01-Choquet} 的条件 (i) 并非自动成立，本命题给出它最常用的一种充分条件：外容量必满足非增紧序列上的上连续性。于是“$C$ 是外容量且满足条件 (ii)”蕴涵 Choquet 定理的全部假设。
+
+(ii) 假设的作用。单调性给出下界 $C(K)\leqslant\liminf_nC(K_n)$；外容量性质把上界转化为 $C(K)$：对每个开集 $A\supseteq K$，紧性保证 $K_n\subseteq A$ 对充分大的 $n$ 成立，故 $\limsup_nC(K_n)\leqslant C(A)$，再对 $A$ 取下确界。若去掉“外容量”，结论可以失败：\cref{remark:ch01-Choquet动机}(iii) 中的容量满足 (ii) 但不是外容量，且 $C(\{0\})=0<1=\lim_kC(K_k)$。
+
+(iii) 边界。命题只涉及非增的紧序列；对非增的闭集序列（不必紧），\eqref{align:ch01-Choquet上连续} 可以失败：\cref{remark:ch01-Choquet动机}(iv) 中的容量满足 (i)，但对非增闭集列 $[0,k]^N$ 有 $C([0,k]^N)=0$ 而 $C(\mathbb{R}^N)=1$。此外 $\bar n$ 的选取依赖 $A$，不能取到与 $A$ 无关的一致 $\bar n$。
+\end{remark}
 
 设 $X$ 和 $\mathcal{F}\subseteq\mathcal{P}(X)$ 如\cref{definition:ch01-容量} 所述，$C:\mathcal{F}\to[0,\infty]$ 为一容量。以下概念与\cref{subsection:ch01-零测集} 中的概念类似：
 \begin{enumerate}[(a)]
 \item 满足 $C(E)=0$ 的集合 $E\in\mathcal{F}$ 称为 $C$--零测的；
-\item 性质 $P$ 称为 $C$--拟处处成立（记为 $C$--q.e. 或 q.e.），若集合 $\{x\in U\mid P(x)\text{ 不成立}\}$ 是 $C$--零测的。
+\item 性质 $P$ 称为 $C$--拟处处成立的（记为 $C$--q.e. 或 q.e.），若集合 $\{x\in X\mid P(x)\text{ 不成立}\}$ 是 $C$--零测的。
 \end{enumerate}
 
-由\cref{definition:ch01-容量}，$C$--零测集族 $\mathcal{N}_C$ 关于可数并和遗传性是稳定的，即 $F\subseteq E$、$E\in\mathcal{N}_C\Rightarrow F\in\mathcal{N}_C$。(b) 的特殊情形如下：
+由\cref{definition:ch01-容量}，$C$--零测集族 $\mathcal{N}_C$ 对可数并与遗传性稳定，即对 $F,E\in\mathcal{F}$，$F\subseteq E$ 且 $E\in\mathcal{N}_C$ 蕴涵 $F\in\mathcal{N}_C$。这里 $F\in\mathcal{F}$ 的前提不可省：容量只在 $\mathcal{F}$ 上有定义，$\mathcal{N}_C\subseteq\mathcal{F}$。(b) 的特殊情形如下：
 \begin{itemize}
-\item 设 $f,f_n:X\to\mathbb{R}$（$n\in\mathbb{N}$）。我们说 $f_n$ 在 $X$ 中 $C$--拟处处收敛于 $f$，若存在 $N\in\mathcal{N}_C$ 使得对任意 $x\in N^c$ 有 $f_n(x)$ 收敛于 $f(x)$；
-\item 两个函数 $f,g:X\to\mathbb{R}$ 在 $X$ 中 $C$--q.e. 相等，若 $\{x\in X\mid f(x)\neq g(x)\}\in\mathcal{N}_C$。
+\item 设 $f,f_n:X\to\mathbb{R}$（$n\in\mathbb{N}$）。称 $f_n$ 在 $X$ 中 $C$--拟处处收敛于 $f$，若存在 $N\in\mathcal{N}_C$ 使得对所有 $x\in N^c$ 有 $f_n(x)$ 收敛于 $f(x)$；
+\item 两个函数 $f,g:X\to\mathbb{R}$ 称为在 $X$ 中 $C$--q.e. 相等的，若 $\{x\in X\mid f(x)\neq g(x)\}\in\mathcal{N}_C$。
 \end{itemize}
 
-显然，$C$--q.e. 相等是一个等价关系：
+$C$--q.e. 相等是一个等价关系：
 \begin{align}
 g\sim f\overset{\mathrm{def}}{\Longleftrightarrow}g=f\ C\text{--q.e. 在 }X\text{ 中}, \label{align:ch01-q.e.等价}
 \end{align}
-关于\eqref{align:ch01-q.e.等价} 的每个等价类由其任意一个元素唯一确定，即该类的一个代表元。与 $\mu$--a.e. 相等的函数一样，我们将 $C$--q.e. 相等的函数等同起来，从而将整个类视为在 $X$ 中 $C$--q.e. 定义的唯一映射 $f$。
+关于\eqref{align:ch01-q.e.等价} 的每个等价类由其任意一个元素唯一确定，即该类的一个代表元。与 $\mu$--a.e. 相等的函数一样，将 $C$--q.e. 相等的函数等同起来，从而将整个类视为在 $X$ 中 $C$--q.e. 定义的唯一映射 $f$。
 
 \subsection{度量外测度}\label{subsection:ch01-度量外测度}
 
-\begin{definition}\label{definition:ch01-度量外测度}
-设 $(X,d)$ 为一度量空间。外测度 $\mu^*$ 称为度量外测度，若对任意非空集合 $E,F\subseteq X$ 且 $d(E,F)>0$，
+\begin{definition}[度量外测度]\label{definition:ch01-度量外测度}
+设 $(X,d)$ 为度量空间，$d(E,F)\triangleq\inf\{d(x,y)\mid x\in E,\ y\in F\}$（$E,F\subseteq X$ 非空）。外测度 $\mu^*:\mathcal{P}(X)\to[0,\infty]$（见\cref{definition:ch01-外测度}）称为度量外测度，若对任意非空集合 $E,F\subseteq X$ 满足 $d(E,F)>0$，
 \begin{align}
 \mu^*(E\cup F)=\mu^*(E)+\mu^*(F). \label{align:ch01-度量外测度条件}
 \end{align}
 \end{definition}
 
-度量外测度的存在性可如\cref{subsection:ch01-Caratheodory构造} 中那样，通过对定义\eqref{align:ch01-外测度生成a} 作微小修改来证明。设 $(X,d)$ 为一度量空间，$\mathcal{C}\subseteq\mathcal{P}(X)$ 且 $\varnothing \in\mathcal{C}$，$\eta:\mathcal{C}\to[0,\infty]$ 且 $\eta(\varnothing )=0$。对任意 $\delta\in(0,\infty]$，令
+% SUPPLEMENT: parent=definition:ch01-度量外测度; kind=motivation; basis=定义 1.6.3 与 Carathéodory 可测性判据的对照，以及把 d(E,F)>0 减弱为不交的后果
+\begin{remark}\phantomsection\label{remark:ch01-度量外测度动机}
+(i) 动机。(1.34) 是“外测度与度量相容”的最小要求：相距正距离的两块集合在容量上互不干扰。它弱于可加性，却足以使 Carathéodory 可测集族包含全部 Borel 集（\cref{proposition:ch01-度量外测度等价}），因而是 Hausdorff 测度、Lebesgue 测度成为 Borel 测度的抽象机制。
+
+(ii) 假设的作用。要求 $d(E,F)>0$ 而非仅 $E\cap F=\varnothing$ 是必要的：若对一切不交集合要求\eqref{align:ch01-度量外测度条件}，则与 $\sigma$--次可加性合起来会使 $\mu^*$ 成为 $\mathcal{P}(X)$ 上的测度，而\cref{definition:ch01-Hausdorff测度} 中的 Hausdorff 容量一般只是容量、不是测度。$E,F$ 非空的条件只是避免把 $d(\varnothing,F)$ 写成 $0$ 后再对空集使用\eqref{align:ch01-度量外测度条件}；由于 $\mu^*(\varnothing)=0$，含空集的平凡情形不影响结论。外测度公理已含 $\mu^*(\varnothing)=0$、单调性与 $\sigma$--次可加性（\cref{definition:ch01-外测度}），故\eqref{align:ch01-度量外测度条件} 只附加“正距离可加”这一条。
+
+(iii) 边界。\eqref{align:ch01-度量外测度条件} 要求正距离集合上的可加性，但不要求对 $d(E,F)=0$ 的不交集合可加；若把它加强为对一切不交集合可加，则与 $\sigma$--次可加性合起来 $\mu^*$ 成为 $\mathcal{P}(X)$ 上的测度，Hausdorff 容量（一般不可加）便被排除。
+\end{remark}
+
+度量外测度的存在性可如\cref{subsection:ch01-Caratheodory构造} 中那样，通过对定义\eqref{align:ch01-外测度生成a} 作微小修改来证明。设 $(X,d)$ 为一度量空间，$\mathcal{C}\subseteq\mathcal{P}(X)$ 且 $\varnothing\in\mathcal{C}$，$\eta:\mathcal{C}\to[0,\infty]$ 且 $\eta(\varnothing)=0$，并令 $\operatorname{diam}(A)\triangleq\sup\{d(x,y)\mid x,y\in A\}$（$A\subseteq X$，$\operatorname{diam}(\varnothing)\triangleq0$）。对任意 $\delta\in(0,\infty]$，令
 \begin{align}
-\eta_\delta^*(E)\triangleq \inf\left\{\sum_{n=1}^\infty\eta(E_n)\ \middle|\ E\subseteq\bigcup_{n=1}^\infty E_n,\ \{E_n\}\subseteq\mathcal{C},\ \operatorname{diam}(E_n)\leqslant\delta\ \forall n\in\mathbb{N}\right\} \label{align:ch01-eta-delta}
+\eta_\delta^*(E)\triangleq\inf\left\{\sum_{n=1}^\infty\eta(E_n)\ \middle|\ E\subseteq\bigcup_{n=1}^\infty E_n,\ \{E_n\}\subseteq\mathcal{C},\ \operatorname{diam}(E_n)\leqslant\delta\ \forall n\in\mathbb{N}\right\}, \label{align:ch01-eta-delta}
 \end{align}
-若存在如\eqref{align:ch01-eta-delta} 中 $E$ 的可数覆盖 $\{E_n\}$，否则令 $\eta_\delta^*(E)\triangleq \infty$。如\cref{theorem:ch01-外测度生成} 的证明那样论证，可知映射 $\eta_\delta^*:\mathcal{P}(X)\to[0,\infty]$ 是一个外测度（特别地，$\eta_\infty^*$ 即\eqref{align:ch01-外测度生成a} 中定义的外测度 $\mu^*$）。容易看出映射
+若\eqref{align:ch01-eta-delta} 中那样的 $E$ 的可数覆盖 $\{E_n\}$ 存在，否则令 $\eta_\delta^*(E)\triangleq\infty$。如\cref{theorem:ch01-外测度生成} 的证明那样论证，映射 $\eta_\delta^*:\mathcal{P}(X)\to[0,\infty]$ 是一个外测度（特别地，$\eta_\infty^*$ 即\eqref{align:ch01-外测度生成a} 中定义的外测度 $\mu^*$）。
+
+% SUPPLEMENT: parent=align:ch01-eta星; kind=proof; basis=原书 “It is easily seen”、sigma-次可加性推导及 eta* 为外测度的完整展开
+映射
 \begin{align}
 \eta^*:\mathcal{P}(X)\to[0,\infty],\qquad
-\eta^*(E)\triangleq \lim_{\delta\to0^+}\eta_\delta^*(E)=\sup_{\delta>0}\eta_\delta^*(E)\quad(E\subseteq X) \label{align:ch01-eta星}
+\eta^*(E)\triangleq\lim_{\delta\to0^+}\eta_\delta^*(E)=\sup_{\delta>0}\eta_\delta^*(E)\quad(E\subseteq X) \label{align:ch01-eta星}
 \end{align}
-也是一个外测度。事实上，对任意 $E\subseteq X$，映射 $\delta\mapsto\eta_\delta^*(E)$ 非增；故定义是适定的，且
+也是外测度。事实上，对每个 $E\subseteq X$，映射 $\delta\mapsto\eta_\delta^*(E)$ 在 $(0,\infty]$ 上非增：当 $0<\delta_1\leqslant\delta_2$ 时，\eqref{align:ch01-eta-delta} 中允许的覆盖族随 $\delta$ 增大而增大，故相应的下确界不增。于是\eqref{align:ch01-eta星} 的定义适定（极限存在，且等于上确界），且
 \begin{align}
 \eta_\infty^*(E)\leqslant\eta_\delta^*(E)\leqslant\eta^*(E)\qquad\text{对任意 }\delta\in(0,\infty). \label{align:ch01-eta不等式}
 \end{align}
-于是对任意 $\{E_n\}\subseteq\mathcal{P}(X)$ 和 $\delta>0$，
-\[
-\eta_\delta^*\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n=1}^\infty\eta_\delta^*(E_n)\leqslant\sum_{n=1}^\infty\eta^*(E_n)
-\quad\Rightarrow\quad
-\eta^*\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n=1}^\infty\eta^*(E_n).
-\]
-这就证明了 $\eta^*$ 是 $\sigma$--次可加的。显然它是单调的，$\eta^*(\varnothing )=0$，故 $\eta^*$ 是一个外测度。以下引理完成该断言。
+从而对任意 $\{E_n\}\subseteq\mathcal{P}(X)$ 和 $\delta>0$，由 $\eta_\delta^*$ 的 $\sigma$--次可加性与\eqref{align:ch01-eta不等式} 得
+\begin{align*}
+\eta_\delta^*\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n=1}^\infty\eta_\delta^*(E_n)\leqslant\sum_{n=1}^\infty\eta^*(E_n),
+\end{align*}
+对 $\delta$ 取上确界即得 $\eta^*\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n=1}^\infty\eta^*(E_n)$，故 $\eta^*$ 是 $\sigma$--次可加的；又 $\eta^*$ 单调、$\eta^*(\varnothing)=0$（因为 $\eta_\delta^*(\varnothing)=0$），故 $\eta^*$ 是外测度。以下引理完成该断言。
 
 \begin{lemma}\label{lemma:ch01-eta星是度量外测度}
-设 $(X,d)$ 为一度量空间。则由\eqref{align:ch01-eta星} 定义的外测度 $\eta^*$ 是一个度量外测度。
+设 $(X,d)$ 为一度量空间，$\mathcal{C}\subseteq\mathcal{P}(X)$ 满足 $\varnothing\in\mathcal{C}$，$\eta:\mathcal{C}\to[0,\infty]$ 满足 $\eta(\varnothing)=0$。则由\eqref{align:ch01-eta星} 定义的外测度 $\eta^*$ 是一个度量外测度。
 \end{lemma}
 
+% SUPPLEMENT: parent=lemma:ch01-eta星是度量外测度; kind=proof; basis=原书紧性一步与 G_n'、G_n'' 构造的完整展开
 \begin{proof}
-设 $E,F\subseteq X$ 非空，$d(E,F)>0$。若证得 $\eta^*(E\cup F)\geqslant\eta^*(E)+\eta^*(F)$，结论即成立。设 $\eta^*(E\cup F)<\infty$，否则结论显然。取 $\delta\in(0,d(E,F))$，设 $\{G_n\}\subseteq\mathcal{C}$ 且对所有 $n\in\mathbb{N}$ 有 $\operatorname{diam}(G_n)\leqslant\delta$，使得 $E\cup F\subseteq\bigcup_{n=1}^\infty G_n$。显然，由 $\delta$ 的选取，不存在 $\bar{n}\in\mathbb{N}$ 使得 $G_{\bar{n}}$ 同时与 $E$ 和 $F$ 相交。于是对所有 $n\in\mathbb{N}$，存在 $G_n',G_n''\subseteq X$ 使得 $G_n'\cup G_n''=G_n$；因而
-\[
-\max\{\operatorname{diam}(G_n'),\operatorname{diam}(G_n'')\}\leqslant\delta,
-\]
-且 $E\subseteq\bigcup_{n=1}^\infty G_n'$，$F\subseteq\bigcup_{n=1}^\infty G_n''$。显然这蕴含
-\[
-\eta_\delta^*(E)+\eta_\delta^*(F)\leqslant\eta_\delta^*(E\cup F),
-\]
-令 $\delta\to0^+$，结论成立。
+设 $E,F\subseteq X$ 非空，$d(E,F)>0$。若 $\eta^*(E\cup F)=\infty$，则待证不等式 $\eta^*(E\cup F)\geqslant\eta^*(E)+\eta^*(F)$ 自动成立；以下设 $\eta^*(E\cup F)<\infty$。由于 $\eta^*$ 是外测度，反向不等式 $\eta^*(E\cup F)\leqslant\eta^*(E)+\eta^*(F)$ 由 $\sigma$--次可加性得到，故只需证 $\eta^*(E\cup F)\geqslant\eta^*(E)+\eta^*(F)$。
+
+固定 $\delta\in(0,d(E,F))$，设 $\{G_n\}\subseteq\mathcal{C}$ 满足 $\operatorname{diam}(G_n)\leqslant\delta$（$n\in\mathbb{N}$）且 $E\cup F\subseteq\bigcup_{n=1}^\infty G_n$。断言：不存在 $n\in\mathbb{N}$ 使得 $G_n$ 同时与 $E$ 和 $F$ 相交。否则取 $x\in G_n\cap E$、$y\in G_n\cap F$，则
+\begin{align*}
+d(E,F)\leqslant d(x,y)\leqslant\operatorname{diam}(G_n)\leqslant\delta<d(E,F),
+\end{align*}
+矛盾。于是对每个 $n\in\mathbb{N}$ 令
+\begin{align*}
+G_n'\triangleq
+\begin{cases}
+G_n, & G_n\cap E\neq\varnothing,\\
+\varnothing, & G_n\cap E=\varnothing,
+\end{cases}
+\qquad
+G_n''\triangleq
+\begin{cases}
+G_n, & G_n\cap F\neq\varnothing,\\
+\varnothing, & G_n\cap F=\varnothing.
+\end{cases}
+\end{align*}
+由 $\varnothing\in\mathcal{C}$ 得 $\{G_n'\},\{G_n''\}\subseteq\mathcal{C}$，且 $\operatorname{diam}(G_n')\leqslant\delta$、$\operatorname{diam}(G_n'')\leqslant\delta$（因 $\operatorname{diam}(\varnothing)=0$）。若 $x\in E$，取 $n$ 使 $x\in G_n$，则 $G_n\cap E\neq\varnothing$，故 $G_n'=G_n\ni x$，于是 $E\subseteq\bigcup_{n=1}^\infty G_n'$；同法得 $F\subseteq\bigcup_{n=1}^\infty G_n''$。又 $G_n$ 不兼与 $E$、$F$ 相交，故 $G_n'$ 与 $G_n''$ 中至少有一个为 $\varnothing$（$G_n$ 与 $E\cup F$ 不交时两者皆为 $\varnothing$），因此
+\begin{align*}
+\eta(G_n')+\eta(G_n'')\leqslant\eta(G_n)\qquad(n\in\mathbb{N}).
+\end{align*}
+于是
+\begin{align*}
+\eta_\delta^*(E)+\eta_\delta^*(F)\leqslant\sum_{n=1}^\infty\eta(G_n')+\sum_{n=1}^\infty\eta(G_n'')\leqslant\sum_{n=1}^\infty\eta(G_n).
+\end{align*}
+对 $E\cup F$ 的所有如上的可数覆盖取下确界，得 $\eta_\delta^*(E)+\eta_\delta^*(F)\leqslant\eta_\delta^*(E\cup F)$。再由\eqref{align:ch01-eta不等式} 有 $\eta_\delta^*(E\cup F)\leqslant\eta^*(E\cup F)$，故
+\begin{align*}
+\eta_\delta^*(E)+\eta_\delta^*(F)\leqslant\eta^*(E\cup F)\qquad(\delta\in(0,d(E,F))).
+\end{align*}
+对 $\delta$ 取上确界，并利用 $\eta^*(E)=\sup_{\delta>0}\eta_\delta^*(E)$、$\eta^*(F)=\sup_{\delta>0}\eta_\delta^*(F)$，即得 $\eta^*(E)+\eta^*(F)\leqslant\eta^*(E\cup F)$。
 \end{proof}
 
-\begin{remark}\label{remark:ch01-eta是容量}
+\begin{remark}\phantomsection\label{remark:ch01-eta是容量}
 由\cref{remark:ch01-容量与外测度}，\eqref{align:ch01-eta-delta}--\eqref{align:ch01-eta星} 中定义的外测度 $\eta_\delta^*$（$\delta\in(0,\infty]$）和 $\eta^*$ 都是 $X$ 上的容量。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch01-eta星是度量外测度; kind=motivation; basis=引理 1.6.3 的构造动机与 delta 的作用
+\begin{remark}\phantomsection\label{remark:ch01-eta星动机}
+(i) 动机。\eqref{align:ch01-eta-delta} 用“直径 $\leqslant\delta$ 的覆盖”定义 $\eta_\delta^*$，再取 $\delta\to0^+$ 的极限以消去覆盖的尺度：小尺度覆盖无法把两块正距离集合“缝”在一起，这正是度量外测度性质\eqref{align:ch01-度量外测度条件} 的来源。\cref{section:ch01-Hausdorff} 中的 Hausdorff 容量正是在\eqref{align:ch01-eta-delta} 中取 $\eta=h\circ\operatorname{diam}$ 得到的（\cref{definition:ch01-Hausdorff测度}）。
+
+(ii) 各项假设的作用。$\delta<d(E,F)$ 是关键：直径 $\leqslant\delta$ 的集合不能同时与 $E$、$F$ 相交，于是覆盖被分裂为 $E$ 与 $F$ 的两个覆盖。$\varnothing\in\mathcal{C}$ 与 $\eta(\varnothing)=0$ 使分裂所得的 $\varnothing$ 仍为允许的覆盖元且不增加覆盖代价。$\eta$ 取非负值保证“对覆盖取下确界”有下界 $0$，从而 $\eta_\delta^*$ 取值于 $[0,\infty]$。
+
+(iii) 边界。$\delta\mapsto\eta_\delta^*(E)$ 非增，故 $\eta^*$ 是“小尺度下的最优覆盖代价”，它可能远小于 $\eta_\infty^*$；\eqref{align:ch01-eta不等式} 给出三者的大小顺序。若 $\eta$ 不是非负的，$\eta_\delta^*$ 可能取 $\pm\infty$，引理的证明不再成立。
 \end{remark}
 
 度量外测度可刻画如下。
@@ -172,113 +282,132 @@ g\sim f\overset{\mathrm{def}}{\Longleftrightarrow}g=f\ C\text{--q.e. 在 }X\text
 \end{enumerate}
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch01-度量外测度等价; kind=proof; basis=原书 (ii)=>(i) 中正距离估计、D 的分解与极限步骤的完整展开
 \begin{proof}
-(i)$\Rightarrow$(ii)。由假设，对任意开集 $A\subseteq X$，有
+(i)$\Rightarrow$(ii)。由假设，每个开集是 $\mu^*$--可测的，故对任意开集 $A\subseteq X$ 有
 \begin{align}
 \mu^*(Z)=\mu^*(Z\cap A)+\mu^*(Z\cap A^c)\qquad\text{对任意 }Z\subseteq X \label{align:ch01-等价证明1}
 \end{align}
-（见\eqref{align:ch01-Caratheodory条件}）。设 $E,F\subseteq X$ 非空，$0<\delta<d(E,F)$。则 $G\triangleq \{x\in X\mid d(x,E)<\delta\}$ 是开集，且 $E\subseteq G$，$F\subseteq G^c$。于是在\eqref{align:ch01-等价证明1} 中取 $Z=E\cup F$、$A=G$，即化为\eqref{align:ch01-度量外测度条件}。结论成立。
+（见\eqref{align:ch01-Caratheodory条件}）。设 $E,F\subseteq X$ 非空，$0<\delta<d(E,F)$。则 $G\triangleq\{x\in X\mid d(x,E)<\delta\}$ 是开集且 $E\subseteq G$；又若 $y\in F$，则 $d(y,E)\geqslant d(E,F)>\delta$，故 $F\subseteq G^c$。在\eqref{align:ch01-等价证明1} 中取 $Z=E\cup F$、$A=G$，由 $(E\cup F)\cap G=E$ 与 $(E\cup F)\cap G^c=F$ 即得\eqref{align:ch01-度量外测度条件}。
 
 (ii)$\Rightarrow$(i)。只需证每个闭集 $C\subseteq X$ 都是 $\mu^*$--可测的。对任意集合 $D\subseteq C^c$，令
-\[
-D_n\triangleq \{x\in D\mid d(x,C)\geqslant 1/n\}\subseteq D\qquad(n\in\mathbb{N}).
-\]
-现证
+\begin{align*}
+D_n\triangleq\{x\in D\mid d(x,C)\geqslant1/n\}\subseteq D\qquad(n\in\mathbb{N}).
+\end{align*}
+则 $D_n\subseteq D_{n+1}$。先证
 \begin{align}
 \lim_{n\to\infty}\mu^*(D_n)=\mu^*(D). \label{align:ch01-等价证明2}
 \end{align}
-事实上，对所有 $n\in\mathbb{N}$，有 $\mu^*(D_n)\leqslant\mu^*(D)$，因为 $D_n\subseteq D_{n+1}\subseteq D$。还需证
+事实上，由 $D_n\subseteq D$ 与 $\mu^*$ 的单调性得 $\mu^*(D_n)\leqslant\mu^*(D)$，故 $\lim_n\mu^*(D_n)\leqslant\mu^*(D)$。还需证
 \begin{align}
 \lim_{n\to\infty}\mu^*(D_n)\geqslant\mu^*(D). \label{align:ch01-等价证明3}
 \end{align}
-设 $\lim_{n\to\infty}\mu^*(D_n)<\infty$（否则结论显然），令 $P_n\triangleq D_{n+1}\setminus D_n$（$n\in\mathbb{N}$）。若 $P_{2k}\neq\varnothing $（$k=1,\cdots ,n$），容易看出
-\[
-d\left(\bigcup_{k=1}^n P_{2k},P_{2n+2}\right)>0,
-\]
-故
-\[
-\mu^*\left(\bigcup_{k=1}^{n+1}P_{2k}\right)=\mu^*\left(\bigcup_{k=1}^n P_{2k}\right)+\mu^*(P_{2n+2}),
-\]
-因为 $\mu^*$ 是度量外测度。归纳论证得
-\[
-\mu^*\left(\bigcup_{k=1}^n P_{2k}\right)=\sum_{k=1}^n\mu^*(P_{2k})\qquad\text{对所有 }n\in\mathbb{N}
-\]
-（注意若某些 $P_{2k}=\varnothing $，上述等式也成立）。类似地可证
-\[
-\mu^*\left(\bigcup_{k=0}^n P_{2k+1}\right)=\sum_{k=0}^n\mu^*(P_{2k+1}).
-\]
-由于对所有 $n\in\mathbb{N}$ 有 $\bigcup_{k=1}^n P_k\subseteq D_n$，得
+设 $\lim_{n\to\infty}\mu^*(D_n)<\infty$（否则\eqref{align:ch01-等价证明3} 自动成立），令 $P_n\triangleq D_{n+1}\setminus D_n$（$n\in\mathbb{N}$）。若 $x\in P_{2k}$，则 $1/(2k+1)\leqslant d(x,C)<1/(2k)$；若 $y\in P_{2n+2}$，则 $d(y,C)\geqslant1/(2n+3)$ 且 $d(y,C)<1/(2n+2)$。于是对 $k=1,\cdots ,n$，只要 $P_{2k}\neq\varnothing$，就有
+\begin{align*}
+d\left(\bigcup_{k=1}^nP_{2k},P_{2n+2}\right)\geqslant\frac{1}{2n+1}-\frac{1}{2n+2}>0,
+\end{align*}
+（对 $x\in P_{2k}$、$y\in P_{2n+2}$ 用 $d(x,y)\geqslant d(x,C)-d(y,C)$）。因此由 $\mu^*$ 是度量外测度得
+\begin{align*}
+\mu^*\left(\bigcup_{k=1}^{n+1}P_{2k}\right)=\mu^*\left(\bigcup_{k=1}^nP_{2k}\right)+\mu^*(P_{2n+2}),
+\end{align*}
+归纳得
+\begin{align*}
+\mu^*\left(\bigcup_{k=1}^nP_{2k}\right)=\sum_{k=1}^n\mu^*(P_{2k})\qquad\text{对所有 }n\in\mathbb{N}
+\end{align*}
+（若某个 $P_{2k}=\varnothing$，由 $\mu^*(\varnothing)=0$ 上述等式仍成立）。同法（用 $P_{2k+1}$ 与 $P_{2n+3}$ 的正距离）可得
+\begin{align*}
+\mu^*\left(\bigcup_{k=0}^nP_{2k+1}\right)=\sum_{k=0}^n\mu^*(P_{2k+1}).
+\end{align*}
+由于 $\bigcup_{k=1}^nP_k\subseteq D_n$ 对一切 $n$ 成立，得
 \begin{align}
 \sum_{k=1}^\infty\mu^*(P_k)
 &=\lim_{n\to\infty}\left(\sum_{k=0}^n\mu^*(P_{2k+1})+\sum_{k=1}^n\mu^*(P_{2k})\right) \label{align:ch01-等价证明4}\\
-&=\lim_{n\to\infty}\left(\mu^*\left(\bigcup_{k=1}^n P_{2k}\right)+\mu^*\left(\bigcup_{k=0}^n P_{2k+1}\right)\right)
-\leqslant 2\lim_{n\to\infty}\mu^*(D_n)<\infty. \nonumber
+&=\lim_{n\to\infty}\left(\mu^*\left(\bigcup_{k=1}^nP_{2k}\right)+\mu^*\left(\bigcup_{k=0}^nP_{2k+1}\right)\right)
+\leqslant2\lim_{n\to\infty}\mu^*(D_n)<\infty. \nonumber
 \end{align}
-最后，由于 $C$ 是闭集，对所有 $n\in\mathbb{N}$ 有 $D=D_n\cup\left(\bigcup_{k=n}^\infty P_k\right)$，故
+最后，由于 $C$ 闭，对每个 $x\in D\setminus D_n$ 有 $d(x,C)<1/n$，取 $m\geqslant n$ 使 $1/(m+1)\leqslant d(x,C)<1/m$，则 $x\in P_m$；故对一切 $n\in\mathbb{N}$ 有 $D=D_n\cup\left(\bigcup_{k=n}^\infty P_k\right)$，从而
 \begin{align}
 \mu^*(D)\leqslant\mu^*(D_n)+\sum_{k=n}^\infty\mu^*(P_k)\qquad(n\in\mathbb{N}). \label{align:ch01-等价证明5}
 \end{align}
-由\eqref{align:ch01-等价证明4} 有 $\lim_{n\to\infty}\sum_{k=n}^\infty\mu^*(P_k)=0$，故在\eqref{align:ch01-等价证明5} 中令 $n\to\infty$，得\eqref{align:ch01-等价证明3}。于是\eqref{align:ch01-等价证明2} 成立。
+由\eqref{align:ch01-等价证明4} 中级数收敛得 $\lim_{n\to\infty}\sum_{k=n}^\infty\mu^*(P_k)=0$，故在\eqref{align:ch01-等价证明5} 中令 $n\to\infty$ 得\eqref{align:ch01-等价证明3}。于是\eqref{align:ch01-等价证明2} 成立。
 
-现固定 $Z\subseteq X$，取 $D=Z\cap C^c$。对任意 $n\in\mathbb{N}$，有
-\[
-Z\supseteq(Z\cap C)\cup D_n,
-\]
-故由 $\mu^*$ 的单调性，
-\[
+现固定 $Z\subseteq X$，取 $D=Z\cap C^c$。对任意 $n\in\mathbb{N}$ 有 $Z\supseteq(Z\cap C)\cup D_n$，故由 $\mu^*$ 的单调性
+\begin{align*}
 \mu^*(Z)\geqslant\mu^*((Z\cap C)\cup D_n)=\mu^*(Z\cap C)+\mu^*(D_n)\qquad(n\in\mathbb{N}),
-\]
-因为 $d(Z\cap C,D_n)\geqslant 1/n>0$ 且 $\mu^*$ 是度量外测度。另一方面，由\eqref{align:ch01-等价证明2} 有
-\[
-\lim_{n\to\infty}\mu^*(D_n)=\mu^*(D)=\mu^*(Z\cap C^c),
-\]
-于是在上述不等式中令 $n\to\infty$，结论成立。
+\end{align*}
+因为 $x\in Z\cap C$ 时 $d(x,C)=0$，$y\in D_n$ 时 $d(y,C)\geqslant1/n$，故 $d(Z\cap C,D_n)\geqslant1/n>0$，而 $\mu^*$ 是度量外测度（若 $Z\cap C$ 或 $D_n$ 为空集，等式由 $\mu^*(\varnothing)=0$ 直接成立）。另一方面，由\eqref{align:ch01-等价证明2} 有 $\lim_{n\to\infty}\mu^*(D_n)=\mu^*(D)=\mu^*(Z\cap C^c)$，于是在上述不等式中令 $n\to\infty$ 得
+\begin{align*}
+\mu^*(Z)\geqslant\mu^*(Z\cap C)+\mu^*(Z\cap C^c).
+\end{align*}
+反向不等式由 $\mu^*$ 的 $\sigma$--次可加性给出，故 $C$ 满足\eqref{align:ch01-Caratheodory条件}，即 $C$ 是 $\mu^*$--可测的。
 \end{proof}
 
-最后我们补充两个关于度量空间上 Borel 测度的概念。
+% SUPPLEMENT: parent=proposition:ch01-度量外测度等价; kind=motivation; basis=命题 1.6.4 的动机、假设作用与正距离条件的边界
+\begin{remark}\phantomsection\label{remark:ch01-度量外测度等价动机}
+(i) 动机。命题把“$\mu^*$ 与度量相容”（几何条件）与“Borel 集全部可测”（测度论条件）等同起来。因此验证 Hausdorff 测度、Lebesgue--Stieltjes 测度是 Borel 测度时，只需验证\eqref{align:ch01-度量外测度条件} 这一条几何性质（如\cref{lemma:ch01-eta星是度量外测度}）。
 
-\begin{definition}\label{definition:ch01-加倍测度}
-设 $(X,d)$ 为一度量空间。$X$ 上的正则 Borel 测度 $\mu$ 称为：
+(ii) 假设的作用。(i)$\Rightarrow$(ii) 只用到“开集可测”（从而可用\eqref{align:ch01-Caratheodory条件}）以及 $\delta<d(E,F)$ 时开集 $G=\{d(\cdot,E)<\delta\}$ 分离 $E,F$。(ii)$\Rightarrow$(i) 中，距离函数 $d(\cdot,C)$ 的 $1/n$--水平集 $D_n$ 把 $D$ 分层，同奇偶的相邻两层保持正距离，这是使用度量外测度可加性的唯一位置；\eqref{align:ch01-等价证明4} 的收敛性保证尾部 $\sum_{k=n}^\infty\mu^*(P_k)\to0$。若 $\mu^*$ 只是外测度而非度量外测度，闭集可以不可测：\cref{remark:ch01-Choquet动机}(iv) 中的容量是对 $\mathcal{P}(\mathbb{R}^N)$ 定义的外测度，例如其中闭集 $\bigcup_{j\in\mathbb{N}}Q_{2j}$ 不可测：取 $Z=\mathbb{R}^N$ 有 $C(Z)=1$，而 $C\left(\bigcup_{j\in\mathbb{N}}Q_{2j}\right)+C\left(\mathbb{R}^N\setminus\bigcup_{j\in\mathbb{N}}Q_{2j}\right)=2$。
+
+(iii) 边界。命题只断言 Borel 集可测；$\mu^*$--可测集族可能严格大于 $\mathcal{B}(X)$（Lebesgue 外测度即如此）。\eqref{align:ch01-度量外测度条件} 中的正距离条件不可减弱为“不交”：否则由 $\sigma$--次可加性 $\mu^*$ 成为 $\mathcal{P}(X)$ 上的测度，Hausdorff 容量（一般不可加）便被排除。
+\end{remark}
+
+最后补充两个关于度量空间上 Borel 测度的概念。
+
+\begin{definition}[维数与加倍测度]\label{definition:ch01-加倍测度}
+设 $(X,d)$ 为一度量空间，$B(x,r)\triangleq\{y\in X\mid d(x,y)<r\}$（$x\in X$，$r>0$）为开球。$X$ 上的正则 Borel 测度 $\mu$（即局部有限且正则的测度，见\cref{definition:ch01-Borel测度}(a) 与 (d)）称为：
 \begin{enumerate}[(i)]
-\item 维数 $s>0$ 的，若存在 $c\geqslant 1$ 使得对所有 $x\in X$ 和 $r>0$ 有
-\[
-\frac{1}{c}r^s\leqslant\mu(B(x,r))\leqslant cr^s;
-\]
-\item 加倍的，若存在 $c_D\geqslant 1$ 使得对所有 $x\in X$ 和 $r>0$ 有
-\[
-\mu(B(x,2r))\leqslant c_D\mu(B(x,r)).
-\]
+\item 维数 $s>0$ 的，若存在常数 $c\geqslant1$ 使得对所有 $x\in X$ 和 $r>0$ 有
+\begin{align}
+\frac{1}{c}r^s\leqslant\mu(B(x,r))\leqslant cr^s; \label{align:ch01-维数条件}
+\end{align}
+\item 加倍的，若存在常数 $c_D\geqslant1$ 使得对所有 $x\in X$ 和 $r>0$ 有
+\begin{align}
+\mu(B(x,2r))\leqslant c_D\mu(B(x,r)). \label{align:ch01-加倍条件}
+\end{align}
 \end{enumerate}
 \end{definition}
 
-\begin{remark}\label{remark:ch01-加倍性质}
-(i) 若 $\mu$ 是维数 $s$ 的，则它是加倍的，常数为 $c_D=c^2 2^s$。
+% SUPPLEMENT: parent=definition:ch01-加倍测度; kind=motivation; basis=定义 1.6.4 的动机、常数 c>=1 与 s>0 的作用，以及典型例子
+\begin{remark}\phantomsection\label{remark:ch01-加倍测度动机}
+(i) 动机。维数条件说 $\mu$ 与 $s$ 维 Hausdorff 测度同标度（Ahlfors 正则性）：球的质量由半径的 $s$ 次幂控制。加倍条件只要求相邻两个尺度的质量可比，是度量测度空间理论的基本假设，其典型后果是\cref{remark:ch01-加倍性质}(iii) 中的幂律估计\eqref{align:ch01-加倍估计}。
 
-(ii) 若 $\mu$ 是加倍的，则容易看出对所有 $x\in X$ 和 $r>0$ 有 $\mu(B(x,r))<\infty$，且若 $\mu\not\equiv 0$，则 $\mu(B(x,r))>0$。
+(ii) 各项假设的作用。$s>0$ 排除 $s=0$ 的退化情形（$s=0$ 时\eqref{align:ch01-维数条件} 只给出 $\mu(B(x,r))$ 夹在 $1/c$ 与 $c$ 之间、与半径无关，Riesz 位势理论中的容量估计即失效）。$c\geqslant1$ 不是外加限制，而是自洽性要求：由\eqref{align:ch01-维数条件} 得 $c^{-1}r^s\leqslant cr^s$，即 $c^2\geqslant1$。$r>0$ 排除 $r=0$（$B(x,0)=\varnothing$）；条件必须对一切 $r>0$ 成立，才能同时控制 $r\to0^+$ 与 $r\to\infty$ 的行为。正则性假设提供局部有限性，这是\cref{remark:ch01-加倍性质}(ii) 中证明 $\mu(B(x,r))<\infty$ 的依据。
+
+(iii) 边界与例子。$\mathbb{R}^N$ 上的 Lebesgue 测度 $\lambda_N$ 是维数 $s=N$ 的（取 $c=\max\{\omega_N,\omega_N^{-1}\}$，$\omega_N$ 为单位球体积），其加倍常数为 $c_D=2^N$。维数 $s$ 若存在则唯一：若 $s<s'$，由 $c^{-1}r^s\leqslant\mu(B(x,r))\leqslant c'r^{s'}$ 得 $r^{s'-s}\geqslant1/(cc')$；令 $r\to0^+$，左端趋于 $0$，矛盾。加倍条件比维数条件弱：$\mathbb{R}^N$ 上由加倍权 $w$ 给出的测度 $w\,\mathrm{d}x$ 是加倍的，但一般不满足任何维数条件。若把开球换成闭球，常数改变而“维数 $s$”与“加倍”这两个性质不变。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch01-加倍性质}
+(i) 若 $\mu$ 是维数 $s$ 的，则它是加倍的，常数为 $c_D=c^22^s$。事实上，在\eqref{align:ch01-维数条件} 中取半径为 $2r$，得
+\begin{align*}
+\mu(B(x,2r))\leqslant c(2r)^s=c2^sr^s\leqslant c2^s\cdot c\,\mu(B(x,r))=c^22^s\mu(B(x,r)).
+\end{align*}
+
+(ii) 若 $\mu$ 是加倍的，则对所有 $x\in X$ 和 $r>0$ 有 $\mu(B(x,r))<\infty$，且若 $\mu\not\equiv0$，则 $\mu(B(x,r))>0$。为证第一个断言，由 $\mu$ 局部有限取 $x$ 的邻域 $U$ 使 $\mu(U)<\infty$，再取 $\rho>0$ 使 $B(x,\rho)\subseteq U$；若 $r\leqslant\rho$，由单调性得 $\mu(B(x,r))\leqslant\mu(B(x,\rho))<\infty$；若 $r>\rho$，取 $k\in\mathbb{N}$ 使 $r\leqslant2^k\rho$，迭代加倍条件 $k$ 次得
+\begin{align*}
+\mu(B(x,r))\leqslant\mu(B(x,2^k\rho))\leqslant c_D^k\mu(B(x,\rho))<\infty.
+\end{align*}
+为证第二个断言，设 $\mu\not\equiv0$ 而某 $\mu(B(x,r_0))=0$；由加倍条件与单调性得 $\mu(B(x,2^kr_0))=0$ 对一切 $k\in\mathbb{N}$ 成立，于是由 $\bigcup_{k=1}^\infty B(x,2^kr_0)=X$ 与 $\sigma$--次可加性得 $\mu(X)\leqslant\sum_{k=1}^\infty\mu(B(x,2^kr_0))=0$，即 $\mu\equiv0$，矛盾。
 
 (iii) 若 $\mu$ 是加倍的且 $0<r<R$，则
 \begin{align}
 \mu(B(x,R))\leqslant c_D\left(\frac{R}{r}\right)^s\mu(B(x,r)) \label{align:ch01-加倍估计}
 \end{align}
-其中 $s=\log_2 c_D=\frac{\log c_D}{\log 2}$。为证\eqref{align:ch01-加倍估计}（若 $\mu\not\equiv 0$；否则\eqref{align:ch01-加倍估计} 显然），令 $k\triangleq \left[\log_2\left(\frac{R}{r}\right)\right]$ 为 $\log_2(R/r)$ 的整数部分。由于 $2^k\leqslant R/r\leqslant 2^{k+1}$，利用 $\mu$ 的单调性和迭代加倍条件，得
-\[
-\mu(B(x,R))\leqslant\mu(B(x,2\cdot 2^k r))\leqslant c_D\mu(B(x,2^k r))
+其中 $s=\log_2c_D=\frac{\log c_D}{\log2}$。为证\eqref{align:ch01-加倍估计}（若 $\mu\not\equiv0$；否则\eqref{align:ch01-加倍估计} 两端为 $0$），令 $k\triangleq\left[\log_2\left(\frac{R}{r}\right)\right]$ 为 $\log_2(R/r)$ 的整数部分。由于 $2^k\leqslant R/r\leqslant2^{k+1}$，利用 $\mu$ 的单调性和迭代加倍条件，得
+\begin{align*}
+\mu(B(x,R))\leqslant\mu(B(x,2\cdot2^kr))\leqslant c_D\mu(B(x,2^kr))
 \leqslant c_D^2\mu(B(x,2^{k-1}r))\leqslant\cdots\leqslant c_D^{k+1}\mu(B(x,r)).
-\]
+\end{align*}
 若 $c_D=1$，则上述不等式给出\eqref{align:ch01-加倍估计}，因为此时 $s=0$。若 $c_D>1$，则由
-\[
-\frac{\mu(B(x,R))}{\mu(B(x,r))}\leqslant c_D^{k+1},
-\]
-得
-\[
+\begin{align*}
+\frac{\mu(B(x,R))}{\mu(B(x,r))}\leqslant c_D^{k+1}
+\end{align*}
+（由 (ii) 得 $\mu(B(x,r))>0$，故可作除法）得
+\begin{align*}
 \log_{c_D}\left(\frac{\mu(B(x,R))}{c_D\mu(B(x,r))}\right)\leqslant k\leqslant\log_2\left(\frac{R}{r}\right)
-=\log_{c_D}\left(\frac{R}{r}\right)\log_2 c_D
+=\log_{c_D}\left(\frac{R}{r}\right)\log_2c_D
 =\log_{c_D}\left(\frac{R}{r}\right)^s,
-\]
+\end{align*}
 故在此情形下\eqref{align:ch01-加倍估计} 也成立。证毕。
 \end{remark}
-
-
-
 
 \end{document}

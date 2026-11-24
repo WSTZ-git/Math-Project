@@ -17,17 +17,21 @@
 
 \subsection{Radon--Nikodým 性质}\label{subsection:ch04-RNP}
 
-设 $(X,\mathcal{A},\mu)$ 为测度空间，$Y$ 为 Banach 空间，$f:X\to Y$ 为 Bochner 可积。由\cref{proposition:ch04-积分诱导向量测度}，映射 $\nu:\mathcal{A}\to Y$，$\nu(E)\triangleq \int_E f\,\mathrm{d}\mu$，是有有界变差的向量测度，且 $\nu\ll\mu$。如前所述（见\cref{remark:ch04-RN反例}），自然要问逆命题是否成立，即：
+设 $(X,\mathcal{A},\mu)$ 为测度空间，$Y$ 为 Banach 空间，$f:X\to Y$ 为 Bochner 可积函数。由\cref{proposition:ch04-积分诱导向量测度}，映射
+\begin{align*}
+\nu:\mathcal{A}\to Y,\quad \nu(E)\triangleq \int_E f\,\mathrm{d}\mu\quad(E\in\mathcal{A}),
+\end{align*}
+是有有界变差的向量测度，且 $\nu\ll\mu$。如前所述（见\cref{remark:ch04-RN反例}），自然要问其逆命题是否成立，即：
 
-\noindent\textbf{(Q1).} 设 $\nu:\mathcal{A}\to Y$ 为有有界变差的向量测度且 $\nu\ll\mu$。是否存在 Bochner 可积函数 $f:X\to Y$，使对所有 $E\in\mathcal{A}$ 有 $\nu(E)\triangleq \int_E f\,\mathrm{d}\mu$？
+\noindent\textbf{(Q1).} 设 $\nu:\mathcal{A}\to Y$ 为有有界变差的向量测度，且 $\nu\ll\mu$。是否存在 Bochner 可积函数 $f:X\to Y$，使对所有 $E\in\mathcal{A}$ 有 $\nu(E)=\int_E f\,\mathrm{d}\mu$？
 
-等价地，问题是 Radon--Nikodým 定理（见\cref{theorem:ch02-RadonNikodym}）能否推广到向量值测度。若 (Q1) 中的函数 $f$ 存在，则它称为向量测度 $\nu$ 的 Bochner 密度。
+等价地，问题是 Radon--Nikodým 定理（见\cref{theorem:ch02-RadonNikodym}）能否推广到向量值测度。若 (Q1) 中的函数 $f$ 存在，则称它为向量测度 $\nu$ 的 Bochner 密度。
 
-可提出一个相关的有趣问题。若测度 $\mu$ 为 $\sigma$-有限，由\cref{theorem:ch02-Lp对偶}，$(L^1(X))^*=L^\infty(X)$，即对每个连续线性映射 $T\in\mathcal{L}(L^1(X);\mathbb{R})$，存在唯一函数 $g\in L^\infty(X)$ 使
+还可提出一个相关的有趣问题。若测度 $\mu$ 为 $\sigma$-有限，则由\cref{theorem:ch02-Lp对偶}有 $(L^1(X))^*=L^\infty(X)$，即对每个连续线性映射 $T\in\mathcal{L}(L^1(X);\mathbb{R})$，存在唯一函数 $g\in L^\infty(X)$ 使
 \begin{align*}
 \langle T,f\rangle=\int_X fg\,\mathrm{d}\mu\quad\text{对所有 }f\in L^1(X)
 \end{align*}
-（我们总用 $\langle\cdot,\cdot\rangle$ 表示任一 Banach 空间与其对偶之间的对偶映射）。自然要问此结果能否推广到向量值映射，即：
+（本书总用 $\langle\cdot,\cdot\rangle$ 表示任一 Banach 空间与其对偶空间之间的对偶映射）。自然要问此结果能否推广到向量值映射，即：
 
 \noindent\textbf{(Q2).} 设 $T\in\mathcal{L}(L^1(X);Y)$。是否存在 $g\in L^\infty(X;Y)$，使对所有 $f\in L^1(X)$ 有 $Tf=\int_X fg\,\mathrm{d}\mu$？
 
@@ -38,57 +42,87 @@
 \begin{align}
 \nu_n(E)\triangleq \int_E\sin(2^n\pi x)\,\mathrm{d}x. \label{align:ch04-4.73}
 \end{align}
-则对所有 $n\in\mathbb{N}$ 有 $|\nu_n(E)|\leqslant\lambda(E)=1$，且由 Riemann--Lebesgue 引理 $\lim_{n\to\infty}\nu_n(E)=0$。
+则对所有 $n\in\mathbb{N}$ 与 $E\in\mathcal{A}$ 有 $|\nu_n(E)|\leqslant\lambda(E)\leqslant1$，且由 Riemann--Lebesgue 引理 $\lim_{n\to\infty}\nu_n(E)=0$。
 
 令 $c_0\triangleq \{\{a_n\}\subseteq\mathbb{R}\mid\lim_{n\to\infty}a_n=0\}$，$\|\{a_n\}\|_{c_0}\triangleq \sup_{n\in\mathbb{N}}|a_n|$。则映射
 \begin{align}
-\nu:\mathcal{A}\to c_0,\quad \nu(E)\triangleq \{\nu_n(E)\}\ (E\in\mathcal{A}) \label{align:ch04-4.74}
+\nu:\mathcal{A}\to c_0,\quad \nu(E)\triangleq \{\nu_n(E)\}\quad(E\in\mathcal{A}) \label{align:ch04-4.74}
 \end{align}
-是良定的，且对所有 $E\in\mathcal{A}$ 与 $n\in\mathbb{N}$ 有 $\|\nu_n(E)\|_{c_0}\leqslant\lambda(E)$。故 $\nu$ 是有有界变差的向量测度（事实上 $|\nu|(I)\leqslant1$；见\cref{definition:ch01-向量测度}），且 $\nu\ll\lambda$。假设存在 Bochner 可积函数 $g:I\to c_0$ 使
+良定，且对所有 $E\in\mathcal{A}$ 有 $\|\nu(E)\|_{c_0}\leqslant\lambda(E)$。故 $\nu$ 是有有界变差的向量测度（事实上 $|\nu|(I)\leqslant1$；见\cref{definition:ch01-向量测度}），且 $\nu\ll\lambda$。设存在 Bochner 可积函数 $g:I\to c_0$ 使
 \begin{align}
 \nu(E)=\int_E g(x)\,\mathrm{d}x\quad\text{对所有 }E\in\mathcal{A}. \label{align:ch04-4.75}
 \end{align}
 则 $g\equiv\{g_n\}$，其中 $g_n:I\to\mathbb{R}$，且对几乎所有 $x\in I$ 有 $g_n(x)=\sin(2^n\pi x)$（见\eqref{align:ch04-4.73}--\eqref{align:ch04-4.75}）。令
 \begin{align*}
-E_0\triangleq \bigcap_{k=1}^\infty\bigcup_{n=k}^\infty E_n,\qquad E_n\triangleq \Big\{x\in I\ \Big|\ |\sin(2^n\pi x)|\geqslant\frac{\sqrt2}{2}\Big\}\ (n\in\mathbb{N}).
+E_0\triangleq \bigcap_{k=1}^\infty\bigcup_{n=k}^\infty E_n,\qquad E_n\triangleq \Big\{x\in I\ \Big|\ |\sin(2^n\pi x)|\geqslant\frac{\sqrt2}{2}\Big\}\quad(n\in\mathbb{N}).
 \end{align*}
 注意对每个 $n$ 有 $\lambda(E_n)=1/2$，从而
 \begin{align*}
 \lambda(E_0)=\lim_{k\to\infty}\lambda\Big(\bigcup_{n=k}^\infty E_n\Big)\geqslant\lim_{k\to\infty}\lambda(E_k)=\frac12.
 \end{align*}
-现固定 $x\in E_0$。由定义，对任意 $k\in\mathbb{N}$，存在 $n\geqslant k$ 使 $x\in E_n$，从而 $|\sin(2^n\pi x)|=|g_n(x)|\geqslant\sqrt2/2$。因此序列 $\{g_n(x)\}$ 当 $n\to\infty$ 时不可能收敛于 $0$，故对几乎所有 $x\in E_0$ 有 $g(x)\notin c_0$。由于 $\lambda(E_0)>0$，这与\eqref{align:ch04-4.75}矛盾。故对 $Y=c_0$，问题 (Q1) 的答案是否定的。
+现固定 $x\in E_0$。由定义，对任意 $k\in\mathbb{N}$ 存在 $n\geqslant k$ 使 $x\in E_n$，从而 $|\sin(2^n\pi x)|=|g_n(x)|\geqslant\sqrt2/2$。因此序列 $\{g_n(x)\}$ 当 $n\to\infty$ 时不可能收敛于 $0$，故对几乎所有 $x\in E_0$ 有 $g(x)\notin c_0$。由于 $\lambda(E_0)>0$，这与\eqref{align:ch04-4.75}矛盾（$g$ 是 $c_0$-值函数，故 $g(x)\in c_0$ 对几乎所有 $x\in I$ 成立）。故对 $Y=c_0$，问题 (Q1) 的答案是否定的。
 \end{example}
 
 \begin{example}\label{example:ch04-算子反例}
 设 $(X,\mathcal{A},\mu)$ 如\cref{example:ch04-c0反例}。令
 \begin{align}
-T:L^1(I)\to c_0,\quad Tf\triangleq \int_I f(x)\sin(2^n\pi x)\,\mathrm{d}x\ (f\in L^1(I)). \label{align:ch04-4.76}
+T:L^1(I)\to c_0,\quad Tf\triangleq \int_I f(x)\sin(2^n\pi x)\,\mathrm{d}x\quad(f\in L^1(I)). \label{align:ch04-4.76}
 \end{align}
-由 Riemann--Lebesgue 引理，此定义良定。映射 $T$ 线性连续：
+由 Riemann--Lebesgue 引理，此定义良定。映射 $T$ 线性且连续：
 \begin{align*}
 \|Tf\|_{c_0}\leqslant\sup_{n\in\mathbb{N}}\int_I|f(x)\sin(2^n\pi x)|\,\mathrm{d}x\leqslant\|f\|_1.
 \end{align*}
 反证，设存在 $g\in L^\infty(I;c_0)$ 使对所有 $f\in L^1(I)$ 有 $Tf=\int_I fg\,\mathrm{d}x$。特别地，对所有 $E\in\mathcal{A}$ 有 $T\chi_E=\int_E g\,\mathrm{d}x=\nu(E)$，其中 $\nu$ 为\eqref{align:ch04-4.73}--\eqref{align:ch04-4.74}中定义的向量测度。然而由\cref{example:ch04-c0反例}，不存在 Bochner 可积函数 $g$ 使此等式成立，矛盾。故对\eqref{align:ch04-4.76}中定义的算子，问题 (Q2) 的答案是否定的。
 \end{example}
 
+% SUPPLEMENT: parent=example:ch04-c0反例; kind=motivation; 说明该反例在 §4.4 结构中的作用并逐项核对各假设
+% SUPPLEMENT: parent=example:ch04-算子反例; kind=motivation; 说明 (Q2) 的反例如何由 (Q1) 的反例得到
+\begin{remark}\phantomsection\label{remark:ch04-c0反例意义}
+\cref{example:ch04-c0反例}与\cref{example:ch04-算子反例}共同说明：标量 Radon--Nikodým 定理不能无条件推广到向量值测度，且公式 $(L^1(X))^*=L^\infty(X)$ 也不能无条件推广为 $(L^1(X;Y))^*=L^\infty(X;Y)$。两个反例只用同一个 Banach 空间 $Y=c_0$，其缺陷在于：$c_0$ 中"逐坐标收敛且范数有界"不能推出范数收敛。
+
+逐项考察\cref{example:ch04-c0反例}中的假设与构造。(i) 测度空间取 $(I,\mathcal{B}\cap I,\lambda)$，它有限且非原子，故\cref{proposition:ch04-纯原子RNP}不适用，$c_0$ 缺少 RNP 的缺陷得以显现。(ii) 由 $|\sin(2^n\pi x)|\leqslant1$ 得 $|\nu_n(E)|\leqslant\lambda(E)$，故 $\nu$ 有有界变差且 $|\nu|(I)\leqslant\lambda(I)=1$；又 $\nu\ll\lambda$。于是\cref{definition:ch04-RNP}(i) 中除"$Y$ 具有 RNP"以外的全部假设都满足，缺失的恰是 $Y$ 的 RNP。(iii) 关键集合 $E_0=\limsup_nE_n$ 满足 $\lambda(E_0)\geqslant1/2>0$；在其上每个 $x$ 都使坐标序列 $\{\sin(2^n\pi x)\}$ 有无穷多项落在 $[-\sqrt2/2,\sqrt2/2]$ 之外，故该序列不趋于 $0$，而 $c_0$ 的元素必须排除这种情形。若把 $c_0$ 换成 $\ell^\infty$ 或 $C[0,1]$，同样的构造仍给出反例；若换成任一具有 RNP 的空间（例如自反空间，见\cref{corollary:ch04-自反RNP}），则 (Q1) 的答案恒为肯定。
+
+\cref{example:ch04-算子反例}中的算子 $T$ 满足 $\|T\|\leqslant1$，其"坐标"是 $L^1(I)$ 上的连续线性泛函 $f\mapsto\int_I f(x)\sin(2^n\pi x)\,\mathrm{d}x$，而这些坐标构成 $c_0$-值连续线性算子（正由 Riemann--Lebesgue 引理保证极限坐标为零）。若 $T$ 可由 $g\in L^\infty(I;c_0)$ 表示，则对每个 $E\in\mathcal{A}$ 取 $f=\chi_E$ 得 $\nu(E)=\int_E g\,\mathrm{d}x$，即 $g$ 是 $\nu$ 的 Bochner 密度，与\cref{example:ch04-c0反例}矛盾。注意 $g$ 的 $L^\infty$-有界性并不构成额外障碍：矛盾已在 $g$ 仅 Bochner 可积的层面出现。
+\end{remark}
+
 上述例子引出如下定义。
 
 \begin{definition}[Radon--Nikodým 性质]\label{definition:ch04-RNP}
-(i) 设 $(X,\mathcal{A},\mu)$ 为 $\sigma$-有限测度空间。Banach 空间 $Y$ 称为关于 $(X,\mathcal{A},\mu)$ 具有 Radon--Nikodým 性质，若对任意有有界变差且关于 $\mu$ 绝对连续的向量测度 $\nu:\mathcal{A}\to Y$，存在 $g\in L^1(X;Y)$ 使对所有 $E\in\mathcal{A}$ 有 $\nu(E)=\int_E g\,\mathrm{d}\mu$。映射 $g$ 称为向量测度 $\nu$ 的 Bochner 密度。
+(i) 设 $(X,\mathcal{A},\mu)$ 为 $\sigma$-有限测度空间。称 Banach 空间 $Y$ 关于 $(X,\mathcal{A},\mu)$ 具有 Radon--Nikodým 性质，若对任意向量测度 $\nu:\mathcal{A}\to Y$，只要 $\nu$ 有有界变差且关于 $\mu$ 绝对连续，就存在 $g\in L^1(X;Y)$ 使对所有 $E\in\mathcal{A}$ 有 $\nu(E)=\int_E g\,\mathrm{d}\mu$。映射 $g$ 称为向量测度 $\nu$ 的 Bochner 密度。
 
-(ii) Banach 空间 $Y$ 称为具有 Radon--Nikodým 性质，若它关于每个 $\sigma$-有限测度空间 $(X,\mathcal{A},\mu)$ 都具有 Radon--Nikodým 性质。
+(ii) 称 Banach 空间 $Y$ 具有 Radon--Nikodým 性质，若它关于每个 $\sigma$-有限测度空间 $(X,\mathcal{A},\mu)$ 都具有 Radon--Nikodým 性质。
 \end{definition}
+
+% SUPPLEMENT: parent=definition:ch04-RNP; kind=motivation; 动机、逐项假设（σ-有限、有有界变差、绝对连续、完备性）的作用、边界与反例、密度唯一性
+% SUPPLEMENT: parent=definition:ch04-Riesz可表示; kind=motivation; (Q2) 的抽象化、$L^\infty$ 而非 $L^1$ 的理由、与 RNP 的关系及边界
+\begin{remark}\phantomsection\label{remark:ch04-RNP定义}
+\cref{definition:ch04-RNP}是 Radon--Nikodým 定理的向量版本：标量情形断言，$\sigma$-有限测度空间上关于 $\mu$ 绝对连续的有限带号测度恰是那些具有密度 $\mathrm{d}\nu/\mathrm{d}\mu\in L^1(X)$ 者；而\cref{example:ch04-c0反例}表明该结论对向量值测度不可能无条件成立。于是"RN 定理成立"不再是对测度论自动成立的事实，而成为 Banach 空间 $Y$ 的一个内在性质。
+
+逐项考察假设。(a) $\mu$ 的 $\sigma$-有限性：推导对偶公式时总把 $X$ 分解为有限测度集之并、在每个有限测度块上使用 RN 定理再拼接（见\cref{theorem:ch04-Lp对偶刻画}与\cref{theorem:ch04-可分对偶Lp对偶}的证明），同时它保证标量框架 $(L^1(X))^*=L^\infty(X)$ 可用。若 $\mu$ 不 $\sigma$-有限，密度的存在性本身仍有意义，但本节的对偶定理需另行表述。(b) $\nu$ 有有界变差：这不是技术性假设而是必要条件。若 $\nu(E)=\int_E g\,\mathrm{d}\mu$ 且 $g\in L^1(X;Y)$，则由\cref{proposition:ch04-积分诱导向量测度}有 $|\nu|(X)\leqslant\int_X\|g\|_Y\,\mathrm{d}\mu<\infty$；反之当 $Y$ 无限维时存在变差为无穷的 $\sigma$-可加向量测度 $\nu\ll\mu$（把质量分散到无穷多个相互"正交"的方向），对这种 $\nu$ 不可能有 Bochner 密度。(c) $\nu\ll\mu$：同样是必要的，因为 $\mu(E)=0$ 时 $\int_E g\,\mathrm{d}\mu=0$，故必有 $\nu(E)=0$。(d) $Y$ 完备：证明中要取 $L^1(X;Y)$ 中 Cauchy 列的极限，并在\cref{proposition:ch04-RNP子空间}的证明中取 $Y_1$-值函数的几乎处处极限，都依赖完备性。
+
+适用边界与反例：$c_0$ 不具有 RNP（\cref{example:ch04-c0反例}），$C[0,1]$、$L^1[0,1]$、$\ell^\infty$ 亦然。另一方面，可分对偶空间具有 RNP（\cref{theorem:ch04-DunfordPettis}），自反空间具有 RNP（\cref{corollary:ch04-自反RNP}），而 $\ell^1$ 具有 RNP 却不自反，故 RNP 严格弱于自反性。若 $\mu$ 为纯原子测度，则 RNP 对一切 $Y$ 成立（\cref{proposition:ch04-纯原子RNP}），可见障碍只来自 $\mu$ 的扩散部分。
+
+最后注意密度的唯一性：若 $g_1,g_2\in L^1(X;Y)$ 都满足 $\nu(E)=\int_E g_i\,\mathrm{d}\mu$，则 $\int_E(g_1-g_2)\,\mathrm{d}\mu=0$ 对一切 $E\in\mathcal{A}$ 成立；由\cref{proposition:ch04-积分诱导向量测度}得 $|\nu_{g_1-g_2}|(E)=0$ 对一切 $E$ 成立，故 $g_1=g_2$ 在 $X$ 中 $\mu$-几乎处处成立。故\cref{definition:ch04-RNP}中的 $g$ 在 $\mu$-几乎处处意义下唯一。
+\end{remark}
 
 \begin{definition}[Riesz 可表示]\label{definition:ch04-Riesz可表示}
-设 $(X,\mathcal{A},\mu)$ 为 $\sigma$-有限测度空间。算子 $T\in\mathcal{L}(L^1(X);Y)$ 称为 Riesz 可表示的（简称可表示的），若存在 $g\in L^\infty(X;Y)$ 使对所有 $f\in L^1(X)$ 有 $Tf=\int_X fg\,\mathrm{d}\mu$。
+设 $(X,\mathcal{A},\mu)$ 为 $\sigma$-有限测度空间。称算子 $T\in\mathcal{L}(L^1(X);Y)$ 为 Riesz 可表示的（或简称可表示的），若存在 $g\in L^\infty(X;Y)$ 使对所有 $f\in L^1(X)$ 有 $Tf=\int_X fg\,\mathrm{d}\mu$。
 \end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch04-Riesz可表示定义}
+\cref{definition:ch04-Riesz可表示}是问题 (Q2) 的抽象化：标量情形由\cref{theorem:ch02-Lp对偶}给出 $(L^1(X))^*=L^\infty(X)$，即每个 $T\in\mathcal{L}(L^1(X);\mathbb{R})$ 都可由某个 $g\in L^\infty(X)$ 表示；而\cref{example:ch04-算子反例}说明对 $Y=c_0$ 此事失败。因此"每个 $T$ 都 Riesz 可表示"是 $(X,\mathcal{A},\mu)$ 与 $Y$ 配对后才有意义的性质，而非 $Y$ 单独的性质；\cref{theorem:ch04-RNP与可表示}将说明当 $\mu$ 有限时它恰等价于 $Y$ 关于该测度空间具有 RNP。
+
+关于假设。$\mu$ 的 $\sigma$-有限性保证 $\chi_E\in L^1(X)$ 可取遍 $\mathcal{A}$ 中的有限测度集，从而把表示公式从示性函数推广到 $L^1(X)$；同时由 Hölder 不等式保证 $fg\in L^1(X;Y)$ 对一切 $f\in L^1(X)$、$g\in L^\infty(X;Y)$ 成立。表示函数取在 $L^\infty(X;Y)$ 而非 $L^1(X;Y)$ 中并非额外限制：若 $Tf=\int_X fg\,\mathrm{d}\mu$ 对一切 $f\in L^1(X)$ 成立且 $T$ 有界，则由 $|T\chi_E|\leqslant\|T\|\mu(E)$ 与 Lebesgue 微分定理（\cref{proposition:ch04-Lebesgue点}）得 $\|g(x)\|_Y\leqslant\|T\|$ 对几乎所有 $x$ 成立，故 $g\in L^\infty(X;Y)$ 且 $\|g\|_\infty\leqslant\|T\|$；反之若只设 $g\in L^1(X;Y)$，则 $f\mapsto\int_X fg\,\mathrm{d}\mu$ 一般不是 $L^1(X)$ 上的有界算子。此外 $g$ 在 $\mu$-几乎处处意义下唯一（论证同\cref{remark:ch04-RNP定义}末段）。
+
+适用边界：当 $Y$ 是自反空间或可分对偶空间时，\cref{theorem:ch04-RNP与可表示}与\cref{theorem:ch04-Lp对偶刻画}保证相应的表示定理成立；当 $Y=c_0$ 且 $(X,\mathcal{A},\mu)=(I,\mathcal{B}\cap I,\lambda)$ 时，\cref{example:ch04-算子反例}中的算子不可表示。若 $\mu$ 仅 $\sigma$-有限而不有限，则须把 $T$ 限制到每个有限测度块上再逐块表示（见\cref{theorem:ch04-Lp对偶刻画}的证明中对 $L^p(F_{\bar k};Y)$ 的处理）。
+\end{remark}
 
 涉及用 Pettis 积分代替 Bochner 积分的 Radon--Nikodým 性质的弱与弱$^*$版本，在文献 [101, 定义 (7-1-3)--(7-1-7)] 中讨论。
 
 Radon--Nikodým 性质成立的一个简单情形由如下命题给出。
 
 \begin{proposition}\label{proposition:ch04-纯原子RNP}
-设 $(X,\mathcal{A},\mu)$ 为 $\mu$ 为 $\sigma$-有限且纯原子的测度空间。则每个 Banach 空间 $Y$ 关于 $(X,\mathcal{A},\mu)$ 都具有 Radon--Nikodým 性质。
+设 $(X,\mathcal{A},\mu)$ 为测度空间，且 $\mu$ 为 $\sigma$-有限且纯原子的。则每个 Banach 空间 $Y$ 关于 $(X,\mathcal{A},\mu)$ 都具有 Radon--Nikodým 性质。
 \end{proposition}
 
 \begin{proof}
@@ -96,7 +130,7 @@ Radon--Nikodým 性质成立的一个简单情形由如下命题给出。
 \begin{align*}
 g:X\to Y,\quad g\triangleq \sum_{n=1}^\infty\frac{\nu(F_n)}{\mu(F_n)}\chi_{F_n}.
 \end{align*}
-显然，
+由定义直接
 \begin{align*}
 \int_X\|g\|_Y\,\mathrm{d}\mu=\sum_{n=1}^\infty\|\nu(F_n)\|_Y\leqslant|\nu|(X)<\infty.
 \end{align*}
@@ -107,62 +141,161 @@ g:X\to Y,\quad g\triangleq \sum_{n=1}^\infty\frac{\nu(F_n)}{\mu(F_n)}\chi_{F_n}.
 故结论成立。
 \end{proof}
 
+% SUPPLEMENT: parent=proposition:ch04-纯原子RNP; kind=proof; 补出级数绝对收敛与 $\nu(E)=\sum_n\nu(E\cap F_n)$ 的逐项论证
+\begin{proof}[以下：\cref{proposition:ch04-纯原子RNP}证明中的两处省略]
+\emph{(a) 级数绝对收敛。}对 $X$ 的任意有限划分 $\{A_1,\cdots,A_m\}$ 有 $\sum_{i=1}^m\|\nu(A_i)\|_Y\leqslant|\nu|(X)$（见\cref{definition:ch01-向量测度}(ii)）；取 $A_i=F_i$（$1\leqslant i\leqslant N$）、$A_{N+1}=X\setminus\bigcup_{i\leqslant N}F_i$，得 $\sum_{i=1}^N\|\nu(F_i)\|_Y\leqslant|\nu|(X)$ 对一切 $N$ 成立，故 $\sum_{i=1}^\infty\|\nu(F_i)\|_Y\leqslant|\nu|(X)<\infty$。于是定义 $g$ 的级数在 $L^1(X;Y)$ 中绝对收敛；由\cref{proposition:ch04-Bochner判据}得 $g$ 为 Bochner 可积且 $\int_X\|g\|_Y\,\mathrm{d}\mu=\sum_{i=1}^\infty\|\nu(F_i)\|_Y$。
+
+\emph{(b) $\nu(E)=\sum_n\nu(E\cap F_n)$ 与逐项求和的合法性。}由 $\mu=\mu\llcorner(\bigcup_nF_n)$ 得 $\mu(X\setminus\bigcup_nF_n)=0$，故由 $\nu\ll\mu$ 得 $\nu(X\setminus\bigcup_nF_n)=0$。又 $\{E\cap F_n\}$ 两两不交且并为 $E\cap\bigcup_nF_n$，故由 $\nu$ 的 $\sigma$-可加性
+\begin{align*}
+\nu(E)=\nu\Big(E\cap\bigcup_{n=1}^\infty F_n\Big)=\sum_{n=1}^\infty\nu(E\cap F_n).
+\end{align*}
+另一方面，对每个 $n$，$\mu(E\cap F_n)\in\{0,\mu(F_n)\}$：若为 $0$ 则 $\nu(E\cap F_n)=0=\frac{\nu(F_n)}{\mu(F_n)}\mu(E\cap F_n)$；若为 $\mu(F_n)$ 则 $\nu(E\cap F_n)=\nu(F_n)=\frac{\nu(F_n)}{\mu(F_n)}\mu(E\cap F_n)$。又
+\begin{align*}
+\sum_{n=1}^\infty\Big\|\frac{\nu(F_n)}{\mu(F_n)}\Big\|_Y\mu(E\cap F_n)\leqslant\sum_{n=1}^\infty\|\nu(F_n)\|_Y\leqslant|\nu|(X)<\infty,
+\end{align*}
+故 Bochner 积分的逐项求和合法（级数在 $L^1(X;Y)$ 中绝对收敛），从而 $\int_Eg\,\mathrm{d}\mu=\sum_n\nu(E\cap F_n)=\nu(E)$。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch04-纯原子RNP; kind=motivation; 动机（纯原子测度上密度逐原子显式给出、与 $Y$ 的几何无关）、各假设作用、非原子的反例、非 $\sigma$-有限时的边界
+\begin{remark}\phantomsection\label{remark:ch04-纯原子RNP}
+本命题说明：Radon--Nikodým 性质的障碍完全来自测度 $\mu$ 的扩散（非原子）部分；在纯原子测度空间上，Bochner 密度可逐个原子显式写出，与 $Y$ 的几何无关。这正是\cref{example:ch04-c0反例}必须取 Lebesgue 测度（非原子）的原因。
+
+逐项考察假设与论证。(i) $\mu$ 纯原子且 $\sigma$-有限：由\cref{definition:ch01-原子}(iii) 可取至多可数个 $\mu$-原子 $\{F_n\}$ 使 $\mu$ 集中在 $\bigcup_nF_n$ 上；$\sigma$-有限性保证每个 $\mu(F_n)<\infty$，否则商 $\nu(F_n)/\mu(F_n)$ 无意义，命题的陈述本身失效。(ii) $\nu$ 有有界变差：它保证 $\sum_n\|\nu(F_n)\|_Y\leqslant|\nu|(X)<\infty$（对任意有限划分 $\{E_i\}$ 有 $\sum_i\|\nu(E_i)\|_Y\leqslant|\nu|(X)$，取划分 $F_1,\cdots,F_N,X\setminus\bigcup_{n\leqslant N}F_n$ 并令 $N\to\infty$ 即得），从而 $\|g\|_{L^1(X;Y)}\leqslant|\nu|(X)$ 有限、定义 $g$ 的级数在 $L^1(X;Y)$ 中绝对收敛。(iii) $\nu\ll\mu$：它使"$\mu(E\cap F_n)=0\Rightarrow\nu(E\cap F_n)=0$"，即每个原子上 $\nu$ 也呈"全有或全无"；同时 $\mu(X\setminus\bigcup_nF_n)=0$ 蕴含 $\nu(X\setminus\bigcup_nF_n)=0$，故 $\nu(E)=\sum_n\nu(E\cap F_n)$ 对一切 $E\in\mathcal{A}$ 成立（级数按\cref{lemma:ch01-向量测度连续}收敛）。
+
+边界与反例：(a) 若 $\mu$ 非纯原子，结论一般失效——\cref{example:ch04-c0反例}中 $\mu=\lambda|_{(0,1)}$ 是扩散的，$Y=c_0$ 无 RNP。(b) 若把"纯原子"减弱为"$\nu$ 集中在 $\mu$-原子上"，证明仍然成立，因为论证只用到 $\nu$ 在 $\mu$-零测集上为零；这说明命题的实质是"$\nu$ 的 Lebesgue 分解中扩散部分为零"。(c) 若 $\mu$ 纯原子但非 $\sigma$-有限（某个原子的测度为 $\infty$），则须把结论改述为局部形式，\cref{definition:ch04-RNP}的表述不再适用。
+\end{remark}
+
 我们证明 Radon--Nikodým 性质成立的一个必要条件。
 
 \begin{proposition}\label{proposition:ch04-RNP子空间}
-若 $Y$ 具有 Radon--Nikodým 性质，则其每个闭子空间亦然。
+若 $Y$ 具有 Radon--Nikodým 性质，则 $Y$ 的每个闭子空间也具有 Radon--Nikodým 性质。
 \end{proposition}
 
 \begin{proof}
-设 $Y_1$ 为 $Y$ 的闭子空间。我们只证 $Y_1$ 关于每个有限测度空间 $(X,\mathcal{A},\mu)$ 具有 Radon--Nikodým 性质（$\mu$ 为 $\sigma$-有限的一般情形由通常论证得到）。
+设 $Y_1$ 为 $Y$ 的闭子空间。只证 $Y_1$ 关于每个有限测度空间 $(X,\mathcal{A},\mu)$ 具有 Radon--Nikodým 性质（$\mu$ 为 $\sigma$-有限的一般情形由通常论证得到）。
 
-设 $\nu:\mathcal{A}\to Y_1\subseteq Y$ 为有有界变差且 $\nu\ll\mu$ 的向量测度。由假设，存在 $g\in L^1(X;Y)$ 使对所有 $E\in\mathcal{A}$ 有 $\nu(E)\triangleq \int_E g\,\mathrm{d}\mu$。对每个 $n\in\mathbb{N}$，设 $\{F_1,\cdots ,F_n\}$ 为 $X$ 的一个划分，且对所有 $i=1,\cdots ,n$ 有 $\mu(F_i)\neq0$。令
+设 $\nu:\mathcal{A}\to Y_1\subseteq Y$ 为有有界变差且 $\nu\ll\mu$ 的向量测度。由假设，存在 $g\in L^1(X;Y)$ 使对所有 $E\in\mathcal{A}$ 有 $\nu(E)=\int_E g\,\mathrm{d}\mu$。对每个 $n\in\mathbb{N}$，设 $\{F_1,\cdots,F_n\}$ 为 $X$ 的一个划分，且对所有 $i=1,\cdots,n$ 有 $\mu(F_i)\neq0$。令
 \begin{align*}
 P_n:L^1(X;Y)\to L^1(X;Y),\quad P_nf\triangleq \sum_{i=1}^n\frac{\int_{F_i}f\,\mathrm{d}\mu}{\mu(F_i)}\chi_{F_i}.
 \end{align*}
-显然 $\|P_nf\|_1\leqslant\sum_{i=1}^n\int_{F_i}\|f\|_Y\,\mathrm{d}\mu=\|f\|_1$，故 $P_n$ 是范数 $\|P_n\|\leqslant1$ 的有界线性算子（$n\in\mathbb{N}$）。此外，设 $s\in\mathcal{S}(X;Y)$，$s=\sum_{j=1}^m y_j\chi_{E_j}$，其中 $y_j\in Y$，$\{E_1,\cdots ,E_m\}$ 为 $X$ 的一个划分。于是对所有 $n\in\mathbb{N}$，
+由定义直接 $\|P_nf\|_1\leqslant\sum_{i=1}^n\int_{F_i}\|f\|_Y\,\mathrm{d}\mu=\|f\|_1$，故 $P_n$ 是范数 $\|P_n\|\leqslant1$ 的有界线性算子（$n\in\mathbb{N}$）。此外，设 $s\in\mathcal{S}(X;Y)$，$s=\sum_{j=1}^my_j\chi_{E_j}$，其中 $y_j\in Y$，$\{E_1,\cdots,E_m\}$ 为 $X$ 的一个划分。于是对所有 $n\in\mathbb{N}$，
 \begin{align*}
 P_ns=\sum_{i=1}^n\sum_{j=1}^m\frac{\mu(E_j\cap F_i)}{\mu(F_i)}y_j\chi_{F_i}.
 \end{align*}
-由上述说明，序列 $\{P_n\}\subseteq\mathcal{L}(L^1(X;Y);L^1(X;Y))$ 有界，且易验证对所有 $s\in\mathcal{S}(X;Y)$ 有
+由上述说明，序列 $\{P_n\}\subseteq\mathcal{L}(L^1(X;Y);L^1(X;Y))$ 有界，且易验证
 \begin{align*}
-\lim_{n\to\infty}\|P_ns-s\|_1=0.
+\lim_{n\to\infty}\|P_ns-s\|_1=0\quad\text{对所有 }s\in\mathcal{S}(X;Y).
 \end{align*}
-由 $\mathcal{S}(X;Y)$ 在 $L^1(X;Y)$ 中的稠密性得，对所有 $f\in L^1(X;Y)$ 有
+由 $\mathcal{S}(X;Y)$ 在 $L^1(X;Y)$ 中的稠密性得
 \begin{align*}
-\lim_{n\to\infty}\|P_nf-f\|_1=0.
+\lim_{n\to\infty}\|P_nf-f\|_1=0\quad\text{对所有 }f\in L^1(X;Y).
 \end{align*}
-特别地，取 $f=g$ 时此式成立，故存在 $\{P_ng\}$ 的一个子列（为简便不重新标号），使
+特别地，取 $f=g$ 时此式成立，故存在 $\{P_ng\}$ 的一个子列（为简便不重新标号）使
 \begin{align*}
 P_ng=\sum_{i=1}^n\frac{\int_{F_i}g\,\mathrm{d}\mu}{\mu(F_i)}\chi_{F_i}=\sum_{i=1}^n\frac{\nu(F_i)}{\mu(F_i)}\chi_{F_i}\to g\quad\text{在 }X\text{ 中 }\mu\text{-几乎处处成立}\ (n\to\infty).
 \end{align*}
-由于由假设对 $i=1,\cdots ,n$ 有 $\nu(F_i)\in Y_1$，且 $Y_1$ 是 $Y$ 的闭子空间，故对 $\mu$-几乎所有 $x\in X$ 有 $g(x)\in Y_1$。因此 $g\in L^1(X;Y_1)$，故结论成立。
+由于由假设对 $i=1,\cdots,n$ 有 $\nu(F_i)\in Y_1$，且 $Y_1$ 是 $Y$ 的闭子空间，故对 $\mu$-几乎所有 $x\in X$ 有 $g(x)\in Y_1$。因此 $g\in L^1(X;Y_1)$，故结论成立。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch04-RNP子空间; kind=motivation; 动机（RNP 对闭子空间遗传）、闭性与 $μ$ 有限的作用、逆命题的反例 $c_0$
+\begin{remark}\phantomsection\label{remark:ch04-RNP子空间}
+本命题说明 RNP 对闭子空间是遗传的，即"$Y$ 有 RNP $\Rightarrow$ 一切闭子空间有 RNP"。它与下述\cref{proposition:ch04-RNP可分子空间}（反方向：闭可分子空间都有 RNP $\Rightarrow$ $Y$ 有 RNP）合起来表明 RNP 由可分空间决定，从而可用\cref{theorem:ch04-DunfordPettis}处理任意自反空间（\cref{corollary:ch04-自反RNP}）。
+
+逐项考察假设与论证。(i) $Y_1$ 必须是闭子空间：证明末步断言 $g$ 作为 $Y_1$-值函数的几乎处处极限仍取值于 $Y_1$，这要求 $Y_1$ 在 $Y$ 中闭；若 $Y_1$ 只是子空间，极限可能落在 $\overline{Y_1}\setminus Y_1$，而 $L^1(X;Y_1)$ 甚至不必完备。(ii) $\mu$ 有限：$P_n$ 的构造用 $\mu(F_i)\neq0$ 且 $\mu(F_i)<\infty$；$\|P_n\|\leqslant1$ 的估计与"$P_nf\to f$"的逼近论证都依赖 $\mu(X)<\infty$ 时简单函数在 $L^1$ 中的稠密性。$\mu$ 为 $\sigma$-有限时，把 $X$ 分解为有限测度块、在每块上重复论证并拼接（见下方补写的证明）。
+
+边界与反例：逆命题不成立，即闭子空间有 RNP 不蕴含 $Y$ 有 RNP。例如 $Y=c_0$ 没有 RNP（\cref{example:ch04-c0反例}），但它的每个有限维子空间都具有 RNP。因此本命题只是从 $Y$ 到子空间的单向工具。
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:ch04-RNP子空间; kind=proof; σ-有限情形的完整归结
+\begin{proof}[以下：\cref{proposition:ch04-RNP子空间}中 $\sigma$-有限情形的归结]
+设 $\mu$ 为 $\sigma$-有限。取非降序列 $\{A_j\}\subseteq\mathcal{A}$，使 $\mu(A_j)<\infty$ 对每个 $j$ 成立且 $\bigcup_{j=1}^\infty A_j=X$。令 $\mathcal{A}_j\triangleq \mathcal{A}\cap A_j$，$\mu_j\triangleq \mu|_{\mathcal{A}_j}$，并对 $E\in\mathcal{A}_j$ 令 $\nu_j(E)\triangleq \nu(E)$。则 $\nu_j:\mathcal{A}_j\to Y_1$ 有有界变差（其变差为 $|\nu|\llcorner A_j$）且 $\nu_j\ll\mu_j$。把已证的有限测度情形用于测度空间 $(A_j,\mathcal{A}_j,\mu_j)$，得 $g_j\in L^1(A_j;Y_1)$ 使
+\begin{align*}
+\nu(E)=\int_E g_j\,\mathrm{d}\mu\quad\text{对所有 }E\in\mathcal{A}_j.
+\end{align*}
+由密度的几乎处处唯一性，$g_{j+1}=g_j$ 在 $A_j$ 中 $\mu$-几乎处处成立；把 $g_j$ 在零测集上修改后，可设 $g_{j+1}|_{A_j}=g_j$ 处处成立。于是
+\begin{align*}
+g:X\to Y_1,\quad g(x)\triangleq g_j(x)\quad\text{若 }x\in A_j
+\end{align*}
+良定。由单调收敛定理，
+\begin{align*}
+\int_X\|g\|_Y\,\mathrm{d}\mu=\lim_{j\to\infty}\int_{A_j}\|g_j\|_Y\,\mathrm{d}\mu=\lim_{j\to\infty}|\nu|(A_j)=|\nu|(X)<\infty,
+\end{align*}
+故 $g\in L^1(X;Y_1)$。最后，对任意 $E\in\mathcal{A}$，由\cref{lemma:ch01-向量测度连续}（$\nu$ 的可数可加性）与 $E\cap A_j\nearrow E$ 得
+\begin{align*}
+\nu(E)=\lim_{j\to\infty}\nu(E\cap A_j)=\lim_{j\to\infty}\int_{E\cap A_j}g\,\mathrm{d}\mu=\int_E g\,\mathrm{d}\mu,
+\end{align*}
+其中末步用控制收敛定理（控制函数为 $\|g\|_Y\in L^1(X)$）。故 $Y_1$ 关于 $(X,\mathcal{A},\mu)$ 具有 Radon--Nikodým 性质。
 \end{proof}
 
 \cref{proposition:ch04-RNP子空间}有一个部分逆（见文献 [41, 定理 III.3.2]）。
 
 \begin{proposition}\label{proposition:ch04-RNP可分子空间}
-若 Banach 空间 $Y$ 的每个闭可分子空间都具有 Radon--Nikodým 性质，则 $Y$ 亦然。
+若 Banach 空间 $Y$ 的每个闭可分子空间都具有 Radon--Nikodým 性质，则 $Y$ 也具有 Radon--Nikodým 性质。
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:ch04-RNP可分子空间; kind=motivation; 动机、"每个"而非"某个"的必要性、原书仅转引文献、边界
+\begin{remark}\phantomsection\label{remark:ch04-RNP可分子空间}
+本命题与\cref{proposition:ch04-RNP子空间}构成 RNP 的"可分判定"：RNP 由 $Y$ 的全部闭可分子空间决定。其用途是绕开 $Y$ 本身不可分的情形——只需对可分空间验证 RNP，即可推广到任意 $Y$，\cref{corollary:ch04-自反RNP}即如此使用。
+
+关于假设。"每个闭可分子空间"不能减弱为"存在某个闭可分子空间具有 RNP"：$c_0$ 含有大量具有 RNP 的闭可分子空间（一切有限维子空间），但 $c_0$ 本身无 RNP（\cref{example:ch04-c0反例}）。另一方面，"可分"这一限制也不能去掉：若要求"每个闭子空间都有 RNP"，则与\cref{proposition:ch04-RNP子空间}合起来只平凡地等价于"$Y$ 有 RNP"，命题便失去内容；可分的限制使证明能把向量测度的值域纳入一个闭可分子空间，从而把一般情形归到\cref{theorem:ch04-DunfordPettis}。
+
+证明状态：原书未给证明，仅引文献 [41, 定理 III.3.2]。下方 proof 环境补出归约证明，其要点是把值域 $\nu(\mathcal{A})$ 纳入 $Y$ 的某个闭可分子空间 $Y_1$，再在 $Y_1$ 中应用 RNP。值域的可分性用如下标准事实：有有界变差向量测度在原子部分的值域是 $\{0,1\}^{\mathbb{N}}$ 的连续像（故紧、可分），在非原子部分的值域由经典的 Liapounoff 定理是紧凸集（故亦可分）。
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:ch04-RNP可分子空间; kind=proof; 原书全省略（转引），补出值域可分性与归约的完整论证
+\begin{proof}[以下：\cref{proposition:ch04-RNP可分子空间}]
+设 $(X,\mathcal{A},\mu)$ 为有限测度空间，$\nu:\mathcal{A}\to Y$ 为有有界变差且 $\nu\ll\mu$ 的向量测度（$\mu$ 为 $\sigma$-有限的情形由\cref{remark:ch04-RNP子空间}下方以下的归结得到）。令
+\begin{align*}
+Y_1\triangleq \overline{\operatorname{span}}\{\nu(E)\mid E\in\mathcal{A}\}\subseteq Y.
+\end{align*}
+先证 $Y_1$ 可分。记 $\rho\triangleq|\nu|$，并设 $\{F_n\}$ 为 $\rho$ 的原子中满足 $\rho(F_n)>0$ 者全体（由 $\rho(X)<\infty$ 这样的原子至多可数；见\cref{definition:ch01-原子}(iii)），$A\triangleq\bigcup_{n=1}^\infty F_n$。
+
+第一步（原子部分）。设 $E\in\mathcal{A}$。对每个 $n$，由 $F_n$ 是 $\rho$-原子知 $\rho(E\cap F_n)\in\{0,\rho(F_n)\}$；两种情形下分别有 $\nu(E\cap F_n)=0$ 与 $\nu(E\cap F_n)=\nu(F_n)$。由 $\nu$ 的可数可加性，
+\begin{align*}
+\nu(E\cap A)=\sum_{n=1}^\infty\nu(E\cap F_n)=\sum_{n\in S(E)}\nu(F_n)
+\end{align*}
+对某个 $S(E)\subseteq\mathbb{N}$ 成立，且级数绝对收敛，因为 $\sum_n\|\nu(F_n)\|_Y\leqslant|\nu|(X)<\infty$。于是映射
+\begin{align*}
+\{0,1\}^\mathbb{N}\to Y,\quad (\varepsilon_n)\mapsto\sum_{n=1}^\infty\varepsilon_n\nu(F_n)
+\end{align*}
+连续（$\{0,1\}^\mathbb{N}$ 为紧度量空间），其像包含 $\{\nu(E\cap A)\mid E\in\mathcal{A}\}$，故该像紧、从而可分。
+
+第二步（非原子部分）。$\rho\llcorner(X\setminus A)$ 是非原子有限测度，且 $\nu\llcorner(X\setminus A)$ 关于它绝对连续、有有界变差。由经典的 Liapounoff 定理，非原子有限测度与关于它绝对连续的有界变差向量测度之值域是 $Y$ 中的紧凸集；故 $\{\nu(E\setminus A)\mid E\in\mathcal{A}\}$ 含于一个紧集，从而可分。
+
+第三步。由 $\nu(E)=\nu(E\cap A)+\nu(E\setminus A)$ 与上述两步，$\nu(\mathcal{A})$ 含于两个可分集之和，故 $\nu(\mathcal{A})$ 可分；于是 $\nu(\mathcal{A})$ 的闭线性包 $Y_1$ 可分。
+
+最后，由假设闭可分子空间 $Y_1\subseteq Y$ 具有 RNP，故存在 $g\in L^1(X;Y_1)\subseteq L^1(X;Y)$ 使 $\nu(E)=\int_E g\,\mathrm{d}\mu$ 对一切 $E\in\mathcal{A}$ 成立。这正是 $Y$ 关于 $(X,\mathcal{A},\mu)$ 的 RNP；由 $(X,\mathcal{A},\mu)$ 的任意性得结论。
+\end{proof}
 
 以下结果在后文起重要作用（见\cref{theorem:ch04-可分对偶Lp对偶}）。
 
-\begin{theorem}[Dunford--Pettis]\label{theorem:ch04-DunfordPettis}\label{proposition:ch04-收敛子列}
+\begin{theorem}[Dunford--Pettis]\label{theorem:ch04-DunfordPettis}
 每个可分对偶空间都具有 Radon--Nikodým 性质。
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch04-DunfordPettis; kind=motivation; "可分对偶空间"的准确含义、证明策略、$Y^*$ 可分与 $Y$ 可分的相互作用、边界
+\begin{remark}\phantomsection\label{remark:ch04-DunfordPettis}
+定理中的"可分对偶空间"指这样的 Banach 空间 $Z$：它等距同构于某个 Banach 空间的对偶空间，且自身可分。证明实际处理 $Z=Y^*$ 且 $Y^*$ 可分的情形；此时 $Y$ 必可分（$Y\subseteq Y^{**}$，而可分空间的对偶单位球弱$^*$紧且可度量化，故 $Y^{**}$ 可分）。$c_0$ 不是对偶空间（$c_0^*=\ell^1$，而 $c_0$ 不是任何空间的对偶），故\cref{example:ch04-c0反例}与本定理不矛盾；相反，$\ell^1=c_0^*$ 是可分对偶空间，因而具有 RNP，却又不是自反空间，这说明 RNP 严格弱于自反性。
+
+证明策略分三步。(1) 以变差 $|\nu|$ 为基本测度，先证 $\nu(E)=\int_E f\,\mathrm{d}|\nu|$ 对某个 $f\in L^\infty(X,\mathcal{A},|\nu|;Y^*)$ 成立且 $\|f\|_\infty\leqslant1$。这是定理的核心，困难在于 $Y^*$ 一般不可分，无法直接取可数稠密集；办法是对每个固定的 $y\in Y$ 用标量 RN 定理造出 $f_y\in L^1(X,|\nu|)$ 使 $\langle\nu(E),y\rangle=\int_E f_y\,\mathrm{d}|\nu|$，再验证 $y\mapsto f_y(x)$ 是 $Y$ 上范数 $\leqslant1$ 的线性泛函（用 $\mathbb{Q}$-线性组合与连续性把不等式从可数集 $D_{\mathbb{Q}}$ 推广到全空间），由 Hahn--Banach 定理得 $f(x)\in Y^*$。(2) 由 $D\subseteq Y$ 可数稠密与\cref{proposition:ch04-弱星等价}（弱$^*$可测 $\Rightarrow$ 可测）得 $f$ 的 $|\nu|$-可测性，并用 Lebesgue 点（\cref{proposition:ch04-Lebesgue点}）得 $\|f_y\|_\infty\leqslant\|y\|_Y$，从而 $f\in L^\infty$。(3) 用 $\mathrm{d}|\nu|/\mathrm{d}\mu$ 把 $|\nu|$-积分改写为 $\mu$-积分，得 $\nu$ 的 $\mu$-Bochner 密度 $g=f\,\mathrm{d}|\nu|/\mathrm{d}\mu\in L^1(X;Y^*)$。
+
+逐项假设的作用：$Y^*$ 可分（经 $Y$ 可分给出可数稠密集 $D\subseteq Y$，使"逐点线性泛函"的拼接与 $f$ 的弱$^*$可测性可行）；$\nu$ 有有界变差（使 $|\nu|$ 为有限测度，从而 $L^\infty(|\nu|)\subseteq L^1(|\nu|)$ 且标量 RN 定理可用）；$\nu\ll\mu$（使 $|\nu|\ll\mu$，从而密度可转写为 $\mu$-密度；若 $\nu\not\ll\mu$，第一步仍成立，但所得的密度只能关于 $|\nu|$）。
+
+边界：本定理不能推广到"每个可分空间"（$c_0$ 是反例），也不能推广到"每个对偶空间"（$C[0,1]^*$ 含 $L^1[0,1]$ 作为子空间，$L^1[0,1]$ 无 RNP，而 RNP 对闭子空间遗传故 $C[0,1]^*$ 无 RNP）。它给出的正例恰是"可分且为对偶空间"。
+\end{remark}
+
 \begin{proof}
-设 $\nu:\mathcal{A}\to Y^*$ 为有有界变差且关于 $\mu$ 绝对连续的向量测度。我们证明存在 $f\in L^\infty(X,\mathcal{A},|\nu|;Y^*)$ 使
+设 $\nu:\mathcal{A}\to Y^*$ 为有有界变差且关于 $\mu$ 绝对连续的向量测度。证明存在 $f\in L^\infty(X,\mathcal{A},|\nu|;Y^*)$ 使
 \begin{align}
-\nu(E)\triangleq \int_E f\,\mathrm{d}|\nu|\quad\text{对所有 }E\in\mathcal{A} \label{align:ch04-4.77}
+\nu(E)=\int_E f\,\mathrm{d}|\nu|\quad\text{对所有 }E\in\mathcal{A} \label{align:ch04-4.77}
 \end{align}
-（由\cref{proposition:ch04-Lp包含阶}，$L^\infty(X,\mathcal{A},|\nu|;Y^*)\subseteq L^1(X,\mathcal{A},|\nu|;Y^*)$，因为 $|\nu|$ 有限）。另一方面，由于 $\nu\ll\mu$ 蕴含 $|\nu|\ll\mu$，易见 $f\in L^\infty(X,\mathcal{A},\mu;Y^*)$，且由 Radon--Nikodým 定理，$|\nu|(E)\triangleq \int_E\frac{\mathrm{d}|\nu|}{\mathrm{d}\mu}\,\mathrm{d}\mu$（$E\in\mathcal{A}$），其中 $\frac{\mathrm{d}|\nu|}{\mathrm{d}\mu}\in L^1(X,\mathcal{A},\mu)$。于是 $g\triangleq f\frac{\mathrm{d}|\nu|}{\mathrm{d}\mu}$ 属于 $L^1(X;Y^*)\equiv L^1(X,\mathcal{A},\mu;Y^*)$，且对所有 $E\in\mathcal{A}$ 有 $\nu(E)=\int_E g\,\mathrm{d}\mu$。故由\cref{remark:ch02-RN注}(i)得结果。
+（由\cref{proposition:ch04-Lp包含阶}，$L^\infty(X,\mathcal{A},|\nu|;Y^*)\subseteq L^1(X,\mathcal{A},|\nu|;Y^*)$，因为 $|\nu|$ 有限）。另一方面，由于 $\nu\ll\mu$ 蕴含 $|\nu|\ll\mu$，易见 $f\in L^\infty(X,\mathcal{A},\mu;Y^*)$，且由 Radon--Nikodým 定理，$|\nu|(E)=\int_E\frac{\mathrm{d}|\nu|}{\mathrm{d}\mu}\,\mathrm{d}\mu$（$E\in\mathcal{A}$），其中 $\frac{\mathrm{d}|\nu|}{\mathrm{d}\mu}\in L^1(X,\mathcal{A},\mu)$。于是 $g\triangleq f\frac{\mathrm{d}|\nu|}{\mathrm{d}\mu}$ 属于 $L^1(X;Y^*)\equiv L^1(X,\mathcal{A},\mu;Y^*)$，且对所有 $E\in\mathcal{A}$ 有 $\nu(E)=\int_E g\,\mathrm{d}\mu$。故由\cref{remark:ch02-RN注}(i)得结果。
 
 固定 $y\in Y$。定义
 \begin{align}
 \nu_y:\mathcal{A}\to\mathbb{R},\quad \nu_y(E)\triangleq \langle\nu(E),y\rangle\quad(E\in\mathcal{A}). \label{align:ch04-4.78}
 \end{align}
-显然 $\nu_y$ 是有限带号测度，且对所有 $y\in Y$ 与 $E\in\mathcal{A}$ 有
+由定义直接 $\nu_y$ 是有限带号测度，且对所有 $y\in Y$ 与 $E\in\mathcal{A}$ 有
 \begin{align}
 |\nu_y(E)|\leqslant\|\nu(E)\|_{Y^*}\|y\|_Y\leqslant|\nu|(E)\|y\|_Y. \label{align:ch04-4.79}
 \end{align}
@@ -171,7 +304,7 @@ P_ng=\sum_{i=1}^n\frac{\int_{F_i}g\,\mathrm{d}\mu}{\mu(F_i)}\chi_{F_i}=\sum_{i=1
 \nu_y(E)=\int_E f_y\,\mathrm{d}|\nu|. \label{align:ch04-4.80}
 \end{align}
 
-由\cref{proposition:ch04-Lebesgue点}与不等式\eqref{align:ch04-4.79}，对 $|\nu|$-几乎所有 $x_0\in X$，有
+由\cref{proposition:ch04-Lebesgue点}与不等式\eqref{align:ch04-4.79}，对 $|\nu|$-几乎所有 $x_0\in X$ 有
 \begin{align*}
 f_y(x_0)=\lim_{r\to0^+}\frac1{|\nu|(B_r(x_0))}\int_{B_r(x_0)}f_y\,\mathrm{d}|\nu|\leqslant\|y\|_Y,
 \end{align*}
@@ -179,23 +312,23 @@ f_y(x_0)=\lim_{r\to0^+}\frac1{|\nu|(B_r(x_0))}\int_{B_r(x_0)}f_y\,\mathrm{d}|\nu
 
 现注意，由假设 $Y^*$ 可分，故 $Y$ 可分。设 $D\subseteq Y$ 可数且稠密。令
 \begin{align*}
-D_{\mathbb R}&\triangleq \Big\{y=\sum_{i=1}^n\alpha_i y_i\ \Big|\ \alpha_1,\cdots ,\alpha_n\in\mathbb{R},\ y_1,\cdots ,y_n\in D,\ \text{某个 }n\in\mathbb{N}\Big\},\\
-D_{\mathbb Q}&\triangleq \Big\{y=\sum_{i=1}^n q_i y_i\ \Big|\ q_1,\cdots ,q_n\in\mathbb{Q},\ y_1,\cdots ,y_n\in D,\ \text{某个 }n\in\mathbb{N}\Big\}.
+D_{\mathbb R}&\triangleq \Big\{y=\sum_{i=1}^n\alpha_iy_i\ \Big|\ \alpha_1,\cdots,\alpha_n\in\mathbb{R},\ y_1,\cdots,y_n\in D,\ \text{某 }n\in\mathbb{N}\Big\},\\
+D_{\mathbb Q}&\triangleq \Big\{y=\sum_{i=1}^nq_iy_i\ \Big|\ q_1,\cdots,q_n\in\mathbb{Q},\ y_1,\cdots,y_n\in D,\ \text{某 }n\in\mathbb{N}\Big\}.
 \end{align*}
-由\eqref{align:ch04-4.78}与\eqref{align:ch04-4.80}，对任意 $y\in D_{\mathbb Q}$，有
+由\eqref{align:ch04-4.78}与\eqref{align:ch04-4.80}，对任意 $y\in D_{\mathbb Q}$ 有
 \begin{align*}
-\int_E f_y\,\mathrm{d}|\nu|=\Big\langle\nu(E),\sum_{i=1}^n q_i y_i\Big\rangle=\sum_{i=1}^n q_i\langle\nu(E),y_i\rangle
-=\sum_{i=1}^n q_i\int_E f_{y_i}\,\mathrm{d}|\nu|=\int_E\Big(\sum_{i=1}^n q_i f_{y_i}\Big)\mathrm{d}|\nu|.
+\int_E f_y\,\mathrm{d}|\nu|=\Big\langle\nu(E),\sum_{i=1}^nq_iy_i\Big\rangle=\sum_{i=1}^nq_i\langle\nu(E),y_i\rangle
+=\sum_{i=1}^nq_i\int_E f_{y_i}\,\mathrm{d}|\nu|=\int_E\Big(\sum_{i=1}^nq_if_{y_i}\Big)\mathrm{d}|\nu|.
 \end{align*}
-因此，对任意 $y=\sum_{i=1}^n q_i y_i\in D_{\mathbb Q}$，存在 $|\nu|$-零测集 $N_{y,2}\in\mathcal{A}$，使对所有 $x\in N_{y,2}^c$ 有 $f_{\sum_{i=1}^n q_i y_i}=\sum_{i=1}^n q_i f_{y_i}$。令 $N\triangleq \bigcup_{y\in D_{\mathbb Q}}(N_{y,1}\cup N_{y,2})$。由于 $D_{\mathbb Q}$ 可数且对每个 $y\in D_{\mathbb Q}$ 有 $|\nu|(N_{y,1})=|\nu|(N_{y,2})=0$，亦有 $|\nu|(N)=0$。此外，对任意 $x\in N^c=\bigcap_{y\in D_{\mathbb Q}}(N_{y,1}^c\cap N_{y,2}^c)$，对所有 $q_1,\cdots ,q_n\in\mathbb{Q}$、$y_1,\cdots ,y_n\in D$（$n\in\mathbb{N}$）有
+因此，对任意 $y=\sum_{i=1}^nq_iy_i\in D_{\mathbb Q}$，存在 $|\nu|$-零测集 $N_{y,2}\in\mathcal{A}$，使对所有 $x\in N_{y,2}^c$ 有 $f_{\sum_{i=1}^nq_iy_i}=\sum_{i=1}^nq_if_{y_i}$。令 $N\triangleq\bigcup_{y\in D_{\mathbb Q}}(N_{y,1}\cup N_{y,2})$。由于 $D_{\mathbb Q}$ 可数且对每个 $y\in D_{\mathbb Q}$ 有 $|\nu|(N_{y,1})=|\nu|(N_{y,2})=0$，亦有 $|\nu|(N)=0$。此外，对任意 $x\in N^c=\bigcap_{y\in D_{\mathbb Q}}(N_{y,1}^c\cap N_{y,2}^c)$，对所有 $q_1,\cdots,q_n\in\mathbb{Q}$、$y_1,\cdots,y_n\in D$（$n\in\mathbb{N}$）有
 \begin{align*}
-\Big|\sum_{i=1}^n q_i f_{y_i}(x)\Big|=\Big|f_{\sum_{i=1}^n q_i y_i}(x)\Big|\leqslant\Big\|\sum_{i=1}^n q_i y_i\Big\|_Y,
+\Big|\sum_{i=1}^nq_if_{y_i}(x)\Big|=\Big|f_{\sum_{i=1}^nq_iy_i}(x)\Big|\leqslant\Big\|\sum_{i=1}^nq_iy_i\Big\|_Y,
 \end{align*}
-因为对任意 $x\in N_{y,1}^c$ 可对 $y=\sum_{i=1}^n q_i y_i$ 使用不等式 $|f_y(x)|\leqslant\|y\|_Y$。由 $\mathbb{Q}$ 在 $\mathbb{R}$ 中的稠密性，对所有 $x\in N^c$，有
+因为对任意 $x\in N_{y,1}^c$ 可对 $y=\sum_{i=1}^nq_iy_i$ 使用不等式 $|f_y(x)|\leqslant\|y\|_Y$。由 $\mathbb{Q}$ 在 $\mathbb{R}$ 中的稠密性，对所有 $x\in N^c$ 有
 \begin{align*}
-\Big|f_{\sum_{i=1}^n\alpha_i y_i}(x)\Big|=\Big|\sum_{i=1}^n\alpha_i f_{y_i}(x)\Big|\leqslant\Big\|\sum_{i=1}^n\alpha_i y_i\Big\|_Y
+\Big|f_{\sum_{i=1}^n\alpha_iy_i}(x)\Big|=\Big|\sum_{i=1}^n\alpha_if_{y_i}(x)\Big|\leqslant\Big\|\sum_{i=1}^n\alpha_iy_i\Big\|_Y
 \end{align*}
-对所有 $\alpha_1,\cdots ,\alpha_n\in\mathbb{R}$、$y_1,\cdots ,y_n\in D$（$n\in\mathbb{N}$）成立，从而对所有 $x\in N^c$，
+对所有 $\alpha_1,\cdots,\alpha_n\in\mathbb{R}$、$y_1,\cdots,y_n\in D$（$n\in\mathbb{N}$）成立，从而对所有 $x\in N^c$，
 \begin{align}
 |f_y(x)|\leqslant\|y\|_Y\quad\text{对所有 }y\in D_{\mathbb R}. \label{align:ch04-4.81}
 \end{align}
@@ -204,15 +337,15 @@ D_{\mathbb Q}&\triangleq \Big\{y=\sum_{i=1}^n q_i y_i\ \Big|\ q_1,\cdots ,q_n\in
 \begin{align}
 \langle f(x),y\rangle=f_y(x)\quad\text{对所有 }y\in D_{\mathbb R}. \label{align:ch04-4.82}
 \end{align}
-对 $x\in N$ 令 $f(x)\triangleq 0$。这样定义的函数 $f:X\to Y^*$ 在 $X$ 中 $|\nu|$-几乎处处满足\eqref{align:ch04-4.82}。由 $D_{\mathbb R}$ 在 $Y$ 中的稠密性，$f$ 弱$^*$可测，从而由\cref{proposition:ch04-弱星等价}它是 $|\nu|$-可测的。此外，对 $|\nu|$-几乎所有 $x\in X$ 有 $\|f(x)\|_{Y^*}\leqslant1$，故 $f\in L^\infty(X,\mathcal{A},|\nu|;Y^*)$，且由\eqref{align:ch04-4.80}与\eqref{align:ch04-4.82}
+对 $x\in N$ 令 $f(x)\triangleq0$。这样定义的函数 $f:X\to Y^*$ 在 $X$ 中 $|\nu|$-几乎处处满足\eqref{align:ch04-4.82}。由 $D_{\mathbb R}$ 在 $Y$ 中的稠密性，$f$ 弱$^*$可测，从而由\cref{proposition:ch04-弱星等价}它是 $|\nu|$-可测的。此外，对 $|\nu|$-几乎所有 $x\in X$ 有 $\|f(x)\|_{Y^*}\leqslant1$，故 $f\in L^\infty(X,\mathcal{A},|\nu|;Y^*)$，且由\eqref{align:ch04-4.80}与\eqref{align:ch04-4.82}
 \begin{align}
 \nu_y(E)=\int_E\langle f(x),y\rangle\,\mathrm{d}|\nu|(x)\quad\text{对所有 }y\in D_{\mathbb R}\text{ 与 }E\in\mathcal{A}. \label{align:ch04-4.83}
 \end{align}
-现令 $y\in Y$，取 $\{y_n\}\subseteq D_{\mathbb R}$ 使当 $n\to\infty$ 时 $\|y_n-y\|_Y\to0$。由上述讨论，对 $|\nu|$-几乎所有 $x\in X$，有
+现令 $y\in Y$，取 $\{y_n\}\subseteq D_{\mathbb R}$ 使当 $n\to\infty$ 时 $\|y_n-y\|_Y\to0$。由上述讨论，对 $|\nu|$-几乎所有 $x\in X$ 有
 \begin{align*}
 \langle f(x),y_n\rangle\to\langle f(x),y\rangle,\qquad \sup_{n\in\mathbb N}|\langle f(x),y_n\rangle|\leqslant\sup_{n\in\mathbb N}\|y_n\|_Y\leqslant2\|y\|_Y.
 \end{align*}
-由于 $|\nu|$ 有限，由控制收敛定理得 $\langle f,y\rangle\in L^1(X,\mathcal{A},|\nu|)$，且对任意 $E\in\mathcal{A}$，
+由于 $|\nu|$ 有限，由控制收敛定理得 $\langle f,y\rangle\in L^1(X,\mathcal{A},|\nu|)$，且对任意 $E\in\mathcal{A}$ 有
 \begin{align}
 \int_E\langle f(x),y\rangle\,\mathrm{d}|\nu|(x)=\lim_{n\to\infty}\int_E\langle f(x),y_n\rangle\,\mathrm{d}|\nu|(x)
 =\lim_{n\to\infty}\nu_{y_n}(E)=\lim_{n\to\infty}\langle\nu(E),y_n\rangle=\langle\nu(E),y\rangle \label{align:ch04-4.84}
@@ -224,6 +357,25 @@ D_{\mathbb Q}&\triangleq \Big\{y=\sum_{i=1}^n q_i y_i\ \Big|\ q_1,\cdots ,q_n\in
 由 $y\in Y$ 的任意性，由\eqref{align:ch04-4.84}--\eqref{align:ch04-4.85}得\eqref{align:ch04-4.77}。故结论成立。
 \end{proof}
 
+% SUPPLEMENT: parent=theorem:ch04-DunfordPettis; kind=proof; 补出 $\nu_y$ 的 $\sigma$-可加性、(4.81)=>(4.82) 的 Hahn--Banach 延拓、弱*可测性的全空间验证、$|\nu|$-积分改写为 $\mu$-积分的细节
+\begin{proof}[以下：\cref{theorem:ch04-DunfordPettis}证明中被略去的四个环节]
+\emph{(a) $\nu_y$ 是有限带号测度。}对两两不交的 $\{E_k\}\subseteq\mathcal{A}$，由 $\nu$ 的 $\sigma$-可加性与对偶配对的连续性，
+\begin{align*}
+\nu_y\Big(\bigcup_{k=1}^\infty E_k\Big)=\Big\langle\nu\Big(\bigcup_{k=1}^\infty E_k\Big),y\Big\rangle=\sum_{k=1}^\infty\langle\nu(E_k),y\rangle=\sum_{k=1}^\infty\nu_y(E_k),
+\end{align*}
+故 $\nu_y$ 是 $\sigma$-可加实值集函数；由\eqref{align:ch04-4.79}得 $|\nu_y|(X)\leqslant|\nu|(X)\|y\|_Y<\infty$，故 $\nu_y$ 为有限带号测度且 $\nu_y\ll|\nu|$。
+
+\emph{(b) 由\eqref{align:ch04-4.81}得到\eqref{align:ch04-4.82}。}固定 $x\in N^c$。由\eqref{align:ch04-4.81}与 $D_{\mathbb R}$ 的定义，$D_{\mathbb R}$ 上的映射 $\Lambda_x:y\mapsto f_y(x)$ 是 $\mathbb{R}$-线性的（线性性来自等式 $f_{\sum_iq_iy_i}=\sum_iq_if_{y_i}$ 对实系数取极限），且 $|\Lambda_x(y)|\leqslant\|y\|_Y$。于是 $\Lambda_x$ 是稠密子空间 $D_{\mathbb R}\subseteq Y$ 上范数 $\leqslant1$ 的连续线性泛函；由 Hahn--Banach 定理它唯一延拓为 $f(x)\in Y^*$，满足 $\|f(x)\|_{Y^*}\leqslant1$ 与 $\langle f(x),y\rangle=\Lambda_x(y)=f_y(x)$ 对一切 $y\in D_{\mathbb R}$ 成立，即\eqref{align:ch04-4.82}。
+
+\emph{(c) $f$ 弱$^*$可测。}对 $y\in D_{\mathbb R}$，$x\mapsto\langle f(x),y\rangle=f_y(x)$ 属于 $L^1(X,|\nu|)$，故可测。对任意 $y\in Y$ 取 $\{y_n\}\subseteq D_{\mathbb R}$ 使 $\|y_n-y\|_Y\to0$，则 $\langle f(x),y_n\rangle\to\langle f(x),y\rangle$ 对一切 $x\in N^c$ 成立，故 $x\mapsto\langle f(x),y\rangle$ 可测。因此 $f$ 弱$^*$可测；由于 $Y$ 可分，\cref{proposition:ch04-弱星等价}给出 $f$ 的 $|\nu|$-可测性。
+
+\emph{(d) 由\eqref{align:ch04-4.77}得 $\mu$-密度。}设 $h\triangleq\mathrm{d}|\nu|/\mathrm{d}\mu\in L^1(X,\mathcal{A},\mu)$，$h\geqslant0$。由 $f$ 的 $|\nu|$-可测性与 $\|f\|_{Y^*}\leqslant1$ 得 $g\triangleq fh$ 为 $\mu$-可测且 $\|g\|_{Y^*}\leqslant h\in L^1(X)$，故 $g\in L^1(X;Y^*)$。又因 $|\nu|\ll\mu$、$|\nu|(E)=\int_Eh\,\mathrm{d}\mu$，对任意 $E\in\mathcal{A}$ 与 $y\in Y$ 有
+\begin{align*}
+\langle\nu(E),y\rangle=\int_E\langle f,y\rangle\,\mathrm{d}|\nu|=\int_E\langle f,y\rangle h\,\mathrm{d}\mu=\Big\langle\int_E g\,\mathrm{d}\mu,y\Big\rangle,
+\end{align*}
+故 $\nu(E)=\int_E g\,\mathrm{d}\mu$，即 $Y^*$ 关于 $(X,\mathcal{A},\mu)$ 具有 RNP。
+\end{proof}
+
 \begin{corollary}[Phillips]\label{corollary:ch04-自反RNP}
 自反 Banach 空间具有 Radon--Nikodým 性质。
 \end{corollary}
@@ -232,7 +384,21 @@ D_{\mathbb Q}&\triangleq \Big\{y=\sum_{i=1}^n q_i y_i\ \Big|\ q_1,\cdots ,q_n\in
 设 $Y$ 为自反 Banach 空间。则 $Y$ 的每个闭可分子空间都是可分对偶空间，从而由\cref{theorem:ch04-DunfordPettis}具有 Radon--Nikodým 性质。故由\cref{proposition:ch04-RNP可分子空间}得结果。
 \end{proof}
 
-现回到 Riesz 可表示性的概念（见\cref{definition:ch04-Riesz可表示}）。\cref{example:ch04-c0反例}与\cref{example:ch04-算子反例}之间的关系由以下定理阐明。
+% SUPPLEMENT: parent=corollary:ch04-自反RNP; kind=proof; 补出"闭可分子空间是可分对偶空间"的论证
+\begin{proof}[以下：\cref{corollary:ch04-自反RNP}中"闭可分子空间是可分对偶空间"的论证]
+设 $Y$ 自反，$Z\subseteq Y$ 为闭子空间。闭子空间继承自反性，故 $Z$ 自反。若 $Z$ 还可分，则 $Z^*$ 可分：$Z$ 的单位球可分，取可数稠密集 $\{z_k\}$，则对每个 $z^*\in Z^*$ 有 $\|z^*\|=\sup_k|\langle z^*,z_k\rangle|$，故 $Z^*$ 等距嵌入可数积 $\mathbb{R}^{\mathbb{N}}$，从而可分。再由 $Z$ 自反得 $Z=(Z^*)^*$，即 $Z$ 是可分空间 $Z^*$ 的对偶空间且自身可分，故\cref{theorem:ch04-DunfordPettis}适用于 $Z$，$Z$ 具有 RNP；由\cref{proposition:ch04-RNP可分子空间}得 $Y$ 具有 RNP。
+\end{proof}
+
+% SUPPLEMENT: parent=corollary:ch04-自反RNP; kind=motivation; 动机、RNP 与自反性的严格强弱关系、边界
+\begin{remark}\phantomsection\label{remark:ch04-自反RNP}
+本推论给出 RNP 最常用的一类充分条件：自反空间都有 RNP。由于 $L^p$、$W^{1,p}$、$H^1$ 等常用空间在 $1<p<\infty$ 时自反，这解释了为何在后文处理这类空间的对偶时不会遇到 Radon--Nikodým 障碍，也解释了为何\cref{theorem:ch04-Lp对偶刻画}（要求 $Y^*$ 有 RNP）在 $p\in(1,\infty)$ 的情形几乎自动可用。
+
+证明的链条是：$Y$ 自反 $\Rightarrow$ 闭子空间 $Z$ 自反；$Z$ 可分 $\Rightarrow$ $Z^*$ 可分 $\Rightarrow$ $Z=(Z^*)^*$ 是可分对偶空间 $\Rightarrow$ \cref{theorem:ch04-DunfordPettis}给出 $Z$ 的 RNP；最后\cref{proposition:ch04-RNP可分子空间}把 RNP 提升到 $Y$。末步不可省：$Y$ 本身可能不可分（例如非可分的 Hilbert 空间），无法直接使用 Dunford--Pettis。
+
+边界与反例：逆命题不成立。$\ell^1$ 是 $c_0$ 的对偶且 $c_0$ 可分，故由\cref{theorem:ch04-DunfordPettis} $\ell^1$ 具有 RNP；但 $\ell^1$ 不是自反空间（其单位球非弱紧）。因此"RNP"严格弱于"自反"。另一方面，$c_0$、$C[0,1]$、$L^1[0,1]$、$\ell^\infty$ 都不具有 RNP，故自反性这一充分条件也不能减弱为"可分"或"为对偶空间"之任一单项。
+\end{remark}
+
+现在回到 Riesz 可表示性的概念（见\cref{definition:ch04-Riesz可表示}）。\cref{example:ch04-c0反例}与\cref{example:ch04-算子反例}之间的关系由以下定理阐明。
 
 \begin{theorem}\label{theorem:ch04-RNP与可表示}
 设 $(X,\mathcal{A},\mu)$ 为有限测度空间。则下列命题等价：
@@ -242,8 +408,19 @@ D_{\mathbb Q}&\triangleq \Big\{y=\sum_{i=1}^n q_i y_i\ \Big|\ q_1,\cdots ,q_n\in
 \end{enumerate}
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch04-RNP与可表示; kind=motivation; 动机（(Q1)⇔(Q2)）、两个方向各自用到的假设、$\mu$ 有限的必要性、边界
+\begin{remark}\phantomsection\label{remark:ch04-RNP与可表示}
+本定理把 §4.4.1 开头的两个问题连接起来：在有限测度空间上，"RN 定理对 $Y$-值测度成立"（(Q1)）与"$L^1(X)$ 的每个有界算子都可由 $L^\infty(X;Y)$ 中的核表示"（(Q2)）是同一件事。\cref{example:ch04-c0反例}与\cref{example:ch04-算子反例}正是这一等价的两侧：$c_0$ 同时使两个命题失败。
+
+证明要点。(i)$\Rightarrow$(ii)：对 $T\in\mathcal{L}(L^1(X);Y)$ 令 $\nu(E)\triangleq T\chi_E$，由\eqref{align:ch04-4.86}得 $\|\nu(E)\|_Y\leqslant\|T\|\mu(E)$，故 $\nu$ 有有界变差（$\mu$ 有限给出 $|\nu|(X)\leqslant\|T\|\mu(X)$）且 $\nu\ll\mu$；RNP 给出 $g\in L^1(X;Y)$；再由 $|\nu|(E)=\int_E\|g\|_Y\,\mathrm{d}\mu\leqslant\|T\|\mu(E)$ 与 Lebesgue 微分（\cref{proposition:ch04-Lebesgue点}）得 $\|g(x)\|_Y\leqslant\|T\|$ 对几乎所有 $x$ 成立，故 $g\in L^\infty(X;Y)$。最后用\emph{标量}简单函数 $\mathcal{S}(X)$ 在 $L^1(X)$ 中的稠密性把 $T\chi_E=\int_E g\,\mathrm{d}\mu$ 推广为 $Tf=\int_X fg\,\mathrm{d}\mu$（$f\in L^1(X)$）。(ii)$\Rightarrow$(i)：设 $\nu$ 有有界变差且 $\nu\ll\mu$，令 $h\triangleq\mathrm{d}|\nu|/\mathrm{d}\mu$、$F_n\triangleq\{n-1\leqslant h<n\}$；在每个 $F_n$ 上 $|\nu|\leqslant n\mu$，故 $T_ns\triangleq\int_{F_n}s\,\mathrm{d}\nu$ 是 $L^1(X)\to Y$ 的有界算子（$\|T_n\|\leqslant n$），由 (ii) 得核 $g_n\in L^\infty(X;Y)$；再由 $\nu(E\cap F_n)=\int_E g_n\,\mathrm{d}\mu$、$|\nu|(F_n)=\int_{F_n}\|g_n\|_Y\,\mathrm{d}\mu$ 与 $\sum_n|\nu|(F_n)=|\nu|(X)<\infty$ 得拼接函数 $g\in L^1(X;Y)$，最后由\cref{lemma:ch01-向量测度连续}得 $\nu(E)=\int_E g\,\mathrm{d}\mu$。
+
+逐项假设的作用。(a) $\mu$ 有限：在 (i)$\Rightarrow$(ii) 中用以从 $\|\nu(E)\|\leqslant\|T\|\mu(E)$ 得 $\nu$ 有有界变差；在 (ii)$\Rightarrow$(i) 中用以对 $h\in L^1(\mu)$ 作水平集分解 $F_n$ 并保证 $\|s\|_1=\sum_i|c_i|\mu(E_i)$ 有限。若 $\mu$ 仅 $\sigma$-有限，则 (ii) 应改述为"每个 $T$ 限制到每个有限测度块上可表示"，等价性随之局部化。(b) $Y$ Banach：给出 $L^1(X;Y)$ 的完备性，使 $g\in L^1(X;Y)$ 的断言有意义。(c) 结论中的 $g\in L^\infty(X;Y)$ 并非额外假设：它由 $T$ 的有界性与 $\nu$ 的变差估计自动得到。
+
+边界与说明：原书在 (ii)$\Rightarrow$(i) 末段断言 $g\in L^\infty(X;Y)$；实际上该论证只给出 $\|g(x)\|_Y=h(x)$ 对几乎所有 $x$ 成立，从而 $g\in L^1(X;Y)$（$h$ 一般不属于 $L^\infty$）。RNP 只要求 $g\in L^1(X;Y)$，故结论不受影响；正确论证见下方补写的证明。
+\end{remark}
+
 \begin{proof}
-(i)$\Rightarrow$(ii)。设 $T\in\mathcal{L}(L^1(X);Y)$。令 $\nu:\mathcal{A}\to Y$，$\nu(E)\triangleq T\chi_E$（$E\in\mathcal{A}$）。对每个 $E\in\mathcal{A}$，有
+(i)$\Rightarrow$(ii)。设 $T\in\mathcal{L}(L^1(X);Y)$。令 $\nu:\mathcal{A}\to Y$，$\nu(E)\triangleq T\chi_E$（$E\in\mathcal{A}$）。对每个 $E\in\mathcal{A}$ 有
 \begin{align}
 \|\nu(E)\|_Y\leqslant\|T\|_{\mathcal{L}(L^1(X);Y)}\|\chi_E\|_1=\|T\|_{\mathcal{L}(L^1(X);Y)}\mu(E), \label{align:ch04-4.86}
 \end{align}
@@ -251,13 +428,15 @@ D_{\mathbb Q}&\triangleq \Big\{y=\sum_{i=1}^n q_i y_i\ \Big|\ q_1,\cdots ,q_n\in
 \begin{align*}
 |\nu|(E)=\int_E\|g\|_Y\,\mathrm{d}\mu\leqslant\|T\|_{\mathcal{L}(L^1(X);Y)}\mu(E)\quad(E\in\mathcal{A}).
 \end{align*}
-于是由\cref{proposition:ch04-Lebesgue点}，$g\in L^\infty(X;Y)$，且 $\|g\|_\infty\leqslant\|T\|_{\mathcal{L}(L^1(X);Y)}$（见\eqref{align:ch04-4.43b}）。综上，我们证明了存在 $g\in L^\infty(X;Y)$ 使对所有 $E\in\mathcal{A}$ 有 $T\chi_E=\int_E g\,\mathrm{d}\mu$。由 $\mathcal{S}(X)$ 在 $L^1(X)$ 中的稠密性得，对所有 $f\in L^1(X)$ 有 $Tf=\int_X fg\,\mathrm{d}\mu$。这就证明了断言。
+于是由\cref{proposition:ch04-Lebesgue点}，$g\in L^\infty(X;Y)$ 且 $\|g\|_\infty\leqslant\|T\|_{\mathcal{L}(L^1(X);Y)}$（见\eqref{align:ch04-4.43b}）。
 
-(ii)$\Rightarrow$(i)。设 $\nu$ 为有有界变差且 $\nu\ll\mu$ 的向量测度。则 $|\nu|\ll\mu$，故由 Radon--Nikodým 定理，存在 $h\in L^1(X)$，$h\geqslant0$，使对所有 $E\in\mathcal{A}$ 有 $|\nu|(E)=\int_E h\,\mathrm{d}\mu$。对任意 $n\in\mathbb{N}$，令 $F_n\triangleq \{n-1\leqslant h<n\}$。于是当 $m\neq n$ 时 $F_m\cap F_n=\varnothing $，且 $\bigcup_{n=1}^\infty F_n=X$。设 $s\in\mathcal{S}(X)$，$s=\sum_{i=1}^m c_i\chi_{E_i}$，其中 $c_1,\cdots ,c_m\in\mathbb{R}$，$\{E_1,\cdots ,E_m\}$ 为 $X$ 的一个划分。对每个 $n\in\mathbb{N}$，定义
+综上，证明了存在 $g\in L^\infty(X;Y)$ 使对所有 $E\in\mathcal{A}$ 有 $T\chi_E=\int_E g\,\mathrm{d}\mu$。由 $\mathcal{S}(X)$ 在 $L^1(X)$ 中的稠密性得，对所有 $f\in L^1(X)$ 有 $Tf=\int_X fg\,\mathrm{d}\mu$。于是证明了断言。
+
+(ii)$\Rightarrow$(i)。设 $\nu$ 为有有界变差且 $\nu\ll\mu$ 的向量测度。则 $|\nu|\ll\mu$，故由 Radon--Nikodým 定理，存在 $h\in L^1(X)$，$h\geqslant0$，使对所有 $E\in\mathcal{A}$ 有 $|\nu|(E)=\int_E h\,\mathrm{d}\mu$。对任意 $n\in\mathbb{N}$，令 $F_n\triangleq\{n-1\leqslant h<n\}$。于是当 $m\neq n$ 时 $F_m\cap F_n=\varnothing$，且 $\bigcup_{n=1}^\infty F_n=X$。设 $s\in\mathcal{S}(X)$，$s=\sum_{i=1}^mc_i\chi_{E_i}$，其中 $c_1,\cdots,c_m\in\mathbb{R}$，$\{E_1,\cdots,E_m\}$ 为 $X$ 的一个划分。对每个 $n\in\mathbb{N}$，定义
 \begin{align}
-T_n:\mathcal{S}(X)\to Y,\quad T_ns\triangleq \int_{F_n}s\,\mathrm{d}\nu=\sum_{i=1}^m c_i\nu(E_i\cap F_n). \label{align:ch04-4.87}
+T_n:\mathcal{S}(X)\to Y,\quad T_ns\triangleq \int_{F_n}s\,\mathrm{d}\nu=\sum_{i=1}^mc_i\nu(E_i\cap F_n). \label{align:ch04-4.87}
 \end{align}
-对任意 $n\in\mathbb{N}$ 与 $s\in\mathcal{S}(X)$，有
+对任意 $n\in\mathbb{N}$ 与 $s\in\mathcal{S}(X)$ 有
 \begin{align*}
 \|T_ns\|_Y\leqslant\sum_{i=1}^m|c_i||\nu|(E_i\cap F_n)=\sum_{i=1}^m|c_i|\int_{E_i\cap F_n}h\,\mathrm{d}\mu\leqslant n\sum_{i=1}^m|c_i|\mu(E_i)=n\|s\|_1,
 \end{align*}
@@ -265,33 +444,60 @@ T_n:\mathcal{S}(X)\to Y,\quad T_ns\triangleq \int_{F_n}s\,\mathrm{d}\nu=\sum_{i=
 \begin{align}
 \nu(E\cap F_n)=T_n\chi_E=\int_E g_n\,\mathrm{d}\mu. \label{align:ch04-4.88}
 \end{align}
-定义 $g:X\to Y$，令 $g\triangleq \sum_{n=1}^\infty g_n$。易验证 $g_n=0$ 在 $F_n^c$ 中 $\mu$-几乎处处成立。由于当 $n\neq m$ 时 $F_n\cap F_m=\varnothing $ 且 $\mu(X)<\infty$，故 $g\in L^\infty(X;Y)\subseteq L^1(X;Y)$。
+定义 $g:X\to Y$，令 $g\triangleq\sum_{n=1}^\infty g_n$。易验证 $g_n=0$ 在 $F_n^c$ 中 $\mu$-几乎处处成立。由于当 $n\neq m$ 时 $F_n\cap F_m=\varnothing$ 且 $\mu(X)<\infty$，故 $g\in L^\infty(X;Y)\subseteq L^1(X;Y)$。
 
-由\eqref{align:ch04-4.88}，对任意 $m\in\mathbb{N}$，有
+由\eqref{align:ch04-4.88}，对任意 $m\in\mathbb{N}$ 有
 \begin{align*}
-\nu\Big(E\cap\Big(\bigcup_{n=1}^m F_n\Big)\Big)=\int_{E\cap(\bigcup_{n=1}^m F_n)}g\,\mathrm{d}\mu\quad(E\in\mathcal{A}).
+\nu\Big(E\cap\Big(\bigcup_{n=1}^mF_n\Big)\Big)=\int_{E\cap(\bigcup_{n=1}^mF_n)}g\,\mathrm{d}\mu\quad(E\in\mathcal{A}).
 \end{align*}
 由\cref{lemma:ch01-向量测度连续}，在此等式中令 $m\to\infty$，得对所有 $E\in\mathcal{A}$ 有 $\nu(E)=\int_E g\,\mathrm{d}\mu$。故结论成立。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-RNP与可表示; kind=proof; 补出 $g_n|_{F_n^c}=0$ 与 $g\in L^1(X;Y)$（原书断言 $g\in L^\infty$ 一般不成立）、$\|g\|_Y=h$ 几乎处处、级数拼接
+\begin{proof}[以下：\cref{theorem:ch04-RNP与可表示}(ii)$\Rightarrow$(i) 中 $g$ 的可积性与拼接]
+\emph{(a) $g_n=0$ 在 $F_n^c$ 中几乎处处成立。}设 $E\in\mathcal{A}$，$E\subseteq F_n^c$。则 $E\cap F_n=\varnothing$，由\eqref{align:ch04-4.88}得 $\int_E g_n\,\mathrm{d}\mu=\nu(\varnothing)=0$。由 $E\subseteq F_n^c$ 的任意性与\cref{proposition:ch04-积分诱导向量测度}得 $\|g_n\|_Y$ 在 $F_n^c$ 上积分为零，故 $g_n=0$ 在 $F_n^c$ 中 $\mu$-几乎处处成立。因此
+\begin{align*}
+g(x)\triangleq g_n(x)\quad\text{若 }x\in F_n\ (n\in\mathbb{N}),\qquad g(x)\triangleq0\quad\text{若 }x\notin\bigcup_{n=1}^\infty F_n
+\end{align*}
+在差一个 $\mu$-零测集的意义下良定（各 $F_n$ 两两不交且 $\bigcup_nF_n=X$）。
+
+\emph{(b) $g\in L^1(X;Y)$ 且 $\|g\|_Y=h$ 几乎处处成立。}固定 $n$，设 $E\in\mathcal{A}$，$E\subseteq F_n$。由\eqref{align:ch04-4.88}有 $\nu(E)=\int_E g_n\,\mathrm{d}\mu$，于是由\cref{proposition:ch04-积分诱导向量测度}与 $|\nu|(E)=\int_E h\,\mathrm{d}\mu$ 得
+\begin{align*}
+\int_E\|g_n\|_Y\,\mathrm{d}\mu=|\nu|(E)=\int_E h\,\mathrm{d}\mu.
+\end{align*}
+两个非负可积函数在 $F_n$ 的每个可测子集上积分相同，故 $\|g_n\|_Y=h$ 在 $F_n$ 中 $\mu$-几乎处处成立（对 $E=\{\|g_n\|_Y>h\}$ 与 $E=\{h>\|g_n\|_Y\}$ 分别用积分为零即得）。因此 $\|g(x)\|_Y=h(x)$ 对 $\mu$-几乎所有 $x\in X$ 成立，从而
+\begin{align*}
+\int_X\|g\|_Y\,\mathrm{d}\mu=\int_X h\,\mathrm{d}\mu=|\nu|(X)<\infty,
+\end{align*}
+即 $g\in L^1(X;Y)$；并且 $g\in L^\infty(X;Y)$ 当且仅当 $h\in L^\infty(X)$（文中此处断言 $g\in L^\infty(X;Y)$，一般并不成立）。
+
+\emph{(c) 级数拼接。}由 (a)(b)，$\sum_{n=1}^\infty g_n$ 在 $L^1(X;Y)$ 中按 $\|\cdot\|_1$ 绝对收敛（$\sum_n\int_{F_n}\|g_n\|_Y\,\mathrm{d}\mu=\sum_n|\nu|(F_n)=|\nu|(X)<\infty$），其和即 $g$。于是对任意 $E\in\mathcal{A}$，由\cref{lemma:ch01-向量测度连续}得
+\begin{align*}
+\nu(E)=\sum_{n=1}^\infty\nu(E\cap F_n)=\sum_{n=1}^\infty\int_{E\cap F_n}g\,\mathrm{d}\mu=\int_E g\,\mathrm{d}\mu,
+\end{align*}
+其中中间级数的绝对收敛性由 $\sum_n|\nu|(E\cap F_n)=|\nu|(E)\leqslant|\nu|(X)<\infty$ 保证。
 \end{proof}
 
 \subsection{对偶与 Radon--Nikodým 性质}\label{subsection:ch04-对偶RNP}
 
 对任意 $f:X\to Y$ 与 $g:X\to Y^*$，令
 \begin{align*}
-\langle g,f\rangle_{Y^*,Y}:X\to\mathbb{R},\quad \langle g,f\rangle_{Y^*,Y}(x)\triangleq \langle g(x),f(x)\rangle_{Y^*,Y}\ (x\in X).
+\langle g,f\rangle_{Y^*,Y}:X\to\mathbb{R},\quad \langle g,f\rangle_{Y^*,Y}(x)\triangleq \langle g(x),f(x)\rangle_{Y^*,Y}\quad(x\in X).
 \end{align*}
+
 设 $p\in[1,\infty]$，$q$ 为其 Hölder 共轭，
 \begin{align}
-q\triangleq 
+q\triangleq
 \begin{cases}
 1 & \text{若 }p=\infty,\\
-p/(p-1) & \text{若 }p\in(1,\infty),\\
+\dfrac{p}{p-1} & \text{若 }p\in(1,\infty),\\
 \infty & \text{若 }p=1.
-\end{cases} \label{align:ch04-4.89}
+\end{cases} 
+\label{align:ch04-4.89}
 \end{align}
-在适当假设下，由\cref{theorem:ch02-Lp对偶}，可把对偶空间 $(L^p(X))^*$ 等同于 $L^q(X)$。自然要问，对向量 Lebesgue 空间是否有类似命题 $(L^p(X;Y))^*=L^q(X;Y^*)$。由以下定理，这取决于对偶空间 $Y^*$ 的 Radon--Nikodým 性质。
+在适当假设下，由\cref{theorem:ch02-Lp对偶}可把对偶空间 $(L^p(X))^*$ 等同于 $L^q(X)$。自然要问，对向量 Lebesgue 空间是否有类似命题 $(L^p(X;Y))^*=L^q(X;Y^*)$。由以下定理，这取决于对偶空间 $Y^*$ 的 Radon--Nikodým 性质。
 
-\begin{theorem}\label{theorem:ch04-Lp对偶刻画}\label{proposition:ch04-对偶}
+\begin{theorem}\label{theorem:ch04-Lp对偶刻画}
 设 $(X,\mathcal{A},\mu)$ 为有限测度空间，$Y$ 为 Banach 空间。设 $p\in[1,\infty)$，$q$ 为其 Hölder 共轭。则下列命题等价：
 \begin{enumerate}[(i)]
 \item\label{item:ch04-Lp对偶刻画-i} $Y^*$ 关于 $(X,\mathcal{A},\mu)$ 具有 Radon--Nikodým 性质；
@@ -301,13 +507,22 @@ p/(p-1) & \text{若 }p\in(1,\infty),\\
 \end{align}
 其中
 \begin{align}
-T_g:L^p(X;Y)\to\mathbb{R},\quad T_gf\triangleq \int_X\langle g,f\rangle_{Y^*,Y}\,\mathrm{d}\mu\ (f\in L^p(X;Y)), \label{align:ch04-4.90b}
+T_g:L^p(X;Y)\to\mathbb{R},\quad T_gf\triangleq \int_X\langle g,f\rangle_{Y^*,Y}\,\mathrm{d}\mu\quad(f\in L^p(X;Y)), \label{align:ch04-4.90b}
 \end{align}
 是等距同构。
 \end{enumerate}
 \end{theorem}
 
-\begin{remark}\label{remark:ch04-对偶配对良定}
+% SUPPLEMENT: parent=theorem:ch04-Lp对偶刻画; kind=motivation; 动机（$L^p$-$L^q$ 对偶的向量化）、$p<\infty$ 与 $p=\infty$ 的差别、$Y^*$ 而非 $Y$ 的 RNP、边界
+\begin{remark}\phantomsection\label{remark:ch04-Lp对偶刻画}
+本定理刻画了向量 Lebesgue 空间的对偶：$(L^p(X;Y))^*$ 与 $L^q(X;Y^*)$ 是否等距同构，完全由 $Y^*$ 关于给定测度空间的 Radon--Nikodým 性质决定。它是\cref{theorem:ch02-Lp对偶}（标量情形 $(L^p(X))^*=L^q(X)$）的向量化，也是 §4.4.3--§4.4.5 全部对偶结果的出发点。
+
+关于假设。(a) $p\in[1,\infty)$：证明中反复用简单函数 $\mathcal{S}(X;Y)$ 在 $L^p(X;Y)$ 中的稠密性（\cref{proposition:ch04-简单函数稠密}(i)），而该稠密性对 $p=\infty$ 不成立；同时用 $\mu(X)<\infty$ 把 $L^q$ 嵌入 $L^1$。$p=\infty$ 时 $(L^\infty(X;Y))^*$ 的结构复杂得多，不能用本定理的论证。(b) $\mu$ 有限：证明中先造出 $g\in L^1(X;Y^*)$ 再用 $\{\|g\|_{Y^*}\leqslant k\}$ 的水平集把 $g$ 局部化到 $L^q$；$\mu$ 为 $\sigma$-有限时须先局部化再拼接（见\cref{theorem:ch04-可分对偶Lp对偶}）。(c) RNP 加在 $Y^*$ 上而非 $Y$ 上：这是定理的核心。对 (ii)$\Rightarrow$(i)，给定 $Y^*$-值向量测度 $\nu$，须由 (ii) 构造一个连续线性泛函 $T$（用 Hahn 分解取得 $|\nu|\leqslant\bar\tau\mu$ 的局部块后延拓），再由 $T$ 的表示核 $g$ 反读 $\nu$ 的密度；对 (i)$\Rightarrow$(ii)，须先由 RNP 得 $g\in L^1$，再用水平集把 $g$ 提升到 $L^q$ 并验证等距性。
+
+边界与反例：若 $Y=c_0$（$Y^*=\ell^1$ 可分，故 $Y^*$ 有 RNP），定理对 $c_0$ 成立：$(L^p(X;c_0))^*=L^q(X;\ell^1)$；反之若 $Y=C[0,1]$（$Y^*=\mathscr{R}_f([0,1])$ 不含 RNP 的闭子空间 $L^1$），则 $(L^p(X;Y))^*\neq L^q(X;Y^*)$，此时须改用\cref{theorem:ch04-可分Y对偶}的弱$^*$表述。这说明 $Y^*$ 的 RNP 不可省。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch04-对偶配对良定}
 设 $f\in L^p(X;Y)$，$g\in L^q(X;Y^*)$。由于 $g$ 为 $\mu$-可测，存在序列 $\{t_n\}\subseteq\mathcal{S}(X;Y^*)$，设 $t_n=\sum_{k=1}^{k_n}y_k^*\chi_{E_k}$（$y_k^*\in Y^*$，$E_k\in\mathcal{A}$），使对 $\mu$-几乎所有 $x\in X$ 有 $\|t_n(x)-g(x)\|_{Y^*}\to0$。又 $f$ 为 $\mu$-可测，从而弱可测；故对每个 $n\in\mathbb{N}$，$\langle t_n,f\rangle_{Y^*,Y}:X\to\mathbb{R}$ 为 $\mathcal{A}$-可测。此外，当 $n\to\infty$ 时，$\langle t_n,f\rangle_{Y^*,Y}\to\langle g,f\rangle_{Y^*,Y}$ 在 $X$ 中 $\mu$-几乎处处成立，因为
 \begin{align*}
 |\langle t_n,f\rangle_{Y^*,Y}-\langle g,f\rangle_{Y^*,Y}|\leqslant\|t_n(x)-g(x)\|_{Y^*}\|f\|_Y.
@@ -324,15 +539,24 @@ T_g:L^p(X;Y)\to\mathbb{R},\quad T_gf\triangleq \int_X\langle g,f\rangle_{Y^*,Y}\
 \cref{theorem:ch04-Lp对偶刻画}的直接推论是如下结果。
 
 \begin{proposition}\label{proposition:ch04-Lp自反}
-设 $(X,\mathcal{A},\mu)$ 为有限测度空间，$p\in(1,\infty)$。则空间 $L^p(X;Y)$ 自反当且仅当 $Y$ 自反。
+设 $(X,\mathcal{A},\mu)$ 为有限测度空间，$p\in(1,\infty)$，且 $\mu(X)>0$。则空间 $L^p(X;Y)$ 自反当且仅当 $Y$ 自反。
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:ch04-Lp自反; kind=motivation; 动机、$\mu(X)>0$ 的非退化性、$p\in(1,\infty)$ 的必要性、与 Theorem 4.4.7 的关系
+\begin{remark}\phantomsection\label{remark:ch04-Lp自反}
+本命题说明 Bochner 空间 $L^p(X;Y)$ 的自反性完全由 $Y$ 的自反性决定，这是\cref{theorem:ch04-Lp对偶刻画}最直接的应用：把该定理连用两次即得 $(L^p(X;Y))^{**}=(L^p(X;Y))$。
+
+关于假设。(a) $p\in(1,\infty)$：只有此时 $q=p/(p-1)\in(1,\infty)$，才能对 $L^q(X;Y^*)$ 再次使用\cref{theorem:ch04-Lp对偶刻画}；$p=1$ 时 $q=\infty$，$(L^\infty(X;Y^*))^*$ 不等于 $L^1(X;Y)$，论证中断。(b) $\mu(X)>0$：这是非退化条件。若 $\mu(X)=0$，则 $L^p(X;Y)=\{0\}$ 平凡自反，而 $Y$ 可任意（例如 $Y=c_0$），命题不成立；原书陈述未排除这一退化情形。(c) 必要性方向用"$Y$ 等距同构于闭子空间 $\{y\chi_X\mid y\in Y\}\subseteq L^p(X;Y)$"与"自反空间的闭子空间自反"；前者要求 $\mu(X)>0$ 以保证 $\|y\chi_X\|_{L^p}=\|y\|_Y[\mu(X)]^{1/p}$ 与 $\|y\|_Y$ 等价。
+
+边界：$p=1$ 或 $p=\infty$ 时结论不成立。例如 $Y=\mathbb{R}$、$X=(0,1)$ 时 $L^1(X)$ 与 $L^\infty(X)$ 都不自反。此外，本命题只给出"$L^p(X;Y)$ 自反 $\Leftrightarrow$ $Y$ 自反"，并不给出 $L^p(X;Y)$ 的对偶的具体形式；后者由\cref{theorem:ch04-Lp对偶刻画}给出，且需要 $Y^*$ 的 RNP。
+\end{remark}
 
 \begin{proof}
 若 $Y$ 自反，则 $Y^*$ 亦自反，且由\cref{corollary:ch04-自反RNP}二者都具有 Radon--Nikodým 性质。于是由\cref{theorem:ch04-Lp对偶刻画}，对任意 $q\in(1,\infty)$ 有
 \begin{align*}
 (L^q(X;Y))^{**}=(L^p(X;Y^*))^*=L^q(X;Y^{**})=L^q(X;Y).
 \end{align*}
-这就证明了充分性。至于必要性，注意 $Y$ 等距同构于闭子空间 $\{y\chi_X\mid y\in Y\}\subseteq L^p(X;Y)$，并回顾自反空间的每个闭子空间自反。故结论成立。
+于是证明了充分性。至于必要性，注意 $Y$ 等距同构于闭子空间 $\{y\chi_X\mid y\in Y\}\subseteq L^p(X;Y)$，并回顾自反空间的每个闭子空间自反。故结论成立。
 \end{proof}
 
 为证\cref{theorem:ch04-Lp对偶刻画}，我们需要两个预备结果。
@@ -341,45 +565,71 @@ T_g:L^p(X;Y)\to\mathbb{R},\quad T_gf\triangleq \int_X\langle g,f\rangle_{Y^*,Y}\
 设 $(X,\mathcal{A},\mu)$ 为有限测度空间，$Y$ 为 Banach 空间。设 $p\in[1,\infty)$，$q$ 为其 Hölder 共轭。则 $L^q(X;Y^*)$ 等距同构于 $(L^p(X;Y))^*$ 的一个闭子空间。
 \end{proposition}
 
-\begin{proof}
-由\eqref{align:ch04-4.91}有 $\|T_g\|_{(L^p(X;Y))^*}\leqslant\|g\|_{L^q(X;Y^*)}$。若我们证明反向不等式，则结论成立。
+% SUPPLEMENT: parent=proposition:ch04-对偶等距嵌入; kind=motivation; 动机（定理 4.4.7 的一半）、$\Theta$ 的线性与等距性、$q=\infty$ 情形、边界
+\begin{remark}\phantomsection\label{remark:ch04-对偶等距嵌入}
+本命题是\cref{theorem:ch04-Lp对偶刻画}的"容易方向"：映射 $\Theta:g\mapsto T_g$ 总是线性等距，唯一的问题是它是否满射。本命题把这一点提炼为：$L^q(X;Y^*)$ 等距同构于 $(L^p(X;Y))^*$ 的闭子空间（$\Theta$ 的像），从而\cref{theorem:ch04-Lp对偶刻画}的实质内容只是"$\Theta$ 满射 $\Leftrightarrow$ $Y^*$ 有 RNP"。
 
-为此，设 $g\in L^q(X;Y^*)$，$g=\sum_{k=1}^\infty y_k^*\chi_{E_k}$，其中 $\{E_k\}\subseteq\mathcal{A}$ 为两两不交序列，$\bigcup_{k=1}^\infty E_k=X$，且对所有 $k$ 有 $\mu(E_k)>0$。令 $\hat g:X\to\mathbb{R}$，$\hat g(x)\triangleq \|g(x)\|_{Y^*}$（$x\in X$），并令
+关于假设与结论。(a) $\Theta$ 的线性性是显然的；等距性由\eqref{align:ch04-4.91}给出 $\|T_g\|\leqslant\|g\|$，反向不等式 $\|T_g\|\geqslant\|g\|$ 是证明的实质：它用标量对偶 $(L^p(X))^*=L^q(X)$（\cref{theorem:ch02-Lp对偶}）先对 $\hat g=\|g\|_{Y^*}$ 取到近似上确界的 $h\in L^p(X)$，再逐坐标用 Hahn--Banach 定理（$Y^*$ 中范数的上确界在单位球上取到）选取 $y_k\in Y$，最后令 $f=(\sum_ky_k\chi_{E_k})h$，得到 $\|f\|_{L^p}\leqslant\|h\|_p\leqslant1$ 且 $T_gf>\|g\|-\varepsilon$。(b) $p\in[1,\infty)$：证明用\cref{proposition:ch04-简单函数稠密}意义下的稠密性与 $L^p(X)\subseteq L^1(X)$（$\mu$ 有限），$p=\infty$ 时不能这样取 $h$。(c) $\Theta$ 是等距，故其像闭（等距像完备），因此"等距同构于闭子空间"的表述是恰当的。
+\end{remark}
+
+\begin{proof}
+由\eqref{align:ch04-4.91}有 $\|T_g\|_{(L^p(X;Y))^*}\leqslant\|g\|_{L^q(X;Y^*)}$。若证明反向不等式，则结论成立。
+
+为此，设 $g\in L^q(X;Y^*)$，$g=\sum_{k=1}^\infty y_k^*\chi_{E_k}$，其中 $\{E_k\}\subseteq\mathcal{A}$ 为两两不交序列，$\bigcup_{k=1}^\infty E_k=X$，且对所有 $k$ 有 $\mu(E_k)>0$。令 $\hat g:X\to\mathbb{R}$，$\hat g(x)\triangleq\|g(x)\|_{Y^*}$（$x\in X$），并令
 \begin{align*}
-\widehat{T}_{\hat g}:L^p(X)\to\mathbb{R},\quad \widehat{T}_{\hat g}u\triangleq \int_X\hat g\,u\,\mathrm{d}\mu\ (u\in L^p(X)).
+\widehat T_{\hat g}:L^p(X)\to\mathbb{R},\quad \widehat T_{\hat g}u\triangleq\int_X\hat gu\,\mathrm{d}\mu\quad(u\in L^p(X)).
 \end{align*}
-显然 $\hat g\in L^q(X)$，$\widehat{T}_{\hat g}\in(L^p(X))^*$，且由\cref{theorem:ch02-Lp对偶}
+由定义直接 $\hat g\in L^q(X)$，$\widehat T_{\hat g}\in(L^p(X))^*$，且由\cref{theorem:ch02-Lp对偶}
 \begin{align*}
-\|\widehat{T}_{\hat g}\|_{(L^p(X))^*}=\sup_{\substack{u\in L^p(X)\\\|u\|_p\leqslant1}}|\widehat{T}_{\hat g}u|=\|\hat g\|_q=\|g\|_{L^q(X;Y^*)}.
+\|\widehat T_{\hat g}\|_{(L^p(X))^*}=\sup_{\substack{u\in L^p(X)\\\|u\|_p\leqslant1}}|\widehat T_{\hat g}u|=\|\hat g\|_q=\|g\|_{L^q(X;Y^*)}.
 \end{align*}
-于是对任意 $\epsilon>0$，存在 $h\in L^p(X)$，$0<\|h\|_p\leqslant1$，$h\geqslant0$，使
+于是对任意 $\varepsilon>0$，存在 $h\in L^p(X)$，$0<\|h\|_p\leqslant1$，$h\geqslant0$，使
 \begin{align}
-\|g\|_{L^q(X;Y^*)}-\frac{\epsilon}{2}<|\widehat{T}_{\hat g}h|=\int_X\|g(x)\|_{Y^*}h\,\mathrm{d}\mu. \label{align:ch04-4.92}
+\|g\|_{L^q(X;Y^*)}-\frac{\varepsilon}{2}<|\widehat T_{\hat g}h|=\int_X\|g(x)\|_{Y^*}h\,\mathrm{d}\mu. \label{align:ch04-4.92}
 \end{align}
-另一方面，设 $\{y_k^*\}\subseteq Y^*$ 为 $g$ 的系数序列。显然存在序列 $\{y_k\}\subseteq Y$，使对所有 $k\in\mathbb{N}$ 有 $\|y_k\|_Y\leqslant1$，且
+另一方面，设 $\{y_k^*\}\subseteq Y^*$ 为 $g$ 的系数序列。由定义直接存在序列 $\{y_k\}\subseteq Y$，使对所有 $k\in\mathbb{N}$ 有 $\|y_k\|_Y\leqslant1$，且
 \begin{align}
-\|y_k^*\|_{Y^*}-\frac{\epsilon}{2\|h\|_1}<\langle y_k^*,y_k\rangle_{Y^*,Y} \label{align:ch04-4.93}
+\|y_k^*\|_{Y^*}-\frac{\varepsilon}{2\|h\|_1}<\langle y_k^*,y_k\rangle_{Y^*,Y} \label{align:ch04-4.93}
 \end{align}
-（注意因 $\mu(X)<\infty$，$h\in L^p(X)\subseteq L^1(X)$）。令 $f:X\to Y$，$f\triangleq (\sum_{k=1}^\infty y_k\chi_{E_k})h$。于是 $f\in L^p(X;Y)$ 且 $\|f\|_{L^p(X;Y)}\leqslant\|h\|_p\leqslant1$。由\eqref{align:ch04-4.90b}--\eqref{align:ch04-4.93}得
+（注意因 $\mu(X)<\infty$，$h\in L^p(X)\subseteq L^1(X)$）。令 $f:X\to Y$，$f\triangleq(\sum_{k=1}^\infty y_k\chi_{E_k})h$。于是 $f\in L^p(X;Y)$ 且 $\|f\|_{L^p(X;Y)}\leqslant\|h\|_p\leqslant1$。由\eqref{align:ch04-4.90b}--\eqref{align:ch04-4.93}得
 \begin{align*}
 T_gf&=\int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu(x)
-=\int_X h\Big(\sum_{k=1}^\infty\langle y_k^*,y_k\rangle_{Y^*,Y}\chi_{E_k}\Big)\mathrm{d}\mu\\
-&\geqslant\int_X h\sum_{k=1}^\infty\Big(\|y_k^*\|_{Y^*}-\frac{\epsilon}{2\|h\|_1}\Big)\chi_{E_k}\,\mathrm{d}\mu
-=\int_X\|g\|_{Y^*}h\,\mathrm{d}\mu-\frac{\epsilon}{2\|h\|_1}\int_X h\,\mathrm{d}\mu>\|g\|_{L^q(X;Y^*)}-\epsilon.
+=\int_Xh\Big(\sum_{k=1}^\infty\langle y_k^*,y_k\rangle_{Y^*,Y}\chi_{E_k}\Big)\mathrm{d}\mu\\
+&\geqslant\int_Xh\sum_{k=1}^\infty\Big(\|y_k^*\|_{Y^*}-\frac{\varepsilon}{2\|h\|_1}\Big)\chi_{E_k}\,\mathrm{d}\mu
+=\int_X\|g\|_{Y^*}h\,\mathrm{d}\mu-\frac{\varepsilon}{2\|h\|_1}\int_Xh\,\mathrm{d}\mu>\|g\|_{L^q(X;Y^*)}-\varepsilon.
 \end{align*}
-由 $\epsilon>0$ 的任意性得 $T_gf=|T_gf|\geqslant\|g\|_{L^q(X;Y^*)}$。
+由 $\varepsilon>0$ 的任意性得 $|T_gf|\geqslant\|g\|_{L^q(X;Y^*)}$，从而 $\|T_g\|_{(L^p(X;Y))^*}\geqslant\|g\|_{L^q(X;Y^*)}$。
 
-综上，我们构造了 $f\in L^p(X;Y)$，$\|f\|_{L^p(X;Y)}\leqslant1$，使 $|T_gf|\geqslant\|g\|_{L^q(X;Y^*)}$。故 $\|T_g\|_{(L^p(X;Y))^*}\geqslant\|g\|_{L^q(X;Y^*)}$，从而结论成立。
+综上，构造了 $f\in L^p(X;Y)$，$\|f\|_{L^p(X;Y)}\leqslant1$，使 $|T_gf|\geqslant\|g\|_{L^q(X;Y^*)}$。故 $\|T_g\|_{(L^p(X;Y))^*}\geqslant\|g\|_{L^q(X;Y^*)}$，从而结论成立。
 \end{proof}
 
-\begin{remark}\label{remark:ch04-对偶向量测度刻画}
-用类似方法可证，对任意 $p\in[1,\infty)$，对偶空间 $(L^p(X;Y))^*$ 等距同构于空间 $\mathcal{V}^q(X;Y^*)\triangleq \{\nu:\mathcal{A}\to Y^*\mid \nu\text{ 向量测度}\}$（$q$ 为 $p$ 的 Hölder 共轭），赋以范数
+% SUPPLEMENT: parent=proposition:ch04-对偶等距嵌入; kind=proof; 补出 $h\geqslant0$ 的取法、$\hat g\in L^q$、逐坐标 Hahn--Banach 取 $y_k$、以及 $g=\sum y_k^*\chi_{E_k}$ 的化简理由
+\begin{proof}[以下：\cref{proposition:ch04-对偶等距嵌入}证明中的细节]
+\emph{(a) 关于 $g$ 的化简。}对一般的 $g\in L^q(X;Y^*)$，$\hat g=\|g\|_{Y^*}\in L^q(X)$ 可测且非负。由简单函数在 $L^q$ 中的稠密性（与\cref{proposition:ch04-简单函数稠密}(i) 同法），可把 $g$ 写成 $\sum_ky_k^*\chi_{E_k}$ 的形式，其中 $\{E_k\}$ 是两两不交的可测集、$\bigcup_kE_k=X$、$\mu(E_k)>0$；必要性在于 $\hat g$ 需写成 $\sum_k\|y_k^*\|_{Y^*}\chi_{E_k}$ 以便把 $\int\hat gh$ 拆成逐坐标之和。
+
+\emph{(b) $h\geqslant0$ 的取法。}若 $u\in L^p(X)$ 满足 $|\widehat T_{\hat g}u|>\|g\|-\varepsilon/2$，则因 $\hat g\geqslant0$ 有 $|\widehat T_{\hat g}u|\leqslant\widehat T_{\hat g}|u|$，故可把 $u$ 换成 $h\triangleq|u|\geqslant0$，且 $\|h\|_p=\|u\|_p\leqslant1$。又 $\|g\|_{L^q(X;Y^*)}>0$ 蕴含 $h\neq0$（否则 $\widehat T_{\hat g}h=0$ 而 $\|g\|-\varepsilon/2>0$，取 $\varepsilon<2\|g\|$ 即可），故 $0<\|h\|_1\leqslant\|h\|_p[\mu(X)]^{1/q}<\infty$，其中 $1/q=1-1/p$。
+
+\emph{(c) 逐坐标选取 $y_k$。}对每个 $k$，若 $y_k^*\neq0$，由 $\|y_k^*\|_{Y^*}=\sup\{\langle y_k^*,y\rangle\mid\|y\|_Y\leqslant1\}$ 可取 $y_k\in Y$ 使 $\|y_k\|_Y\leqslant1$ 且 $\langle y_k^*,y_k\rangle>\|y_k^*\|_{Y^*}-\varepsilon/(2\|h\|_1)$，即\eqref{align:ch04-4.93}；若 $y_k^*=0$ 任取 $\|y_k\|_Y\leqslant1$。由 $\sum_k\|y_k^*\|_{Y^*}^q\mu(E_k)<\infty$ 与 $\sum_k\mu(E_k)=\mu(X)<\infty$，级数 $\sum_k\|y_k^*\|_{Y^*}\mu(E_k)$ 收敛，故下面的逐项估计合法。
+
+\emph{(d) 最后的比较。}由 $f=(\sum_ky_k\chi_{E_k})h$ 与 $\|y_k\|_Y\leqslant1$ 得
 \begin{align*}
-\|\nu\|_q\triangleq \sup_{\pi}\Big(\sum_{i=1}^n\|\nu(E_i)\|_{Y^*}^q[\mu(E_i)]^{q-1}\Big)^{1/p}\quad\text{若 }q\in(1,\infty)
+\|f\|_{L^p(X;Y)}^p=\int_Xh^p\Big\|\sum_ky_k\chi_{E_k}\Big\|_Y^p\,\mathrm{d}\mu\leqslant\int_Xh^p\,\mathrm{d}\mu=\|h\|_p^p\leqslant1.
 \end{align*}
-（$\pi\equiv\{E_1,\cdots ,E_n\}$ 为 $X$ 的任一划分，且对每个 $i=1,\cdots ,n$ 有 $\mu(E_i)>0$），
+并且
 \begin{align*}
-\|\nu\|_\infty\triangleq \inf\{C>0\mid\|\nu(E)\|_{Y^*}\leqslant C\mu(E)\ \forall E\in\mathcal{A}\}
+\int_X\|g\|_{Y^*}h\,\mathrm{d}\mu-\frac{\varepsilon}{2\|h\|_1}\int_Xh\,\mathrm{d}\mu=\int_X\|g\|_{Y^*}h\,\mathrm{d}\mu-\frac{\varepsilon}{2}>\|g\|_{L^q(X;Y^*)}-\varepsilon,
+\end{align*}
+其中末步用\eqref{align:ch04-4.92}。于是补全了 $|T_gf|>\|g\|-\varepsilon$ 的推导。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch04-对偶向量测度刻画}
+用类似方法可证，对任意 $p\in[1,\infty)$，对偶空间 $(L^p(X;Y))^*$ 等距同构于空间 $\mathcal{V}^q(X;Y^*)\triangleq\{\nu:\mathcal{A}\to Y^*\mid\nu\text{ 为向量测度}\}$（$q$ 为 $p$ 的 Hölder 共轭），赋以范数
+\begin{align*}
+\|\nu\|_q\triangleq\sup_{\pi}\Big(\sum_{i=1}^n\frac{\|\nu(E_i)\|_{Y^*}^q}{[\mu(E_i)]^{q-1}}\Big)^{1/p}\quad\text{若 }q\in(1,\infty)
+\end{align*}
+（$\pi\equiv\{E_1,\cdots,E_n\}$ 为 $X$ 的任一划分，且对每个 $i=1,\cdots,n$ 有 $\mu(E_i)>0$），
+\begin{align*}
+\|\nu\|_\infty\triangleq\inf\{C>0\mid\|\nu(E)\|_{Y^*}\leqslant C\mu(E)\ \text{对一切 }E\in\mathcal{A}\}
 \end{align*}
 （见文献 [41, 第 IV.6 节]、[44, 第 8.20 节]）。
 \end{remark}
@@ -392,44 +642,74 @@ T_gf&=\int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu(x)
 则 $Y^*$ 关于 $(X,\mathcal{A},\mu)$ 具有 Radon--Nikodým 性质。
 \end{lemma}
 
+% SUPPLEMENT: parent=lemma:ch04-RNP局部; kind=motivation; 动机（把"局部可表示"提升为"整体可表示"）、$\mu$ 有限与 $\nu\ll\mu$ 的作用、与耗竭引理的关系、边界
+\begin{remark}\phantomsection\label{remark:ch04-RNP局部}
+本引理是一个"局部到整体"的提升原理：只要每个正测集都含有一个正测的"密度存在"块，整个空间上就存在 Bochner 密度。它的价值在于把\cref{theorem:ch04-Lp对偶刻画}的 (ii)$\Rightarrow$(i) 方向化归为一个纯局部的构造（只需在某个小集合上把泛函的核写出来），而无需事先知道 $Y^*$ 的几何。
+
+关于假设。(a) $\mu$ 有限：耗竭引理（\cref{lemma:ch01-穷竭}）本身要求有限测度空间；同时 $\sum_k|\nu|(E_k)=|\nu|(X)<\infty$ 才保证拼接函数的 $L^1$-范数有限。(b) $\nu\ll\mu$：在耗竭引理的条件 (i) 中用到——$\mu$-零测集上 $\nu$ 也为零，故取 $h\equiv0$ 即满足\eqref{align:ch04-4.94}。(c) $\nu$ 有有界变差：保证 $|\nu|(X)<\infty$，从而 $g=\sum_kh_k\chi_{E_k}$ 的 $L^1$-范数被 $|\nu|(X)$ 控制（这正是证明末段用单调收敛定理的地方）。(d) 假设中的 $h_F$ 只要求在 $F$ 上 Bochner 可积，即在 $L^1(F;Y^*)$ 中；这比"$h_F\in L^\infty$"弱，正因如此本引理可用于 $L^q$ 情形。
+
+边界：局部性假设不能减弱为"存在一个正测集 $F$ 使\eqref{align:ch04-4.94}成立"。若只在某个 $F$ 上可表示，则 $\nu$ 在 $X\setminus F$ 上的部分可能完全没有密度（例如 $X\setminus F$ 上取\cref{example:ch04-c0反例}式的构造，只要 $Y^*$ 含 $c_0$ 的拷贝），此时整体密度不存在。
+\end{remark}
+
 \begin{proof}
-我们把穷竭引理（见\cref{lemma:ch01-穷竭}）应用于如下性质：
+把耗竭引理（见\cref{lemma:ch01-穷竭}）应用于如下性质：
 \begin{quote}
-存在 Bochner 可积函数 $h_E:E\to Y^*$，使对所有 $G\subseteq E$ 满足\eqref{align:ch04-4.94}。\hfill$(P)$
+存在 Bochner 可积函数 $h_E:E\to Y^*$，使对所有 $G\in\mathcal{A}$、$G\subseteq E$ 满足\eqref{align:ch04-4.94}。\hfill$(P)$
 \end{quote}
-于是存在两两不交序列 $\{E_k\}\subseteq\mathcal{A}$，$\bigcup_{k=1}^\infty E_k=X$，以及 Bochner 可积函数列 $\{h_k\}$，$h_k:E_k\to Y^*$，使对所有 $E\in\mathcal{A}$ 与 $k\in\mathbb{N}$ 有
+性质 $(P)$ 满足耗竭引理的条件 (i)：若 $\mu(E)=0$，则取 $h_E\equiv0$，由 $\nu\ll\mu$ 得 $\nu(G)=0=\int_Gh_E\,\mathrm{d}\mu$ 对一切 $G\subseteq E$ 成立。条件 (ii) 即引理的假设。于是存在两两不交序列 $\{E_k\}\subseteq\mathcal{A}$，$\bigcup_{k=1}^\infty E_k=X$，以及 Bochner 可积函数列 $\{h_k\}$，$h_k:E_k\to Y^*$，使对所有 $E\in\mathcal{A}$ 与 $k\in\mathbb{N}$ 有
 \begin{align*}
 \nu(E\cap E_k)=\int_{E\cap E_k}h_k\,\mathrm{d}\mu.
 \end{align*}
-令 $g:X\to Y^*$，$g\triangleq \sum_{k=1}^\infty h_k\chi_{E_k}$。则 $g$ 为 Bochner 可积，且对所有 $E\in\mathcal{A}$，有
+令 $g:X\to Y^*$，$g\triangleq\sum_{k=1}^\infty h_k\chi_{E_k}$。则 $g$ 为 Bochner 可积，且对所有 $E\in\mathcal{A}$ 有
 \begin{align}
-\nu\Big(E\cap\Big(\bigcup_{k=1}^n E_k\Big)\Big)=\sum_{k=1}^n\nu(E\cap E_k)=\sum_{k=1}^n\int_{E\cap E_k}h_k\,\mathrm{d}\mu=\int_E g\chi_{\bigcup_{k=1}^n E_k}\,\mathrm{d}\mu. \label{align:ch04-4.95}
+\nu\Big(E\cap\Big(\bigcup_{k=1}^nE_k\Big)\Big)=\sum_{k=1}^n\nu(E\cap E_k)=\sum_{k=1}^n\int_{E\cap E_k}h_k\,\mathrm{d}\mu=\int_E g\chi_{\bigcup_{k=1}^nE_k}\,\mathrm{d}\mu. \label{align:ch04-4.95}
 \end{align}
 由\cref{lemma:ch01-向量测度连续}，在\eqref{align:ch04-4.95}中令 $n\to\infty$，得
 \begin{align}
-\nu(E)=\lim_{n\to\infty}\int_E g\chi_{\bigcup_{k=1}^n E_k}\,\mathrm{d}\mu=\int_E g\,\mathrm{d}\mu. \label{align:ch04-4.96}
+\nu(E)=\lim_{n\to\infty}\int_E g\chi_{\bigcup_{k=1}^nE_k}\,\mathrm{d}\mu=\int_E g\,\mathrm{d}\mu. \label{align:ch04-4.96}
 \end{align}
 由\eqref{align:ch04-4.95}中 $E$ 的任意性与\cref{proposition:ch04-积分诱导向量测度}，还对所有 $n\in\mathbb{N}$ 得
 \begin{align*}
-\int_X\|g\|_Y^*\chi_{\bigcup_{k=1}^n E_k}\,\mathrm{d}\mu\leqslant|\nu|(X),
+\int_X\|g\|_{Y^*}\chi_{\bigcup_{k=1}^nE_k}\,\mathrm{d}\mu\leqslant|\nu|(X),
 \end{align*}
-故由单调收敛定理 $\int_X\|g\|_Y^*\,\mathrm{d}\mu\leqslant|\nu|(X)<\infty$。由此 $g\in L^1(X;Y^*)$，故由\eqref{align:ch04-4.96}得结果。
+故由单调收敛定理 $\int_X\|g\|_{Y^*}\,\mathrm{d}\mu\leqslant|\nu|(X)<\infty$。由此 $g\in L^1(X;Y^*)$，故由\eqref{align:ch04-4.96}得结果。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch04-RNP局部; kind=proof; 补出耗竭引理条件 (i) 的验证、$g$ 的 Bochner 可积性、以及 $\int_E g\chi_{\cup E_k}\to\int_E g$ 的控制收敛依据
+\begin{proof}[以下：\cref{lemma:ch04-RNP局部}证明中的三处省略]
+\emph{(a) 耗竭引理条件 (i)。}设 $E\in\mathcal{A}$ 且 $\mu(E)=0$。令 $h_E\equiv0$。对 $G\in\mathcal{A}$、$G\subseteq E$ 有 $\mu(G)=0$，故由 $\nu\ll\mu$ 得 $\nu(G)=0=\int_G0\,\mathrm{d}\mu$，即 $(P)$ 在 $E$ 上成立。
+
+\emph{(b) $g=\sum_kh_k\chi_{E_k}$ 的 Bochner 可积性。}$\{E_k\}$ 两两不交且并为 $X$，故 $g$ 是几乎处处有定义的强可测函数（每个 $h_k\chi_{E_k}$ Bochner 可积、从而 $\mu$-可测，见\cref{proposition:ch04-Bochner判据}）。又由每个 $h_k$ 的 Bochner 可积性与\cref{proposition:ch04-积分诱导向量测度}（用于测度空间 $(E_k,\mathcal{A}\cap E_k,\mu)$），
+\begin{align*}
+\int_X\|g\|_{Y^*}\,\mathrm{d}\mu=\sum_{k=1}^\infty\int_{E_k}\|h_k\|_{Y^*}\,\mathrm{d}\mu,
+\end{align*}
+其中右端级数的部分和恰为 $\int_X\|g\|_{Y^*}\chi_{\bigcup_{k\leqslant n}E_k}\,\mathrm{d}\mu$。由\eqref{align:ch04-4.95}与\cref{proposition:ch04-积分诱导向量测度}对每个 $n$ 有
+\begin{align*}
+\int_X\|g\|_{Y^*}\chi_{\bigcup_{k\leqslant n}E_k}\,\mathrm{d}\mu=|\nu|\Big(\bigcup_{k=1}^nE_k\Big)\leqslant|\nu|(X),
+\end{align*}
+故级数收敛且 $\int_X\|g\|_{Y^*}\,\mathrm{d}\mu\leqslant|\nu|(X)<\infty$；由\cref{proposition:ch04-Bochner判据}得 $g$ 的 Bochner 可积性。
+
+\emph{(c) $n\to\infty$ 的极限。}在\eqref{align:ch04-4.95}中取 $E=X$ 得 $\nu(\bigcup_{k\leqslant n}E_k)=\int_{\bigcup_{k\leqslant n}E_k}g\,\mathrm{d}\mu$；由\cref{lemma:ch01-向量测度连续}（$\nu$ 在 $\bigcup_{k\leqslant n}E_k\nearrow X$ 上的连续性）左端趋于 $\nu(X)$。对一般的 $E\in\mathcal{A}$ 与任意 $y\in Y^*$ 有
+\begin{align*}
+\Big\langle\int_E g\chi_{\bigcup_{k\leqslant n}E_k}\,\mathrm{d}\mu,y\Big\rangle=\int_E\langle g,y\rangle\chi_{\bigcup_{k\leqslant n}E_k}\,\mathrm{d}\mu,
+\end{align*}
+由 $|\langle g,y\rangle|\chi_{\bigcup_{k\leqslant n}E_k}\leqslant|\langle g,y\rangle|\in L^1(X)$ 与 $E\cap\bigcup_{k\leqslant n}E_k\nearrow E$，控制收敛定理给出该式趋于 $\int_E\langle g,y\rangle\,\mathrm{d}\mu=\langle\int_Eg\,\mathrm{d}\mu,y\rangle$；再由 $y$ 任意与 Hahn--Banach 定理得\eqref{align:ch04-4.96}。
 \end{proof}
 
 现可证明\cref{theorem:ch04-Lp对偶刻画}。
 
 \begin{proof}[\textbf{证明\cref{theorem:ch04-Lp对偶刻画}}]
-(i)$\Rightarrow$(ii)。设 $\Theta$ 由\eqref{align:ch04-4.90a}定义。首先注意，由\eqref{align:ch04-4.90b}，对任意 $g\in L^q(X;Y^*)$ 与 $f\in L^p(X;Y)$，有
+(i)$\Rightarrow$(ii)。设 $\Theta$ 由\eqref{align:ch04-4.90a}定义。首先注意，由\eqref{align:ch04-4.90b}，对任意 $g\in L^q(X;Y^*)$ 与 $f\in L^p(X;Y)$ 有
 \begin{align}
 \langle\Theta g,f\rangle_{(L^p(X;Y))^*,L^p(X;Y)}=\int_X\langle g,f\rangle_{Y^*,Y}\,\mathrm{d}\mu. \label{align:ch04-4.97}
 \end{align}
-由\cref{proposition:ch04-对偶等距嵌入}，映射 $\Theta$ 等距，从而单射。若我们证明它亦是满射，则断言成立。
+由\cref{proposition:ch04-对偶等距嵌入}，映射 $\Theta$ 等距，从而单射。若证明它亦是满射，则断言成立。
 
 为此，固定任意 $T\in(L^p(X;Y))^*$。定义
 \begin{align*}
-\nu_T:\mathcal{A}\to Y^*,\quad \langle\nu_T(E),y\rangle_{Y^*,Y}\triangleq \langle T,\chi_Ey\rangle_{(L^p(X;Y))^*,L^p(X;Y)}\ (E\in\mathcal{A},\ y\in Y).
+\nu_T:\mathcal{A}\to Y^*,\quad \langle\nu_T(E),y\rangle_{Y^*,Y}\triangleq\langle T,\chi_Ey\rangle_{(L^p(X;Y))^*,L^p(X;Y)}\quad(E\in\mathcal{A},\ y\in Y).
 \end{align*}
-显然，映射 $\nu_T$ 是 $\sigma$-可加的，从而是向量测度。此外，
+由定义直接，映射 $\nu_T$ 是 $\sigma$-可加的，从而是向量测度。此外，
 \begin{align*}
 |\langle\nu_T(E),y\rangle_{Y^*,Y}|\leqslant\|T\|_{(L^p(X;Y))^*}\|\chi_Ey\|_{L^p(X;Y)}=\|T\|_{(L^p(X;Y))^*}[\mu(E)]^{1/p}\|y\|_Y,
 \end{align*}
@@ -437,18 +717,18 @@ T_gf&=\int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu(x)
 \begin{align*}
 \|\nu_T(E)\|_{Y^*}\leqslant\|T\|_{(L^p(X;Y))^*}[\mu(E)]^{1/p}.
 \end{align*}
-于是 $\nu_T$ 有有界变差（因由假设 $\mu(X)<\infty$），且 $\nu_T\ll\mu$。由于 $Y^*$ 关于 $(X,\mathcal{A},\mu)$ 具有 Radon--Nikodým 性质，存在 $g\in L^1(X;Y^*)$ 使对所有 $E\in\mathcal{A}$ 有 $\nu_T(E)\triangleq \int_E g\,\mathrm{d}\mu$。于是对任意 $s\in\mathcal{S}(X;Y)$，$s=\sum_{i=1}^k y_i\chi_{E_i}$，有
+于是 $\nu_T$ 有有界变差（因由假设 $\mu(X)<\infty$），且 $\nu_T\ll\mu$。由于 $Y^*$ 关于 $(X,\mathcal{A},\mu)$ 具有 Radon--Nikodým 性质，存在 $g\in L^1(X;Y^*)$ 使对所有 $E\in\mathcal{A}$ 有 $\nu_T(E)=\int_E g\,\mathrm{d}\mu$。于是对任意 $s\in\mathcal{S}(X;Y)$，$s=\sum_{i=1}^ky_i\chi_{E_i}$，有
 \begin{align}
 \langle T,s\rangle_{(L^p(X;Y))^*,L^p(X;Y)}
 &=\sum_{i=1}^k\langle T,y_i\chi_{E_i}\rangle_{(L^p(X;Y))^*,L^p(X;Y)}
-=\sum_{i=1}^k\langle\nu_T(E_i),y\rangle_{Y^*,Y}\nonumber\\
+=\sum_{i=1}^k\langle\nu_T(E_i),y_i\rangle_{Y^*,Y}\nonumber\\
 &=\sum_{i=1}^k\Big\langle\int_{E_i}g\,\mathrm{d}\mu,\,y_i\Big\rangle_{Y^*,Y}
 =\sum_{i=1}^k\int_X\langle g,y_i\rangle_{Y^*,Y}\chi_{E_i}\,\mathrm{d}\mu
 =\int_X\langle g,s\rangle_{Y^*,Y}\,\mathrm{d}\mu. \label{align:ch04-4.98}
 \end{align}
-设 $\{F_k\}\subseteq\mathcal{A}$ 为非降序列，$\bigcup_{k=1}^\infty F_k=X$，且函数 $\|g\|_{Y^*}:X\to[0,\infty)$ 在每个 $F_k$ 上有界（一个可取的选择是 $F_k\triangleq \{\|g(\cdot)\|_{Y^*}\leqslant k\}$）。固定 $\bar k\in\mathbb{N}$，考虑空间 $L^p(F_{\bar k};Y)\equiv L^p(F_{\bar k},\mathcal{A}\cap F_{\bar k},\mu|_{\mathcal{A}\cap F_{\bar k}};Y)$。令
+设 $\{F_k\}\subseteq\mathcal{A}$ 为非降序列，$\bigcup_{k=1}^\infty F_k=X$，且函数 $\|g\|_{Y^*}:X\to[0,\infty)$ 在每个 $F_k$ 上有界（一个可取的选择是 $F_k\triangleq\{\|g(\cdot)\|_{Y^*}\leqslant k\}$）。固定 $\bar k\in\mathbb{N}$，考虑空间 $L^p(F_{\bar k};Y)\equiv L^p(F_{\bar k},\mathcal{A}\cap F_{\bar k},\mu|_{\mathcal{A}\cap F_{\bar k}};Y)$。令
 \begin{align}
-T_{\bar k}:L^p(F_{\bar k};Y)\to\mathbb{R},\quad T_{\bar k}f\triangleq \int_{F_{\bar k}}\langle g\chi_{F_{\bar k}},f\rangle_{Y^*,Y}\,\mathrm{d}\mu\ (f\in L^p(F_{\bar k};Y)). \label{align:ch04-4.99}
+T_{\bar k}:L^p(F_{\bar k};Y)\to\mathbb{R},\quad T_{\bar k}f\triangleq\int_{F_{\bar k}}\langle g\chi_{F_{\bar k}},f\rangle_{Y^*,Y}\,\mathrm{d}\mu\quad(f\in L^p(F_{\bar k};Y)). \label{align:ch04-4.99}
 \end{align}
 由于 $\|g\|_{Y^*}$ 在 $F_{\bar k}$ 上有界，故 $g\chi_{F_{\bar k}}\in L^q(F_{\bar k};Y^*)$。于是由\cref{proposition:ch04-对偶等距嵌入}，$T_{\bar k}\in(L^p(F_{\bar k};Y))^*$，且 $\|T_{\bar k}\|_{(L^p(F_{\bar k};Y))^*}=\|g\chi_{F_{\bar k}}\|_{L^q(F_{\bar k};Y^*)}$。
 
@@ -456,7 +736,7 @@ T_{\bar k}:L^p(F_{\bar k};Y)\to\mathbb{R},\quad T_{\bar k}f\triangleq \int_{F_{\
 \begin{align*}
 L^p(F_{\bar k};Y)\simeq\{f\in L^p(X;Y)\mid f=0\text{ 在 }F_{\bar k}^c\text{ 中 }\mu\text{-几乎处处}\};
 \end{align*}
-此外，简单函数 $s\in\mathcal{S}(F_{\bar k};Y)$，$s=\sum_{i=1}^k y_i\chi_{E_i\cap F_{\bar k}}$，在 $L^p(F_{\bar k};Y)$ 中稠密。于是由\eqref{align:ch04-4.98}--\eqref{align:ch04-4.99}，对每个 $f\in L^p(X;Y)$，有
+此外，简单函数 $s\in\mathcal{S}(F_{\bar k};Y)$，$s=\sum_{i=1}^ky_i\chi_{E_i\cap F_{\bar k}}$，在 $L^p(F_{\bar k};Y)$ 中稠密。于是由\eqref{align:ch04-4.98}--\eqref{align:ch04-4.99}，对每个 $f\in L^p(X;Y)$ 有
 \begin{align*}
 \langle T,f\chi_{F_{\bar k}}\rangle_{(L^p(X;Y))^*,L^p(X;Y)}=\int_X\langle g,f\chi_{F_{\bar k}}\rangle_{Y^*,Y}\,\mathrm{d}\mu=T_{\bar k}(f\chi_{F_{\bar k}}),
 \end{align*}
@@ -472,15 +752,15 @@ L^p(F_{\bar k};Y)\simeq\{f\in L^p(X;Y)\mid f=0\text{ 在 }F_{\bar k}^c\text{ 中
 \end{align}
 由 $f$ 的任意性，由\eqref{align:ch04-4.97}与\eqref{align:ch04-4.100}得 $T=\Theta g$。故断言成立。
 
-(ii)$\Rightarrow$(i)。设 $\nu:\mathcal{A}\to Y^*$ 为有有界变差且 $\nu\ll\mu$ 的向量测度。我们证明：对任意满足 $\mu(E)>0$ 的 $E\in\mathcal{A}$，存在 $F\in\mathcal{A}$，$F\subseteq E$，$\mu(F)>0$，以及 Bochner 可积函数 $h_F:F\to Y^*$，使\eqref{align:ch04-4.94}成立。于是由\cref{lemma:ch04-RNP局部}得结论。
+(ii)$\Rightarrow$(i)。设 $\nu:\mathcal{A}\to Y^*$ 为有有界变差且 $\nu\ll\mu$ 的向量测度。证明：对任意满足 $\mu(E)>0$ 的 $E\in\mathcal{A}$，存在 $F\in\mathcal{A}$，$F\subseteq E$，$\mu(F)>0$，以及 Bochner 可积函数 $h_F:F\to Y^*$，使\eqref{align:ch04-4.94}成立。于是由\cref{lemma:ch04-RNP局部}得结论。
 
-固定满足 $\mu(E)>0$ 的 $E\in\mathcal{A}$。对有限带号测度 $|\nu|-\tau\mu$（$\tau>0$）应用 Hahn 分解（见\cref{theorem:ch01-Hahn分解}）。于是存在 $\bar\tau>0$ 与 $F\subseteq E$，$\mu(F)>0$，使对所有 $G\in\mathcal{A}$，$G\subseteq F$，有 $|\nu|(G)\leqslant\bar\tau\mu(G)$。设 $s\in\mathcal{S}(X;Y)$，$s=\sum_{i=1}^k y_i\chi_{E_i}$（其中 $\{E_i,\cdots ,E_k\}$ 为 $X$ 的一个划分，且对每个 $i=1,\cdots ,k$ 有 $\mu(E_i)>0$）；于是
+固定满足 $\mu(E)>0$ 的 $E\in\mathcal{A}$。对有限带号测度 $|\nu|-\tau\mu$（$\tau>0$）应用 Hahn 分解（见\cref{theorem:ch01-Hahn分解}）。于是存在 $\bar\tau>0$ 与 $F\subseteq E$，$\mu(F)>0$，使对所有 $G\in\mathcal{A}$，$G\subseteq F$，有 $|\nu|(G)\leqslant\bar\tau\mu(G)$。设 $s\in\mathcal{S}(X;Y)$，$s=\sum_{i=1}^ky_i\chi_{E_i}$（其中 $\{E_1,\cdots,E_k\}$ 为 $X$ 的一个划分，且对每个 $i=1,\cdots,k$ 有 $\mu(E_i)>0$）；于是
 \begin{align*}
 \|s\|_{L^p(X;Y)}^p=\sum_{i=1}^k\mu(E_i)\|y_i\|_Y^p.
 \end{align*}
 定义
 \begin{align}
-T:\mathcal{S}(X;Y)\to\mathbb{R},\quad Ts\triangleq \sum_{i=1}^k\langle\nu(F\cap E_i),y_i\rangle_{Y^*,Y}\quad(s\in\mathcal{S}(X;Y)). \label{align:ch04-4.101}
+T:\mathcal{S}(X;Y)\to\mathbb{R},\quad Ts\triangleq\sum_{i=1}^k\langle\nu(F\cap E_i),y_i\rangle_{Y^*,Y}\quad(s\in\mathcal{S}(X;Y)). \label{align:ch04-4.101}
 \end{align}
 映射 $T$ 线性，且
 \begin{align}
@@ -497,9 +777,32 @@ T:\mathcal{S}(X;Y)\to\mathbb{R},\quad Ts\triangleq \sum_{i=1}^k\langle\nu(F\cap 
 \begin{align*}
 \langle\nu(G),y\rangle_{Y^*,Y}=\langle T,y\chi_G\rangle_{(L^p(X;Y))^*,L^p(X;Y)}
 =\int_G\langle h_F,y\rangle_{Y^*,Y}\,\mathrm{d}\mu
-=\Big\langle\int_G h_F\,\mathrm{d}\mu,\,y\Big\rangle_{Y^*,Y}
+=\Big\langle\int_Gh_F\,\mathrm{d}\mu,\,y\Big\rangle_{Y^*,Y}
 \end{align*}
-（见\cref{corollary:ch04-对偶配对}），故由 $y$ 的任意性得 $\nu(G)=\int_G h_F\,\mathrm{d}\mu$。证明完毕。
+（见\cref{corollary:ch04-对偶配对}），故由 $y$ 的任意性得 $\nu(G)=\int_Gh_F\,\mathrm{d}\mu$。证明完毕。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-Lp对偶刻画; kind=proof; 补出 (ii)=>(i) 中 Hahn 分解取得局部块 $F$ 的标准穷竭论证，以及 $\nu_T$ 的 $\sigma$-可加性、有界变差与绝对连续性
+\begin{proof}[以下：\cref{theorem:ch04-Lp对偶刻画}证明中略去的两个环节]
+\emph{(a) $\nu_T$ 是向量测度、有有界变差且 $\nu_T\ll\mu$。}对两两不交的 $\{A_j\}\subseteq\mathcal{A}$ 与 $y\in Y$，由 $T$ 的连续性与 $\chi_{\bigcup_jA_j}y=\sum_j\chi_{A_j}y$ 在 $L^p(X;Y)$ 中的收敛性（控制收敛定理，控制函数 $\|y\|_Y\chi_{\bigcup_jA_j}\leqslant\|y\|_Y$），
+\begin{align*}
+\langle\nu_T(\textstyle\bigcup_jA_j),y\rangle=\langle T,\chi_{\bigcup_jA_j}y\rangle=\sum_j\langle T,\chi_{A_j}y\rangle=\sum_j\langle\nu_T(A_j),y\rangle,
+\end{align*}
+故 $\nu_T$ 是 $\sigma$-可加的；又 $\|\nu_T(E)\|_{Y^*}\leqslant\|T\|[\mu(E)]^{1/p}$，于是对 $X$ 的任意有限划分 $\{E_i\}$ 由 Hölder 不等式
+\begin{align*}
+\sum_i\|\nu_T(E_i)\|_{Y^*}\leqslant\|T\|\sum_i[\mu(E_i)]^{1/p}\leqslant\|T\|n^{1/q}[\mu(X)]^{1/p}<\infty,
+\end{align*}
+故 $\nu_T$ 有有界变差；$\mu(E)=0$ 时 $\|\nu_T(E)\|_{Y^*}\leqslant\|T\|\cdot0=0$，故 $\nu_T\ll\mu$。
+
+\emph{(b) 局部块 $F$ 的存在性。}固定 $E\in\mathcal{A}$，$\mu(E)>0$，并固定 $\tau_0>0$。对每个 $\tau>0$，把 Hahn 分解（\cref{theorem:ch01-Hahn分解}）用于 $(E,\mathcal{A}\cap E)$ 上的有限带号测度 $\sigma\triangleq|\nu|-\tau\mu$，得 $P,N\in\mathcal{A}\cap E$ 使 $E=P\cup N$、$P\cap N=\varnothing$，且
+\begin{align*}
+|\nu|(G)\geqslant\tau\mu(G)\quad(G\subseteq P),\qquad |\nu|(G)\leqslant\tau\mu(G)\quad(G\subseteq N).
+\end{align*}
+若 $\mu(N)>0$，则取 $F\triangleq N$、$\bar\tau\triangleq\tau$ 即得所需结论。否则 $\mu(N)=0$，从而 $\mu(P)=\mu(E)>0$，且对每个 $G\subseteq E$ 有 $|\nu|(G)=|\nu|(G\cap P)\geqslant\tau\mu(G\cap P)=\tau\mu(G)$（其中用到 $\mu(G\cap N)=0$、$|\nu|\ll\mu$ 与 $|\nu|(G\cap N)=0$）。
+
+于是只剩一种可能：对每个 $\tau>0$ 都有 $|\nu|(G)\geqslant\tau\mu(G)$ 对一切 $G\subseteq E$ 成立。把上述论证依次用于 $\tau=2^n\tau_0$（$n\in\mathbb{N}$）；若对一切 $n$ 都落到这后一种可能，则取 $G=E$ 得 $|\nu|(E)\geqslant2^n\tau_0\mu(E)$ 对一切 $n$ 成立。而 $|\nu|(E)<\infty$，故必有 $\mu(E)=0$，与 $\mu(E)>0$ 矛盾。因此存在某个 $n$ 使相应的 $\mu(N)>0$，取 $F\triangleq N$、$\bar\tau\triangleq2^n\tau_0$ 即满足 $|\nu|(G)\leqslant\bar\tau\mu(G)$ 对一切 $G\in\mathcal{A}$、$G\subseteq F$ 成立。
+
+\emph{(c) 延拓 $T$ 与 $\bar\tau[\mu(X)]^{1/q}$ 的来源。}由\eqref{align:ch04-4.102}，$T$ 在稠密子空间 $\mathcal{S}(X;Y)\subseteq L^p(X;Y)$ 上有界，故唯一延拓为 $(L^p(X;Y))^*$ 的元素且范数不超过 $\bar\tau[\mu(X)]^{1/q}$（末步为 Hölder 不等式 $\|s\|_{L^1}\leqslant[\mu(X)]^{1/q}\|s\|_{L^p}$，用到 $\mu(X)<\infty$）。
 \end{proof}
 
 \subsection{对偶结果}\label{subsection:ch04-对偶结果}
@@ -509,25 +812,35 @@ T:\mathcal{S}(X;Y)\to\mathbb{R},\quad Ts\triangleq \sum_{i=1}^k\langle\nu(F\cap 
 \begin{theorem}\label{theorem:ch04-弱对偶}
 设 $(X,\mathcal{A},\mu)$ 为 $\sigma$-有限测度空间，$Y$ 为可分 Banach 空间。设 $p\in[1,\infty)$，$q$ 为其 Hölder 共轭。则映射
 \begin{align}
-\Theta:L^q_{w^*}(X;Y^*)\to(L^p_w(X;Y))^*,\quad \Theta g\triangleq T_g\ (g\in L^q_{w^*}(X;Y^*)), \label{align:ch04-4.104a}
+\Theta:L^q_{w^*}(X;Y^*)\to(L^p_w(X;Y))^*,\quad \Theta g\triangleq T_g\quad(g\in L^q_{w^*}(X;Y^*)), \label{align:ch04-4.104a}
 \end{align}
 其中
 \begin{align}
-T_gf\triangleq \int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu\quad(f\in L^p_w(X;Y)), \label{align:ch04-4.104b}
+T_gf\triangleq\int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu\quad(f\in L^p_w(X;Y)), \label{align:ch04-4.104b}
 \end{align}
 是等距同构。
 \end{theorem}
 
 注意在上述陈述中 $L^p_w(X;Y)=L^p(X;Y)$，因为 $Y$ 可分（见\cref{remark:ch04-Lp包含}(i)）。
 
-\begin{remark}\label{remark:ch04-弱对偶良定}
+% SUPPLEMENT: parent=theorem:ch04-弱对偶; kind=motivation; 动机（不假设 $Y^*$ 有 RNP 时对偶的弱*形态）、两侧空间的差别（$L^p_w$ 与 $L^q_{w^*}$）、证明分工（$p=1$ 由 4.4.13，$Y^*$ 可分由 4.4.12，一般情形转引）、边界
+\begin{remark}\phantomsection\label{remark:ch04-弱对偶}
+本定理是 §4.4 中对偶结果的最终形态：在不假设 $Y^*$ 具有 Radon--Nikodým 性质的前提下，把 $(L^p(X;Y))^*$ 刻画为弱$^*$可测的 $Y^*$-值函数空间 $L^q_{w^*}(X;Y^*)$。与\cref{theorem:ch04-Lp对偶刻画}相比，代价有两处：(i) 定义域不是 $L^p(X;Y)$ 而是 $L^p_w(X;Y)$（当 $Y$ 可分时二者相同，见\cref{remark:ch04-Lp包含}(i)）；(ii) 值域不是 $L^q(X;Y^*)$ 而是其子空间 $L^q_{w^*}(X;Y^*)$，因为此时 $g$ 只弱$^*$可测、其范数 $\|g(x)\|_{Y^*}$ 未必可测（$Y^*$ 不可分时弱$^*$可测函数不必强可测）。若 $Y^*$ 还可分，二者合一，回到\cref{theorem:ch04-可分对偶Lp对偶}的等式\eqref{align:ch04-4.106}。
+
+关于假设。(a) $Y$ 可分：这是本定理的核心假设，由\cref{theorem:ch04-Pettis}它给出"$L^p_w(X;Y)$ 中的函数 $\mu$-可测"，从而\eqref{align:ch04-4.104b}的被积函数可测；同时 $L^p_w(X;Y)=L^p(X;Y)$。(b) $\mu$ 为 $\sigma$-有限：证明通过有限测度块的局部化进行（$p=1$ 情形的证明见\cref{theorem:ch04-可分Y对偶}，其中 $\sigma$-有限性用于把 $L^1(X)$ 上的泛函化成 $Y^*$-值 Gelfand 积分）。(c) $p\in[1,\infty)$：$p=\infty$ 时 $L^\infty_w$ 的结构与此不同，本定理不覆盖。
+
+证明分工：$p=1$、$q=\infty$ 的情形即\cref{theorem:ch04-可分Y对偶}（对本文的目的最重要，见 §4.4.5）；$Y^*$ 可分的 $p\in(1,\infty)$ 情形由\cref{theorem:ch04-可分对偶Lp对偶}（即\eqref{align:ch04-4.106}）给出；$Y$ 可分但 $Y^*$ 不可分、$p\in(1,\infty)$ 的一般情形见文献 [44, 第 8.20 节]。下方 proof 环境把前两种情形组装起来并说明它们如何覆盖本定理。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch04-弱对偶良定}
 设 $f\in L^p_w(X;Y)$，$g\in L^q_{w^*}(X;Y^*)$。由于 $Y$ 可分，由\cref{theorem:ch04-Pettis} $f$ 为 $\mu$-可测。故存在序列 $\{s_n\}\subseteq\mathcal{S}(X;Y)$，设 $s_n=\sum_{k=1}^{k_n}y_k\chi_{E_k}$（$y_k\in Y$，$E_k\in\mathcal{A}$），如\cref{definition:ch04-简单函数}中那样，使对 $\mu$-几乎所有 $x\in X$ 有 $\|s_n(x)-f(x)\|_Y\to0$。
 
 由于 $g$ 弱$^*$可测，实值函数 $\langle g,s_n\rangle_{Y^*,Y}:X\to\mathbb{R}$ 对每个 $n\in\mathbb{N}$ 为 $\mathcal{A}$-可测。此外，当 $n\to\infty$ 时，$\langle g,s_n\rangle_{Y^*,Y}\to\langle g,f\rangle_{Y^*,Y}$ 在 $X$ 中 $\mu$-几乎处处成立，因为
 \begin{align*}
 |\langle g(x),s_n(x)\rangle_{Y^*,Y}-\langle g(x),f(x)\rangle_{Y^*,Y}|\leqslant\|s_n(x)-f(x)\|_Y\|g(x)\|_{Y^*}\quad(x\in X).
 \end{align*}
-因此实值函数 $x\mapsto\langle g(x),f(x)\rangle_{Y^*,Y}$ 可测，\eqref{align:ch04-4.104b}中的定义良定。仿照\cref{remark:ch04-对偶配对良定}中的论证可知，\eqref{align:ch04-4.104b}中定义的映射线性连续，从而 $T_g\in(L^p_w(X;Y))^*$，故定义\eqref{align:ch04-4.104a}良定。
+因此实值函数 $x\mapsto\langle g(x),f(x)\rangle_{Y^*,Y}$ 可测，\eqref{align:ch04-4.104b}中的定义良定。仿照\cref{remark:ch04-对偶配对良定}中的论证可知\eqref{align:ch04-4.104b}中定义的映射线性连续，从而 $T_g\in(L^p_w(X;Y))^*$，故定义\eqref{align:ch04-4.104a}良定。
+\end{remark}
 
 简短地说，若 $\mu$ 为 $\sigma$-有限且 $Y$ 可分，则\cref{theorem:ch04-弱对偶}的结论可表示为等式
 \begin{align}
@@ -538,25 +851,48 @@ T_gf\triangleq \int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu\quad(f\in L
 (L^p(X;Y))^*=L^q(X;Y^*) \label{align:ch04-4.106}
 \end{align}
 （见\cref{remark:ch04-Lp包含}(i)），与下文\cref{theorem:ch04-可分对偶Lp对偶}一致。
-\end{remark}
 
 我们将在 $p=1$、$q=\infty$ 的情形下证明\cref{theorem:ch04-弱对偶}，这对我们的目的是相关的（见\cref{subsection:ch04-可分Y对偶}）；$p\in(1,\infty)$ 的证明将在更强的 $Y^*$ 可分假设下给出（见\cref{subsection:ch04-可分对偶对偶}），一般情形请读者参考文献 [44, 第 8.20 节]。
+
+% SUPPLEMENT: parent=theorem:ch04-弱对偶; kind=proof; 说明如何由 Theorem 4.4.13 (p=1) 与 Theorem 4.4.12 (Y* 可分) 组装出本定理的两种已证情形
+\begin{proof}[以下：\cref{theorem:ch04-弱对偶}的两种已证情形]
+\emph{情形 $p=1$、$q=\infty$。}此时\eqref{align:ch04-4.104a}即
+\begin{align*}
+\Theta:L^\infty_{w^*}(X;Y^*)\to(L^1_w(X;Y))^*,\quad \Theta g\triangleq T_g,
+\end{align*}
+这正是\cref{theorem:ch04-可分Y对偶}所断言的等距同构（其证明不依赖 $Y^*$ 的可分性，只用到 $Y$ 可分与 $\mu$ 为 $\sigma$-有限）。故本情形成立。
+
+\emph{情形：$Y^*$ 可分。}若 $Y^*$ 可分，则由\cref{remark:ch04-Lp包含}(i) 有 $L^q_{w^*}(X;Y^*)=L^q(X;Y^*)$，故\eqref{align:ch04-4.105}与\eqref{align:ch04-4.106}一致；而此时\eqref{align:ch04-4.106}正是\cref{theorem:ch04-可分对偶Lp对偶}的结论（其对 $p\in[1,\infty)$ 全部成立），即 $(L^p(X;Y))^*=L^q(X;Y^*)$，且该等距同构由 $\Theta$ 实现（见\cref{theorem:ch04-Lp对偶刻画}的证明中 $\Theta$ 的定义与等距性）。又 $Y^*$ 可分 $\Rightarrow$ $Y$ 可分，故由\cref{remark:ch04-Lp包含}(i) 得 $L^p_w(X;Y)=L^p(X;Y)$。故本情形成立。
+
+两种情形合并即覆盖了本定理在 §4.4 中实际使用的范围；$p\in(1,\infty)$ 而 $Y^*$ 不可分的一般情形见文献 [44, 第 8.20 节]。
+\end{proof}
 
 \subsection{对偶结果：$Y^*$ 可分}\label{subsection:ch04-可分对偶对偶}
 
 如前所述，若 $Y^*$ 可分，则等式\eqref{align:ch04-4.105}与\eqref{align:ch04-4.106}一致。因此，若假设 $Y^*$ 可分，则\cref{theorem:ch04-弱对偶}是如下结果的推论。
 
 \begin{theorem}\label{theorem:ch04-可分对偶Lp对偶}
-设 $(X,\mathcal{A},\mu)$ 为 $\sigma$-有限测度空间，$Y^*$ 可分。设 $p\in[1,\infty)$，$q$ 为其 Hölder 共轭。则\eqref{align:ch04-4.106}成立。
+设 $(X,\mathcal{A},\mu)$ 为 $\sigma$-有限测度空间，且 $Y^*$ 可分。设 $p\in[1,\infty)$，$q$ 为其 Hölder 共轭。则\eqref{align:ch04-4.106}成立。
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch04-可分对偶Lp对偶; kind=motivation; 动机（$Y^*$ 可分时把定理 4.4.7 从有限测度推广到 $\sigma$-有限）、局部化-拼接策略、$\sigma$-有限性与 $Y^*$ 可分的作用、边界
+\begin{remark}\phantomsection\label{remark:ch04-可分对偶Lp对偶}
+本定理把\cref{theorem:ch04-Lp对偶刻画}（要求 $\mu$ 有限）推广到 $\sigma$-有限测度空间：只要 $Y^*$ 可分，就有 $(L^p(X;Y))^*=L^q(X;Y^*)$（等距同构）。由于 $Y^*$ 可分保证 $Y^*$ 具有 RNP（\cref{theorem:ch04-DunfordPettis}），\eqref{align:ch04-4.106}的右端就是全部对偶空间，而不像\cref{theorem:ch04-弱对偶}那样只是其"弱$^*$"部分。
+
+证明策略是局部化加拼接：取非降的有限测度集 $\{E_k\}$ 穷竭 $X$，把 $T\in(L^p(X;Y))^*$ 限制到子空间 $L^p(E_k;Y)$ 上，在每个有限测度空间 $(E_k,\mathcal{A}_k,\mu_k)$ 上用\cref{theorem:ch04-Lp对偶刻画}得核 $g_k$；由唯一性可设 $g_{k+1}|_{E_k}=g_k$，故 $g$ 良定；再由\eqref{align:ch04-4.108}的一致估计与单调收敛定理得 $\|g\|_{L^q}\leqslant\|T\|$，最后令 $k\to\infty$ 得表示公式。
+
+关于假设。(a) $\mu$ 为 $\sigma$-有限：这是局部化的前提，也保证 $\{E_k\}$ 可取非降且 $\mu(E_k)<\infty$。(b) $Y^*$ 可分：使\cref{theorem:ch04-Lp对偶刻画}在每块上可用（该定理要求 $Y^*$ 关于该测度空间有 RNP，而 $Y^*$ 可分时由\cref{theorem:ch04-DunfordPettis}自动成立）；同时它保证 $L^q(E_k;Y^*)$ 中的函数可测。(c) $p\in[1,\infty)$：同\cref{theorem:ch04-Lp对偶刻画}。
+
+边界：$Y^*$ 不可分时结论一般失效（此时只能得到\cref{theorem:ch04-可分Y对偶}的弱$^*$形式）。典型例子是 $Y=C_0(U)$：$Y$ 可分而 $Y^*=\mathscr{R}_f(U)$ 不可分，见 §4.4.5 的讨论。
+\end{remark}
+
 \begin{proof}
-若 $\mu$ 有限，则结果由\cref{theorem:ch04-DunfordPettis}与\cref{theorem:ch04-Lp对偶刻画}得到。我们证明当 $\mu$ 为 $\sigma$-有限时亦成立。设 $\{E_k\}\subseteq\mathcal{A}$ 为非降序列，每个 $k$ 有 $\mu(E_k)<\infty$，且 $\bigcup_{k=1}^\infty E_k=X$。令 $\mathcal{A}_k\triangleq \mathcal{A}\cap E_k$，$\mu_k\triangleq \mu|_{\mathcal{A}\cap E_k}$，并考虑空间 $L^p(E_k;Y)\equiv L^p(E_k,\mathcal{A}_k,\mu_k;Y)$（$k\in\mathbb{N}$）。注意 $L^p(E_k;Y)$ 可等同于 $L^p(X;Y)$ 的子空间
+若 $\mu$ 有限，则结果由\cref{theorem:ch04-DunfordPettis}与\cref{theorem:ch04-Lp对偶刻画}得到。证明当 $\mu$ 为 $\sigma$-有限时亦成立。设 $\{E_k\}\subseteq\mathcal{A}$ 为非降序列，每个 $k$ 有 $\mu(E_k)<\infty$，且 $\bigcup_{k=1}^\infty E_k=X$。令 $\mathcal{A}_k\triangleq \mathcal{A}\cap E_k$，$\mu_k\triangleq \mu|_{\mathcal{A}\cap E_k}$，并考虑空间 $L^p(E_k;Y)\equiv L^p(E_k,\mathcal{A}_k,\mu_k;Y)$（$k\in\mathbb{N}$）。注意 $L^p(E_k;Y)$ 可等同于 $L^p(X;Y)$ 的子空间
 \begin{align*}
 L^p(E_k;Y)\simeq\{f\in L^p(X;Y)\mid f=0\text{ 在 }E_k^c\text{ 中 }\mu\text{-几乎处处}\}.
 \end{align*}
 
-设 $T\in(L^p(X;Y))^*$。对任意 $k\in\mathbb{N}$，令 $T_k\triangleq T|_{L^p(E_k;Y)}$。显然 $T_k\in(L^p(E_k;Y))^*$，且 $\|T_k\|_{(L^p(E_k;Y))^*}\leqslant\|T\|_{(L^p(X;Y))^*}$。由于 $\mu_k(E_k)<\infty$，由\cref{theorem:ch04-Lp对偶刻画}存在唯一 $g_k\in L^q(E_k;Y^*)$，使对所有 $f\in L^p(E_k;Y)$ 有
+设 $T\in(L^p(X;Y))^*$。对任意 $k\in\mathbb{N}$，令 $T_k\triangleq T|_{L^p(E_k;Y)}$。由定义直接 $T_k\in(L^p(E_k;Y))^*$，且 $\|T_k\|_{(L^p(E_k;Y))^*}\leqslant\|T\|_{(L^p(X;Y))^*}$。由于 $\mu_k(E_k)<\infty$，由\cref{theorem:ch04-Lp对偶刻画}存在唯一 $g_k\in L^q(E_k;Y^*)$，使对所有 $f\in L^p(E_k;Y)$ 有
 \begin{align}
 \langle T_k,f\rangle_{(L^p(E_k;Y))^*,L^p(E_k;Y)}=\int_{E_k}\langle g_k,f\rangle_{Y^*,Y}\,\mathrm{d}\mu_k, \label{align:ch04-4.107}
 \end{align}
@@ -574,6 +910,23 @@ L^p(E_k;Y)\simeq\{f\in L^p(X;Y)\mid f=0\text{ 在 }E_k^c\text{ 中 }\mu\text{-�
 故结论成立。
 \end{proof}
 
+% SUPPLEMENT: parent=theorem:ch04-可分对偶Lp对偶; kind=proof; 补出 $g_{k+1}|_{E_k}=g_k$ 的调整（唯一性 + 零测集修正）、$g$ 的可测性、以及 $k\to\infty$ 的极限（控制收敛）
+\begin{proof}[以下：\cref{theorem:ch04-可分对偶Lp对偶}证明中被略去的细节]
+\emph{(a) 可设 $g_{k+1}|_{E_k}=g_k$。}把\eqref{align:ch04-4.107}中的 $k$ 换成 $k+1$ 并限制 $f\in L^p(E_k;Y)\subseteq L^p(E_{k+1};Y)$，与\eqref{align:ch04-4.107}比较得
+\begin{align*}
+\int_{E_k}\langle g_{k+1}-g_k,f\rangle_{Y^*,Y}\,\mathrm{d}\mu=0\quad\text{对所有 }f\in L^p(E_k;Y).
+\end{align*}
+由\cref{proposition:ch04-简单函数稠密}(i) 与\cref{theorem:ch02-Lp对偶}（或直接用 $\langle g_{k+1}-g_k,f\rangle$ 对 $f=\chi_Ey$ 取遍）得 $g_{k+1}=g_k$ 在 $E_k$ 中 $\mu$-几乎处处成立。于是存在 $\mu$-零测集 $N_k\subseteq E_k$ 使 $g_{k+1}=g_k$ 在 $E_k\setminus N_k$ 上成立；把 $g_{k+1}$ 在 $N_k$ 上重新定义为 $g_k$（不改变它在 $L^q(E_{k+1};Y^*)$ 中的等价类），即得处处相等。
+
+\emph{(b) $g$ 的可测性。}对每个 $k$，$g|_{E_k}=g_k$ 是 $\mu$-可测的（$g_k\in L^q(E_k;Y^*)$ 强可测，从而可测）；而 $\bigcup_kE_k=X$，故 $g$ 在 $X$ 上 $\mu$-可测。
+
+\emph{(c) 极限 $k\to\infty$。}$\|g_k\|_{L^q(E_k;Y^*)}^q=\int_{E_k}\|g\|_{Y^*}^q\,\mathrm{d}\mu\nearrow\int_X\|g\|_{Y^*}^q\,\mathrm{d}\mu$（单调收敛定理，$q<\infty$；$q=\infty$ 时 $\|g\|_\infty=\sup_k\|g_k\|_\infty$），故由\eqref{align:ch04-4.108}得 $\|g\|_{L^q(X;Y^*)}\leqslant\|T\|$。又对固定 $f\in L^p(X;Y)$，$\|f-f\chi_{E_k}\|_{L^p}\to0$（控制收敛定理）且 $|\langle g,f\chi_{E_k}\rangle|\leqslant\|g\|_{Y^*}\|f\|_Y\in L^1(X)$（Hölder），故由控制收敛定理
+\begin{align*}
+\int_X\langle g,f\chi_{E_k}\rangle_{Y^*,Y}\,\mathrm{d}\mu\longrightarrow\int_X\langle g,f\rangle_{Y^*,Y}\,\mathrm{d}\mu,
+\end{align*}
+而左端 $=\langle T,f\chi_{E_k}\rangle\to\langle T,f\rangle$（$T$ 连续）。于是表示公式对一切 $f\in L^p(X;Y)$ 成立。
+\end{proof}
+
 \subsection{对偶结果：$Y$ 可分}\label{subsection:ch04-可分Y对偶}
 
 $Y^*$ 可分的假设在许多情形过强，例如 $Y=C_0(U)$，其中 $U\subseteq\mathbb{R}^N$ 有界开。此时由\cref{theorem:ch02-Riesz表示}，$Y^*=\mathscr{R}_f(U)$，它不可分，而 $Y=C_0(U)$ 可分。如下结果（见文献 [44, 定理 8.17.5]、[93, 推论 (2.3)]）常为处理此类情形提供数学框架，后文将看到这一点。
@@ -581,24 +934,42 @@ $Y^*$ 可分的假设在许多情形过强，例如 $Y=C_0(U)$，其中 $U\subse
 \begin{theorem}\label{theorem:ch04-可分Y对偶}
 设 $(X,\mathcal{A},\mu)$ 为 $\sigma$-有限测度空间，$Y$ 可分。则映射
 \begin{align}
-\Theta:L^\infty_{w^*}(X;Y^*)\to(L^1_w(X;Y))^*,\quad \Theta g\triangleq T_g\ (g\in L^\infty_{w^*}(X;Y^*)), \label{align:ch04-4.109a}
+\Theta:L^\infty_{w^*}(X;Y^*)\to(L^1_w(X;Y))^*,\quad \Theta g\triangleq T_g\quad(g\in L^\infty_{w^*}(X;Y^*)), \label{align:ch04-4.109a}
 \end{align}
 其中
 \begin{align}
-T_gf\triangleq \int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu\quad(f\in L^1_w(X;Y)), \label{align:ch04-4.109b}
+T_gf\triangleq\int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu\quad(f\in L^1_w(X;Y)), \label{align:ch04-4.109b}
 \end{align}
 是等距同构。
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch04-可分Y对偶; kind=motivation; 动机（$Y^*$ 不可分时以弱*可测替代强可测）、$Y$ 可分的两处作用、与 Theorem 4.4.12 的关系、边界 $C_0(U)$
+\begin{remark}\phantomsection\label{remark:ch04-可分Y对偶}
+本定理是 §4.4.5 的主结果，也是第 4--6 章处理 $Y=C_0(U)$、$Y=C_0(Z)$ 这类"可分但 $Y^*$ 不可分"的空间时的基本工具：它把 $(L^1_w(X;Y))^*$ 刻画为**弱$^*$**可测的 $Y^*$-值本质有界函数空间，从而绕开 $Y^*$ 的 Radon--Nikodým 性质。证明的枢纽是\cref{proposition:ch04-弱星Gelfand表示}：每个 $T\in\mathcal{L}(L^1(X);Y^*)$ 都可由唯一的 $g\in L^\infty_{w^*}(X;Y^*)$ 通过 Gelfand 积分表示，且 $\|T\|=\|g\|_\infty^*$。
+
+关于假设。(a) $Y$ 可分有三处作用：其一，由\cref{theorem:ch04-Pettis}得 $L^1_w(X;Y)$ 中的函数 $\mu$-可测，从而 $L^1_w(X;Y)=L^1(X;Y)$ 且 $\mathcal{S}(X;Y)$ 在其稠密；其二，在\cref{proposition:ch04-弱星Gelfand表示}的唯一性证明中用 $Y$ 的可数稠密集把"对每个 $y$ 几乎处处相等"合成"几乎处处作为 $Y^*$ 的元素相等"；其三，使 $x\mapsto\|g(x)\|_{Y^*}=\sup_k|\langle g(x),y_k\rangle|$ 可测，故 $\|g\|_\infty^*$ 有意义。(b) $\mu$ 为 $\sigma$-有限：\cref{proposition:ch04-弱星Gelfand表示}的证明用 $(L^1(X))^*=L^\infty(X)$（\cref{theorem:ch02-Lp对偶}），该等式对 $\sigma$-有限 $\mu$ 成立。(c) 指数 $(1,\infty)$：只有 $p=1$、$q=\infty$ 时 $L^\infty$ 的对偶性质才给出\cref{proposition:ch04-弱星Gelfand表示}所需的形式；$p>1$ 的情形见\cref{theorem:ch04-弱对偶}的注释与文献 [44, 第 8.20 节]。
+
+边界与反例：若 $Y=C_0(U)$（$U\subseteq\mathbb{R}^N$ 有界开），则 $Y$ 可分而 $Y^*=\mathscr{R}_f(U)$ 不可分（\cref{theorem:ch02-Riesz表示}），\cref{theorem:ch04-可分对偶Lp对偶}不适用，本定理给出正确的对偶描述。反之，若 $Y^*$ 还可分，则 $L^\infty_{w^*}(X;Y^*)=L^\infty(X;Y^*)$，本定理退化为\cref{theorem:ch04-可分对偶Lp对偶}在 $p=1$ 的情形。
+\end{remark}
+
 为证\cref{theorem:ch04-可分Y对偶}，我们需要一些预备说明。设 $E,F$ 为 Banach 空间。我们记 $\mathcal{L}_2(E,F;\mathbb{R})$ 为从 $E\times F$ 到 $\mathbb{R}$ 的双线性连续映射空间，赋以范数
 \begin{align*}
-\mathcal{L}_2(E,F;\mathbb{R})\ni B\equiv B(e,f)\mapsto\|B\|\triangleq \sup_{\|e\|_E\leqslant1,\|f\|_F\leqslant1}|B(e,f)|.
+\mathcal{L}_2(E,F;\mathbb{R})\ni B\equiv B(e,f)\mapsto\|B\|\triangleq\sup_{\|e\|_E\leqslant1,\|f\|_F\leqslant1}|B(e,f)|.
 \end{align*}
 回顾如下结果（例如见文献 [31, 第 1.9 节]、[44, 第 8.17.4 节]）。
 
 \begin{proposition}\label{proposition:ch04-双线性等距}
 设 $E,F$ 为 Banach 空间。则 $\mathcal{L}_2(E,F;\mathbb{R})$ 等距同构于 $\mathcal{L}(E;F^*)$ 与 $\mathcal{L}(F;E^*)$。
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:ch04-双线性等距; kind=motivation; 动机（把 $\mathcal{L}(L^1;Y^*)$ 化为 $\mathcal{L}(Y;L^\infty)$ 的关键）、等距同构的具体形式、Hahn--Banach 的作用、边界
+\begin{remark}\phantomsection\label{remark:ch04-双线性等距}
+本命题是纯 Banach 空间的事实，却是\cref{proposition:ch04-弱星Gelfand表示}的枢纽：取 $E=L^1(X)$、$F=Y$，把 $\mathcal{L}(L^1(X);Y^*)$ 等距地化为 $\mathcal{L}(Y;L^\infty(X))$，于是算子 $T$ 的"核"问题变成"对每个 $y$ 给出一个 $L^\infty(X)$ 中的函数 $Sy$"，再用 $(L^\infty(X))^*=L^1(X)$ 与 $\sigma$-有限性读出点态函数 $g$。
+
+等距同构的具体形式：$B\mapsto\Phi_B$，其中 $\Phi_B(e)\in F^*$ 定义为 $\langle\Phi_B(e),f\rangle\triangleq B(e,f)$；反向地，$\Phi\mapsto B_\Phi$，$B_\Phi(e,f)\triangleq\langle\Phi(e),f\rangle$。等距性 $\|B\|=\|\Phi_B\|$ 的两半分别是：$\leqslant$ 由定义直接得到；$\geqslant$ 用到 $\|f\|_F=\sup\{|\langle f^*,f\rangle|:\|f^*\|_{F^*}\leqslant1\}$ 与 Hahn--Banach 定理（取 $f^*$ 使 $|\langle\Phi_B(e),f^*\rangle|$ 近似 $\|\Phi_B(e)\|_{F^*}$）。第二个同构 $\mathcal{L}_2(E,F;\mathbb{R})\cong\mathcal{L}(F;E^*)$ 由 $B$ 的两个变元的对称地位得到。
+
+边界：本命题只断言线性等距同构，不涉及弱拓扑；$\mathcal{L}_2$ 的完备性由 $E,F$ 完备保证。若 $E$ 或 $F$ 仅是赋范空间，等距同构仍然成立（证明只用到 Hahn--Banach），但 $\mathcal{L}_2$ 不必完备。
+\end{remark}
 
 现可证明如下结果。
 
@@ -609,6 +980,17 @@ T_gf\triangleq \int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu\quad(f\in L
 \end{align}
 此外，$\|T\|=\|g\|_\infty^*=\operatorname*{ess\,sup}_{x\in X}\|g(x)\|_{Y^*}$。
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:ch04-弱星Gelfand表示; kind=motivation; 动机（Gelfand 积分表示、弱*意义下的 Riesz 表示）、$Y$ 可分与 $\sigma$-有限的作用、范数等式的意义、边界
+\begin{remark}\phantomsection\label{remark:ch04-弱星Gelfand表示}
+本命题说明：即使 $Y^*$ 不可分，$L^1(X)$ 到 $Y^*$ 的每个有界线性算子仍可由唯一的弱$^*$可测本质有界 $Y^*$-值函数 $g$ 通过**弱$^*$**积分表示。它是标量 Riesz 表示 $(L^1(X))^*=L^\infty(X)$ 的"逐点化"向量版本：不是断言 $T\hat f=\int\hat fg$ 作为 Bochner 积分（那需要 $g$ 的强可测性与 RNP），而是断言其与每个 $y\in Y$ 的对偶配对满足标量等式\eqref{align:ch04-4.110}，即 $T\hat f$ 是 $\hat fg$ 的 Gelfand 积分（见\cref{remark:ch04-Gelfand表示}）。
+
+关于假设。(a) $Y$ 可分：唯一性证明的末段用可数稠密集 $D=\{y_k\}$ 把"对每个 $y_k$ 几乎处处相等"提升为"作为 $Y^*$ 的元素几乎处处相等"；若无此假设，$g$ 只能在"对每个 $y$ 几乎处处"的弱意义下唯一。(b) $\mu$ 为 $\sigma$-有限：把 $\mathcal{L}(L^1(X);Y^*)\cong\mathcal{L}(Y;L^\infty(X))$ 中的 $Sy$ 与 $L^1(X)$ 配对时用 $(L^\infty(X))^*=L^1(X)$；$\sigma$-有限性保证该对偶公式成立（若 $\mu$ 非 $\sigma$-有限，$(L^\infty(X))^*$ 严格大于 $L^1(X)$，论证失效）。(c) $T$ 线性连续：给出 $\|(Sy)(x)\|\leqslant\|S\|\|y\|$ 的一致估计，从而\eqref{align:ch04-4.110}的右端对每个 $\hat f$ 可积，并使 $\|T\|=\|g\|_\infty^*$。
+
+范数等式 $\|T\|=\|g\|_\infty^*$ 是本命题的定量部分：$\|g\|_\infty^*\leqslant\|T\|$ 由\eqref{align:ch04-4.113}给出，反向不等式由\eqref{align:ch04-4.110}与 Hölder 不等式给出。注意 $\|g\|_\infty^*$ 是**本质**上确界，且 $x\mapsto\|g(x)\|_{Y^*}$ 的可测性依赖 $Y$ 可分（见下方补写的证明）。
+
+边界：若 $Y$ 不可分，本命题的"唯一性"与"范数等式"都需改述（本质上确界可能不可测）。若 $T$ 只定义在 $L^1(X)$ 的稠密子空间上，则只能得到 $g$ 在弱$^*$意义下的局部表示。
+\end{remark}
 
 \begin{proof}
 取 $E=L^1(X)$、$F=Y$，应用\cref{proposition:ch04-双线性等距}，可见 $\mathcal{L}(L^1(X);Y^*)$ 等距同构于 $\mathcal{L}(Y;L^\infty(X))$。于是对任意 $T\in\mathcal{L}(L^1(X);Y^*)$，存在唯一 $S\in\mathcal{L}(Y;L^\infty(X))$，使 $\|S\|=\|T\|$，且对所有 $y\in Y$、$\hat f\in L^1(X)$ 有
@@ -621,7 +1003,7 @@ T_gf\triangleq \int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu\quad(f\in L
 \end{align}
 此映射连续，故存在 $g_x\in Y^*$ 使 $\langle g_x,y\rangle_{Y^*,Y}=(Sy)(x)$。令 $g:X\to Y^*$，$g(x)\triangleq g_x$（对 $\mu$-几乎所有 $x\in X$）。
 
-由于 $Sy\in L^\infty(X)$，映射 $x\mapsto(Sy)(x)=\langle g(x),y\rangle_{Y^*,Y}$ 可测，故 $g$ 弱$^*$可测。此外，由\eqref{align:ch04-4.112}，对 $\mu$-几乎所有 $x\in X$，有
+由于 $Sy\in L^\infty(X)$，映射 $x\mapsto(Sy)(x)=\langle g(x),y\rangle_{Y^*,Y}$ 可测，故 $g$ 弱$^*$可测。此外，由\eqref{align:ch04-4.112}，对 $\mu$-几乎所有 $x\in X$ 有
 \begin{align*}
 |\langle g(x),y\rangle_{Y^*,Y}|=|\langle g_x,y\rangle_{Y^*,Y}|=|(Sy)(x)|\leqslant\|S\|\|y\|_Y.
 \end{align*}
@@ -631,12 +1013,12 @@ T_gf\triangleq \int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu\quad(f\in L
 \end{align}
 从而 $g\in L^\infty_{w^*}(X;Y^*)$。
 
-现注意，由\eqref{align:ch04-4.111}与 $g$ 的定义本身，对任意 $\hat f\in L^1(X)$ 与 $y\in Y$，有
+现注意，由\eqref{align:ch04-4.111}与 $g$ 的定义本身，对任意 $\hat f\in L^1(X)$ 与 $y\in Y$ 有
 \begin{align*}
 \langle T\hat f,y\rangle_{Y^*,Y}=\big\langle\langle g(\cdot),y\rangle_{Y^*,Y},\,\hat f\big\rangle_{L^\infty(X),L^1(X)}
 =\int_X\hat f(x)\langle g(x),y\rangle_{Y^*,Y}\,\mathrm{d}\mu(x),
 \end{align*}
-从而得\eqref{align:ch04-4.110}。由\eqref{align:ch04-4.110}显然得 $\|T\|\leqslant\|g\|_\infty^*$。由于反向不等式已证（见\eqref{align:ch04-4.113}），故 $\|T\|=\|g\|_\infty^*$。
+从而得\eqref{align:ch04-4.110}。由\eqref{align:ch04-4.110}由定义直接得 $\|T\|\leqslant\|g\|_\infty^*$。由于反向不等式已证（见\eqref{align:ch04-4.113}），故 $\|T\|=\|g\|_\infty^*$。
 
 还需证明唯一性。为此，设存在 $g_1,g_2\in L^\infty_{w^*}(X;Y^*)$ 满足\eqref{align:ch04-4.110}。则对所有 $\hat f\in L^1(X)$ 与 $y\in Y$ 有
 \begin{align*}
@@ -646,21 +1028,34 @@ T_gf\triangleq \int_X\langle g(x),f(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu\quad(f\in L
 \begin{align}
 \langle g_1(x),y\rangle_{Y^*,Y}=\langle g_2(x),y\rangle_{Y^*,Y}. \label{align:ch04-4.114}
 \end{align}
-由于 $Y$ 可分，存在稠密可数集 $D\equiv\{y_k\}\subseteq Y$。令 $N\triangleq \bigcup_{k=1}^\infty N_{y_k}$。则 $N$ 为 $\mu$-零测，且由\eqref{align:ch04-4.114}，对所有 $x\in N^c$ 与 $y_k\in D$ 有 $\langle g_1(x)-g_2(x),y_k\rangle_{Y^*,Y}=0$，故由 $D$ 的稠密性得 $g_1=g_2$ 在 $X$ 中 $\mu$-几乎处处成立。故结论成立。
+由于 $Y$ 可分，存在稠密可数集 $D\equiv\{y_k\}\subseteq Y$。令 $N\triangleq\bigcup_{k=1}^\infty N_{y_k}$。则 $N$ 为 $\mu$-零测，且由\eqref{align:ch04-4.114}，对所有 $x\in N^c$ 与 $y_k\in D$ 有 $\langle g_1(x)-g_2(x),y_k\rangle_{Y^*,Y}=0$，故由 $D$ 的稠密性得 $g_1=g_2$ 在 $X$ 中 $\mu$-几乎处处成立。故结论成立。
 \end{proof}
 
-\begin{remark}\label{remark:ch04-Gelfand表示}
+% SUPPLEMENT: parent=proposition:ch04-弱星Gelfand表示; kind=proof; 补出代表元的选取（可数稠密集上同时取代表）、$g$ 弱*可测与 $\|g(x)\|_{Y^*}$ 可测、以及 $\|T\|\leqslant\|g\|_\infty^*$
+\begin{proof}[以下：\cref{proposition:ch04-弱星Gelfand表示}证明中代表元与可测性的细节]
+\emph{(a) 代表元的选取。}$L^\infty(X)$ 的元素是等价类，不能对每个 $y$ 任意取代表后再声称"对几乎所有 $x$ 同时有定义"。正确做法：取 $Y$ 的可数稠密集 $D=\{y_k\}$，对每个 $k$ 选定 $Sy_k$ 的一个可测代表 $\varphi_k$，令 $N_0\triangleq\bigcup_k\{\varphi_k\text{ 无定义或 }|\varphi_k|>\|S\|\|y_k\|_Y\}$，则 $\mu(N_0)=0$。对 $x\notin N_0$，令 $\Lambda_x:y_k\mapsto\varphi_k(x)$，则 $|\Lambda_x(y_k)|\leqslant\|S\|\|y_k\|_Y$，故 $\Lambda_x$ 是 $D$ 上范数 $\leqslant\|S\|$ 的线性泛函；由 $D$ 在 $Y$ 中稠密与 Hahn--Banach 定理它唯一延拓为 $g_x\in Y^*$，且 $\|g_x\|_{Y^*}\leqslant\|S\|$。对 $x\in N_0$ 令 $g_x\triangleq0$，即得 $g:X\to Y^*$。
+
+\emph{(b) $\langle g(\cdot),y\rangle$ 的可测性。}对 $y\in D$ 有 $\langle g(x),y\rangle=\varphi_k(x)$（$x\notin N_0$），故可测。对一般 $y\in Y$ 取 $y_k\to y$，则 $\langle g(x),y_k\rangle\to\langle g(x),y\rangle$ 对一切 $x\in X$ 成立（因 $\|g(x)\|\leqslant\|S\|$ 一致有界），故 $\langle g(\cdot),y\rangle$ 可测。于是 $g$ 弱$^*$可测；又因 $Y$ 可分，$\|g(x)\|_{Y^*}=\sup_k|\langle g(x),y_k\rangle|$ 是可测函数（可数上确界），故 $\|g\|_\infty^*=\operatorname*{ess\,sup}_x\|g(x)\|_{Y^*}$ 有意义。由 (a) 中 $\|g_x\|_{Y^*}\leqslant\|S\|$ 得 $\|g\|_\infty^*\leqslant\|S\|=\|T\|$，即\eqref{align:ch04-4.113}。
+
+\emph{(c) $\|T\|\leqslant\|g\|_\infty^*$。}由\eqref{align:ch04-4.110}与 Hölder 不等式，对 $\|\hat f\|_1\leqslant1$ 与 $\|y\|_Y\leqslant1$ 有
+\begin{align*}
+|\langle T\hat f,y\rangle_{Y^*,Y}|\leqslant\int_X|\hat f|\,\|g\|_{Y^*}\,\mathrm{d}\mu\leqslant\|\hat f\|_1\|g\|_\infty^*\leqslant\|g\|_\infty^*,
+\end{align*}
+对 $\hat f$ 取上确界并用 $\|T\hat f\|_{Y^*}=\sup_{\|y\|_Y\leqslant1}|\langle T\hat f,y\rangle|$ 得 $\|T\|\leqslant\|g\|_\infty^*$。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch04-Gelfand表示}
 等式\eqref{align:ch04-4.110}可重述为：对所有 $\hat f\in L^1(X)$ 有
 \begin{align*}
-T\hat f=G\!\int_X\hat f\,g\,\mathrm{d}\mu,
+T\hat f=\mathcal{G}\int_X\hat f g\,\mathrm{d}\mu,
 \end{align*}
-即 $T\hat f$ 是 $\hat f\,g$ 在 $X$ 上的 Gelfand 积分（见\eqref{align:ch04-4.64c}；注意 $\hat f\,g:X\to Y^*$ 弱$^*$可测，且对每个 $y\in Y$，映射 $x\mapsto\langle\hat f(x)g(x),y\rangle_{Y^*,Y}$ 属于 $L^1(X)$）。由\cref{proposition:ch04-弱星Gelfand表示}，这等价于说算子 $T$ 是 Riesz 可表示的，或 $Y^*$ 在更弱意义下具有 Radon--Nikodým 性质（见\cref{definition:ch04-RNP}、\cref{definition:ch04-Riesz可表示}与文献 [101, 第 7 章]；另见文献 [93]）。
+即 $T\hat f$ 是 $\hat f g$ 在 $X$ 上的 Gelfand 积分（见\eqref{align:ch04-4.64c}；注意 $\hat f g:X\to Y^*$ 弱$^*$可测，且对每个 $y\in Y$，映射 $x\mapsto\langle\hat f(x)g(x),y\rangle_{Y^*,Y}$ 属于 $L^1(X)$）。由\cref{proposition:ch04-弱星Gelfand表示}，这等价于说算子 $T$ 是 Riesz 可表示的，或 $Y^*$ 在更弱意义下具有 Radon--Nikodým 性质（见\cref{definition:ch04-RNP}、\cref{definition:ch04-Riesz可表示}与文献 [101, \cref{chapter:ch07}]；另见文献 [93]）。
 \end{remark}
 
 现可证明\cref{theorem:ch04-可分Y对偶}。
 
 \begin{proof}[\textbf{证明\cref{theorem:ch04-可分Y对偶}}]
-在\eqref{align:ch04-4.109b}中取 $f=\hat f\,y$（$y\in Y$，$\hat f\in L^1(X)$），并仿照\cref{proposition:ch04-弱星Gelfand表示}唯一性证明中的论证，可知\eqref{align:ch04-4.109a}中定义的算子 $\Theta$ 单射（此处用到 $Y$ 的可分性）。此外，
+在\eqref{align:ch04-4.109b}中取 $f=\hat fy$（$y\in Y$，$\hat f\in L^1(X)$），并仿照\cref{proposition:ch04-弱星Gelfand表示}唯一性证明中的论证，可知\eqref{align:ch04-4.109a}中定义的算子 $\Theta$ 单射（此处用到 $Y$ 的可分性）。此外，
 \begin{align*}
 |\langle\Theta g,f\rangle_{(L^1_w(X;Y))^*,L^1_w(X;Y)}|
 \leqslant\int_X|\langle g(x),f(x)\rangle_{Y^*,Y}|\,\mathrm{d}\mu
@@ -671,9 +1066,9 @@ T\hat f=G\!\int_X\hat f\,g\,\mathrm{d}\mu,
 
 现证 $\Theta$ 满射。对任意 $F\in(L^1_w(X;Y))^*$，令
 \begin{align*}
-T_F:L^1(X)\to Y^*,\quad \langle T_F\hat f,y\rangle_{Y^*,Y}\triangleq \langle F,\hat f\,y\rangle_{(L^1_w(X;Y))^*,L^1_w(X;Y)}\ (\hat f\in L^1(X),\ y\in Y).
+T_F:L^1(X)\to Y^*,\quad \langle T_F\hat f,y\rangle_{Y^*,Y}\triangleq\langle F,\hat fy\rangle_{(L^1_w(X;Y))^*,L^1_w(X;Y)}\quad(\hat f\in L^1(X),\ y\in Y).
 \end{align*}
-显然 $T_F$ 线性，且
+由定义直接 $T_F$ 线性，且
 \begin{align*}
 |\langle T_F\hat f,y\rangle_{Y^*,Y}|\leqslant\|F\|_{(L^1_w(X;Y))^*}\|\hat f\|_1\|y\|_Y;
 \end{align*}
@@ -685,9 +1080,9 @@ T_F:L^1(X)\to Y^*,\quad \langle T_F\hat f,y\rangle_{Y^*,Y}\triangleq \langle F,\
 \end{align}
 且 $\|T_F\|=\|g_F\|_\infty^*$。由 $T_F$ 的定义与等式\eqref{align:ch04-4.115}，还有
 \begin{align*}
-\langle F,\hat f\,y\rangle_{(L^1_w(X;Y))^*,L^1_w(X;Y)}=\int_X\langle g_F(x),\hat f(x)y\rangle_{Y^*,Y}\,\mathrm{d}\mu(x),
+\langle F,\hat fy\rangle_{(L^1_w(X;Y))^*,L^1_w(X;Y)}=\int_X\langle g_F(x),\hat f(x)y\rangle_{Y^*,Y}\,\mathrm{d}\mu(x),
 \end{align*}
-故显然
+故由定义直接
 \begin{align*}
 \langle F,s\rangle_{(L^1_w(X;Y))^*,L^1_w(X;Y)}=\int_X\langle g_F(x),s(x)\rangle_{Y^*,Y}\,\mathrm{d}\mu(x)\quad\text{对所有 }s\in\mathcal{S}(X;Y).
 \end{align*}
@@ -706,6 +1101,23 @@ T_F:L^1(X)\to Y^*,\quad \langle T_F\hat f,y\rangle_{Y^*,Y}\triangleq \langle F,\
 故结论成立。
 \end{proof}
 
+% SUPPLEMENT: parent=theorem:ch04-可分Y对偶; kind=proof; 补出 $\Theta$ 单射与连续性中"弱*可测但非强可测"的处理、$\mathcal{S}$ 到 $L^1_w$ 的延拓、以及范数等式两半
+\begin{proof}[以下：\cref{theorem:ch04-可分Y对偶}证明中的三处细节]
+\emph{(a) $\Theta$ 单射。}设 $\Theta g=0$，即 $T_gf=0$ 对一切 $f\in L^1_w(X;Y)$。取 $f=\hat fy$（$\hat f\in L^1(X)$，$y\in Y$），得
+\begin{align*}
+\int_X\hat f(x)\langle g(x),y\rangle_{Y^*,Y}\,\mathrm{d}\mu(x)=0\quad\text{对一切 }\hat f\in L^1(X).
+\end{align*}
+由 $\hat f$ 任意，对每个 $y\in Y$ 有 $\langle g(x),y\rangle=0$ 对 $\mu$-几乎所有 $x$ 成立。取 $Y$ 的可数稠密集 $D$ 并对 $y\in D$ 取并集零测集，得：对 $\mu$-几乎所有 $x$，$\langle g(x),y\rangle=0$ 对一切 $y\in D$ 成立，故由稠密性 $g(x)=0$。因此 $g=0$，$\Theta$ 单射（此步用 $Y$ 的可分性）。
+
+\emph{(b) 连续性。}由 $|\langle g(x),f(x)\rangle|\leqslant\|g(x)\|_{Y^*}\|f(x)\|_Y$ 与 Hölder 不等式得 $\|\Theta g\|\leqslant\|g\|_\infty^*$；注意这里用到 $x\mapsto\|g(x)\|_{Y^*}$ 的可测性（$Y$ 可分，见\cref{remark:ch04-弱星Gelfand表示}）。
+
+\emph{(c) 从 $\mathcal{S}(X;Y)$ 延拓到 $L^1_w(X;Y)$。}由\cref{proposition:ch04-简单函数稠密}(i)，$\mathcal{S}(X;Y)$ 在 $L^1(X;Y)=L^1_w(X;Y)$ 中稠密（$Y$ 可分）。对 $s\in\mathcal{S}(X;Y)$，\eqref{align:ch04-4.116}成立；对一般 $f\in L^1_w(X;Y)$ 取 $s_n\to f$ 于 $L^1$，则由
+\begin{align*}
+|\langle g_F,f-s_n\rangle|\leqslant\|g_F\|_\infty^*\|f-s_n\|_1\to0
+\end{align*}
+与 $\langle F,s_n\rangle\to\langle F,f\rangle$（$F$ 连续）得\eqref{align:ch04-4.116}。
+\end{proof}
+
 若 $Z$ 为 $\sigma$-紧度量空间，则空间 $C_0(Z)$ 可分（见附录 A 的\cref{proposition:chA-C0可分}与第 A.7 段）。于是由\cref{theorem:ch02-Riesz表示}与\cref{theorem:ch04-可分Y对偶}，有如下结果。
 
 \begin{proposition}\label{proposition:ch04-C0对偶}
@@ -715,7 +1127,26 @@ T_F:L^1(X)\to Y^*,\quad \langle T_F\hat f,y\rangle_{Y^*,Y}\triangleq \langle F,\
 \end{align}
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch04-C0对偶; kind=proof; 原书未给证明（由定理 2.7.1 与 4.4.13 立得），补出两句推导
+\begin{proof}
+由 $Z$ 为 $\sigma$-紧度量空间知 $C_0(Z)$ 可分（见\cref{proposition:chA-C0可分}），故\cref{theorem:ch04-可分Y对偶}适用于 $Y=C_0(Z)$，给出
+\begin{align*}
+(L^1_w(X;C_0(Z)))^*=L^\infty_{w^*}(X;C_0(Z)^*).
+\end{align*}
+又由\cref{theorem:ch02-Riesz表示}有 $C_0(Z)^*=\mathscr{R}_f(Z)$（$\sigma$-紧空间上的 Radon 测度空间），且 $Y=C_0(Z)$ 可分给出 $L^1_w(X;C_0(Z))=L^1(X;C_0(Z))$（见\cref{remark:ch04-Lp包含}(i)）。代入即得\eqref{align:ch04-4.117}。
+\end{proof}
 
+% SUPPLEMENT: parent=proposition:ch04-C0对偶; kind=motivation; 动机（$C_0(Z)$ 型空间的对偶是弱*可测的 Radon 测度值本质有界函数）、各假设作用、边界
+\begin{remark}\phantomsection\label{remark:ch04-C0对偶}
+本命题把\cref{theorem:ch04-可分Y对偶}具体化到 $Y=C_0(Z)$，给出第 5、6 章反复使用的对偶公式
+\begin{align*}
+(L^1(X;C_0(Z)))^*=L^\infty_{w^*}(X;\mathscr{R}_f(Z)).
+\end{align*}
+它说明：$C_0(Z)$-值 $L^1$ 函数的对偶空间由"弱$^*$可测的 Radon 测度值本质有界函数"构成，而不是 $L^\infty(X;\mathscr{R}_f(Z))$——因为 $\mathscr{R}_f(Z)$ 一般不可分（如 $Z=[0,1]$ 时 $\mathscr{R}_f(Z)=C[0,1]^*$ 不可分）。
 
+关于假设。(a) $Z$ 为 $\sigma$-紧度量空间：保证 $C_0(Z)$ 可分（\cref{proposition:chA-C0可分}），从而使\cref{theorem:ch04-可分Y对偶}可用；同时也保证 $C_0(Z)^*=\mathscr{R}_f(Z)$（\cref{theorem:ch02-Riesz表示}）。(b) $\mu$ 为 $\sigma$-有限：\cref{theorem:ch04-可分Y对偶}的假设。(c) 等式两端的两种写法：$(L^1(X;C_0(Z)))^*=(L^1_w(X;C_0(Z)))^*$ 用到 $Y=C_0(Z)$ 可分。
+
+边界：若 $Z$ 不可分（例如 $Z$ 为不可分的紧 Hausdorff 空间），则 $C_0(Z)$ 不可分，本命题不适用；此时须直接用\cref{proposition:ch04-弱星Gelfand表示}的形式。
+\end{remark}
 
 \end{document}

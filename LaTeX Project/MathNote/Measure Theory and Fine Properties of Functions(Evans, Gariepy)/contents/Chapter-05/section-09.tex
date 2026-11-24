@@ -1,0 +1,721 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{BV 函数的逐点性质}\label{section:ch05-09}
+
+接下来把关于有限周长集的分析推广到一般的 $\BV$ 函数。目标是证明：一个 $\BV$ 函数是「测度论意义下逐段连续」的，其「跳跃沿着一张测度论意义下的 $C^1$ 曲面」发生。
+
+此后总假设 $f\in\BV(\mathbb{R}^n)$，并考察当 $y$ 趋于典型点 $x\in\mathbb{R}^n$ 时 $f(y)$ 的近似极限。
+
+\begin{definition}[近似上极限与近似下极限]\label{definition:ch05-5-8}
+设 $n\geqslant1$ 为整数，$\mathcal{L}^n$ 为 $\mathbb{R}^n$ 上的 $n$ 维 Lebesgue 测度，$B(x,r):=\{y\in\mathbb{R}^n\mid\lvert x-y\rvert\leqslant r\}$ 为以 $x$ 为心、$r>0$ 为半径的闭球，$f:\mathbb{R}^n\to\mathbb{R}$ 为 $\mathcal{L}^n$-可测函数，$x\in\mathbb{R}^n$；对 $t\in\mathbb{R}$ 记 $\{f>t\}:=\{y\in\mathbb{R}^n\mid f(y)>t\}$ 与 $\{f<t\}:=\{y\in\mathbb{R}^n\mid f(y)<t\}$。则 $f$ 在 $x$ 处的\textbf{近似上极限}与\textbf{近似下极限}分别定义为
+\begin{align*}
+\mu(x)&:=\inf\Bigl\{t\in\mathbb{R}\Bigm|\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f>t\}\bigr)}{r^n}=0\Bigr\},\\
+\lambda(x)&:=\sup\Bigl\{t\in\mathbb{R}\Bigm|\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f<t\}\bigr)}{r^n}=0\Bigr\},
+\end{align*}
+其中约定 $\inf\varnothing:=+\infty$、$\sup\varnothing:=-\infty$；并分别记作
+\begin{align*}
+\mu(x)=\operatorname*{ap\,lim\,sup}_{y\to x}f(y),\qquad
+\lambda(x)=\operatorname*{ap\,lim\,inf}_{y\to x}f(y).
+\end{align*}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch05-5-8; kind=motivation; 说明为何用水平集的密度刻画近似上、下极限，以及它们与近似极限、精确代表元的关系
+\begin{remark}\phantomsection\label{remark:ch05-def-5-8-动机}
+$\BV$ 函数的逐点取值在 $\mathcal{L}^n$-零测集上没有意义，它的一阶导数又只是向量值 Radon 测度，因此不能用极限 $\lim_{y\to x}f(y)$ 描述其在一点附近的行为。定义改用水平集在 $x$ 处的密度：条件「$\{f>t\}$ 在 $x$ 处的密度为零」表示 $f$ 在 $x$ 附近几乎处处不超过 $t$，于是所有这样的 $t$ 的下确界正是 $f$ 在 $x$ 附近的渐近最大值，这正是 $\mu(x)$；把 $f$ 换成 $-f$ 并把上、下确界互换，即得 $\lambda(x)$ 的含义。
+
+这样得到的 $\mu(x)$ 与 $\lambda(x)$ 对每个 $x$ 都有定义（可以取 $\pm\infty$），不需要事先知道极限是否存在。当 $f$ 在 $x$ 处的近似极限为有限实数 $\ell$ 时，$\lambda(x)=\mu(x)=\ell$；反之，若 $\lambda(x)=\mu(x)=\ell\in\mathbb{R}$，则对每个 $\varepsilon>0$ 有
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f>\ell+\varepsilon\}\bigr)}{r^n}=0,\qquad
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f<\ell-\varepsilon\}\bigr)}{r^n}=0,
+\end{align*}
+而 $B(x,r)$ 被 $\{f>\ell+\varepsilon\}$、$\{f<\ell-\varepsilon\}$ 与 $\{\lvert f-\ell\rvert\leqslant\varepsilon\}$ 覆盖，故 $\aplim_{y\to x}f(y)=\ell$（\cref{definition:ch01-1-27}）。% XREF internal
+因此 $\lambda$ 与 $\mu$ 分别是近似极限的下侧包络与上侧包络，其差 $\mu-\lambda$ 度量近似极限失效的程度；而平均值 $F=(\lambda+\mu)/2$ 在 $\mathcal{H}^{n-1}$-a.e. 点处给出 $f$ 的精确代表元。\cref{theorem:ch05-5-19}将证明：在 $\mathcal{H}^{n-1}$-a.e. 点处，$\lambda(x)$ 与 $\mu(x)$ 恰是 $f$ 在跳跃超平面两侧的近似极限。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-8; kind=hypotheses; 逐条分析可测性、t 的范围与单调性、±∞ 约定、归一化因子的选取以及与代表元无关
+\begin{remark}\phantomsection\label{remark:ch05-def-5-8-条件}
+\begin{enumerate}[(i)]
+\item 可测性假设的作用：比式中的 $\mathcal{L}^n(B(x,r)\cap\{f>t\})$ 只在 $f$ 为 $\mathcal{L}^n$-可测时才有定义（此时 $\{f>t\}$ 与 $\{f<t\}$ 都是可测集）；若 $f$ 不可测，则须把 $\mathcal{L}^n$ 换成外测度，两式的含义不变。
+\item 参数范围：$t$ 取遍全体实数，$r$ 沿正数趋于零。由于 $\mathcal{L}^n(B(x,r))=\alpha(n)r^n$，分母写成 $r^n$ 与写成 $\mathcal{L}^n(B(x,r))$ 只相差正常数 $\alpha(n)$，两种写法给出同一个下确界与上确界。
+\item 关于 $t$ 的单调性：若 $t_1<t_2$，则 $\{f>t_2\}\subseteq\{f>t_1\}$，故定义 $\mu$ 所用的实数集关于 $t$ 向上封闭；同理定义 $\lambda$ 所用的实数集关于 $t$ 向下封闭。这保证下确界与上确界在 $[-\infty,+\infty]$ 中存在，并且只在集合为空时取到约定值：$\mu(x)=+\infty$ 当且仅当对每个 $t\in\mathbb{R}$ 都有 $\limsup_{r\to0}\mathcal{L}^n(B(x,r)\cap\{f>t\})/r^n>0$。
+\item 与\cref{definition:ch01-1-28}的一致性：那里的近似上极限、近似下极限用同一组水平集的下确界与上确界定义，但要求所论集合的下确界为实数；本定义允许取 $\pm\infty$，因而对每个 $x$ 都有值，这是后文把 $\lambda,\mu$ 当作 $\mathbb{R}^n$ 上的函数来讨论的前提。 % XREF internal
+\item 两个量只依赖 $f$ 的等价类：把 $f$ 换成 $\mathcal{L}^n$-a.e. 相等的函数不改变任何比式的极限，故 $\lambda$ 与 $\mu$ 由 $f$ 的等价类唯一决定；但它们在每个点都有定义，这一点与精确代表元 $f^{*}$ 只在 $\mathcal{L}^n$-a.e. 点有定义不同。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-def-5-8-序}
+对一切 $x\in\mathbb{R}^n$ 有 $-\infty\leqslant\lambda(x)\leqslant\mu(x)\leqslant+\infty$。
+
+其中 $\lambda(x)\leqslant\mu(x)$ 的论证如下。设 $s<t$ 且
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f>s\}\bigr)}{r^n}=0,\qquad
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f<t\}\bigr)}{r^n}=0 .
+\end{align*}
+由于 $s<t$ 时 $\{f>s\}\cup\{f<t\}=\mathbb{R}^n$，对每个 $r>0$ 有
+\begin{align*}
+1\leqslant\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f>s\}\bigr)}{\alpha(n)r^n}+\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f<t\}\bigr)}{\alpha(n)r^n},
+\end{align*}
+令 $r\to0$ 得 $1\leqslant0$，矛盾。因此不存在同时属于定义 $\mu$ 与定义 $\lambda$ 所用两个实数集的 $s<t$。记这两个实数集为 $M(x)$ 与 $L(x)$，并设 $\inf M(x)<\sup L(x)$；取实数 $\gamma$ 使 $\inf M(x)<\gamma<\sup L(x)$，则存在 $s\in M(x)$ 满足 $s<\gamma$ 与 $t\in L(x)$ 满足 $t>\gamma$，从而 $s<t$，与上述矛盾。故 $\inf M(x)\geqslant\sup L(x)$，即 $\mu(x)\geqslant\lambda(x)$。
+\end{remark}
+
+\begin{lemma}[$\lambda$ 与 $\mu$ 的 Borel 可测性]\label{lemma:ch05-5-6}
+设 $n\geqslant1$ 为整数，$f:\mathbb{R}^n\to\mathbb{R}$ 为 $\mathcal{L}^n$-可测函数，$\lambda,\mu:\mathbb{R}^n\to[-\infty,+\infty]$ 为\cref{definition:ch05-5-8}所定义的近似下极限与近似上极限。则 $\lambda$ 与 $\mu$ 都是 Borel 可测函数。 % XREF internal
+\end{lemma}
+
+% SUPPLEMENT: parent=lemma:ch05-5-6; kind=motivation; 说明可测性为何是谈论 H^{n-1} 测度与水平集测度的前提
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-6-动机}
+后文的论证多次对集合 $\{\lambda>t\}$、$\{\mu\leqslant s\}$ 取 $\mathcal{H}^{n-1}$ 测度，并对 $\mathcal{H}^{n-1}(\{\lambda(x)<t<\mu(x)\})$ 关于 $t$ 积分。这些操作要求 $\lambda$ 与 $\mu$ 关于 Borel $\sigma$-代数可测，否则 $\{\lambda>t\}$ 未必是 Borel 集，$\mathcal{H}^{n-1}$ 在其上虽有外测度却无法使用 Fubini 定理与测度的可数可加性。本引理说明：尽管 $\lambda,\mu$ 由一族随 $x$ 变动的比式的下确界、上确界定义，它们仍然是 Borel 函数，从而上述测度论操作合法。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch05-5-6; kind=hypotheses; 逐条分析可测性、有理数上极限的作用、s 的范围与 μ 取值于扩展实数的处理
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-6-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f$ 为 $\mathcal{L}^n$-可测是必要的：证明的第一步用到 $E_t=\{f>t\}$ 为 $\mathcal{L}^n$-可测集，否则 $\mathcal{L}^n(B(x,r)\cap E_t)$ 没有定义。这里只需 $\mathcal{L}^n$-可测性而不需 $f$ 可积，因为所论比式的分子对每个 $r>0$ 都是有限球的测度。
+\item 证明中把 $r\to0$ 换成「$r$ 沿有理数趋于零」：可数族连续函数的上极限仍是 Borel 可测函数，而不可数族的上极限没有这一性质。这一步同时把 $\mu_t$ 化归为可数多个连续函数的组合。
+\item 结论对每个 $s\in\mathbb{R}$ 给出 $\{\mu\leqslant s\}$ 为 Borel 集；由于 $\mu$ 取值于 $[-\infty,+\infty]$，这已足够：对 $a<b$ 有 $\mu^{-1}\bigl((a,b)\bigr)=\{\mu\leqslant b\}\setminus\{\mu\leqslant a\}$ 为 Borel 集，而形如 $(a,b)$ 的区间生成 $[-\infty,+\infty]$ 的 Borel $\sigma$-代数。
+\item 恒等式 $\{\mu\leqslant s\}=\bigcap_{k}\{\mu_{s+1/k}=0\}$ 的成立依赖于 $\mu$ 的定义中实数集关于 $t$ 的向上封闭性：$\mu(x)\leqslant s$ 当且仅当每个 $s+1/k$ 都属于该集合，而后者又等价于 $\mu_{s+1/k}(x)=0$。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+对每个 $t\in\mathbb{R}$，集合 $E_t:=\{x\in\mathbb{R}^n\mid f(x)>t\}$ 是 $\mathcal{L}^n$-可测的；于是对每个 $r>0$ 与 $t\in\mathbb{R}$，映射
+\begin{align*}
+x\longmapsto\frac{\mathcal{L}^n\bigl(B(x,r)\cap E_t\bigr)}{r^n}
+\end{align*}
+连续。由此，对每个 $t\in\mathbb{R}$，
+\begin{align*}
+\mu_t(x):=\limsup_{\substack{r\to0\\ r\ \text{为有理数}}}\frac{\mathcal{L}^n\bigl(B(x,r)\cap E_t\bigr)}{r^n}
+\end{align*}
+是 $x$ 的 Borel 可测函数。又对每个 $s\in\mathbb{R}$ 有
+\begin{align*}
+\{x\in\mathbb{R}^n\mid\mu(x)\leqslant s\}=\bigcap_{k=1}^{\infty}\Bigl\{x\in\mathbb{R}^n\Bigm|\mu_{s+\frac1k}(x)=0\Bigr\},
+\end{align*}
+故 $\mu$ 是 Borel 可测函数。$\lambda$ 的 Borel 可测性可按同一格式得到：把 $\{f>t\}$ 换成 $\{f<t\}$、把下确界换成上确界即可。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-5-6; kind=proof; 补出球平均的连续性、有理半径上极限的可测性、恒等式 {μ⩽s}=∩_k{μ_{s+1/k}=0} 的验证，以及 λ 情形的完整论证
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-6-论证}
+\begin{enumerate}[(i)]
+\item 连续性的论证。固定 $r>0$ 与 $t\in\mathbb{R}$，并令 $\varphi(x):=\mathcal{L}^n(B(x,r)\cap E_t)/r^n$。对 $x,x_0\in\mathbb{R}^n$ 有
+\begin{align*}
+r^n\bigl\lvert\varphi(x)-\varphi(x_0)\bigr\rvert
+&=\Bigl\lvert\int_{B(0,r)}\bigl(\chi_{E_t}(x+z)-\chi_{E_t}(x_0+z)\bigr)\diff z\Bigr\rvert\\
+&\leqslant\int_{\mathbb{R}^n}\bigl\lvert\chi_{E_t}\bigl(z+(x-x_0)\bigr)-\chi_{E_t}(z)\bigr\rvert\diff z .
+\end{align*}
+由 $E_t$ 为 $\mathcal{L}^n$-可测集知 $\chi_{E_t}\in L^1(\mathbb{R}^n)$，而平移在 $L^1(\mathbb{R}^n)$ 中连续，故右端当 $x\to x_0$ 时趋于零，即 $\varphi$ 连续。
+\item 有理半径上极限的可测性。对每个有理数 $r>0$ 记 $\varphi_r(x):=\mathcal{L}^n(B(x,r)\cap E_t)/r^n$，则 $\varphi_r$ 连续。对每个正整数 $j$，函数
+\begin{align*}
+\psi_j(x):=\sup\bigl\{\varphi_r(x)\bigm|r\in\mathbb{Q}\cap(0,1/j)\bigr\}
+\end{align*}
+是可数多个连续函数的上确界，故为 Borel 可测函数；$j\mapsto\psi_j(x)$ 关于 $j$ 单调递减，故 $\mu_t=\lim_{j\to\infty}\psi_j$ 为 Borel 可测函数。
+\item 恒等式的验证。对固定的 $x$，记 $M(x):=\{t\in\mathbb{R}\mid\lim_{r\to0}\mathcal{L}^n(B(x,r)\cap\{f>t\})/r^n=0\}$，则 $\mu(x)=\inf M(x)$。由 $M(x)$ 关于 $t$ 向上封闭，$\mu(x)\leqslant s$ 当且仅当对每个正整数 $k$ 有 $s+1/k\in M(x)$。又对每个 $t$，$t\in M(x)$ 当且仅当 $\mu_t(x)=0$：一方面若极限为零则上极限为零；另一方面若上极限为零，则极限存在且为零，因为 $\liminf\leqslant\limsup$ 且比式非负。于是
+\begin{align*}
+\{x\mid\mu(x)\leqslant s\}=\bigcap_{k=1}^{\infty}\{x\mid\mu_{s+1/k}(x)=0\},
+\end{align*}
+右端是可数多个 Borel 集之交，故为 Borel 集。
+\item $\lambda$ 的情形。对每个 $t\in\mathbb{R}$ 令 $F_t:=\{x\mid f(x)<t\}$、$\nu_t(x):=\limsup_{r\to0,\,r\in\mathbb{Q}}\mathcal{L}^n(B(x,r)\cap F_t)/r^n$，则 $\nu_t$ 为 Borel 可测函数。记 $L(x):=\{t\mid\lim_{r\to0}\mathcal{L}^n(B(x,r)\cap\{f<t\})/r^n=0\}$，则 $\lambda(x)=\sup L(x)$，且由 $L(x)$ 关于 $t$ 向下封闭得：$\lambda(x)\geqslant s$ 当且仅当对每个正整数 $k$ 有 $s-1/k\in L(x)$，即 $\nu_{s-1/k}(x)=0$。于是
+\begin{align*}
+\{x\mid\lambda(x)\geqslant s\}=\bigcap_{k=1}^{\infty}\{x\mid\nu_{s-1/k}(x)=0\}
+\end{align*}
+为 Borel 集；由 $s\in\mathbb{R}$ 的任意性知 $\lambda$ 为 Borel 可测函数。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[跳跃集]\label{definition:ch05-5-9}
+设 $n\geqslant1$ 为整数，$f:\mathbb{R}^n\to\mathbb{R}$ 为 $\mathcal{L}^n$-可测函数，$\lambda,\mu:\mathbb{R}^n\to[-\infty,+\infty]$ 为\cref{definition:ch05-5-8}所定义的近似下极限与近似上极限。则 $f$ 的\textbf{跳跃集}定义为 % XREF internal
+\begin{align*}
+J:=\{x\in\mathbb{R}^n\mid\lambda(x)<\mu(x)\},
+\end{align*}
+即它是使 $f$ 的近似极限不存在的点集。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch05-5-9; kind=motivation; 说明跳跃集刻画近似极限失效的点、它在 BV 理论中的地位以及为何用 λ<μ 而不直接用极限不存在来定义
+\begin{remark}\phantomsection\label{remark:ch05-def-5-9-跳跃动机}
+一个 $\BV$ 函数与连续函数的差别集中在两类集合上：一类是 $f$ 不近似连续的点，另一类是 $f$ 的一阶导数测度关于 $\mathcal{L}^n$ 奇异的部分。跳跃集 $J$ 正是前一类集合的精确刻画：在 $x\notin J$ 处近似上极限与近似下极限相等，$f$ 在 $x$ 处有近似极限；在 $x\in J$ 处两者相差一个正值，$f$ 在 $x$ 的任何邻域内都同时在两个相差正距离的水平上占有正比例。定义用 $\lambda(x)<\mu(x)$ 而不用「近似极限不存在」这一说法，是因为前者在每一点处都可以直接检验，而后者预设了极限的定义；由 $\lambda,\mu$ 的有限性（\cref{theorem:ch05-5-18}），两种说法在 $\mathcal{H}^{n-1}$-a.e. 点处一致。% XREF internal
+
+$\BV$ 理论的中心结论之一是：$J$ 尽管可以很大（例如 $f$ 为 Cantor 型函数的原函数时 $J$ 可以很复杂），却必定是可数多个 $C^1$ 超曲面之并至多相差一个 $\mathcal{H}^{n-1}$-零测集（\cref{theorem:ch05-5-17}），并且在 $\mathcal{H}^{n-1}$-a.e. 点处 $f$ 沿某个超平面两侧各有确定的近似极限（\cref{theorem:ch05-5-19}）。这正是「$\BV$ 函数是测度论意义下逐段连续的」的准确含义。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-9; kind=hypotheses; 逐条分析可测性、λ<μ 与近似极限不存在的等价性、L^n(J)=0 以及 J 的 Borel 可测性
+\begin{remark}\phantomsection\label{remark:ch05-def-5-9-跳跃条件}
+\begin{enumerate}[(i)]
+\item 定义只要求 $f$ 为 $\mathcal{L}^n$-可测，这与\cref{definition:ch05-5-8}的前提一致；$\lambda$ 与 $\mu$ 的取值允许为 $\pm\infty$，故 $J$ 的定义在 $f$ 无界时同样有意义。% XREF internal
+\item $\lambda(x)<\mu(x)$ 与「$f$ 在 $x$ 处的近似极限不存在」的一致性：若 $f$ 在 $x$ 处的近似极限为 $\ell\in\mathbb{R}$，则 $\lambda(x)=\mu(x)=\ell$，故 $x\notin J$；反之若 $\lambda(x)=\mu(x)=\ell\in\mathbb{R}$，则 $f$ 在 $x$ 处的近似极限为 $\ell$。当 $\lambda(x)=\mu(x)=\pm\infty$ 时 $f$ 没有有限的近似极限而 $x\notin J$，这种点构成 $\mathcal{H}^{n-1}$-零测集（\cref{theorem:ch05-5-18}），故就 $\mathcal{H}^{n-1}$-a.e. 的结论而言 $J$ 恰是近似极限不存在的点集。% XREF internal
+\item $\mathcal{L}^n(J)=0$：由\cref{theorem:ch01-1-37}，$\mathcal{L}^n$-可测函数在 $\mathcal{L}^n$-a.e. 点处近似连续，即 $\lambda=\mu=f$ 于 $\mathcal{L}^n$-a.e. 成立；故 $J$ 是 $\mathcal{L}^n$-零测集。这一事实说明 $J$ 在 $n$ 维意义下可以忽略，它在 $(n-1)$ 维意义下才可能有正测度。% XREF internal
+\item $J$ 是 Borel 集：由\cref{lemma:ch05-5-6}，$\lambda$ 与 $\mu$ 是 Borel 可测函数，故 $\{\lambda<\mu\}$ 是 Borel 集。这使得 $\mathcal{H}^{n-1}(J\cap K)$ 对紧集 $K$ 有定义，后文的 $\sigma$-有限性陈述因此有意义。% XREF internal
+\end{enumerate}
+\end{remark}
+
+由\cref{theorem:ch01-1-37}，% XREF p=253 "According to Theorem 1.37,"
+\begin{align*}
+\mathcal{L}^n(J)=0 .
+\end{align*}
+下文将看到：对 $\mathcal{H}^{n-1}$-a.e. 点 $x\in J$，$f$ 在过 $x$ 的某张超平面两侧有「测度论跳跃」。
+
+\begin{theorem}[用超曲面逼近]\label{theorem:ch05-5-17}
+设 $n\geqslant2$ 为整数，$\mathcal{H}^{n-1}$ 为 $\mathbb{R}^n$ 上的 $(n-1)$ 维 Hausdorff 测度，$f\in\BV(\mathbb{R}^n)$，$\lambda,\mu$ 与 $J$ 按\cref{definition:ch05-5-8}与\cref{definition:ch05-5-9}定义。则存在可数多个 $C^1$ 超曲面 $\{S_k\}_{k=1}^{\infty}$，使得 % XREF internal
+\begin{align*}
+\mathcal{H}^{n-1}\Bigl(J-\bigcup_{k=1}^{\infty}S_k\Bigr)=0 ;
+\end{align*}
+这里「$S\subseteq\mathbb{R}^n$ 是 $C^1$ 超曲面」是指：对每个 $y\in S$，存在 $y$ 的开邻域 $V$、正交变换 $Q$ 与 $C^1$ 函数 $g:\mathbb{R}^{n-1}\to\mathbb{R}$，使得 $S\cap V$ 等于 $Q\bigl(\{z\in\mathbb{R}^{n-1}\times\mathbb{R}\mid z_n=g(z_1,\cdots,z_{n-1})\}\bigr)\cap V$。
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch05-5-17; kind=motivation; 说明跳跃集的 (n−1) 维可数可求长性、由余面积公式把跳跃点化为某个水平集边界点的思路，以及一维情形的类比
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-17-动机}
+单变量有界变差函数的跳跃点至多可数。本定理是这一事实在 $n$ 维的推广：跳跃集 $J$ 在 $\mathcal{H}^{n-1}$ 意义下不能是任意的分形集，它至多相差一个 $\mathcal{H}^{n-1}$-零测集而落在可数多个 $C^1$ 超曲面上，即 $J$ 是可数 $(n-1)$ 可求长的。
+
+证明的思路是把函数化为集合：$x$ 处的跳跃意味着存在水平 $t$，使 $\{f>t\}$ 与 $\{f<t\}$ 在 $x$ 附近都占有正比例，于是 $x$ 落在水平集 $\{f>t\}$ 的测度论边界上。对 $\BV$ 函数，由余面积公式（\cref{theorem:ch05-5-9}），几乎每个水平集 $\{f>t\}$ 都是有限周长集；而有限周长集的边界由结构定理（\cref{theorem:ch05-5-15}）是可数多个 $C^1$ 超曲面之并至多相差零测集。由于 $J$ 中每一点的跳跃区间 $(\lambda(x),\mu(x))$ 非空，取可数多个有理水平 $t$ 即可覆盖 $J$，而可数多个可数族之并仍是可数的。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-17; kind=hypotheses; 逐条分析 f∈BV 的作用、零测集不可去掉、可数族与有理水平的关系以及定义域为全空间的原因
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-17-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in\BV(\mathbb{R}^n)$ 通过余面积公式使用：它保证存在满测度的水平集族，使 $E_t=\{f>t\}$ 具有有限周长，从而结构定理可以应用于 $E_t$。若只有 $f\in L^1(\mathbb{R}^n)$，则水平集可能没有有限周长，结论没有依据。
+\item 零测集不能去掉。$J$ 与 $\bigcup_{k}S_k$ 的差别可以非空：由\cref{lemma:ch05-5-5}，水平集 $E_t$ 的测度论边界与其约化边界相差一个 $\mathcal{H}^{n-1}$-零测集，而跳跃点可能落在这部分差集中；此外 $\bigcup_{t\in D}\partial_*E_t$ 中还可能含有不属于 $J$ 的点。因此只能断言 $\mathcal{H}^{n-1}(J-\bigcup_{k}S_k)=0$，不能断言 $J$ 本身是可数多个 $C^1$ 超曲面之并。% XREF internal
+\item 可数性的来源。对每个固定的 $t$，结构定理只给出可数多个 $C^1$ 超曲面；所有 $t$ 的并不可数，故必须把 $t$ 限制在一个可数稠密集 $D$ 上。这一步可行的原因是：当 $x\in J$ 时区间 $(\lambda(x),\mu(x))$ 非空，故其中必有有理数，于是 $J$ 被 $\{\partial_*E_t\}_{t\in D}$ 覆盖。
+\item 定义域取全空间 $\mathbb{R}^n$ 是本节的总假设 $f\in\BV(\mathbb{R}^n)$。对开集 $U$ 上的 $\BV$ 函数，把 $f$ 延拓到 $\mathbb{R}^n$ 之外（\cref{theorem:ch05-5-8}）后结论对 $U$ 内的点成立；也可在 $U$ 内局部重复全部论证。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+定义（与\cref{section:ch05-05}中相同） % XREF p=253 "Define, as in Section 5.5,"
+\begin{align*}
+E_t:=\{x\in\mathbb{R}^n\mid f(x)>t\},\qquad t\in\mathbb{R}.
+\end{align*}
+由 $\BV$ 函数的余面积公式（\cref{theorem:ch05-5-9}），对 $\mathcal{L}^1$-a.e. $t\in\mathbb{R}$，$E_t$ 的周长有限，即 $\lVert\partial E_t\rVert(\mathbb{R}^n)<\infty$。此外，若 $x\in J$ 且 $\lambda(x)<t<\mu(x)$，则 % XREF p=253 "According to the coarea formula for BV functions (Theorem 5.9)"
+\begin{align*}
+\limsup_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f>t\}\bigr)}{r^n}>0
+\end{align*}
+且
+\begin{align*}
+\limsup_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f<t\}\bigr)}{r^n}>0 .
+\end{align*}
+于是
+\begin{align}
+\{x\in J\mid\lambda(x)<t<\mu(x)\}\subseteq\partial_*E_t . \label{align:ch05-5-17-包含}
+\end{align}
+取可数稠密集 $D\subseteq\mathbb{R}$，使得对每个 $t\in D$ 有 $\lVert\partial E_t\rVert(\mathbb{R}^n)<\infty$。对每个 $t\in D$，$\partial_*E_t$ 的 $\mathcal{H}^{n-1}$-几乎全部包含在可数多个 $C^1$ 超曲面之并中；这是结构定理（\cref{theorem:ch05-5-15}）的推论。又由\eqref{align:ch05-5-17-包含}， % XREF p=253 "this is a consequence of the Structure Theorem 5.15"
+\begin{align*}
+J\subseteq\bigcup_{t\in D}\partial_*E_t ,
+\end{align*}
+定理得证。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-17; kind=proof; 补出三处省略：水平集为何具有有限周长、J 被 ∪_{t∈D}∂_*E_t 覆盖的理由、以及 ∂_*E_t 落在可数多个 C^1 超曲面之并中的依据
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-17-论证}
+\begin{enumerate}[(i)]
+\item 水平集的周长有限性。由\cref{theorem:ch05-5-9}，对 $\mathcal{L}^1$-a.e. $t$ 有 $\lVert\partial E_t\rVert(\mathbb{R}^n)<\infty$，从而 $E_t$ 在 $\mathbb{R}^n$ 中具有局部有限周长，\cref{theorem:ch05-5-15}的前提对这样的 $t$ 成立。满足该条件的 $t$ 构成满测度集，而满测度集是稠密的，故其中含可数稠密子集 $D$。% XREF internal
+\item 覆盖关系 $J\subseteq\bigcup_{t\in D}\partial_*E_t$。设 $x\in J$，则 $\lambda(x)<\mu(x)$。若 $\lambda(x)$ 与 $\mu(x)$ 都是有限实数，则取有理数 $t\in D\cap(\lambda(x),\mu(x))$；若 $\lambda(x)=-\infty$，则取 $t\in D$ 使 $t<\mu(x)$；若 $\mu(x)=+\infty$，则取 $t\in D$ 使 $t>\lambda(x)$。三种情形下都有 $\lambda(x)<t<\mu(x)$，于是 $x\in\partial_*E_t$ 由\eqref{align:ch05-5-17-包含}给出。
+\item $\partial_*E_t$ 与 $C^1$ 超曲面的关系。由\cref{theorem:ch05-5-15}(i)，约化边界满足 $\partial^*E_t=\bigcup_{k}K_k\cup N$，其中每个 $K_k$ 是某个 $C^1$ 超曲面的紧子集，而 $\lVert\partial E_t\rVert(N)=0$；由\cref{theorem:ch05-5-15}(iii)，$\lVert\partial E_t\rVert=\mathcal{H}^{n-1}\llcorner\partial^*E_t$，故 $\mathcal{H}^{n-1}(N)=0$。又由\cref{lemma:ch05-5-5}(ii)，$\mathcal{H}^{n-1}(\partial_*E_t-\partial^*E_t)=0$。于是 $\partial_*E_t$ 与 $\bigcup_{k}S_k$ 只相差一个 $\mathcal{H}^{n-1}$-零测集。% XREF internal
+\item 结论的合成。把每个 $t\in D$ 所提供的可数族按字典序排列，得到可数族 $\{S_k\}_{k=1}^{\infty}$。由上述覆盖关系与超曲面的关系，对每个 $t\in D$ 有 $\mathcal{H}^{n-1}\bigl((J\cap\partial_*E_t)-\bigcup_{k}S_k\bigr)=0$，故
+\begin{align*}
+\mathcal{H}^{n-1}\Bigl(J-\bigcup_{k=1}^{\infty}S_k\Bigr)\leqslant\sum_{t\in D}\mathcal{H}^{n-1}\Bigl(\partial_*E_t-\bigcup_{k=1}^{\infty}S_k\Bigr)=0 ,
+\end{align*}
+此即定理的结论。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[近似上极限与近似下极限的有限性]\label{theorem:ch05-5-18}
+设 $n\geqslant2$ 为整数，$\mathcal{H}^{n-1}$ 为 $\mathbb{R}^n$ 上的 $(n-1)$ 维 Hausdorff 测度，$f\in\BV(\mathbb{R}^n)$，$\lambda,\mu$ 为\cref{definition:ch05-5-8}所定义的近似下极限与近似上极限。则 % XREF internal
+\begin{align*}
+-\infty<\lambda(x)\leqslant\mu(x)<+\infty
+\end{align*}
+对 $\mathcal{H}^{n-1}$-a.e. $x\in\mathbb{R}^n$ 成立。
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch05-5-18; kind=motivation; 说明为何 λ、μ 只能在 H^{n−1}-a.e. 意义下有限，以及这一有限性对定义跳跃与精确代表元的必要性
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-18-动机}
+\cref{definition:ch05-5-8}对每个点都定义了 $\lambda(x)$ 与 $\mu(x)$，但允许取 $\pm\infty$；若在某个 $\mathcal{H}^{n-1}$-正测度集上 $\lambda=-\infty$ 或 $\mu=+\infty$，则平均值 $F=(\lambda+\mu)/2$ 在该集合上没有定义，\cref{theorem:ch05-5-19}的陈述也就失去意义。本定理说明这种退化只发生在 $\mathcal{H}^{n-1}$-零测集上：$\BV$ 函数在 $(n-1)$ 维意义下几乎处处既不会取到 $-\infty$ 的近似下极限，也不会取到 $+\infty$ 的近似上极限，两者的差也不会是无穷。 % XREF internal
+
+证明的策略是把关于 $\lambda,\mu$ 的无穷性化为关于水平集周长的估计：若 $\lambda(x)=+\infty$，则对每个 $t$ 都有 $x\in\{\lambda>t\}$，于是 $x$ 属于每个水平集 $F_t=\{\lambda>t\}$；而 $F_t$ 与 $E_t=\{f>t\}$ 只差一个 $\mathcal{L}^n$-零测集，故其周长可以用余面积公式控制，且当 $t\to\infty$ 时总周长趋于零。再用相对等周不等式把「$F_t$ 在球内的占比为 $1/4$」转化为周长下界，即得 $\mathcal{H}^{n-1}$ 的定量估计。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-18; kind=hypotheses; 逐条分析 f∈BV 的作用、t→+∞ 的极限、spt(f) 紧的归约、α(n) 归一化与 d 的存在性
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-18-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in\BV(\mathbb{R}^n)$ 提供两件事：变差测度 $\lVert Df\rVert$ 有限，以及余面积公式 $\int_{-\infty}^{\infty}\lVert\partial F_t\rVert(\mathbb{R}^n)\diff t=\lVert Df\rVert(\mathbb{R}^n)$。后者是断言 \#1 中「$\liminf_{t\to\infty}\lVert\partial F_t\rVert(\mathbb{R}^n)=0$」的惟一依据：一个非负可积函数在 $t\to\infty$ 时不可能有正的下极限。
+\item 断言 \#1 只涉及 $\lambda=+\infty$ 与 $\mu=-\infty$ 两种退化。这不是遗漏：由 $\lambda\leqslant\mu$（\cref{remark:ch05-def-5-8-序}），条件 $\lambda=-\infty$ 与 $\mu=+\infty$ 分别被 $\mu=-\infty$ 与 $\lambda=+\infty$ 的论证覆盖（把 $f$ 换成 $-f$ 即交换 $\lambda$ 与 $\mu$）。% XREF internal
+\item 断言 \#2 处理 $\mu-\lambda=+\infty$ 的情形，即两者之差为无穷。它与断言 \#1 合起来排除 $\lambda=-\infty$ 与 $\mu=+\infty$：若 $\lambda(x)=-\infty$ 而 $\mu(x)$ 有限，则 $\mu(x)-\lambda(x)=+\infty$；若 $\mu(x)=+\infty$ 而 $\lambda(x)$ 有限，同理。
+\item 归一化常数 $\alpha(n)$ 只影响常数：$\mathcal{L}^n(B(x,r))=\alpha(n)r^n$，故结论与用 $r^n$ 还是用 $\alpha(n)r^n$ 归一化无关。常数 $d$ 依赖 $f$ 与 $x$ 所在的紧集，但不进入最终结论。
+\item 断言 \#1 的证明先假设 $\spt(f)$ 紧，这不失一般性：对一般 $f$，先用紧支集的 $C^1$ 函数截断，再令截断半径趋于无穷（见本定理之后的注记）。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+1. 断言 \#1：$\mathcal{H}^{n-1}\bigl(\{x\mid\lambda(x)=+\infty\}\bigr)=0$ 且 $\mathcal{H}^{n-1}\bigl(\{x\mid\mu(x)=-\infty\}\bigr)=0$。
+
+断言之证明：可设 $\spt(f)$ 为紧集。令
+\begin{align*}
+F_t:=\{x\in\mathbb{R}^n\mid\lambda(x)>t\}.
+\end{align*}
+由于 $\mu(x)=\lambda(x)=f(x)$ 于 $\mathcal{L}^n$-a.e. 成立，$E_t$ 与 $F_t$ 至多相差一个 $\mathcal{L}^n$-零测集；于是
+\begin{align*}
+\lVert\partial E_t\rVert=\lVert\partial F_t\rVert .
+\end{align*}
+从而 $\BV$ 函数的余面积公式（\cref{theorem:ch05-5-9}）给出 % XREF p=254 "Consequently, the coarea formula for BV functions implies"
+\begin{align*}
+\int_{-\infty}^{\infty}\lVert\partial F_t\rVert(\mathbb{R}^n)\diff t=\lVert Df\rVert(\mathbb{R}^n)<\infty ,
+\end{align*}
+故
+\begin{align}
+\liminf_{t\to\infty}\lVert\partial F_t\rVert(\mathbb{R}^n)=0 . \label{align:ch05-5-18-余面积}
+\end{align}
+由于 $\spt(f)$ 是紧集，存在 $d>0$，使得
+\begin{align}
+\mathcal{L}^n\bigl(\spt(f)\cap B(x,r)\bigr)\leqslant\frac18\alpha(n)r^n\qquad(x\in\spt(f),\ r\geqslant d). \label{align:ch05-5-18-球}
+\end{align}
+固定 $t>0$。由 $\lambda$ 与 $F_t$ 的定义，
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap F_t\bigr)}{\alpha(n)r^n}=1\qquad(x\in F_t).
+\end{align*}
+于是对每个 $x\in F_t$，存在 $r>0$，使得
+\begin{align}
+\frac{\mathcal{L}^n\bigl(B(x,r)\cap F_t\bigr)}{\alpha(n)r^n}=\frac14 . \label{align:ch05-5-18-比值}
+\end{align}
+由\eqref{align:ch05-5-18-球}可知 $r\leqslant d$。
+
+由 Vitali 覆盖定理（\cref{theorem:ch01-1-24}），可取得一列互不相交的球 $\{B(x_i,r_i)\}_{i=1}^{\infty}$，使得它们对 $x=x_i$、$r=r_i\leqslant d$ 满足\eqref{align:ch05-5-18-比值}，且 % XREF p=254 "We apply Vitali's Covering Theorem"
+\begin{align*}
+F_t\subseteq\bigcup_{i=1}^{\infty}B(x_i,5r_i).
+\end{align*}
+由\eqref{align:ch05-5-18-比值}与相对等周不等式（\cref{theorem:ch05-5-11}(ii)）得 % XREF p=254 "and the relative isoperimetric inequality imply"
+\begin{align*}
+\Bigl(\frac{\alpha(n)}{4}\Bigr)^{\frac{n-1}{n}}\leqslant\frac{C\lVert\partial F_t\rVert\bigl(B(x_i,r_i)\bigr)}{r_i^{n-1}} ,
+\end{align*}
+即
+\begin{align*}
+r_i^{n-1}\leqslant C\lVert\partial F_t\rVert\bigl(B(x_i,r_i)\bigr)\qquad(i=1,2,\cdots).
+\end{align*}
+于是可作如下计算：
+\begin{align*}
+\mathcal{H}^{n-1}_{10d}(F_t)&\leqslant\sum_{i=1}^{\infty}\alpha(n-1)(5r_i)^{n-1}\\
+&\leqslant C\sum_{i=1}^{\infty}\lVert\partial F_t\rVert\bigl(B(x_i,r_i)\bigr)\\
+&\leqslant C\lVert\partial F_t\rVert(\mathbb{R}^n).
+\end{align*}
+结合\eqref{align:ch05-5-18-余面积}，
+\begin{align*}
+\mathcal{H}^{n-1}_{10d}\bigl(\{x\mid\lambda(x)=+\infty\}\bigr)=0 ,
+\end{align*}
+故
+\begin{align*}
+\mathcal{H}^{n-1}\bigl(\{x\mid\lambda(x)=+\infty\}\bigr)=0 .
+\end{align*}
+$\mathcal{H}^{n-1}\bigl(\{x\mid\mu(x)=-\infty\}\bigr)=0$ 的证明与此平行：把 $f$ 换成 $-f$，$\lambda$ 与 $\mu$ 互换，$\{f>t\}$ 与 $\{f<t\}$ 随之互换。
+
+2. 断言 \#2：$\mathcal{H}^{n-1}\bigl(\{x\mid\mu(x)-\lambda(x)=\infty\}\bigr)=0$。
+
+断言之证明：由\cref{theorem:ch05-5-17}，$J$ 关于 $\mathbb{R}^n$ 中的 $\mathcal{H}^{n-1}$ 是 $\sigma$-有限的，从而 $\{(x,t)\mid x\in J,\ \lambda(x)<t<\mu(x)\}$ 关于 $\mathbb{R}^{n+1}$ 中的 $\mathcal{H}^{n-1}\times\mathcal{L}^1$ 是 $\sigma$-有限的。于是 Fubini 定理给出 % XREF p=255 "By Theorem 5.17, J is σ-finite with respect to H^{n-1}"
+\begin{align*}
+\int_{-\infty}^{\infty}\mathcal{H}^{n-1}\bigl(\{\lambda(x)<t<\mu(x)\}\bigr)\diff t=\int_{\mathbb{R}^n}\mu(x)-\lambda(x)\diff\mathcal{H}^{n-1} .
+\end{align*}
+但由\cref{theorem:ch05-5-17}证明中的\eqref{align:ch05-5-17-包含}与\cref{section:ch05-07}中发展的理论， % XREF p=255 "statement (★) in the proof of Theorem 5.17" | p=255 "the theory developed in Section 5.7"
+\begin{align*}
+\int_{-\infty}^{\infty}\mathcal{H}^{n-1}\bigl(\{\lambda(x)<t<\mu(x)\}\bigr)\diff t&\leqslant\int_{-\infty}^{\infty}\mathcal{H}^{n-1}(\partial_*E_t)\diff t\\
+&=\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(\mathbb{R}^n)\diff t\\
+&=\lVert Df\rVert(\mathbb{R}^n)<\infty .
+\end{align*}
+因此 $\mathcal{H}^{n-1}\bigl(\{x\mid\mu(x)-\lambda(x)=\infty\}\bigr)=0$。
+
+3. 断言 \#1 与断言 \#2 合起来即得结论。事实上，设 $x$ 不属于上述三个 $\mathcal{H}^{n-1}$-零测集。若 $\lambda(x)=-\infty$，则由 $\lambda(x)\leqslant\mu(x)$ 知 $\mu(x)=-\infty$（属于第二个零测集）或 $\mu(x)$ 为有限实数或 $+\infty$；后两种情形都有 $\mu(x)-\lambda(x)=+\infty$（属于第三个零测集）。若 $\mu(x)=+\infty$，则 $\lambda(x)=+\infty$（属于第一个零测集）或 $\mu(x)-\lambda(x)=+\infty$（属于第三个零测集）。故 $\lambda(x)>-\infty$ 且 $\mu(x)<+\infty$，结合 $\lambda(x)\leqslant\mu(x)$ 即得 $-\infty<\lambda(x)\leqslant\mu(x)<+\infty$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-18; kind=proof; 补出断言 #1 的各步细节：spt(f) 紧的归约、λ=μ=f 的来源、(★★) 中 d 的取法、(★★★) 只需不等式的理由、Vitali 覆盖与 Hausdorff 估计
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-18-论证}
+\begin{enumerate}[(i)]
+\item 「可设 $\spt(f)$ 紧」的依据。取 $\zeta_R\in C_c^{\infty}(\mathbb{R}^n)$ 使 $0\leqslant\zeta_R\leqslant1$ 且 $\zeta_R=1$ 于 $B(0,R)$ 上，令 $f_R:=f\zeta_R$。由 $\BV$ 函数与 $C^1$ 函数的乘积仍为 $\BV$ 函数知 $f_R\in\BV(\mathbb{R}^n)$ 且具紧支集。由于 $\lambda,\mu$ 只依赖 $f$ 在 $x$ 的任意小邻域内的取值，对 $x\in B(0,R)$ 有 $\lambda_{f_R}(x)=\lambda_f(x)$ 与 $\mu_{f_R}(x)=\mu_f(x)$。对 $f_R$ 证明断言后令 $R\to\infty$，并用 $\mathcal{H}^{n-1}$ 在 $\mathbb{R}^n$ 上的 $\sigma$-有限性（$\mathbb{R}^n$ 可数多个球之并）即得一般情形。
+\item $\mu(x)=\lambda(x)=f(x)$ 于 $\mathcal{L}^n$-a.e. 成立：由\cref{theorem:ch01-1-37}，$\mathcal{L}^n$-可测函数在 $\mathcal{L}^n$-a.e. 点处近似连续，而在近似连续点处 $\aplim f=f(x)$，故 $\lambda(x)=\mu(x)=f(x)$。于是对每个 $t$，集合 $\{f>t\}$ 与 $\{\lambda>t\}$ 只在 $\mathcal{L}^n$-零测集上不同，从而由\cref{definition:ch05-5-1}的变差测度定义得 $\lVert\partial E_t\rVert=\lVert\partial F_t\rVert$。% XREF internal
+\item \eqref{align:ch05-5-18-球} 中 $d$ 的取法：由 $\spt(f)$ 紧知 $0<\mathcal{L}^n(\spt(f))<\infty$，取 $d>0$ 使 $\alpha(n)d^n\geqslant8\mathcal{L}^n(\spt(f))$。则当 $r\geqslant d$ 时
+\begin{align*}
+\mathcal{L}^n\bigl(\spt(f)\cap B(x,r)\bigr)\leqslant\mathcal{L}^n(\spt(f))\leqslant\frac18\alpha(n)d^n\leqslant\frac18\alpha(n)r^n .
+\end{align*}
+\item \eqref{align:ch05-5-18-比值} 的用法只需不等式 $\mathcal{L}^n(B(x,r)\cap F_t)\geqslant\frac14\alpha(n)r^n$。该不等式确实成立：由前面已证的极限等于 $1$，对充分小的 $r$ 有 $\mathcal{L}^n(B(x,r)\cap F_t)\geqslant\frac12\alpha(n)r^n>\frac14\alpha(n)r^n$；又由\eqref{align:ch05-5-18-球}，当 $r\geqslant d$ 时 $F_t\subseteq\spt(f)$ 给出 $\mathcal{L}^n(B(x,r)\cap F_t)\leqslant\frac18\alpha(n)r^n<\frac14\alpha(n)r^n$。故满足该不等式的 $r$ 必满足 $r\leqslant d$，且这样的 $r$ 存在。
+\item Vitali 覆盖的形式。由\cref{theorem:ch01-1-24}，对 $F_t$ 的细覆盖（每个 $x\in F_t$ 对应满足上述不等式且半径任意小的球）可取出互不相交的族 $\{B(x_i,r_i)\}_{i=1}^{\infty}$，使 $F_t\subseteq\bigcup_{i}B(x_i,5r_i)$。$r_i\to0$ 是定义中半径可任意小的直接结果。 % XREF internal
+\item Hausdorff 估计。按 $\mathcal{H}^{s}_{\delta}$ 的定义，用覆盖 $\{B(x_i,5r_i)\}_{i=1}^{\infty}$ 且每个球的直径 $10r_i\leqslant10d$，得
+\begin{align*}
+\mathcal{H}^{n-1}_{10d}(F_t)\leqslant\sum_{i=1}^{\infty}\alpha(n-1)\Bigl(\frac{10r_i}{2}\Bigr)^{n-1}=\alpha(n-1)5^{n-1}\sum_{i=1}^{\infty}r_i^{n-1} .
+\end{align*}
+再由 $r_i^{n-1}\leqslant C\lVert\partial F_t\rVert(B(x_i,r_i))$ 与 $\{B(x_i,r_i)\}$ 互不相交得第三条不等号，常数 $C$ 只依赖 $n$。
+\item 由 $F_t$ 到 $\{\lambda=+\infty\}$ 的过渡。若 $\lambda(x)=+\infty$，则对每个 $t>0$ 有 $\lambda(x)>t$，即 $x\in F_t$，故 $\{\lambda=+\infty\}\subseteq F_t$ 对一切 $t>0$ 成立。于是 $\mathcal{H}^{n-1}_{10d}(\{\lambda=+\infty\})\leqslant C\lVert\partial F_t\rVert(\mathbb{R}^n)$ 对一切 $t>0$ 成立，令 $t\to\infty$ 并用\eqref{align:ch05-5-18-余面积}即得 $\mathcal{H}^{n-1}_{10d}(\{\lambda=+\infty\})=0$。
+\item 由 $\mathcal{H}^{n-1}_{10d}$ 到 $\mathcal{H}^{n-1}$ 的过渡：$\mathcal{H}^{n-1}_{\delta}$ 关于 $\delta$ 单调递减且 $\mathcal{H}^{n-1}=\sup_{\delta>0}\mathcal{H}^{n-1}_{\delta}$，故 $\mathcal{H}^{n-1}_{10d}=0$ 蕴含 $\mathcal{H}^{n-1}_{\delta}=0$ 对一切 $\delta<10d$ 成立，从而 $\mathcal{H}^{n-1}=0$。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-18; kind=proof; 补出断言 #2 的细节：σ-有限性的来源、Fubini 定理的适用条件，以及 H^{n−1}(∂_*E_t)=‖∂E_t‖(R^n) 的逐项依据
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-18-论证二}
+\begin{enumerate}[(i)]
+\item $J$ 的 $\sigma$-有限性。由\cref{theorem:ch05-5-17}，存在可数多个 $C^1$ 超曲面 $\{S_k\}$ 使 $\mathcal{H}^{n-1}(J-\bigcup_{k}S_k)=0$。每个 $S_k$ 是 $\sigma$-紧的（可数多个紧集之并），且 $\mathcal{H}^{n-1}(S_k\cap K)<\infty$ 对紧集 $K$ 成立；故 $J$ 是可数多个 $\mathcal{H}^{n-1}$-有限集之并，即 $\sigma$-有限。% XREF internal
+\item Fubini 定理的适用条件。集合 $A:=\{(x,t)\in\mathbb{R}^{n+1}\mid x\in J,\ \lambda(x)<t<\mu(x)\}$ 可测：$\lambda,\mu$ 是 Borel 函数（\cref{lemma:ch05-5-6}），$J$ 是 Borel 集。又 $A$ 的每个「纤维」$\{t\mid\lambda(x)<t<\mu(x)\}$ 的 $\mathcal{L}^1$ 测度等于 $\mu(x)-\lambda(x)$；在 $J$ 上 $\mathcal{H}^{n-1}$ 是 $\sigma$-有限的（(i)），故 $\mathcal{H}^{n-1}\llcorner J$ 是 $\sigma$-有限测度，Tonelli 定理可用；又 $A\subseteq J\times\mathbb{R}$ 且 $\mu-\lambda=0$ 于 $J$ 之外。于是 Tonelli 定理给出% XREF internal
+\begin{align*}
+\int_{-\infty}^{\infty}\mathcal{H}^{n-1}\bigl(\{\lambda(x)<t<\mu(x)\}\bigr)\diff t=\int_{\mathbb{R}^n}\bigl(\mu(x)-\lambda(x)\bigr)\diff\mathcal{H}^{n-1} ,
+\end{align*}
+其中两端在 $[0,+\infty]$ 中取值。
+\item 第一个不等号的依据。由\eqref{align:ch05-5-17-包含}，对每个 $t$ 有 $\{x\in J\mid\lambda(x)<t<\mu(x)\}\subseteq\partial_*E_t$，而 $\{x\notin J\mid\lambda(x)<t<\mu(x)\}=\varnothing$，故 $\{\lambda(x)<t<\mu(x)\}\subseteq\partial_*E_t$ 对每个 $t$ 成立；对 $\mathcal{H}^{n-1}$ 取测度并关于 $t$ 积分即得。
+\item 第一个等号的依据。由\cref{lemma:ch05-5-5}(ii) 与\cref{theorem:ch05-5-15}(iii)，$\mathcal{H}^{n-1}(\partial_*E_t)=\mathcal{H}^{n-1}(\partial^*E_t)=\lVert\partial E_t\rVert(\mathbb{R}^n)$。% XREF internal
+\item 第二个等号的依据：$\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(\mathbb{R}^n)\diff t=\lVert Df\rVert(\mathbb{R}^n)$ 正是\cref{theorem:ch05-5-9}的余面积公式。% XREF internal
+\item 结论的读法。由上述 Fubini 恒等式与不等式链得
+\begin{align*}
+\int_{\mathbb{R}^n}\bigl(\mu(x)-\lambda(x)\bigr)\diff\mathcal{H}^{n-1}\leqslant\lVert Df\rVert(\mathbb{R}^n)<\infty ,
+\end{align*}
+故被积函数 $\mu-\lambda$ 在 $\mathcal{H}^{n-1}$-a.e. 点处有限，即 $\mathcal{H}^{n-1}(\{\mu-\lambda=+\infty\})=0$。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-18-平均}
+此后记
+\begin{align*}
+F(x):=\frac{\lambda(x)+\mu(x)}{2},\qquad x\in\mathbb{R}^n ,
+\end{align*}
+这里 $1^{*}:=\frac{n}{n-1}$ 与平均值 $(f)_{x,r}:=\fint_{B(x,r)}f\diff y$ 都是\cref{theorem:ch05-5-10}中的记号。% XREF internal
+\end{remark}
+
+\begin{definition}[超平面与半空间]\label{definition:ch05-5-10}
+设 $n\geqslant1$ 为整数，$\nu\in\mathbb{R}^n$ 为单位向量，即 $\lvert\nu\rvert=1$，$x\in\mathbb{R}^n$。定义过 $x$、以 $\nu$ 为法向的超平面
+\begin{align*}
+H_\nu:=\{y\in\mathbb{R}^n\mid\nu\cdot(y-x)=0\}
+\end{align*}
+以及由它分出的两个闭半空间
+\begin{align*}
+H_\nu^+:=\{y\in\mathbb{R}^n\mid\nu\cdot(y-x)\geqslant0\},\qquad
+H_\nu^-:=\{y\in\mathbb{R}^n\mid\nu\cdot(y-x)\leqslant0\}.
+\end{align*}
+其中 $H_\nu$ 称为过 $x$、以 $\nu$ 为法向的\textbf{超平面}，$H_\nu^+$ 与 $H_\nu^-$ 称为相应的两个\textbf{半空间}；两者都含 $H_\nu$，且 $H_\nu^+\cup H_\nu^-=\mathbb{R}^n$、$H_\nu^+\cap H_\nu^-=H_\nu$。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch05-5-10; kind=motivation; 说明为何要把跳跃的几何载体写成半空间，以及它与约化边界处切平面定义的对应关系
+\begin{remark}\phantomsection\label{remark:ch05-def-5-10-动机}
+\cref{theorem:ch05-5-19}要断言：在一个跳跃点的附近，$f$ 的取值只依赖点落在某张超平面的哪一侧。因此需要把「一侧」写成集合，即半空间 $H_\nu^\pm$：它们以过 $x$ 的超平面 $H_\nu$ 为公共边界，分别对应法向 $\nu$ 的正侧与负侧。 % XREF internal
+
+这与\cref{definition:ch05-5-5}中的切超平面 $H(x)$、外半空间 $H^+(x)$ 与内半空间 $H^-(x)$ 是同一构造：在那里法向取为集合 $E$ 在 $x$ 处的测度论单位外法向 $\nu_E(x)$，半空间随 $E$ 而定；这里把法向抽象为任意单位向量 $\nu$，以便对不同的水平集 $E_t=\{f>t\}$ 使用同一个 $\nu$，并把结论陈述为关于 $\nu$ 的形式。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-5-10; kind=hypotheses; 逐条分析 |ν|=1 的作用、x 的角色、闭半空间的取法以及 H_ν 依赖于 x 这一点
+\begin{remark}\phantomsection\label{remark:ch05-def-5-10-条件}
+\begin{enumerate}[(i)]
+\item 条件 $\lvert\nu\rvert=1$ 不可省略：若 $\nu=0$，则 $H_\nu=\mathbb{R}^n$ 而 $H_\nu^\pm=\mathbb{R}^n$，三个对象都退化，半空间不再由一张超平面分出。单位性保证 $\nu\cdot(y-x)$ 是点 $y$ 到超平面的有符号距离。
+\item 点 $x$ 是超平面所过的定点，$H_\nu$、$H_\nu^\pm$ 都依赖 $x$；在\cref{theorem:ch05-5-19}中 $x$ 是所考察的跳跃点，$\nu=\nu(x)$ 随 $x$ 变化，两个半空间因而也随 $x$ 变化。% XREF internal
+\item 两个半空间取为闭集，故它们只在 $H_\nu$ 上相交，而 $\mathcal{L}^n(H_\nu)=0$；因此在计算 $\mathcal{L}^n(B(x,r)\cap H_\nu^\pm)$ 时，闭与开的取法不影响结果，且 $\mathcal{L}^n(B(x,r)\cap H_\nu^\pm)=\frac12\alpha(n)r^n$。
+\item 定义不涉及任何测度或可测性，对任意单位向量与任意点都有意义；后文只在 $\nu$ 为某个水平集的测度论单位外法向时使用它。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[$\BV$ 函数的精细性质]\label{theorem:ch05-5-19}
+设 $n\geqslant2$ 为整数，$f\in\BV(\mathbb{R}^n)$，$\lambda,\mu:\mathbb{R}^n\to[-\infty,+\infty]$ 为\cref{definition:ch05-5-8}所定义的近似下极限与近似上极限，$J$ 为\cref{definition:ch05-5-9}所定义的跳跃集， % XREF internal
+\begin{align*}
+F(x):=\frac{\lambda(x)+\mu(x)}{2},\qquad x\in\mathbb{R}^n ,
+\end{align*}
+$\mathcal{H}^{n-1}$ 为 $(n-1)$ 维 Hausdorff 测度，$B(x,r)$ 为以 $x$ 为心、$r$ 为半径的闭球，$H_\nu^{\pm}$ 为\cref{definition:ch05-5-10}所定义的半空间。则下列断言成立： % XREF internal
+\begin{enumerate}[(i)]
+\item 对 $\mathcal{H}^{n-1}$-a.e. $x\in\mathbb{R}^n-J$ 有
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert f-F(x)\rvert^{\frac{n}{n-1}}\diff y=0 ;
+\end{align*}
+\item 进而，对 $\mathcal{H}^{n-1}$-a.e. $x\in J$ 存在单位向量 $\nu=\nu(x)\in\mathbb{R}^n$，使得
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)\cap H_\nu^-}\lvert f-\mu(x)\rvert^{\frac{n}{n-1}}\diff y=0
+\end{align*}
+且
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)\cap H_\nu^+}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y=0 ;
+\end{align*}
+\item 特别地，
+\begin{align*}
+\mu(x)=\aplim_{\substack{y\to x\\ y\in H_\nu^+}}f(y),\qquad
+\lambda(x)=\aplim_{\substack{y\to x\\ y\in H_\nu^-}}f(y).
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-19-跳跃}
+于是，对 $\mathcal{H}^{n-1}$-a.e. $x\in J$，$f$ 在超平面 $H_{\nu(x)}$ 两侧有「测度论跳跃」。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-19; kind=motivation; 说明三条断言的层次、指数 n/(n−1) 的来历、F 作为精确代表元的含义，以及为何跳跃必须是「沿超平面」的
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-19-动机}
+三条断言从弱到强地描述同一个事实。断言 (i) 说：在不属于 $J$ 的点处，$f$ 在一列收缩的球上的 $L^{n/(n-1)}$ 平均值集中在 $F(x)$；断言 (ii) 说：在属于 $J$ 的点处，只要把球沿某张过 $x$ 的超平面切成两半，$f$ 在每一半上的平均值分别集中在 $\lambda(x)$ 与 $\mu(x)$；断言 (iii) 说这两侧的集中正是两侧的近似极限。因此 $\BV$ 函数的跳跃不是任意的间断，而是在 $\mathcal{H}^{n-1}$-a.e. 跳跃点处沿一张超平面发生的、两侧各有确定极限的「跳跃」。
+
+指数 $n/(n-1)=1^{*}$ 是 Sobolev 指数的临界值：$\BV$ 函数只保证属于 $L^{1^{*}}$，因此以 $L^{1^{*}}$ 平均值的收敛作为结论是最强的尺度。若用 $L^1$ 平均，结论会弱得多；若用更高的指数，一般不再成立。断言 (i) 同时说明 $F=(\lambda+\mu)/2$ 是 $f$ 的精确代表元：它是使 $f$ 在 $L^{1^{*}}$ 意义下集中于 $F(x)$ 的那个函数，而 $F$ 由 $\lambda,\mu$ 定义，与 $f$ 的等价类无关。
+
+证明的关键是把两侧的偏差分开：一侧用 $\mu$（或 $\lambda$）的定义直接控制，另一侧用水平集的测度论单位外法向控制。这样就把函数在一点附近的 $L^{1^{*}}$ 行为归结为变差测度在球内的增长，而后者由 $\BV$ 函数的 Sobolev 型不等式控制。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-19; kind=hypotheses; 逐条分析 f∈BV、n≥2、λ,μ 有限性、指数 1*、半空间依赖 x 以及结论中例外集不可去掉
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-19-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in\BV(\mathbb{R}^n)$ 在证明中有三处作用：它使每个水平集 $E_t=\{f>t\}$ 对 $\mathcal{L}^1$-a.e. $t$ 具有有限的周长测度（\cref{theorem:ch05-5-9}），使 $J$ 被可数多个 $C^1$ 超曲面覆盖（\cref{theorem:ch05-5-17}），并使截断函数 $(f-M)^{+}$ 的变差测度可以由 Sobolev 型不等式控制（\cref{theorem:ch05-5-10}）。若只有 $f\in L^1(\mathbb{R}^n)$，这三件事都没有依据。% XREF internal
+\item 要求 $n\geqslant2$ 是因为指数 $1^{*}=n/(n-1)$ 只在 $n\geqslant2$ 时大于 $1$；$n=1$ 时 $\BV$ 函数即一维有界变差函数，跳跃点至多可数，结论应按一维语言单独陈述。
+\item $\lambda(x)$ 与 $\mu(x)$ 在断言 (i)、(ii) 中出现，故须它们有限；由\cref{theorem:ch05-5-18}，这只在 $\mathcal{H}^{n-1}$-零测集上失效，与结论中允许的例外集相符。% XREF internal
+\item 半空间 $H_\nu^{\pm}$ 依赖 $x$（通过 $\nu=\nu(x)$ 与过点 $x$），因此 (ii)、(iii) 中的 $\aplim$ 是沿随 $x$ 变化的集合取的；也正因如此，(ii) 的断言比「整个球上的 $L^{1^{*}}$ 平均收敛」更强：在 $x\in J$ 处，整个球上的平均值只给出 $\lambda(x)$ 与 $\mu(x)$ 的中点（\cref{theorem:ch05-5-20}），而 (ii) 给出两侧各自的极限。 % XREF internal
+\item 结论中的例外集不能去掉。取 $n=2$ 与 $f=\chi_{[0,1]^{2}}$，则 $J=\partial[0,1]^{2}$，$\mathcal{H}^{1}(J)<\infty$。在正方形的四个顶点处，$f$ 在角点附近只在四分之一的空间内取值为 $1$；而对任何过该点的超平面，每个半圆内 $\{f=1\}$ 所占的比例都不超过球体积的四分之一，故不存在使 (ii) 的第一式（即 $f$ 在 $H_\nu^-$ 上近似等于 $\mu(x)=1$）成立的单位向量 $\nu$；而四个顶点构成 $\mathcal{H}^{1}$-零测集，与结论相容。这说明 (ii) 只能对 $\mathcal{H}^{n-1}$-a.e. 点陈述。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+以下只证明断言 (ii) 的第二式，其余断言按同一格式处理（完整的论证见本定理之后的注记）。
+
+1. 对 $\mathcal{H}^{n-1}$-a.e. 点 $x\in J$，存在单位向量 $\nu$，使得对每个满足 $\lambda(x)<t<\mu(x)$ 的 $t$，$\nu$ 是 $E_t=\{f>t\}$ 在 $x$ 处的测度论外单位法向量。于是对每个 $\varepsilon>0$，
+\begin{align}
+&\begin{cases}
+\displaystyle\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f>\lambda(x)+\varepsilon\}\cap H_\nu^+\bigr)}{r^n}=0,\\[10pt]
+\displaystyle\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f<\lambda(x)-\varepsilon\}\bigr)}{r^n}=0 .
+\end{cases}
+\label{align:ch05-5-19-密度}
+\end{align}
+于是若 $0<\varepsilon<1$，则
+\begin{align}
+\frac{1}{r^n}\int_{B(x,r)\cap H_\nu^+}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y
+&\leqslant\frac12\alpha(n)\varepsilon^{\frac{n}{n-1}}
++\frac{1}{r^n}\int_{B(x,r)\cap H_\nu^+\cap\{f>\lambda(x)+\varepsilon\}}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y\notag\\
+&\qquad+\frac{1}{r^n}\int_{B(x,r)\cap H_\nu^+\cap\{f<\lambda(x)-\varepsilon\}}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y . \label{align:ch05-5-19-分解}
+\end{align}
+现固定 $M>\lambda(x)+\varepsilon$。则
+\begin{align*}
+\frac{1}{r^n}\int_{B(x,r)\cap H_\nu^+\cap\{f>\lambda(x)+\varepsilon\}}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y
+&\leqslant(M-\lambda(x))^{\frac{n}{n-1}}\frac{\mathcal{L}^n\bigl(B(x,r)\cap H_\nu^+\cap\{f>\lambda(x)+\varepsilon\}\bigr)}{r^n}\\
+&\qquad+\frac{1}{r^n}\int_{B(x,r)\cap\{f>M\}}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y .
+\end{align*}
+同样，若 $-M<\lambda(x)-\varepsilon$，则
+\begin{align*}
+\frac{1}{r^n}\int_{B(x,r)\cap\{f<\lambda(x)-\varepsilon\}}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y
+&\leqslant(M+\lambda(x))^{\frac{n}{n-1}}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f<\lambda(x)-\varepsilon\}\bigr)}{r^n}\\
+&\qquad+\frac{1}{r^n}\int_{B(x,r)\cap\{f<-M\}}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y .
+\end{align*}
+把上述两个计算代入\eqref{align:ch05-5-19-分解}并回顾\eqref{align:ch05-5-19-密度}，得
+\begin{align}
+\limsup_{r\to0}\frac{1}{r^n}\int_{B(x,r)\cap H_\nu^+}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y
+&\leqslant\limsup_{r\to0}\frac{1}{r^n}\int_{B(x,r)\cap\{\lvert f\rvert>M\}}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y \label{align:ch05-5-19-尾部}
+\end{align}
+对一切充分大的 $M>0$ 成立。
+
+2. 现作估计
+\begin{align}
+\frac{1}{r^n}\int_{B(x,r)\cap\{f>M\}}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y
+&\leqslant\frac{C}{r^n}\int_{B(x,r)}\bigl((f-M)^{+}\bigr)^{\frac{n}{n-1}}\diff y\notag\\
+&\qquad+(M-\lambda(x))^{\frac{n}{n-1}}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f>M\}\bigr)}{r^n} . \label{align:ch05-5-19-截断}
+\end{align}
+若 $M>\mu(x)$，上式右端第二项当 $r\to0$ 时趋于零。此外，对充分小的 $r>0$ 有
+\begin{align*}
+\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f>M\}\bigr)}{\mathcal{L}^n\bigl(B(x,r)\bigr)}\leqslant\frac12 ;
+\end{align*}
+于是由\cref{theorem:ch05-5-10}(iii) 得% XREF p=258 "and hence by Theorem 5.17, (iii) we have"
+\begin{align*}
+\Bigl(\fint_{B(x,r)}\bigl((f-M)^{+}\bigr)^{\frac{n}{n-1}}\diff y\Bigr)^{\frac{n-1}{n}}\leqslant\frac{C}{r^{n-1}}\bigl\lVert D(f-M)^{+}\bigr\rVert\bigl(B(x,r)\bigr).
+\end{align*}
+该估计与关于集合 $\{f<-M\}$ 的相应估计一起，代入\eqref{align:ch05-5-19-尾部}即得
+\begin{align}
+\limsup_{r\to0}\Bigl(\fint_{B(x,r)\cap H_\nu^+}\lvert f-\lambda(x)\rvert^{\frac{n}{n-1}}\diff y\Bigr)^{\frac{n-1}{n}}
+&\leqslant C\limsup_{r\to0}\frac{\bigl\lVert D(f-M)^{+}\bigr\rVert\bigl(B(x,r)\bigr)}{r^{n-1}}\notag\\
+&\qquad+C\limsup_{r\to0}\frac{\bigl\lVert D(-M-f)^{+}\bigr\rVert\bigl(B(x,r)\bigr)}{r^{n-1}} \label{align:ch05-5-19-极限}
+\end{align}
+对一切充分大的 $M>0$ 成立。
+
+3. 固定 $\varepsilon>0$、$N>0$，并定义
+\begin{align*}
+A_\varepsilon^N:=\Bigl\{x\in\mathbb{R}^n\Bigm|\limsup_{r\to0}\frac{\bigl\lVert D(f-M)^{+}\bigr\rVert\bigl(B(x,r)\bigr)}{r^{n-1}}>\varepsilon\ \text{对一切}\ M\geqslant N\Bigr\}.
+\end{align*}
+则
+\begin{align*}
+\varepsilon\mathcal{H}^{n-1}\bigl(A_\varepsilon^N\bigr)\leqslant C\bigl\lVert D(f-M)^{+}\bigr\rVert(\mathbb{R}^n)=C\int_M^{\infty}\lVert\partial E_t\rVert(\mathbb{R}^n)\diff t
+\end{align*}
+对一切 $M\geqslant N$ 成立。因此
+\begin{align*}
+\mathcal{H}^{n-1}\bigl(A_\varepsilon^N\bigr)=0 ,
+\end{align*}
+故
+\begin{align*}
+\lim_{M\to\infty}\limsup_{r\to0}\frac{\bigl\lVert D(f-M)^{+}\bigr\rVert\bigl(B(x,r)\bigr)}{r^{n-1}}=0
+\end{align*}
+对 $\mathcal{H}^{n-1}$-a.e. $x\in J$ 成立。同样，
+\begin{align*}
+\lim_{M\to\infty}\limsup_{r\to0}\frac{\bigl\lVert D(-M-f)^{+}\bigr\rVert\bigl(B(x,r)\bigr)}{r^{n-1}}=0 .
+\end{align*}
+这些估计与\eqref{align:ch05-5-19-密度}一起给出
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)\cap H_\nu^+}\lvert f-\lambda(x)\rvert^{1^{*}}\diff y=0 .
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-19; kind=proof; 补出第 1 步的全部依据：ν 的存在性与与 t 无关、\eqref{align:ch05-5-19-密度} 两式的来源、\eqref{align:ch05-5-19-分解} 的半空间测度计算，以及两处截断估计
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-19-论证一}
+\begin{enumerate}[(i)]
+\item 单位向量 $\nu$ 的存在性。由\cref{theorem:ch05-5-17}，存在 $\mathcal{H}^{n-1}$-零测集 $N$ 与可数多个 $C^1$ 超曲面 $\{S_k\}_{k=1}^{\infty}$，使 $J-N\subseteq\bigcup_{k}S_k$。设 $x\in J-N$，并取 $t$ 满足 $\lambda(x)<t<\mu(x)$。由\eqref{align:ch05-5-17-包含}有 $x\in\partial_*E_t$。由\cref{lemma:ch05-5-5}(ii)，$\mathcal{H}^{n-1}(\partial_*E_t-\partial^*E_t)=0$，故除去一个 $\mathcal{H}^{n-1}$-零测集后 $x\in\partial^*E_t$；此时\cref{definition:ch05-5-4}中的 $\nu_{E_t}(x)$ 存在且为单位向量，而由\cref{definition:ch05-5-6}与\cref{theorem:ch05-5-14}(i)，它就是 $E_t$ 在 $x$ 处的测度论单位外法向。% XREF internal
+\item $\nu$ 与 $t$ 无关。设 $t_1<t_2$ 都满足 $\lambda(x)<t_j<\mu(x)$。除去一个 $\mathcal{H}^{n-1}$-零测集后可设 $x$ 属于\cref{theorem:ch05-5-15}(i) 中的某个紧集 $K_k\subseteq S_k$；于是由\cref{theorem:ch05-5-15}(ii)，$\nu_{E_{t_j}}(x)$ 是 $S_k$ 在 $x$ 处的单位法向（$j=1,2$），故两者或相等或互为相反数。又 $E_{t_2}\subseteq E_{t_1}$，且由定义 $E_{t_j}$ 在 $\nu_{E_{t_j}}(x)$ 所指的一侧密度为零，在相反一侧密度为 $1$；两个集合的密度为 $1$ 的一侧必相同，故 $\nu_{E_{t_1}}(x)=\nu_{E_{t_2}}(x)$。记这个公共值为 $\nu=\nu(x)$。% XREF internal
+\item \eqref{align:ch05-5-19-密度} 第一式的来源。按\cref{definition:ch05-5-6}，$\nu$ 是 $E_t$ 在 $x$ 处的测度论单位外法向，即 % XREF internal
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(\{y\in B(x,r)\cap E_t\mid\nu\cdot(y-x)\geqslant0\}\bigr)}{r^n}=0 .
+\end{align*}
+而 $\{y\mid\nu\cdot(y-x)\geqslant0\}=H_\nu^+$，故上式即 $\mathcal{L}^n(B(x,r)\cap H_\nu^+\cap\{f>t\})/r^n\to0$。取 $t\in\bigl(\lambda(x),\min\{\mu(x),\lambda(x)+\varepsilon\}\bigr)$，则 $\{f>\lambda(x)+\varepsilon\}\subseteq\{f>t\}$，于是第一式成立。
+\item \eqref{align:ch05-5-19-密度} 第二式的来源。由 $\lambda(x)=\sup L(x)$ 与 $L(x)$ 关于 $t$ 向下封闭，$\lambda(x)-\varepsilon<\lambda(x)$ 蕴含 $\lambda(x)-\varepsilon\in L(x)$，即
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f<\lambda(x)-\varepsilon\}\bigr)}{r^n}=0 .
+\end{align*}
+\item \eqref{align:ch05-5-19-分解} 的推导。把 $B(x,r)\cap H_\nu^+$ 分成三个互不相交的部分：$\{\lvert f-\lambda(x)\rvert\leqslant\varepsilon\}$、$\{f>\lambda(x)+\varepsilon\}$ 与 $\{f<\lambda(x)-\varepsilon\}$。在第一部分上被积函数不超过 $\varepsilon^{n/(n-1)}$，而这部分的测度不超过 $\mathcal{L}^n(B(x,r)\cap H_\nu^+)=\frac12\alpha(n)r^n$；在后两部分上保留原来的积分并除以 $r^n$，即得\eqref{align:ch05-5-19-分解}。
+\item 两处截断估计的推导。在 $\{\lambda(x)+\varepsilon<f\leqslant M\}$ 上有 $\lvert f-\lambda(x)\rvert\leqslant M-\lambda(x)$，在 $\{f>M\}$ 上保留原积分，即得第一个估计。在 $\{-M\leqslant f<\lambda(x)-\varepsilon\}$ 上，由 $-M<\lambda(x)-\varepsilon$ 得 $M+\lambda(x)>0$，且 $\lvert f-\lambda(x)\rvert=\lambda(x)-f\leqslant\lambda(x)+M$，在 $\{f<-M\}$ 上保留原积分，即得第二个估计。
+\item \eqref{align:ch05-5-19-尾部} 的推导。把上述两个估计代入\eqref{align:ch05-5-19-分解}：含 $(M-\lambda(x))^{n/(n-1)}$ 与 $(M+\lambda(x))^{n/(n-1)}$ 的两项分别乘以\eqref{align:ch05-5-19-密度}中的两个比式，故当 $r\to0$ 时趋于零；剩下的两项分别是 $\{f>M\}$ 与 $\{f<-M\}$ 上的积分，而 $\{f>M\}\cup\{f<-M\}=\{\lvert f\rvert>M\}$，即得\eqref{align:ch05-5-19-尾部}。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-19; kind=proof; 补出第 2、3 步的细节：截断不等式的来历、第二项所用集合与 M>μ(x) 的关系、定理 5.10(iii) 的适用性、A_ε^N 的覆盖论证，以及最后取极限
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-19-论证二}
+\begin{enumerate}[(i)]
+\item \eqref{align:ch05-5-19-截断} 的推导。在 $\{f>M\}$ 上写 $\lvert f-\lambda(x)\rvert=(f-M)+(M-\lambda(x))$，并用不等式 $(a+b)^{p}\leqslant2^{p-1}(a^{p}+b^{p})$（$p=\frac{n}{n-1}$，$a,b\geqslant0$），再在 $\{f>M\}$ 上积分、除以 $r^n$，即得\eqref{align:ch05-5-19-截断}，其中常数 $C=2^{p-1}$。被积函数写成 $\bigl((f-M)^{+}\bigr)^{p}$ 是因为 $p$ 不是整数，$(f-M)^{p}$ 只在 $f\geqslant M$ 时有定义。
+\item 第二项中的集合。该项为 $(M-\lambda(x))^{p}\mathcal{L}^n(B(x,r)\cap\{f>M\})/r^n$。当 $M>\mu(x)$ 时 $M\in M(x)$，即 $\lim_{r\to0}\mathcal{L}^n(B(x,r)\cap\{f>M\})/r^n=0$，这正是该项趋于零的理由。若把集合换成 $\{f<M\}$，则当 $M>\mu(x)$ 时由 $\mu$ 的定义知 $\{f\geqslant M\}$ 在 $x$ 处的密度为零（取 $t\in(\mu(x),M)$ 得 $\mathcal{L}^n(B(x,r)\cap\{f\geqslant M\})\leqslant\mathcal{L}^n(B(x,r)\cap\{f>t\})$），故该比式趋于 $\alpha(n)$，相应的项不趋于零。
+\item 密度条件的核对。当 $r$ 充分小时 $\mathcal{L}^n(B(x,r)\cap\{f>M\})/\mathcal{L}^n(B(x,r))\leqslant\frac12$，即 $\mathcal{L}^n(B(x,r)\cap\{(f-M)^{+}=0\})/\mathcal{L}^n(B(x,r))\geqslant\frac12$。于是可把\cref{theorem:ch05-5-10}(iii) 用于 $g:=(f-M)^{+}$ 与 $\alpha=\frac12$，得% XREF internal
+\begin{align*}
+\bigl\lVert g\bigr\rVert_{L^{1^{*}}(B(x,r))}\leqslant C\bigl\lVert Dg\bigr\rVert\bigl(B^0(x,r)\bigr)\leqslant C\bigl\lVert Dg\bigr\rVert\bigl(B(x,r)\bigr).
+\end{align*}
+\item 由 $L^{1^{*}}$ 范数到平均值。由 $n/1^{*}=n-1$ 与 $\mathcal{L}^n(B(x,r))=\alpha(n)r^n$，
+\begin{align*}
+\Bigl(\fint_{B(x,r)}\lvert g\rvert^{1^{*}}\diff y\Bigr)^{\frac{1}{1^{*}}}
+=\alpha(n)^{-\frac{1}{1^{*}}}r^{-n+\frac{n}{1^{*}}}\bigl\lVert g\bigr\rVert_{L^{1^{*}}(B(x,r))}
+=\alpha(n)^{-\frac{n-1}{n}}r^{-(n-1)}\bigl\lVert g\bigr\rVert_{L^{1^{*}}(B(x,r))},
+\end{align*}
+代入上述不等式即得第 2 步中的估计，常数 $C$ 只依赖 $n$。
+\item \eqref{align:ch05-5-19-极限} 的合成。把\eqref{align:ch05-5-19-尾部}右端的积分按 $\{f>M\}$ 与 $\{f<-M\}$ 分开，对前者用 (iii)、对后者用把 $f$ 换成 $-f$ 的同一估计，再对 $r\to0$ 取上极限，即得\eqref{align:ch05-5-19-极限}。
+\item $A_\varepsilon^N$ 的 $\mathcal{H}^{n-1}$ 估计。设 $x\in A_\varepsilon^N$。对每个充分小的 $r>0$ 有 $\lVert D(f-M)^{+}\rVert(B(x,r))>\varepsilon r^{n-1}$，故这些球构成 $A_\varepsilon^N$ 的细覆盖。固定 $\delta>0$，由\cref{theorem:ch01-1-24}取出互不相交的球 $\{B(x_i,r_i)\}_{i=1}^{\infty}$，使 $r_i<\delta$、每个球满足上述不等式，且 $A_\varepsilon^N\subseteq\bigcup_{i}B(x_i,5r_i)$。于是% XREF internal
+\begin{align*}
+\mathcal{H}^{n-1}_{5\delta}\bigl(A_\varepsilon^N\bigr)\leqslant\sum_{i=1}^{\infty}\alpha(n-1)(5r_i)^{n-1}
+\leqslant\frac{5^{n-1}\alpha(n-1)}{\varepsilon}\sum_{i=1}^{\infty}\bigl\lVert D(f-M)^{+}\bigr\rVert\bigl(B(x_i,r_i)\bigr)
+\leqslant\frac{C}{\varepsilon}\bigl\lVert D(f-M)^{+}\bigr\rVert(\mathbb{R}^n),
+\end{align*}
+令 $\delta\to0$ 即得 $\varepsilon\mathcal{H}^{n-1}(A_\varepsilon^N)\leqslant C\lVert D(f-M)^{+}\rVert(\mathbb{R}^n)$。
+\item 余面积公式的一步。由 $g=(f-M)^{+}$ 的余面积公式（\cref{theorem:ch05-5-9}）与 $\{g>s\}=\{f>M+s\}$（$s>0$）得% XREF internal
+\begin{align*}
+\bigl\lVert D(f-M)^{+}\bigr\rVert(\mathbb{R}^n)=\int_0^{\infty}\bigl\lVert\partial\{f>M+s\}\bigr\rVert(\mathbb{R}^n)\diff s=\int_M^{\infty}\lVert\partial E_t\rVert(\mathbb{R}^n)\diff t .
+\end{align*}
+\item 从 $A_\varepsilon^N$ 到极限。由于 $\int_M^{\infty}\lVert\partial E_t\rVert(\mathbb{R}^n)\diff t\to0$（$M\to\infty$），上述估计给出 $\mathcal{H}^{n-1}(A_\varepsilon^N)=0$。若 $x\notin\bigcup_{N=1}^{\infty}A_\varepsilon^N$，则对每个 $N$ 存在 $M\geqslant N$ 使相应的上极限不超过 $\varepsilon$；又 $M\mapsto\bigl\lVert D(f-M)^{+}\bigr\rVert$ 随 $M$ 增大而不增，故 $M\mapsto\limsup_{r\to0}\lVert D(f-M)^{+}\rVert(B(x,r))/r^{n-1}$ 也随 $M$ 增大而不增，于是该极限存在且不超过 $\varepsilon$。由 $\varepsilon>0$ 任意，即得该极限为零。
+\item 最后的合成。在\eqref{align:ch05-5-19-极限}中令 $M\to\infty$，右端两个上极限都为零，故左端的上极限为零；而 $1^{*}=\frac{n}{n-1}$，于是 $\fint_{B(x,r)\cap H_\nu^+}\lvert f-\lambda(x)\rvert^{1^{*}}\diff y\to0$。这正是断言 (ii) 的第二式。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-19; kind=proof; 补出断言 (i)、断言 (ii) 第一式与断言 (iii) 的论证，并核对它们与已证部分的共用估计
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-19-论证三}
+\begin{enumerate}[(i)]
+\item 断言 (i)。设 $x\in\mathbb{R}^n-J$。由\cref{theorem:ch05-5-18}，可设 $\lambda(x)=\mu(x)=F(x)$ 为有限实数。于是对每个 $\varepsilon>0$，$F(x)+\varepsilon\in M(x)$ 且 $F(x)-\varepsilon\in L(x)$，即 % XREF internal
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f>F(x)+\varepsilon\}\bigr)}{r^n}=0,\qquad
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f<F(x)-\varepsilon\}\bigr)}{r^n}=0 .
+\end{align*}
+把第 1 步中 $H_\nu^+$ 换成整个球 $B(x,r)$、把 $\lambda(x)$ 换成 $F(x)$，重复\eqref{align:ch05-5-19-分解}到\eqref{align:ch05-5-19-尾部}的推导（第一步中 $\frac12\alpha(n)r^n$ 换成 $\alpha(n)r^n$），得
+\begin{align*}
+\limsup_{r\to0}\frac{1}{r^n}\int_{B(x,r)}\lvert f-F(x)\rvert^{\frac{n}{n-1}}\diff y
+\leqslant\limsup_{r\to0}\frac{1}{r^n}\int_{B(x,r)\cap\{\lvert f\rvert>M\}}\lvert f-F(x)\rvert^{\frac{n}{n-1}}\diff y
+\end{align*}
+对一切充分大的 $M>0$ 成立。再用第 2、3 步的估计（其中的 $\lambda(x)$ 换成 $F(x)$）即得 $\lim_{r\to0}\fint_{B(x,r)}\lvert f-F(x)\rvert^{1^{*}}\diff y=0$。
+\item 断言 (ii) 的第一式。设 $x\in J$ 且 $\nu=\nu(x)$ 如第 1 步。由\cref{definition:ch05-5-6}与\cref{theorem:ch05-5-14}(ii)，对每个满足 $\lambda(x)<t<\mu(x)$ 的 $t$，$E_t=\{f>t\}$ 在 $H_\nu^-$ 一侧的补集密度为零：% XREF internal
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl((B(x,r)\setminus E_t)\cap H_\nu^-\bigr)}{r^n}=0 .
+\end{align*}
+固定 $\varepsilon>0$ 并取 $t\in\bigl(\max\{\lambda(x),\mu(x)-\varepsilon\},\mu(x)\bigr)$。则 $\{f<\mu(x)-\varepsilon\}\subseteq\{f\leqslant t\}$，故
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap H_\nu^-\cap\{f<\mu(x)-\varepsilon\}\bigr)}{r^n}=0 ;
+\end{align*}
+又由 $\mu(x)=\inf M(x)$ 与 $\mu(x)+\varepsilon>\mu(x)$ 得
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\bigl(B(x,r)\cap\{f>\mu(x)+\varepsilon\}\bigr)}{r^n}=0 .
+\end{align*}
+以 $H_\nu^-$ 代替 $H_\nu^+$、以 $\mu(x)$ 代替 $\lambda(x)$，重复第 1、2 步的推导，即得 $\lim_{r\to0}\fint_{B(x,r)\cap H_\nu^-}\lvert f-\mu(x)\rvert^{1^{*}}\diff y=0$。
+\item 断言 (iii)。由断言 (ii) 的第二式与 $1^{*}>1$，对 $\varepsilon>0$ 有
+\begin{align*}
+\frac{\mathcal{L}^n\bigl(B(x,r)\cap H_\nu^+\cap\{\lvert f-\lambda(x)\rvert>\varepsilon\}\bigr)}{\mathcal{L}^n\bigl(B(x,r)\cap H_\nu^+\bigr)}
+\leqslant\frac{1}{\varepsilon^{1^{*}}}\frac{\int_{B(x,r)\cap H_\nu^+}\lvert f-\lambda(x)\rvert^{1^{*}}\diff y}{\mathcal{L}^n\bigl(B(x,r)\cap H_\nu^+\bigr)}
+=\frac{1}{\varepsilon^{1^{*}}}\fint_{B(x,r)\cap H_\nu^+}\lvert f-\lambda(x)\rvert^{1^{*}}\diff y ,
+\end{align*}
+其中第二个等号用到平均值 $\fint$ 的定义；由断言 (ii) 第二式，右端当 $r\to0$ 时趋于零，故按\cref{definition:ch01-1-27}得 $\aplim_{y\to x,\,y\in H_\nu^+}f(y)=\lambda(x)$。对 $H_\nu^-$ 与 $\mu(x)$ 的论证相同。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-19-取向}
+断言 (iii) 的两个等式所分配的两侧与断言 (ii) 相反。由\cref{definition:ch01-1-27}，断言 (ii) 的第二式直接给出 % XREF internal
+\begin{align*}
+\lambda(x)=\aplim_{\substack{y\to x\\ y\in H_\nu^+}}f(y),
+\end{align*}
+而断言 (ii) 的第一式给出
+\begin{align*}
+\mu(x)=\aplim_{\substack{y\to x\\ y\in H_\nu^-}}f(y) ;
+\end{align*}
+因此 (iii) 中两个等式的左右两端应互换，即 $f$ 在 $H_\nu^+$ 一侧的近似极限是 $\lambda(x)$，在 $H_\nu^-$ 一侧的近似极限是 $\mu(x)$，其中 $\nu=\nu(x)$ 是水平集 $E_t=\{f>t\}$ 的测度论单位外法向。
+
+按 (iii) 的字面陈述不能成立。取 $n\geqslant2$ 与 $f=\chi_{H^-}$，其中 $H^-=\{y\in\mathbb{R}^n\mid y_n\leqslant0\}$。则对每个 $x$ 满足 $x_n=0$ 与每个 $t\in[0,1)$ 有 $E_t=H^-$，故 $\lambda(x)=0$、$\mu(x)=1$、$x\in J$，而 $E_t$ 的测度论单位外法向为 $\nu=e_n$。此时 $H_\nu^+=\{y\mid y_n\geqslant0\}$，在其上 $f\equiv0$，故
+\begin{align*}
+\aplim_{\substack{y\to x\\ y\in H_\nu^+}}f(y)=0=\lambda(x)\neq\mu(x)=1 ,
+\end{align*}
+即 (iii) 的第一个等式按字面为假；相应地 $\aplim_{y\to x,\,y\in H_\nu^-}f(y)=1=\mu(x)$。这与 (ii) 以及上面的推导一致。
+\end{remark}
+
+\begin{theorem}[$\BV$ 函数与磨光核]\label{theorem:ch05-5-20}
+设 $n\geqslant2$ 为整数，$f\in\BV(\mathbb{R}^n)$，$\mathcal{H}^{n-1}$ 为 $(n-1)$ 维 Hausdorff 测度，$B(x,r)$ 为以 $x$ 为心、$r$ 为半径的闭球，$\lambda,\mu$ 为\cref{definition:ch05-5-8}所定义的近似下极限与近似上极限， % XREF internal
+\begin{align*}
+F(x):=\frac{\lambda(x)+\mu(x)}{2},\qquad (f)_{x,r}:=\fint_{B(x,r)}f\diff y\quad(x\in\mathbb{R}^n,\ r>0),
+\end{align*}
+$\eta_\varepsilon$（$\varepsilon>0$）为\cref{definition:ch04-4-2-记号}中的标准磨光核，$f^{\varepsilon}:=\eta_\varepsilon*f$。则下列断言成立：% XREF internal
+\begin{enumerate}[(i)]
+\item 极限
+\begin{align*}
+f^{*}(x):=\lim_{r\to0}(f)_{x,r}=F(x)
+\end{align*}
+对 $\mathcal{H}^{n-1}$-a.e. $x\in\mathbb{R}^n$ 存在；
+\item 进而，
+\begin{align*}
+f^{*}(x)=\lim_{\varepsilon\to0}f^{\varepsilon}(x)
+\end{align*}
+对 $\mathcal{H}^{n-1}$-a.e. $x\in\mathbb{R}^n$ 成立。
+\end{enumerate}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch05-5-20; kind=motivation; 说明球平均与磨光都恢复出精确代表元 F、跳跃点处平均值为 λ 与 μ 的中点，以及这一结论与精确代表元定义的关系
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-20-动机}
+球平均与磨光都是对 $f$ 作局部平均的线性运算，它们把 $f$ 在一点附近的振荡抹平。本定理说明：对 $\BV$ 函数，这两个平均在 $\mathcal{H}^{n-1}$-a.e. 点处的极限都等于 $F=(\lambda+\mu)/2$。在 $x\notin J$ 处 $F(x)=\lambda(x)=\mu(x)$，这是通常的 Lebesgue 点结论的加强；在 $x\in J$ 处 $F(x)$ 恰是跳跃两侧数值的中点，即对称的球平均把「跳跃」平均成了 $\lambda$ 与 $\mu$ 的算术平均，而磨光给出同一个值。
+
+因此 $F$ 与\cref{definition:ch01-1-26}中按球平均定义的精确代表元 $f^{*}$ 一致：本定理的 (i) 说明 $f^{*}$ 作为 $\mathcal{H}^{n-1}$-a.e. 极限存在且等于 $F$。由于 $\mathcal{H}^{n-1}$-零测集也是 $\mathcal{L}^n$-零测集，这也给出 $f^{*}=F$ 于 $\mathcal{L}^n$-a.e. 成立，从而把两种「精确代表元」的构造统一起来。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-20; kind=hypotheses; 逐条分析 f∈BV、球平均与磨光的归一化、H^{n−1}-a.e. 的例外集，以及 (i) 与 (ii) 的相互独立之处
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-20-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in\BV(\mathbb{R}^n)$ 只通过\cref{theorem:ch05-5-19}使用：$L^{1^{*}}$ 平均的收敛性是该定理的结论，(i) 与 (ii) 都由它推出。若只有 $f\in L^{1}_{\mathrm{loc}}(\mathbb{R}^n)$，则 (i) 对 $\mathcal{L}^n$-a.e. 点成立（Lebesgue 微分定理），但极限值是 $f$ 的 Lebesgue 值而非 $F(x)$，且在跳跃点处不收敛。% XREF internal
+\item 球平均 $(f)_{x,r}$ 以 $x$ 为心、半径 $r$ 的球为平均区域，且不赋予权函数；磨光 $f^{\varepsilon}=\eta_\varepsilon*f$ 的核满足 $\eta_\varepsilon(z)=\varepsilon^{-n}\eta(z/\varepsilon)$、$\spt\eta\subseteq B(0,1)$ 与 $\int\eta\diff z=1$，故 $f^{\varepsilon}(x)$ 只依赖 $f$ 在 $B(x,\varepsilon)$ 上的取值。两者都只用 $f$ 的等价类，因此极限值只能是 $F$ 或 $f^{*}$ 这类由等价类决定的量。
+\item 结论中的例外集依赖于 $f$，一般不能去掉：在 $x\in J$ 处 $f$ 本身没有极限，故任何不取平均的陈述都不可能对每个 $x$ 成立；而在 (ii) 中，磨光在 $x$ 处的极限存在并不意味着 $f$ 在 $x$ 处有极限。
+\item (i) 与 (ii) 的证明彼此独立：(i) 由\cref{theorem:ch05-5-19}的 $L^{1^{*}}$ 估计经 Hölder 不等式得到；(ii) 则把磨光写成对球平均的加权平均，再用 (i)。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+这是前一定理的推论。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-20; kind=proof; 补出 (i) 由定理 5.19 经 Hölder 不等式过渡、跳跃点处半空间分解的计算，以及 (ii) 把磨光写成球平均之加权平均的估计
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-20-论证}
+\begin{enumerate}[(i)]
+\item 断言 (i) 在 $x\notin J$ 处。由\cref{theorem:ch05-5-19}(i)，对 $\mathcal{H}^{n-1}$-a.e. $x\notin J$ 有 $\fint_{B(x,r)}\lvert f-F(x)\rvert^{1^{*}}\diff y\to0$。由 Hölder 不等式（或 Jensen 不等式）与 $\mathcal{L}^n(B(x,r))<\infty$，% XREF internal
+\begin{align*}
+\Bigl\lvert(f)_{x,r}-F(x)\Bigr\rvert\leqslant\fint_{B(x,r)}\lvert f-F(x)\rvert\diff y
+\leqslant\Bigl(\fint_{B(x,r)}\lvert f-F(x)\rvert^{1^{*}}\diff y\Bigr)^{\frac{1}{1^{*}}}\longrightarrow0 ,
+\end{align*}
+故 $f^{*}(x)=\lim_{r\to0}(f)_{x,r}=F(x)$。
+\item 断言 (i) 在 $x\in J$ 处。由\cref{theorem:ch05-5-19}(ii)，对 $\mathcal{H}^{n-1}$-a.e. $x\in J$ 存在单位向量 $\nu=\nu(x)$，使两个半空间上的 $L^{1^{*}}$ 平均分别收敛。由于 $\mathcal{L}^n(H_\nu)=0$ 与 $\mathcal{L}^n(B(x,r)\cap H_\nu^{\pm})=\frac12\alpha(n)r^n$，把 $B(x,r)$ 分成 $B\cap H_\nu^+$ 与 $B\cap H_\nu^-$ 两部分，并注意 $F(x)=\frac12\lambda(x)+\frac12\mu(x)$，得% XREF internal
+\begin{align*}
+\Bigl\lvert(f)_{x,r}-F(x)\Bigr\rvert
+&\leqslant\frac{1}{\alpha(n)r^n}\int_{B(x,r)\cap H_\nu^+}\lvert f-\lambda(x)\rvert\diff y
++\frac{1}{\alpha(n)r^n}\int_{B(x,r)\cap H_\nu^-}\lvert f-\mu(x)\rvert\diff y\\
+&=\frac12\fint_{B(x,r)\cap H_\nu^+}\lvert f-\lambda(x)\rvert\diff y
++\frac12\fint_{B(x,r)\cap H_\nu^-}\lvert f-\mu(x)\rvert\diff y .
+\end{align*}
+由 Hölder 不等式，两个半空间上的 $L^1$ 平均都不超过相应 $L^{1^{*}}$ 平均的 $\frac{1}{1^{*}}$ 次幂，故由\cref{theorem:ch05-5-19}(ii) 右端趋于零，即 $f^{*}(x)=F(x)$。% XREF internal
+\item 断言 (ii)。设 $x$ 属于 (i) 中使 $(f)_{x,r}\to F(x)$ 的满测度集。由 $\eta_\varepsilon(z)=\varepsilon^{-n}\eta(z/\varepsilon)$、$\spt\eta\subseteq B(0,1)$ 与 $\int_{\mathbb{R}^n}\eta\diff z=1$ 得
+\begin{align*}
+f^{\varepsilon}(x)-F(x)=\int_{B(x,\varepsilon)}\eta_\varepsilon(x-y)\bigl(f(y)-F(x)\bigr)\diff y ,
+\end{align*}
+故
+\begin{align*}
+\bigl\lvert f^{\varepsilon}(x)-F(x)\bigr\rvert
+&\leqslant\lVert\eta\rVert_{L^{\infty}(\mathbb{R}^n)}\,\varepsilon^{-n}\int_{B(x,\varepsilon)}\bigl\lvert f(y)-F(x)\bigr\rvert\diff y\\
+&=\lVert\eta\rVert_{L^{\infty}(\mathbb{R}^n)}\,\alpha(n)\fint_{B(x,\varepsilon)}\bigl\lvert f(y)-F(x)\bigr\rvert\diff y\longrightarrow0\qquad(\varepsilon\to0),
+\end{align*}
+最后一步用 (i) 中已证的 $\lim_{r\to0}\fint_{B(x,r)}\lvert f-F(x)\rvert\diff y=0$。
+\end{enumerate}
+\end{remark}
+
+\end{document}

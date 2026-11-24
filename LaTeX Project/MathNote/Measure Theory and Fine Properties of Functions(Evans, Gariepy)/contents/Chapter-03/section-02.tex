@@ -1,0 +1,612 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{线性映射与 Jacobi 行列式}\label{section:ch03-02}
+
+% 本节记号：原书用双中括号表示线性映射的 Jacobi 行列式，记作 $\llbracket L\rrbracket$。
+
+接下来回顾一些线性代数。此后的目标是定义映射 $f:\mathbb{R}^n\to\mathbb{R}^m$ 的 Jacobi 行列式。
+
+\subsection{线性映射}\label{subsection:ch03-02-1}
+
+\begin{definition}[正交、对称、对角映射与伴随]\label{definition:ch03-3-3}
+设 $n,m$ 为正整数，$\mathbb{R}^n$ 与 $\mathbb{R}^m$ 上均取欧氏内积 $x\cdot y$，相应的范数记为 $\lvert x\rvert:=(x\cdot x)^{1/2}$，$I$ 表恒等映射。
+\begin{enumerate}[(i)]
+\item 设 $O:\mathbb{R}^n\to\mathbb{R}^n$ 为线性映射。若对一切 $x,y\in\mathbb{R}^n$ 成立
+\begin{align*}
+(Ox)\cdot(Oy)=x\cdot y,
+\end{align*}
+则称 $O$ 为\textbf{正交}映射。
+\item 设 $S:\mathbb{R}^n\to\mathbb{R}^n$ 为线性映射。若对一切 $x,y\in\mathbb{R}^n$ 成立
+\begin{align*}
+x\cdot(Sy)=(Sx)\cdot y,
+\end{align*}
+则称 $S$ 为\textbf{对称}映射。
+\item 设 $D:\mathbb{R}^n\to\mathbb{R}^n$ 为线性映射。若存在 $d_1,\cdots,d_n\in\mathbb{R}$，使得对一切 $x=(x_1,\cdots,x_n)\in\mathbb{R}^n$ 成立
+\begin{align*}
+Dx=(d_1x_1,\cdots,d_nx_n),
+\end{align*}
+则称 $D$ 为\textbf{对角}映射，$(d_1,\cdots,d_n)$ 称为 $D$ 的\textbf{对角元}。
+\item 设 $A:\mathbb{R}^n\to\mathbb{R}^m$ 为线性映射。若线性映射 $A^*:\mathbb{R}^m\to\mathbb{R}^n$ 满足
+\begin{align*}
+x\cdot(A^*y)=(Ax)\cdot y\qquad(x\in\mathbb{R}^n,\ y\in\mathbb{R}^m),
+\end{align*}
+则称 $A^*$ 为 $A$ 的\textbf{伴随}。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch03-3-3; kind=proof; 补出第 (iv) 款中伴随的存在性与唯一性，使该定义不依赖坐标选取
+\begin{proof}
+第 (iv) 款中伴随的存在性与唯一性。固定 $y\in\mathbb{R}^m$，映射 $x\mapsto(Ax)\cdot y$ 是 $\mathbb{R}^n$ 上的线性泛函；由 $\mathbb{R}^n$ 上的 Riesz 表示定理，存在唯一的 $A^*y\in\mathbb{R}^n$，使得
+\begin{align*}
+x\cdot(A^*y)=(Ax)\cdot y\qquad(x\in\mathbb{R}^n).
+\end{align*}
+唯一性也可直接验证：若 $z\in\mathbb{R}^n$ 满足 $x\cdot z=(Ax)\cdot y$ 对一切 $x\in\mathbb{R}^n$ 成立，则 $x\cdot(z-A^*y)=0$ 对一切 $x$ 成立；取 $x=z-A^*y$ 得 $\lvert z-A^*y\rvert^2=0$，故 $z=A^*y$。
+
+再验证 $y\mapsto A^*y$ 是线性的。设 $y_1,y_2\in\mathbb{R}^m$、$\alpha,\beta\in\mathbb{R}$，则对每个 $x\in\mathbb{R}^n$ 有
+\begin{align*}
+x\cdot\bigl(A^*(\alpha y_1+\beta y_2)\bigr)
+&=(Ax)\cdot(\alpha y_1+\beta y_2)\\
+&=\alpha\,(Ax)\cdot y_1+\beta\,(Ax)\cdot y_2\\
+&=\alpha\,x\cdot(A^*y_1)+\beta\,x\cdot(A^*y_2)\\
+&=x\cdot\bigl(\alpha A^*y_1+\beta A^*y_2\bigr),
+\end{align*}
+由上述唯一性得 $A^*(\alpha y_1+\beta y_2)=\alpha A^*y_1+\beta A^*y_2$。于是 $A^*$ 是满足定义中恒等式的唯一线性映射。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:ch03-3-3; kind=motivation; 说明为何把线性映射分为正交、对称、对角三类，以及伴随在两种维数配比下的作用
+\begin{remark}\phantomsection\label{remark:ch03-def-3-3-动机}
+本节的目标是为一般线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$ 定义一个数 $\llbracket L\rrbracket$，使它在 $L$ 把体积放大时给出正确的伸缩因子。当 $n=m$ 时这个数应当是 $\lvert\det L\rvert$；当 $n\neq m$ 时 $\det L$ 无定义，因此须把 $L$ 写成若干初等映射的复合，再把这些映射的伸缩因子相乘。
+
+第 (i)、(ii)、(iii) 款给出的正是三个初等类型。正交映射保持内积，因而保持长度、角度与体积；对称映射在适当的正交基下只沿各个方向独立伸缩，\cref{theorem:ch03-3-4}的第 (v) 款把这一点写成 $S=O\circ D\circ O^{-1}$；对角映射把伸缩系数直接写在坐标上，是伸缩因子的来源。第 (iv) 款的伴随把 $\mathbb{R}^m$ 上与 $\mathbb{R}^n$ 上的内积联系起来，它是转置的坐标无关形式：借助它可写出 $L^*\circ L:\mathbb{R}^n\to\mathbb{R}^n$ 与 $L\circ L^*:\mathbb{R}^m\to\mathbb{R}^m$，从而在 $n\leqslant m$ 与 $n\geqslant m$ 两种配比下都把问题化为方阵的行列式。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch03-3-3; kind=hypotheses; 逐款解释正交、对称、对角、伴随四类条件的等价形式与必要限定
+\begin{remark}\phantomsection\label{remark:ch03-def-3-3-条件}
+\begin{enumerate}[(i)]
+\item 第 (i) 款中 $O$ 的定义域与陪域同为 $\mathbb{R}^n$。条件 $(Ox)\cdot(Oy)=x\cdot y$ 等价于 $O^*\circ O=I$：把第 (iv) 款的恒等式取 $A=O$ 得 $(Ox)\cdot(Oy)=x\cdot(O^*Oy)$，故该条件等价于 $x\cdot(O^*Oy)=x\cdot y$ 对一切 $x,y\in\mathbb{R}^n$ 成立。它蕴含 $\lvert Ox\rvert^2=\lvert x\rvert^2$，故 $O$ 单射；当 $n=m$ 时 $O$ 可逆且 $O^{-1}=O^*$。当 $n<m$ 时 $O$ 不是满射，$O\circ O^*$ 只是到 $O(\mathbb{R}^n)$ 的正交投影，并非 $\mathbb{R}^m$ 上的恒等映射。
+\item 第 (ii) 款的条件 $x\cdot(Sy)=(Sx)\cdot y$ 等价于 $S^*=S$：由第 (iv) 款的恒等式，$(Sx)\cdot y=x\cdot(S^*y)$，故条件即 $x\cdot(Sy)=x\cdot(S^*y)$ 对一切 $x,y$ 成立。在标准基下它对应矩阵的对称性，即第 $i$ 行第 $j$ 列的元素等于第 $j$ 行第 $i$ 列的元素。
+\item 第 (iii) 款要求对角元 $d_1,\cdots,d_n$ 为实数，且个数等于维数 $n$；等价地，$D$ 关于标准基 $\{e_1,\cdots,e_n\}$ 的矩阵为对角阵，即 $De_k=d_ke_k$（$k=1,\cdots,n$）。$n=1$ 时每个线性映射都是对角的。
+\item 第 (iv) 款中 $A$ 与 $A^*$ 的维数方向相反：$A:\mathbb{R}^n\to\mathbb{R}^m$，$A^*:\mathbb{R}^m\to\mathbb{R}^n$，否则恒等式两端的内积落在不同的空间中。伴随的存在性与唯一性由 Riesz 表示定理保证；在标准基下 $A^*$ 的矩阵是 $A$ 的矩阵的转置。
+\end{enumerate}
+\end{remark}
+
+首先记录线性代数中的一些标准事实。
+
+\begin{theorem}[线性代数]\label{theorem:ch03-3-4}
+设 $n,m,p$ 为正整数，$I$ 表相应维数上的恒等映射。
+\begin{enumerate}[(i)]
+\item 若 $A:\mathbb{R}^n\to\mathbb{R}^m$ 为线性映射，则 $A^{**}=A$。
+\item 若 $B:\mathbb{R}^n\to\mathbb{R}^m$ 与 $A:\mathbb{R}^m\to\mathbb{R}^p$ 为线性映射，则
+\begin{align*}
+(A\circ B)^*=B^*\circ A^*.
+\end{align*}
+\item 若 $O:\mathbb{R}^n\to\mathbb{R}^n$ 为正交映射，则 $O^*=O^{-1}$。
+\item 若 $S:\mathbb{R}^n\to\mathbb{R}^n$ 为对称映射，则 $S^*=S$。
+\item 若 $S:\mathbb{R}^n\to\mathbb{R}^n$ 为对称映射，则存在正交映射 $O:\mathbb{R}^n\to\mathbb{R}^n$ 与对角映射 $D:\mathbb{R}^n\to\mathbb{R}^n$，使得
+\begin{align*}
+S=O\circ D\circ O^{-1}.
+\end{align*}
+\item 若 $O:\mathbb{R}^n\to\mathbb{R}^m$ 为正交映射，则 $n\leqslant m$，且
+\begin{align*}
+O^*\circ O=I\quad\text{在 }\mathbb{R}^n\text{ 上},\qquad
+O\circ O^*=I\quad\text{在 }\mathbb{R}^m\text{ 上}.
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch03-3-4; kind=proof; 原书把这些结论列为线性代数中的标准事实而未给证明，此处逐款补出
+\begin{proof}
+先记一条反复使用的唯一性事实：若 $B,C:\mathbb{R}^m\to\mathbb{R}^n$ 为线性映射，且对一切 $x\in\mathbb{R}^n$、$y\in\mathbb{R}^m$ 成立 $x\cdot(By)=x\cdot(Cy)$，则 $B=C$。事实上，取 $x=By-Cy$ 得 $\lvert By-Cy\rvert^2=0$，故 $By=Cy$ 对一切 $y\in\mathbb{R}^m$ 成立。
+
+（i）对 $x\in\mathbb{R}^n$、$y\in\mathbb{R}^m$，由伴随的定义两次，
+\begin{align*}
+y\cdot(A^{**}x)=(A^*y)\cdot x=x\cdot(A^*y)=(Ax)\cdot y=y\cdot(Ax),
+\end{align*}
+由唯一性得 $A^{**}x=Ax$，即 $A^{**}=A$。
+
+（ii）对 $x\in\mathbb{R}^n$、$z\in\mathbb{R}^p$，
+\begin{align*}
+x\cdot\bigl((A\circ B)^*z\bigr)=((A\circ B)x)\cdot z=(A(Bx))\cdot z=(Bx)\cdot(A^*z)=x\cdot\bigl((B^*\circ A^*)z\bigr),
+\end{align*}
+由唯一性得 $(A\circ B)^*=B^*\circ A^*$。
+
+（iii）对 $x,y\in\mathbb{R}^n$，
+\begin{align*}
+x\cdot(O^*Oy)=(Ox)\cdot(Oy)=x\cdot y=x\cdot(Iy),
+\end{align*}
+由唯一性得 $O^*\circ O=I$。于是 $O$ 单射；又 $O$ 是 $\mathbb{R}^n$ 到自身的方阵映射，$O^*\circ O=I$ 蕴含 $O$ 可逆且 $O^{-1}=O^*$。
+
+（iv）对 $x,y\in\mathbb{R}^n$ 有 $x\cdot(S^*y)=(Sx)\cdot y=x\cdot(Sy)$，由唯一性得 $S^*=S$。
+
+（v）对 $n$ 作归纳。$n=1$ 时每个线性映射 $S:\mathbb{R}\to\mathbb{R}$ 形如 $Sx=\mu x$，取 $O=I$、$D=S$ 即得 $S=O\circ D\circ O^{-1}$。
+
+设结论对 $n-1$ 成立，并设 $S:\mathbb{R}^n\to\mathbb{R}^n$ 为对称映射。取标准基把 $S$ 写成实矩阵 $(s_{ij})$，其中 $s_{ij}=s_{ji}$，并把同一矩阵看作 $\mathbb{C}^n$ 上的线性映射。由代数基本定理，特征多项式在 $\mathbb{C}$ 中有根 $\lambda$；取相应的非零特征向量 $z\in\mathbb{C}^n$，即 $Sz=\lambda z$。用 $\bar z$ 与 $Sz$ 作 Hermite 内积，一方面
+\begin{align*}
+\sum_{i=1}^n(Sz)_i\overline{z_i}=\lambda\sum_{i=1}^nz_i\overline{z_i}=\lambda\lvert z\rvert^2,
+\end{align*}
+另一方面，由 $s_{ij}=s_{ji}\in\mathbb{R}$，
+\begin{align*}
+\sum_{i=1}^n(Sz)_i\overline{z_i}
+=\sum_{i,j=1}^ns_{ij}z_j\overline{z_i}
+=\sum_{j=1}^nz_j\overline{\sum_{i=1}^ns_{ji}z_i}
+=\sum_{j=1}^nz_j\overline{(Sz)_j}
+=\bar\lambda\lvert z\rvert^2.
+\end{align*}
+由 $\lvert z\rvert^2>0$ 得 $\lambda=\bar\lambda$，故 $\lambda\in\mathbb{R}$。于是 $S-\lambda I$ 是奇异实矩阵，存在非零的 $x\in\mathbb{R}^n$ 使 $Sx=\lambda x$。
+
+令 $E:=\operatorname{span}\{x\}$、$E^{\perp}:=\{y\in\mathbb{R}^n\mid y\cdot x=0\}$，则 $\dim E^{\perp}=n-1$，且 $S(E^{\perp})\subseteq E^{\perp}$：当 $y\in E^{\perp}$ 时
+\begin{align*}
+(Sy)\cdot x=y\cdot(Sx)=\lambda\,(y\cdot x)=0.
+\end{align*}
+取 $E^{\perp}$ 的一组标准正交基，把 $E^{\perp}$ 与 $\mathbb{R}^{n-1}$ 等距等同；在该等同之下 $S|_{E^{\perp}}$ 仍为对称映射，因为对 $u,v\in\mathbb{R}^{n-1}$ 有
+\begin{align*}
+(S'u)\cdot v=(S\iota u)\cdot(\iota v)=(\iota u)\cdot(S\iota v)=u\cdot(S'v),
+\end{align*}
+其中 $S':=\iota^{-1}\circ S|_{E^{\perp}}\circ\iota$，$\iota:\mathbb{R}^{n-1}\to E^{\perp}$ 为等距同构。由归纳假设，存在 $E^{\perp}$ 的标准正交基 $\{x_2,\cdots,x_n\}$ 与实数 $\mu_2,\cdots,\mu_n$，使得 $Sx_k=\mu_kx_k$（$k=2,\cdots,n$）。再令 $x_1:=x/\lvert x\rvert$、$\mu_1:=\lambda$，则 $\{x_1,\cdots,x_n\}$ 是 $\mathbb{R}^n$ 的标准正交基，且
+\begin{align*}
+Sx_k=\mu_kx_k\qquad(k=1,\cdots,n).
+\end{align*}
+
+最后定义 $\mathbb{R}^n$ 上的线性映射 $D$ 与 $O$。设 $\{e_1,\cdots,e_n\}$ 为标准基，令
+\begin{align*}
+De_k:=\mu_ke_k,\qquad Oe_k:=x_k\qquad(k=1,\cdots,n).
+\end{align*}
+则 $D$ 是对角映射，其对角元为 $\mu_1,\cdots,\mu_n$。$O$ 是正交映射：由
+\begin{align*}
+(Oe_k)\cdot(Oe_l)=x_k\cdot x_l=\delta_{kl}=e_k\cdot e_l\qquad(k,l=1,\cdots,n)
+\end{align*}
+与内积的双线性，对一切 $x,y\in\mathbb{R}^n$ 有 $(Ox)\cdot(Oy)=x\cdot y$，其中 $\delta_{kl}$ 为 Kronecker 符号。于是 $O^*\circ O=I$，由第（iii）款得 $O^{-1}=O^*$，并且
+\begin{align*}
+(O\circ D\circ O^{-1})x_k=O(De_k)=O(\mu_ke_k)=\mu_kx_k=Sx_k\qquad(k=1,\cdots,n).
+\end{align*}
+两个线性映射在基 $\{x_1,\cdots,x_n\}$ 上取值相同，故 $S=O\circ D\circ O^{-1}$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-3-4; kind=motivation; 说明各款在极分解与 Jacobi 行列式定义中的用途，核心是第 (v) 款的正交对角化
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-4-动机}
+本定理把伴随运算与复合、逆、对称性的关系集中列出，其核心是第 (v) 款：$\mathbb{R}^n$ 上的实对称映射在某个标准正交基下是对角的。这一款是极分解\cref{theorem:ch03-3-5}的全部实质内容——极分解对 $L^*\circ L$ 这个对称半正定映射作正交对角化，再把特征值的平方根沿特征方向延拓为正交映射。第 (i)、(ii)、(iii) 款是伴随运算的形式规则，用来把 $L$ 与 $L^*$ 的复合按相反顺序搬移：在 $n\geqslant m$ 的情形，正是靠它们把关于 $L^*$ 的分解转回关于 $L$ 的分解，从而得到 $L=S\circ O^*$。第 (iv) 款把对称性表述为 $S^*=S$，使 $S$ 可在内积的任一侧自由搬动。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch03-3-4; kind=hypotheses; 逐款核对维数配比、方阵要求与对称性条件，并指出第 (vi) 款第二个恒等式的条件缺失
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-4-条件}
+\begin{enumerate}[(i)]
+\item 第 (ii) 款的维数必须首尾相接：$B:\mathbb{R}^n\to\mathbb{R}^m$、$A:\mathbb{R}^m\to\mathbb{R}^p$，于是 $A\circ B:\mathbb{R}^n\to\mathbb{R}^p$，而 $B^*\circ A^*:\mathbb{R}^p\to\mathbb{R}^n$ 与 $(A\circ B)^*$ 的定义域、陪域一致。
+\item 第 (i) 款中 $A:\mathbb{R}^n\to\mathbb{R}^m$，故 $A^{**}:\mathbb{R}^n\to\mathbb{R}^m$，维数回到原处；这正是伴随运算为对合的内容。
+\item 第 (iii) 款要求 $O:\mathbb{R}^n\to\mathbb{R}^n$，即方阵情形。若 $O:\mathbb{R}^n\to\mathbb{R}^m$ 且 $n<m$，则 $O$ 无逆，只有 $O^*\circ O=I$ 成立；该情形由第 (vi) 款处理。
+\item 第 (v) 款中对称性不可去掉：$\mathbb{R}^2$ 上旋转 $\pi/2$ 的线性映射没有实特征值，因而不存在由特征向量组成的基，不能写成 $O\circ D\circ O^{-1}$ 的形式。
+\item 第 (vi) 款的第一个恒等式对一切 $n\leqslant m$ 成立，第二个恒等式却需要 $n=m$；按字面它在 $n<m$ 时为假。该款的修正与证明见紧随本定理的注记。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch03-3-4; kind=correction; 指出第 (vi) 款第二个恒等式按字面为假，给出反例、最小修正版本及其证明
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-4-修正}
+第 (vi) 款的第二个恒等式按字面为假。取 $n=1$、$m=2$ 与
+\begin{align*}
+O(t):=(t,0)\qquad(t\in\mathbb{R}).
+\end{align*}
+对 $s,t\in\mathbb{R}$ 有 $(Os)\cdot(Ot)=st=s\cdot t$，故 $O:\mathbb{R}\to\mathbb{R}^2$ 为正交映射，且 $1\leqslant2$。伴随 $O^*:\mathbb{R}^2\to\mathbb{R}$ 由 $(a,b)\mapsto a$ 给出，于是 $O^*\circ O=I$ 在 $\mathbb{R}$ 上成立，而
+\begin{align*}
+(O\circ O^*)(a,b)=(a,0)\neq(a,b)\qquad((a,b)\in\mathbb{R}^2,\ b\neq0),
+\end{align*}
+故 $O\circ O^*\neq I$ 在 $\mathbb{R}^2$ 上。错误只出现在第二个恒等式上。
+
+该款的最小修正为：设 $O:\mathbb{R}^n\to\mathbb{R}^m$ 为正交映射，则 $n\leqslant m$，$O^*\circ O=I$ 在 $\mathbb{R}^n$ 上成立，且 $O\circ O^*$ 是 $\mathbb{R}^m$ 到 $O(\mathbb{R}^n)$ 的正交投影；特别地，$O\circ O^*=I$ 在 $\mathbb{R}^m$ 上成立当且仅当 $n=m$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch03-3-4; kind=proof; 证明第 (vi) 款的修正版本
+\begin{proof}
+设 $O:\mathbb{R}^n\to\mathbb{R}^m$ 为正交映射。由 $\lvert Ox\rvert^2=(Ox)\cdot(Ox)=x\cdot x=\lvert x\rvert^2$ 知 $O$ 单射，故 $n\leqslant m$。又对 $x,y\in\mathbb{R}^n$ 有 $x\cdot(O^*Oy)=(Ox)\cdot(Oy)=x\cdot y$，故 $O^*\circ O=I$ 在 $\mathbb{R}^n$ 上成立。
+
+记 $P:=O\circ O^*$，则 $P$ 是 $\mathbb{R}^m$ 上的线性映射，且由第（i）、（ii）款
+\begin{align*}
+P^*=(O\circ O^*)^*=O^{**}\circ O^*=O\circ O^*=P,
+\end{align*}
+由 $O^*\circ O=I$ 又得
+\begin{align*}
+P\circ P=O\circ(O^*\circ O)\circ O^*=O\circ O^*=P.
+\end{align*}
+于是 $P$ 是正交投影。$P$ 的像集等于 $O(\mathbb{R}^n)$：一方面 $P=O\circ O^*$ 的像含于 $O(\mathbb{R}^n)$，另一方面 $O=P\circ O$ 的像含于 $P$ 的像。故 $P$ 是 $\mathbb{R}^m$ 到 $O(\mathbb{R}^n)$ 的正交投影。最后，$P=I$ 等价于 $O(\mathbb{R}^n)=\mathbb{R}^m$，即 $O$ 满射；由 $O$ 单射与 $n\leqslant m$，这等价于 $n=m$。
+\end{proof}
+
+\begin{theorem}[极分解]\label{theorem:ch03-3-5}
+设 $n,m$ 为正整数，$L:\mathbb{R}^n\to\mathbb{R}^m$ 为线性映射。
+\begin{enumerate}[(i)]
+\item 若 $n\leqslant m$，则存在对称映射 $S:\mathbb{R}^n\to\mathbb{R}^n$ 与正交映射 $O:\mathbb{R}^n\to\mathbb{R}^m$，使得
+\begin{align*}
+L=O\circ S.
+\end{align*}
+\item 若 $n\geqslant m$，则存在对称映射 $S:\mathbb{R}^m\to\mathbb{R}^m$ 与正交映射 $O:\mathbb{R}^m\to\mathbb{R}^n$，使得
+\begin{align*}
+L=S\circ O^*.
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）先设 $n\leqslant m$。定义 $C:=L^*\circ L$，则 $C:\mathbb{R}^n\to\mathbb{R}^n$。对 $x,y\in\mathbb{R}^n$ 有
+\begin{align*}
+(Cx)\cdot y=(L^*\circ Lx)\cdot y=Lx\cdot Ly=x\cdot(L^*\circ Ly)=x\cdot Cy,
+\end{align*}
+并且
+\begin{align*}
+(Cx)\cdot x=Lx\cdot Lx\geqslant0.
+\end{align*}
+故 $C$ 对称且半正定。于是存在 $\mu_1,\cdots,\mu_n\geqslant0$ 与 $\mathbb{R}^n$ 的一组正交基 $\{x_k\}_{k=1}^n$，使得
+\begin{align*}
+Cx_k=\mu_kx_k\qquad(k=1,\cdots,n).
+\end{align*}
+令 $\mu_k=:\lambda_k^2$，$\lambda_k\geqslant0$（$k=1,\cdots,n$）。
+
+% SUPPLEMENT: parent=theorem:ch03-3-5; kind=proof; 补出把正交基单位化、以及特征基由本节线性代数定理第 (v) 款得到这两步
+把正交基 $\{x_k\}$ 单位化不影响 $Cx_k=\mu_kx_k$，故可设 $\{x_k\}_{k=1}^n$ 为 $\mathbb{R}^n$ 的标准正交基。$\mu_k\geqslant0$ 也可由半正定性直接读出：$\mu_k=Cx_k\cdot x_k\geqslant0$。特征基的存在性来自\cref{theorem:ch03-3-4}的第 (v) 款：该款给出 $C=O'\circ D\circ(O')^{-1}$，取 $x_k:=O'e_k$ 即得 $Cx_k=\mu_kx_k$，其中 $\mu_k$ 为对角映射 $D$ 的第 $k$ 个对角元，而 $\{x_k\}$ 的标准正交性由 $O'$ 的正交性保证。% XREF internal
+
+（2）断言：存在 $\mathbb{R}^m$ 中的标准正交组 $\{z_k\}_{k=1}^n$，使得
+\begin{align*}
+Lx_k=\lambda_kz_k\qquad(k=1,\cdots,n).
+\end{align*}
+断言的证明：若 $\lambda_k\neq0$，定义
+\begin{align*}
+z_k:=\frac{1}{\lambda_k}Lx_k.
+\end{align*}
+若 $\lambda_k,\lambda_l\neq0$，则
+\begin{align*}
+z_k\cdot z_l
+=\frac{1}{\lambda_k\lambda_l}Lx_k\cdot Lx_l
+=\frac{1}{\lambda_k\lambda_l}(Cx_k)\cdot x_l
+=\frac{\lambda_k^2}{\lambda_k\lambda_l}x_k\cdot x_l
+=\frac{\lambda_k}{\lambda_l}\delta_{kl},
+\end{align*}
+其中 $\delta_{kl}$ 为 Kronecker 符号，故 $\{z_k\mid\lambda_k\neq0\}$ 是正交组。若 $\lambda_k=0$，则取 $z_k$ 为任一单位向量，使得 $\{z_k\}_{k=1}^n$ 是标准正交组。
+
+% SUPPLEMENT: parent=theorem:ch03-3-5; kind=proof; 补出 $\lambda_k=0$ 时 $Lx_k=0$，以及非零指标对应的那部分向量如何扩充为标准正交组
+当 $\lambda_k=0$ 时 $\lvert Lx_k\rvert^2=(Cx_k)\cdot x_k=\mu_k=0$，故 $Lx_k=0=\lambda_kz_k$，与 $z_k$ 的取法无关。记 $J:=\{k\mid\lambda_k\neq0\}$。上面的计算表明 $\{z_k\}_{k\in J}$ 是标准正交组，其个数 $\lvert J\rvert\leqslant n\leqslant m$。由 Gram--Schmidt 过程，任一标准正交组都可扩充为 $\mathbb{R}^m$ 中的标准正交组；把 $\{z_k\}_{k\in J}$ 扩充为 $\{z_k\}_{k=1}^n$，并对 $k\notin J$ 的指标取扩充所得的向量，即得所需的标准正交组。
+
+（3）现定义 $S:\mathbb{R}^n\to\mathbb{R}^n$ 与 $O:\mathbb{R}^n\to\mathbb{R}^m$ 为
+\begin{align*}
+Sx_k:=\lambda_kx_k,\qquad Ox_k:=z_k\qquad(k=1,\cdots,n).
+\end{align*}
+则 $O\circ Sx_k=\lambda_kOx_k=\lambda_kz_k=Lx_k$（$k=1,\cdots,n$），故
+\begin{align*}
+L=O\circ S.
+\end{align*}
+映射 $S$ 是对称的，$O$ 是正交的，因为
+\begin{align*}
+Ox_k\cdot Ox_l=z_k\cdot z_l=\delta_{kl}.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch03-3-5; kind=proof; 补出 $S$ 的对称性与 $O$ 的正交性在全部向量上成立，以及第（4）步如何由第 (i) 款得到第 (ii) 款
+$S$ 的对称性：写 $x=\sum_{k=1}^na_kx_k$、$y=\sum_{l=1}^nb_lx_l$，则 $Sx=\sum_{k=1}^n\lambda_ka_kx_k$，故
+\begin{align*}
+(Sx)\cdot y=\sum_{k=1}^n\lambda_ka_kb_k=x\cdot(Sy).
+\end{align*}
+$O$ 的正交性：由 $Ox=\sum_{k=1}^na_kz_k$、$Oy=\sum_{l=1}^nb_lz_l$ 与 $\{z_k\}_{k=1}^n$ 的标准正交性得
+\begin{align*}
+(Ox)\cdot(Oy)=\sum_{k=1}^na_kb_k=x\cdot y.
+\end{align*}
+
+（4）把第 (i) 款用于线性映射 $L^*:\mathbb{R}^m\to\mathbb{R}^n$（此时 $m\leqslant n$），得对称映射 $S_0:\mathbb{R}^m\to\mathbb{R}^m$ 与正交映射 $O_0:\mathbb{R}^m\to\mathbb{R}^n$，使得 $L^*=O_0\circ S_0$。由\cref{theorem:ch03-3-4}的第 (i)、(ii)、(iv) 款，% XREF internal
+\begin{align*}
+L=L^{**}=(O_0\circ S_0)^*=S_0^*\circ O_0^*=S_0\circ O_0^*.
+\end{align*}
+取 $S:=S_0$、$O:=O_0$ 即得 $L=S\circ O^*$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-3-5; kind=motivation; 说明极分解的几何含义、与 Jacobi 行列式定义的关系，以及 $S$ 的唯一性与 $O$ 的不唯一性
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-5-动机}
+极分解把任意线性映射拆成「正交」与「对称」两部分的复合，从而把 $L$ 的作用分解为两步：先用对称映射沿一族互相垂直的方向作伸缩，再用正交映射把伸缩后的图形刚性地搬到 $\mathbb{R}^m$ 中。这正是\cref{definition:ch03-3-4}定义 $\llbracket L\rrbracket$ 的依据——伸缩因子应当等于 $\lvert\det S\rvert$，而正交部分不改变体积。% XREF internal
+
+证明中的构造还说明 $S$ 只依赖 $L$：$C=L^*\circ L$ 由 $L$ 决定，其特征值 $\mu_k=\lambda_k^2$ 与特征方向因而也由 $L$ 决定，故 $\det S=\prod_{k=1}^n\lambda_k$ 与分解的选取无关。$O$ 则不然：第（2）步只在特征向量上指定 $Ox_k=z_k$，当 $\lambda_k=0$ 时 $z_k$ 可任取，故 $O$ 一般不唯一。$n=m$ 时两款同时可用，且 $\lvert\det L\rvert=\lvert\det S\rvert$，与 $\det$ 的直接计算一致。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch03-3-5; kind=hypotheses; 逐款核对维数配比、对称与正交的要求、半正定性，以及分解不唯一但 $\lvert\det S\rvert$ 唯一的事实
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-5-条件}
+\begin{enumerate}[(i)]
+\item 两款的分工由维数决定。$n\leqslant m$ 时写成 $O\circ S$：先伸缩后旋转，$S$ 是 $\mathbb{R}^n$ 上的映射，对应 $n\times n$ 方阵；$n\geqslant m$ 时写成 $S\circ O^*$：先旋转后伸缩，$S$ 是 $\mathbb{R}^m$ 上的映射，对应 $m\times m$ 方阵。$n=m$ 时两式都可用。
+\item 第 (i) 款中 $O:\mathbb{R}^n\to\mathbb{R}^m$ 只有在 $n=m$ 时才是方阵映射；$n<m$ 时它不可能是满射，这与\cref{theorem:ch03-3-4}第 (vi) 款的修正版本一致——只需 $O^*\circ O=I$，不需要 $O\circ O^*=I$。% XREF internal
+\item $S$ 由 $C=L^*\circ L$ 的特征值决定，故是半正定对称映射，从而 $\det S\geqslant0$、$\lvert\det S\rvert=\det S$。第 (ii) 款中 $S$ 同样半正定，其来源是把第 (i) 款用于 $L^*$。
+\item $\lvert\det S\rvert$ 与分解的选取无关，这一点是使\cref{definition:ch03-3-4}有意义的前提；其证明是\cref{theorem:ch03-3-6}。 | internal % XREF internal
+\item 证明用到\cref{theorem:ch03-3-4}第 (v) 款的实对称正交对角化。该款依赖对称矩阵的实特征值，实矩阵的复特征值经上述 Hermite 内积论证必为实数；这一论证不能推广到一般的非对称实矩阵。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[线性映射的 Jacobi 行列式]\label{definition:ch03-3-4}
+设 $n,m$ 为正整数，$L:\mathbb{R}^n\to\mathbb{R}^m$ 为线性映射，$\det$ 表方阵的行列式。
+\begin{enumerate}[(i)]
+\item 设 $n\leqslant m$，并按\cref{theorem:ch03-3-5}第 (i) 款的方式写 $L=O\circ S$，其中 $S:\mathbb{R}^n\to\mathbb{R}^n$ 为对称映射、$O:\mathbb{R}^n\to\mathbb{R}^m$ 为正交映射。则称% XREF internal
+\begin{align*}
+\llbracket L\rrbracket:=\lvert\det S\rvert
+\end{align*}
+为 $L$ 的 \textbf{Jacobi 行列式}。
+\item 设 $n\geqslant m$，并按\cref{theorem:ch03-3-5}第 (ii) 款的方式写 $L=S\circ O^*$，其中 $S:\mathbb{R}^m\to\mathbb{R}^m$ 为对称映射、$O:\mathbb{R}^m\to\mathbb{R}^n$ 为正交映射。则称% XREF internal
+\begin{align*}
+\llbracket L\rrbracket:=\lvert\det S\rvert
+\end{align*}
+为 $L$ 的 \textbf{Jacobi 行列式}。
+\end{enumerate}
+\end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch03-def-3-4-独立性}
+由\cref{theorem:ch03-3-6}可知，$\llbracket L\rrbracket$ 的定义与 $O$、$S$ 的具体选取无关。% XREF p=111 "It follows from Theorem 3.6 below that the definition of [[L]] is independent of the particular choices of O and S."
+另据定义直接看出
+\begin{align*}
+\llbracket L\rrbracket=\llbracket L^*\rrbracket.
+\end{align*}
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch03-3-4; kind=motivation; 说明把体积伸缩因子抽象为一个数的必要性，以及为何必须分两种维数配比定义
+\begin{remark}\phantomsection\label{remark:ch03-def-3-4-动机}
+当 $n=m$ 时线性映射 $L$ 对体积的伸缩由 $\lvert\det L\rvert$ 刻画：单位立方体的像是一个平行多面体，其体积正是 $\lvert\det L\rvert$。可是当 $n\neq m$ 时 $L$ 的矩阵不是方阵，$\det$ 无定义，而 $L$ 仍然把 $n$ 维体积放大为 $m$ 维空间中一个 $n$ 维曲面的面积。定义把这一放大倍数记为 $\llbracket L\rrbracket$，其做法是先用极分解把 $L$ 中的正交部分（不改变体积）与对称部分（只作伸缩）分离，再取对称部分行列式的绝对值。于是 $\llbracket L\rrbracket$ 只依赖 $L$ 本身，而与分解的选取无关，这一点由\cref{theorem:ch03-3-6}保证。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch03-3-4; kind=hypotheses; 逐款核对维数配比、对称与正交的要求、行列式的阶数，以及良定义性依赖的结果
+\begin{remark}\phantomsection\label{remark:ch03-def-3-4-条件}
+\begin{enumerate}[(i)]
+\item 第 (i) 款的适用范围是 $n\leqslant m$，此时 $S$ 是 $\mathbb{R}^n$ 上的对称映射，$\det S$ 是 $n\times n$ 行列式；第 (ii) 款的适用范围是 $n\geqslant m$，此时 $S$ 是 $\mathbb{R}^m$ 上的对称映射，$\det S$ 是 $m\times m$ 行列式。两款的公式形式相同，但所含行列式的阶数不同。
+\item 两款都要求 $S$ 对称、$O$ 正交，这正是\cref{theorem:ch03-3-5}给出的分解形式；若改用别的分解（例如把正交部分吸收进 $S$），$\lvert\det S\rvert$ 一般会改变，故这两项要求是定义的一部分。% XREF internal
+\item 良定义性：$\llbracket L\rrbracket$ 不依赖分解的选取。由\cref{theorem:ch03-3-6}，$\llbracket L\rrbracket^2$ 等于 $\det(L^*\circ L)$ 或 $\det(L\circ L^*)$，而这两个行列式只由 $L$ 决定；又 $\llbracket L\rrbracket\geqslant0$，故 $\llbracket L\rrbracket$ 本身也由 $L$ 唯一确定。% XREF internal
+\item $n=m$ 时两款给出同一个值 $\lvert\det L\rvert$：此时\cref{theorem:ch03-3-5}的分解中 $S=O^{-1}\circ L$，故 $\lvert\det S\rvert=\lvert\det L\rvert$。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Jacobi 行列式与伴随]\label{theorem:ch03-3-6}
+设 $n,m$ 为正整数，$L:\mathbb{R}^n\to\mathbb{R}^m$ 为线性映射，$\det$ 表相应阶数方阵的行列式。
+\begin{enumerate}[(i)]
+\item 若 $n\leqslant m$，则
+\begin{align*}
+\llbracket L\rrbracket^2=\det(L^*\circ L).
+\end{align*}
+\item 若 $n\geqslant m$，则
+\begin{align*}
+\llbracket L\rrbracket^2=\det(L\circ L^*).
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+设 $n\leqslant m$，并写 $L=O\circ S$、$L^*=S\circ O^*$；则
+\begin{align*}
+L^*\circ L=S\circ O^*\circ O\circ S=S^2,
+\end{align*}
+因为 $O$ 正交，从而 $O^*\circ O=I$。于是
+\begin{align*}
+\det(L^*\circ L)=(\det S)^2=\llbracket L\rrbracket^2.
+\end{align*}
+第 (ii) 款的证明类似。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-3-6; kind=proof; 补出第 (ii) 款的完整论证
+\begin{proof}
+设 $n\geqslant m$，并写 $L=S\circ O^*$，其中 $S:\mathbb{R}^m\to\mathbb{R}^m$ 对称、$O:\mathbb{R}^m\to\mathbb{R}^n$ 正交。由\cref{theorem:ch03-3-4}的第 (i)、(ii)、(iv) 款，% XREF internal
+\begin{align*}
+L^*=(S\circ O^*)^*=O^{**}\circ S^*=O\circ S.
+\end{align*}
+由 $O$ 的正交性与\cref{theorem:ch03-3-4}第 (vi) 款的修正版本，$O^*\circ O=I$ 在 $\mathbb{R}^m$ 上成立，故% XREF internal
+\begin{align*}
+L\circ L^*=S\circ O^*\circ O\circ S=S^2,
+\end{align*}
+从而
+\begin{align*}
+\det(L\circ L^*)=(\det S)^2=\llbracket L\rrbracket^2.
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-3-6; kind=motivation; 说明该定理把不可直接计算的 $\llbracket L\rrbracket$ 化为可计算的行列式，并保证定义的良定义性
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-6-动机}
+\cref{definition:ch03-3-4}用极分解定义 $\llbracket L\rrbracket$，但分解中的 $S$ 依赖特征向量的选取。本定理给出一个只含 $L$ 的表达式：$\llbracket L\rrbracket^2$ 等于 $\det(L^*\circ L)$（$n\leqslant m$）或 $\det(L\circ L^*)$（$n\geqslant m$）。$L^*\circ L$ 与 $L\circ L^*$ 都由 $L$ 直接算出，于是 $\llbracket L\rrbracket$ 是 $L$ 的不变量，\cref{definition:ch03-3-4}的良定义性随之成立。% XREF internal
+
+这一公式同时给出计算方法：把 $L$ 的矩阵写出，作矩阵乘法得到 $n\times n$（或 $m\times m$）方阵，再算行列式。它也解释了 $\llbracket L\rrbracket=\llbracket L^*\rrbracket$：$L^*$ 的两种乘积与 $L$ 的两种乘积互换，行列式相同。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch03-3-6; kind=hypotheses; 逐款核对维数配比、行列式的阶数、$S$ 的半正定性，以及为何不需要 $O\circ O^*=I$
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-6-条件}
+\begin{enumerate}[(i)]
+\item 第 (i) 款中 $L^*\circ L:\mathbb{R}^n\to\mathbb{R}^n$，故 $\det(L^*\circ L)$ 是 $n\times n$ 行列式；第 (ii) 款中 $L\circ L^*:\mathbb{R}^m\to\mathbb{R}^m$，故 $\det(L\circ L^*)$ 是 $m\times m$ 行列式。两款不可混用：当 $n<m$ 时 $L\circ L^*$ 奇异，其行列式为零，而 $\llbracket L\rrbracket$ 一般不为零。
+\item 证明只用到 $O^*\circ O=I$，即\cref{theorem:ch03-3-4}第 (vi) 款中成立的那一半恒等式；$O\circ O^*=I$ 在 $n<m$ 时不成立，也不需要。% XREF internal
+\item 结论中取绝对值不必要：$S$ 对称半正定，故 $\det S\geqslant0$，于是 $(\det S)^2=\llbracket L\rrbracket^2$。
+\item 本定理不依赖极分解中 $O$ 的具体选取：换一个 $O$ 只改变 $S$ 的零特征值对应的方向，而 $\det S$ 由非零特征值决定，故结论不变。
+\end{enumerate}
+\end{remark}
+
+由\cref{theorem:ch03-3-6}得到计算 $\llbracket L\rrbracket$ 的一种方法，下面再用 Binet--Cauchy 公式加以补充。% XREF p=112 "Theorem 3.6 provides us with a useful method for computing [[L]], which we augment with the Binet-Cauchy formula below."
+
+\begin{definition}[坐标投影与递增映射]\label{definition:ch03-3-5}
+设 $n,m$ 为正整数且 $n\leqslant m$，$\{e_1,\cdots,e_m\}$ 为 $\mathbb{R}^m$ 的标准基，$e_1,\cdots,e_n$ 同时记 $\mathbb{R}^n$ 的标准基。
+\begin{enumerate}[(i)]
+\item 若映射 $\lambda:\{1,\cdots,n\}\to\{1,\cdots,m\}$ 满足 $\lambda(1)<\lambda(2)<\cdots<\lambda(n)$，则称 $\lambda$ 为\textbf{递增}映射；记
+\begin{align*}
+\Lambda(m,n):=\bigl\{\lambda:\{1,\cdots,n\}\to\{1,\cdots,m\}\bigm|\lambda\ \text{为递增映射}\bigr\}.
+\end{align*}
+\item 对每个 $\lambda\in\Lambda(m,n)$，定义 $P_\lambda:\mathbb{R}^m\to\mathbb{R}^n$ 为
+\begin{align*}
+P_\lambda(x_1,\cdots,x_m):=(x_{\lambda(1)},\cdots,x_{\lambda(n)}).
+\end{align*}
+\item 对每个 $\lambda\in\Lambda(m,n)$，定义 $n$ 维子空间
+\begin{align*}
+S_\lambda:=\operatorname{span}\{e_{\lambda(1)},\cdots,e_{\lambda(n)}\}\subseteq\mathbb{R}^m.
+\end{align*}
+\end{enumerate}
+于是 $P_\lambda$ 是 $\mathbb{R}^m$ 到 $S_\lambda$ 上的投影。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch03-3-5; kind=proof; 补出末句「$P_\lambda$ 是到 $S_\lambda$ 的投影」的证明：先给出 $S_\lambda$ 与 $\mathbb{R}^n$ 的等距等同，再验证复合关系
+\begin{proof}
+定义等距同构 $\iota_\lambda:\mathbb{R}^n\to S_\lambda$ 为
+\begin{align*}
+\iota_\lambda(y_1,\cdots,y_n):=\sum_{i=1}^ny_ie_{\lambda(i)}.
+\end{align*}
+由 $\{e_1,\cdots,e_m\}$ 的标准正交性，$\iota_\lambda$ 保持内积，其像为 $S_\lambda$。对 $x=(x_1,\cdots,x_m)\in\mathbb{R}^m$ 有
+\begin{align*}
+\iota_\lambda(P_\lambda x)=\sum_{i=1}^nx_{\lambda(i)}e_{\lambda(i)}=\sum_{j\in\lambda(\{1,\cdots,n\})}x_je_j.
+\end{align*}
+右端属于 $S_\lambda$，且 $x$ 与之差 $\sum_{j\notin\lambda(\{1,\cdots,n\})}x_je_j$ 与每个 $e_{\lambda(i)}$ 正交，故右端是 $x$ 在 $S_\lambda$ 上的正交投影。又 $P_\lambda\circ\iota_\lambda=\mathrm{id}_{\mathbb{R}^n}$，故在等同 $\iota_\lambda$ 之下 $P_\lambda$ 是 $\mathbb{R}^m$ 到 $S_\lambda$ 的正交投影。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:ch03-3-5; kind=motivation; 说明 $\Lambda(m,n)$、$P_\lambda$、$S_\lambda$ 三者在 Binet--Cauchy 公式中的作用
+\begin{remark}\phantomsection\label{remark:ch03-def-3-5-动机}
+Binet--Cauchy 公式要把线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$ 的 $n$ 维体积因子写成有限个 $n$ 阶行列式的平方和。这些行列式来自「先把 $\mathbb{R}^m$ 投影到各个 $n$ 维坐标子空间，再与 $L$ 复合」：$\Lambda(m,n)$ 参数化所有 $n$ 维坐标子空间，递增条件使每个子空间恰好对应一个 $\lambda$，求和既不重复也不遗漏；$P_\lambda$ 把 $\mathbb{R}^m$ 压到第 $\lambda$ 个坐标子空间上；$P_\lambda\circ L$ 是 $\mathbb{R}^n$ 到 $\mathbb{R}^n$ 的线性映射，其行列式可按 Leibniz 公式展开。于是 $\llbracket L\rrbracket^2$ 化为 $\binom{m}{n}$ 个 $n$ 阶行列式的平方和。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch03-3-5; kind=hypotheses; 逐款核对 $n\leqslant m$ 的必要性、递增性的作用、$P_\lambda$ 的矩阵形状与 $S_\lambda$ 的维数
+\begin{remark}\phantomsection\label{remark:ch03-def-3-5-条件}
+\begin{enumerate}[(i)]
+\item 条件 $n\leqslant m$ 保证 $\Lambda(m,n)$ 非空：$\lambda(i)=i$（$i=1,\cdots,n$）即为递增映射。若 $n>m$，则不存在 $\{1,\cdots,n\}$ 到 $\{1,\cdots,m\}$ 的单射，$\Lambda(m,n)$ 为空，求和失去意义。
+\item 递增性把 $\Lambda(m,n)$ 与 $\mathbb{R}^m$ 的 $n$ 维坐标子空间一一对应：给定 $\{1,\cdots,m\}$ 的 $n$ 元子集 $J$，它作为像集的递增枚举唯一；反之每个 $\lambda\in\Lambda(m,n)$ 的像集是 $n$ 元子集。
+\item $P_\lambda$ 是线性映射，其矩阵是 $n\times m$ 矩阵，第 $i$ 行第 $\lambda(i)$ 列的元素为 $1$，其余元素为 $0$。$P_\lambda$ 是满射，其核为 $\operatorname{span}\{e_j\mid j\notin\lambda(\{1,\cdots,n\})\}$。
+\item $S_\lambda$ 的维数为 $n$：$\lambda$ 为单射，故 $e_{\lambda(1)},\cdots,e_{\lambda(n)}$ 线性无关。$n=m$ 且 $\lambda$ 为恒等映射时 $P_\lambda=I$、$S_\lambda=\mathbb{R}^m$。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Binet--Cauchy 公式]\label{theorem:ch03-3-7}
+设 $n,m$ 为正整数且 $n\leqslant m$，$L:\mathbb{R}^n\to\mathbb{R}^m$ 为线性映射，$\Lambda(m,n)$ 与 $P_\lambda$ 取自\cref{definition:ch03-3-5}。则 $\llbracket L\rrbracket$ 的平方等于各坐标投影下行列式平方之和：% XREF internal
+\begin{align*}
+\llbracket L\rrbracket^2=\sum_{\lambda\in\Lambda(m,n)}\bigl(\det(P_\lambda\circ L)\bigr)^2.
+\end{align*}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-7-子式}
+于是为计算 $\llbracket L\rrbracket^2$，须取表示 $L$ 的 $(m\times n)$ 矩阵（关于 $\mathbb{R}^n$ 与 $\mathbb{R}^m$ 的标准基），对它的每个 $(n\times n)$ 子矩阵计算行列式的平方，再求和。
+
+由\cref{lemma:ch03-3-1}，这是勾股定理的高维推广。% XREF p=112 "In view of Lemma 3.1 below, this is a higher dimensional generalization of the Pythagorean Theorem."
+\end{remark}
+
+\begin{proof}
+（1）把线性映射与它在 $\mathbb{R}^n$、$\mathbb{R}^m$ 的标准基下的矩阵等同，写
+\begin{align*}
+L=((l_{ij}))_{m\times n},\qquad A=L^*\circ L=((a_{ij}))_{n\times n},
+\end{align*}
+于是
+\begin{align*}
+a_{ij}=\sum_{k=1}^ml_{ki}l_{kj}\qquad(i,j=1,\cdots,n).
+\end{align*}
+（2）则
+\begin{align*}
+\llbracket L\rrbracket^2=\det A=\sum_{\sigma\in\Sigma}\operatorname{sgn}(\sigma)\prod_{i=1}^na_{i,\sigma(i)},
+\end{align*}
+
+% 原书印刷 113 页顶部有示意图一幅（无图题、无图号），示意 \mathbb{R}^m 中的集合与其在各坐标子空间上的投影；其位图须写入 image/，不在本节可改动的文件范围内。
+
+其中 $\Sigma$ 表 $\{1,\cdots,n\}$ 的全部置换之集。于是
+\begin{align*}
+\llbracket L\rrbracket^2
+&=\sum_{\sigma\in\Sigma}\operatorname{sgn}(\sigma)\prod_{i=1}^n\sum_{k=1}^ml_{ki}l_{k\sigma(i)}\\
+&=\sum_{\sigma\in\Sigma}\operatorname{sgn}(\sigma)\sum_{\phi\in\Phi}\prod_{i=1}^nl_{\phi(i)i}l_{\phi(i)\sigma(i)},
+\end{align*}
+其中 $\Phi$ 表 $\{1,\cdots,n\}$ 到 $\{1,\cdots,m\}$ 的全部单射之集。
+
+% SUPPLEMENT: parent=theorem:ch03-3-7; kind=proof; 补出内层乘积的展开、以及非单射 $\phi$ 的贡献为零这两步
+内层乘积的展开：对固定的 $\sigma$，$\prod_{i=1}^n\sum_{k=1}^ml_{ki}l_{k\sigma(i)}$ 等于对全部映射 $\phi:\{1,\cdots,n\}\to\{1,\cdots,m\}$ 求和
+\begin{align*}
+\sum_{\phi}\prod_{i=1}^nl_{\phi(i)i}l_{\phi(i)\sigma(i)},
+\end{align*}
+因为每个因子独立地选取 $k=\phi(i)$。非单射的 $\phi$ 不给出贡献：若 $\phi$ 非单射，取 $i\neq i'$ 使 $\phi(i)=\phi(i')$，并记 $G$ 为 $n\times n$ 矩阵 $G_{ij}:=l_{\phi(i)j}$；则 $G$ 的第 $i$ 行与第 $i'$ 行相同，故 $\det G=0$，而
+\begin{align*}
+\sum_{\sigma\in\Sigma}\operatorname{sgn}(\sigma)\prod_{i=1}^nl_{\phi(i)i}l_{\phi(i)\sigma(i)}
+=\Bigl(\prod_{i=1}^nG_{ii}\Bigr)\det G=0 .
+\end{align*}
+于是求和只需对单射 $\phi$ 进行。
+
+（3）对每个 $\phi\in\Phi$，可唯一地写 $\phi=\lambda\circ\theta$，其中 $\theta\in\Sigma$、$\lambda\in\Lambda(m,n)$。于是
+\begin{align*}
+\llbracket L\rrbracket^2
+&=\sum_{\sigma\in\Sigma}\operatorname{sgn}(\sigma)\sum_{\lambda\in\Lambda(m,n)}\sum_{\theta\in\Sigma}
+\prod_{i=1}^nl_{\lambda\circ\theta(i),i}l_{\lambda\circ\theta(i),\sigma(i)}\\
+&=\sum_{\sigma\in\Sigma}\operatorname{sgn}(\sigma)\sum_{\lambda\in\Lambda(m,n)}\sum_{\theta\in\Sigma}
+\prod_{i=1}^nl_{\lambda(i),\theta^{-1}(i)}l_{\lambda(i),\sigma\circ\theta^{-1}(i)}\\
+&=\sum_{\lambda\in\Lambda(m,n)}\sum_{\theta\in\Sigma}\sum_{\sigma\in\Sigma}
+\operatorname{sgn}(\sigma)\prod_{i=1}^nl_{\lambda(i),\theta(i)}l_{\lambda(i),\sigma\circ\theta(i)}\\
+&=\sum_{\lambda\in\Lambda(m,n)}\sum_{\rho\in\Sigma}\sum_{\theta\in\Sigma}
+\operatorname{sgn}(\theta)\operatorname{sgn}(\rho)\prod_{i=1}^nl_{\lambda(i),\theta(i)}l_{\lambda(i),\rho(i)}\\
+&=\sum_{\lambda\in\Lambda(m,n)}\Biggl(\sum_{\theta\in\Sigma}\operatorname{sgn}(\theta)\prod_{i=1}^nl_{\lambda(i),\theta(i)}\Biggr)^2\\
+&=\sum_{\lambda\in\Lambda(m,n)}\bigl(\det(P_\lambda\circ L)\bigr)^2,
+\end{align*}
+其中令 $\rho=\sigma\circ\theta$。
+
+% SUPPLEMENT: parent=theorem:ch03-3-7; kind=proof; 补出 $\phi=\lambda\circ\theta$ 的存在唯一性、指标替换与最后一行的 Leibniz 公式
+上述两步的细节如下。分解的存在唯一性：设 $\phi\in\Phi$。像集 $\phi(\{1,\cdots,n\})$ 是 $\{1,\cdots,m\}$ 的 $n$ 元子集，把它按大小递增排列为 $\lambda(1)<\cdots<\lambda(n)$，则 $\lambda\in\Lambda(m,n)$，且 $\lambda$ 由该像集唯一确定。由于 $\lambda$ 是单射，$\theta:=\lambda^{-1}\circ\phi$ 是 $\{1,\cdots,n\}$ 到自身的双射，即 $\theta\in\Sigma$，并且 $\phi=\lambda\circ\theta$。若 $\phi=\lambda'\circ\theta'$ 是另一这样的分解，则 $\lambda$ 与 $\lambda'$ 的像集都等于 $\phi(\{1,\cdots,n\})$，而递增枚举唯一，故 $\lambda'=\lambda$，从而 $\theta'=\theta$。
+
+指标替换：在第一个等号后把 $\theta$ 换成 $\theta^{-1}$（$\Sigma$ 对取逆封闭，求和不变），并令 $j:=\theta(i)$，即 $i=\theta^{-1}(j)$，逐因子重排乘积。在第三个等号处交换三个求和次序（均为有限和）。令 $\rho:=\sigma\circ\theta$；由于 $\operatorname{sgn}$ 是置换群的同态，$\operatorname{sgn}(\sigma)=\operatorname{sgn}(\rho\circ\theta^{-1})=\operatorname{sgn}(\rho)\operatorname{sgn}(\theta)$。固定 $\lambda$ 后，对 $\rho$ 与 $\theta$ 的求和相互独立，故双重和分解为两个相同因子之积。
+
+最后一行的识别：$P_\lambda\circ L$ 关于 $\mathbb{R}^n$ 的标准基的矩阵为 $(l_{\lambda(i)j})_{n\times n}$，由行列式的 Leibniz 公式，
+\begin{align*}
+\det(P_\lambda\circ L)=\sum_{\theta\in\Sigma}\operatorname{sgn}(\theta)\prod_{i=1}^nl_{\lambda(i),\theta(i)}.
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-3-7; kind=motivation; 说明公式的几何含义：$\llbracket L\rrbracket^2$ 是各坐标投影下体积因子平方之和，以及它作为勾股定理推广的理由
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-7-动机}
+本定理把 $\llbracket L\rrbracket^2$ 分解为 $\mathbb{R}^m$ 的各 $n$ 维坐标子空间上的贡献之和。几何上，$L$ 把 $\mathbb{R}^n$ 的单位立方体映成 $\mathbb{R}^m$ 中一个 $n$ 维平行多面体，而 $P_\lambda\circ L$ 的像正是该多面体在第 $\lambda$ 个坐标子空间上的正交投影，其 $n$ 维体积为 $\lvert\det(P_\lambda\circ L)\rvert$。定理断言这些投影体积的平方和等于原多面体体积的平方。
+
+这正是勾股定理的高维形式：$n=1$、$m$ 任意时，$L$ 把 $\mathbb{R}$ 的基向量映为向量 $v=(l_{11},\cdots,l_{m1})$，而 $\Lambda(m,1)$ 只有 $\lambda(1)=1,\cdots,m$ 共 $m$ 个元素，定理化为 $\lvert v\rvert^2=\sum_{k=1}^mv_k^2$。$n=m$ 时 $\Lambda(m,n)$ 只有一个元素，定理化为 $\lvert\det L\rvert^2=\det(L^*\circ L)$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch03-3-7; kind=hypotheses; 逐条核对 $n\leqslant m$、标准基的选取、$\Lambda(m,n)$ 的有限性，以及公式对 $n=m$ 的退化情形
+\begin{remark}\phantomsection\label{remark:ch03-thm-3-7-条件}
+\begin{enumerate}[(i)]
+\item 条件 $n\leqslant m$ 是\cref{definition:ch03-3-5}中 $\Lambda(m,n)$ 非空的前提；若 $n>m$，右端为空和，而 $\llbracket L\rrbracket$ 由\cref{definition:ch03-3-4}第 (ii) 款定义且一般不为零，公式不成立。% XREF internal
+\item 求和项数为 $\binom{m}{n}$，即 $\Lambda(m,n)$ 的元素个数，故右端是有限和。$n=m$ 时只有 $\lambda=\mathrm{id}$ 一项，公式化为 $\llbracket L\rrbracket^2=(\det L)^2$。
+\item 证明在标准基下把 $L$ 与其矩阵等同，并用到 $L^*$ 的矩阵是 $L$ 的矩阵的转置。换用别的基不改变 $\det(P_\lambda\circ L)$ 的绝对值，但会改变 $P_\lambda$ 的形式；公式的表述依赖标准基。
+\item 右端不出现 $O$ 与 $S$，故本定理给出 $\llbracket L\rrbracket$ 的一个只含矩阵元素 $l_{ij}$ 的表达式，可用于实际计算。
+\end{enumerate}
+\end{remark}
+
+\subsection{Jacobi 行列式}\label{subsection:ch03-02-2}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.66\textwidth]{ch03-3-2-linear-map.png}
+\end{figure}
+
+现设 $f:\mathbb{R}^n\to\mathbb{R}^m$ 为 Lipschitz 连续映射。由\cref{theorem:ch03-3-2}（Rademacher 定理），$f$ 在 $\mathcal{L}^n$-a.e. 处可微，因此 $Df(x)$ 对 $\mathcal{L}^n$-a.e. 的 $x\in\mathbb{R}^n$ 存在，并且可视为从 $\mathbb{R}^n$ 到 $\mathbb{R}^m$ 的线性映射。% XREF p=114 "By Rademacher's Theorem, f is differentiable L^n-a.e., and therefore Df(x) exists, and can be regarded as a linear mapping from R^n into R^m"
+
+\begin{definition*}[梯度矩阵]\phantomsection\label{definition:ch03-def-3-6-梯度矩阵}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为映射，写 $f=(f^1,\cdots,f^m)$。在 $Df$ 存在的每一点处，记 $f$ 的\textbf{梯度矩阵}为
+\begin{align*}
+Df=
+\begin{pmatrix}
+f^1_{x_1} & \cdots & f^1_{x_n}\\
+\vdots & \ddots & \vdots\\
+f^m_{x_1} & \cdots & f^m_{x_n}
+\end{pmatrix}_{m\times n}.
+\end{align*}
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch03-def-3-6-梯度矩阵; kind=motivation; 说明为何要把导数写成 $m\times n$ 矩阵，以及它与线性映射 $Df(x)$ 的关系
+\begin{remark}\phantomsection\label{remark:ch03-def-3-6-梯度矩阵-动机}
+$Df(x)$ 本身是线性映射，谈它的行列式或子式必须先选定坐标。以 $\mathbb{R}^n$、$\mathbb{R}^m$ 的标准基为坐标，$Df(x)$ 的矩阵就是梯度矩阵，其第 $i$ 行是分量 $f^i$ 的梯度（按行排列），第 $j$ 列是 $f$ 沿 $e_j$ 方向的偏导数向量。$m\times n$ 的形状与 $Df(x):\mathbb{R}^n\to\mathbb{R}^m$ 的维数配比一致，从而 $n\leqslant m$ 与 $n\geqslant m$ 两种情形分别对应矩阵的行数大于列数与列数大于行数。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch03-def-3-6-梯度矩阵; kind=hypotheses; 说明分量表示、存在性要求与形状，并指出只有 $Df$ 存在处才有定义
+\begin{remark}\phantomsection\label{remark:ch03-def-3-6-梯度矩阵-条件}
+\begin{enumerate}[(i)]
+\item 记法要求 $f$ 有分量表示 $f=(f^1,\cdots,f^m)$，即 $f^i:\mathbb{R}^n\to\mathbb{R}$ 为第 $i$ 个分量函数；$m$ 与 $n$ 为正整数。
+\item 梯度矩阵只在 $Df$ 存在处有定义。由\cref{theorem:ch03-3-2}，$f$ 为 Lipschitz 连续时 $Df(x)$ 对 $\mathcal{L}^n$-a.e. 的 $x$ 存在，故梯度矩阵也是几乎处处定义的。% XREF internal
+\item 矩阵元素 $f^i_{x_j}$ 是偏导数 $\partial f^i/\partial x_j$；第 $i$ 行对应分量 $f^i$，第 $j$ 列对应自变量 $x_j$，行列次序不可交换，否则矩阵变为转置，随之 $Df$ 所代表的线性映射改变。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[映射的 Jacobi 行列式]\label{definition:ch03-3-6}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为映射，$x\in\mathbb{R}^n$ 为使 $Df(x)$ 存在的点，把 $Df(x)$ 视为从 $\mathbb{R}^n$ 到 $\mathbb{R}^m$ 的线性映射，线性映射的 Jacobi 行列式按\cref{definition:ch03-3-4}定义。则称% XREF internal
+\begin{align*}
+Jf(x):=\llbracket Df(x)\rrbracket
+\end{align*}
+为 $f$ 在 $x$ 处的 \textbf{Jacobi 行列式}。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch03-3-6; kind=motivation; 说明把线性映射的 $\llbracket \cdot\rrbracket$ 用于 $Df(x)$ 的意义：局部体积伸缩因子
+\begin{remark}\phantomsection\label{remark:ch03-def-3-6-动机}
+$f$ 在 $x$ 处的一阶近似是仿射映射 $y\mapsto f(x)+Df(x)(y-x)$。仿射映射把体积放大 $\llbracket Df(x)\rrbracket$ 倍，故 $Jf(x)$ 刻画 $f$ 在 $x$ 附近的局部体积伸缩率。面积公式把这一局部信息积分成整体结论：$f(A)$ 的 $n$ 维 Hausdorff 测度等于 $Jf$ 在 $A$ 上的积分（计重数）。这也说明为何要在\cref{definition:ch03-3-4}中把线性映射的 Jacobi 行列式定义为与维数配比无关的量：$Df(x)$ 的定义域与陪域可以不同，而 $Jf(x)$ 始终是一个非负数。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch03-3-6; kind=hypotheses; 逐条说明 Lipschitz 连续性、$Df$ 的存在性与几乎处处的含义
+\begin{remark}\phantomsection\label{remark:ch03-def-3-6-条件}
+\begin{enumerate}[(i)]
+\item 定义本身只要求 $Df(x)$ 存在，不要求 $f$ 全局可微；但 $Jf$ 作为函数要能积分，需 $Df(x)$ 对几乎所有的 $x$ 存在。\cref{theorem:ch03-3-2}保证：$f$ 局部 Lipschitz 连续时 $Df(x)$ 对 $\mathcal{L}^n$-a.e. 的 $x$ 存在。% XREF internal
+\item $Jf(x)\geqslant0$ 由\cref{definition:ch03-3-4}中取绝对值得到；当 $Df(x)$ 奇异时 $Jf(x)=0$。% XREF internal
+\item $Jf$ 是 $\mathcal{L}^n$-可测函数：$Df$ 的矩阵元素是偏导数，为可测函数的几乎处处极限，故 $Jf$ 可测。面积公式中的积分正是对这一可测函数取的。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\end{document}

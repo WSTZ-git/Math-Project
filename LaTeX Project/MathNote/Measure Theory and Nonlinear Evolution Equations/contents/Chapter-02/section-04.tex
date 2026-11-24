@@ -18,105 +18,204 @@
 
 \subsection{一个有用的等式}\label{subsection:ch02-有用等式}
 
-设 $(X,\mathscr A,\mu)$ 为测度空间，$f:X\to[0,\infty]$ 为 $\mathscr A$-可测。则从 $[0,\infty)$ 到 $[0,\infty]$ 的函数 $t\mapsto\mu(\{f>t\})$ 非增；由 Chebyshev 不等式，若 $f\in L^1(X,\mathscr A,\mu)$，则 $\lim_{t\to\infty}\mu(\{f>t\})=0$。
+设 $(X,\mathscr A,\mu)$ 为测度空间，$f:X\to[0,\infty]$ 为 $\mathscr A$-可测。则从 $[0,\infty)$ 到 $[0,\infty]$ 的函数
+\begin{align*}
+[0,\infty)\to[0,\infty],\qquad t\mapsto\mu(\{f>t\}),
+\end{align*}
+非增；且由 Chebyshev 不等式，若 $f\in L^1(X,\mathscr A,\mu)$，则 $\lim_{t\to\infty}\mu(\{f>t\})=0$。下列等式把 $f^\alpha$ 在 $X$ 上的积分化为其分布函数 $\mu(\{f>t\})$ 在 $[0,\infty)$ 上的一维积分。
 
 \begin{proposition}\label{proposition:ch02-尾部积分}
-设 $(X,\mathscr A,\mu)$ 为 $\sigma$-有限测度空间，$f:X\to[0,\infty]$ 为 $\mathscr A$-可测。则对任意 $\alpha>0$，有
+设 $(X,\mathscr A,\mu)$ 为 $\sigma$-有限测度空间，$\alpha\in(0,\infty)$，$f:X\to[0,\infty]$ 为 $\mathscr A$-可测。则
 \begin{align}
-\int_X f^\alpha\,\mathrm{d}\mu=\alpha\int_{[0,\infty)}\mu(\{f>t\})\,t^{\alpha-1}\,\mathrm{d}t. \label{align:ch02-2.19}
+\int_Xf^\alpha\,\mathrm{d}\mu=\alpha\int_{[0,\infty)}\mu(\{f>t\})\,t^{\alpha-1}\,\mathrm{d}t, \label{align:ch02-2.19}
 \end{align}
+其中右端为 $[0,\infty)$ 上关于 Lebesgue 测度 $\lambda|_{[0,\infty)}$ 的积分，两端均取值于 $[0,\infty]$。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch02-尾部积分; kind=proof; location=命题 2.4.1 的证明; basis=原书“It is easily seen”（$E$ 的乘积可测性）与“$\lambda_\varphi(\{f(x)>0\})=f^\alpha(x)$”两处，补出有理数逼近、$\lambda_\varphi$ 的显式取值与 Tonelli 各步的完整论证
+% SUPPLEMENT: parent=proposition:ch02-尾部积分; kind=correction; location=命题 2.4.1 证明中最后一个等号; basis=原书写作 $\lambda_\varphi(\{f(x)>0\})$，按 (2.19) 的推导此处应为 $\lambda_\varphi(\{t\geqslant0\mid f(x)>t\})=\lambda_\varphi([0,f(x)))$；已按后者陈述并核对其值
 \begin{proof}
-在 Tonelli 定理中取 $(X_1,\mathscr A_1,\mu_1)=(X,\mathscr A,\mu)$，$(X_2,\mathscr A_2,\mu_2)=([0,\infty),\mathscr B\cap[0,\infty),\lambda_\varphi)$，其中 $\lambda_\varphi$ 为 $\mathscr B\cap[0,\infty)$ 上与 $\varphi(t)=t^\alpha$（$t\geqslant0$）相伴的 Lebesgue--Stieltjes 测度。易见集合 $E\triangleq \{(x,t)\in X\times[0,\infty)\mid f(x)>t\}$ 为 $\mathscr A_1\times\mathscr A_2$-可测。在\eqref{align:ch02-2.17}中取 $f=\chi_E$，得
+令 $\varphi(t)\triangleq t^\alpha$（$t\in[0,\infty)$），$\lambda_\varphi$ 为 $\mathscr B\cap[0,\infty)$ 上与 $\varphi$ 相伴的 Lebesgue--Stieltjes 测度（\cref{definition:ch01-Stieltjes测度}）。函数 $\varphi$ 在 $[0,\infty)$ 上非减、右连续且 $\varphi(0)=0$，故 $\lambda_\varphi$ 是 $\mathscr B\cap[0,\infty)$ 上的正测度，且对 $0\leqslant a<b<\infty$ 有
+\begin{align*}
+\lambda_\varphi((a,b])=\varphi(b)-\varphi(a)=b^\alpha-a^\alpha.
+\end{align*}
+由此 $\lambda_\varphi(\{0\})=0$，且 $\lambda_\varphi([0,s))=s^\alpha$（$s\in(0,\infty)$）、$\lambda_\varphi([0,\infty))=\infty$。于是对任意非负 Borel 函数 $h:[0,\infty)\to[0,\infty]$，
+\begin{align*}
+\alpha\int_{[0,\infty)}h(t)\,t^{\alpha-1}\,\mathrm{d}t=\int_{[0,\infty)}h\,\mathrm{d}\lambda_\varphi,
+\end{align*}
+因为两端在 $h=\chi_{(a,b]}$（$0\leqslant a<b<\infty$）时都等于 $\alpha(b^\alpha-a^\alpha)$，再对非负 Borel 函数由单调收敛定理延拓即得。此外 $\lambda_\varphi$ 在 $\mathscr B\cap[0,\infty)$ 上 $\sigma$-有限，因 $\lambda_\varphi([0,n))=n^\alpha<\infty$（$n\in\mathbb N$）；而 $\mu$ 按假设 $\sigma$-有限。
+
+下证 $E\triangleq\{(x,t)\in X\times[0,\infty)\mid f(x)>t\}$ 为 $\mathscr A\otimes(\mathscr B\cap[0,\infty))$-可测。对 $x\in X$、$t\in[0,\infty)$，不等式 $f(x)>t$ 等价于存在有理数 $q\in\mathbb Q\cap(0,\infty)$ 使 $t<q<f(x)$，故
+\begin{align*}
+E=\bigcup_{q\in\mathbb Q\cap(0,\infty)}\bigl(\{f>q\}\times[0,q)\bigr).
+\end{align*}
+右端每一项都是可测矩形之积（当 $f(x)=\infty$ 时 $x\in\{f>q\}$ 对一切 $q\in\mathbb Q\cap(0,\infty)$ 成立），而 $\mathbb Q\cap(0,\infty)$ 可数，故 $E$ 可测。
+
+在 Tonelli 定理的等式\eqref{align:ch02-2.17}中取 $f=\chi_E$，并利用 $\chi_E(x,t)=\chi_{\{f>t\}}(x)$，得
 \begin{align*}
 \alpha\int_{[0,\infty)}\mu(\{f>t\})\,t^{\alpha-1}\,\mathrm{d}t
 &=\int_{[0,\infty)}\mu(\{f>t\})\,\mathrm{d}\lambda_\varphi(t)
 =\int_{[0,\infty)}\mathrm{d}\lambda_\varphi(t)\int_X\chi_{\{f(x)>t\}}\,\mathrm{d}\mu(x)\\
 &=\int_X\mathrm{d}\mu(x)\int_{[0,\infty)}\chi_{\{f(x)>t\}}\,\mathrm{d}\lambda_\varphi(t)
-=\int_X\mathrm{d}\mu(x)\,\lambda_\varphi(\{f(x)>0\})
-=\int_X f^\alpha(x)\,\mathrm{d}\mu(x).
+=\int_X\lambda_\varphi(\{t\in[0,\infty)\mid f(x)>t\})\,\mathrm{d}\mu(x)\\
+&=\int_X\lambda_\varphi([0,f(x)))\,\mathrm{d}\mu(x)
+=\int_Xf^\alpha(x)\,\mathrm{d}\mu(x),
 \end{align*}
+其中倒数第二个等号用到 $\{t\in[0,\infty)\mid f(x)>t\}=[0,f(x))$（当 $f(x)=\infty$ 时右端为 $[0,\infty)$），最后一个等号用到 $\lambda_\varphi([0,s))=s^\alpha$（$s<\infty$）与 $\lambda_\varphi([0,\infty))=\infty$。此即\eqref{align:ch02-2.19}。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch02-尾部积分; kind=motivation; location=命题 2.4.1 后的注记; basis=原书命题 2.4.1 与 Chebyshev 不等式段 + 逐项核验 $\sigma$-有限与 $\alpha>0$ 的作用、$\alpha<0$ 的反例及非 $\sigma$-有限时 Tonelli 失效的对角线例
+\begin{remark}\phantomsection\label{remark:ch02-尾部积分动机}
+(i) 动机。\eqref{align:ch02-2.19} 是 Cavalieri 原理（分层原理）的连续形式：$f^\alpha$ 的积分由分布函数 $t\mapsto\mu(\{f>t\})$ 决定。当 $\alpha=1$ 时它给出
+\begin{align*}
+\int_Xf\,\mathrm{d}\mu=\int_{[0,\infty)}\mu(\{f>t\})\,\mathrm{d}t,
+\end{align*}
+即积分等于尾测度的积分；当 $\alpha=p\in[1,\infty)$ 时它把 $L^p$ 范数写成分布函数的一维积分，是弱 $L^p$ 空间、重排不等式与插值理论的出发点。集合版本即\cref{subsection:ch02-Steiner对称化}中的 Steiner 对称化：那里的截面长度函数 $f(\hat x)=\lambda(E_{\hat x})$ 正是示性函数沿 $x_1$ 方向积分的分布。
+
+(ii) 假设的作用。$\sigma$-有限性使 Tonelli 定理\eqref{align:ch02-2.17}可用：证明中需要在乘积空间 $X\times[0,\infty)$ 上交换两个积分次序，而这一交换对非 $\sigma$-有限测度可以失败（\cref{remark:ch02-sigma有限必要}）：取 $X_1=X_2=[0,1]$、$\mu_1=\lambda$、$\mu_2$ 为计数测度、$E$ 为对角线 $\{(t,t)\}$，则 $\int_{X_1}\mathrm{d}\mu_1\int_{X_2}\chi_E\,\mathrm{d}\mu_2=1$，而 $\int_{X_2}\mathrm{d}\mu_2\int_{X_1}\chi_E\,\mathrm{d}\mu_1=0$。$\alpha>0$ 的作用有两层：其一，$\varphi(t)=t^\alpha$ 在 $[0,\infty)$ 上非减、右连续、$\varphi(0)=0$，故 $\lambda_\varphi$ 为正测度，且 $\lambda_\varphi([0,s))=s^\alpha$ 是右端因子 $t^{\alpha-1}\,\mathrm{d}t$ 的来源；其二，$\alpha-1>-1$ 保证 $t^{\alpha-1}$ 在 $t=0$ 附近可积。$f\geqslant0$ 与 $\mathscr A$-可测性使 $f^\alpha$ 有定义、使 Tonelli 定理只需非负可测性，并使 $E$ 为乘积可测集。
+
+(iii) 边界与反例。$\alpha>0$ 不能放宽到 $\alpha\leqslant0$。取 $X=[0,1]$、$\mu=\lambda$、$f(x)=x$、$\alpha=-\tfrac12$：左端为 $\int_0^1x^{-1/2}\,\mathrm{d}x=2$，而 $\mu(\{f>t\})=(1-t)^+$，故右端为 $(-\tfrac12)\int_0^1(1-t)t^{-3/2}\,\mathrm{d}t=-\infty$，两端不相等（此时 $\varphi$ 递减，$\lambda_\varphi$ 不再是正测度）。等式对不必可积的非负可测 $f$ 仍成立：两端可同时为 $\infty$。若 $f\in L^1(X,\mathscr A,\mu)$，则由 Chebyshev 不等式 $\mu(\{f>t\})\leqslant t^{-1}\|f\|_1$，故尾测度可积，$\alpha=1$ 时\eqref{align:ch02-2.19}的两端均为有限实数。
+
+(iv) 适用边界。\eqref{align:ch02-2.19}只涉及 $f$ 的分布，故 $\mu$-a.e. 相等的非负可测函数有相同的两端；它不要求 $f$ 或 $X$ 有界，也不要求 $f$ 取有限值。
+\end{remark}
 
 \subsection{Steiner 对称化}\label{subsection:ch02-Steiner对称化}
 \label{subsection:ch02-等周}
 
-对任意 $x\in\mathbb R^N$，记 $x\equiv(x_1,\hat x)$，其中 $x_1\in\mathbb R$，$\hat x\in\mathbb R^{N-1}$。设 $E$ 为 $\mathbb R^N$ 的 Borel 子集。对任意 $\hat x\in\mathbb R^{N-1}$，令 $E_{\hat x}\triangleq \{x_1\in\mathbb R\mid(x_1,\hat x)\in E\}$ 为其 $\hat x$-截面。由\cref{proposition:ch01-截面}，函数
-\begin{align}
-f:\mathbb R^{N-1}\to[0,\infty],\qquad f(\hat x)\triangleq \lambda(E_{\hat x}) \label{align:ch02-2.20}
-\end{align}
-良定义。考虑对称区间
+对任意 $x\in\mathbb R^N$，记 $x\equiv(x_1,\hat x)$，其中 $x_1\in\mathbb R$，$\hat x\in\mathbb R^{N-1}$。设 $E$ 为 $\mathbb R^N$ 的 Borel 子集；对任意 $\hat x\in\mathbb R^{N-1}$，令
 \begin{align*}
-I_{\hat x}\triangleq \left(-\frac{f(\hat x)}2,\frac{f(\hat x)}2\right)\quad\text{若 }f(\hat x)\neq0,\qquad I_{\hat x}\triangleq \varnothing \text{ 否则},
+E_{\hat x}\triangleq\{x_1\in\mathbb R\mid(x_1,\hat x)\in E\}
+\end{align*}
+为其 $\hat x$-截面。由\cref{proposition:ch01-截面}，$E_{\hat x}\in\mathscr B$ 对每个 $\hat x$ 成立，故下式有定义；其 $\mathscr B_{N-1}$-可测性由\cref{proposition:ch02-乘积截面积分}(i) 给出：
+\begin{align}
+f:\mathbb R^{N-1}\to[0,\infty],\qquad f(\hat x)\triangleq\lambda(E_{\hat x}). \label{align:ch02-2.20}
+\end{align}
+考虑对称区间
+\begin{align*}
+I_{\hat x}\triangleq\Bigl(-\frac{f(\hat x)}2,\frac{f(\hat x)}2\Bigr)\ \text{若 }f(\hat x)\neq0,\qquad I_{\hat x}\triangleq\varnothing\ \text{否则},
 \end{align*}
 并定义
 \begin{align}
-S_1(E)\triangleq \bigcup_{\hat x\in\mathbb R^{N-1}}(I_{\hat x}\times\{\hat x\})
-=\{(x_1,\hat x)\in\mathbb R^N\mid|x_1|\leqslant f(\hat x)/2\}. \label{align:ch02-2.21}
+S_1(E)\triangleq\bigcup_{\hat x\in\mathbb R^{N-1}}\bigl(I_{\hat x}\times\{\hat x\}\bigr)
+=\{(x_1,\hat x)\in\mathbb R^N\mid|x_1|<f(\hat x)/2\}. \label{align:ch02-2.21}
 \end{align}
 
+% SUPPLEMENT: parent=align:ch02-2.21; kind=correction; location=(2.21) 的第二个描述; basis=原书第二个描述写作 $|x_1|\leqslant f(\hat x)/2$，与前面的并集（开区间）描述在边界 $|x_1|=f(\hat x)/2$ 上不一致；按开区间读法取严格不等式，否则引理 2.4.2(iv) 对两点集失效（见引理后的注记）
 \begin{definition}\label{definition:ch02-Steiner对称化}
-由\eqref{align:ch02-2.21}定义的集合 $S_1(E)$ 称为 $E$ 关于平面 $x_1=0$ 的 Steiner 对称化。$E$ 关于平面 $x_j=0$（$j=2,\cdots ,N$）的 Steiner 对称化类似定义。$E$ 关于原点的 Steiner 对称化为
+设 $N\in\mathbb N^*$，$E\in\mathscr B_N$。由\eqref{align:ch02-2.21}定义的集合 $S_1(E)\subseteq\mathbb R^N$ 称为 $E$ 关于平面 $x_1=0$ 的 Steiner 对称化。
+
+对 $j\in\{1,\cdots ,N\}$，令 $\pi_j:\mathbb R^N\to\mathbb R^N$ 为坐标置换
+\begin{align*}
+\pi_j(z)\triangleq(z_j,z_1,\cdots ,z_{j-1},z_{j+1},\cdots ,z_N),
+\end{align*}
+并把 $\mathbb R^N$ 的点写成 $(z_j,\hat z_j)\triangleq\pi_j(z)$，其中 $z_j\in\mathbb R$，$\hat z_j\in\mathbb R^{N-1}$ 由除 $z_j$ 外的 $N-1$ 个坐标按原顺序组成。置
+\begin{align*}
+S_j(E)\triangleq\pi_j^{-1}\bigl(S_1(\pi_j(E))\bigr);
+\end{align*}
+$S_j(E)$ 称为 $E$ 关于平面 $x_j=0$ 的 Steiner 对称化。$E$ 关于原点的 Steiner 对称化为
 \begin{align}
 S(E)\triangleq S_N(S_{N-1}(\cdots S_1(E)\cdots)). \label{align:ch02-2.22}
 \end{align}
 \end{definition}
 
-集合 $S_1(E)$ 的若干相关性质在下列引理中证明。
+% SUPPLEMENT: parent=definition:ch02-Steiner对称化; kind=motivation; location=定义 2.4.1 后的注记; basis=原书定义 2.4.1 与 (2.20)(2.21)(2.22) + 截面长度函数作为重排的解释、各项约定的作用、坐标依赖与退化情形的边界
+\begin{remark}\phantomsection\label{remark:ch02-Steiner对称化动机}
+(i) 动机。$\hat x\mapsto f(\hat x)=\lambda(E_{\hat x})$ 记录 $E$ 沿 $x_1$ 方向的截面长度，$S_1(E)$ 把这些截面逐一换成同长度、以 $0$ 为中心的区间：它是集合的重排，把 $E$ 变为关于平面 $x_1=0$ 对称且测度相同的集合（\cref{lemma:ch02-Steiner性质}(i)(iii)）。逐个坐标方向迭代后得到的 $S(E)$ 关于全部坐标平面 $x_j=0$ 对称，从而关于原点中心对称（\cref{theorem:ch02-Steiner}(i)）。这一步把任一 Borel 集换成同测度、直径不增、且中心对称的集合，因而是等直径不等式的证明机制：中心对称且直径不超过 $d$ 的集合含于半径 $d/2$ 的球内。
+
+(ii) 各项约定的作用。$E\in\mathscr B_N$ 保证每个截面 $E_{\hat x}$ 为 Borel 集（\cref{proposition:ch01-截面}），从而 $f(\hat x)=\lambda(E_{\hat x})$ 有定义且 $f$ 为 $\mathscr B_{N-1}$-可测（\cref{proposition:ch02-乘积截面积分}(i)），这是\cref{lemma:ch02-Steiner性质}(ii)(iii) 的前提。区间以 $0$ 为中心、长度取 $f(\hat x)$，是使一维截面测度保持不变的选择。约定 $I_{\hat x}=\varnothing$（当 $f(\hat x)=0$）与描述 $\{(x_1,\hat x)\mid|x_1|<f(\hat x)/2\}$ 一致：此时 $|x_1|<0$ 无解。若 $f(\hat x)=\infty$（$E$ 在该截面上无界），则 $I_{\hat x}=\mathbb R$，$S_1(E)$ 含整条直线 $\{\hat x\}\times\mathbb R$，\cref{lemma:ch02-Steiner性质}(iii) 的两端同为 $\infty$。
+
+(iii) 边界。$S_j$ 依赖坐标轴的选取：定义只使用坐标方向的截面，故 $S_j(E)$ 只在坐标置换与坐标变号下不变，对一般旋转会改变。$S_1(E)$ 一般不是 $E$ 的平移或伸缩；仅当 $E$ 的每个截面已是以 $0$ 为中心、长度 $f(\hat x)$ 的区间时才有 $S_1(E)=E$，例如以原点为心的球。$S_1(E)=\varnothing$ 是可能的：若 $E$ 的每个截面 Lebesgue 测度都为 $0$（如 $E$ 为至多可数集），则 $f\equiv0$，此时 $\lambda_N(S_1(E))=0=\lambda_N(E)$。对 Lebesgue 可测而非 Borel 的 $E$，截面仍 Lebesgue 可测（$\mathscr L_N$ 是 $\mathscr B_N$ 的完备化），故 $S_1(E)$ 仍可定义，但\cref{lemma:ch02-Steiner性质}的可测性陈述须换成 $\mathscr L_N$。
+\end{remark}
+
+集合 $S_1(E)$ 的若干相关性质在下列引理中证明，其中
+\begin{align*}
+\operatorname{diam}(A)\triangleq\sup\{|x-y|\mid x,y\in A\}\quad(A\subseteq\mathbb R^N),\qquad\operatorname{diam}(\varnothing)\triangleq0.
+\end{align*}
 
 \begin{lemma}\label{lemma:ch02-Steiner性质}
-设 $E\in\mathscr B_N$，$S_1(E)$ 由\eqref{align:ch02-2.21}定义。则：
+设 $N\in\mathbb N^*$，$E\in\mathscr B_N$，$f(\hat x)\triangleq\lambda(E_{\hat x})$（$\hat x\in\mathbb R^{N-1}$）由\eqref{align:ch02-2.20}定义，$S_1(E)$ 由\eqref{align:ch02-2.21}定义，即 $S_1(E)=\{(x_1,\hat x)\in\mathbb R^N\mid|x_1|<f(\hat x)/2\}$。则：
 \begin{enumerate}[(i)]
 \item $(x_1,\hat x)\in S_1(E)\Rightarrow(-x_1,\hat x)\in S_1(E)$；
 \item $S_1(E)\in\mathscr B_N$；
-\item $\lambda_N(S_1(E))=\lambda_N(E)$；
+\item $\lambda_N(S_1(E))=\lambda_N(E)$（两端取值于 $[0,\infty]$）；
 \item $\operatorname{diam}(S_1(E))\leqslant\operatorname{diam}(E)$。
 \end{enumerate}
 \end{lemma}
 
+% SUPPLEMENT: parent=lemma:ch02-Steiner性质; kind=proof; location=引理 2.4.2 的证明; basis=原书“is clear from (2.21)”“it is easily checked that $\{F_k\}$ is nondecreasing and $S_1(E)=\bigcup_kF_k$”两处未展开，且 (iv) 末步 $[\sup E_{\hat y}-\inf E_{\hat x}]^2\leqslant[\operatorname{diam}(E)]^2$ 缺少用 $E$ 中的点逼近 $\inf$、$\sup$ 的论证
 \begin{proof}
-(i) 由\eqref{align:ch02-2.21}显然。为证 (ii)，设 $\{s_k\}\subseteq\mathscr S^+(\mathbb R^{N-1})$ 为非降简单函数列，使当 $k\to\infty$ 时 $s_k\to f$ 在 $\mathbb R^{N-1}$ 上逐点，其中 $f$ 由\eqref{align:ch02-2.20}定义。对任意 $k\in\mathbb N$，定义
+(i) 设 $(x_1,\hat x)\in S_1(E)$，即 $|x_1|<f(\hat x)/2$。则 $|-x_1|=|x_1|<f(\hat x)/2$，故 $(-x_1,\hat x)\in S_1(E)$。
+
+(ii) 对每个 $n\in\mathbb N$，$f\wedge n$ 为实值 $\mathscr B_{N-1}$-可测函数，由\cref{theorem:ch02-简单逼近}(i) 可取简单函数列 $\{s_k^{(n)}\}_k\subseteq\mathscr S^+(\mathbb R^{N-1})$ 使 $0\leqslant s_k^{(n)}\uparrow f\wedge n$（$k\to\infty$，逐点）。令 $s_k\triangleq\max_{n\leqslant k}s_k^{(n)}$（$k\in\mathbb N$），则 $\{s_k\}\subseteq\mathscr S^+(\mathbb R^{N-1})$ 非降，$0\leqslant s_k\leqslant f$，且 $s_k\to f$ 在 $\mathbb R^{N-1}$ 上逐点成立。对 $k\in\mathbb N$ 定义
 \begin{align*}
-g_k:\mathbb R^N\to\mathbb R,\qquad g_k(x_1,\hat x)\triangleq \frac{s_k(\hat x)}2-|x_1|.
+g_k:\mathbb R^N\to\mathbb R,\qquad g_k(x_1,\hat x)\triangleq\frac{s_k(\hat x)}2-|x_1|.
 \end{align*}
-显然 $g_k$ 为 $\mathscr B_N$-可测，故 $F_k\triangleq \{g_k>0\}\in\mathscr B_N$（$k\in\mathbb N$）。因对所有 $k$ 有 $s_k\leqslant s_{k+1}$，易验证序列 $\{F_k\}$ 非增且 $S_1(E)=\bigcup_{k=1}^\infty F_k$。故 (ii) 成立。关于 (iii)，只需注意由\eqref{align:ch02-2.15b}（另见\cref{remark:ch02-乘积完备化}）有
+$s_k$ 为简单 Borel 函数、$(x_1,\hat x)\mapsto|x_1|$ 连续，故 $g_k$ 为 $\mathscr B_N$-可测，于是 $F_k\triangleq\{g_k>0\}=\{(x_1,\hat x)\mid|x_1|<s_k(\hat x)/2\}\in\mathscr B_N$。
+
+断言：$\{F_k\}$ 非降且 $S_1(E)=\bigcup_{k=1}^\infty F_k$。由 $s_k\leqslant s_{k+1}$ 得 $|x_1|<s_k(\hat x)/2\Rightarrow|x_1|<s_{k+1}(\hat x)/2$，即 $F_k\subseteq F_{k+1}$。由 $s_k\leqslant f$ 得 $F_k\subseteq S_1(E)$，故 $\bigcup_kF_k\subseteq S_1(E)$。反之设 $(x_1,\hat x)\in S_1(E)$，则 $|x_1|<f(\hat x)/2$。若 $f(\hat x)<\infty$，由 $s_k(\hat x)\to f(\hat x)$ 得 $s_k(\hat x)>2|x_1|$ 对充分大的 $k$ 成立；若 $f(\hat x)=\infty$，则 $s_k(\hat x)\to\infty$，同一结论成立。故 $(x_1,\hat x)\in F_k$ 对某个 $k$ 成立。断言得证，于是 $S_1(E)$ 是可测集的可数并，$S_1(E)\in\mathscr B_N$。
+
+(iii) 对 $\hat x\in\mathbb R^{N-1}$，$S_1(E)$ 的 $\hat x$-截面为 $I_{\hat x}$，其 Lebesgue 测度为 $f(\hat x)$（当 $f(\hat x)=0$ 时 $I_{\hat x}=\varnothing$，测度为 $0$）。由\eqref{align:ch02-2.15b}（另见\cref{remark:ch02-乘积完备化}）应用于 $E\in\mathscr B_N$ 与 $S_1(E)\in\mathscr B_N$，得
 \begin{align*}
-\lambda_N(E)=\int_{\mathbb R^{N-1}}\lambda(E_{\hat x})\,\mathrm{d}\lambda_{N-1}(\hat x)
-=\int_{\mathbb R^{N-1}}f(\hat x)\,\mathrm{d}\lambda_{N-1}(\hat x)=\lambda_N(S_1(E)).
+\lambda_N(E)&=\int_{\mathbb R^{N-1}}\lambda(E_{\hat x})\,\mathrm{d}\lambda_{N-1}(\hat x)
+=\int_{\mathbb R^{N-1}}f(\hat x)\,\mathrm{d}\lambda_{N-1}(\hat x)\\
+&=\int_{\mathbb R^{N-1}}\lambda\bigl((S_1(E))_{\hat x}\bigr)\,\mathrm{d}\lambda_{N-1}(\hat x)
+=\lambda_N(S_1(E)).
 \end{align*}
 
-最后证 (iv)。设 $\operatorname{diam}(E)<\infty$；否则结论显然。设 $E_{\hat x}\neq\varnothing $，定义 $K_{\hat x}\triangleq [\inf E_{\hat x},\sup E_{\hat x}]$。显然
+(iv) 设 $D\triangleq\operatorname{diam}(E)<\infty$；若 $D=\infty$，则 (iv) 由 $\operatorname{diam}(S_1(E))\leqslant\infty$ 直接得到。以下设 $D<\infty$。对每个满足 $E_{\hat x}\neq\varnothing$ 的 $\hat x\in\mathbb R^{N-1}$，置 $K_{\hat x}\triangleq[\inf E_{\hat x},\sup E_{\hat x}]$；由 $E_{\hat x}\subseteq K_{\hat x}$ 得
 \begin{align}
 \lambda(K_{\hat x})=\sup E_{\hat x}-\inf E_{\hat x}\geqslant\lambda(E_{\hat x})=f(\hat x). \label{align:ch02-2.23}
 \end{align}
-设 $(x_1,\hat x),(y_1,\hat y)\in S_1(E)$，使
+用反证法证明 $\operatorname{diam}(S_1(E))\leqslant D$，设 $\operatorname{diam}(S_1(E))>D$。若 $\operatorname{diam}(S_1(E))=\infty$，取 $p,q\in S_1(E)$ 使 $|p-q|>D$；若 $\operatorname{diam}(S_1(E))<\infty$，令 $\varepsilon\triangleq(\operatorname{diam}(S_1(E))-D)/2>0$，并取 $p=(x_1,\hat x)$、$q=(y_1,\hat y)\in S_1(E)$ 使
 \begin{align}
-\operatorname{diam}(S_1(E))\leqslant\sqrt{|x_1-y_1|^2+|\hat x-\hat y|^2}+\epsilon. \label{align:ch02-2.24}
+\operatorname{diam}(S_1(E))\leqslant\sqrt{|x_1-y_1|^2+|\hat x-\hat y|^2}+\varepsilon; \label{align:ch02-2.24}
 \end{align}
-不妨设
+此时由\eqref{align:ch02-2.24}得 $|p-q|\geqslant\operatorname{diam}(S_1(E))-\varepsilon=D+\varepsilon>D$。两种情形下都有 $|p-q|>D$，而下面的估计给出 $|p-q|<D$，矛盾。
+
+$p,q\in S_1(E)$ 蕴含 $f(\hat x)>0$、$f(\hat y)>0$，故 $E_{\hat x}$、$E_{\hat y}$ 非空，且 $|x_1|<f(\hat x)/2$、$|y_1|<f(\hat y)/2$（故\eqref{align:ch02-2.23}可应用于 $\hat x$）。若 $\hat x=\hat y$，则 $|p-q|=|x_1-y_1|<f(\hat x)\leqslant\sup E_{\hat x}-\inf E_{\hat x}\leqslant D$，与 $|p-q|>D$ 矛盾，故 $\hat x\neq\hat y$。交换 $p$ 与 $q$ 的地位不妨设
 \begin{align}
 \sup E_{\hat y}-\inf E_{\hat x}\geqslant\sup E_{\hat x}-\inf E_{\hat y}. \label{align:ch02-2.25}
 \end{align}
-因 $|x_1|\leqslant f(\hat x)/2$、$|y_1|\leqslant f(\hat y)/2$，由\eqref{align:ch02-2.23}与\eqref{align:ch02-2.25}立得
+由 $|x_1|<f(\hat x)/2$、$|y_1|<f(\hat y)/2$、\eqref{align:ch02-2.23}与\eqref{align:ch02-2.25}得
 \begin{align}
-|x_1-y_1|\leqslant\frac{f(\hat x)+f(\hat y)}2
-\leqslant\frac{\sup E_{\hat x}-\inf E_{\hat x}}2+\frac{\sup E_{\hat y}-\inf E_{\hat y}}2
+|x_1-y_1|<\frac{f(\hat x)+f(\hat y)}2
+&\leqslant\frac{\sup E_{\hat x}-\inf E_{\hat x}}2+\frac{\sup E_{\hat y}-\inf E_{\hat y}}2
 =\frac{\sup E_{\hat y}-\inf E_{\hat x}}2+\frac{\sup E_{\hat x}-\inf E_{\hat y}}2
 \leqslant\sup E_{\hat y}-\inf E_{\hat x}. \label{align:ch02-2.26}
 \end{align}
-由\eqref{align:ch02-2.24}与\eqref{align:ch02-2.26}得
+
+余下估计 $(\sup E_{\hat y}-\inf E_{\hat x})^2+|\hat x-\hat y|^2\leqslant D^2$。因 $D<\infty$，$E$ 有界，故 $\inf E_{\hat x}$、$\sup E_{\hat y}$ 为有限实数。由\eqref{align:ch02-2.25}，
 \begin{align*}
-[\operatorname{diam}(S_1(E))-\epsilon]^2\leqslant|x_1-y_1|^2+|\hat x_1-\hat y_1|^2
-\leqslant|\hat x_1-\hat y_1|^2+[\sup E_{\hat y}-\inf E_{\hat x}]^2\leqslant[\operatorname{diam}(E)]^2,
+\sup E_{\hat y}-\inf E_{\hat x}\geqslant\frac{(\sup E_{\hat x}-\inf E_{\hat x})+(\sup E_{\hat y}-\inf E_{\hat y})}2\geqslant0.
 \end{align*}
-由 $\epsilon$ 的任意性即得 (iv)。证毕。
+对 $\delta>0$ 取 $a\in E_{\hat x}$、$b\in E_{\hat y}$ 使 $a<\inf E_{\hat x}+\delta$、$b>\sup E_{\hat y}-\delta$。则 $a\geqslant\inf E_{\hat x}$、$b\leqslant\sup E_{\hat y}$，故
+\begin{align*}
+\sup E_{\hat y}-\inf E_{\hat x}-2\delta<b-a\leqslant\sup E_{\hat y}-\inf E_{\hat x},
+\end{align*}
+即 $|b-a|\to\sup E_{\hat y}-\inf E_{\hat x}$（$\delta\to0^+$）。又 $(a,\hat x),(b,\hat y)\in E$，故
+\begin{align*}
+(b-a)^2+|\hat y-\hat x|^2=|(b,\hat y)-(a,\hat x)|^2\leqslant D^2.
+\end{align*}
+令 $\delta\to0^+$ 即得所需不等式。于是由\eqref{align:ch02-2.26}，
+\begin{align*}
+|p-q|^2=|x_1-y_1|^2+|\hat x-\hat y|^2<\bigl(\sup E_{\hat y}-\inf E_{\hat x}\bigr)^2+|\hat x-\hat y|^2\leqslant D^2,
+\end{align*}
+即 $|p-q|<D$，与 $|p-q|>D$ 矛盾。故 $\operatorname{diam}(S_1(E))\leqslant D=\operatorname{diam}(E)$。
 \end{proof}
+
+% SUPPLEMENT: parent=lemma:ch02-Steiner性质; kind=motivation; location=引理 2.4.2 后的注记; basis=原书引理 2.4.2 四条结论 + 逐条核验假设作用、直径不等号严格的退化例（两点集）以及 (2.21) 取严格不等式的必要性
+\begin{remark}\phantomsection\label{remark:ch02-Steiner性质动机}
+(i) 动机。引理的四条结论说明 $S_1$ 是保持测度、不增大直径、并制造对称性的变换：(i) 给出关于平面 $x_1=0$ 的对称性，(ii) 保证可测性以便继续迭代与计算测度，(iii) 是测度不变性，(iv) 是直径的单侧控制。等直径不等式只用到 (i)(iii)(iv)：对称性把集合压进以原点为心的球，测度不变与直径不增把球的体积与原集合的体积联系起来。
+
+(ii) 各假设的作用。$E\in\mathscr B_N$ 同时用于 (ii)（$f$ 的 Borel 可测性，从而 $F_k$ 可测）与 (iii)（截面积分公式\eqref{align:ch02-2.15b}）；(iv) 的证明用到 $p,q\in S_1(E)$ 所蕴含的 $f(\hat x),f(\hat y)>0$（从而相应截面非空，$\inf$、$\sup$ 有意义）以及 $D<\infty$（从而 $E$ 有界，$\inf$、$\sup$ 有限，且上确界可由 $E$ 中的点逼近）。$D=\infty$ 时 (iv) 无内容。
+
+(iii) 边界。\eqref{align:ch02-2.21}必须取严格不等式 $|x_1|<f(\hat x)/2$。若改用 $|x_1|\leqslant f(\hat x)/2$，则对两点集 $E=\{0,(1,0)\}\subseteq\mathbb R^2$ 有 $f\equiv0$，此时 $S_1(E)=\{(0,\hat x)\mid\hat x\in\mathbb R\}$ 的直径为 $\infty$，而 $\operatorname{diam}(E)=1$，(iv) 失效；按开区间读法同一例给出 $S_1(E)=\varnothing$、$\operatorname{diam}(S_1(E))=0<1$。(iv) 中的不等号一般严格：上述两点集即是。(iii) 的两端可为 $\infty$（$E$ 在某一截面上无界时）。(ii) 的证明依赖\cref{theorem:ch02-简单逼近}，其中 $0\leqslant s_k\leqslant f$ 与 $s_k\to f$ 逐点这两条同时用于断言中的两个包含。
+\end{remark}
 
 由\cref{lemma:ch02-Steiner性质}得下列结果。
 
 \begin{theorem}[Steiner 对称化]\label{theorem:ch02-Steiner}
-设 $E\in\mathscr B_N$，$S(E)$ 为其关于原点的 Steiner 对称化。则：
+设 $N\in\mathbb N^*$，$E\in\mathscr B_N$，$S(E)$ 为 $E$ 关于原点的 Steiner 对称化，即由\eqref{align:ch02-2.22}定义。则：
 \begin{enumerate}[(i)]
 \item $x\in S(E)\Rightarrow-x\in S(E)$；
 \item $S(E)\in\mathscr B_N$；
@@ -125,10 +224,47 @@ g_k:\mathbb R^N\to\mathbb R,\qquad g_k(x_1,\hat x)\triangleq \frac{s_k(\hat x)}2
 \end{enumerate}
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch02-Steiner; kind=proof; location=定理 2.4.3 后; basis=原书仅以“By Lemma 2.4.2 we have the following result”给出结论而未证明，此处补出对 $j=1,\cdots,N$ 的归纳、坐标置换下的不变性以及由各坐标平面对称性推出中心对称的论证
+\begin{proof}
+置 $E_0\triangleq E$，$E_j\triangleq S_j(E_{j-1})$（$j=1,\cdots ,N$），则 $S(E)=E_N$。证明对 $j=0,1,\cdots ,N$ 有
+\begin{align*}
+E_j\in\mathscr B_N,\qquad\lambda_N(E_j)=\lambda_N(E),\qquad\operatorname{diam}(E_j)\leqslant\operatorname{diam}(E),
+\end{align*}
+且当 $j\geqslant1$ 时 $E_j$ 关于每个平面 $x_i=0$ 对称（$i=1,\cdots ,j$），即对每个 $z=(z_1,\cdots ,z_N)\in E_j$ 与每个 $i\in\{1,\cdots ,j\}$ 有 $(z_1,\cdots ,z_{i-1},-z_i,z_{i+1},\cdots ,z_N)\in E_j$。
+
+$j=0$ 时三条性质对 $E_0=E$ 成立。设 $j\geqslant1$ 且 $F\triangleq E_{j-1}$ 满足相应的三条性质，且（当 $j\geqslant2$ 时）$F$ 关于平面 $x_i=0$ 对称（$i=1,\cdots ,j-1$）。坐标置换 $\pi_j$ 是 $\mathbb R^N$ 的线性等距同构，故 $\pi_j(\mathscr B_N)=\mathscr B_N$、$\lambda_N(\pi_j(A))=\lambda_N(A)$、$\operatorname{diam}(\pi_j(A))=\operatorname{diam}(A)$，且 $\pi_j(F)\in\mathscr B_N$。对 $\pi_j(F)$ 应用\cref{lemma:ch02-Steiner性质}：$S_1(\pi_j(F))\in\mathscr B_N$、$\lambda_N(S_1(\pi_j(F)))=\lambda_N(\pi_j(F))$、$\operatorname{diam}(S_1(\pi_j(F)))\leqslant\operatorname{diam}(\pi_j(F))$，并且 $S_1(\pi_j(F))$ 关于其第一个坐标变号对称。由 $E_j=\pi_j^{-1}(S_1(\pi_j(F)))$ 与 $\pi_j$ 保测度、保直径，得 $E_j\in\mathscr B_N$、$\lambda_N(E_j)=\lambda_N(F)=\lambda_N(E)$、$\operatorname{diam}(E_j)\leqslant\operatorname{diam}(F)\leqslant\operatorname{diam}(E)$；又 $S_1(\pi_j(F))$ 关于第一个坐标变号对称，经 $\pi_j^{-1}$ 拉回即得 $E_j$ 关于平面 $x_j=0$ 对称。
+
+此外，$E_j$ 仍关于平面 $x_i=0$ 对称（$1\leqslant i<j$）：$S_j$ 只改动第 $j$ 个坐标，而截面长度函数 $g(\hat z_j)\triangleq\lambda\bigl((F)_{(z_j,\hat z_j)}\bigr)$ 在把 $\hat z_j$ 的第 $i$ 个坐标变号时不变（因 $F$ 关于平面 $x_i=0$ 对称，且坐标变号保持 Lebesgue 测度），故 $E_j=\{(z_j,\hat z_j)\mid|z_j|<g(\hat z_j)/2\}$ 关于平面 $x_i=0$ 对称。
+
+于是 $S(E)=E_N$ 关于每个平面 $x_j=0$ 对称，且满足 (ii)(iii)(iv)。为证 (i)，令 $\sigma_j:\mathbb R^N\to\mathbb R^N$，$\sigma_j(z)\triangleq z-2z_je_j$（$e_j$ 为第 $j$ 个单位向量）为关于平面 $x_j=0$ 的反射。每个 $\sigma_j$ 保持 $E_N$，故对 $x\in E_N$ 有
+\begin{align*}
+-x=\sigma_N\sigma_{N-1}\cdots\sigma_1x\in E_N,
+\end{align*}
+即 $x\in S(E)\Rightarrow-x\in S(E)$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-Steiner; kind=motivation; location=定理 2.4.3 后的注记; basis=原书定理 2.4.3 与等直径不等式的应用 + 归纳中各步的作用、对称性的继承与不等号严格的例子（两点集）
+\begin{remark}\phantomsection\label{remark:ch02-Steiner动机}
+(i) 动机。逐个坐标平面的对称化把任意 Borel 集换成同测度、直径不增、且关于原点中心对称的集合。中心对称性是关键：若 $A$ 关于原点对称且 $\operatorname{diam}(A)\leqslant d$，则对 $x\in A$ 有 $-x\in A$，故 $2|x|=|x-(-x)|\leqslant d$，即 $A\subseteq B(0,d/2)$。因此
+\begin{align*}
+\lambda_N(E)=\lambda_N(S(E))\leqslant\kappa_N\Bigl(\frac{\operatorname{diam}(E)}2\Bigr)^N,
+\end{align*}
+这正是等直径不等式（本节末的证明）。
+
+(ii) 各步的作用。归纳中每一步都使用\cref{lemma:ch02-Steiner性质}：其 (ii) 给出可测性以便下一步仍可定义对称化，其 (iii) 累积为 $\lambda_N(S(E))=\lambda_N(E)$，其 (iv) 累积为直径不增。顺序 $S_1,\cdots ,S_N$ 固定；已获得的坐标平面对称性在后续步骤中保持（后续步骤只改动尚未处理的坐标），故 $S(E)$ 关于全部平面 $x_j=0$ 对称，这是 (i) 的来源。$E\in\mathscr B_N$ 不可省：\cref{lemma:ch02-Steiner性质}(ii)(iii) 都以 Borel 可测性为前提。
+
+(iii) 边界。(iv) 中的不等号一般严格：取两点集 $E=\{0,(1,0)\}\subseteq\mathbb R^2$，其每个坐标方向的截面测度都为 $0$，故 $S(E)=\varnothing$、$\operatorname{diam}(S(E))=0<1=\operatorname{diam}(E)$，而 (iii) 仍成立（两端为 $0$）。$S(E)$ 依赖坐标轴的选取，不是旋转不变的：对同一集合 $E$，先沿 $x_1$ 方向还是先沿 $x_2$ 方向对称化所得中间集合不同，最终 $S(E)$ 由固定顺序\eqref{align:ch02-2.22}确定。$S(E)=E$ 的典型情形是以原点为心的球。定理只断言单侧控制 $\operatorname{diam}(S(E))\leqslant\operatorname{diam}(E)$，不给出等号条件。
+\end{remark}
+
 作为\cref{theorem:ch02-Steiner}的应用，现可证明等直径不等式（见\cref{proposition:ch01-等直径不等式}）。
 
+% SUPPLEMENT: parent=proposition:ch01-等直径不等式; kind=proof; location=本节末“Proof of Proposition 1.5.2”; basis=原书证明中“the conclusion is obvious”、由\cref{remark:ch01-等直径注}(ii) 归约到 Borel 集、以及 $S(E)\subseteq B(0,\operatorname{diam}(E)/2)$ 三处未展开，此处补出
 \begin{proof}[等直径不等式的证明]
-若 $\operatorname{diam}(E)=\infty$，结论显然；故设 $E\subseteq\mathbb R^N$ 有界。又由\cref{remark:ch01-等直径注}(ii)，不妨设 $E\in\mathscr B_N$。设 $S(E)$ 由\eqref{align:ch02-2.22}定义。由\cref{theorem:ch02-Steiner}(i,iv)，$S(E)$ 关于原点对称，且 $\operatorname{diam}(S(E))\leqslant\operatorname{diam}(E)$，故 $S(E)\subseteq B(0,\operatorname{diam}(E)/2)$。由\cref{theorem:ch02-Steiner}(iii)得
+若 $\operatorname{diam}(E)=\infty$，则右端为 $\infty$，结论成立；故设 $E\subseteq\mathbb R^N$ 有界。由\cref{remark:ch01-等直径注}(ii)，对任意 $\varepsilon>0$ 存在 $F\in\mathscr B_N$ 使 $F\subseteq E$、$\lambda_N(F)\geqslant\lambda_N^*(E)-\varepsilon$ 且 $\operatorname{diam}(F)\leqslant\operatorname{diam}(E)$，故不妨设 $E\in\mathscr B_N$（此时 $\lambda_N^*(E)=\lambda_N(E)$）。设 $S(E)$ 由\eqref{align:ch02-2.22}定义。由\cref{theorem:ch02-Steiner}(i)(iv)，$S(E)$ 关于原点对称且 $\operatorname{diam}(S(E))\leqslant\operatorname{diam}(E)$。于是对 $x\in S(E)$ 有 $-x\in S(E)$，从而
+\begin{align*}
+2|x|=|x-(-x)|\leqslant\operatorname{diam}(S(E))\leqslant\operatorname{diam}(E),
+\end{align*}
+即 $S(E)\subseteq B(0,\operatorname{diam}(E)/2)$。由\cref{theorem:ch02-Steiner}(iii) 与 $\lambda_N$ 的单调性得
 \begin{align*}
 \lambda_N(E)=\lambda_N(S(E))\leqslant\kappa_N\left(\frac{\operatorname{diam}(E)}2\right)^N,
 \end{align*}

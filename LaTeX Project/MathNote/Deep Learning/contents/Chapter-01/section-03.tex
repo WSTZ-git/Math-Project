@@ -32,16 +32,16 @@
 神经元的这些属性已被抽象为简单的数学模型，即人工神经网络（Artificial Neural Network, ANN），它们成为计算学习方法的基础（McCulloch and Pitts, 1943）。诸多此类模型通过对其他神经元的输出的线性组合来描述单个神经元的特性，然后使用非线性函数进行转换。该过程可以用数学表达式表示为：
 
 \begin{definition}[人工神经网络]\label{definition:ch01-人工神经网络}
-设 $M\in\mathbb{N}$，输入 $x=(x_1,\dots,x_M)\in\mathbb{R}^{M}$，权重 $w=(w_1,\dots,w_M)\in\mathbb{R}^{M}$，$f:\mathbb{R}\to\mathbb{R}$。由
+设 $M\in\mathbb{N}$，输入 $x=(x_1,\cdots,x_M)\in\mathbb{R}^{M}$，权重 $w=(w_1,\cdots,w_M)\in\mathbb{R}^{M}$，$f:\mathbb{R}\to\mathbb{R}$。由
 \begin{align}
   a &= \sum_{i=1}^{M} w_i x_i \label{align:ch01-神经元预激活}\\
   y &= f(a) \label{align:ch01-神经元激活}
 \end{align}
 定义的映射 $u_{w,f}:\mathbb{R}^{M}\to\mathbb{R}$ 称为\textbf{单元}（unit）；$w_i\in\mathbb{R}$ 称为该单元的\textbf{权重}（weight），表示相应突触的强度；$a$ 称为\textbf{预激活}（pre-activation），$f$ 称为\textbf{激活函数}（activation function），$y$ 称为\textbf{激活}（activation）。若 $f$ 为仿射函数，则称该单元为\textbf{线性单元}，否则称为\textbf{非线性单元}。
 
-设 $L\in\mathbb{N}$，$n_{0},\dots,n_{L}\in\mathbb{N}$。第 $\ell$ 层（$\ell=1,\dots,L$）由 $n_{\ell}$ 个单元组成，其权重矩阵 $W^{(\ell)}\in\mathbb{R}^{n_{\ell}\times n_{\ell-1}}$ 为 $n_{\ell}$ 行 $n_{\ell-1}$ 列的实矩阵，激活函数 $f_{\ell}:\mathbb{R}\to\mathbb{R}$ 逐元素作用；层映射 $F_{\ell}:\mathbb{R}^{n_{\ell-1}}\to\mathbb{R}^{n_{\ell}}$ 定义为
+设 $L\in\mathbb{N}$，$n_{0},\cdots,n_{L}\in\mathbb{N}$。第 $\ell$ 层（$\ell=1,\cdots,L$）由 $n_{\ell}$ 个单元组成，其权重矩阵 $W^{(\ell)}\in\mathbb{R}^{n_{\ell}\times n_{\ell-1}}$ 为 $n_{\ell}$ 行 $n_{\ell-1}$ 列的实矩阵，激活函数 $f_{\ell}:\mathbb{R}\to\mathbb{R}$ 逐元素作用；层映射 $F_{\ell}:\mathbb{R}^{n_{\ell-1}}\to\mathbb{R}^{n_{\ell}}$ 定义为
 \begin{align*}
-  F_{\ell}(z)=\bigl(f_{\ell}(a_{\ell,1}),\dots,f_{\ell}(a_{\ell,n_{\ell}})\bigr)^{\mathsf{T}},
+  F_{\ell}(z)=\bigl(f_{\ell}(a_{\ell,1}),\cdots,f_{\ell}(a_{\ell,n_{\ell}})\bigr)^{\mathsf{T}},
   \qquad
   a_{\ell,j}=\sum_{i=1}^{n_{\ell-1}}W^{(\ell)}_{ji}z_i .
 \end{align*}
@@ -57,23 +57,23 @@
 可以看出，式\eqref{align:ch01-多项式模型}可视为这个模型的一个特例，其中输入 $x_i$ 由单一变量 $x$ 的各次幂构成，而激活函数 $f(\cdot)$ 退化为恒等函数 $f(a)=a$。
 
 \begin{proposition}[多项式函数是神经元模型的特例]\label{proposition:ch01-多项式是神经元特例}
-设 $M\in\mathbb{N}$，$\mathbf{w}=(w_0,w_1,\dots,w_M)\in\mathbb{R}^{M+1}$，$x\in\mathbb{R}$。在\cref{definition:ch01-人工神经网络}的记号下，取输入维数 $M$、输入 $(x_1,\dots,x_M)=(x,x^{2},\dots,x^{M})$、权重 $(w_1,\dots,w_M)$、激活函数 $f=\mathrm{id}_{\mathbb{R}}$。则
+设 $M\in\mathbb{N}$，$\mathbf{w}=(w_0,w_1,\cdots,w_M)\in\mathbb{R}^{M+1}$，$x\in\mathbb{R}$。在\cref{definition:ch01-人工神经网络}的记号下，取输入维数 $M$、输入 $(x_1,\cdots,x_M)=(x,x^{2},\cdots,x^{M})$、权重 $(w_1,\cdots,w_M)$、激活函数 $f=\mathrm{id}_{\mathbb{R}}$。则
 \begin{enumerate}
   \item 该单元的输出为 $y=\sum_{i=1}^{M}w_ix^{i}$，即式\eqref{align:ch01-多项式模型}中 $w_0=0$ 时的 $M$ 阶多项式函数；
-  \item 若把输入维数取为 $M+1$、输入取为 $(x_0,x_1,\dots,x_M)=(1,x,x^{2},\dots,x^{M})$、权重取为 $(w_0,w_1,\dots,w_M)$，则该单元的输出为 $y=\sum_{j=0}^{M}w_jx^{j}$，即式\eqref{align:ch01-多项式模型}中的一般 $M$ 阶多项式函数。
+  \item 若把输入维数取为 $M+1$、输入取为 $(x_0,x_1,\cdots,x_M)=(1,x,x^{2},\cdots,x^{M})$、权重取为 $(w_0,w_1,\cdots,w_M)$，则该单元的输出为 $y=\sum_{j=0}^{M}w_jx^{j}$，即式\eqref{align:ch01-多项式模型}中的一般 $M$ 阶多项式函数。
 \end{enumerate}
 因此多项式模型是人工神经网络在激活函数取恒等映射时的特例。
 \end{proposition}
 
 \begin{proof}
-按\cref{definition:ch01-人工神经网络}，单元的输出为 $y=f(a)$，其中 $a=\sum_{i=1}^{M}w_ix_i$。代入 $(x_1,\dots,x_M)=(x,x^{2},\dots,x^{M})$ 与 $f=\mathrm{id}_{\mathbb{R}}$，得
+按\cref{definition:ch01-人工神经网络}，单元的输出为 $y=f(a)$，其中 $a=\sum_{i=1}^{M}w_ix_i$。代入 $(x_1,\cdots,x_M)=(x,x^{2},\cdots,x^{M})$ 与 $f=\mathrm{id}_{\mathbb{R}}$，得
 \begin{align*}
  a=\sum_{i=1}^{M}w_ix^{i},
  \qquad
  y=f(a)=a=\sum_{i=1}^{M}w_ix^{i},
 \end{align*}
 这正是式\eqref{align:ch01-多项式模型}右端在 $w_0=0$ 时的表达式，第一条成立。
-若把输入维数取为 $M+1$、输入取为 $(1,x,x^{2},\dots,x^{M})$、权重取为 $(w_0,w_1,\dots,w_M)$，则 $a=\sum_{j=0}^{M}w_jx^{j}$，$y=a$，与式\eqref{align:ch01-多项式模型}右端完全一致，第二条成立。
+若把输入维数取为 $M+1$、输入取为 $(1,x,x^{2},\cdots,x^{M})$、权重取为 $(w_0,w_1,\cdots,w_M)$，则 $a=\sum_{j=0}^{M}w_jx^{j}$，$y=a$，与式\eqref{align:ch01-多项式模型}右端完全一致，第二条成立。
 恒等映射是仿射函数，故按\cref{definition:ch01-人工神经网络}该单元为线性单元；把单个单元视为 $L=1$、$n_{0}=M+1$、$n_{1}=1$ 的网络即得所述特例。
 \end{proof}
 
@@ -97,7 +97,7 @@
 人工神经网络的历史大致可以根据其复杂程度划分为三个不同的阶段，这种复杂性是通过处理的“层数”来衡量的。由式\eqref{align:ch01-神经元预激活}和式\eqref{align:ch01-神经元激活}描述的简单神经网络模型可以视为具有单层处理能力，对应\cref{figure:ch01-简单神经网络}中的单层连接结构。在神经计算的历史长河中，感知机模型（Rosenblatt, 1962）无疑占据着举足轻重的地位，其激活函数 $f(\cdot)$ 是以下形式的阶跃函数：
 
 \begin{definition}[感知机]\label{definition:ch01-感知机}
-设 $M\in\mathbb{N}$，输入 $x=(x_1,\dots,x_M)\in\mathbb{R}^{M}$，权重 $w=(w_1,\dots,w_M)\in\mathbb{R}^{M}$。在\cref{definition:ch01-人工神经网络}中取激活函数为阶跃函数
+设 $M\in\mathbb{N}$，输入 $x=(x_1,\cdots,x_M)\in\mathbb{R}^{M}$，权重 $w=(w_1,\cdots,w_M)\in\mathbb{R}^{M}$。在\cref{definition:ch01-人工神经网络}中取激活函数为阶跃函数
 \begin{align}
   f(a) =
   \begin{cases}
@@ -135,7 +135,7 @@
 请注意，尽管感知机已经从实际机器学习应用中消失，但这个术语仍然流传下来，因此现代神经网络有时也称为多层感知机（Multi Layer Perceptron, MLP）。
 
 \begin{definition}[多层感知机]\label{definition:ch01-多层感知机}
-设 $L\geqslant2$，$F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为\cref{definition:ch01-人工神经网络}所述的 $L$ 层网络，第 $\ell$ 层的权重矩阵 $W^{(\ell)}\in\mathbb{R}^{n_{\ell}\times n_{\ell-1}}$ 为 $n_{\ell}$ 行 $n_{\ell-1}$ 列的实矩阵，且第 $1,\dots,L-1$ 层的单元为\cref{definition:ch01-隐藏单元}所述的隐藏单元。若各层权重均可由训练数据调整，则 $F$ 称为\textbf{多层感知机}（Multi Layer Perceptron, MLP）。该名称沿用历史用法：现代的多层感知机不要求其单元取式\eqref{align:ch01-感知机激活}的阶跃函数。
+设 $L\geqslant2$，$F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为\cref{definition:ch01-人工神经网络}所述的 $L$ 层网络，第 $\ell$ 层的权重矩阵 $W^{(\ell)}\in\mathbb{R}^{n_{\ell}\times n_{\ell-1}}$ 为 $n_{\ell}$ 行 $n_{\ell-1}$ 列的实矩阵，且第 $1,\cdots,L-1$ 层的单元为\cref{definition:ch01-隐藏单元}所述的隐藏单元。若各层权重均可由训练数据调整，则 $F$ 称为\textbf{多层感知机}（Multi Layer Perceptron, MLP）。该名称沿用历史用法：现代的多层感知机不要求其单元取式\eqref{align:ch01-感知机激活}的阶跃函数。
 \end{definition}
 
 % SUPPLEMENT: parent=definition:ch01-多层感知机; kind=motivation; location=紧随其后的 remark
@@ -170,7 +170,7 @@
 \cref{figure:ch01-两层神经网络}中的每一个隐藏单元和每一个输出单元均计算形如式\eqref{align:ch01-神经元预激活}和式\eqref{align:ch01-神经元激活}的函数值。对于一组给定的输入值，所有隐藏单元和输出单元的状态可以通过迭代地应用式\eqref{align:ch01-神经元预激活}和式\eqref{align:ch01-神经元激活}进行前向计算，在这个过程中，信息沿着箭头所指的方向在网络中逐层向前传递。由于这种信息流动的特点，此类模型也被称作前馈神经网络（feed-forward neural network）。
 
 \begin{definition}[前馈神经网络]\label{definition:ch01-前馈神经网络}
-设 $L\in\mathbb{N}$，$F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为 $L$ 层网络，它的单元与连接构成有向图 $G=(V,E)$：每个单元为一个顶点，从第 $\ell'$ 层单元指向第 $\ell$ 层单元的连接为一条有向边。若每条有向边都从第 $\ell'$ 层的单元指向第 $\ell$ 层的单元且 $\ell'<\ell$，即信号只沿层序向前传递、$G$ 中不存在有向回路，则 $F$ 称为\textbf{前馈神经网络}（feed-forward neural network）。此时给定输入 $x\in\mathbb{R}^{n_{0}}$ 后，各单元的值可按层序 $1,2,\dots,L$ 依次算出。
+设 $L\in\mathbb{N}$，$F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为 $L$ 层网络，它的单元与连接构成有向图 $G=(V,E)$：每个单元为一个顶点，从第 $\ell'$ 层单元指向第 $\ell$ 层单元的连接为一条有向边。若每条有向边都从第 $\ell'$ 层的单元指向第 $\ell$ 层的单元且 $\ell'<\ell$，即信号只沿层序向前传递、$G$ 中不存在有向回路，则 $F$ 称为\textbf{前馈神经网络}（feed-forward neural network）。此时给定输入 $x\in\mathbb{R}^{n_{0}}$ 后，各单元的值可按层序 $1,2,\cdots,L$ 依次算出。
 \end{definition}
 
 % SUPPLEMENT: parent=definition:ch01-前馈神经网络; kind=motivation; location=紧随其后的 remark
@@ -185,7 +185,7 @@
 设 $F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为前馈神经网络，第 $\ell$ 层的权重矩阵 $W^{(\ell)}\in\mathbb{R}^{n_{\ell}\times n_{\ell-1}}$ 为实矩阵，偏置 $b^{(\ell)}\in\mathbb{R}^{n_{\ell}}$ 为 $n_{\ell}$ 维向量，激活函数 $f_{\ell}:\mathbb{R}\to\mathbb{R}$ 逐元素作用；记 $z^{(0)}=x\in\mathbb{R}^{n_{0}}$，
 \begin{align*}
   a^{(\ell)}=W^{(\ell)}z^{(\ell-1)}+b^{(\ell)},\qquad
-  z^{(\ell)}=f_{\ell}\bigl(a^{(\ell)}\bigr)\quad(\ell=1,\dots,L).
+  z^{(\ell)}=f_{\ell}\bigl(a^{(\ell)}\bigr)\quad(\ell=1,\cdots,L).
 \end{align*}
 设目标 $t\in\mathbb{R}^{n_{L}}$，损失函数 $\ell:\mathbb{R}^{n_{L}}\times\mathbb{R}^{n_{L}}\to[0,\infty)$ 对其第一个变量可微，误差 $E=\ell(z^{(L)},t)$，各 $f_{\ell}$ 可微，并以 $\odot$ 表示逐元素乘积。若一个算法按
 \begin{align*}
@@ -193,7 +193,7 @@
   \qquad
   \delta^{(\ell)}=\Bigl(\bigl(W^{(\ell+1)}\bigr)^{\mathsf{T}}\delta^{(\ell+1)}\Bigr)\odot f_{\ell}'\bigl(a^{(\ell)}\bigr)
 \end{align*}
-（$\ell=L-1,\dots,1$）由后向前递推，并由
+（$\ell=L-1,\cdots,1$）由后向前递推，并由
 \begin{align*}
   \frac{\partial E}{\partial W^{(\ell)}}=\delta^{(\ell)}\bigl(z^{(\ell-1)}\bigr)^{\mathsf{T}},
   \qquad
@@ -239,7 +239,7 @@
 神经网络发展的第三个阶段，也是当前阶段，始于 21 世纪的第二个十年。一系列的突破使具有多层权重的神经网络得以有效训练，从而消除了这些技术先前的能力限制。具有多层权重的网络称为深度神经网络，专注于这类网络的机器学习子领域称为深度学习（deep learning）（LeCun, Bengio and Hinton, 2015）。
 
 \begin{definition}[深度神经网络与深度学习]\label{definition:ch01-深度神经网络与深度学习}
-设 $F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为\cref{definition:ch01-人工神经网络}所述的 $L$ 层网络，第 $\ell$ 层的权重矩阵 $W^{(\ell)}\in\mathbb{R}^{n_{\ell}\times n_{\ell-1}}$ 为实矩阵（$\ell=1,\dots,L$），故可调权重的层数为 $L$。若 $L\geqslant3$，即网络至少含两个隐藏层与三层可调权重，则 $F$ 称为\textbf{深度神经网络}（deep neural network）；研究这类网络的设计与训练的机器学习分支称为\textbf{深度学习}（deep learning）（LeCun, Bengio and Hinton, 2015）。
+设 $F=F_{L}\circ\cdots\circ F_{1}:\mathbb{R}^{n_{0}}\to\mathbb{R}^{n_{L}}$ 为\cref{definition:ch01-人工神经网络}所述的 $L$ 层网络，第 $\ell$ 层的权重矩阵 $W^{(\ell)}\in\mathbb{R}^{n_{\ell}\times n_{\ell-1}}$ 为实矩阵（$\ell=1,\cdots,L$），故可调权重的层数为 $L$。若 $L\geqslant3$，即网络至少含两个隐藏层与三层可调权重，则 $F$ 称为\textbf{深度神经网络}（deep neural network）；研究这类网络的设计与训练的机器学习分支称为\textbf{深度学习}（deep learning）（LeCun, Bengio and Hinton, 2015）。
 \end{definition}
 
 % SUPPLEMENT: parent=definition:ch01-深度神经网络与深度学习; kind=motivation; location=紧随其后的 remark
@@ -308,7 +308,7 @@
 另一项具有里程碑意义的进展是自动微分（automatic differentiation）方法的提出，该方法能够基于描述网络前向传播过程的代码，自动生成用于执行反向传播以计算误差函数梯度的代码。研究人员只需要显式地编写相对简洁的前向传播函数代码，就能够快速地探索和尝试不同的神经网络架构，并快速尝试不同的架构和多种组件的不同组合。
 
 \begin{definition}[自动微分]\label{definition:ch01-自动微分}
-设 $F:\mathbb{R}^{n}\to\mathbb{R}^{m}$（$n,m\in\mathbb{N}$）由有限个可微基本运算复合而成，其计算过程由有向无环图 $G=(V,E)$ 表示：每个顶点对应一个基本运算或一个输入变量，每条有向边表示数据依赖关系。若算法以 $G$ 与输入 $x\in\mathbb{R}^{n}$ 为输入，按链式法则在 $G$ 上反向遍历一次，输出全部偏导数 $\partial F_{i}/\partial x_{j}$（$i=1,\dots,m$，$j=1,\dots,n$）的值，则它称为\textbf{自动微分}（automatic differentiation）；若该反向遍历所需的运算量不超过前向计算运算量与某个与 $n$ 无关的常数之积，则称它为\textbf{反向模式}（reverse mode）。
+设 $F:\mathbb{R}^{n}\to\mathbb{R}^{m}$（$n,m\in\mathbb{N}$）由有限个可微基本运算复合而成，其计算过程由有向无环图 $G=(V,E)$ 表示：每个顶点对应一个基本运算或一个输入变量，每条有向边表示数据依赖关系。若算法以 $G$ 与输入 $x\in\mathbb{R}^{n}$ 为输入，按链式法则在 $G$ 上反向遍历一次，输出全部偏导数 $\partial F_{i}/\partial x_{j}$（$i=1,\cdots,m$，$j=1,\cdots,n$）的值，则它称为\textbf{自动微分}（automatic differentiation）；若该反向遍历所需的运算量不超过前向计算运算量与某个与 $n$ 无关的常数之积，则称它为\textbf{反向模式}（reverse mode）。
 \end{definition}
 
 % SUPPLEMENT: parent=definition:ch01-自动微分; kind=motivation; location=紧随其后的 remark

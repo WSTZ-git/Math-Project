@@ -1,0 +1,456 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{逼近与紧性}\label{section:ch05-02}
+
+\subsection{下半连续性}\label{subsection:ch05-02-1}
+
+\begin{theorem}[变差测度的下半连续性]\label{theorem:ch05-5-2}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$\{f_k\}_{k=1}^{\infty}\subseteq\BV(U)$ 为 $\BV$ 函数列，$f\in L^1_{\loc}(U)$，且
+\begin{align*}
+f_k\to f\qquad\text{于 }L^1_{\loc}(U),
+\end{align*}
+即对每个紧集 $K\subseteq U$ 有 $\int_K\lvert f_k-f\rvert\diff x\to0$（$k\to\infty$）。则
+\begin{align*}
+\lVert Df\rVert(U)\leqslant\liminf_{k\to\infty}\lVert Df_k\rVert(U),
+\end{align*}
+其中对 $g\in\BV_{\loc}(U)$，$\lVert Dg\rVert$ 表示 $g$ 的变差测度、$\lVert Dg\rVert(U)$ 表示该测度在 $U$ 上的总质量，而
+\begin{align*}
+\liminf_{k\to\infty}\lVert Df_k\rVert(U):=\sup_{j\geqslant1}\inf_{k\geqslant j}\lVert Df_k\rVert(U)
+\end{align*}
+是数列 $\{\lVert Df_k\rVert(U)\}_{k=1}^{\infty}$ 的下极限，其值允许为 $+\infty$。结论的含义是：当右端有限时 $f\in\BV_{\loc}(U)$、$\lVert Df\rVert$ 是 $U$ 上的 Radon 测度且上式成立；当右端等于 $+\infty$ 时上式不含信息。
+\end{theorem}
+
+\begin{proof}
+设 $\phi\in C_c^1(U;\mathbb{R}^n)$ 满足 $\lvert\phi\rvert\leqslant1$。由 $f_k\to f$ 于 $L^1_{\loc}(U)$ 与 $\spt\phi$ 是 $U$ 的紧子集，有
+\begin{align*}
+\int_U f\diver\phi\diff x=\lim_{k\to\infty}\int_U f_k\diver\phi\diff x .
+\end{align*}
+按\cref{theorem:ch05-5-1}，对每个 $k$ 存在 $\lVert Df_k\rVert$-可测向量场 $\sigma_k:U\to\mathbb{R}^n$，满足 $\lvert\sigma_k\rvert=1$ 于 $\lVert Df_k\rVert$-a.e.，且% XREF internal
+\begin{align*}
+\int_U f_k\diver\phi\diff x=-\int_U\phi\cdot\sigma_k\diff\lVert Df_k\rVert .
+\end{align*}
+由 $\lvert\phi\rvert\leqslant1$ 与 $\lvert\sigma_k\rvert=1$ $\lVert Df_k\rVert$-a.e. 得
+\begin{align*}
+\Bigl\lvert\int_U\phi\cdot\sigma_k\diff\lVert Df_k\rVert\Bigr\rvert\leqslant\int_U\lvert\phi\rvert\diff\lVert Df_k\rVert\leqslant\lVert Df_k\rVert(U).
+\end{align*}
+于是
+\begin{align*}
+\int_U f\diver\phi\diff x&=\lim_{k\to\infty}\Bigl(-\int_U\phi\cdot\sigma_k\diff\lVert Df_k\rVert\Bigr)\\
+&=\liminf_{k\to\infty}\Bigl(-\int_U\phi\cdot\sigma_k\diff\lVert Df_k\rVert\Bigr)
+\leqslant\liminf_{k\to\infty}\lVert Df_k\rVert(U).
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-2; kind=proof; 补出上确界公式 ‖Df‖(U)=sup{∫_U f div φ} 的依据：由定理 5.1 的表示取上确界，并说明取上确界后给出局部有界性
+上式对满足 $\lvert\phi\rvert\leqslant1$ 的一切 $\phi\in C_c^1(U;\mathbb{R}^n)$ 成立。由\cref{theorem:ch05-5-1}的表示 $\int_U f\diver\phi\diff x=-\int_U\phi\cdot\sigma\diff\lVert Df\rVert$ 与 $\lvert\sigma\rvert=1$ $\lVert Df\rVert$-a.e.，有% XREF internal
+\begin{align*}
+\lVert Df\rVert(U)=\sup\left\{\int_U f\diver\phi\diff x\,\middle|\,\phi\in C_c^1(U;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\right\},
+\end{align*}
+故
+\begin{align*}
+\lVert Df\rVert(U)\leqslant\liminf_{k\to\infty}\lVert Df_k\rVert(U).
+\end{align*}
+当右端有限时，把检验向量场限制在 $C_c^1(V;\mathbb{R}^n)$ 中（$V\subset\subset U$ 为开集）得 $\lVert Df\rVert(V)\leqslant\liminf_{k\to\infty}\lVert Df_k\rVert(V)<\infty$，按\cref{definition:ch05-5-2}即 $f\in\BV_{\loc}(U)$；若再设 $f\in L^1(U)$，则 $f\in\BV(U)$。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-2; kind=motivation; 说明变差泛函在 L^1_loc 收敛下的下半连续性、等式不能成立的反例，以及证明的两步结构
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-2-动机}
+$\lVert Dg\rVert$ 是\cref{theorem:ch05-5-1}给出的 Radon 测度，$\lVert Dg\rVert(U)$ 是它在 $U$ 上的总质量，因而这一总质量度量的是 $g$ 在 $U$ 内的总变差。本定理断言：总变差关于 $L^1_{\loc}$ 收敛是下半连续的，即极限函数的总变差不超过各项总变差的下极限。等价的说法是：对每个 $C>0$，集 $\{g\in\BV(U)\mid\lVert Dg\rVert(U)\leqslant C\}$ 在 $L^1_{\loc}(U)$ 中是闭的；变差在 $L^1_{\loc}$ 极限处只会下降，不会上升。% XREF internal
+
+不等号不能改成等号，变差可以严格下降。取 $U=(0,1)$ 与 $f_k(x):=x^k$，则
+\begin{align*}
+\lVert f_k\rVert_{L^1(U)}&=\frac{1}{k+1}\longrightarrow0,\\
+\lVert Df_k\rVert((0,1))&=\int_0^1kx^{k-1}\diff x=1,
+\end{align*}
+故 $f_k\to0$ 于 $L^1(U)$ 而 $\lVert Df_k\rVert((0,1))$ 恒等于 $1$，于是 $\lVert D0\rVert((0,1))=0<1=\lim_{k\to\infty}\lVert Df_k\rVert((0,1))$。变差的丧失来自 $f_k$ 在 $x=1$ 附近的陡峭过渡段：该段的高度为 $1$、宽度趋于零，其变差恒为 $1$，而在 $L^1$ 范数下其贡献趋于零。
+
+证明分两步。第一步把每个 $f_k$ 的弱导数用 $\lVert Df_k\rVert$ 与单位向量场 $\sigma_k$ 表示，使每个积分被 $\lVert Df_k\rVert(U)$ 控制；第二步对这批不等式取下极限，再对检验向量场取上确界。$\lvert\sigma_k\rvert=1$ 是关键：它给出 $\lvert\phi\cdot\sigma_k\rvert\leqslant\lvert\phi\rvert\leqslant1$，故关于 $\lVert Df_k\rVert$ 的积分不超过该测度的总质量。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-2; kind=hypotheses; 逐条分析 f_k∈BV(U)、f∈L^1_loc(U)、L^1_loc 收敛（可弱化为弱收敛）、下极限有限的必要性以及结论的局部化
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-2-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f_k\in\BV(U)$ 使 $\lVert Df_k\rVert(U)$ 与 $\sigma_k$ 有定义，这是定理关于 $f_k$ 的唯一正则性要求；$f_k$ 不必连续或可微。
+\item 假设 $f\in L^1_{\loc}(U)$ 而不要求 $f\in L^1(U)$。证明只用到 $f$ 在紧子集上的可积性，因为检验向量场 $\phi$ 的支集是 $U$ 的紧子集；$f$ 是否属于 $\BV(U)$ 由下极限的有限性或附加条件 $f\in L^1(U)$ 决定，不在假设中预先给出。
+\item 证明实际只用到 $L^1_{\loc}$ 收敛的一个推论：对一切 $\phi\in C_c^1(U;\mathbb{R}^n)$ 有 $\int_U f_k\diver\phi\diff x\to\int_U f\diver\phi\diff x$。由于 $\diver\phi\in C_c(U)\subseteq L^{\infty}(U)$，把强收敛换成弱收敛 $f_k\weakto f$ 于 $L^1_{\loc}(U)$ 时该推论仍成立，故定理在弱收敛假设下同样成立。
+\item 下极限的有限性不可省略。取 $U=(0,1)$、$f(x):=\sin(1/x)$ 与 $f_k:=f\chi_{(1/k,1)}$，则 $f_k\in\BV(U)$ 且 $f_k\to f$ 于 $L^1(U)$；又
+\begin{align*}
+\lVert Df_k\rVert((0,1))\geqslant\int_1^k\lvert\cos u\rvert\diff u\longrightarrow+\infty\qquad(k\to\infty),
+\end{align*}
+故 $\liminf_{k\to\infty}\lVert Df_k\rVert((0,1))=+\infty$，而 $f$ 在 $(0,1)$ 上的变差也为 $+\infty$，即 $f\notin\BV_{\loc}((0,1))$。这说明定理不能叙述为「$f_k\to f$ 于 $L^1_{\loc}(U)$ 蕴含 $f\in\BV(U)$」。
+\item 结论可以局部化：把定理用于 $U$ 的任一开子集 $V$（此时 $f_k\in\BV(V)$、$f\in L^1_{\loc}(V)$、$f_k\to f$ 于 $L^1_{\loc}(V)$）得
+\begin{align*}
+\lVert Df\rVert(V)\leqslant\liminf_{k\to\infty}\lVert Df_k\rVert(V)
+\end{align*}
+对每个开集 $V\subseteq U$ 成立。因此下半连续性按测度的意义成立，而不只在 $V=U$ 处成立。
+\end{enumerate}
+\end{remark}
+
+\subsection{光滑函数逼近}\label{subsection:ch05-02-2}
+
+\begin{theorem}[光滑函数的局部逼近]\label{theorem:ch05-5-3}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$f\in\BV(U)$ 为给定的有界变差函数。则存在函数列 $\{f_k\}_{k=1}^{\infty}\subseteq\BV(U)\cap C^{\infty}(U)$，使得
+\begin{enumerate}[(i)]
+\item $f_k\to f$ 于 $L^1(U)$，且
+\item $\lVert Df_k\rVert(U)\to\lVert Df\rVert(U)$（$k\to\infty$）。
+\end{enumerate}
+此处 $C^{\infty}(U)$ 表示在 $U$ 内无穷次可微的函数全体，$\lVert Df_k\rVert(U)$ 表示 $f_k$ 的变差测度在 $U$ 上的总质量。
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-3-比较}
+可与\cref{theorem:ch04-4-2}相比较。% XREF p=215 "Compare with Theorem 4.2 in Section 4.2"
+需分辨的一点是：本定理并未断言 $\lVert D(f_k-f)\rVert(U)\to0$。
+\end{remark}
+
+\begin{proof}
+1. 固定 $\varepsilon>0$。给定正整数 $m$，对 $k=1,2,\cdots$ 定义开集
+\begin{align*}
+U_k:=\left\{x\in U\,\middle|\,\operatorname{dist}(x,\partial U)>\frac{1}{m+k}\right\}\cap B^0(0,k+m),
+\end{align*}
+其中 $B^0(0,r):=\{x\in\mathbb{R}^n\mid\lvert x\rvert<r\}$ 是以原点为心、$r$ 为半径的开球。其次取 $m$ 充分大，使得
+\begin{align*}
+\lVert Df\rVert(U-U_1)<\varepsilon .\qquad(\star)
+\end{align*}
+置 $U_0:=\varnothing$，并定义
+\begin{align*}
+V_k:=U_{k+1}-\overline{U}_{k-1}\qquad(k=1,2,\cdots).
+\end{align*}
+取一列光滑函数 $\{\zeta_k\}_{k=1}^{\infty}$，使得
+\begin{align*}
+&\zeta_k\in C_c^{\infty}(V_k),\qquad0\leqslant\zeta_k\leqslant1\qquad(k=1,2,\cdots),\\
+&\sum_{k=1}^{\infty}\zeta_k\equiv1\qquad\text{于 }U .
+\end{align*}
+固定\cref{definition:ch04-4-2-记号}中的标准磨光核 $\eta_\varepsilon$。则对每个 $k$ 可取 $\varepsilon_k>0$ 充分小，使得% XREF internal
+\begin{align*}
+\left\{
+\begin{array}{l}
+\displaystyle\spt\bigl(\eta_{\varepsilon_k}*(f\zeta_k)\bigr)\subseteq V_k,\\[6pt]
+\displaystyle\int_U\bigl\lvert\eta_{\varepsilon_k}*(f\zeta_k)-f\zeta_k\bigr\rvert\diff x<\frac{\varepsilon}{2^{k}},\\[10pt]
+\displaystyle\int_U\bigl\lvert\eta_{\varepsilon_k}*(fD\zeta_k)-fD\zeta_k\bigr\rvert\diff x<\frac{\varepsilon}{2^{k}},
+\end{array}
+\right.\qquad(\star\star)
+\end{align*}
+其中 $D\zeta_k$ 表示 $\zeta_k$ 的梯度。定义
+\begin{align*}
+f_\varepsilon:=\sum_{k=1}^{\infty}\eta_{\varepsilon_k}*(f\zeta_k).
+\end{align*}
+由于 $\spt(\eta_{\varepsilon_k}*(f\zeta_k))\subseteq V_k$，而 $U$ 中每一点只属于有限多个 $V_k$，上述级数在每点的一个邻域内只有有限多项非零；因此 $f_\varepsilon\in C^{\infty}(U)$。
+
+2. 又因
+\begin{align*}
+f=\sum_{k=1}^{\infty}f\zeta_k,
+\end{align*}
+% SUPPLEMENT: parent=theorem:ch05-5-3; kind=proof; 补出由两个级数表示相减得到 f_ε-f 的级数表示、以及逐项取 L^1 范数的一步
+把 $f_\varepsilon$ 的定义式与上式相减得
+\begin{align*}
+f_\varepsilon-f=\sum_{k=1}^{\infty}\bigl(\eta_{\varepsilon_k}*(f\zeta_k)-f\zeta_k\bigr),
+\end{align*}
+故由 $(\star\star)$ 得
+\begin{align*}
+\lVert f_\varepsilon-f\rVert_{L^1(U)}&\leqslant\sum_{k=1}^{\infty}\int_U\bigl\lvert\eta_{\varepsilon_k}*(f\zeta_k)-f\zeta_k\bigr\rvert\diff x\\
+&<\varepsilon .
+\end{align*}
+因此当 $\varepsilon\to0$ 时 $f_\varepsilon\to f$ 于 $L^1(U)$；于是由\cref{theorem:ch05-5-2}得% XREF p=216 "and therefore Theorem 5.2 implies"
+\begin{align*}
+\lVert Df\rVert(U)\leqslant\liminf_{\varepsilon\to0}\lVert Df_\varepsilon\rVert(U).\qquad(\star\star\star)
+\end{align*}
+
+3. 现设 $\phi\in C_c^1(U;\mathbb{R}^n)$ 满足 $\lvert\phi\rvert\leqslant1$。则
+\begin{align*}
+\int_U f_\varepsilon\diver\phi\diff x&=\sum_{k=1}^{\infty}\int_U\eta_{\varepsilon_k}*(f\zeta_k)\diver\phi\diff x\\
+&=\sum_{k=1}^{\infty}\int_U f\zeta_k\diver(\eta_{\varepsilon_k}*\phi)\diff x\\
+&=\sum_{k=1}^{\infty}\int_U f\diver\bigl(\zeta_k(\eta_{\varepsilon_k}*\phi)\bigr)\diff x
+-\sum_{k=1}^{\infty}\int_U fD\zeta_k\cdot(\eta_{\varepsilon_k}*\phi)\diff x\\
+&=\sum_{k=1}^{\infty}\int_U f\diver\bigl(\zeta_k(\eta_{\varepsilon_k}*\phi)\bigr)\diff x
+-\sum_{k=1}^{\infty}\int_U\phi\cdot\bigl(\eta_{\varepsilon_k}*(fD\zeta_k)-fD\zeta_k\bigr)\diff x\\
+&=:I_1^{\varepsilon}+I_2^{\varepsilon}.
+\end{align*}
+这里用到 $\sum_{k=1}^{\infty}D\zeta_k\equiv0$ 于 $U$。
+
+4. 注意
+\begin{align*}
+\lvert\zeta_k(\eta_{\varepsilon_k}*\phi)\rvert\leqslant1\qquad(k=1,2,\cdots),
+\end{align*}
+且 $U$ 中每一点至多属于集合族 $\{V_k\}_{k=1}^{\infty}$ 中的三个集合。于是
+\begin{align*}
+I_1^{\varepsilon}&=\int_U f\diver\bigl(\zeta_1(\eta_{\varepsilon_1}*\phi)\bigr)\diff x+\sum_{k=2}^{\infty}\int_U f\diver(\zeta_k\eta_{\varepsilon_k}*\phi)\diff x,\\
+\lvert I_1^{\varepsilon}\rvert&\leqslant\lVert Df\rVert(U)+\sum_{k=2}^{\infty}\lVert Df\rVert(V_k)\\
+&\leqslant\lVert Df\rVert(U)+3\lVert Df\rVert(U-U_1)\\
+&\leqslant\lVert Df\rVert(U)+3\varepsilon\qquad\text{由 }(\star).
+\end{align*}
+另一方面，$(\star\star)$ 给出
+\begin{align*}
+\lvert I_2^{\varepsilon}\rvert<\varepsilon .
+\end{align*}
+因此
+\begin{align*}
+\int_U f_\varepsilon\diver\phi\diff x\leqslant\lVert Df\rVert(U)+4\varepsilon ,
+\end{align*}
+从而
+\begin{align*}
+\lVert Df_\varepsilon\rVert(U)\leqslant\lVert Df\rVert(U)+4\varepsilon .
+\end{align*}
+这一估计与 $(\star\star\star)$ 完成证明。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-3; kind=proof; 补出第 3 步四个等号的依据、|I_2^ε|<ε 的估计，以及由 ε 参数族过渡到可数序列的取法
+\begin{proof}
+以下补出上述证明中略去的环节。
+
+（1）第 3 步四个等号的依据。第一个等号由 $\spt(\eta_{\varepsilon_k}*(f\zeta_k))\subseteq V_k\subseteq U$ 与级数的局部有限性得到：在 $\spt\phi$ 的邻域内只有有限多项非零，故可逐项积分。第二个等号由 $\eta_{\varepsilon_k}$ 是偶函数（$\eta$ 为径向函数，故 $\eta(-x)=\eta(x)$）与 Fubini 定理得到，即对 $g\in L^1(U)$ 有
+\begin{align*}
+\int_U(\eta_{\varepsilon_k}*g)\diver\phi\diff x=\int_U g\,\diver(\eta_{\varepsilon_k}*\phi)\diff x,
+\end{align*}
+其中用到磨光与求导可交换，即 $\diver(\eta_{\varepsilon_k}*\phi)=\eta_{\varepsilon_k}*\diver\phi$。第三个等号由乘积求导法则
+\begin{align*}
+\diver\bigl(\zeta_k(\eta_{\varepsilon_k}*\phi)\bigr)=\zeta_k\diver(\eta_{\varepsilon_k}*\phi)+D\zeta_k\cdot(\eta_{\varepsilon_k}*\phi)
+\end{align*}
+与分部积分得到，其中 $\spt(\zeta_k(\eta_{\varepsilon_k}*\phi))\subseteq V_k\subset\subset U$ 使分部积分不出现边界项。第四个等号由
+\begin{align*}
+\int_U fD\zeta_k\cdot(\eta_{\varepsilon_k}*\phi)\diff x=\int_U\phi\cdot\eta_{\varepsilon_k}*(fD\zeta_k)\diff x
+\end{align*}
+（再次使用 $\eta$ 的偶性与 Fubini 定理）与
+\begin{align*}
+\sum_{k=1}^{\infty}\int_U\phi\cdot fD\zeta_k\diff x=\int_U\phi\cdot f\Bigl(\sum_{k=1}^{\infty}D\zeta_k\Bigr)\diff x=0
+\end{align*}
+得到，其中 $\sum_k\zeta_k\equiv1$ 在 $U$ 上局部只有有限项非零，故可逐项求导而得 $\sum_kD\zeta_k\equiv0$。
+
+（2）$\lvert I_2^{\varepsilon}\rvert<\varepsilon$ 的依据。由 $I_2^{\varepsilon}$ 的定义、$\lvert\phi\rvert\leqslant1$ 与 $(\star\star)$ 的第三条，
+\begin{align*}
+\lvert I_2^{\varepsilon}\rvert&\leqslant\sum_{k=1}^{\infty}\int_U\lvert\phi\rvert\,\bigl\lvert\eta_{\varepsilon_k}*(fD\zeta_k)-fD\zeta_k\bigr\rvert\diff x\\
+&<\sum_{k=1}^{\infty}\frac{\varepsilon}{2^{k}}=\varepsilon .
+\end{align*}
+
+（3）由参数族到序列。对每个正整数 $j$ 取 $\varepsilon=1/j$，按第 1 步的构造取定相应的 $m=m(j)$ 与 $\{\varepsilon_k\}=\{\varepsilon_k(j)\}$，并记 $f^{(j)}:=f_{1/j}\in\BV(U)\cap C^{\infty}(U)$。第 2 步与第 4 步分别给出
+\begin{align*}
+\lVert f^{(j)}-f\rVert_{L^1(U)}&<\frac{1}{j},\\
+\lVert Df^{(j)}\rVert(U)&\leqslant\lVert Df\rVert(U)+\frac{4}{j}.
+\end{align*}
+结合 $(\star\star\star)$ 得
+\begin{align*}
+\lVert Df\rVert(U)&\leqslant\liminf_{j\to\infty}\lVert Df^{(j)}\rVert(U)\\
+&\leqslant\limsup_{j\to\infty}\lVert Df^{(j)}\rVert(U)\leqslant\lVert Df\rVert(U),
+\end{align*}
+故 $\lVert Df^{(j)}\rVert(U)\to\lVert Df\rVert(U)$（$j\to\infty$）。于是 $\{f^{(j)}\}_{j=1}^{\infty}$ 满足结论 (i) 与 (ii)。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-3; kind=motivation; 说明本定理是 Sobolev 局部逼近的 BV 版本、奇异部分造成的限制，以及局部化加逐块磨光的构造思路
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-3-动机}
+本定理是 Sobolev 情形\cref{theorem:ch04-4-2}的 $\BV$ 对应：$\BV(U)$ 中的函数可以用 $C^{\infty}(U)$ 中的函数在 $L^1(U)$ 中逼近，同时总变差收敛到 $\lVert Df\rVert(U)$，即逼近既不损失变差，也不额外增加变差。断言 (ii) 与\cref{theorem:ch05-5-2}合起来给出% XREF internal
+\begin{align*}
+\lVert Df\rVert(U)=\lim_{j\to\infty}\lVert Df^{(j)}\rVert(U),
+\end{align*}
+故逼近在变差意义下是精确的。
+
+困难来自 $\BV$ 函数的导数含奇异部分 $[Df]_{\mathrm{s}}$：光滑函数的变差测度关于 $\mathcal{L}^n$ 绝对连续，因而不能在强意义下逼近 $[Df]$，这正是\cref{remark:ch05-thm-5-3-比较}所指出的限制。构造分两层：先用一列穷尽 $U$ 的开集 $U_k$ 与单位分解 $\{\zeta_k\}$ 把 $f$ 写成 $\sum_kf\zeta_k$，其中每项 $f\zeta_k$ 的支集紧含于一个与 $\partial U$ 有正距离的区域 $V_k$；再对每项选取各自的磨光尺度 $\varepsilon_k$，使磨光后的支集不越出 $V_k$，且 $L^1$ 误差按 $2^{-k}$ 可和。由于每点只属于有限多个 $V_k$，逐项误差求和保持局部有限性；而变差的损失只发生在边界层 $U-U_1$ 上，其总量由 $(\star)$ 控制为 $3\varepsilon$。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-3; kind=hypotheses; 逐条分析 f∈BV(U)、U 的开性、V_k 的局部有限性、ε_k 三条要求的分工，以及结论 (ii) 不能加强的原因
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-3-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in\BV(U)$ 蕴含 $f\in L^1(U)$ 与 $\lVert Df\rVert(U)<\infty$。前者使 $f\zeta_k\in L^1(U)$、磨光 $\eta_{\varepsilon_k}*(f\zeta_k)$ 有定义；后者使 $(\star)$ 中的 $m$ 可以取到：开集 $U_1$ 随 $m$ 递增且 $\bigcup_mU_1=U$，由测度的下连续性得 $\lVert Df\rVert(U-U_1)\to0$（$m\to\infty$）。
+\item $U$ 只须为非空开集，可以有界、无界，$\partial U$ 不必具有任何正则性。构造只用到 $\operatorname{dist}(x,\partial U)$ 与开球 $B^0(0,k+m)$：前者使 $\overline{U}_k\subseteq U$，后者使 $U_k$ 有界，从而 $\overline{U}_k$ 紧。
+\item 单位分解 $\{\zeta_k\}$ 的存在性依赖 $V_k$ 的局部有限性。由于 $U_k$ 关于 $k$ 递增且 $\bigcup_kU_k=U$，族 $\{V_k\}$ 覆盖 $U$；又若 $x\in V_k\cap V_l$ 且 $l\geqslant k+2$，则 $x\in U_{k+1}\subseteq U_{l-1}\subseteq\overline{U}_{l-1}$，与 $x\notin\overline{U}_{l-1}$（$x\in V_l=U_{l+1}-\overline{U}_{l-1}$）矛盾，故每点至多属于两个 $V_k$，特别地至多属于三个。同一事实保证级数 $\sum_k\eta_{\varepsilon_k}*(f\zeta_k)$ 在每点附近只有有限项非零。
+\item $(\star\star)$ 中的三条要求各有分工：第一条使磨光后的支集仍含于 $V_k$，从而级数的局部有限性不被破坏；第二条给出第 2 步的 $L^1$ 误差估计；第三条给出第 4 步中 $\lvert I_2^{\varepsilon}\rvert<\varepsilon$ 的估计。三条都可通过取 $\varepsilon_k$ 充分小实现，因为对 $g\in L^1(\mathbb{R}^n)$ 有 $\eta_{\varepsilon}*g\to g$ 于 $L^1(\mathbb{R}^n)$，且 $\spt(\eta_{\varepsilon}*g)\subseteq\spt g+\overline{B(0,\varepsilon)}$。
+\item 结论 (ii) 不能加强为 $\lVert D(f_k-f)\rVert(U)\to0$。若 $[Df]_{\mathrm{s}}\neq0$，则由 $[Df_k]$ 关于 $\mathcal{L}^n$ 绝对连续得
+\begin{align*}
+[Df]=[Df_k]+[D(f-f_k)],\qquad [Df]_{\mathrm{s}}=[D(f-f_k)]_{\mathrm{s}},
+\end{align*}
+其中下标 $\mathrm{s}$ 表示关于 $\mathcal{L}^n$ 的奇异部分；于是
+\begin{align*}
+\lVert D(f_k-f)\rVert(U)\geqslant\bigl\lVert[D(f_k-f)]_{\mathrm{s}}\bigr\rVert(U)=\bigl\lVert[Df]_{\mathrm{s}}\bigr\rVert(U)>0
+\end{align*}
+对一切 $k$ 成立，该量不可能趋于零。此处 $\lVert[Df]_{\mathrm{s}}\rVert(U)$ 表示向量值测度 $[Df]_{\mathrm{s}}$ 的全变差在 $U$ 上的质量。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[导数的弱逼近]\label{theorem:ch05-5-4}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$f\in\BV(U)$，$\{f_k\}_{k=1}^{\infty}\subseteq\BV(U)\cap C^{\infty}(U)$ 为\cref{theorem:ch05-5-3}的陈述中所给出的函数列，故 $f_k\to f$ 于 $L^1(U)$ 且 $\lVert Df_k\rVert(U)\to\lVert Df\rVert(U)$（$k\to\infty$）。对每个 Borel 集 $B\subseteq\mathbb{R}^n$，定义（向量值）Radon 测度% XREF p=217 "For f_k in the statement of Theorem 5.3"
+\begin{align*}
+\mu_k(B):=\int_{B\cap U}Df_k\diff x,
+\end{align*}
+并置
+\begin{align*}
+\mu(B):=\int_{B\cap U}\diff[Df].
+\end{align*}
+则
+\begin{align*}
+\mu_k\weakto\mu\qquad(k\to\infty),
+\end{align*}
+即 $\mu_k$ 弱*收敛于 $\mu$：对每个 $\phi\in C_c(\mathbb{R}^n;\mathbb{R}^n)$ 有
+\begin{align*}
+\int_{\mathbb{R}^n}\phi\diff\mu_k\longrightarrow\int_{\mathbb{R}^n}\phi\diff\mu .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+固定 $\phi\in C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 与 $\varepsilon>0$。按前一证明中的构造取定相对紧开集 $U_1\subset\subset U$，并取光滑截断函数 $\zeta$ 满足
+\begin{align*}
+\zeta\equiv1\quad\text{于 }U_1,\qquad\spt\zeta\subset U,\qquad0\leqslant\zeta\leqslant1 .
+\end{align*}
+则
+\begin{align*}
+\int_{\mathbb{R}^n}\phi\diff\mu_k&=\int_U\phi\cdot Df_k\diff x\\
+&=\int_U\zeta\phi\cdot Df_k\diff x+\int_U(1-\zeta)\phi\cdot Df_k\diff x\qquad(\star)\\
+&=-\int_U\diver(\zeta\phi)f_k\diff x+\int_U(1-\zeta)\phi\cdot Df_k\diff x .
+\end{align*}
+由于 $f_k\to f$ 于 $L^1(U)$，$(\star)$ 中第一项收敛到
+\begin{align*}
+-\int_U\diver(\zeta\phi)f\diff x&=\int_U\zeta\phi\cdot\diff[Df]\\
+&=\int_U\phi\cdot\diff[Df]+\int_U(\zeta-1)\phi\cdot\diff[Df].\qquad(\star\star)
+\end{align*}
+$(\star\star)$ 中最后一项由
+\begin{align*}
+\lVert\phi\rVert_{L^{\infty}}\lVert Df\rVert(U-U_1)\leqslant C\varepsilon
+\end{align*}
+估计，其中 $C:=\lVert\phi\rVert_{L^{\infty}}$。由\cref{theorem:ch05-5-3}，当 $k$ 充分大时 $(\star)$ 中最后一项满足% XREF p=218 "Using Theorem 5.3, we see that for k large enough"
+\begin{align*}
+\lVert\phi\rVert_{L^{\infty}}\lVert Df_k\rVert(U-U_1)\leqslant C\varepsilon .
+\end{align*}
+因此
+\begin{align*}
+\Bigl\lvert\int_{\mathbb{R}^n}\phi\diff\mu_k-\int_{\mathbb{R}^n}\phi\diff\mu\Bigr\rvert\leqslant C\varepsilon
+\end{align*}
+对一切充分大的 $k$ 成立。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-4; kind=proof; 补出由 ‖Df_k‖(U)→‖Df‖(U) 与定理 5.2 推出 ‖Df_k‖(U−U_1)≤ε 的论证，以及边界层两项的估计
+\begin{proof}
+以下补出最后两步的估计。
+
+（1）变差在边界层上的估计。由于 $U_1\subseteq U$ 为开集，
+\begin{align*}
+\lVert Df_k\rVert(U-U_1)=\lVert Df_k\rVert(U)-\lVert Df_k\rVert(U_1).
+\end{align*}
+在 $U_1$ 上 $f_k\to f$ 于 $L^1(U_1)$，故由\cref{theorem:ch05-5-2}得% XREF internal
+\begin{align*}
+\lVert Df\rVert(U_1)\leqslant\liminf_{k\to\infty}\lVert Df_k\rVert(U_1).
+\end{align*}
+结合 $\lVert Df_k\rVert(U)\to\lVert Df\rVert(U)$ 得
+\begin{align*}
+\limsup_{k\to\infty}\lVert Df_k\rVert(U-U_1)&=\lVert Df\rVert(U)-\liminf_{k\to\infty}\lVert Df_k\rVert(U_1)\\
+&\leqslant\lVert Df\rVert(U)-\lVert Df\rVert(U_1)=\lVert Df\rVert(U-U_1)<\varepsilon ,
+\end{align*}
+故当 $k$ 充分大时 $\lVert Df_k\rVert(U-U_1)\leqslant\varepsilon$，从而 $\lVert\phi\rVert_{L^{\infty}}\lVert Df_k\rVert(U-U_1)\leqslant C\varepsilon$。
+
+（2）$(\star\star)$ 中最后一项的估计。函数 $1-\zeta$ 在 $U_1$ 上为零，故其支集含于 $U-U_1$，于是
+\begin{align*}
+\Bigl\lvert\int_U(\zeta-1)\phi\cdot\diff[Df]\Bigr\rvert&\leqslant\lVert\phi\rVert_{L^{\infty}}\lVert Df\rVert(U-U_1)\\
+&\leqslant C\varepsilon .
+\end{align*}
+把 $(\star)$ 与 $(\star\star)$ 相减，两项的误差都不超过 $C\varepsilon$，故
+\begin{align*}
+\Bigl\lvert\int_{\mathbb{R}^n}\phi\diff\mu_k-\int_{\mathbb{R}^n}\phi\diff\mu\Bigr\rvert\leqslant C'\varepsilon
+\end{align*}
+对一切充分大的 $k$ 成立，其中 $C'$ 只依赖于 $\phi$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-4; kind=motivation; 说明导数作为测度时的自然收敛是弱*收敛、与定理 5.3 的关系，以及该结论在变分法中的作用
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-4-动机}
+\cref{theorem:ch05-5-3}说明 $L^1$ 逼近不能使导数强收敛：光滑函数的导数测度关于 $\mathcal{L}^n$ 绝对连续，而 $\BV$ 函数的导数可以有奇异部分。本定理说明导数的弱*收敛仍然成立：把 $f_k$ 的导数打包成向量值 Radon 测度 $\mu_k=\mathcal{L}^n\llcorner Df_k$（限制在 $U$ 上），则 $\mu_k$ 弱*收敛于 $\mu=[Df]\llcorner U$。由于 $\BV$ 函数的导数本身就是测度，测度论中的自然收敛正是弱*收敛，故这一结论是不损失信息的最佳收敛形式。% XREF internal
+
+本定理与\cref{theorem:ch05-5-2}相呼应：下半连续性说明 $L^1$ 收敛不会使变差总量下降过多，本定理进一步指出导数的弱*极限恰是 $[Df]$ 而不是别的测度。两者的组合正是变分法直接方法的要素：极小化序列的 $L^1$ 收敛由紧性\cref{theorem:ch05-5-5}给出，变差的下半连续性给出极小性，而本定理用于识别极限的导数。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-4; kind=hypotheses; 逐条分析定理 5.3 的结论作为假设、测度的 Radon 性、检验函数类、截断函数的分工，以及弱*收敛不能换成按总变差的收敛
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-4-条件}
+\begin{enumerate}[(i)]
+\item 假设只是\cref{theorem:ch05-5-3}的结论：$f\in\BV(U)$、$f_k\in\BV(U)\cap C^{\infty}(U)$、$f_k\to f$ 于 $L^1(U)$ 与 $\lVert Df_k\rVert(U)\to\lVert Df\rVert(U)$。$U$ 的有界性与 $\partial U$ 的正则性都不是假设。% XREF internal
+\item $\mu_k$ 与 $\mu$ 是 $\mathbb{R}^n$ 上的向量值 Radon 测度：它们在 $U$ 外取零值，且对紧集 $B\subseteq\mathbb{R}^n$ 有 $\lvert\mu_k(B)\rvert\leqslant\lVert Df_k\rVert(B\cap U)<\infty$、$\lvert\mu(B)\rvert\leqslant\lVert Df\rVert(B\cap U)<\infty$，其中用到 $Df_k\in L^1(U;\mathbb{R}^n)$ 与 $[Df]$ 是 Radon 测度。
+\item 检验函数取在 $C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 中。由于 $C_c^1(\mathbb{R}^n;\mathbb{R}^n)$ 在 $C_c(\mathbb{R}^n;\mathbb{R}^n)$ 中按一致范数稠密，而测度的弱*收敛由一切连续紧支集检验函数刻画，只需对光滑检验函数验证收敛即可。
+\item 相对紧开集 $U_1$ 与截断函数 $\zeta$ 的作用是分离内部与边界层：在 $U_1$ 上 $\zeta\equiv1$，故 $\int_U\zeta\phi\cdot Df_k\diff x$ 可分部积分并借助 $f_k\to f$ 于 $L^1(U)$ 取极限；边界层 $U-U_1$ 上的两项分别由 $\lVert Df\rVert(U-U_1)<\varepsilon$ 与 $\lVert Df_k\rVert(U-U_1)\leqslant\varepsilon$ 控制，代价是常数倍的 $\varepsilon$。
+\item 结论是弱*收敛，不能换成按总变差的收敛。每个 $\mu_k$ 关于 $\mathcal{L}^n$ 绝对连续，而 $\mu$ 含奇异部分 $[Df]_{\mathrm{s}}$，故当 $[Df]_{\mathrm{s}}\neq0$ 时
+\begin{align*}
+\lVert\mu_k-\mu\rVert(U)\geqslant\bigl\lVert[Df]_{\mathrm{s}}\bigr\rVert(U)>0
+\end{align*}
+对一切 $k$ 成立，其中 $\lVert\mu_k-\mu\rVert(U)$ 表示向量值测度 $\mu_k-\mu$ 的全变差在 $U$ 上的质量。
+\end{enumerate}
+\end{remark}
+
+\subsection{紧性}\label{subsection:ch05-02-3}
+
+\begin{theorem}[$\BV$ 函数的紧性]\label{theorem:ch05-5-5}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为非空有界开集，其边界 $\partial U$ 是 Lipschitz 的，即 $\partial U$ 的每一部分经过适当的旋转与坐标重标号后是某个 Lipschitz 连续函数 $\gamma:\mathbb{R}^{n-1}\to\mathbb{R}$ 的图像（见\cref{definition:ch04-4-4}）；并设 $\{f_k\}_{k=1}^{\infty}$ 为 $\BV(U)$ 中的序列，满足% XREF internal
+\begin{align*}
+\sup_{k}\lVert f_k\rVert_{\BV(U)}<\infty,
+\end{align*}
+其中对 $g\in\BV(U)$
+\begin{align*}
+\lVert g\rVert_{\BV(U)}:=\lVert g\rVert_{L^1(U)}+\lVert Dg\rVert(U)
+\end{align*}
+为 $g$ 的 $\BV$ 范数。则存在子列 $\{f_{k_j}\}_{j=1}^{\infty}$ 与函数 $f\in\BV(U)$，使得
+\begin{align*}
+f_{k_j}\to f\qquad\text{于 }L^1(U)
+\end{align*}
+（$j\to\infty$）。
+\end{theorem}
+
+\begin{proof}
+对 $k=1,2,\cdots$，取 $g_k\in C^{\infty}(U)$，使得
+\begin{align*}
+\int_U\lvert f_k-g_k\rvert\diff x<\frac{1}{k},\qquad\sup_{k}\int_U\lvert Dg_k\rvert\diff x<\infty;\qquad(\star)
+\end{align*}
+这样的函数的存在性由\cref{theorem:ch05-5-3}给出。% XREF p=218 "such functions exist according to Theorem 5.3"
+由\cref{theorem:ch04-4-11}之后的注记，存在 $f\in L^1(U)$ 与子列 $\{g_{k_j}\}_{j=1}^{\infty}$，使得 $g_{k_j}\to f$ 于 $L^1(U)$。% XREF p=218 "By the remark following Theorem 4.11 in Section 4.6"
+但此时 $(\star)$ 亦蕴含 $f_{k_j}\to f$ 于 $L^1(U)$。由\cref{theorem:ch05-5-2}得 $f\in\BV(U)$。% XREF p=218 "According to Theorem 5.2, f ∈ BV(U)."
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-5; kind=proof; 补出 g_k 的选取、W^{1,1}(U) 紧嵌入给出的子列、f_{k_j}→f 的估计以及 f∈BV(U) 的论证
+\begin{proof}
+以下补出上述论证中各步的细节。
+
+（1）$g_k$ 的选取。由\cref{theorem:ch05-5-3}，对每个 $k$ 存在 $g_k\in\BV(U)\cap C^{\infty}(U)$，使得% XREF internal
+\begin{align*}
+\lVert g_k-f_k\rVert_{L^1(U)}&<\frac{1}{k},\\
+\bigl\lvert\lVert Dg_k\rVert(U)-\lVert Df_k\rVert(U)\bigr\rvert&<\frac{1}{k}.
+\end{align*}
+于是 $g_k\in C^{\infty}(U)$，且由 $\lVert Dg_k\rVert(U)=\int_U\lvert Dg_k\rvert\diff x$ 得
+\begin{align*}
+\sup_{k}\int_U\lvert Dg_k\rvert\diff x\leqslant\sup_{k}\lVert Df_k\rVert(U)+1<\infty,
+\end{align*}
+即 $(\star)$ 成立。
+
+（2）抽取子列。由第（1）步与假设，
+\begin{align*}
+\sup_{k}\lVert g_k\rVert_{W^{1,1}(U)}&\leqslant\sup_{k}\lVert f_k\rVert_{L^1(U)}+1+\sup_{k}\lVert Dg_k\rVert_{L^1(U;\mathbb{R}^n)}\\
+&<\infty .
+\end{align*}
+由于 $U$ 有界且 $\partial U$ 是 Lipschitz 的，由\cref{theorem:ch04-4-11}及其后的注记（其中包含 $p=1$ 的端点情形，此时目标空间取 $L^1(U)$），存在 $f\in L^1(U)$ 与子列 $\{g_{k_j}\}_{j=1}^{\infty}$，使得 $g_{k_j}\to f$ 于 $L^1(U)$。% XREF internal
+
+（3）$f_{k_j}\to f$ 于 $L^1(U)$。由 $(\star)$，
+\begin{align*}
+\lVert f_{k_j}-f\rVert_{L^1(U)}&\leqslant\lVert f_{k_j}-g_{k_j}\rVert_{L^1(U)}+\lVert g_{k_j}-f\rVert_{L^1(U)}\\
+&\leqslant\frac{1}{k_j}+\lVert g_{k_j}-f\rVert_{L^1(U)}\longrightarrow0
+\end{align*}
+（$j\to\infty$）。
+
+（4）$f\in\BV(U)$。由 $f_{k_j}\to f$ 于 $L^1(U)$、从而于 $L^1_{\loc}(U)$，及\cref{theorem:ch05-5-2}得% XREF internal
+\begin{align*}
+\lVert Df\rVert(U)\leqslant\liminf_{j\to\infty}\lVert Df_{k_j}\rVert(U)\leqslant\sup_{k}\lVert Df_k\rVert(U)<\infty,
+\end{align*}
+故 $f\in\BV(U)$ 且 $\lVert f\rVert_{\BV(U)}<\infty$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-5; kind=motivation; 说明 BV 情形的 Rellich--Kondrachov 紧性、证明的四步化归，以及它在变分法直接方法中的作用
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-5-动机}
+本定理是 $\BV$ 情形的 Rellich--Kondrachov 紧性定理：$\BV$ 范数一致有界的序列在 $L^1(U)$ 中相对紧。它与\cref{theorem:ch05-5-2}配合，构成变分法直接方法的两个要素：由紧性从极小化序列中抽取 $L^1$ 收敛子列，由下半连续性确认极限函数属于 $\BV(U)$ 且变差不超过原来的下极限。% XREF internal
+
+证明把 $\BV$ 的情形化归为 Sobolev 的情形。第（1）步用\cref{theorem:ch05-5-3}把每个 $f_k$ 换成 $g_k\in C^{\infty}(U)$，使 $L^1$ 误差不超过 $1/k$ 而总变差几乎不增，于是 $\{g_k\}$ 成为 $W^{1,1}(U)$ 中的有界序列；第（2）步用 $W^{1,1}(U)$ 到 $L^1(U)$ 的紧嵌入抽取子列；第（3）步用 $(\star)$ 的第一条把 $g_{k_j}$ 的收敛转回 $f_{k_j}$ 的收敛；第（4）步用\cref{theorem:ch05-5-2}确认极限属于 $\BV(U)$。化归的要点是：$\BV$ 范数的界在第一步转化为 $W^{1,1}$ 范数的界，而 $L^1$ 误差在第三步被 $1/k_j$ 吸收。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-5; kind=hypotheses; 逐条分析 U 有界与 Lipschitz 边界（有界性不可删去的反例）、BV 范数界两项不可省的反例，以及结论的范围
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-5-条件}
+\begin{enumerate}[(i)]
+\item $U$ 有界且 $\partial U$ 是 Lipschitz 的，这两条正是 $W^{1,1}(U)$ 到 $L^1(U)$ 的紧嵌入所需的假设（\cref{theorem:ch04-4-11}及其端点情形的注记）。有界性不可删除：取 $U=\mathbb{R}^n$ 与固定的非零 $g\in C_c^{\infty}(\mathbb{R}^n)$，令 $f_k(x):=g(x-ke_1)$，则 $\lVert f_k\rVert_{\BV(\mathbb{R}^n)}=\lVert g\rVert_{\BV(\mathbb{R}^n)}$ 与 $k$ 无关，而各项支集两两不交，故 $\lVert f_k-f_l\rVert_{L^1(\mathbb{R}^n)}=2\lVert g\rVert_{L^1(\mathbb{R}^n)}$ 对 $k\neq l$ 成立，$\{f_k\}$ 在 $L^1(\mathbb{R}^n)$ 中没有收敛子列。% XREF internal
+\item 条件 $\sup_k\lVert f_k\rVert_{\BV(U)}<\infty$ 中的两项都不可省。若只假设 $L^1$ 范数有界，取 $U=(0,2\pi)^n$ 与 $f_k(x):=\sin(kx_1)$，则
+\begin{align*}
+\lVert f_k\rVert_{L^1(U)}=4(2\pi)^{n-1},\qquad \lVert Df_k\rVert(U)=4k(2\pi)^{n-1},
+\end{align*}
+故 $\{f_k\}$ 在 $L^1(U)$ 中弱收敛于 $0$ 而 $\lVert f_k\rVert_{L^1(U)}$ 不趋于零，任何子列都不在 $L^1(U)$ 中收敛。若只假设变差有界，取 $f_k\equiv k$，则 $\lVert Df_k\rVert(U)=0$ 而 $\lVert f_k\rVert_{L^1(U)}=k\mathcal{L}^n(U)\to\infty$，任何子列都不在 $L^1(U)$ 中收敛。
+\item 结论只给出 $L^1(U)$ 中的收敛子列与 $\BV$ 极限，不给出收敛速率、连续性模或逐点收敛。极限 $f$ 的变差满足 $\lVert Df\rVert(U)\leqslant\liminf_j\lVert Df_{k_j}\rVert(U)$，故变差可以在极限处下降（反例见\cref{remark:ch05-thm-5-2-动机}）。% XREF internal
+\item $(\star)$ 第一条中的 $1/k$ 可以换成任何满足 $\sum_k\delta_k<\infty$ 的 $\delta_k>0$，只需把该条相应地改为 $\int_U\lvert f_k-g_k\rvert\diff x<\delta_k$；第二条即 $\{g_k\}$ 在 $W^{1,1}(U)$ 中的有界性，它是紧嵌入定理的前提，由\cref{theorem:ch05-5-3}的结论 (ii) 与 $\sup_k\lVert Df_k\rVert(U)<\infty$ 得到。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\end{document}

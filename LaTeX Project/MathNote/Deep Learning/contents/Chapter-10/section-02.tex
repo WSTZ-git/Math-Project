@@ -27,7 +27,7 @@ $M\times M$ 矩形区域内的像素值、而与该区域外的像素无关，�
 \textbf{感受野}（receptive field）。固定该区域左上角的位置 $(j_0,k_0)$，其中
 $1\leqslant j_0\leqslant J-M+1$、$1\leqslant k_0\leqslant K-M+1$，把区域内像素按行优先
 顺序排成向量 $\mathbf{x}\in\mathbb{R}^{M^2}$，其第 $(l-1)M+m$ 个分量等于
-$I(j_0+l-1,\,k_0+m-1)$，$l,m=1,\dots,M$。则该单元的输出为
+$I(j_0+l-1,\,k_0+m-1)$，$l,m=1,\cdots,M$。则该单元的输出为
 $\mathrm{ReLU}(\mathbf{w}^{\mathsf{T}}\mathbf{x}+w_0)$，其中
 $\mathrm{ReLU}(t)=\max\{t,0\}$。
 \end{definition}
@@ -40,7 +40,7 @@ $\mathrm{ReLU}(t)=\max\{t,0\}$。
 \begin{definition}[滤波器与核]\label{definition:ch10-滤波器}
 沿用\cref{definition:ch10-感受野}的记号：$M$ 为正整数，$\mathbf{w}\in\mathbb{R}^{M^2}$，
 $w_0\in\mathbb{R}$。把 $\mathbf{w}$ 的分量按行优先顺序重排为 $M\times M$ 的实方阵
-$\mathbf{W}\in\mathbb{R}^{M\times M}$，即 $W(l,m)=w_{(l-1)M+m}$，$l,m=1,\dots,M$，
+$\mathbf{W}\in\mathbb{R}^{M\times M}$，即 $W(l,m)=w_{(l-1)M+m}$，$l,m=1,\cdots,M$，
 其中 $W(l,m)$ 是感受野内相对位置 $(l,m)$ 的像素所对应的权重。矩阵 $\mathbf{W}$ 称为
 \textbf{滤波器}（filter），也称为\textbf{核}（kernel）；$w_0$ 称为该单元的
 \textbf{偏置}（bias）。滤波器共有 $M^2$ 个权重，其取值不随感受野左上角
@@ -114,14 +114,14 @@ $f(\mathbf{x})=\mathbf{w}^{\mathsf{T}}\mathbf{x}$。则下列结论成立：
 \begin{definition}[特征图与通道]\label{definition:ch10-特征图}
 设某卷积层的输入为单通道图像 $I\in\mathbb{R}^{J\times K}$，该层含
 $C_{\mathrm{out}}$ 个滤波器 $\mathbf{W}^{(c)}\in\mathbb{R}^{M\times M}$ 与偏置
-$w_0^{(c)}\in\mathbb{R}$，$c=1,\dots,C_{\mathrm{out}}$，其中 $M\geqslant1$ 且
+$w_0^{(c)}\in\mathbb{R}$，$c=1,\cdots,C_{\mathrm{out}}$，其中 $M\geqslant1$ 且
 $M\leqslant\min\{J,K\}$；填充宽度为 $P\in\mathbb{Z}_{\geqslant0}$，步幅为
-$S\in\mathbb{Z}_{\geqslant1}$。对 $c=1,\dots,C_{\mathrm{out}}$，第 $c$ 个输出通道是
+$S\in\mathbb{Z}_{\geqslant1}$。对 $c=1,\cdots,C_{\mathrm{out}}$，第 $c$ 个输出通道是
 $J'\times K'$ 的数组 $C_c$，其中
 $J'=\lfloor(J+2P-M)/S\rfloor+1$、$K'=\lfloor(K+2P-M)/S\rfloor+1$；其元素 $C_c(i,j)$
 由滤波器 $\mathbf{W}^{(c)}$ 在位置 $(1+(i-1)S-P,\;1+(j-1)S-P)$ 处对填充后图像的
 $M\times M$ 窗口作加权求和、再加 $w_0^{(c)}$ 并施加 ReLU 得到。数组 $C_c$ 称为该层的
-一个\textbf{特征图}（feature map）；$C_1,\dots,C_{\mathrm{out}}$ 中的每一个都称为该层的
+一个\textbf{特征图}（feature map）；$C_1,\cdots,C_{\mathrm{out}}$ 中的每一个都称为该层的
 一个\textbf{通道}（channel）。同一特征图内的所有位置共用同一组权重
 $\mathbf{W}^{(c)},w_0^{(c)}$。
 \end{definition}
@@ -305,7 +305,7 @@ $\lfloor x\rfloor$ 表示不超过 $x$ 的最大整数，即水平与竖直方�
 设输入张量为 $I\in\mathbb{R}^{J\times K\times C_{\mathrm{in}}}$，滤波器张量为
 $W\in\mathbb{R}^{M\times M\times C_{\mathrm{in}}\times C_{\mathrm{out}}}$，偏置为
 $b\in\mathbb{R}^{C_{\mathrm{out}}}$，其中 $J,K,M,C_{\mathrm{in}},C_{\mathrm{out}}$
-为正整数且 $M\leqslant\min\{J,K\}$。对 $c=1,\dots,C_{\mathrm{out}}$ 与
+为正整数且 $M\leqslant\min\{J,K\}$。对 $c=1,\cdots,C_{\mathrm{out}}$ 与
 $1\leqslant j\leqslant J-M+1$、$1\leqslant k\leqslant K-M+1$，令
 \begin{align}
   O_c(j,k)=\sum_{c'=1}^{C_{\mathrm{in}}}\sum_{l}\sum_{m} I_{c'}(j+l,\,k+m)\,W(l,m,c',c)+b_c,
@@ -313,7 +313,7 @@ $1\leqslant j\leqslant J-M+1$、$1\leqslant k\leqslant K-M+1$，令
 \end{align}
 其中 $I_{c'}$ 表示输入张量的第 $c'$ 个通道，$l,m$ 取遍使 $I_{c'}(j+l,k+m)$ 有定义的
 全部整数。$C_{\mathrm{in}}$ 称为输入通道数，$C_{\mathrm{out}}$ 称为输出通道数，
-$O_1,\dots,O_{C_{\mathrm{out}}}$ 称为输出的各个\textbf{通道}（channel），每个 $O_c$ 是
+$O_1,\cdots,O_{C_{\mathrm{out}}}$ 称为输出的各个\textbf{通道}（channel），每个 $O_c$ 是
 $(J-M+1)\times(K-M+1)$ 的实矩阵，$b_c$ 是第 $c$ 个输出通道的偏置。
 \end{definition}
 
@@ -368,7 +368,7 @@ $M^2C_{\mathrm{in}}C_{\mathrm{out}}J'K'$。
 $W\in\mathbb{R}^{1\times1\times C_{\mathrm{in}}\times C_{\mathrm{out}}}$，偏置为
 $b\in\mathbb{R}^{C_{\mathrm{out}}}$，其中 $J,K,C_{\mathrm{in}},C_{\mathrm{out}}$ 为正整数。
 对每个空间位置 $(j,k)$，$1\leqslant j\leqslant J$、$1\leqslant k\leqslant K$，
-与每个输出通道 $c=1,\dots,C_{\mathrm{out}}$，令
+与每个输出通道 $c=1,\cdots,C_{\mathrm{out}}$，令
 \begin{align}
   O_c(j,k)=\sum_{c'=1}^{C_{\mathrm{in}}} W(1,1,c',c)\,I_{c'}(j,k)+b_c,\qquad c=1,\cdots,C_{\mathrm{out}}.
   \label{align:ch10-1x1卷积}
@@ -392,9 +392,9 @@ $1\times 1$ 卷积是“逐像素的全连接层”：它在每个空间位置�
 \begin{definition}[池化、最大池化与平均池化]\label{definition:ch10-池化}
 设特征图张量为 $A\in\mathbb{R}^{J\times K\times C}$，池化窗口为 $M\times M$，步幅为
 $S\in\mathbb{Z}_{\geqslant1}$，其中 $M,J,K,C$ 为正整数且 $M\leqslant\min\{J,K\}$。
-对每个通道 $c=1,\dots,C$ 与每个窗口左上角位置 $(i,j)$，$i,j\in\{1,1+S,1+2S,\dots\}$，
+对每个通道 $c=1,\cdots,C$ 与每个窗口左上角位置 $(i,j)$，$i,j\in\{1,1+S,1+2S,\cdots\}$，
 若 $i+M-1\leqslant J$、$j+M-1\leqslant K$，则窗口
-$R_{i,j}=\{i,\dots,i+M-1\}\times\{j,\dots,j+M-1\}$ 内全部输入构成一个池化单元，其输出为
+$R_{i,j}=\{i,\cdots,i+M-1\}\times\{j,\cdots,j+M-1\}$ 内全部输入构成一个池化单元，其输出为
 \begin{align*}
   P_c(i,j)=\max_{(r,s)\in R_{i,j}} A(r,s,c)
   \quad\text{或}\quad
@@ -436,7 +436,7 @@ $S\in\mathbb{Z}_{\geqslant1}$，且 $M\leqslant\min\{J,K\}$。则池化输出的
 其余位置仍取 $0$ 后，窗口 $R$ 上的最大池化输出都等于 $v$。
 \end{proposition}
 \begin{proof}
-尺寸公式与\cref{proposition:ch10-跨步卷积输出尺寸}在 $P=0$ 时的情形完全相同：窗口左端可放置的位置为 $0,S,2S,\cdots$，第 $t$ 个位置要求 $tS+M\leqslant J$，故 $t\leqslant (J-M)/S$，位置个数为 $\lfloor (J-M)/S\rfloor+1$。取 $S=M$ 得 $\lfloor (J-M)/M\rfloor+1=\lfloor J/M\rfloor$（当 $J$ 为 $M$ 的整数倍时等号成立，一般情形由取整给出）。关于不变性：设 $A$ 在窗口 $R$ 内除一点 $p$ 外取值均为 $0$、$A(p)=v>0$。把 $A$ 在 $R$ 内的正值移到任意 $p'\in R$、其余位置仍取 $0$，则 $R$ 内取值的多重集仍为 $\{v,0,\dots,0\}$，其最大值为 $v$，故窗口 $R$ 上最大池化的输出不变。证毕。
+尺寸公式与\cref{proposition:ch10-跨步卷积输出尺寸}在 $P=0$ 时的情形完全相同：窗口左端可放置的位置为 $0,S,2S,\cdots$，第 $t$ 个位置要求 $tS+M\leqslant J$，故 $t\leqslant (J-M)/S$，位置个数为 $\lfloor (J-M)/S\rfloor+1$。取 $S=M$ 得 $\lfloor (J-M)/M\rfloor+1=\lfloor J/M\rfloor$（当 $J$ 为 $M$ 的整数倍时等号成立，一般情形由取整给出）。关于不变性：设 $A$ 在窗口 $R$ 内除一点 $p$ 外取值均为 $0$、$A(p)=v>0$。把 $A$ 在 $R$ 内的正值移到任意 $p'\in R$、其余位置仍取 $0$，则 $R$ 内取值的多重集仍为 $\{v,0,\cdots,0\}$，其最大值为 $v$，故窗口 $R$ 上最大池化的输出不变。证毕。
 \end{proof}
 
 % SUPPLEMENT: parent=proposition:ch10-池化输出尺寸; kind=motivation; location=紧随其后的 remark
@@ -458,7 +458,7 @@ $S\in\mathbb{Z}_{\geqslant1}$，且 $M\leqslant\min\{J,K\}$。则池化输出的
 
 \begin{proposition}[有效感受野的递推]\label{proposition:ch10-有效感受野}
 设 $L\geqslant1$，第 $l$ 层卷积的滤波器空间尺寸为 $M_l\times M_l$
-（$M_l\geqslant1$）、步幅为 $S_l\geqslant1$，$l=1,\dots,L$，并设输入图像足够大，
+（$M_l\geqslant1$）、步幅为 $S_l\geqslant1$，$l=1,\cdots,L$，并设输入图像足够大，
 使各层的感受野完全落在图像内。记 $R_l$ 为第 $l$ 层一个单元在输入图像上的有效
 感受野边长，约定 $R_0=1$，空乘积取 $1$。则
 \begin{align}

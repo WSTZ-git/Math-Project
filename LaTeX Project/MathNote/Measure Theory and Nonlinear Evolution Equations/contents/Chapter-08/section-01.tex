@@ -24,7 +24,7 @@ u=u_0 & \text{在 }\Omega\times\{0\},
 \end{cases}
 \qquad(P)
 \end{align*}
-其中 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant2$ 时为具有光滑边界 $\partial\Omega$ 的有界区域），$T\in(0,\infty]$，记号“$\cdot$”表示 $\mathbb{R}^N$ 中的数量积。
+其中 $\Omega\subseteq\mathbb{R}^N$ 为有界区域，$N\geqslant2$ 时其边界 $\partial\Omega$ 光滑；$T\in(0,\infty]$；符号“$\cdot$”表示 $\mathbb{R}^N$ 中的数量积。
 
 若 $N=1$，则对 $\phi:\mathbb{R}\to\mathbb{R}$ 与初值 $u_0$ 作如下假设：
 \begin{align}
@@ -37,7 +37,7 @@ u=u_0 & \text{在 }\Omega\times\{0\},
 \quad\text{对所有 }|y|>y_0; \label{align:ch08-8.1c}\\
 &\phi(y)y\geqslant0\quad\text{对所有 }y\in\mathbb{R}. \label{align:ch08-8.1d}
 \end{align}
-按记号滥用，在\eqref{align:ch08-8.1a}及此后，我们令 $W^{1,\infty}_0(\Omega)\triangleq W^{1,\infty}(\Omega)\cap C_0(\overline\Omega)$。
+按记号滥用，在\eqref{align:ch08-8.1a}及此后令 $W^{1,\infty}_0(\Omega)\triangleq W^{1,\infty}(\Omega)\cap C_0(\overline\Omega)$。
 
 若 $N\geqslant2$，则对 $u_0$ 与 $\phi:\mathbb{R}^N\to\mathbb{R}^N$（$\phi\equiv(\phi_1,\cdots ,\phi_N)$）采用如下假设：
 \begin{align}
@@ -55,40 +55,40 @@ u=u_0 & \text{在 }\Omega\times\{0\},
 &\phi(y)\cdot y\geqslant0\quad\text{对所有 }y\in\mathbb{R}^N. \label{align:ch08-8.2f}
 \end{align}
 
-\begin{remark}\label{remark:ch08-8.1.1}
-对 $N\geqslant2$，我们假设 $\phi$ 整体 Lipschitz 连续，而非 $N=1$ 时的局部 Lipschitz 连续；这对允许的 $p$ 值给出更强的限制 $p\in(1,2]$（而非 $N=1$ 时的 $p\in(1,\infty)$。另注意，由\eqref{align:ch08-8.2c}--\eqref{align:ch08-8.2e} 有
+\begin{remark}\phantomsection\label{remark:ch08-8.1.1}
+对 $N\geqslant2$，此处假设 $\phi$ 整体 Lipschitz 连续，而不像 $N=1$ 的情形只假设局部 Lipschitz 连续；这使允许的 $p$ 值受到更强的限制 $p\in(1,2]$（$N=1$ 时为 $p\in(1,\infty)$）。此外，由\eqref{align:ch08-8.2c}--\eqref{align:ch08-8.2e} 有
 \begin{align}
-C_1|y|^q\leqslant\Phi(y)\leqslant C_3|y|^p\quad\text{对所有 }|y|>y_0 \label{align:ch08-8.3}
+C_1|y|^q\leqslant\Phi(y)\leqslant C_3|y|^p\quad\text{对所有 }|y|>y_0, \label{align:ch08-8.3}
 \end{align}
-其中 $C_3>0$，因而蕴含相容性条件 $q\leqslant p$。下文我们总假设\eqref{align:ch08-8.2c}--\eqref{align:ch08-8.2e} 对某个固定的 $p=q\in(1,2]$ 成立，且\eqref{align:ch08-8.2a} 中 $p$ 取同一值。
+其中 $C_3>0$；令 $|y|\to\infty$ 即得相容性条件 $q\leqslant p$。下文总假设\eqref{align:ch08-8.2c}--\eqref{align:ch08-8.2e} 对某个固定的 $p=q\in(1,2]$ 成立，且\eqref{align:ch08-8.2a} 中的 $p$ 取同一值。
 \end{remark}
 
-正如引言中所说明的，若函数 $\phi$ 非增，则问题 (P) 不适定。下面用 Sobolev 正则化研究问题 (P)。首先，对 $\epsilon>0$，考察初边值问题
+正如引言中所说明的，若 $\phi$ 不是单调递增的，则问题 (P) 不适定。下面用 Sobolev 正则化研究问题 (P)。首先，对 $\varepsilon>0$ 考察初边值问题
 \begin{align*}
 \begin{cases}
-\partial_t u=\nabla\cdot[\phi(\nabla u)]+\epsilon\,\Delta\partial_t u & \text{在 }Q_T,\\
+\partial_t u=\nabla\cdot[\phi(\nabla u)]+\varepsilon\,\Delta\partial_t u & \text{在 }Q_T,\\
 u=0 & \text{在 }\Gamma_T,\\
 u=u_0 & \text{在 }\Omega\times\{0\}.
 \end{cases}
-\qquad(P\epsilon)
+\qquad(P_\varepsilon)
 \end{align*}
-然后研究逼近问题族 $(P\epsilon)$ 的解族 $\{u_\epsilon\}$ 当 $\epsilon\to0^+$ 时的极限，证明原问题 (P) 存在 Young 测度值解（见\cref{definition:ch08-Young测度值解}）。我们还用紧性与 $\omega$--极限集技术研究这种解当 $t\to\infty$ 时的渐近性态；其中一个要点是证明极限 Young 测度 $\nu$ 的时间平移序列 $\{\nu_m\}$ 的紧性。最后，对 $N=1$ 显式计算极限 Young 测度 $\nu$，推广文献~\cite{ref83} 对类似情形给出的刻画。
+然后研究逼近问题族 $(P_\varepsilon)$ 的解族 $\{u_\varepsilon\}$ 当 $\varepsilon\to0^+$ 时的极限，证明原问题 (P) 存在 Young 测度值解（见\cref{definition:ch08-Young测度值解}）。还用紧性与 $\omega$-极限集技术研究这种解当 $t\to\infty$ 时的渐近性态；其中一个要点是证明极限 Young 测度 $\nu$ 的时间平移序列 $\{\nu_m\}$ 的胎紧性。最后，对 $N=1$ 显式计算极限 Young 测度 $\nu$，推广文献~\cite{ref83} 对类似情形给出的刻画。
 
 \subsection{解的概念}\label{subsection:ch08-解的概念}
 
-问题 (P) 的解按如下意义理解。
+本节始终设 $\Omega\subseteq\mathbb{R}^N$ 为有界区域（$N\geqslant2$ 时 $\partial\Omega$ 光滑），$T\in(0,\infty)$，并记 $Q_T\triangleq\Omega\times(0,T)$、$\Gamma_T\triangleq\partial\Omega\times(0,T)$。问题 (P) 的解按如下意义理解。
 
 \begin{definition}[Young 测度值解]\label{definition:ch08-Young测度值解}
-设或 $N=1$ 且\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立，或 $N\geqslant2$ 且\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2e} 成立。所谓问题 (P) 在 $Q_T$ 中的 Young 测度值解，是指一偶 $(u,\nu)$，满足：
+设 $\Omega\subseteq\mathbb{R}^N$ 为有界区域（$N\geqslant2$ 时 $\partial\Omega$ 光滑），$T\in(0,\infty)$，$Q_T\triangleq\Omega\times(0,T)$，且或 $N=1$ 而\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立，或 $N\geqslant2$ 而\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2e} 成立。所谓问题 (P) 在 $Q_T$ 中的 Young 测度值解，是指一偶 $(u,\nu)$，具有下列性质：
 \begin{enumerate}[(i)]
-\item\label{item:ch08-ymvs-i} 或 $N=1$ 时 $u\in L^\infty(0,T;W^{1,p}_0(\Omega))\cap C([0,T);L^2(\Omega))$（对所有 $p\in[1,\infty)$）且 $u_x\in L^\infty(\Omega\times(0,T))$，或 $N\geqslant2$ 时 $u\in L^\infty(0,T;W^{1,p}_0(\Omega))\cap C([0,T);L^p(\Omega))$（$p\in(1,2]$）；
+\item\label{item:ch08-ymvs-i} 若 $N=1$，则 $u\in L^\infty(0,T;W^{1,p}_0(\Omega))\cap C([0,T);L^2(\Omega))$ 对所有 $p\in[1,\infty)$ 成立，且 $u_x\in L^\infty(\Omega\times(0,T))$；若 $N\geqslant2$，则 $u\in L^\infty(0,T;W^{1,p}_0(\Omega))\cap C([0,T);L^p(\Omega))$，其中 $p\in(1,2]$ 为\eqref{align:ch08-8.2a} 中的指数；
 \item\label{item:ch08-ymvs-ii} $\partial_t u\in L^2(Q_T)$，$\nu\in\mathcal{Y}^+(Q_T;\mathbb{R}^N)$；
-\item\label{item:ch08-ymvs-iii} 对几乎所有 $(x,t)\in Q_T$，有
+\item\label{item:ch08-ymvs-iii} 对几乎所有 $(x,t)\in Q_T$，$y\mapsto y$ 关于 $\nu_{(x,t)}$ 可积，且
 \begin{align}
 \nabla u(x,t)=\int_{\mathbb{R}^N}y\,\mathrm{d}\nu_{(x,t)}(y), \label{align:ch08-8.4}
 \end{align}
 其中 $\{\nu_{(x,t)}\}_{(x,t)\in Q_T}$ 表示 $\nu$ 的离散分解；
-\item\label{item:ch08-ymvs-iv} 对所有 $\zeta\in C^1([0,T);C^1_c(\Omega))$ 与 $t\in(0,T)$，有
+\item\label{item:ch08-ymvs-iv} 对所有 $\zeta\in C^1([0,T);C^1_c(\Omega))$ 与所有 $t\in(0,T)$，有
 \begin{align}
 \int_0^t\int_\Omega\{u\,\partial_s\zeta-\phi^*\cdot\nabla\zeta\}(x,s)\,\mathrm{d}x\,\mathrm{d}s
 =\int_\Omega u(x,t)\zeta(x,t)\,\mathrm{d}x-\int_\Omega u_0(x)\zeta(x,0)\,\mathrm{d}x, \label{align:ch08-8.5}
@@ -99,50 +99,109 @@ u=u_0 & \text{在 }\Omega\times\{0\}.
 \end{align}
 对几乎所有 $(x,t)\in Q_T$ 成立。
 \end{enumerate}
-问题 (P) 在 $Q_\infty$ 中的 Young 测度值解称为整体解。
 \end{definition}
 
-作为\cref{definition:ch08-Young测度值解}的特例，有如下定义。
+问题 (P) 在 $Q_\infty$ 中的 Young 测度值解称为整体解。
+
+% SUPPLEMENT: parent=definition:ch08-Young测度值解; kind=motivation; location=定义 8.1.1 后的注记; basis=定义 8.1.1 与 (8.4)--(8.6) + 正则化解梯度仅弱收敛的机制、$u$ 的时空正则性在 (8.5) 各位置上的作用、$\nu$ 的一阶矩条件不可由 $\nu\in\mathcal{Y}^+$ 推出的理由，以及 $\nu=\delta_0$ 与 $\tfrac12(\delta_{-1}+\delta_1)$ 同时满足 (8.4)--(8.6) 的例子
+\begin{remark}\phantomsection\label{remark:ch08-Young测度值解}
+\begin{enumerate}[(i)]
+\item 引入动机。当 $\phi$ 非单调时问题 (P) 不适定（见本节开头的说明）：正则化解 $u_\varepsilon$ 的梯度 $\nabla u_\varepsilon$ 一般只在 $L^p$ 中弱收敛，其逐点极限不存在，故 $\phi(\nabla u)$ 无法由 $\nabla u$ 的弱极限复合得到。定义把记录局部振荡的概率测度 $\nu_{(x,t)}$ 与宏观函数 $u$ 并列，用 $\phi_i$ 关于 $\nu_{(x,t)}$ 的均值 $\phi^*_i$ 代替 $\phi_i(\nabla u)$，使\eqref{align:ch08-8.5}成为 $u$ 的线性方程。\cref{theorem:ch08-存在性} 证明这样的偶确实存在；\eqref{align:ch08-8.4}则保证 $\nu$ 不是任意的辅助对象，其重心恰为宏观梯度。
+\item 条件 (i) 的作用。$L^\infty(0,T;W^{1,p}_0(\Omega))$ 使 $\nabla u\in L^\infty(0,T;L^p(\Omega))$，因而\eqref{align:ch08-8.4}两端属于 $L^p(Q_T)$，并使 $u(\cdot,t)$ 的零边值迹有意义；$C([0,T);L^2(\Omega))$（$N=1$）或 $C([0,T);L^p(\Omega))$（$N\geqslant2$）使 $u(\cdot,t)$ 对每个 $t\in(0,T)$ 有确定的值，这是\eqref{align:ch08-8.5}中 $\int_\Omega u(x,t)\zeta(x,t)\,\mathrm{d}x$ 有意义的前提；若无时间连续性，该积分只对几乎所有 $t$ 有意义，而不能对每个给定的 $t$ 取极限。$u_x\in L^\infty(\Omega\times(0,T))$ 是 $N=1$ 独有的附加正则性，由\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d} 的强制性经估计\eqref{align:ch08-8.21} 得到；\cref{section:ch08-测度刻画} 中对 $\nu$ 的显式刻画正是以此为依据。
+\item 条件 (ii) 的作用。$\partial_t u\in L^2(Q_T)$ 使 $u\in H^1(Q_T)$，故\eqref{align:ch08-8.5}左端的分部积分与 $k\to\infty$ 的极限过程合法，且 $t\mapsto\|u(\cdot,t)\|_{L^2(\Omega)}$ 绝对连续。$\nu\in\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 把 $\nu$ 限制为取值于概率测度、且以 $\lambda_{N+1}|_{Q_T}$ 为 $Q_T$-边缘的 Young 测度，使其离散分解 $\{\nu_{(x,t)}\}$ 存在（见\cref{proposition:ch05-离散分解}）。
+\item 条件 (iii) 的独立作用。\eqref{align:ch08-8.4}不是 $\nu\in\mathcal{Y}^+$ 的推论：$\mathcal{Y}^+$ 只控制总质量，不控制一阶矩。故\eqref{align:ch08-8.4}是额外的非退化条件，它要求 $y\mapsto y$ 关于 $\nu_{(x,t)}$ 可积，即 $\int_{\mathbb{R}^N}|y|\,\mathrm{d}\nu_{(x,t)}(y)<\infty$，且其积分等于 $\nabla u(x,t)$。若删去\eqref{align:ch08-8.4}，则 $\nu$ 与 $u$ 完全脱钩，\eqref{align:ch08-8.5}只约束 $\phi^*$，$\nu$ 可取任意与 $\phi^*$ 相容的测度。
+\item 条件 (iv) 的作用。试验函数取 $C^1([0,T);C^1_c(\Omega))$：关于 $x$ 的紧支性使 $\Gamma_T$ 上的边界积分不出现（齐次 Dirichlet 条件由 $u\in W^{1,p}_0(\Omega)$ 承担），关于 $t$ 在 $t=T$ 处截断使 $t\in(0,T)$ 可任意取；于是\eqref{align:ch08-8.5}同时编码方程与初值 $u_0$（$t\to0$ 时右端给出 $-\int_\Omega u_0\zeta(\cdot,0)$）。$u_0$ 在\eqref{align:ch08-8.5}中只以 $L^2(\Omega)$（$N=1$）或 $L^p(\Omega)$（$N\geqslant2$）函数的身份出现，故初值只需\eqref{align:ch08-8.1a} 或\eqref{align:ch08-8.2a} 的正则性。
+\item 边界与特例。(a) 若 $\nu_{(x,t)}=\delta_{\nabla u(x,t)}$ 对几乎所有 $(x,t)\in Q_T$ 成立，则 $\phi^*=\phi(\nabla u)$，\eqref{align:ch08-8.5}退化为 (P) 的通常弱形式，故在相应正则性下的通常弱解是 Young 测度值解；本定义是弱解概念的推广。(b) 定义只假设\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2e}，不含符号条件\eqref{align:ch08-8.2f}：后者用于能量恒等式\eqref{align:ch08-8.47} 与 $\omega$-极限点的刻画，非解的定义所需。(c) 定义不强制 $\nu$ 由 $u$ 唯一确定。例如取 $N=1$、$\Omega=(0,1)$、$T=1$、$u_0\equiv0$、$\phi(y)\triangleq y^3$（满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d}，其中 $p=4$）与 $u\equiv0$，则 $\nu^{(1)}_{(x,t)}\triangleq\delta_0$ 与 $\nu^{(2)}_{(x,t)}\triangleq\frac12(\delta_{-1}+\delta_1)$ 都满足\eqref{align:ch08-8.4}（两者的重心均为 $0=\nabla u$）与\eqref{align:ch08-8.6}（两者的 $\phi$-均值均为 $0$），故 $(u,\nu^{(1)})$ 与 $(u,\nu^{(2)})$ 都是 (P) 在 $Q_T$ 中的 Young 测度值解。
+\end{enumerate}
+\end{remark}
+
+作为\cref{definition:ch08-Young测度值解} 的特例，有如下定义。
 
 \begin{definition}[Young 测度平衡解]\label{definition:ch08-Young平衡解}
-所谓问题 (P) 的 Young 测度平衡解，是指一偶 $(\bar u,\bar\nu)\in W^{1,p}_0(\Omega)\times\mathcal{Y}^+(Q_T;\mathbb{R}^N)$（$N=1$ 时对每个 $p\in(1,\infty)$，$N\geqslant2$ 时 $p\in(1,2]$），使得对几乎所有 $(x,t)\in Q_T$，
+设 $\Omega\subseteq\mathbb{R}^N$ 为有界区域（$N\geqslant2$ 时 $\partial\Omega$ 光滑），$T\in(0,\infty)$，$Q_T\triangleq\Omega\times(0,T)$。所谓问题 (P) 的 Young 测度平衡解，是指一偶 $(\bar u,\bar\nu)\in W^{1,p}_0(\Omega)\times\mathcal{Y}^+(Q_T;\mathbb{R}^N)$（$N=1$ 时对每个 $p\in(1,\infty)$，$N\geqslant2$ 时 $p\in(1,2]$），使对几乎所有 $(x,t)\in Q_T$，$y\mapsto\phi_i(y)$（$i=1,\cdots ,N$）与 $y\mapsto y$ 关于 $\bar\nu_{(x,t)}$ 可积，且
 \begin{align}
 \int_{\mathbb{R}^N}\phi_i(y)\,\mathrm{d}\bar\nu_{(x,t)}(y)=0\quad(i=1,\cdots ,N), \label{align:ch08-8.7}\\
-\nabla\bar u(x)=\int_{\mathbb{R}^N}y\,\mathrm{d}\bar\nu_{(x,t)}(y). \label{align:ch08-8.8}
+\nabla\bar u(x)=\int_{\mathbb{R}^N}y\,\mathrm{d}\bar\nu_{(x,t)}(y), \label{align:ch08-8.8}
 \end{align}
+其中 $\{\bar\nu_{(x,t)}\}_{(x,t)\in Q_T}$ 表示 $\bar\nu$ 的离散分解。
 \end{definition}
 
-关于正则化问题 $(P\epsilon)$ 的解，有如下定义。若 $N=1$，令
+% SUPPLEMENT: parent=definition:ch08-Young平衡解; kind=motivation; location=定义 8.1.2 后的注记; basis=定义 8.1.2 与 (8.7)--(8.8) + 把 $\partial_tu=0$ 代入 (8.5) 后对 $t$ 求导得到 $\nabla\cdot\phi^*=0$ 的推导、规范 $\phi^*=0$ 来自 $\omega$-极限的耗散条件 $\operatorname{supp}\bar\nu\subseteq\{\phi=0\}$、两个矩条件各自的作用，以及 $\phi(y)=y$ 与 $\phi(y)=y(y^2-1)^2$ 两个显式例子说明 $\bar\nu$ 不必退化
+\begin{remark}\phantomsection\label{remark:ch08-Young平衡解}
+\begin{enumerate}[(i)]
+\item 引入动机。平衡解对应 (P) 的时间无关解。设 $u(x,t)=\bar u(x)$ 且 $\nu_{(x,t)}=\bar\nu_{(x,t)}$ 满足\eqref{align:ch08-8.5}，取 $\zeta(x,s)=\theta(s)\psi(x)$，其中 $\psi\in C^1_c(\Omega)$、$\theta\in C^1([0,T))$、$\theta(0)=0$：此时\eqref{align:ch08-8.5}两端含 $\bar u$ 的项相消，对 $t$ 求导得
+\begin{align*}
+\int_\Omega\phi^*\cdot\nabla\psi\,\mathrm{d}x=0\quad\text{对所有 }\psi\in C^1_c(\Omega),
+\end{align*}
+即 $\nabla\cdot\phi^*=0$ 的弱形式（$N=1$ 时即 $\phi^*$ 为常数）。\eqref{align:ch08-8.7}进一步把这常数规范为零；该规范来自 $\omega$-极限的耗散条件：由\cref{theorem:ch08-omega极限非空}(ii)，$\omega$-极限测度满足 $\operatorname{supp}\tilde\nu_{(x,t)}\subseteq\{\phi=0\}$，于是\eqref{align:ch08-8.7}成立（见\cref{theorem:ch08-平衡解} 的证明）。
+\item 条件的作用。$W^{1,p}_0(\Omega)$ 对每个 $p\in(1,\infty)$（$N=1$）或 $p\in(1,2]$（$N\geqslant2$）成立，比\cref{definition:ch08-Young测度值解}(i) 中的 $L^\infty(0,T;\cdot)$ 强：平衡解与 $t$ 无关，时空正则性退化为空间正则性。\eqref{align:ch08-8.7}逐分量要求 $\phi_i$ 关于 $\bar\nu_{(x,t)}$ 的均值为零，即 $\phi^*=0$；\eqref{align:ch08-8.8}仍要求 $\bar\nu$ 的重心等于 $\nabla\bar u$，使 $\bar u$ 与 $\bar\nu$ 不脱钩。定义只涉及 $\bar\nu$ 的这两个矩，$\bar\nu$ 的其余信息不受约束。
+\item 边界与例。(a) 定义不强制 $\bar\nu$ 退化。取 $N=1$、$\phi(y)\equiv y$、$\bar u\equiv0$ 与 $\bar\nu_{(x,t)}\triangleq\frac12(\delta_{-1}+\delta_1)$（与 $(x,t)$ 无关），则 $\int y\,\mathrm{d}\bar\nu=0=\nabla\bar u$ 且 $\int\phi(y)\,\mathrm{d}\bar\nu=\frac12(-1+1)=0$，故 $(\bar u,\bar\nu)$ 是平衡解，而 $\bar\nu$ 并非 Dirac 测度。这与平衡解只是 $\omega$-极限点的候选类相容：$\bar\nu$ 的进一步信息须由 $\omega$-极限过程提供（见\cref{section:ch08-渐近性态} 与\cref{section:ch08-测度刻画}）。
+\item (b) 非单调 $\phi$ 时可构造非平凡的平衡解。取 $N=1$、$\phi(y)\triangleq y(y^2-1)^2$（满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d}，其中 $p=6$；$\phi$ 在 $y=0,\pm1$ 处为零）、$\bar u\equiv0$ 与 $\bar\nu_{(x,t)}\triangleq\frac13(\delta_{-1}+\delta_0+\delta_1)$。则 $\int\phi\,\mathrm{d}\bar\nu=\frac13[\phi(-1)+\phi(0)+\phi(1)]=0$ 且 $\int y\,\mathrm{d}\bar\nu=0=\nabla\bar u$，故 $(\bar u,\bar\nu)$ 是平衡解。它不是与任何函数相伴的 Young 测度（见\cref{proposition:ch05-Dirac测度}）：与函数 $v$ 相伴的测度在每条纤维上都是 Dirac 测度 $\delta_{v(x)}$，而 $\bar\nu$ 在三个不同点 $-1,0,1$ 上各分配质量 $1/3$。
+\end{enumerate}
+\end{remark}
+
+关于正则化问题 $(P_\varepsilon)$ 的解，有如下定义。若 $N=1$，令
 \begin{align}
-v\triangleq \partial_x u,\qquad w\triangleq \phi(v)+\epsilon\,\partial_t v, \label{align:ch08-8.9}
+v\triangleq \partial_x u,\qquad w\triangleq \phi(v)+\varepsilon\,\partial_t v, \label{align:ch08-8.9}
 \end{align}
-则问题 $(P\epsilon)$ 写为
+则问题 $(P_\varepsilon)$ 写为
 \begin{align}
 \begin{cases}
 \partial_t u=\partial_x w & \text{在 }Q_T,\\
 u=0 & \text{在 }\Gamma_T,\\
 u=u_0 & \text{在 }\Omega\times\{0\}.
-\end{cases} \label{align:ch08-8.10}
+\end{cases} 
+\label{align:ch08-8.10}
 \end{align}
 
-\begin{definition}[$N=1$ 时 $(P\epsilon)$ 的解]\label{definition:ch08-正则化解N1}
-设 $N=1$ 且\eqref{align:ch08-8.1a} 成立。所谓问题 $(P\epsilon)$ 在 $Q_T$ 中的解，是指任一 $u_\epsilon\in C^1([0,T);W^{1,\infty}_0(\Omega))$，其相伴的 $w_\epsilon\in C([0,T);W^{2,\infty}(\Omega)\cap C(\overline\Omega))$ 且 $\partial_x w_\epsilon\in C([0,T);W^{1,\infty}_0(\Omega))$，并在经典意义下满足\eqref{align:ch08-8.10}。
+\begin{definition}[$N=1$ 时 $(P_\varepsilon)$ 的解]\label{definition:ch08-正则化解N1}
+设 $N=1$（此时 $\Omega$ 为有界区间，记 $\Omega\equiv(a,b)$），$T\in(0,\infty)$，且\eqref{align:ch08-8.1a} 成立。所谓问题 $(P_\varepsilon)$ 在 $Q_T$ 中的解，是指任一函数 $u_\varepsilon\in C^1([0,T);W^{1,\infty}_0(\Omega))$，其由\eqref{align:ch08-8.9}定义的 $w_\varepsilon$ 满足 $w_\varepsilon\in C([0,T);W^{2,\infty}(\Omega)\cap C(\overline\Omega))$ 与 $\partial_x w_\varepsilon\in C([0,T);W^{1,\infty}_0(\Omega))$，且 $u_\varepsilon$ 在经典意义下满足\eqref{align:ch08-8.10}。
 \end{definition}
 
-\begin{definition}[$N\geqslant2$ 时 $(P\epsilon)$ 的解]\label{definition:ch08-正则化解N2}
-设 $N\geqslant2$，$u_0\in H^1_0(\Omega)$。所谓问题 $(P\epsilon)$ 在 $Q_T$ 中的解，是指任一 $u_\epsilon\in C^1([0,T);H^1_0(\Omega))$，满足 $u_\epsilon(\cdot,0)=u_{0\epsilon}$，且对所有 $t\in(0,T)$ 与 $\rho\in H^1_0(\Omega)$，有
+% SUPPLEMENT: parent=definition:ch08-正则化解N1; kind=motivation; location=定义 8.1.3 后的注记; basis=定义 8.1.3 与 (8.9)--(8.12) + Sobolev 正则化把 (P) 变为方程组 (8.10) 的动机、$C^1$ 与 $W^{1,\infty}_0$ 各自支撑的项、$w_\varepsilon$ 的 $W^{2,\infty}$ 与 $\partial_xw_\varepsilon\in W^{1,\infty}_0$ 分别保证 (8.10) 逐点成立与 Neumann 条件，以及去掉强制性 (8.1c) 时先验界失去的边界
+\begin{remark}\phantomsection\label{remark:ch08-正则化解N1}
+\begin{enumerate}[(i)]
+\item 引入动机。Sobolev 正则化把 (P) 换为伪抛物型问题 $(P_\varepsilon)$：$\varepsilon\Delta\partial_t u$ 使方程对 $\partial_t u$ 含二阶椭圆算子，从而把退化的一阶方程变为可解方程。$N=1$ 时令 $v=\partial_x u$、$w=\phi(v)+\varepsilon\partial_t v$，则 $(P_\varepsilon)$ 等价于方程组\eqref{align:ch08-8.10}：第二式定义 $w$，第一式即 $\partial_t u=\partial_x w$。本定义要求 $u_\varepsilon$ 与 $w_\varepsilon$ 具备使\eqref{align:ch08-8.10}逐点成立的正则性。
+\item 条件的作用。$C^1([0,T);W^{1,\infty}_0(\Omega))$ 中，$W^{1,\infty}_0$ 使 $v=\partial_x u_\varepsilon$ 有界，从而\eqref{align:ch08-8.1b}的局部 Lipschitz 估计在 $v$ 的整个值域上一致成立（\cref{lemma:ch08-局部适定N1} 的证明据此把局部适定性化归为常微分方程的解），并给出 $u_\varepsilon=0$ 在 $\Gamma_T$ 上；$C^1$ 使 $\partial_{xt}u_\varepsilon$ 存在且连续，故 $\partial_t v=\partial_{xt}u_\varepsilon$ 连续，$\varepsilon\partial_t v$ 是连续函数。$w_\varepsilon\in C([0,T);W^{2,\infty}(\Omega)\cap C(\overline\Omega))$ 使 $\partial_{xx}w_\varepsilon$ 有界连续，故\eqref{align:ch08-8.10}第一式两端都是连续函数；$\partial_x w_\varepsilon\in C([0,T);W^{1,\infty}_0(\Omega))$ 给出 $\partial_x w_\varepsilon=0$ 在 $\Gamma_T$ 上，即\eqref{align:ch08-8.12}中的 Neumann 条件。
+\item 边界。$T$ 有限时\cref{lemma:ch08-局部适定N1} 只给出局部解（存在 $T_\varepsilon>0$）；整体解的存在（\cref{definition:ch08-整体解}）需要\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d} 的强制性，它经不变区间论证给出 $v_\varepsilon$ 的一致 $L^\infty$ 界\eqref{align:ch08-8.17}。若只有\eqref{align:ch08-8.1b}而无\eqref{align:ch08-8.1c}，则先验界\eqref{align:ch08-8.17}不再成立，$T_\varepsilon$ 可能有限，不能断言整体解存在。
+\item 与下一步的接口。定义对每个 $\varepsilon>0$ 给出一个经典解 $u_\varepsilon$，而 $\varepsilon$ 只通过\eqref{align:ch08-8.9}中的 $\varepsilon\partial_t v$ 进入。研究 $\varepsilon\to0^+$ 的关键不是单个解的古典性，而是族 $\{u_\varepsilon\}$ 的界\eqref{align:ch08-8.21} 关于 $\varepsilon$ 一致（\cref{proposition:ch08-先验估计N1}）；古典性只是使\eqref{align:ch08-8.9}--\eqref{align:ch08-8.10}的逐点运算合法，从而能量等式\eqref{align:ch08-8.23} 可逐点求导得到。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[$N\geqslant2$ 时 $(P_\varepsilon)$ 的解]\label{definition:ch08-正则化解N2}
+设 $N\geqslant2$，$T\in(0,\infty)$，$u_0\in H^1_0(\Omega)$，$u_{0\varepsilon}\in H^1_0(\Omega)$ 为逼近初值。所谓问题 $(P_\varepsilon)$ 在 $Q_T$ 中的解，是指任一函数 $u_\varepsilon\in C^1([0,T);H^1_0(\Omega))$，满足 $u_\varepsilon(\cdot,0)=u_{0\varepsilon}$，且对所有 $t\in(0,T)$ 与 $\rho\in H^1_0(\Omega)$ 有
 \begin{align}
-\int_\Omega\partial_t u_\epsilon(x,t)\rho(x)\,\mathrm{d}x
-+\int_\Omega\phi(\nabla u_\epsilon)(x,t)\cdot\nabla\rho(x)\,\mathrm{d}x
-+\epsilon\int_\Omega\nabla\partial_t u_\epsilon(x,t)\cdot\nabla\rho(x)\,\mathrm{d}x=0. \label{align:ch08-8.11}
+\int_\Omega\partial_t u_\varepsilon(x,t)\rho(x)\,\mathrm{d}x
++\int_\Omega\phi(\nabla u_\varepsilon)(x,t)\cdot\nabla\rho(x)\,\mathrm{d}x
++\varepsilon\int_\Omega\nabla\partial_t u_\varepsilon(x,t)\cdot\nabla\rho(x)\,\mathrm{d}x=0. \label{align:ch08-8.11}
 \end{align}
 \end{definition}
+
+% SUPPLEMENT: parent=definition:ch08-正则化解N2; kind=motivation; location=定义 8.1.4 后的注记; basis=定义 8.1.4 与 (8.11) + 把 (8.11) 改写为 $H^{-1}$ 中的抽象方程 $(I-\varepsilon\Delta)\partial_tu_\varepsilon=\nabla\cdot[\phi(\nabla u_\varepsilon)]$ 的推导、$\varepsilon>0$ 使 $I-\varepsilon\Delta:H^1_0\to H^{-1}$ 成为同构的作用、试验函数须取满 $H^1_0$ 的理由，以及 $\varepsilon=0$ 时失去满射性的边界
+\begin{remark}\phantomsection\label{remark:ch08-正则化解N2}
+\begin{enumerate}[(i)]
+\item 引入动机。$N\geqslant2$ 时 $(P_\varepsilon)$ 是四阶伪抛物型方程，经典解需 $u_\varepsilon\in C^1([0,T);C^2(\overline\Omega))$ 一类的高阶正则性，而这与初值 $u_0\in W^{1,p}_0(\Omega)$（$p\in(1,2]$）不匹配。定义改用弱形式\eqref{align:ch08-8.11}：对每个 $t\in(0,T)$ 与每个 $\rho\in H^1_0(\Omega)$ 要求积分等式成立。第三项 $\varepsilon\int_\Omega\nabla\partial_t u_\varepsilon\cdot\nabla\rho$ 只在 $\partial_t u_\varepsilon\in H^1_0(\Omega)$ 时有意义，这正是定义要求 $u_\varepsilon\in C^1([0,T);H^1_0(\Omega))$ 的原因。
+\item 等价形式。\eqref{align:ch08-8.11}左端等于 $\langle(I-\varepsilon\Delta)\partial_t u_\varepsilon,\rho\rangle$，右端等于 $\langle\nabla\cdot[\phi(\nabla u_\varepsilon)],\rho\rangle$（配对为 $H^{-1}(\Omega)$ 与 $H^1_0(\Omega)$），故\eqref{align:ch08-8.11}等价于抽象方程
+\begin{align*}
+(I-\varepsilon\Delta)\partial_t u_\varepsilon=\nabla\cdot[\phi(\nabla u_\varepsilon)]\quad\text{在 }H^{-1}(\Omega)\text{ 中，对每个 }t\in(0,T).
+\end{align*}
+$\varepsilon>0$ 时 $I-\varepsilon\Delta:H^1_0(\Omega)\to H^{-1}(\Omega)$ 是线性同构（Lax--Milgram 定理），故\eqref{align:ch08-8.11}又等价于 $\partial_t u_\varepsilon=L(u_\varepsilon)$，其中 $L$ 由\eqref{align:ch08-8.19}定义。$\varepsilon=0$ 时 $I:H^1_0(\Omega)\to H^{-1}(\Omega)$ 只是紧嵌入而非满射，方程只对落在其像中的右端可解，故 $\partial_t u$ 被迫属于 $H^1_0(\Omega)$，这正是正则化在算子层面所起的作用。
+\item 条件的作用。$u_\varepsilon\in C^1([0,T);H^1_0(\Omega))$ 使三项都有意义：$\partial_t u_\varepsilon\in C([0,T);H^1_0(\Omega))\subseteq L^2(Q_T)$，$\phi(\nabla u_\varepsilon)\in L^2(Q_T;\mathbb{R}^N)$（由\eqref{align:ch08-8.2b}与\eqref{align:ch08-8.2a}），$\nabla\partial_t u_\varepsilon\in L^2(Q_T)$；同时给出 $u_\varepsilon(\cdot,t)\in H^1_0(\Omega)$，故零边值迹在每一时刻成立，无需另设边界条件。试验函数取满 $H^1_0(\Omega)$ 而非 $C^1_c(\Omega)$，是因为\eqref{align:ch08-8.11}中出现的 $\nabla\cdot[\phi(\nabla u_\varepsilon)]$ 只属于 $H^{-1}(\Omega)$，而 $C^1_c(\Omega)$ 不足以刻画 $H^{-1}(\Omega)$ 中的元素。
+\item 边界。定义允许 $u_{0\varepsilon}\neq u_0$：$u_0$ 只在 $W^{1,p}_0(\Omega)$ 中，而解要求 $u_{0\varepsilon}\in H^1_0(\Omega)$，故\eqref{align:ch08-8.11}描述的是以逼近初值为数据的正则化问题；逼近的存在性与一致性见\eqref{align:ch08-8.28}。\cref{theorem:ch08-正则化适定} 断言对每个 $\varepsilon>0$ 与每个 $u_0\in H^1_0(\Omega)$ 存在唯一整体解，其证明正是经上述等价形式用 $L$ 的 Lipschitz 连续性（\cref{proposition:ch08-Lipschitz算子}）与抽象 Cauchy 问题的适定性。
+\end{enumerate}
+\end{remark}
 
 \begin{definition}[整体解]\label{definition:ch08-整体解}
-设 $N\geqslant1$。问题 $(P\epsilon)$ 在 $Q_\infty$ 中的解称为整体的，若它对每个 $T\in(0,\infty)$ 都是 $Q_T$ 中的解。
+设 $N\geqslant1$。问题 $(P_\varepsilon)$ 在 $Q_\infty$ 中的解称为整体的，若它对每个 $T\in(0,\infty)$ 都是 $Q_T$ 中的解。
 \end{definition}
 
-
-
+% SUPPLEMENT: parent=definition:ch08-整体解; kind=motivation; location=定义 8.1.5 后的注记; basis=定义 8.1.5 + 把“整体”归约为“所有有限 $T$ 上的解”的动机、$N=1$ 与 $N\geqslant2$ 两种解定义的兼容性，以及局部解可能爆破的边界
+\begin{remark}\phantomsection\label{remark:ch08-整体解}
+\begin{enumerate}[(i)]
+\item 引入动机。$T\in(0,\infty]$ 的端点 $T=\infty$ 需要单独命名：整体解不是“在 $Q_\infty$ 上另有一种正则性”，而是“对每个有限 $T$ 都是 $Q_T$ 中的解”。这样定义使局部存在性（\cref{lemma:ch08-局部适定N1}）与整体存在性（\cref{theorem:ch08-正则化适定}）之间有干净的接口：只需对每个有限 $T$ 重复局部论证。
+\item 条件的作用。定义只引用“$Q_T$ 中的解”这一概念，故\cref{definition:ch08-正则化解N1} 与\cref{definition:ch08-正则化解N2} 两种解的定义都适用，$N=1$ 与 $N\geqslant2$ 无需分别叙述。定义隐含相容性要求：对 $T_1<T_2$，$Q_{T_2}$ 中的解限制到 $Q_{T_1}$ 仍是解；这一点由解的定义直接成立，不需另设条件。
+\item 边界。“整体”是关于时间变量 $t$ 的，与空间维数 $N$ 无关；对每个固定的 $\varepsilon>0$，\cref{theorem:ch08-正则化适定} 断言整体解存在且唯一。若只有局部解（如\cref{lemma:ch08-局部适定N1} 的情形），$T_\varepsilon$ 可能有限，此时解在 $Q_{T_\varepsilon}$ 之外没有定义，“整体”一词无对象可言。
+\end{enumerate}
+\end{remark}
 
 \end{document}

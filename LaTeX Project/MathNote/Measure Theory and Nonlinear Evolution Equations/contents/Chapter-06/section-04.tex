@@ -14,96 +14,156 @@
 \begin{document}
 
 \section{存在性与正则性结果}\label{section:ch06-存在正则}
-
 \subsection{存在性}\label{subsection:ch06-存在性}
-
-第一个存在性结果的证明是构造性的。事实上，我们通过研究逼近问题序列的解 $\{u_n\}$ 来展示 (P) 的弱解：
+第一个存在性结果的证明是构造性的。事实上，我们通过研究逼近问题解序列 $\{u_n\}$ 来展示 (P) 的弱解：
 \begin{align*}
 \begin{cases}
 \partial_t u_n=\Delta\phi_n(u_n) & \text{在 }Q,\\
 u_n=0 & \text{在 }\Gamma,\\
-u_n(\cdot,0)=u_{0n} & \text{在 }\Omega,
+u_n(\cdot,0)=u_{0n} & \text{在 }\Omega
 \end{cases}
-\qquad(Pn)
+\qquad(P_n)
 \end{align*}
-（见\cref{section:ch06-逼近问题}）。此处 $\phi_n(z)\triangleq \phi(z)+\frac{z}{n}$（$z\in\mathbb{R}$），$u_{0n}$ 为初值测度 $u_0$ 的合适正则化（见\eqref{align:ch6-6.48}--\eqref{align:ch6-6.49a}）。
-
+（见\cref{section:ch06-逼近问题}）。此处 $\phi_n(z)\triangleq\phi(z)+z/n$（$z\in\mathbb{R}$，$n\in\mathbb{N}$），$u_{0n}$ 为初值测度 $u_0$ 的合适正则化（见\eqref{align:ch6-6.48}--\eqref{align:ch6-6.49a}）。
 \begin{theorem}\label{theorem:ch06-6.4.1}
-设 (A0)--(A2) 成立。则存在问题 (P) 的弱解，它作为逼近问题 (Pn) 解序列在 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 的弱$^*$拓扑下的极限点而得到。进而：
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界的有界开集，$T>0$，并设 (A0)--(A2) 成立。设 $\{u_n\}$ 为逼近问题 $(P_n)$ 的解序列，其中 $\phi_n(z)\triangleq\phi(z)+z/n$（$z\in\mathbb{R}$），$u_{0n}$ 为 $u_0$ 的正则化并满足\eqref{align:ch6-6.48}--\eqref{align:ch6-6.49a}。则存在子列（不重新标号）与 $u\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$，使
+\begin{align*}
+u_n\stackrel{*}{\rightharpoonup}u \quad\text{于 }L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega)),
+\end{align*}
+且 $u$ 是问题 (P) 的弱解。此外：
 \begin{enumerate}[(i)]
 \item 对几乎所有 $0<t_1<t_2<T$，
 \begin{align}
-u^\pm_s(\cdot,t_2)\leqslant u^\pm_s(\cdot,t_1)\leqslant u^\pm_{0s} \quad\text{在 }\mathscr{R}_f(\Omega). \label{align:ch6-6.33}
+u^\pm_s(\cdot,t_2)\leqslant u^\pm_s(\cdot,t_1)\leqslant u^\pm_{0s} \quad\text{于 }\mathscr{R}_f(\Omega); \label{align:ch6-6.33}
 \end{align}
 \item 若 $u_0\in L^1(\Omega)$，则 $u\in L^\infty(0,T;L^1(\Omega))$。
 \end{enumerate}
 \end{theorem}
 
-由\cref{theorem:ch06-6.3.1}，为得到 (P) 的适定性，证明满足相容性条件的弱解存在性是重要的。这由如下结果保证。
+% SUPPLEMENT: parent=theorem:ch06-6.4.1; kind=motivation; location=定理 6.4.1 后的注记; basis=原书定理 6.4.1、定理 6.4.1 的构造性证明（6.5--6.6 节）与各项假设的作用分析
+\begin{remark}\phantomsection\label{remark:ch06-存在动机}
+(i) 动机与内容。定理把 (P) 的解构造为逼近问题 $(P_n)$ 解序列的弱*极限点。$(P_n)$ 是非退化的：$\phi_n'=\phi'+1/n\geqslant1/n>0$，故 $(P_n)$ 是拟线性一致抛物问题，其解 $u_n$ 存在且光滑（$\phi_n\in C^\infty$ 且严格增，$u_{0n}\in L^1\cap L^\infty$）。定理断言这一族的极限仍是 (P) 的弱解，并且极限过程保持奇异部分的单调性 (i) 与 $L^1$ 结构 (ii)。
 
-\begin{theorem}\label{theorem:ch06-6.4.2}\label{proposition:ch06-6.4.2}
-设 (A0)--(A2) 成立。则\cref{theorem:ch06-6.4.1}所给出的问题 (P) 的弱解满足相容性条件。
+(ii) 各假设的作用。(A0) 使初值可取为有限 Radon 测度，从而必须用正则化 $u_{0n}\in C^\infty_c(\Omega)$ 逼近（\eqref{align:ch6-6.48}--\eqref{align:ch6-6.49a}）；(A1) 的单调性用于 $(P_n)$ 的比较原理与 $L^\infty$、$L^1$ 先验估计，(A1) 的有界性使 $\phi(u_n)$ 在 $L^\infty(Q)$ 中有界；(A2)（即 $\phi\in W^{1,\infty}(\mathbb{R})$）用于\eqref{align:ch6-6.63}型的梯度估计与 $\phi(u_n)\in L^2(0,T;H^1_0(\Omega))$ 的一致界，这是紧性论证的核心。断言 (i) 依赖 $\phi_n$ 的单调性与 (ii) 的 $L^1$ 界；断言 (ii) 依赖 $\|u_n\|_{L^\infty(0,T;L^1(\Omega))}\leqslant\|u_0\|_{\mathscr{R}_f(\Omega)}$（\eqref{align:ch6-6.54}）。
+
+(iii) 证明位置与结构。定理的证明在\cref{section:ch06-逼近问题}--\cref{section:ch06-令n趋于无穷}中给出，分三步：初值逼近（\cref{lemma:ch06-6.5.1}--\cref{lemma:ch06-6.5.2}）、先验估计（\cref{lemma:ch06-6.5.3}--\cref{lemma:ch06-6.5.8}）、令 $n\to\infty$（\cref{theorem:ch06-6.6.1}、\cref{proposition:ch06-6.6.2}--\cref{proposition:ch06-6.6.6}）。断言 (i) 的单调性本质上来自极限 $u$ 是熵解（\cref{proposition:ch06-6.4.4}）与\cref{theorem:ch06-6.4.5}，而 (ii) 来自 $L^1$ 范数的下半连续性与\eqref{align:ch6-6.54}。若无 (A2)，则 $\nabla\phi(u_n)$ 的一致 $L^2$ 界失效，弱*极限仍存在但不能保证是弱解；这一情形由\cref{section:ch06-无界phi}在更一般的假设下另行处理。
+\end{remark}
+
+在\cref{theorem:ch06-6.3.1}的框架下，为得到 (P) 的适定性，证明满足相容性条件的弱解存在性是重要的。这由如下结果保证。
+
+\begin{theorem}\label{theorem:ch06-6.4.2}
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界的有界开集，$T>0$，并设 (A0)--(A2) 成立。则\cref{theorem:ch06-6.4.1}所给出的问题 (P) 的每个弱解都满足相容性条件\eqref{align:ch6-6.21a}。
 \end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch06-6.4.2; kind=motivation; location=定理 6.4.2 后的注记; basis=同定理 6.4.2 的动机注记（该 label 为同一对象的历史别名）
+% SUPPLEMENT: parent=theorem:ch06-6.4.2; kind=motivation; location=定理 6.4.2 后的注记; basis=原书定理 6.4.2 及其在 6.6 节中的证明结构（引理 6.6.7 的条件 (6.118)）
+\begin{remark}\phantomsection\label{remark:ch06-相容存在}
+(i) 动机与内容。\cref{theorem:ch06-6.3.1}给出弱解在相容类中的唯一性，因此为使 (P) 适定，只须说明构造出的弱解落在该类中。定理正是这一事实：\cref{theorem:ch06-6.4.1}所构造的每个弱解都满足\eqref{align:ch6-6.21a}。结合两条结果即得\cref{theorem:ch06-6.4.3}。
+
+(ii) 各假设的作用。(A2) 使构造过程中 $\phi(u_{n_k})$ 与 $\phi_{n_k}(u_{n_k})$ 在 $L^2(0,T;H^1_0(\Omega))$ 中一致有界，从而可利用紧嵌入与 Young 测度论证得到\eqref{align:ch6-6.118}型估计；(A1) 的单调性用于把 $(P_n)$ 的熵不等式取极限。若去掉 (A2)，则\eqref{align:ch6-6.118}的证明失效，而\cref{proposition:ch06-6.7.4}表明此时需对 $\phi$ 附加增长条件。
+
+(iii) 证明位置。证明在\cref{section:ch06-令n趋于无穷}中给出，关键工具是\cref{lemma:ch06-6.6.7}（即估计\eqref{align:ch6-6.118}）：它把 $2$-弥散奇异部分的质量与 $\phi$ 逼近饱和值的速度联系起来，从而把\eqref{align:ch6-6.21a}化为该估计的推论。
+\end{remark}
 
 由\cref{theorem:ch06-6.3.1}、\cref{theorem:ch06-6.4.1}与\cref{theorem:ch06-6.4.2}，有如下结果。
 
 \begin{theorem}\label{theorem:ch06-6.4.3}
-设 (A0)--(A2) 成立。则对每个 $u_0\in\mathscr{R}_f(\Omega)$，存在问题 (P) 满足相容性条件的唯一弱解 $u$。进而\cref{theorem:ch06-6.4.1}的 (i)--(ii) 款成立。
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界的有界开集，$T>0$，并设 (A0)--(A2) 成立。则对每个 $u_0\in\mathscr{R}_f(\Omega)$，存在满足相容性条件\eqref{align:ch6-6.21a}的唯一的弱解 $u$。此外\cref{theorem:ch06-6.4.1}的 (i)--(ii) 款成立。
 \end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch06-6.4.3; kind=proof; location=定理 6.4.3 后的补写证明; basis=原书“By Theorems 6.3.1, 6.4.1, and 6.4.2 we have the following result”之展开
+\begin{proof}
+设 $u_0\in\mathscr{R}_f(\Omega)$。由\cref{theorem:ch06-6.4.1}，存在 (P) 的弱解 $u$，且由\cref{theorem:ch06-6.4.2}它满足相容性条件，故\eqref{align:ch6-6.21a}可满足；存在性得证。若 $v$ 为任一满足相容性条件的弱解，则由\cref{theorem:ch06-6.3.1}（以 $\Omega$、$T$、$\phi$、$u_0$ 为给定数据）得 $v=u$ 于 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$，故唯一性成立。由\cref{theorem:ch06-6.4.1}的 (i)--(ii) 款对该 $u$ 成立，因为 $u$ 就是\cref{theorem:ch06-6.4.1}所给出的解。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6.4.3; kind=motivation; location=定理 6.4.3 后的注记; basis=原书定理 6.4.3 与适定性概念的独立分析
+\begin{remark}\phantomsection\label{remark:ch06-适定}
+(i) 动机与内容。定理是本章的适定性结论：在 (A0)--(A2) 下，(P) 对每个 $u_0\in\mathscr{R}_f(\Omega)$ 存在唯一满足相容性条件的弱解，并且该解继承\cref{theorem:ch06-6.4.1}的单调性与 $L^1$ 结构。由于\cref{theorem:ch06-6.3.1}的唯一性只在相容类中成立，这里的“唯一”必须连同相容性条件一起理解，不能读作弱解类的唯一性。
+
+(ii) 各假设的作用。(A2) 只在存在性与相容性（\cref{theorem:ch06-6.4.1}--\cref{theorem:ch06-6.4.2}）中使用；唯一性（\cref{theorem:ch06-6.3.1}）只需 (A0)--(A1)。因此定理是“唯一性假设较弱、存在性假设较强”的典型组合。
+
+(iii) 边界。若把相容性条件换成更强的要求（例如 $[u^\pm_s(\cdot,t)]_{d,2}=0$），则存在性可能失败；若去掉相容性条件，则唯一性失败（\cref{remark:ch06-6.3.2}）。在 $\phi$ 无界的情形，适定性须改用\cref{theorem:ch06-6.7.2}与\cref{theorem:ch06-6.7.5}中的（更弱的）相容性条件。
+\end{remark}
 
 \cref{theorem:ch06-6.4.1}证明中构造的 (P) 弱解有若干重要性质（特别地，由\cref{theorem:ch06-6.4.2}它们满足相容性条件）。这引出如下定义。
 
 \begin{definition}\label{definition:ch06-构造解}
-\cref{theorem:ch06-6.4.1}所给出的问题 (P) 弱解称为构造解。
+设 (A0)--(A2) 成立，$\{u_n\}$ 为逼近问题 $(P_n)$ 的解序列，$u$ 为 $\{u_n\}$ 在 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 的弱*拓扑下的一个极限点。称由\cref{theorem:ch06-6.4.1}如此给出的问题 (P) 的弱解 $u$ 称为构造解。
 \end{definition}
+
+% SUPPLEMENT: parent=definition:ch06-构造解; kind=motivation; location=定义 6.4.1 后的注记; basis=原书定义 6.4.1 与定理 6.4.1 的构造过程
+\begin{remark}\phantomsection\label{remark:ch06-构造解动机}
+(i) 动机与内容。“构造解”这一名称记录解的来源而非新的数学性质：它强调 $u$ 是由具体的逼近序列 $\{u_n\}$ 的弱*极限得到的，因而自动携带该构造过程给出的全部信息（相容性条件、$L^\infty(0,T;L^1)$ 结构、奇异部分的单调性）。后文凡断言“构造解具有某性质”，均可回到\cref{theorem:ch06-6.4.1}的证明中去验证。
+
+(ii) 各假设的作用。定义本身不引入新假设，它继承 (A0)--(A2) 与 $(P_n)$ 的选取。注意 $u_{0n}$ 的取法会影响序列，但由\cref{theorem:ch06-6.4.3}，任一极限点都是同一个满足相容性条件的弱解，故构造解实际上不依赖子列与 $u_{0n}$ 的具体选择。
+
+(iii) 边界。在 $\phi$ 严格增的情形，构造解就是唯一的弱解；在 $\phi$ 退化的情形，构造解只是弱解类中的一个元素，其余元素（如\cref{remark:ch06-6.3.2}的构造）不满足相容性条件。\cref{section:ch06-无界phi}把这一概念推广到 $\phi$ 无界的情形（见\cref{theorem:ch06-6.7.5}）。
+\end{remark}
 
 构造解的另一个有趣性质如下。
 
 \begin{proposition}\label{proposition:ch06-6.4.4}
-设 (A0)--(A2) 成立。则问题 (P) 的每个构造解都是熵解。
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界的有界开集，$T>0$，并设 (A0)--(A2) 成立。则问题 (P) 的每个构造解 $u$（即由\cref{theorem:ch06-6.4.1}的构造过程得到的弱解）都是\cref{definition:ch06-熵解}意义下的熵解，即对每个非减 $f\in C(\mathbb{R})$ 与每个满足 $\zeta\geqslant0$ 于 $Q$、$\zeta(\cdot,T)=0$ 于 $\Omega$ 的 $\zeta\in C^1([0,T];C^1_c(\Omega))$，不等式\eqref{align:ch6-6.11}成立。
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:ch06-6.4.4; kind=motivation; location=命题 6.4.4 后的注记; basis=原书命题 6.4.4 与其在 6.6 节中的证明（对逼近解取熵不等式极限）
+\begin{remark}\phantomsection\label{remark:ch06-构造熵}
+(i) 动机与内容。命题说明\cref{definition:ch06-构造解}与\cref{definition:ch06-熵解}是相容的：构造解自动满足全部熵不等式。其证明把\cref{lemma:ch06-6.5.4}的熵不等式（\eqref{align:ch6-6.60}）用于 $u_n$，再令 $n\to\infty$，利用 $\phi(u_{n_k})$ 的强收敛（\eqref{align:ch6-6.87}）与 Young 测度表示（\eqref{align:ch6-6.130}）取极限。
+
+(ii) 各假设的作用。(A2) 保证取极限所需的梯度和时间导数估计；(A1) 的非减性使 $f\circ\phi$ 非减从而熵不等式对逼近解成立；构造解的定义提供弱*收敛序列。
+
+(iii) 边界。命题的逆不成立：\cref{theorem:ch06-6.4.5}的熵解一般未必是构造解；但在\cref{theorem:ch06-6.4.5}的假设下构造解都是熵解，故\cref{theorem:ch06-6.4.5}对一切构造解适用。
+\end{remark}
 
 \subsection{正则性}\label{subsection:ch06-正则性}
 
-熵解一个有趣的特征是其奇异部分既不能自发出现，也不能随时间增长：
-
+熵解的一个有趣特征是：其奇异部分既不能自发出现，也不能随时间增长。
 \begin{theorem}\label{theorem:ch06-6.4.5}
-设 (A0)--(A1) 成立。假设
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界的有界开集，$T>0$，并设 (A0)--(A1) 成立。假设
 \begin{align}
-\text{存在 }L_0\geqslant0\text{ 使当 }|s|>L_0\text{ 时 }\phi'(s)>0. \label{align:ch6-6.34}
+\text{存在 }L_0\geqslant0\text{，使当 }|s|>L_0\text{ 时 }\phi'(s)>0. \label{align:ch6-6.34}
 \end{align}
 设 $u$ 为问题 (P) 的熵解。则对几乎所有 $t_1,t_2\in(0,T)$，$t_1<t_2$，不等式\eqref{align:ch6-6.33}成立。
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch06-6.4.5; kind=motivation; location=定理 6.4.5 后的注记; basis=原书定理 6.4.5、(6.34) 的作用与定理 6.4.1(i) 的对比
+\begin{remark}\phantomsection\label{remark:ch06-正则动机}
+(i) 动机与内容。由\cref{theorem:ch06-6.2.1}，奇异部分的 $2$-集中分量被初值完全决定；本定理说明奇异部分整体（包括 $2$-弥散分量）在时间上单调不增：$u^\pm_s(\cdot,t_2)\leqslant u^\pm_s(\cdot,t_1)\leqslant u^\pm_{0s}$。因此熵解不会在正时刻自发产生新的奇异质量，也不能使已有的奇异质量增加；这是熵条件给出的正则化效应。其证明只用一族特殊的熵：$F_\phi(y)=[y-m]_+$（$m>L_0$），它对应 $f=\chi_{[\phi(m),+\infty)}$，在\eqref{align:ch6-6.11}中给出\eqref{align:ch6-6.36}，再以 $m\to\infty$ 与 $h_p$ 型时间试验函数导出\eqref{align:ch6-6.33}。
+
+(ii) 各假设的作用。\eqref{align:ch6-6.34}是本质的：它保证 $\phi$ 在 $[L_0,+\infty)$ 上严格增，从而 $[y-m]_+$ 可写成 $F_\phi$ 的形状（取 $f=\chi_{[\phi(m),+\infty)}$，并用连续非减函数逼近），且 $M^+_{F_\phi}=1$、$M^-_{F_\phi}=0$，使熵不等式恰好分离出 $u^+_s$。若 $\phi$ 在 $+\infty$ 附近为常数（即\eqref{align:ch6-6.34}对 $+$ 号失效），则对任意大的 $m$ 都有 $\phi(m)=\phi_{+\infty}$，上述熵族不再可用；\cref{proposition:ch06-6.4.8}说明此时\eqref{align:ch6-6.33}确实可以失效。(A1) 保证 $\phi_{\pm\infty}\in\mathbb{R}$ 与 $\phi$ 有界，使 $F_\phi$ 至多线性增长、\eqref{align:ch6-6.36}中各项可积。(A2) 在此不需要。
+
+(iii) 边界与对比。对构造解，\eqref{align:ch6-6.33}已由\cref{theorem:ch06-6.4.1}(i) 在 (A0)--(A2) 下得到，不需要\eqref{align:ch6-6.34}；\cref{theorem:ch06-6.4.5}的价值在于它对一切熵解成立（在\eqref{align:ch6-6.34}下）。结论是“对几乎所有 $t_1<t_2$”，不能加强为对每个 $t$：$u(\cdot,t)$ 只在几乎处处的 $t$ 有定义，且证明中的极限只对 Lebesgue 点成立。若要得到逐时刻结论，须使用\cref{remark:ch06-6.1.2}的连续代表元并额外验证单调性在该代表元下仍成立。
+\end{remark}
 \begin{proof}
 设 $u$ 为问题 (P) 的熵解。先证对所有 $\rho\in C^1_c(\Omega)$，$\rho\geqslant0$，及 $h\in C^1([0,T])$，$h(T)=0$，有
 \begin{align}
 \int_0^T\langle u^\pm_s(\cdot,t),\rho\rangle h'(t)\,\mathrm{d}t\geqslant-h(0)\langle u^\pm_{0s},\rho\rangle. \label{align:ch6-6.35}
 \end{align}
-我们仅证 $+$ 号情形。因 $\phi$ 在 $[L_0,+\infty)$ 上严格增（见\eqref{align:ch6-6.34}），由标准逼近结果可在\eqref{align:ch6-6.11}中取 $F_\phi(y)=[y-m]_+$，$m>L_0$（这对应于在\eqref{align:ch6-6.9}中取 $f=\chi_{[\phi(m),+\infty)}$）。此时 $M^+_{F_\phi}=1$，$M^-_{F_\phi}=0$，从而得
+仅证 $+$ 号情形。因 $\phi$ 在 $[L_0,+\infty)$ 上严格增（见\eqref{align:ch6-6.34}），由逼近结果可在\eqref{align:ch6-6.11}中取 $F_\phi(y)=[y-m]_+$，$m>L_0$（这对应于在\eqref{align:ch6-6.9}中取 $f=\chi_{[\phi(m),+\infty)}$）。此时 $M^+_{F_\phi}=1$，$M^-_{F_\phi}=0$，从而得
 \begin{align}
 \begin{aligned}
-&\iint_Q\{[u_r-m]_+\zeta_t-\chi_{[m,+\infty)}(u_r)\nabla\phi(u_r)\cdot\nabla\zeta\}\,\mathrm{d}x\,\mathrm{d}t\\
-&\quad+\int_0^T\langle u^+_s(\cdot,t),\zeta_t(\cdot,t)\rangle\,\mathrm{d}t
-\geqslant-\int_\Omega[u_{0r}-m]_+\zeta(x,0)\,\mathrm{d}x-\langle u^+_{0s},\zeta(\cdot,0)\rangle
-\end{aligned} \label{align:ch6-6.36}
+&\iint_Q\{[u_r-m]_+\zeta_t-\chi_{[m,+\infty)}(u_r)\nabla\phi(u_r)\cdot\nabla\zeta\}\,\mathrm{d}x\,\mathrm{d}t
++\int_0^T\langle u^+_s(\cdot,t),\zeta_t(\cdot,t)\rangle\,\mathrm{d}t\\
+&\quad\geqslant-\int_\Omega[u_{0r}-m]_+\zeta(x,0)\,\mathrm{d}x-\langle u^+_{0s},\zeta(\cdot,0)\rangle
+\end{aligned}
+\label{align:ch6-6.36}
 \end{align}
-对每个 $\zeta\in C^1([0,T];C^1_c(\Omega))$，$\zeta\geqslant0$，$\zeta(\cdot,T)=0$ 在 $\Omega$ 上成立。在此不等式中取 $\zeta(x,t)=\rho(x)h(t)$，$\rho,h$ 如上，并令 $m\to\infty$，即得\eqref{align:ch6-6.35}。
-
-现在固定 $t_1\in(0,T)$。对充分大的 $p\in\mathbb{N}$，置
+对每个 $\zeta\in C^1([0,T];C^1_c(\Omega))$，$\zeta\geqslant0$，$\zeta(\cdot,T)=0$ 于 $\Omega$ 成立。在此不等式中取 $\zeta(x,t)=\rho(x)h(t)$，$\rho,h$ 如上，并令 $m\to\infty$，即得\eqref{align:ch6-6.35}。
+现固定 $t_1\in(0,T)$。对充分大的 $p\in\mathbb{N}$，置
 \begin{align*}
-h_p(t)\triangleq \chi_{[0,t_1]}(t)+p\left(t_1+\frac{1}{p}-t\right)\chi_{(t_1,t_1+\frac{1}{p}]}(t) \quad(t\in[0,T]).
+h_p(t)\triangleq\chi_{[0,t_1]}(t)+p\left(t_1+\frac{1}{p}-t\right)\chi_{(t_1,t_1+\frac{1}{p}]}(t)
+\quad(t\in[0,T]).
 \end{align*}
 在\eqref{align:ch6-6.35}中取 $h=h_p$，对所有非负 $\rho\in C^1_c(\Omega)$，得
 \begin{align}
 p\int_{t_1}^{t_1+\frac{1}{p}}\langle u^\pm_s(\cdot,t),\rho\rangle\,\mathrm{d}t\leqslant\langle u^\pm_{0s},\rho\rangle. \label{align:ch6-6.37}
 \end{align}
-因由\cref{definition:ch06-熵解}，映射 $t\mapsto\langle u^\pm_s(\cdot,t),\rho\rangle\in L^\infty(0,T)$，由\cref{corollary:ch02-平均收敛}(i) 有
+因由\cref{definition:ch06-熵解}，映射 $t\mapsto\langle u^\pm_s(\cdot,t),\rho\rangle$ 属于 $L^\infty(0,T)$，由\cref{theorem:ch02-BeppoLevi}(i) 有
 \begin{align*}
 \lim_{p\to\infty}p\int_{t_1}^{t_1+\frac{1}{p}}\langle u^\pm_s(\cdot,t),\rho\rangle\,\mathrm{d}t
 =\langle u^\pm_s(\cdot,t_1),\rho\rangle.
 \end{align*}
-在\eqref{align:ch6-6.37}中令 $p\to\infty$，对几乎所有 $t_1\in(0,T)$，得 $\langle u^\pm_s(\cdot,t_1),\rho\rangle\leqslant\langle u^\pm_{0s},\rho\rangle$，对所有 $\rho\in C^1_c(\Omega)$，$\rho\geqslant0$ 成立，故\eqref{align:ch6-6.33}中第二个不等式直接成立。第一个不等式类似地在\eqref{align:ch6-6.35}中取如下 $h=h_p$ 得证：
+在\eqref{align:ch6-6.37}中令 $p\to\infty$，对几乎所有 $t_1\in(0,T)$ 得 $\langle u^\pm_s(\cdot,t_1),\rho\rangle\leqslant\langle u^\pm_{0s},\rho\rangle$，对所有 $\rho\in C^1_c(\Omega)$，$\rho\geqslant0$ 成立，故\eqref{align:ch6-6.33}中第二个不等式直接成立。第一个不等式同法可证，只需在\eqref{align:ch6-6.35}中取如下的 $h=h_p$：
 \begin{align*}
 h_p(t)\triangleq p(t-t_1)\chi_{[t_1,t_1+\frac{1}{p}]}(t)
 +\chi_{(t_1+\frac{1}{p},t_2)}(t)
@@ -113,40 +173,102 @@ h_p(t)\triangleq p(t-t_1)\chi_{[t_1,t_1+\frac{1}{p}]}(t)
 结论随之成立。
 \end{proof}
 
-\cref{theorem:ch06-6.4.5}可视为熵解的一个正则性结果。特别地，由\cref{proposition:ch06-6.4.4}，它适用于构造解。值得注意的是，(P) 的构造解还表现出进一步的正则化效应。为讨论这一点，陈述如下定义。
+% SUPPLEMENT: parent=theorem:ch06-6.4.5; kind=proof; location=定理 6.4.5 原证明后的补写证明; basis=原书证明中被压缩的四处（F_φ=[y−m]_+ 的容许性、(6.36) 的导出、(6.36) 到 (6.35) 的取极限、h_p 的 Lipschitz 性、以及由标量不等式过渡到测度不等式）
+\begin{proof}
+补出原证明中被压缩的论证。
+(1) $F_\phi(y)=[y-m]_+$ 的容许性。固定 $m>L_0$（故 $m>0$）。由\eqref{align:ch6-6.34}，$\phi$ 在 $[L_0,+\infty)$ 上严格增，且由 (A1) 它在 $\mathbb{R}$ 上非减。于是对 $z\in\mathbb{R}$：若 $z\geqslant m$，则 $\phi(z)\geqslant\phi(m)$；若 $z<m$，则由 $L_0<m$ 与 $[L_0,m]$ 上的严格单调性得 $\phi(z)\leqslant\phi(m)$，且等号成立仅当 $z=m$。故
+\begin{align*}
+\chi_{[\phi(m),+\infty)}(\phi(z))=\chi_{[m,+\infty)}(z)\quad(z\in\mathbb{R}).
+\end{align*}
+取非减的 $f_\varepsilon\in C(\mathbb{R})$ 使 $0\leqslant f_\varepsilon\leqslant1$、$f_\varepsilon=0$ 于 $(-\infty,\phi(m)-\varepsilon]$、$f_\varepsilon=1$ 于 $[\phi(m),+\infty)$。则 $f_\varepsilon(\phi(z))\uparrow\chi_{[m,+\infty)}(z)$ 对每个 $z$ 成立，故
+\begin{align*}
+F_\varepsilon(y)\triangleq\int_0^y f_\varepsilon(\phi(z))\,\mathrm{d}z\ \uparrow\ \int_0^y\chi_{[m,+\infty)}(z)\,\mathrm{d}z=[y-m]_+ .
+\end{align*}
+又 $M^+_{F_\varepsilon}=\lim_{y\to+\infty}f_\varepsilon(\phi(y))=1$，且 $\lim_{y\to-\infty}f_\varepsilon(\phi(y))=f_\varepsilon(\phi(-\infty))=0$（当 $\varepsilon<\phi(m)-\phi(-\infty)$ 时），即 $M^-_{F_\varepsilon}=0$。
+(2) \eqref{align:ch6-6.36}的导出。把 $f=f_\varepsilon$ 代入\eqref{align:ch6-6.11}，利用 $M^+_{F_\varepsilon}=1$、$M^-_{F_\varepsilon}=0$，得
+\begin{align*}
+&\iint_Q\{F_\varepsilon(u_r)\partial_t\zeta-f_\varepsilon(\phi(u_r))\nabla\phi(u_r)\cdot\nabla\zeta\}\,\mathrm{d}x\,\mathrm{d}t
++\int_0^T\langle u^+_s(\cdot,t),\partial_t\zeta(\cdot,t)\rangle\,\mathrm{d}t\\
+&\quad\geqslant-\int_\Omega F_\varepsilon(u_{0r})\zeta(x,0)\,\mathrm{d}x-\langle u^+_{0s},\zeta(\cdot,0)\rangle .
+\end{align*}
+令 $\varepsilon\to0$：由 $F_\varepsilon(y)\uparrow[y-m]_+$ 与 $0\leqslant F_\varepsilon\leqslant|y|$ 得 $F_\varepsilon(u_r)\to[u_r-m]_+$、$F_\varepsilon(u_{0r})\to[u_{0r}-m]_+$（控制收敛，控制函数分别为 $|u_r|\in L^1(Q)$、$|u_{0r}|\in L^1(\Omega)$）；由 $f_\varepsilon(\phi(u_r))\to\chi_{[m,+\infty)}(u_r)$ 与 $|f_\varepsilon(\phi(u_r))\nabla\phi(u_r)|\leqslant|\nabla\phi(u_r)|\in L^1(Q)$ 得第二项的收敛（控制收敛）；$M^\pm_{F_\varepsilon}\to1,0$。故\eqref{align:ch6-6.36}成立。
+(3) 由\eqref{align:ch6-6.36}到\eqref{align:ch6-6.35}。取 $\zeta=\rho h$，其中 $\rho\in C^1_c(\Omega)$、$\rho\geqslant0$，$h\in C^1([0,T])$、$h(T)=0$。则\eqref{align:ch6-6.36}中各项为
+\begin{align*}
+&\iint_Q[u_r-m]_+\rho h'\,\mathrm{d}x\,\mathrm{d}t
+-\iint_Q\chi_{[m,+\infty)}(u_r)\nabla\phi(u_r)\cdot\nabla\rho\,h\,\mathrm{d}x\,\mathrm{d}t
++\int_0^T\langle u^+_s,\rho\rangle h'\,\mathrm{d}t\\
+&\quad\geqslant-\int_\Omega[u_{0r}-m]_+\rho h(0)\,\mathrm{d}x-\langle u^+_{0s},\rho\rangle h(0).
+\end{align*}
+令 $m\to\infty$：由 $[u_r-m]_+\leqslant|u_r|\in L^1(Q)$、$[u_{0r}-m]_+\leqslant|u_{0r}|\in L^1(\Omega)$ 及 $\chi_{[m,+\infty)}(u_r)\to0$ 几乎处处（$u_r$ 几乎处处有限）、$|\chi_{[m,+\infty)}(u_r)\nabla\phi(u_r)|\leqslant|\nabla\phi(u_r)|\in L^1(Q)$，控制收敛给出第一个与第二、第三个积分项趋于零，即得\eqref{align:ch6-6.35}。
+
+(4) $h_p$ 的容许性。\eqref{align:ch6-6.35}对 $C^1$ 的 $h$ 证明。所取的两个 $h_p$ 在 $[0,T]$ 上连续、分段 $C^1$ 且 Lipschitz，其导数属于 $L^\infty(0,T)$，且 $h_p(T)=0$。取 $h_{p,\varepsilon}\in C^1([0,T])$ 使 $h_{p,\varepsilon}(0)\to h_p(0)$、$h_{p,\varepsilon}(T)=0$、$h_{p,\varepsilon}'\to h_p'$ 于 $L^1(0,T)$（Lipschitz 函数的通常逼近），在\eqref{align:ch6-6.35}中对 $h_{p,\varepsilon}$ 写出并取极限：左端之差由 $\|h_{p,\varepsilon}'-h_p'\|_{L^1(0,T)}\sup_t|\langle u^\pm_s(\cdot,t),\rho\rangle|$ 控制，右端之差由 $|h_{p,\varepsilon}(0)-h_p(0)|\,\|u^\pm_{0s}\|_{\mathscr{R}_f(\Omega)}\|\rho\|_\infty$ 控制。故\eqref{align:ch6-6.35}对 $h_p$ 成立。
+
+(5) \eqref{align:ch6-6.37}。对第一个 $h_p$ 有 $h_p(0)=1$、$h_p'=-p$ 于 $(t_1,t_1+1/p)$、$h_p'=0$ 于其余点（在 $t_1$、$t_1+1/p$ 处不可导，但不影响积分）。代入\eqref{align:ch6-6.35}得 $-p\int_{t_1}^{t_1+1/p}\langle u^+_s,\rho\rangle\mathrm{d}t\geqslant-\langle u^+_{0s},\rho\rangle$，即\eqref{align:ch6-6.37}。
+(6) 由标量不等式到测度不等式。设 $\mu,\nu\in\mathscr{R}_f(\Omega)$ 满足 $\langle\mu,\rho\rangle\leqslant\langle\nu,\rho\rangle$ 对所有非负 $\rho\in C^1_c(\Omega)$ 成立。取 $C^1_c(\Omega)$ 中非负函数的可数稠密集 $\{\rho_k\}$（相对于 $\|\cdot\|_{C_0(\Omega)}$），则对每个 $k$ 与几乎所有的 $t_1$ 有 $\langle u^\pm_s(\cdot,t_1),\rho_k\rangle\leqslant\langle u^\pm_{0s},\rho_k\rangle$；取这些零测集之并（仍为零测集），并对 $\rho\in C_c(\Omega)$、$\rho\geqslant0$ 用 $\|\rho-\rho_k\|_{C_0(\Omega)}<\delta$ 与 $|\langle\mu,\rho-\rho_k\rangle|\leqslant\|\mu\|_{\mathscr{R}_f(\Omega)}\delta$ 过渡，得 $\langle u^\pm_s(\cdot,t_1),\rho\rangle\leqslant\langle u^\pm_{0s},\rho\rangle$ 对所有非负 $\rho\in C_c(\Omega)$ 成立。于是对紧集 $K\subseteq\Omega$ 与开集 $U\supseteq K$，取 $\rho\in C_c(\Omega)$ 使 $\chi_K\leqslant\rho\leqslant\chi_U$，得 $u^\pm_s(\cdot,t_1)(K)\leqslant u^\pm_{0s}(U)$；令 $U\downarrow K$ 并用外正则性得 $u^\pm_s(\cdot,t_1)(K)\leqslant u^\pm_{0s}(K)$，再由内正则性得 $u^\pm_s(\cdot,t_1)\leqslant u^\pm_{0s}$ 于 $\mathscr{R}_f(\Omega)$。
+(7) 第一个不等式的 $h_p$。对第二个 $h_p$ 有 $h_p(0)=0$、$h_p'=p$ 于 $(t_1,t_1+1/p)$、$h_p'=-p$ 于 $(t_2,t_2+1/p)$、其余为零。代入\eqref{align:ch6-6.35}得
+\begin{align*}
+p\int_{t_1}^{t_1+\frac{1}{p}}\langle u^\pm_s(\cdot,t),\rho\rangle\,\mathrm{d}t
+-p\int_{t_2}^{t_2+\frac{1}{p}}\langle u^\pm_s(\cdot,t),\rho\rangle\,\mathrm{d}t\geqslant0 .
+\end{align*}
+由\cref{theorem:ch02-BeppoLevi}(i)，令 $p\to\infty$ 得 $\langle u^\pm_s(\cdot,t_1),\rho\rangle\geqslant\langle u^\pm_s(\cdot,t_2),\rho\rangle$ 对几乎所有 $(t_1,t_2)\in(0,T)^2$（$t_1<t_2$）成立；其例外集由 Fubini 定理为二维零测集。再用第 (6) 段的方式过渡到测度不等式，即得\eqref{align:ch6-6.33}的第一个不等式。
+\end{proof}
+
+\cref{theorem:ch06-6.4.5}可视为熵解的正则性结果。特别地，由\cref{proposition:ch06-6.4.4}，它适用于构造解。值得注意的是，(P) 的构造解还表现出进一步的正则化效应。为讨论这一点，陈述如下定义。
 
 \begin{definition}\label{definition:ch06-RfL1正则}
-问题 (P) 的弱解 $u$ 经历 $\mathscr{R}_f$--$L^1$ 正则化效应，若存在等待时间 $\tau\in[0,T)$，使对所有 $t\in(\tau,T)$ 有 $u(\cdot,t)\in L^1(\Omega)$。若 $\tau=0$，则发生瞬时 $\mathscr{R}_f$--$L^1$ 正则化。
+设 $u$ 为问题 (P) 的弱解。若存在 $\tau\in[0,T)$，使 $u(\cdot,t)\in L^1(\Omega)$ 对所有 $t\in(\tau,T)$ 成立（其中 $t\mapsto u(\cdot,t)$ 取\cref{remark:ch06-6.1.2}的连续代表元），则称 $u$ 经历 $\mathscr{R}_f$--$L^1$ 正则化效应，$\tau$ 称为相应的等待时间。若 $\tau=0$，则称发生瞬时 $\mathscr{R}_f$--$L^1$ 正则化。
 \end{definition}
 
-$\mathscr{R}_f$--$L^1$ 正则化效应发生的充分条件由如下命题给出，它依赖于 $\phi$ 趋于饱和值 $\phi_{\pm\infty}$ 的合适收敛速率（证明见文献~\cite{ref87} 命题 3.8）。
+% SUPPLEMENT: parent=definition:ch06-RfL1正则; kind=motivation; location=定义 6.4.2 后的注记; basis=原书定义 6.4.2 与命题 6.4.6--6.4.8 的对比
+\begin{remark}\phantomsection\label{remark:ch06-RfL1动机}
+(i) 动机与内容。弱解 $u(\cdot,t)$ 一般是测度，其奇异部分由\cref{theorem:ch06-6.2.1}与\cref{theorem:ch06-6.4.5}控制但不能排除。定义刻画更强的现象：经过等待时间 $\tau$ 后解变成 $L^1$ 函数，即奇异部分完全消失。“等待时间”一语的来源是：$\tau>0$ 时在 $(0,\tau)$ 内仍可有奇异部分，正则化不是立即发生的；$\tau=0$ 时称之为瞬时的。
 
+(ii) 各假设的作用。要求 $u(\cdot,t)\in L^1(\Omega)$ 对一切 $t\in(\tau,T)$ 成立，这只有在采用\cref{remark:ch06-6.1.2}的连续代表元后才有意义；否则只能对几乎处处的 $t$ 陈述。定义本身不引入新假设，但\cref{proposition:ch6-瞬时正则}需要 $\phi$ 趋于饱和值的速率条件，\cref{proposition:ch06-6.4.7}--\cref{proposition:ch06-6.4.8}则给出不发生的情形。
+
+(iii) 边界。$\tau<T$ 是必要的：若允许 $\tau=T$，则条件空洞。若 $u_0\in L^1(\Omega)$，则 $\tau=0$ 自动成立（\cref{theorem:ch06-6.4.1}(ii)）；故非平凡的等待时间只出现在 $u_0$ 含奇异部分时。
+\end{remark}
+
+$\mathscr{R}_f$--$L^1$ 正则化效应发生的充分条件由如下命题给出，它依赖 $\phi$ 趋于饱和值 $\phi_{\pm\infty}$ 的合适收敛速率（证明见文献~\cite{ref87} 命题 3.8）。
 \begin{proposition}\label{proposition:ch6-瞬时正则}
-设 (A0)--(A2) 成立。设存在 $s_\pm\in(0,1)$ 与 $M_\pm\in(0,\phi_{\pm\infty}]$，使
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界的有界开集，$T>0$，并设 (A0)--(A2) 成立。设存在 $s_\pm\in(0,1)$ 与 $M_\pm\in(0,\phi_{\pm\infty}]$，使
 \begin{align}
 \pm\phi_{\pm\infty}\mp\phi(y)\geqslant\frac{M_\pm}{(1+|y|)^{s_\pm}}
 \quad\text{当 }\pm y\geqslant0. \label{align:ch6-6.38}
 \end{align}
-进而设 $u^\pm_0\in\mathscr{R}^+_{d,p}(\Omega)$，$p\in(1,\frac{2}{1+s_\pm})$，$u$ 为 (P) 满足相容性条件的唯一弱解。则 $u^\pm\in L^\infty(0,T;L^1(\Omega))$。
+进而设 $u^\pm_0\in\mathscr{R}^+_{d,p}(\Omega)$ 为 $2$-弥散奇异初值，$p\in(1,\frac{2}{1+s_\pm})$，$u$ 为 (P) 满足相容性条件的唯一弱解。则 $u^\pm\in L^\infty(0,T;L^1(\Omega))$，即发生瞬时的 $\mathscr{R}_f$--$L^1$ 正则化。
 \end{proposition}
 
-相反地，如下两个命题指出瞬时 $\mathscr{R}_f$--$L^1$ 正则化不发生的情形：或对合适的 $u_0\in\mathscr{R}_{d,2}(\Omega)$ 且 $\phi$ 严格增，或在 $\phi$ 在 $\pm\infty$ 附近为常数的最奇异情形下对任意构造解。证明见文献~\cite{ref87} 命题 3.9、3.10。
+% SUPPLEMENT: parent=proposition:ch6-瞬时正则; kind=motivation; location=命题 6.4.6 后的注记; basis=原书命题 6.4.6、条件 (6.38) 的含义与文献 [87] 命题 3.8 的结论
+\begin{remark}\phantomsection\label{remark:ch06-瞬时正则动机}
+(i) 动机与内容。\eqref{align:ch6-6.38}定量刻画 $\phi$ 趋于饱和值 $\phi_{\pm\infty}$ 的速率：允许以幂律速率 $|y|^{-s_\pm}$（$s_\pm\in(0,1)$）退化，但不允许指数式或常数式饱和。命题断言：在这一速率下，$2$-弥散奇异部分的初始质量经方程立即被“吸收”，解对每个正时刻都属于 $L^1$，即发生瞬时 $\mathscr{R}_f$--$L^1$ 正则化。
 
+(ii) 各假设的作用。$s_\pm\in(0,1)$ 与 $M_\pm>0$ 使\eqref{align:ch6-6.38}成为一致的正幂律下界，它保证 $\phi$ 在饱和值附近不出现平坦的“平台”，从而扩散通量在奇异质量所在处不为零；若 $s_\pm\geqslant1$（退化过慢），估计不再给出 $L^1$ 结论；若 $\phi$ 在无穷远附近为常数，则\eqref{align:ch6-6.38}对任何 $M_\pm>0$ 都不成立。条件 $u^\pm_0\in\mathscr{R}^+_{d,p}(\Omega)$ 与 $p\in(1,\frac{2}{1+s_\pm})$ 是熵估计所需的质量指标范围：$p$ 太大会使初始奇异质量过于集中，正则化时间变为正（\cref{proposition:ch06-6.4.7}）。$u$ 取满足相容性条件的唯一弱解，正是\cref{theorem:ch06-6.4.3}所给出的解。
+
+(iii) 边界。结论 $u^\pm\in L^\infty(0,T;L^1(\Omega))$ 强于“$u(\cdot,t)\in L^1$ 对几乎所有 $t$”，它给出了 $L^1$ 范数关于时间的界，因而蕴含瞬时正则化且等待时间为零。证明见文献~\cite{ref87} 命题 3.8，本处只陈述而不重复。
+\end{remark}
+
+相反地，如下两个命题指出瞬时 $\mathscr{R}_f$--$L^1$ 正则化不发生的情形：或对合适的 $u_0\in\mathscr{R}_{d,2}(\Omega)$ 且 $\phi$ 严格增，或在 $\phi$ 在 $\pm\infty$ 附近为常数的最奇异情形下对任意构造解。证明见文献~\cite{ref87} 命题 3.9、3.10。
 \begin{proposition}\label{proposition:ch06-6.4.7}
-设 (A0)--(A2) 成立且 $\phi$ 严格增。则存在 $u_0\in\mathscr{R}^+_{d,2}(\Omega)$，$u_{0s}\neq0$，使对 (P) 满足相容性条件的唯一弱解，有
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界的有界开集，$T>0$，并设 (A0)--(A2) 成立且 $\phi$ 严格增。则存在 $u_0\in\mathscr{R}^+_{d,2}(\Omega)$，$u_{0s}\neq0$，使对 (P) 满足相容性条件的唯一弱解 $u$，其奇异部分在 $t\to0^+$ 时连续地趋于初值（因而不发生瞬时正则化），即
 \begin{align}
 \operatorname*{ess\,lim}_{t\to0^+}\|u_s(\cdot,t)-u_{0s}\|_{\mathscr{R}_f(\Omega)}=0. \label{align:ch6-6.39}
 \end{align}
 \end{proposition}
-
 \begin{proposition}\label{proposition:ch06-6.4.8}
-设 (A0)--(A2) 成立，$u$ 为 (P) 满足相容性条件的唯一弱解。设存在 $\pm c_\pm\geqslant0$ 与 $\pm d_\pm\geqslant0$，使 $\phi(y)=c_\pm$ 当 $\pm y\geqslant\pm d_\pm$。则对每个开子集 $\widetilde\Omega\Subset\Omega$，有
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界的有界开集，$T>0$，并设 (A0)--(A2) 成立，$u$ 为 (P) 满足相容性条件的唯一弱解。设存在 $\pm c_\pm\geqslant0$ 与 $\pm d_\pm\geqslant0$，使当 $\pm y\geqslant\pm d_\pm$ 时 $\phi(y)=c_\pm$。则对每个开子集 $\widetilde\Omega\Subset\Omega$，奇异部分在 $t\to0^+$ 时连续地趋于初值，即
 \begin{align}
 \operatorname*{ess\,lim}_{t\to0^+}\|u^\pm_s(\cdot,t)-u^\pm_{0s}\|_{\mathscr{R}_f(\widetilde\Omega)}=0. \label{align:ch6-6.40}
 \end{align}
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch06-6.4.7; kind=motivation; location=命题 6.4.7 与命题 6.4.8 后的注记; basis=原书命题 6.4.7--6.4.8 与 (6.39)--(6.40) 的对照分析
+% SUPPLEMENT: parent=proposition:ch06-6.4.8; kind=motivation; location=命题 6.4.7 与命题 6.4.8 后的注记; basis=原书命题 6.4.7--6.4.8 与 (6.39)--(6.40) 的对照分析
+\begin{remark}\phantomsection\label{remark:ch06-非正则动机}
+(i) 动机与内容。两个命题给出\cref{proposition:ch6-瞬时正则}的逆例，说明瞬时 $\mathscr{R}_f$--$L^1$ 正则化并非普遍现象，且不发生的方式有两种。\eqref{align:ch6-6.39}说：即使 $\phi$ 严格增（因此相容性条件自动满足、弱解唯一），也可取到 $2$-弥散奇异初值 $u_0$，使奇异部分在 $t\to0^+$ 时连续地趋于初值，从而不在任何正时刻消失。\eqref{align:ch6-6.40}说：若 $\phi$ 在 $\pm\infty$ 附近为常数（最奇异的饱和情形），则对任意构造解，奇异部分在每个内子区域上连续地趋于初值，完全不发生正则化。
 
+(ii) 各假设的作用。\eqref{align:ch6-6.39}中 $\phi$ 严格增使 $\mathscr{S}^\pm_t=\varnothing$，相容性条件迫使奇异部分全为 $2$-集中，因此奇异初值可以“停留”；$u_0\in\mathscr{R}^+_{d,2}(\Omega)$ 保证奇异部分是 $2$-弥散的，这正是正则化机制唯一可能作用的对象。\eqref{align:ch6-6.40}中 $\phi$ 在 $[d_+,\infty)$ 与 $(-\infty,-d_-]$ 上为常数使饱和集 $\mathscr{S}^\pm_t$ 在正时刻“很大”，相容性条件几乎不施加限制，奇异质量因而可以停留；结论只在 $\widetilde\Omega\Subset\Omega$ 上陈述，因为边界附近的质量可能立即被吸收（$\phi$ 的平坦性与边界条件的相互作用）。
 
+(iii) 边界。\eqref{align:ch6-6.40}是局部陈述：一般情况下不能换成 $\widetilde\Omega=\Omega$，这是 $\mathscr{R}_f(\Omega)$ 范数与测度的紧性在边界处的技术限制。两个命题都说明：\cref{proposition:ch6-瞬时正则}的速率条件\eqref{align:ch6-6.38}与“$\phi$ 严格增”是两种互补的机制，前者保证正则化，后者允许奇异质量停留；在 $\phi$ 严格增且\eqref{align:ch6-6.38}成立时，二者并不矛盾，因为\cref{proposition:ch06-6.4.7}只断言存在特定的 $u_0$，而\cref{proposition:ch6-瞬时正则}要求 $u^\pm_0\in\mathscr{R}^+_{d,p}(\Omega)$ 且 $p$ 落在特定区间。
+\end{remark}
 
 \end{document}

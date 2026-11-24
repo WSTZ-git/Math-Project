@@ -1,0 +1,428 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+本章更细致地考察 $\BV$ 函数、Sobolev 函数与 Lipschitz 连续函数的可微性。这些函数在多种意义下对 $\mathcal{L}^n$-a.e. 的点 $x\in\mathbb{R}^n$ 可微，并因此在除一个小集之外与 $C^1$ 函数相等。
+
+\cref{section:ch06-01}研究若干 $L^p$ 意义下的 $\mathcal{L}^n$-a.e. 可微性；\cref{section:ch06-02}把这些想法推广，证明 $p>n$ 时 $W^{1,p}$ 中的函数在经典意义下 $\mathcal{L}^n$-a.e. 可微。% XREF p=257 "Section 6.1 investigates differentiability-a.e. in certain L^p-senses" | p=257 "and Section 6.2 extends these ideas to show functions in W^{1,p} for p > n are in fact-a.e. differentiable in the classical sense"
+
+\cref{section:ch06-03}叙述凸函数的基本性质；\cref{section:ch06-04}证明 Aleksandrov 定理，该定理断言凸函数 $\mathcal{L}^n$-a.e. 两次可微。% XREF p=257 "Section 6.3 recounts the elementary properties of convex functions" | p=257 "In Section 6.4 we prove Aleksandrov's Theorem, asserting a convex function is twice differentiable-a.e."
+
+Whitney 延拓定理保证 $C^1$ 延拓的存在，其证明见\cref{section:ch06-05}；\cref{section:ch06-06}用它证明 $\BV$ 函数或 Sobolev 函数在除一个小集之外与 $C^1$ 函数相等。% XREF p=257 "Whitney's Extension Theorem, ensuring the existence of C^1 extensions, is proved in Section 6.5" | p=257 "and is utilized in Section 6.6 to show that a BV or Sobolev function equals a C^1 function except on a small set"
+
+\section{$L^p$ 可微性与近似可微性}\label{section:ch06-01}
+
+\subsection{$\BV$ 函数的 $L^{1^{*}}$ 可微性}\label{subsection:ch06-01-1}
+
+设 $f\in\BV_{\loc}(\mathbb{R}^n)$。
+
+\begin{remark}\phantomsection\label{remark:ch06-01-记号}
+设 $n$ 为正整数，$f\in\BV_{\loc}(\mathbb{R}^n)$。回顾\cref{section:ch05-01}中的记号% XREF p=272 "We recall from Section 5.1 the notation"
+\begin{align*}
+[Df]=[Df]_{\mathrm{ac}}+[Df]_{\mathrm{s}}=\mathcal{L}^n\llcorner Df+[Df]_{\mathrm{s}},
+\end{align*}
+其中 $Df\in L^1_{\loc}(\mathbb{R}^n;\mathbb{R}^n)$ 是 $[Df]$ 的绝对连续部分 $[Df]_{\mathrm{ac}}$ 的密度，$[Df]_{\mathrm{s}}$ 是 $[Df]$ 的奇异部分。
+\end{remark}
+
+下面先证明：在 $\mathcal{L}^n$-a.e. 的点 $x$ 附近，$f$ 可以在积分范数意义下用线性映射逼近。
+
+\begin{theorem}[$\BV$ 函数的可微性]\label{theorem:ch06-6-1}
+设 $n\geqslant2$ 为正整数，$1^{*}:=n/(n-1)$，$f\in\BV_{\loc}(\mathbb{R}^n)$，$Df\in L^1_{\loc}(\mathbb{R}^n;\mathbb{R}^n)$ 为梯度测度 $[Df]$ 的绝对连续部分的密度，$B(x,r)$ 为以 $x$ 为球心、$r>0$ 为半径的闭球。则对 $\mathcal{L}^n$-a.e. 的点 $x\in\mathbb{R}^n$ 有
+\begin{align*}
+\left(\fint_{B(x,r)}\lvert f(y)-f(x)-Df(x)\cdot(y-x)\rvert^{1^{*}}\diff y\right)^{\frac{1}{1^{*}}}=o(r)
+\end{align*}
+当 $r\to0$。
+\end{theorem}
+
+\begin{proof}
+1. 对 $\mathcal{L}^n$-a.e. 的点 $x\in\mathbb{R}^n$，下列条件成立：
+\begin{enumerate}[(a)]
+\item $\lim_{r\to0}\fint_{B(x,r)}\lvert f(y)-f(x)\rvert\diff y=0$；
+\item $\lim_{r\to0}\fint_{B(x,r)}\lvert Df(y)-Df(x)\rvert\diff y=0$；
+\item $\lim_{r\to0}\frac{\lvert[Df]_{\mathrm{s}}\rvert(B(x,r))}{r^n}=0$。
+\end{enumerate}
+
+% SUPPLEMENT: parent=theorem:ch06-6-1; kind=proof; 补出第 1 步三条几乎处处条件的来源：Lebesgue 点定理给出 (a)(b)，Lebesgue 分解定理给出奇异部分的密度为零即 (c)
+下面对第 1 步的三条条件各给出来源。
+
+（1）条件 (a)。由 $f\in\BV_{\loc}(\mathbb{R}^n)$ 得 $f\in L^1_{\loc}(\mathbb{R}^n)$。在\cref{theorem:ch01-1-33}中取 $\mu=\mathcal{L}^n$ 与 $p=1$，得对 $\mathcal{L}^n$-a.e. 的点 $x$ 有 $\lim_{r\to0}\fint_{B(x,r)}\lvert f-f(x)\rvert\diff y=0$，此即 (a)。% XREF internal
+
+（2）条件 (b)。由 $Df\in L^1_{\loc}(\mathbb{R}^n;\mathbb{R}^n)$，把 $Df$ 的每个分量代入 (a) 的论证，得对 $\mathcal{L}^n$-a.e. 的点 $x$ 与 $i=1,\cdots,n$ 有 $\lim_{r\to0}\fint_{B(x,r)}\lvert Df^i(y)-Df^i(x)\rvert\diff y=0$。由于
+\begin{align*}
+\lvert Df(y)-Df(x)\rvert\leqslant\sum_{i=1}^{n}\lvert Df^i(y)-Df^i(x)\rvert,
+\end{align*}
+而有限个 $\mathcal{L}^n$-零集的并仍为 $\mathcal{L}^n$-零集，故 (b) 对 $\mathcal{L}^n$-a.e. 的点 $x$ 成立。
+
+（3）条件 (c)。记 $\nu:=\lvert[Df]_{\mathrm{s}}\rvert$，则 $\nu$ 是 $\mathbb{R}^n$ 上的 Radon 测度且 $\nu\perp\mathcal{L}^n$。在\cref{theorem:ch01-1-31}(ii) 中取 $\mu=\mathcal{L}^n$，得 $D_{\mathcal{L}^n}\nu_{\mathrm{s}}=0$ $\mathcal{L}^n$-a.e.；由 $\nu\perp\mathcal{L}^n$ 知其绝对连续部分为零，即 $\nu_{\mathrm{s}}=\nu$，故 $D_{\mathcal{L}^n}\nu=0$ $\mathcal{L}^n$-a.e.。按\cref{definition:ch01-1-21}，这正是 $\lim_{r\to0}\nu(B(x,r))/\mathcal{L}^n(B(x,r))=0$ 对 $\mathcal{L}^n$-a.e. 的点 $x$ 成立，而 $\mathcal{L}^n(B(x,r))=\alpha(n)r^n$，故 (c) 成立。% XREF internal
+
+2. 固定这样的点 $x$，并设 $x=0$。取 $r>0$，令 $f^\varepsilon:=\eta_\varepsilon*f$，其中 $\eta_\varepsilon$ 为标准磨光核。记 $B(r)=B(0,r)$，取 $y\in B(r)$，并定义 $g(t):=f^\varepsilon(ty)$。则
+\begin{align*}
+g(1)=g(0)+\int_0^1g'(s)\diff s;
+\end{align*}
+即
+\begin{align*}
+f^\varepsilon(y)&=f^\varepsilon(0)+\int_0^1Df^\varepsilon(sy)\cdot y\diff s\\
+&=f^\varepsilon(0)+Df(0)\cdot y+\int_0^1\bigl[Df^\varepsilon(sy)-Df(0)\bigr]\cdot y\diff s.
+\end{align*}
+
+3. 取任一函数 $\phi\in C_c^1(B(r))$ 满足 $\lvert\phi\rvert\leqslant1$，乘以 $\phi$，并在 $B(r)$ 上取平均：
+\begin{align*}
+&\fint_{B(r)}\phi(y)\bigl(f^\varepsilon(y)-f^\varepsilon(0)-Df(0)\cdot y\bigr)\diff y\\
+&\quad=\int_0^1\left(\fint_{B(r)}\phi(y)\bigl[Df^\varepsilon(sy)-Df(0)\bigr]\cdot y\diff y\right)\diff s\\
+&\quad=\int_0^1\frac{1}{s}\left(\fint_{B(rs)}\phi\Bigl(\frac{z}{s}\Bigr)\bigl[Df^\varepsilon(z)-Df(0)\bigr]\cdot z\diff z\right)\diff s.\qquad(\star)
+\end{align*}
+
+现令
+\begin{align*}
+g_\varepsilon(s)&:=\int_{B(rs)}\phi\Bigl(\frac{z}{s}\Bigr)Df^\varepsilon(z)\cdot z\diff z\\
+&=-\int_{B(rs)}f^\varepsilon(z)\diver\Bigl(\phi\Bigl(\frac{z}{s}\Bigr)z\Bigr)\diff z\\
+&\longrightarrow-\int_{B(rs)}f(z)\diver\Bigl(\phi\Bigl(\frac{z}{s}\Bigr)z\Bigr)\diff z\qquad(\varepsilon\to0)\\
+&=\int_{B(rs)}\phi\Bigl(\frac{z}{s}\Bigr)z\cdot\diff[Df]\\
+&=\int_{B(rs)}\phi\Bigl(\frac{z}{s}\Bigr)Df(z)\cdot z\diff z+\int_{B(rs)}\phi\Bigl(\frac{z}{s}\Bigr)z\cdot\diff[Df]_{\mathrm{s}}.
+\end{align*}
+
+进一步，
+\begin{align*}
+\frac{\lvert g_\varepsilon(s)\rvert}{s^{n+1}}
+&\leqslant\frac{r}{s^n}\int_{B(rs)}\lvert Df^\varepsilon(z)\rvert\diff z\\
+&=\frac{r}{s^n}\int_{B(rs)}\left\lvert\int_{\mathbb{R}^n}D\eta_\varepsilon(z-y)f(y)\diff y\right\rvert\diff z\\
+&=\frac{r}{s^n}\int_{B(rs)}\left\lvert\int_{\mathbb{R}^n}\eta_\varepsilon(z-y)\diff[Df]\right\rvert\diff z\\
+&\leqslant\frac{r}{s^n}\int_{B(rs)}\int_{\mathbb{R}^n}\eta_\varepsilon(z-y)\diff\lVert Df\rVert\diff z\\
+&=\frac{r}{s^n}\int_{\mathbb{R}^n}\int_{B(rs)}\eta_\varepsilon(z-y)\diff z\diff\lVert Df\rVert\\
+&\leqslant\frac{C}{s^n\varepsilon^n}\int_{B(rs+\varepsilon)}\int_{B(rs)\cap B(y,\varepsilon)}\diff z\diff\lVert Df\rVert\\
+&\leqslant C\,\frac{\min\{(rs)^n,\varepsilon^n\}}{s^n\varepsilon^n}\,\lVert Df\rVert\bigl(B(rs+\varepsilon)\bigr)\\
+&\leqslant C\,\frac{\min\{(rs)^n,\varepsilon^n\}(rs+\varepsilon)^n}{s^n\varepsilon^n}\\
+&\leqslant C\qquad(0<\varepsilon,\ s\leqslant1).
+\end{align*}
+
+4. 于是对 $(\star)$ 应用控制收敛定理，得
+\begin{align*}
+&\fint_{B(r)}\phi(y)\bigl(f(y)-f(0)-Df(0)\cdot y\bigr)\diff y\\
+&\quad\leqslant Cr\int_0^1\fint_{B(rs)}\lvert Df(z)-Df(0)\rvert\diff z\diff s+Cr\int_0^1\frac{\lvert[Df]_{\mathrm{s}}\rvert(B(rs))}{(rs)^n}\diff s\\
+&\quad=o(r)
+\end{align*}
+当 $r\to0$。对上述一切 $\phi$ 取上确界，得
+\begin{align*}
+\fint_{B(r)}\lvert f(y)-f(0)-Df(0)\cdot y\rvert\diff y=o(r)\qquad(\star\star)
+\end{align*}
+当 $r\to0$。
+
+5. 最后，由\cref{theorem:ch05-5-10}(ii)可得% XREF p=275 "observe from Theorem 5.10, (ii) in Section 5.6 that"
+\begin{align*}
+&\left(\fint_{B(r)}\lvert f(y)-f(0)-Df(0)\cdot y\rvert^{\frac{n}{n-1}}\diff y\right)^{\frac{n-1}{n}}\\
+&\quad\leqslant C\,\frac{\lVert D(f-f(0)-Df(0)\cdot y)\rVert(B(r))}{r^{n-1}}+C\fint_{B(r)}\lvert f(y)-f(0)-Df(0)\cdot y\rvert\diff y\\
+&\quad=o(r)
+\end{align*}
+当 $r\to0$，依据 $(\star\star)$、(b) 与 (c)。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-1; kind=motivation; 说明 L^{1*} 一阶逼近的含义、指数 1* 的来源与「对偶 + 提升」的证明路线
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-1-动机}
+本定理断言：对 $\mathcal{L}^n$-a.e. 的点 $x$，$f$ 与其一阶 Taylor 多项式 $y\mapsto f(x)+Df(x)\cdot(y-x)$ 之差在 $B(x,r)$ 上的 $L^{1^{*}}$ 平均值是 $o(r)$。指数 $1^{*}=n/(n-1)$ 是 $1$ 的 Sobolev 共轭指数，也正是 $\BV$ 函数所处的尺度：$\BV$ 函数的梯度只是一阶测度，可积性为 $L^1$，而 Sobolev 型不等式给出的可积性恰为 $L^{n/(n-1)}$，因此 $L^{1^{*}}$ 是使结论对一切 $\BV$ 函数都成立的最小指数。
+
+证明的路线是一条「对偶再提升」的链条。第 1 步选出使 $f$、$Df$ 与奇异测度 $[Df]_{\mathrm{s}}$ 三者都表现良好的点；第 2、3 步用磨光函数 $f^\varepsilon$ 上的微积分基本定理把差写成导数沿径向线段的积分，乘以试验函数 $\phi$ 并在球上平均后得到 $(\star)$；第 4 步把关于 $f^\varepsilon$ 的积分换成关于测度 $[Df]$ 的积分，再对 $\phi$ 取上确界，得到 $L^1$ 意义下的一阶逼近 $(\star\star)$；第 5 步用 Sobolev 型不等式把 $L^1$ 估计提升为 $L^{1^{*}}$ 估计。第 4 步中 $\phi$ 的任意性说明 $L^1$ 范数可以由与试验函数配对的上确界刻画，于是一个关于光滑函数的等式被转化为关于测度的估计。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-1; kind=hypotheses; 逐条分析 BV_loc、指数 1*、线性项 Df(x) 与奇异部分的作用，并说明为何只能断言几乎处处
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-1-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in\BV_{\loc}(\mathbb{R}^n)$ 有三项作用：它给出 $f\in L^1_{\loc}(\mathbb{R}^n)$，使第 1 步的 Lebesgue 点论证可用；由\cref{theorem:ch05-5-10}的 Sobolev 型不等式它又给出 $f\in L^{1^{*}}_{\loc}(\mathbb{R}^n)$，使定理左端的平均值对每个球有限；它还给出梯度测度的分解 $[Df]=\mathcal{L}^n\llcorner Df+[Df]_{\mathrm{s}}$，其中密度 $Df$ 承担 Taylor 多项式的线性项，奇异部分 $[Df]_{\mathrm{s}}$ 在第 4 步被单独估计。若只设 $f\in L^1_{\loc}(\mathbb{R}^n)$，梯度测度不存在，线性项 $Df(x)$ 无从定义，条件 (c) 与第 5 步的提升都失去依据。% XREF internal
+\item 指数 $1^{*}=n/(n-1)$ 由 $p=1$ 与 $p^{*}=np/(n-p)$ 给出，故要求 $n\geqslant2$。$n=1$ 时 $1\leqslant p<n$ 无解，$L^{1^{*}}$ 不对应有限指数，定理没有内容。
+\item 线性映射取为 $Df(x)$，即 $[Df]$ 的绝对连续部分在 $x$ 处的密度，它只在 $\mathcal{L}^n$-a.e. 的意义下由 $[Df]$ 确定。以 $\mathbb{R}$ 上的 Cantor--Vitali 函数为例：它是 $\BV$ 函数，其导数 $\mathcal{L}^1$-a.e. 为零，全部变差由奇异部分承载，定理此时取线性映射 $0$，结论仍然成立。
+\item 结论只能是 $\mathcal{L}^n$-a.e. 的。$\BV$ 函数一般不可微：取 $f=\chi_{B(0,1)}$，则 $f$ 在 $\partial B(0,1)$ 的每一点处都没有导数，而 $\mathcal{L}^n(\partial B(0,1))=0$，与结论不矛盾。结论中的指数 $1^{*}$ 也不能换成 $\infty$：$\BV$ 函数可以无界，球上的本质上确界估计不成立。
+\end{enumerate}
+\end{remark}
+
+\subsection{$W^{1,p}$ 函数的 $L^{p^{*}}$ 几乎处处可微性}\label{subsection:ch06-01-2}
+
+若 $f$ 是 Sobolev 函数，则可以用切平面改进上述局部逼近。
+
+\begin{theorem}[Sobolev 函数的可微性]\label{theorem:ch06-6-2}
+设 $n\geqslant2$ 为正整数，$1\leqslant p<n$，$p^{*}:=np/(n-p)$，$f\in W^{1,p}_{\loc}(\mathbb{R}^n)$，$Df\in L^p_{\loc}(\mathbb{R}^n;\mathbb{R}^n)$ 为 $f$ 的弱梯度，$B(x,r)$ 为以 $x$ 为球心、$r>0$ 为半径的闭球。则对 $\mathcal{L}^n$-a.e. 的点 $x\in\mathbb{R}^n$ 有
+\begin{align*}
+\left(\fint_{B(x,r)}\lvert f(y)-f(x)-Df(x)\cdot(y-x)\rvert^{p^{*}}\diff y\right)^{\frac{1}{p^{*}}}=o(r)
+\end{align*}
+当 $r\to0$。
+\end{theorem}
+
+\begin{proof}
+1. 对 $\mathcal{L}^n$-a.e. 的点 $x\in\mathbb{R}^n$ 有
+\begin{enumerate}[(a)]
+\item $\lim_{r\to0}\fint_{B(x,r)}\lvert f(x)-f(y)\rvert^{p}\diff y=0$；
+\item $\lim_{r\to0}\fint_{B(x,r)}\lvert Df(x)-Df(y)\rvert^{p}\diff y=0$。
+\end{enumerate}
+
+2. 固定这样的点 $x$，并设 $x=0$。取 $\phi\in C_c^1(B(r))$ 满足 $\lVert\phi\rVert_{L^q(B(r))}\leqslant1$，其中 $1/p+1/q=1$。则与前一证明相同，计算得
+\begin{align*}
+&\fint_{B(r)}\phi(y)\bigl(f(y)-f(0)-Df(0)\cdot y\bigr)\diff y\\
+&\quad=\int_0^1\frac{1}{s}\fint_{B(rs)}\phi\Bigl(\frac{z}{s}\Bigr)\bigl[Df(z)-Df(0)\bigr]\cdot z\diff z\diff s\\
+&\quad\leqslant r\int_0^1\left(\fint_{B(rs)}\Bigl\lvert\phi\Bigl(\frac{z}{s}\Bigr)\Bigr\rvert^{q}\diff z\right)^{\frac{1}{q}}\left(\fint_{B(r)}\lvert Df(z)-Df(0)\rvert^{p}\diff z\right)^{\frac{1}{p}}\diff s.
+\end{align*}
+
+由于
+\begin{align*}
+\fint_{B(rs)}\Bigl\lvert\phi\Bigl(\frac{z}{s}\Bigr)\Bigr\rvert^{q}\diff z=\fint_{B(r)}\lvert\phi(y)\rvert^{q}\diff y\leqslant\frac{1}{\alpha(n)r^{n}},
+\end{align*}
+得
+\begin{align*}
+\fint_{B(r)}\phi(y)\bigl(f(y)-f(0)-Df(0)\cdot y\bigr)\diff y=o\bigl(r^{1-\frac{n}{q}}\bigr)\qquad(r\to0).
+\end{align*}
+对上述一切函数 $\phi$ 取上确界，得
+\begin{align*}
+\frac{1}{r^{n}}\left(\int_{B(r)}\lvert f(y)-f(0)-Df(0)\cdot y\rvert^{p}\diff y\right)^{\frac{1}{p}}=o\bigl(r^{1-\frac{n}{q}}\bigr).
+\end{align*}
+于是
+\begin{align*}
+\left(\fint_{B(r)}\lvert f(y)-f(0)-Df(0)\cdot y\rvert^{p}\diff y\right)^{\frac{1}{p}}=o(r)\qquad(r\to0).\qquad(\star)
+\end{align*}
+
+3. 于是由\cref{theorem:ch04-4-9}(ii)可得% XREF p=276 "Thus Theorem 4.9,(ii) in Section 4.5 implies"
+\begin{align*}
+&\left(\fint_{B(r)}\lvert f(y)-f(0)-Df(0)\cdot y\rvert^{p^{*}}\diff y\right)^{\frac{1}{p^{*}}}\\
+&\quad\leqslant Cr\left(\fint_{B(r)}\lvert Df(y)-Df(0)\rvert^{p}\diff y\right)^{\frac{1}{p}}+C\left(\fint_{B(r)}\lvert f(y)-f(0)-Df(0)\cdot y\rvert^{p}\diff y\right)^{\frac{1}{p}}\\
+&\quad=o(r)\qquad(r\to0),
+\end{align*}
+依据 $(\star)$ 与 (b)。
+
+% SUPPLEMENT: parent=theorem:ch06-6-2; kind=proof; 补出第 2 步「与前一证明相同」的细节（微积分基本定理、变量替换与 Hölder 不等式）以及第 1 步两条条件的来源
+下面对第 2 步的省略之处与第 1 步的两条条件作出补足。
+
+（1）积分表示。令 $f^\varepsilon:=\eta_\varepsilon*f$（$\eta_\varepsilon$ 为标准磨光核），对固定 $y\in B(r)$ 与 $g(t):=f^\varepsilon(ty)$ 用微积分基本定理，得
+\begin{align*}
+f^\varepsilon(y)-f^\varepsilon(0)-Df(0)\cdot y=\int_0^1\bigl[Df^\varepsilon(sy)-Df(0)\bigr]\cdot y\diff s.
+\end{align*}
+两边乘以 $\phi(y)$ 并在 $B(r)$ 上取平均，再作变量替换 $z=sy$：此时 $y=z/s$、$\diff y=s^{-n}\diff z$，$y\in B(r)$ 对应 $z\in B(rs)$，且 $s^{-n}\lvert B(r)\rvert=\lvert B(rs)\rvert$，故
+\begin{align*}
+\fint_{B(r)}\phi(y)\bigl(f^\varepsilon(y)-f^\varepsilon(0)-Df(0)\cdot y\bigr)\diff y=\int_0^1\frac{1}{s}\fint_{B(rs)}\phi\Bigl(\frac{z}{s}\Bigr)\bigl[Df^\varepsilon(z)-Df(0)\bigr]\cdot z\diff z\diff s.
+\end{align*}
+令 $\varepsilon\to0$：由 $f^\varepsilon\to f$ 于 $L^p_{\loc}$ 与 $Df^\varepsilon\to Df$ 于 $L^p_{\loc}$，两端分别收敛到定理中的对应量，故上式对 $f$ 本身成立。
+
+（2）Hölder 不等式。对 $z$ 的积分用指数 $p$ 与 $q$ 的 Hölder 不等式，并用 $\lvert z\rvert\leqslant rs$（$z\in B(rs)$），得
+\begin{align*}
+\left\lvert\fint_{B(rs)}\phi\Bigl(\frac{z}{s}\Bigr)\bigl[Df(z)-Df(0)\bigr]\cdot z\diff z\right\rvert\leqslant rs\left(\fint_{B(rs)}\Bigl\lvert\phi\Bigl(\frac{z}{s}\Bigr)\Bigr\rvert^{q}\diff z\right)^{\frac{1}{q}}\left(\fint_{B(rs)}\lvert Df(z)-Df(0)\rvert^{p}\diff z\right)^{\frac{1}{p}},
+\end{align*}
+再除以 $s$ 并把 $B(rs)$ 换成更大的 $B(r)$（被积函数非负），即得第 2 步中的不等号。
+
+（3）第 1 步的条件。由 $f\in W^{1,p}_{\loc}(\mathbb{R}^n)$ 得 $f\in L^p_{\loc}(\mathbb{R}^n)$ 与 $Df\in L^p_{\loc}(\mathbb{R}^n;\mathbb{R}^n)$。在\cref{theorem:ch01-1-33}中取 $\mu=\mathcal{L}^n$ 即得 (a)；把 $Df$ 的每个分量代入同一结论并求和即得 (b)。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-2; kind=motivation; 说明与定理 6.1 的差别：Sobolev 假设使可积指数由 1* 提高到 p*，且不再出现奇异部分
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-2-动机}
+本定理与\cref{theorem:ch06-6-1}的结构相同：仍以球上的一阶 Taylor 多项式之差的积分平均值刻画一阶逼近，但可积指数由 $1^{*}=n/(n-1)$ 提高为 $p^{*}=np/(n-p)$，而 $p^{*}>p$。指数提高的来源是 Sobolev 假设：$f\in W^{1,p}_{\loc}(\mathbb{R}^n)$ 使 $f$ 与 $Df$ 都可积到 $p$ 次幂，并且不再出现无法用 $L^p$ 估计的奇异部分。% XREF internal
+
+证明分三步。第 1 步选出使 $f$ 与 $Df$ 在 $L^p$ 意义下连续的点；第 2 步用与前一证明相同的积分表示，并以 $L^{q}$ 范数不超过 $1$ 的试验函数作对偶，得到 $L^p$ 意义下的逼近 $(\star)$；第 3 步用\cref{theorem:ch04-4-9}(ii) 的 Sobolev 型不等式把 $L^p$ 估计提升为 $L^{p^{*}}$ 估计。与前一证明相比，第 2 步的对偶从 $L^{\infty}$ 范数换成了 $L^{q}$ 范数，这一差别正对应 $p>1$ 与 $p=1$ 的分界。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-2; kind=hypotheses; 逐条分析 1≤p<n、p* 的取值、W^{1,p}_loc 假设与共轭指数 q 的作用，并说明 p=n 与 p>n 的情形
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-2-条件}
+\begin{enumerate}[(i)]
+\item 条件 $1\leqslant p<n$ 保证 $p^{*}=np/(n-p)$ 有限且 $p^{*}>p$。$p\to n^{-}$ 时 $p^{*}\to\infty$，故 $p=n$ 不对应有限的共轭指数，本定理的陈述失去意义；$p>n$ 时结论由\cref{theorem:ch06-6-5}加强为经典意义下的 $\mathcal{L}^n$-a.e. 可微。% XREF internal
+\item 假设 $f\in W^{1,p}_{\loc}(\mathbb{R}^n)$ 给出两件事：$Df\in L^p_{\loc}(\mathbb{R}^n;\mathbb{R}^n)$ 使第 1 步的条件 (b) 有意义；由 Sobolev 型不等式\cref{theorem:ch04-4-9}又有 $f\in L^{p^{*}}_{\loc}(\mathbb{R}^n)$，使定理左端的平均值对每个球有限。% XREF internal
+\item 共轭指数 $q=p/(p-1)$ 只用于第 2 步的对偶：$\lVert\phi\rVert_{L^{q}(B(r))}\leqslant1$ 的试验函数族给出 $\lVert g\rVert_{L^{p}(B(r))}$ 的刻画，故对 $\phi$ 取上确界即得 $L^p$ 范数。$p=1$ 时 $q=\infty$，该刻画退化为 $\lvert\phi\rvert\leqslant1$，正是\cref{theorem:ch06-6-1}证明中的用法。% XREF internal
+\item 结论中的指数 $p^{*}$ 不能再提高：$L^{p^{*}}$ 是 Sobolev 型不等式所能控制的最大可积指数，若把 $p^{*}$ 换成更大的指数，\cref{theorem:ch04-4-9}不再适用。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\subsection{近似可微性}\label{subsection:ch06-01-3}
+
+\begin{definition}[近似可微性]\label{definition:ch06-6-1}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$，$x\in\mathbb{R}^n$。若存在线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$ 使得
+\begin{align*}
+\aplim_{y\to x}\frac{\lvert f(y)-f(x)-L(y-x)\rvert}{\lvert y-x\rvert}=0,
+\end{align*}
+则称 $f$ 在 $x$ 处\textbf{近似可微}，并称这样的 $L$ 为 $f$ 在 $x$ 处的一个近似微分。
+
+（近似极限的定义见\cref{definition:ch01-1-27}。）% XREF p=277 "See Section 1.7 for the definition of the approximate limit"
+\end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch06-def-6-1-近似导数}
+由下文所证（\cref{theorem:ch06-6-3}），这样的线性映射 $L$ 若存在则唯一。记它为% XREF internal
+\begin{align*}
+\ap Df(x),
+\end{align*}
+并称 $\ap Df(x)$ 为 $f$ 在 $x$ 处的\textbf{近似导数}。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch06-6-1; kind=motivation; 说明近似可微性把微分定义中的极限换成近似极限，以及它对只在几乎处处有值的对象仍然有意义的原因
+\begin{remark}\phantomsection\label{remark:ch06-def-6-1-动机}
+近似可微性把经典微分定义中的极限换成近似极限：不要求差商在整个邻域上一致地小，只要求使差商超过给定 $\varepsilon$ 的点集在 $x$ 处具有零密度。这一放宽使定义适用于只在 $\mathcal{L}^n$-a.e. 意义下有值的对象：在 $\mathcal{L}^n$-零集上改动 $f$ 不改变超界点集在 $x$ 处的密度，故不改变近似可微性。按\cref{definition:ch01-1-27}，近似极限只依赖于函数在一组零密度例外集之外的行为，因此近似可微性对 $\BV$ 函数与 Sobolev 函数这类允许在零测集上任意改动的对象仍然有意义；\cref{theorem:ch06-6-4}将证明 $\BV$ 函数在 $\mathcal{L}^n$-a.e. 的点处正是这种意义下可微的。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch06-6-1; kind=hypotheses; 逐条说明定义中的量化结构：线性映射 L、分母 |y-x|、近似极限的取值范围、值域维数 m 与唯一性的地位
+\begin{remark}\phantomsection\label{remark:ch06-def-6-1-条件}
+\begin{enumerate}[(i)]
+\item 逼近对象是线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$，而非一般映射。定义要求存在一个线性映射使差商的近似极限为零，这与\cref{definition:ch01-1-21}中可微性的要求一致，只是极限换成了近似极限。% XREF internal
+\item 分子中的 $L(y-x)$ 以 $x$ 为基点。若把 $L(y-x)$ 换成 $L(y)$，则除非 $L=0$，差商在 $y\to x$ 时不趋于零，故基点的选取是定义的一部分。
+\item 分母 $\lvert y-x\rvert$ 在 $y=x$ 处为零，差商在该点无定义；但单点集的 $\mathcal{L}^n$-测度为零，它在近似极限的定义中不影响任何密度，故不必单独规定 $y=x$ 处的取值。
+\item 近似极限的取值范围是 $x$ 的整个邻域，而不限于某个子集。若把范围限制在 $f$ 的连续点集或某个 Lebesgue 点集上，所得条件严格弱于本定义。
+\item 定义允许 $m\neq n$，此时 $L$ 是 $\mathbb{R}^n$ 到 $\mathbb{R}^m$ 的线性映射，分子取 $\mathbb{R}^m$ 中的范数。近似导数的唯一性不属于定义的内容，它由\cref{theorem:ch06-6-3}证明。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[近似可微性]\label{theorem:ch06-6-3}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$，$x\in\mathbb{R}^n$。若 $f$ 在 $x$ 处近似可微，则 $f$ 在 $x$ 处的近似导数是唯一的。特别地，$f$ 在 $\{f=0\}$ 的 $\mathcal{L}^n$-a.e. 点处的近似导数为零映射，即
+\begin{align*}
+\ap Df=0\qquad\mathcal{L}^n\text{-a.e. 于 }\{f=0\}.
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+设
+\begin{align*}
+\aplim_{y\to x}\frac{\lvert f(y)-f(x)-L(y-x)\rvert}{\lvert y-x\rvert}=0
+\end{align*}
+以及
+\begin{align*}
+\aplim_{y\to x}\frac{\lvert f(y)-f(x)-L'(y-x)\rvert}{\lvert y-x\rvert}=0.
+\end{align*}
+则对每个 $\varepsilon>0$ 有
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\Bigl(B(x,r)\cap\Bigl\{y\Bigm|\frac{\lvert f(y)-f(x)-L(y-x)\rvert}{\lvert y-x\rvert}>\varepsilon\Bigr\}\Bigr)}{\mathcal{L}^n(B(x,r))}=0\qquad(\star)
+\end{align*}
+以及
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n\Bigl(B(x,r)\cap\Bigl\{y\Bigm|\frac{\lvert f(y)-f(x)-L'(y-x)\rvert}{\lvert y-x\rvert}>\varepsilon\Bigr\}\Bigr)}{\mathcal{L}^n(B(x,r))}=0.\qquad(\star\star)
+\end{align*}
+若 $L\neq L'$，令
+\begin{align*}
+\lVert L-L'\rVert:=\max_{\lvert z\rvert=1}\bigl\lvert(L-L')(z)\bigr\rvert>0,
+\end{align*}
+并取
+\begin{align*}
+\varepsilon=\frac{1}{6}\lVert L-L'\rVert.
+\end{align*}
+考虑扇形
+\begin{align*}
+S:=\Bigl\{y\Bigm|\bigl\lvert(L-L')(y-x)\bigr\rvert\geqslant\frac{\lVert L-L'\rVert\lvert y-x\rvert}{2}\Bigr\}.
+\end{align*}
+注意
+\begin{align*}
+\frac{\mathcal{L}^n(B(x,r)\cap S)}{\mathcal{L}^n(B(x,r))}=a>0\qquad(\star\star\star)
+\end{align*}
+对一切 $r>0$ 成立。但若 $y\in S$，则
+\begin{align*}
+3\varepsilon\lvert y-x\rvert&=\frac{\lVert L-L'\rVert\lvert y-x\rvert}{2}\\
+&\leqslant\bigl\lvert(L-L')(y-x)\bigr\rvert\\
+&\leqslant\lvert f(y)-f(x)-L(y-x)\rvert+\lvert f(y)-f(x)-L'(y-x)\rvert;
+\end{align*}
+于是
+\begin{align*}
+S\subseteq\Bigl\{\frac{\lvert f(y)-f(x)-L(y-x)\rvert}{\lvert y-x\rvert}>\varepsilon\Bigr\}\cup\Bigl\{\frac{\lvert f(y)-f(x)-L'(y-x)\rvert}{\lvert y-x\rvert}>\varepsilon\Bigr\}.
+\end{align*}
+因此 $(\star)$ 与 $(\star\star)$ 蕴含
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n(B(x,r)\cap S)}{\mathcal{L}^n(B(x,r))}=0,
+\end{align*}
+与 $(\star\star\star)$ 矛盾。
+
+% SUPPLEMENT: parent=theorem:ch06-6-3; kind=proof; 补出「特别地」一款的证明：在 {f=0} 的密度 1 点处零映射满足近似可微的定义
+下面补出「特别地」一款的论证。令 $A:=\{f=0\}$。由\cref{theorem:ch01-1-35}，对 $\mathcal{L}^n$-a.e. 的点 $x\in A$ 有% XREF internal
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n(B(x,r)\cap A)}{\mathcal{L}^n(B(x,r))}=1 .
+\end{align*}
+固定这样的点 $x$，并设 $\varepsilon>0$。凡满足 $\lvert f(y)\rvert/\lvert y-x\rvert>\varepsilon$ 的点 $y$ 必不属于 $A$：若 $y\in A$，则 $f(y)=0$，该商为零。故
+\begin{align*}
+\Bigl\{y\Bigm|\frac{\lvert f(y)-f(x)\rvert}{\lvert y-x\rvert}>\varepsilon\Bigr\}\subseteq\mathbb{R}^n\setminus A,
+\end{align*}
+从而
+\begin{align*}
+\frac{\mathcal{L}^n\Bigl(B(x,r)\cap\Bigl\{y\Bigm|\frac{\lvert f(y)-f(x)\rvert}{\lvert y-x\rvert}>\varepsilon\Bigr\}\Bigr)}{\mathcal{L}^n(B(x,r))}\leqslant\frac{\mathcal{L}^n(B(x,r)\setminus A)}{\mathcal{L}^n(B(x,r))}\longrightarrow0\qquad(r\to0),
+\end{align*}
+即 $\aplim_{y\to x}\lvert f(y)-f(x)\rvert/\lvert y-x\rvert=0$。取 $L=0$ 便知零映射是 $f$ 在 $x$ 处的一个近似微分；由本定理第一部分，$\ap Df(x)=0$。使上述密度条件成立的点 $x$ 构成 $A$ 的 $\mathcal{L}^n$-全测子集，故 $\ap Df=0$ 在 $\{f=0\}$ 上 $\mathcal{L}^n$-a.e. 成立。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-3; kind=motivation; 说明唯一性使近似导数的记号有意义，并说明「特别地」一款的用途
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-3-动机}
+本定理的第一部分使\cref{remark:ch06-def-6-1-近似导数}中的记号 $\ap Df(x)$ 有意义：近似可微点处的线性映射只有一个，故把它记为 $f$ 在该点的近似导数不会产生歧义。证明的构造是一个以 $x$ 为顶点的扇形 $S$：在 $S$ 上，两个候选导数之差被两个差商之和控制，于是两个差商的超界集若都在 $x$ 处具有零密度，$S$ 在 $x$ 处的密度就必须为零，这与扇形的密度为正矛盾。% XREF internal
+
+第二部分给出零点集上的取值：在 $\{f=0\}$ 的几乎每个点处，零映射就是近似导数。这一款使 $f$ 在其零点集上的近似导数可以直接取为 $0$，无须逐点验证定义。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-3; kind=hypotheses; 逐条分析结论所需的量化条件、扇形构造用到的算子范数与 $\varepsilon$ 的选取，以及 $f$ 的可测性
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-3-条件}
+\begin{enumerate}[(i)]
+\item 结论只要求 $f$ 在 $x$ 处近似可微，对该点的函数值不作任何正则性要求：$f$ 在该点附近不必连续、不必可积，也不必局部有界。
+\item 论证用到集合 $\bigl\{y\mid\lvert f(y)-f(x)-L(y-x)\rvert/\lvert y-x\rvert>\varepsilon\bigr\}$ 的 $\mathcal{L}^n$-可测性，故须假定 $f$ 为 $\mathcal{L}^n$-可测，否则 $\mathcal{L}^n(B(x,r)\cap\{\cdots\})$ 无从定义。\cref{theorem:ch06-6-4}中的 $f$ 属于 $\BV_{\loc}(\mathbb{R}^n)$，该假定自动成立。% XREF internal
+\item 常数 $\lVert L-L'\rVert:=\max_{\lvert z\rvert=1}\lvert(L-L')(z)\rvert$ 是线性映射 $L-L'$ 的算子范数，它在 $L\neq L'$ 时为正，故 $\varepsilon=\lVert L-L'\rVert/6$ 为正。取因子 $1/6$ 使 $3\varepsilon=\lVert L-L'\rVert/2$，于是 $y\in S$ 时两个差商之和不小于 $3\varepsilon>2\varepsilon$，其中至少一个超过 $\varepsilon$；只要 $4\varepsilon<\lVert L-L'\rVert$，同样的论证即可进行。
+\item 扇形 $S$ 在 $x$ 处的密度为正：$S$ 是以 $x$ 为顶点的锥，故 $B(x,r)\cap S=x+r\bigl(B(0,1)\cap(S-x)\bigr)$，从而 $(\star\star\star)$ 中的比值与 $r$ 无关且等于 $B(0,1)\cap(S-x)$ 的体积分数。这一正密度是矛盾的来源；若把 $S$ 换成球内任意集合，相应的密度可以为零，论证随之失效。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[$\BV$ 函数与近似可微性]\label{theorem:ch06-6-4}
+设 $n$ 为正整数，$f\in\BV_{\loc}(\mathbb{R}^n)$。则 $f$ 在 $\mathcal{L}^n$-a.e. 的点 $x\in\mathbb{R}^n$ 处近似可微。
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-4-补充}
+\begin{enumerate}[(i)]
+\item 进一步有
+\begin{align*}
+\ap Df=Df\qquad\mathcal{L}^n\text{-a.e.},
+\end{align*}
+其中右端的函数按\cref{section:ch05-01}定义。% XREF p=279 "the function on the right defined in Section 5.1"
+\item 由于 $1\leqslant p\leqslant\infty$ 时 $W^{1,p}_{\loc}(\mathbb{R}^n)\subseteq\BV_{\loc}(\mathbb{R}^n)$，每个 Sobolev 函数都在 $\mathcal{L}^n$-a.e. 的点处近似可微，且其近似导数在 $\mathcal{L}^n$-a.e. 的意义下等于其弱导数。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+取点 $x\in\mathbb{R}^n$，使得
+\begin{align*}
+\fint_{B(x,r)}\lvert f(y)-f(x)-Df(x)\cdot(y-x)\rvert\diff y=o(r)\qquad(\star)
+\end{align*}
+当 $r\to0$；由\cref{theorem:ch06-6-1}，$\mathcal{L}^n$-a.e. 的 $x$ 满足此式。% XREF p=279 "L^n-a.e. x will do according to Theorem 6.1"
+
+设
+\begin{align*}
+\ap\limsup_{y\to x}\frac{\lvert f(y)-f(x)-Df(x)\cdot(y-x)\rvert}{\lvert y-x\rvert}>\theta>0 .
+\end{align*}
+则存在 $r_j\to0$ 与 $\gamma>0$，使得
+\begin{align*}
+\mathcal{L}^n\bigl(\bigl\{y\in B(x,r_j)\bigm\lvert\lvert f(y)-f(x)-Df(x)\cdot(y-x)\rvert>\theta\lvert y-x\rvert\bigr\}\bigr)\geqslant\gamma\alpha(n)r_j^n>0 .
+\end{align*}
+于是存在 $\sigma>0$，使得
+\begin{align*}
+\mathcal{L}^n\bigl(\bigl\{y\in B(x,r_j)-B(x,\sigma r_j)\bigm\lvert\lvert f(y)-f(x)-Df(x)\cdot(y-x)\rvert>\theta\lvert y-x\rvert\bigr\}\bigr)\geqslant\frac{\gamma\alpha(n)r_j^n}{2}
+\end{align*}
+对 $j=1,2,\cdots$ 成立。由于 $y\in B(x,r_j)-B(x,\sigma r_j)$ 时 $\lvert y-x\rvert>\sigma r_j$，由此得
+\begin{align*}
+\frac{\mathcal{L}^n\bigl(\bigl\{y\in B(x,r_j)\bigm\lvert\lvert f(y)-f(x)-Df(x)\cdot(y-x)\rvert>\theta\sigma r_j\bigr\}\bigr)}{\alpha(n)r_j^n}\geqslant\frac{\gamma}{2}\qquad(\star\star)
+\end{align*}
+对 $j=1,2,\cdots$ 成立。但由 $(\star)$，$(\star\star)$ 左端的表达式不超过
+\begin{align*}
+\frac{o(r_j)}{\theta\sigma r_j}=o(1)
+\end{align*}
+当 $r_j\to0$，与 $(\star\star)$ 矛盾。于是
+\begin{align*}
+\ap\limsup_{y\to x}\frac{\lvert f(y)-f(x)-Df(x)\cdot(y-x)\rvert}{\lvert y-x\rvert}=0,
+\end{align*}
+从而
+\begin{align*}
+\ap Df(x)=Df(x).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch06-6-4; kind=proof; 补出由 (★) 控制 (★★) 左端的一步：Chebyshev 不等式把平均值估计转化为分布函数的估计
+下面补出「由 $(\star)$，$(\star\star)$ 左端的表达式不超过 $o(r_j)/(\theta\sigma r_j)$」这一步的依据。对 $j=1,2,\cdots$ 有
+\begin{align*}
+&\frac{\mathcal{L}^n\bigl(\bigl\{y\in B(x,r_j)\bigm\lvert\lvert f(y)-f(x)-Df(x)\cdot(y-x)\rvert>\theta\sigma r_j\bigr\}\bigr)}{\alpha(n)r_j^n}\\
+&\quad\leqslant\frac{1}{\theta\sigma r_j}\cdot\frac{1}{\alpha(n)r_j^n}\int_{B(x,r_j)}\lvert f(y)-f(x)-Df(x)\cdot(y-x)\rvert\diff y=\frac{o(r_j)}{\theta\sigma r_j},
+\end{align*}
+其中第一个不等号即 Chebyshev 不等式（用 $\mathcal{L}^n(B(x,r_j))=\alpha(n)r_j^n$ 写成平均值的形式），最后一个等号即 $(\star)$。由于 $\theta>0$、$\sigma>0$，右端当 $j\to\infty$ 时趋于 $0$，这与 $(\star\star)$ 给出的下界 $\gamma/2>0$ 矛盾。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-4; kind=motivation; 说明由 L^1 一阶逼近过渡到近似可微性的思路：平均估计与密度估计的对照
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-4-动机}
+本定理把\cref{theorem:ch06-6-1}的 $L^{1^{*}}$ 一阶逼近转化为近似可微性，即把「平均意义下的 $o(r)$」提升为「近似意义下的 $o(r)$」。两者的差别在于：平均估计允许余项在某处很大，只要求它在大范围上被压小；而近似可微性要求余项超过 $\varepsilon\lvert y-x\rvert$ 的点集在 $x$ 处具有零密度。证明用反证：若近似上极限大于某个 $\theta>0$，则余项在一列球内按正比例超过 $\theta\lvert y-x\rvert$；由于这些点满足 $\lvert y-x\rvert$ 与半径同阶，余项在球上的 $L^1$ 平均值便不小于 $cr$，与\cref{theorem:ch06-6-1}给出的 $o(r)$ 矛盾。% XREF internal
+
+证明的另一个要点是结论强于「存在某个线性映射」：定理给出 $\ap Df=Df$，即近似导数恰为梯度测度绝对连续部分的密度。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-4; kind=hypotheses; 逐条分析 BV_loc 假设的作用、几乎处处的必然性、与定理 6.2 的关系以及唯一性的地位
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-4-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in\BV_{\loc}(\mathbb{R}^n)$ 的作用是通过\cref{theorem:ch06-6-1}提供 $(\star)$：该定理对 $\mathcal{L}^n$-a.e. 的点给出 $L^{1^{*}}$ 意义下的一阶逼近，而由 Hölder 不等式它蕴含 $(\star)$ 中的 $L^1$ 估计。线性项 $Df(x)$ 之所以存在，也正是因为 $f$ 的梯度是一阶测度，其绝对连续部分有密度。% XREF internal
+\item 结论只能是 $\mathcal{L}^n$-a.e. 的。取 $n=1$、$f=\chi_{[0,1]}$ 与 $x=0$，则 $f\in\BV_{\loc}(\mathbb{R})$，而 $f$ 在 $x=0$ 处不近似可微。事实上 $f(0)=1$，而对 $y<0$ 有 $f(y)=0$，故当线性映射为 $y\mapsto ay$ 时差商等于 $\lvert1-ay\rvert/\lvert y\rvert$；对每个 $a$ 与每个 $\varepsilon>0$，凡满足 $y<0$ 与 $\lvert y\rvert<1/(\varepsilon+\lvert a\rvert+1)$ 的 $y$ 都使该差商超过 $\varepsilon$，于是超界集在 $0$ 处的密度不小于 $1/2$，不满足近似极限为零的要求。
+\item 本定理的结论弱于\cref{theorem:ch06-6-2}（后者在 $W^{1,p}$ 假设下给出 $L^{p^{*}}$ 意义下的一阶逼近），但适用范围更广：它不要求 $f$ 属于任何 Sobolev 空间，也不要求 $p<n$。\cref{theorem:ch06-6-3}保证近似导数唯一，从而使 $\ap Df=Df$ 的写法有意义；反之，若近似导数不唯一，本定理的结论便无法用等式表述。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\end{document}

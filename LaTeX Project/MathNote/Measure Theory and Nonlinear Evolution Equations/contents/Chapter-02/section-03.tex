@@ -17,56 +17,161 @@
 
 \subsection{Tonelli 与 Fubini 定理}\label{subsection:ch02-TonelliFubini}
 
-设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为测度空间。设 $E\in\mathscr A_1\times\mathscr A_2$。于是对任意 $x_1\in X_1$ 有 $E_{x_1}\in\mathscr A_2$，对任意 $x_2\in X_2$ 有 $E_{x_2}\in\mathscr A_1$（见\cref{proposition:ch01-截面}）。则从 $X_1$ 到 $[0,\infty]$ 的映射 $x_1\mapsto\mu_2(E_{x_1})$（$x_1\in X_1$），以及从 $X_2$ 到 $[0,\infty]$ 的映射 $x_2\mapsto\mu_1(E_{x_2})$（$x_2\in X_2$）均良定义。有下列结果。
+设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为测度空间，$E\in\mathscr A_1\times\mathscr A_2$。则对任意 $x_1\in X_1$ 有 $E_{x_1}\in\mathscr A_2$，对任意 $x_2\in X_2$ 有 $E_{x_2}\in\mathscr A_1$（见\cref{proposition:ch01-截面}）。于是从 $X_1$ 到 $[0,\infty]$ 的映射 $x_1\mapsto\mu_2(E_{x_1})$（$x_1\in X_1$）与从 $X_2$ 到 $[0,\infty]$ 的映射 $x_2\mapsto\mu_1(E_{x_2})$（$x_2\in X_2$）均有定义（其值可等于 $+\infty$，因为 $\mu_2(X_2)$ 与 $\mu_1(X_1)$ 可为 $+\infty$）。有下列结果。
 
 \begin{proposition}\label{proposition:ch02-乘积截面积分}
-设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为 $\sigma$-有限测度空间。设 $E\in\mathscr A_1\times\mathscr A_2$。则：
+设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为 $\sigma$-有限测度空间，$E\in\mathscr A_1\times\mathscr A_2$。则：
 \begin{enumerate}[(i)]
-\item 映射 $X_1\to[0,\infty]$，$x_1\mapsto\mu_2(E_{x_1})$，为 $\mathscr A_1$-可测；映射 $X_2\to[0,\infty]$，$x_2\mapsto\mu_1(E_{x_2})$，为 $\mathscr A_2$-可测；
+\item 映射 $X_1\to[0,\infty]$，$x_1\mapsto\mu_2(E_{x_1})$（$x_1\in X_1$），为 $\mathscr A_1$-可测；映射 $X_2\to[0,\infty]$，$x_2\mapsto\mu_1(E_{x_2})$（$x_2\in X_2$），为 $\mathscr A_2$-可测；
 \item 有
 \begin{align}
 \int_{X_1}\mu_2(E_{x_1})\,\mathrm{d}\mu_1=\int_{X_2}\mu_1(E_{x_2})\,\mathrm{d}\mu_2; \label{align:ch02-2.15a}
 \end{align}
 \item 由
 \begin{align}
-(\mu_1\times\mu_2)(E)\triangleq \int_{X_1}\mu_2(E_{x_1})\,\mathrm{d}\mu_1=\int_{X_2}\mu_1(E_{x_2})\,\mathrm{d}\mu_2\quad(E\in\mathscr A_1\times\mathscr A_2) \label{align:ch02-2.15b}
+(\mu_1\times\mu_2)(E)\triangleq\int_{X_1}\mu_2(E_{x_1})\,\mathrm{d}\mu_1=\int_{X_2}\mu_1(E_{x_2})\,\mathrm{d}\mu_2\quad(E\in\mathscr A_1\times\mathscr A_2) \label{align:ch02-2.15b}
 \end{align}
 定义的映射 $\mu_1\times\mu_2:\mathscr A_1\times\mathscr A_2\to[0,\infty]$ 为 $\sigma$-有限测度。
 \end{enumerate}
 \end{proposition}
 
-\begin{remark}\label{remark:ch02-sigma有限必要}
-若 $\mu_1$ 与/或 $\mu_2$ 非 $\sigma$-有限，易构造使\eqref{align:ch02-2.15a}不成立的例子。
+% SUPPLEMENT: parent=proposition:ch02-乘积截面积分; kind=proof; 补出全部论证：可测矩形、有限不交矩形并上的直接计算，在有限测度盒 $A_{1m}\times A_{2m}$ 上以单调类定理得到等式，用单调收敛定理过渡到全空间，再验证 $\sigma$--可加性与 $\sigma$--有限性
+\begin{proof}
+记
+\begin{align*}
+\Phi_1(E)\triangleq\int_{X_1}\mu_2(E_{x_1})\,\mathrm{d}\mu_1,\qquad
+\Phi_2(E)\triangleq\int_{X_2}\mu_1(E_{x_2})\,\mathrm{d}\mu_2\qquad(E\in\mathscr A_1\times\mathscr A_2),
+\end{align*}
+只要相应的被积函数可测，二者都是 $[0,\infty]$ 中的元素。
+
+第一步：$\sigma$-有限性的表示。由假设，存在非降序列 $\{A_{1m}\}\subseteq\mathscr A_1$、$\{A_{2m}\}\subseteq\mathscr A_2$，使 $\mu_1(A_{1m})<\infty$、$\mu_2(A_{2m})<\infty$，且 $X_1=\bigcup_{m=1}^\infty A_{1m}$、$X_2=\bigcup_{m=1}^\infty A_{2m}$。令 $B_m\triangleq A_{1m}\times A_{2m}$，则 $B_m\uparrow X_1\times X_2$。
+
+第二步：可测矩形。设 $E=E_1\times E_2$，$E_k\in\mathscr A_k$。则对 $x_1\in X_1$，
+\begin{align*}
+E_{x_1}=\{x_2\in X_2\mid x_1\in E_1,\ x_2\in E_2\}=
+\begin{cases}
+E_2, & x_1\in E_1,\\
+\varnothing, & x_1\notin E_1,
+\end{cases}
+\end{align*}
+故 $\mu_2(E_{x_1})=\mu_2(E_2)\chi_{E_1}(x_1)$，它是 $\mathscr A_1$-可测的，且由\cref{definition:ch02-简单函数积分}（或\eqref{align:ch02-2.6}）
+\begin{align*}
+\Phi_1(E)=\int_{X_1}\mu_2(E_2)\chi_{E_1}\,\mathrm{d}\mu_1=\mu_1(E_1)\mu_2(E_2),
+\end{align*}
+其中用到约定 $0\cdot\infty=0$。对调下标同理得 $\Phi_2(E)=\mu_1(E_1)\mu_2(E_2)$。故 (i)、(ii) 对可测矩形成立。
+
+第三步：有限不交矩形并。设 $E=\bigcup_{r=1}^R(E_{1r}\times E_{2r})$，其中各 $E_{1r}\times E_{2r}$ 两两不交。则对每个 $x_1$，$\{x_2\mid(x_1,x_2)\in E\}=\bigcup_{r=1}^R(E_{1r}\times E_{2r})_{x_1}$ 是有限不交并，故由 $\mu_2$ 的有限可加性
+\begin{align*}
+\mu_2(E_{x_1})=\sum_{r=1}^R\mu_2(E_{2r})\chi_{E_{1r}}(x_1),
+\end{align*}
+它是 $\mathscr A_1$-可测的，且由非负可测函数积分的可加性（\cref{definition:ch02-可积拟可积}后的证明第二段）
+\begin{align*}
+\Phi_1(E)=\sum_{r=1}^R\mu_1(E_{1r})\mu_2(E_{2r})=\Phi_2(E).
+\end{align*}
+于是 (i)、(ii) 对一切有限不交矩形并成立；这类集合的全体 $\mathscr A_m$（$m\in\mathbb N$）是 $B_m$ 上的代数，且由\cref{definition:ch01-乘积sigma代数}，
+\begin{align*}
+\sigma_0(\mathscr A_m)=\{E\in\mathscr A_1\times\mathscr A_2\mid E\subseteq B_m\}.
+\end{align*}
+
+第四步：在 $B_m$ 上的等式。固定 $m\in\mathbb N$，令
+\begin{align*}
+\mathscr D_m\triangleq\big\{E\in\mathscr A_1\times\mathscr A_2\mid E\subseteq B_m,\ \text{(i) 成立，且}\ \Phi_1(E)=\Phi_2(E)<\infty\big\}.
+\end{align*}
+由第三步与 $\mu_1(A_{1m})\mu_2(A_{2m})<\infty$ 得 $\mathscr A_m\subseteq\mathscr D_m$。又 $\mathscr D_m$ 是 $B_m$ 上的单调类：
+\begin{enumerate}[(a)]
+\item 若 $E_n\in\mathscr D_m$，$E_n\uparrow E$，则 $E\subseteq B_m$，且对每个 $x_1$ 有 $\mu_2((E_n)_{x_1})\uparrow\mu_2(E_{x_1})$（$\mu_2$ 关于非降序列连续），故 $x_1\mapsto\mu_2(E_{x_1})$ 是 $\mathscr A_1$-可测的；由\cref{theorem:ch02-BeppoLevi}，$\Phi_1(E)=\lim_{n\to\infty}\Phi_1(E_n)$，同理 $\Phi_2(E)=\lim_{n\to\infty}\Phi_2(E_n)$，故 $\Phi_1(E)=\Phi_2(E)$，且由 $E\subseteq B_m$ 与单调性得该值不超过 $\mu_1(A_{1m})\mu_2(A_{2m})<\infty$。于是 $E\in\mathscr D_m$。
+\item 若 $E_n\in\mathscr D_m$，$E_n\downarrow E$，则 $E\subseteq B_m$，且对每个 $x_1$ 有 $\mu_2((E_n)_{x_1})\downarrow\mu_2(E_{x_1})$，其中 $\mu_2((E_1)_{x_1})\leqslant\mu_2(A_{2m})<\infty$，故 $\mu_2$ 关于非升序列连续可用；于是 $x_1\mapsto\mu_2(E_{x_1})$ 为 $\mathscr A_1$-可测，且 $0\leqslant\mu_2((E_n)_{x_1})\leqslant\mu_2(A_{2m})\chi_{A_{1m}}(x_1)$，右端在 $L^1(\mu_1)$ 中。由\cref{theorem:ch02-Lebesgue控制收敛}得 $\Phi_1(E)=\lim_{n\to\infty}\Phi_1(E_n)$，同理 $\Phi_2(E)=\lim_{n\to\infty}\Phi_2(E_n)$，故 $\Phi_1(E)=\Phi_2(E)\leqslant\Phi_1(E_1)<\infty$。于是 $E\in\mathscr D_m$。
+\end{enumerate}
+由\cref{theorem:ch01-单调类定理}与 $\mathscr A_m$ 为代数得 $\mathscr D_m\supseteq\sigma_0(\mathscr A_m)$，即
+\begin{align*}
+\{E\in\mathscr A_1\times\mathscr A_2\mid E\subseteq B_m\}\subseteq\mathscr D_m.
+\end{align*}
+
+第五步：过渡到全空间。设 $E\in\mathscr A_1\times\mathscr A_2$，令 $E_m\triangleq E\cap B_m$。则由第四步 $E_m\in\mathscr D_m$，特别地 $E_m$ 满足 (i) 且 $\Phi_1(E_m)=\Phi_2(E_m)$；(i) 对 $E$ 成立由 $E_m\uparrow E$ 与第四步 (a) 中的论证得到，且由\cref{theorem:ch02-BeppoLevi}
+\begin{align*}
+\Phi_1(E)=\lim_{m\to\infty}\Phi_1(E_m)=\lim_{m\to\infty}\Phi_2(E_m)=\Phi_2(E).
+\end{align*}
+故 (i)、(ii) 对一切 $E\in\mathscr A_1\times\mathscr A_2$ 成立。
+
+第六步：(iii) 的 $\sigma$--可加性。$\Phi_1(\varnothing)=\int_{X_1}\mu_2(\varnothing)\,\mathrm{d}\mu_1=0$。设 $\{E_k\}\subseteq\mathscr A_1\times\mathscr A_2$ 两两不交，$E\triangleq\bigcup_{k=1}^\infty E_k$。则对每个 $x_1$，$\{(E_k)_{x_1}\}$ 两两不交且 $E_{x_1}=\bigcup_{k=1}^\infty(E_k)_{x_1}$，故 $\mu_2(E_{x_1})=\sum_{k=1}^\infty\mu_2((E_k)_{x_1})$，从而 $x_1\mapsto\mu_2(E_{x_1})$ 为 $\mathscr A_1$-可测；由\eqref{align:ch02-2.6}（应用于部分和 $\sum_{k=1}^n\mu_2((E_k)_{x_1})\uparrow\mu_2(E_{x_1})$）得
+\begin{align*}
+(\mu_1\times\mu_2)(E)=\int_{X_1}\mu_2(E_{x_1})\,\mathrm{d}\mu_1
+=\sum_{k=1}^\infty\int_{X_1}\mu_2((E_k)_{x_1})\,\mathrm{d}\mu_1=\sum_{k=1}^\infty(\mu_1\times\mu_2)(E_k).
+\end{align*}
+
+第七步：(iii) 的 $\sigma$--有限性。由第二步，$(\mu_1\times\mu_2)(B_m)=\mu_1(A_{1m})\mu_2(A_{2m})<\infty$，且 $B_m\uparrow X_1\times X_2$，故 $\mu_1\times\mu_2$ 是 $\sigma$-有限的。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch02-乘积截面积分; kind=motivation; 说明先证集合并计算截面积分的动机、$\sigma$--有限性在证明中的两处作用（有限测度盒上的单调类论证与 $\infty-\infty$ 的排除），以及去掉该假设后 (2.15a) 失效的反例
+\begin{remark}\phantomsection\label{remark:ch02-乘积截面积分动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{proposition:ch02-乘积截面积分}是 Tonelli 定理的集合版本：它把“乘积测度”这一未知对象先定义为两个截面积分之值，从而给出乘积测度的存在性。\eqref{align:ch02-2.15b}因此成为\cref{definition:ch02-乘积测度}的依据，而 (i) 的可测性是 (ii) 与 (iii) 的前提：\eqref{align:ch02-2.15a}两端是 $\mu_1$-与 $\mu_2$-积分，被积函数必须先可测。
+\item $\sigma$-有限性的两处作用。第一处是第四步 (b)：非升序列的连续性只在 $\mu_2((E_1)_{x_1})<\infty$ 时可用，而盒 $B_m$ 的选取保证该界成立。第二处是 $\infty-\infty$ 的排除：在 $\mathscr D_m$ 中要求 $\Phi_1(E)<\infty$，于是在 (b) 中相减合法；若某截面积分之值为 $\infty$，关于非升序列的连续性即失效，等式可能破坏。
+\item 反例。设 $X_1=X_2=[0,1]$，$\mathscr A_1=\mathscr A_2=\mathscr B([0,1])$，$\mu_1=\lambda$（Lebesgue 测度），$\mu_2=\#$（计数测度），$E\triangleq\{(x,x)\mid x\in[0,1]\}$ 为对角线。则 $E$ 为闭集，故 $E\in\mathscr A_1\times\mathscr A_2$；$E_{x_1}=\{x_1\}$，故 $\mu_2(E_{x_1})=1$，$\int_{X_1}\mu_2(E_{x_1})\,\mathrm{d}\mu_1=1$；而 $E_{x_2}=\{x_2\}$，故 $\mu_1(E_{x_2})=\lambda(\{x_2\})=0$，$\int_{X_2}\mu_1(E_{x_2})\,\mathrm{d}\mu_2=0$。于是\eqref{align:ch02-2.15a}不成立。此处 $\lambda$ 是 $\sigma$-有限的，而计数测度 $\#$ 不是：$[0,1]$ 不能写成可数个有限集之并，因为可数多个有限集之并至多可数，而 $[0,1]$ 不可数。
+\item 适用边界。若 $\mu_1$、$\mu_2$ 中至少一个不是 $\sigma$-有限的，则 (i) 仍可能成立（上例中两个被积函数均可测），失效的是\eqref{align:ch02-2.15a}所表达的等式，进而由\eqref{align:ch02-2.15b}定义的集函数不再是测度。故\cref{definition:ch02-乘积测度}的陈述必须带上 $\sigma$-有限性。
+\end{enumerate}
 \end{remark}
 
-由\cref{proposition:ch02-乘积截面积分}，下列定义是适定的。
+% SUPPLEMENT: parent=definition:ch02-乘积测度; kind=motivation; 说明乘积测度的动机（在可测矩形上等于因子测度之积）、$\sigma$--有限性对唯一性的作用、与完备化的关系以及 $(\mu_1\times\mu_2)(E)=\Phi_1(E)$ 的定义方式的含义
+\begin{remark}\phantomsection\label{remark:ch02-乘积测度动机}
+\begin{enumerate}[(i)]
+\item 引入动机。对可测矩形 $E_1\times E_2$，乘积测度应当满足
+\begin{align*}
+(\mu_1\times\mu_2)(E_1\times E_2)=\mu_1(E_1)\mu_2(E_2),
+\end{align*}
+这是“面积等于边长之积”的抽象形式。\eqref{align:ch02-2.15b}把这一要求推广到 $\mathscr A_1\times\mathscr A_2$ 的全部元素，而\cref{proposition:ch02-乘积截面积分}保证所得集函数确实是测度。
+\item 唯一性。在 $\sigma$-有限的情形，$\mu_1\times\mu_2$ 是 $\mathscr A_1\times\mathscr A_2$ 上唯一满足上式对一切可测矩形成立的测度：两个这样的测度在可测矩形组成的 $\pi$-系上一致，由\cref{theorem:ch01-单调类定理}（应用于有限不交矩形并组成的代数与 $\sigma$-有限性给出的截断）它们在 $\mathscr A_1\times\mathscr A_2$ 上一致。因此“乘积测度”一词没有歧义。
+\item $\sigma$-有限性的作用。若去掉该假设，则\eqref{align:ch02-2.15b}右端两个积分可能不相等（\hyperref[remark:ch02-乘积截面积分动机]{关于乘积截面积分的注记}(iii)），集函数 $E\mapsto\Phi_1(E)$ 甚至不是测度，定义失去意义。故 $\sigma$-有限性是定义的一部分，而非可以事后补充的技术条件。
+\item 边界情形。$\mu_1\times\mu_2$ 一般不是完备测度，即使 $\mu_1$、$\mu_2$ 完备；其完备化与 Lebesgue 测度的关系见\hyperref[remark:ch02-乘积完备化]{关于乘积完备化的注记}。又当 $\mu_1$ 或 $\mu_2$ 为零测度时 $\mu_1\times\mu_2=0$，此时乘积测度空间的一切子集未必可测，但每个可测集的测度为零。
+\end{enumerate}
+\end{remark}
 
 \begin{definition}\label{definition:ch02-乘积测度}
-设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为 $\sigma$-有限测度空间。由\eqref{align:ch02-2.15b}定义的测度 $\mu_1\times\mu_2$ 称为乘积测度，$(X_1\times X_2,\mathscr A_1\times\mathscr A_2,\mu_1\times\mu_2)$ 称为乘积测度空间。
+设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为 $\sigma$-有限测度空间。由\eqref{align:ch02-2.15b}定义的测度 $\mu_1\times\mu_2$ 称为乘积测度，即对每个 $E\in\mathscr A_1\times\mathscr A_2$，$(\mu_1\times\mu_2)(E)$ 为\eqref{align:ch02-2.15b}右端的公共值；$(X_1\times X_2,\mathscr A_1\times\mathscr A_2,\mu_1\times\mu_2)$ 称为乘积测度空间。
 \end{definition}
 
-\begin{remark}\label{remark:ch02-乘积a.e.等价}
-设 $(X_1\times X_2,\mathscr A_1\times\mathscr A_2,\mu_1\times\mu_2)$ 为乘积测度空间，$P=P(x_1,x_2)$ 为某性质。利用\eqref{align:ch02-2.15b}易见下列命题等价：(i) $P$ 在 $X_1\times X_2$ 中 $\mu_1\times\mu_2$-a.e. 成立；(ii) 对 $\mu_1$-a.e. $x_1\in X_1$，$P(x_1,\cdot)$ 在 $X_2$ 中 $\mu_2$-a.e. 成立；(iii) 对 $\mu_2$-a.e. $x_2\in X_2$，$P(\cdot,x_2)$ 在 $X_1$ 中 $\mu_1$-a.e. 成立。
+\begin{remark}\phantomsection\label{remark:ch02-sigma有限必要}
+若 $\mu_1$ 与/或 $\mu_2$ 非 $\sigma$-有限，则可构造使\eqref{align:ch02-2.15a}不成立的例子，其显式构造及全部验证见\hyperref[remark:ch02-乘积截面积分动机]{关于乘积截面积分的注记}(iii)。
 \end{remark}
 
-\begin{remark}\label{remark:ch02-乘积完备化}\label{proposition:ch02-完备化}
-简单例子表明完备测度空间的乘积不必完备。然而可证 Lebesgue 空间 $(\mathbb R^{M+N},\mathscr L_{M+N},\lambda_{M+N})$ 是乘积 $(\mathbb R^{M+N},\mathscr L_M\times\mathscr L_N,\lambda_M\times\lambda_N)$ 的完备化（$M,N\in\mathbb N$；见\cref{definition:ch01-完备化}）。
+% SUPPLEMENT: parent=remark:ch02-乘积a.e.等价; kind=proof; 补出“几乎处处性质可逐纤维检验”的论证：用 (2.15b) 把例外集的双重积分化为累次积分，并用“非负函数积分为零当且仅当几乎处处为零”
+\begin{remark}\phantomsection\label{remark:ch02-乘积a.e.等价}
+设 $(X_1\times X_2,\mathscr A_1\times\mathscr A_2,\mu_1\times\mu_2)$ 为乘积测度空间，$N\in\mathscr A_1\times\mathscr A_2$。则下列命题等价：
+\begin{enumerate}[(i)]
+\item $(\mu_1\times\mu_2)(N)=0$；
+\item 对 $\mu_1$-a.e. $x_1\in X_1$ 有 $\mu_2(N_{x_1})=0$；
+\item 对 $\mu_2$-a.e. $x_2\in X_2$ 有 $\mu_1(N_{x_2})=0$。
+\end{enumerate}
+因此，对关于 $x_1$ 与 $x_2$ 的性质 $P=P(x_1,x_2)$，若集合 $\{(x_1,x_2)\mid P(x_1,x_2)\ \text{不成立}\}$ 属于 $\mathscr A_1\times\mathscr A_2$，则“$P$ 在 $X_1\times X_2$ 中 $\mu_1\times\mu_2$-a.e. 成立”、“对 $\mu_1$-a.e. $x_1\in X_1$，$P(x_1,\cdot)$ 在 $X_2$ 中 $\mu_2$-a.e. 成立”与“对 $\mu_2$-a.e. $x_2\in X_2$，$P(\cdot,x_2)$ 在 $X_1$ 中 $\mu_1$-a.e. 成立”三者等价。
+
+证明。由\eqref{align:ch02-2.15b}，$(\mu_1\times\mu_2)(N)=\int_{X_1}\mu_2(N_{x_1})\,\mathrm{d}\mu_1$，而被积函数非负可测（\cref{proposition:ch02-乘积截面积分}(i)）。由\hyperref[remark:ch02-非负可测积分动机]{关于非负可测函数积分的注记}(v)，该积分等于 $0$ 当且仅当 $\mu_2(N_{x_1})=0$ 对 $\mu_1$-a.e. $x_1$ 成立，即 (i)$\Leftrightarrow$(ii)。对调下标并用\eqref{align:ch02-2.15a}即得 (i)$\Leftrightarrow$(iii)。关于 $P$ 的三项断言分别是上述三条应用于 $N\triangleq\{P\ \text{不成立}\}$ 的结果；当 $N$ 不属于 $\mathscr A_1\times\mathscr A_2$ 时，三项断言中的“a.e.”无法用乘积测度表述，故 $N$ 的可测性是必要的。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch02-乘积完备化; kind=proof; 补出“完备测度空间之乘积不必完备”的显式反例（$\mathbb R\times\{0\}$ 的非 Lebesgue 可测子集），并说明 Lebesgue 测度是乘积测度的完备化这一断言的含义
+\begin{remark}\phantomsection\label{remark:ch02-乘积完备化}
+简单例子表明完备测度空间的乘积不必完备。事实上，取 $X_1=X_2=\mathbb R$、$\mathscr A_1=\mathscr A_2=\mathscr L$（Lebesgue $\sigma$--代数）、$\mu_1=\mu_2=\lambda$，则两个因子空间都是完备的。设 $B\subseteq\mathbb R$ 不是 Lebesgue 可测集，令 $N\triangleq B\times\{0\}$。由\eqref{align:ch02-2.15b}，
+\begin{align*}
+(\lambda\times\lambda)(\mathbb R\times\{0\})=\int_{\mathbb R}\lambda(\{0\})\,\mathrm{d}\lambda=0,
+\end{align*}
+故 $N\subseteq\mathbb R\times\{0\}$ 是 $(\lambda\times\lambda)$-零测集的子集；但 $N\notin\mathscr L\times\mathscr L$，因为 $N$ 在 $x_2=0$ 处的截面为 $B\notin\mathscr L$，而由\cref{proposition:ch01-截面}，$\mathscr L\times\mathscr L$ 中集合的一切截面均属于 $\mathscr L$。于是 $\mathscr L\times\mathscr L$ 不含 $(\lambda\times\lambda)$-零测集的全部子集，即乘积测度空间不完备。
+
+另一方面，可以证明 Lebesgue 空间 $(\mathbb R^{M+N},\mathscr L_{M+N},\lambda_{M+N})$ 是乘积 $(\mathbb R^{M+N},\mathscr L_M\times\mathscr L_N,\lambda_M\times\lambda_N)$ 的完备化（$M,N\in\mathbb N$；见\cref{definition:ch01-完备化}），即 $\mathscr L_{M+N}$ 是包含 $\mathscr L_M\times\mathscr L_N$ 且使 $\lambda_M\times\lambda_N$ 完备的最小 $\sigma$--代数，且 $\lambda_{M+N}$ 在其上为 $\lambda_M\times\lambda_N$ 的延拓。这一事实说明乘积测度的“不完备”只是 $\sigma$--代数选取的问题，其零测集结构仍由 $\lambda_M\times\lambda_N$ 完全决定。
 \end{remark}
 
 设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为测度空间，$f:X_1\times X_2\to[0,\infty)$ 为 $\mathscr A_1\times\mathscr A_2$-可测。由\cref{proposition:ch02-迹可测}，$x_1$-迹 $f_{x_1}$ 为 $\mathscr A_2$-可测，故函数
 \begin{align}
 X_1\to[0,\infty],\qquad x_1\mapsto\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2 \label{align:ch02-2.16a}
 \end{align}
-良定义；类似地，映射
+有定义；同理，映射
 \begin{align}
 X_2\to[0,\infty],\qquad x_2\mapsto\int_{X_1}f_{x_2}\,\mathrm{d}\mu_1 \label{align:ch02-2.16b}
 \end{align}
-良定义。
+有定义。
 
 \begin{theorem}[Tonelli]\label{theorem:ch02-Tonelli}
-设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为 $\sigma$-有限测度空间。设 $f:X_1\times X_2\to[0,\infty)$ 为 $\mathscr A_1\times\mathscr A_2$-可测。则：
+设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为 $\sigma$-有限测度空间，$f:X_1\times X_2\to[0,\infty)$ 为 $\mathscr A_1\times\mathscr A_2$-可测。则：
 \begin{enumerate}[(i)]
-\item \eqref{align:ch02-2.16a}中定义的函数分别为 $\mathscr A_1$-、$\mathscr A_2$-可测；
+\item \eqref{align:ch02-2.16a}与\eqref{align:ch02-2.16b}中定义的函数分别为 $\mathscr A_1$-与 $\mathscr A_2$-可测；
 \item 有
 \begin{align}
 \int_{X_1\times X_2}f\,\mathrm{d}(\mu_1\times\mu_2)
@@ -76,17 +181,53 @@ X_2\to[0,\infty],\qquad x_2\mapsto\int_{X_1}f_{x_2}\,\mathrm{d}\mu_1 \label{alig
 \end{enumerate}
 \end{theorem}
 
-\begin{remark}\label{remark:ch02-Tonelli条件}
-\label{remark:ch02-截口注}
-注意\eqref{align:ch02-2.15b}是\eqref{align:ch02-2.17}在 $f=\chi_E$（$E\in\mathscr A_1\times\mathscr A_2$）时的特例。因此\cref{theorem:ch02-Tonelli}中 $\mu_1$ 与 $\mu_2$ 为 $\sigma$-有限的假设不能放松（见\cref{remark:ch02-sigma有限必要}）。
+% SUPPLEMENT: parent=theorem:ch02-Tonelli; kind=proof; 补出 Tonelli 定理的完整证明：先对特征函数（用 (2.15a)），再对非负简单函数（线性性），最后对一般非负可测函数用非降简单函数列逼近与两次单调收敛定理
+\begin{proof}
+第一步：特征函数。设 $f=\chi_E$，$E\in\mathscr A_1\times\mathscr A_2$。则 $(f_{x_1})=\chi_{E_{x_1}}$，故 $\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2=\mu_2(E_{x_1})$，它是 $\mathscr A_1$-可测的（\cref{proposition:ch02-乘积截面积分}(i)）；同理 $x_2\mapsto\int_{X_1}f_{x_2}\,\mathrm{d}\mu_1=\mu_1(E_{x_2})$ 为 $\mathscr A_2$-可测。又 $\int_{X_1\times X_2}\chi_E\,\mathrm{d}(\mu_1\times\mu_2)=(\mu_1\times\mu_2)(E)$，故\eqref{align:ch02-2.17}就是\eqref{align:ch02-2.15b}与\eqref{align:ch02-2.15a}。
+
+第二步：非负简单函数。设 $f=\sum_{r=1}^Rc_r\chi_{E_r}\in\mathscr S^+(X_1\times X_2)$，$c_r\geqslant0$。则 $f_{x_1}=\sum_{r=1}^Rc_r\chi_{(E_r)_{x_1}}$，故 $x_1\mapsto\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2=\sum_{r=1}^Rc_r\mu_2((E_r)_{x_1})$ 为 $\mathscr A_1$-可测；同理另一侧。由第一步与积分的线性性（\cref{definition:ch02-可积拟可积}后的证明第二段给出非负可测函数积分的可加性，配合有限线性组合）
+\begin{align*}
+\int_{X_1\times X_2}f\,\mathrm{d}(\mu_1\times\mu_2)=\sum_{r=1}^Rc_r(\mu_1\times\mu_2)(E_r)
+=\int_{X_1}\mathrm{d}\mu_1\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2=\int_{X_2}\mathrm{d}\mu_2\int_{X_1}f_{x_2}\,\mathrm{d}\mu_1.
+\end{align*}
+
+第三步：一般的非负可测函数。取 $\{s_n\}\subseteq\mathscr S^+(X_1\times X_2)$ 如\eqref{align:ch02-2.5}，即 $0\leqslant s_n\leqslant s_{n+1}\leqslant f$ 且 $s_n\to f$ 逐点。则对每个 $x_1\in X_1$，$(s_n)_{x_1}\uparrow f_{x_1}$，故由\cref{theorem:ch02-BeppoLevi}
+\begin{align*}
+\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2=\lim_{n\to\infty}\int_{X_2}(s_n)_{x_1}\,\mathrm{d}\mu_2.
+\end{align*}
+由第二步，每个 $x_1\mapsto\int_{X_2}(s_n)_{x_1}\,\mathrm{d}\mu_2$ 为 $\mathscr A_1$-可测，故其逐点极限 $x_1\mapsto\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2$ 为 $\mathscr A_1$-可测，即 (i) 成立。对非降序列 $x_1\mapsto\int_{X_2}(s_n)_{x_1}\,\mathrm{d}\mu_2$ 再用一次\cref{theorem:ch02-BeppoLevi}得
+\begin{align*}
+\int_{X_1}\mathrm{d}\mu_1\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2
+=\lim_{n\to\infty}\int_{X_1}\mathrm{d}\mu_1\int_{X_2}(s_n)_{x_1}\,\mathrm{d}\mu_2.
+\end{align*}
+另一方面，由 $s_n\uparrow f$ 与\cref{theorem:ch02-BeppoLevi}（对测度 $\mu_1\times\mu_2$）
+\begin{align*}
+\int_{X_1\times X_2}f\,\mathrm{d}(\mu_1\times\mu_2)=\lim_{n\to\infty}\int_{X_1\times X_2}s_n\,\mathrm{d}(\mu_1\times\mu_2).
+\end{align*}
+由第二步，上式右端的第 $n$ 项等于 $\int_{X_1}\mathrm{d}\mu_1\int_{X_2}(s_n)_{x_1}\,\mathrm{d}\mu_2$，故\eqref{align:ch02-2.17}的第一个等号成立；对调下标作同样的论证得第二个等号。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch02-Tonelli条件}\label{remark:ch02-截口注}
+\eqref{align:ch02-2.15b}是\eqref{align:ch02-2.17}在 $f=\chi_E$（$E\in\mathscr A_1\times\mathscr A_2$）时的特例。因此\cref{theorem:ch02-Tonelli}中 $\mu_1$ 与 $\mu_2$ 为 $\sigma$-有限的假设不能放松（见\hyperref[remark:ch02-sigma有限必要]{关于 $\sigma$-有限性必要性的注记} 与\hyperref[remark:ch02-乘积截面积分动机]{关于乘积截面积分的注记}(iii)）。
 \end{remark}
 
-对可积实值函数有下列结果。
+% SUPPLEMENT: parent=theorem:ch02-Tonelli; kind=motivation; 说明 Tonelli 定理的动机（累次积分与二重积分相等、无需可积性）、$f\geqslant0$ 假设的作用、两次单调收敛定理的位置，以及 $\sigma$--有限性不可去掉与 $f$ 变号时的失效
+\begin{remark}\phantomsection\label{remark:ch02-Tonelli动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch02-2.17}把二重积分化为累次积分，并且断言两种积分次序给出同一值。与 Fubini 定理不同，它不要求 $f$ 可积，因为 $f\geqslant0$ 时三个量都在 $[0,\infty]$ 中有定义（可为 $+\infty$），故等式自动成立。这使它成为计算非负函数积分的首选工具。
+\item $f\geqslant0$ 假设的作用。非负性使 $f_{x_1}$ 与 $f_{x_2}$ 的积分在 $[0,\infty]$ 中无条件有定义，也使\eqref{align:ch02-2.5}中的逼近可以从下方进行；若 $f$ 变号，则 $\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2$ 可能对某些 $x_1$ 无定义（$\infty-\infty$），等式\eqref{align:ch02-2.17}失去意义。此时需 $f\in L^1(X_1\times X_2,\mathscr A_1\times\mathscr A_2,\mu_1\times\mu_2)$，这正是\cref{theorem:ch02-Fubini}的假设。
+\item 两次单调收敛定理的位置。证明第三段对 $n$ 与对 $x_1$ 各用一次\cref{theorem:ch02-BeppoLevi}：第一次把 $\int_{X_2}(s_n)_{x_1}\,\mathrm{d}\mu_2$ 的极限移入积分，第二次把该极限移出 $\mathrm{d}\mu_1$ 积分。$\sigma$--有限性则用于第一步中的集合情形（\cref{proposition:ch02-乘积截面积分}）。
+\item 假设不可去掉。由\hyperref[remark:ch02-乘积截面积分动机]{关于乘积截面积分的注记}(iii)的对角线例，取 $\mu_2=\#$、$f=\chi_E$，则\eqref{align:ch02-2.17}两端分别为 $1$ 与 $0$。可见 $\sigma$--有限性不能减弱为“$\mu_1$、$\mu_2$ 为测度”。
+\item 适用边界。定理陈述中 $f$ 取值于 $[0,\infty)$；证明只用到 $f\geqslant0$ 与可测性，故结论对 $f:X_1\times X_2\to[0,\infty]$ 同样成立，此时\eqref{align:ch02-2.17}两端可同时为 $+\infty$。
+\end{enumerate}
+\end{remark}
+
+对可积的实值函数，有下列结果。
 
 \begin{theorem}[Fubini]\label{theorem:ch02-Fubini}
-设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为 $\sigma$-有限测度空间。设 $f\in L^1(X_1\times X_2,\mathscr A_1\times\mathscr A_2,\mu_1\times\mu_2)$。则：
+设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为 $\sigma$-有限测度空间，$f\in L^1(X_1\times X_2,\mathscr A_1\times\mathscr A_2,\mu_1\times\mu_2)$。则：
 \begin{enumerate}[(i)]
-\item 对 $\mu_1$-a.e. $x_1\in X_1$，$f_{x_1}\in L^1(X_2,\mathscr A_2,\mu_2)$；对 $\mu_2$-a.e. $x_2\in X_2$，$f_{x_2}\in L^1(X_1,\mathscr A_1,\mu_1)$；
+\item 对 $\mu_1$-a.e. $x_1\in X_1$ 有 $f_{x_1}\in L^1(X_2,\mathscr A_2,\mu_2)$；对 $\mu_2$-a.e. $x_2\in X_2$ 有 $f_{x_2}\in L^1(X_1,\mathscr A_1,\mu_1)$；
 \item 从 $X_1$ 到 $\mathbb R$ 的映射 $x_1\mapsto\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2$ 与从 $X_2$ 到 $\mathbb R$ 的映射 $x_2\mapsto\int_{X_1}f_{x_2}\,\mathrm{d}\mu_1$ 分别属于 $L^1(X_1,\mathscr A_1,\mu_1)$ 与 $L^1(X_2,\mathscr A_2,\mu_2)$；
 \item 有
 \begin{align}
@@ -97,10 +238,55 @@ X_2\to[0,\infty],\qquad x_2\mapsto\int_{X_1}f_{x_2}\,\mathrm{d}\mu_1 \label{alig
 \end{enumerate}
 \end{theorem}
 
-\cref{theorem:ch02-Fubini}中 $f$ 可积的假设不能放松，简单例子即表明。因此为应用 Fubini 定理，Tonelli 定理的如下推论是方便的。
+% SUPPLEMENT: parent=theorem:ch02-Fubini; kind=proof; 补出 Fubini 定理的完整证明：对 $f^+$ 与 $f^-$ 分别用 Tonelli 定理得到可积性与累次积分，再用 (2.10) 相减得 (2.18)；并说明例外集的零测性
+\begin{proof}
+第一步：正负部分。设 $f\in L^1(X_1\times X_2,\mathscr A_1\times\mathscr A_2,\mu_1\times\mu_2)$，即 $f$ 为 $\mathscr A_1\times\mathscr A_2$-可测且 $\int_{X_1\times X_2}|f|\,\mathrm{d}(\mu_1\times\mu_2)<\infty$。令 $f^\pm\triangleq\max\{\pm f,0\}$，则 $f^\pm\geqslant0$ 为 $\mathscr A_1\times\mathscr A_2$-可测，$(f^\pm)_{x_1}=(f_{x_1})^\pm$。由\cref{theorem:ch02-Tonelli}，
+\begin{align*}
+\int_{X_1}\mathrm{d}\mu_1\int_{X_2}(f^\pm)_{x_1}\,\mathrm{d}\mu_2=\int_{X_1\times X_2}f^\pm\,\mathrm{d}(\mu_1\times\mu_2)\leqslant\int_{X_1\times X_2}|f|\,\mathrm{d}(\mu_1\times\mu_2)<\infty.
+\end{align*}
+故 $x_1\mapsto\int_{X_2}(f^\pm)_{x_1}\,\mathrm{d}\mu_2$ 属于 $L^1(X_1,\mathscr A_1,\mu_1)$，特别地
+\begin{align*}
+\int_{X_2}(f^\pm)_{x_1}\,\mathrm{d}\mu_2<\infty\qquad\text{对}\ \mu_1\text{-a.e.}\ x_1\in X_1.
+\end{align*}
+
+第二步：例外集。令 $N_1\triangleq\big\{x_1\in X_1\mid\int_{X_2}(f^+)_{x_1}\,\mathrm{d}\mu_2=\infty\ \text{或}\ \int_{X_2}(f^-)_{x_1}\,\mathrm{d}\mu_2=\infty\big\}$。由第一步，$\mu_1(N_1)=0$。对 $x_1\in X_1\setminus N_1$，$(f_{x_1})^\pm=(f^\pm)_{x_1}\in L^1(X_2,\mathscr A_2,\mu_2)$，即 $f_{x_1}\in L^1(X_2,\mathscr A_2,\mu_2)$，故 (i) 的第一个断言成立；对调下标得第二个断言。
+
+第三步：\eqref{align:ch02-2.18}。对 $x_1\in X_1\setminus N_1$，由\cref{definition:ch02-可积拟可积}
+\begin{align*}
+\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2=\int_{X_2}(f^+)_{x_1}\,\mathrm{d}\mu_2-\int_{X_2}(f^-)_{x_1}\,\mathrm{d}\mu_2,
+\end{align*}
+且右端两项均有限。在 $N_1$ 上把 $x_1\mapsto\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2$ 的值定义为 $0$，所得函数 $\varphi$ 为 $\mathscr A_1$-可测（由\cref{theorem:ch02-Tonelli}(i)）且在 $X_1$ 上等于上述差，故由线性性（\cref{definition:ch02-可积拟可积}后的证明第五段）
+\begin{align*}
+\int_{X_1}\varphi\,\mathrm{d}\mu_1
+=\int_{X_1\times X_2}f^+\,\mathrm{d}(\mu_1\times\mu_2)-\int_{X_1\times X_2}f^-\,\mathrm{d}(\mu_1\times\mu_2)
+=\int_{X_1\times X_2}f\,\mathrm{d}(\mu_1\times\mu_2),
+\end{align*}
+其中第二个等号用到 $f=f^+-f^-$ 与\cref{definition:ch02-可积拟可积}。于是 $\varphi\in L^1(X_1,\mathscr A_1,\mu_1)$，即 (ii) 的第一个断言成立，且 $\int_{X_1}\varphi\,\mathrm{d}\mu_1=\int_{X_1}\mathrm{d}\mu_1\int_{X_2}f_{x_1}\,\mathrm{d}\mu_2$ 给出\eqref{align:ch02-2.18}的第一个等号（$\mu_1$-零测集上的改动不影响积分）。对调下标得第二个等号。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-Fubini; kind=motivation; 说明 Fubini 定理的动机、可积性假设不可去掉（两个累次积分不相等的级数反例，逐项验证其余条件）、与 Tonelli 定理的分工，以及结论中“几乎处处”出现的位置
+\begin{remark}\phantomsection\label{remark:ch02-Fubini动机}
+\begin{enumerate}[(i)]
+\item 引入动机。Tonelli 定理只处理非负函数；(i) 与 (ii) 说明：对可积的实值 $f$，几乎每个截口都可积、累次积分作为纤维上的函数可积，且 (iii) 给出二重积分与两种累次积分三者相等。这是把多重积分化为累次积分的标准依据。
+\item 可积性假设不可去掉。设 $X_1=X_2=\mathbb N$，$\mathscr A_1=\mathscr A_2=\mathscr P(\mathbb N)$，$\mu_1=\mu_2=\#$ 为计数测度（$\sigma$-有限），并令
+\begin{align*}
+f(m,n)\triangleq
+\begin{cases}
+1, & n=m,\\
+-1, & n=m-1,\\
+0, & \text{其他},
+\end{cases}
+\end{align*}
+其中 $n=m-1$ 一项在 $m\geqslant1$ 时出现。对固定 $m$，内层和 $\sum_{n=0}^\infty f(m,n)$ 在 $m=0$ 时等于 $1$，在 $m\geqslant1$ 时等于 $1-1=0$，故 $\sum_{m=0}^\infty\sum_{n=0}^\infty f(m,n)=1$。对固定 $n$，内层和 $\sum_{m=0}^\infty f(m,n)=1-1=0$，故 $\sum_{n=0}^\infty\sum_{m=0}^\infty f(m,n)=0$。两个累次积分不相等。逐项核查其余条件：$f$ 关于 $\mathscr P(\mathbb N)\times\mathscr P(\mathbb N)=\mathscr P(\mathbb N^2)$ 可测；两个内层和都绝对收敛（对固定 $m$，$\sum_n|f(m,n)|\leqslant2$；对固定 $n$，$\sum_m|f(m,n)|\leqslant2$）；$\mu_1$、$\mu_2$ 为 $\sigma$-有限。唯一失败的假设是可积性：$\int_{\mathbb N^2}|f|\,\mathrm{d}(\#\times\#)=\sum_{m,n}|f(m,n)|=\infty$，故 $f\notin L^1$。
+\item 与 Tonelli 定理的分工。实践中先用\cref{theorem:ch02-Tonelli}对 $|f|$ 计算一个累次积分：若其值有限，则 $f\in L^1$，于是\cref{theorem:ch02-Fubini}适用并给出\eqref{align:ch02-2.18}。这正是\cref{theorem:ch02-Fubini判别}的内容。反过来，若先验证 $f\in L^1$，则不必再检查累次积分的收敛性。
+\item “几乎处处”的位置。(i) 中的例外集只能断言为 $\mu_1$-零测集：它可以依赖于 $f$ 而不可去掉，因为存在可积的 $f$，使某些截口不可积。例如在 $X_1=X_2=(0,1)$、$\mu_1=\mu_2=\lambda$ 上取 $f(x_1,x_2)\triangleq(x_1-x_2)^{-1/2}$（在 $x_1=x_2$ 处任意取值），则 $f\in L^1((0,1)^2)$，但当 $x_1$ 处的截口在 $x_2=x_1$ 附近有不可积的奇性时 $\int_0^1f_{x_1}\,\mathrm{d}x_2$ 发散；由 (i)，这样的 $x_1$ 只能构成零测集。在 (iii) 的等式两边，零测集上的取值不影响积分，故 (i) 中的例外集不影响 (iii)。
+\end{enumerate}
+\end{remark}
+
+\cref{theorem:ch02-Fubini}中 $f$ 可积的假设不能放松，简单例子即表明（见\hyperref[remark:ch02-Fubini动机]{关于 Fubini 定理的注记}(ii)）。因此为应用 Fubini 定理，Tonelli 定理的如下推论是方便的。
 
 \begin{theorem}\label{theorem:ch02-Fubini判别}
-设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为 $\sigma$-有限测度空间。设 $f:X_1\times X_2\to\mathbb R$ 为 $\mathscr A_1\times\mathscr A_2$-可测。则下列命题等价：
+设 $(X_1,\mathscr A_1,\mu_1)$ 与 $(X_2,\mathscr A_2,\mu_2)$ 为 $\sigma$-有限测度空间，$f:X_1\times X_2\to\mathbb R$ 为 $\mathscr A_1\times\mathscr A_2$-可测。则下列命题等价：
 \begin{enumerate}[(i)]
 \item $f\in L^1(X_1\times X_2,\mathscr A_1\times\mathscr A_2,\mu_1\times\mu_2)$；
 \item $\int_{X_1}\mathrm{d}\mu_1\int_{X_2}|f_{x_1}|\,\mathrm{d}\mu_2<\infty$；
@@ -108,7 +294,25 @@ X_2\to[0,\infty],\qquad x_2\mapsto\int_{X_1}f_{x_2}\,\mathrm{d}\mu_1 \label{alig
 \end{enumerate}
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch02-Fubini判别; kind=proof; 补出判别的证明：对 $|f|\geqslant0$ 用 Tonelli 定理把三个量化为同一个值，再说明 (ii)、(iii) 中内层积分自动几乎处处有限
+\begin{proof}
+因 $|f|\geqslant0$ 为 $\mathscr A_1\times\mathscr A_2$-可测，且 $(|f|)_{x_1}=|f_{x_1}|$、$(|f|)_{x_2}=|f_{x_2}|$，由\cref{theorem:ch02-Tonelli}应用于 $|f|$ 得
+\begin{align*}
+\int_{X_1\times X_2}|f|\,\mathrm{d}(\mu_1\times\mu_2)
+=\int_{X_1}\mathrm{d}\mu_1\int_{X_2}|f_{x_1}|\,\mathrm{d}\mu_2
+=\int_{X_2}\mathrm{d}\mu_2\int_{X_1}|f_{x_2}|\,\mathrm{d}\mu_1.
+\end{align*}
+三个量在 $[0,\infty]$ 中取值且相等。由\cref{definition:ch02-可积拟可积}，$f\in L^1(X_1\times X_2,\mathscr A_1\times\mathscr A_2,\mu_1\times\mu_2)$ 当且仅当 $\int_{X_1\times X_2}|f|\,\mathrm{d}(\mu_1\times\mu_2)<\infty$，故 (i)、(ii)、(iii) 三者等价。又若 (ii) 成立，则 $\int_{X_2}|f_{x_1}|\,\mathrm{d}\mu_2$ 作为 $\mu_1$-可积函数在 $\mu_1$-a.e. $x_1$ 处有限（\hyperref[remark:ch02-非负可测积分动机]{关于非负可测函数积分的注记}(v)），即 $f_{x_1}\in L^1(X_2,\mathscr A_2,\mu_2)$ 对 $\mu_1$-a.e. $x_1$ 成立，与\cref{theorem:ch02-Fubini}(i) 一致。
+\end{proof}
 
-
+% SUPPLEMENT: parent=theorem:ch02-Fubini判别; kind=motivation; 说明该判别的作用（把 Fubini 定理的可积性化归为一次累次积分的有限性）、两项条件的对称性、验证顺序以及边界情形
+\begin{remark}\phantomsection\label{remark:ch02-Fubini判别动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{theorem:ch02-Fubini}要求先知道 $f\in L^1(\mu_1\times\mu_2)$，而这一般不易直接验证。\cref{theorem:ch02-Fubini判别}把该要求化归为对 $|f|$ 计算一次累次积分：只要 $\int_{X_1}\mathrm{d}\mu_1\int_{X_2}|f_{x_1}|\,\mathrm{d}\mu_2<\infty$，就有 $f\in L^1$，从而\cref{theorem:ch02-Fubini}的全部结论可用。
+\item 两项条件的对称性。(ii) 与 (iii) 等价，故可任选其一验证；实践中选取内层积分较易计算的那一侧。注意 (ii) 中的内层积分是 $\mu_2$-积分，外层是 $\mu_1$-积分，次序不能交换。
+\item 验证顺序。先对 $|f|$ 用\cref{theorem:ch02-Tonelli}（此时无需可积性），若得到的值有限则结论成立；若得到的值为 $+\infty$，则 $f\notin L^1$，\cref{theorem:ch02-Fubini}不可用，且两个累次积分可能不相等（\hyperref[remark:ch02-Fubini动机]{关于 Fubini 定理的注记}(ii)）。
+\item 边界情形。条件 (ii) 只涉及 $|f|$，故 $f$ 变号不影响判别结果；若 $f$ 只取非负值，则 (ii) 等价于 $f\in L^1$ 且此时累次积分与二重积分相等（\cref{theorem:ch02-Tonelli}）。若 $f$ 定义在 $\mu_1\times\mu_2$-零测集之外（例如只在某个可测子集上有定义），则需先按零值延拓，延拓不改变可积性与各积分值。
+\end{enumerate}
+\end{remark}
 
 \end{document}

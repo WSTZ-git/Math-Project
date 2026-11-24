@@ -15,43 +15,104 @@
 
 \section{$\phi$ 无界的情形}\label{section:ch06-无界phi}
 
-本节致力于在更一般假设下研究问题 (P)，特别允许函数 $\phi$ 无界。除\cref{theorem:ch6-正则化}的简短证明外，我们仅描述主要结果并给出证明梗概（完整证明请感兴趣的读者参见文献~\cite{ref87}）。
+本节致力于在更一般假设下研究问题 (P)，特别允许函数 $\phi$ 无界。除\cref{theorem:ch6-正则化}的简短证明外，本节仅描述主要结果并给出证明梗概（完整证明参见文献~\cite{ref87}）。
 
 此后假设 (A1)--(A2) 由如下两条假设替代：
 \begin{align*}
-\phi\in C(\mathbb{R}) \text{ 在 }\mathbb{R}\text{ 上非减且非常数，}\phi(0)=0; \qquad(A1')
+\phi\in C(\mathbb{R})\text{ 在 }\mathbb{R}\text{ 上非减且非常数，}\phi(0)=0; \qquad(A1')
 \end{align*}
 \begin{align}
-\text{存在 }M_0>0\text{ 与 }\alpha\in[1,\infty)\text{ 使 }|\phi(y)|\leqslant M_0(1+|y|^\alpha)
-\quad(y\in\mathbb{R}). \qquad(A2') \label{align:ch6-A2p}
+\text{存在 }M_0>0\text{ 与 }\alpha\in[1,\infty)\text{，使 }|\phi(y)|\leqslant M_0(1+|y|^{\alpha})
+\quad\text{对一切 }y\in\mathbb{R}. \qquad(A2') \label{align:ch6-A2p}
 \end{align}
 
 由假设 (A1')，存在
 \begin{align}
-\lim_{y\to\pm\infty}\phi(y)=:\phi_{\pm\infty}\in\mathbb{R}. \label{align:ch6-6.131}
+\lim_{y\to\pm\infty}\phi(y)=:\phi_{\pm\infty}\in\overline{\mathbb{R}}. \label{align:ch6-6.131}
 \end{align}
-$\phi_{\pm\infty}$ 有限或无穷两种情形均允许，且要么 $\phi_{-\infty}\leqslant0<\phi_{+\infty}$，要么 $\phi_{-\infty}<0\leqslant\phi_{+\infty}$。对 $\phi$ 的唯一限制是其增长至多为幂次；不使用下界估计（除\cref{proposition:ch06-6.7.9}中的正则化结果外），不对扩散率 $\phi'$ 的存在性作假设。
+$\phi_{\pm\infty}$ 有限或无穷两种情形均允许，且要么 $\phi_{-\infty}\leqslant0<\phi_{+\infty}$，要么 $\phi_{-\infty}<0\leqslant\phi_{+\infty}$。对 $\phi$ 的唯一限制是其增长至多为幂次；除\cref{proposition:ch06-6.7.9}中的正则化结果外，不使用下界估计，也不对扩散率 $\phi'$ 的存在性作任何假设。
 
 \subsection{解的定义}\label{subsection:ch06-无界解定义}
 
-记 $T_K(y)\triangleq \max\{-K,\min\{y,K\}\}$（$y\in\mathbb{R}$，$K>0$）为标准截断函数。
+记 $T_K(y)\triangleq\max\{-K,\min\{y,K\}\}$（$y\in\mathbb{R}$，$K>0$）为标准截断函数。
 
 \begin{definition}\label{definition:ch06-无界弱解}
-设 (A0) 成立。问题 (P) 的弱解指任意 $u\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$，满足：
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，$Q\triangleq\Omega\times(0,T)$，$\Gamma\triangleq\partial\Omega\times(0,T)$，且 (A0) 成立（即 $u_0\in\mathscr{R}_f(\Omega)$）。设 $\phi:\mathbb{R}\to\mathbb{R}$ 满足 (A1')，并设 $\alpha\in[1,\infty)$ 为 (A2') 中的指数，即存在 $M_0>0$ 使 $|\phi(y)|\leqslant M_0(1+|y|^{\alpha})$ 对一切 $y\in\mathbb{R}$ 成立。问题 (P) 的弱解是指满足以下两条的 $u\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$，其中 $u_r\in L^1(Q)$ 为 $u\in\mathscr{R}_f(Q)$ 关于 Lebesgue 测度的绝对连续部分的密度（见\cref{definition:ch01-Lebesgue分解}）：
 \begin{enumerate}[(i)]
-\item $\phi(u_r)\in L^q(0,T;W^{1,q}_0(\Omega))$ 对任意 $q\in[1,1+\frac{1}{\alpha N+1})$，且 $T_K(\phi(u_r))\in L^2(0,T;H^1_0(\Omega))$ 对任意 $K>0$；
-\item 对每个 $\zeta\in C^1([0,T];C^1_c(\Omega))$，$\zeta(\cdot,T)=0$ 在 $\Omega$ 上，有
+\item $\phi(u_r)\in L^q(0,T;W^{1,q}_0(\Omega))$ 对任意 $q\in[1,1+\frac{1}{\alpha N+1})$ 成立，且 $T_K(\phi(u_r))\in L^2(0,T;H^1_0(\Omega))$ 对任意 $K>0$ 成立；
+\item 对每个满足 $\zeta(\cdot,T)=0$ 于 $\Omega$ 的 $\zeta\in C^1([0,T];C^1_c(\Omega))$，有
 \begin{align}
 \int_0^T\langle u(\cdot,t),\partial_t\zeta(\cdot,t)\rangle\,\mathrm{d}t
 = \iint_Q\nabla\phi(u_r)\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}t
--\langle u_0,\zeta(\cdot,0)\rangle. \label{align:ch6-6.132}
+-\langle u_0,\zeta(\cdot,0)\rangle , \label{align:ch6-6.132}
 \end{align}
+其中 $u(\cdot,t)$（$t\in(0,T)$）为 $u$ 的离散分解，$\langle\cdot,\cdot\rangle$ 为 $\mathscr{R}_f(\Omega)$ 与 $C_0(\Omega)$ 之间的对偶配对。
 \end{enumerate}
 \end{definition}
 
-易见在此情形等式\eqref{align:ch6-6.5a}同样成立，即初值条件在 $\mathscr{R}_f(\Omega)$ 的弱$^*$意义下满足。
+% SUPPLEMENT: parent=definition:ch06-无界弱解; kind=motivation; location=定义 6.7.1 后的注记; basis=原书定义 6.7.1、(A1')--(A2')、(6.131) 的推导与注记 6.7.1 的化归；$q>1$ 对 (6.132) 右端绝对收敛的作用以及 $T_K$ 一款与 $L^q$ 一款互不包含，均为独立核对
+\begin{remark}\phantomsection\label{remark:ch06-无界弱解动机}
+\begin{enumerate}[(i)]
+\item 引入动机。先说明\eqref{align:ch6-6.131}与两种情形的来源。(A1') 只要求 $\phi\in C(\mathbb{R})$ 非减，故 $y\to\pm\infty$ 时的极限在 $\overline{\mathbb{R}}$ 中存在；由 $\phi$ 非减与 $\phi(0)=0$ 得 $\phi_{-\infty}\leqslant0\leqslant\phi_{+\infty}$，再由 $\phi$ 非常数知 $\phi_{-\infty}<0$ 与 $\phi_{+\infty}>0$ 至少一个成立，这正是原文所列的两种情形。(A1) 中的有界性 $\phi\in C_b(\mathbb{R})$ 一旦去掉，$\phi(u_r)$ 不再自动属于 $L^\infty(Q)$：由 (A2') 与 $u_r\in L^1(Q)$ 只能得到 $\phi(u_r)\in L^{1/\alpha}(Q)$（$\alpha\geqslant1$ 时该指数不超过 $1$），一般不属于 $L^2(Q)$，故\cref{definition:ch06-弱解}的要求 $\phi(u_r)\in L^2(0,T;H^1_0(\Omega))$ 须换成更弱且分层的两条要求。条件 (i) 的两款控制两个不同的水平范围：$L^q(0,T;W^{1,q}_0(\Omega))$（$q$ 接近 $1$）给出 $\phi(u_r)$ 在全部水平上的整体 $L^q$ 正则性，$T_K(\phi(u_r))\in L^2(0,T;H^1_0(\Omega))$（每个 $K>0$）给出 $|\phi(u_r)|\leqslant K$ 这一层上的 $H^1$ 正则性。
 
-\begin{remark}\label{remark:ch06-6.7.1}
+\item 各假设的作用。因 $1+\frac{1}{\alpha N+1}>1$，可取 $q\in(1,1+\frac{1}{\alpha N+1})$，于是 $\nabla\phi(u_r)\in L^q(Q)\subseteq L^1(Q)$，这正是\eqref{align:ch6-6.132}右端对 $\zeta\in C^1([0,T];C^1_c(\Omega))$ 绝对收敛的依据：$|\nabla\zeta|\leqslant\|\nabla\zeta\|_{L^\infty}$ 而 $\nabla\phi(u_r)\in L^1(Q)$。$W^{1,q}_0$ 的下标 $0$ 与 $H^1_0$ 的下标 $0$ 编码了边界条件：$\phi(u_r(\cdot,t))$ 及其截断的迹在 $\partial\Omega$ 上为零，故边界条件不需另行陈述。(A0) 使初值配对 $\langle u_0,\zeta(\cdot,0)\rangle$ 有定义；$u\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 保证离散分解 $\{u(\cdot,t)\}$ 存在且 $\|u(\cdot,t)\|_{\mathscr{R}_f(\Omega)}$ 关于 $t$ 本性有界，从而\eqref{align:ch6-6.132}左端为 Lebesgue 积分（见\cref{proposition:ch05-弱星可度量化}）；$\phi\in C(\mathbb{R})$ 使 $\phi(u_r)$ 对几乎处处的 $(x,t)$ 有定义；$\alpha<\infty$ 使 (A2') 成立，即 $\phi$ 至多按幂次增长，这是 $\phi(u_r)$ 可由 $u_r$ 的 $L^1$ 界控制的前提：若 $\phi$ 增长快于任何幂次，则 $u_r\in L^1(Q)$ 甚至不能保证 $\phi(u_r)\in L^1(Q)$，条件 (i) 与\eqref{align:ch6-6.132}同时失去意义；$\zeta(\cdot,T)=0$ 用于消去分部积分产生的未知项 $\langle u(\cdot,T),\zeta(\cdot,T)\rangle$。$\phi$ 的非减性与 $\phi(0)=0$ 在本定义中未被使用：非减性只在存在性、唯一性与比较原理中起作用，$\phi(0)=0$ 是规范条件，并使 $T_K(\phi(u_r))$ 在 $\Gamma$ 上为零。
+
+\item 边界与反例。若 $\phi$ 有界，取 $K>\|\phi\|_{L^\infty(\mathbb{R})}$ 得 $T_K(\phi(u_r))=\phi(u_r)$，故 (i) 的第二款即为 $\phi(u_r)\in L^2(0,T;H^1_0(\Omega))$，而 (i) 的第一款由 $L^2\subseteq L^q$ 自动成立，定义退化为\cref{definition:ch06-弱解}（另见\cref{remark:ch06-6.7.1}(i)）。当 $\phi$ 无界时，(i) 的两款互不包含：$T_K$ 一款只控制水平集 $\{|\phi(u_r)|\leqslant K\}$ 上的梯度，对 $|\phi(u_r)|$ 取值很大的区域不给出整体可积性，故不能推出 $\nabla\phi(u_r)\in L^1(Q)$；反之，$L^q$ 一款只给出 $q$（接近 $1$）阶可积性，不能推出每个截断属于 $H^1$。若把 (i) 的第一款中 $q$ 的上界换成更大的数，则 $\nabla\phi(u_r)$ 的相应 $L^q$ 界在 (A2') 下不再由逼近解的先验估计一致给出，\cref{theorem:ch06-6.7.3}的紧性论证随之失效。定义不要求 $u_r$ 本身具有任何 Sobolev 正则性：$\nabla\phi(u_r)$ 可以不为零，而 $u_r$ 可以完全不可微（若 $\phi$ 在某个区间上为常数，则 $\phi(u_r)$ 不感受 $u_r$ 在该区间的变化）。
+\end{enumerate}
+\end{remark}
+
+下式说明本情形下初值条件仍在弱$^*$意义下成立；其证明为由\eqref{align:ch6-6.132}出发的标准逼近论证。
+
+% SUPPLEMENT: parent=definition:ch06-无界弱解; kind=proof; location=定义 6.7.1 后的补写证明; basis=原书“It is easily seen that also in the present case equality (6.5a) holds”之展开：以 $k_p$ 型时间试验函数代入 (6.132)、$\nabla\phi(u_r)\in L^1(Q)$ 给出的绝对连续性、$C^2_c(\Omega)$ 在 $C_0(\Omega)$ 中的稠密性
+\begin{proof}[证明\eqref{align:ch6-6.5a}]
+设 $u$ 为问题 (P) 的弱解。任取 $q\in(1,1+\frac{1}{\alpha N+1})$，则 $\nabla\phi(u_r)\in L^q(Q)\subseteq L^1(Q)$。
+
+第一步：对每个 $\rho\in C^2_c(\Omega)$ 与几乎所有 $t_1\in(0,T)$，有
+\begin{align}
+\langle u(\cdot,t_1),\rho\rangle-\langle u_0,\rho\rangle
+=\int_0^{t_1}\int_\Omega\phi(u_r(x,t))\Delta\rho(x)\,\mathrm{d}x\,\mathrm{d}t . \label{align:ch6-6.141}
+\end{align}
+事实上，取 $t_1\in(0,T)$ 与 $p>1/(T-t_1)$，置 $k_p(t)\triangleq\chi_{(0,t_1]}(t)+[p(t_1-t)+1]\chi_{(t_1,t_1+\frac{1}{p}]}(t)$（$t\in[0,T]$）。则 $k_p$ 在 $[0,T]$ 上连续、分段 $C^1$，$k_p(0)=1$、$k_p(T)=0$，且 $k_p'=-p$ 于 $(t_1,t_1+\frac{1}{p})$、$k_p'=0$ 于其余点。由 $C^1$ 函数在 $W^{1,1}(0,T)$ 中逼近 $k_p$（保持 $k_p(T)=0$ 与 $k_p(0)=1$）及\eqref{align:ch6-6.132}两端关于 $\zeta$ 的连续性，\eqref{align:ch6-6.132}对 $\zeta(x,t)=\rho(x)k_p(t)$ 成立。代入得
+\begin{align*}
+-p\int_{t_1}^{t_1+\frac{1}{p}}\langle u(\cdot,t),\rho\rangle\,\mathrm{d}t
+=\iint_Q\nabla\phi(u_r)\cdot\nabla\rho\,k_p(t)\,\mathrm{d}x\,\mathrm{d}t-\langle u_0,\rho\rangle ,
+\end{align*}
+即
+\begin{align*}
+p\int_{t_1}^{t_1+\frac{1}{p}}\langle u(\cdot,t),\rho\rangle\,\mathrm{d}t
+=\langle u_0,\rho\rangle-\int_0^Tk_p(t)\left(\int_\Omega\nabla\phi(u_r(x,t))\cdot\nabla\rho(x)\,\mathrm{d}x\right)\mathrm{d}t .
+\end{align*}
+令 $p\to\infty$。左端当 $t_1$ 为 $\psi(t)\triangleq\langle u(\cdot,t),\rho\rangle\in L^\infty(0,T)$ 的 Lebesgue 点时收敛于 $\psi(t_1)$（见\cref{theorem:ch02-BeppoLevi}(i)）；右端的内层积分关于 $t$ 属于 $L^1(0,T)$（因 $\nabla\phi(u_r)\in L^1(Q)$），且 $k_p\to\chi_{(0,t_1]}$ 逐点、$|k_p|\leqslant1$，故由控制收敛定理右端收敛于 $\langle u_0,\rho\rangle-\int_0^{t_1}\int_\Omega\nabla\phi(u_r)\cdot\nabla\rho\,\mathrm{d}x\,\mathrm{d}t$。于是
+\begin{align*}
+\langle u(\cdot,t_1),\rho\rangle-\langle u_0,\rho\rangle
+=-\int_0^{t_1}\int_\Omega\nabla\phi(u_r(x,t))\cdot\nabla\rho(x)\,\mathrm{d}x\,\mathrm{d}t .
+\end{align*}
+对几乎所有的 $t$，$\phi(u_r(\cdot,t))\in W^{1,q}_0(\Omega)\subseteq H^1_0(\Omega)$，故对 $\rho\in C^2_c(\Omega)$ 分部积分合法且无边界项，右端化为 $\int_0^{t_1}\int_\Omega\phi(u_r)\Delta\rho\,\mathrm{d}x\,\mathrm{d}t$，即\eqref{align:ch6-6.141}。
+
+第二步：由\eqref{align:ch6-6.141}得\eqref{align:ch6-6.5a}。设 $\rho\in C^2_c(\Omega)$ 且 $t_1$ 满足\eqref{align:ch6-6.141}。设 $q'\in(1,\infty)$ 为 $q$ 的共轭指数。由 Hölder 不等式，
+\begin{align*}
+\left|\langle u(\cdot,t_1)-u_0,\rho\rangle\right|
+\leqslant\|\nabla\rho\|_{L^\infty(\Omega)}\int_0^{t_1}\int_\Omega|\nabla\phi(u_r)|\,\mathrm{d}x\,\mathrm{d}t
+\leqslant\|\nabla\rho\|_{L^\infty(\Omega)}\|\nabla\phi(u_r)\|_{L^q(Q)}\,t_1^{1/q'} .
+\end{align*}
+故沿\eqref{align:ch6-6.141}成立的那些 $t_1$，$\langle u(\cdot,t_1),\rho\rangle\to\langle u_0,\rho\rangle$（$t_1\to0^+$）。
+
+对一般的 $\rho\in C_0(\Omega)$ 与 $j\in\mathbb{N}$，取 $\rho_j\in C^2_c(\Omega)$ 使 $\|\rho-\rho_j\|_{C_0(\Omega)}<1/j$，并置 $M\triangleq\operatorname{ess\,sup}_{t\in(0,T)}\|u(\cdot,t)\|_{\mathscr{R}_f(\Omega)}$。对每个 $j$，\eqref{align:ch6-6.141}除一个零测集 $F_j\subseteq(0,T)$ 外成立；置 $F\triangleq\bigcup_{j=1}^{\infty}F_j$，则 $F$ 为零测集。对 $t_1\in(0,T)\setminus F$，
+\begin{align*}
+\left|\langle u(\cdot,t_1)-u_0,\rho\rangle\right|
+\leqslant\left|\langle u(\cdot,t_1)-u_0,\rho-\rho_j\rangle\right|
++\left|\langle u(\cdot,t_1)-u_0,\rho_j\rangle\right|
+\leqslant\frac{2M}{j}+\left|\langle u(\cdot,t_1)-u_0,\rho_j\rangle\right| .
+\end{align*}
+先令 $t_1\to0^+$（沿 $t_1\in(0,T)\setminus F$）得 $\limsup_{t_1\to0^+}|\langle u(\cdot,t_1)-u_0,\rho\rangle|\leqslant2M/j$，再令 $j\to\infty$ 即得 $\operatorname*{ess\,lim}_{t\to0^+}\langle u(\cdot,t),\rho\rangle=\langle u_0,\rho\rangle$，即\eqref{align:ch6-6.5a}。结论成立。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:ch06-无界弱解; kind=example; location=定义 6.7.1 后的例子; basis=由 (A1')--(A2') 与 $u_r\in L^1$ 独立核对的两种极端情形，用以校准条件 (i) 中两个指数指标的含义
+\begin{remark}\phantomsection\label{remark:ch06-无界弱解例}
+两种极端情形可用以校准条件 (i)。其一，取 $\phi(y)\triangleq|y|^{\alpha-1}y$（$\alpha\geqslant1$），此时 (A1') 与 (A2') 均成立，且 (A2') 中的指数不能取更小。若 $u_0\in\mathscr{R}_f(\Omega)$ 带奇异部分，则 $u(\cdot,t)$ 在正时刻仍可带奇异部分，而 $\phi(u_r)$ 在 $u_r$ 取值很大的区域按 $|u_r|^{\alpha}$ 增长；条件 (i) 的 $L^q$ 一款正是对这一区域的可积性要求，$q$ 的上界 $1+\frac{1}{\alpha N+1}$ 随 $\alpha$ 增大而趋近于 $1$，即 $\phi$ 增长越快，可得的可积性越弱。其二，取 $\phi$ 有界（此时 (A1) 成立），则 (i) 等价于 $\phi(u_r)\in L^2(0,T;H^1_0(\Omega))$，\cref{definition:ch06-无界弱解}与\cref{definition:ch06-弱解}逐字相同。介于两者之间的是 $\phi_{-\infty}$ 或 $\phi_{+\infty}$ 有限而另一支发散的情形（例如 $\phi(y)=y$ 于 $y\geqslant0$、$\phi(y)=0$ 于 $y\leqslant0$）：此时一支的扩散在无穷远附近退化，另一支不退化，而\cref{remark:ch06-6.7.1}(i)表明只有有限的一支具有 $L^2(0,T;H^1_0(\Omega))$ 正则性。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch06-6.7.1}
 (i) 因 $[T_K(\phi)]^\pm=T_K(\phi^\pm)$，对 (P) 的每个弱解，若 $\pm\phi_{\pm\infty}<+\infty$，则 $\phi^\pm(u_r)\in L^2(0,T;H^1_0(\Omega))$。故在此情形，\cref{definition:ch06-无界弱解}化归为\cref{definition:ch06-弱解}。
 
 (ii) 若 $\phi$ 有界，则 (P) 的每个弱解 $u$ 具有如下性质：
@@ -59,7 +120,7 @@ $\phi_{\pm\infty}$ 有限或无穷两种情形均允许，且要么 $\phi_{-\inf
 \phi(u_r)\in L^2(0,T;H^1_0(\Omega)), \label{align:ch6-6.133a}
 \end{align}
 \begin{align}
-u(\cdot,t)-u_0\in H^{-1}(\Omega) \quad\text{对几乎所有 }t\in(0,T), \label{align:ch6-6.133b}
+u(\cdot,t)-u_0\in H^{-1}(\Omega)\quad\text{对几乎所有 }t\in(0,T), \label{align:ch6-6.133b}
 \end{align}
 \begin{align}
 \operatorname*{ess\,lim}_{t\to0^+}\|u(\cdot,t)-u_0\|_{H^{-1}(\Omega)}=0. \label{align:ch6-6.133c}
@@ -78,33 +139,78 @@ u(\cdot,t)-u_0=\Delta\left(\int_0^t\phi(u_r(\cdot,s))\,\mathrm{d}s\right)
 从而\eqref{align:ch6-6.133b}与\eqref{align:ch6-6.133c}成立。断言得证。
 \end{remark}
 
+% SUPPLEMENT: parent=remark:ch06-6.7.1; kind=proof; location=注记 6.7.1 后的补写证明; basis=原书“In fact”与“whence (6.133b) and (6.133c) follow”两处跳跃之展开：由 (6.132) 推 (6.134)、$\Delta:H^1_0(\Omega)\to H^{-1}(\Omega)$ 的等距性、时间积分的 $H^1_0$ 估计
+\begin{proof}
+设 $\phi$ 有界，(A1') 成立，$u$ 为 (P) 的弱解。
+
+(1) \eqref{align:ch6-6.133a}。由 $|\phi|\leqslant\|\phi\|_{L^\infty(\mathbb{R})}$，在\cref{definition:ch06-无界弱解}(i) 中取 $K>\|\phi\|_{L^\infty(\mathbb{R})}$ 得 $T_K(\phi(u_r))=\phi(u_r)$，故\eqref{align:ch6-6.133a}成立。
+
+(2) \eqref{align:ch6-6.134}。设 $\rho\in C^2_c(\Omega)$。由\eqref{align:ch6-6.141}（其证明只用到 $\nabla\phi(u_r)\in L^1(Q)$，而此处更强，有 $\nabla\phi(u_r)\in L^2(Q)$）与分部积分，对几乎所有 $t\in(0,T)$ 有
+\begin{align*}
+\langle u(\cdot,t)-u_0,\rho\rangle
+=\int_0^t\int_\Omega\phi(u_r(x,s))\Delta\rho(x)\,\mathrm{d}x\,\mathrm{d}s
+=\int_\Omega\Delta\rho(x)\left(\int_0^t\phi(u_r(x,s))\,\mathrm{d}s\right)\mathrm{d}x ,
+\end{align*}
+其中交换积分次序合法，因为 $\phi(u_r)\in L^1(Q)$ 且 $\Delta\rho\in L^\infty(\Omega)$。由 $\rho\in C^2_c(\Omega)$ 的任意性即得\eqref{align:ch6-6.134}。
+
+(3) 范数恒等式。对几乎所有的 $t$，置 $G_t\triangleq\int_0^t\phi(u_r(\cdot,s))\,\mathrm{d}s$。由 $\phi(u_r)\in L^2(0,T;H^1_0(\Omega))$ 得 $\nabla G_t\in L^2(\Omega)$，且
+\begin{align*}
+\|\nabla G_t\|_{L^2(\Omega)}\leqslant\int_0^t\|\nabla\phi(u_r(\cdot,s))\|_{L^2(\Omega)}\,\mathrm{d}s<\infty,
+\end{align*}
+故 $G_t\in H^1_0(\Omega)$。由 $\Delta:H^1_0(\Omega)\to H^{-1}(\Omega)$ 在等价范数 $\|G\|_{H^1_0(\Omega)}\triangleq\|\nabla G\|_{L^2(\Omega)}$ 下为等距同构得 $\|\Delta G_t\|_{H^{-1}(\Omega)}=\|G_t\|_{H^1_0(\Omega)}$，而 $\|G_t\|^2_{H^1_0(\Omega)}=\langle-\Delta G_t,G_t\rangle=\|\nabla G_t\|^2_{L^2(\Omega)}$。于是
+\begin{align*}
+\|u(\cdot,t)-u_0\|_{H^{-1}(\Omega)}=\|\Delta G_t\|_{H^{-1}(\Omega)}=\|\nabla G_t\|_{L^2(\Omega)}
+\leqslant\int_0^t\|\nabla\phi(u_r(\cdot,s))\|_{L^2(\Omega)}\,\mathrm{d}s .
+\end{align*}
+
+(4) \eqref{align:ch6-6.133b}与\eqref{align:ch6-6.133c}。由 $\nabla\phi(u_r)\in L^2(Q)$ 与第 (3) 段，对几乎所有 $t\in(0,T)$ 有
+\begin{align*}
+\|u(\cdot,t)-u_0\|_{H^{-1}(\Omega)}\leqslant t^{1/2}\|\nabla\phi(u_r)\|_{L^2(Q)},
+\end{align*}
+故 $u(\cdot,t)-u_0\in H^{-1}(\Omega)$ 对几乎所有 $t$ 成立，即\eqref{align:ch6-6.133b}；又右端当 $t\to0^+$ 时趋于零，即\eqref{align:ch6-6.133c}。
+
+(5) (i) 的推理。设 $\phi_{+\infty}<+\infty$。由 $\phi$ 非减得 $\phi^+=\max\{\phi,0\}$ 非减，且 $\phi^+(y)\to\phi^+_{+\infty}$（$y\to+\infty$）；取 $K>\phi^+_{+\infty}$，则对一切 $y\in\mathbb{R}$ 有 $[T_K(\phi)]^+(y)=T_K(\phi^+(y))=\phi^+(y)$。故 $\phi^+(u_r)=T_K(\phi(u_r))\in L^2(0,T;H^1_0(\Omega))$。同法（对 $-\phi$ 或对 $y\to-\infty$ 取极限）得 $\phi^-(u_r)\in L^2(0,T;H^1_0(\Omega))$。于是 $\phi(u_r)=\phi^+(u_r)-\phi^-(u_r)\in L^2(0,T;H^1_0(\Omega))$，且\cref{definition:ch06-无界弱解}(i) 的 $L^q$ 要求由 $L^2\subseteq L^q$ 自动满足；两定义的条件 (ii) 逐字相同，故\cref{definition:ch06-无界弱解}化归为\cref{definition:ch06-弱解}。
+\end{proof}
+
 \subsection{持续性与唯一性}\label{subsection:ch06-无界持续唯一}
 
 $\phi$ 在无穷远次线性时的持续性性质（与\cref{theorem:ch06-6.2.1}类似）由如下结果给出。
 
 \begin{theorem}\label{theorem:ch6-正则化}
-设 (A0) 与 (A1') 成立，且存在 $M>0$ 与 $\alpha\in(0,\frac{N-2}{N}]$，使
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，(A0) 成立（即 $u_0\in\mathscr{R}_f(\Omega)$），$\phi:\mathbb{R}\to\mathbb{R}$ 满足 (A1')。设存在 $M>0$ 与 $\alpha\in(0,\frac{N-2}{N}]$，使
 \begin{align*}
-|\phi(y)|\leqslant M(1+|y|)^\alpha \quad(y\in\mathbb{R}).
+|\phi(y)|\leqslant M(1+|y|)^{\alpha}\quad\text{对一切 }y\in\mathbb{R}.
 \end{align*}
-设 $u$ 为问题 (P) 的弱解。则存在零测集 $F\subseteq(0,T)$，使对每个 $t\in(0,T)\setminus F$，$u(\cdot,t)$ 的 $C_{2,\frac{1}{1-\alpha}}$-集中部分在时间上为常数：
+设 $u\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 为问题 (P) 的弱解（\cref{definition:ch06-无界弱解}）。则存在零测集 $F\subseteq(0,T)$，使对每个 $t\in(0,T)\setminus F$，$u(\cdot,t)$ 的 $C_{2,\frac{1}{1-\alpha}}$-集中部分在时间上为常数，且等于 $u_0$ 的相应部分：
 \begin{align}
-[u(\cdot,t)]_{c,2,\frac{1}{1-\alpha}}=[u_0]_{c,2,\frac{1}{1-\alpha}}. \label{align:ch6-6.135}
+[u(\cdot,t)]_{c,2,\frac{1}{1-\alpha}}=[u_0]_{c,2,\frac{1}{1-\alpha}}\quad\text{于 }\mathscr{R}_f(\Omega), \label{align:ch6-6.135}
 \end{align}
+其中 $[\cdot]_{c,2,\frac{1}{1-\alpha}}$ 表示关于容量 $C_{2,\frac{1}{1-\alpha}}$ 的集中部分（见\cref{definition:ch03-集中弥散部分}）。
 \end{theorem}
 
-\begin{remark}\label{remark:ch06-6.7.2}
-注意\cref{theorem:ch6-正则化}与文献~\cite{ref26,ref80}中关于快扩散多孔介质方程 Cauchy 问题的结果一致。特别地，设 $u_0\in\mathscr{R}^+_{c,2}(\mathbb{R}^N)\cap\mathscr{R}^+_{d,2,\frac{1}{1-\alpha}}(\mathbb{R}^N)$（回忆由\cref{proposition:ch03-容量包含}，$\mathscr{R}_{c,2,\frac{1}{1-\alpha}}(\mathbb{R}^N)\subseteq\mathscr{R}_{c,2}(\mathbb{R}^N)$）。则文献~\cite{ref26,ref80}意义下的解满足对所有 $t\in(0,T)$，$u(\cdot,t)\in L^1(\mathbb{R}^N)$，故在此情形等式\eqref{align:ch6-6.12}不成立。这提示了\cref{theorem:ch6-正则化}的如下解释：当无穷远附近扩散率更强时，只有关于更强容量集中的测度在时间上保持常数。
+% SUPPLEMENT: parent=theorem:ch6-正则化; kind=motivation; location=定理 6.7.1 后的注记; basis=原书定理 6.7.1 的陈述与证明结构（(6.132)$\to$(6.136)$\to$Gr\"un--Rehomme）；指数范围的临界性 $2\cdot\frac{1}{1-\alpha}\leqslant N$ 以及本定理的 $\alpha$ 与 (A2') 中指数无关，均为独立核对
+\begin{remark}\phantomsection\label{remark:ch06-正则化动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{theorem:ch06-6.2.1}断言：在 $\phi$ 有界时，$u(\cdot,t)$ 关于 Newton 容量 $C_2$ 的集中部分恒等于初值的集中部分。本定理给出 $\phi$ 无界时的替代陈述，但把容量换成了更强的 $C_{2,\frac{1}{1-\alpha}}$（$\alpha\in(0,1)$ 时 $\frac{1}{1-\alpha}>1$）：扩散在无穷远附近按 $|y|^{\alpha}$ 增长，$\alpha$ 越小扩散越强，能保持不变的那部分质量所对应的测度类就越小。当 $\phi$ 次线性（$\alpha<1$）时，强扩散使只有关于更强容量集中的那部分质量能够“停留”，其余质量立即被抹平，这正是\eqref{align:ch6-6.135}的内容。
 
-在此联系中注意，对任意 $\alpha,\beta\in(0,\frac{N-2}{N}]$，$\alpha<\beta$：
+\item 各假设的作用。本定理中的 $\alpha$ 与 (A2') 中的指数无关，后者在本定理中甚至不必成立：因 $\alpha\leqslant1$，$|\phi(y)|\leqslant M(1+|y|)^{\alpha}\leqslant M(1+|y|)$，故 (A2') 对指数 $1$、常数 $M_0=M$ 成立，\cref{definition:ch06-无界弱解}可用。(A0) 使 $u_0$ 及其集中部分 $[u_0]_{c,2,\frac{1}{1-\alpha}}$ 有定义。(A1') 在证明中只通过两点进入：$\phi$ 为实值连续函数使 $\phi(u_r)$ 有定义；$\phi$ 非减使 $\phi_{\pm\infty}$ 存在，且与 $|\phi(y)|\leqslant M(1+|y|)^\alpha$ 相容。关键是次线性界：证明只用\eqref{align:ch6-6.132}的弱形式与 $|\phi(y)|\leqslant M(1+|y|)^{\alpha}$，得到 $u(\cdot,t)-u_0\in W^{-2,\frac{1}{\alpha}}(\Omega)$ 对几乎所有 $t$ 成立，再由 $W^{-2,\frac{1}{\alpha}}(\Omega)\cap\mathscr{R}_f(\Omega)\subseteq\mathscr{R}_{d,2,\frac{1}{1-\alpha}}(\Omega)$（\cref{proposition:ch03-GrunRehomme}，取 $m=2$、$p=\frac{1}{1-\alpha}$，其共轭指数为 $q=\frac{1}{\alpha}$）知该差关于 $C_{2,\frac{1}{1-\alpha}}$ 弥散，故其集中部分为零。
+
+\item 边界与最优性。条件 $\alpha\leqslant\frac{N-2}{N}$ 等价于 $2\cdot\frac{1}{1-\alpha}\leqslant N$，即 $(m,p)=(2,\frac{1}{1-\alpha})$ 满足 $mp\leqslant N$；由\cref{proposition:ch03-无非平凡集中}，此时 $C_{2,\frac{1}{1-\alpha}}$ 存在非空零容集，$\mathscr{R}_{c,2,\frac{1}{1-\alpha}}$ 才可能非平凡，结论才有内容。若 $\alpha\in(\frac{N-2}{N},1)$，则 $mp>N$，每个测度关于 $C_{2,\frac{1}{1-\alpha}}$ 都是弥散的（\cref{proposition:ch03-点容量}），\eqref{align:ch6-6.135}两端恒为零、结论空洞，故不存在与\cref{theorem:ch6-正则化}平行的结果（见本节下文）。结论只对几乎处处的 $t$ 成立：差 $u(\cdot,t)-u_0$ 只在某个零测集之外才有 $W^{-2,\frac{1}{\alpha}}$ 正则性，而该零测集来自\eqref{align:ch6-6.136}中关于 $t$ 的估计。若 $\phi$ 有界，则由\cref{theorem:ch06-6.2.1}可得更强的结论（关于 $C_2$ 的集中部分不变），本定理不必使用。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch06-6.7.2}
+\cref{theorem:ch6-正则化}与文献~\cite{ref26,ref80}中关于快扩散多孔介质方程 Cauchy 问题的结果一致。特别地，设 $u_0\in\mathscr{R}^+_{c,2}(\mathbb{R}^N)\cap\mathscr{R}^+_{d,2,\frac{1}{1-\alpha}}(\mathbb{R}^N)$（回忆由\cref{proposition:ch03-容量包含}，$\mathscr{R}_{c,2,\frac{1}{1-\alpha}}(\mathbb{R}^N)\subseteq\mathscr{R}_{c,2}(\mathbb{R}^N)$）。则文献~\cite{ref26,ref80}意义下的解满足对所有 $t\in(0,T)$，$u(\cdot,t)\in L^1(\mathbb{R}^N)$，故在此情形等式\eqref{align:ch6-6.12}不成立。这提示了\cref{theorem:ch6-正则化}的如下解释：当无穷远附近的扩散率更强时，只有关于更强容量集中的测度在时间上保持常数。
+
+在此联系中，对任意 $\alpha,\beta\in(0,\frac{N-2}{N}]$，$\alpha<\beta$：
 \begin{enumerate}[(a)]
 \item $C_{2,\frac{1}{1-\beta}}$-容量强于 $C_{2,\frac{1}{1-\alpha}}$-容量；
 \item 关于 $C_{2,\frac{1}{1-\beta}}$-容量集中的测度也关于 $C_{2,\frac{1}{1-\alpha}}$-容量集中（见\cref{theorem:ch03-容量单调}与\cref{proposition:ch03-容量包含}）。
 \end{enumerate}
 进而，关于 $C_{2,\frac{1}{1-\alpha}}$-容量（$\alpha\in(0,\frac{N-2}{N}]$）集中的测度也关于 Newton 容量集中（见\cref{proposition:ch03-容量包含}）。
-
-注意对 $\alpha\in(\frac{N-2}{N},1)$，不存在\cref{theorem:ch6-正则化}的类似结果，因为在此情形每个测度关于 $C_{2,\frac{1}{1-\alpha}}$-容量都是弥散的（见\cref{proposition:ch03-点容量}）。
 \end{remark}
+
+另一方面，对 $\alpha\in(\frac{N-2}{N},1)$，不存在\cref{theorem:ch6-正则化}的类似结果，因为在此情形每个测度关于 $C_{2,\frac{1}{1-\alpha}}$-容量都是弥散的（见\cref{proposition:ch03-点容量}）。
 
 \begin{proof}[证明\cref{theorem:ch6-正则化}]
 设 $u$ 为问题 (P) 的弱解。由\eqref{align:ch6-6.132}，对每个 $\rho\in C^2_c(\Omega)$ 及 $h\in C^1([0,T])$，$h(0)=1$，$h(T)=0$，得
@@ -116,51 +222,192 @@ $\phi$ 在无穷远次线性时的持续性性质（与\cref{theorem:ch06-6.2.1}
 \begin{align}
 |\langle u(\cdot,t)-u_0,\rho\rangle|
 =\left|\int_0^t\int_\Omega\phi(u_r)\Delta\rho\,\mathrm{d}x\,\mathrm{d}t\right|
-\leqslant Mt^{1-\alpha}\left(\iint_Q(1+|u_r|)\,\mathrm{d}x\,\mathrm{d}t\right)^\alpha
+\leqslant Mt^{1-\alpha}\left(\iint_Q(1+|u_r|)\,\mathrm{d}x\,\mathrm{d}t\right)^{\alpha}
 \left(\int_\Omega|\Delta\rho|^{\frac{1}{1-\alpha}}\,\mathrm{d}x\right)^{1-\alpha}. \label{align:ch6-6.136}
 \end{align}
 由上述不等式，存在零测集 $F\subseteq(0,T)$，使对所有 $t\in(0,T)\setminus F$，$u(\cdot,t)-u_0\in W^{-2,\frac{1}{\alpha}}(\Omega)=(W^{2,\frac{1}{1-\alpha}}_0(\Omega))^*$。由文献~\cite{ref10} 引理 4.1，这蕴含对任意此类 $t$，测度 $u(\cdot,t)-u_0$ 是 $C_{2,\frac{1}{1-\alpha}}$-弥散的，因而 $u(\cdot,t)-u_0$ 的 $C_{2,\frac{1}{1-\alpha}}$-集中部分为零。故等式\eqref{align:ch6-6.135}成立。
 \end{proof}
 
+% SUPPLEMENT: parent=theorem:ch6-正则化; kind=proof; location=定理 6.7.1 原证明后的补写证明; basis=原证明中被压缩的四处：由 $h$ 恒等式到 (6.136) 的 $k_p$ 论证、Hölder 估计中因子 $T^{1-\alpha}$ 的来源、零测集 $F$ 的选取与 $W^{-2,1/\alpha}$ 正则性、由弥散性到 (6.135) 的线性性论证
+\begin{proof}
+补出原证明中被压缩的论证。
+
+(1) 由 $h$ 恒等式到\eqref{align:ch6-6.136}。设 $\rho\in C^2_c(\Omega)$。取 $\zeta(x,t)=\rho(x)h(t)$，其中 $h\in C^1([0,T])$、$h(0)=1$、$h(T)=0$；则 $\zeta\in C^1([0,T];C^1_c(\Omega))$、$\zeta(\cdot,T)=0$，且 $\partial_t\zeta=\rho h'$、$\nabla\zeta=h\nabla\rho$。代入\eqref{align:ch6-6.132}并对空间变量分部积分（无边界项，因 $\rho$ 紧支于 $\Omega$）得
+\begin{align}
+\int_0^T\langle u(\cdot,t),\rho\rangle h'(t)\,\mathrm{d}t
+=-\iint_Q\phi(u_r)\Delta\rho\,h(t)\,\mathrm{d}x\,\mathrm{d}t-\langle u_0,\rho\rangle h(0). \label{align:ch6-6.142}
+\end{align}
+取 $t_1\in(0,T)$、$p>1/(T-t_1)$，$k_p$ 如\eqref{align:ch6-6.141}的证明中所置（$k_p(0)=1$、$k_p(T)=0$、$k_p'=-p\chi_{(t_1,t_1+1/p)}$），由 $C^1$ 逼近可将\eqref{align:ch6-6.142}用于 $h=k_p$，得
+\begin{align*}
+-p\int_{t_1}^{t_1+\frac{1}{p}}\langle u(\cdot,t),\rho\rangle\,\mathrm{d}t
+=-\iint_Q\phi(u_r)\Delta\rho\,k_p(t)\,\mathrm{d}x\,\mathrm{d}t-\langle u_0,\rho\rangle .
+\end{align*}
+令 $p\to\infty$：左端在 Lebesgue 点 $t_1$ 处收敛于 $-\langle u(\cdot,t_1),\rho\rangle$（\cref{theorem:ch02-BeppoLevi}(i)），右端由 $k_p\to\chi_{(0,t_1]}$ 与控制收敛定理（被积函数 $\phi(u_r)\Delta\rho\,k_p$ 被 $|\phi(u_r)\Delta\rho|\in L^1(Q)$ 控制）收敛于 $-\int_0^{t_1}\int_\Omega\phi(u_r)\Delta\rho-\langle u_0,\rho\rangle$。故对几乎所有 $t_1\in(0,T)$，
+\begin{align*}
+\langle u(\cdot,t_1)-u_0,\rho\rangle=\int_0^{t_1}\int_\Omega\phi(u_r(x,t))\Delta\rho(x)\,\mathrm{d}x\,\mathrm{d}t .
+\end{align*}
+
+(2) \eqref{align:ch6-6.136}的 Hölder 估计。由 $|\phi(y)|\leqslant M(1+|y|)^\alpha$ 与 $0<\alpha<1$ 得 $1/\alpha\in(1,\infty)$、$1/(1-\alpha)\in(1,\infty)$，且两指数共轭。于是对 $0<t<T$，
+\begin{align*}
+\left|\int_0^t\int_\Omega\phi(u_r)\Delta\rho\,\mathrm{d}x\,\mathrm{d}s\right|
+&\leqslant M\int_0^t\int_\Omega(1+|u_r|)^{\alpha}|\Delta\rho|\,\mathrm{d}x\,\mathrm{d}s\\
+&\leqslant M\left(\iint_Q(1+|u_r|)\,\mathrm{d}x\,\mathrm{d}s\right)^{\alpha}
+\left(\int_0^t\int_\Omega|\Delta\rho|^{\frac{1}{1-\alpha}}\,\mathrm{d}x\,\mathrm{d}s\right)^{1-\alpha}\\
+&\leqslant MT^{1-\alpha}\left(\iint_Q(1+|u_r|)\,\mathrm{d}x\,\mathrm{d}s\right)^{\alpha}
+\left(\int_\Omega|\Delta\rho|^{\frac{1}{1-\alpha}}\,\mathrm{d}x\right)^{1-\alpha},
+\end{align*}
+其中第二个不等号是 Hölder 不等式（对 $f=1+|u_r|$、$g=|\Delta\rho|$ 与共轭指数 $1/\alpha$、$1/(1-\alpha)$ 使用 $\int f^\alpha g\leqslant(\int f)^{\alpha}(\int g^{\frac{1}{1-\alpha}})^{1-\alpha}$），第三个不等号来自 $\int_0^t(\cdot)\,\mathrm{d}s\leqslant T(\cdot)$。因 $u_r\in L^1(Q)$，右端的因子 $(\iint_Q(1+|u_r|))^{\alpha}$ 有限，故\eqref{align:ch6-6.136}成立。
+
+(3) 零测集 $F$ 与 $W^{-2,\frac{1}{\alpha}}$ 正则性。置 $\mathcal{R}\triangleq\{\rho\in C^2_c(\Omega)\mid\|\Delta\rho\|_{L^{\frac{1}{1-\alpha}}(\Omega)}\leqslant1\}$，并取 $\mathcal{R}$ 的可数子集 $\{\rho_j\}$ 使每个 $\rho\in\mathcal{R}$ 都可由 $\{\rho_j\}$ 中的元素在 $W^{2,\frac{1}{1-\alpha}}_0(\Omega)$ 中逼近（例如取 $C^\infty_c(\Omega)$ 中的可数稠密集并逐项按 $\|\Delta\rho\|_{L^{\frac{1}{1-\alpha}}}$ 归一化）。对每个 $j$，\eqref{align:ch6-6.136}除一个零测集 $F_j$ 外成立；置 $F\triangleq\bigcup_{j=1}^{\infty}F_j$，则 $F$ 为零测集。设 $t\in(0,T)\setminus F$。则对每个 $j$，
+\begin{align*}
+|\langle u(\cdot,t)-u_0,\rho_j\rangle|\leqslant C_0,
+\quad C_0\triangleq MT^{1-\alpha}\left(\iint_Q(1+|u_r|)\,\mathrm{d}x\,\mathrm{d}t\right)^{\alpha}.
+\end{align*}
+在 $W^{2,\frac{1}{1-\alpha}}_0(\Omega)$ 上 $\|\rho\|_{W^{2,\frac{1}{1-\alpha}}_0}$ 与 $\|\Delta\rho\|_{L^{\frac{1}{1-\alpha}}}$ 等价（$\Delta$ 为该空间到 $L^{\frac{1}{1-\alpha}}(\Omega)$ 的同构，由 $L^p$ 椭圆估计得到），故由 $\{\rho_j\}$ 的稠密性与上式，线性泛函 $\rho\mapsto\langle u(\cdot,t)-u_0,\rho\rangle$ 关于 $\|\rho\|_{W^{2,\frac{1}{1-\alpha}}_0}$ 连续且范数不超过 $C_0$，于是它延拓为 $(W^{2,\frac{1}{1-\alpha}}_0(\Omega))^*=W^{-2,\frac{1}{\alpha}}(\Omega)$ 中的元素。故 $u(\cdot,t)-u_0\in W^{-2,\frac{1}{\alpha}}(\Omega)$。
+
+(4) 由弥散性到\eqref{align:ch6-6.135}。设 $t\in(0,T)\setminus F$。由第 (3) 段，$u(\cdot,t)-u_0\in\mathscr{R}_f(\Omega)\cap W^{-2,\frac{1}{\alpha}}(\Omega)$；由\cref{proposition:ch03-GrunRehomme}（取 $m=2$、$p=\frac{1}{1-\alpha}$，则共轭指数 $q=\frac{1}{\alpha}$）得 $u(\cdot,t)-u_0\in\mathscr{R}_{d,2,\frac{1}{1-\alpha}}(\Omega)$；这与文献~\cite{ref10} 引理 4.1 的结论一致。于是该差的 $C_{2,\frac{1}{1-\alpha}}$-集中部分为零。由\cref{proposition:ch03-集中弥散分解}的唯一性，集中部分映射是加性的（两个集中部分之和与两个弥散部分之和分别属于 $\mathscr{R}_{c,2,\frac{1}{1-\alpha}}$ 与 $\mathscr{R}_{d,2,\frac{1}{1-\alpha}}$，故由分解唯一性它们就是和测度的两个分量），因此
+\begin{align*}
+[u(\cdot,t)]_{c,2,\frac{1}{1-\alpha}}-[u_0]_{c,2,\frac{1}{1-\alpha}}
+=[u(\cdot,t)-u_0]_{c,2,\frac{1}{1-\alpha}}=0,
+\end{align*}
+即\eqref{align:ch6-6.135}。结论成立。
+\end{proof}
+
 如前所述，解的持续性性质与唯一性相联系，需要附加条件来确定问题 (P) 的唯一类。在此情形，这些条件由如下定义给出，它推广了\cref{definition:ch06-相容性条件}。
 
 \begin{definition}\label{definition:ch06-无界相容性}
-设 (A0) 与 (A1') 成立。问题 (P) 的弱解 $u$ 满足相容性条件，若对几乎所有 $t\in(0,T)$：
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，(A0) 成立（即 $u_0\in\mathscr{R}_f(\Omega)$），$\phi:\mathbb{R}\to\mathbb{R}$ 满足 (A1')，$\phi_{\pm\infty}$ 由\eqref{align:ch6-6.131}给出。设 $u\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 为问题 (P) 的弱解（\cref{definition:ch06-无界弱解}），$u_r$ 为其绝对连续部分的密度，$u^\pm_s$ 为其奇异部分 $u_s$ 的 Jordan 正、负部，$[\cdot]_{d,2}$ 表示关于 $2$-容量的弥散部分。称 $u$ 满足相容性条件，若对几乎所有 $t\in(0,T)$：
 \begin{enumerate}[(i)]
-\item 若 $\phi_{\pm\infty}\in\mathbb{R}$，则条件\eqref{align:ch6-6.21a}满足；
+\item 若 $\phi_{\pm\infty}\in\mathbb{R}$，则条件\eqref{align:ch6-6.21a}满足，即对两个符号 $\pm$，
+\begin{align*}
+[u^\pm_s(\cdot,t)]_{d,2}=[u^\pm_s(\cdot,t)]_{d,2}\llcorner\mathscr{S}^\pm_t,
+\qquad \mathscr{S}^\pm_t\triangleq\{x\in\Omega\mid\phi^\pm(u_r(x,t))=\pm\phi_{\pm\infty}\};
+\end{align*}
 \item 若 $\phi_{\pm\infty}=\pm\infty$，则
 \begin{align}
 [u^\pm_s(\cdot,t)]_{d,2}=0. \label{align:ch6-6.137}
 \end{align}
 \end{enumerate}
-若 $\phi_{\pm\infty}\in\mathbb{R}$，\cref{remark:ch06-6.3.1}在此情形同样适用于 $\phi^\pm(u_r)$。
+若 $\phi_{+\infty}$ 与 $\phi_{-\infty}$ 中只有一个为无穷（即 $\phi_{+\infty}=+\infty$ 而 $\phi_{-\infty}\in\mathbb{R}$，或 $\phi_{-\infty}=-\infty$ 而 $\phi_{+\infty}\in\mathbb{R}$），则 (i) 与 (ii) 按相应的符号分别理解：对 $\phi_{\pm\infty}\in\mathbb{R}$ 的符号用 (i)，对 $\phi_{\pm\infty}=\pm\infty$ 的符号用 (ii)。
 \end{definition}
 
-相容性条件的重要性由如下唯一性结果凸显，由\cref{remark:ch06-6.7.1}(ii)，它将\cref{theorem:ch06-6.3.1}作为特例包含。
+% SUPPLEMENT: parent=definition:ch06-无界相容性; kind=motivation; location=定义 6.7.2 后的注记; basis=原书定义 6.7.2、定义 6.3.1、注记 6.7.1(ii) 与 6.7.3 节证明结构中相容性条件的用法；(i)--(ii) 的编号与原文一致、混合情形由定义末尾一句补充处理，此处理方式的理由为独立核对
+\begin{remark}\phantomsection\label{remark:ch06-无界相容动机}
+\begin{enumerate}[(i)]
+\item 引入动机。由\cref{theorem:ch06-6.2.1}，解在正时刻的 $2$-集中部分被初值完全决定，故弱解类的不唯一性只能来自 $2$-弥散奇异部分。\cref{definition:ch06-相容性条件}在 $\phi$ 有界时对这一部分的位置施加限制：它必须集中在 $\phi$ 已达饱和值的集合上，即扩散通量为零处。$\phi$ 无界时饱和值可能为 $\pm\infty$：若 $\phi_{+\infty}=+\infty$，则 $\phi^+(u_r)=\phi_{+\infty}$ 不可能对实值 $u_r$ 成立，集合 $\mathscr{S}^+_t$ 为空，条件\eqref{align:ch6-6.21a}将迫使 $[u^+_s(\cdot,t)]_{d,2}=0$，即正奇异部分必须全为 $2$-集中的。\cref{definition:ch06-无界相容性}(ii) 把这一退化情形直接写成要求\eqref{align:ch6-6.137}，避免了在空集上陈述条件\eqref{align:ch6-6.21a}。
+
+\item 各假设的作用。$\phi$ 的非减性使 $\phi^\pm$ 与极限 $\phi_{\pm\infty}$ 相容，并使\eqref{align:ch6-6.21a}中的集合确为饱和集；$u$ 取\cref{definition:ch06-无界弱解}意义下的弱解，才使 $u_r$ 与 $u^\pm_s$ 有意义，且 $u(\cdot,t)$ 的离散分解对几乎所有 $t$ 存在；“对几乎所有 $t$”来自离散分解只在几乎处处的 $t$ 有定义。条件 (i)--(ii) 与原文的 (i)--(ii) 逐字对应：若 $\phi_{\pm\infty}$ 有限，则 $\mathscr{S}^\pm_t$ 与\eqref{align:ch6-6.21b}中的集合同一，本定义在该分支上与\cref{definition:ch06-相容性条件}重合。由于正、负两支通过 $u^\pm_s$ 与 $\phi^\pm$ 完全解耦，而混合情形确实可能出现（例如 $\phi(y)=y^+$，此时 $\phi_{+\infty}=+\infty$、$\phi_{-\infty}=0$，见\cref{remark:ch06-无界弱解例}），定义末尾按符号分别指定应使用的条件；当两支都有限或都无穷时，该句为空说明，定义与原文完全一致。
+
+\item 边界与对比。若 $\phi$ 有界，则\cref{remark:ch06-6.7.1}(ii) 表明\cref{definition:ch06-无界弱解}化归为\cref{definition:ch06-弱解}，条件 (i)--(ii) 即为\cref{definition:ch06-相容性条件}，故\cref{theorem:ch06-6.3.1}是本定义所刻画唯一类的特例。若 $\phi_{+\infty}=+\infty$，则正奇异部分必须全为 $2$-集中，由\cref{theorem:ch06-6.2.1}它被初值唯一确定，故\eqref{align:ch6-6.137}是可能的最强要求。\cref{definition:ch06-弱解}对 $2$-弥散部分不加任何限制，因此\cref{remark:ch06-6.3.2}的构造（取 $u(\cdot,t)=w(\cdot,t)+u_{0s}$）在 $\phi$ 无界时仍给出不满足相容性条件的弱解，这说明本定义不是自动成立的。
+\end{enumerate}
+\end{remark}
+
+相容性条件的重要性由如下唯一性结果凸显；由\cref{remark:ch06-6.7.1}(ii)，它把\cref{theorem:ch06-6.3.1}作为特例包含。
 
 \begin{theorem}\label{theorem:ch06-6.7.2}
-设 (A0) 与 (A1') 成立。设 $u_1$ 与 $u_2$ 为问题 (P) 的两个弱解，满足相容性条件，且
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，(A0) 成立（即 $u_0\in\mathscr{R}_f(\Omega)$），$\phi:\mathbb{R}\to\mathbb{R}$ 满足 (A1')。设 $u_1,u_2\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 为问题 (P) 的两个弱解（\cref{definition:ch06-无界弱解}），二者均满足\cref{definition:ch06-无界相容性}意义下的相容性条件，且满足
 \begin{align}
-\phi(u_{1r})-\phi(u_{2r})\in L^2(\tau,T;H^1_0(\Omega)) \quad\text{对所有 }\tau\in(0,T), \label{align:ch6-6.138a}
+\phi(u_{1r})-\phi(u_{2r})\in L^2(\tau,T;H^1_0(\Omega))\quad\text{对所有 }\tau\in(0,T), \label{align:ch6-6.138a}
 \end{align}
 \begin{align}
-u_1(\cdot,t)-u_2(\cdot,t)\in H^{-1}(\Omega) \quad\text{对几乎所有 }t\in(0,T), \label{align:ch6-6.138b}
+u_1(\cdot,t)-u_2(\cdot,t)\in H^{-1}(\Omega)\quad\text{对几乎所有 }t\in(0,T), \label{align:ch6-6.138b}
 \end{align}
 \begin{align}
 \operatorname*{ess\,lim}_{t\to0^+}\|u_1(\cdot,t)-u_2(\cdot,t)\|_{H^{-1}(\Omega)}=0. \label{align:ch6-6.138c}
 \end{align}
-则 $u_1=u_2$ 在 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$。
+则 $u_1=u_2$ 于 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$。
 \end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch06-6.7.2; kind=motivation; location=定理 6.7.2 后的注记; basis=原书定理 6.7.2、定理 6.3.1 的证明结构与 (6.138a)--(6.138c) 的逐项作用；(6.138a) 在 $\tau>0$ 上成立的必要性为独立核对
+\begin{remark}\phantomsection\label{remark:ch06-无界唯一动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{theorem:ch06-6.3.1}的唯一性证明以“$\phi(u_{1r})-\phi(u_{2r})$ 本身可作为试验函数”为支点，而该函数属于 $L^2(0,T;H^1_0(\Omega))$ 在 $\phi$ 有界时由\cref{remark:ch06-6.7.1}(ii) 自动成立。$\phi$ 无界时这一点不再自动：只能期望 $u_i$ 在正时刻之后具有较好的正则性，而在 $t=0$ 附近可能有奇异层。\eqref{align:ch6-6.138a}正是把这一期望写成假设，它允许在每段 $(\tau,T)$（$\tau>0$）上重复\cref{theorem:ch06-6.3.1}的论证。
+
+\item 各假设的作用。\eqref{align:ch6-6.138a}提供试验函数 $g\triangleq\phi(u_{1r})-\phi(u_{2r})\in L^2(\tau,T;H^1_0(\Omega))$，使能量恒等式与\eqref{align:ch6-6.27}型的求导有意义；\eqref{align:ch6-6.138b}给出 $u_1(\cdot,t)-u_2(\cdot,t)\in\mathscr{R}_f(\Omega)\cap H^{-1}(\Omega)$，由 $H^{-1}(\Omega)\subseteq\mathscr{R}_{d,2}(\Omega)$（\cref{proposition:ch03-GrunRehomme} 取 $m=1$、$p=2$）知该差关于 $C_2$ 弥散，故两解的 $2$-集中部分相同（这一步替代了\cref{theorem:ch06-6.3.1}证明中的\eqref{align:ch6-6.25}）；\eqref{align:ch6-6.138c}在 $t\to0^+$ 时把两解的差压到零，用于排除“差为不依赖 $t$ 的非零测度”这一可能，即把 $(\tau,T)$ 上的结论过渡到整个 $(0,T)$。两个相容性条件使\eqref{align:ch6-6.29}型的奇异项非负（有限分支）或为零（无穷分支），这是证明中唯一用到相容性之处。
+
+\item 边界与必要性。三条附加条件都不可省。若去掉\eqref{align:ch6-6.138a}，则无法排除两个解的正则部分之差仅为 $H^{-1}$ 中元素的可能，能量恒等式失效；若去掉\eqref{align:ch6-6.138b}，则 $2$-弥散奇异部分不受控制，此时即使 $\phi$ 有界也存在不唯一的弱解（\cref{remark:ch06-6.3.2}）；若去掉\eqref{align:ch6-6.138c}，则只能得到 $u_1-u_2$ 在时间上为常数，非零常数解不违反方程。只有当 $\phi$ 有界时，\cref{remark:ch06-6.7.1}(ii) 才保证三条自动成立，定理因而化归为\cref{theorem:ch06-6.3.1}；此时\eqref{align:ch6-6.138a}中的 $\tau\to0$ 也可取到 $0$。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6.7.2; kind=proof; location=定理 6.7.2 后的补写证明; basis=原书未给证明（完整证明见 [87]）；此处给出与定理 6.3.1 证明平行的论证骨架：$(\tau,T)$ 上的弱形式及其 $t=\tau$ 边界项、能量恒等式 (6.145)、相容性给出的非负性、$g=0$ 与时间常定性；$\tau\to0$ 所需的一致界来自 [87]
+\begin{proof}
+记 $w\triangleq u_1-u_2$、$g\triangleq\phi(u_{1r})-\phi(u_{2r})$。文中未给出证明，以下给出与\cref{theorem:ch06-6.3.1}平行的论证骨架，完整细节见文献~\cite{ref87}。
+
+(1) $2$-集中部分相消。由\eqref{align:ch6-6.138b}，对几乎所有 $t\in(0,T)$ 有 $w(\cdot,t)\in\mathscr{R}_f(\Omega)\cap H^{-1}(\Omega)$；由\cref{proposition:ch03-GrunRehomme}（$m=1$、$p=2$、$q=2$）得 $w(\cdot,t)\in\mathscr{R}_{d,2}(\Omega)$，故其 $2$-集中部分为零。由\cref{proposition:ch03-集中弥散分解}的唯一性，$2$-集中部分映射是加性的，故
+\begin{align*}
+[u_1(\cdot,t)]_{c,2}=[u_2(\cdot,t)]_{c,2}\quad\text{对几乎所有 }t\in(0,T).
+\end{align*}
+于是 $w(\cdot,t)=[u_1(\cdot,t)]_{d,2}-[u_2(\cdot,t)]_{d,2}$，且由\eqref{align:ch03-3.81}，
+\begin{align}
+w(\cdot,t)=(u_{1r}(\cdot,t)-u_{2r}(\cdot,t))\,\mathrm{d}x+[u_{1s}(\cdot,t)]_{d,2}-[u_{2s}(\cdot,t)]_{d,2}. \label{align:ch6-6.143}
+\end{align}
+
+(2) $(\tau,T)$ 上的弱形式。设 $\tau\in(0,T)$。由\eqref{align:ch6-6.132}对 $u_1$、$u_2$ 相减，$w$ 在 $\mathscr{D}'((\tau,T)\times\Omega)$ 中满足 $\partial_tw=\Delta g$。对每个满足 $\zeta(\cdot,T)=0$ 于 $\Omega$ 的 $\zeta\in C^1([\tau,T];C^1_c(\Omega))$，分部积分给出
+\begin{align}
+\int_\tau^T\langle w(\cdot,t),\partial_t\zeta(\cdot,t)\rangle\,\mathrm{d}t
+=-\iint_{\Omega\times(\tau,T)}\nabla g\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}t
+-\langle w(\cdot,\tau),\zeta(\cdot,\tau)\rangle , \label{align:ch6-6.144}
+\end{align}
+其中右端末项为 $H^{-1}(\Omega)$ 与 $H^1_0(\Omega)$ 之间的配对（由\eqref{align:ch6-6.138b}，$w(\cdot,\tau)\in H^{-1}(\Omega)$）。与\cref{theorem:ch06-6.3.1}证明中的\eqref{align:ch6-6.24}不同，此处出现 $t=\tau$ 处的边界项：在 $(\tau,T)$ 上没有相同的初值使该项相消。
+
+(3) 能量恒等式。在\eqref{align:ch6-6.144}中取
+\begin{align*}
+\zeta(x,t)\triangleq-\int_t^Tg(x,s)\,\mathrm{d}s\quad((x,t)\in\Omega\times[\tau,T]),
+\end{align*}
+则 $\partial_t\zeta=g$、$\zeta(\cdot,T)=0$、$\zeta(\cdot,\tau)=-\int_\tau^Tg$、$\nabla\zeta=-\int_t^T\nabla g$。由\eqref{align:ch6-6.138a}，$g\in L^2(\tau,T;H^1_0(\Omega))$，故 $\zeta\in C([\tau,T];H^1_0(\Omega))$ 且 $\partial_t\zeta\in L^2(\tau,T;H^1_0(\Omega))$，其在\eqref{align:ch6-6.144}中的可用性由 $C^1$ 试验函数逼近得到。代入并利用
+\begin{align*}
+\iint_{\Omega\times(\tau,T)}\nabla g\cdot\left(\int_t^T\nabla g\,\mathrm{d}s\right)\mathrm{d}x\,\mathrm{d}t
+=-\frac{1}{2}\left\|\int_\tau^T\nabla g(\cdot,t)\,\mathrm{d}t\right\|^2_{L^2(\Omega)},
+\end{align*}
+（由 $\frac{\mathrm{d}}{\mathrm{d}t}\left|\int_t^T\nabla g\right|^2=-2\nabla g\cdot\int_t^T\nabla g$ 与 $\int_T^T\nabla g=0$ 得到），得
+\begin{align}
+\int_\tau^T\langle w(\cdot,t),g(\cdot,t)\rangle\,\mathrm{d}t
++\frac{1}{2}\left\|\int_\tau^T\nabla g(\cdot,t)\,\mathrm{d}t\right\|^2_{L^2(\Omega)}
+=\left\langle w(\cdot,\tau),\int_\tau^Tg(\cdot,t)\,\mathrm{d}t\right\rangle . \label{align:ch6-6.145}
+\end{align}
+
+(4) 相容性给出的非负性。由\eqref{align:ch6-6.143}，左端第一个积分为
+\begin{align*}
+\int_\tau^T\langle w,g\rangle\,\mathrm{d}t
+=\iint_{\Omega\times(\tau,T)}(u_{1r}-u_{2r})g\,\mathrm{d}x\,\mathrm{d}t
++\int_\tau^T\langle[u_{1s}]_{d,2}-[u_{2s}]_{d,2},g\rangle\,\mathrm{d}t .
+\end{align*}
+第二个积分非负：论证与\cref{theorem:ch06-6.3.1}证明中的\eqref{align:ch6-6.28}--\eqref{align:ch6-6.29}相同，在 $\phi_{\pm\infty}$ 有限的符号上被积函数逐点非负（由 $\phi_{-\infty}\leqslant\phi\leqslant\phi_{+\infty}$），在 $\pm\phi_{\pm\infty}=\pm\infty$ 的符号上相应的 $[u^\pm_{is}]_{d,2}$ 按\cref{definition:ch06-无界相容性}(ii) 为零。又由 $\phi$ 非减，$(u_{1r}-u_{2r})g\geqslant0$ 于 $\Omega\times(\tau,T)$。于是\eqref{align:ch6-6.145}给出
+\begin{align}
+0\leqslant\iint_{\Omega\times(\tau,T)}(u_{1r}-u_{2r})g\,\mathrm{d}x\,\mathrm{d}t
+\leqslant\left\langle w(\cdot,\tau),\int_\tau^Tg(\cdot,t)\,\mathrm{d}t\right\rangle . \label{align:ch6-6.146}
+\end{align}
+
+(5) 令 $\tau\to0$。右端当 $\tau\to0^+$ 时趋于零：第一个因子 $\|w(\cdot,\tau)\|_{H^{-1}(\Omega)}$ 由\eqref{align:ch6-6.138c}趋于零，第二个因子 $\|\int_\tau^Tg\,\mathrm{d}t\|_{H^1_0(\Omega)}$ 关于 $\tau\in(0,T)$ 有界（这由文献~\cite{ref87} 中\eqref{align:ch6-6.139a}型的一致能量估计给出，该估计只用到 $u_0\in H^{-1}(\Omega)$ 与相容性条件）。故\eqref{align:ch6-6.146}中令 $\tau\to0$ 得
+\begin{align*}
+\iint_Q(u_{1r}-u_{2r})g\,\mathrm{d}x\,\mathrm{d}t=0 .
+\end{align*}
+
+(6) $g=0$ 于 $Q$。由上式的被积函数逐点非负，$(u_{1r}-u_{2r})g=0$ 几乎处处于 $Q$。若 $u_{1r}(x,t)<u_{2r}(x,t)$，则 $g(x,t)\leqslant0$，故 $g(x,t)=0$；若 $u_{1r}>u_{2r}$ 同理；若 $u_{1r}=u_{2r}$，则 $g=0$ 直接成立。故 $g=0$ 几乎处处于 $Q$，特别地 $\nabla g=0$ 于 $L^2(Q)$。
+
+(7) 时间常定性。由 $\nabla g=0$ 与\eqref{align:ch6-6.144}，对每个 $\tau\in(0,T)$ 与每个满足 $\zeta(\cdot,T)=0$ 的 $\zeta\in C^1([\tau,T];C^1_c(\Omega))$ 有 $\int_\tau^T\langle w,\partial_t\zeta\rangle=-\langle w(\cdot,\tau),\zeta(\cdot,\tau)\rangle$；取 $\zeta$ 在 $t=\tau$ 附近为零，则 $\int_\tau^T\langle w,\partial_t\zeta\rangle=0$。由 $\tau$ 的任意性，对每个 $\zeta\in C^1_c(Q)$ 有 $\int_0^T\langle w(\cdot,t),\partial_t\zeta(\cdot,t)\rangle\mathrm{d}t=0$。故对每个 $\rho\in C^1_c(\Omega)$，分布 $t\mapsto\langle w(\cdot,t),\rho\rangle$ 在 $\mathscr{D}'(0,T)$ 中的导数为零，从而存在常数 $c_\rho$ 使 $\langle w(\cdot,t),\rho\rangle=c_\rho$ 对几乎所有 $t$ 成立。由\eqref{align:ch6-6.138c}，$c_\rho=\lim_{t\to0^+}\langle w(\cdot,t),\rho\rangle=0$。由 $\rho$ 的任意性与 $C^1_c(\Omega)$ 在 $C_0(\Omega)$ 中的稠密性得 $w(\cdot,t)=0$ 于 $\mathscr{R}_f(\Omega)$ 对几乎所有 $t$ 成立，即 $w=0$ 于 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$。结论成立。
+\end{proof}
 
 \subsection{存在性}\label{subsection:ch06-无界存在}
 
-同样地，我们遵循\cref{section:ch06-存在正则}中概述的构造性存在方法，故第一个存在性结果是\cref{theorem:ch06-6.4.1}的对应物。
+本节仍遵循\cref{section:ch06-存在正则}中概述的构造性存在方法，故第一个存在性结果是\cref{theorem:ch06-6.4.1}的对应物。
 
 \begin{theorem}\label{theorem:ch06-6.7.3}
-设 (A0) 与 (A1')--(A2') 成立。则存在问题 (P) 的弱解，它作为逼近问题 (Pn) 解序列在 $\mathscr{R}_f(Q)$ 的弱$^*$拓扑下的极限点而得到。
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，(A0) 成立（即 $u_0\in\mathscr{R}_f(\Omega)$），$\phi:\mathbb{R}\to\mathbb{R}$ 满足 (A1')--(A2')，即 $\phi\in C(\mathbb{R})$ 在 $\mathbb{R}$ 上非减且非常数、$\phi(0)=0$，且存在 $M_0>0$ 与 $\alpha\in[1,\infty)$ 使 $|\phi(y)|\leqslant M_0(1+|y|^{\alpha})$ 对一切 $y\in\mathbb{R}$ 成立。设 $\{u_n\}$ 为逼近问题 $(P_n)$ 的解序列，其中 $\phi_n(z)\triangleq\phi(z)+z/n$（$z\in\mathbb{R}$，$n\in\mathbb{N}$），初值 $u_{0n}\in C^\infty_c(\Omega)$ 按\eqref{align:ch6-6.48}--\eqref{align:ch6-6.49a}选取。则存在问题 (P) 的弱解（\cref{definition:ch06-无界弱解}），它是 $\{u_n\}$ 在 $\mathscr{R}_f(Q)$ 的弱$^*$拓扑下的一个极限点。
 \end{theorem}
 
-为证明满足相容性条件的弱解存在性，现在使用两步过程，它对 $u_0$ 采用如下附加假设：
+% SUPPLEMENT: parent=theorem:ch06-6.7.3; kind=motivation; location=定理 6.7.3 后的注记; basis=原书定理 6.7.3 与 6.4--6.6 节的构造性证明结构、定义 6.7.1(i) 中指数 $1+\frac{1}{\alpha N+1}$ 的来源；(A2') 与 $\phi_n$ 不可省的分析为独立核对
+\begin{remark}\phantomsection\label{remark:ch06-无界存在动机}
+\begin{enumerate}[(i)]
+\item 引入动机。定理把 (P) 的解构造为逼近问题 $(P_n)$ 解序列的弱$^*$极限点，与\cref{theorem:ch06-6.4.1}的构造完全平行；差别只在于 $\phi$ 无界，故极限解只满足\cref{definition:ch06-无界弱解}中更弱的正则性要求。\cref{definition:ch06-无界弱解}(i) 中的指数 $1+\frac{1}{\alpha N+1}$ 不是任取的：它正是 $(P_n)$ 的解在 (A2') 的增长限制下所具有的一致 $L^q(0,T;W^{1,q}_0(\Omega))$ 界的上界，而截断条件 $T_K(\phi(u_r))\in L^2(0,T;H^1_0(\Omega))$ 对应 $|\phi(u_n)|\leqslant K$ 这一层上的一致能量估计。
+
+\item 各假设的作用。(A0) 通过 $\|u_n\|_{L^\infty(0,T;L^1(\Omega))}\leqslant\|u_0\|_{\mathscr{R}_f(\Omega)}$ 给出与 $n$ 无关的 $L^1$ 界，这是 $\{u_n\}$ 在 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 中有界、从而存在弱$^*$收敛子列的依据（见\eqref{align:ch6-6.54}）。(A1') 的非减性用于 $(P_n)$ 的比较原理与单调性方法：$\phi$ 非减蕴含 $\phi_n$ 严格增（$\phi_n'=\phi'+1/n\geqslant1/n>0$ 在 $\phi$ 可微处），故 $(P_n)$ 是非退化的一致抛物问题，其经典解存在唯一；正是这一非退化性允许对 $(P_n)$ 使用极值原理与 $L^1$ 压缩估计。(A2') 给出 $\phi$ 的幂次增长界，从而给出 $\nabla\phi(u_n)$ 的一致 $L^q$ 界与截断量的一致 $L^2$ 界；若 $\phi$ 增长快于任何幂次，(A2') 失效，这些界不再一致，极限点可能不是弱解。
+
+\item 边界与证明位置。定理只断言弱解存在，不断言唯一：极限点可能依赖子列与 $u_{0n}$ 的选取，唯一性须在相容类中取得（\cref{theorem:ch06-6.7.2}与\cref{theorem:ch06-6.7.6}）。定理也未断言所得解满足相容性条件：在 $\phi$ 无界时这一点并不自动成立，需用两步逼近（\cref{proposition:ch06-6.7.4}与\cref{theorem:ch06-6.7.5}）。完整的紧性论证见文献~\cite{ref87}。
+\end{enumerate}
+\end{remark}
+
+为证明满足相容性条件的弱解存在性，现使用两步过程，它对 $u_0$ 采用如下附加假设：
 \begin{align*}
 [u^\pm_0]_{d,2}\in H^{-1}(\Omega), \qquad(A3)
 \end{align*}
@@ -172,38 +419,60 @@ K^\pm_0\subseteq\Omega\text{ 紧且 }C_2(K^\pm_0)=0. \qquad(A4)
 首先证明如下结果（见文献~\cite{ref87} 命题 3.4）。
 
 \begin{proposition}\label{proposition:ch06-6.7.4}
-设 (A0) 与 (A1')--(A2') 成立。若 $\phi_{\pm\infty}=\pm\infty$，则设 $u^\pm_0$ 还满足 (A3)--(A4)。则存在问题 (P) 满足相容性条件的弱解。
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，(A0) 成立（即 $u_0\in\mathscr{R}_f(\Omega)$），$\phi:\mathbb{R}\to\mathbb{R}$ 满足 (A1')--(A2')。若 $\phi_{+\infty}=+\infty$ 或 $\phi_{-\infty}=-\infty$，则设 $u^\pm_0$（相应分支）还满足 (A3)--(A4)，即 $[u^\pm_0]_{d,2}\in H^{-1}(\Omega)$ 且 $[u^\pm_0]_{c,2}=[u^\pm_0]_{c,2}\llcorner K^\pm_0$，其中 $K^\pm_0\subseteq\Omega$ 为满足 $C_2(K^\pm_0)=0$ 的紧集。则存在问题 (P) 满足\cref{definition:ch06-无界相容性}意义下相容性条件的弱解。
 \end{proposition}
 
-由\cref{proposition:ch06-6.7.4}，若 (A1')--(A2') 成立且 $\phi$ 有界，则存在 (P) 满足\eqref{align:ch6-6.21a}的弱解，这是已由\cref{proposition:ch06-6.4.2}所知的结果。若 $\phi$ 无界，则需进一步逼近过程以去掉假设 (A3)--(A4)。对每个 $i,j\in\mathbb{N}$，考虑问题
+% SUPPLEMENT: parent=proposition:ch06-6.7.4; kind=motivation; location=命题 6.7.4 后的注记; basis=原书命题 6.7.4、条件 (A3)--(A4) 的逐项作用与命题 6.4.2 的对照；两步逼近的第一阶段在 $(P_{i,j})$ 构造中的用法为独立核对
+\begin{remark}\phantomsection\label{remark:ch06-6.7.4动机}
+\begin{enumerate}[(i)]
+\item 引入动机。这是两步逼近的第一阶段：为了得到满足相容性条件的弱解，先对初值附加两条结构假设，使奇异部分的两个分量都可以被光滑初值单调逼近。\cref{theorem:ch06-6.7.5}再通过 $(P_{i,j})$ 去掉这两条假设。
+
+\item 各假设的作用。(A3) 要求 $2$-弥散奇异部分属于 $H^{-1}(\Omega)$，即属于对偶空间 $(H^1_0)^*$：这使该部分可以与 $H^1_0$ 中的试验函数配对，从而用能量方法处理；一般 $2$-弥散测度只属于 $L^1+W^{-1,2}$ 型的空间（\cref{theorem:ch03-Lp可解性}），不能直接配对。(A4) 要求 $2$-集中部分集中在某个 $2$-零容紧集 $K^\pm_0$ 上：紧支性使该部分可由 $C^\infty_c(\Omega)$ 中的函数逼近，而 $C_2(K^\pm_0)=0$ 保证逼近函数的能量可任意小；这两点是构造单调逼近序列（\cref{lemma:ch06-6.5.1}型结果）所需。附加条件只对无穷分支提出（“若 $\phi_{\pm\infty}=\pm\infty$”）：当 $\phi_{\pm\infty}=\pm\infty$ 时相容性条件退化为\eqref{align:ch6-6.137}，它对 $2$-弥散奇异部分提出最强要求，故须预先控制该部分；当 $\phi_{\pm\infty}$ 有限时，相应的限制已由\eqref{align:ch6-6.21a}给出，无需 (A3)--(A4)。(A0) 与 (A1')--(A2') 提供解概念与全部先验估计。
+
+\item 边界与第二步的必要性。(A3)--(A4) 不是初值的内在性质：$2$-集中部分可以集中在非紧的 $2$-零容集上，$2$-弥散部分可以不属于 $H^{-1}(\Omega)$。例如在带 $2$-零容边界集的区域上取相应的测度，即可使 (A4) 失效。故本命题本身不能覆盖全部 $u_0\in\mathscr{R}_f(\Omega)$，这正是需要 $(P_{i,j})$ 逼近的理由。当 $\phi$ 有界时，(A3)--(A4) 为多余，本命题即为\cref{theorem:ch06-6.4.2}所给出的存在性。
+\end{enumerate}
+\end{remark}
+
+由\cref{proposition:ch06-6.7.4}，若 (A1')--(A2') 成立且 $\phi$ 有界，则存在 (P) 满足\eqref{align:ch6-6.21a}的弱解，这是已由\cref{theorem:ch06-6.4.2}所知的结果。若 $\phi$ 无界，则需进一步逼近过程以去掉假设 (A3)--(A4)。对每个 $i,j\in\mathbb{N}$，考虑问题
 \begin{align*}
 \begin{cases}
 \partial_t u_{i,j}=\Delta\phi(u_{i,j}) & \text{在 }Q,\\
 u_{i,j}=0 & \text{在 }\Gamma,\\
 u_{i,j}=u_{0,i,j} & \text{在 }\Omega\times\{0\},
 \end{cases}
-\qquad(Pi,j)
+\qquad(P_{i,j})
 \end{align*}
-其中初值 $u_{0,i,j}\in\mathscr{R}_f(\Omega)$ 在 $\phi_{\pm\infty}=\pm\infty$ 时满足条件 (A3)--(A4)，关于 $i,j$ 具有合适的单调性，并当 $i,j\to\infty$ 时在合适意义下收敛于 $u_0$（见文献~\cite{ref87} 第 7 节；此类序列的存在性由文献~\cite{ref10} 引理 4.2 保证）。由\cref{proposition:ch06-6.7.4}，对所有 $i,j\in\mathbb{N}$，存在 (Pi,j) 满足相容性条件的弱解 $u_{i,j}$。由单调性方法证明当 $i,j\to\infty$ 时 $u_{i,j}$ 在 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 中的极限存在且为 (P) 满足相容性条件的弱解。于是有如下结果。
+其中初值 $u_{0,i,j}\in\mathscr{R}_f(\Omega)$ 在 $\phi_{\pm\infty}=\pm\infty$ 时满足条件 (A3)--(A4)，关于 $i,j$ 具有合适的单调性，并当 $i,j\to\infty$ 时在合适意义下收敛于 $u_0$（见文献~\cite{ref87} 第 7 节；此类序列的存在性由文献~\cite{ref10} 引理 4.2 保证）。由\cref{proposition:ch06-6.7.4}，对所有 $i,j\in\mathbb{N}$，存在 $(P_{i,j})$ 满足相容性条件的弱解 $u_{i,j}$。由单调性方法可证当 $i,j\to\infty$ 时 $u_{i,j}$ 在 $L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 中的极限存在，且为 (P) 满足相容性条件的弱解。于是有如下结果。
 
 \begin{theorem}\label{theorem:ch06-6.7.5}
-设 (A0) 与 (A1')--(A2') 成立。则存在问题 (P) 满足相容性条件的弱解。
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，(A0) 成立（即 $u_0\in\mathscr{R}_f(\Omega)$），$\phi:\mathbb{R}\to\mathbb{R}$ 满足 (A1')--(A2')。则存在问题 (P) 满足\cref{definition:ch06-无界相容性}意义下相容性条件的弱解。
 \end{theorem}
 
-现在称\cref{theorem:ch06-6.7.5}所给出的问题 (P) 弱解为构造解。若 $\phi$ 有界，则构造解由\cref{proposition:ch06-6.7.4}给出，此定义与\cref{definition:ch06-构造解}一致。我们得出结论，在此情形构造解也满足相容性条件。
+% SUPPLEMENT: parent=theorem:ch06-6.7.5; kind=motivation; location=定理 6.7.5 后的注记; basis=原书定理 6.7.5 之前的两步逼近说明、单调性方法的作用与构造解定义的引入；$u_{0,i,j}$ 的单调性为何不可省为独立核对
+\begin{remark}\phantomsection\label{remark:ch06-6.7.5动机}
+\begin{enumerate}[(i)]
+\item 引入动机。定理是两步逼近的第二阶段：以初值序列 $\{u_{0,i,j}\}$ 代替 $u_0$，每个 $u_{0,i,j}$ 满足 (A3)--(A4)，故\cref{proposition:ch06-6.7.4}给出相应的弱解 $u_{i,j}$（满足相容性条件）；再令 $i,j\to\infty$ 取极限，即得 (P) 的满足相容性条件的弱解。由此得到的解称为构造解（见本节下文），它是\cref{definition:ch06-构造解}在 $\phi$ 无界情形的推广。
 
-由\cref{theorem:ch06-6.7.2}与\cref{theorem:ch06-6.7.5}，有如下结果，它推广了\cref{theorem:ch06-6.4.3}（回忆由\cref{remark:ch03-H负1测度}，测度 $\mu\in\mathscr{R}_f(\Omega)$ 可属于对偶空间 $H^{-1}(\Omega)=(H^1_0)^*$）。
+\item 各假设的作用。(A1')--(A2') 与 (A0) 使\cref{proposition:ch06-6.7.4}可用，并提供 $u_{i,j}$ 关于 $i,j$ 一致的有界性（$L^\infty(0,T;\mathscr{R}_f(\Omega))$、$\phi(u_{i,j,r})$ 的 $L^q(0,T;W^{1,q}_0(\Omega))$ 界）；$u_{0,i,j}$ 关于 $i,j$ 的单调性不可省：单调性使 $\{u_{i,j}\}$ 在 $i,j$ 增大时按测度序单调，从而弱$^*$极限存在且其奇异部分可由单调收敛定理直接识别，相容性条件（即 $[u^\pm_s]_{d,2}$ 的支撑位置）在极限中保持；若失去单调性，则只能得到子列极限，无法控制奇异部分的分布。初值在 $\mathscr{R}_f(\Omega)$ 中弱$^*$收敛于 $u_0$ 且其绝对连续部分在 $L^1(\Omega)$ 中强收敛，是使极限解的绝对连续部分为 $u_r$ 的条件。
+
+\item 边界。定理只给出存在性，不给出唯一性；由于对一般的 $u_0\in\mathscr{R}_f(\Omega)$ 唯一类尚不清楚，结论中的“存在”不能加强。当 $u_0\in H^{-1}(\Omega)$ 时由\cref{theorem:ch06-6.7.6}(ii) 存在唯一，此时构造解与任一满足相容性条件的弱解重合，故构造解实际上不依赖逼近序列的选取。当 $\phi$ 有界时，\cref{proposition:ch06-6.7.4}已足够，本定理的逼近过程不必要，但所得构造解与\cref{theorem:ch06-6.4.1}所给出的解一致（见\cref{theorem:ch06-6.7.6}(i)）。
+\end{enumerate}
+\end{remark}
+
+现称\cref{theorem:ch06-6.7.5}所给出的问题 (P) 的弱解为构造解。若 $\phi$ 有界，则构造解由\cref{proposition:ch06-6.7.4}给出，此定义与\cref{definition:ch06-构造解}一致。由此可知，在本情形构造解也满足相容性条件。
+
+由\cref{theorem:ch06-6.7.2}与\cref{theorem:ch06-6.7.5}，有如下结果，它推广了\cref{theorem:ch06-6.4.3}（回忆由\cref{proposition:ch03-W-1q刻画}，测度 $\mu\in\mathscr{R}_f(\Omega)$ 可属于对偶空间 $H^{-1}(\Omega)=(H^1_0)^*$）。
 
 \begin{theorem}\label{theorem:ch06-6.7.6}
-设 (A0) 与 (A1')--(A2') 成立。
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，(A0) 成立（即 $u_0\in\mathscr{R}_f(\Omega)$），$\phi:\mathbb{R}\to\mathbb{R}$ 满足 (A1')--(A2')。
 \begin{enumerate}[(i)]
-\item 设 $\phi$ 有界。则对每个 $u_0\in\mathscr{R}_f(\Omega)$，存在问题 (P) 满足\eqref{align:ch6-6.21a}的唯一弱解 $u$。
-\item 设 $\phi$ 无界。则对每个 $u_0\in\mathscr{R}_f(\Omega)\cap H^{-1}(\Omega)$，存在问题 (P) 满足相容性条件的唯一弱解 $u$。进而，
+\item 设 $\phi$ 有界。则对每个 $u_0\in\mathscr{R}_f(\Omega)$，存在问题 (P) 满足\eqref{align:ch6-6.21a}的唯一弱解（\cref{definition:ch06-无界弱解}）$u$。
+\item 设 $\phi$ 无界。则对每个 $u_0\in\mathscr{R}_f(\Omega)\cap H^{-1}(\Omega)$，存在问题 (P) 满足\cref{definition:ch06-无界相容性}意义下相容性条件的唯一弱解 $u$。此外，
 \begin{align}
-\phi(u_r)\in L^2(\tau,T;H^1_0(\Omega)) \quad\text{对所有 }\tau\in(0,T), \label{align:ch6-6.139a}
+\phi(u_r)\in L^2(\tau,T;H^1_0(\Omega))\quad\text{对所有 }\tau\in(0,T), \label{align:ch6-6.139a}
 \end{align}
 \begin{align}
-u(\cdot,t)\in H^{-1}(\Omega) \quad\text{对几乎所有 }t\in(0,T), \label{align:ch6-6.139b}
+u(\cdot,t)\in H^{-1}(\Omega)\quad\text{对几乎所有 }t\in(0,T), \label{align:ch6-6.139b}
 \end{align}
 \begin{align}
 \operatorname*{ess\,lim}_{t\to0^+}\|u(\cdot,t)-u_0\|_{H^{-1}(\Omega)}=0. \label{align:ch6-6.139c}
@@ -211,29 +480,86 @@ u(\cdot,t)\in H^{-1}(\Omega) \quad\text{对几乎所有 }t\in(0,T), \label{align
 \end{enumerate}
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch06-6.7.6; kind=motivation; location=定理 6.7.6 后的注记; basis=原书定理 6.7.6、定理 6.4.3 与注记 6.7.1(ii) 的对照；(i) 中 (A1')--(A2') 弱于 (A1)--(A2) 而结论仍成立为独立核对
+\begin{remark}\phantomsection\label{remark:ch06-6.7.6动机}
+\begin{enumerate}[(i)]
+\item 引入动机。定理是本节的主要结论：它在 $\phi$ 无界时恢复适定性，并把\cref{theorem:ch06-6.4.3}作为特例包含。条款 (i) 处理 $\phi$ 有界的情形，此时\cref{remark:ch06-6.7.1}(ii) 使\cref{definition:ch06-无界弱解}化归为\cref{definition:ch06-弱解}，相容性条件化归为\eqref{align:ch6-6.21a}；条款 (ii) 处理 $\phi$ 无界的情形，此时须把初值限制在 $H^{-1}(\Omega)$ 中。
+
+\item 各假设的作用。条款 (i) 中 (A1')--(A2') 比 (A1)--(A2) 弱得多：不要求 $\phi\in C^\infty(\mathbb{R})\cap W^{1,\infty}(\mathbb{R})$，只要求连续、非减、非常数与幂次增长，故 (i) 是真推广。条款 (ii) 中 $u_0\in H^{-1}(\Omega)$ 不可省：由\cref{theorem:ch06-6.7.2}，唯一性需要在 $(\tau,T)$ 上以 $\phi(u_{1r})-\phi(u_{2r})$ 为试验函数，这要求该差属于 $L^2(\tau,T;H^1_0(\Omega))$，而对 $H^{-1}(\Omega)$ 初值这一正则性对正时刻成立（\eqref{align:ch6-6.139a}），对一般的奇异初值则未必；\eqref{align:ch6-6.139b}--\eqref{align:ch6-6.139c}说明解在正时刻进入 $H^{-1}(\Omega)$ 并弱连续地取到初值，这正是\eqref{align:ch6-6.138b}--\eqref{align:ch6-6.138c}的来源。
+
+\item 边界与最优性。\eqref{align:ch6-6.139a}只在 $(\tau,T)$（$\tau>0$）上断言，不能在 $\tau=0$ 处断言：$u_0$ 的 $2$-弥散奇异部分在 $t=0$ 附近可以产生奇异层，使 $\phi(u_r)$ 在 $t=0$ 附近失去 $H^1_0$ 正则性；\cref{theorem:ch6-正则化}与\cref{proposition:ch06-6.7.9}从不同角度说明这一层可能消失，但那需要额外的增长或下界条件。若 $u_0\in\mathscr{R}_f(\Omega)\setminus H^{-1}(\Omega)$ 而 $\phi$ 无界，则由\cref{theorem:ch06-6.7.5}仍存在满足相容性条件的弱解，但唯一性没有断言；此时是否唯一取决于初值奇异部分的结构，见文献~\cite{ref87}。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6.7.6; kind=proof; location=定理 6.7.6 后的补写证明; basis=原书“By Theorems 6.7.2 and 6.7.5 we have the following result”之展开：有界情形由注记 6.7.1(ii) 验证 (6.138a)--(6.138c)，无界情形由 (6.139a)--(6.139c) 验证并引用 [87] 的正则性结果
+\begin{proof}
+(i) 设 $\phi$ 有界。存在性：因 $\phi$ 有界，(A2') 对 $\alpha=1$ 成立，且\cref{proposition:ch06-6.7.4}中的附加条件“若 $\phi_{\pm\infty}=\pm\infty$”为空，故该命题给出 (P) 的满足相容性条件的弱解；由\cref{remark:ch06-6.7.1}(ii) 该相容性条件即\eqref{align:ch6-6.21a}。唯一性：设 $u_1,u_2$ 为两个满足\eqref{align:ch6-6.21a}的弱解。由\cref{remark:ch06-6.7.1}(ii)，$\phi(u_{ir})\in L^2(0,T;H^1_0(\Omega))$，故\eqref{align:ch6-6.138a}成立；$u_i(\cdot,t)-u_0\in H^{-1}(\Omega)$ 对几乎所有 $t$ 成立，故 $u_1(\cdot,t)-u_2(\cdot,t)\in H^{-1}(\Omega)$ 对几乎所有 $t$ 成立，即\eqref{align:ch6-6.138b}；又由\eqref{align:ch6-6.133c}，
+\begin{align*}
+\operatorname*{ess\,lim}_{t\to0^+}\|u_1(\cdot,t)-u_2(\cdot,t)\|_{H^{-1}(\Omega)}
+\leqslant\operatorname*{ess\,lim}_{t\to0^+}\|u_1(\cdot,t)-u_0\|_{H^{-1}(\Omega)}
++\operatorname*{ess\,lim}_{t\to0^+}\|u_0-u_2(\cdot,t)\|_{H^{-1}(\Omega)}=0,
+\end{align*}
+即\eqref{align:ch6-6.138c}。由\cref{theorem:ch06-6.7.2}得 $u_1=u_2$。
+
+(ii) 设 $\phi$ 无界，$u_0\in\mathscr{R}_f(\Omega)\cap H^{-1}(\Omega)$。存在性由\cref{theorem:ch06-6.7.5}给出：构造解满足相容性条件。\eqref{align:ch6-6.139a}--\eqref{align:ch6-6.139c}是该构造解的正则性性质，其证明即文献~\cite{ref87} 中相应命题的证明；其要点是：初值属于 $H^{-1}(\Omega)$ 使逼近初值 $u_{0,i,j}$ 可按 $H^{-1}$ 范数控制，从而对每个 $\tau>0$ 得到 $\iint_{\Omega\times(\tau,T)}|\nabla\phi(u_{i,j,r})|^2$ 关于 $i,j$ 的一致界，极限后得\eqref{align:ch6-6.139a}；$u_0\in H^{-1}(\Omega)$ 同时给出 $u_{i,j}(\cdot,t)-u_0$ 的 $H^{-1}$ 一致界，极限后得\eqref{align:ch6-6.139b}与\eqref{align:ch6-6.139c}。唯一性：设 $v$ 为任一满足相容性条件的弱解。对初值属于 $H^{-1}(\Omega)$ 的此类解，同一正则性论证给出\eqref{align:ch6-6.138a}--\eqref{align:ch6-6.138c}（这三条对构造解即为\eqref{align:ch6-6.139a}--\eqref{align:ch6-6.139c}）；于是\cref{theorem:ch06-6.7.2}适用于 $u$ 与 $v$，得 $v=u$。结论成立。
+\end{proof}
+
 \subsection{正则化}\label{subsection:ch06-无界正则}
 
-同样，在此情形构造解的奇异部分既不能自发出现，也不能随时间增长。
+在本情形，构造解的奇异部分同样既不能自发出现，也不能随时间增长。
 
 \begin{theorem}\label{theorem:ch06-6.7.7}
-设 (A0) 与 (A1')--(A2') 成立，$u$ 为问题 (P) 的构造解。则对几乎所有 $t_1,t_2\in(0,T)$，$t_1<t_2$，不等式\eqref{align:ch6-6.33}成立。
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，(A0) 成立（即 $u_0\in\mathscr{R}_f(\Omega)$），$\phi:\mathbb{R}\to\mathbb{R}$ 满足 (A1')--(A2')。设 $u$ 为问题 (P) 的构造解（即\cref{theorem:ch06-6.7.5}所给出的满足相容性条件的弱解），$u^\pm_s(\cdot,t)$ 为其奇异部分的 Jordan 正、负部。则对几乎所有 $t_1,t_2\in(0,T)$，$t_1<t_2$，不等式\eqref{align:ch6-6.33}成立，即
+\begin{align*}
+u^\pm_s(\cdot,t_2)\leqslant u^\pm_s(\cdot,t_1)\leqslant u^\pm_{0s}\quad\text{于 }\mathscr{R}_f(\Omega).
+\end{align*}
 \end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch06-6.7.7; kind=motivation; location=定理 6.7.7 后的注记; basis=原书定理 6.7.7 与定理 6.4.1(i)、定理 6.4.5 的对照；“构造解”这一限制的必要性为独立核对
+\begin{remark}\phantomsection\label{remark:ch06-6.7.7动机}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch6-6.33}正是\cref{theorem:ch06-6.4.1}(i) 在 $\phi$ 无界情形的对应物：奇异部分的正、负部随时间是单调不增的测度，故构造解既不能在正时刻自发产生新的奇异质量，也不能使已有的奇异质量增加。与\cref{theorem:ch06-6.4.1}(i) 相比，这里的结论同样只对构造解成立、且只对几乎处处的 $t_1<t_2$ 成立。
+
+\item 各假设的作用。“构造解”这一限制不可省：单调性不是方程本身的推论，而是逼近序列 $\{u_{i,j}\}$ 的单调性在极限中的继承；对任意的弱解（即使满足相容性条件），只由\cref{definition:ch06-无界弱解}无法排除奇异质量在正时刻增加。\cref{definition:ch06-无界相容性}中的相容性条件在证明中保证 $2$-弥散奇异部分的支撑位置，从而使单调性论证可以在 $2$-零容集上逐点比较；(A1')--(A2') 提供 $(P_{i,j})$ 解的一致估计与比较原理所需的非减性。
+
+\item 边界与对比。结论是测度不等式，只涉及奇异部分 $u^\pm_s$，对绝对连续部分 $u_r$ 不加断言。当 $\phi$ 有界时，\cref{theorem:ch06-6.4.5}在额外的非退化条件\eqref{align:ch6-6.34}下对一切熵解给出同一结论，而本定理不需要\eqref{align:ch6-6.34}；反过来，本定理限定解为构造解。对一般弱解，\eqref{align:ch6-6.33}一般不成立：由\cref{remark:ch06-6.3.2}的构造 $u(\cdot,t)=w(\cdot,t)+u_{0s}$，奇异部分恒为 $u_{0s}$，此时\eqref{align:ch6-6.33}中的第二个不等式取等号，但若把构造改为 $u(\cdot,t)=w(\cdot,t)+u_{0s}+\nu_t$（$\nu_t$ 为随时间增加的 $2$-弥散测度），则\eqref{align:ch6-6.33}失效而\eqref{align:ch6-6.132}仍成立。
+\end{enumerate}
+\end{remark}
 
 最后提及两个 $\mathscr{R}_f$--$L^1$ 正则化效应（见文献~\cite{ref87} 注 3.7 与命题 3.11）。
 
 \begin{proposition}\label{proposition:ch06-6.7.8}
-设 (A0) 与 (A1')--(A2') 成立且 $\phi_{\pm\infty}=\pm\infty$。则对每个具有 $2$-弥散初值的问题 (P) 构造解，发生瞬时正则化。
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，(A0) 成立（即 $u_0\in\mathscr{R}_f(\Omega)$），$\phi:\mathbb{R}\to\mathbb{R}$ 满足 (A1')--(A2')，且 $\phi_{+\infty}=+\infty$、$\phi_{-\infty}=-\infty$（即 $\phi_{\pm\infty}=\pm\infty$）。则对每个以 $2$-弥散初值（即 $u_0\in\mathscr{R}_{d,2}(\Omega)$，亦即 $[u_0]_{c,2}=0$）为初值的问题 (P) 的构造解，发生瞬时 $\mathscr{R}_f$--$L^1$ 正则化（\cref{definition:ch06-RfL1正则}），即相应的等待时间为 $\tau=0$。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch06-6.7.8; kind=motivation; location=命题 6.7.8 后的注记; basis=原书命题 6.7.8、命题 6.4.6--6.4.8 的对照与定理 6.2.1 的作用；“2-弥散初值”不可省的分析为独立核对
+\begin{remark}\phantomsection\label{remark:ch06-6.7.8动机}
+\begin{enumerate}[(i)]
+\item 引入动机。当 $\pm\phi_{\pm\infty}=\pm\infty$ 时，扩散率在 $\pm\infty$ 处的“极限”为无穷：$\phi$ 在两端都无界增长，故解在大幅值处的扩散极强，任何 $2$-弥散型的奇异质量在正时刻立即被抹平，解在任意小的正时刻即为 $L^1$ 函数。这正是瞬时正则化：等待时间 $\tau=0$。
+
+\item 各假设的作用。$\phi_{\pm\infty}=\pm\infty$ 不可省：若某一端 $\phi_{\pm\infty}$ 有限，则该端附近 $\phi$ 趋于饱和值，扩散通量在该处退化，奇异质量可以停留（对照\cref{proposition:ch06-6.4.8}：$\phi$ 在 $\pm\infty$ 附近为常数时完全不发生正则化）。初值的 $2$-弥散性同样不可省：由\cref{theorem:ch06-6.2.1}，初值的 $2$-集中部分对一切 $t\in(0,T)$ 保持不变，若 $u_0\notin\mathscr{R}_{d,2}(\Omega)$，则 $u(\cdot,t)$ 永远带同样的 $2$-集中奇异部分，$u(\cdot,t)\in L^1(\Omega)$ 不可能对所有 $t>0$ 成立。“构造解”一词保证\cref{theorem:ch06-6.7.7}的单调性可用，从而奇异部分只能减少、不能增加。
+
+\item 边界与对比。\cref{proposition:ch6-瞬时正则}在 $\phi$ 有界时给出瞬时正则化，但需要 $\phi$ 趋于饱和值的幂律速率条件\eqref{align:ch6-6.38}与初值的质量指标 $p\in(1,\frac{2}{1+s_\pm})$；本命题不需要任何速率条件，代之以 $\phi$ 在两端无界这一更强的结构假设。结论只断言 $u(\cdot,t)\in L^1(\Omega)$ 对 $t\in(0,T)$ 成立，不给出 $L^1$ 范数关于 $t$ 的一致界；后者需要\cref{proposition:ch06-6.7.9}的下界条件。
+\end{enumerate}
+\end{remark}
+
 \begin{proposition}\label{proposition:ch06-6.7.9}
-设 (A0) 与 (A1')--(A2') 成立，$u$ 为问题 (P) 的构造解。设存在 $\alpha_\pm>\frac{N-2}{N}$ 及 $a_\pm,b_\pm>0$，使
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界 $\partial\Omega$ 的有界开集，$T>0$，(A0) 成立（即 $u_0\in\mathscr{R}_f(\Omega)$），$\phi:\mathbb{R}\to\mathbb{R}$ 满足 (A1')--(A2')。设 $u$ 为问题 (P) 的构造解。设存在 $\alpha_\pm>\frac{N-2}{N}$ 与 $a_\pm,b_\pm>0$，使
 \begin{align}
-\pm\phi(z)\geqslant a_\pm|z|^{\alpha_\pm}-b_\pm \quad\text{当 }\pm z\geqslant0. \label{align:ch6-6.140}
+\pm\phi(z)\geqslant a_\pm|z|^{\alpha_\pm}-b_\pm\quad\text{当 }\pm z\geqslant0. \label{align:ch6-6.140}
 \end{align}
 则 $u^\pm\in L^\infty(0,T;L^1(\Omega))$。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:ch06-6.7.9; kind=motivation; location=命题 6.7.9 后的注记; basis=原书命题 6.7.9 与本节开头的说明（下界估计仅在此处使用）；阈值 $\alpha_\pm>\frac{N-2}{N}$ 与定理 6.7.1 的 $\alpha\leqslant\frac{N-2}{N}$ 互补，为独立核对
+\begin{remark}\phantomsection\label{remark:ch06-6.7.9动机}
+\begin{enumerate}[(i)]
+\item 引入动机。本节开头指出：对 $\phi$ 的唯一限制是幂次增长，不使用下界估计，例外正是本命题。\eqref{align:ch6-6.140}给出 $\phi$ 在两端至少按幂次 $\alpha_\pm$ 增长的下界，即扩散在幅值很大处足够强；结论是构造解的正、负部都属于 $L^\infty(0,T;L^1(\Omega))$，特别地 $u(\cdot,t)$ 对几乎所有 $t$ 为 $L^1$ 函数，奇异部分被完全消灭。与\cref{proposition:ch06-6.7.8}相比，本命题不要求初值 $2$-弥散，也不需要 $\phi_{\pm\infty}=\pm\infty$，代之以增长下界。
 
+\item 各假设的作用。\eqref{align:ch6-6.140}对每个符号单独给出：$z\geqslant0$ 时 $\phi(z)\geqslant a_+|z|^{\alpha_+}-b_+$，$z\leqslant0$ 时 $-\phi(z)\geqslant a_-|z|^{\alpha_-}-b_-$，故结论也按正、负部分别陈述。阈值 $\alpha_\pm>\frac{N-2}{N}$ 是临界的：它等价于 $2\cdot\frac{1}{1-\alpha_\pm}>N$（当 $\alpha_\pm<1$ 时），即容量 $C_{2,\frac{1}{1-\alpha_\pm}}$ 没有非空零容集，因而不存在关于该容量集中的非零奇异测度；当 $\alpha_\pm\geqslant1$ 时，$\phi$ 至少线性增长，$\phi(u^\pm)$ 的可积性直接给出 $u^\pm$ 的可积性。$a_\pm>0$ 使下界是真正的幂次增长而非仅与之相切；$b_\pm>0$ 允许在 $z=0$ 附近取负值，不影响大 $|z|$ 处的结论。$u$ 取构造解使\cref{theorem:ch06-6.7.7}的单调性可用。
 
+\item 边界与最优性。结论中的 $L^\infty(0,T;L^1(\Omega))$ 强于“$u(\cdot,t)\in L^1(\Omega)$ 对几乎所有 $t$”，它给出 $L^1$ 范数关于 $t$ 的一致界，从而蕴含瞬时正则化且等待时间为零。阈值 $\frac{N-2}{N}$ 与\cref{theorem:ch6-正则化}中的上界 $\alpha\leqslant\frac{N-2}{N}$ 互补：后者说明 $\alpha$ 不超过该值时 $C_{2,\frac{1}{1-\alpha}}$-集中部分可以停留，前者说明增长指数超过该值时任何奇异部分都不能停留。若 $\alpha_\pm\leqslant\frac{N-2}{N}$，则由\cref{proposition:ch03-无非平凡集中}相应的 $C_{2,\frac{1}{1-\alpha_\pm}}$ 存在非空零容集，奇异质量可以集中其上而不被下界排斥，结论可能失效。证明见文献~\cite{ref87} 命题 3.11。
+\end{enumerate}
+\end{remark}
 
 \end{document}

@@ -1,0 +1,355 @@
+﻿\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{等周不等式}\label{section:ch05-06}
+
+以下建立若干不等式，它们把一个集合的 $\mathcal{L}^n$ 测度与其周长联系起来。
+
+\subsection{BV 函数的 Sobolev 不等式与 Poincaré 不等式}\label{subsection:ch05-06-1}
+
+\begin{theorem}[$\BV$ 函数的不等式]\label{theorem:ch05-5-10}
+设 $n\geqslant2$ 为整数，$1^*:=\frac{n}{n-1}$，$B(x,r):=\{y\in\mathbb{R}^n\mid\lvert x-y\rvert\leqslant r\}$ 为以 $x$ 为心、$r$ 为半径的闭球，$B^0(x,r):=\{y\in\mathbb{R}^n\mid\lvert x-y\rvert<r\}$ 为对应的开球，$\BV(\mathbb{R}^n)$ 与 $\BV_{\loc}(\mathbb{R}^n)$ 分别为有界变差函数空间与局部有界变差函数空间，对 $f\in\BV_{\loc}(\mathbb{R}^n)$ 记 $\lVert Df\rVert$ 为其变差测度。则下列断言成立：
+\begin{enumerate}[(i)]
+\item 存在只依赖于 $n$ 的常数 $C_1$，使得
+\begin{align*}
+\lVert f\rVert_{L^{1^*}(\mathbb{R}^n)}\leqslant C_1\lVert Df\rVert(\mathbb{R}^n)
+\end{align*}
+对一切 $f\in\BV(\mathbb{R}^n)$ 成立；
+\item 存在只依赖于 $n$ 的常数 $C_2$，使得
+\begin{align*}
+\lVert f-(f)_{x,r}\rVert_{L^{1^*}(B(x,r))}\leqslant C_2\lVert Df\rVert(B^0(x,r))
+\end{align*}
+对一切球 $B(x,r)\subseteq\mathbb{R}^n$ 与一切 $f\in\BV_{\loc}(\mathbb{R}^n)$ 成立，其中
+\begin{align*}
+(f)_{x,r}:=\fint_{B(x,r)}f\diff y
+\end{align*}
+为 $f$ 在 $B(x,r)$ 上关于 Lebesgue 测度的平均值；
+\item 对每个满足 $0<\alpha\leqslant1$ 的实数 $\alpha$，存在只依赖于 $\alpha$ 与 $n$ 的常数 $C_3(\alpha)$，使得
+\begin{align*}
+\lVert f\rVert_{L^{1^*}(B(x,r))}\leqslant C_3(\alpha)\lVert Df\rVert(B^0(x,r))
+\end{align*}
+对一切球 $B(x,r)\subseteq\mathbb{R}^n$ 与一切满足
+\begin{align*}
+\frac{\mathcal{L}^n(B(x,r)\cap\{f=0\})}{\mathcal{L}^n(B(x,r))}\geqslant\alpha
+\end{align*}
+的 $f\in\BV_{\loc}(\mathbb{R}^n)$ 成立。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+1. 取 $f_k\in C_c^\infty(\mathbb{R}^n)$（$k=1,2,\cdots$），使得
+\begin{align*}
+f_k\to f\ \text{于}\ L^1(\mathbb{R}^n),\qquad f_k\to f\quad\mathcal{L}^n\text{-a.e.},\qquad \lVert Df_k\rVert(\mathbb{R}^n)\to\lVert Df\rVert(\mathbb{R}^n).
+\end{align*}
+由 Fatou 引理与 Gagliardo--Nirenberg--Sobolev 不等式（\cref{theorem:ch04-4-8}）得 % XREF p=216 "Then Fatou's Lemma and the Gagliardo–Nirenberg–Sobolev inequality imply"
+\begin{align*}
+\lVert f\rVert_{L^{1^*}(\mathbb{R}^n)}
+&\leqslant\liminf_{k\to\infty}\lVert f_k\rVert_{L^{1^*}(\mathbb{R}^n)}\\
+&\leqslant\lim_{k\to\infty}C_1\lVert Df_k\rVert_{L^1(\mathbb{R}^n)}=C_1\lVert Df\rVert(\mathbb{R}^n),
+\end{align*}
+此即 (i)。
+
+% SUPPLEMENT: parent=theorem:ch05-5-10; kind=proof; 补出第 1 步中逼近列 $\{f_k\}$ 的存在性与其三条性质的来源
+第 1 步中 $\{f_k\}$ 的存在性依据如下。由\cref{theorem:ch05-5-3}（取 $U=\mathbb{R}^n$）可得 $g_k\in\BV(\mathbb{R}^n)\cap C^\infty(\mathbb{R}^n)$，使 $g_k\to f$ 于 $L^1(\mathbb{R}^n)$ 且 $\lVert Dg_k\rVert(\mathbb{R}^n)\to\lVert Df\rVert(\mathbb{R}^n)$；再由 $L^1$ 收敛列必有 $\mathcal{L}^n$-a.e. 收敛的子列，可设 $g_k\to f$ $\mathcal{L}^n$-a.e.。为得到紧支集，取截断函数 $\zeta_R\in C_c^\infty(\mathbb{R}^n)$，满足 $0\leqslant\zeta_R\leqslant1$ 且 $\zeta_R=1$ 于 $B(0,R)$ 上；对 $f\zeta_R$ 重复上述逼近，再令 $R\to\infty$ 并用对角线法取子列，即得 $f_k\in C_c^\infty(\mathbb{R}^n)$ 与上述三条性质。对这些 $f_k$ 有 $\lVert Df_k\rVert_{L^1(\mathbb{R}^n)}=\lVert Df_k\rVert(\mathbb{R}^n)$。% XREF internal
+
+2. (ii) 由\cref{section:ch04-05}中的 Poincaré 不等式按同一方式得到。% XREF p=217 "Statement (ii) follows similarly from Poincaré's inequality, Section 4.5."
+
+% SUPPLEMENT: parent=theorem:ch05-5-10; kind=proof; 补出断言 (ii) 的完整推导：先在光滑情形用伸缩化归到单位球上的 Poincaré 不等式，再经局部逼近与 $L^{1^*}$ 范数的弱下半连续性过渡到 BV 函数
+(ii) 的完整推导如下。先设 $f\in C^\infty(B^0(x,r))$，并置 $g(y):=f(x+ry)$（$y\in B^0(0,1)$）。由 $Dg(y)=rDf(x+ry)$ 与伸缩变换 $\diff z=r^n\diff y$ 得
+\begin{align*}
+(g)_{0,1}=\fint_{B(0,1)}f(x+ry)\diff y=(f)_{x,r},\qquad
+\int_{B(0,1)}\lvert Dg\rvert\diff y=r^{1-n}\int_{B(x,r)}\lvert Df\rvert\diff z .
+\end{align*}
+把\cref{theorem:ch04-4-9}用于 $p=1$、$x=0$、$r=1$ 与 $g$，得 % XREF internal
+\begin{align*}
+\Bigl(\fint_{B(0,1)}\lvert g-(g)_{0,1}\rvert^{1^*}\diff y\Bigr)^{\frac{1}{1^*}}\leqslant C_2\fint_{B(0,1)}\lvert Dg\rvert\diff y .
+\end{align*}
+由 $n/1^*=n-1$ 与 $1/1^*=1-\frac1n$，上式左端等于 $\alpha(n)^{-\left(1-\frac1n\right)}r^{-(n-1)}\lVert f-(f)_{x,r}\rVert_{L^{1^*}(B(x,r))}$，右端等于 $C_2\alpha(n)^{-1}r^{1-n}\lVert Df\rVert(B^0(x,r))$。于是
+\begin{align*}
+\lVert f-(f)_{x,r}\rVert_{L^{1^*}(B(x,r))}\leqslant C_2\alpha(n)^{-\frac1n}\lVert Df\rVert(B^0(x,r)).
+\end{align*}
+
+次设 $f\in\BV_{\loc}(\mathbb{R}^n)$。由\cref{theorem:ch05-5-3}取 $f_k\in\BV(B^0(x,r))\cap C^\infty(B^0(x,r))$，使得 $f_k\to f$ 于 $L^1(B^0(x,r))$ 且 $\lVert Df_k\rVert(B^0(x,r))\to\lVert Df\rVert(B^0(x,r))$。% XREF internal
+对每个 $k$，把已证的光滑情形用于 $f_k$，得
+\begin{align*}
+\lVert f_k-(f_k)_{x,r}\rVert_{L^{1^*}(B(x,r))}\leqslant C_2\alpha(n)^{-\frac1n}\lVert Df_k\rVert(B^0(x,r)).
+\end{align*}
+由 $f_k\to f$ 于 $L^1(B(x,r))$ 知 $f_k-(f_k)_{x,r}\to f-(f)_{x,r}$ 于 $L^1(B(x,r))$；又上式右端有界，故 $\{f_k-(f_k)_{x,r}\}$ 在 $L^{1^*}(B(x,r))$ 中按范数有界。$1^*>1$ 时 $L^{1^*}$ 为自反空间，故该列存在弱收敛子列，其弱极限必为 $f-(f)_{x,r}$；$L^{1^*}$ 范数弱下半连续，故
+\begin{align*}
+\lVert f-(f)_{x,r}\rVert_{L^{1^*}(B(x,r))}\leqslant C_2\alpha(n)^{-\frac1n}\lVert Df\rVert(B^0(x,r)).
+\end{align*}
+把常数 $C_2\alpha(n)^{-\frac1n}$ 仍记为 $C_2$，它只依赖于 $n$；断言 (ii) 得证。
+
+3. 设
+\begin{align*}
+\frac{\mathcal{L}^n(B(x,r)\cap\{f=0\})}{\mathcal{L}^n(B(x,r))}\geqslant\alpha>0. \qquad(\star)
+\end{align*}
+则
+\begin{align*}
+\lVert f\rVert_{L^{1^*}(B(x,r))}
+&\leqslant\lVert f-(f)_{x,r}\rVert_{L^{1^*}(B(x,r))}+\lVert(f)_{x,r}\rVert_{L^{1^*}(B(x,r))}\\
+&\leqslant C_2\lVert Df\rVert(B^0(x,r))+\lvert(f)_{x,r}\rvert\bigl(\mathcal{L}^n(B(x,r))\bigr)^{1-\frac1n},\qquad(\star\star)
+\end{align*}
+其中用到 $\lVert(f)_{x,r}\rVert_{L^{1^*}(B(x,r))}=\lvert(f)_{x,r}\rvert\bigl(\mathcal{L}^n(B(x,r))\bigr)^{\frac{1}{1^*}}$ 与 $\frac{1}{1^*}=1-\frac1n$。另一方面，
+\begin{align*}
+&\lvert(f)_{x,r}\rvert\bigl(\mathcal{L}^n(B(x,r))\bigr)^{1-\frac1n}\\
+&\quad\leqslant\frac{1}{\mathcal{L}^n(B(x,r))^{\frac1n}}\int_{B(x,r)\cap\{f\neq0\}}\lvert f\rvert\diff y\\
+&\quad\leqslant\Bigl(\int_{B(x,r)}\lvert f\rvert^{1^*}\diff y\Bigr)^{1-\frac1n}\Bigl(\frac{\mathcal{L}^n(B(x,r))\cap\{f\neq0\}}{\mathcal{L}^n(B(x,r))}\Bigr)^{\frac1n}\\
+&\quad\leqslant\lVert f\rVert_{L^{1^*}(B(x,r))}(1-\alpha)^{\frac1n},
+\end{align*}
+其中第二个不等号为指数 $1^*$ 与 $n$ 的 Hölder 不等式（$\frac{1}{1^*}+\frac1n=1$），第三个不等号由 $(\star)$ 得到。把这个估计代入 $(\star\star)$，得
+\begin{align*}
+\lVert f\rVert_{L^{1^*}(B(x,r))}\leqslant\frac{C_2}{1-(1-\alpha)^{\frac1n}}\lVert Df\rVert(B^0(x,r)),
+\end{align*}
+其中 $0<\alpha\leqslant1$ 保证 $1-(1-\alpha)^{\frac1n}>0$，而 $C_3(\alpha):=\frac{C_2}{1-(1-\alpha)^{\frac1n}}$ 只依赖于 $\alpha$ 与 $n$。断言 (iii) 得证。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-10; kind=motivation; 说明三条估计如何把 GNS 与 Poincaré 不等式搬到 BV 情形，以及 1^*、减去平均值与零集密度条件各自的作用
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-10-动机}
+本定理把 Sobolev 空间上的两个基本估计推广到 $\BV$：断言 (i) 是 $p=1$ 的 Gagliardo--Nirenberg--Sobolev 不等式，断言 (ii) 是球上的 Poincaré 不等式，断言 (iii) 是 (ii) 的变体，它在只知道 $\{f=0\}$ 在球内占有固定比例 $\alpha$ 的条件下直接控制 $\lVert f\rVert_{L^{1^*}(B(x,r))}$，而不减去平均值。
+
+三条断言的分工与下一个定理直接对应。在\cref{theorem:ch05-5-11}(i) 中取 $f=\chi_E$，(i) 就给出集合的 $\mathcal{L}^n$ 测度与其周长之间的不等式；相对等周不等式则要对 $f=\chi_{B(x,r)\cap E}$ 这类在球内取两个值的函数作估计，(ii) 给出减去平均值之后的偏差估计，而 (iii) 中的条件把平均值那一项吸收回左端，使最终估计不含平均值。% XREF internal
+
+指数 $1^*=\frac{n}{n-1}$ 是 $p=1$ 的 Sobolev 共轭指数（\cref{definition:ch04-4-7}），它满足 $\frac{1}{1^*}=1-\frac1n$；这一恒等式把 $n$ 维球的体积因子 $\mathcal{L}^n(B(x,r))^{\frac{1}{1^*}}$ 化成 $\mathcal{L}^n(B(x,r))^{1-\frac1n}$，是 (ii)、(iii) 推导中所有 $\mathcal{L}^n$ 幂次的来源。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-10; kind=hypotheses; 逐条分析 n>=2、BV 与 BV_loc 的定义域、球的开闭之分、常数对 n 的依赖以及 0<alpha<=1 的作用与不可删除性
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-10-条件}
+\begin{enumerate}[(i)]
+\item 条件 $n\geqslant2$ 使 $1^*=\frac{n}{n-1}$ 有定义且大于 $1$，从而 $L^{1^*}$ 是自反的 Banach 空间、$\frac{1}{1^*}=1-\frac1n\in(0,1)$。$n=1$ 时 $1^*$ 的分母 $n-1$ 等于 $0$，指数本身失去意义，故定理要求 $n\geqslant2$。
+\item 断言 (i) 的论域是 $\BV(\mathbb{R}^n)$：只有 $f\in L^1(\mathbb{R}^n)$ 才能使 $\lVert f\rVert_{L^{1^*}(\mathbb{R}^n)}$ 与 $\lVert Df\rVert(\mathbb{R}^n)$ 同时有限，故此处不能换成 $\BV_{\loc}(\mathbb{R}^n)$。
+\item 断言 (ii)、(iii) 的论域是 $\BV_{\loc}(\mathbb{R}^n)$：两端的量都只由 $f$ 在一个球上的取值决定，故只需局部可积与局部有界变差。
+\item 左端在闭球 $B(x,r)$ 上积分，右端取开球 $B^0(x,r)$。左端换成开球不改变数值，因为 $\mathcal{L}^n(\partial B(x,r))=0$；右端取开球是因为\cref{theorem:ch04-4-9}中 $f$ 定义在开球 $B^0(x,r)$ 上，而 $\lVert Df\rVert(\partial B(x,r))$ 可以不为零，开球避免了边界上的歧义。% XREF internal
+\item 常数 $C_1$、$C_2$ 只依赖于 $n$，$C_3(\alpha)$ 只依赖于 $\alpha$ 与 $n$，都与 $f$、$x$、$r$ 无关；这是后文可以把它们并入同一个字母 $C$ 的依据。
+\item 条件 $0<\alpha\leqslant1$ 在 (iii) 中不可删除。若取 $\alpha=0$，则条件 $\mathcal{L}^n(B(x,r)\cap\{f=0\})\geqslant0$ 恒成立，而 $f\equiv1$ 在球上给出 $\lVert f\rVert_{L^{1^*}(B(x,r))}=\mathcal{L}^n(B(x,r))^{1-\frac1n}>0$ 与 $\lVert Df\rVert(B^0(x,r))=0$，不等式不成立；同时 $\alpha=0$ 时系数 $1-(1-\alpha)^{\frac1n}$ 等于 $0$，推导中的除法也失效。
+\end{enumerate}
+\end{remark}
+
+\subsection{等周不等式}\label{subsection:ch05-06-2}
+
+\begin{theorem}[等周不等式]\label{theorem:ch05-5-11}
+设 $n\geqslant2$ 为整数，$E\subseteq\mathbb{R}^n$ 为有界且具有有限周长的 $\mathcal{L}^n$-可测集，即 $\chi_E\in\BV(\mathbb{R}^n)$，$\lVert\partial E\rVert$ 为 $E$ 的周长测度，$B(x,r)$ 为以 $x$ 为心、$r$ 为半径的闭球，$B^0(x,r)$ 为对应的开球。则下列断言成立：
+\begin{enumerate}[(i)]
+\item
+\begin{align*}
+\mathcal{L}^n(E)^{1-\frac1n}\leqslant C_1\lVert\partial E\rVert(\mathbb{R}^n),
+\end{align*}
+其中 $C_1$ 是只依赖于 $n$ 的常数；
+\item 对每个球 $B(x,r)\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\min\bigl\{\mathcal{L}^n(B(x,r)\cap E),\ \mathcal{L}^n(B(x,r)\setminus E)\bigr\}^{1-\frac1n}\leqslant2C_2\lVert\partial E\rVert(B^0(x,r)),
+\end{align*}
+其中 $C_2$ 是只依赖于 $n$ 的常数。
+\end{enumerate}
+\end{theorem}
+
+% 印刷第 218 页有一幅插图：区域 E 与球 B(x,r) 的相交部分被涂黑，球内标出球心 x 与半径 r；该图尚未从原页裁取为位图，暂未以 includegraphics 插入。
+% FIGURE physical=233 bbox=[0.10,0.09,0.85,0.35]
+
+常数 $C_1$ 与 $C_2$ 分别是\cref{section:ch04-05}中\cref{theorem:ch04-4-8}与\cref{theorem:ch04-4-9}中的常数。% XREF p=218 "The constants C_1 and C_2 are those from Theorems 4.8 and 4.9 in Section 4.5." | p=218 "Section 4.5" | p=218 "Theorem 4.9"
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-11-名称}
+断言 (i) 是\textbf{等周不等式}，(ii) 是\textbf{相对等周不等式}。
+\end{remark}
+
+\begin{proof}
+1. 在\cref{theorem:ch05-5-10}(i) 中取 $f=\chi_E$ 即得 (i)：% XREF p=218 "Let f = χ_E in Theorem 5.10,(i) to prove (i)."
+\begin{align*}
+\mathcal{L}^n(E)^{1-\frac1n}=\lVert\chi_E\rVert_{L^{1^*}(\mathbb{R}^n)}\leqslant C_1\lVert D\chi_E\rVert(\mathbb{R}^n)=C_1\lVert\partial E\rVert(\mathbb{R}^n),
+\end{align*}
+其中第一个等号用到 $\frac{1}{1^*}=1-\frac1n$，最后一个等号是周长测度的定义（\cref{definition:ch05-def-5-1-周长测度}）。% XREF internal
+
+2. 在\cref{theorem:ch05-5-10}(ii) 中取 $f=\chi_{B(x,r)\cap E}$，此时% XREF p=218 "Let f = χ_{B(x,r)∩E} in Theorem 5.10,(ii), in which case"
+\begin{align*}
+(f)_{x,r}=\fint_{B(x,r)}\chi_{B(x,r)\cap E}\diff y=\frac{\mathcal{L}^n(B(x,r)\cap E)}{\mathcal{L}^n(B(x,r))}.
+\end{align*}
+于是
+\begin{align*}
+\int_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{1^*}\diff y
+&=\Bigl(\frac{\mathcal{L}^n(B(x,r)\setminus E)}{\mathcal{L}^n(B(x,r))}\Bigr)^{1^*}\mathcal{L}^n(B(x,r)\cap E)\\
+&\quad+\Bigl(\frac{\mathcal{L}^n(B(x,r)\cap E)}{\mathcal{L}^n(B(x,r))}\Bigr)^{1^*}\mathcal{L}^n(B(x,r)\setminus E).
+\end{align*}
+若 $\mathcal{L}^n(B(x,r)\cap E)\leqslant\mathcal{L}^n(B(x,r)\setminus E)$，则
+\begin{align*}
+&\Bigl(\int_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{1^*}\diff y\Bigr)^{1-\frac1n}\\
+&\quad\geqslant\frac{\mathcal{L}^n(B(x,r)\setminus E)}{\mathcal{L}^n(B(x,r))}\,\mathcal{L}^n(B(x,r)\cap E)^{1-\frac1n}\\
+&\quad\geqslant\frac12\min\bigl\{\mathcal{L}^n(B(x,r)\cap E),\ \mathcal{L}^n(B(x,r)\setminus E)\bigr\}^{1-\frac1n}.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch05-5-11; kind=proof; 补出「另一情形类似」的全部推导：以和式第二项作为下界，用 L^n(B(x,r)∩E) 在球内占优得到同样的因子 1/2
+另一情形 $\mathcal{L}^n(B(x,r)\setminus E)<\mathcal{L}^n(B(x,r)\cap E)$ 的推导如下。此时和式的第二项已给出
+\begin{align*}
+&\Bigl(\int_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{1^*}\diff y\Bigr)^{1-\frac1n}\\
+&\quad\geqslant\frac{\mathcal{L}^n(B(x,r)\cap E)}{\mathcal{L}^n(B(x,r))}\,\mathcal{L}^n(B(x,r)\setminus E)^{1-\frac1n}\\
+&\quad\geqslant\frac12\min\bigl\{\mathcal{L}^n(B(x,r)\cap E),\ \mathcal{L}^n(B(x,r)\setminus E)\bigr\}^{1-\frac1n},
+\end{align*}
+其中最后一个不等号用到两件事实：由 $\mathcal{L}^n(B(x,r)\setminus E)<\mathcal{L}^n(B(x,r)\cap E)$ 得 $\frac{\mathcal{L}^n(B(x,r)\cap E)}{\mathcal{L}^n(B(x,r))}>\frac12$；又 $\mathcal{L}^n(B(x,r)\setminus E)$ 不小于 $\min\bigl\{\mathcal{L}^n(B(x,r)\cap E),\ \mathcal{L}^n(B(x,r)\setminus E)\bigr\}$，故可把 $\mathcal{L}^n(B(x,r)\setminus E)^{1-\frac1n}$ 换成该最小值。两种情形给出同一个下界。
+
+3. 由\cref{theorem:ch05-5-10}(ii) 与 $f=\chi_E$ 于 $B^0(x,r)$ 上，得% XREF internal
+\begin{align*}
+\lVert f-(f)_{x,r}\rVert_{L^{1^*}(B(x,r))}\leqslant C_2\lVert Df\rVert(B^0(x,r))=C_2\lVert\partial E\rVert(B^0(x,r)).
+\end{align*}
+由 $\frac{1}{1^*}=1-\frac1n$，第 2 步中左端的幂次正是 $L^{1^*}$ 范数；与第 2 步中两种情形的下界比较，得到
+\begin{align*}
+\frac12\min\bigl\{\mathcal{L}^n(B(x,r)\cap E),\ \mathcal{L}^n(B(x,r)\setminus E)\bigr\}^{1-\frac1n}\leqslant C_2\lVert\partial E\rVert(B^0(x,r)),
+\end{align*}
+此即 (ii)。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-11; kind=motivation; 说明幂次 1-1/n 在伸缩下的不变性、球的最优性，以及相对等周不等式作为局部形式在覆盖论证中的作用
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-11-动机}
+断言 (i) 把 $\mathcal{L}^n(E)^{1-\frac1n}$ 与周长 $\lVert\partial E\rVert(\mathbb{R}^n)$ 相比较。幂次 $1-\frac1n$ 由伸缩不变性确定：对 $\lambda>0$ 与 $E_\lambda:=\lambda E$ 有 $\mathcal{L}^n(E_\lambda)=\lambda^n\mathcal{L}^n(E)$ 与 $\lVert\partial E_\lambda\rVert(\mathbb{R}^n)=\lambda^{n-1}\lVert\partial E\rVert(\mathbb{R}^n)$，故两端在 $E\mapsto\lambda E$ 下按同一个 $\lambda^{n-1}$ 伸缩，不等式的形式与 $\lambda$ 无关。取 $E$ 为球时两端只相差常数因子，这是「同样周长下球所围体积最大」这一几何事实的定量形式。
+
+断言 (ii) 是 (i) 的局部形式：它不用 $\mathcal{L}^n(E)$ 整体度量 $E$ 的大小，而是对每个球用 $\mathcal{L}^n(B(x,r)\cap E)$ 与 $\mathcal{L}^n(B(x,r)\setminus E)$ 中较小者度量 $E$ 在该球内的出现程度，右端只涉及该球内的周长。\cref{theorem:ch05-5-12}的证明要在集合 $A$ 的每个点处各取一个球来覆盖 $A$，此时无法使用整体的 (i)，而 (ii) 恰好给出每个球上半径与周长之间的定量联系。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-11; kind=hypotheses; 逐条分析可测性、有界性、有限周长、球的开闭之分，以及常数 C_1、C_2 的来源与因子 2 的出处
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-11-条件}
+\begin{enumerate}[(i)]
+\item 假设 $E$ 为 $\mathcal{L}^n$-可测集：$\mathcal{L}^n(B(x,r)\cap E)$ 与 $\chi_E$ 的可积性都以可测性为前提。
+\item 假设 $E$ 有界：它使 $\mathcal{L}^n(E)<\infty$，从而 $\chi_E\in L^1(\mathbb{R}^n)$；结合有限周长条件得 $\chi_E\in\BV(\mathbb{R}^n)$，这正是把\cref{theorem:ch05-5-10}(i) 用于 $f=\chi_E$ 的前提。若无界，$\chi_E$ 一般不属于 $L^1(\mathbb{R}^n)$，\cref{theorem:ch05-5-10}(i) 不能直接使用。 | internal % XREF internal
+\item 假设 $E$ 具有有限周长，即 $\lVert\partial E\rVert(\mathbb{R}^n)<\infty$：它使 (i) 的右端有限、使 (ii) 的右端对每个球有限，并使第 2 步中的 $f=\chi_{B(x,r)\cap E}$ 属于 $\BV_{\loc}(\mathbb{R}^n)$。
+\item 断言 (ii) 的左端取闭球 $B(x,r)$、右端取开球 $B^0(x,r)$：左端只涉及 $\mathcal{L}^n$，闭球与开球的差别是零测集；右端取开球是因为 $f=\chi_{B(x,r)\cap E}$ 与 $\chi_E$ 在 $B^0(x,r)$ 上相等，故 $\lVert Df\rVert(B^0(x,r))=\lVert\partial E\rVert(B^0(x,r))$。
+\item 常数 $C_1$、$C_2$ 只依赖于 $n$，分别是\cref{theorem:ch04-4-8}与\cref{theorem:ch04-4-9}中的常数。断言 (ii) 中的因子 $2$ 来自证明：$\min$ 的两种情形各给出因子 $\frac12$，故最终常数是 $2C_2$。 | internal % XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-11-逆命题}
+以上论证说明 Gagliardo--Nirenberg--Sobolev 不等式蕴含等周不等式。其逆命题同样成立：等周不等式蕴含 Gagliardo--Nirenberg--Sobolev 不等式。
+\end{remark}
+
+\begin{proof}
+设 $f\in C_c^1(\mathbb{R}^n)$ 且 $f\geqslant0$。计算
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df\rvert\diff x=\lVert Df\rVert(\mathbb{R}^n)=\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(\mathbb{R}^n)\diff t\geqslant\frac{1}{C_1}\int_{-\infty}^{\infty}\mathcal{L}^n(E_t)^{1-\frac1n}\diff t,
+\end{align*}
+其中第二个等号是余面积公式（\cref{theorem:ch05-5-9}），% XREF internal
+不等号是等周不等式（\cref{theorem:ch05-5-11}）。% XREF internal
+
+再令
+\begin{align*}
+f_t:=\min\{t,f\},\qquad \chi(t):=\Bigl(\int_{\mathbb{R}^n}f_t^{1^*}\diff x\Bigr)^{1-\frac1n}\qquad(t\in\mathbb{R}).
+\end{align*}
+则 $\chi$ 在 $(0,\infty)$ 上单调不减，且
+\begin{align*}
+\lim_{t\to\infty}\chi(t)=\Bigl(\int_{\mathbb{R}^n}\lvert f\rvert^{1^*}\diff x\Bigr)^{1-\frac1n}.
+\end{align*}
+又对 $h>0$ 有
+\begin{align*}
+0\leqslant\chi(t+h)-\chi(t)\leqslant\Bigl(\int_{\mathbb{R}^n}\lvert f_{t+h}-f_t\rvert^{1^*}\diff x\Bigr)^{1-\frac1n}\leqslant h\,\mathcal{L}^n(E_t)^{1-\frac1n},
+\end{align*}
+其中第二个不等号是 $L^{1^*}$ 范数的三角不等式，第三个不等号用到 $0\leqslant f_{t+h}-f_t\leqslant h$ 于 $E_t$ 上、而 $f_{t+h}=f_t$ 于 $E_t$ 之外。由此 $\chi$ 局部 Lipschitz 连续：$\mathcal{L}^n(E_t)$ 关于 $t$ 单调不增，故当 $t\geqslant t_0>0$ 时上式右端不超过 $h\mathcal{L}^n(E_{t_0})^{1-\frac1n}$，而 $\mathcal{L}^n(E_{t_0})<\infty$。因此
+\begin{align*}
+\chi'(t)\leqslant\mathcal{L}^n(E_t)^{1-\frac1n}
+\end{align*}
+对 $\mathcal{L}^1$-a.e. 的 $t$ 成立。从 $0$ 到 $\infty$ 积分，并用 $\chi(0)=0$ 与 $\chi$ 在 $[0,T]$ 上的绝对连续性，得
+\begin{align*}
+\Bigl(\int_{\mathbb{R}^n}\lvert f\rvert^{1^*}\diff x\Bigr)^{1-\frac1n}
+&=\int_0^{\infty}\chi'(t)\diff t\\
+&\leqslant\int_0^{\infty}\mathcal{L}^n(E_t)^{1^*}\diff t\\
+&\leqslant C_1\int_{\mathbb{R}^n}\lvert Df\rvert\diff x .
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=remark:ch05-thm-5-11-逆命题; kind=correction; 指出该链第二个不等号中被积函数的指数应取 1-1/n 而不是 1*，并给出修正后的完整不等式
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-11-指数}
+上式第二个不等号中被积函数的指数应取 $1-\frac1n$，而不是 $1^*$。理由有两条。第一，前一步给出的是 $\chi'(t)\leqslant\mathcal{L}^n(E_t)^{1-\frac1n}$，逐项积分只能得到 $\int_0^{\infty}\chi'(t)\diff t\leqslant\int_0^{\infty}\mathcal{L}^n(E_t)^{1-\frac1n}\diff t$。第二，只有指数为 $1-\frac1n$ 时才能用等周不等式把 $\mathcal{L}^n(E_t)^{1-\frac1n}$ 换成 $C_1\lVert\partial E_t\rVert(\mathbb{R}^n)$，再由余面积公式得到 $C_1\int_{\mathbb{R}^n}\lvert Df\rvert\diff x$；对指数 $1^*$ 该估计不成立，因为 $1^*=\frac{n}{n-1}$ 与 $1-\frac1n=\frac{n-1}{n}$ 互为倒数，$n\geqslant2$ 时二者不相等。改用指数 $1-\frac1n$ 后，上述推理给出
+\begin{align*}
+\Bigl(\int_{\mathbb{R}^n}\lvert f\rvert^{1^*}\diff x\Bigr)^{1-\frac1n}\leqslant\int_0^{\infty}\mathcal{L}^n(E_t)^{1-\frac1n}\diff t\leqslant C_1\int_{\mathbb{R}^n}\lvert Df\rvert\diff x,
+\end{align*}
+这正是 $p=1$ 的 Gagliardo--Nirenberg--Sobolev 不等式（\cref{theorem:ch04-4-8}）。% XREF internal
+\end{remark}
+
+\subsection{$\mathcal{H}^{n-1}$ 与 $\Cap_1$}\label{subsection:ch05-06-3}
+
+作为等周不等式的第一个应用，建立\cref{theorem:ch04-4-17}的如下精确形式：% XREF p=220 "As a first application of the isoperimetric inequalities, we establish this refinement of Theorem 4.17 in Section 4.7"
+
+\begin{theorem}[$\mathcal{H}^{n-1}$ 与 $\Cap_1$]\label{theorem:ch05-5-12}
+设 $n\geqslant2$ 为整数，$A\subseteq\mathbb{R}^n$ 为紧集，$\mathcal{H}^{n-1}$ 为 $(n-1)$ 维 Hausdorff 测度，$\Cap_1$ 为 $1$-容量：对每个 $B\subseteq\mathbb{R}^n$，
+\begin{align*}
+\Cap_1(B):=\inf\Bigl\{\int_{\mathbb{R}^n}\lvert Df\rvert\diff x\Bigm| f\in K^1,\ B\subseteq\{f\geqslant1\}^0\Bigr\},
+\end{align*}
+其中 $K^1$ 为\cref{section:ch04-07}中给出的容许函数类，$\{f\geqslant1\}^0$ 表示集合 $\{f\geqslant1\}$ 的内部。则% XREF internal
+\begin{align*}
+\Cap_1(A)=0\quad\text{当且仅当}\quad\mathcal{H}^{n-1}(A)=0 .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+由\cref{theorem:ch04-4-15}，若 $\mathcal{H}^{n-1}(A)=0$ 则 $\Cap_1(A)=0$。% XREF p=220 "According to Theorem 4.15, Cap_1(A) = 0 if H^{n-1}(A) = 0."
+反之设 $\Cap_1(A)=0$。若 $f\in K^1$ 且 $A\subseteq\{f\geqslant1\}^0$，则由余面积公式（\cref{theorem:ch05-5-9}）% XREF p=220 "then by Theorem 5.9"
+\begin{align*}
+\int_0^1\lVert\partial E_t\rVert(\mathbb{R}^n)\diff t\leqslant\int_{\mathbb{R}^n}\lvert Df\rvert\diff x,
+\end{align*}
+其中 $E_t:=\{f>t\}$。故由积分中值定理，存在 $t\in(0,1)$，使得
+\begin{align*}
+\lVert\partial E_t\rVert(\mathbb{R}^n)\leqslant\int_{\mathbb{R}^n}\lvert Df\rvert\diff x .
+\end{align*}
+由 $0<t<1$ 与 $A\subseteq\{f\geqslant1\}^0$ 得 $A\subseteq E_t^0$；又由等周不等式（\cref{theorem:ch05-5-11}）得 $\mathcal{L}^n(E_t)<\infty$。% XREF p=220 "Clearly A ⊆ E_t^0; and by the isoperimetric inequality, L^n(E_t) < ∞."
+于是对每个 $x\in A$ 存在 $r>0$，使得
+\begin{align*}
+\frac{\mathcal{L}^n(E_t\cap B(x,r))}{\alpha(n)r^n}=\frac14 .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch05-5-12; kind=proof; 补出「存在 r>0 使该比值为 1/4」的中间值论证、球族半径的一致有界性，以及相对等周不等式中常数 C 的来源
+先看 $\mathcal{L}^n(E_t)<\infty$：由 $f\in L^{1^*}(\mathbb{R}^n)$、$t>0$ 与 Chebyshev 不等式得 $\mathcal{L}^n(E_t)\leqslant t^{-1^*}\int_{\mathbb{R}^n}\lvert f\rvert^{1^*}\diff x<\infty$。再看这样的 $r$ 的存在性：函数 $\rho(r):=\frac{\mathcal{L}^n(E_t\cap B(x,r))}{\alpha(n)r^n}$ 在 $(0,\infty)$ 上连续（球面的 $\mathcal{L}^n$ 测度为零），由 $x\in E_t^0$ 知 $r$ 充分小时 $B(x,r)\subseteq E_t$，从而 $\rho(r)=1$；又 $\mathcal{L}^n(E_t)<\infty$ 给出 $\lim_{r\to\infty}\rho(r)=0$。由中间值定理，存在 $r>0$ 使 $\rho(r)=\frac14$。相应的球族 $\{B(x,r_x)\}_{x\in A}$ 的半径一致有界：由 $\frac14\alpha(n)r_x^n=\mathcal{L}^n(E_t\cap B(x,r_x))\leqslant\mathcal{L}^n(E_t)$ 得 $r_x\leqslant\bigl(\frac{4\mathcal{L}^n(E_t)}{\alpha(n)}\bigr)^{\frac1n}$。
+
+由相对等周不等式（\cref{theorem:ch05-5-11}），对每个这样的球 $B(x,r)$ 有% XREF p=220 "In light of the relative isoperimetric inequality, we have for each such ball B(x,r) that"
+\begin{align*}
+\Bigl(\frac14\alpha(n)r^n\Bigr)^{\frac{n-1}{n}}=\bigl(\mathcal{L}^n(E_t\cap B(x,r))\bigr)^{\frac{n-1}{n}}\leqslant C\lVert\partial E_t\rVert(B(x,r)),
+\end{align*}
+即
+\begin{align*}
+r^{n-1}\leqslant C\lVert\partial E_t\rVert(B(x,r)),
+\end{align*}
+其中常数 $C$ 只依赖于 $n$：这里 $\mathcal{L}^n(E_t\cap B(x,r))=\frac14\alpha(n)r^n\leqslant\frac12\mathcal{L}^n(B(x,r))$，故相对等周不等式中的 $\min$ 等于 $\mathcal{L}^n(E_t\cap B(x,r))$；又 $B^0(x,r)\subseteq B(x,r)$，故以 $B(x,r)$ 代 $B^0(x,r)$ 只使右端变大。若 $E_t$ 无界，则把\cref{theorem:ch05-5-11}用于有界集 $E_t\cap B(0,R)$（$R$ 充分大，使所考虑的球都含于 $B^0(0,R)$），此时两端的量都不变。% XREF internal
+
+由 Vitali 覆盖定理（\cref{theorem:ch01-1-24}），存在由上述球组成的可数不交球族 $\{B(x_j,r_j)\}_{j=1}^{\infty}$，其中 $x_j\in A$，并且% XREF p=220 "By Vitali's Covering Theorem, there exists a disjoint collection of balls"
+\begin{align*}
+A\subseteq\bigcup_{j=1}^{\infty}B(x_j,5r_j).
+\end{align*}
+于是
+\begin{align*}
+\sum_{j=1}^{\infty}(5r_j)^{n-1}\leqslant C\lVert\partial E_t\rVert(\mathbb{R}^n)\leqslant C\int_{\mathbb{R}^n}\lvert Df\rvert\diff x,
+\end{align*}
+其中第一个不等号用到 $r_j^{n-1}\leqslant C\lVert\partial E_t\rVert(B(x_j,r_j))$ 与各球两两不交，第二个不等号用到 $t$ 的取法。
+
+由于 $\Cap_1(A)=0$，对给定的 $\varepsilon>0$，可使 $f$ 满足
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df\rvert\diff x\leqslant\varepsilon .
+\end{align*}
+于是对每个 $j$，
+\begin{align*}
+r_j\leqslant\bigl(C\lVert\partial E_t\rVert(\mathbb{R}^n)\bigr)^{\frac{1}{n-1}}\leqslant C\varepsilon^{\frac{1}{n-1}} .
+\end{align*}
+这说明 $\mathcal{H}^{n-1}(A)=0$。
+
+% SUPPLEMENT: parent=theorem:ch05-5-12; kind=proof; 补出由覆盖的半径估计推出 H^{n-1}(A)=0 的细节
+最后一步的依据如下。由 $A\subseteq\bigcup_{j=1}^{\infty}B(x_j,5r_j)$ 与 $r_j\leqslant C\varepsilon^{\frac{1}{n-1}}$，对每个 $\delta>0$ 取 $\varepsilon>0$ 使 $10C\varepsilon^{\frac{1}{n-1}}\leqslant\delta$，则这些球的直径都不超过 $\delta$，故
+\begin{align*}
+\mathcal{H}^{n-1}_\delta(A)\leqslant\sum_{j=1}^{\infty}\alpha(n-1)(5r_j)^{n-1}\leqslant\alpha(n-1)(5C)^{n-1}\varepsilon .
+\end{align*}
+令 $\varepsilon\to0$ 得 $\mathcal{H}^{n-1}_\delta(A)=0$；再令 $\delta\to0$ 得 $\mathcal{H}^{n-1}(A)=0$。与已证的反向蕴含合起来，即得 $\Cap_1(A)=0$ 当且仅当 $\mathcal{H}^{n-1}(A)=0$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-12; kind=motivation; 说明容量与 Hausdorff 测度定义方式不同而零集相同这一结论的意义，以及「覆盖 + 相对等周不等式」的证明思路
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-12-动机}
+本定理把 $1$-容量与 $(n-1)$ 维 Hausdorff 测度的零集等同起来。容量的定义只用容许函数类与梯度的积分，Hausdorff 测度的定义只用覆盖，二者的定义方式完全不同；把二者联系起来的正是等周不等式。
+
+证明的思路是「覆盖加相对等周不等式」。先由一个容许函数 $f$ 构造水平集 $E_t$，使 $A$ 落在 $E_t$ 的内部，且 $E_t$ 的周长被 $\int_{\mathbb{R}^n}\lvert Df\rvert\diff x$ 控制；再在每个 $x\in A$ 处取一个球，使 $E_t$ 在该球内只占 $\frac14$ 的体积，于是相对等周不等式把球的半径 $r$ 与该球内的周长联系起来；最后用 Vitali 覆盖定理抽出不交球族，$A$ 被半径放大 $5$ 倍的球覆盖，而半径的一致上界给出 $\mathcal{H}^{n-1}(A)$ 的任意小上界。由于 $\int_{\mathbb{R}^n}\lvert Df\rvert\diff x$ 可以取得任意小，得到 $\mathcal{H}^{n-1}(A)=0$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-12; kind=hypotheses; 逐条分析 n>=2、A 紧、结论的零集形式、Cap_1 定义中的内部条件，以及本证明用到的两条容量事实
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-12-条件}
+\begin{enumerate}[(i)]
+\item 条件 $n\geqslant2$ 使 $\mathcal{H}^{n-1}$ 是真正的 $(n-1)$ 维测度；$n=1$ 时 $n-1=0$，$\mathcal{H}^0$ 为计数测度，结论须另行陈述。
+\item 假设 $A$ 为紧集：紧性使 $A$ 有界闭、$\mathcal{H}^{n-1}(A)<\infty$，并使\cref{theorem:ch04-4-15}中关于 $A$ 的假设得到满足；证明中球心逐个取自 $A$，Vitali 覆盖定理也作用于以 $A$ 的点为中心的球族。% XREF internal
+\item 结论是两个零集的等同，而不是两个量的定量比较：若 $\Cap_1(A)$ 与 $\mathcal{H}^{n-1}(A)$ 都有限且为正，则二者之间还有依赖于 $n$ 的常数因子；本定理只断言二者同时为零或同时不为零。
+\item $\Cap_1$ 的定义中条件写成 $A\subseteq\{f\geqslant1\}^0$ 而非 $A\subseteq\{f\geqslant1\}$：取内部使 $A$ 的每一点都是 $E_t$ 的内点（$0<t<1$），这正是证明中 $A\subseteq E_t^0$ 的依据。
+\item 证明用到两条关于容量的既定事实：其一，$\mathcal{H}^{n-1}(A)=0$ 蕴含 $\Cap_1(A)=0$（\cref{theorem:ch04-4-15}）；其二，由 $\Cap_1(A)=0$ 与定义中的下确界，可取到 $f\in K^1$ 使 $A\subseteq\{f\geqslant1\}^0$ 且 $\int_{\mathbb{R}^n}\lvert Df\rvert\diff x$ 任意小。$K^1$ 与 $\Cap_1$ 的其余性质在证明中不再使用。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\end{document}

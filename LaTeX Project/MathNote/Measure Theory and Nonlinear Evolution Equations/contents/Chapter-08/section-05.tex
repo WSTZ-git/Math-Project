@@ -15,77 +15,100 @@
 
 \section{极限 Young 测度的刻画}\label{section:ch08-测度刻画}
 
-设 $(u,\nu)$ 为\cref{theorem:ch08-存在性} 给出的问题 (P) 的整体 Young 测度值解。本节给出 $N=1$ 时 Young 测度 $\nu$ 的显式表达式（与此相关，见\cref{section:ch05-收敛}）。
+设 $(u,\nu)$ 为\cref{theorem:ch08-存在性}给出的问题 (P) 的整体 Young 测度值解。本节给出 $N=1$ 时 Young 测度 $\nu$ 的显式表达式；与此相关的收敛性讨论见\cref{section:ch05-收敛}。
 
-先陈述若干预备事实。设 $\phi$ 改变单调特征的次数有限；由假设\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d} 注意该次数为偶数，记为 $2n$（$n\in\mathbb{N}$）。故
+先陈述若干预备事实。以下设 $\phi$ 改变单调特征的次数有限。由假设\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d}，该次数为偶数，记为 $2n$（$n\in\mathbb{N}$）：事实上由该两式有 $\phi(y)\to-\infty$（$y\to-\infty$）与 $\phi(y)\to+\infty$（$y\to+\infty$），故最左与最右的单调分支均递增，改变次数只能是偶数。于是
 \begin{align}
 \mathbb{R}=\left(\bigcup_{l=0}^n I_l\right)\cup\left(\bigcup_{m=1}^n\widehat I_m\right)\quad(n\in\mathbb{N}), \label{align:ch08-8.96}
 \end{align}
 其中
 \begin{align*}
-I_0\triangleq (-\infty,b_1],\quad I_l\triangleq (a_l,b_{l+1}]\ (l=1,\cdots ,n-1),\quad I_n\triangleq (a_n,\infty),
+&I_0\triangleq (-\infty,b_1],\qquad I_l\triangleq (a_l,b_{l+1}]\quad(l=1,\cdots ,n-1),\\
+&I_n\triangleq (a_n,\infty),\qquad \widehat I_m\triangleq (b_m,a_m]\quad(m=1,\cdots ,n),
 \end{align*}
+$b_l$ 为 $\phi$ 图像的局部极大点，$a_l$ 为局部极小点；诸分点满足 $b_1<a_1<b_2<a_2<\cdots <b_n<a_n$，而 $I_l$（$l=0,\cdots ,n$）与 $\widehat I_m$（$m=1,\cdots ,n$）构成 $\mathbb{R}$ 的互不相交的分解。
+
+令 $J_l\triangleq\phi(I_l)$、$\widehat J_m\triangleq\phi(\widehat I_m)$（$l=0,\cdots ,n$；$m=1,\cdots ,n$）。由于 $a_l$、$b_l$ 取尽 $\phi$ 的全部局部极值点，$\phi$ 在每个 $I_l$ 上严格递增、在每个 $\widehat I_m$ 上严格递减，故
 \begin{align*}
-\widehat I_m\triangleq (b_m,a_m]\ (m=1,\cdots ,n),
+&J_0\triangleq (-\infty,\phi(b_1)],\qquad J_l\triangleq (\phi(a_l),\phi(b_{l+1})]\quad(l=1,\cdots ,n-1),\\
+&J_n\triangleq (\phi(a_n),\infty),\qquad \widehat J_m\triangleq [\phi(a_m),\phi(b_m))\quad(m=1,\cdots ,n).
 \end{align*}
-$b_l$ 为 $\phi$ 图像的局部极大点，$a_l$ 为局部极小点。令 $J_l\triangleq \phi(I_l)$、$\widehat J_m\triangleq \phi(\widehat I_m)$（$l=0,\cdots ,n$；$m=1,\cdots ,n$）；由于 $\phi$ 在每个区间 $I_l$ 上递增、在每个区间 $\widehat I_m$ 上递减，有
+另考虑 $n+1$ 个递增函数 $s_l:J_l\to I_l$、$s_l\triangleq(\phi|_{I_l})^{-1}$（$l=0,\cdots ,n$）与 $n$ 个递减函数 $t_m:\widehat J_m\to\widehat I_m$、$t_m\triangleq(\phi|_{\widehat I_m})^{-1}$（$m=1,\cdots ,n$）。仿照文献~\cite{ref83}，采用如下假设：
 \begin{align*}
-J_0\triangleq (-\infty,\phi(b_1)],\quad J_l\triangleq (\phi(a_l),\phi(b_{l+1})]\ (l=1,\cdots ,n-1),\quad J_n\triangleq (\phi(a_n),\infty),
+&\text{函数 }s_0',\cdots ,s_n',t_1',\cdots ,t_n'\text{ 在 }\mathbb{R}\text{ 的任一开子集上线性无关，}\qquad\text{(C)}
 \end{align*}
-\begin{align*}
-\widehat J_m\triangleq [\phi(a_m),\phi(b_m))\ (m=1,\cdots ,n).
-\end{align*}
-另考虑 $n+1$ 个递增函数 $s_l:J_l\to I_l$、$s_l\triangleq (\phi|_{I_l})^{-1}$（$l=0,\cdots ,n$）与 $n$ 个递减函数 $t_m:\widehat J_m\to\widehat I_m$、$t_m\triangleq (\phi|_{\widehat I_m})^{-1}$（$m=1,\cdots ,n$）。仿照文献~\cite{ref83}，我们用如下假设：
-\begin{align*}
-\text{函数 }s_0',\cdots ,s_n',t_1',\cdots ,t_n'\text{ 在 }\mathbb{R}\text{ 的任一开子集上线性无关。}
-\qquad(C)
-\end{align*}
+其确切含义为：不存在不全为零的常数 $\lambda_0,\cdots ,\lambda_n,\mu_1,\cdots ,\mu_n$ 与非空开集 $U\subseteq\mathbb{R}$，使 $\sum_{l=0}^n\lambda_l s_l'(y)+\sum_{m=1}^n\mu_m t_m'(y)=0$ 对 $y\in U$ 中几乎所有的 $y$ 成立。本节总设 $\phi$ 连续、分段 $C^1$，且在每个分支内部 $\phi'\neq0$，从而 $s_l,t_m$ 为 $C^1$ 且 $s_l'>0$、$t_m'<0$；假设 (C) 中的导数即按此理解。
+
+本节以下把 $s_l$、$t_m$ 连续延拓到整个 $\mathbb{R}$：对 $l=1,\cdots ,n-1$ 令 $s_l(y)\triangleq a_l$（$y\leqslant\phi(a_l)$）、$s_l(y)\triangleq b_{l+1}$（$y>\phi(b_{l+1})$），并令 $s_0(y)\triangleq b_1$（$y>\phi(b_1)$）、$s_n(y)\triangleq a_n$（$y\leqslant\phi(a_n)$）；对 $m=1,\cdots ,n$ 令 $t_m(y)\triangleq a_m$（$y\leqslant\phi(a_m)$）、$t_m(y)\triangleq b_m$（$y\geqslant\phi(b_m)$）。延拓后的函数仍记作 $s_l$、$t_m$，它们分别单调递增、单调递减且连续，并满足 $(\phi\circ s_l)|_{J_l}=\mathrm{id}_{J_l}$、$(\phi\circ t_m)|_{\widehat J_m}=\mathrm{id}_{\widehat J_m}$。这一延拓使表达式 $s_l(w(x,t))$、$t_m(w(x,t))$ 对一切 $(x,t)$ 有意义；当 $w(x,t)\notin J_l$ 时它取端点值，此时相应的权重在\cref{theorem:ch08-测度刻画}中被约定为零。
 
 现陈述如下结果。
 
 \begin{theorem}[极限 Young 测度的显式刻画]\label{theorem:ch08-测度刻画}
-设 $N=1$，$\Omega\equiv(a,b)$，\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立，$\phi$ 改变单调特征的次数有限。设 $(u,\nu)$ 为\cref{theorem:ch08-存在性} 给出的 (P) 的整体 Young 测度值解。则对几乎所有 $(x,t)\in Q_\infty$，
+设 $N=1$，$\Omega\equiv(a,b)\subseteq\mathbb{R}$，$\phi$ 与 $u_0$ 满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d}，$\phi$ 改变单调特征的次数有限（记为 $2n$，$n\in\mathbb{N}$，见\eqref{align:ch08-8.96}），且假设 (C) 成立。设 $(u,\nu)$ 为\cref{theorem:ch08-存在性}给出的问题 (P) 的整体 Young 测度值解，并设 $w\in L^2(0,\infty;H^1(\Omega))\cap L^\infty(Q_\infty)$ 为\eqref{align:ch08-8.45} 中的极限函数。则存在函数 $c_l,d_m\in L^\infty(Q_\infty)$（$l=0,\cdots ,n$；$m=1,\cdots ,n$），使对几乎所有 $(x,t)\in Q_\infty$ 有
 \begin{align}
 \nu_{(x,t)}=\sum_{l=0}^n c_l(x,t)\,\delta_{s_l(w(x,t))}
 +\sum_{m=1}^n d_m(x,t)\,\delta_{t_m(w(x,t))}, \label{align:ch08-8.97}
 \end{align}
-其中 $w\in L^2(0,\infty;H^1(\Omega))\cap L^\infty(Q_\infty)$ 为\eqref{align:ch08-8.45} 中的极限函数。进而 $c_l,d_m\in L^\infty(Q_\infty)$，且对几乎所有 $(x,t)\in Q_\infty$：
+其中 $s_l$、$t_m$ 按前述方式连续延拓，并约定 $w(x,t)\notin J_l$ 时 $c_l(x,t)=0$、$w(x,t)\notin\widehat J_m$ 时 $d_m(x,t)=0$。此外，对几乎所有 $(x,t)\in Q_\infty$ 有：
 \begin{enumerate}[(i)]
-\item\label{item:ch08-char-i} $0\leqslant c_l(x,t)\leqslant1$，$0\leqslant d_m(x,t)\leqslant1$；
+\item\label{item:ch08-char-i} $0\leqslant c_l(x,t)\leqslant1$，$0\leqslant d_m(x,t)\leqslant1$（$l=0,\cdots ,n$；$m=1,\cdots ,n$）；
 \item\label{item:ch08-char-ii} $\sum_{l=0}^n c_l(x,t)+\sum_{m=1}^n d_m(x,t)=1$；
-\item\label{item:ch08-char-iii} 若 $w(x,t)\leqslant A\triangleq \min\{\phi(a_1),\cdots ,\phi(a_n)\}$，则 $c_0(x,t)=1$；若 $w(x,t)\geqslant B\triangleq \max\{\phi(b_1),\cdots ,\phi(b_n)\}$，则 $c_n(x,t)=1$。
+\item\label{item:ch08-char-iii} 若 $w(x,t)\leqslant A\triangleq\min\{\phi(a_1),\cdots ,\phi(a_n)\}$，则 $c_0(x,t)=1$；若 $w(x,t)\geqslant B\triangleq\max\{\phi(b_1),\cdots ,\phi(b_n)\}$，则 $c_n(x,t)=1$。
 \end{enumerate}
 \end{theorem}
 
-\begin{remark}\label{remark:ch08-导数公式}
-在\cref{theorem:ch08-测度刻画} 的假设下，由等式\eqref{align:ch08-8.97} 与\cref{remark:ch08-w等于phi星}，对几乎所有 $(x,t)\in Q_\infty$ 有
+% SUPPLEMENT: parent=theorem:ch08-测度刻画; kind=motivation; location=定理 8.5.1 后的注记; basis=定理 8.5.1 与 (8.96)(8.97) + 各分支原像的分布、supp ν⊆{φ=w} 与 w=φ*、(C) 在 8.5.4(iii) 消元中的位置、以及 φ(y)=y^3-y、ν=δ_{a_1} 在 w=A 处的边界反例
+\begin{remark}\phantomsection\label{remark:ch08-测度刻画}
+\begin{enumerate}[(i)]
+\item 引入动机。$\nu_{(x,t)}$ 记录 $\partial_xu_{\varepsilon_k}$ 的振荡；当 $\phi$ 非单调时，宏观极限 $w$ 只是 $\phi$ 的一个值，而同一值可由多个分支 $I_l$、$\widehat I_m$ 上的原像实现。(8.97) 断言极限测度恰好只在这些原像上承载质量，其权重 $c_l$、$d_m$ 就是各分支被选中的概率。于是关于梯度的全部振荡信息被压缩为至多 $2n+1$ 个待定权重，这是本节后续论证的出发点。
+\item 各项假设的作用。$N=1$ 使 $\phi$ 为标量函数且分支个数有限，从而使原像集 $\{\phi=w\}$ 至多 $2n+1$ 点；\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d} 使最左与最右分支延伸到无穷，保证\eqref{align:ch08-8.96} 是 $\mathbb{R}$ 的分解，并使 $J_0$、$J_n$ 为无界区间；“改变单调特征的次数有限”是原像集有限的前提，否则 (8.97) 的右端应为对某个测度的积分而非有限和。假设 (C) 不在本定理的证明中直接使用，它保证各分支的导数之间没有恒定的线性关系，因而是\cref{lemma:ch08-矩等式}(iii) 中解出未知权重的依据；若去掉 (C)（例如 $\phi$ 的两支弧彼此相似，使 $s_0'$ 与 $t_1'$ 在某个开集上成比例），则\cref{lemma:ch08-矩等式}(iii) 的关系式不足以确定 $\sigma$ 的原子结构，\cref{proposition:ch08-σ为Dirac}的论证随之失效。
+\item 结论的作用。(i) 与 (ii) 表明 $c_l$、$d_m$ 是概率权重；(iii) 表明在阈值 $A$、$B$ 之外只有一个权重非零，即 $\nu_{(x,t)}$ 退化为单原子测度。这三条在\cref{proposition:ch08-σ为Dirac}的证明中把 $\sigma_{(x,t)}$ 逼成 Dirac 测度，并进而给出\eqref{align:ch08-8.101}。
+\item 边界与反例。(iii) 的等号情形需谨慎。取 $\phi(y)=y^3-y$，则 $b_1=-1/\sqrt3$、$a_1=1/\sqrt3$、$A=\phi(a_1)=-2/(3\sqrt3)$；取与 $(x,t)$ 无关的 $\nu_{(x,t)}=\delta_{a_1}$，则 $w=\phi(a_1)=A$、$c_0=0$、$d_1=1$，故 (iii) 中 $w\leqslant A$ 的等号不能仅由 (8.97) 与 (i)(ii) 推出。补证中的论证对 $w<A$ 与 $w>B$ 成立；等号情形需附加“$A$（相应地 $B$）不在其它分支的端点处被取到”之类的非退化条件。此外，若 $\phi$ 有无穷多次单调性改变，则原像集为无限集，(8.97) 的有限和须换成对某个测度的积分，(iii) 的形式亦随之改变。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch08-导数公式}
+在\cref{theorem:ch08-测度刻画}的假设下，由等式\eqref{align:ch08-8.97} 与\cref{remark:ch08-w等于phi星}，对几乎所有 $(x,t)\in Q_\infty$ 有
 \begin{align*}
 \partial_x u(x,t)=\sum_{l=0}^n c_l(x,t)\,s_l(\phi^*(x,t))+\sum_{m=1}^n d_m(x,t)\,t_m(\phi^*(x,t)).
 \end{align*}
+事实上，由\eqref{align:ch08-8.4}（$N=1$）有 $\partial_xu(x,t)=\int_{\mathbb{R}}y\,\mathrm{d}\nu_{(x,t)}(y)$；把\eqref{align:ch08-8.97} 代入并对每个原子取 $y=s_l(w(x,t))$、$y=t_m(w(x,t))$，再用 $\phi^*=w$（见\cref{remark:ch08-w等于phi星}）即得。
 \end{remark}
 
-为论证\cref{theorem:ch08-测度刻画}，仿照\cref{theorem:ch6-正则化} 之证明思路。设 $(u,\nu)$ 为\cref{theorem:ch08-存在性} 给出的整体 Young 测度值解，$\{u_{\epsilon_k}\}$ 为构造它所用的序列。由于族 $\{\phi(v_\epsilon)\}$（$v_\epsilon\triangleq \partial_x u_\epsilon$）在 $L^\infty(Q_\infty)$ 中有界（见\eqref{align:ch08-8.26}），由\cref{proposition:ch05-弱收敛} 与对角论证，存在序列 $\{\phi(v_{\epsilon_k})\}$ 与 Young 测度 $\tau\in\mathcal{Y}^+(Q_\infty;\mathbb{R})$，使对所有 $T\in(0,\infty)$ 与 $f\in C_c(\mathbb{R})$，
+为论证\cref{theorem:ch08-测度刻画}，仿照\cref{theorem:ch6-正则化}的证明思路。设 $(u,\nu)$ 为\cref{theorem:ch08-存在性}给出的整体 Young 测度值解，$\{u_{\varepsilon_k}\}$ 为构造它所用的序列，并记 $v_\varepsilon\triangleq\partial_xu_\varepsilon$。由于族 $\{\phi(v_\varepsilon)\}$ 在 $L^\infty(Q_\infty)$ 中有界（见\eqref{align:ch08-8.26}），由\cref{proposition:ch05-弱收敛}与对角论证，存在序列 $\{\phi(v_{\varepsilon_k})\}$ 与 Young 测度 $\tau\in\mathcal{Y}^+(Q_\infty;\mathbb{R})$，使对所有 $T\in(0,\infty)$ 与所有 $f\in C_c(\mathbb{R})$ 有
 \begin{align}
-f(\phi(v_{\epsilon_k}))\rightharpoonup f^*\ \text{在 }L^1(Q_T),\qquad
-f^*(x,t)\triangleq \int_{\mathbb{R}}f(y)\,\mathrm{d}\tau_{(x,t)}(y). \label{align:ch08-8.98}
+f(\phi(v_{\varepsilon_k}))\rightharpoonup f^*\quad\text{在 }L^1(Q_T),\qquad
+f^*(x,t)\triangleq\int_{\mathbb{R}}f(y)\,\mathrm{d}\tau_{(x,t)}(y). \label{align:ch08-8.98}
 \end{align}
-另一方面，对每个 $f\in C_c(\mathbb{R})$，序列 $\{f(\phi(v_{\epsilon_k}))\}$ 在 $L^1(Q)$ 中有界且一致可积，因而（可能抽子列，不重新标号）由\cref{proposition:ch05-弱收敛} 得
+另一方面，对每个 $f\in C_c(\mathbb{R})$，序列 $\{f(\phi(v_{\varepsilon_k}))\}$ 在 $L^1(Q)$ 中有界且一致可积，故（必要时抽取子列，不重新标号）由\cref{proposition:ch05-弱收敛}得
 \begin{align}
-f(\phi(v_{\epsilon_k}))\rightharpoonup(f\circ\phi)^*\ \text{在 }L^1(Q_T),\qquad
-(f\circ\phi)^*(x,t)\triangleq \int_{\mathbb{R}}f(\phi(y))\,\mathrm{d}\nu_{(x,t)}(y). \label{align:ch08-8.99}
+f(\phi(v_{\varepsilon_k}))\rightharpoonup(f\circ\phi)^*\quad\text{在 }L^1(Q_T),\qquad
+(f\circ\phi)^*(x,t)\triangleq\int_{\mathbb{R}}f(\phi(y))\,\mathrm{d}\nu_{(x,t)}(y). \label{align:ch08-8.99}
 \end{align}
 由等式\eqref{align:ch08-8.98}--\eqref{align:ch08-8.99} 有
 \begin{align}
 \tau_{(x,t)}=(\nu_{(x,t)})_\phi\quad\text{对几乎所有 }(x,t)\in Q_\infty, \label{align:ch08-8.100}
 \end{align}
-即 $\tau_{(x,t)}$ 为 $(\nu_{(x,t)})$ 在 $\phi$ 下的像测度。
+即 $\tau_{(x,t)}$ 为 $\nu_{(x,t)}$ 在 $\phi$ 下的像测度（见\cref{definition:ch02-像测度}）。
+
+以下诸陈述中，“满足\cref{theorem:ch08-测度刻画}的假设”均指：$N=1$，$\Omega\equiv(a,b)\subseteq\mathbb{R}$，$\phi$ 与 $u_0$ 满足\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d}，$\phi$ 改变单调特征的次数为有限的 $2n$（$n\in\mathbb{N}$），且假设 (C) 成立。
 
 \begin{theorem}[$\tau$ 为 Dirac 测度]\label{theorem:ch08-τ为Dirac}
-设\cref{theorem:ch08-测度刻画} 的假设满足。设 $\tau\in\mathcal{Y}^+(Q_\infty;\mathbb{R})$ 为\eqref{align:ch08-8.98} 中的 Young 测度。则
+设\cref{theorem:ch08-测度刻画}的假设满足。设 $\tau\in\mathcal{Y}^+(Q_\infty;\mathbb{R})$ 为\eqref{align:ch08-8.98} 中的 Young 测度。则
 \begin{align}
 \tau_{(x,t)}=\delta_{w(x,t)}\quad\text{对几乎所有 }(x,t)\in Q_\infty. \label{align:ch08-8.101}
 \end{align}
 \end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch08-τ为Dirac; kind=motivation; location=定理 8.5.2 后的注记; basis=定理 8.5.2 与 (8.98)(8.100)(8.105) + τ 作为 φ(梯度) 的振荡测度、原像集有限性的作用、N≥2 时 ν 可非 Dirac 的边界
+\begin{remark}\phantomsection\label{remark:ch08-τ为Dirac}
+\begin{enumerate}[(i)]
+\item 引入动机。$\tau$ 是序列 $\{\phi(v_{\varepsilon_k})\}$ 的 Young 测度，即非线性量 $\phi(\partial_xu_{\varepsilon_k})$ 的振荡的统计描述。定理断言在 $N=1$、$\phi$ 分段单调且假设 (C) 成立时这种振荡完全消失：$\tau_{(x,t)}$ 为 Dirac 测度，等价于 $\phi(v_{\varepsilon_k})$ 在 $L^1$ 意义下强收敛于 $w$。于是“梯度的振荡”被完全归结为\cref{theorem:ch08-测度刻画}中权重的分支选择自由度。
+\item 各项假设的作用。$N=1$ 与\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 通过\cref{theorem:ch08-存在性}提供 $(u,\nu)$ 与序列 $\{u_{\varepsilon_k}\}$；有限次单调性使 $\phi$ 的每个纤维至多含 $2n+1$ 点，从而 $\tau$ 的支撑至多 $2n+1$ 点；假设 (C) 经\cref{proposition:ch08-σ为Dirac}进入。若 $\phi$ 改变单调特征的次数无限，纤维可为无限集，$\tau$ 可以是任意的概率测度，结论不成立。
+\item 结论的作用。与\eqref{align:ch08-8.100}（$\tau=(\nu)_\phi$）合起来，\eqref{align:ch08-8.101} 给出 $\operatorname{supp}\nu_{(x,t)}\subseteq\{\phi=w(x,t)\}$。这正是\cref{theorem:ch08-测度刻画}的证明中把 $f(\phi(v_{\varepsilon_k}))$ 的极限识别为 $f(w)$ 的依据（见\eqref{align:ch08-8.111}）。
+\item 边界与反例。结论只对 $N=1$ 陈述。$N\geqslant2$ 时 $\phi:\mathbb{R}^N\to\mathbb{R}^N$ 非单调，纤维 $\{\phi=w\}$ 一般是曲面，$\nu$ 完全可以非 Dirac（例如\hyperref[remark:ch08-Young测度值解]{注记}中 $\phi(y)\equiv y$、$\bar\nu=\frac12(\delta_{-1}+\delta_1)$ 的例子）。此外，若把\eqref{align:ch08-8.1c} 减弱为 $\phi$ 无强制性，则 $J_n$ 不再无界，\eqref{align:ch08-8.96} 的分解与\eqref{align:ch08-8.97} 的项数都要改变。
+\end{enumerate}
+\end{remark}
 
 对几乎所有 $(x,t)\in Q_\infty$ 与所有 $l=0,\cdots ,n$、$m=1,\cdots ,n$，令
 \begin{align}
@@ -93,188 +116,302 @@ f(\phi(v_{\epsilon_k}))\rightharpoonup(f\circ\phi)^*\ \text{在 }L^1(Q_T),\qquad
 \widehat\sigma^m_{(x,t)}\triangleq (\nu_{(x,t)})_{\phi|_{\widehat I_m}}, \label{align:ch08-8.102a}\\
 \sigma_{(x,t)}\triangleq \sum_{l=0}^n\sigma^l_{(x,t)}+\sum_{m=1}^n\widehat\sigma^m_{(x,t)}. \label{align:ch08-8.102b}
 \end{align}
-显然，对任意如上的 $(x,t)$ 与 $l,m$，有
+其中 $\sigma^l_{(x,t)}$ 为 $\nu_{(x,t)}$ 在 $I_l$ 上的限制在 $\phi|_{I_l}$ 下的像测度（见\cref{definition:ch02-像测度}），即对每个 Borel 集 $B\subseteq J_l$ 有 $\sigma^l_{(x,t)}(B)=\nu_{(x,t)}(I_l\cap\phi^{-1}(B))$；$\widehat\sigma^m_{(x,t)}$ 类似，其对每个 Borel 集 $B\subseteq\widehat J_m$ 满足 $\widehat\sigma^m_{(x,t)}(B)=\nu_{(x,t)}(\widehat I_m\cap\phi^{-1}(B))$。
+
+由像测度的定义，对任意如上的 $(x,t)$ 与 $l,m$，有
 \begin{align}
 \operatorname{supp}\sigma^l_{(x,t)}\subseteq J_l,\quad
 \operatorname{supp}\widehat\sigma^m_{(x,t)}\subseteq\widehat J_m,\quad
 \operatorname{supp}\sigma_{(x,t)}\subseteq\phi(\mathbb{R})=\mathbb{R}. \label{align:ch08-8.103}
 \end{align}
+其中 $\phi(\mathbb{R})=\mathbb{R}$ 由 $\phi$ 连续与\eqref{align:ch08-8.1c}--\eqref{align:ch08-8.1d} 得到：$y\to\pm\infty$ 时 $\phi(y)\to\pm\infty$。
+
 由\eqref{align:ch08-8.102a}，对每个 $f\in C(\mathbb{R})$ 有
 \begin{align}
 \int_{J_l}f(y)\,\mathrm{d}\sigma^l_{(x,t)}(y)=\int_{I_l}(f\circ\phi)(y)\,\mathrm{d}\nu_{(x,t)}(y), \label{align:ch08-8.104a}\\
 \int_{\widehat J_m}f(y)\,\mathrm{d}\widehat\sigma^m_{(x,t)}(y)=\int_{\widehat I_m}(f\circ\phi)(y)\,\mathrm{d}\nu_{(x,t)}(y). \label{align:ch08-8.104b}
 \end{align}
-由\eqref{align:ch08-8.104a} 与\eqref{align:ch08-8.102b} 显然 $\sigma_{(x,t)}\in\mathcal{P}(\mathbb{R})$。
+由\eqref{align:ch08-8.104a}--\eqref{align:ch08-8.104b} 与\eqref{align:ch08-8.102b} 得 $\sigma_{(x,t)}\in\mathcal{P}(\mathbb{R})$：因 $\sigma^l_{(x,t)}(J_l)=\nu_{(x,t)}(I_l)$、$\widehat\sigma^m_{(x,t)}(\widehat J_m)=\nu_{(x,t)}(\widehat I_m)$，而\eqref{align:ch08-8.96} 给出
+\begin{align*}
+\sigma_{(x,t)}(\mathbb{R})=\sum_{l=0}^n\nu_{(x,t)}(I_l)+\sum_{m=1}^n\nu_{(x,t)}(\widehat I_m)=\nu_{(x,t)}(\mathbb{R})=1.
+\end{align*}
 
-由等式\eqref{align:ch08-8.100}，\cref{theorem:ch08-τ为Dirac} 是如下命题的直接推论。
+由等式\eqref{align:ch08-8.100}，\cref{theorem:ch08-τ为Dirac}是如下命题的直接推论。
 
 \begin{proposition}[$\sigma$ 为 Dirac 测度]\label{proposition:ch08-σ为Dirac}
-设\cref{theorem:ch08-测度刻画} 的假设满足。则对几乎所有 $(x,t)\in Q_\infty$，
+设\cref{theorem:ch08-测度刻画}的假设满足。则对几乎所有 $(x,t)\in Q_\infty$，
 \begin{align}
 \sigma_{(x,t)}=(\nu_{(x,t)})_\phi,\qquad \sigma_{(x,t)}=\delta_{w(x,t)}. \label{align:ch08-8.105}
 \end{align}
 \end{proposition}
 
-\begin{remark}\label{remark:ch08-σ第一等式}
-\eqref{align:ch08-8.105} 中第一个等式易证。事实上，由\eqref{align:ch08-8.96} 与\eqref{align:ch08-8.104a}，对所有 $f\in C(\mathbb{R})$ 与几乎所有 $(x,t)\in Q_\infty$，
+% SUPPLEMENT: parent=proposition:ch08-σ为Dirac; kind=motivation; location=命题 8.5.3 后的注记; basis=命题 8.5.3 与 (8.102)--(8.105) + σ 作为各分支像测度之和的含义、两个等式各自的难度、(C) 与 σ(K)>0 的作用、以及 N≥2 时一维区间论证失效的边界
+\begin{remark}\phantomsection\label{remark:ch08-σ为Dirac}
+\begin{enumerate}[(i)]
+\item 引入动机。$\sigma_{(x,t)}$ 是把 $\nu_{(x,t)}$ 沿各单调分支“压平”到 $\phi$ 的值域后得到的测度，它只记录 $\phi$ 的值的分布而不区分原像所在的分支。\eqref{align:ch08-8.100} 已把它与 $\tau_{(x,t)}$ 等同，故\eqref{align:ch08-8.105} 的第二个等式正是\cref{theorem:ch08-τ为Dirac}的全部内容。
+\item 两个等式的作用。第一个等式是分支分解的可加性：把 $\int_{\mathbb{R}}(f\circ\phi)\,\mathrm{d}\nu$ 按\eqref{align:ch08-8.96} 拆成 $2n+1$ 项、再逐项用\eqref{align:ch08-8.104a}--\eqref{align:ch08-8.104b} 换成分支像测度上的积分即得（见\cref{remark:ch08-σ第一等式}）。第二个等式是困难所在：它等价于“$\sigma_{(x,t)}$ 在每个区间 $(-\infty,A]$、$[B,\infty)$ 与 $E_k$ 上至多有一个原子”，其证明依赖\cref{lemma:ch08-矩等式}中的矩关系。
+\item 各项假设的作用。$N=1$ 使 $J_l$、$\widehat J_m$ 为一维区间，从而“支撑为单点”可由累积函数刻画；有限次单调性使 $\sigma$ 只有 $2n+1$ 个分支像测度，故\cref{proposition:ch08-σ为Dirac}的证明只需在有限个区间上逐一排除多原子；假设 (C) 保证\cref{lemma:ch08-矩等式}(iii) 的线性关系可解，因而是第二个等式的关键。\cref{lemma:ch08-矩等式}中 $\sigma_{(x,t)}(K)>0$ 的非退化条件使 $1/\sigma_{(x,t)}(K)$ 有意义，从而条件化后的测度仍是概率测度。
+\item 边界与反例。若 $\sigma_{(x,t)}(K)=0$，则\eqref{align:ch08-8.113}、\eqref{align:ch08-8.114} 两端同时为零而不提供信息，故\cref{proposition:ch08-σ为Dirac}的证明必须对支撑内的紧集 $K$ 取极限。若 $N\geqslant2$，则 $\phi$ 的纤维是高维曲面，“区间 $E_k$ 上至多一个原子”的论证整体失效，此时极限 Young 测度一般不是 Dirac 测度（见\hyperref[remark:ch08-Young测度值解]{注记}）。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch08-σ第一等式}
+\eqref{align:ch08-8.105} 中第一个等式可直接验证。事实上，由\eqref{align:ch08-8.96} 与\eqref{align:ch08-8.104a}--\eqref{align:ch08-8.104b}，对所有 $f\in C(\mathbb{R})$ 与几乎所有 $(x,t)\in Q_\infty$ 有
 \begin{align*}
 \int_{\mathbb{R}}(f\circ\phi)(y)\,\mathrm{d}\nu_{(x,t)}(y)
-&=\sum_{l=0}^n\int_{I_l}(f\circ\phi)(y)\,\mathrm{d}\nu_{(x,t)}(y)+\sum_{m=1}^n\int_{\widehat I_m}(f\circ\phi)(y)\,\mathrm{d}\nu_{(x,t)}(y)\\
-&=\sum_{l=0}^n\int_{J_l}f(y)\,\mathrm{d}\sigma^l_{(x,t)}(y)+\sum_{m=1}^n\int_{\mathbb{R}}f(y)\,\mathrm{d}\widehat\sigma^m_{(x,t)}(y)
-=\int_{\phi(\mathbb{R})}f(y)\,\mathrm{d}\sigma_{(x,t)}(y),
+&=\sum_{l=0}^n\int_{I_l}(f\circ\phi)(y)\,\mathrm{d}\nu_{(x,t)}(y)
++\sum_{m=1}^n\int_{\widehat I_m}(f\circ\phi)(y)\,\mathrm{d}\nu_{(x,t)}(y)\\
+&=\sum_{l=0}^n\int_{J_l}f(y)\,\mathrm{d}\sigma^l_{(x,t)}(y)
++\sum_{m=1}^n\int_{\widehat J_m}f(y)\,\mathrm{d}\widehat\sigma^m_{(x,t)}(y)\\
+&=\int_{\phi(\mathbb{R})}f(y)\,\mathrm{d}\sigma_{(x,t)}(y),
 \end{align*}
-结论即得。
+其中最后一个等号用到 $\operatorname{supp}\sigma^l_{(x,t)}\subseteq J_l$、$\operatorname{supp}\widehat\sigma^m_{(x,t)}\subseteq\widehat J_m$（见\eqref{align:ch08-8.103}）与\eqref{align:ch08-8.102b}。由 $f$ 的任意性即得 $(\nu_{(x,t)})_\phi=\sigma_{(x,t)}$。
 \end{remark}
+
+% SUPPLEMENT: parent=theorem:ch08-τ为Dirac; kind=proof; location=注记 8.5.2 后的补证; basis=由 (8.100) 与 (8.105) 的两步传递 τ=(ν)φ=σ=δ_w、以及把两个零测集取并的核对
+\begin{proof}[补证：\cref{theorem:ch08-τ为Dirac}]
+由\eqref{align:ch08-8.100}，存在零测集 $N_1\subseteq Q_\infty$，使 $(x,t)\notin N_1$ 时 $\tau_{(x,t)}=(\nu_{(x,t)})_\phi$。由\eqref{align:ch08-8.105} 中第一个等式（其内容即\cref{remark:ch08-σ第一等式}）有 $(\nu_{(x,t)})_\phi=\sigma_{(x,t)}$；由\eqref{align:ch08-8.105} 中第二个等式，存在零测集 $N_2\subseteq Q_\infty$，使 $(x,t)\notin N_2$ 时 $\sigma_{(x,t)}=\delta_{w(x,t)}$。取 $N\triangleq N_1\cup N_2$，则 $(x,t)\notin N$ 时
+\begin{align*}
+\tau_{(x,t)}=(\nu_{(x,t)})_\phi=\sigma_{(x,t)}=\delta_{w(x,t)},
+\end{align*}
+此即\eqref{align:ch08-8.101}。
+\end{proof}
 
 借助\cref{theorem:ch08-τ为Dirac}，可证\cref{theorem:ch08-测度刻画}。
 
-\begin{proof}[\cref{theorem:ch08-测度刻画} 的证明]
-设 $\{\epsilon_k\}$ 为使\cref{proposition:ch08-收敛N1} 与\eqref{align:ch08-8.45} 的收敛成立的指标序列。对 $k\in\mathbb{N}$，令
+\begin{proof}[\cref{theorem:ch08-测度刻画}的证明]
+设 $\{\varepsilon_k\}$ 为使\cref{proposition:ch08-收敛N1}与\eqref{align:ch08-8.45} 的收敛成立的指标序列。对 $k\in\mathbb{N}$ 令
 \begin{align*}
-Q_{k,l}\triangleq \{(x,t)\in Q_\infty\mid v_{\epsilon_k}(x,t)\in I_l\}\quad(l=0,\cdots ,n),
+Q_{k,l}\triangleq \{(x,t)\in Q_\infty\mid v_{\varepsilon_k}(x,t)\in I_l\}\quad(l=0,\cdots ,n),
 \end{align*}
 \begin{align*}
-Q_{k,m}\triangleq \{(x,t)\in Q_\infty\mid v_{\epsilon_k}(x,t)\in\widehat I_m\}\quad(m=1,\cdots ,n).
+Q_{k,m}\triangleq \{(x,t)\in Q_\infty\mid v_{\varepsilon_k}(x,t)\in\widehat I_m\}\quad(m=1,\cdots ,n).
 \end{align*}
-显然，在 $Q_\infty$ 中几乎处处对所有 $f\in C(\mathbb{R})$ 有
+由\eqref{align:ch08-8.96}，诸集合 $Q_{k,l}$、$Q_{k,m}$ 两两不交且并集为 $Q_\infty$；在 $Q_{k,l}$ 上 $v_{\varepsilon_k}\in I_l$，故 $(s_l\circ\phi)(v_{\varepsilon_k})=v_{\varepsilon_k}$，在 $Q_{k,m}$ 上同样 $(t_m\circ\phi)(v_{\varepsilon_k})=v_{\varepsilon_k}$。于是对几乎所有 $(x,t)\in Q_\infty$ 与所有 $f\in C(\mathbb{R})$ 有
 \begin{align}
-f(v_{\epsilon_k})=\sum_{l=0}^n\chi_{Q_{k,l}}f((s_l\circ\phi)(v_{\epsilon_k}))
-+\sum_{m=1}^n\chi_{Q_{k,m}}f((t_m\circ\phi)(v_{\epsilon_k})). \label{align:ch08-8.106}
+f(v_{\varepsilon_k})=\sum_{l=0}^n\chi_{Q_{k,l}}f((s_l\circ\phi)(v_{\varepsilon_k}))
++\sum_{m=1}^n\chi_{Q_{k,m}}f((t_m\circ\phi)(v_{\varepsilon_k})). \label{align:ch08-8.106}
 \end{align}
-对任意固定的 $l,m\in\mathbb{N}$，序列 $\{\chi_{Q_{k,l}}\}$ 与 $\{\chi_{Q_{k,m}}\}$ 在 $L^\infty(Q_\infty)$ 中有界。于是存在二者的子列（为简便不重新标号）与 $c_l,d_m\in L^\infty(Q_\infty)$，使对所有 $T\in(0,\infty)$，
+
+对任意固定的 $l,m\in\mathbb{N}$，序列 $\{\chi_{Q_{k,l}}\}$ 与 $\{\chi_{Q_{k,m}}\}$ 在 $L^\infty(Q_\infty)$ 中有界。于是存在二者的子列（为简便不重新标号）与 $c_l,d_m\in L^\infty(Q_\infty)$，使对所有 $T\in(0,\infty)$ 有
 \begin{align}
 \chi_{Q_{k,l}}\stackrel{*}{\rightharpoonup}c_l,\quad
 \chi_{Q_{k,m}}\stackrel{*}{\rightharpoonup}d_m\ \text{在 }L^\infty(Q_T). \label{align:ch08-8.107}
 \end{align}
-易见函数 $c_l,d_m$（$l=0,\cdots ,n$；$m=1,\cdots ,n$）具有所述性质。
+函数 $c_l,d_m$（$l=0,\cdots ,n$；$m=1,\cdots ,n$）具有定理所述性质，其验证见补证。
 
-我们证明，对所有 $l=0,\cdots ,n$ 与 $m=1,\cdots ,n$，在 $L^\infty(Q_T)$（$T\in(0,\infty)$）中有
+下面证明，对所有 $l=0,\cdots ,n$ 与 $m=1,\cdots ,n$，在 $L^\infty(Q_T)$（$T\in(0,\infty)$）中有
 \begin{align}
-\chi_{Q_{k,l}}f((s_l\circ\phi)(v_{\epsilon_k}))\stackrel{*}{\rightharpoonup}c_l\,f(s_l(w)), \label{align:ch08-8.108a}\\
-\chi_{Q_{k,m}}f((t_m\circ\phi)(v_{\epsilon_k}))\stackrel{*}{\rightharpoonup}d_m\,f(t_m(w)). \label{align:ch08-8.108b}
+\chi_{Q_{k,l}}f((s_l\circ\phi)(v_{\varepsilon_k}))\stackrel{*}{\rightharpoonup}c_l\,f(s_l(w)), \label{align:ch08-8.108a}\\
+\chi_{Q_{k,m}}f((t_m\circ\phi)(v_{\varepsilon_k}))\stackrel{*}{\rightharpoonup}d_m\,f(t_m(w)). \label{align:ch08-8.108b}
 \end{align}
-另一方面，由于由\eqref{align:ch08-8.25} 族 $\{v_\epsilon\}$ 在 $L^\infty(Q_\infty)$ 中有界因而有界且一致可积，由\cref{proposition:ch05-弱收敛} 对所有 $T\in(0,\infty)$ 有 $f(v_{\epsilon_k})\rightharpoonup f^*\triangleq \int_{\mathbb{R}}f(y)\,\mathrm{d}\nu(y)$ 在 $L^1(Q_T)$。于是在\eqref{align:ch08-8.106} 中令 $k\to\infty$ 并用\eqref{align:ch08-8.108a}，得
+另一方面，由\eqref{align:ch08-8.25} 族 $\{v_\varepsilon\}$ 在 $L^\infty(Q_\infty)$ 中有界，因而有界且一致可积；故由\cref{proposition:ch05-弱收敛}，对所有 $T\in(0,\infty)$ 有 $f(v_{\varepsilon_k})\rightharpoonup f^*\triangleq\int_{\mathbb{R}}f(y)\,\mathrm{d}\nu(y)$ 在 $L^1(Q_T)$ 中。于是在\eqref{align:ch08-8.106} 中令 $k\to\infty$ 并用\eqref{align:ch08-8.108a}--\eqref{align:ch08-8.108b}，得
 \begin{align*}
 \int_{\mathbb{R}}f(y)\,\mathrm{d}\nu_{(x,t)}(y)
 =\sum_{l=0}^n c_l\,f(s_l(w))+\sum_{m=1}^n d_m\,f(t_m(w))\quad\text{在 }Q_T\text{ 中几乎处处},
 \end{align*}
 由 $f$ 的任意性即得等式\eqref{align:ch08-8.97}。
 
-只证\eqref{align:ch08-8.108a}，因\eqref{align:ch08-8.108b} 的证明类似。对任意 $\zeta\in L^1(Q_T)$（$T\in(0,\infty)$），有
+只证\eqref{align:ch08-8.108a}，\eqref{align:ch08-8.108b} 的证明与之相同。对任意 $\zeta\in L^1(Q_T)$（$T\in(0,\infty)$）有
 \begin{align}
 \begin{aligned}
-&\iint_{Q_T}[\chi_{Q_{k,l}}f((s_l\circ\phi)(v_{\epsilon_k}))-c_l f(s_l(w))]\zeta\,\mathrm{d}x\,\mathrm{d}t\\
-&\qquad=\iint_{Q_T}(\chi_{Q_{k,l}}-c_l)f(s_l(w))\zeta\,\mathrm{d}x\,\mathrm{d}t
-+\iint_{Q_T}\chi_{Q_{k,l}}[f((s_l\circ\phi)(v_{\epsilon_k}))-f(s_l(w))]\zeta\,\mathrm{d}x\,\mathrm{d}t.
-\end{aligned} \label{align:ch08-8.109}
+&\iint_{Q_T}[\chi_{Q_{k,l}}f((s_l\circ\phi)(v_{\varepsilon_k}))-c_l f(s_l(w))]\zeta\,\mathrm{d}x\,\mathrm{d}t\\
+&\qquad=\iint_{Q_T}(\chi_{Q_{k,l}}-c_l)f(s_l(w))\zeta\,\mathrm{d}x\,\mathrm{d}t\\
+&\qquad\qquad+\iint_{Q_T}\chi_{Q_{k,l}}[f((s_l\circ\phi)(v_{\varepsilon_k}))-f(s_l(w))]\zeta\,\mathrm{d}x\,\mathrm{d}t.
+\end{aligned} 
+\label{align:ch08-8.109}
 \end{align}
-由于 $w\in L^\infty(Q_T)$ 且 $f\circ s_l$ 连续，$f(s_l(w))\in L^\infty(Q_T)$。由\eqref{align:ch08-8.107} 中第一个收敛，
+由于 $w\in L^\infty(Q_T)$ 且 $f\circ s_l$ 连续，$f(s_l(w))\in L^\infty(Q_T)$。于是由\eqref{align:ch08-8.107} 中第一个收敛得
 \begin{align}
 \lim_{k\to\infty}\iint_{Q_T}(\chi_{Q_{k,l}}-c_l)f(s_l(w))\zeta\,\mathrm{d}x\,\mathrm{d}t=0. \label{align:ch08-8.110}
 \end{align}
-至于\eqref{align:ch08-8.109} 右端第二个积分，注意由等式\eqref{align:ch08-8.101} 与\cref{proposition:ch05-几乎处处收敛} 有 $\phi(v_{\epsilon_k})\to w$，因而（至多差一个子列）$f((s_l\circ\phi)(v_{\epsilon_k}))\to f(s_l(w))$ 在 $Q_\infty$ 中几乎处处。由控制收敛定理，
+至于\eqref{align:ch08-8.109} 右端的第二个积分，由等式\eqref{align:ch08-8.101} 与\cref{proposition:ch05-几乎处处收敛}有 $\phi(v_{\varepsilon_k})\to w$，因而（至多差一个子列）$f((s_l\circ\phi)(v_{\varepsilon_k}))\to f(s_l(w))$ 在 $Q_\infty$ 中几乎处处成立。由控制收敛定理得
 \begin{align}
-\lim_{k\to\infty}\iint_{Q_T}\chi_{Q_{k,l}}[f((s_l\circ\phi)(v_{\epsilon_k}))-f(s_l(w))]\zeta\,\mathrm{d}x\,\mathrm{d}t=0. \label{align:ch08-8.111}
+\lim_{k\to\infty}\iint_{Q_T}\chi_{Q_{k,l}}[f((s_l\circ\phi)(v_{\varepsilon_k}))-f(s_l(w))]\zeta\,\mathrm{d}x\,\mathrm{d}t=0. \label{align:ch08-8.111}
 \end{align}
 由\eqref{align:ch08-8.109}--\eqref{align:ch08-8.111} 得\eqref{align:ch08-8.108a} 中的收敛。证毕。
 \end{proof}
 
-还需证\cref{proposition:ch08-σ为Dirac}。由\cref{remark:ch08-σ第一等式} 只需证\eqref{align:ch08-8.105} 中第二个等式。我们概述证明，细节见文献~\cite{ref30}。
+% SUPPLEMENT: parent=theorem:ch08-测度刻画; kind=proof; location=定理 8.5.1 的证明后的补证; basis=补出 (8.106) 的分片恒等式、(8.107) 的弱*抽取与对角线合并、c_l 与 d_m 的三条性质（原书以 easily seen 带过）、由 (8.108) 取极限得 (8.97) 时对 f 取可数稠密子集、以及 f∘s_l 的连续延拓在 (8.110) 与 (8.111) 中的作用
+\begin{proof}[补证：\cref{theorem:ch08-测度刻画}证明中省略的细节]
+\begin{enumerate}[(i)]
+\item 关于\eqref{align:ch08-8.106}。由\eqref{align:ch08-8.96}，对每个 $(x,t)\in Q_\infty$ 恰有唯一指标 $l\in\{0,\cdots ,n\}$ 或 $m\in\{1,\cdots ,n\}$ 使 $v_{\varepsilon_k}(x,t)$ 属于相应的区间（分点 $b_l$、$a_l$ 处的归属由这些区间的半开半闭取法唯一确定）。若 $v_{\varepsilon_k}\in I_l$，则 $s_l(\phi(v_{\varepsilon_k}))=v_{\varepsilon_k}$，故 $f(v_{\varepsilon_k})=f((s_l\circ\phi)(v_{\varepsilon_k}))$，且该点处其余各项的示性函数为零；若 $v_{\varepsilon_k}\in\widehat I_m$，则同样有 $f(v_{\varepsilon_k})=f((t_m\circ\phi)(v_{\varepsilon_k}))$。逐点相加即得\eqref{align:ch08-8.106}。
+\item 关于\eqref{align:ch08-8.107} 与 $c_l,d_m$ 的构造。对每个 $T\in(0,\infty)$，序列 $\{\chi_{Q_{k,l}}\}$ 在 $L^\infty(Q_T)$ 中有界（取值于 $\{0,1\}$），而 $L^\infty(Q_T)$ 是 $L^1(Q_T)$ 的对偶空间，故由弱*紧性存在子列与 $c_{l,T}\in L^\infty(Q_T)$ 使其弱*收敛。对 $T=1,2,\cdots$ 逐次抽取子列并取对角线，得单一子列（仍记作 $\{\chi_{Q_{k,l}}\}$）与 $c_l\in L^\infty(Q_\infty)$，使\eqref{align:ch08-8.107} 对每个 $T$ 成立；$c_l$ 在 $Q_T$ 上的限制由弱*极限的唯一性确定，故不同 $T$ 所得的极限彼此相容。对 $\{\chi_{Q_{k,m}}\}$ 同样处理得 $d_m$。由于只有 $2n+1$ 个序列，上述抽取可合并为一次对角线抽取。
+\item 关于 $c_l,d_m$ 的性质 (i)。由 $0\leqslant\chi_{Q_{k,l}}\leqslant1$ 得 $0\leqslant c_l\leqslant1$：对任意非负 $\zeta\in L^1(Q_T)$ 有
+\begin{align*}
+0\leqslant\iint_{Q_T}c_l\zeta\,\mathrm{d}x\,\mathrm{d}t=\lim_{k\to\infty}\iint_{Q_T}\chi_{Q_{k,l}}\zeta\,\mathrm{d}x\,\mathrm{d}t\leqslant\iint_{Q_T}\zeta\,\mathrm{d}x\,\mathrm{d}t.
+\end{align*}
+$d_m$ 的情形相同。
+\item 关于性质 (ii)。在\eqref{align:ch08-8.106} 中取 $f\equiv1$，得 $\sum_l\chi_{Q_{k,l}}+\sum_m\chi_{Q_{k,m}}=1$ 在 $Q_\infty$ 中几乎处处成立（诸 $Q_{k,l}$、$Q_{k,m}$ 构成分解）。在 $L^\infty(Q_T)$ 中取弱*极限即得 $\sum_lc_l+\sum_md_m=1$。
+\item 关于性质 (iii)。由\eqref{align:ch08-8.101}（即 $(\nu_{(x,t)})_\phi=\delta_{w(x,t)}$）得
+\begin{align*}
+\operatorname{supp}\nu_{(x,t)}\subseteq\phi^{-1}(w(x,t))=\{y\in\mathbb{R}\mid\phi(y)=w(x,t)\}.
+\end{align*}
+设 $w(x,t)<A$。对 $y\in I_l$（$l\geqslant1$）有 $\phi(y)>\phi(a_l)\geqslant A>w(x,t)$，对 $y\in\widehat I_m$ 有 $\phi(y)\geqslant\phi(a_m)\geqslant A>w(x,t)$，故 $\{\phi=w(x,t)\}\subseteq I_0$，从而 $\nu_{(x,t)}(I_0)=1$。另一方面，$w(x,t)<A\leqslant\phi(a_l)$ 给出 $w(x,t)\notin J_l$（$l\geqslant1$）与 $w(x,t)\notin\widehat J_m$（因 $w(x,t)<\phi(a_m)$），故按定理中的约定\eqref{align:ch08-8.97} 的右端只剩 $c_0\,\delta_{s_0(w(x,t))}$ 一项，于是
+\begin{align*}
+1=\nu_{(x,t)}(I_0)=c_0(x,t)\,\delta_{s_0(w(x,t))}(I_0)=c_0(x,t),
+\end{align*}
+其中末一步用到 $s_0(w(x,t))\in I_0$。$w(x,t)>B$ 的情形对称：此时 $\{\phi=w(x,t)\}\subseteq I_n$、$\nu_{(x,t)}(I_n)=1$，且只有 $c_n$ 可能非零，故 $c_n(x,t)=1$。
+\item 关于由\eqref{align:ch08-8.108a}--\eqref{align:ch08-8.108b} 推出\eqref{align:ch08-8.97}。固定 $f\in C_c(\mathbb{R})$。由\eqref{align:ch08-8.106}，在 $L^1(Q_T)$ 中令 $k\to\infty$ 并用\eqref{align:ch08-8.108a}--\eqref{align:ch08-8.108b}，得
+\begin{align*}
+\int_{\mathbb{R}}f(y)\,\mathrm{d}\nu_{(x,t)}(y)=\sum_{l=0}^nc_l(x,t)f(s_l(w(x,t)))+\sum_{m=1}^nd_m(x,t)f(t_m(w(x,t)))
+\end{align*}
+对几乎所有 $(x,t)\in Q_T$。取 $C_c(\mathbb{R})$ 的可数稠密子集 $\{f_j\}$（例如具有紧支集的有理系数多项式），对每个 $j$ 与每个 $T\in\mathbb{N}$ 扣除相应的零测集，其并仍为零测集。在该并的补集上，上式对所有 $f_j$ 成立；由于两端关于 $f$ 连续（前者由 $\nu_{(x,t)}$ 为有限测度、后者由 $s_l,t_m$ 取值于有界区间），它对所有 $f\in C_c(\mathbb{R})$ 成立。固定这样的 $(x,t)$：两端都是总质量不超过 $1$ 的有限测度，且在 $C_c(\mathbb{R})$ 上给出相同的积分，故二者相等，此即\eqref{align:ch08-8.97}。最后，$Q_\infty=\bigcup_{T>0}Q_T$ 使结论对几乎所有 $(x,t)\in Q_\infty$ 成立。
+\item 关于连续延拓的使用。$s_l$ 连续且取值于 $[a_l,b_{l+1}]$，故 $f\circ s_l$ 在 $\mathbb{R}$ 上连续有界，从而 $f(s_l(w))\in L^\infty(Q_T)$；这既使\eqref{align:ch08-8.110} 中的弱*配对合法（其试验函数为 $f(s_l(w))\zeta\in L^1(Q_T)$），又使\eqref{align:ch08-8.111} 中由 $\phi(v_{\varepsilon_k})\to w$ 几乎处处推出 $f((s_l\circ\phi)(v_{\varepsilon_k}))\to f(s_l(w))$ 几乎处处成立。若不作延拓，$f(s_l(\cdot))$ 仅在 $J_l$ 上有定义，上述两处推理都须附加关于 $w(x,t)\in J_l$ 的讨论。
+\end{enumerate}
+\end{proof}
 
-记 $e_1\leqslant\cdots\leqslant e_{2n}$ 为 $\phi$ 图像的局部极值 $\phi(a_l),\phi(b_l)$（$l=1,\cdots ,n$）。令 $E\equiv E_k\triangleq [e_k,e_{k+1}]$（$k=1,\cdots ,2n-1$）。于是 $e_1=A$，$e_{2n}=B$，且
+还需证\cref{proposition:ch08-σ为Dirac}。由\cref{remark:ch08-σ第一等式}，只需证\eqref{align:ch08-8.105} 中第二个等式。以下概述证明，细节见文献~\cite{ref30}。
+
+记 $e_1\leqslant\cdots\leqslant e_{2n}$ 为 $\phi$ 图像的局部极值 $\phi(a_l)$、$\phi(b_l)$（$l=1,\cdots ,n$）按递增次序的排列。令 $E\equiv E_k\triangleq[e_k,e_{k+1}]$（$k=1,\cdots ,2n-1$）。于是 $e_1=A$、$e_{2n}=B$，且
 \begin{align*}
 \mathbb{R}=(-\infty,A]\cup\left(\bigcup_{k=1}^{2n-1}E_k\right)\cup[B,\infty).
 \end{align*}
-对每个 $l=0,\cdots ,n$，$E\cap J_l=\varnothing $ 或 $E\cap J_l=E$；对 $E\cap\widehat J_m$（$m=1,\cdots ,n$）类似。故存在 $p+1$ 个区间 $J_{l_i}$ 与 $p$ 个区间 $\widehat J_{m_j}$（$p=1,\cdots ,n$；$l_i\in\{0,\cdots ,p\}$；$m_j\in\{1,\cdots ,p\}$），使
+对每个 $l=0,\cdots ,n$ 有 $E\cap J_l=\varnothing$ 或 $E\cap J_l=E$，对 $E\cap\widehat J_m$（$m=1,\cdots ,n$）同样如此。故存在 $p\in\{1,\cdots ,n\}$、$p+1$ 个区间 $J_{l_i}$ 与 $p$ 个区间 $\widehat J_{m_j}$（$l_i\in\{0,\cdots ,n\}$，$m_j\in\{1,\cdots ,n\}$），使
 \begin{align}
-E\subseteq\left(\bigcap_{i=0}^p J_{l_i}\right)\cap\left(\bigcap_{j=1}^p\widehat J_{m_j}\right). \label{align:ch08-8.112}
+E\subseteq\left(\bigcap_{i=1}^{p+1}J_{l_i}\right)\cap\left(\bigcap_{j=1}^{p}\widehat J_{m_j}\right). \label{align:ch08-8.112}
 \end{align}
-不失一般性设 $l_0\leqslant\cdots\leqslant l_p$、$m_1\leqslant\cdots\leqslant m_p$。借助\cref{proposition:ch08-分离等式}，可证如下引理。
+不失一般性设 $l_1<\cdots <l_{p+1}$、$m_1<\cdots <m_p$。借助\cref{proposition:ch08-分离等式}，可证如下引理。
 
-\begin{lemma}[各区间上的矩等式]\label{lemma:ch08-矩等式}
-设\cref{theorem:ch08-测度刻画} 的假设满足。则对几乎所有 $(x,t)\in Q_\infty$：
+\begin{lemma}[各分支上的矩关系]\label{lemma:ch08-矩等式}
+设\cref{theorem:ch08-测度刻画}的假设满足。则对几乎所有 $(x,t)\in Q_\infty$ 有：
 \begin{enumerate}[(i)]
-\item\label{item:ch08-mom-i} 设 $K\subseteq(-\infty,A]$（$A\triangleq \min\{\phi(a_1),\cdots ,\phi(a_p)\}$）紧，$\sigma_{(x,t)}(K)>0$。则对几乎所有 $y\in(-\infty,A]$，
+\item\label{item:ch08-mom-i} 设 $K\subseteq(-\infty,A]$ 紧（$A\triangleq\min\{\phi(a_1),\cdots ,\phi(a_n)\}$）且 $\sigma_{(x,t)}(K)>0$。则对几乎所有 $y\in(-\infty,A]$，
 \begin{align}
 \sigma^0_{(x,t)}((-\infty,y])\,\sigma_{(x,t)}(K)=\sigma^0_{(x,t)}((-\infty,y]\cap K); \label{align:ch08-8.113}
 \end{align}
-\item\label{item:ch08-mom-ii} 设 $K\subseteq[B,\infty)$（$B\triangleq \max\{\phi(b_1),\cdots ,\phi(b_p)\}$）紧，$\sigma_{(x,t)}(K)>0$。则对几乎所有 $y\in[B,\infty)$，
+\item\label{item:ch08-mom-ii} 设 $K\subseteq[B,\infty)$ 紧（$B\triangleq\max\{\phi(b_1),\cdots ,\phi(b_n)\}$）且 $\sigma_{(x,t)}(K)>0$。则对几乎所有 $y\in[B,\infty)$，
 \begin{align}
 \sigma^n_{(x,t)}([y,\infty))\,\sigma_{(x,t)}(K)=\sigma^n_{(x,t)}([y,\infty)\cap K); \label{align:ch08-8.114}
 \end{align}
-\item\label{item:ch08-mom-iii} 设 $E\equiv[e_k,e_{k+1}]$（$k=1,\cdots ,2n-1$），$K\subseteq E$ 紧，$\sigma_{(x,t)}(K)>0$。则对几乎所有 $y\in E$，
+\item\label{item:ch08-mom-iii} 设 $k\in\{1,\cdots ,2n-1\}$、$E\equiv E_k=[e_k,e_{k+1}]$，$K\subseteq E$ 紧且 $\sigma_{(x,t)}(K)>0$。则对几乎所有 $y\in E$，
 \begin{align*}
-\sum_{i=1}^{p+1}D_i(y)\left\{\frac{\sigma^{l_i}_{(x,t)}(K)}{\sigma_{(x,t)}(K)}-\sigma^{l_i}_{(x,t)}(E)\right\}
-+\sum_{j=1}^p D_{j+1}(y)\left\{\frac{\widehat\sigma^{m_j}_{(x,t)}(K)}{\sigma_{(x,t)}(K)}-\widehat\sigma^{m_j}_{(x,t)}(E)\right\}\qquad\nonumber\\
-=\sum_{i=1}^{p+1}s'_{l_i}(y)\left\{\rho^{l_i}_{(x,t)}(y)-\frac{\rho^{l_i}_K(y)}{\sigma_{(x,t)}(K)}\right\}
-+\sum_{j=1}^p t'_{m_j}(y)\left\{\widehat\rho^{m_j}_{(x,t)}(y)-\frac{\widehat\rho^{m_j}_K(y)}{\sigma_{(x,t)}(K)}\right\},
+&\sum_{i=1}^{p+1}D_i(y)\left\{\frac{\sigma^{l_i}_{(x,t)}(K)}{\sigma_{(x,t)}(K)}-\sigma^{l_i}_{(x,t)}(E)\right\}
++\sum_{j=1}^{p}D_{j+1}(y)\left\{\frac{\widehat\sigma^{m_j}_{(x,t)}(K)}{\sigma_{(x,t)}(K)}-\widehat\sigma^{m_j}_{(x,t)}(E)\right\}\\
+&\qquad=\sum_{i=1}^{p+1}s'_{l_i}(y)\left\{\rho^{l_i}_{(x,t)}(y)-\frac{\rho^{l_i}_K(y)}{\sigma_{(x,t)}(K)}\right\}\\
+&\qquad\qquad+\sum_{j=1}^{p}t'_{m_j}(y)\left\{\widehat\rho^{m_j}_{(x,t)}(y)-\frac{\widehat\rho^{m_j}_K(y)}{\sigma_{(x,t)}(K)}\right\},
 \end{align*}
-其中
+其中 $p$、$l_i$、$m_j$ 如\eqref{align:ch08-8.112} 所述，
 \begin{align*}
 D_1(y)\triangleq 0,\quad D_i(y)\triangleq \sum_{k=1}^{i-1}(s'_{l_k}-t'_{m_k})(y)\quad(i=2,\cdots ,p+1),
 \end{align*}
 \begin{align*}
-\rho^{l_i}_{(x,t)}(y)\triangleq \sigma^{l_i}_{(x,t)}([y,\phi(b_{l_i+1})]),\quad
+\rho^{l_i}_{(x,t)}(y)\triangleq \sigma^{l_i}_{(x,t)}([y,\phi(b_{l_i+1})]),\qquad
 \widehat\rho^{m_j}_{(x,t)}(y)\triangleq \widehat\sigma^{m_j}_{(x,t)}([y,\phi(b_{m_j})]),
 \end{align*}
 \begin{align*}
-\rho^{l_i}_K(y)\triangleq \sigma^{l_i}_{(x,t)}([y,\phi(b_{l_i+1})]\cap K),\quad
-\widehat\rho^{m_j}_K(y)\triangleq \widehat\sigma^{m_j}_{(x,t)}([y,\phi(b_{m_j})]\cap K).
+\rho^{l_i}_K(y)\triangleq \sigma^{l_i}_{(x,t)}([y,\phi(b_{l_i+1})]\cap K),\qquad
+\widehat\rho^{m_j}_K(y)\triangleq \widehat\sigma^{m_j}_{(x,t)}([y,\phi(b_{m_j})]\cap K),
 \end{align*}
+并约定 $\phi(b_{n+1})\triangleq+\infty$。
 \end{enumerate}
 \end{lemma}
 
+% SUPPLEMENT: parent=lemma:ch08-矩等式; kind=motivation; location=引理 8.5.4 后的注记; basis=引理 8.5.4 与 (8.103)(8.113)(8.114)(8.112) + 矩关系作为"支撑为单点"的定量形式、K 紧与 σ(K)>0 的作用、supp g⊆(−∞,A] 使 Gφ 在 I_0 外为常数的机制、以及 s'_0>0 与变分引理给出的几乎处处性
+\begin{remark}\phantomsection\label{remark:ch08-矩等式}
+\begin{enumerate}[(i)]
+\item 引入动机。(8.113) 与 (8.114) 把“$\sigma$ 在端点区间上只有一个原子”这一几何事实写成定量形式：它们断言条件化不改变累积函数，即
+\begin{align*}
+\frac{\sigma^0_{(x,t)}((-\infty,y]\cap K)}{\sigma_{(x,t)}(K)}=\sigma^0_{(x,t)}((-\infty,y]),
+\end{align*}
+故 $\sigma^0_{(x,t)}$ 在 $(-\infty,A]$ 上的分布与其在 $K$ 上的条件分布相同；在\cref{proposition:ch08-σ为Dirac}的证明中令 $K$ 收缩到支撑的最高点即得原子性。(iii) 是同一机制在内部区间 $E_k$ 上的形式：此时纤维含 $p+1+p$ 个分支点，各分支的矩关系相减后留下系数 $D_i$，它正是相邻分支导数之差的部分和。
+\item 各项假设的作用。$K$ 紧且 $\sigma_{(x,t)}(K)>0$ 使 $1/\sigma_{(x,t)}(K)$ 有意义，并使 $\chi_K$ 可由 $C_c(\mathbb{R})$ 中的序列 $\{f_h\}$ 从上方逼近（这一步用\cref{lemma:appA-光滑截断}）；$\operatorname{supp}g\subseteq(-\infty,A]$ 使 $G_\phi$ 在 $a_0$ 右侧恒为零，从而 $\int G_\phi\,\mathrm{d}\nu$ 只在分支 $I_0$ 上非零，这是把 $\nu$ 上的积分换成 $\sigma^0$ 上的积分的关键；$s_0'>0$ 使乘积 $g\,s_0'$ 在 $C_c^1$ 上稠密，从而由 $\int g\,s_0'(\cdots)=0$ 推出括号几乎处处为零，这正是结论只对几乎所有的 $y$ 成立的原因。
+\item 结论的作用。(8.113) 与 (8.114) 在\cref{proposition:ch08-σ为Dirac}的证明中分别处理区间 $(-\infty,A]$ 与 $[B,\infty)$；(iii) 处理内部的 $E_k$，其中系数 $D_i$ 的差分结构使各分支的未知权重可以被逐个消去，假设 (C) 在此处保证消去合法。
+\item 边界与说明。若 $\sigma_{(x,t)}(K)=0$，则\eqref{align:ch08-8.113} 两端同时为零而不含信息，故 $K$ 必须取在 $\sigma_{(x,t)}$ 的支撑内。若把 $K$ 取成非紧集，则 $\chi_K$ 不能由 $C_c$ 中的序列单调逼近，$h\to\infty$ 时无法用控制收敛定理。(ii) 中的积分因子是 $s'_n$ 而非 $s'_0$：区间 $[B,\infty)$ 只与分支 $I_n$ 的像相交（因 $B\geqslant\phi(b_n)>\phi(a_n)$），原书此处下标印作 $0$，系排印之误。另需说明：(iii) 中的 $p$ 是覆盖 $E$ 的分支个数（$1\leqslant p\leqslant n$），与 $L^p$ 空间的可积指数无关；原书在\cref{lemma:ch08-矩等式}(i)--(ii) 中把 $A$、$B$ 写成 $\min\{\phi(a_1),\cdots ,\phi(a_p)\}$、$\max\{\phi(b_1),\cdots ,\phi(b_p)\}$，应取 $n$ 项，与\cref{theorem:ch08-测度刻画}(iii) 的定义一致。
+\end{enumerate}
+\end{remark}
+
 \begin{proof}
-只证 (i)--(ii)，(iii) 的证明类似但更繁（见文献~\cite{ref30} 引理 5.5）。由于 $K\subseteq(-\infty,A]$ 紧，存在序列 $\{f_h\}\subseteq C_c(\mathbb{R})$ 使 $0\leqslant f_h\leqslant1$、$f_h=1$ 在 $K$ 上，且 $\lim_{h\to\infty}f_h(y)=\chi_K(y)$ 对所有 $y\in\mathbb{R}$。令 $a_0\in I_0$ 为使 $\phi(a_0)=A$ 的唯一点，取\eqref{align:ch08-8.14} 中的 $k$ 使 $G_\phi(y)=\int_{a_0}^y g(\phi(z))\,\mathrm{d}z$（$y\in\mathbb{R}$），其中 $g\in C^1_c(\mathbb{R})$ 且 $\operatorname{supp}g\subseteq(-\infty,A]$。由等式\eqref{align:ch08-8.58} 有
+只证 (i)--(ii)，(iii) 的证明与此相同但更繁（见文献~\cite{ref30} 引理 5.5）。设 $K\subseteq(-\infty,A]$ 紧。由\cref{lemma:appA-光滑截断}（施于开集 $A_h\triangleq\{y\in\mathbb{R}\mid\operatorname{dist}(y,K)<1/h\}$）存在序列 $\{f_h\}\subseteq C_c(\mathbb{R})$，使 $0\leqslant f_h\leqslant1$、$f_h=1$ 在 $K$ 上，且 $\lim_{h\to\infty}f_h(y)=\chi_K(y)$ 对所有 $y\in\mathbb{R}$。令 $a_0\in I_0$ 为使 $\phi(a_0)=A$ 的唯一点（存在性由 $A\leqslant\phi(a_1)<\phi(b_1)$ 与 $\phi|_{I_0}$ 的严格单调性给出），并取\eqref{align:ch08-8.14} 中的 $k$ 使
+\begin{align*}
+G_\phi(y)=\int_{a_0}^y g(\phi(z))\,\mathrm{d}z\quad(y\in\mathbb{R}),
+\end{align*}
+其中 $g\in C_c^1(\mathbb{R})$ 且 $\operatorname{supp}g\subseteq(-\infty,A]$。由等式\eqref{align:ch08-8.58} 有
 \begin{align*}
 \int_{\mathbb{R}}f_h(\phi(y))G_\phi(y)\,\mathrm{d}\nu_{(x,t)}(y)
-=\int_{\mathbb{R}}f_h(\phi(y))\,\mathrm{d}\nu_{(x,t)}(y)\int_{\mathbb{R}}G_\phi(y)\,\mathrm{d}\nu_{(x,t)}(y),
+=\int_{\mathbb{R}}f_h(\phi(y))\,\mathrm{d}\nu_{(x,t)}(y)\int_{\mathbb{R}}G_\phi(y)\,\mathrm{d}\nu_{(x,t)}(y).
 \end{align*}
-由 $g$ 的选取与\cref{remark:ch08-σ第一等式} 得
+由 $g$ 的选取，$y\geqslant a_0$ 时 $G_\phi(y)=0$；故 $G_\phi=(G_\phi\circ s_0)\circ\phi$，且由\eqref{align:ch08-8.104a}--\eqref{align:ch08-8.104b} 与\cref{remark:ch08-σ第一等式}得
 \begin{align*}
-\int_{(-\infty,A]}f_h(y)(G_\phi\circ s_0)(y)\,\mathrm{d}\sigma^0_{(x,t)}(y)
-=\int_{\phi(\mathbb{R})}f_h(y)\,\mathrm{d}\sigma_{(x,t)}(y)\int_{(-\infty,A]}(G_\phi\circ s_0)(y)\,\mathrm{d}\sigma^0_{(x,t)}(y).
+&\int_{(-\infty,A]}f_h(y)(G_\phi\circ s_0)(y)\,\mathrm{d}\sigma^0_{(x,t)}(y)\\
+&\qquad=\left(\int_{\phi(\mathbb{R})}f_h(y)\,\mathrm{d}\sigma_{(x,t)}(y)\right)
+\left(\int_{(-\infty,A]}(G_\phi\circ s_0)(y)\,\mathrm{d}\sigma^0_{(x,t)}(y)\right).
 \end{align*}
-令 $h\to\infty$，得
+令 $h\to\infty$（由 $0\leqslant f_h\leqslant1$ 与 $f_h\to\chi_K$ 用控制收敛定理），并注意 $\sigma_{(x,t)}(K)>0$，得
 \begin{align*}
 \int_K(G_\phi\circ s_0)(y)\,\mathrm{d}\sigma^0_{(x,t)}(y)
-=\sigma_{(x,t)}(K)\int_{(-\infty,A]}(G_\phi\circ s_0)(y)\,\mathrm{d}\sigma^0_{(x,t)}(y),
+=\sigma_{(x,t)}(K)\int_{(-\infty,A]}(G_\phi\circ s_0)(y)\,\mathrm{d}\sigma^0_{(x,t)}(y).
 \end{align*}
-因而显然
+作代换 $y=s_0(z)$（即 $z=\phi(y)$，$\mathrm{d}y=s_0'(z)\,\mathrm{d}z$）得 $(G_\phi\circ s_0)(y)=\int_A^yg(z)s_0'(z)\,\mathrm{d}z$，故上式即
 \begin{align*}
 \int_{(-\infty,A]}\mathrm{d}\sigma^0_{(x,t)}(y)\int_A^y g(z)s_0'(z)\,\mathrm{d}z
 =\frac{1}{\sigma_{(x,t)}(K)}\int_K\mathrm{d}\sigma^0_{(x,t)}(y)\int_A^y g(z)s_0'(z)\,\mathrm{d}z.
 \end{align*}
-交换积分顺序即得\eqref{align:ch08-8.113}。情形 (ii) 类似地得
+交换积分次序即得\eqref{align:ch08-8.113}。情形 (ii) 以同样的方式处理：此时 $[B,\infty)\subseteq J_n$，把 $a_0$ 换成 $I_n$ 中满足 $\phi(b^*)=B$ 的点 $b^*$、把 $s_0$ 换成 $s_n$，得
 \begin{align*}
-\int_{[B,\infty)}\mathrm{d}\sigma^n_{(x,t)}(y)\int_B^y g(z)s_0'(z)\,\mathrm{d}z
-=\frac{1}{\sigma_{(x,t)}(K)}\int_K\mathrm{d}\sigma^n_{(x,t)}(y)\int_B^y g(z)s_0'(z)\,\mathrm{d}z,
+\int_{[B,\infty)}\mathrm{d}\sigma^n_{(x,t)}(y)\int_B^y g(z)s_n'(z)\,\mathrm{d}z
+=\frac{1}{\sigma_{(x,t)}(K)}\int_K\mathrm{d}\sigma^n_{(x,t)}(y)\int_B^y g(z)s_n'(z)\,\mathrm{d}z,
 \end{align*}
 由上式得\eqref{align:ch08-8.114}。证毕。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch08-矩等式; kind=proof; location=引理 8.5.4 的证明后的补证; basis=补出 (i)(ii) 中 Fubini 换序后由 g s'_0 的稠密性推出累积函数相等、(ii) 中由 ∫_B^y 化为尾积分、以及 (iii) 的推导纲要（原书只引 [30, Lemma 5.5]）
+\begin{proof}[补证：\cref{lemma:ch08-矩等式}证明中省略的细节及 (iii) 的推导纲要]
+\begin{enumerate}[(i)]
+\item (i) 的换序。取 $\mu_1\triangleq\sigma^0_{(x,t)}|_{(-\infty,A]}$、$\mu_2\triangleq\sigma_{(x,t)}(K)^{-1}\sigma^0_{(x,t)}|_{K}$，二者为 $(-\infty,A]$ 上的有限测度。对 $y\leqslant A$ 有 $\int_A^y=-\int_{[y,A]}$，故由 Fubini 定理（被积函数 $|g(z)s_0'(z)|$ 在 $(-\infty,A]$ 上有界、$\mu_1,\mu_2$ 有限）得
+\begin{align*}
+\int_{(-\infty,A]}\mathrm{d}\mu_1(y)\int_A^y g(z)s_0'(z)\,\mathrm{d}z
+=-\int_{(-\infty,A]}g(z)s_0'(z)\,\mu_1((-\infty,z])\,\mathrm{d}z,
+\end{align*}
+对 $\mu_2$ 同样。于是 (i) 前的等式等价于
+\begin{align*}
+\int_{(-\infty,A]}g(z)s_0'(z)\big[\mu_1((-\infty,z])-\mu_2((-\infty,z])\big]\,\mathrm{d}z=0
+\end{align*}
+对所有 $g\in C_c^1((-\infty,A])$ 成立。由于 $s_0'$ 为 $C^1$ 且 $s_0'>0$，对任意 $\varphi\in C_c^1((-\infty,A])$，函数 $g\triangleq\varphi/s_0'$ 仍属于 $C_c^1((-\infty,A])$；故上式中 $g\,s_0'$ 可取遍 $C_c^1((-\infty,A])$，从而括号几乎处处为零，此即\eqref{align:ch08-8.113}。
+\item (ii) 的尾积分形式。对 $z\in[B,\infty)$ 有 $\{y\in[B,\infty)\mid z\leqslant y\}=[z,\infty)$，故由 Fubini 定理
+\begin{align*}
+\int_{[B,\infty)}\mathrm{d}\sigma^n_{(x,t)}(y)\int_B^y g(z)s_n'(z)\,\mathrm{d}z
+=\int_{[B,\infty)}g(z)s_n'(z)\,\sigma^n_{(x,t)}([z,\infty))\,\mathrm{d}z,
+\end{align*}
+右端对 $K$ 的相应积分以相同方式处理；与 (ii) 前的等式比较并用 $g\,s_n'$ 在 $C_c^1((B,\infty))$ 中的稠密性，即得\eqref{align:ch08-8.114}。
+\item (iii) 的推导纲要。仍由\eqref{align:ch08-8.58} 出发，但取 $g\in C_c^1(\operatorname{int}E)$，于是 $\operatorname{supp}g\subseteq E\subseteq\bigcap_iJ_{l_i}\cap\bigcap_j\widehat J_{m_j}$，且基点 $y_0$ 取在 $E$ 内。对 $z\in E$，纤维 $\{\phi=z\}$ 恰由 $p+1+p$ 个点 $s_{l_i}(z)$、$t_{m_j}(z)$ 组成（因 $z\in J_{l_i}$ 与 $z\in\widehat J_{m_j}$ 对全部 $i,j$ 成立，而其它分支的像不含 $z$）。把\eqref{align:ch08-8.58} 左端的积分按\eqref{align:ch08-8.96} 的分解拆开，再用\eqref{align:ch08-8.104a}--\eqref{align:ch08-8.104b} 换成分支像测度上的积分：在分支 $I_{l_i}$ 上有 $G_\phi(s_{l_i}(z))=\int_{y_0}^z g(\zeta)s'_{l_i}(\zeta)\,\mathrm{d}\zeta$，在分支 $\widehat I_{m_j}$ 上有 $G_\phi(t_{m_j}(z))=\int_{y_0}^z g(\zeta)t'_{m_j}(\zeta)\,\mathrm{d}\zeta$。令 $h\to\infty$ 后把含 $\sigma^{l_i}_{(x,t)}(K)$、$\widehat\sigma^{m_j}_{(x,t)}(K)$ 的项移到一端，并对各分支的累积区间 $[y,\phi(b_{l_i+1})]$、$[y,\phi(b_{m_j})]$ 作 Fubini 换序；由于各分支的上端不同，逐项相减并合并同类项时相邻分支的系数差恰为 $s'_{l_k}-t'_{m_k}$，累加即得 $D_i(y)=\sum_{k<i}(s'_{l_k}-t'_{m_k})(y)$。最后用 $g$ 的任意性与变分引理即得 (iii) 的恒等式。上述步骤中除以 $\sigma_{(x,t)}(K)$ 与把 $\int_{J_{l_i}}$ 限制到 $[y,\phi(b_{l_i+1})]$ 均合法，因 $\sigma^{l_i}_{(x,t)}$、$\widehat\sigma^{m_j}_{(x,t)}$ 的支撑分别落在相应区间内（见\eqref{align:ch08-8.103}）；而\eqref{align:ch08-8.112} 中各分支的指标互不相同，使合并后的系数不恒为零，这正是假设 (C) 所提供的非退化性。
+\end{enumerate}
+\end{proof}
+
 现可证\cref{proposition:ch08-σ为Dirac}。
 
-\begin{proof}[\cref{proposition:ch08-σ为Dirac} 的证明]
-设 $\operatorname{supp}\sigma_{(x,t)}|_{(-\infty,A]}\neq\varnothing $，令
+\begin{proof}[\cref{proposition:ch08-σ为Dirac}的证明]
+设 $\operatorname{supp}\sigma_{(x,t)}|_{(-\infty,A]}\neq\varnothing$，令
 \begin{align*}
-q_0\equiv q_0(x,t)\triangleq \max\{y\in\operatorname{supp}\sigma_{(x,t)}|_{(-\infty,A]}\}.
+q_0\equiv q_0(x,t)\triangleq\max\{y\in\operatorname{supp}\sigma_{(x,t)}|_{(-\infty,A]}\}.
 \end{align*}
 对任意 $\delta>0$ 考察紧集 $K=[q_0-\delta,q_0]$。则 $\sigma_{(x,t)}(K)>0$，且对所有 $y\in(-\infty,q_0-\delta]$ 有
 \begin{align*}
 \sigma^0_{(x,t)}((-\infty,y]\cap K)=0.
 \end{align*}
-由等式\eqref{align:ch08-8.113} 与 $\delta$ 的任意性得 $\sigma^0_{(x,t)}((-\infty,q_0))$，因而 $\operatorname{supp}\sigma_{(x,t)}|_{(-\infty,A]}=\{q_0\}$。进而取 $K=\{q_0\}$ 时等式\eqref{align:ch08-8.113} 给出 $\sigma^0_{(x,t)}(\{q_0\})=\sigma_{(x,t)}(\{q_0\})=1$。用\eqref{align:ch08-8.114} 类似地可见 $\operatorname{supp}\sigma_{(x,t)}|_{[B,\infty)}$ 至多由一点组成，记为 $\{q_{2n}\}$；若非空，则 $\sigma^n_{(x,t)}(\{q_{2n}\})=\sigma_{(x,t)}(\{q_{2n}\})=1$。借助\cref{lemma:ch08-矩等式}(iii) 的更精细论证表明，对每个区间 $E_k=[e_k,e_{k+1}]$（$k=1,\cdots ,2n-1$）同样成立：若 $\operatorname{supp}\sigma|_{E_k}\neq\varnothing $，则 $\operatorname{supp}\sigma_{(x,t)}|_{E_k}=\{q_k\}$，且对某个 $q_k\in E_k$ 有 $\sigma_{(x,t)}(\{q_k\})=1$（细节见文献~\cite{ref30} 命题 5.2 的证明）。
+由等式\eqref{align:ch08-8.113} 与 $\delta$ 的任意性得 $\sigma^0_{(x,t)}((-\infty,q_0))=0$，因而 $\operatorname{supp}\sigma^0_{(x,t)}|_{(-\infty,A]}=\{q_0\}$。进而取 $K=\{q_0\}$ 时等式\eqref{align:ch08-8.113} 给出 $\sigma^0_{(x,t)}((-\infty,q_0])\,\sigma_{(x,t)}(\{q_0\})=\sigma^0_{(x,t)}(\{q_0\})$；由 $\sigma^0_{(x,t)}((-\infty,q_0])=\sigma^0_{(x,t)}(\{q_0\})>0$ 得 $\sigma_{(x,t)}(\{q_0\})=1$。用\eqref{align:ch08-8.114} 同样可见 $\operatorname{supp}\sigma_{(x,t)}|_{[B,\infty)}$ 至多由一点组成，记为 $\{q_{2n}\}$；若它非空，则同法得 $\sigma_{(x,t)}(\{q_{2n}\})=1$。借助\cref{lemma:ch08-矩等式}(iii) 的更精细论证表明，对每个区间 $E_k=[e_k,e_{k+1}]$（$k=1,\cdots ,2n-1$）同样成立：若 $\operatorname{supp}\sigma_{(x,t)}|_{E_k}\neq\varnothing$，则 $\operatorname{supp}\sigma_{(x,t)}|_{E_k}=\{q_k\}$，且对某个 $q_k\in E_k$ 有 $\sigma_{(x,t)}(\{q_k\})=1$（细节见文献~\cite{ref30} 命题 5.2 的证明）。
 
-综上，测度 $\sigma_{(x,t)}$ 的支撑至多由 $2n+1$ 个点 $\{q_k\}$ 组成，且每个 $k=0,\cdots ,2n$ 有 $\sigma_{(x,t)}(\{q_k\})=1$。然而由于 $\sigma_{(x,t)}\in\mathcal{P}(\mathbb{R})$，这蕴含 $\operatorname{supp}\sigma_{(x,t)}$ 由一点组成，记为 $q=q(x,t)$，且 $\sigma_{(x,t)}=\delta_{q(x,t)}$。由\eqref{align:ch08-8.105} 中第一个等式有
+综上，$\operatorname{supp}\sigma_{(x,t)}$ 含于至多 $2n+1$ 个点 $\{q_k\}$ 组成的集合，且对每个在 $E_k$ 上支撑非空的指标 $k$ 都有 $\sigma_{(x,t)}(\{q_k\})=1$。由于 $\sigma_{(x,t)}\in\mathcal{P}(\mathbb{R})$，至多一个这样的点存在，故 $\operatorname{supp}\sigma_{(x,t)}$ 由一点组成，记为 $q=q(x,t)$，且 $\sigma_{(x,t)}=\delta_{q(x,t)}$。由\eqref{align:ch08-8.105} 中第一个等式有
 \begin{align*}
 q(x,t)=\int_{\mathbb{R}}y\,\mathrm{d}\sigma_{(x,t)}(y)
 =\int_{\mathbb{R}}\phi(y)\,\mathrm{d}\nu_{(x,t)}(y)=\phi^*(x,t),
 \end{align*}
-由\cref{remark:ch08-w等于phi星} 得 $\sigma_{(x,t)}=\delta_{\phi^*(x,t)}=\delta_{w(x,t)}$ 对几乎所有 $(x,t)\in Q_\infty$。证毕。
+由\cref{remark:ch08-w等于phi星}得 $\sigma_{(x,t)}=\delta_{\phi^*(x,t)}=\delta_{w(x,t)}$ 对几乎所有 $(x,t)\in Q_\infty$。证毕。
 \end{proof}
 
-
-
+% SUPPLEMENT: parent=proposition:ch08-σ为Dirac; kind=proof; location=命题 8.5.3 的证明后的补证; basis=补出 q_0 作为上确界的存在性与 σ(K)>0、由 (8.113) 得 σ^0((−∞,q_0))=0、取 K={q_0} 时 σ^0({q_0})>0 与除零、由总质量 1 排除多原子、以及 q_0=A 的边界情形
+\begin{proof}[补证：\cref{proposition:ch08-σ为Dirac}证明中省略的细节]
+\begin{enumerate}[(i)]
+\item 关于 $q_0$ 与 $K$。支撑 $\operatorname{supp}\sigma_{(x,t)}$ 为闭集，故 $\operatorname{supp}\sigma_{(x,t)}|_{(-\infty,A]}$ 亦为闭集；令 $q_0$ 为其上确界（当上确界被取到时即文中所记的 $\max$，否则为上确界本身）。由于该集合闭，$q_0$ 属于它，从而 $q_0\leqslant A$，且对每个 $\delta>0$，$K=[q_0-\delta,q_0]$ 与支撑相交，故 $\sigma_{(x,t)}(K)>0$。这说明\eqref{align:ch08-8.113} 的前提对一切 $\delta>0$ 成立。
+\item 关于 $\sigma^0_{(x,t)}((-\infty,q_0))=0$。$y\in(-\infty,q_0-\delta]$ 时 $(-\infty,y]\cap K=\varnothing$，故\eqref{align:ch08-8.113} 给出 $\sigma^0_{(x,t)}((-\infty,y])\,\sigma_{(x,t)}(K)=0$，即 $\sigma^0_{(x,t)}((-\infty,y])=0$；由累积函数的单调性，该式对一切 $y\leqslant q_0-\delta$ 成立。令 $\delta\downarrow0$ 得 $\sigma^0_{(x,t)}((-\infty,y])=0$ 对一切 $y<q_0$ 成立，再由 $\sigma^0_{(x,t)}$ 的可数可加性得 $\sigma^0_{(x,t)}((-\infty,q_0))=\lim_{j\to\infty}\sigma^0_{(x,t)}((-\infty,q_0-1/j])=0$。结合 $q_0\in\operatorname{supp}\sigma^0_{(x,t)}$（见下文第 (iii) 项）即得 $\operatorname{supp}\sigma^0_{(x,t)}|_{(-\infty,A]}=\{q_0\}$。
+\item 关于 $\sigma^0_{(x,t)}(\{q_0\})>0$。当 $q_0<A$ 时，任一 $y<A$ 只可能属于 $J_0$：因 $J_l\subseteq(\phi(a_l),\infty)$、$\widehat J_m\subseteq[\phi(a_m),\infty)$，而 $\phi(a_l)\geqslant A$、$\phi(a_m)\geqslant A$。于是 $\sigma_{(x,t)}$ 与 $\sigma^0_{(x,t)}$ 在 $(-\infty,A)$ 上一致（其余分支的像测度在该区间上为零），故 $q_0\in\operatorname{supp}\sigma^0_{(x,t)}$，$\sigma^0_{(x,t)}(\{q_0\})>0$。若 $q_0=A$，则把\eqref{align:ch08-8.113} 用于 $K=\{A\}$：若 $\sigma^0_{(x,t)}(\{A\})=0$，则该式给出 $\sigma^0_{(x,t)}((-\infty,A])=0$，与 $q_0=A\in\operatorname{supp}\sigma^0_{(x,t)}$ 矛盾；故此时仍有 $\sigma^0_{(x,t)}(\{A\})>0$。
+\item 关于 $\sigma_{(x,t)}(\{q_0\})=1$。由 (ii) 与 (iii)，$\sigma^0_{(x,t)}((-\infty,q_0])=\sigma^0_{(x,t)}(\{q_0\})>0$。把\eqref{align:ch08-8.113} 用于 $K=\{q_0\}$（其前提 $\sigma_{(x,t)}(\{q_0\})>0$ 由 $q_0\in\operatorname{supp}\sigma_{(x,t)}$ 给出）得
+\begin{align*}
+\sigma^0_{(x,t)}((-\infty,q_0])\,\sigma_{(x,t)}(\{q_0\})=\sigma^0_{(x,t)}(\{q_0\})=\sigma^0_{(x,t)}((-\infty,q_0]),
+\end{align*}
+两端除以 $\sigma^0_{(x,t)}((-\infty,q_0])>0$ 即得 $\sigma_{(x,t)}(\{q_0\})=1$。
+\item 关于至多一个原子。若 $\operatorname{supp}\sigma_{(x,t)}|_{E_k}\neq\varnothing$ 且 $\operatorname{supp}\sigma_{(x,t)}|_{E_{k'}}\neq\varnothing$（$k\neq k'$），则 $q_k\neq q_{k'}$ 而 $\sigma_{(x,t)}(\{q_k\})=\sigma_{(x,t)}(\{q_{k'}\})=1$，于是 $\sigma_{(x,t)}(\mathbb{R})\geqslant2$，与 $\sigma_{(x,t)}\in\mathcal{P}(\mathbb{R})$ 矛盾。故至多一个指标的非零区间存在；又因 $\mathbb{R}$ 是 $(-\infty,A]$、诸 $E_k$ 与 $[B,\infty)$ 的并而 $\sigma_{(x,t)}(\mathbb{R})=1>0$，至少一个非零区间存在。于是 $\operatorname{supp}\sigma_{(x,t)}$ 是单点集，结论成立。$N\geqslant2$ 时上述一维区间的划分不再适用，论证失效。
+\end{enumerate}
+\end{proof}
 
 \end{document}

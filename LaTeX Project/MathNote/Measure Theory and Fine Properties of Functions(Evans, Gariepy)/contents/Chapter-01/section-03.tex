@@ -1,0 +1,444 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{积分与极限定理}\label{section:ch01-03}
+
+现在把微积分推广到测度论的框架之中。本节陈述积分理论；微分理论更为困难，将在\cref{section:ch01-06}中给出。% XREF p=39 "differentiation theory is harder and will be set forth later in Section 1.6"
+
+\begin{definition*}[正部与负部]\phantomsection\label{definition:ch01-1-3-正负部}
+设 $X$ 为非空集合，$f:X\to[-\infty,\infty]$ 为函数。定义 $f$ 的正部与负部为
+\begin{align*}
+f^{+}:=\max(f,0),\qquad f^{-}:=\max(-f,0),
+\end{align*}
+其中右端按逐点意义理解。此时
+\begin{align*}
+f=f^{+}-f^{-}.
+\end{align*}
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch01-1-3-正负部; kind=motivation; 说明把函数分解为非负部分之差这一约化的动机与在积分理论中的位置
+% SUPPLEMENT: parent=definition:ch01-1-3-正负部; kind=hypotheses; 说明正负部对可测性、简单性与取无穷值的相容性
+\begin{remark}\phantomsection\label{remark:ch01-1-3-正负部}
+积分理论的主体（上积分、下积分、Fatou 引理、单调收敛定理）只对非负函数陈述最为方便，因此把一般函数拆成两个非负函数之差是必要的约化：$f^{+}\geqslant0$、$f^{-}\geqslant0$，$\lvert f\rvert=f^{+}+f^{-}$，且 $f=f^{+}-f^{-}$。这一分解把「可积」问题分成两部分：积分值是否为 $+\infty$，以及 $\infty-\infty$ 是否出现；后者由「$\int f^{+}\diff\mu<\infty$ 与 $\int f^{-}\diff\mu<\infty$ 至少一个成立」这一条件排除。
+
+逐点取 $\max$ 的运算对任何函数都有定义，不要求 $f$ 可测；当 $f$ 为 $\mu$-可测函数时 $f^{+}$ 与 $f^{-}$ 同为 $\mu$-可测。当 $f$ 为简单函数时，$f^{+}$ 的像集包含于 $f(X)\cup\{0\}$，$f^{-}$ 的像集包含于 $\{-y\mid y\in f(X)\}\cup\{0\}$，两者仍至多可数，即简单性在分解下保持。分解在 $f$ 取 $\pm\infty$ 的点处依旧成立：$f=+\infty$ 时 $f^{+}=+\infty$、$f^{-}=0$，$f=-\infty$ 时 $f^{+}=0$、$f^{-}=+\infty$。
+\end{remark}
+
+设 $\mu$ 为定义在非空集合 $X$ 上的测度。
+
+\begin{definition}[简单函数]\label{definition:ch01-1-11}
+设 $X$ 为非空集合，$\mu$ 为 $X$ 上的测度。称函数 $g:X\to[-\infty,\infty]$ 为简单函数，是指其像集 $g(X)=\{g(x)\mid x\in X\}$ 是至多可数集。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-11; kind=motivation; 说明以水平集分解定义简单函数、并由此建立积分的动机
+\begin{remark}\phantomsection\label{remark:ch01-def-1-11-动机}
+简单函数是 Lebesgue 积分理论的起点。它的水平集 $\{x\mid g(x)=y\}$ 至多可数个，且 $g$ 在每个水平集上取常值 $y$，于是一旦这些水平集的测度已知，积分就化为加权和 $\sum_{y}y\,\mu(g^{-1}\{y\})$，无须像 Riemann 积分那样分割值域并比较上下和之差。一般非负 $\mu$-可测函数 $f$ 可以由简单函数从下方单调逼近：取二进截断
+\begin{align*}
+\varphi_j:=\sum_{i=1}^{j2^{j}}\frac{i-1}{2^{j}}\chi_{\{(i-1)2^{-j}\leqslant f<i2^{-j}\}}+j\,\chi_{\{f\geqslant j\}}\qquad(j=1,2,\cdots),
+\end{align*}
+则 $\varphi_j$ 为非负简单 $\mu$-可测函数，$\varphi_j\leqslant\varphi_{j+1}$，且 $\varphi_j\to f$ 逐点成立。定义中把「至多可数」而非「有限」写入条件，正是为了使每一步截断都合法。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-11; kind=hypotheses; 逐条分析值域取 $[-\infty,\infty]$、不要求可测性与「至多可数」三点
+\begin{remark}\phantomsection\label{remark:ch01-def-1-11-条件}
+\begin{enumerate}[(i)]
+\item 值域取 $[-\infty,\infty]$ 而不取 $\mathbb{R}$，使得水平值 $y=\pm\infty$ 出现在像集中时，$\mu(g^{-1}\{\pm\infty\})$ 仍是某个水平集的测度，加权和在该点处的贡献为 $\pm\infty\cdot\mu(g^{-1}\{\pm\infty\})$。
+\item 定义本身不要求 $\mu$-可测性，可测性是在\cref{definition:ch01-1-12}中作为附加假设出现的：只有对 $\mu$-可测集才能取测度，若 $g$ 简单而不可测，$g^{-1}\{y\}$ 可能不是 $\mu$-可测集，$\mu(g^{-1}\{y\})$ 便无从定义。% XREF internal
+\item 「至多可数」不能改成「有限」而不改变对象范围：取 $f(x)=1/k$（$x\in[k,k+1)$，$k=1,2,\cdots$），其像集可数而无限，$f$ 是简单函数；若只允许有限值域，逼近一般可测函数时需额外的截断步骤，像 $f(x)=1/k$ 这样的函数也无法在定义内部被覆盖。
+\item 各水平集两两不交且并为 $X$，故 $g=\sum_{y}y\,\chi_{g^{-1}\{y\}}$ 逐点成立；这一表示使得关于简单函数的运算都可以逐水平集验证，也解释了简单函数的积分只需一次加权求和。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[简单函数的积分]\label{definition:ch01-1-12}
+设 $X$ 为非空集合，$\mu$ 为 $X$ 上的测度。
+\begin{enumerate}[(i)]
+\item 若 $g:X\to[-\infty,\infty]$ 非负、简单且 $\mu$-可测，则 $g$ 的积分定义为
+\begin{align*}
+\int g\diff\mu:=\sum_{0\leqslant y\leqslant\infty}y\,\mu\bigl(g^{-1}\{y\}\bigr).
+\end{align*}
+\item 若 $g$ 为简单 $\mu$-可测函数，且 $\int g^{+}\diff\mu<\infty$ 与 $\int g^{-}\diff\mu<\infty$ 中至少一个成立，则称 $g$ 为 $\mu$-可积简单函数，并令
+\begin{align*}
+\int g\diff\mu:=\int g^{+}\diff\mu-\int g^{-}\diff\mu .
+\end{align*}
+该表达式可能等于 $\pm\infty$。
+\end{enumerate}
+于是若 $g$ 为 $\mu$-可积简单函数，则
+\begin{align*}
+\int g\diff\mu:=\sum_{-\infty\leqslant y\leqslant\infty}y\,\mu\bigl(g^{-1}\{y\}\bigr).
+\end{align*}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-12; kind=motivation; 说明先对简单函数定义积分、再用正负部分处理符号的构造思路
+\begin{remark}\phantomsection\label{remark:ch01-def-1-12-动机}
+先对简单函数定义积分、再借上下积分推广到一般函数，是 Lebesgue 积分的四步结构：简单函数、非负可测函数、一般可测函数、可和函数。第 (i) 款处理非负简单函数，此时级数各项非负，求和次序与分组方式都不影响结果；第 (ii) 款用 $g=g^{+}-g^{-}$ 把有符号的简单函数化为两个非负情形之差，并以「两个积分至少一个有限」保证不出现 $\infty-\infty$。四步结构的意义在于：每一步只使用前一步已建立的对象，积分的存在性不依赖任何极限过程。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-12; kind=hypotheses; 逐条分析非负性、可测性、至少一个积分有限的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-12-条件}
+\begin{enumerate}[(i)]
+\item 非负性使 $\sum_{0\leqslant y\leqslant\infty}y\,\mu(g^{-1}\{y\})$ 成为非负项级数，其和与求和次序无关；同时按约定 $0\cdot\infty=0$ 理解 $y=0$ 而 $\mu(g^{-1}\{0\})=\infty$ 的项。
+\item 第 (i) 款中的 $\mu$-可测性不可删除：$\mu(g^{-1}\{y\})$ 只对 $\mu$-可测集有定义；若 $g$ 只是简单而不可测，某些水平集可能不是 $\mu$-可测集。
+\item 第 (ii) 款中「$\int g^{+}\diff\mu<\infty$ 与 $\int g^{-}\diff\mu<\infty$ 至少一个成立」正是为了排除 $\infty-\infty$。若两者同为 $\infty$，差式无意义，$g$ 也就没有积分；允许积分取 $\pm\infty$ 与对「可积」一词的约定一致（\cref{remark:ch01-def-1-13-可积约定}）。% XREF internal
+\item 当 $g$ 为 $\mu$-可积简单函数时，两种写法一致：$g^{+}$ 的非零水平集对应 $g$ 的正水平集，$g^{-}$ 的非零水平集对应 $g$ 的负水平集，故 $\sum_{-\infty\leqslant y\leqslant\infty}y\,\mu(g^{-1}\{y\})=\int g^{+}\diff\mu-\int g^{-}\diff\mu$；这一等式允许两端同时为 $\pm\infty$。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[上积分与下积分]\label{definition:ch01-1-13}
+设 $X$ 为非空集合，$\mu$ 为 $X$ 上的测度。
+\begin{enumerate}[(i)]
+\item 设 $f:X\to[-\infty,\infty]$。$f$ 关于 $\mu$ 的上积分定义为
+\begin{align*}
+\int^{*}f\diff\mu:=\inf\left\{\int g\diff\mu\ \middle|\ g\ \text{为}\ \mu\text{-可积简单函数},\ g\geqslant f\ \ \mu\text{-a.e.}\right\},
+\end{align*}
+并令 $f$ 关于 $\mu$ 的下积分为
+\begin{align*}
+\int_{*}f\diff\mu:=\sup\left\{\int g\diff\mu\ \middle|\ g\ \text{为}\ \mu\text{-可积简单函数},\ g\leqslant f\ \ \mu\text{-a.e.}\right\}.
+\end{align*}
+\item 称 $\mu$-可测函数 $f:X\to[-\infty,\infty]$ 为 $\mu$-可积的，是指
+\begin{align*}
+\int^{*}f\diff\mu=\int_{*}f\diff\mu,
+\end{align*}
+此时记
+\begin{align*}
+\int f\diff\mu:=\int^{*}f\diff\mu=\int_{*}f\diff\mu .
+\end{align*}
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-13; kind=motivation; 说明用简单函数从两侧夹逼定义一般函数积分的动机与单调性来源
+\begin{remark}\phantomsection\label{remark:ch01-def-1-13-动机}
+一般可测函数没有至多可数的水平集结构，其积分不能直接用加权和定义。定义中改用 $\mu$-可积简单函数从两侧夹逼：上积分对所有位于 $f$ 上方的这类函数取下确界，下积分对所有位于 $f$ 下方的这类函数取上确界。两个数对任意函数 $f:X\to[-\infty,\infty]$ 都有意义，而 $f$ 可积当且仅当二者相等。这样得到的积分在简单函数上与\cref{definition:ch01-1-12}一致，并自动具有单调性：若 $f\leqslant h$ $\mu$-a.e.，则任一满足 $g\geqslant h$ $\mu$-a.e. 的 $\mu$-可积简单函数 $g$ 也满足 $g\geqslant f$ $\mu$-a.e.，故 $\int^{*}f\diff\mu\leqslant\int^{*}h\diff\mu$。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-13; kind=hypotheses; 逐条分析可测性、a.e. 比较、空集约定与「非负可测必可积」
+\begin{remark}\phantomsection\label{remark:ch01-def-1-13-条件}
+\begin{enumerate}[(i)]
+\item 第 (i) 款的上下积分对任意函数 $f:X\to[-\infty,\infty]$ 有效，不要求 $\mu$-可测。若定义中的集合为空（不存在满足条件的 $\mu$-可积简单函数），按 $\inf\varnothing=+\infty$、$\sup\varnothing=-\infty$ 的约定理解。
+\item 比较用 $\mu$-a.e. 而非逐点：在零测集上改动 $f$ 不改变上下积分，这与积分不依赖零测集上取值的原则一致；若改用逐点比较，某些函数的上下积分会依赖于零测集上的定义方式。
+\item 第 (ii) 款的 $\mu$-可积性要求 $f$ 为 $\mu$-可测：可测性保证 $\{f>t\}$ 等水平集可测，这是 Fatou 引理与单调收敛定理中构造集合的前提。不可测函数的上下积分可能相等，但此时不能把 $f$ 当作可积函数使用。
+\item 恒有 $\int_{*}f\diff\mu\leqslant\int^{*}f\diff\mu$：若 $h\leqslant f\leqslant g$ $\mu$-a.e. 且 $h,g$ 为 $\mu$-可积简单函数，则 $h\leqslant g$ $\mu$-a.e.，由简单函数积分的单调性得 $\int h\diff\mu\leqslant\int g\diff\mu$；对一个变元取上确界、对另一个取下确界即得该不等式。
+\item 非负 $\mu$-可测函数总是 $\mu$-可积的。设 $\mu(\{f=\infty\})>0$，则任一满足 $g\geqslant f$ $\mu$-a.e. 的 $\mu$-可积简单函数 $g$ 于该集上取 $\infty$，故 $\int g\diff\mu=\infty$，上积分为 $\infty$；又二进截断 $\varphi_j$ 于该集上等于 $j$，故 $\int\varphi_j\diff\mu\geqslant j\,\mu(\{f=\infty\})\to\infty$，下积分亦为 $\infty$。若 $\mu(\{f=\infty\})=0$，取满足 $g\geqslant f$ $\mu$-a.e. 的 $\mu$-可积简单函数 $g$，可设 $g=0$ 于 $\{f=0\}$ 上（否则以 $g\chi_{\{f>0\}}$ 代替 $g$，它仍控制 $f$ 而积分不增），写 $g=\sum_{k=1}^{N}a_k\chi_{B_k}$，$0<a_k<\infty$，并令 $C_{k,n}:=B_k\cap\{f\geqslant a_k(1-1/n)\}$、$h_n:=\sum_{k=1}^{N}a_k(1-1/n)\chi_{C_{k,n}}$，则 $h_n$ 为 $\mu$-可积简单函数、$h_n\leqslant f$，且 $\mu(C_{k,n})\uparrow\mu(B_k)$（$n\to\infty$），故 $\int h_n\diff\mu\to\int g\diff\mu$；于是下积分 $\geqslant\int g\diff\mu$，对 $g$ 取下确界即得下积分 $\geqslant$ 上积分。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch01-def-1-13-可积约定}
+「可积」一词的用法与多数文献不同：只要求函数具有积分，即使该积分等于 $+\infty$ 或 $-\infty$，就称该函数可积。非负 $\mu$-可测函数总是 $\mu$-可积的。
+
+术语上的这一约定使得「可积」与「可和」分离：可积只要求上下积分相等，不要求积分有限；积分有限的情形另称为 $\mu$-可和（\cref{definition:ch01-1-14}）。因此本节的控制收敛定理等结论都以「可和」而非「可积」为前提。% XREF internal
+\end{remark}
+
+以下假定读者熟悉积分的通常性质。
+
+\begin{definition}[可和函数与局部可和函数]\label{definition:ch01-1-14}
+设 $X$ 为非空集合，$\mu$ 为 $X$ 上的测度。
+\begin{enumerate}[(i)]
+\item 称函数 $f:X\to[-\infty,\infty]$ 为 $\mu$-可和的，是指 $f$ 为 $\mu$-可积的且
+\begin{align*}
+\int\lvert f\rvert\diff\mu<\infty .
+\end{align*}
+\item 设 $f:\mathbb{R}^n\to[-\infty,\infty]$。称 $f$ 为局部 $\mu$-可和的，是指对每个紧集 $K\subset\mathbb{R}^n$，限制 $f|_{K}$ 是 $\mu$-可和的。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-14; kind=motivation; 说明「可积」与「可和」分层、并引入局部版本的原因
+\begin{remark}\phantomsection\label{remark:ch01-def-1-14-动机}
+定义把「有积分」（$\mu$-可积，积分可取 $\pm\infty$）与「积分有限」（$\mu$-可和）分成两层。$L^1$ 空间由可和函数组成，因为只有在 $\int\lvert f\rvert\diff\mu<\infty$ 时积分才具有良好的代数性质：可和函数之集对加法与数乘封闭，且 $\lvert\int f\diff\mu\rvert\leqslant\int\lvert f\rvert\diff\mu$。第 (ii) 款的局部版本把这一要求放宽到每个紧集上，使像 $f\equiv1$（$\mu=\mathcal{L}^n$）这样在全空间上不可和、却在每个有界区域上可和的函数进入讨论范围；\cref{definition:ch01-1-15}中符号测度的密度正是这样的局部对象。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-14; kind=hypotheses; 逐条分析可积性前提、局部化的紧集要求与不可和函数的存在
+\begin{remark}\phantomsection\label{remark:ch01-def-1-14-条件}
+\begin{enumerate}[(i)]
+\item 第 (i) 款先要求 $f$ 为 $\mu$-可积的，再要求 $\int\lvert f\rvert\diff\mu<\infty$。两个条件不能互相替代：非负 $\mu$-可测函数的积分可以是 $+\infty$，此时它可积但不可和；而 $\int\lvert f\rvert\diff\mu<\infty$ 蕴含 $\int f^{+}\diff\mu$ 与 $\int f^{-}\diff\mu$ 都有限，故 $\mu$-可和函数必为 $\mu$-可积。
+\item 若 $f$ 为 $\mu$-可和，则 $\lvert f\rvert<\infty$ $\mu$-a.e.，即 $f$ 在 $\mu$-a.e. 点取有限值；故可和函数与可积函数的差别只出现在零测集上取 $\pm\infty$ 的可能，以及积分值是否有限。
+\item 第 (ii) 款的局部化必须对一切紧集 $K\subset\mathbb{R}^n$ 要求，不能只对某个紧集要求：只在一个紧集上可和不能排除 $f$ 在远处剧烈增长。局部可和等价于 $f\chi_K\in L^1(\mathbb{R}^n,\mu)$ 对每个紧集 $K$ 成立。
+\item 局部可和性只在 $\mathbb{R}^n$ 这类局部紧空间上定义，因为它依赖紧集的概念；在一般测度空间上需要以「对每个测度有限的集合」或类似条件替代。
+\item 常数函数 $f\equiv1$ 关于 $\mu=\mathcal{L}^n$ 是局部 $\mu$-可和的，但不属于 $L^1(\mathbb{R}^n,\mathcal{L}^n)$，这说明第 (ii) 款确实比第 (i) 款弱。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[符号测度]\label{definition:ch01-1-15}
+称 $\nu$ 为 $\mathbb{R}^n$ 上的符号测度，是指存在 $\mathbb{R}^n$ 上的 Radon 测度 $\mu$ 与局部 $\mu$-可和函数 $f:\mathbb{R}^n\to[-\infty,\infty]$，使得对一切紧集 $K\subseteq\mathbb{R}^n$ 有
+\begin{align}
+\nu(K)=\int_{K}f\diff\mu,\label{align:ch01-1-15-符号测度}
+\end{align}
+其中 $\int_{K}f\diff\mu:=\int f\chi_{K}\diff\mu$。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-15; kind=motivation; 说明为何需要允许取负值的「测度」以及密度表示的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-15-动机}
+测度只取非负值，无法表示散度、通量这类带符号的量。定义用「Radon 测度与密度之积」的方式引入符号测度：$f\geqslant0$ 时 $\nu(K)=\int_{K}f\diff\mu$ 就是通常的测度 $\mu\llcorner f$，而 $f$ 变号时 $\nu(K)$ 可取负值。把符号测度表示为密度形式，使关于测度的积分运算可以直接迁移过来：$\nu$ 在集合上的值就是对 $f$ 积分，$\nu$ 的可加性来自积分的可加性。这一表示在\cref{section:ch01-06}的微分理论中给出逆向结论：由 $\nu$ 可以还原出密度 $f$。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-15; kind=hypotheses; 逐条分析 Radon 测度、局部可和与「仅对紧集指定」三点
+\begin{remark}\phantomsection\label{remark:ch01-def-1-15-条件}
+\begin{enumerate}[(i)]
+\item 要求 $\mu$ 为 Radon 测度（局部有限、Borel 正则、外正则），是为了使紧集 $K$ 的测度有限，从而 $\int_{K}f\diff\mu$ 对局部可和的 $f$ 有定义且有限。
+\item $f$ 的局部可和性保证 $\nu(K)\in\mathbb{R}$ 对每个紧集 $K$ 成立。若只假设 $f$ 为 $\mu$-可积，$\int_{K}f\diff\mu$ 可能等于 $\pm\infty$，$K\mapsto\nu(K)$ 便不再具有可加性：$\nu(K_1\cup K_2)=\nu(K_1)+\nu(K_2)$ 在出现 $\infty-\infty$ 时失效。
+\item 定义只在紧集上指定 $\nu$ 的取值。由于 $\mu$ 为 Radon 测度，紧集上的取值已经决定了 $\nu$ 在 Borel 集上的取值（用内正则性从内部逼近），故这一指定方式不损失信息。
+\item 允许 $f$ 取负值，正是「符号」二字的来源。取 $\mu=\mathcal{L}^n$、$f\equiv-1$，则 $\nu(K)=-\mathcal{L}^n(K)$ 对每个紧集 $K$ 成立，$\nu$ 不是测度：它在非空开集上取负值。
+\item 同一条\eqref{align:ch01-1-15-符号测度}可以由不同的函数给出：$f=g$ $\mu$-a.e. 时两者给出同一个 $\nu$；反之由 $\nu$ 在紧集上的值确定 $f$ 只到 $\mu$-a.e. 相等。
+\end{enumerate}
+\end{remark}
+
+\begin{definition*}[记号]\phantomsection\label{definition:ch01-1-3-记号}
+设 $\mu$ 为 $\mathbb{R}^n$ 上的 Radon 测度，$f:\mathbb{R}^n\to[-\infty,\infty]$ 为局部 $\mu$-可和函数。
+\begin{enumerate}[(i)]
+\item 若对一切紧集 $K\subseteq\mathbb{R}^n$ 有\eqref{align:ch01-1-15-符号测度}，则记 $\nu=\mu\llcorner f$。由此对每个 $\mu$-可测集 $A\subseteq\mathbb{R}^n$ 有 $\mu\llcorner A=\mu\llcorner\chi_{A}$。
+\item 用 $L^1(X,\mu)$ 表示 $X$ 上一切 $\mu$-可和函数之集，用 $L^1_{\mathrm{loc}}(\mathbb{R}^n,\mu)$ 表示一切局部 $\mu$-可和函数之集。
+\item 同样，若 $1<p<\infty$，则 $L^p(X,\mu)$ 表示 $X$ 上使 $\lvert f\rvert^{p}$ 为 $\mu$-可和的 $\mu$-可测函数 $f$ 之集，$L^{p}_{\mathrm{loc}}(\mathbb{R}^n,\mu)$ 表示使 $\lvert f\rvert^{p}$ 为局部 $\mu$-可和的 $\mu$-可测函数 $f$ 之集。
+\item 不把两个 $\mu$-a.e. 相等的 $L^p$（或 $L^{p}_{\mathrm{loc}}$）函数视为同一函数。
+\end{enumerate}
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch01-1-3-记号; kind=motivation; 说明密度记号与 $L^p$ 空间的约定如何服务于本节及后续
+% SUPPLEMENT: parent=definition:ch01-1-3-记号; kind=hypotheses; 说明 $1<p<\infty$ 的范围、未取商空间与局部版本的含义
+\begin{remark}\phantomsection\label{remark:ch01-1-3-记号}
+记号 $\nu=\mu\llcorner f$ 把\cref{definition:ch01-1-15}的表示式缩写为一个等式，使符号测度可以像测度一样参与运算；取 $f=\chi_{A}$ 即得通常的测度限制，故测度限制是密度记号的特例。$L^{p}$ 空间的定义沿用可和性：$f\in L^{p}(X,\mu)$ 当且仅当 $\lvert f\rvert^{p}$ 为 $\mu$-可和，即 $\int\lvert f\rvert^{p}\diff\mu<\infty$；局部版本则要求在每个紧集上如此。% XREF internal
+
+指数范围限定为 $1<p<\infty$：$p=1$ 的情形已由 $L^1$ 单独定义，$p=\infty$ 需要本质上确界而非积分，两者都不在积分框架内。第 (iv) 款说明这些空间里的元素是函数本身而非等价类，因此 $\lVert\cdot\rVert_{p}$ 只是半范数；若需要范数，须对 $\mu$-a.e. 相等的函数作商。局部版本的记号 $L^{p}_{\mathrm{loc}}(\mathbb{R}^n,\mu)$ 只在 $\mathbb{R}^n$ 上使用，与\cref{definition:ch01-1-14}的局部可和性对应。% XREF internal
+\end{remark}
+
+下面三个关于积分的极限定理属于整个分析学中最重要的论断之列。
+
+\begin{theorem}[Fatou 引理]\label{theorem:ch01-1-17}
+设 $X$ 为非空集合，$\mu$ 为 $X$ 上的测度，$f_k:X\to[0,\infty]$（$k=1,2,\cdots$）为 $\mu$-可测函数。则
+\begin{align}
+\int\liminf_{k\to\infty}f_k\diff\mu\leqslant\liminf_{k\to\infty}\int f_k\diff\mu .\label{align:ch01-1-17-fatou}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+取非负简单函数 $g:=\sum_{j=1}^{\infty}a_j\chi_{A_j}$，使 $g\leqslant\liminf_{k\to\infty}f_k$ $\mu$-a.e.；其中 $\mu$-可测集 $\{A_j\}_{j=1}^{\infty}$ 两两不交，$a_j>0$（$j=1,2,\cdots$）。此时 $\int g\diff\mu=\sum_{j=1}^{\infty}a_j\mu(A_j)$。若某个 $a_j=+\infty$ 且 $\mu(A_j)>0$，则把该系数换成任意大的正整数 $N$ 后重复以下论证，再令 $N\to\infty$ 即得结论，故以下设 $0<a_j<\infty$（$j=1,2,\cdots$）。
+
+固定 $0<t<1$。对每个 $j$ 与 $k=1,2,\cdots$ 令
+\begin{align*}
+B_{j,k}:=A_j\cap\left\{x\mid f_l(x)>ta_j\ \text{对一切}\ l\geqslant k\right\}.
+\end{align*}
+由 $g\leqslant\liminf_{l\to\infty}f_l$ $\mu$-a.e. 知，对 $\mu$-a.e. $x\in A_j$ 有 $\liminf_{l\to\infty}f_l(x)\geqslant a_j>ta_j$，故存在 $k$ 使得 $l\geqslant k$ 时 $f_l(x)>ta_j$；因此 $\mu\bigl(A_j\setminus\bigcup_{k=1}^{\infty}B_{j,k}\bigr)=0$，从而
+\begin{align*}
+\mu(B_{j,k})\to\mu(A_j)\qquad(k\to\infty).
+\end{align*}
+注意 $A_j\supseteq B_{j,k+1}\supseteq B_{j,k}$（$k=1,2,\cdots$）。由 $f_k\geqslant0$ 及 $B_{j,k}\subseteq A_j$ 得
+\begin{align*}
+\int f_k\diff\mu\geqslant\sum_{j=1}^{\infty}\int_{A_j}f_k\diff\mu\geqslant\sum_{j=1}^{\infty}\int_{B_{j,k}}f_k\diff\mu\geqslant t\sum_{j=1}^{\infty}a_j\mu(B_{j,k}),
+\end{align*}
+其中末一步用到 $f_k>ta_j$ 于 $B_{j,k}$ 上。于是对 $k$ 取下极限，并利用 $\mu(B_{j,k})\to\mu(A_j)$ 与各项非负，得
+\begin{align*}
+\liminf_{k\to\infty}\int f_k\diff\mu\geqslant t\sum_{j=1}^{\infty}a_j\mu(A_j)=t\int g\diff\mu .
+\end{align*}
+上式对每个 $0<t<1$ 与每个满足 $g\leqslant\liminf_{k\to\infty}f_k$ $\mu$-a.e. 的 $\mu$-可积简单函数 $g$ 成立。令 $t\uparrow1$，再对这样的 $g$ 取上确界，得
+\begin{align*}
+\liminf_{k\to\infty}\int f_k\diff\mu\geqslant\int_{*}\liminf_{k\to\infty}f_k\diff\mu=\int\liminf_{k\to\infty}f_k\diff\mu,
+\end{align*}
+其中末一步用到：$\liminf_{k\to\infty}f_k$ 为非负 $\mu$-可测函数，故按\cref{definition:ch01-1-13}它是 $\mu$-可积的，且其积分与下积分相等。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-17; kind=motivation; 说明单向不等式为何是最优结论及其证明策略
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-17-动机}
+积分的极限与极限的积分一般不相等，Fatou 引理给出在非负情形下仍然成立的单向不等式，因而是对「积分与极限交换」这一问题的最优一般结论。证明策略是把任意一个位于 $\liminf_{k}f_k$ 下方的非负简单函数 $g$ 与 $f_k$ 的积分作比较：在水平集 $A_j$ 上 $\liminf_{l}f_l\geqslant a_j$，故最终 $f_k>ta_j$；取 $0<t<1$ 是为处理严格不等号，最后令 $t\uparrow1$ 消去这一缩放。集合 $B_{j,k}$ 随 $k$ 递增且覆盖 $A_j$ 的 $\mu$-a.e. 部分，这一单调性正是取下极限的依据。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-17; kind=hypotheses; 逐条分析非负性、可测性的作用并给出反例与取等情形
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-17-条件}
+\begin{enumerate}[(i)]
+\item 非负性不可删除。取 $\mu=\mathcal{L}^1$、$f_k:=-\chi_{[k,k+1]}$，则 $\liminf_{k}f_k=0$ 处处成立，故左端为 $0$；而 $\int f_k\diff\mu=-1$ 对每个 $k$ 成立，右端为 $-1$，不等式不成立。
+\item 结论为不等号，等式一般不成立。取 $\mu=\mathcal{L}^1$ 于 $[0,1]$、$f_k:=k\chi_{(0,1/k)}$，则 $\liminf_{k}f_k=0$ 处处成立、左端为 $0$，而 $\int f_k\diff\mu=1$，右端为 $1$。
+\item $\mu$-可测性用于两处：保证 $B_{j,k}$ 为 $\mu$-可测集从而其测度有定义，并保证每个 $f_k$ 的积分存在。
+\item 结论不需要 $\mu(X)<\infty$，也不需要任何控制函数；这是 Fatou 引理相对于控制收敛定理的优势。
+\item 若补充单调性或控制条件，不等号可以加强为等式，见\cref{theorem:ch01-1-18}与\cref{theorem:ch01-1-19}。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[单调收敛定理]\label{theorem:ch01-1-18}
+设 $X$ 为非空集合，$\mu$ 为 $X$ 上的测度，$f_k:X\to[0,\infty]$（$k=1,2,\cdots$）为 $\mu$-可测函数，且
+\begin{align*}
+f_1\leqslant\cdots\leqslant f_k\leqslant f_{k+1}\leqslant\cdots .
+\end{align*}
+则
+\begin{align}
+\lim_{k\to\infty}\int f_k\diff\mu=\int\lim_{k\to\infty}f_k\diff\mu .\label{align:ch01-1-18-mct}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+对每个 $j$，设 $g$ 为任一满足 $g\geqslant\lim_{k\to\infty}f_k$ $\mu$-a.e. 的 $\mu$-可积简单函数。由 $f_j\leqslant\lim_{k\to\infty}f_k$ 得 $g\geqslant f_j$ $\mu$-a.e.，按\cref{definition:ch01-1-13}中上积分的定义取下确界，得% XREF internal
+\begin{align*}
+\int f_j\diff\mu=\int^{*}f_j\diff\mu\leqslant\int^{*}\lim_{k\to\infty}f_k\diff\mu=\int\lim_{k\to\infty}f_k\diff\mu\qquad(j=1,2,\cdots);
+\end{align*}
+因此
+\begin{align*}
+\lim_{k\to\infty}\int f_k\diff\mu\leqslant\int\lim_{k\to\infty}f_k\diff\mu .
+\end{align*}
+反向的不等式由\cref{theorem:ch01-1-17}得到：% XREF p=42 "The opposite inequality follows from Fatou's Lemma."
+\begin{align*}
+\int\lim_{k\to\infty}f_k\diff\mu=\int\liminf_{k\to\infty}f_k\diff\mu\leqslant\liminf_{k\to\infty}\int f_k\diff\mu=\lim_{k\to\infty}\int f_k\diff\mu,
+\end{align*}
+其中第一个等号用到 $\{f_k\}$ 单调递增故其极限与下极限相同，最后一个等号用到 $\{\int f_k\diff\mu\}$ 关于 $k$ 单调不减（由 $f_k\leqslant f_{k+1}$ 与积分的单调性）故其下极限等于极限。两式合并即得结论。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-18; kind=motivation; 说明单调性如何使积分与极限可交换及其在后续证明中的作用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-18-动机}
+单调性使积分与极限可以交换：极限函数是单调递增列的逐点上确界，故任何控制极限函数的简单函数都最终控制每一项，反向估计便化为 Fatou 引理。这一定理是把逐点信息提升为积分等式的核心工具：对非负 $\mu$-可测函数列 $\{g_k\}$，对部分和 $\sum_{k=1}^{N}g_k$ 应用本定理即得逐项积分公式 $\sum_{k=1}^{\infty}\int g_k\diff\mu=\int\sum_{k=1}^{\infty}g_k\diff\mu$，\cref{theorem:ch01-1-21}的证明正是这样使用它。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-18; kind=hypotheses; 逐条分析单调性、非负性的必要性并给出反例
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-18-条件}
+\begin{enumerate}[(i)]
+\item 单调性不可删除。取 $\mu=\mathcal{L}^1$、$f_k:=\chi_{[k,k+1]}$，则 $f_k\geqslant0$ 且 $\mu$-可测，但 $\{f_k\}$ 不单调；此时 $\lim_{k}f_k=0$ 处处成立，$\int\lim_{k}f_k\diff\mu=0$，而 $\int f_k\diff\mu=1$，等式不成立。
+\item 非负性不可删除。取 $\mu=\mathcal{L}^1$、$f_k:=-1/k$（$k=1,2,\cdots$），则 $f_k$ 单调递增且 $\lim_{k}f_k=0$ 处处成立，故 $\int\lim_{k}f_k\diff\mu=0$；但 $\int f_k\diff\mu=-\infty$ 对每个 $k$ 成立，$\lim_{k}\int f_k\diff\mu=-\infty$。
+\item 允许 $f_k$ 取 $+\infty$ 是必要的：结论中极限函数的积分可以是 $+\infty$，此时等式两端同时为 $+\infty$。
+\item 若单调列有可和的下界控制，即 $f_1$ 为 $\mu$-可和且 $f_k\geqslant f_1$，则对非负列 $f_k-f_1$ 应用本定理即可，无须额外的控制条件；这与\cref{theorem:ch01-1-19}的区别在于控制来自列自身的一端。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[控制收敛定理]\label{theorem:ch01-1-19}
+设 $X$ 为非空集合，$\mu$ 为 $X$ 上的测度，$g:X\to[0,\infty]$ 为 $\mu$-可和函数，$f:X\to[-\infty,\infty]$ 与 $f_k:X\to[-\infty,\infty]$（$k=1,2,\cdots$）为 $\mu$-可测函数。假设
+\begin{align*}
+f_k\to f\quad\mu\text{-a.e.}\qquad(k\to\infty),
+\end{align*}
+且
+\begin{align*}
+\lvert f_k\rvert\leqslant g\qquad(k=1,2,\cdots).
+\end{align*}
+则
+\begin{align}
+\lim_{k\to\infty}\int\lvert f_k-f\rvert\diff\mu=0 .\label{align:ch01-1-19-dct}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+在使 $f_k(x)\to f(x)$ 的 $\mu$-a.e. 点 $x$ 处有 $\lvert f(x)\rvert=\lim_{k}\lvert f_k(x)\rvert\leqslant g(x)$，故 $\lvert f-f_k\rvert\leqslant\lvert f\rvert+\lvert f_k\rvert\leqslant2g$ $\mu$-a.e.；于是函数 $2g-\lvert f-f_k\rvert$ 非负、$\mu$-可测，且其下极限等于 $2g$ $\mu$-a.e.。由\cref{theorem:ch01-1-17}，% XREF p=43 "By Fatou's Lemma,"
+\begin{align*}
+\int 2g\diff\mu=\int\liminf_{k\to\infty}\bigl(2g-\lvert f-f_k\rvert\bigr)\diff\mu\leqslant\liminf_{k\to\infty}\int\bigl(2g-\lvert f-f_k\rvert\bigr)\diff\mu .
+\end{align*}
+由于 $\int 2g\diff\mu<\infty$ 且 $\int\lvert f-f_k\rvert\diff\mu\leqslant2\int g\diff\mu<\infty$，逐项相减得
+\begin{align*}
+\int\bigl(2g-\lvert f-f_k\rvert\bigr)\diff\mu=2\int g\diff\mu-\int\lvert f-f_k\rvert\diff\mu,
+\end{align*}
+故上式蕴含
+\begin{align*}
+\limsup_{k\to\infty}\int\lvert f-f_k\rvert\diff\mu\leqslant0 .
+\end{align*}
+而 $\int\lvert f-f_k\rvert\diff\mu\geqslant0$，故 $\lim_{k\to\infty}\int\lvert f_k-f\rvert\diff\mu=0$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-19; kind=motivation; 说明单一可和控制的思路，以及把逐点收敛转化为 Fatou 不等式的技巧
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-19-动机}
+一个与 $k$ 无关的 $\mu$-可和函数 $g$ 把整列 $\{f_k\}$ 压在同一可积范围内，于是逐点收敛可以提升为积分的收敛。证明的技巧在于把「$\lvert f_k-f\rvert\to0$」翻译成非负函数 $2g-\lvert f-f_k\rvert$ 的 Fatou 不等式：控制函数 $g$ 使这一列非负，而 Fatou 的单向不等式在两端同时减去 $\int2g\diff\mu$ 后反解出 $\limsup\int\lvert f_k-f\rvert\diff\mu\leqslant0$。控制函数的作用正是把可能出现无穷大的方向同时扣掉。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-19; kind=hypotheses; 逐条分析控制、可和、a.e. 收敛的作用并给出反例
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-19-条件}
+\begin{enumerate}[(i)]
+\item 控制条件 $\lvert f_k\rvert\leqslant g$ 不可删除。取 $\mu=\mathcal{L}^1$ 于 $[0,1]$、$f_k:=k\chi_{(0,1/k)}$，则 $f_k\to0$ 处处成立，而 $\int\lvert f_k\rvert\diff\mu=1$ 对每个 $k$ 成立。此时不存在满足条件的 $g$：$\sup_{k}\lvert f_k\rvert=+\infty$ 于 $(0,1)$ 上成立，任何控制函数都不可和。
+\item 假设 $f_k\to f$ $\mu$-a.e. 不可删除。取 $\mu=\mathcal{L}^1$ 于 $[0,1]$、$f_k:=\chi_{[0,1/2]}$（$k$ 为偶数）、$f_k:=\chi_{(1/2,1]}$（$k$ 为奇数），并取 $g\equiv1$，则 $\lvert f_k\rvert\leqslant g$ 且 $g$ 可和，但 $\{f_k\}$ 不收敛，$\int\lvert f_k-f\rvert\diff\mu$ 对任何 $f$ 都不趋于 $0$。
+\item $g$ 必须与 $k$ 无关：若控制函数随 $k$ 变化，需要额外假设 $\int g_k\diff\mu\to\int g\diff\mu$，见\cref{theorem:ch01-1-20}。% XREF internal
+\item 结论是 $L^1$ 收敛，强于依测度收敛：由 $\int\lvert f_k-f\rvert\diff\mu\to0$ 与 Markov 不等式得 $\mu(\{\lvert f_k-f\rvert>\varepsilon\})\to0$；反之依测度收敛不蕴含 $L^1$ 收敛。
+\item 结论中的极限函数 $f$ 由 $f_k\to f$ $\mu$-a.e. 确定，只在零测集上可以改动；改动不改变 $\int\lvert f_k-f\rvert\diff\mu$ 的极限值。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[控制收敛定理的变体]\label{theorem:ch01-1-20}
+设 $X$ 为非空集合，$\mu$ 为 $X$ 上的测度，$g:X\to[-\infty,\infty]$ 与 $g_k:X\to[-\infty,\infty]$（$k=1,2,\cdots$）为 $\mu$-可和函数，$f:X\to[-\infty,\infty]$ 与 $f_k:X\to[-\infty,\infty]$（$k=1,2,\cdots$）为 $\mu$-可测函数。假设 $f_k\to f$ $\mu$-a.e.，且
+\begin{align*}
+\lvert f_k\rvert\leqslant g_k\qquad(k=1,2,\cdots).
+\end{align*}
+若又有 $g_k\to g$ $\mu$-a.e.，且
+\begin{align*}
+\lim_{k\to\infty}\int g_k\diff\mu=\int g\diff\mu,
+\end{align*}
+则
+\begin{align}
+\lim_{k\to\infty}\int\lvert f_k-f\rvert\diff\mu=0 .\label{align:ch01-1-20-变体}
+\end{align}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch01-1-20; kind=proof; 该定理的证明被省略，此处给出完整论证：以 $g_k+g$ 代替常数控制 $2g$，对非负函数 $g_k+g-\lvert f_k-f\rvert$ 应用 Fatou 引理
+\begin{proof}
+本定理的证明与\cref{theorem:ch01-1-19}的证明类似；下面写出完整论证，以便逐条核对条件的使用。% XREF p=43 "Similar to proof of the Dominated Convergence Theorem."
+
+（1）先证 $\lvert f\rvert\leqslant g$ $\mu$-a.e.。在使 $f_k(x)\to f(x)$ 且 $g_k(x)\to g(x)$ 的点 $x$ 处，
+\begin{align*}
+\lvert f(x)\rvert=\lim_{k\to\infty}\lvert f_k(x)\rvert\leqslant\lim_{k\to\infty}g_k(x)=g(x).
+\end{align*}
+
+（2）令 $\varphi_k:=g_k+g-\lvert f_k-f\rvert$。由（1）得 $\lvert f_k-f\rvert\leqslant\lvert f_k\rvert+\lvert f\rvert\leqslant g_k+g$ $\mu$-a.e.，故 $\varphi_k\geqslant0$ $\mu$-a.e.；在 $\varphi_k<0$ 的零测集上把 $\varphi_k$ 改为 $0$ 不改变任何积分，故可设 $\varphi_k\geqslant0$ 处处成立，且 $\varphi_k$ 为 $\mu$-可测。对 $\{\varphi_k\}$ 应用\cref{theorem:ch01-1-17}：% XREF internal
+\begin{align*}
+\int 2g\diff\mu
+&=\int\liminf_{k\to\infty}\varphi_k\diff\mu
+\leqslant\liminf_{k\to\infty}\int\varphi_k\diff\mu\\
+&=\liminf_{k\to\infty}\left(\int g_k\diff\mu+\int g\diff\mu-\int\lvert f_k-f\rvert\diff\mu\right)\\
+&=\int g\diff\mu+\int g\diff\mu-\limsup_{k\to\infty}\int\lvert f_k-f\rvert\diff\mu,
+\end{align*}
+其中第一个等号用到 $\liminf_{k}\varphi_k=2g$ $\mu$-a.e.，中间一步用到 $g_k$、$g$、$\lvert f_k-f\rvert$ 的积分均有限从而可逐项相减，最后一个等号用到 $\int g_k\diff\mu\to\int g\diff\mu$ 与 $\int g\diff\mu<\infty$。
+
+（3）由（2）得
+\begin{align*}
+\limsup_{k\to\infty}\int\lvert f_k-f\rvert\diff\mu\leqslant0,
+\end{align*}
+而 $\int\lvert f_k-f\rvert\diff\mu\geqslant0$，故 $\lim_{k\to\infty}\int\lvert f_k-f\rvert\diff\mu=0$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-20; kind=motivation; 说明为什么要把常数控制放宽为逐项控制，以及总质量收敛条件的作用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-20-动机}
+常数控制函数在应用中过强：处理 $\lvert f_k\rvert^{p}$ 型估计时，控制量本身随 $k$ 变化，难以找到与 $k$ 无关的可和函数。本定理把控制放宽为逐项控制 $g_k$，代价是要求这些控制量的总质量收敛，即 $\int g_k\diff\mu\to\int g\diff\mu$。这一条件的实质是「质量不逃逸」：$g_k$ 可以变化，但其积分不能有额外的损失或增益。证明中把\cref{theorem:ch01-1-19}的 $2g$ 换成 $g_k+g$，于是非负性来自 $\lvert f_k-f\rvert\leqslant g_k+g$，而质量守恒条件使 Fatou 不等式两端可以相消。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-20; kind=hypotheses; 逐条分析质量收敛条件的必要性，并说明它与常数控制情形的联系
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-20-条件}
+\begin{enumerate}[(i)]
+\item 条件 $\int g_k\diff\mu\to\int g\diff\mu$ 不可删除。取 $\mu=\mathcal{L}^1$、$g_k:=\chi_{[0,1]}+\chi_{[k,k+1]}$、$g:=\chi_{[0,1]}$、$f_k:=\chi_{[k,k+1]}$、$f:=0$。则 $g_k\to g$ $\mu$-a.e.，$\lvert f_k\rvert\leqslant g_k$，$f_k\to f$ $\mu$-a.e.，但 $\int g_k\diff\mu=2$、$\int g\diff\mu=1$，且 $\int\lvert f_k-f\rvert\diff\mu=1$ 对每个 $k$ 成立，结论不成立。
+\item 要求 $g$ 与 $g_k$ 为 $\mu$-可和（而非仅仅 $\mu$-可积）是必要的：结论中的极限等式涉及两个有限量之差，若允许 $\int g_k\diff\mu=+\infty$，条件 $\int g_k\diff\mu\to\int g\diff\mu$ 便失去意义。
+\item 由 $\lvert f_k\rvert\leqslant g_k$ 与 $f_k\to f$ $\mu$-a.e. 不能推出 $\lvert f\rvert\leqslant g$ 处处成立，只能得到 $\mu$-a.e. 成立；证明第（1）步中的等式只在零测集之外有效，这不影响积分。
+\item \cref{theorem:ch01-1-19}是本定理取 $g_k\equiv g$ 的特例：此时质量条件自动满足。% XREF internal
+\item 结论与\cref{theorem:ch01-1-21}配合使用：先由本定理得到 $\int\lvert f_k-f\rvert\diff\mu\to0$，再提取 $\mu$-a.e. 收敛的子列。% XREF internal
+\end{enumerate}
+\end{remark}
+
+由 $\lim_{k\to\infty}\int\lvert f_k-f\rvert\diff\mu=0$ 一般不蕴含 $f_k\to f$ $\mu$-a.e.；但若过渡到适当的子列，则可得到 a.e. 收敛。
+
+\begin{theorem}[几乎处处收敛的子列]\label{theorem:ch01-1-21}
+设 $X$ 为非空集合，$\mu$ 为 $X$ 上的测度，$f:X\to[-\infty,\infty]$ 与 $f_k:X\to[-\infty,\infty]$（$k=1,2,\cdots$）为 $\mu$-可和函数，且
+\begin{align*}
+\lim_{k\to\infty}\int\lvert f_k-f\rvert\diff\mu=0 .
+\end{align*}
+则存在子列 $\{f_{k_j}\}_{j=1}^{\infty}$，使得
+\begin{align*}
+f_{k_j}\to f\quad\mu\text{-a.e.}\qquad(j\to\infty).
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+由 $\int\lvert f_k-f\rvert\diff\mu\to0$，可归纳地取 $k_1<k_2<\cdots$，使得
+\begin{align*}
+\int\lvert f_{k_j}-f\rvert\diff\mu\leqslant2^{-j}\qquad(j=1,2,\cdots),
+\end{align*}
+于是 $\sum_{j=1}^{\infty}\int\lvert f_{k_j}-f\rvert\diff\mu<\infty$。由\cref{theorem:ch01-1-18}，% XREF p=44 "In view of the Monotone Convergence Theorem, this implies"
+\begin{align*}
+\int\sum_{j=1}^{\infty}\lvert f_{k_j}-f\rvert\diff\mu=\sum_{j=1}^{\infty}\int\lvert f_{k_j}-f\rvert\diff\mu<\infty;
+\end{align*}
+于是
+\begin{align*}
+\sum_{j=1}^{\infty}\lvert f_{k_j}-f\rvert<\infty\quad\mu\text{-a.e.},
+\end{align*}
+因为若该级数在某个正测度集上发散到 $+\infty$，则其积分等于 $+\infty$，与上式矛盾。因此对 $\mu$-a.e. 点 $x$ 有 $\sum_{j}\lvert f_{k_j}(x)-f(x)\rvert<\infty$；级数收敛蕴含其通项趋于零，故 $f_{k_j}(x)\to f(x)$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-21; kind=motivation; 说明 $L^1$ 收敛与逐点收敛的差距，以及把积分可和性转化为级数可和性的思路
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-21-动机}
+$L^1$ 收敛是积分意义下的收敛，不保证逐点收敛；本定理说明在可和函数列中总能提取 $\mu$-a.e. 收敛的子列。证明的思路是把「积分可和」转成「级数可和」：先选取使 $\int\lvert f_{k_j}-f\rvert\diff\mu\leqslant2^{-j}$ 的子列，再用单调收敛定理把级数与积分交换，最后利用「非负可积函数在 $\mu$-a.e. 点取有限值」这一事实。这一手法是 $L^p$ 空间完备性论证与依测度收敛提取子列的标准步骤。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-21; kind=hypotheses; 逐条分析可和性、子列的必要性并给出反例
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-21-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f$ 与 $f_k$ 为 $\mu$-可和，保证 $\int\lvert f_k-f\rvert\diff\mu$ 是有限数，从而「$\to0$」以及不等式 $\int\lvert f_{k_j}-f\rvert\diff\mu\leqslant2^{-j}$ 才有意义。
+\item 结论中的子列不可换成整个序列。取 $\mu=\mathcal{L}^1$ 于 $[0,1]$，并按 $[0,1]$、$[0,1/2]$、$[1/2,1]$、$[0,1/3]$、$[1/3,2/3]$、$[2/3,1]$、$\cdots$ 的顺序取 $f_k$ 为这些区间上的指示函数、$f:=0$，则 $\int\lvert f_k-f\rvert\diff\mu$ 等于相应区间的长度，趋于 $0$；但每个点 $x\in(0,1)$ 被无穷多个区间覆盖，故 $f_k(x)$ 不收敛。
+\item 结论是存在性：收敛点集不能预先指定，且子列的选取依赖于序列本身。取 $\mu=\mathcal{L}^1$、$f_k:=\chi_{[k,k+1]}$、$f:=0$，则 $f_k\to f$ 处处成立而 $\int\lvert f_k-f\rvert\diff\mu=1$ 不趋于 $0$，故定理中的积分条件不能换成 a.e. 收敛。
+\item 反向蕴含不成立：$f_k:=k\chi_{(0,1/k)}$ 于 $[0,1]$ 满足 $f_k\to0$ $\mu$-a.e.，但 $\int\lvert f_k\rvert\diff\mu=1$，故 a.e. 收敛不蕴含 $L^1$ 收敛。
+\end{enumerate}
+\end{remark}
+
+\end{document}

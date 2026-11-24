@@ -15,154 +15,1104 @@
 
 \section{与核相联的容量}\label{section:ch03-核容量}
 
-\subsection{预备知识}\label{subsection:ch03-核预备}
+本节介绍文献~\cite{ref72} 中发展起来的容量理论的若干结果，供后文使用。
 
-设 $g:\mathbb{R}^N\times\mathbb{R}^N\to[0,\infty]$ 为连续对称函数。
+\subsection{预备知识与定义}\label{subsection:ch03-核预备}
 
+本节以下，$\mathbb{R}^N\times\mathbb{R}^N$ 上的\textbf{核}指下半连续函数
+\begin{align*}
+g:\mathbb{R}^N\times\mathbb{R}^N\to[0,\infty],
+\end{align*}
+其取值允许为 $+\infty$。由\hyperref[remark:ch02-连续半连续Borel]{下半连续函数为 Borel 可测的注记}，$g$ 为 $\mathcal{B}(\mathbb{R}^N)\times\mathcal{B}(\mathbb{R}^N)$-可测；于是对任意固定的 $x,y\in\mathbb{R}^N$，$g(x,\cdot)$ 与 $g(\cdot,y)$ 分别为 $\mathcal{B}(\mathbb{R}^N)$-可测（见\cref{proposition:ch02-迹可测}）。因此对任意 $\mu,\nu\in\mathscr{R}^+(\mathbb{R}^N)$，下列各量作为 $[0,\infty]$ 中的元素有定义：
+\begin{align}
+g(x,\mu)&\triangleq\int_{\mathbb{R}^N}g(x,y)\,\mathrm{d}\mu(y)\quad(x\in\mathbb{R}^N),\label{align:ch03-3.21a}\\
+g(\nu,y)&\triangleq\int_{\mathbb{R}^N}g(x,y)\,\mathrm{d}\nu(x)\quad(y\in\mathbb{R}^N),\label{align:ch03-3.21b}\\
+g(\nu,\mu)&\triangleq\int_{\mathbb{R}^N\times\mathbb{R}^N}g\,\mathrm{d}(\mu\times\nu)
+=\int_{\mathbb{R}^N}g(x,\mu)\,\mathrm{d}\nu(x)
+=\int_{\mathbb{R}^N}g(\nu,y)\,\mathrm{d}\mu(y).\label{align:ch03-3.21c}
+\end{align}
+
+\eqref{align:ch03-3.21c} 中的两个等号由 Tonelli 定理得到。注意 $g(x,\mu)=g(\delta_x,\mu)$ 且 $g(\nu,y)=g(\nu,\delta_y)$。若 $\tilde\mu(E)=\int_Ef\,\mathrm{d}\mu$（$E\in\mathcal{B}(\mathbb{R}^N)$），其中 $f$ 非负且 $\mathcal{B}(\mathbb{R}^N)$-可测，则记 $g(\nu,f\mu)\equiv g(\nu,\tilde\mu)$；并置
+\begin{align}
+(G_\mu f)(x)\triangleq g(x,f\mu)=\int_{\mathbb{R}^N}g(x,y)f(y)\,\mathrm{d}\mu(y)\quad(x\in\mathbb{R}^N).\label{align:ch03-3.22}
+\end{align}
+量 $g(f\nu,\mu)$ 与 $(G_\nu f)(y)$（$y\in\mathbb{R}^N$）类似地定义。
+
+\eqref{align:ch03-3.21a}--\eqref{align:ch03-3.21c} 中的函数 $g(\cdot,\mu)$、$g(\nu,\cdot)$ 与 $g$ 分别称为 $\mu$ 与 $\nu$ 的\textbf{位势}与\textbf{互能量}。
+
+关于下述结果，注意 $\mathscr{R}^+_f(\mathbb{R}^N)$ 上的弱$^*$拓扑由\cref{theorem:ch02-Riesz对偶}刻画（见\cref{definition:ch05-弱星收敛}）。
+
+\begin{lemma}\label{lemma:ch03-位势下半连续}
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$f:\mathbb{R}^N\to[0,\infty]$ 非负且 $\mathcal{B}(\mathbb{R}^N)$-可测，$\nu\in\mathscr{R}^+_f(\mathbb{R}^N)$。则对任意 $\mu\in\mathscr{R}^+_f(\mathbb{R}^N)$：
 \begin{enumerate}[(i)]
-\item 对任意 $\mu\in\mathscr{R}^+(\mathbb{R}^N)$ 与 $x\in\mathbb{R}^N$，置
-\begin{align}
-g(x,\mu)\triangleq \int_{\mathbb{R}^N}g(x,y)\,\mathrm{d}\mu(y).\label{align:ch03-3.21a}
-\end{align}
-\item 对任意 $\nu\in\mathscr{R}^+(\mathbb{R}^N)$ 与 $y\in\mathbb{R}^N$，置
-\begin{align}
-g(\nu,y)\triangleq \int_{\mathbb{R}^N}g(x,y)\,\mathrm{d}\nu(x).\label{align:ch03-3.21b}
-\end{align}
-\item 对任意 $\mu,\nu\in\mathscr{R}^+(\mathbb{R}^N)$，置
-\begin{align}
-g(\nu,\mu)\triangleq \int_{\mathbb{R}^N}g(x,\mu)\,\mathrm{d}\nu(x)
-=\int_{\mathbb{R}^N}\int_{\mathbb{R}^N}g(x,y)\,\mathrm{d}\mu(y)\,\mathrm{d}\nu(x).\label{align:ch03-3.21c}
-\end{align}
+\item 映射 $G_\mu f:\mathbb{R}^N\to[0,\infty]$，$(G_\mu f)(x)=\int_{\mathbb{R}^N}g(x,y)f(y)\,\mathrm{d}\mu(y)$，下半连续；
+\item 映射 $\mathscr{R}^+_f(\mathbb{R}^N)\to[0,\infty]$，$\nu\mapsto g(\nu,f\mu)=\int_{\mathbb{R}^N}(G_\mu f)\,\mathrm{d}\nu$，关于 $\mathscr{R}^+_f(\mathbb{R}^N)$ 上的弱$^*$拓扑下半连续。
 \end{enumerate}
-
-由 Tonelli 定理，$g(\nu,\mu)=g(\mu,\nu)$。
-
-设 $g(x,y)\equiv g(x-y)$（$x,y\in\mathbb{R}^N$），其中 $g:\mathbb{R}^N\to[0,\infty)$ 为径向递减连续函数。则由平移不变性，$g(x,\mu)=(g*\mu)(x)$，$g(\nu,y)=(g*\nu)(y)$，且
-\begin{align}
-g(\nu,\mu)=\int_{\mathbb{R}^N}(g*\mu)\,\mathrm{d}\nu.\label{align:ch03-3.22}
-\end{align}
-
-\begin{lemma}\label{lemma:ch03-下界估计}
-设 $g(x,y)\equiv g(x-y)$，$g$ 径向递减。设 $\mu\in\mathscr{R}^+(\mathbb{R}^N)$，$E\subseteq\mathbb{R}^N$ 为 $\mu$-可测集。则
-\begin{align}
-\int_E g(x,\mu)\,\mathrm{d}\mu(x)\geqslant\mu(E)^2g(0).\label{align:ch03-3.23}
-\end{align}
+映射 $G_\nu f$ 与 $\mu\mapsto g(f\nu,\mu)$ 具有同样的性质。
 \end{lemma}
 
 \begin{proof}
-不妨设 $E$ 为紧集。因 $g$ 径向递减，对任意 $x,y\in E$ 有 $g(x-y)\geqslant g(\operatorname{diam}E)$。故
+(i) 固定 $\bar x\in\mathbb{R}^N$，取 $\{x_n\}\subseteq\mathbb{R}^N$，$x_n\to\bar x$，使 $(G_\mu f)(x_n)\to\liminf_{x\to\bar x}(G_\mu f)(x)$。由于对任意 $y\in\mathbb{R}^N$，$g(\cdot,y)$ 在 $\bar x$ 处下半连续，即 $g(\bar x,y)\leqslant\liminf_{n\to\infty}g(x_n,y)$，由 Fatou 引理，
 \begin{align*}
-\int_E g(x,\mu)\,\mathrm{d}\mu(x)
-=\int_E\int_E g(x-y)\,\mathrm{d}\mu(y)\,\mathrm{d}\mu(x)
-\geqslant g(\operatorname{diam}E)\mu(E)^2.
+(G_\mu f)(\bar x)&=\int_{\mathbb{R}^N}g(\bar x,y)f(y)\,\mathrm{d}\mu(y)
+\leqslant\int_{\mathbb{R}^N}\liminf_{n\to\infty}g(x_n,y)f(y)\,\mathrm{d}\mu(y)\\
+&\leqslant\liminf_{n\to\infty}\int_{\mathbb{R}^N}g(x_n,y)f(y)\,\mathrm{d}\mu(y)
+=\lim_{n\to\infty}(G_\mu f)(x_n)=\liminf_{x\to\bar x}(G_\mu f)(x).
 \end{align*}
-若 $\operatorname{diam}E=0$，即 $E$ 为单点，则 $g(0)$ 替换 $g(\operatorname{diam}E)$，结论成立。
+由此得 $(G_\mu f)(\bar x)\leqslant\liminf_{x\to\bar x}(G_\mu f)(x)$，即 $G_\mu f$ 在 $\bar x$ 处下半连续；由 $\bar x$ 的任意性得 (i)。
+
+(ii) 由 (i)，$G_\mu f$ 下半连续，于是由\hyperref[remark:ch02-连续半连续Borel]{下半连续函数为 Borel 可测的注记}与标准磨光论证，存在序列 $\{\varphi_k\}\subseteq C_c(\mathbb{R}^N)$ 使
+\begin{align*}
+\varphi_k\leqslant\varphi_{k+1}\leqslant G_\mu f\quad(k\in\mathbb{N}),\qquad
+\lim_{k\to\infty}\varphi_k=G_\mu f\ \text{在}\ \mathbb{R}^N\ \text{中},
+\end{align*}
+其中后一极限为逐点极限。则由单调收敛定理，
+\begin{align}
+g(\nu,f\mu)=\int_{\mathbb{R}^N}G_\mu f\,\mathrm{d}\nu=\lim_{k\to\infty}\int_{\mathbb{R}^N}\varphi_k\,\mathrm{d}\nu.\label{align:ch03-3.23}
+\end{align}
+
+设 $\{\nu_n\}\subseteq\mathscr{R}^+_f(\mathbb{R}^N)$ 弱$^*$收敛于 $\nu$。则对任意 $k\in\mathbb{N}$，
+\begin{align}
+\int_{\mathbb{R}^N}\varphi_k\,\mathrm{d}\nu=\lim_{n\to\infty}\int_{\mathbb{R}^N}\varphi_k\,\mathrm{d}\nu_n
+\leqslant\liminf_{n\to\infty}\int_{\mathbb{R}^N}G_\mu f\,\mathrm{d}\nu_n=\liminf_{n\to\infty}g(\nu_n,f\mu).\label{align:ch03-3.24}
+\end{align}
+由\eqref{align:ch03-3.23}--\eqref{align:ch03-3.24}，对每个 $k\in\mathbb{N}$ 有 $\int_{\mathbb{R}^N}\varphi_k\,\mathrm{d}\nu\leqslant\liminf_{n\to\infty}g(\nu_n,f\mu)$；令 $k\to\infty$ 并再用\eqref{align:ch03-3.23}得 $g(\nu,f\mu)\leqslant\liminf_{n\to\infty}g(\nu_n,f\mu)$，即 (ii)。
 \end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-位势下半连续; kind=proof; location=引理 3.2.1 证明中“标准磨光论证”与弱$^*$极限的两步; basis=原书未写出递增 $C_c$ 逼近列的构造、$\int G_\mu f\,\mathrm{d}\nu=g(\nu,f\mu)$ 的 Tonelli 依据以及 $\int\varphi_k\,\mathrm{d}\nu_n\to\int\varphi_k\,\mathrm{d}\nu$ 的拓扑理由 + 独立补出
+\begin{proof}
+补出三处细节。
+
+第一，递增 $C_c$ 逼近列的构造。置 $u\triangleq G_\mu f$，$u$ 在 $\mathbb{R}^N$ 上下半连续且取值于 $[0,\infty]$。对 $k\in\mathbb{N}$ 与 $x\in\mathbb{R}^N$ 置
+\begin{align*}
+u_k(x)\triangleq\inf_{y\in\mathbb{R}^N}\left[u(y)+k|x-y|\right].
+\end{align*}
+则 $0\leqslant u_k\leqslant u$（在定义中取 $y=x$），$u_{k+1}\geqslant u_k$（被取下确界的函数随 $k$ 增大而减小），且 $u_k$ 关于 $x$ 为 $k$-Lipschitz：对每个 $y$，$x\mapsto u(y)+k|x-y|$ 为 $k$-Lipschitz，取下确界保持 Lipschitz 常数。又 $\lim_{k\to\infty}u_k(x)=u(x)$：设 $c<u(x)$，由下半连续性存在 $\delta>0$ 使 $|y-x|<\delta$ 时 $u(y)>c$，于是
+\begin{align*}
+u_k(x)\geqslant\min\left\{c,\ \inf_{|y-x|\geqslant\delta}\left[u(y)+k|x-y|\right]\right\}\geqslant\min\{c,k\delta\},
+\end{align*}
+当 $k\delta\geqslant c$ 时 $u_k(x)\geqslant c$，由 $c<u(x)$ 的任意性得 $\lim_k u_k(x)\geqslant u(x)$，结合 $u_k\leqslant u$ 得极限等式。再置 $v_k\triangleq\min\{u_k,k\}$（连续、非负、不减、$v_k\leqslant u$、$v_k\to u$ 逐点），并取 $\theta_k\in C_c(\mathbb{R}^N)$ 使 $0\leqslant\theta_k\leqslant1$、$\theta_k=1$ 在 $B(0,k)$ 上、$\theta_{k+1}\geqslant\theta_k$。则
+\begin{align*}
+\varphi_k\triangleq v_k\theta_k\in C_c(\mathbb{R}^N),\qquad
+\varphi_k\leqslant\varphi_{k+1}\leqslant u,\qquad
+\lim_{k\to\infty}\varphi_k(x)=u(x)\ \text{对每个}\ x\in\mathbb{R}^N,
+\end{align*}
+其中 $\varphi_k\leqslant u$ 用到 $v_k\leqslant u$ 与 $0\leqslant\theta_k\leqslant1$，单调性用到 $v_k$ 与 $\theta_k$ 的单调性，逐点收敛用到 $\theta_k(x)=1$ 对充分大的 $k$ 成立。
+
+第二，$\int_{\mathbb{R}^N}G_\mu f\,\mathrm{d}\nu=g(\nu,f\mu)$。由 $g\geqslant0$、$f\geqslant0$ 与 Tonelli 定理，
+\begin{align*}
+\int_{\mathbb{R}^N}(G_\mu f)(x)\,\mathrm{d}\nu(x)
+=\int_{\mathbb{R}^N}\left(\int_{\mathbb{R}^N}g(x,y)f(y)\,\mathrm{d}\mu(y)\right)\mathrm{d}\nu(x)
+=\int_{\mathbb{R}^N\times\mathbb{R}^N}g\,\mathrm{d}(\mu\times\nu),
+\end{align*}
+右端即 $g(\nu,f\mu)$。
+
+第三，$\int_{\mathbb{R}^N}\varphi_k\,\mathrm{d}\nu_n\to\int_{\mathbb{R}^N}\varphi_k\,\mathrm{d}\nu$。因 $\varphi_k\in C_c(\mathbb{R}^N)\subseteq C_0(\mathbb{R}^N)$，而 $\mathscr{R}^+_f(\mathbb{R}^N)$ 上的弱$^*$拓扑按\cref{theorem:ch02-Riesz对偶}由与 $C_0(\mathbb{R}^N)$ 的对偶给出，故弱$^*$收敛蕴含上述收敛。再由 $\varphi_k\leqslant G_\mu f$ 与积分的单调性得 $\int\varphi_k\,\mathrm{d}\nu\leqslant\liminf_n g(\nu_n,f\mu)$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-位势下半连续; kind=motivation; location=引理 3.2.1 后的注记; basis=引理 3.2.1 的作用、$g\geqslant0$ 与下半连续性的逐项必要性、弱$^*$拓扑需 $\nu$ 有限的原因，以及去掉下半连续性后的具体反例
+\begin{remark}\phantomsection\label{remark:ch03-位势下半连续}
+\begin{enumerate}[(i)]
+\item 引入动机。本引理把核的正则性（下半连续）传给位势，并把 $L^p$ 范数型的约束与对集合的逐点条件连接起来。这两点是后文的两条技术支柱：\cref{theorem:ch03-Cgp外容量}中“用开集从外部逼近”的等式\eqref{align:ch03-3.27}只用 $Gf$ 的下半连续性；而\cref{proposition:ch03-简单函数逼近}中用简单函数逼近 $f$ 时，需要 $G_\mu f$ 的下半连续性把“在 $K$ 上 $>1$”转化为开集上的条件。
+
+\item 假设的作用。$g\geqslant0$ 使\eqref{align:ch03-3.21a}--\eqref{align:ch03-3.21c} 中的积分作为非负函数的积分总有定义，并可直接应用 Tonelli 与单调收敛定理；$g$ 在乘积空间中下半连续保证每个截口 $g(x,\cdot)$、$g(\cdot,y)$ 可测（这也是\eqref{align:ch03-3.21a}--\eqref{align:ch03-3.21c} 中各量有定义的前提），并保证 $g(\cdot,y)$ 沿 $x_n\to\bar x$ 满足 $g(\bar x,y)\leqslant\liminf_ng(x_n,y)$，即 Fatou 引理所需的方向；$f\geqslant0$ 使 Fatou 引理可作用于 $g(x_n,\cdot)f$；$\mu\in\mathscr{R}^+_f(\mathbb{R}^N)$ 使 $G_\mu f$ 实值可测（$\mu$ 无限时 (i) 的论证仍逐字成立，但结论 (ii) 中的弱$^*$拓扑需另行解释）；结论 (ii) 中的 $\nu\in\mathscr{R}^+_f(\mathbb{R}^N)$ 使弱$^*$拓扑有定义，并使 $\nu\mapsto g(\nu,f\mu)$ 在 $[0,\infty]$ 中取值。
+
+\item 边界与反例。下半连续性不能减弱为 Borel 可测性。取 $N=1$，$g(x,y)\triangleq\chi_{(-\infty,x]}(y)$（集合 $\{y\leqslant x\}$ 在 $\mathbb{R}^2$ 中闭，故 $g$ 上半连续而非下半连续），$f\equiv1$，$\mu\triangleq\delta_0$。则 $(G_\mu f)(x)=g(x,0)=\chi_{[0,\infty)}(x)$，而
+\begin{align*}
+\liminf_{x\to0}(G_\mu f)(x)=0<1=(G_\mu f)(0),
+\end{align*}
+故 $G_\mu f$ 在 $0$ 处不下半连续，引理 (i) 失效。同一例子中 $u\triangleq G_\mu f$ 不下半连续，故补证第一步中的递增逼近列 $\{\varphi_k\}$ 无法构造，引理 (ii) 的论证随之失效。
+
+\item 适用边界。结论 (ii) 只断言下半连续性，不给连续性；即使 $g$ 连续，$\nu\mapsto g(\nu,f\mu)$ 一般也不连续（在质量逸出的方向上它可能严格下降）。此外 (i) 与 (ii) 中 $\mu$ 与 $\nu$ 的位置不可随意互换：$G_\mu f$ 的半连续性来自 $g$ 对第一个变量的半连续性，而 $G_\nu f$ 的半连续性来自 $g$ 对第二个变量的半连续性，二者均由 $g$ 在乘积空间上的下半连续性保证（下半连续函数在每个截口上仍下半连续）。
+\end{enumerate}
+\end{remark}
 
 \subsection{容量 $C_{g,p}$}\label{subsection:ch03-容量}
 
-设 $g(x,y)\equiv g(x-y)$，$g:\mathbb{R}^N\to[0,\infty)$ 为径向递减连续函数。
+固定 $\mu\in\mathscr{R}^+(\mathbb{R}^N)$。为记号简单，置 $Gf\equiv G_\mu f$ 与 $L^p(\mathbb{R}^N)\equiv L^p(\mathbb{R}^N,\mathcal{B}(\mathbb{R}^N),\mu)$（$p\in[1,\infty)$），并记 $\|f\|_p\equiv\|f\|_{L^p(\mathbb{R}^N,\mathcal{B}(\mathbb{R}^N),\mu)}$。
 
 \begin{definition}\label{definition:ch03-Cgp}
-设 $p\in(1,\infty)$。对任意 $E\subseteq\mathbb{R}^N$，$E$ 的 $(g,p)$-容量定义为
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$\mu\in\mathscr{R}^+(\mathbb{R}^N)$ 固定，$p\in(1,\infty)$。对任意 $E\subseteq\mathbb{R}^N$，$E$ 的与 $g$ 相联的 $p$-容量定义为
 \begin{align}
-C_{g,p}(E)\triangleq \inf_{f\in V_{E,p}}\|f\|_p^p,\qquad
-V_{E,p}\triangleq \{f\in L^p(\mathbb{R}^N)\mid (g*f)(x)\geqslant1\ \forall x\in E\}.\label{align:ch03-3.24a}
-\end{align}
-若 $V_{E,p}=\varnothing $，则 $C_{g,p}(E)\triangleq \infty$。
-
-$E$ 的 $(g,1)$-容量定义为
-\begin{align}
-C_{g,1}(E)\triangleq \inf_{\sigma\in V_{E,1}}\|\sigma\|,\label{align:ch03-3.24b}
+C_{\mu,g,p}(E)\equiv C_{g,p}(E)\triangleq\inf_{f\in V_{E,p}}\|f\|_p^p,\label{align:ch03-3.25a}
 \end{align}
 其中
 \begin{align}
-V_{E,1}\triangleq \left\{\sigma\in\mathscr{R}_f(\mathbb{R}^N)\ \middle|\ \int_{\mathbb{R}^N}g(x-y)\,\mathrm{d}\sigma(y)\geqslant1\ \forall x\in E\right\}.\label{align:ch03-3.24c}
+V_{E,p}\equiv V_{E,g,p}\triangleq\{f\in L^p(\mathbb{R}^N)\mid f\geqslant0,\ (Gf)(x)\geqslant1\ \forall x\in E\}.\label{align:ch03-3.25b}
 \end{align}
-若 $V_{E,1}=\varnothing $，则 $C_{g,1}(E)\triangleq \infty$。
+若 $V_{E,p}=\varnothing$，则约定 $C_{g,p}(E)\triangleq\infty$。
 \end{definition}
 
-\begin{remark}\label{remark:ch03-非负可去}
-在\eqref{align:ch03-3.24a}中显然可限制 $f\geqslant0$；类似地在\eqref{align:ch03-3.24b}中可限制 $\sigma\geqslant0$。
+\begin{definition}\label{definition:ch03-Cg1}
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$\mu\in\mathscr{R}^+(\mathbb{R}^N)$ 固定。对任意 $E\subseteq\mathbb{R}^N$，置
+\begin{align}
+C_{g,1}(E)\triangleq\inf_{\sigma\in V_{E,1}}\|\sigma\|,\label{align:ch03-3.26a}
+\end{align}
+其中
+\begin{align}
+V_{E,1}\equiv V_{E,g,1}\triangleq\left\{\sigma\in\mathscr{R}^+_f(\mathbb{R}^N)\ \middle|\ g(x,\sigma)=\int_{\mathbb{R}^N}g(x,y)\,\mathrm{d}\sigma(y)\geqslant1\ \forall x\in E\right\},\label{align:ch03-3.26b}
+\end{align}
+$\|\sigma\|$ 表示全变差 $\sigma(\mathbb{R}^N)$。若 $V_{E,1}=\varnothing$，则约定 $C_{g,1}(E)\triangleq\infty$。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch03-Cgp; kind=motivation; location=定义 3.2.1 后的注记; basis=定义 3.2.1 的动机、$\mu$ 与 $p$ 及逐点条件 $\geqslant1$ 的作用、空族约定与尺度核验，以及 $C_{g,p}(E)=0$ 的边界
+\begin{remark}\phantomsection\label{remark:ch03-Cgp动机}
+\begin{enumerate}[(i)]
+\item 引入动机。$C_{g,p}(E)$ 是“用 $L^p(\mu)$ 中函数的 $g$-位势在 $E$ 上覆盖水平 $1$”所需的最小 $p$ 次范数。它不是测度，但对集合的包含关系单调、可数次可加；正是这三条公理使第一章与第二章的容量理论（外容量、可容集、拟连续、拟处处）可逐字用于 $C_{g,p}$。在 \S3.3 中取 $g$ 为 Bessel 核或 Riesz 核、$\mu$ 为 Lebesgue 测度，即得 Bessel 容量与 Riesz 容量，后者是研究非线性演化方程奇点集的基本工具。
+
+\item 各项假设的作用。$\mu$ 固定且只要求为 Radon 测度（可无限），使 $L^p(\mu)$ 与位势 $G_\mu f$ 有意义；$f\geqslant0$ 可去（见\hyperref[remark:ch03-非负可去]{后一条注记}）；条件 $(Gf)(x)\geqslant1$ 对每个 $x\in E$ 逐点成立，而非仅在 $E$ 上拟处处成立，这使 $V_{E,p}$ 关于 $E$ 反序单调（$E_1\subseteq E_2$ 蕴含 $V_{E_2,p}\subseteq V_{E_1,p}$），从而 $C_{g,p}$ 单调；水平值 $1$ 只是规范化的选择：$V_{E,p}$ 关于正数伸缩封闭，故更换水平 $t>0$ 只把容量乘以 $t^{-p}$；$E$ 可为任意子集，无需可测，故 $C_{g,p}$ 定义在整个 $\mathcal{P}(\mathbb{R}^N)$ 上，这正是外容量所需的定义域。
+
+\item 空族约定。$V_{E,p}$ 可以为空：取 $\mu=0$ 与 $E\neq\varnothing$，则 $L^p(\mathbb{R}^N)=\{0\}$ 而 $(G0)(x)=0\geqslant1$ 不成立，故 $V_{E,p}=\varnothing$；此时按约定 $C_{g,p}(E)=\infty$。去掉这一约定，$\inf\varnothing$ 在 $[0,\infty]$ 中没有意义。
+
+\item 尺度核验与边界。若 $g$ 换为 $cg$（$c>0$），则条件变为 $c\,Gf\geqslant1$，即 $f\in V_{E,p}$ 当且仅当 $c^{1/p}f\in V_{E,p}'$（$V_{E,p}'$ 为对应 $cg$ 的容许族），故 $C_{cg,p}(E)=c^{-p}C_{g,p}(E)$。由定义得 $C_{g,p}(\varnothing)=0$；反之 $C_{g,p}(E)=0$ 不蕴含 $E=\varnothing$：取 $g\equiv\infty$，则任意非负 $f\in L^p(\mathbb{R}^N)$、$f\neq0$ 满足 $(Gf)(x)=\infty\geqslant1$，故 $C_{g,p}(E)=0$ 对一切 $E\subseteq\mathbb{R}^N$ 成立。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch03-Cg1; kind=motivation; location=定义 3.2.2 后的注记; basis=定义 3.2.2 为何在 $p=1$ 时改用测度、与定义 3.2.1 的关系、各项假设的作用，以及 $p=1$ 时下确界未必达到的边界
+\begin{remark}\phantomsection\label{remark:ch03-Cg1动机}
+\begin{enumerate}[(i)]
+\item 引入动机。$p=1$ 时容许对象取为有限正 Radon 测度而非 $L^1$ 函数：一方面 $g(x,\sigma)$ 对测度有定义（\eqref{align:ch03-3.21b}），另一方面 Riesz 表示定理把 $(C_0(\mathbb{R}^N))^*$ 等同于 $\mathscr{R}_f(\mathbb{R}^N)$，故测度是 $p=1$ 时与 $L^p$ 对偶的自然对象。\S3.3 中 Bessel 容量 $B_{r,1}$ 与 Sobolev 容量 $C_{m,1}$ 正是按\eqref{align:ch03-3.26a}定义的。
+
+\item 各项假设的作用。$\sigma\geqslant0$ 可去（见\hyperref[remark:ch03-非负可去]{后一条注记}）；$\sigma$ 要求有限，否则 $\|\sigma\|$ 无意义；$g(x,\sigma)\geqslant1$ 对每个 $x\in E$ 逐点成立；$g$ 非负保证 $g(x,\sigma)$ 对每个 $x$ 有定义（取值于 $[0,\infty]$）。
+
+\item 与\cref{definition:ch03-Cgp}的关系。$p=1$ 时\eqref{align:ch03-3.25a}与\eqref{align:ch03-3.26a}不可互换：$V_{E,1}$ 含一切满足位势条件的有限正测度（不必关于 $\mu$ 绝对连续），故
+\begin{align*}
+C_{g,1}(E)\leqslant\inf\left\{\|f\|_1\ \middle|\ f\in L^1(\mathbb{R}^N),\ f\geqslant0,\ (Gf)(x)\geqslant1\ \forall x\in E\right\},
+\end{align*}
+因为每个非负 $f\in L^1(\mathbb{R}^N)$ 给出测度 $f\mu\in V_{E,1}$ 且 $\|f\mu\|=\|f\|_1$。取 $\mu=\delta_0$、$g(0,0)=1$、$E=\{0\}$，则 $V_{E,1}$ 含 $\sigma=\delta_0$，而 $L^1(\delta_0)$ 只含常值函数，两种定义的容许族结构不同。
+
+\item 边界。$p=1$ 时下确界未必达到：$V_{E,1}$ 是 $\mathscr{R}^+_f(\mathbb{R}^N)$ 的弱$^*$闭子集而非紧子集，一般只能取极小化序列。这与 $p>1$ 的情形不同（\cref{proposition:ch03-容量函数存在}）。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch03-非负可去; kind=proof; location=注 3.2.1 的两个等式的完整推导; basis=原书只写 “we clearly have” 与 “similarly seen”，此处补出两个方向的包含关系与带号测度的正部论证
+\begin{remark}\phantomsection\label{remark:ch03-非负可去}
+\eqref{align:ch03-3.25b} 中的限制 $f\geqslant0$ 可以去掉。事实上，对一切 $p\in(1,\infty)$，
+\begin{align*}
+C_{g,p}(E)\geqslant\inf_{\substack{f\in L^p(\mathbb{R}^N)\\ Gf\geqslant1\ \text{在}\ E\ \text{上}}}\|f\|_p^p .
+\end{align*}
+反向地，设 $f\in L^p(\mathbb{R}^N)$ 满足 $Gf\geqslant1$ 在 $E$ 上。由 $G$ 的线性性与单调性，$Gf=Gf^+-Gf^-$，故
+\begin{align*}
+Gf^+=Gf+Gf^-\geqslant Gf\geqslant1\quad\text{在}\ E\ \text{上},
+\end{align*}
+于是 $f^+\in V_{E,p}$；又 $\|f^+\|_p\leqslant\|f\|_p$。因此反向不等式成立，两个下确界相等。
+
+以同样方式可见\eqref{align:ch03-3.26b}中非负性的要求可以去掉，即
+\begin{align*}
+C_{g,1}(E)=\inf_{\substack{\sigma\in\mathscr{R}_f(\mathbb{R}^N)\\ g(x,\sigma)\geqslant1\ \forall x\in E}}\|\sigma\|.
+\end{align*}
+这里 $g(x,\sigma)$ 对带号 $\sigma\in\mathscr{R}_f(\mathbb{R}^N)$ 按 $g(x,\sigma)=\int g(x,y)\,\mathrm{d}\sigma(y)$ 理解，并要求该积分有意义。若 $g(x,\sigma)\geqslant1$，则 $g(x,\sigma)$ 有限，故 $\int g\,\mathrm{d}\sigma^+$ 与 $\int g\,\mathrm{d}\sigma^-$ 均有限，于是
+\begin{align*}
+g(x,\sigma^+)=g(x,\sigma)+g(x,\sigma^-)\geqslant1,
+\end{align*}
+即 $\sigma^+\in V_{E,1}$；又 $\|\sigma^+\|\leqslant\|\sigma\|$。故带号测度的容许族给出的下确界不小于 $C_{g,1}(E)$，反向不等式由 $V_{E,1}$ 含于该容许族得到。
 \end{remark}
 
 \begin{theorem}\label{theorem:ch03-Cgp外容量}
-设 $p\in[1,\infty)$。则 $C_{g,p}$ 是 $\mathbb{R}^N$ 上的外容量。
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$\mu\in\mathscr{R}^+(\mathbb{R}^N)$ 固定，$p\in[1,\infty)$，$C_{g,p}\equiv C_{\mu,g,p}$ 由\cref{definition:ch03-Cgp}与\cref{definition:ch03-Cg1}定义，定义域为 $\mathcal{P}(\mathbb{R}^N)$，取值于 $[0,\infty]$。则：
+\begin{enumerate}[(i)]
+\item $C_{g,p}(\varnothing)=0$；
+\item 若 $E_1\subseteq E_2\subseteq\mathbb{R}^N$，则 $C_{g,p}(E_1)\leqslant C_{g,p}(E_2)$；
+\item 对任意序列 $\{E_n\}_{n\in\mathbb{N}}\subseteq\mathcal{P}(\mathbb{R}^N)$，
+\begin{align*}
+C_{g,p}\left(\bigcup_{n=1}^\infty E_n\right)\leqslant\sum_{n=1}^\infty C_{g,p}(E_n);
+\end{align*}
+\item 对任意 $E\subseteq\mathbb{R}^N$，
+\begin{align}
+C_{g,p}(E)=\inf\{C_{g,p}(A)\mid A\supseteq E,\ A\ \text{开}\}.\label{align:ch03-3.27}
+\end{align}
+\end{enumerate}
+即 $C_{g,p}$ 是 $\mathbb{R}^N$ 上的外容量。
 \end{theorem}
 
 \begin{proof}
-显然 $C_{g,p}(\varnothing )=0$，且若 $E_1\subseteq E_2$ 则 $C_{g,p}(E_1)\leqslant C_{g,p}(E_2)$。次可列可加性可由标准对角论证得到。右连续性类似得到。
-\end{proof}
-
-\begin{proposition}\label{proposition:ch03-Borel可容}
-设 $p\in(1,\infty)$。$\mathbb{R}^N$ 的每个 Borel 子集为 $C_{g,p}$-可容集。
-\end{proposition}
-
-\begin{proposition}\label{proposition:ch03-对偶}
-设 $p\in(1,\infty)$，$q=p/(p-1)$。对任意紧集 $K\subseteq\mathbb{R}^N$，
-\begin{align}
-C_{g,p}(K)=\sup\left\{\mu(K)^q\ \middle|\ \mu\in\mathscr{R}^+(K),\ \int_{\mathbb{R}^N}g(x-y)\,\mathrm{d}\mu(y)\,\mathrm{d}\mu(x)\leqslant1\right\}^{1/(q-1)}.\label{align:ch03-3.25}
-\end{align}
-\end{proposition}
-
-\begin{proof}
-这是经典对偶定理：在约束 $g*f\geqslant1$（在 $K$ 上）下极小化 $\|f\|_p^p$，等价于在能量约束 $\int g*\mathrm{d}\mu\,\mathrm{d}\mu\leqslant1$ 下极大化 $\mu(K)$。
-\end{proof}
-
-\begin{proposition}\label{proposition:ch03-比较}
-设 $g_1,g_2:\mathbb{R}^N\to[0,\infty)$ 为径向递减连续函数，$g_1\leqslant g_2$。则对任意 $E\subseteq\mathbb{R}^N$ 与 $p\in[1,\infty)$，
+先设 $p>1$。由\eqref{align:ch03-3.25b}，$V_{\varnothing,p}=\{f\in L^p(\mathbb{R}^N)\mid f\geqslant0\}$，故 $C_{g,p}(\varnothing)=0$。若 $E_1\subseteq E_2$，则 $V_{E_2,p}\subseteq V_{E_1,p}$，故 $C_{g,p}(E_1)\leqslant C_{g,p}(E_2)$。设 $E_n\subseteq\mathbb{R}^N$（$n\in\mathbb{N}$），置 $E\triangleq\bigcup_{n=1}^\infty E_n$，证明
 \begin{align*}
-C_{g_1,p}(E)\leqslant C_{g_2,p}(E).
+C_{g,p}(E)\leqslant\sum_{n=1}^\infty C_{g,p}(E_n).
 \end{align*}
+若 $\sum_{n=1}^\infty C_{g,p}(E_n)=\infty$，则无需证明。否则取 $\varepsilon>0$。对每个 $n\in\mathbb{N}$，由\eqref{align:ch03-3.25a}存在 $f_n\in V_{E_n,p}$ 使 $\|f_n\|_p^p<C_{g,p}(E_n)+\varepsilon/2^n$。置
+\begin{align*}
+f\triangleq\left(\sum_{n=1}^\infty f_n^p\right)^{1/p}.
+\end{align*}
+则 $f\geqslant f_n\geqslant0$，故由 $G$ 的单调性，$(Gf)(x)\geqslant(Gf_n)(x)\geqslant1$ 对每个 $x\in E_n$ 成立，从而 $(Gf)(x)\geqslant1$ 对每个 $x\in E$ 成立，即 $f\in V_{E,p}$。此外由单调收敛定理，
+\begin{align*}
+\|f\|_p^p=\int_{\mathbb{R}^N}\sum_{n=1}^\infty f_n^p\,\mathrm{d}\mu=\sum_{n=1}^\infty\|f_n\|_p^p\leqslant\sum_{n=1}^\infty C_{g,p}(E_n)+\varepsilon.
+\end{align*}
+故 $C_{g,p}(E)\leqslant\sum_{n=1}^\infty C_{g,p}(E_n)+\varepsilon$；由 $\varepsilon$ 的任意性得次可列可加性。
+
+为完成证明，须证\eqref{align:ch03-3.27}。若 $V_{E,p}=\varnothing$，则每个满足 $A\supseteq E$ 的开集 $A$ 给出 $V_{A,p}\subseteq V_{E,p}=\varnothing$，故\eqref{align:ch03-3.27}两端同为 $\infty$。设 $V_{E,p}\neq\varnothing$，则 $C_{g,p}(E)<\infty$。取 $\varepsilon\in(0,1)$ 与 $f\in V_{E,p}$ 使 $\|f\|_p^p<C_{g,p}(E)+\varepsilon$。由\cref{lemma:ch03-位势下半连续}(i)，$Gf$ 下半连续，故
+\begin{align*}
+A_\varepsilon\triangleq\{Gf>1-\varepsilon\}
+\end{align*}
+为开集。又因 $f\in V_{E,p}$，对 $x\in E$ 有 $(Gf)(x)\geqslant1>1-\varepsilon$，故 $E\subseteq A_\varepsilon$。置 $f_\varepsilon\triangleq f/(1-\varepsilon)$；由 $(Gf_\varepsilon)(x)=(Gf)(x)/(1-\varepsilon)>1$（$x\in A_\varepsilon$）得 $f_\varepsilon\in V_{A_\varepsilon,p}$。于是
+\begin{align*}
+\inf\{C_{g,p}(A)\mid A\supseteq E,\ A\ \text{开}\}\leqslant C_{g,p}(A_\varepsilon)\leqslant\|f_\varepsilon\|_p^p\leqslant\frac{1}{(1-\varepsilon)^p}\left[C_{g,p}(E)+\varepsilon\right],
+\end{align*}
+由 $\varepsilon\in(0,1)$ 的任意性得 $\inf\{C_{g,p}(A)\mid A\supseteq E,\ A\ \text{开}\}\leqslant C_{g,p}(E)$。反向不等式由单调性得到：每个满足 $A\supseteq E$ 的开集 $A$ 给出 $C_{g,p}(A)\geqslant C_{g,p}(E)$。故\eqref{align:ch03-3.27}成立，本情形结论得证。
+
+现设 $p=1$。由\eqref{align:ch03-3.26b}，$V_{\varnothing,1}=\mathscr{R}^+_f(\mathbb{R}^N)$，故 $C_{g,1}(\varnothing)=0$；又 $E_1\subseteq E_2$ 蕴含 $V_{E_2,1}\subseteq V_{E_1,1}$，故 $C_{g,1}(E_1)\leqslant C_{g,1}(E_2)$。为证次可列可加性，按上述论证进行，把 $f$ 换为 $\sigma\triangleq\sum_{n=1}^\infty\sigma_n$：取 $\sigma_n\in V_{E_n,1}$ 使 $\|\sigma_n\|<C_{g,1}(E_n)+\varepsilon/2^n$。则 $\sum_{n=1}^\infty\|\sigma_n\|<\infty$，故 $\sigma$ 作为 $\mathscr{R}_f(\mathbb{R}^N)$ 中的绝对收敛级数属于 $\mathscr{R}^+_f(\mathbb{R}^N)$，且 $\|\sigma\|\leqslant\sum_{n=1}^\infty\|\sigma_n\|$；又对 $x\in E$，取 $n$ 使 $x\in E_n$，则
+\begin{align*}
+g(x,\sigma)=\sum_{k=1}^\infty g(x,\sigma_k)\geqslant g(x,\sigma_n)\geqslant1,
+\end{align*}
+故 $\sigma\in V_{E,1}$，于是 $C_{g,1}(E)\leqslant\|\sigma\|\leqslant\sum_{n=1}^\infty C_{g,1}(E_n)+\varepsilon$。
+
+最后，$p=1$ 时\eqref{align:ch03-3.27}按同样方法得到，只需用 $\sigma\in V_{E,1}$ 与映射 $x\mapsto g(x,\sigma)$ 的下半连续性（见\cref{lemma:ch03-位势下半连续}(i)，取 $\mu=\sigma$、$f\equiv1$）。证明完毕。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-Cgp外容量; kind=proof; location=定理 3.2.2 证明中次可列可加性的构造与 $p=1$ 情形的细节; basis=原书取 $f=\sup_nf_n$ 而断言 $\|f\|_p^p\leqslant\sum_n\|f_n\|_p^p$（$p>1$ 时不成立），此处改用 $\ell^p$ 和使两条要求同时成立；$p=1$ 情形补出级数收敛性与逐点下界
+\begin{proof}
+补出两处。
+
+第一，次可列可加性中极值函数的构造。直接取 $f=\sup_{n\in\mathbb{N}}f_n$ 时，$(Gf)(x)\geqslant(Gf_n)(x)\geqslant1$（$x\in E_n$）成立，但 $\|f\|_p^p\leqslant\sum_n\|f_n\|_p^p$ 对 $p>1$ 一般不成立：Minkowski 不等式只给出 $\|f\|_p\leqslant\sum_n\|f_n\|_p$，而 $\left(\sum_na_n\right)^p\geqslant\sum_na_n^p$。改取 $f\triangleq\left(\sum_{n=1}^\infty f_n^p\right)^{1/p}$ 可同时满足两条要求：$f\geqslant f_n$ 给出位势下界（逐点，用到 $G$ 的单调性），而单调收敛定理给出精确等式 $\|f\|_p^p=\sum_n\|f_n\|_p^p$。此外 $f\in L^p(\mathbb{R}^N)$，因为右端级数被 $\sum_nC_{g,p}(E_n)+\varepsilon$ 控制。
+
+第二，$p=1$ 情形中级数的收敛性与逐点下界。由 $\|\sigma_n\|<C_{g,1}(E_n)+\varepsilon/2^n$ 得 $\sum_n\|\sigma_n\|\leqslant\sum_nC_{g,1}(E_n)+\varepsilon<\infty$，故 $\sigma\triangleq\sum_n\sigma_n$ 在 $\mathscr{R}_f(\mathbb{R}^N)$ 中绝对收敛，从而 $\sigma\in\mathscr{R}^+_f(\mathbb{R}^N)$ 且 $\|\sigma\|\leqslant\sum_n\|\sigma_n\|$（范数的三角不等式）。对固定的 $x\in E$，取 $n$ 使 $x\in E_n$；因各项 $g(x,\sigma_k)\geqslant0$，部分和单调增加，故
+\begin{align*}
+g(x,\sigma)=\int_{\mathbb{R}^N}g(x,y)\,\mathrm{d}\sigma(y)
+=\sum_{k=1}^\infty\int_{\mathbb{R}^N}g(x,y)\,\mathrm{d}\sigma_k(y)
+=\sum_{k=1}^\infty g(x,\sigma_k)\geqslant g(x,\sigma_n)\geqslant1,
+\end{align*}
+其中第二个等号由单调收敛定理（对测度的级数展开）。最后，$p=1$ 时\eqref{align:ch03-3.27}中的集合 $A_\varepsilon\triangleq\{x\in\mathbb{R}^N\mid g(x,\sigma)>1-\varepsilon\}$ 为开集，这一步只用\cref{lemma:ch03-位势下半连续}(i) 在 $f\equiv1$、$\mu=\sigma$ 时的特例。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch03-Cgp外容量; kind=motivation; location=定理 3.2.2 后的注记; basis=外容量三条公理与开集逼近各自的作用、$p\in[1,\infty)$ 与 $g$ 的非负性在何处使用、去掉下半连续性或去掉非负性后的失效情形，以及 $C_{g,p}$ 退化的边界
+\begin{remark}\phantomsection\label{remark:ch03-Cgp外容量}
+\begin{enumerate}[(i)]
+\item 引入动机。定理把 $C_{g,p}$ 认证为外容量，于是第一章的 Choquet 理论（可容集、\cref{theorem:ch01-Choquet}）与第二章的容量收敛理论（拟连续、拟处处、依容量收敛）可全部用于 $C_{g,p}$。第四条（开集逼近）是外容量区别于一般容量的关键：它使 $C_{g,p}(E)$ 可由 $E$ 的开邻域的容量逼近，再与紧集的内逼近配合即得可容性。
+
+\item 各项假设的作用。$g\geqslant0$ 使 $G$ 单调，这是 $(Gf)(x)\geqslant(Gf_n)(x)$ 的唯一依据，也是次可列可加性中“取 $f=\left(\sum f_n^p\right)^{1/p}$ 不破坏位势下界”的原因；$p\in[1,\infty)$ 使 $L^p(\mu)$ 为赋范空间，从而 $\|\cdot\|_p$ 满足三角不等式并可对级数取范数；$\mu$ 固定使 $V_{E,p}$ 与 $\|\cdot\|_p$ 有统一含义；第四条只用 $Gf$ 的下半连续性，而不需要 $g$ 的任何可积性。
+
+\item 边界与反例。若 $g$ 不下半连续，第四条证明中的 $A_\varepsilon$ 不必为开集（见\hyperref[remark:ch03-位势下半连续]{\cref{lemma:ch03-位势下半连续}后的注记}(iii) 的反例），该证明失效。若去掉 $g\geqslant0$，则 $G$ 不单调，次可列可加性的构造不再保位势下界。容量可以退化：$\mu=0$ 或 $g\equiv0$ 时 $C_{g,p}(E)=\infty$（$E\neq\varnothing$）；$g\equiv\infty$ 时 $C_{g,p}(E)=0$（$E\neq\varnothing$）。这些退化情形仍满足外容量的四条公理。
+
+\item 适用边界。第四条只给出开集从外部的逼近，不给等式成立的集合类；哪些集合同时满足内、外两侧逼近，是\cref{proposition:ch03-Borel可容}的内容，那里需要额外的连续性假设\eqref{align:ch03-3.29}。
+\end{enumerate}
+\end{remark}
+
+由\cref{theorem:ch03-Cgp外容量}，第一、二两章中关于容量的术语与结果可用于 $C_{g,p}$。为简短起见，若 $E\subseteq\mathbb{R}^N$ 为 $C_{g,p}$-零集，则称 $E$ 为 \textbf{$(g,p)$-零集}；其他概念同样处理。特别地，若函数 $f:\mathbb{R}^N\to\mathbb{R}$ 为 $C_{g,p}$-拟连续（见\cref{definition:ch02-C拟连续}），则称 $f$ 为 \textbf{$(g,p)$-拟连续}。于是由\cref{proposition:ch02-容量拟连续闭}得下列结果。
+
+\begin{proposition}\label{proposition:ch03-拟连续稳定}
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$p\in(1,\infty)$，$f,f_n:\mathbb{R}^N\to\mathbb{R}$（$n\in\mathbb{N}$）。设每个 $f_n$ 为 $(g,p)$-拟连续，且 $f_n$ 依 $C_{g,p}$-容量收敛于 $f$。则 $f$ 为 $(g,p)$-拟连续。
 \end{proposition}
 
-\begin{proposition}\label{proposition:ch03-简单函数逼近}
-设 $p\in(1,\infty)$，$g\in L^{q/(q-1)}(\mathbb{R}^N)$。则对任意紧集 $K\subseteq\mathbb{R}^N$，映射 $p\mapsto C_{g,p}(K)$ 在 $[1,\infty)$ 上右连续。
-\end{proposition}
+% SUPPLEMENT: parent=proposition:ch03-拟连续稳定; kind=proof; location=命题 3.2.3 的证明; basis=原书只写“由命题 2.1.17 得”，此处核验该命题的全部假设并写出对应关系
+\begin{proof}
+命题是\cref{proposition:ch02-容量拟连续闭}在以 $C\triangleq C_{g,p}$ 代入时的特例，逐项核验其假设如下。第一，$C_{g,p}:\mathcal{P}(\mathbb{R}^N)\to[0,\infty]$ 为 $\mathbb{R}^N$ 上的容量：由\cref{theorem:ch03-Cgp外容量}它为外容量，特别满足 $C_{g,p}(\varnothing)=0$、单调性与可数次可加性。第二，定义域 $\mathscr{F}\triangleq\mathcal{P}(\mathbb{R}^N)$ 对补集封闭。第三，$f_n\to f$ 依 $C_{g,p}$-容量，即对每个 $\varepsilon>0$ 有 $\lim_{n\to\infty}C_{g,p}(\{|f_n-f|>\varepsilon\})=0$（见\cref{definition:ch02-容量收敛}）。\cref{proposition:ch02-容量拟连续闭}的结论正是 $f$ 为 $C_{g,p}$-拟连续，即 $(g,p)$-拟连续。
+\end{proof}
 
-\begin{lemma}\label{lemma:ch03-位势下半连续}
-设 $f\in L^p(\mathbb{R}^N)$（$p\in[1,\infty)$）。则 $g*f$ 下半连续。
+% SUPPLEMENT: parent=proposition:ch03-拟连续稳定; kind=motivation; location=命题 3.2.3 后的注记; basis=命题 3.2.3 的动机、各假设的作用、$p=1$ 的可推广性，以及把依容量收敛减弱为拟处处收敛后的失效
+\begin{remark}\phantomsection\label{remark:ch03-拟连续稳定}
+\begin{enumerate}[(i)]
+\item 引入动机。本命题说明 $(g,p)$-拟连续函数类在依容量收敛下封闭，从而是 $L^p(\mathbb{R}^N)$ 中一个可由范数逼近继承的性质。它是 \S3.3 与 \S3.4 中“$W^{m,p}$ 函数的 $(m,p)$-拟连续代表元”论证的收敛性基础：代表元存在之后，唯一性与稳定性都归结为这里的封闭性。
+
+\item 假设的作用。每个 $f_n$ 的 $(g,p)$-拟连续性提供\cref{proposition:ch02-容量拟连续闭}证明中的集合 $E_n$；依容量收敛（而非仅仅拟处处收敛）提供可数次可加性下仍可控的容量估计；$C_{g,p}$ 的可数次可加性与单调性用于把各 $E_n^c$ 的容量相加。$p\in(1,\infty)$ 只是本节其余结果的统一范围：结论对 $p=1$ 亦成立，因为\cref{theorem:ch03-Cgp外容量}对一切 $p\in[1,\infty)$ 给出容量。
+
+\item 边界。把“依容量收敛”减弱为“$(g,p)$-拟处处收敛”后结论失效：拟处处收敛不提供对 $\{|f_n-f|>\varepsilon\}$ 的容量控制，无法把各零集的并的容量压到任意小。此外 $f_n$ 的连续性不可由 $f_n\to f$ 的范数收敛替代，除非另有紧性（这正是\cref{proposition:ch03-位势子列收敛}的作用）。
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}\label{lemma:ch03-零集刻画}
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$\mu\in\mathscr{R}^+(\mathbb{R}^N)$ 固定，$p\in(1,\infty)$。则下列命题等价：
+\begin{enumerate}[(i)]
+\item $E\subseteq\mathbb{R}^N$ 为 $(g,p)$-零集，即 $C_{g,p}(E)=0$；
+\item 存在 $f\in L^p(\mathbb{R}^N)$，$f\geqslant0$，使 $E\subseteq\{Gf=\infty\}$。
+\end{enumerate}
 \end{lemma}
 
 \begin{proof}
-若 $f\geqslant0$，则 $g*f(x)=\int g(x-y)f(y)\,\mathrm{d}y$ 为连续函数的上包络，故下半连续。一般情形由 $f=f^+-f^-$ 分解得到。
+(i)$\Rightarrow$(ii)。若 $C_{g,p}(E)=0$，则由\eqref{align:ch03-3.25a}存在 $\{f_n\}\subseteq L^p(\mathbb{R}^N)$ 使对每个 $n\in\mathbb{N}$ 有 $f_n\geqslant0$、$Gf_n\geqslant1$ 在 $E$ 上、且 $\|f_n\|_p\leqslant2^{-n}$。置 $f\triangleq\sum_{n=1}^\infty f_n$。由 Minkowski 不等式 $\|f\|_p\leqslant\sum_{n=1}^\infty\|f_n\|_p\leqslant1$，故 $f\in L^p(\mathbb{R}^N)$；由 $f\geqslant0$ 与单调收敛定理，$Gf=\sum_{n=1}^\infty Gf_n$，故对 $x\in E$ 有 $(Gf)(x)=\sum_{n=1}^\infty(Gf_n)(x)\geqslant\sum_{n=1}^\infty1=\infty$。于是 $f$ 满足 (ii)。
+
+(ii)$\Rightarrow$(i)。设 $f\in L^p(\mathbb{R}^N)$，$f\geqslant0$，$E\subseteq\{Gf=\infty\}$。对任意 $t>0$，由\eqref{align:ch03-3.25b}，$f/t\in V_{\{Gf\geqslant t\},p}$，因为 $G(f/t)=Gf/t\geqslant1$ 在 $\{Gf\geqslant t\}$ 上；故
+\begin{align}
+t^pC_{g,p}(\{Gf\geqslant t\})\leqslant\int_{\mathbb{R}^N}f^p\,\mathrm{d}\mu.\label{align:ch03-3.28}
+\end{align}
+在\eqref{align:ch03-3.28}中令 $t\to\infty$，由单调性 $\{Gf=\infty\}\subseteq\{Gf\geqslant t\}$ 得 $C_{g,p}(\{Gf=\infty\})=0$；再由 $E\subseteq\{Gf=\infty\}$ 与 $C_{g,p}$ 的单调性得 $C_{g,p}(E)=0$。
 \end{proof}
 
-\subsection{$C_{g,p}$ 对 $p$ 的依赖}\label{subsection:ch03-p依赖}
+% SUPPLEMENT: parent=lemma:ch03-零集刻画; kind=proof; location=引理 3.2.4 证明中 $\|f\|_p\leqslant1$、$Gf=\sum_nGf_n$ 与 (3.28) 的推导; basis=原书 (i)=>(ii) 只给结论、(ii)=>(i) 中 (3.28) 的容许函数未写出，此处补出 Minkowski 不等式、单调收敛定理与 $f/t\in V_{\{Gf\geqslant t\},p}$ 的逐步核验
+\begin{proof}
+补出三处。
 
-设 $g(x,y)\equiv g(x-y)$。假设
-\begin{align}
-g(0)<\infty.\label{align:ch03-3.35}
-\end{align}
-此外假设存在 $\alpha>1$ 使
-\begin{align}
-\int_{\mathbb{R}^N}g(x)^\alpha\,\mathrm{d}x<\infty.\label{align:ch03-3.40}
-\end{align}
+第一，$\|f\|_p\leqslant1$。由 $\|f_n\|_p\leqslant2^{-n}$ 与 Minkowski 不等式，部分和 $s_N\triangleq\sum_{n=1}^Nf_n$ 满足 $\|s_N\|_p\leqslant\sum_{n=1}^N\|f_n\|_p\leqslant1$；又 $s_N\uparrow f$ 逐点，故由单调收敛定理 $\|f\|_p=\lim_N\|s_N\|_p\leqslant1$，特别 $f\in L^p(\mathbb{R}^N)$。
 
-\begin{lemma}\label{lemma:ch03-p趋近1}
-设 $p\in(1,\infty)$，\eqref{align:ch03-3.35}成立。则对任意紧集 $K\subseteq\mathbb{R}^N$，
+第二，$Gf=\sum_{n=1}^\infty Gf_n$。对固定的 $x\in\mathbb{R}^N$，由 $g(x,\cdot)\geqslant0$ 与 $f_n\geqslant0$，部分和 $\sum_{n=1}^Ng(x,\cdot)f_n$ 单调增加至 $g(x,\cdot)f$，故由单调收敛定理
 \begin{align*}
-\lim_{p\to1^+}C_{g,p}(K)=C_{g,1}(K).
+(Gf)(x)=\int_{\mathbb{R}^N}g(x,y)\sum_{n=1}^\infty f_n(y)\,\mathrm{d}\mu(y)=\sum_{n=1}^\infty\int_{\mathbb{R}^N}g(x,y)f_n(y)\,\mathrm{d}\mu(y)=\sum_{n=1}^\infty(Gf_n)(x).
 \end{align*}
-\end{lemma}
 
-\begin{proposition}\label{proposition:ch03-p趋近1}
-设 $p\in(1,\infty)$，\eqref{align:ch03-3.35}与\eqref{align:ch03-3.40}成立。则对任意紧集 $K\subseteq\mathbb{R}^N$，映射 $p\mapsto C_{g,p}(K)$ 在 $[1,\alpha')$ 上右连续，其中 $\alpha'>1$ 由 $\frac1\alpha+\frac1{\alpha'}=1$ 定义。
+第三，(3.28) 的容许函数与极限。对 $t>0$ 令 $f_t\triangleq f/t$。则 $f_t\in L^p(\mathbb{R}^N)$、$f_t\geqslant0$，且对 $x\in\{Gf\geqslant t\}$ 有 $(Gf_t)(x)=(Gf)(x)/t\geqslant1$，故 $f_t\in V_{\{Gf\geqslant t\},p}$，于是 $C_{g,p}(\{Gf\geqslant t\})\leqslant\|f_t\|_p^p=t^{-p}\int_{\mathbb{R}^N}f^p\,\mathrm{d}\mu$，即\eqref{align:ch03-3.28}。又 $\{Gf=\infty\}\subseteq\{Gf\geqslant t\}$ 对每个 $t>0$ 成立，故 $C_{g,p}(\{Gf=\infty\})\leqslant t^{-p}\int f^p\,\mathrm{d}\mu$，令 $t\to\infty$ 得 $C_{g,p}(\{Gf=\infty\})=0$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-零集刻画; kind=motivation; location=引理 3.2.4 后的注记; basis=零集刻画的意义、$f\geqslant0$ 与 $p<\infty$ 的作用、零集可以很大的边界例子，以及 $g\equiv0$ 时的对照
+\begin{remark}\phantomsection\label{remark:ch03-零集刻画}
+\begin{enumerate}[(i)]
+\item 引入动机。本引理把“容量为零”这一集合论条件翻译为“某个 $L^p$ 位势在 $E$ 上处处为 $\infty$”这一解析条件。它使 $(g,p)$-拟处的陈述可以逐点验证，并在后文中反复用于把“除一个 $(g,p)$-零集外成立”转化为“存在一个位势为 $\infty$ 的修正项”。\cref{lemma:ch03-容许集闭包}的证明正是靠这一翻译构造修正项。
+
+\item 各项假设的作用。$f\geqslant0$ 使 $Gf=\sum_nGf_n$ 可用单调收敛定理（否则级数可能不收敛）；$f\in L^p(\mathbb{R}^N)$ 使 $\|f\|_p<\infty$，从而 $f/t\in V_{\{Gf\geqslant t\},p}$ 有有限的 $p$ 次范数；$p\in(1,\infty)$ 保证 $\{Gf\geqslant t\}$ 的容量估计\eqref{align:ch03-3.28}有意义；$E$ 不必可测，因为 $C_{g,p}$ 定义在全体子集上。
+
+\item 边界与例。零集可以很大：取 $g\equiv\infty$ 与任意非零 $\mu$，则任意非负 $f\in L^p(\mathbb{R}^N)$、$f\neq0$ 满足 $Gf=\infty$ 处处，故 $\mathbb{R}^N$ 本身是 $(g,p)$-零集。反之取 $g\equiv0$，则 $Gf=0$ 处处、$\{Gf=\infty\}=\varnothing$，故除 $\varnothing$ 外没有 $(g,p)$-零集，与 $C_{g,p}(E)=\infty$（$E\neq\varnothing$）一致。
+
+\item 适用边界。$\{Gf=\infty\}$ 是 Borel 集（$Gf$ 下半连续，见\cref{lemma:ch03-位势下半连续}(i)），(ii) 只给出 $E$ 含于一个 Borel 零集之中，而 (i) 中的 $E$ 可为任意子集。这一不对称不影响后文的“拟处处”表述，因为零集的子集仍是零集。
+\end{enumerate}
+\end{remark}
+
+\begin{proposition}\label{proposition:ch03-位势子列收敛}
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$\mu\in\mathscr{R}^+(\mathbb{R}^N)$ 固定，$p\in(1,\infty)$。设 $\{f_n\}\subseteq L^p(\mathbb{R}^N)$ 为 Cauchy 列，$f$ 为其在 $L^p(\mathbb{R}^N)$ 中的极限。则存在子列 $\{f_{n_k}\}\subseteq\{f_n\}$，使 $\{Gf_{n_k}\}$ 在 $\mathbb{R}^N$ 上 $(g,p)$-拟处处收敛于 $Gf$、依 $C_{g,p}$-容量收敛于 $Gf$，并且 $(g,p)$-拟一致收敛于 $Gf$。
 \end{proposition}
 
 \begin{proof}
-由\eqref{align:ch03-3.40}，$g\in L^\alpha(\mathbb{R}^N)$。若 $p<\alpha'$，则 $q=p/(p-1)>\alpha$，故 $g\in L^q(\mathbb{R}^N)$。由\cref{proposition:ch03-简单函数逼近}，结论成立。
+因 $\{f_n\}$ 为 $L^p(\mathbb{R}^N)$ 中的 Cauchy 列，对每个 $k\in\mathbb{N}$ 存在 $n_k\in\mathbb{N}$ 使
+\begin{align*}
+\|f_m-f_n\|_p<2^{-k}k^{-2}\quad\text{对所有}\ m,n\geqslant n_k.
+\end{align*}
+不妨设 $n_{k+1}>n_k$，于是所得子列 $\{f_{n_k}\}\subseteq\{f_n\}$ 满足
+\begin{align*}
+\sum_{k=1}^\infty\left(2^k\|f_{n_k}-f_{n_{k+1}}\|_p\right)^p<\infty.
+\end{align*}
+置 $E_k\triangleq\{G|f_{n_k}-f_{n_{k+1}}|>2^{-k}\}$（$k\in\mathbb{N}$）。则 $2^k|f_{n_k}-f_{n_{k+1}}|\in V_{E_k,p}$ 对每个 $k\in\mathbb{N}$ 成立，故
+\begin{align*}
+C_{g,p}(E_k)\leqslant2^{kp}\|f_{n_k}-f_{n_{k+1}}\|_p^p .
+\end{align*}
+置 $F_j\triangleq\bigcup_{k=j}^\infty E_k$。则由 $C_{g,p}$ 的次可列可加性，
+\begin{align*}
+C_{g,p}(F_j)\leqslant\sum_{k=j}^\infty C_{g,p}(E_k)\leqslant\sum_{k=j}^\infty2^{kp}\|f_{n_k}-f_{n_{k+1}}\|_p^p
+\end{align*}
+对任意 $j\in\mathbb{N}$ 成立，故 $\lim_{j\to\infty}C_{g,p}(F_j)=0$。此外，对 $l>m>j$ 与 $x\in F_j^c$ 有
+\begin{align*}
+\sup_{x\in F_j^c}\left|Gf_{n_l}(x)-Gf_{n_m}(x)\right|
+&\leqslant\sup_{x\in F_j^c}\left(\sum_{i=m}^{l-1}\left|Gf_{n_i}(x)-Gf_{n_{i+1}}(x)\right|\right)\\
+&\leqslant\sum_{i=m}^{l-1}2^{-i}\leqslant2^{1-m},
+\end{align*}
+其中第二个不等号用到 $x\notin E_i$（$i\geqslant j$）。故 $\{Gf_{n_k}\}$ 在 $F_j^c$ 上一致收敛。
+
+综上，对任意 $\delta>0$ 可取 $j\in\mathbb{N}$ 充分大使 $C_{g,p}(F_j)<\delta$，且 $\{Gf_{n_k}\}$ 在 $F_j^c$ 上一致收敛，故 $\{Gf_{n_k}\}$ 为 $(g,p)$-拟一致收敛列。由\cref{proposition:ch02-容量收敛关系}(i)，$(g,p)$-拟一致收敛蕴含依 $C_{g,p}$-容量收敛与 $(g,p)$-拟处处收敛。极限为 $Gf$ 见下。
 \end{proof}
 
-\begin{remark}\label{remark:ch03-条件替换}
-若将\eqref{align:ch03-3.40}替换为较弱的条件
-\begin{align}
-\int_{\mathbb{R}^N}g(x)^{\alpha}\,\mathrm{d}x<\infty\label{align:ch03-3.40b}
-\end{align}
-对某个 $\alpha>N/(N-r)$（$r>0$），则结论在 $[1,\alpha')$ 上成立。
+% SUPPLEMENT: parent=proposition:ch03-位势子列收敛; kind=proof; location=命题 3.2.5 证明的结尾（极限的识别）; basis=原书只断言“收敛”而未指明极限，但引理 3.2.6 与命题 3.2.8 的证明均把极限当作 $Gf$ 使用；此处用 (3.28) 识别极限
+\begin{proof}
+补出极限的识别。设 $\{Gf_{n_k}\}$ 的 $(g,p)$-拟一致极限为 $h$，即对每个 $\delta>0$ 存在 $F$ 使 $C_{g,p}(F)<\delta$ 且 $Gf_{n_k}\to h$ 在 $F^c$ 上一致。
+
+第一，$Gf_{n_k}\to Gf$ 依 $C_{g,p}$-容量。对 $\varepsilon>0$ 与任意 $k\in\mathbb{N}$，把\eqref{align:ch03-3.28}应用于 $f_{n_k}-f$ 及其相反数，并利用 $C_{g,p}$ 的次可加性与 $\{|G\psi|\geqslant\varepsilon\}\subseteq\{G\psi\geqslant\varepsilon\}\cup\{G(-\psi)\geqslant\varepsilon\}$，得
+\begin{align*}
+C_{g,p}\left(\left\{|Gf_{n_k}-Gf|\geqslant\varepsilon\right\}\right)
+\leqslant\varepsilon^{-p}\left(\|f_{n_k}-f\|_p^p+\|f-f_{n_k}\|_p^p\right)=2\varepsilon^{-p}\|f_{n_k}-f\|_p^p\to0.
+\end{align*}
+
+第二，$h=Gf$ 为 $(g,p)$-拟处处。固定 $\varepsilon>0$ 与 $\delta>0$。由第一段存在 $k_0$ 使 $k\geqslant k_0$ 时 $C_{g,p}(\{|Gf_{n_k}-Gf|\geqslant\varepsilon\})<\delta/2$；由拟一致收敛存在 $k_1$ 使 $k\geqslant k_1$ 时 $C_{g,p}(\{|Gf_{n_k}-h|\geqslant\varepsilon\})<\delta/2$。取 $k\geqslant\max\{k_0,k_1\}$，由次可加性
+\begin{align*}
+C_{g,p}\left(\left\{|h-Gf|\geqslant2\varepsilon\right\}\right)<\delta.
+\end{align*}
+由 $\delta>0$ 的任意性得 $C_{g,p}(\{|h-Gf|\geqslant2\varepsilon\})=0$；再由
+\begin{align*}
+\{|h-Gf|>0\}=\bigcup_{j=1}^\infty\left\{|h-Gf|\geqslant\frac1j\right\}
+\end{align*}
+与 $C_{g,p}$ 的次可加性得 $C_{g,p}(\{|h-Gf|>0\})=0$，即 $h=Gf$ $(g,p)$-拟处处。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-位势子列收敛; kind=motivation; location=命题 3.2.5 后的注记; basis=命题 3.2.5 的动机、$2^{-k}k^{-2}$ 的取法与水平集 $E_k$ 的作用、子列不可省的原因，以及 $p\in(1,\infty)$ 的作用
+\begin{remark}\phantomsection\label{remark:ch03-位势子列收敛}
+\begin{enumerate}[(i)]
+\item 引入动机。本命题是 $L^p$ 范数收敛在位势层面的精确版本：范数收敛只给出一条子列在容量意义下的收敛。它把强收敛转化为“去掉容量任意小的集合后的一致收敛”，这是\cref{lemma:ch03-容许集闭包}、\cref{proposition:ch03-容量函数存在}与\cref{proposition:ch03-下连续}中传递拟处处下界 $Gf\geqslant1$ 的唯一通道。
+
+\item 构造的作用。$2^{-k}k^{-2}$ 的选择使 $\sum_k2^{kp}\|f_{n_k}-f_{n_{k+1}}\|_p^p\leqslant\sum_kk^{-2p}<\infty$（$p>1$），从而 $\sum_kC_{g,p}(E_k)<\infty$ 且 $C_{g,p}(F_j)\to0$；水平集 $E_k\triangleq\{G|f_{n_k}-f_{n_{k+1}}|>2^{-k}\}$ 的选择使 $2^k|f_{n_k}-f_{n_{k+1}}|$ 成为 $E_k$ 的容许函数，把容量估计化为范数估计；几何级数 $\sum_{i\geqslant m}2^{-i}=2^{1-m}$ 给出与 $x\in F_j^c$ 无关的一致 Cauchy 估计。
+
+\item 边界。子列不可省：$L^p$ 中的 Cauchy 列只有子列在拟一致意义下收敛，全列一般不行（\cref{proposition:ch02-容量收敛关系}(ii) 已显示同样现象）。$p\in(1,\infty)$ 用于 $\sum_kk^{-2p}<\infty$ 与\eqref{align:ch03-3.28}；$p=1$ 时对应的命题需以测度取代函数。此外命题不给出 $Gf_{n_k}\to Gf$ 的逐点收敛速度。
+\end{enumerate}
 \end{remark}
 
 
+现刻画\eqref{align:ch03-3.25b}中集合 $V_{E,p}$ 的闭包。
 
+\begin{lemma}\label{lemma:ch03-容许集闭包}
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$\mu\in\mathscr{R}^+(\mathbb{R}^N)$ 固定，$p\in(1,\infty)$。则
+\begin{align*}
+\overline{V_{E,p}}=\left\{f\in L^p(\mathbb{R}^N)\ \middle|\ f\geqslant0,\ Gf\geqslant1\ \text{在}\ E\ \text{上}\ (g,p)\text{-拟处处}\right\},
+\end{align*}
+其中闭包在 $L^p(\mathbb{R}^N)$ 的范数拓扑中取。
+\end{lemma}
+
+\begin{proof}
+置 $V'_{E,p}\triangleq\{f\in L^p(\mathbb{R}^N)\mid f\geqslant0,\ Gf\geqslant1\ \text{在}\ E\ \text{上}\ (g,p)\text{-拟处处}\}$。由 $V_{E,p}\subseteq V'_{E,p}$ 与 $V'_{E,p}$ 的闭性（见补证）得 $\overline{V_{E,p}}\subseteq V'_{E,p}$。
+
+反向地，设 $f\in V'_{E,p}$。则 $f\in L^p(\mathbb{R}^N)$、$f\geqslant0$，且存在 $(g,p)$-零集 $F\subseteq\mathbb{R}^N$ 使 $Gf(x)\geqslant1$ 对所有 $x\in E\setminus F$ 成立。\cref{lemma:ch03-零集刻画}的证明稍作修改即给出：对任意 $\varepsilon>0$，存在 $g_\varepsilon\in L^p(\mathbb{R}^N)$，$g_\varepsilon\geqslant0$，使 $\|g_\varepsilon\|_p<\varepsilon$ 且 $Gg_\varepsilon=\infty$ 在 $F$ 上。于是 $f_1\triangleq f+g_\varepsilon\in V_{E,p}$ 且 $\|f_1-f\|_p=\|g_\varepsilon\|_p<\varepsilon$，故 $f\in\overline{V_{E,p}}$。于是 $V'_{E,p}\subseteq\overline{V_{E,p}}$，结论得证。
+
+最后证 $V'_{E,p}$ 为闭集。设 $\{f_n\}\subseteq V'_{E,p}$，$f\in L^p(\mathbb{R}^N)$ 满足 $\lim_{n\to\infty}\|f_n-f\|_p=0$。则 $f\geqslant0$（$L^p$ 收敛蕴含几乎处处收敛的子列），且由\cref{proposition:ch03-位势子列收敛}存在子列 $\{f_{n_k}\}\subseteq\{f_n\}$ 使 $\lim_{k\to\infty}Gf_{n_k}=Gf$ 在 $E$ 上 $(g,p)$-拟处处。由于每个 $f_{n_k}\in V'_{E,p}$，即 $Gf_{n_k}\geqslant1$ 在 $E$ 上除一个 $(g,p)$-零集外成立，而可数多个 $(g,p)$-零集的并仍是 $(g,p)$-零集（$C_{g,p}$ 的次可列可加性），故 $Gf\geqslant1$ 在 $E$ 上 $(g,p)$-拟处处成立。于是 $f\in V'_{E,p}$，即 $V'_{E,p}$ 闭。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-容许集闭包; kind=proof; location=引理 3.2.6 证明中“闭性”与“$g_\varepsilon$ 的构造”两步; basis=原书中 “We will prove below that $V'_{E,p}$ is closed” 与 “The proof of Lemma 3.2.4 can be easily modified” 均未展开，此处补出几乎处处收敛的子列、零集并的次可列可加性，以及 $g_\varepsilon$ 的显式构造
+\begin{proof}
+补出两处。
+
+第一，修正项 $g_\varepsilon$ 的构造。设 $F$ 为 $(g,p)$-零集，则 $C_{g,p}(F)=0$。按\cref{lemma:ch03-零集刻画}(i)$\Rightarrow$(ii) 的构造，取 $h\in L^p(\mathbb{R}^N)$、$h\geqslant0$，使 $Gh=\infty$ 在 $F$ 上。若 $h=0$，则 $F=\varnothing$（否则 $Gh=0$ 不可能在 $F$ 上为 $\infty$），此时取 $g_\varepsilon\triangleq0$ 即可，并且 $f\in V_{E,p}$ 本身。若 $h\neq0$，置
+\begin{align*}
+g_\varepsilon\triangleq\frac{\varepsilon}{2\|h\|_p}h .
+\end{align*}
+则 $g_\varepsilon\in L^p(\mathbb{R}^N)$、$g_\varepsilon\geqslant0$、$\|g_\varepsilon\|_p=\varepsilon/2<\varepsilon$，且由 $G$ 的正齐次性与 $Gh=\infty$ 得 $Gg_\varepsilon=\infty$ 在 $F$ 上。于是 $G(f+g_\varepsilon)=\infty\geqslant1$ 在 $F$ 上而 $G(f+g_\varepsilon)\geqslant Gf\geqslant1$ 在 $E\setminus F$ 上，故 $f+g_\varepsilon\in V_{E,p}$。
+
+第二，$V'_{E,p}$ 的闭性。设 $f_n\to f$ 于 $L^p(\mathbb{R}^N)$，$f_n\geqslant0$；由 Riesz 定理存在子列几乎处处收敛于 $f$，故 $f\geqslant0$ $\mu$-a.e.，即 $f\geqslant0$ 作为 $L^p$ 的元素。由\cref{proposition:ch03-位势子列收敛}（用其拟处处收敛部分）存在子列 $\{f_{n_k}\}$ 使 $Gf_{n_k}\to Gf$ 在 $\mathbb{R}^N$ 上 $(g,p)$-拟处处。对每个 $k$，设 $F_k$ 为 $(g,p)$-零集，使 $Gf_{n_k}\geqslant1$ 在 $E\setminus F_k$ 上成立。置 $F\triangleq\bigcup_{k=1}^\infty F_k$。由 $C_{g,p}(F_k)=0$ 与次可列可加性得 $C_{g,p}(F)=0$。对 $x\in E\setminus F$，有 $Gf_{n_k}(x)\geqslant1$ 对一切 $k$ 成立且 $Gf_{n_k}(x)\to Gf(x)$，故 $Gf(x)\geqslant1$。于是 $Gf\geqslant1$ 在 $E$ 上除零集 $F$ 外成立，即 $f\in V'_{E,p}$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-容许集闭包; kind=motivation; location=引理 3.2.6 后的注记; basis=闭包刻画的作用（把逐点条件放松为拟处处）、$V_{E,p}$ 本身不闭的原因、修正项技巧的代价，以及 $E=\varnothing$ 的边界
+\begin{remark}\phantomsection\label{remark:ch03-容许集闭包}
+\begin{enumerate}[(i)]
+\item 引入动机。本引理是使 $C_{g,p}(E)$ 可计算的关键一步：它说明\eqref{align:ch03-3.25a} 中的下确界可以在一个闭集上取，而该闭集的元素只满足拟处处（而非逐点）的下界条件。因此后续论证中由范数极限得到的位势下界可以直接使用，无需再逐点核实。
+
+\item 各项假设的作用。$f\geqslant0$ 在取极限时保持（$L^p$ 收敛有几乎处处收敛的子列）；$p\in(1,\infty)$ 使 $L^p$ 完备并把闭包运算与范数收敛对应；$(g,p)$-拟处处的条件使 $V'_{E,p}$ 在范数极限下封闭，其中可数次可加性保证可数多个零集的并仍为零集。修正项 $g_\varepsilon$ 的代价是 $\varepsilon$（$p$ 次范数意义下），这正说明 $V_{E,p}$ 一般不是闭集。
+
+\item 边界。$V_{E,p}$ 本身不闭：$f\in V'_{E,p}$ 只在 $E\setminus F$ 上满足 $Gf\geqslant1$，而在 $F$ 上 $Gf$ 可以小于 $1$；要进入 $V_{E,p}$ 必须在 $F$ 上把位势抬到 $\infty$，这改变函数本身。若 $E=\varnothing$，则 $V_{\varnothing,p}=\{f\in L^p\mid f\geqslant0\}$ 本身闭，$V'_{\varnothing,p}=V_{\varnothing,p}$，与引理一致。
+
+\item 适用边界。引理只刻画闭包，不给闭包的内部结构；$V'_{E,p}$ 是否凸与 $\{f\geqslant0\}$ 及位势条件的凸性有关，位势条件 $Gf\geqslant1$ 是线性的不等式，故 $V'_{E,p}$ 为闭凸集，这一点在\cref{proposition:ch03-容量函数存在}中起作用。
+\end{enumerate}
+\end{remark}
+
+\cref{proposition:ch03-容量函数存在}说明\eqref{align:ch03-3.25a}中的下确界实际上可以达到。
+
+\begin{proposition}\label{proposition:ch03-容量函数存在}
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$\mu\in\mathscr{R}^+(\mathbb{R}^N)$ 固定，$p\in(1,\infty)$。设 $E\subseteq\mathbb{R}^N$ 满足 $C_{g,p}(E)<\infty$。则存在唯一的非负 $f_E\in L^p(\mathbb{R}^N)$，使 $(Gf_E)(x)\geqslant1$ 对 $(g,p)$-拟所有的 $x\in E$ 成立，且
+\begin{align*}
+C_{g,p}(E)=\|f_E\|_p^p .
+\end{align*}
+唯一性在 $L^p(\mathbb{R}^N)$ 中理解，即两个这样的函数至多在一个 $\mu$-零集上不同。
+\end{proposition}
+
+\begin{proof}
+对任意 $p\in(1,\infty)$，空间 $L^p(\mathbb{R}^N)$ 一致凸，故在闭凸子集 $V_{E,p}\subseteq L^p(\mathbb{R}^N)$ 中存在唯一的最小范数元 $f_E$（例如见文献~[2, 推论 1.3.4]）。由 $C_{g,p}(E)<\infty$ 得 $V_{E,p}\neq\varnothing$，故该元存在且 $\|f_E\|_p^p=C_{g,p}(E)$。再由\cref{lemma:ch03-容许集闭包}，$f_E\in\overline{V_{E,p}}=V'_{E,p}$，即 $(Gf_E)(x)\geqslant1$ 对 $(g,p)$-拟所有的 $x\in E$ 成立。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-容量函数存在; kind=proof; location=命题 3.2.7 证明中“一致凸空间中闭凸集存在唯一最小范数元”一步; basis=原书只引用文献 [2, 推论 1.3.4]，此处补出极小化序列的 Cauchy 估计（Clarkson 不等式）与唯一性论证，并说明 $C_{g,p}(E)$ 与闭包上的下确界一致
+\begin{proof}
+补出细节。
+
+第一，$V_{E,p}$ 非空且闭凸。$C_{g,p}(E)<\infty$ 意味着\eqref{align:ch03-3.25a} 的下确界有限，故 $V_{E,p}\neq\varnothing$。凸性：$f_1,f_2\in V_{E,p}$、$t\in[0,1]$ 时 $tf_1+(1-t)f_2\in L^p$、非负，且由 $G$ 的线性与单调性 $G(tf_1+(1-t)f_2)=tGf_1+(1-t)Gf_2\geqslant1$ 在 $E$ 上。闭性：$L^p$ 收敛保持非负性与逐点位势下界（后者由 $Gf_n\to Gf$ 的一个子列逐点收敛，见\cref{proposition:ch03-位势子列收敛}，或直接由 Fatou 引理）。
+
+第二，极小化序列为 Cauchy 列。置 $d\triangleq\inf_{f\in V_{E,p}}\|f\|_p$，取 $\{f_n\}\subseteq V_{E,p}$ 使 $\|f_n\|_p\to d$。由凸性 $(f_n+f_m)/2\in V_{E,p}$，故 $\|(f_n+f_m)/2\|_p\geqslant d$，于是
+\begin{align*}
+\left\|\frac{f_n-f_m}{2}\right\|_p^p\leqslant\frac{\|f_n\|_p^p+\|f_m\|_p^p}{2}-\left\|\frac{f_n+f_m}{2}\right\|_p^p
+\leqslant\frac{\|f_n\|_p^p+\|f_m\|_p^p}{2}-d^p\to0
+\end{align*}
+（$p\geqslant2$ 时用 Clarkson 不等式；$1<p<2$ 时用其 $q=p/(p-1)$ 形式，结论相同），即 $\|f_n-f_m\|_p\to0$。由 $L^p$ 完备性存在 $f_E\in L^p(\mathbb{R}^N)$ 使 $f_n\to f_E$；由闭性 $f_E\in V_{E,p}$ 且 $\|f_E\|_p=d$。
+
+第三，唯一性。若 $f,g\in V_{E,p}$ 都满足 $\|f\|_p=\|g\|_p=d$，则 $(f+g)/2\in V_{E,p}$ 且
+\begin{align*}
+d^p\leqslant\left\|\frac{f+g}{2}\right\|_p^p\leqslant\frac{\|f\|_p^p+\|g\|_p^p}{2}=d^p,
+\end{align*}
+故等号成立；在一致凸空间中严格凸性给出 $f=g$（$p\geqslant2$ 时由 Clarkson 不等式得 $\|(f-g)/2\|_p^p\leqslant0$）。在 $L^p$ 中等式意味着 $f=g$ $\mu$-a.e.。
+
+第四，$f_E$ 满足拟处处的下界。由\cref{lemma:ch03-容许集闭包}，$\overline{V_{E,p}}=V'_{E,p}$；而 $\inf_{V'_{E,p}}\|f\|_p^p=\inf_{\overline{V_{E,p}}}\|f\|_p^p=\inf_{V_{E,p}}\|f\|_p^p=C_{g,p}(E)$（范数连续），故 $f_E$ 也是 $V'_{E,p}$ 上的极小元，特别 $f_E\in V'_{E,p}$。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-容量函数存在; kind=motivation; location=命题 3.2.7 后的注记（容量函数与容量位势的术语）; basis=极小元存在的意义、$C_{g,p}(E)<\infty$ 与一致凸性的作用、唯一性只在 $L^p$ 中的原因，以及下界只拟处处成立的边界
+\begin{remark}\phantomsection\label{remark:ch03-容量函数存在}
+\begin{enumerate}[(i)]
+\item 引入动机与术语。\cref{proposition:ch03-容量函数存在}给出的极小元 $f_E$ 与它的位势 $Gf_E$ 分别称为集 $E$ 的\textbf{容量函数}与\textbf{容量位势}。存在性使 $C_{g,p}(E)$ 可以写成某个具体函数的范数，从而把容量的估计转化为函数的估计；这也是后文用容量函数作检验函数的依据。
+
+\item 各项假设的作用。$C_{g,p}(E)<\infty$ 保证 $V_{E,p}\neq\varnothing$，否则闭凸集为空、无最小范数元；$p\in(1,\infty)$ 保证 $L^p$ 一致凸，从而使极小化序列为 Cauchy 列并保证唯一性（$p=1$ 与 $p=\infty$ 时 $L^p$ 不严格凸，最小范数元不必唯一）；$\mu$ 固定使范数与几乎处处相等有统一含义。
+
+\item 边界。唯一性只在 $L^p(\mathbb{R}^N)$ 的元素意义下成立：$f_E$ 在一个 $\mu$-零集上可以任意改动而不影响范数与位势（后者的改变也只在 $\mu$-零集上）。此外 $Gf_E\geqslant1$ 只在 $E$ 上 $(g,p)$-拟处处成立，不一定逐点成立；逐点版本一般不对，因为极小元只属于闭包 $V'_{E,p}$。
+
+\item 适用边界。若 $C_{g,p}(E)=\infty$，则 $V'_{E,p}$ 为空或范数无下界，本命题的结论无意义；此时容量只能由外逼近（\eqref{align:ch03-3.27}）描述。
+\end{enumerate}
+\end{remark}
+
+下列结果与测度的\\cref{proposition:ch01-测度性质}(iv)类似。
+
+\begin{proposition}\label{proposition:ch03-下连续}
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$\mu\in\mathscr{R}^+(\mathbb{R}^N)$ 固定，$p\in(1,\infty)$。则对任意非减的集列 $\{E_k\}_{k\in\mathbb{N}}\subseteq\mathcal{P}(\mathbb{R}^N)$，
+\begin{align}
+C_{g,p}\left(\bigcup_{k=1}^\infty E_k\right)=\lim_{k\to\infty}C_{g,p}(E_k).\label{align:ch03-3.29}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+置 $E\triangleq\bigcup_{k=1}^\infty E_k$。由单调性得 $\lim_{k\to\infty}C_{g,p}(E_k)\leqslant C_{g,p}(E)$。为证反向不等式，不妨设 $\lim_{k\to\infty}C_{g,p}(E_k)<\infty$。设 $f_k\equiv f_{E_k}$ 为\cref{proposition:ch03-容量函数存在}给出的 $E_k$ 的容量函数。若 $k<l$，则 $E_k\subseteq E_l$，故 $Gf_l\geqslant1$ 在 $E_k$ 上 $(g,p)$-拟处处；由\cref{lemma:ch03-容许集闭包}得 $f_l\in V_{E_k,p}$，于是 $(f_k+f_l)/2\in V_{E_k,p}$，从而
+\begin{align*}
+\left\|\frac{f_k+f_l}{2}\right\|_p^p\geqslant C_{g,p}(E_k).
+\end{align*}
+
+由这一不等式与 $L^p(\mathbb{R}^N)$ 的一致凸性，序列 $\{f_k\}$ 为 Cauchy 列（见补证），故存在 $f\in L^p(\mathbb{R}^N)$ 使 $\lim_{k\to\infty}\|f_k-f\|_p=0$。于是
+\begin{align}
+\|f\|_p^p=\lim_{k\to\infty}\|f_k\|_p^p=\lim_{k\to\infty}C_{g,p}(E_k).\label{align:ch03-3.30}
+\end{align}
+
+另一方面，由\cref{proposition:ch03-位势子列收敛}，对每个固定的 $k\in\mathbb{N}$，某子列满足 $\lim_{l\to\infty}Gf_l=Gf\geqslant1$ 在 $E_k$ 上 $(g,p)$-拟处处，故 $Gf\geqslant1$ 在 $E$ 上 $(g,p)$-拟处处。于是 $f\in V_{E,p}$，从而
+\begin{align}
+\|f\|_p^p\geqslant C_{g,p}(E).\label{align:ch03-3.31}
+\end{align}
+由\eqref{align:ch03-3.30}--\eqref{align:ch03-3.31}得 $\lim_{k\to\infty}C_{g,p}(E_k)\geqslant C_{g,p}(E)$。结论成立。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-下连续; kind=proof; location=命题 3.2.8 证明中“一致凸性蕴含 $\{f_k\}$ 为 Cauchy 列”与拟处处下界的传递; basis=原书引用文献 [2, 推论 1.3.3] 而未展开，此处补出上下界夹逼、Clarkson 估计与可数并零集的论证
+\begin{proof}
+补出两处。
+
+第一，$\{f_k\}$ 为 Cauchy 列。置 $c_k\triangleq C_{g,p}(E_k)=\|f_k\|_p^p$，由假设 $c_k$ 收敛于 $c\triangleq\lim_kc_k<\infty$。对 $k<l$，由凸性 $\|(f_k+f_l)/2\|_p^p\leqslant(\|f_k\|_p^p+\|f_l\|_p^p)/2=(c_k+c_l)/2$，结合已证的 $\|(f_k+f_l)/2\|_p^p\geqslant c_k$ 得
+\begin{align*}
+c_k\leqslant\left\|\frac{f_k+f_l}{2}\right\|_p^p\leqslant\frac{c_k+c_l}{2}\xrightarrow[k,l\to\infty]{}c .
+\end{align*}
+$p\geqslant2$ 时由 Clarkson 不等式，
+\begin{align*}
+\left\|\frac{f_k-f_l}{2}\right\|_p^p
+\leqslant\frac{c_k+c_l}{2}-\left\|\frac{f_k+f_l}{2}\right\|_p^p
+\leqslant\frac{c_k+c_l}{2}-c_k=\frac{c_l-c_k}{2}\to0,
+\end{align*}
+故 $\|f_k-f_l\|_p\to0$；$1<p<2$ 时以 $q=p/(p-1)$ 形式的 Clarkson 不等式作同样估计，结论相同。
+
+第二，拟处处下界的传递。固定 $k$。对每个 $l\geqslant k$，$f_l$ 为 $E_l$ 的容量函数，故 $Gf_l\geqslant1$ 在 $E_l$ 上 $(g,p)$-拟处处，特别在 $E_k$ 上 $(g,p)$-拟处处。由\cref{proposition:ch03-位势子列收敛}存在子列 $\{f_{l_j}\}$ 使 $Gf_{l_j}\to Gf$ 在 $\mathbb{R}^N$ 上 $(g,p)$-拟处处。设 $F_j$ 为 $(g,p)$-零集使 $Gf_{l_j}\geqslant1$ 在 $E_k\setminus F_j$ 上成立，$F$ 为 $(g,p)$-零集使 $Gf_{l_j}\to Gf$ 在 $\mathbb{R}^N\setminus F$ 上成立；置 $Z\triangleq F\cup\bigcup_jF_j$，由次可列可加性 $C_{g,p}(Z)=0$。对 $x\in E_k\setminus Z$ 有 $Gf_{l_j}(x)\geqslant1$ 且 $Gf_{l_j}(x)\to Gf(x)$，故 $Gf(x)\geqslant1$。于是 $Gf\geqslant1$ 在 $E_k$ 上 $(g,p)$-拟处处。最后，$E=\bigcup_kE_k$，取各 $k$ 对应的零集 $Z_k$，由次可列可加性 $C_{g,p}\left(\bigcup_kZ_k\right)=0$，且 $Gf\geqslant1$ 在 $E\setminus\bigcup_kZ_k$ 上成立，故 $Gf\geqslant1$ 在 $E$ 上 $(g,p)$-拟处处，即 $f\in V'_{E,p}=\overline{V_{E,p}}$，于是 $\|f\|_p^p\geqslant\inf_{V_{E,p}}\|\cdot\|_p^p=C_{g,p}(E)$。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-下连续; kind=motivation; location=命题 3.2.8 后的注记; basis=下连续性在 Choquet 理论中的位置、$C_{g,p}(E_k)<\infty$ 与 $p\in(1,\infty)$ 的作用、与测度情形的对照，以及非增序列上结论失效的边界
+\begin{remark}\phantomsection\label{remark:ch03-下连续}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch03-3.29} 是 Choquet 定理的条件 (ii)（非减序列上的下连续性）。它与外容量给出的条件 (i)（非增紧序列上的上连续性）合起来，构成\cref{proposition:ch03-Borel可容}的全部假设。\eqref{align:ch03-3.29} 对任意非减集列成立，不要求 $E_k$ 为 Borel 集或紧集。
+
+\item 各项假设的作用。非减性使 $V_{E_k,p}$ 反序单调，从而容量函数 $\{f_k\}$ 的范数单调不减且有上界 $C_{g,p}(E)$；$C_{g,p}(E_k)<\infty$（由 $\lim_kC_{g,p}(E_k)<\infty$ 蕴含）保证\cref{proposition:ch03-容量函数存在}可用，否则 $\{f_k\}$ 不存在；$p\in(1,\infty)$ 提供一致凸性与\cref{proposition:ch03-位势子列收敛}。若 $\lim_kC_{g,p}(E_k)=\infty$，则结论由单调性平凡成立。
+
+\item 边界。对非增集列，对应的等式 $C_{g,p}\left(\bigcap_kE_k\right)=\lim_kC_{g,p}(E_k)$ 不成立：容量一般缺少上连续性，只有对非增的\emph{紧}集列才由上连续性（\cref{proposition:ch01-外容量上连续}）保证。\cref{theorem:ch01-Choquet} 的注记中有容量虽满足\eqref{align:ch03-3.29}却不满足紧集上连续性的例子，说明两条连续性条件互不包含。
+\end{enumerate}
+\end{remark}
+
+下列结果表明 $\mathbb{R}^N$ 的每个 Borel 子集都是 $(g,p)$-可容集。
+
+\begin{proposition}\label{proposition:ch03-Borel可容}
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$\mu\in\mathscr{R}^+(\mathbb{R}^N)$ 固定，$p\in(1,\infty)$。则对任意 Borel 集 $E\subseteq\mathbb{R}^N$，
+\begin{align*}
+C_{g,p}(E)=\inf\{C_{g,p}(A)\mid A\supseteq E,\ A\ \text{开}\}=\sup\{C_{g,p}(K)\mid K\subseteq E,\ K\ \text{紧}\}.
+\end{align*}
+\end{proposition}
+
+\begin{proof}
+由\cref{theorem:ch03-Cgp外容量}，$C_{g,p}$ 为 $\mathbb{R}^N$ 上的外容量，故\cref{proposition:ch01-外容量上连续}适用。因此，结合\cref{proposition:ch03-下连续}，\cref{theorem:ch01-Choquet}的假设得到满足：非增紧集列上的上连续性由\cref{proposition:ch01-外容量上连续}给出，非减集列上的下连续性即\eqref{align:ch03-3.29}；而\eqref{align:ch03-3.27}给出外容量所要求的外部开集逼近。故每个 Borel 集 $E\subseteq\mathbb{R}^N$ 为 $C_{g,p}$-可容集（见\cref{definition:ch01-内外容量}），即上式成立。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-Borel可容; kind=proof; location=命题 3.2.9 证明中“Choquet 定理的假设得到满足”的逐条核验; basis=原书只写“Proposition 1.6.2 applies ... the assumptions of Theorem 1.6.1 are satisfied”，此处写明两条连续性条件与外部逼近各由哪一结果提供
+\begin{proof}
+补出假设的逐条核验。按\cref{theorem:ch01-Choquet}的陈述，需要 $C:\mathcal{P}(\mathbb{R}^N)\to[0,\infty]$ 满足容量的三条公理以及
+\begin{enumerate}[(a)]
+\item 对任意非增紧集列 $\{K_k\}$，$C\left(\bigcap_kK_k\right)=\lim_kC(K_k)$；
+\item 对任意非减集列 $\{E_k\}$，$C\left(\bigcup_kE_k\right)=\lim_kC(E_k)$。
+\end{enumerate}
+容量的三条公理由\cref{theorem:ch03-Cgp外容量}给出（$C_{g,p}(\varnothing)=0$、单调性、次可列可加性）。(a) 由\cref{proposition:ch01-外容量上连续}给出：$C_{g,p}$ 是外容量，故对非增紧集列上连续。(b) 即\cref{proposition:ch03-下连续}的\eqref{align:ch03-3.29}。于是\cref{theorem:ch01-Choquet}给出每个 Borel 集 $E\subseteq\mathbb{R}^N$ 满足
+\begin{align*}
+C_{g,p}(E)=\inf\{C_{g,p}(A)\mid A\supseteq E,\ A\ \text{开}\}=\sup\{C_{g,p}(K)\mid K\subseteq E,\ K\ \text{紧}\},
+\end{align*}
+其中第一个等号也由\eqref{align:ch03-3.27}独立得到，第二个等号是可容性的实质内容。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-Borel可容; kind=motivation; location=命题 3.2.9 后的注记; basis=可容性的作用、$p\in(1,\infty)$ 与 Borel 性各自的作用、不可推广到任意子集的边界，以及 Suslin 集的加强
+\begin{remark}\phantomsection\label{remark:ch03-Borel可容}
+\begin{enumerate}[(i)]
+\item 引入动机。可容性把 Borel 集的容量计算化为紧集容量序列的极限。\S3.3 与 \S3.4 中 Bessel 与 Sobolev 容量只对紧集容易估计（球上的显式估计），而零集、拟连续代表元与集中弥散分解都需要 Borel 集（甚至任意子集）的容量，\cref{proposition:ch03-Borel可容}正是这一过渡的依据。
+
+\item 各项假设的作用。$C_{g,p}$ 的外容量性（\cref{theorem:ch03-Cgp外容量}）提供外部开集逼近与紧集上的上连续性；\eqref{align:ch03-3.29}（\cref{proposition:ch03-下连续}）提供非减序列的下连续性，其中 $p\in(1,\infty)$ 不可省（\cref{proposition:ch03-下连续}的证明用一致凸性）；$E$ 要求为 Borel 集，因为 Choquet 定理只对 Borel 集（实际上对 Suslin 集）保证可容性。
+
+\item 边界。结论不能推广到任意子集：存在非 Borel 集使内、外逼近不相等。\cref{theorem:ch01-Choquet}的加强形式表明结论对 Suslin 集仍成立（见\hyperref[remark:ch01-Suslin集]{关于 Suslin 集的注记}）。此外第二个等号中的上确界取遍紧子集，若 $E$ 不含非空紧集（例如 $E$ 为无处稠密的可数集），则上确界由 $C_{g,p}(\varnothing)=0$ 给出，此时命题断言 $C_{g,p}(E)=0$。
+\end{enumerate}
+\end{remark}
+
+\subsection{$C_{g,p}$ 对 $p\in[1,\infty)$ 的依赖}\label{subsection:ch03-p依赖}
+
+固定 $\mu\in\mathscr{R}^+(\mathbb{R}^N)$。除特别声明外，本小节以 $C_{\mu,g,p}$ 代替 $C_{g,p}$，类似情形使用类似的记号。特别地，对任意 $f\in L^p(\mathbb{R}^N,\mathcal{B}(\mathbb{R}^N),\mu)$ 记
+\begin{align*}
+\|f\|_{\mu,p}^p\equiv\int_{\mathbb{R}^N}|f|^p\,\mathrm{d}\mu
+\end{align*}
+以代替此前使用的 $\|f\|_p^p$。
+
+以下考察 $C_{\mu,g,p}(E)$ 作为 $p$ 的函数的行为，其中 $E\subseteq\mathbb{R}^N$ 固定。为此需要下列两个引理。
+
+\begin{lemma}\label{lemma:ch03-有限测度比较}
+设 $\mu\in\mathscr{R}^+(\mathbb{R}^N)$，$R>0$，$\nu_R\triangleq\mu\llcorner B(0,R)\in\mathscr{R}^+_f(\mathbb{R}^N)$。设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$p\in(1,\infty)$。则对所有 $E\subseteq\mathbb{R}^N$，
+\begin{align}
+C_{\mu,g,p}(E)\leqslant C_{\nu_R,g,p}(E).\label{align:ch03-3.32}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+为简单记 $\nu\equiv\nu_R$。设
+\begin{align*}
+f\in V_{E,\nu,g,p}\triangleq\{f\in L^p(\mathbb{R}^N,\mathcal{B}(\mathbb{R}^N),\nu)\mid f\geqslant0,\ (G_\nu f)(x)\geqslant1\ \forall x\in E\}
+\end{align*}
+（见\eqref{align:ch03-3.25b}）。置 $F\triangleq f\chi_{B(0,R)}$。则 $F\in L^p(\mathbb{R}^N,\mathcal{B}(\mathbb{R}^N),\mu)$、$F\geqslant0$，且对 $x\in E$ 有
+\begin{align*}
+(G_\mu F)(x)=\int_{\mathbb{R}^N}g(x,y)f(y)\chi_{B(0,R)}(y)\,\mathrm{d}\mu(y)=\int_{\mathbb{R}^N}g(x,y)f(y)\,\mathrm{d}\nu(y)=(G_\nu f)(x)\geqslant1,
+\end{align*}
+故 $F\in V_{E,\mu,g,p}$。于是
+\begin{align*}
+C_{\mu,g,p}(E)\leqslant\|F\|_{L^p(\mathbb{R}^N,\mathcal{B}(\mathbb{R}^N),\mu)}=\|f\|_{L^p(\mathbb{R}^N,\mathcal{B}(\mathbb{R}^N),\nu)} .
+\end{align*}
+对 $f\in V_{E,\nu,g,p}$ 取下确界即得\eqref{align:ch03-3.32}。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-有限测度比较; kind=proof; location=引理 3.2.10 证明中 $F$ 的容许性与范数等式; basis=原书只写 “It follows that $F\in V_{E,\mu,g,p}$”，此处补出 $F\chi_{B(0,R)}$ 与 $\nu_R$ 的关系、$L^p$ 范数的逐项相等以及 $\nu_R$ 有限的理由
+\begin{proof}
+补出三处。
+
+第一，$\nu_R\in\mathscr{R}^+_f(\mathbb{R}^N)$。因 $\mu$ 为 Radon 测度，它在紧集上取有限值，故 $\|\nu_R\|=\mu(B(0,R))<\infty$。
+
+第二，$G_\mu F=G_\nu f$。由 $\nu=\mu\llcorner B(0,R)$ 的定义，对任意非负 $\mathcal{B}(\mathbb{R}^N)$-可测函数 $h$ 有 $\int_{\mathbb{R}^N}h\,\mathrm{d}\nu=\int_{B(0,R)}h\,\mathrm{d}\mu$。取 $h\triangleq g(x,\cdot)f$ 得
+\begin{align*}
+(G_\nu f)(x)=\int_{\mathbb{R}^N}g(x,y)f(y)\,\mathrm{d}\nu(y)=\int_{B(0,R)}g(x,y)f(y)\,\mathrm{d}\mu(y)=(G_\mu F)(x).
+\end{align*}
+
+第三，范数相等。因 $F=f$ 在 $B(0,R)$ 上而 $\nu$ 集中于 $B(0,R)$，
+\begin{align*}
+\|F\|_{L^p(\mu)}^p=\int_{B(0,R)}|f|^p\,\mathrm{d}\mu=\int_{\mathbb{R}^N}|f|^p\,\mathrm{d}\nu=\|f\|_{L^p(\nu)}^p .
+\end{align*}
+故 $f\mapsto f\chi_{B(0,R)}$ 是 $L^p(\nu)$ 到 $L^p(\mu)$ 的等距嵌入，它把 $V_{E,\nu,g,p}$ 送入 $V_{E,\mu,g,p}$，于是\eqref{align:ch03-3.32}成立。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-有限测度比较; kind=motivation; location=引理 3.2.10 后的注记; basis=为何要用 $\nu_R$ 代替 $\mu$、等距嵌入的结构、反向不等式失效的具体反例，以及 $R\to\infty$ 时的极限问题
+\begin{remark}\phantomsection\label{remark:ch03-有限测度比较}
+\begin{enumerate}[(i)]
+\item 引入动机。引理把无限 Radon 测度 $\mu$ 上的容量与有限测度 $\nu_R$ 上的容量作比较，方向是 $C_{\mu,g,p}\leqslant C_{\nu_R,g,p}$。它的用途是：有限测度上的容量可用弱$^*$紧性作关于 $R$ 的统一估计（\cref{proposition:ch03-p右连续}、\cref{proposition:ch03-p趋近1}），而无限测度上的容量只能由 $R\to\infty$ 逼近得到。
+
+\item 结构。$f\mapsto f\chi_{B(0,R)}$ 是 $L^p(\nu_R)\to L^p(\mu)$ 的等距嵌入，并且保持位势不变（因为 $\nu_R$ 集中于 $B(0,R)$）。因此 $V_{E,\nu_R,g,p}$ 被等距地送入 $V_{E,\mu,g,p}$，容量的不等式随之而来。$\nu_R$ 有限这一点来自 $\mu$ 的 Radon 性（局部有限），它保证 $\|\nu_R\|=\mu(B(0,R))<\infty$。
+
+\item 边界。反向不等式一般不成立。取 $N=1$、$\mu=\lambda$、$R=1$、$E=\{x_0\}$，并取 $\varphi\in C_c(\mathbb{R})$ 满足 $\varphi\geqslant0$、$\operatorname{supp}\varphi\subseteq[2,3]$，$g(x,y)\triangleq\varphi(y)$（与 $x$ 无关，故为核）。则 $g(x,\nu_1)=\int\varphi\,\mathrm{d}\nu_1=0<1$ 对一切 $x$，故 $V_{E,\nu_1,g,p}=\varnothing$、$C_{\nu_1,g,p}(E)=\infty$；而 $g(x,\lambda)=\int\varphi\,\mathrm{d}\lambda\in(0,\infty)$，故 $V_{E,\lambda,g,p}\neq\varnothing$、$C_{\lambda,g,p}(E)<\infty$。可见\eqref{align:ch03-3.32}一般为严格不等式。
+
+\item 适用边界。$C_{\nu_R,g,p}(E)$ 关于 $R$ 非增（$\nu_R$ 随 $R$ 增大），其极限 $\lim_{R\to\infty}C_{\nu_R,g,p}(E)$ 存在但一般不等于 $C_{\mu,g,p}(E)$：\eqref{align:ch03-3.32}只给出一侧。等号的成立需要核在无穷远处的衰减条件，这正是\cref{proposition:ch03-p右连续}的假设\eqref{align:ch03-3.35a}。
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}\label{lemma:ch03-规范单调}
+设 $\mu\in\mathscr{R}^+_f(\mathbb{R}^N)$ 且 $\mu\neq0$，$g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$p\in[1,\infty)$。则对任意 $E\subseteq\mathbb{R}^N$，映射
+\begin{align*}
+p\mapsto\left(\frac{C_{g,p}(E)}{\|\mu\|}\right)^{1/p}
+\end{align*}
+非减，其中 $C_{g,p}\equiv C_{\mu,g,p}$，$\|\mu\|=\mu(\mathbb{R}^N)$。
+\end{lemma}
+
+\begin{proof}
+由 Hölder 不等式，对任意 $f\in V_{E,q}$ 与 $1<p<q<\infty$ 有
+\begin{align*}
+\int_{\mathbb{R}^N}f^p\,\mathrm{d}\mu\leqslant\left(\int_{\mathbb{R}^N}f^q\,\mathrm{d}\mu\right)^{p/q}\mu(\mathbb{R}^N)^{\frac{q-p}{q}},
+\end{align*}
+于是
+\begin{align*}
+\left(\frac{C_{\mu,g,p}(E)}{\|\mu\|}\right)^{1/p}\leqslant\left(\frac{C_{\mu,g,q}(E)}{\|\mu\|}\right)^{1/q}.
+\end{align*}
+现设 $1=p<q<\infty$，$f\in V_{E,q}$。则由\eqref{align:ch03-3.22}，测度 $\sigma\triangleq f\mu$，$\sigma(F)\triangleq\int_Ff\,\mathrm{d}\mu$（$F\in\mathcal{B}(\mathbb{R}^N)$），属于 $V_{E,1}$，且
+\begin{align*}
+\|\sigma\|=\int_{\mathbb{R}^N}f\,\mathrm{d}\mu\leqslant\left(\int_{\mathbb{R}^N}f^q\,\mathrm{d}\mu\right)^{1/q}\mu(\mathbb{R}^N)^{\frac{q-1}{q}}.
+\end{align*}
+由此不等式得
+\begin{align*}
+\frac{C_{g,1}(E)}{\|\mu\|}\leqslant\left(\frac{C_{g,q}(E)}{\|\mu\|}\right)^{1/q},
+\end{align*}
+故结论成立。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-规范单调; kind=proof; location=引理 3.2.11 证明中 Hölder 不等式的应用与 $V_{E,q}\subseteq V_{E,p}$ 的下确界传递; basis=原书写出 Hölder 估计后直接给出规范化不等式，未说明容许族的包含关系与 $p=1$ 时 $\sigma=f\mu$ 的有限性
+\begin{proof}
+补出三处。
+
+第一，$V_{E,q}\subseteq V_{E,p}$（$1\leqslant p<q<\infty$）。设 $f\in V_{E,q}$，则 $f\in L^q(\mu)$、$f\geqslant0$、$Gf\geqslant1$ 在 $E$ 上。因 $\mu$ 有限，Hölder 不等式给出 $\|f\|_{\mu,p}\leqslant\|f\|_{\mu,q}\|\mu\|^{1/p-1/q}<\infty$，故 $f\in L^p(\mu)$，于是 $f\in V_{E,p}$。因此
+\begin{align*}
+C_{\mu,g,p}(E)=\inf_{f\in V_{E,p}}\|f\|_{\mu,p}^p\leqslant\inf_{f\in V_{E,q}}\|f\|_{\mu,p}^p\leqslant\|\mu\|^{1-p/q}\left(\inf_{f\in V_{E,q}}\|f\|_{\mu,q}^q\right)^{p/q},
+\end{align*}
+最后一步用第一段的逐点估计；两端同除以 $\|\mu\|$ 并取 $1/p$ 次幂即得 $1<p<q<\infty$ 时的非减性。
+
+第二，$p=1$ 时 $\sigma\triangleq f\mu$ 有限且属于 $V_{E,1}$。由 $\mu$ 有限与 $f\in L^q(\mu)$ 得 $f\in L^1(\mu)$，故 $\|\sigma\|=\int f\,\mathrm{d}\mu<\infty$，即 $\sigma\in\mathscr{R}^+_f(\mathbb{R}^N)$。又 $g(x,\sigma)=\int g(x,y)f(y)\,\mathrm{d}\mu(y)=(Gf)(x)\geqslant1$ 对 $x\in E$ 成立，故 $\sigma\in V_{E,1}$。
+
+第三，$p=1$ 时的规范化不等式。由 $C_{g,1}(E)\leqslant\|\sigma\|$ 与上述估计，对每个 $f\in V_{E,q}$ 有 $C_{g,1}(E)\leqslant\|\mu\|^{(q-1)/q}\|f\|_{\mu,q}$；对 $f$ 取 $\|f\|_{\mu,q}^q\to C_{g,q}(E)$ 的极小化序列并取极限得 $C_{g,1}(E)\leqslant\|\mu\|^{(q-1)/q}C_{g,q}(E)^{1/q}$。两端除以 $\|\mu\|$ 得 $C_{g,1}(E)/\|\mu\|\leqslant(C_{g,q}(E)/\|\mu\|)^{1/q}$。$\mu\neq0$ 保证 $\|\mu\|>0$，从而规范化有意义。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch03-规范单调; kind=motivation; location=引理 3.2.11 后的注记; basis=规范化的必要性、Hölder 指数 $q/(q-p)$ 的来源、$\mu\neq0$ 与 $\mu$ 有限的作用，以及 $g\equiv1$ 时的显式核验
+\begin{remark}\phantomsection\label{remark:ch03-规范单调}
+\begin{enumerate}[(i)]
+\item 引入动机。本引理给出 $p\mapsto C_{g,p}(E)$ 的一个单调量。它与\cref{proposition:ch03-简单函数逼近}(ii) 中由简单函数表示得到的上半连续性合起来，恰好给出右连续性：上半连续性给出 $\limsup_{q\to p+}C_{g,q}\leqslant C_{g,p}$，而本引理给出 $C_{g,p}\leqslant\liminf_{q\to p+}C_{g,q}$。
+
+\item 规范化的作用。$C_{g,p}(E)$ 本身不必关于 $p$ 单调；必须除以 $\|\mu\|$ 并取 $1/p$ 次幂才得到单调量。这一点由量纲可见：$C_{g,p}$ 是 $L^p$ 范数的 $p$ 次幂，而 $(C_{g,p}/\|\mu\|)^{1/p}$ 才是与 $p$ 的指数无关的“水平”。Hölder 不等式的指数 $q/(q-p)$ 与 $q/p$ 正是把 $p$ 次积分用 $q$ 次积分与全质量 $\|\mu\|$ 控制的代价。
+
+\item 各项假设的作用。$\mu$ 有限使 $\|\mu\|<\infty$ 且 $L^q(\mu)\subseteq L^p(\mu)$（$p<q$），这是容许族包含关系与 Hölder 估计的前提；$\mu\neq0$ 使规范化 $\|\mu\|^{-1/p}$ 有意义；$p\in[1,\infty)$ 使 $L^p$ 为赋范空间。若 $C_{g,p}(E)=\infty$，则单调性不等式两端同为 $\infty$，结论平凡成立。
+
+\item 边界与例。取 $g\equiv1$、$E=\mathbb{R}^N$、$\mu\in\mathscr{R}^+_f(\mathbb{R}^N)$ 且 $\|\mu\|>1$。由 Hölder 不等式，条件 $\int f\,\mathrm{d}\mu\geqslant1$ 蕴含 $\|f\|_{\mu,p}^p\geqslant\|\mu\|^{-(p-1)}$，而 $f\equiv\|\mu\|^{-1}$ 达到该值，故 $C_{g,p}(\mathbb{R}^N)=\|\mu\|^{-(p-1)}$ 关于 $p$ 严格递减；规范化量 $\left(C_{g,p}(\mathbb{R}^N)/\|\mu\|\right)^{1/p}=\|\mu\|^{-1}$ 却关于 $p$ 为常数。可见引理中的规范化与 $1/p$ 次幂均不可省：$C_{g,p}(E)$ 本身不必关于 $p$ 单调。
+\end{enumerate}
+\end{remark}
+
+记 $\mathscr S_0(\mathbb{R}^N)\subseteq\mathscr S^+(\mathbb{R}^N)$ 为在某个 $\mu$-有限测度集之外为零的非负简单函数之集（即 $s\in\mathscr S_0(\mathbb{R}^N)$ 当且仅当 $s\in\mathscr S^+(\mathbb{R}^N)$ 且存在 $E\in\mathcal{B}(\mathbb{R}^N)$ 使 $\mu(E)<\infty$、$s=0$ 在 $\mathbb{R}^N\setminus E$ 上）。对任意 $p\in(1,\infty)$，置
+\begin{align}
+S_{\mu,g,p}(E)\triangleq\inf_{s\in\Sigma_E}\|s\|_{\mu,p}^p,\label{align:ch03-3.33a}
+\end{align}
+其中
+\begin{align}
+\Sigma_E\equiv\Sigma_{E,\mu,g}\triangleq\{s\in\mathscr S_0(\mathbb{R}^N)\mid(G_\mu s)(x)\geqslant1\ \forall x\in E\}.\label{align:ch03-3.33b}
+\end{align}
+若 $\Sigma_E=\varnothing$，则约定 $S_{\mu,g,p}(E)\triangleq\infty$。
+
+\begin{proposition}\label{proposition:ch03-简单函数逼近}
+设 $\mu\in\mathscr{R}^+(\mathbb{R}^N)$。设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核，$p\in(1,\infty)$。则对任意紧集 $K\subseteq\mathbb{R}^N$：
+\begin{enumerate}[(i)]
+\item $S_{\mu,g,p}(K)=C_{\mu,g,p}(K)$；
+\item 映射 $p\mapsto C_{\mu,g,p}(K)$ 上半连续；此外，若 $\mu\in\mathscr{R}^+_f(\mathbb{R}^N)$，则它在 $(1,\infty)$ 上右连续。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) 由定义 $\Sigma_K\subseteq V_{K,p}$（见\eqref{align:ch03-3.25b}），故 $S_{\mu,g,p}(K)\geqslant C_{\mu,g,p}(K)$。若 $C_{\mu,g,p}(K)=\infty$，则结论成立。否则取 $\varepsilon\in(0,1)$ 与 $f\in V_{K,p}$ 使 $\|f\|_{\mu,p}^p<C_{\mu,g,p}(K)+\varepsilon$。置 $f_\varepsilon\triangleq f/(1-\varepsilon)$。由标准结果（见\cref{lemma:ch02-有理简单函数稠密}）存在 $\{s_n\}\subseteq\mathscr S_0(\mathbb{R}^N)$ 使 $\lim_{n\to\infty}\|s_n-f_\varepsilon\|_{\mu,p}=0$。证明下列断言：
+
+\textbf{断言.} 存在 $\bar n\in\mathbb{N}$，使 $G_\mu s_n\geqslant1$ 在 $K$ 上对所有 $n>\bar n$ 成立。
+
+由该断言，对每个 $n>\bar n$ 有 $s_n\in\Sigma_K$，故 $S_{\mu,g,p}(K)\leqslant\|s_n\|_{\mu,p}^p$。在前一不等式中令 $n\to\infty$ 得
+\begin{align*}
+S_{\mu,g,p}(K)\leqslant\frac{1}{(1-\varepsilon)^p}\|f\|_{\mu,p}^p\leqslant\frac{1}{(1-\varepsilon)^p}\left[C_{\mu,g,p}(K)+\varepsilon\right],
+\end{align*}
+由 $\varepsilon$ 的任意性得 $S_{\mu,g,p}(K)\leqslant C_{\mu,g,p}(K)$。
+
+为证断言，设其不成立，则存在 $\{s_{n_k}\}\subseteq\{s_n\}$ 与 $\{x_k\}\subseteq K$ 使 $(G_\mu s_{n_k})(x_k)<1$ 对每个 $k\in\mathbb{N}$ 成立。因 $K$ 紧，存在 $\{x_k\}$ 的子列（不重新标号）与 $\bar x\in K$ 使 $x_k\to\bar x$（$k\to\infty$）。按\cref{lemma:ch03-位势下半连续}(i) 的论证，这蕴含
+\begin{align*}
+(G_\mu f_\varepsilon)(\bar x)&=\int_{\mathbb{R}^N}g(\bar x,y)f_\varepsilon(y)\,\mathrm{d}\mu(y)\leqslant\liminf_{k\to\infty}\int_{\mathbb{R}^N}g(x_k,y)s_{n_k}(y)\,\mathrm{d}\mu(y)\\
+&=\liminf_{k\to\infty}(G_\mu s_{n_k})(x_k)\leqslant1,
+\end{align*}
+这与 $G_\mu f_\varepsilon\geqslant1/(1-\varepsilon)>1$ 在 $K$ 上成立矛盾。故断言与 (i) 均成立。
+
+(ii) 若 $\Sigma_K=\varnothing$，则由 (i) 有 $C_{\mu,g,p}(K)=\infty$ 对一切 $p$ 成立，结论平凡。否则对每个 $s\in\Sigma_K$ 有 $s=\sum_{k=1}^{j_s}c_{k,s}\chi_{E_{k,s}}$，其中 $j_s\in\mathbb{N}$、$c_{k,s}>0$、$E_{k,s}\in\mathcal{B}(\mathbb{R}^N)$。于是由 (i)
+\begin{align*}
+C_{\mu,g,p}(K)=\inf_{s\in\Sigma_K}\|s\|_{\mu,p}^p=\inf_{s\in\Sigma_K}\sum_{k=1}^{j_s}c_{k,s}^p\mu(E_{k,s}).
+\end{align*}
+由该等式，$C_{\mu,g,p}(K)$ 是一族 $p$ 的连续函数的下确界，故为 $p$ 的上半连续函数。因此
+\begin{align}
+\limsup_{q\to p+}C_{\mu,g,q}(K)\leqslant C_{\mu,g,p}(K).\label{align:ch03-3.34a}
+\end{align}
+另一方面，由\cref{lemma:ch03-规范单调}，对每个 $q>p$ 有
+\begin{align*}
+\left(\frac{C_{\mu,g,p}(K)}{\|\mu\|}\right)^{1/p}\leqslant\left(\frac{C_{\mu,g,q}(K)}{\|\mu\|}\right)^{1/q},
+\end{align*}
+故
+\begin{align}
+C_{\mu,g,p}(K)\leqslant\liminf_{q\to p+}C_{\mu,g,q}(K).\label{align:ch03-3.34b}
+\end{align}
+由\eqref{align:ch03-3.34a}--\eqref{align:ch03-3.34b}得结论。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-简单函数逼近; kind=proof; location=命题 3.2.12(i) 中断言的证明; basis=原书用反证法与 Fatou 型估计，其中 “$(G_\mu f_\varepsilon)(\bar x)\leqslant\liminf_k\int g(x_k,y)s_{n_k}(y)\,\mathrm{d}\mu(y)$” 需要核在 $K$ 上的额外可积性；此处改用“从下方单调逼近 + 紧性（Dini 型）论证”，只用 $g\geqslant0$、$f_\varepsilon\in L^p$ 与 $Gf_\varepsilon$ 的下半连续性
+\begin{proof}
+补出断言的一个不依赖核的可积性的证明。把逼近列取成从下方的单调列。置
+\begin{align*}
+s_n\triangleq2^{-n}\left\lfloor2^n\min\{f_\varepsilon,n\}\right\rfloor\chi_{B(0,n)}\quad(n\in\mathbb{N}),
+\end{align*}
+其中 $\lfloor\cdot\rfloor$ 表示下取整。则 $s_n$ 为非负简单函数，$s_n=0$ 在 $B(0,n)$ 之外，而 $\mu(B(0,n))<\infty$（$\mu$ 为 Radon 测度），故 $s_n\in\mathscr S_0(\mathbb{R}^N)$；又
+\begin{align*}
+0\leqslant s_n\leqslant\min\{f_\varepsilon,n\}\chi_{B(0,n)}\leqslant f_\varepsilon,\qquad
+f_\varepsilon-s_n\leqslant2^{-n}+f_\varepsilon\chi_{B(0,n)^c},
+\end{align*}
+故 $s_n\uparrow f_\varepsilon$ 逐点且由控制收敛定理 $\|s_n-f_\varepsilon\|_{\mu,p}\to0$。
+
+由 $g\geqslant0$ 与单调收敛定理，$(G_\mu s_n)(x)\uparrow(G_\mu f_\varepsilon)(x)$ 对每个 $x\in\mathbb{R}^N$ 成立。置
+\begin{align*}
+u_n\triangleq\min\{G_\mu s_n,2\},\qquad u\triangleq\min\{G_\mu f_\varepsilon,2\}.
+\end{align*}
+每个 $G_\mu s_n$ 是有限个形如 $x\mapsto\int_{E}g(x,y)\,\mathrm{d}\mu(y)$ 的非负函数之和，故由\cref{lemma:ch03-位势下半连续}(i) 下半连续；于是 $u_n$ 下半连续、$u_n\uparrow u$，且 $u$ 下半连续。在 $K$ 上有 $u\geqslant\min\{1/(1-\varepsilon),2\}=:c>1$。因 $\{u_n>1\}$ 为开集、关于 $n$ 递增，且由 $u_n\uparrow u\geqslant c>1$ 覆盖紧集 $K$，存在 $\bar n$ 使 $K\subseteq\{u_{\bar n}>1\}$；于是 $n\geqslant\bar n$ 时 $G_\mu s_n\geqslant u_n\geqslant u_{\bar n}>1$ 在 $K$ 上成立，断言得证。整个过程只用到 $g\geqslant0$、$f_\varepsilon\in L^p(\mu)$、$K$ 紧与 $G_\mu f_\varepsilon$ 的下半连续性。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-简单函数逼近; kind=motivation; location=命题 3.2.12 后的注记; basis=把容量写成简单函数范数的下确界的作用、$\mathscr S_0$ 要求有限 $\mu$-测度支撑的理由、上半连续与右连续的分工，以及 $K$ 必须是紧集的边界
+\begin{remark}\phantomsection\label{remark:ch03-简单函数逼近}
+\begin{enumerate}[(i)]
+\item 引入动机。(i) 把容量写成可数族简单函数范数的下确界，从而把“$p$ 的函数”写成“连续函数族的下确界”；(ii) 由此得到上半连续性，并与\cref{lemma:ch03-规范单调}合并得到右连续性。这正是 \S3.3 中 Bessel 容量关于 $p$ 右连续（\cref{proposition:ch03-Bessel基本}(iii)）的来源。
+
+\item 各项假设的作用。$\mathscr S_0$ 要求支撑具有限 $\mu$-测度，使 $\|s\|_{\mu,p}<\infty$（否则 $S_{\mu,g,p}$ 无意义）；$K$ 紧是紧性论证与 $x_k\to\bar x$ 取子列的前提，也是 $Gf_\varepsilon>1$ 能提升为一致下界的前提；$\varepsilon\in(0,1)$ 使 $1/(1-\varepsilon)>1$ 留有严格余量，从而 $c>1$；$\mu\in\mathscr{R}^+_f$ 用于 (ii) 中的规范化（\cref{lemma:ch03-规范单调}要求 $\|\mu\|<\infty$）。
+
+\item 边界。$K$ 不可换为一般闭集或 Borel 集：$Gf_\varepsilon>1$ 在 $K$ 上的下界 $c>1$ 只对紧集可由有限覆盖得到一致下界；对非紧集，简单函数的位势可以逐点趋于 $Gf_\varepsilon$ 而不在任何一致意义下超过 $1$。此外 (ii) 只给右连续，左连续一般不成立：$p\mapsto C_{\mu,g,p}(K)$ 可以在某点左侧跳跃。
+
+\item 适用边界。结论 (ii) 的第二部分要求 $\mu$ 有限；若 $\mu$ 只是 Radon 测度，\cref{lemma:ch03-规范单调}不可用，此时上半连续性仍成立，右连续性需另加假设（见\cref{proposition:ch03-p右连续}）。
+\end{enumerate}
+\end{remark}
+
+
+\begin{proposition}\label{proposition:ch03-p右连续}
+设 $\mu\in\mathscr{R}^+(\mathbb{R}^N)$。设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核。设 $K\subseteq\mathbb{R}^N$ 紧，且下列条件成立：
+\begin{align}
+\lim_{R\to\infty}\int_{\{y\in\mathbb{R}^N\mid|y|\geqslant R\}}\left(\sup_{x\in K}g(x,y)\right)\mathrm{d}\mu(y)=0,\label{align:ch03-3.35a}\\
+\limsup_{|y|\to\infty}\left(\sup_{x\in K}g(x,y)\right)=:M_0<\infty.\label{align:ch03-3.35b}
+\end{align}
+则映射 $p\mapsto C_{\mu,g,p}(K)$（$p\in(1,\infty)$）在 $(1,\infty)$ 上右连续。
+\end{proposition}
+
+\begin{proof}
+不妨设 $C_{\mu,g,p}(K)<\infty$ 对一切 $p\in(1,\infty)$ 成立，否则由\cref{proposition:ch03-简单函数逼近}(i) 有 $C_{\mu,g,p}(K)=\infty$ 对一切 $p\in(1,\infty)$ 成立，结论平凡满足。只需对 $p\in[p_1,q_1]$ 证明结论，其中 $p_1\in(1,2)$、$q_1\triangleq p_1/(p_1-1)$。由\cref{proposition:ch03-简单函数逼近}(ii)，映射 $p\mapsto C_{\mu,g,p}(K)$ 上半连续，故它在闭区间 $[p_1,q_1]$ 上取到最大值，即存在
+\begin{align}
+\max_{p\in[p_1,q_1]}C_{\mu,g,p}(K)=:M_1<\infty.\label{align:ch03-3.36}
+\end{align}
+
+置
+\begin{align*}
+\varepsilon_1\triangleq\left[(M_0+1)(M_1+1)\right]^{-q_1/p_1}\in(0,1],
+\end{align*}
+并固定 $\varepsilon\in(0,\varepsilon_1)$。对任意 $p\in[p_1,q_1]$，存在 $f_p\in V_{K,\mu,g,p}$ 使
+\begin{align}
+\|f_p\|_{\mu,p}^p<C_{\mu,g,p}(K)+\varepsilon\leqslant M_1+\varepsilon\label{align:ch03-3.37}
+\end{align}
+（见\eqref{align:ch03-3.36}）。设 $\nu_R\in\mathscr{R}^+_f(\mathbb{R}^N)$，$\nu_R\triangleq\mu\llcorner B(0,R)$（$R>0$）。证明下列断言：
+
+\textbf{断言.} 对任意 $\varepsilon\in(0,\varepsilon_1)$，存在 $\bar R>0$，使
+\begin{align*}
+f_{\varepsilon,p}\triangleq f_p\left[1-\left(\frac{\varepsilon}{\varepsilon_1}\right)^{1/q_1}\right]^{-1}\in V_{K,\nu_R,g,p}
+\end{align*}
+对一切 $R>\bar R$ 与 $p\in[p_1,q_1]$ 成立。
+
+若断言成立，则由\eqref{align:ch03-3.37}，对任意 $\varepsilon\in(0,\varepsilon_1)$ 与 $R>\bar R$ 有
+\begin{align}
+C_{\nu_R,g,p}(K)\leqslant\|f_{\varepsilon,p}\|_{\nu_R,p}^p=\int_{B_R}\left[f_{\varepsilon,p}(y)\right]^p\mathrm{d}\mu(y)
+\leqslant\frac{\|f_p\|_{\mu,p}^p}{\left[1-\left(\frac{\varepsilon}{\varepsilon_1}\right)^{1/q_1}\right]^p}
+\leqslant\frac{C_{\mu,g,p}(K)+\varepsilon}{\left[1-\left(\frac{\varepsilon}{\varepsilon_1}\right)^{1/q_1}\right]^{q_1}} .\label{align:ch03-3.38}
+\end{align}
+由\eqref{align:ch03-3.38}与\eqref{align:ch03-3.32}得
+\begin{align*}
+0\leqslant\sup_{p\in[p_1,q_1]}C_{\nu_R,g,p}(K)-C_{\mu,g,p}(K)
+\leqslant\left(\left[1-\left(\frac{\varepsilon}{\varepsilon_1}\right)^{1/q_1}\right]^{-q_1}-1\right)M_1
++\varepsilon\left[1-\left(\frac{\varepsilon}{\varepsilon_1}\right)^{1/q_1}\right]^{-q_1}.
+\end{align*}
+现令 $\varepsilon\to0^+$，随之 $R\to\infty$。由此得 $C_{\nu_R,g,p}(K)\to C_{\mu,g,p}(K)$ 关于 $p\in[p_1,q_1]$ 一致。另一方面，由\cref{proposition:ch03-简单函数逼近}(ii)，映射 $p\mapsto C_{\nu_R,g,p}(K)$ 对每个 $R>0$ 在 $[p_1,q_1]$ 上右连续。故结论成立。
+
+为证断言，只需注意 $f_{\varepsilon,p}\in L^p(\mathbb{R}^N,\mathcal{B}(\mathbb{R}^N),\nu_R)$ 且 $f_{\varepsilon,p}\geqslant0$。置 $B_R\equiv B(0,R)$，令 $q\triangleq p/(p-1)$ 为 $p$ 的共轭指数，并固定 $x\in K$。由\eqref{align:ch03-3.35a}--\eqref{align:ch03-3.35b}与\eqref{align:ch03-3.37}，对任意 $\varepsilon\in(0,\varepsilon_1)$ 存在 $\bar R>0$ 使对所有 $R>\bar R$ 有
+\begin{align*}
+\int_{B_R^c}g(x,y)f_p(y)\,\mathrm{d}\mu(y)
+&\leqslant\|f_p\|_{\mu,p}\left\{\int_{B_R^c}\left(\sup_{x\in K}g(x,y)\right)^q\mathrm{d}\mu(y)\right\}^{1/q}\\
+&\leqslant\|f_p\|_{\mu,p}\left(\sup_{x\in K}g(x,y)\right)^{1/p}\left\{\int_{B_R^c}\sup_{x\in K}g(x,y)\,\mathrm{d}\mu(y)\right\}^{1/q}\\
+&\leqslant\left[(M_0+1)(M_1+1)\right]^{1/p_1}\varepsilon^{1/q}\leqslant\left(\frac{\varepsilon}{\varepsilon_1}\right)^{1/q_1},
+\end{align*}
+其中用到 $q\leqslant q_1$ 与 $\varepsilon\in(0,1)$。因此，对上述 $\varepsilon$、$R$ 与任意 $x\in K$，
+\begin{align*}
+1\leqslant(G_\mu f_p)(x)&=\int_{B_R}g(x,y)f_p(y)\,\mathrm{d}\mu(y)+\int_{B_R^c}g(x,y)f_p(y)\,\mathrm{d}\mu(y)\\
+&\leqslant(G_{\nu_R}f_p)(x)+\left(\frac{\varepsilon}{\varepsilon_1}\right)^{1/q_1}.
+\end{align*}
+由上式得 $(G_{\nu_R}f_{\varepsilon,p})(x)\geqslant1$ 对所有 $x\in K$ 成立，故 $f_{\varepsilon,p}\in V_{K,\nu_R,g,p}$。断言得证，从而证明完毕。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-p右连续; kind=proof; location=命题 3.2.13 证明中的常数计算、$\varepsilon\to0$ 与 $R\to\infty$ 的联合极限，以及一致极限的右连续性; basis=原书 (3.38) 后的上确界估计、$\varepsilon$ 与 $R$ 的依赖关系、$C_{\nu_R,g,p}$ 关于 $R$ 的单调性均未展开
+\begin{proof}
+补出四处。
+
+第一，$\varepsilon_1$ 的取值范围与退化情形。由 $M_0,M_1\geqslant0$ 得 $(M_0+1)(M_1+1)\geqslant1$，故 $\varepsilon_1\in(0,1]$；当 $M_0=M_1=0$ 时 $\varepsilon_1=1$，此时 $C_{\mu,g,p}(K)=0$ 在 $[p_1,q_1]$ 上恒成立，结论平凡，故以下设 $M_0+M_1>0$，即 $\varepsilon_1<1$，从而 $0<\varepsilon<\varepsilon_1<1$ 可用。
+
+第二，Hölder 估计中的指数。由 $(q-1)/q=1/p$ 得 $\left(\sup g\right)^{q}=\left(\sup g\right)^{1/p}\left(\sup g\right)^{1/q}$ 型的分解，于是
+\begin{align*}
+\left\{\int_{B_R^c}\left(\sup_{x\in K}g\right)^q\mathrm{d}\mu\right\}^{1/q}
+\leqslant\left(\sup_{|y|\geqslant R}\sup_{x\in K}g\right)^{1/p}\left\{\int_{B_R^c}\sup_{x\in K}g\,\mathrm{d}\mu\right\}^{1/q},
+\end{align*}
+其中第一个因子由\eqref{align:ch03-3.35b}控制为 $(M_0+1)^{1/p}\leqslant(M_0+1)^{1/p_1}$（$p\geqslant p_1$），第二个因子由\eqref{align:ch03-3.35a}控制为 $\varepsilon^{1/q}$（取 $R$ 充分大）；又 $\|f_p\|_{\mu,p}\leqslant(M_1+\varepsilon)^{1/p}\leqslant(M_1+1)^{1/p_1}$。合并得
+\begin{align*}
+\left[(M_0+1)(M_1+1)\right]^{1/p_1}\varepsilon^{1/q}
+=\varepsilon^{1/q}\varepsilon_1^{-1/q_1}\leqslant\left(\frac{\varepsilon}{\varepsilon_1}\right)^{1/q_1},
+\end{align*}
+最后一步用 $q\leqslant q_1$ 与 $0<\varepsilon<1$（此时 $1/q\geqslant1/q_1$ 蕴含 $\varepsilon^{1/q}\leqslant\varepsilon^{1/q_1}$）。
+
+第三，$\varepsilon\to0$ 与 $R\to\infty$ 的联合极限。\eqref{align:ch03-3.38}中的 $\bar R$ 依赖于 $\varepsilon$。取 $\varepsilon_j\downarrow0$ 与相应的 $R_j\uparrow\infty$，得上确界估计趋于 $0$（因为 $[1-(\varepsilon_j/\varepsilon_1)^{1/q_1}]^{-q_1}\to1$）。又 $R\mapsto C_{\nu_R,g,p}(K)$ 非增（$\nu_R$ 随 $R$ 增大而增大），故对任意 $R\geqslant R_j$ 有
+\begin{align*}
+0\leqslant C_{\nu_R,g,p}(K)-C_{\mu,g,p}(K)\leqslant C_{\nu_{R_j},g,p}(K)-C_{\mu,g,p}(K),
+\end{align*}
+于是整个族在 $R\to\infty$ 时关于 $p\in[p_1,q_1]$ 一致收敛于 $C_{\mu,g,p}(K)$。
+
+第四，一致极限的右连续性。设 $f_R(p)\triangleq C_{\nu_R,g,p}(K)$ 在 $[p_1,q_1]$ 上右连续且 $f_R\to f$ 一致。给定 $p\in[p_1,q_1)$ 与 $\eta>0$，取 $R$ 使 $\sup_{[p_1,q_1]}|f_R-f|<\eta/3$，再取 $\delta>0$ 使 $q\in(p,p+\delta)$ 时 $|f_R(q)-f_R(p)|<\eta/3$；则 $|f(q)-f(p)|\leqslant\eta$，即 $f$ 在 $p$ 处右连续。由 $p_1\in(1,2)$ 的任意性（$q_1=p_1/(p_1-1)\to\infty$ 当 $p_1\to1^+$），右连续性在 $(1,\infty)$ 上成立。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-p右连续; kind=motivation; location=命题 3.2.13 后的注记; basis=两条假设的几何含义与必要性、$\nu_R$ 逼近的作用、$p_1<2$ 与 $q_1$ 的选择，以及条件失效的边界
+\begin{remark}\phantomsection\label{remark:ch03-p右连续}
+\begin{enumerate}[(i)]
+\item 引入动机。本命题说明在核于无穷远衰减的条件下，$C_{\mu,g,p}(K)$ 关于 $p$ 的右连续性并不需要 $\mu$ 有限。证明策略是：用 $\nu_R=\mu\llcorner B(0,R)$ 上的容量逼近 $\mu$ 上的容量，而有限测度情形的右连续性已由\cref{proposition:ch03-简单函数逼近}(ii) 给出；$\nu_R$ 的逼近精度由\eqref{align:ch03-3.35a} 控制。
+
+\item 两条假设的作用。\eqref{align:ch03-3.35a} 说明 $\sup_{x\in K}g(x,\cdot)$ 在无穷远处的积分可任意小，它使截断误差 $\int_{B_R^c}g(x,y)f_p(y)\mathrm{d}\mu(y)$ 可由 Hölder 不等式与 $\|f_p\|_{\mu,p}$ 控制；\eqref{align:ch03-3.35b} 说明 $\sup_{x\in K}g(x,\cdot)$ 在无穷远处有界，它把 Hölder 估计中的第一个因子控制为 $(M_0+1)^{1/p_1}$。两者缺一不可：只有\eqref{align:ch03-3.35a} 时 $\sup g$ 可以在小测度集上取巨大值而使第一个因子失控；只有\eqref{align:ch03-3.35b} 时截断误差可以衰减过慢。
+
+\item 参数的选择。$p_1\in(1,2)$ 与 $q_1=p_1/(p_1-1)$ 使区间 $[p_1,q_1]$ 关于共轭运算封闭（$q_1'=p_1$），从而 Hölder 估计中的共轭指数 $q=p/(p-1)$ 仍落在 $[p_1,q_1]$ 内并满足 $q\leqslant q_1$；$\varepsilon_1$ 的幂次 $q_1/p_1$ 正是使 $\left[(M_0+1)(M_1+1)\right]^{1/p_1}=\varepsilon_1^{-1/q_1}$ 成立的选择。
+
+\item 边界。$K$ 紧不可省：$M_0$ 与\eqref{align:ch03-3.35a} 中的上确界取遍 $x\in K$，$K$ 紧保证上确界有限且可由有限覆盖控制。若核在无穷远处不衰减（例如 $g\equiv1$、$\mu=\lambda_N$），则\eqref{align:ch03-3.35a} 失效；此时 $C_{\mu,g,p}(K)$ 仍可由\cref{proposition:ch03-简单函数逼近}(ii) 在 $\mu$ 有限时处理，但 $\mu$ 无限时右连续性可以失败。此外命题只给右连续，左连续需另作假设。
+\end{enumerate}
+\end{remark}
+
+本小节余下部分总取 $\mu=\lambda_N$，即 $\mathbb{R}^N$ 上的 Lebesgue 测度，并在记号中省略对 $\mu$ 的依赖。故置 $C_{g,p}\equiv C_{\lambda_N,g,p}$（见定义\eqref{align:ch03-3.25a}与\eqref{align:ch03-3.26a}）。同时置 $L^p(\mathbb{R}^N)\equiv L^p(\mathbb{R}^N,\mathcal{B}(\mathbb{R}^N),\lambda_N)$、$\mathrm{d}\mu(y)\equiv\mathrm{d}y$ 与 $\|s\|_p\equiv\|s\|_{\lambda_N,p}$。
+
+下面证明对任意紧集 $K\subseteq\mathbb{R}^N$，映射 $p\mapsto C_{g,p}(K)$（$p\in[1,\infty)$）在 $p=1$ 处右连续。为此置
+\begin{align}
+S_{g,1}(E)\triangleq\inf_{s\in\Sigma'_E}\|s\|_1,\label{align:ch03-3.39a}
+\end{align}
+其中
+\begin{align}
+\Sigma'_E\equiv\Sigma'_{E,g}\triangleq\left\{s\in\mathscr S_0(\mathbb{R}^N)\ \middle|\ \int_{\mathbb{R}^N}g(x,y)s(y)\,\mathrm{d}y\geqslant1\ \forall x\in E\right\}.\label{align:ch03-3.39b}
+\end{align}
+若 $\Sigma'_E=\varnothing$，则约定 $S_{g,1}(E)\triangleq\infty$。
+
+下列结果与\cref{proposition:ch03-简单函数逼近}类似。
+
+\begin{proposition}\label{proposition:ch03-容量p1表示}
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核。则对任意紧集 $K\subseteq\mathbb{R}^N$：
+\begin{enumerate}[(i)]
+\item $S_{g,1}(K)=C_{g,1}(K)$；
+\item 映射 $p\mapsto C_{g,p}(K)$ 在 $[1,\infty)$ 上上半连续。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) 因 $\Sigma'_K\subseteq V_{K,1}$，故 $S_{g,1}(K)\geqslant C_{g,1}(K)$。若 $C_{g,1}(K)=\infty$，则结论成立。否则取 $\varepsilon\in(0,1)$ 与 $\mu\in V_{K,1}$ 使 $\|\mu\|<C_{g,1}(K)+\varepsilon$（见\eqref{align:ch03-3.26a}）。置 $\mu_\varepsilon\triangleq\mu/(1-\varepsilon)$。取 $\rho\in C_c^\infty(\mathbb{R}^N)$ 满足 $\int_{\mathbb{R}^N}\rho\,\mathrm{d}y=1$，并置 $\rho_k(y)\triangleq k^N\rho(ky)$（$k\in\mathbb{N}$，$y\in\mathbb{R}^N$）、$f_k\triangleq\mu_\varepsilon*\rho_k$。则 $\{f_k\}\subseteq C^\infty(\mathbb{R}^N)$、$f_k\geqslant0$、$\|f_k\|_1\leqslant\|\mu_\varepsilon\|$，且对每个 $\varphi\in C_c(\mathbb{R}^N)$ 有 $\int_{\mathbb{R}^N}f_k\varphi\,\mathrm{d}y\to\int_{\mathbb{R}^N}\varphi\,\mathrm{d}\mu_\varepsilon$。另一方面，因 $f_k$ 非负且属于 $L^1(\mathbb{R}^N)$，它可由 $\mathscr S_0(\mathbb{R}^N)$ 中的函数列在 $L^1(\mathbb{R}^N)$ 中从下方强逼近。因此存在 $\{s_k\}\subseteq\mathscr S_0(\mathbb{R}^N)$ 使 $\|s_k\|_1\leqslant\|\mu_\varepsilon\|$ 且对每个 $\varphi\in C_c(\mathbb{R}^N)$ 有 $\int_{\mathbb{R}^N}s_k\varphi\,\mathrm{d}y\to\int_{\mathbb{R}^N}\varphi\,\mathrm{d}\mu_\varepsilon$。如同\cref{proposition:ch03-简单函数逼近}(i) 的证明，可证 $k$ 充分大时 $\{s_k\}\subseteq\Sigma'_K$，于是 $S_{g,1}(K)\leqslant C_{g,1}(K)$，(i) 得证。
+
+(ii) 由 (i) 与\cref{proposition:ch03-简单函数逼近}(i) 得
+\begin{align*}
+C_{g,p}(K)=\inf_{s\in\Sigma'_K}\sum_{k=1}^{j_s}c_{k,s}^p\lambda_N(E_{k,s})\qquad\text{对所有}\ p\in[1,\infty),
+\end{align*}
+其中 $s=\sum_{k=1}^{j_s}c_{k,s}\chi_{E_{k,s}}$，$j_s\in\mathbb{N}$，$c_{k,s}>0$，$E_{k,s}\in\mathcal{B}(\mathbb{R}^N)$。于是按\cref{proposition:ch03-简单函数逼近}(i) 的证明方式（下确界表示）即得结论。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-容量p1表示; kind=proof; location=命题 3.2.14(i) 中“如同命题 3.2.12(i) 的证明”一步与 (ii) 的下确界表示; basis=原书对两处均只作类比引用，且 $\{s_k\}\subseteq\Sigma'_K$ 的论证涉及弱$^*$逼近与紧性；此处补出弱$^*$逼近测度的构造、包络论证与 $p=1$ 时 $C_{g,1}$ 与 $\mu$ 无关的事实
+\begin{proof}
+补出三处。
+
+第一，$\{s_k\}$ 的弱$^*$逼近性。因 $\mu_\varepsilon\in\mathscr{R}^+_f(\mathbb{R}^N)$，可用有限个以 $\mu_\varepsilon$-小集为原子的加权和逼近它，再把每个原子 $\delta_{x_i}$ 换成小球上的平均 $(\lambda_N(B(x_i,r_i)))^{-1}\chi_{B(x_i,r_i)}$；所得 $s_k\in\mathscr S_0(\mathbb{R}^N)$ 满足 $\|s_k\|_1\leqslant\|\mu_\varepsilon\|$ 且 $s_k\lambda_N\rightharpoonup\mu_\varepsilon$ 弱$^*$。于是对任意 $\varphi\in C_c(\mathbb{R}^N)$ 有 $\int s_k\varphi\,\mathrm{d}y\to\int\varphi\,\mathrm{d}\mu_\varepsilon$。
+
+第二，$\{s_k\}\subseteq\Sigma'_K$（$k$ 充分大）。对固定 $x\in\mathbb{R}^N$，映射 $\nu\mapsto g(x,\nu)$ 在弱$^*$拓扑下下半连续（\cref{lemma:ch03-位势下半连续}及其关于 $g(f\nu,\mu)$ 的附注），故
+\begin{align*}
+\liminf_{k\to\infty}\int_{\mathbb{R}^N}g(x,y)s_k(y)\,\mathrm{d}y\geqslant\int_{\mathbb{R}^N}g(x,y)\,\mathrm{d}\mu_\varepsilon(y)\geqslant\frac{1}{1-\varepsilon}>1 .
+\end{align*}
+置 $u_k(x)\triangleq\inf_{j\geqslant k}\int g(x,y)s_j(y)\,\mathrm{d}y$，则 $u_k$ 下半连续（下半连续函数族的下确界仍下半连续）、$u_k$ 关于 $k$ 递增、$u\triangleq\lim_ku_k\geqslant1/(1-\varepsilon)>1$ 在 $K$ 上成立。因开集 $\{u_k>1\}$ 递增覆盖紧集 $K$，存在 $\bar k$ 使 $K\subseteq\{u_{\bar k}>1\}$，于是 $k\geqslant\bar k$ 时 $\int g(x,y)s_k(y)\,\mathrm{d}y>1$ 在 $K$ 上一致成立，即 $s_k\in\Sigma'_K$。
+
+第三，(ii) 的下确界表示与 $p=1$ 的相容性。$p=1$ 时\cref{definition:ch03-Cg1}中的容许族 $V_{E,1}$ 不依赖 $\mu$（条件只涉及 $g(x,\sigma)$），故 $C_{g,1}$ 与 $\mu$ 的选取无关，(i) 与\cref{proposition:ch03-简单函数逼近}(i) 在 $p=1$ 与 $p>1$ 时分别给出同一表示
+\begin{align*}
+C_{g,p}(K)=\inf_{s\in\Sigma'_K}\|s\|_p^p=\inf_{s\in\Sigma'_K}\sum_{k=1}^{j_s}c_{k,s}^p\lambda_N(E_{k,s}),
+\end{align*}
+其中 $\Sigma'_K$ 与 $p$ 无关。每个 $p\mapsto\sum_kc_{k,s}^p\lambda_N(E_{k,s})$ 连续，故其下确界上半连续。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-容量p1表示; kind=motivation; location=命题 3.2.14 后的注记; basis=为何 $p=1$ 需用 $\mathscr S_0$ 而非 $L^1$ 的测度版本、$\Sigma'_K$ 与 $p$ 无关的意义，以及上半连续而非连续的边界
+\begin{remark}\phantomsection\label{remark:ch03-p右连续无界核}
+\begin{enumerate}[(i)]
+\item 引入动机。本命题把\cref{proposition:ch03-简单函数逼近}中的 $S_{\mu,g,p}$ 换成以 Lebesgue 积分为基础的 $S_{g,1}$，从而在 $p=1$ 时也得到“容量等于简单函数范数的下确界”。它使 $p\mapsto C_{g,p}(K)$ 在整个 $[1,\infty)$ 上有统一的上半连续表示，这是\cref{proposition:ch03-p趋近1}中最大性估计\eqref{align:ch03-3.42}的来源。
+
+\item 各项假设的作用。$\mathscr S_0(\mathbb{R}^N)$ 中的函数具有限 Lebesgue 测度支撑，使 $\|s\|_1<\infty$；$K$ 紧使包络论证（开集递增覆盖）可用；$\varepsilon\in(0,1)$ 提供的余量 $1/(1-\varepsilon)>1$ 使弱$^*$极限的严格不等式得以保持。$p=1$ 时 $C_{g,1}$ 与测度无关，这是\eqref{align:ch03-3.39a}能用 $\lambda_N$ 书写的原因。
+
+\item 边界。结论 (ii) 只给上半连续：$p\mapsto C_{g,p}(K)$ 可以在某点左跳。连续性的右半边需\cref{lemma:ch03-规范单调}（有限测度情形）或\cref{proposition:ch03-p趋近1}的衰减假设。此外 $S_{g,1}(E)=C_{g,1}(E)$ 只对紧集 $K$ 证明；对一般 $E$，$\Sigma'_E$ 可能为空而 $C_{g,1}(E)$ 有限。
+\end{enumerate}
+\end{remark}
+
+
+% SUPPLEMENT: parent=remark:ch03-有限测度右连续; kind=proof; location=注 3.2.2 的推导; basis=原书只写“In view of Lemma 3.2.11 and Proposition 3.2.14(ii)”，此处说明 $\nu_R$ 有限时两个半边分别由哪一结果给出，并交代 $p=1$ 端点
+\begin{remark}\phantomsection\label{remark:ch03-有限测度右连续}
+设 $\nu_R\triangleq\lambda_N\llcorner B_R$（$B_R\equiv B(0,R)$，$R>0$）。由\cref{lemma:ch03-规范单调}与\cref{proposition:ch03-容量p1表示}(ii)，映射 $p\mapsto C_{\nu_R,g,p}(K)$ 对任意 $R>0$ 在 $[1,\infty)$ 上右连续。
+
+具体地：$p>1$ 时上半连续性由\cref{proposition:ch03-容量p1表示}(ii) 给出（把 $\lambda_N$ 换为有限测度 $\nu_R$，其证明逐字适用），$\liminf$ 一侧由\cref{lemma:ch03-规范单调}（$\nu_R$ 有限且非零）给出；$p=1$ 处同理由\cref{proposition:ch03-容量p1表示}(i) 与\cref{lemma:ch03-规范单调}给出，其中用到 $C_{\nu_R,g,1}=C_{g,1}$（定义\eqref{align:ch03-3.26a}的容许族不依赖测度）。此结论在\cref{proposition:ch03-p趋近1}的证明中用于把 $[1,p_1]$ 上的右连续性从 $\nu_R$ 搬到 $\lambda_N$ 上。
+\end{remark}
+
+下面给出\cref{proposition:ch03-p右连续}的一个类似结果。
+
+\begin{proposition}\label{proposition:ch03-p趋近1}
+设 $g$ 为 $\mathbb{R}^N\times\mathbb{R}^N$ 上的核。设 $K\subseteq\mathbb{R}^N$ 紧，且
+\begin{align}
+\int_{\{y\in\mathbb{R}^N\mid|y|\geqslant R_0\}}\left(\sup_{x\in K}[g(x,y)]^\alpha\right)\mathrm{d}y=:M_2<\infty\label{align:ch03-3.40a}
+\end{align}
+对某个 $R_0>0$（依赖于 $K$）成立，并且
+\begin{align}
+\lim_{|y|\to\infty}\left(\sup_{x\in K}g(x,y)\right)=0\label{align:ch03-3.40b}
+\end{align}
+其中 $\alpha\in[1,\infty)$。则
+\begin{align}
+\lim_{p\to1^+}C_{g,p}(K)=C_{g,1}(K).\label{align:ch03-3.41}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+设 $\beta\in(1,\infty]$ 为 $\alpha$ 的共轭指数，即 $1/\alpha+1/\beta=1$。固定 $p_1\in(1,\beta)$，并令 $p\in[1,p_1]$。由\cref{proposition:ch03-容量p1表示}(ii)，映射 $p\mapsto C_{g,p}(K)$ 在 $[1,p_1]$ 上上半连续，故存在
+\begin{align}
+\max_{p\in[1,p_1]}C_{g,p}(K)=:M_3<\infty.\label{align:ch03-3.42}
+\end{align}
+
+置
+\begin{align*}
+\varepsilon_2\triangleq\left[(M_2+1)(M_3+1)\right]^{-1/(1-\alpha/q_1)}\in(0,1),
+\end{align*}
+其中 $q_1\triangleq p_1/(p_1-1)$（注意 $\alpha<q_1$），并固定 $\varepsilon\in(0,\varepsilon_2)$。对任意 $p\in[1,p_1]$，存在 $s_p\in\Sigma'_K\subseteq V_{K,p}$ 使
+\begin{align}
+\|s_p\|_p^p<C_{g,p}(K)+\varepsilon\leqslant M_3+\varepsilon\label{align:ch03-3.43}
+\end{align}
+（$p=1$ 时由\cref{proposition:ch03-容量p1表示}(i)、$p\in(1,\infty)$ 时由\cref{proposition:ch03-简单函数逼近}(i) 得到）。设 $\nu_R\in\mathscr{R}^+_f(\mathbb{R}^N)$，$\nu_R\triangleq\lambda_N\llcorner B_R$（$B_R\equiv B(0,R)$，$R>0$）。证明：对任意 $\varepsilon\in(0,\varepsilon_2)$，存在 $\bar R>0$，使对所有 $R>\bar R$ 与 $p\in[1,p_1]$ 有
+\begin{align*}
+s_{\varepsilon,p}\triangleq\frac{s_p}{1-\left(\frac{\varepsilon}{\varepsilon_2}\right)^{1-\alpha/q_1}}\in\Sigma_{K,\nu_R}\subseteq V_{K,\nu_R,p}.
+\end{align*}
+
+若上述成立，则由\eqref{align:ch03-3.43}，对任意 $\varepsilon\in(0,\varepsilon_2)$ 与 $R>\bar R$ 有
+\begin{align}
+C_{\nu_R,g,p}(K)\leqslant\|s_{\varepsilon,p}\|_{\nu_R,p}^p=\int_{B_R}\left[s_{\varepsilon,p}(y)\right]^p\mathrm{d}y
+\leqslant\frac{\|s_p\|_p^p}{\left[1-\left(\frac{\varepsilon}{\varepsilon_2}\right)^{1-\alpha/q_1}\right]^p}
+\leqslant\frac{C_{g,p}(K)+\varepsilon}{\left[1-\left(\frac{\varepsilon}{\varepsilon_2}\right)^{1-\alpha/q_1}\right]^{p_1}} .\label{align:ch03-3.44}
+\end{align}
+另一方面，如同\cref{lemma:ch03-有限测度比较}的证明可见，对任意 $p\in[1,\infty)$、$E\subseteq\mathbb{R}^N$ 与 $R>0$ 有
+\begin{align}
+C_{g,p}(E)\leqslant C_{\nu_R,g,p}(E).\label{align:ch03-3.45}
+\end{align}
+令 $\varepsilon\to0^+$ 并随之 $R\to\infty$，由\eqref{align:ch03-3.44}--\eqref{align:ch03-3.45}得 $C_{\nu_R,g,p}(K)\to C_{g,p}(K)$ 关于 $[1,p_1]$ 一致。又映射 $p\mapsto C_{\nu_R,g,p}(K)$ 对每个 $R>0$ 在 $[1,p_1]$ 上右连续（见\cref{remark:ch03-有限测度右连续}），故结论成立。
+
+为完成证明，须证上述断言。设 $q$ 为 $p$ 的共轭指数，固定 $x\in K$。由\eqref{align:ch03-3.40a}--\eqref{align:ch03-3.40b}与\eqref{align:ch03-3.43}，对任意 $\varepsilon\in(0,\varepsilon_2)$ 存在 $\bar R>R_0$，使对所有 $R>\bar R$ 有：
+
+(a) 若 $p=1$，则
+\begin{align}
+\int_{B_R^c}g(x,y)s_p(y)\,\mathrm{d}y\leqslant\|s_p\|_1\sup_{x\in K,\ |y|\geqslant R}g(x,y)<(M_3+1)\varepsilon;\label{align:ch03-3.46a}
+\end{align}
+
+(b) 若 $p\in(1,p_1]$，则
+\begin{align}
+\int_{B_R^c}g(x,y)s_p(y)\,\mathrm{d}y
+&\leqslant\|s_p\|_p\left\{\int_{B_R^c}\left(\sup_{x\in K}g(x,y)\right)^q\mathrm{d}y\right\}^{1/q}\nonumber\\
+&\leqslant\|s_p\|_p\left(\sup_{x\in K,\ |y|\geqslant R}g(x,y)\right)^{1-\alpha/q}\left\{\int_{B_R^c}\left(\sup_{x\in K}g(x,y)\right)^\alpha\mathrm{d}y\right\}^{1/q}\nonumber\\
+&\leqslant(M_2+1)(M_3+1)\varepsilon^{1-\alpha/q}\leqslant\left(\frac{\varepsilon}{\varepsilon_2}\right)^{1-\alpha/q_1},\label{align:ch03-3.46b}
+\end{align}
+其中用到 $\varepsilon\in(0,1)$ 与 $1-\alpha/q\geqslant1-\alpha/q_1>0$。
+
+由\eqref{align:ch03-3.46a}--\eqref{align:ch03-3.46b}，对上述 $\varepsilon$、$R$ 与所有 $p\in[1,p_1]$、$x\in K$ 有
+\begin{align*}
+\int_{B_R^c}g(x,y)s_p(y)\,\mathrm{d}y\leqslant\left(\frac{\varepsilon}{\varepsilon_2}\right)^{1-\alpha/q_1}.
+\end{align*}
+因此，对任意 $x\in K$，
+\begin{align*}
+1\leqslant(Gs_p)(x)&=\int_{B_R}g(x,y)s_p(y)\,\mathrm{d}y+\int_{B_R^c}g(x,y)s_p(y)\,\mathrm{d}y\\
+&\leqslant(G_{\nu_R}s_p)(x)+\left(\frac{\varepsilon}{\varepsilon_2}\right)^{1-\alpha/q_1}.
+\end{align*}
+由上式得 $(G_{\nu_R}s_{\varepsilon,p})(x)\geqslant1$ 对所有 $x\in K$ 成立，故 $s_{\varepsilon,p}\in\Sigma_{K,\nu_R}$。证明完毕。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-p趋近1; kind=proof; location=命题 3.2.15 证明中 $\varepsilon_2$ 的取值、(3.46b) 的常数比较、(3.45) 的 $p=1$ 情形与 $\varepsilon\to0$ 的统一极限; basis=原书只写“since $\varepsilon\in(0,1)$ and $1-\alpha q^{-1}\geqslant1-\alpha q_1^{-1}>0$”，未核验常数 $(M_2+1)(M_3+1)$ 与 $\varepsilon_2$ 的匹配，也未说明 $p=1$ 时 (3.45) 的含义
+\begin{proof}
+补出四处。
+
+第一，$\varepsilon_2\in(0,1)$ 与 $\alpha<q_1$。由 $M_2,M_3\geqslant0$ 得 $(M_2+1)(M_3+1)\geqslant1$，故 $\varepsilon_2\leqslant1$；又 $1-\alpha/q_1>0$，故 $\varepsilon_2>0$。$\alpha<q_1$ 由 $p_1<\beta$ 推出：$p_1<\alpha/(\alpha-1)$ 等价于 $\alpha(p_1-1)<p_1$，即 $\alpha<p_1/(p_1-1)=q_1$。
+
+第二，(3.46a) 与 (3.46b) 的常数比较。对 (3.46a)，由 $0<\varepsilon<\varepsilon_2<1$ 与 $M_2+1\geqslant1$ 得
+\begin{align*}
+(M_3+1)\varepsilon\leqslant(M_3+1)\varepsilon^{1-\alpha/q_1}\leqslant(M_2+1)(M_3+1)\varepsilon^{1-\alpha/q_1}=\left(\frac{\varepsilon}{\varepsilon_2}\right)^{1-\alpha/q_1},
+\end{align*}
+其中最后一个等号即 $\varepsilon_2^{-(1-\alpha/q_1)}=(M_2+1)(M_3+1)$。对 (3.46b)，由 $\|s_p\|_p\leqslant(M_3+1)^{1/p}\leqslant M_3+1$、$\sup_{x\in K,|y|\geqslant R}g\leqslant\varepsilon$（取 $R$ 充分大，见\eqref{align:ch03-3.40b}）与 $M_2$ 的定义得第三行；再用 $\varepsilon^{1-\alpha/q}\leqslant\varepsilon^{1-\alpha/q_1}$（因 $q\leqslant q_1$、$1-\alpha/q\geqslant1-\alpha/q_1$、$0<\varepsilon<1$）得最后一行的不等式。
+
+第三，(3.45) 的 $p=1$ 情形。(3.45) 在 $p\in(1,\infty)$ 时即\cref{lemma:ch03-有限测度比较}（取 $\mu=\lambda_N$）；在 $p=1$ 时定义\eqref{align:ch03-3.26a}的容许族 $V_{E,1}$ 不涉及测度，故 $C_{g,1}=C_{\nu_R,g,1}$，\eqref{align:ch03-3.45}取等号。
+
+第四，$\varepsilon\to0$ 与 $R\to\infty$ 的统一极限。与\cref{proposition:ch03-p右连续}的补证相同：取 $\varepsilon_j\downarrow0$ 与相应的 $R_j\uparrow\infty$，由\eqref{align:ch03-3.44}得
+\begin{align*}
+0\leqslant\sup_{p\in[1,p_1]}\left(C_{\nu_{R_j},g,p}(K)-C_{g,p}(K)\right)
+\leqslant\left(\left[1-\left(\frac{\varepsilon_j}{\varepsilon_2}\right)^{1-\alpha/q_1}\right]^{-p_1}-1\right)M_3
++\varepsilon_j\left[1-\left(\frac{\varepsilon_j}{\varepsilon_2}\right)^{1-\alpha/q_1}\right]^{-p_1}\to0,
+\end{align*}
+再用 $R\mapsto C_{\nu_R,g,p}(K)$ 的非增性把序列上的收敛提升为 $R\to\infty$ 时的一致收敛；一致极限保持右连续性，故 $p\mapsto C_{g,p}(K)$ 在 $[1,p_1]$ 上右连续，由 $p_1\in(1,\beta)$ 的任意性得它在 $[1,\beta)$ 上右连续，特别在 $p=1$ 处右连续，即\eqref{align:ch03-3.41}。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch03-p趋近1; kind=motivation; location=命题 3.2.15 后的注记; basis=(3.40a) 与 (3.40b) 的关系与作用、$\alpha$ 的角色、$[1,\beta)$ 的范围为何不能再扩大，以及条件失效的边界
+\begin{remark}\phantomsection\label{remark:ch03-p趋近1}
+\begin{enumerate}[(i)]
+\item 引入动机。本命题给出 $p\to1^+$ 时的连续端点值，即在核于无穷远处衰减（且具有 $\alpha$ 次可积性）时 $C_{g,p}(K)$ 与 $C_{g,1}(K)$ 衔接。它是 \S3.3 中 Bessel 与 Riesz 容量关于 $p$ 在 $p=1$ 处右连续的依据（\cref{proposition:ch03-Bessel基本}(iii)），也是把以测度定义的 $p=1$ 容量纳入 $p>1$ 族的唯一桥梁。
+
+\item 两条假设的作用。\eqref{align:ch03-3.40a} 以 $\alpha$ 次幂控制 $\sup_{x\in K}g$ 在无穷远处的积分，它经 Hölder 不等式给出 (3.46b) 中的因子 $\varepsilon^{1-\alpha/q}$；\eqref{align:ch03-3.40b} 给出 $\sup_{x\in K}g$ 在无穷远处的消失，它同时保证 (3.46a) 中的 $(M_3+1)\varepsilon$ 与 (3.46b) 中的因子 $\varepsilon^{1-\alpha/q}$。$\alpha$ 越大，可允许的 $p_1$ 越小（$\beta$ 越小），从而结论成立的范围 $[1,\beta)$ 越窄。
+
+\item 参数的作用。$q_1=p_1/(p_1-1)$ 与 $\varepsilon_2$ 的幂次 $1/(1-\alpha/q_1)$ 精确匹配：它使 $\varepsilon_2^{-(1-\alpha/q_1)}=(M_2+1)(M_3+1)$，从而 (3.46a) 与 (3.46b) 的右端统一为 $(\varepsilon/\varepsilon_2)^{1-\alpha/q_1}$。$M_3$ 的存在依赖 $p\mapsto C_{g,p}(K)$ 的上半连续性（\cref{proposition:ch03-容量p1表示}(ii)）与 $[1,p_1]$ 的紧性。
+
+\item 边界。结论的范围 $[1,\beta)$ 一般不能扩大：$\alpha=1$ 时 $\beta=\infty$，结论在整个 $[1,\infty)$ 上成立；$\alpha>1$ 时对 $p\geqslant\beta$，Hölder 不等式的指数越界，(3.46b) 的论证失效。若\eqref{align:ch03-3.40a} 只对某个 $\alpha$ 成立而 $\sup_{x\in K}g$ 在无穷远处不消失（即\eqref{align:ch03-3.40b}失效），则 $\varepsilon$ 不能任意小，(3.46) 的估计不再给出 $p\to1^+$ 的连续性。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch03-条件替换; kind=motivation; location=注 3.2.3（原书第 170 页）; basis=把命题 3.2.13 的 (3.35a) 换成 (3.47) 后论证的变化、(3.47) 蕴含 (3.40a) 的推导，以及结论范围 (1,α') 的来源
+\begin{remark}\phantomsection\label{remark:ch03-条件替换}
+若把\cref{proposition:ch03-p右连续}中的条件\eqref{align:ch03-3.35a}换成
+\begin{align}
+\lim_{R\to\infty}\int_{\{y\in\mathbb{R}^N\mid|y|\geqslant R\}}\left(\sup_{x\in K}[g(x,y)]^\alpha\right)\mathrm{d}y=0\label{align:ch03-3.47}
+\end{align}
+对某个 $\alpha\in[1,\infty)$ 成立，则按\cref{proposition:ch03-p右连续}的证明方式可得：对任意紧集 $K\subseteq\mathbb{R}^N$，映射 $p\mapsto C_{\mu,g,p}(K)$ 在 $(1,\alpha')$ 上右连续，其中 $\alpha'$ 表示 $\alpha$ 的共轭指数。理由是把 (3.35a) 的估计换成 (3.46b) 型的 Hölder 估计，此时要求共轭指数 $q=p/(p-1)$ 满足 $q>\alpha$，即 $p<\alpha'$。
+
+另一方面，条件\eqref{align:ch03-3.47}结合\eqref{align:ch03-3.40b}蕴含\eqref{align:ch03-3.40a}：在 $\{|y|\geqslant R\}$ 上由 Hölder 不等式
+\begin{align*}
+\int_{\{|y|\geqslant R\}}\sup_{x\in K}g(x,y)\,\mathrm{d}y
+\leqslant\left(\sup_{x\in K,\ |y|\geqslant R}g(x,y)\right)^{1-1/\alpha}
+\left\{\int_{\{|y|\geqslant R\}}\left(\sup_{x\in K}g(x,y)\right)^\alpha\mathrm{d}y\right\}^{1/\alpha},
+\end{align*}
+其第一个因子由\eqref{align:ch03-3.40b}有界、第二个因子由\eqref{align:ch03-3.47}趋于零（$\alpha=1$ 时第一个因子取 $1$）。因此，若\eqref{align:ch03-3.40b}也成立，则由\cref{proposition:ch03-p趋近1}，结论在 $[1,\alpha')$ 上成立。
+\end{remark}
 
 \end{document}

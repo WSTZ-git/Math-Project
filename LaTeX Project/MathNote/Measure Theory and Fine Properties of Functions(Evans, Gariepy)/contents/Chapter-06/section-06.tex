@@ -1,0 +1,617 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{用 $C^1$ 函数逼近}\label{section:ch06-06}
+
+下面利用 Whitney 延拓定理证明：Lipschitz 连续函数、$\BV$ 函数与 Sobolev 函数在除一个小集之外等于某个 $C^1$ 函数 $\bar f$；此外，$Df=D\bar f$ 也在除一个小集之外成立。
+
+\subsection{Lipschitz 连续函数的逼近}\label{subsection:ch06-06-1}
+
+\begin{theorem}[Lipschitz 函数的逼近]\label{theorem:ch06-6-11}
+设 $n$ 为正整数，$\mathcal{L}^n$ 为 $\mathbb{R}^n$ 上的 Lebesgue 测度，$f:\mathbb{R}^n\to\mathbb{R}$ 为 Lipschitz 连续函数，其 Lipschitz 常数记为
+\begin{align*}
+\operatorname{Lip}(f):=\sup\Bigl\{\frac{\lvert f(x)-f(y)\rvert}{\lvert x-y\rvert}\Bigm|x,y\in\mathbb{R}^n,\ x\ne y\Bigr\},
+\end{align*}
+$Df$ 为 $f$ 的梯度（由\cref{theorem:ch03-3-2}，它在 $\mathcal{L}^n$-a.e. 的每一点处存在）。% XREF internal
+则对每个 $\varepsilon>0$，存在 $C^1$ 函数 $\bar f:\mathbb{R}^n\to\mathbb{R}$，使得
+\begin{align*}
+\mathcal{L}^n\bigl(\{x\in\mathbb{R}^n\mid\bar f(x)\ne f(x)\ \text{或}\ D\bar f(x)\ne Df(x)\}\bigr)\le\varepsilon .
+\end{align*}
+此外，存在只依赖于 $n$ 的常数 $C$，使得
+\begin{align*}
+\sup_{\mathbb{R}^n}\lvert D\bar f\rvert\le C\operatorname{Lip}(f).
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+由 Rademacher 定理（\cref{theorem:ch03-3-2}），$f$ 在集合 $A\subseteq\mathbb{R}^n$ 上可微，且 $\mathcal{L}^n(\mathbb{R}^n-A)=0$。% XREF p=283 "By Rademacher's Theorem, f is differentiable on a set A ⊂ R^n, with L^n(R^n − A) = 0."
+利用 Lusin 定理（\cref{theorem:ch01-1-14}），存在闭集 $B\subseteq A$，使得 $Df|_B$ 连续且 $\mathcal{L}^n(\mathbb{R}^n-B)<\frac{\varepsilon}{2}$。% XREF p=283 "Using Lusin's Theorem, we see that there exists a closed set B ⊂ A such that Df|B is continuous and L^n(R^n − B) < ε/2."
+令
+\begin{align*}
+d(x):=Df(x)\qquad(x\in B),
+\end{align*}
+以及
+\begin{align*}
+R(y,x):=\frac{f(y)-f(x)-d(x)\cdot(y-x)}{\lvert x-y\rvert}\qquad(x,y\in B,\ x\ne y).
+\end{align*}
+再定义
+\begin{align*}
+\eta_k(x):=\sup\Bigl\{\lvert R(y,x)\rvert\Bigm|y\in B,\ 0<\lvert x-y\rvert\le\frac1k\Bigr\}\qquad(x\in B,\ k=1,2,\cdots).
+\end{align*}
+则对一切 $x\in B$ 有 $\eta_k(x)\to0$（$k\to\infty$）。由 Egoroff 定理（\cref{theorem:ch01-1-16}），存在闭集 $C\subseteq B$，使得 $\eta_k\to0$ 在 $C$ 的紧子集上一致，并且% XREF p=283 "By Egoroff's Theorem, there exists a closed set C ⊆ B such that η_k → 0 uniformly on compact subsets of C, and"
+\begin{align*}
+\mathcal{L}^n(B-C)\le\frac{\varepsilon}{2}.
+\end{align*}
+这表明 Whitney 延拓定理（\cref{theorem:ch06-6-10}）的假设 $(\star)$ 成立。% XREF p=283 "This implies hypothesis (★) of Whitney's Extension Theorem."
+
+% SUPPLEMENT: parent=theorem:ch06-6-11; kind=proof; 补出闭集 B 与 C 的取法，并逐条验证 Whitney 延拓定理的假设 (★)
+（1）闭集 $B$ 的取法。取 $Df$ 的一个 Borel 代表 $\tilde D$，即 $\tilde D$ 为 Borel 函数且 $\tilde D=Df$ 于 $A$ 上成立。把\cref{theorem:ch01-1-14}用于各环域 $\{R-1\le\lvert x\rvert\le R\}$ 上的 $\tilde D$ 并对角线取子列，得连续函数列 $\{g_j\}$，使 $g_j\to\tilde D$ $\mathcal{L}^n$-a.e. 成立。对正整数 $m,R$ 置% XREF internal
+\begin{align*}
+B_{m,R}:=\bigcap_{j,l\ge m}\bigl\{x\in\mathbb{R}^n\bigm|\lvert g_j(x)-g_l(x)\rvert\le2^{-m}\bigr\}\cap\{R-1\le\lvert x\rvert\le R\}.
+\end{align*}
+每个 $B_{m,R}$ 为闭集；又对固定的 $R$，$B_{m,R}$ 随 $m$ 递增，其并集在环域 $\{R-1\le\lvert x\rvert\le R\}$ 中的补集为零测集，故
+\begin{align*}
+\mathcal{L}^n\bigl(\{R-1\le\lvert x\rvert\le R\}\setminus B_{m,R}\bigr)\longrightarrow0\qquad(m\to\infty).
+\end{align*}
+取正整数 $m_R$ 使上式小于 $\varepsilon2^{-R-3}$，并置 $B:=\bigcup_{R=1}^{\infty}B_{m_R,R}$。由于每个 $B_{m_R,R}$ 含于半径区间 $[R-1,R]$ 内，$B$ 为闭集，且
+\begin{align*}
+\mathcal{L}^n(\mathbb{R}^n-B)<\sum_{R=1}^{\infty}\varepsilon2^{-R-3}=\frac{\varepsilon}{4}.
+\end{align*}
+再证 $\tilde D$ 在 $B$ 上连续。设 $x\in B$ 属于第 $R$ 个环域，$y\in B$ 满足 $\lvert x-y\rvert<\frac12$，并取整数 $j\ge\max\{m_{R-1},m_R,m_{R+1}\}$。则 $\lvert g_j(x)-\tilde D(x)\rvert\le2^{-m_R}$，$\lvert g_j(y)-\tilde D(y)\rvert\le2^{-m_{R'}}$（其中 $R'$ 是 $y$ 所在环域的指标），故
+\begin{align*}
+\lvert\tilde D(y)-\tilde D(x)\rvert\le2^{-m_{R-1}}+2^{-m_R}+2^{-m_{R+1}}+\lvert g_j(y)-g_j(x)\rvert\longrightarrow0\qquad(y\to x),
+\end{align*}
+最后一步用了 $g_j$ 的连续性。于是 $d:=\tilde D|_B$ 连续；又 $d=Df$ 于 $B\cap A$ 上成立，而 $B\setminus A$ 为零测集。% XREF internal
+
+（2）$\eta_k(x)\to0$ 的依据。固定 $x\in B\cap A$。由 $f$ 在 $x$ 处可微及 $d(x)=Df(x)$，对每个 $\sigma>0$ 存在 $\delta>0$，使得 $0<\lvert x-y\rvert<\delta$ 时 $\lvert R(y,x)\rvert<\sigma$；于是 $k>1/\delta$ 时 $\eta_k(x)\le\sigma$。由于 $\mathcal{L}^n(B\setminus A)=0$，$\eta_k\to0$ 在 $B$ 上 $\mathcal{L}^n$-a.e. 成立。
+
+（3）闭集 $C$ 的取法。对每个正整数 $R$，把\cref{theorem:ch01-1-16}用于测度 $\mathcal{L}^n$、集合 $B\cap\{R-1\le\lvert x\rvert\le R\}$（测度有限）、函数列 $\{\eta_k\}$ 与误差 $\varepsilon2^{-R-3}$，得该环域内 $B$ 的一个可测子集，$\eta_k$ 在其上一致收敛于 $0$，且它在该环域内与 $B$ 的测度差小于 $\varepsilon2^{-R-3}$；再用 $\mathcal{L}^n$ 的正则性在其中取闭集 $C_R$，使同样的测度差仍小于 $\varepsilon2^{-R-3}$。置 $C:=\bigcup_{R=1}^{\infty}C_R$。诸 $C_R$ 分别含于半径区间 $[R-1,R]$ 内，故 $C$ 为闭集；又 $C\subseteq B$ 且% XREF internal
+\begin{align*}
+\mathcal{L}^n(B-C)\le\sum_{R=1}^{\infty}\varepsilon2^{-R-3}=\frac{\varepsilon}{4},
+\end{align*}
+从而 $\mathcal{L}^n(\mathbb{R}^n-C)<\frac{\varepsilon}{2}$。任一紧集只与有限多个环域相交，故 $\eta_k\to0$ 在 $C$ 的紧子集上一致。% XREF internal
+
+（4）假设 $(\star)$ 的验证。设 $K\subseteq C$ 为紧集，$\sigma>0$。由 $\eta_k\to0$ 在 $K$ 上一致，存在正整数 $k_0$，使得 $k\ge k_0$ 时 $\sup_{x\in K}\eta_k(x)\le\sigma$。取 $\delta\le1/k_0$。对 $x,y\in K$ 且 $0<\lvert x-y\rvert\le\delta$，按\cref{theorem:ch06-6-10}中 $\rho_K$ 的定义与 $\eta_{k_0}$ 的定义有 $\lvert R(y,x)\rvert\le\eta_{k_0}(x)\le\sigma$，故 $\rho_K(\delta)\le\sigma$，即 $\rho_K(\delta)\to0$（$\delta\to0$）。另一方面，$f|_C$ 连续（$f$ 为 Lipschitz 连续）且 $d|_C$ 连续（$d=\tilde D$ 在 $B\supseteq C$ 上连续），因此\cref{theorem:ch06-6-10}的全部假设成立。% XREF internal
+
+关于 $\sup_{\mathbb{R}^n}\lvert D\bar f\rvert$ 的估计由\cref{section:ch06-05}的证明中 $\bar f$ 的构造得到：由于 $\sup_C\lvert d\rvert\le\operatorname{Lip}(f)$，故 $\lvert R\rvert\le C\operatorname{Lip}(f)$。% XREF p=283 "The stated estimate on sup_{R^n} |Df̄| follows from the construction of f̄ in the proof in Section 6.5, since sup_C |d| ≤ Lip(f) and thus |R| ≤ C Lip(f)."
+
+% SUPPLEMENT: parent=theorem:ch06-6-11; kind=proof; 补出 sup_{R^n}|Df̄|≤C Lip(f) 的完整推导：写出 §6.5 构造中 f̄ 的表达式，把 Df̄(x)−d(b) 拆成三项并逐项估计
+（1）构造中的表达式。令 $U:=\mathbb{R}^n-C$，$r(x):=\frac{1}{20}\min\{1,\operatorname{dist}(x,C)\}$（$x\in U$）。按\cref{theorem:ch06-6-10}证明中的构造，存在互不相交的球 $\{B(x_j,r(x_j))\}_{j=1}^{\infty}$，使 $U=\bigcup_{j=1}^{\infty}B(x_j,5r(x_j))$；又存在光滑函数 $u_j$，满足 $0\le u_j\le1$、$u_j\equiv1$ 于 $B(x_j,5r(x_j))$ 上、$u_j\equiv0$ 于 $\mathbb{R}^n-B(x_j,10r(x_j))$ 上，且 $x_j\in S_x$ 时 $\lvert Du_j(x)\rvert\le c_1/r(x)$，其中% XREF internal
+\begin{align*}
+S_x:=\bigl\{x_j\mid B(x,10r(x))\cap B(x_j,10r(x_j))\ne\varnothing\bigr\},\qquad\operatorname{Card}(S_x)\le(129)^n .
+\end{align*}
+再置 $\sigma:=\sum_ju_j$、$v_j:=u_j/\sigma$，则
+\begin{align*}
+\sum_{j=1}^{\infty}v_j=1,\qquad\sum_{j=1}^{\infty}Dv_j=0,\qquad\lvert Dv_j(x)\rvert\le\frac{c_3}{r(x)}\quad(x\in U).
+\end{align*}
+取 $s_j\in C$ 使 $\lvert x_j-s_j\rvert=\operatorname{dist}(x_j,C)$，则
+\begin{align*}
+\bar f(x)=f(x)\ \ (x\in C),\qquad\bar f(x)=\sum_{j=1}^{\infty}v_j(x)\bigl[f(s_j)+d(s_j)\cdot(x-s_j)\bigr]\quad(x\in U),
+\end{align*}
+且对 $x\in U$ 有
+\begin{align*}
+D\bar f(x)=\sum_{x_j\in S_x}\Bigl\{\bigl[f(s_j)+d(s_j)\cdot(x-s_j)\bigr]Dv_j(x)+v_j(x)d(s_j)\Bigr\}.
+\end{align*}
+
+（2）距离的估计。若 $\varepsilon>\alpha(n)$，则把证明用于 $\varepsilon':=\alpha(n)$，所得 $\bar f$ 满足更强的测度估计，故不妨设 $\varepsilon\le\alpha(n)$；此时 $\mathcal{L}^n(\mathbb{R}^n-C)<\varepsilon\le\alpha(n)$。对每个 $x\in U$，由 $C$ 闭得 $B(x,\operatorname{dist}(x,C))\subseteq U$，故
+\begin{align*}
+\alpha(n)\operatorname{dist}(x,C)^n\le\mathcal{L}^n(U)<\alpha(n),
+\end{align*}
+即 $\operatorname{dist}(x,C)<1$，从而 $r(x)=\frac{1}{20}\operatorname{dist}(x,C)$。取 $b\in C$ 使 $\lvert x-b\rvert=\operatorname{dist}(x,C)=20r(x)$。对 $x_j\in S_x$ 有 $r(x_j)\le3r(x)$，且同样地由 $\operatorname{dist}(x_j,C)<1$ 得 $\lvert x_j-s_j\rvert=20r(x_j)$；又 $v_j(x)\ne0$ 蕴含 $x\in B(x_j,10r(x_j))$，故 $\lvert x-x_j\rvert\le10r(x_j)\le30r(x)$。于是
+\begin{align*}
+\lvert s_j-b\rvert\le\lvert s_j-x_j\rvert+\lvert x_j-x\rvert+\lvert x-b\rvert\le20r(x_j)+10r(x_j)+20r(x)\le120r(x).
+\end{align*}
+
+（3）三项估计。由 $\sum_jDv_j(x)=0$、$\sum_jv_j(x)=1$ 以及 $\sum_jd(b)\cdot(x-b)Dv_j(x)=0$，对 $x\in U$ 有
+\begin{align*}
+D\bar f(x)-d(b)&=\sum_{x_j\in S_x}\bigl[f(s_j)-f(b)+d(s_j)\cdot(b-s_j)\bigr]Dv_j(x)\\
+&\quad+\sum_{x_j\in S_x}\bigl[\bigl(d(s_j)-d(b)\bigr)\cdot(x-b)\bigr]Dv_j(x)+\sum_{x_j\in S_x}v_j(x)\bigl[d(s_j)-d(b)\bigr].
+\end{align*}
+由于 $s_j,b\in C\subseteq A$，有 $\lvert d(s_j)\rvert=\lvert Df(s_j)\rvert\le\operatorname{Lip}(f)$ 与 $\lvert d(b)\rvert\le\operatorname{Lip}(f)$。由 $f$ 的 Lipschitz 连续性，
+\begin{align*}
+\bigl\lvert f(s_j)-f(b)+d(s_j)\cdot(b-s_j)\bigr\rvert\le2\operatorname{Lip}(f)\lvert s_j-b\rvert\le240\operatorname{Lip}(f)r(x),
+\end{align*}
+故第一项不超过 $240c_3(129)^n\operatorname{Lip}(f)$。又
+\begin{align*}
+\bigl\lvert\bigl(d(s_j)-d(b)\bigr)\cdot(x-b)\bigr\rvert\le2\operatorname{Lip}(f)\lvert x-b\rvert=40\operatorname{Lip}(f)r(x),
+\end{align*}
+故第二项不超过 $40c_3(129)^n\operatorname{Lip}(f)$，而第三项不超过 $2\operatorname{Lip}(f)\sum_jv_j(x)=2\operatorname{Lip}(f)$。综上，
+\begin{align*}
+\lvert D\bar f(x)\rvert\le\lvert d(b)\rvert+C(n)\operatorname{Lip}(f)\le C'(n)\operatorname{Lip}(f)\qquad(x\in U),
+\end{align*}
+而 $x\in C$ 时 $\lvert D\bar f(x)\rvert=\lvert Df(x)\rvert\le\operatorname{Lip}(f)$。故 $\sup_{\mathbb{R}^n}\lvert D\bar f\rvert\le C\operatorname{Lip}(f)$，其中 $C$ 只依赖于 $n$。同一估计还给出
+\begin{align*}
+\lvert\bar f(x)\rvert\le\sum_{x_j\in S_x}v_j(x)\bigl(\lvert f(s_j)\rvert+\operatorname{Lip}(f)\lvert x-s_j\rvert\bigr)\le\lvert f(b)\rvert+12\operatorname{Lip}(f)\qquad(x\in U),
+\end{align*}
+其中用了 $\lvert x-s_j\rvert\le\lvert x-x_j\rvert+\lvert x_j-s_j\rvert\le10r(x_j)+20r(x_j)\le90r(x)\le5$、$\lvert s_j-b\rvert\le120r(x)\le6$ 与 $\lvert f(s_j)\rvert\le\lvert f(b)\rvert+6\operatorname{Lip}(f)$；若 $f$ 有界，则相应地有 $\lvert\bar f(x)\rvert\le\lVert f\rVert_{L^{\infty}(\mathbb{R}^n)}+5\operatorname{Lip}(f)$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-11; kind=motivation; 说明 Whitney 延拓定理在此如何被调用、闭集上的一致性的来源，以及梯度整体界在后续逼近中的作用
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-11-动机}
+本定理把「Lipschitz 函数几乎处处是一个 $C^1$ 函数」这一直观精确化。\cref{theorem:ch06-6-10}要求在一个闭集上给定一对函数 $(f,d)$，使余项 $R$ 在每个紧集上关于 $\delta$ 一致地趋于零，即假设 $(\star)$；其含义是 $d$ 局部一致地充当 $f$ 的一阶展开中的线性项。对 Lipschitz 函数，Rademacher 定理给出 $\mathcal{L}^n$-a.e. 存在的梯度 $Df$，Lusin 定理把 $Df$ 限制到闭集 $B$ 上成为连续函数，Egoroff 定理把「每点处的差商余项趋于零」提升为「在更小的闭集 $C$ 的紧子集上一致地趋于零」。三步合起来正好补满 $(\star)$ 所需的全部内容，于是延拓定理给出 $C^1$ 函数 $\bar f$，它在 $C$ 上连同梯度与 $f$ 一致，误差只可能出现在 $\mathbb{R}^n-C$ 上，而其测度小于 $\varepsilon$。% XREF internal
+
+结论的第二部分给出梯度的整体界 $\sup_{\mathbb{R}^n}\lvert D\bar f\rvert\le C\operatorname{Lip}(f)$，其中常数与 $\varepsilon$ 及 $f$ 的具体形状无关。这一界来自\cref{theorem:ch06-6-10}证明中的显式构造：$\bar f$ 在 $C$ 的补集上是有限个「$f$ 在 $C$ 上的值与 $d$ 的线性项」的加权平均，权函数的梯度与距离同阶，故求导后各项都被 $\operatorname{Lip}(f)$ 控制。该界使逼近函数的梯度与 $f$ 的梯度同阶，从而为\cref{theorem:ch06-6-14}与\cref{theorem:ch06-6-15}中 $W^{1,p}$ 范数的估计提供一致控制。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-11; kind=hypotheses; 逐条分析 Lipschitz 连续性、误差参数、常数只依赖 n 以及结论不能加强为处处相等等要点
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-11-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f$ 为 Lipschitz 连续有三项作用：其一，由 Rademacher 定理（\cref{theorem:ch03-3-2}）保证 $Df$ 在 $\mathcal{L}^n$-a.e. 处存在；其二，给出 $\lvert Df\rvert\le\operatorname{Lip}(f)$ 于可微点处，从而余项满足 $\lvert R(y,x)\rvert\le2\operatorname{Lip}(f)$，这正是结论第二部分中常数只依赖 $n$ 的来源；其三，$f|_C$ 连续，这是\cref{theorem:ch06-6-10}对 $f$ 的要求。若 $f$ 只连续，则 $Df$ 可能处处不存在，$d$ 无从定义。% XREF internal
+\item 参数 $\varepsilon>0$ 任意但固定，所得 $\bar f$ 依赖于 $\varepsilon$，并且结论中的集合
+\begin{align*}
+\{x\in\mathbb{R}^n\mid\bar f(x)\ne f(x)\ \text{或}\ D\bar f(x)\ne Df(x)\}
+\end{align*}
+含于 $\mathbb{R}^n-C$ 之中，其测度不超过 $\mathcal{L}^n(\mathbb{R}^n-B)+\mathcal{L}^n(B-C)<\varepsilon$。
+\item 结论中的 $D\bar f(x)\ne Df(x)$ 只在 $Df(x)$ 存在处才有意义；由于 $Df$ 在 $\mathcal{L}^n$-a.e. 处存在，该集合的测度不受影响。$C^1$ 函数 $\bar f$ 的梯度处处存在，故 $D\bar f$ 无需附加条件。
+\item 结论不能加强为 $\bar f=f$ 处处成立。取 $n=1$、$f(x)=\lvert x\rvert$，它在 $0$ 处不可微；若 $C^1$ 函数 $\bar f$ 满足 $\bar f=f$ 处处成立，则 $\bar f$ 在 $0$ 处不可微，矛盾。因此「除一个小集外相等」是最强的合理结论，其中的小集一般不能取为空集。
+\item 常数 $C$ 只依赖 $n$，不依赖 $\varepsilon$、$f$ 与 $\operatorname{Lip}(f)$ 的具体数值；这一点在\cref{theorem:ch06-6-15}中把 Lipschitz 逼近提升为 $C^1$ 逼近时被使用。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\subsection{$\BV$ 函数的逼近}\label{subsection:ch06-06-2}
+
+\begin{theorem}[$\BV$ 函数的逼近]\label{theorem:ch06-6-12}
+设 $n$ 为正整数，$\mathcal{L}^n$ 为 $\mathbb{R}^n$ 上的 Lebesgue 测度，$\alpha(n):=\mathcal{L}^n(B(0,1))$ 为单位球的体积，$f\in\BV(\mathbb{R}^n)$，$\lVert Df\rVert$ 为 $f$ 的变差测度，$B(x,r)$ 为以 $x$ 为球心、$r>0$ 为半径的闭球。则对每个 $\varepsilon>0$，存在 Lipschitz 连续函数 $\bar f:\mathbb{R}^n\to\mathbb{R}$，使得
+\begin{align*}
+\mathcal{L}^n\bigl(\{x\in\mathbb{R}^n\mid\bar f(x)\ne f(x)\}\bigr)\le\varepsilon .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+1. 对 $\lambda>0$ 定义
+\begin{align*}
+R^\lambda:=\Bigl\{x\in\mathbb{R}^n\Bigm|\frac{\lVert Df\rVert(B(x,r))}{r^n}\le\lambda\ \text{对一切}\ r>0\Bigr\}.
+\end{align*}
+
+2. \textbf{Claim \#1}：
+\begin{align*}
+\mathcal{L}^n(\mathbb{R}^n-R^\lambda)\le\frac{\alpha(n)5^n}{\lambda}\lVert Df\rVert(\mathbb{R}^n).
+\end{align*}
+\textbf{Claim \#1 的证明}：由 Vitali 覆盖定理（\cref{theorem:ch01-1-24}），存在互不相交的球 $\{B(x_i,r_i)\}_{i=1}^{\infty}$，使得% XREF p=284 "According to Vitali's Covering Theorem, there exist disjoint balls {B(x_i, r_i)}_{i=1}^∞ such that"
+\begin{align*}
+\mathbb{R}^n-R^\lambda\subseteq\bigcup_{i=1}^{\infty}B(x_i,5r_i)
+\end{align*}
+且
+\begin{align*}
+\frac{\lVert Df\rVert(B(x_i,r_i))}{r_i^n}>\lambda .
+\end{align*}
+于是
+\begin{align*}
+\mathcal{L}^n(\mathbb{R}^n-R^\lambda)\le5^n\alpha(n)\sum_{i=1}^{\infty}r_i^n\le\frac{5^n\alpha(n)}{\lambda}\lVert Df\rVert(\mathbb{R}^n).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch06-6-12; kind=proof; 补出 Claim #1 中球族的选取条件与末步求和的依据
+（i）球族的选取。置
+\begin{align*}
+\mathcal{F}:=\Bigl\{B(x,r)\Bigm|x\in\mathbb{R}^n-R^\lambda,\ r>0,\ \frac{\lVert Df\rVert(B(x,r))}{r^n}>\lambda\Bigr\}.
+\end{align*}
+则 $\mathbb{R}^n-R^\lambda\subseteq\bigcup_{B\in\mathcal{F}}B$；又 $B(x,r)\in\mathcal{F}$ 时 $\lambda r^n<\lVert Df\rVert(B(x,r))\le\lVert Df\rVert(\mathbb{R}^n)$，故
+\begin{align*}
+\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}\le2\Bigl(\frac{\lVert Df\rVert(\mathbb{R}^n)}{\lambda}\Bigr)^{\frac1n}<\infty ,
+\end{align*}
+且 $\mathcal{F}$ 中每个球都满足 $\lVert Df\rVert(B)>\lambda(\operatorname{rad}B)^n$。于是\cref{theorem:ch01-1-24}的条件全部满足，存在 $\mathcal{F}$ 中的可数不交球族 $\{B(x_i,r_i)\}_{i=1}^{\infty}$，使% XREF internal
+\begin{align*}
+\bigcup_{B\in\mathcal{F}}B\subseteq\bigcup_{i=1}^{\infty}B(x_i,5r_i),
+\end{align*}
+从而 $\mathbb{R}^n-R^\lambda\subseteq\bigcup_{i=1}^{\infty}B(x_i,5r_i)$。若 $\lVert Df\rVert(\mathbb{R}^n)=0$，则 $f$ 为常数，$R^\lambda=\mathbb{R}^n$，所需不等式两端均为零。% XREF internal
+
+（ii）求和。由诸球两两不交及 $\lVert Df\rVert$ 的可加性，
+\begin{align*}
+\lambda\sum_{i=1}^{\infty}r_i^n<\sum_{i=1}^{\infty}\lVert Df\rVert(B(x_i,r_i))=\lVert Df\rVert\Bigl(\bigcup_{i=1}^{\infty}B(x_i,r_i)\Bigr)\le\lVert Df\rVert(\mathbb{R}^n),
+\end{align*}
+即 $\sum_ir_i^n<\frac{1}{\lambda}\lVert Df\rVert(\mathbb{R}^n)$。再由 $\mathcal{L}^n(B(x_i,5r_i))=5^n\alpha(n)r_i^n$ 以及 Lebesgue 测度的单调性与次可加性，
+\begin{align*}
+\mathcal{L}^n(\mathbb{R}^n-R^\lambda)\le\sum_{i=1}^{\infty}\mathcal{L}^n(B(x_i,5r_i))=5^n\alpha(n)\sum_{i=1}^{\infty}r_i^n\le\frac{5^n\alpha(n)}{\lambda}\lVert Df\rVert(\mathbb{R}^n).
+\end{align*}
+
+3. \textbf{Claim \#2}：存在只依赖于 $n$ 的常数 $C$，使得
+\begin{align*}
+\lvert f(x)-f(y)\rvert\le C\lambda\lvert x-y\rvert
+\end{align*}
+对 $\mathcal{L}^n$-a.e. 的 $x,y\in R^\lambda$ 成立。
+\textbf{Claim \#2 的证明}：设 $x\in R^\lambda$，$r>0$。由 Poincaré 不等式（\cref{theorem:ch05-5-10}(ii)，见\cref{section:ch05-06}）有% XREF p=284 "By Poincaré's inequality, Theorem 5.10,(ii) in Section 5.6," | p=284 "Theorem 5.10,(ii) in Section 5.6"
+\begin{align*}
+\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert\diff y\le\frac{C\lVert Df\rVert(B(x,r))}{r^{n-1}}\le C\lambda r.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch06-6-12; kind=proof; 补出由 Poincaré 不等式到平均值估计的过渡，以及相邻尺度平均值之差的估计
+（1）由 $L^{1^{*}}$ 估计到平均值估计。记 $1^{*}:=\frac{n}{n-1}$。由 Hölder 不等式及\cref{theorem:ch05-5-10}(ii)，% XREF internal
+\begin{align*}
+\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert\diff y&\le\Bigl(\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{1^{*}}\diff y\Bigr)^{\frac{1}{1^{*}}}\\
+&\le\frac{C_2\lVert Df\rVert(B(x,r))}{(\alpha(n)r^n)^{\frac{n-1}{n}}}\le C\lambda r,
+\end{align*}
+其中第一式用了 $\fint\lvert h\rvert\le(\fint\lvert h\rvert^{1^{*}})^{1/1^{*}}$，第二式用了 $\mathcal{L}^n(B(x,r))^{-(n-1)/n}=(\alpha(n)r^n)^{-(n-1)/n}$，最后一式用了 $\lVert Df\rVert(B(x,r))\le\lambda r^n$。
+
+（2）相邻尺度平均值之差。设 $0<s\le t$。由于 $(f)_{x,s}$ 是 $f$ 在 $B(x,s)$ 上的平均值，
+\begin{align*}
+\bigl\lvert(f)_{x,s}-(f)_{x,t}\bigr\rvert=\Bigl\lvert\fint_{B(x,s)}\bigl(f-(f)_{x,t}\bigr)\diff y\Bigr\rvert\le\fint_{B(x,s)}\lvert f-(f)_{x,t}\rvert\diff y .
+\end{align*}
+取 $s=\frac{r}{2^{k+1}}$、$t=\frac{r}{2^k}$，并利用 $B(x,\frac{r}{2^{k+1}})\subseteq B(x,\frac{r}{2^k})$ 与 $\mathcal{L}^n(B(x,\frac{r}{2^k}))=2^n\mathcal{L}^n(B(x,\frac{r}{2^{k+1}}))$，得
+\begin{align*}
+\bigl\lvert(f)_{x,\frac{r}{2^{k+1}}}-(f)_{x,\frac{r}{2^k}}\bigr\rvert\le2^n\fint_{B(x,\frac{r}{2^k})}\bigl\lvert f-(f)_{x,\frac{r}{2^k}}\bigr\rvert\diff y\le\frac{C\lambda r}{2^k},
+\end{align*}
+其中最后一式是把 (1) 用于半径为 $\frac{r}{2^k}$ 的球。
+
+由于
+\begin{align*}
+f(x)=\lim_{r\to0}(f)_{x,r}
+\end{align*}
+对 $\mathcal{L}^n$-a.e. 的 $x\in R^\lambda$ 成立，故
+\begin{align*}
+\lvert f(x)-(f)_{x,r}\rvert\le\sum_{k=1}^{\infty}\bigl\lvert(f)_{x,\frac{r}{2^{k+1}}}-(f)_{x,\frac{r}{2^k}}\bigr\rvert\le C\lambda r.
+\end{align*}
+现设 $x,y\in R^\lambda$，$x\ne y$，令 $r=\lvert x-y\rvert$。则
+\begin{align*}
+\bigl\lvert(f)_{x,r}-(f)_{y,r}\bigr\rvert
+&\le\fint_{B(x,r)\cap B(y,r)}\bigl(\bigl\lvert(f)_{x,r}-f(z)\bigr\rvert+\bigl\lvert f(z)-(f)_{y,r}\bigr\rvert\bigr)\diff z\\
+&\le C\Bigl(\fint_{B(x,r)}\bigl\lvert f(z)-(f)_{x,r}\bigr\rvert\diff z+\fint_{B(y,r)}\bigl\lvert f(z)-(f)_{y,r}\bigr\rvert\diff z\Bigr)\\
+&\le C\lambda r.
+\end{align*}
+合并上述不等式，得
+\begin{align*}
+\lvert f(x)-f(y)\rvert\le C\lambda r=C\lambda\lvert x-y\rvert
+\end{align*}
+对 $\mathcal{L}^n$-a.e. 的 $x,y\in R^\lambda$ 成立。
+
+% SUPPLEMENT: parent=theorem:ch06-6-12; kind=proof; 补出极限等式与交叠球上平均值比较的依据，并合成成对估计
+（3）各处依据。极限等式 $f(x)=\lim_{r\to0}(f)_{x,r}$ 对 $\mathcal{L}^n$-a.e. 的 $x\in\mathbb{R}^n$ 成立，依据是 Lebesgue 微分定理（$f\in\BV(\mathbb{R}^n)\subseteq L^1_{\loc}(\mathbb{R}^n)$）。又当 $r=\lvert x-y\rvert$ 时，交叠区域 $B(x,r)\cap B(y,r)$ 含有一个与 $B(x,r)$ 同阶的球，故存在只依赖于 $n$ 的常数 $c$，使 $\mathcal{L}^n(B(x,r)\cap B(y,r))\ge c\,\mathcal{L}^n(B(x,r))$；于是
+\begin{align*}
+\fint_{B(x,r)\cap B(y,r)}\bigl\lvert(f)_{x,r}-f(z)\bigr\rvert\diff z\le c^{-1}\fint_{B(x,r)}\bigl\lvert f(z)-(f)_{x,r}\bigr\rvert\diff z\le c^{-1}C\lambda r,
+\end{align*}
+对 $y$ 的一项作同样的估计；于是得到上面第二式中的常数 $C$。（2）的最后一条不等式对一切 $x,y\in R^\lambda$ 成立，而极限等式只在一个 $\mathcal{L}^n$-零集 $N\subseteq R^\lambda$ 之外成立。故当 $x,y\in R^\lambda\setminus N$ 且 $r=\lvert x-y\rvert$ 时，
+\begin{align*}
+\lvert f(x)-f(y)\rvert\le\lvert f(x)-(f)_{x,r}\rvert+\bigl\lvert(f)_{x,r}-(f)_{y,r}\bigr\rvert+\bigl\lvert(f)_{y,r}-f(y)\bigr\rvert\le3C\lambda\lvert x-y\rvert .
+\end{align*}
+
+4. 由 Claim \#2，存在 Lipschitz 连续映射 $\bar f:R^\lambda\to\mathbb{R}$，使得 $\bar f=f$ 于 $R^\lambda$ 上 $\mathcal{L}^n$-a.e. 成立。现回顾\cref{theorem:ch03-3-1}，把 $\bar f$ 延拓为 Lipschitz 连续映射 $\bar f:\mathbb{R}^n\to\mathbb{R}$。% XREF p=285 "Now recall Theorem 3.1 and extend f̄ to a Lipschitz continuous mapping f̄ : R^n → R."
+% SUPPLEMENT: parent=theorem:ch06-6-12; kind=proof; 补出第 4 步：由成对估计构造 R^λ 上的 Lipschitz 函数、延拓到 R^n，并选取 λ
+（4）以下补出第 4 步的细节。由第 3 段，存在 $\mathcal{L}^n$-零集 $N\subseteq R^\lambda$，使得
+\begin{align*}
+\lvert f(x)-f(y)\rvert\le3C\lambda\lvert x-y\rvert\qquad(x,y\in R^\lambda\setminus N).
+\end{align*}
+在 $R^\lambda\setminus N$ 上置 $\bar f:=f$。对 $x\in N$，取点列 $x_k\in R^\lambda\setminus N$ 使 $x_k\to x$，并置 $\bar f(x):=\lim_{k\to\infty}f(x_k)$：该极限存在，因为 $\{f(x_k)\}$ 是 Cauchy 列；它与点列的选取无关，因为两条点列可以交错成一个点列而极限唯一。于是 $\bar f:R^\lambda\to\mathbb{R}$ 满足
+\begin{align*}
+\lvert\bar f(x)-\bar f(y)\rvert\le3C\lambda\lvert x-y\rvert\qquad(x,y\in R^\lambda),
+\end{align*}
+且 $\bar f=f$ 于 $R^\lambda\setminus N$ 上。若 $R^\lambda\ne\varnothing$，由\cref{theorem:ch03-3-1}把 $\bar f$ 延拓为 $\mathbb{R}^n$ 上的 Lipschitz 连续函数，仍记为 $\bar f$；若 $R^\lambda=\varnothing$，取 $\bar f\equiv0$。无论哪种情形都有 $\{x\mid\bar f(x)\ne f(x)\}\subseteq(\mathbb{R}^n-R^\lambda)\cup N$，故由 Claim \#1，% XREF internal
+\begin{align*}
+\mathcal{L}^n\bigl(\{x\in\mathbb{R}^n\mid\bar f(x)\ne f(x)\}\bigr)\le\mathcal{L}^n(\mathbb{R}^n-R^\lambda)\le\frac{\alpha(n)5^n}{\lambda}\lVert Df\rVert(\mathbb{R}^n).
+\end{align*}
+取 $\lambda>0$ 充分大，使上式右端不超过 $\varepsilon$，即得结论；当 $\lVert Df\rVert(\mathbb{R}^n)=0$ 时 $f$ 为常数，取 $\bar f$ 为该常数即可。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-12; kind=motivation; 说明用极大函数型水平集逼近 BV 函数的思想、两条 Claim 的分工与「奇异部分集中在可任意小测度集上」的含义
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-12-动机}
+$\BV$ 函数的导数只是一个测度，函数本身可以非常不连续，因此不能指望它在整体上被一个 $C^1$ 函数逼近。本定理给出的是最弱而仍然有用的结论：$f$ 在除一个测度任意小的集合之外与某个 Lipschitz 函数相等。证明把「$f$ 的局部行为」翻译成变差测度 $\lVert Df\rVert$ 的极大函数可以控制的水平集：$R^\lambda$ 是使 $\lVert Df\rVert(B(x,r))/r^n$ 关于一切半径都不超过 $\lambda$ 的点集，它承担「正则点集」的角色。Claim \#1 用 Vitali 覆盖定理说明其补集很小，Claim \#2 用 Poincaré 不等式说明 $f$ 在 $R^\lambda$ 上是 Lipschitz 的。后者的关键估计是球上平均 $\lvert f-(f)_{x,r}\rvert$ 的尺度不变界 $C\lambda r$：它把「梯度测度的密度有界」转化为「平均值随半径线性变化」，再沿一串半径趋于零的球作望远镜求和，得到 $f$ 与自身的平均值之差被 $C\lambda r$ 控制。
+
+这一路线与\cref{theorem:ch06-6-14}中 Sobolev 情形的论证结构相同，区别在于那里用 $g=\lvert f\rvert+\lvert Df\rvert$ 的 $L^p$ 可积性代替变差测度的有限性。定理本身不给出 Lipschitz 常数的绝对界：由证明可见 $\operatorname{Lip}(\bar f)\le C\lambda$，而 $\lambda$ 需要按 $\varepsilon$ 选取，故 $\varepsilon\to0$ 时常数趋于无穷。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-12; kind=hypotheses; 逐条分析 f∈BV(R^n)、球半径与 λ 的作用，并说明结论不能加强为处处相等
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-12-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in\BV(\mathbb{R}^n)$ 表示 $\lVert Df\rVert(\mathbb{R}^n)<\infty$，即变差测度在全空间上有限。它在 Claim \#1 中有两处作用：其一，使覆盖中每个球的半径有界，从而\cref{theorem:ch01-1-24}可用；其二，使 $\sum_ir_i^n$ 可以被 $\lVert Df\rVert(\mathbb{R}^n)$ 控制。若只设 $f\in\BV_{\loc}(\mathbb{R}^n)$，Claim \#1 的右端为无穷，估计失去意义。% XREF internal
+\item 球取闭球 $B(x,r)$ 使 $\lVert Df\rVert(B(x,r))$ 关于 $x$ 上半连续，$R^\lambda$ 因而是 Borel 集；若改用开球 $B^0(x,r)$，由\cref{theorem:ch05-5-10}(ii) 的右端形式，两种取法只相差一个零测集，不影响结论。% XREF internal
+\item 参数 $\lambda>0$ 决定正则集 $R^\lambda$ 的大小与逼近函数的 Lipschitz 常数：$\lambda$ 越大，$R^\lambda$ 越大、补集越小，但 $\bar f$ 的 Lipschitz 常数上界 $C\lambda$ 也越大。定理的结论对每个 $\varepsilon>0$ 给出一个依赖 $\varepsilon$ 的 $\bar f$，不存在与 $\varepsilon$ 无关的逼近函数。
+\item 结论不能加强为 $\bar f=f$ 处处成立。取 $f=\chi_{B(0,1)}$，则 $f\in\BV(\mathbb{R}^n)$ 而在 $\partial B(0,1)$ 上不连续；任何与 $f$ 处处相等的函数都不连续，更不是 Lipschitz 函数。另一方面，取截断函数 $\bar f$ 在 $B(0,1-\delta)$ 上等于 $1$、在 $B(0,1+\delta)$ 外等于 $0$，则 $\{f\ne\bar f\}$ 含于测度与 $\delta$ 同阶的环域内，故所容许的例外集确实可以任意小。
+\item 结论中的 $f$ 理解为 $L^1_{\loc}$ 函数，$\{x\mid\bar f(x)\ne f(x)\}$ 只在 $\mathcal{L}^n$-a.e. 的意义下确定；改变 $f$ 在零测集上的取值不改变结论。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[$\BV$ 函数的逐点逼近]\label{theorem:ch06-6-13}
+设 $n$ 为正整数，$\mathcal{L}^n$ 为 $\mathbb{R}^n$ 上的 Lebesgue 测度，$f\in\BV(\mathbb{R}^n)$，$\lVert Df\rVert$ 为其变差测度，$[Df]=\mathcal{L}^n\llcorner Df+[Df]_{\mathrm{s}}$ 为 $[Df]$ 关于 $\mathcal{L}^n$ 的 Lebesgue 分解，其中 $Df\in L^1_{\loc}(\mathbb{R}^n;\mathbb{R}^n)$ 是绝对连续部分的密度、$[Df]_{\mathrm{s}}\perp\mathcal{L}^n$，又 $D\bar f$ 表示 $C^1$ 函数 $\bar f$ 的经典梯度。则对每个 $\varepsilon>0$，存在 $C^1$ 函数 $\bar f:\mathbb{R}^n\to\mathbb{R}$，使得
+\begin{align*}
+\mathcal{L}^n\bigl(\{x\in\mathbb{R}^n\mid f(x)\ne\bar f(x)\ \text{或}\ Df(x)\ne D\bar f(x)\}\bigr)\le\varepsilon .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+由\cref{theorem:ch06-6-11}与\cref{theorem:ch06-6-12}，存在 $\bar f\in C^1(\mathbb{R}^n)$，使得% XREF p=285 "According to Theorems 6.11 and 6.12, there exists f̄ ∈ C^1(R^n) such that" | p=285 "Theorems 6.11 and 6.12"
+\begin{align*}
+\mathcal{L}^n(\{\bar f\ne f\})<\varepsilon .
+\end{align*}
+此外，由\cref{theorem:ch06-6-3}，% XREF p=285 "L^n-a.e. on {f = f̄}, according to Theorem 6.3."
+\begin{align*}
+D\bar f(x)=Df(x)
+\end{align*}
+在 $\{f=\bar f\}$ 上 $\mathcal{L}^n$-a.e. 成立。
+
+% SUPPLEMENT: parent=theorem:ch06-6-13; kind=proof; 补出两个逼近定理的合成以及 $Df=D\bar f$ 于 $\{f=\bar f\}$ 上成立的理由
+（1）两个逼近的合成。由\cref{theorem:ch06-6-12}（误差取 $\frac{\varepsilon}{2}$），存在 Lipschitz 连续函数 $\bar f_1:\mathbb{R}^n\to\mathbb{R}$，使% XREF internal
+\begin{align*}
+\mathcal{L}^n(\{\bar f_1\ne f\})<\frac{\varepsilon}{2}.
+\end{align*}
+再把\cref{theorem:ch06-6-11}用于 $\bar f_1$（误差取 $\frac{\varepsilon}{2}$），得 $C^1$ 函数 $\bar f:\mathbb{R}^n\to\mathbb{R}$，使% XREF internal
+\begin{align*}
+\mathcal{L}^n\bigl(\{x\mid\bar f(x)\ne\bar f_1(x)\ \text{或}\ D\bar f(x)\ne D\bar f_1(x)\}\bigr)<\frac{\varepsilon}{2}.
+\end{align*}
+由于 $\{\bar f\ne f\}\subseteq\{\bar f\ne\bar f_1\}\cup\{\bar f_1\ne f\}$，故 $\mathcal{L}^n(\{\bar f\ne f\})<\varepsilon$。
+
+（2）梯度的几乎处处相等。记 $g:=f-\bar f$。由 $f\in\BV(\mathbb{R}^n)$ 与 $\bar f\in C^1(\mathbb{R}^n)\subseteq\BV_{\loc}(\mathbb{R}^n)$ 得 $g\in\BV_{\loc}(\mathbb{R}^n)$，且 $g=0$ 于 $\{f=\bar f\}$ 上。由\cref{theorem:ch06-6-3}，$\ap Dg=0$ 在 $\{g=0\}$ 上 $\mathcal{L}^n$-a.e. 成立；又由\cref{theorem:ch06-6-4}及其后的注记，$\ap Dg=Dg$ $\mathcal{L}^n$-a.e. 成立。故 $Dg=0$ 在 $\{f=\bar f\}$ 上 $\mathcal{L}^n$-a.e. 成立，即 $Df=D\bar f$ 在该集合上 $\mathcal{L}^n$-a.e. 成立。于是% XREF internal
+\begin{align*}
+\{x\mid f(x)\ne\bar f(x)\ \text{或}\ Df(x)\ne D\bar f(x)\}\subseteq\{f\ne\bar f\}\cup N,
+\end{align*}
+其中 $\mathcal{L}^n(N)=0$，从而该集合的测度小于 $\varepsilon$。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-13; kind=motivation; 说明逐点逼近与前面的测度型逼近的区别，以及把 $Df$ 也纳入结论的意义
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-13-动机}
+\cref{theorem:ch06-6-12}只断言 $\BV$ 函数在一个小测度集之外等于某个 Lipschitz 函数，没有涉及导数；本定理把逼近函数改为 $C^1$ 函数，并且把导数也纳入同一误差集：在 $\{f=\bar f\}$ 上，$f$ 的绝对连续部分的密度 $Df$ 与 $\bar f$ 的经典梯度 $\mathcal{L}^n$-a.e. 相等。这一加强使逼近在 $W^{1,1}$ 意义下也是有效的，因为 $\int\lvert Df-D\bar f\rvert\diff x$ 只在 $\{f\ne\bar f\}$ 与一个零测集上可能非零。% XREF internal
+
+证明的两个步骤分别对应两条独立的误差来源：先用\cref{theorem:ch06-6-12}把 $f$ 换成 Lipschitz 函数，这一步承担测度误差；再用\cref{theorem:ch06-6-11}把该 Lipschitz 函数换成 $C^1$ 函数，这一步同时控制函数值与梯度。第二步之所以可行，是因为第一步的输出是 Lipschitz 函数，而\cref{theorem:ch06-6-11}恰好把 Lipschitz 函数在测度意义下变成 $C^1$ 函数并保持梯度。最后用\cref{theorem:ch06-6-3}的零点集条款把梯度的误差吸收进零测集。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-13; kind=hypotheses; 逐条分析 f∈BV(R^n)、$Df$ 的含义与结论中误差集的结构
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-13-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in\BV(\mathbb{R}^n)$ 使变差测度 $[Df]$ 存在并分解为绝对连续部分与奇异部分，$Df$ 即前者的密度。结论中的 $Df(x)$ 只在 $\mathcal{L}^n$-a.e. 处有定义，这与结论只断言 $\mathcal{L}^n$-a.e. 相等相容。
+\item 结论中的两个不等式合并成一个集合：若两个条件都只想分别成立，则误差集是二者之并，测度可以加倍；本定理断言它们可以在同一个集合上同时成立，这比分别逼近更强。
+\item $C^1$ 函数 $\bar f$ 的梯度 $D\bar f$ 处处存在且连续，无需附加条件；$\BV$ 函数 $f$ 的 $Df$ 则只在 $\mathcal{L}^n$-a.e. 处存在，故结论中的第二个不等式应理解为除去一个零测集后成立。
+\item 误差集不能取为空集。取 $f=\chi_{B(0,1)}$，则 $f\in\BV(\mathbb{R}^n)$ 且在 $\partial B(0,1)$ 上不连续，而 $C^1$ 函数连续，故 $\{f\ne\bar f\}$ 必含 $\partial B(0,1)$ 上使 $\bar f\ne0$ 的点；又 $\mathcal{L}^n$-a.e. 相等的意义下例外集的测度可以任意小，故结论中的 $\varepsilon$ 不能去掉。
+\end{enumerate}
+\end{remark}
+
+\subsection{Sobolev 函数的逼近}\label{subsection:ch06-06-3}
+
+\begin{theorem}[Sobolev 函数的逐点逼近 I]\label{theorem:ch06-6-14}
+设 $n$ 为正整数，$1\le p<\infty$，$\mathcal{L}^n$ 为 $\mathbb{R}^n$ 上的 Lebesgue 测度，$f\in W^{1,p}(\mathbb{R}^n)$ 为实值 Sobolev 函数，$Df\in L^p(\mathbb{R}^n;\mathbb{R}^n)$ 为其弱梯度，$\lVert\cdot\rVert_{W^{1,p}(\mathbb{R}^n)}$ 为通常的 Sobolev 范数，且 $f$ 与 $Df$ 按 $\mathcal{L}^n$-a.e. 的意义理解。则对每个 $\varepsilon>0$，存在 Lipschitz 连续函数 $\bar f:\mathbb{R}^n\to\mathbb{R}$，使得
+\begin{align*}
+\mathcal{L}^n\bigl(\{x\in\mathbb{R}^n\mid f(x)\ne\bar f(x)\}\bigr)\le\varepsilon
+\end{align*}
+且
+\begin{align*}
+\lVert f-\bar f\rVert_{W^{1,p}(\mathbb{R}^n)}\le\varepsilon .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+1. 记 $g:=\lvert f\rvert+\lvert Df\rvert$，并对 $\lambda>0$ 定义
+\begin{align*}
+R^\lambda:=\Bigl\{x\in\mathbb{R}^n\Bigm|\fint_{B(x,r)}g\diff y\le\lambda\ \text{对一切}\ r>0\Bigr\}.
+\end{align*}
+
+2. \textbf{Claim \#1}：当 $\lambda\to\infty$ 时 $\mathcal{L}^n(\mathbb{R}^n-R^\lambda)=o\bigl(\frac{1}{\lambda^p}\bigr)$。
+\textbf{Claim \#1 的证明}：由 Vitali 覆盖定理（\cref{theorem:ch01-1-24}），存在互不相交的球 $\{B(x_i,r_i)\}_{i=1}^{\infty}$，使得% XREF p=286 "By Vitali's Covering Theorem, there exist disjoint balls {B(x_i, r_i)}_{i=1}^∞ such that"
+\begin{align*}
+\mathbb{R}^n-R^\lambda\subseteq\bigcup_{i=1}^{\infty}B(x_i,5r_i)\qquad(\star)
+\end{align*}
+且
+\begin{align*}
+\fint_{B(x_i,r_i)}g\diff y>\lambda\qquad(i=1,\cdots).
+\end{align*}
+于是
+\begin{align*}
+\lambda&\le\frac{1}{\mathcal{L}^n(B(x_i,r_i))}\int_{B(x_i,r_i)\cap\{g>\frac{\lambda}{2}\}}g\diff y\\
+&\quad+\frac{1}{\mathcal{L}^n(B(x_i,r_i))}\int_{B(x_i,r_i)\cap\{g\le\frac{\lambda}{2}\}}g\diff y\\
+&\le\frac{1}{\mathcal{L}^n(B(x_i,r_i))}\int_{B(x_i,r_i)\cap\{g>\frac{\lambda}{2}\}}g\diff y+\frac{\lambda}{2},
+\end{align*}
+从而
+\begin{align*}
+\alpha(n)r_i^n\le\frac{2}{\lambda}\int_{B(x_i,r_i)\cap\{g>\frac{\lambda}{2}\}}g\diff y\qquad(i=1,\cdots).
+\end{align*}
+利用 $(\star)$ 即得
+\begin{align*}
+\mathcal{L}^n(\mathbb{R}^n-R^\lambda)&\le5^n\alpha(n)\sum_{i=1}^{\infty}r_i^n\\
+&\le\frac{2\cdot5^n}{\lambda}\int_{\{g>\frac{\lambda}{2}\}}g\diff y\\
+&\le\frac{2\cdot5^n}{\lambda}\Bigl(\int_{\{g>\frac{\lambda}{2}\}}g^p\diff y\Bigr)^{\frac1p}\Bigl(\mathcal{L}^n\bigl\{g>\frac{\lambda}{2}\bigr\}\Bigr)^{1-\frac1p}\\
+&\le\frac{C}{\lambda^p}\int_{\{\lvert f\rvert+\lvert Df\rvert>\frac{\lambda}{2}\}}\lvert Df\rvert^p+\lvert f\rvert^p\diff y\\
+&=o(\lambda^{-p})
+\end{align*}
+当 $\lambda\to\infty$，因为 $\mathcal{L}^n\{g>\frac{\lambda}{2}\}\le\frac{2^p}{\lambda^p}\int_{\{g>\frac{\lambda}{2}\}}g^p\diff y$。
+
+% SUPPLEMENT: parent=theorem:ch06-6-14; kind=proof; 补出 Claim #1 中球族的选取、积分拆分、Hölder 不等式与 $o(\lambda^{-p})$ 的推导
+（1）球族的选取。置
+\begin{align*}
+\mathcal{F}:=\Bigl\{B(x,r)\Bigm|x\in\mathbb{R}^n-R^\lambda,\ r>0,\ \fint_{B(x,r)}g\diff y>\lambda\Bigr\}.
+\end{align*}
+则 $\mathbb{R}^n-R^\lambda\subseteq\bigcup_{B\in\mathcal{F}}B$。由 $g\in L^p(\mathbb{R}^n)$ 与 Hölder 不等式，$B(x,r)\in\mathcal{F}$ 时
+\begin{align*}
+\lambda<\fint_{B(x,r)}g\diff y\le\frac{\lVert g\rVert_{L^p(\mathbb{R}^n)}}{\alpha(n)^{\frac1p}r^{\frac np}},
+\end{align*}
+故 $r<\Bigl(\frac{\lVert g\rVert_{L^p(\mathbb{R}^n)}}{\lambda\alpha(n)^{1/p}}\Bigr)^{\frac{p}{n}}$，即 $\mathcal{F}$ 中球的半径一致有界。于是\cref{theorem:ch01-1-24}给出 $\mathcal{F}$ 中的可数不交球族 $\{B(x_i,r_i)\}_{i=1}^{\infty}$，使 $\mathbb{R}^n-R^\lambda\subseteq\bigcup_{i=1}^{\infty}B(x_i,5r_i)$，且每个球满足 $\fint_{B(x_i,r_i)}g\diff y>\lambda$。% XREF internal
+
+（2）积分拆分。由 $\fint_{B(x_i,r_i)}g\diff y>\lambda$ 与 $g\le\frac{\lambda}{2}$ 于 $\{g\le\frac{\lambda}{2}\}$ 上，
+\begin{align*}
+\lambda&<\frac{1}{\mathcal{L}^n(B(x_i,r_i))}\Bigl(\int_{B(x_i,r_i)\cap\{g>\frac{\lambda}{2}\}}g\diff y+\int_{B(x_i,r_i)\cap\{g\le\frac{\lambda}{2}\}}g\diff y\Bigr)\\
+&\le\frac{1}{\mathcal{L}^n(B(x_i,r_i))}\int_{B(x_i,r_i)\cap\{g>\frac{\lambda}{2}\}}g\diff y+\frac{\lambda}{2},
+\end{align*}
+故 $\frac{\lambda}{2}<\frac{1}{\mathcal{L}^n(B(x_i,r_i))}\int_{B(x_i,r_i)\cap\{g>\frac{\lambda}{2}\}}g\diff y$，两边乘以 $\mathcal{L}^n(B(x_i,r_i))=\alpha(n)r_i^n$ 即得文中关于 $\alpha(n)r_i^n$ 的不等式。
+
+（3）求和与 Hölder 不等式。由诸球两两不交，
+\begin{align*}
+\sum_{i=1}^{\infty}r_i^n\le\frac{2}{\lambda\alpha(n)}\sum_{i=1}^{\infty}\int_{B(x_i,r_i)\cap\{g>\frac{\lambda}{2}\}}g\diff y\le\frac{2}{\lambda\alpha(n)}\int_{\{g>\frac{\lambda}{2}\}}g\diff y .
+\end{align*}
+对指数 $p$ 与 $\frac{p}{p-1}$ 用 Hölder 不等式，得
+\begin{align*}
+\int_{\{g>\frac{\lambda}{2}\}}g\diff y\le\Bigl(\int_{\{g>\frac{\lambda}{2}\}}g^p\diff y\Bigr)^{\frac1p}\Bigl(\mathcal{L}^n\bigl\{g>\frac{\lambda}{2}\bigr\}\Bigr)^{1-\frac1p},
+\end{align*}
+又由 Chebyshev 不等式 $\mathcal{L}^n\{g>\frac{\lambda}{2}\}\le\frac{2^p}{\lambda^p}\int_{\{g>\frac{\lambda}{2}\}}g^p\diff y$，故
+\begin{align*}
+\frac{2\cdot5^n}{\lambda}\int_{\{g>\frac{\lambda}{2}\}}g\diff y\le\frac{2^p5^n}{\lambda^p}\int_{\{g>\frac{\lambda}{2}\}}g^p\diff y .
+\end{align*}
+
+（4）$o(\lambda^{-p})$。由 $g^p=(|f|+|Df|)^p\le2^{p-1}(|f|^p+|Df|^p)$ 与 $g^p\in L^1(\mathbb{R}^n)$ 得
+\begin{align*}
+\frac{2^p5^n}{\lambda^p}\int_{\{g>\frac{\lambda}{2}\}}g^p\diff y\le\frac{2^{2p-1}5^n}{\lambda^p}\int_{\{\lvert f\rvert+\lvert Df\rvert>\frac{\lambda}{2}\}}\lvert Df\rvert^p+\lvert f\rvert^p\diff y .
+\end{align*}
+当 $\lambda\to\infty$ 时，水平集 $\{\lvert f\rvert+\lvert Df\rvert>\frac{\lambda}{2}\}$ 的测度趋于零，而 $|f|^p+|Df|^p$ 可积，故其上的积分趋于零（积分对定义域的绝对连续性），即右端为 $o(\lambda^{-p})$。
+
+3. \textbf{Claim \#2}：存在只依赖于 $n$ 的常数 $C$，使得
+\begin{align*}
+\lvert f(x)\rvert\le\lambda,\qquad\lvert f(x)-f(y)\rvert\le C\lambda\lvert x-y\rvert
+\end{align*}
+对 $\mathcal{L}^n$-a.e. 的 $x,y\in R^\lambda$ 成立。
+\textbf{Claim \#2 的证明}：这一断言与\cref{theorem:ch06-6-12}的证明中 Claim \#2 的证明几乎完全相同。% XREF p=287 "This is almost exactly like the proof of Claim #2 in the proof of Theorem 6.12."
+
+% SUPPLEMENT: parent=theorem:ch06-6-14; kind=proof; 补出 Claim #2 的完整证明，逐项指出与\cref{theorem:ch06-6-12} 对应步骤中替换的对象
+（1）函数值的界。设 $x\in R^\lambda$。由 $g=\lvert f\rvert+\lvert Df\rvert$ 与 $R^\lambda$ 的定义，
+\begin{align*}
+\fint_{B(x,r)}\lvert f\rvert\diff y\le\fint_{B(x,r)}g\diff y\le\lambda\qquad(r>0).
+\end{align*}
+由 Lebesgue 微分定理（$\lvert f\rvert\in L^1_{\loc}(\mathbb{R}^n)$），$\lvert f(x)\rvert=\lim_{r\to0}\fint_{B(x,r)}\lvert f\rvert\diff y\le\lambda$ 对 $\mathcal{L}^n$-a.e. 的 $x\in R^\lambda$ 成立。
+
+（2）平均值的尺度估计。由 $f\in W^{1,p}(\mathbb{R}^n)\subseteq\BV_{\loc}(\mathbb{R}^n)$，其变差测度为 $\lVert Df\rVert=\lvert Df\rvert\mathcal{L}^n$，故对 $x\in R^\lambda$ 与 $r>0$ 有
+\begin{align*}
+\lVert Df\rVert(B(x,r))=\int_{B(x,r)}\lvert Df\rvert\diff y\le\int_{B(x,r)}g\diff y\le\lambda\alpha(n)r^n .
+\end{align*}
+用\cref{theorem:ch05-5-10}(ii) 与 Hölder 不等式（与\cref{theorem:ch06-6-12} 证明中 Claim \#2 的第 (1) 步相同，只把那里的 $\lVert Df\rVert(B(x,r))\le\lambda r^n$ 换成上式）得% XREF internal
+\begin{align*}
+\fint_{B(x,r)}\bigl\lvert f-(f)_{x,r}\bigr\rvert\diff y\le C\lambda r .
+\end{align*}
+
+（3）相邻尺度之差与望远镜求和。与\cref{theorem:ch06-6-12} 证明中 Claim \#2 的第 (2) 步相同，对 $k=1,2,\cdots$ 有
+\begin{align*}
+\bigl\lvert(f)_{x,\frac{r}{2^{k+1}}}-(f)_{x,\frac{r}{2^k}}\bigr\rvert\le\frac{C\lambda r}{2^k},
+\end{align*}
+故对 $\mathcal{L}^n$-a.e. 的 $x\in R^\lambda$ 与一切 $r>0$，
+\begin{align*}
+\lvert f(x)-(f)_{x,r}\rvert\le\sum_{k=1}^{\infty}\bigl\lvert(f)_{x,\frac{r}{2^{k+1}}}-(f)_{x,\frac{r}{2^k}}\bigr\rvert\le C\lambda r .
+\end{align*}
+
+（4）成对估计。设 $x,y\in R^\lambda$、$r=\lvert x-y\rvert$。与\cref{theorem:ch06-6-12} 证明中 Claim \#2 的第 (3) 段完全并行地，由交叠区域 $B(x,r)\cap B(y,r)$ 与 $B(x,r)$ 同阶得
+\begin{align*}
+\bigl\lvert(f)_{x,r}-(f)_{y,r}\bigr\rvert\le C\lambda r .
+\end{align*}
+合并 (3)(4) 即得 $\lvert f(x)-f(y)\rvert\le3C\lambda\lvert x-y\rvert$ 对 $\mathcal{L}^n$-a.e. 的 $x,y\in R^\lambda$ 成立。% XREF internal
+
+4. 由 Claim \#2，可以用\cref{theorem:ch03-3-1}把 $f$ 延拓为 Lipschitz 连续映射 $\bar f:\mathbb{R}^n\to\mathbb{R}$，且% XREF p=287 "In view of Claim #2 we may extend f using Theorem 3.1 to a Lipschitz continuous mapping f̄ : R^n → R, with"
+\begin{align*}
+\lvert\bar f\rvert\le\lambda,\qquad\operatorname{Lip}(\bar f)\le C\lambda,\qquad\bar f=f\quad\mathcal{L}^n\text{-a.e. 于}\ R^\lambda .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch06-6-14; kind=proof; 补出第 4 步的细节：由几乎处处的 Lipschitz 估计得到真正的 Lipschitz 函数，$Df=D\bar f$ 于 $R^\lambda$ 上，以及两条界的来源
+（1）由几乎处处的估计到 Lipschitz 函数。由 Claim \#2，存在 $\mathcal{L}^n$-零集 $N\subseteq R^\lambda$，使
+\begin{align*}
+\lvert f(x)\rvert\le\lambda,\qquad\lvert f(x)-f(y)\rvert\le3C\lambda\lvert x-y\rvert\qquad(x,y\in R^\lambda\setminus N).
+\end{align*}
+按\cref{theorem:ch06-6-12}证明第 4 步的方法，在 $R^\lambda\setminus N$ 上取 $\bar f:=f$，在 $N$ 上取 $\bar f$ 为 $f$ 沿 $R^\lambda\setminus N$ 中收敛点列的极限，则 $\bar f:R^\lambda\to\mathbb{R}$ 为 $3C\lambda$-Lipschitz 且 $\bar f=f$ 于 $R^\lambda\setminus N$ 上；再由\cref{theorem:ch03-3-1}延拓到 $\mathbb{R}^n$，延拓保持 Lipschitz 常数。由极限保持不等式，在 $R^\lambda$ 上有 $\lvert\bar f\rvert\le\lambda$，故 $\operatorname{Lip}(\bar f)\le3C\lambda$，这与文中两条界一致（常数 $C$ 只需适当放大）。% XREF internal
+
+（2）梯度的几乎处处相等。由于 $f=\bar f$ $\mathcal{L}^n$-a.e. 于 $R^\lambda$ 上，$g:=f-\bar f$ 在 $R^\lambda$ 上几乎处处为零；由\cref{theorem:ch06-6-3}与\cref{theorem:ch06-6-4}及其后的注记（与\cref{theorem:ch06-6-13} 证明第 (2) 段相同），$Dg=0$ $\mathcal{L}^n$-a.e. 于 $R^\lambda$ 上，即 $Df=D\bar f$ $\mathcal{L}^n$-a.e. 于 $R^\lambda$ 上。% XREF internal
+
+5. \textbf{Claim \#3}：当 $\lambda\to\infty$ 时 $\lVert f-\bar f\rVert_{W^{1,p}(\mathbb{R}^n)}=o(1)$。
+\textbf{Claim \#3 的证明}：由于 $f=\bar f$ 于 $R^\lambda$ 上，有
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert f-\bar f\rvert^p\diff x&=\int_{\mathbb{R}^n-R^\lambda}\lvert f-\bar f\rvert^p\diff x\\
+&\le C\int_{\mathbb{R}^n-R^\lambda}\lvert f\rvert^p\diff x+C\lambda^p\mathcal{L}^n(\mathbb{R}^n-R^\lambda)\\
+&=o(1)
+\end{align*}
+当 $\lambda\to\infty$，依据 Claim \#1。同样地，$Df=D\bar f$ $\mathcal{L}^n$-a.e. 于 $R^\lambda$ 上，故
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df-D\bar f\rvert^p\diff x&\le C\int_{\mathbb{R}^n-R^\lambda}\lvert Df\rvert^p\diff x+C\lambda^p\mathcal{L}^n(\mathbb{R}^n-R^\lambda)\\
+&=o(1)
+\end{align*}
+当 $\lambda\to\infty$。
+
+% SUPPLEMENT: parent=theorem:ch06-6-14; kind=proof; 补出 Claim #3 的两条逐点不等式与 $o(1)$ 的依据，并补出用测度估计与范数估计同时选取 λ 的收尾
+（1）函数项。由第 4 步的 $\lvert\bar f\rvert\le\lambda$，
+\begin{align*}
+\lvert f-\bar f\rvert^p\le2^{p-1}\bigl(\lvert f\rvert^p+\lvert\bar f\rvert^p\bigr)\le2^{p-1}\bigl(\lvert f\rvert^p+\lambda^p\bigr),
+\end{align*}
+故第一个不等号成立。又 $\lvert f\rvert^p\in L^1(\mathbb{R}^n)$ 而 $\mathcal{L}^n(\mathbb{R}^n-R^\lambda)\to0$（$\lambda\to\infty$），由积分对定义域的绝对连续性得 $\int_{\mathbb{R}^n-R^\lambda}\lvert f\rvert^p\diff x\to0$；而由 Claim \#1，$\lambda^p\mathcal{L}^n(\mathbb{R}^n-R^\lambda)=\lambda^p\cdot o(\lambda^{-p})=o(1)$。两项之和为 $o(1)$。
+
+（2）梯度项。由 $\operatorname{Lip}(\bar f)\le C\lambda$ 得 $\lvert D\bar f\rvert\le C\lambda$，故
+\begin{align*}
+\lvert Df-D\bar f\rvert^p\le2^{p-1}\bigl(\lvert Df\rvert^p+C^p\lambda^p\bigr),
+\end{align*}
+于是第二个不等号成立；再按 (1) 的推理把 $\lvert f\rvert^p$ 换成 $\lvert Df\rvert^p\in L^1(\mathbb{R}^n)$，即知右端为 $o(1)$。
+
+（3）$\lambda$ 的选取。给定 $\varepsilon>0$。由 Claim \#1，取 $\lambda$ 充分大使 $\mathcal{L}^n(\mathbb{R}^n-R^\lambda)\le\varepsilon$；由于 $\{f\ne\bar f\}\subseteq(\mathbb{R}^n-R^\lambda)\cup N$ 且 $\mathcal{L}^n(N)=0$，得测度估计
+\begin{align*}
+\mathcal{L}^n\bigl(\{x\in\mathbb{R}^n\mid f(x)\ne\bar f(x)\}\bigr)\le\varepsilon .
+\end{align*}
+再把 $\lambda$ 取得更大（必要时），由 Claim \#3 使 $\lVert f-\bar f\rVert_{W^{1,p}(\mathbb{R}^n)}\le\varepsilon$。两条结论同时成立。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-14; kind=motivation; 说明以极大函数水平集代替 BV 的变差测度、$L^p$ 可积性带来的额外估计，以及两条结论各自的作用
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-14-动机}
+Sobolev 函数的弱梯度是 $L^p$ 函数而不是测度，因此\cref{theorem:ch06-6-12}中按变差测度定义的水平集 $R^\lambda$ 需要换成按 $g=\lvert f\rvert+\lvert Df\rvert$ 的球平均定义的水平集：$g$ 同时控制函数值与梯度，使水平集上的两个量都有界。这样做的收益是双重的：一方面，$g\in L^p$ 的 Hölder 估计使补集测度是 $o(\lambda^{-p})$ 而不是 $O(\lambda^{-1})$，因此可以用 $\lambda^p\mathcal{L}^n(\mathbb{R}^n-R^\lambda)=o(1)$ 吸收逼近函数梯度所带来的 $\lambda^p$ 因子；另一方面，$W^{1,p}$ 范数本身可以被控制，从而结论中除测度估计外还多出范数估计。% XREF internal
+
+证明的结构是：Claim \#1 估计正则集的补集，Claim \#2 在正则集上给出函数值与 Lipschitz 估计，第 4 步把它们变成真正的 Lipschitz 函数并附上两条界 $\lvert\bar f\rvert\le\lambda$、$\operatorname{Lip}(\bar f)\le C\lambda$，Claim \#3 把这两条界与 Claim \#1 合起来估计 $W^{1,p}$ 范数。其中「$\lvert\bar f\rvert\le\lambda$」与「$\operatorname{Lip}(\bar f)\le C\lambda$」是后面\cref{theorem:ch06-6-15}把 Lipschitz 逼近升级为 $C^1$ 逼近时控制误差的关键。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-14; kind=hypotheses; 逐条分析 $1\le p<\infty$、$f\in W^{1,p}(R^n)$ 与水平集定义的作用
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-14-条件}
+\begin{enumerate}[(i)]
+\item 假设 $1\le p<\infty$ 在证明中有三处作用：Hölder 不等式需要共轭指数 $p/(p-1)$ 有限，这要求 $p>1$；$p=1$ 时改用 $L^1$ 的平凡估计，Claim \#1 的结论相应地变为 $o(\lambda^{-1})$，论证仍然成立，故 $p=1$ 被纳入假设；$p=\infty$ 时 $g^p$ 不必可积，$o(\lambda^{-p})$ 的说法失去意义，故 $p<\infty$ 不可去掉。
+\item 假设 $f\in W^{1,p}(\mathbb{R}^n)$ 给出 $g=\lvert f\rvert+\lvert Df\rvert\in L^p(\mathbb{R}^n)\subseteq L^1_{\loc}(\mathbb{R}^n)$，从而使 $R^\lambda$ 有定义、使 $g$ 的球平均有限、使 Claim \#1 中的水平集估计可用。若 $f$ 只在 $W^{1,p}_{\loc}$ 中，$g$ 可能不可积，$g^p$ 在水平集上的积分不一定趋于零。
+\item 水平集用球平均 $\fint_{B(x,r)}g\diff y\le\lambda$ 定义，与\cref{theorem:ch06-6-12}中按变差测度密度定义的方式一致：两者都是极大函数 $\sup_r\fint_{B(x,r)}\cdot$ 的水平集，其补集都可以用 Vitali 覆盖定理估计。% XREF internal
+\item 结论中的两个估计同时成立，但误差集与范数误差都由同一个 $\lambda$ 控制；$\lambda\to\infty$ 时两者都趋于零，这与 $f\in W^{1,p}$ 的绝对连续性一致。
+\item 逼近函数只断言为 Lipschitz 连续而非 $C^1$；后者需要\cref{theorem:ch06-6-11}再作一次逼近，这正是\cref{theorem:ch06-6-15}的内容。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Sobolev 函数的逐点逼近 II]\label{theorem:ch06-6-15}
+设 $n$ 为正整数，$1\le p<\infty$，$\mathcal{L}^n$ 为 $\mathbb{R}^n$ 上的 Lebesgue 测度，$f\in W^{1,p}(\mathbb{R}^n)$ 为实值 Sobolev 函数，$Df\in L^p(\mathbb{R}^n;\mathbb{R}^n)$ 为其弱梯度，$D\bar f$ 表示 $C^1$ 函数的经典梯度，$\lVert\cdot\rVert_{W^{1,p}(\mathbb{R}^n)}$ 为通常的 Sobolev 范数，且 $f$ 与 $Df$ 按 $\mathcal{L}^n$-a.e. 的意义理解。则对每个 $\varepsilon>0$，存在 $C^1$ 函数 $\bar f:\mathbb{R}^n\to\mathbb{R}$，使得
+\begin{align*}
+\mathcal{L}^n\bigl(\{x\in\mathbb{R}^n\mid f(x)\ne\bar f(x)\ \text{或}\ Df(x)\ne D\bar f(x)\}\bigr)\le\varepsilon
+\end{align*}
+且
+\begin{align*}
+\lVert f-\bar f\rVert_{W^{1,p}(\mathbb{R}^n)}\le\varepsilon .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+由\cref{theorem:ch06-6-12}与\cref{theorem:ch06-6-14}即得。% XREF p=288 "This follows from Theorems 6.12 and 6.14." | p=288 "Theorems 6.12 and 6.14"
+
+% SUPPLEMENT: parent=theorem:ch06-6-15; kind=proof; 补出完整论证：先取有界的 Lipschitz 逼近，再用定理 6.11 换成 C^1 逼近，并分别控制误差测度与 W^{1,p} 范数
+（1）有界的 Lipschitz 逼近。由\cref{theorem:ch06-6-14}（误差取 $\varepsilon_1>0$），存在 Lipschitz 连续函数 $h:\mathbb{R}^n\to\mathbb{R}$ 与只依赖于 $n$ 的常数 $C_1$，使得% XREF internal
+\begin{align*}
+\mathcal{L}^n(\{f\ne h\})\le\varepsilon_1,\qquad\lVert f-h\rVert_{W^{1,p}(\mathbb{R}^n)}\le\varepsilon_1,
+\end{align*}
+并且按\cref{theorem:ch06-6-14}证明的第 4 步，$h$ 还满足 $\lvert h\rvert\le\lambda$ 与 $\operatorname{Lip}(h)\le C_1\lambda$，其中 $\lambda$ 是该定理证明中所取的参数。% XREF internal
+
+（2）换成 $C^1$ 逼近。把\cref{theorem:ch06-6-11}用于 $h$（误差取 $\eta>0$），得 $C^1$ 函数 $\bar f:\mathbb{R}^n\to\mathbb{R}$，使得% XREF internal
+\begin{align*}
+\mathcal{L}^n\bigl(\{x\mid h(x)\ne\bar f(x)\ \text{或}\ Dh(x)\ne D\bar f(x)\}\bigr)\le\eta,
+\end{align*}
+且按该定理的结论与其证明中的估计，
+\begin{align*}
+\sup_{\mathbb{R}^n}\lvert D\bar f\rvert\le C_2\operatorname{Lip}(h)\le C_1C_2\lambda,\qquad\lvert\bar f\rvert\le\lVert h\rVert_{L^{\infty}(\mathbb{R}^n)}+C_3\operatorname{Lip}(h)\le(1+C_1C_3)\lambda .
+\end{align*}
+
+（3）误差测度。记
+\begin{align*}
+E:=\{x\mid f(x)\ne\bar f(x)\ \text{或}\ Df(x)\ne D\bar f(x)\}.
+\end{align*}
+则 $E\subseteq\{f\ne h\}\cup\{h\ne\bar f\}\cup\{Df\ne D\bar f,\ f=\bar f\}$。最后一项是 $\mathcal{L}^n$-零集：在 $\{f=\bar f\}$ 上，$f-\bar f=0$，由\cref{theorem:ch06-6-3}与\cref{theorem:ch06-6-4}及其后的注记，$D(f-\bar f)=0$ $\mathcal{L}^n$-a.e. 成立。故% XREF internal
+\begin{align*}
+\mathcal{L}^n(E)\le\varepsilon_1+\eta .
+\end{align*}
+
+（4）$W^{1,p}$ 范数。由 (1)(2)，
+\begin{align*}
+\lVert h-\bar f\rVert_{W^{1,p}(\mathbb{R}^n)}^p&=\int_{\{h\ne\bar f\}}\lvert h-\bar f\rvert^p\diff x+\int_{\{Dh\ne D\bar f\}}\lvert Dh-D\bar f\rvert^p\diff x\\
+&\le(2C_4\lambda)^p\eta+(2C_1C_2\lambda)^p\eta,
+\end{align*}
+其中第一项用了 $\lvert h-\bar f\rvert\le\lvert h\rvert+\lvert\bar f\rvert\le C_4\lambda$ 于 $\{h\ne\bar f\}$ 上，第二项用了 $\lvert Dh\rvert\le\operatorname{Lip}(h)\le C_1\lambda$ 与 $\lvert D\bar f\rvert\le C_1C_2\lambda$。于是
+\begin{align*}
+\lVert f-\bar f\rVert_{W^{1,p}(\mathbb{R}^n)}\le\lVert f-h\rVert_{W^{1,p}(\mathbb{R}^n)}+\lVert h-\bar f\rVert_{W^{1,p}(\mathbb{R}^n)}\le\varepsilon_1+C_5\lambda\eta^{\frac1p}.
+\end{align*}
+
+（5）参数的选取。给定 $\varepsilon>0$，取 $\varepsilon_1\le\frac{\varepsilon}{2}$，再取 $\eta>0$ 充分小，使 $\varepsilon_1+\eta\le\varepsilon$ 且 $C_5\lambda\eta^{1/p}\le\frac{\varepsilon}{2}$。于是 (3) 与 (4) 给出
+\begin{align*}
+\mathcal{L}^n\bigl(\{x\mid f(x)\ne\bar f(x)\ \text{或}\ Df(x)\ne D\bar f(x)\}\bigr)\le\varepsilon,\qquad\lVert f-\bar f\rVert_{W^{1,p}(\mathbb{R}^n)}\le\varepsilon .
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-15; kind=motivation; 说明为何需要把 Lipschitz 逼近升级为 C^1 逼近、两条估计如何同时被保留，以及常数与 ε 的依赖关系
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-15-动机}
+\cref{theorem:ch06-6-14}给出的是 Lipschitz 逼近，而本定理要求 $C^1$ 逼近，并且要求在换成 $C^1$ 之后测度估计与 $W^{1,p}$ 范数估计同时成立。两者的衔接点在于\cref{theorem:ch06-6-11}：它把任意 Lipschitz 函数在测度意义下变成 $C^1$ 函数，并给出梯度的整体界 $\sup\lvert D\bar f\rvert\le C\operatorname{Lip}(h)$；而\cref{theorem:ch06-6-14}证明中的第 4 步恰好给出 $\lvert h\rvert\le\lambda$ 与 $\operatorname{Lip}(h)\le C\lambda$，于是 $C^1$ 逼近及其梯度都被同一个 $\lambda$ 控制。% XREF internal
+
+这一步之所以不能直接用\cref{theorem:ch06-6-14}代替，是因为 Lipschitz 函数一般不是 $C^1$ 函数；而之所以能在升级过程中保持 $W^{1,p}$ 估计，是因为\cref{theorem:ch06-6-11}的误差集测度可以取得任意小，且 $h$ 与 $\bar f$ 都有一致界，故 $L^p$ 与梯度的 $L^p$ 误差都被「界 $\times$ 误差集测度的 $1/p$ 次幂」控制。常数最终依赖于 $n$、$p$ 与 $\lVert f\rVert_{W^{1,p}(\mathbb{R}^n)}$（经由 $\lambda$ 的选取），但不依赖于 $\varepsilon$ 之外的其他量。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-15; kind=hypotheses; 逐条分析 $1\le p<\infty$、$f\in W^{1,p}(R^n)$ 与两条结论同时成立的条件
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-15-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in W^{1,p}(\mathbb{R}^n)$ 且 $1\le p<\infty$，与\cref{theorem:ch06-6-14}相同：它保证弱梯度 $Df\in L^p$ 存在，从而结论中的 $Df$ 有意义，并使\cref{theorem:ch06-6-14}的全部结论可用。% XREF internal
+\item 假设 $f\in W^{1,p}(\mathbb{R}^n)$ 还保证 $f\in\BV_{\loc}(\mathbb{R}^n)$，这是结论中 $Df=D\bar f$ 于 $\{f=\bar f\}$ 上成立的依据：需要把 $f-\bar f$ 看作 $\BV$ 函数并使用\cref{theorem:ch06-6-3}。% XREF internal
+\item 结论把两个估计放在同一个 $\bar f$ 上。若分别取两条逼近，一般得到两个不同的函数；本定理的构造把二者统一，代价是常数依赖于\cref{theorem:ch06-6-14}中的参数 $\lambda$。% XREF internal
+\item 与\cref{theorem:ch06-6-14}相比，本定理的逼近函数是 $C^1$ 而不是仅 Lipschitz，但结论中的测度估计涉及 $Df$ 与 $D\bar f$ 的比较，故比\cref{theorem:ch06-6-14}的测度估计略强。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\end{document}

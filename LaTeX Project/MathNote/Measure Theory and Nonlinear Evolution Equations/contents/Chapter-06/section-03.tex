@@ -15,39 +15,56 @@
 
 \section{唯一性}\label{section:ch06-唯一性}
 
-\cref{theorem:ch06-6.2.1}中的持续性性质在证明 (P) 弱解唯一性时起重要作用，因为它完全刻画了弱解的 $2$-集中部分。另一方面，由于\cref{definition:ch06-弱解}对 $2$-弥散部分 $[u_s(\cdot,t)]_{d,2}$ 未作任何规定（见\eqref{align:ch03-3.82}），不出所料，(P) 的弱解不构成问题的唯一类（见\cref{remark:ch06-6.3.2}）。这使如下定义变得重要。
-
+\cref{theorem:ch06-6.2.1}中的持续性性质在证明 (P) 弱解唯一性时起重要作用，因为它完全刻画了弱解的 $2$-集中部分。另一方面，由于\cref{definition:ch06-弱解}对 $2$-弥散部分 $[u_s(\cdot,t)]_{d,2}$ 未作任何规定（见\eqref{align:ch03-3.80}--\eqref{align:ch03-3.82}），不出所料，(P) 的弱解不构成问题的唯一类（见\cref{remark:ch06-6.3.2}）。这使如下定义变得重要。
 \begin{definition}\label{definition:ch06-相容性条件}
-设 (A0)--(A1) 成立。(P) 的弱解 $u$ 满足相容性条件，若对几乎所有 $t\in(0,T)$，
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界的有界开集，$T>0$，并设 (A0)--(A1) 成立。(P) 的弱解 $u$ 满足相容性条件是指：对几乎所有 $t\in(0,T)$，有
 \begin{align}
 [u^\pm_s(\cdot,t)]_{d,2}=[u^\pm_s(\cdot,t)]_{d,2}\llcorner\mathscr{S}^\pm_t, \label{align:ch6-6.21a}
 \end{align}
-其中
+其中 $u^\pm_s$ 为奇异部分 $u_s$ 的 Jordan 正、负部，$[\cdot]_{d,2}$ 表示关于 $2$-容量的弥散部分，而
 \begin{align}
-\mathscr{S}^\pm_t\triangleq \{x\in\Omega\mid\phi^\pm(u_r(x,t))=\pm\phi_{\pm\infty}\}. \label{align:ch6-6.21b}
+\mathscr{S}^\pm_t\triangleq \{x\in\Omega\mid\phi^\pm(u_r(x,t))=\pm\phi_{\pm\infty}\}, \label{align:ch6-6.21b}
 \end{align}
+$\phi^\pm$ 为 $\phi$ 的正、负部，$\phi_{\pm\infty}$ 由\eqref{align:ch6-6.1}给出。
 \end{definition}
+
+% SUPPLEMENT: parent=definition:ch06-相容性条件; kind=motivation; location=定义 6.3.1 后的注记; basis=原书定义 6.3.1、(3.80)--(3.82)、定理 6.2.1 与注记 6.3.1 的分析
+\begin{remark}\phantomsection\label{remark:ch06-相容动机}
+(i) 动机与内容。由\cref{theorem:ch06-6.2.1}，弱解的 $2$-集中部分被初值完全决定，故不唯一性只能来自 $2$-弥散奇异部分 $[u^\pm_s(\cdot,t)]_{d,2}$。\cref{definition:ch06-相容性条件}对这一部分附加支撑位置约束：它必须集中在 $\phi^\pm(u_r(\cdot,t))$ 达到饱和值 $\pm\phi_{\pm\infty}$ 的集合上。其含义是奇异质量只能停留在扩散通量为零的地方：由于 $\phi$ 非减，$\phi(u_r)\leqslant\phi_{+\infty}$ 且 $\phi(u_r)\geqslant\phi_{-\infty}$，等式 $\phi(u_r)=\phi_{+\infty}$ 恰表示该点处 $\phi$ 已饱和、$\Delta\phi(u_r)$ 不再提供扩散；若奇异质量出现在 $\phi$ 尚未饱和的区域，扩散会立即将其抹平。
+
+(ii) 各假设的作用。$\pm$ 分解使正、负奇异部分各自与相应的饱和值 $\phi_{+\infty}$、$\phi_{-\infty}$ 配对，两支互不干扰；“对几乎所有 $t$”是因为 $u(\cdot,t)$ 只在几乎处处的 $t$ 有定义（\cref{proposition:ch05-弱星可度量化}）；(A1) 中 $\phi$ 非减保证 $\phi_{\pm\infty}$ 为 $\phi$ 的上、下确界，从而\eqref{align:ch6-6.21b}中的集合正是饱和集；$2$-弥散性使 $u^\pm_s(\cdot,t)$ 不感受 $2$-零容集上的改动，故把\eqref{align:ch6-6.21b}中的 $\phi^\pm(u_r(\cdot,t))$ 换成其 $2$-拟连续代表元不改变条件（见\cref{remark:ch06-6.3.1}）。
+
+(iii) 边界。若 $\phi$ 严格增，则 $\mathscr{S}^\pm_t=\varnothing$（否则 $\phi$ 在 $u_r(x,t)$ 处取到饱和值 $\pm\phi_{\pm\infty}$，而 $u_r$ 为实值、$\phi$ 严格增时该值不属于 $\phi(\mathbb{R})$），于是\eqref{align:ch6-6.21a}迫使 $[u^\pm_s(\cdot,t)]_{d,2}=0$：奇异部分全为 $2$-集中，由\cref{theorem:ch06-6.2.1}完全确定，弱解自动唯一。若 $\phi$ 在 $[d,+\infty)$ 上为常数，则 $\mathscr{S}^+_t$ 可以很大，\eqref{align:ch6-6.21a}成为实质性的附加要求；\cref{proposition:ch06-6.4.8}讨论的正是这一最奇异情形。去掉相容性条件则唯一性失效，反例见\cref{remark:ch06-6.3.2}。
+\end{remark}
 
 在本定义及此后，凡符号 $\pm$ 与 $\mp$ 出现的陈述，均应读作一对独立陈述，分别对应上、下号选择。
 
-\begin{remark}\label{remark:ch06-6.3.1}
-由\cref{definition:ch06-弱解}(i)，对几乎所有 $t\in(0,T)$，$\phi(u_r(\cdot,t))\in H^1_0(\Omega)$，故 $\phi(u_r(\cdot,t))$ 有一个 $2$-拟连续代表元 $v(\cdot,t)\in H^1_0(\Omega)$（见\cref{definition:ch02-拟连续}）。在\eqref{align:ch6-6.21b}中，我们将函数 $\phi^\pm(u_r(\cdot,t))$ 等同于其 $2$-拟连续代表元 $v^\pm(\cdot,t)\in H^1_0(\Omega)$，后者在 $\mathbb{R}$ 上 $2$-拟处处满足 $0\leqslant v^\pm\leqslant\pm\phi_{\pm\infty}$。在\eqref{align:ch6-6.21a}中，我们总将集 $\mathscr{S}^\pm_t$ 等同于 $\widetilde{\mathscr{S}}^\pm_t\triangleq \{x\in\Omega\mid v^\pm(x,t)=\pm\phi_{\pm\infty}\}$。因 $v^\pm(\cdot,t)$ 定义到相差一个 $2$-零容集，集 $\widetilde{\mathscr{S}}^\pm_t$ 亦然。
+\begin{remark}\phantomsection\label{remark:ch06-6.3.1}
+由\cref{definition:ch06-弱解}(i)，对几乎所有 $t\in(0,T)$，$\phi(u_r(\cdot,t))\in H^1_0(\Omega)$，故 $\phi(u_r(\cdot,t))$ 有一个 $2$-拟连续代表元 $v(\cdot,t)\in H^1_0(\Omega)$（见\cref{definition:ch02-拟连续}）。在\eqref{align:ch6-6.21b}中，我们将函数 $\phi^\pm(u_r(\cdot,t))$ 等同于其 $2$-拟连续代表元 $v^\pm(\cdot,t)\in H^1_0(\Omega)$，后者在 $\mathbb{R}$ 上 $2$-拟处处满足 $0\leqslant v^\pm\leqslant\pm\phi_{\pm\infty}$。在\eqref{align:ch6-6.21a}中，我们总将集 $\mathscr{S}^\pm_t$ 等同于 $\widetilde{\mathscr{S}}^\pm_t\triangleq\{x\in\Omega\mid v^\pm(x,t)=\pm\phi_{\pm\infty}\}$。因 $v^\pm(\cdot,t)$ 定义到相差一个 $2$-零容集，集 $\widetilde{\mathscr{S}}^\pm_t$ 亦然。
 \end{remark}
 
 问题 (P) 的唯一性由如下定理给出，它利用\cref{definition:ch06-相容性条件}中的相容性条件。
 
 \begin{theorem}\label{theorem:ch06-6.3.1}
-设 (A0)--(A1) 成立。则对每个 $u_0\in\mathscr{R}_f(\Omega)$，问题 (P) 至多存在一个满足相容性条件\eqref{align:ch6-6.21a}的弱解。
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界的有界开集，$T>0$，并设 (A0)--(A1) 成立。则对每个 $u_0\in\mathscr{R}_f(\Omega)$，初值为 $u_0$ 的问题 (P) 至多存在一个满足相容性条件\eqref{align:ch6-6.21a}的弱解。
 \end{theorem}
 
-\begin{remark}\label{remark:ch06-6.3.2}
-满足相容性条件的 (P) 弱解的存在性将在下文证明（见\cref{theorem:ch06-6.4.2}）。另一方面，容易构造不满足相容性条件的 (P) 弱解，因而它们不可能是\cref{theorem:ch06-6.4.2}所给出的解。故弱解不构成问题 (P) 的唯一类。
+% SUPPLEMENT: parent=theorem:ch06-6.3.1; kind=motivation; location=定理 6.3.1 后的注记; basis=原书定理 6.3.1 及其证明结构（(6.24)--(6.32) 的单调性与能量估计）、定理 6.2.1 与定义 6.3.1 的作用分析
+\begin{remark}\phantomsection\label{remark:ch06-唯一性动机}
+(i) 动机与内容。定理把弱解类限制为满足相容性条件者，并在其中恢复唯一性；结合\cref{theorem:ch06-6.4.1}--\cref{theorem:ch06-6.4.2}即得适定性（\cref{theorem:ch06-6.4.3}）。证明是能量型的：先由\eqref{align:ch6-6.2}相减得两解之差的弱形式\eqref{align:ch6-6.24}，由\cref{theorem:ch06-6.2.1}知 $2$-集中部分相同从而相消，得\eqref{align:ch6-6.26}；再取以差本身为核的特殊试验函数，把右端化为全导数，得\eqref{align:ch6-6.31}；左端由 $\phi$ 的单调性给出非负的 $2$-弥散项与 $\int_Q(u_{1r}-u_{2r})(\phi(u_{1r})-\phi(u_{2r}))$，由相容性条件给出非负的奇异项，于是\eqref{align:ch6-6.30}与\eqref{align:ch6-6.31}合并迫使 $\phi(u_{1r})=\phi(u_{2r})$；最后用 $k_q$ 型试验函数恢复 $u_1=u_2$。
 
+(ii) 各假设的作用。(A0) 使两解有同一初值，从而\eqref{align:ch6-6.24}中的 $\langle u_0,\zeta(\cdot,0)\rangle$ 相消；(A1) 中 $\phi$ 非减给出两处关键不等式：\eqref{align:ch6-6.30}的右端非负、以及\eqref{align:ch6-6.32}中乘积为零蕴含 $\phi(u_{1r})=\phi(u_{2r})$；(A1) 中 $\phi$ 有界使 $\phi(u_{ir})\in L^\infty(Q)\cap L^2(0,T;H^1_0(\Omega))$，从而 $[\phi(u_{1r})-\phi(u_{2r})](\cdot,t)$ 可作为\eqref{align:ch6-6.26}的试验函数并与奇异测度配对；相容性条件\eqref{align:ch6-6.23}使\eqref{align:ch6-6.29}中四项全部非负，这是本证明唯一用到相容性之处；\cref{theorem:ch06-6.2.1}给出\eqref{align:ch6-6.25}，使 $2$-集中部分在相减中消失。
+
+(iii) 边界。定理只断言“至多一个”；在 (A0)--(A1) 下存在性并不成立，须加 (A2)（\cref{theorem:ch06-6.4.2}）才能保证存在满足相容性条件的弱解。若去掉相容性条件，结论失效（\cref{remark:ch06-6.3.2}）；若 $\phi$ 严格增，则相容性条件自动满足（见\hyperref[remark:ch06-相容动机]{前述注记}(iii)），定理给出无附加条件的唯一性。证明中未使用 $u$ 的任何时间正则性：时间方向的正则性完全由试验函数承担，这也是\eqref{align:ch6-6.26}可对 $C([0,T];H^1_0(\Omega))$ 中的 $\zeta$ 成立的原因。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch06-6.3.2}
+满足相容性条件的 (P) 弱解的存在性将在下文证明（见\cref{theorem:ch06-6.4.2}）。另一方面，易构造不满足相容性条件的 (P) 弱解，因而它们不可能是\cref{theorem:ch06-6.4.2}所给出的解。故弱解不构成问题 (P) 的唯一类。
 设 (A0) 成立且 $u_{0s}\neq0$。由
 \begin{align}
 u(\cdot,t)\triangleq w(\cdot,t)+u_{0s} \quad\text{对几乎所有 }t\in(0,T) \label{align:ch6-6.22}
 \end{align}
-定义 $u\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$，其中 $w\in L^\infty(0,T;L^1(\Omega))$ 为初值 $u_{0r}$ 对应的 (P) 唯一弱解（$w$ 的存在唯一性由\cref{theorem:ch06-6.4.3}保证）。显然 $u$ 是 (P) 的弱解，$u_r=w$ 在 $Q$ 中几乎处处成立，奇异部分 $u_s(\cdot,t)=u_{0s}$ 在时间上为常数，因而 $u$ 满足相容性条件当且仅当
+定义 $u\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$，其中 $w\in L^\infty(0,T;L^1(\Omega))$ 为初值 $u_{0r}$ 对应的 (P) 唯一弱解（$w$ 的存在唯一性由\cref{theorem:ch06-6.4.3}保证）。则 $u$ 是 (P) 的弱解，$u_r=w$ 于 $Q$ 中几乎处处，奇异部分 $u_s(\cdot,t)=u_{0s}$ 在时间上为常数，因而 $u$ 满足相容性条件当且仅当
 \begin{align*}
 [u^\pm_{0s}]_{d,2}=[u^\pm_{0s}]_{d,2}\llcorner\{x\in\Omega\mid\phi^\pm(w(x,t))=\pm\phi_{\pm\infty}\}
 \quad\text{对几乎所有 }t\in(0,T).
@@ -55,6 +72,32 @@ u(\cdot,t)\triangleq w(\cdot,t)+u_{0s} \quad\text{对几乎所有 }t\in(0,T) \la
 这些等式不成立的例子容易给出，故断言成立。
 \end{remark}
 
+% SUPPLEMENT: parent=remark:ch06-6.3.2; kind=proof; location=注记 6.3.2 后的补写证明; basis=原书注记 6.3.2 中“Plainly, u is a weak solution”之展开：逐条验证定义 6.1.1、相容性条件的等价形式并给出不满足该条件的显式构造
+\begin{proof}
+(i) $u$ 满足\cref{definition:ch06-弱解}。由 $w\in L^\infty(0,T;L^1(\Omega))$ 与 $u_{0s}\in\mathscr{R}_f(\Omega)$ 得 $u(\cdot,t)\in\mathscr{R}_f(\Omega)$ 且
+\begin{align*}
+\|u(\cdot,t)\|_{\mathscr{R}_f(\Omega)}\leqslant\|w(\cdot,t)\|_{L^1(\Omega)}+\|u_{0s}\|_{\mathscr{R}_f(\Omega)},
+\end{align*}
+故 $u\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$。又 $u_r=w$ 于 $Q$ 中几乎处处，而 $w$ 是初值 $u_{0r}$ 的弱解，故 $\phi(u_r)=\phi(w)\in L^2(0,T;H^1_0(\Omega))$，即条件 (i) 成立。
+条件 (ii)：设 $\zeta\in C^1([0,T];C^1_c(\Omega))$，$\zeta(\cdot,T)=0$。因 $u_{0s}$ 不依赖 $t$ 且 $\partial
+_t\zeta\in 
+C([0,T];C_0(\Omega))$，
+\begin{align*}
+\int_0^T\langle u_{0s},\partial_t\zeta(\cdot,t)\rangle\,\mathrm{d}t
+=\left\langle u_{0s},\int_0^T\partial_t\zeta(\cdot,t)\,\mathrm{d}t\right\rangle
+=\langle u_{0s},\zeta(\cdot,T)-\zeta(\cdot,0)\rangle
+=-\langle u_{0s},\zeta(\cdot,0)\rangle .
+\end{align*}
+又 $w$ 满足\eqref{align:ch6-6.2}（初值为 $u_{0r}$）。两式相加，利用 $u=w+u_{0s}$、$u_r=w$ 与 $u_0=u_{0r}+u_{0s}$，即得 $u$ 满足\eqref{align:ch6-6.2}。
+(ii) 相容性条件的等价形式。由 $u_s(\cdot,t)=u_{0s}$ 与 $u_r=w$，把\eqref{align:ch6-6.21a}--\eqref{align:ch6-6.21b}对 $u$ 写出，得
+\begin{align*}
+[u^\pm_{0s}]_{d,2}=[u^\pm_{0s}]_{d,2}\llcorner\{x\in\Omega\mid\phi^\pm(w(x,t))=\pm\phi_{\pm\infty}\}
+\quad\text{对几乎所有 }t\in(0,T),
+\end{align*}
+即所断言的等价形式。
+
+(iii) 不满足相容性条件的显式构造。设 $\phi_{+\infty}>0$，取 $u_{0r}=0$、$u_{0s}$ 为非零的 $2$-弥散奇异测度（即 $[u_{0s}]_{d,2}=u_{0s}\neq0$；这样的测度存在，例如\cref{subsection:ch03-集中弥散}中给出的 $2$-弥散测度），置 $u_0\triangleq u_{0s}\in\mathscr{R}_f(\Omega)$。此时初值 $u_{0r}=0$ 对应的弱解为 $w\equiv0$：零函数满足\eqref{align:ch6-6.2}，且它是满足相容性条件的唯一弱解（\cref{theorem:ch06-6.4.3}）。于是 $\phi^\pm(w)\equiv\phi^\pm(0)=0$，而 $\phi_{+\infty}>0$ 蕴含 $\{x\in\Omega\mid\phi^+(0)=\phi_{+\infty}\}=\varnothing$，故所需等式化为 $[u^+_{0s}]_{d,2}=0$。若 $u^+_{0s}\neq0$ 且 $2$-弥散，则 $[u^+_{0s}]_{d,2}=u^+_{0s}\neq0$，等式不成立，$u=u_{0s}$ 因而是不满足相容性条件的弱解。同理处理 $u^-_{0s}$ 的情形。故弱解类严格大于\cref{theorem:ch06-6.4.3}所给出的唯一类。
+\end{proof}
 \begin{proof}[证明\cref{theorem:ch06-6.3.1}]
 设 $u_1$ 与 $u_2$ 为问题 (P) 的两个弱解。为简便记 $u_{1r}\equiv(u_1)_r$，$u_{1s}\equiv(u_1)_s$（$u_2$ 类似）。设 $u_1$ 与 $u_2$ 满足相容性条件
 \begin{align}
@@ -69,18 +112,17 @@ u(\cdot,t)\triangleq w(\cdot,t)+u_{0s} \quad\text{对几乎所有 }t\in(0,T) \la
 \int_0^T\langle u_1(\cdot,t)-u_2(\cdot,t),\partial_t\zeta(\cdot,t)\rangle\,\mathrm{d}t
 = \iint_Q\nabla[\phi(u_{1r})-\phi(u_{2r})]\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}t \label{align:ch6-6.24}
 \end{align}
-对每个 $\zeta\in C^1([0,T];C^1_c(\Omega))$，$\zeta(\cdot,T)=0$ 在 $\Omega$ 上成立。又由等式\eqref{align:ch6-6.12}，对所有 $t\in(0,T)$，有
+对每个 $\zeta\in C^1([0,T];C^1_c(\Omega))$，$\zeta(\cdot,T)=0$ 于 $\Omega$ 成立。又由等式\eqref{align:ch6-6.12}，对所有 $t\in(0,T)$，有
 \begin{align}
-[u_1(\cdot,t)]_{c,2}=[u_0]_{c,2}=[u_2(\cdot,t)]_{c,2} \quad\text{在 }\mathscr{R}_f(\Omega). \label{align:ch6-6.25}
+[u_1(\cdot,t)]_{c,2}=[u_0]_{c,2}=[u_2(\cdot,t)]_{c,2} \quad\text{于 }\mathscr{R}_f(\Omega). \label{align:ch6-6.25}
 \end{align}
 由\eqref{align:ch6-6.24}--\eqref{align:ch6-6.25}得
 \begin{align}
 \int_0^T\langle[u_1(\cdot,t)]_{d,2}-[u_2(\cdot,t)]_{d,2},\partial_t\zeta(\cdot,t)\rangle\,\mathrm{d}t
 = \iint_Q\nabla[\phi(u_{1r})-\phi(u_{2r})]\cdot\nabla\zeta\,\mathrm{d}x\,\mathrm{d}t \label{align:ch6-6.26}
 \end{align}
-对每个 $\zeta\in C^1([0,T];C^1_c(\Omega))$，$\zeta(\cdot,T)=0$ 在 $\Omega$ 上成立。
-
-由标准正则化论证，此等式对任意 $\zeta\in C([0,T];H^1_0(\Omega))$，$\partial_t\zeta\in L^\infty(Q)\cap L^2(0,T;H^1_0(\Omega))$，$\zeta(\cdot,T)=0$ 几乎处处在 $\Omega$ 上也成立。这使我们可在\eqref{align:ch6-6.26}中选取试验函数
+对每个 $\zeta\in C^1([0,T];C^1_c(\Omega))$，$\zeta(\cdot,T)=0$ 于 $\Omega$ 成立。
+由正则化论证，此等式对任意 $\zeta\in C([0,T];H^1_0(\Omega))$，$\partial_t\zeta\in L^\infty(Q)\cap L^2(0,T;H^1_0(\Omega))$，$\zeta(\cdot,T)=0$ 几乎处处于 $\Omega$ 也成立。这使\eqref{align:ch6-6.26}中可选取试验函数
 \begin{align*}
 \zeta(x,t)\triangleq -\int_t^T[\phi(u_{1r})-\phi(u_{2r})](x,s)\,\mathrm{d}s \quad((x,t)\in Q),
 \end{align*}
@@ -91,17 +133,19 @@ u(\cdot,t)\triangleq w(\cdot,t)+u_{0s} \quad\text{对几乎所有 }t\in(0,T) \la
 [\phi(u_{1r})-\phi(u_{2r})](\cdot,t)\rangle\,\mathrm{d}t\\
 &\quad= -\iint_Q\nabla[\phi(u_{1r})-\phi(u_{2r})]\cdot
 \left(\int_t^T\nabla[\phi(u_{1r})-\phi(u_{2r})](x,s)\,\mathrm{d}s\right)\mathrm{d}x\,\mathrm{d}t.
-\end{aligned} \label{align:ch6-6.27}
+\end{aligned}
+\label{align:ch6-6.27}
 \end{align}
-由等式\eqref{align:ch03-3.82}有
+由等式\eqref{align:ch03-3.81}有
 \begin{align}
 \begin{aligned}
 &\int_0^T\langle[u_1(\cdot,t)]_{d,2}-[u_2(\cdot,t)]_{d,2},
 [\phi(u_{1r})-\phi(u_{2r})](\cdot,t)\rangle\,\mathrm{d}t\\
-&\quad= \int_0^T\langle[u_{1s}(\cdot,t)]_{d,2}-[u_2s(\cdot,t)]_{d,2},
+&\quad= \int_0^T\langle[u_{1s}(\cdot,t)]_{d,2}-[u_{2s}(\cdot,t)]_{d,2},
 [\phi(u_{1r})-\phi(u_{2r})](\cdot,t)\rangle\,\mathrm{d}t\\
 &\qquad+\iint_Q(u_{1r}-u_{2r})[\phi(u_{1r})-\phi(u_{2r})]\,\mathrm{d}x\,\mathrm{d}t,
-\end{aligned} \label{align:ch6-6.28}
+\end{aligned}
+\label{align:ch6-6.28}
 \end{align}
 而由相容性条件\eqref{align:ch6-6.23}，
 \begin{align}
@@ -113,7 +157,8 @@ u(\cdot,t)\triangleq w(\cdot,t)+u_{0s} \quad\text{对几乎所有 }t\in(0,T) \la
 &\qquad-\int_0^T\langle[u^+_{2s}(\cdot,t)]_{d,2},\phi(u_{1r})(\cdot,t)-\phi_{+\infty}\rangle\,\mathrm{d}t\\
 &\qquad+\int_0^T\langle[u^-_{2s}(\cdot,t)]_{d,2},\phi(u_{1r})(\cdot,t)-\phi_{-\infty}\rangle\,\mathrm{d}t
 \geqslant0.
-\end{aligned} \label{align:ch6-6.29}
+\end{aligned}
+\label{align:ch6-6.29}
 \end{align}
 由\eqref{align:ch6-6.28}--\eqref{align:ch6-6.29}得
 \begin{align}
@@ -121,7 +166,8 @@ u(\cdot,t)\triangleq w(\cdot,t)+u_{0s} \quad\text{对几乎所有 }t\in(0,T) \la
 &\int_0^T\langle[u_1(\cdot,t)]_{d,2}-[u_2(\cdot,t)]_{d,2},
 [\phi(u_{1r})-\phi(u_{2r})](\cdot,t)\rangle\,\mathrm{d}t\\
 &\quad\geqslant\iint_Q(u_{1r}-u_{2r})[\phi(u_{1r})-\phi(u_{2r})]\,\mathrm{d}x\,\mathrm{d}t.
-\end{aligned} \label{align:ch6-6.30}
+\end{aligned}
+\label{align:ch6-6.30}
 \end{align}
 关于\eqref{align:ch6-6.27}右端，有
 \begin{align}
@@ -131,7 +177,8 @@ u(\cdot,t)\triangleq w(\cdot,t)+u_{0s} \quad\text{对几乎所有 }t\in(0,T) \la
 &\quad= \frac{1}{2}\iint_Q\frac{\mathrm{d}}{\mathrm{d}t}
 \left|\int_t^T\nabla[\phi(u_{1r})-\phi(u_{2r})](x,s)\,\mathrm{d}s\right|^2\mathrm{d}x\,\mathrm{d}t\\
 &\quad= -\frac{1}{2}\int_\Omega\left|\int_0^T\nabla[\phi(u_{1r})-\phi(u_{2r})](x,s)\,\mathrm{d}s\right|^2\mathrm{d}x.
-\end{aligned} \label{align:ch6-6.31}
+\end{aligned}
+\label{align:ch6-6.31}
 \end{align}
 由\eqref{align:ch6-6.27}与\eqref{align:ch6-6.30}--\eqref{align:ch6-6.31}得
 \begin{align*}
@@ -142,14 +189,66 @@ u(\cdot,t)\triangleq w(\cdot,t)+u_{0s} \quad\text{对几乎所有 }t\in(0,T) \la
 \begin{align}
 \phi(u_{1r}(x,t))=\phi(u_{2r}(x,t)) \quad\text{对几乎所有 }(x,t)\in Q. \label{align:ch6-6.32}
 \end{align}
-现在在等式\eqref{align:ch6-6.24}中取 $\zeta(x,t)=\rho(x)k_q(t)$，其中 $\rho\in C^2_c(\Omega)$，$k_q$ 如\eqref{align:ch6-6.7}。如\eqref{align:ch6-6.4}证明中那样论证，并利用等式\eqref{align:ch6-6.32}，对几乎所有 $t_1\in(0,T)$，得
+现在在等式\eqref{align:ch6-6.24}中取 $\zeta(x,t)=\rho(x)k_q(t)$，其中 $\rho\in C^2_c(\Omega)$，$k_q$ 如\eqref{align:ch6-6.7}。如\eqref{align:ch6-6.4}的证明中那样论证，并利用等式\eqref{align:ch6-6.32}，对几乎所有 $t_1\in(0,T)$，得
 \begin{align*}
 \langle u_1(\cdot,t_1)-u_2(\cdot,t_1),\rho\rangle=0.
 \end{align*}
-由 $\rho$ 的任意性，这蕴含对几乎所有 $t_1\in(0,T)$，$u_1(\cdot,t_1)=u_2(\cdot,t_1)$ 在 $\mathscr{R}_f(\Omega)$。结论随之成立。
+由 $\rho$ 的任意性，这蕴含对几乎所有 $t_1\in(0,T)$，$u_1(\cdot,t_1)=u_2(\cdot,t_1)$ 于 $\mathscr{R}_f(\Omega)$。结论随之成立。
 \end{proof}
 
+% SUPPLEMENT: parent=theorem:ch06-6.3.1; kind=proof; location=定理 6.3.1 原证明后的补写证明; basis=原书证明中被压缩的部分（(6.25)、(6.26)、(6.28)、(6.29) 的推导，(6.31) 的求导，(6.32) 的符号论证，以及最后一步由几乎处处相等到测度相等）
+\begin{proof}
+补出原证明中被压缩的论证。
 
-
+(1) \eqref{align:ch6-6.25}。$u_1$、$u_2$ 是弱解，由\cref{remark:ch06-6.1.1}它们是极弱解，故\cref{theorem:ch06-6.2.1}（对每个 $t\in(0,T)$）给出 $[u_i(\cdot,t)]_{c,2}=[u_0]_{c,2}$（$i=1,2$）。
+(2) \eqref{align:ch6-6.26}。由\eqref{align:ch03-3.82}，$u_i(\cdot,t)=[u_i(\cdot,t)]_{d,2}+[u_i(\cdot,t)]_{c,2}$；与\eqref{align:ch6-6.25}并用得 $u_1(\cdot,t)-u_2(\cdot,t)=[u_1(\cdot,t)]_{d,2}-[u_2(\cdot,t)]_{d,2}$ 于 $\mathscr{R}_f(\Omega)$，对每个 $t\in(0,T)$ 成立。代入\eqref{align:ch6-6.24}即得\eqref{align:ch6-6.26}。
+(3) 试验函数类的扩大与所取 $\zeta$ 的容许性。记 $\mathscr{D}$ 为所有 $\zeta\in C([0,T];H^1_0(\Omega))$ 之集，使 $\partial_t\zeta\in L^\infty(Q)\cap L^2(0,T;H^1_0(\Omega))$ 且 $\zeta(\cdot,T)=0$ 几乎处处于 $\Omega$。\eqref{align:ch6-6.26}两端作为 $\zeta$ 的泛函连续：由 $[u_i(\cdot,t)]_{d,2}\in H^{-1}(\Omega)$ 且 $\|[u_i(\cdot,t)]_{d,2}\|_{H^{-1}(\Omega)}\leqslant C$ 得
+\begin{align*}
+\left|\int_0^T\langle[u_1]_{d,2}-[u_2]_{d,2},\partial_t\zeta\rangle\,\mathrm{d}t\right|
+\leqslant 2C\int_0^T\|\partial_t\zeta(\cdot,t)\|_{H^1_0(\Omega)}\,\mathrm{d}t,
+\end{align*}
+而右端由 $\|\nabla[\phi(u_{1r})-\phi(u_{2r})]\|_{L^2(Q)}\|\nabla\zeta\|_{L^2(Q)}$ 控制。设 $\zeta\in\mathscr{D}$。取 $\theta_\delta\in C^\infty([0,T])$ 使 $0\leqslant\theta_\delta\leqslant1$、$\theta_\delta=1$ 于 $[0,T-\delta]$、$\theta_\delta=0$ 于 $[T-\delta/2,T]$、$|\theta_\delta'|\leqslant C/\delta$，置 $\zeta^\delta\triangleq\theta_\delta\zeta$。由 $\zeta(\cdot,T)=0$ 与 $\zeta\in C([0,T];H^1_0(\Omega))$ 得
+\begin{align*}
+\int_0^T\|\theta_\delta'\zeta(\cdot,t)\|_{H^1_0(\Omega)}\,\mathrm{d}t
+\leqslant\frac{C}{\delta}\int_{T-\delta}^T\|\zeta(\cdot,t)\|_{H^1_0(\Omega)}\,\mathrm{d}t\to0
+\quad(\delta\to0),
+\end{align*}
+且 $\zeta^\delta(\cdot,T)=0$、$\partial_t\zeta^\delta=\theta_\delta\partial_t\zeta+\theta_\delta'\zeta\to\partial_t\zeta$ 于 $L^1(0,T;H^1_0(\Omega))$。再取 $\eta_\varepsilon\in C^\infty_c(\Omega)$ 使 $0\leqslant\eta_\varepsilon\leqslant1$、$\eta_\varepsilon=1$ 于 $\{x\in\Omega\mid\operatorname{dist}(x,\partial\Omega)\geqslant\varepsilon\}$、$|\nabla\eta_\varepsilon|\leqslant C/\varepsilon$，置 $\zeta^{\delta,\varepsilon}\triangleq\eta_\varepsilon\zeta^\delta$。则 $\zeta^{\delta,\varepsilon}\in C^1([0,T];C^1_c(\Omega))$、$\zeta^{\delta,\varepsilon}(\cdot,T)=0$，且 $\nabla\zeta^{\delta,\varepsilon}\to\nabla\zeta$ 于 $L^2(Q)$、$\partial_t\zeta^{\delta,\varepsilon}\to\partial_t\zeta$ 于 $L^1(0,T;H^1_0(\Omega))$。由\eqref{align:ch6-6.26}对 $\zeta^{\delta,\varepsilon}$ 成立及两端的连续性，取 $\delta,\varepsilon\to0$ 即得\eqref{align:ch6-6.26}对 $\zeta\in\mathscr{D}$ 成立。
+对所取的 $\zeta(x,t)=-\int_t^T[\phi(u_{1r})-\phi(u_{2r})](x,s)\mathrm{d}s$：由 $\phi(u_{ir})\in L^2(0,T;H^1_0(\Omega))$ 与 $\phi\in C_b(\mathbb{R})$ 得 $\partial_t\zeta=[\phi(u_{1r})-\phi(u_{2r})](\cdot,t)\in L^\infty(Q)\cap L^2(0,T;H^1_0(\Omega))$，且 $\zeta\in C([0,T];H^1_0(\Omega))$、$\zeta(\cdot,T)=0$，故 $\zeta\in\mathscr{D}$。
+(4) \eqref{align:ch6-6.28}。由\eqref{align:ch03-3.81}，$[u_i(\cdot,t)]_{d,2}=u_{ir}(\cdot,t)\mathrm{d}x+[u_{is}(\cdot,t)]_{d,2}$，故
+\begin{align*}
+[u_1]_{d,2}-[u_2]_{d,2}=(u_{1r}-u_{2r})\mathrm{d}x+[u_{1s}]_{d,2}-[u_{2s}]_{d,2}.
+\end{align*}
+逐项与 $[\phi(u_{1r})-\phi(u_{2r})](\cdot,t)\in H^1_0(\Omega)\cap L^\infty(\Omega)$ 配对：绝对连续部分给出 $\int_\Omega(u_{1r}-u_{2r})[\phi(u_{1r})-\phi(u_{2r})](\cdot,t)\mathrm{d}x$（由 $u_{ir}\in L^\infty(0,T;L^1(\Omega))\subseteq L^2(Q)$ 与 $\phi(u_{1r})-\phi(u_{2r})\in L^\infty(Q)$，该积分绝对收敛），奇异部分给出\eqref{align:ch6-6.28}右端第一项（由\cref{proposition:ch03-W-1q刻画}，$[u_{is}(\cdot,t)]_{d,2}\in H^{-1}(\Omega)$）。
+(5) \eqref{align:ch6-6.29}及其非负性。由 $u^\pm_{is}$ 的定义，
+\begin{align*}
+[u_{1s}]_{d,2}-[u_{2s}]_{d,2}=[u^+_{1s}]_{d,2}-[u^-_{1s}]_{d,2}-[u^+_{2s}]_{d,2}+[u^-_{2s}]_{d,2}.
+\end{align*}
+由\eqref{align:ch6-6.23}，$[u^+_{1s}(\cdot,t)]_{d,2}$ 集中于 $\mathscr{S}^t_{1,+}$，而 $\phi(u_{1r})=\phi_{+\infty}$ 于该集上 $2$-拟处处成立（见\cref{remark:ch06-6.3.1}）；因 $[u^+_{1s}(\cdot,t)]_{d,2}$ 是 $2$-弥散的，它不给任何 $2$-零容集分配质量，故把 $\phi(u_{1r})$ 换成 $\phi_{+\infty}$ 不改变配对值，得第一项 $=\int_0^T\langle[u^+_{1s}]_{d,2},\phi_{+\infty}-\phi(u_{2r})\rangle\mathrm{d}t$。对 $[u^-_{1s}]_{d,2}$ 用 $\mathscr{S}^t_{1,-}$ 上 $\phi(u_{1r})=\phi_{-\infty}$，对 $[u^\pm_{2s}]_{d,2}$ 用 $\mathscr{S}^t_{2,\pm}$ 上 $\phi(u_{2r})=\phi_{\pm\infty}$，即得\eqref{align:ch6-6.29}的等式。非负性来自逐点估计：由 $\phi$ 非减及\eqref{align:ch6-6.1}，$\phi_{-\infty}\leqslant\phi(\cdot)\leqslant\phi_{+\infty}$，故
+\begin{align*}
+\phi_{+\infty}-\phi(u_{2r})\geqslant0,\quad -[\phi_{-\infty}-\phi(u_{2r})]\geqslant0,\quad
+-[\phi(u_{1r})-\phi_{+\infty}]\geqslant0,\quad \phi(u_{1r})-\phi_{-\infty}\geqslant0,
+\end{align*}
+于是四项均为非负测度与非负函数的配对。
+(6) \eqref{align:ch6-6.31}的求导。置 $g\triangleq\phi(u_{1r})-\phi(u_{2r})\in L^2(0,T;H^1_0(\Omega))\cap L^\infty(Q)$、$G(x,t)\triangleq\int_t^T\nabla g(x,s)\mathrm{d}s$。由 $\nabla g\in L^2(Q)\subseteq L^1(0,T;L^2(\Omega))$ 知 $G$ 关于 $t$ 绝对连续、取值于 $L^2(\Omega)$，$\partial_tG(\cdot,t)=-\nabla g(\cdot,t)$ 对几乎所有 $t$ 成立，且 $G(\cdot,T)=0$。于是 $\frac{\mathrm{d}}{\mathrm{d}t}\|G(\cdot,t)\|_{L^2(\Omega)}^2=2\langle G(\cdot,t),\partial_tG(\cdot,t)\rangle=-2\langle G(\cdot,t),\nabla g(\cdot,t)\rangle$ 对几乎所有 $t$ 成立，从而
+\begin{align*}
+-\iint_Q\nabla g\cdot G\,\mathrm{d}x\,\mathrm{d}t=\frac{1}{2}\int_0^T\frac{\mathrm{d}}{\mathrm{d}t}\|G(\cdot,t)\|_{L^2(\Omega)}^2\,\mathrm{d}t
+=\frac{1}{2}\left(\|G(\cdot,T)\|^2-\|G(\cdot,0)\|^2\right),
+\end{align*}
+即\eqref{align:ch6-6.31}。
+(7) \eqref{align:ch6-6.32}。由 $\phi$ 非减，$(u_{1r}-u_{2r})[\phi(u_{1r})-\phi(u_{2r})]\geqslant0$ 于 $Q$ 中几乎处处成立；由第 (6) 段的结论其积分 $\leqslant0$，故该乘积几乎处处为零。若 $u_{1r}(x,t)<u_{2r}(x,t)$，则 $\phi(u_{1r})\leqslant\phi(u_{2r})$，乘积为零迫使 $\phi(u_{1r})=\phi(u_{2r})$；若 $u_{1r}>u_{2r}$ 同理；若 $u_{1r}=u_{2r}$，则 $\phi(u_{1r})=\phi(u_{2r})$ 直接成立。故\eqref{align:ch6-6.32}成立。
+(8) 最后一步。在\eqref{align:ch6-6.24}中取 $\zeta=\rho k_q$（$\rho\in C^2_c(\Omega)$）：因 $k_q$ 绝对连续、$k_q(T)=0$、$\partial_tk_q=-q\chi_{(t_1,t_1+1/q)}$，得
+\begin{align*}
+-q\int_{t_1}^{t_1+\frac{1}{q}}\langle u_1(\cdot,t)-u_2(\cdot,t),\rho\rangle\,\mathrm{d}t
+=\iint_Q\nabla[\phi(u_{1r})-\phi(u_{2r})]\cdot\nabla\rho\,k_q\,\mathrm{d}x\,\mathrm{d}t=0,
+\end{align*}
+最后一个等号由\eqref{align:ch6-6.32}及 $\nabla[\phi(u_{1r})-\phi(u_{2r})]=0$ 于 $L^2(Q)$ 得到。由 $t\mapsto\langle u_1(\cdot,t)-u_2(\cdot,t),\rho\rangle\in L^\infty(0,T)$ 与\cref{theorem:ch02-BeppoLevi}(i)，令 $q\to\infty$ 得 $\langle u_1(\cdot,t_1)-u_2(\cdot,t_1),\rho\rangle=0$ 对几乎所有 $t_1\in(0,T)$ 成立。由 $C^2_c(\Omega)$ 在 $C_0(\Omega)$ 中的稠密性得 $u_1(\cdot,t_1)=u_2(\cdot,t_1)$ 于 $\mathscr{R}_f(\Omega)$。
+(9) 由逐时刻相等到测度相等。设 $u_1(\cdot,t)=u_2(\cdot,t)$ 对一切 $t\in(0,T)\setminus F$ 成立，$F$ 为零测集。对 $\varphi\in C_c(\Omega)$、$\psi\in C_c(0,T)$，
+\begin{align*}
+\iint_Q\varphi(x)\psi(t)\,\mathrm{d}(u_1-u_2)
+=\int_0^T\psi(t)\langle u_1(\cdot,t)-u_2(\cdot,t),\varphi\rangle\,\mathrm{d}t=0 .
+\end{align*}
+形如 $\varphi\otimes\psi$ 的函数在 $C_c(Q)$ 中稠密，故 $u_1-u_2$ 作为 $\mathscr{R}_f(Q)$ 中的测度为零，即 $u_1=u_2$。
+\end{proof}
 
 \end{document}

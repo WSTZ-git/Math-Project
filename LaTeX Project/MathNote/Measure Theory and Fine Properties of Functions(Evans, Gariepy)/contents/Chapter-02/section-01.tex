@@ -1,0 +1,403 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+下面引入 $\mathbb{R}^n$ 上某些“低维”测度，它们使 $\mathbb{R}^n$ 的某些“非常小”的子集得以度量。这就是 Hausdorff 测度 $\mathcal{H}^s$，其定义依据各种有效覆盖的直径。其想法是：若 $0<\mathcal{H}^s(A)<\infty$，就把 $A$ 看作 $\mathbb{R}^n$ 的“$s$ 维子集”，即便 $A$ 的几何形状极为复杂。
+
+\cref{section:ch02-01}给出 Hausdorff 测度的定义与基本性质。% XREF p=81 "Section 2.1 provides the definitions and basic properties of Hausdorff measures."
+在\cref{section:ch02-02}中证明 $n$ 维 Lebesgue 测度与 $n$ 维 Hausdorff 测度在 $\mathbb{R}^n$ 上一致。% XREF p=81 "In Section 2.2 we prove n-dimensional Lebesgue and n-dimensional Hausdorff measure agree on R^n."
+低维 Hausdorff 测度的密度定理在\cref{section:ch02-03}中建立。% XREF p=81 "Density theorems for lower dimensional Hausdorff measures are established in Section 2.3."
+\cref{section:ch02-04}记录若干简单事实以供后文使用，内容涉及图像的 Hausdorff 维数与可和函数取值较大的集合。% XREF p=81 "Section 2.4 records for later use some easy facts concerning the Hausdorff dimension of graphs and the sets where a summable function is large."
+
+\section{定义与基本性质}\label{section:ch02-01}
+
+\begin{definition}[Hausdorff 测度]\label{definition:ch02-2-1}
+设 $n$ 为正整数，$A\subseteq\mathbb{R}^n$ 为任意子集，$0\leqslant s<\infty$，$0<\delta\leqslant\infty$。
+\begin{enumerate}[(i)]
+\item 记
+\begin{align*}
+\mathcal{H}^s_\delta(A):=\inf\Bigl\{\sum_{j=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^s\Bigm| A\subseteq\bigcup_{j=1}^{\infty}C_j,\ \operatorname{diam}C_j\leqslant\delta\Bigr\},
+\end{align*}
+其中下确界取遍 $\mathbb{R}^n$ 中一切满足 $A\subseteq\bigcup_{j=1}^{\infty}C_j$ 与 $\operatorname{diam}C_j\leqslant\delta$（$j=1,2,\cdots$）的可数族 $\{C_j\}_{j=1}^{\infty}$，约定 $\operatorname{diam}\varnothing:=0$，而 $\alpha(s)$ 定义为
+\begin{align*}
+\alpha(s):=\frac{\pi^{\frac{s}{2}}}{\Gamma\bigl(\frac{s}{2}+1\bigr)},
+\end{align*}
+其中 $\Gamma$ 为 gamma 函数；当 $s=0$ 时求和只对非空集合 $C_j$ 进行，即每个非空 $C_j$ 贡献 $\alpha(0)=1$，而 $s>0$ 时空集本来贡献 $0$，故该约定与上式相容。
+\item 对上述 $A$ 与 $s$，定义
+\begin{align*}
+\mathcal{H}^s(A):=\lim_{\delta\to0}\mathcal{H}^s_\delta(A)=\sup_{\delta>0}\mathcal{H}^s_\delta(A).
+\end{align*}
+\end{enumerate}
+称 $\mathcal{H}^s$ 为 $\mathbb{R}^n$ 上的 $s$ 维 Hausdorff 测度。
+\end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch02-def-2-1-说明}
+\begin{enumerate}[(i)]
+\item 要求 $\delta\to0$ 迫使覆盖“遵循集合 $A$ 的局部几何”。
+\item 定义中
+\begin{align*}
+\Gamma(s):=\int_0^{\infty}e^{-x}x^{s-1}\diff x\qquad(0<s<\infty)
+\end{align*}
+为 gamma 函数。对球 $B(x,r)\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\mathcal{L}^n(B(x,r))=\alpha(n)r^n.
+\end{align*}
+后文将证明：若 $s=k$ 为整数，则 $\mathcal{H}^k$ 在“好”的集合上与通常的“$k$ 维曲面面积”一致；这正是定义中引入正规化常数 $\alpha(s)$ 的原因。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch02-2-1; kind=motivation; 说明以覆盖直径的 s 次幂下确界度量低维集合的动机、两层结构（δ 与极限）的必要性以及 α(s) 正规化的作用
+\begin{remark}\phantomsection\label{remark:ch02-def-2-1-动机}
+Lebesgue 测度对低维集合失效：$\mathbb{R}^n$ 中曲线与曲面的 $n$ 维 Lebesgue 测度都为零，$\mathcal{L}^n$ 无法区分它们的“大小”。Hausdorff 测度改用“覆盖的直径”作为唯一的度量输入：把 $\alpha(s)(\operatorname{diam}C_j/2)^s$ 当作覆盖集 $C_j$ 的“$s$ 维体积”，对一切可数覆盖求和并取下确界，所得即 $A$ 的“最经济”的 $s$ 维体积。$s$ 可以取任意非负实数，无须为整数，这是该构造超出 Lebesgue 测度之处：$\mathcal{H}^s$ 对每个 $s\geqslant0$ 都有定义，而 $\mathcal{L}^n$ 只对应 $s=n$ 这一档。
+
+两层结构（先固定 $\delta$ 取 $\mathcal{H}^s_\delta$，再令 $\delta\to0$）是必要的。若只固定一个尺度 $\delta$，则任何集合都被单个直径等于其直径的集合覆盖，从而 $\mathcal{H}^s_\delta(A)\leqslant\alpha(s)(\operatorname{diam}A/2)^s$；这使 $s\mapsto\mathcal{H}^s_\delta(A)$ 对一切有界集都随 $s$ 增大而迅速衰减，无法区分维数。令 $\delta\to0$ 迫使覆盖越来越细，只保留 $A$ 的局部结构，并使 $\mathcal{H}^s$ 获得伸缩协变性，即\cref{theorem:ch02-2-2}的 (iv)。% XREF internal
+
+正规化常数 $\alpha(s)$ 在 $s=n$ 时等于 $\mathbb{R}^n$ 中单位球的 Lebesgue 测度，即 $\alpha(n)=\mathcal{L}^n(B(0,1))$。这一选择使 $\mathcal{H}^n$ 与 $\mathcal{L}^n$ 相等（见\cref{section:ch02-02}），并使整数 $s=k$ 时 $\mathcal{H}^k$ 与 $k$ 维曲面面积一致。% XREF internal
+常数因子是定义中唯一可以任意改动而保持上述结构的量：把 $\alpha(s)$ 换成任意正常数 $c(s)$，所得集函数只是原来测度的 $c(s)$ 倍，其零测集、有限性、Borel 正则性与维数都不改变。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch02-2-1; kind=hypotheses; 逐条解释 A、s、δ 的范围、可数覆盖的含义、直径上界的量化作用与 α(s) 的地位，并给出 s=0 的边界情形
+\begin{remark}\phantomsection\label{remark:ch02-def-2-1-条件}
+\begin{enumerate}[(i)]
+\item 对 $A$ 只要求 $A\subseteq\mathbb{R}^n$：不要求可测、有界或 Borel。$\mathcal{H}^s$ 因此定义在 $\mathbb{R}^n$ 的全部子集上，符合\cref{definition:ch01-1-1}中测度定义在整个幂集上的约定；Borel 集上的可加性随后由 Carathéodory 判据补出。% XREF internal
+\item 参数范围 $0\leqslant s<\infty$ 是实质的：$\Gamma\bigl(\frac{s}{2}+1\bigr)$ 在 $s\geqslant0$ 上取有限正值（$\Gamma$ 在 $(0,\infty)$ 上无零点且 $\Gamma(1)=1$），故 $\alpha(s)\in(0,\infty)$。若容许 $s<0$，直径的负次幂随直径变小而增大，\cref{lemma:ch02-2-2}中的比较估计随之失效。% XREF internal
+\item $s=0$ 是边界情形：$\alpha(0)=\pi^0/\Gamma(1)=1$，直径的零次幂对每个非空集合取值 $1$，故 $\mathcal{H}^0_\delta(A)$ 是覆盖 $A$ 所需非空集合个数的最小值，与 $\delta$ 无关，$\mathcal{H}^0$ 即计数测度。正因如此，求和必须约定只对非空集合进行：若让空集也贡献 $1$，则 $\mathcal{H}^0(\varnothing)=1$，与测度要求 $\mu(\varnothing)=0$ 矛盾。
+\item 参数范围 $0<\delta\leqslant\infty$：$\delta=\infty$ 时条件 $\operatorname{diam}C_j\leqslant\delta$ 对 $\mathbb{R}^n$ 的一切子集自动成立，$\mathcal{H}^s_\infty$ 就是一切可数覆盖上的下确界；$\delta$ 不取 $0$，而 $\mathcal{H}^s$ 由 $\delta\to0$ 的极限定义。
+\item “可数覆盖”指 $A\subseteq\bigcup_{j=1}^{\infty}C_j$；集合列允许重复、允许空集，不要求 $C_j$ 互不相交，也不要求 $C_j$ 可测或闭。取可数族而非有限族是关键：若只允许有限覆盖，取 $[0,1]$ 中的可数稠密子集 $A$ 与 $s=1$，用单点集覆盖给出 $\mathcal{H}^1_\delta(A)=0$，而任何有限覆盖的并的闭包都包含 $[0,1]$，从而 $\sum_j\operatorname{diam}C_j\geqslant1$，可数次可加性随之失效。
+\item 条件 $\operatorname{diam}C_j\leqslant\delta$ 是“覆盖必须越来越细”的量化形式。把 $\leqslant$ 换成 $<$ 不改变 $\mathcal{H}^s(A)$，只可能改变中间量 $\mathcal{H}^s_\delta$ 的个别取值，因为 $\mathcal{H}^s$ 由 $\delta\to0$ 的极限定义。
+\item $\alpha(s)$ 的地位是正规化而非定义性的：其取值只影响 $\mathcal{H}^s$ 的常数因子，不影响零测集、有限性与 Borel 正则性；数值上的选择使 $\mathcal{H}^n=\mathcal{L}^n$。
+\item 两个层次的关系：对固定的 $A$，$\delta\mapsto\mathcal{H}^s_\delta(A)$ 随 $\delta$ 减小而单调不减，故 $\delta\to0$ 时的极限存在且等于 $\sup_{\delta>0}\mathcal{H}^s_\delta(A)$；定义中同时写出两种写法是为强调这一单调性。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Hausdorff 测度为 Borel 正则测度]\label{theorem:ch02-2-1}
+设 $n$ 为正整数，$0\leqslant s<\infty$。则 $\mathcal{H}^s$ 是 $\mathbb{R}^n$ 上的 Borel 正则测度，即 $\mathcal{H}^s$ 为 Borel 测度，且对每个子集 $A\subseteq\mathbb{R}^n$ 都存在 Borel 集 $B\subseteq\mathbb{R}^n$，使得 $A\subseteq B$ 且 $\mathcal{H}^s(A)=\mathcal{H}^s(B)$；等价地，对每个 $A\subseteq\mathbb{R}^n$ 有 $\mathcal{H}^s(A)=\inf\{\mathcal{H}^s(B)\mid A\subseteq B,\ B\text{ 为 Borel 集}\}$，且该下确界可由某个这样的 $B$ 达到。
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-1-警告}
+\textbf{警告.} 若 $0\leqslant s<n$，则 $\mathcal{H}^s$ 不是 Radon 测度，因为 $\mathbb{R}^n$ 关于 $\mathcal{H}^s$ 不是 $\sigma$-有限的。
+\end{remark}
+
+\begin{proof}
+（1）断言 \#1：$\mathcal{H}^s_\delta$ 是测度。
+
+证明：按\cref{definition:ch01-1-1}，只需验证 $\mathcal{H}^s_\delta(\varnothing)=0$ 与可数次可加性。% XREF internal
+
+先看 $\mathcal{H}^s_\delta(\varnothing)=0$：取 $C_j:=\varnothing$（$j=1,2,\cdots$），则 $\varnothing\subseteq\bigcup_{j=1}^{\infty}C_j$、$\operatorname{diam}C_j=0\leqslant\delta$，而求和只对非空集合进行，故这个覆盖的贡献为 $0$，从而 $\mathcal{H}^s_\delta(\varnothing)\leqslant0$；又各项非负，故 $\mathcal{H}^s_\delta(\varnothing)=0$。
+
+再看可数次可加性：取 $\{A_k\}_{k=1}^{\infty}\subseteq\mathbb{R}^n$，并设 $A_k\subseteq\bigcup_{j=1}^{\infty}C_j^k$、$\operatorname{diam}C_j^k\leqslant\delta$（$j,k=1,2,\cdots$）。则 $\{C_j^k\}_{j,k=1}^{\infty}$ 覆盖 $\bigcup_{k=1}^{\infty}A_k$，故
+\begin{align*}
+\mathcal{H}^s_\delta\Bigl(\bigcup_{k=1}^{\infty}A_k\Bigr)\leqslant\sum_{k=1}^{\infty}\sum_{j=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j^k}{2}\Bigr)^s.
+\end{align*}
+对一切这样的族取下确界，并注意对每个 $k$ 有 $\sum_{j=1}^{\infty}\alpha(s)(\operatorname{diam}C_j^k/2)^s\geqslant\mathcal{H}^s_\delta(A_k)$，得
+\begin{align*}
+\mathcal{H}^s_\delta\Bigl(\bigcup_{k=1}^{\infty}A_k\Bigr)\leqslant\sum_{k=1}^{\infty}\mathcal{H}^s_\delta(A_k).
+\end{align*}
+
+（2）断言 \#2：$\mathcal{H}^s$ 是测度。
+
+证明：取 $\{A_k\}_{k=1}^{\infty}\subseteq\mathbb{R}^n$。对每个 $\delta>0$，由（1）与 $\mathcal{H}^s_\delta(A_k)\leqslant\mathcal{H}^s(A_k)$ 得
+\begin{align*}
+\mathcal{H}^s_\delta\Bigl(\bigcup_{k=1}^{\infty}A_k\Bigr)\leqslant\sum_{k=1}^{\infty}\mathcal{H}^s_\delta(A_k)\leqslant\sum_{k=1}^{\infty}\mathcal{H}^s(A_k).
+\end{align*}
+令 $\delta\to0$，左端趋于 $\mathcal{H}^s(\bigcup_{k=1}^{\infty}A_k)$，故 $\mathcal{H}^s$ 可数次可加；又由（1）得 $\mathcal{H}^s(\varnothing)=\lim_{\delta\to0}\mathcal{H}^s_\delta(\varnothing)=0$。因此 $\mathcal{H}^s$ 是测度。
+
+（3）断言 \#3：$\mathcal{H}^s$ 是 Borel 测度。
+
+证明：取 $A,B\subseteq\mathbb{R}^n$ 使 $\operatorname{dist}(A,B)>0$，并取 $0<\delta<\frac14\operatorname{dist}(A,B)$。设 $A\cup B\subseteq\bigcup_{k=1}^{\infty}C_k$ 且 $\operatorname{diam}C_k\leqslant\delta$。
+
+记 $\mathcal{A}:=\{C_j\mid C_j\cap A\neq\varnothing\}$，$\mathcal{B}:=\{C_j\mid C_j\cap B\neq\varnothing\}$。若某个 $C_j$ 同时属于 $\mathcal{A}$ 与 $\mathcal{B}$，取 $x\in C_j\cap A$ 与 $y\in C_j\cap B$，则
+\begin{align*}
+\operatorname{dist}(A,B)\leqslant\lvert x-y\rvert\leqslant\operatorname{diam}C_j\leqslant\delta<\frac14\operatorname{dist}(A,B),
+\end{align*}
+矛盾，故 $\mathcal{A}\cap\mathcal{B}=\varnothing$。于是 $A\subseteq\bigcup_{C_j\in\mathcal{A}}C_j$，$B\subseteq\bigcup_{C_j\in\mathcal{B}}C_j$，且当 $C_i\in\mathcal{A}$、$C_j\in\mathcal{B}$ 时 $C_i\cap C_j=\varnothing$。由此
+\begin{align*}
+\sum_{j=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^s
+&\geqslant\sum_{C_j\in\mathcal{A}}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^s+\sum_{C_j\in\mathcal{B}}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^s\\
+&\geqslant\mathcal{H}^s_\delta(A)+\mathcal{H}^s_\delta(B).
+\end{align*}
+对一切这样的族 $\{C_j\}_{j=1}^{\infty}$ 取下确界，得：当 $0<4\delta<\operatorname{dist}(A,B)$ 时
+\begin{align*}
+\mathcal{H}^s_\delta(A\cup B)\geqslant\mathcal{H}^s_\delta(A)+\mathcal{H}^s_\delta(B).
+\end{align*}
+令 $\delta\to0$，得 $\mathcal{H}^s(A\cup B)\geqslant\mathcal{H}^s(A)+\mathcal{H}^s(B)$。反向不等式由 $\mathcal{H}^s$ 的次可加性给出，故
+\begin{align*}
+\mathcal{H}^s(A\cup B)=\mathcal{H}^s(A)+\mathcal{H}^s(B)
+\end{align*}
+对一切满足 $\operatorname{dist}(A,B)>0$ 的 $A,B\subseteq\mathbb{R}^n$ 成立。于是由\cref{theorem:ch01-1-9}（Caratheodory 判据），$\mathcal{H}^s$ 是 Borel 测度。% XREF p=83 "Hence Caratheodory's criterion implies H^s is a Borel measure."
+
+（4）断言 \#4：$\mathcal{H}^s$ 是 Borel 正则测度。
+
+证明：对一切 $C\subseteq\mathbb{R}^n$ 有 $\operatorname{diam}\overline{C}=\operatorname{diam}C$；把覆盖中的每个 $C_j$ 换成闭包 $\overline{C_j}$ 不改变和式，故
+\begin{align*}
+\mathcal{H}^s_\delta(A)=\inf\Bigl\{\sum_{j=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^s\Bigm| A\subseteq\bigcup_{j=1}^{\infty}C_j,\ \operatorname{diam}C_j\leqslant\delta,\ C_j\text{ 为闭集}\Bigr\}.
+\end{align*}
+
+取 $A\subseteq\mathbb{R}^n$。若 $\mathcal{H}^s(A)=\infty$，则由 $A\subseteq\mathbb{R}^n$、$\mathbb{R}^n$ 为 Borel 集以及 $\mathcal{H}^s$ 的单调性得 $\mathcal{H}^s(\mathbb{R}^n)=\infty$，故 $B:=\mathbb{R}^n$ 即为所求。以下设 $\mathcal{H}^s(A)<\infty$；此时 $\mathcal{H}^s_\delta(A)\leqslant\mathcal{H}^s(A)<\infty$ 对一切 $\delta>0$ 成立，故上述下确界有限。
+
+对每个 $k\geqslant1$，取闭集 $\{C_j^k\}_{j=1}^{\infty}$，使得 $\operatorname{diam}C_j^k\leqslant\frac1k$、$A\subseteq\bigcup_{j=1}^{\infty}C_j^k$，且
+\begin{align*}
+\sum_{j=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j^k}{2}\Bigr)^s\leqslant\mathcal{H}^s_{1/k}(A)+\frac1k.
+\end{align*}
+令 $A_k:=\bigcup_{j=1}^{\infty}C_j^k$，$B:=\bigcap_{k=1}^{\infty}A_k$。则 $B$ 为 Borel 集；又 $A\subseteq A_k$ 对每个 $k$ 成立，故 $A\subseteq B$。此外，由 $\operatorname{diam}C_j^k\leqslant\frac1k$ 与下确界的定义，
+\begin{align*}
+\mathcal{H}^s_{1/k}(B)\leqslant\sum_{j=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j^k}{2}\Bigr)^s\leqslant\mathcal{H}^s_{1/k}(A)+\frac1k.
+\end{align*}
+令 $k\to\infty$，得 $\mathcal{H}^s(B)\leqslant\mathcal{H}^s(A)$；而 $A\subseteq B$ 与单调性给出 $\mathcal{H}^s(A)\leqslant\mathcal{H}^s(B)$，故 $\mathcal{H}^s(A)=\mathcal{H}^s(B)$。因此对每个 $A\subseteq\mathbb{R}^n$ 都存在 Borel 集 $B\supseteq A$ 使 $\mathcal{H}^s(A)=\mathcal{H}^s(B)$，即 $\mathcal{H}^s$ 是 Borel 正则测度。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-2-1; kind=proof; 补全断言 #1 中测度两条公理的验证、断言 #3 中"覆盖分裂"的理由与反向不等式、断言 #4 中 H^s(A)=∞ 的情形
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-1-补证说明}
+断言 \#1 的完整验证需要测度的两条公理：$\mathcal{H}^s_\delta(\varnothing)=0$ 由取全为空集的覆盖得到，可数次可加性由 $\{C_j^k\}_{j,k}$ 仍是覆盖得到；断言 \#2 再把这两条沿 $\delta\to0$ 传给 $\mathcal{H}^s$。断言 \#3 的要点是：直径不超过 $\delta$ 的覆盖集不可能同时与相距大于 $\delta$ 的两个集合相交，故覆盖按“与 $A$ 相交”“与 $B$ 相交”分裂为两族，和式随之分裂；这一步只给出 $\geqslant$，反向不等式来自次可加性。断言 \#4 中，若 $\mathcal{H}^s(A)=\infty$，则取 $B=\mathbb{R}^n$ 即可；若 $\mathcal{H}^s(A)<\infty$，则 $\mathcal{H}^s_{1/k}(A)$ 有限，故可逐 $k$ 选取近最优的闭覆盖。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-1; kind=motivation; 说明为何要证明 Borel 正则性、四个断言的分工以及 δ→0 在可加性论证中的位置
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-1-动机}
+本定理把\cref{definition:ch02-2-1}中的集函数纳入可用的测度框架：只有先知道 $\mathcal{H}^s$ 是 Borel 正则测度，才能按\cref{definition:ch01-1-9}使用 Borel 正则性作外逼近、定义限制 $\mathcal{H}^s\llcorner A$，并在 Borel 集上自由施行可数运算。% XREF internal
+证明分四步，每一步只增加一条结构：断言 \#1 在固定 $\delta$ 下验证测度的两条公理；断言 \#2 沿 $\delta\to0$ 把可数次可加性传给极限；断言 \#3 用 Caratheodory 判据得到 Borel 集上的可加性；断言 \#4 用闭覆盖与可数交得到外逼近。
+
+四步的次序不可交换。断言 \#1 与 \#2 只用覆盖的加性，因此对一切集合成立；断言 \#3 才开始使用 $\mathbb{R}^n$ 的度量结构，其假设是正距离而非单纯的不相交；断言 \#4 才把“任意集合”换成“Borel 集”。若没有断言 \#1，断言 \#2 无从取极限；若没有断言 \#3，$\mathcal{H}^s$ 只是外测度，Borel 集上未必可加。
+
+$\delta\to0$ 在断言 \#3 中的作用是把“近似可加性”变成“可加性”。固定 $\delta$ 时只能得到 $0<4\delta<\operatorname{dist}(A,B)$ 情形的比较；正是令 $\delta\to0$ 才使该比较对 $\mathcal{H}^s$ 本身成立，从而满足 Caratheodory 判据的假设。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-1; kind=hypotheses; 逐条解释 s 的范围、正距离假设的必要性、警告中 s<n 的缘由以及 s=0 的边界情形
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-1-条件}
+\begin{enumerate}[(i)]
+\item 参数范围 $0\leqslant s<\infty$ 与\cref{definition:ch02-2-1}一致；定理对 $s=0$ 同样成立，此时 $\mathcal{H}^0$ 是计数测度，它是 Borel 正则的，但不是 Radon 的（$\mathbb{R}^n$ 不可数，故 $\mathcal{H}^0(\mathbb{R}^n)=+\infty$）。% XREF internal
+\item 断言 \#3 中 $\operatorname{dist}(A,B)>0$ 不能减弱为 $A\cap B=\varnothing$：$A$ 与 $B$ 可以任意接近，此时一个直径很小的覆盖集可能同时与两者相交，“覆盖分裂”的论证失效。Caratheodory 判据正是只需正距离情形的可加性，故这已足够；而 Borel 集之间的可加性随后由 $\mathcal{H}^s$ 是 Borel 测度推出。
+\item 警告中 $0\leqslant s<n$ 的缘由是：$\mathbb{R}^n$ 不能写成可数个 $\mathcal{H}^s$-有限集之并，因为当 $s<n$ 时任何内部非空的集合都有 $\mathcal{H}^s$ 测度 $+\infty$（比较 $\mathcal{H}^n$ 与 $\mathcal{L}^n$ 的论证见\cref{section:ch02-02}）。Radon 测度按\cref{definition:ch01-1-9}要求紧集上有限，故此时 $\mathcal{H}^s$ 不是 Radon 测度。% XREF internal
+\item 当 $s\geqslant n$ 时警告的条件不成立：$s=n$ 时 $\mathcal{H}^n=\mathcal{L}^n$，$s>n$ 时 $\mathcal{H}^s\equiv0$，两者都是 Radon 测度。这一对照说明“是否 Radon”只取决于 $s$ 与 $n$ 的大小关系。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Hausdorff 测度的性质]\label{theorem:ch02-2-2}
+设 $n$ 为正整数，$0\leqslant s<\infty$。则下列断言成立。
+\begin{enumerate}[(i)]
+\item $\mathcal{H}^0$ 是计数测度：对每个有限集 $A\subseteq\mathbb{R}^n$ 有 $\mathcal{H}^0(A)=\operatorname{Card}(A)$，对每个无限集 $A\subseteq\mathbb{R}^n$ 有 $\mathcal{H}^0(A)=+\infty$；
+\item 在 $\mathbb{R}^1$ 上 $\mathcal{H}^1=\mathcal{L}^1$，即对每个 $A\subseteq\mathbb{R}^1$ 有 $\mathcal{H}^1(A)=\mathcal{L}^1(A)$；
+\item 对一切 $s>n$ 与一切 $A\subseteq\mathbb{R}^n$ 有 $\mathcal{H}^s(A)=0$；
+\item 对一切 $\lambda>0$ 与一切 $A\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\mathcal{H}^s(\lambda A)=\lambda^s\mathcal{H}^s(A),
+\end{align*}
+其中 $\lambda A:=\{\lambda x\mid x\in A\}$；
+\item 对每个仿射等距 $L:\mathbb{R}^n\to\mathbb{R}^n$ 与每个 $A\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\mathcal{H}^s(L(A))=\mathcal{H}^s(A),
+\end{align*}
+其中仿射等距指形如 $L(x)=Ox+b$ 的映射，$O$ 为 $n\times n$ 正交矩阵，$b\in\mathbb{R}^n$。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）断言 (iv) 与 (v) 的论证放在本证明末：对 $\lambda>0$ 与仿射等距 $L$，覆盖的直径分别按 $\operatorname{diam}(\lambda C)=\lambda\operatorname{diam}C$ 与 $\operatorname{diam}(L(C))=\operatorname{diam}C$ 变换，故两个断言都化为覆盖族之间的对应。
+
+（2）先注意 $\alpha(0)=\frac{\pi^{0}}{\Gamma(1)}=1$。于是 $\mathcal{H}^0(\{a\})=1$ 对一切 $a\in\mathbb{R}^n$ 成立，这给出 (i) 在单点集上的情形；一般集合的论证见本证明的（5）。
+
+（3）取 $A\subseteq\mathbb{R}^1$ 与 $\delta>0$。由\cref{definition:ch01-1-18}，% XREF internal
+\begin{align*}
+\mathcal{L}^1(A)&=\inf\Bigl\{\sum_{j=1}^{\infty}\operatorname{diam}C_j\Bigm| A\subseteq\bigcup_{j=1}^{\infty}C_j\Bigr\}\\
+&\leqslant\inf\Bigl\{\sum_{j=1}^{\infty}\operatorname{diam}C_j\Bigm| A\subseteq\bigcup_{j=1}^{\infty}C_j,\ \operatorname{diam}C_j\leqslant\delta\Bigr\}=\mathcal{H}^1_\delta(A),
+\end{align*}
+其中最后一步用到 $\Gamma\bigl(\frac32\bigr)=\frac{\sqrt{\pi}}{2}$，故 $\alpha(1)=2$，从而 $\alpha(1)\cdot\frac{\operatorname{diam}C_j}{2}=\operatorname{diam}C_j$ 对每个 $C_j$ 成立。因此 $\mathcal{L}^1(A)\leqslant\mathcal{H}^1(A)$。
+
+另一方面，对 $k\in\mathbb{Z}$ 令 $I_k:=[k\delta,(k+1)\delta]$。则 $C_j\cap I_k\subseteq C_j$，故 $\operatorname{diam}(C_j\cap I_k)\leqslant\delta$，且
+\begin{align*}
+\sum_{k=-\infty}^{\infty}\operatorname{diam}(C_j\cap I_k)\leqslant\operatorname{diam}C_j.
+\end{align*}
+于是对每个覆盖 $\{C_j\}_{j=1}^{\infty}$，族 $\{C_j\cap I_k\}_{j,k\in\mathbb{Z}}$ 覆盖 $A$ 且其中每个集合的直径不超过 $\delta$，故由下确界的定义
+\begin{align*}
+\mathcal{H}^1_\delta(A)\leqslant\sum_{j=1}^{\infty}\sum_{k=-\infty}^{\infty}\operatorname{diam}(C_j\cap I_k)\leqslant\sum_{j=1}^{\infty}\operatorname{diam}C_j.
+\end{align*}
+对一切覆盖取下确界得 $\mathcal{H}^1_\delta(A)\leqslant\mathcal{L}^1(A)$。故 $\mathcal{L}^1(A)=\mathcal{H}^1_\delta(A)$ 对一切 $\delta>0$ 成立，从而在 $\mathbb{R}^1$ 上 $\mathcal{L}^1=\mathcal{H}^1$。
+
+（4）固定整数 $m\geqslant1$。$\mathbb{R}^n$ 中的单位立方体 $Q:=[0,1]^n$ 可分解为 $m^n$ 个边长为 $\frac1m$、直径为 $\frac{\sqrt{n}}{m}$ 的立方体。因此
+\begin{align*}
+\mathcal{H}^s_{\frac{\sqrt{n}}{m}}(Q)\leqslant\sum_{i=1}^{m^n}\alpha(s)\Bigl(\frac{\sqrt{n}}{m}\Bigr)^s=\alpha(s)n^{\frac{s}{2}}m^{n-s}.
+\end{align*}
+若 $s>n$，则上式右端当 $m\to\infty$ 时趋于 $0$，故 $\mathcal{H}^s(Q)=0$。$\mathbb{R}^n$ 是可数个这样的单位立方体之并，由可数次可加性得 $\mathcal{H}^s(\mathbb{R}^n)=0$。
+
+% SUPPLEMENT: parent=theorem:ch02-2-2; kind=proof; 补全 (i) 的一般集合情形（有限集与无限集）、(iv) 的伸缩协变性与 (v) 的仿射等距不变性
+（5）(i) 的一般情形。设 $A\subseteq\mathbb{R}^n$ 为有限集，$A=\{a_1,\cdots,a_N\}$，其中 $N=\operatorname{Card}(A)$ 且 $a_1,\cdots,a_N$ 互不相同。令 $\rho:=\min\{\lvert a_i-a_j\rvert\mid i\neq j\}$（$N=1$ 时取 $\rho:=1$），则 $\rho>0$。取 $0<\delta<\rho$。若 $C\subseteq\mathbb{R}^n$ 满足 $\operatorname{diam}C\leqslant\delta$，则 $C$ 至多含 $A$ 中一个点，故任何覆盖 $A\subseteq\bigcup_jC_j$ 至少有 $N$ 个非空的 $C_j$，从而 $\mathcal{H}^0_\delta(A)\geqslant N$；另一方面用 $N$ 个单点集覆盖给出 $\mathcal{H}^0_\delta(A)\leqslant N$。于是 $\mathcal{H}^0(A)=N$。
+
+若 $A\subseteq\mathbb{R}^n$ 为无限集，取 $A$ 的可数无限子集 $\{a_i\}_{i=1}^{\infty}$。由\cref{theorem:ch02-2-1}，$\mathcal{H}^0$ 是 Borel 测度，单点集是两两不交的 Borel 集，故由\cref{theorem:ch01-1-2}的可数可加性， | internal % XREF internal
+\begin{align*}
+\mathcal{H}^0\Bigl(\bigcup_{i=1}^{\infty}\{a_i\}\Bigr)=\sum_{i=1}^{\infty}\mathcal{H}^0(\{a_i\})=+\infty,
+\end{align*}
+再由单调性得 $\mathcal{H}^0(A)=+\infty$。
+
+（6）(iv) 的证明。设 $\lambda>0$，$A\subseteq\mathbb{R}^n$，$\delta>0$。对任意 $C\subseteq\mathbb{R}^n$ 有 $\operatorname{diam}(\lambda C)=\lambda\operatorname{diam}C$。因此 $\{C_j\}_{j=1}^{\infty}$ 是 $A$ 的覆盖且 $\operatorname{diam}C_j\leqslant\delta$ 当且仅当 $\{\lambda C_j\}_{j=1}^{\infty}$ 是 $\lambda A$ 的覆盖且 $\operatorname{diam}(\lambda C_j)\leqslant\lambda\delta$；又 $\alpha(s)(\lambda\operatorname{diam}C_j/2)^s=\lambda^s\alpha(s)(\operatorname{diam}C_j/2)^s$。于是
+\begin{align*}
+\mathcal{H}^s_{\lambda\delta}(\lambda A)=\lambda^s\mathcal{H}^s_\delta(A),
+\end{align*}
+令 $\delta\to0$ 即得 (iv)。
+
+（7）(v) 的证明。设 $L(x)=Ox+b$，其中 $O$ 为 $n\times n$ 正交矩阵、$b\in\mathbb{R}^n$。则对一切 $x,y\in\mathbb{R}^n$ 有 $\lvert L(x)-L(y)\rvert=\lvert x-y\rvert$，故 $\operatorname{diam}L(C)=\operatorname{diam}C$；又 $L$ 是 $\mathbb{R}^n$ 到自身的双射且把覆盖映为覆盖，故 $\mathcal{H}^s_\delta(L(A))=\mathcal{H}^s_\delta(A)$，令 $\delta\to0$ 即得 (v)。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-2-2; kind=motivation; 说明五条性质的几何含义、为何以 (i)(ii) 作为两个基准比较以及证明统一归结为对覆盖直径之和的估计
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-2-动机}
+五条性质刻画 $\mathcal{H}^s$ 在几何变换下如何变化，从而说明它确实是一个“$s$ 维体积”。(iv) 的齐次性 $\mathcal{H}^s(\lambda A)=\lambda^s\mathcal{H}^s(A)$ 是维数的标志：把集合放大 $\lambda$ 倍，其 $s$ 维体积按 $\lambda^s$ 缩放，这正是 $\mathbb{R}^n$ 中 $s$ 维曲面的面积在相似变换下的规律。(v) 说明 $\mathcal{H}^s$ 只依赖度量结构，与坐标系的选取无关，故它是 $\mathbb{R}^n$ 的内蕴量。合起来，这两条给出“$s$ 次齐次的度量不变量”这一定性描述，也是把 $\mathcal{H}^s$ 当作 $s$ 维曲面面积的推广的理由。
+
+(i) 与 (ii) 是两个基准比较：(i) 把 $s=0$ 的情形归结为计数，说明 $s$ 的下端是“点数”；(ii) 把 $s=1$ 且 $n=1$ 的情形归结为长度，说明规范化常数 $\alpha(s)$ 的选择恰好使 $\mathcal{H}^1$ 与 $\mathcal{L}^1$ 吻合。(iii) 说明当 $s$ 超过环境维数 $n$ 时测度恒为零，即不存在“$s$ 维体积”可分配；与\cref{lemma:ch02-2-2}的阈值结论合起来，得到 $s\mapsto\mathcal{H}^s(A)$ 在临界值处由 $+\infty$ 跳为 $0$ 的现象。% XREF internal
+
+证明的技术核心是把所有断言都化为对覆盖的直径之和的估计：对齐次性与等距不变性，只需注意直径在变换下的相应变化以及覆盖族之间的对应；对 (ii)，用 $\alpha(1)=2$ 把 $\mathcal{H}^1_\delta$ 的和式化为直径之和，再用网格 $\{I_k\}$ 把任意覆盖细化为直径不超过 $\delta$ 的覆盖；对 (iii)，用边长为 $\frac1m$ 的立方体细分单位立方体，得到 $\alpha(s)n^{s/2}m^{n-s}$，当 $s>n$ 时它随 $m$ 增大而趋于零。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-2; kind=hypotheses; 逐条说明 (i) 中 s=0 的约定、(ii) 限于 n=1、(iii) 的严格不等式、(iv) 的 λ>0 与 (v) 的等距假设
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-2-条件}
+\begin{enumerate}[(i)]
+\item (i) 依赖\cref{definition:ch02-2-1}中 $s=0$ 的约定：求和只对非空集合进行，每个非空 $C_j$ 贡献 $\alpha(0)=1$。若让空集也贡献 $1$，则 $\mathcal{H}^0(\varnothing)=1$ 而不是 $0$，计数测度的结论随即失效。% XREF internal
+\item (ii) 只对 $n=1$ 成立，其证明用到一维 Lebesgue 测度以“直径之和的下确界”作为定义，以及 $\alpha(1)=2$。高维的对应结论 $\mathcal{H}^n=\mathcal{L}^n$ 需要等周不等式，见\cref{section:ch02-02}。% XREF internal
+\item (iii) 中的不等式 $s>n$ 是严格的，不能减弱为 $s\geqslant n$：$s=n$ 时 $\mathcal{H}^n=\mathcal{L}^n$ 在 $\mathbb{R}^n$ 上不恒为零（例如 $\mathcal{H}^n(Q)=\mathcal{L}^n(Q)=1$ 对单位立方体 $Q$ 成立）。
+\item (iv) 要求 $\lambda>0$。当 $\lambda=0$ 时 $\lambda A=\{0\}$，$s=0$ 的情形不再成立：左端为 $\mathcal{H}^0(\{0\})=1$（$A\neq\varnothing$ 时），而右端含因子 $0^0$，无定义。
+\item (v) 中的等距假设保证直径不变，从而覆盖族与权 $\alpha(s)(\operatorname{diam}/2)^s$ 都不变。若把 $L$ 换成一般的非退化线性映射 $T$，$\mathcal{H}^s(T(A))$ 一般不再等于 $\mathcal{H}^s(A)$，例如 $T=2I$ 使 $\mathcal{H}^s(T(A))=2^s\mathcal{H}^s(A)$。
+\item (iv) 与 (v) 合起来说明 $\mathcal{H}^s$ 在相似变换下的变换规律只依赖 $s$，这是把 $s$ 解释为维数的依据。
+\end{enumerate}
+\end{remark}
+
+用下列事实检验 $\mathcal{H}^s$ 在一个集合上是否为零是方便的：
+
+\begin{lemma}\label{lemma:ch02-2-1}
+设 $n$ 为正整数，$A\subseteq\mathbb{R}^n$ 为任意子集，$0\leqslant s<\infty$。若存在 $0<\delta<\infty$ 使得 $\mathcal{H}^s_\delta(A)=0$（即对每个 $\varepsilon>0$ 都存在覆盖 $\{C_j\}_{j=1}^{\infty}$ 满足 $A\subseteq\bigcup_{j=1}^{\infty}C_j$、$\operatorname{diam}C_j\leqslant\delta$ 与 $\sum_{j=1}^{\infty}\alpha(s)(\operatorname{diam}C_j/2)^s\leqslant\varepsilon$），则 $\mathcal{H}^s(A)=0$，即在某一个固定尺度上为零已足以推出 $\mathcal{H}^s(A)$ 为零；换言之，$\mathcal{H}^s(A)=0$ 当且仅当存在 $0<\delta<\infty$ 使 $\mathcal{H}^s_\delta(A)=0$。
+\end{lemma}
+
+\begin{proof}
+（1）当 $s=0$ 时，$\mathcal{H}^0_\delta(A)$ 是覆盖 $A$ 所需非空集合个数的最小值，其为零当且仅当 $A=\varnothing$，此时 $\mathcal{H}^0(A)=0$。以下设 $s>0$。
+
+（2）固定 $\varepsilon>0$。由 $\mathcal{H}^s_\delta(A)=0$ 与下确界的定义，存在集合 $\{C_j\}_{j=1}^{\infty}$，使得 $A\subseteq\bigcup_{j=1}^{\infty}C_j$、$\operatorname{diam}C_j\leqslant\delta$，且
+\begin{align*}
+\sum_{j=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^s\leqslant\varepsilon.
+\end{align*}
+对每个 $i$，由上式与各项非负得
+\begin{align*}
+\alpha(s)\Bigl(\frac{\operatorname{diam}C_i}{2}\Bigr)^s\leqslant\varepsilon,
+\end{align*}
+故
+\begin{align*}
+\operatorname{diam}C_i\leqslant2\Bigl(\frac{\varepsilon}{\alpha(s)}\Bigr)^{\frac1s}=:\delta(\varepsilon).
+\end{align*}
+于是 $\{C_j\}_{j=1}^{\infty}$ 是 $A$ 的覆盖，其中每个集合的直径不超过 $\min\{\delta,\delta(\varepsilon)\}\leqslant\delta(\varepsilon)$，从而
+\begin{align*}
+\mathcal{H}^s_{\delta(\varepsilon)}(A)\leqslant\sum_{j=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^s\leqslant\varepsilon.
+\end{align*}
+
+（3）由（2）得 $\mathcal{H}^s_{\delta(\varepsilon)}(A)\leqslant\varepsilon$。若 $0<\delta'\leqslant\delta(\varepsilon)$，则（2）中同一族覆盖对 $\delta'$ 也容许，故 $\mathcal{H}^s_{\delta'}(A)\leqslant\varepsilon$；若 $\delta'>\delta(\varepsilon)$，则由 $\mathcal{H}^s_{\delta'}\leqslant\mathcal{H}^s_{\delta(\varepsilon)}$ 也得同一结论。于是
+\begin{align*}
+\mathcal{H}^s(A)=\sup_{\delta'>0}\mathcal{H}^s_{\delta'}(A)\leqslant\varepsilon.
+\end{align*}
+由于 $\varepsilon>0$ 任意，$\mathcal{H}^s(A)=0$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch02-2-1; kind=proof; 补全 s=0 情形与"由 ε 得到统一直径上界 δ(ε)"的推导
+\begin{remark}\phantomsection\label{remark:ch02-lem-2-1-补证说明}
+$s=0$ 的情形须单独处理：此时 $\delta$ 不再提供任何尺度信息，$\mathcal{H}^0_\delta(A)=0$ 直接强制 $A=\varnothing$。$s>0$ 时，论证的关键是把“和式可以任意小”翻译成“覆盖集的直径可以一致地小”：单个集合的贡献不超过总和，故每个 $\operatorname{diam}C_i\leqslant2(\varepsilon/\alpha(s))^{1/s}=:\delta(\varepsilon)$，而 $\delta(\varepsilon)\to0$（$\varepsilon\to0$）。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch02-2-1; kind=motivation; 说明该引理把极限意义下的零性化归为固定尺度上的零性，从而是构造覆盖证明测度为零的依据
+\begin{remark}\phantomsection\label{remark:ch02-lem-2-1-动机}
+$\mathcal{H}^s(A)$ 由 $\delta\to0$ 的极限定义，直接验证它为零需要对每个 $\delta$ 控制下确界。引理说明这种控制只需在一个固定的有限尺度上完成一次：只要在某个 $\delta$ 上能作出总“$s$ 次直径和”任意小的覆盖，极限必为零。这样，证明一个集合的 Hausdorff 测度为零就归结为具体地构造覆盖族，而不必处理关于 $\delta$ 的一致估计。后文估计图像、水平集与 Cantor 型集合的测度时，正是用这一形式组织覆盖。
+
+引理还给出零性的稳定性：$\mathcal{H}^s(A)=0$ 与否不依赖尺度 $\delta$ 的选取。由 $\mathcal{H}^s_\delta\leqslant\mathcal{H}^s$，逆命题直接成立：若 $\mathcal{H}^s(A)=0$，则 $\mathcal{H}^s_\delta(A)\leqslant\mathcal{H}^s(A)=0$。故“存在某个有限 $\delta$ 使 $\mathcal{H}^s_\delta(A)=0$”与“$\mathcal{H}^s(A)=0$”等价。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch02-2-1; kind=hypotheses; 逐条解释 s 与 δ 的范围、α(s) 非零的必要性以及结论不涉及 H^s_δ 本身的取值
+\begin{remark}\phantomsection\label{remark:ch02-lem-2-1-条件}
+\begin{enumerate}[(i)]
+\item $0\leqslant s<\infty$ 与\cref{definition:ch02-2-1}一致。$s=0$ 时结论直接，$s>0$ 时证明用到 $\alpha(s)>0$ 与 $\alpha(s)<\infty$，否则 $\delta(\varepsilon)$ 无意义。% XREF internal
+\item $0<\delta<\infty$：$\delta$ 有限使证明能得到统一的直径上界 $\delta(\varepsilon)$，从而使极限论证成立。若允许 $\delta=\infty$，则覆盖集可以任意大，本节的论证不再给出结论。
+\item $A$ 只需是 $\mathbb{R}^n$ 的任意子集，不需要可测、有界或闭；证明只用到覆盖的定义。
+\item 结论不涉及 $\mathcal{H}^s_\delta$ 本身的取值：对固定的 $\delta'$，$\mathcal{H}^s_{\delta'}(A)$ 可以很大，引理只断言极限 $\mathcal{H}^s(A)$ 为零。
+\end{enumerate}
+\end{remark}
+
+下面定义 $\mathbb{R}^n$ 子集的 Hausdorff 维数。
+
+\begin{lemma}\label{lemma:ch02-2-2}
+设 $n$ 为正整数，$A\subseteq\mathbb{R}^n$ 为任意子集，$0\leqslant s<t<\infty$。
+\begin{enumerate}[(i)]
+\item 若 $\mathcal{H}^s(A)<\infty$，则 $\mathcal{H}^t(A)=0$；
+\item 若 $\mathcal{H}^t(A)>0$，则 $\mathcal{H}^s(A)=+\infty$。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+（1）设 $\mathcal{H}^s(A)<\infty$，并取 $\delta>0$。由 $\mathcal{H}^s_\delta(A)\leqslant\mathcal{H}^s(A)<\infty$，下确界有限，故存在集合 $\{C_j\}_{j=1}^{\infty}$，使得 $\operatorname{diam}C_j\leqslant\delta$、$A\subseteq\bigcup_{j=1}^{\infty}C_j$，且
+\begin{align*}
+\sum_{j=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^s\leqslant\mathcal{H}^s_\delta(A)+1\leqslant\mathcal{H}^s(A)+1.
+\end{align*}
+于是
+\begin{align*}
+\mathcal{H}^t_\delta(A)&\leqslant\sum_{j=1}^{\infty}\alpha(t)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^t\\
+&=\frac{\alpha(t)}{\alpha(s)}2^{s-t}\sum_{j=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^s(\operatorname{diam}C_j)^{t-s}\\
+&\leqslant\frac{\alpha(t)}{\alpha(s)}2^{s-t}\delta^{t-s}\bigl(\mathcal{H}^s(A)+1\bigr),
+\end{align*}
+其中第二行对每个 $j$ 用了恒等式
+\begin{align*}
+\alpha(t)\Bigl(\frac{d}{2}\Bigr)^t=\frac{\alpha(t)}{\alpha(s)}2^{s-t}\alpha(s)\Bigl(\frac{d}{2}\Bigr)^s d^{t-s}\qquad(d\geqslant0),
+\end{align*}
+第三行用了 $\operatorname{diam}C_j\leqslant\delta$ 与 $t-s>0$。令 $\delta\to0$，右端因 $t>s$ 而趋于 $0$，故 $\mathcal{H}^t(A)=0$，即 (i) 成立。
+
+（2）(ii) 是 (i) 的逆否命题：若 $\mathcal{H}^s(A)<\infty$，则由 (i) 得 $\mathcal{H}^t(A)=0$，与 $\mathcal{H}^t(A)>0$ 矛盾；故 $\mathcal{H}^s(A)=+\infty$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch02-2-2; kind=proof; 补全 (ii) 的逆否论证与 (i) 中"近最优覆盖存在"的理由，并写出所用恒等式
+\begin{remark}\phantomsection\label{remark:ch02-lem-2-2-补证说明}
+(i) 中之所以能取到满足 $\sum_j\alpha(s)(\operatorname{diam}C_j/2)^s\leqslant\mathcal{H}^s_\delta(A)+1$ 的覆盖，是因为 $\mathcal{H}^s_\delta(A)\leqslant\mathcal{H}^s(A)<\infty$，即下确界有限；若没有 $\mathcal{H}^s(A)<\infty$，这一步不成立。(ii) 与 (i) 并非两条独立的结论：$\mathcal{H}^s(A)$ 取扩展实数值，故“$\mathcal{H}^t(A)>0$”即“$\mathcal{H}^t(A)\neq0$”，正是“$\mathcal{H}^s(A)<\infty$”的否定，于是 (ii) 恰为 (i) 的逆否命题。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch02-2-2; kind=motivation; 说明该引理给出的维数阈值现象、定量衰减估计及其在维数定义中的作用
+\begin{remark}\phantomsection\label{remark:ch02-lem-2-2-动机}
+引理说明对固定的集合 $A$，函数 $s\mapsto\mathcal{H}^s(A)$ 的形状极其简单：至多有一个 $s$ 使它取有限正值；在该值左侧为 $+\infty$，右侧为 $0$。这一“阈值现象”使维数可以被定义：门槛值就是 $A$ 的 Hausdorff 维数，见\cref{definition:ch02-2-2}。% XREF internal
+
+证明还给出定量信息：$\mathcal{H}^t_\delta(A)\leqslant\frac{\alpha(t)}{\alpha(s)}2^{s-t}\delta^{t-s}(\mathcal{H}^s(A)+1)$，即较高维数的 $\delta$-近似测度以 $\delta^{t-s}$ 的速率衰减。常数只依赖 $s,t$，与 $A$、$\delta$ 无关；后文估计图像与集合的维数上界时，正是把这一幂次衰减与覆盖的构造配合使用。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch02-2-2; kind=hypotheses; 逐条解释 s<t 的严格性、H^s(A)<∞ 的实质作用与结论的适用范围
+\begin{remark}\phantomsection\label{remark:ch02-lem-2-2-条件}
+\begin{enumerate}[(i)]
+\item 条件 $0\leqslant s<t<\infty$ 中的严格不等式是关键：若 $s=t$，则 $\mathcal{H}^s(A)<\infty$ 并不推出 $\mathcal{H}^s(A)=0$。第三行估计用到 $t-s>0$，正是这一点使 $\delta^{t-s}\to0$。
+\item (i) 的实质假设是 $\mathcal{H}^s(A)<\infty$：它既保证下确界有限从而可取近最优覆盖，又保证最后的界 $(\mathcal{H}^s(A)+1)$ 有限。若 $\mathcal{H}^s(A)=+\infty$，则 (i) 的结论无从谈起，(ii) 提供的是另一侧的信息。
+\item $A$ 不需要可测、有界或 Borel；引理对 $\mathbb{R}^n$ 的一切子集成立。
+\item 结论只说 $\mathcal{H}^t(A)=0$，不含 $\mathcal{H}^t_\delta(A)$ 对固定 $\delta$ 为零的断言；后者一般不对，只有其随 $\delta$ 的衰减速率可由上面的估计控制。
+\item 两个断言互为逆否命题，故 (ii) 不增加新的内容，其价值在于给出“低维测度为无穷”这一常用的否命题形式。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[Hausdorff 维数]\label{definition:ch02-2-2}
+设 $n$ 为正整数，$A\subseteq\mathbb{R}^n$ 为任意子集。称集合 $\{s\in[0,\infty)\mid\mathcal{H}^s(A)=0\}$ 的下确界为 $A$ 的 \textbf{Hausdorff 维数}，记作 $\mathcal{H}_{\dim}(A)$；即 $\mathcal{H}_{\dim}(A)$ 定义为
+\begin{align*}
+\mathcal{H}_{\dim}(A):=\inf\{0\leqslant s<\infty\mid\mathcal{H}^s(A)=0\}.
+\end{align*}
+等价地，$\mathcal{H}_{\dim}(A)$ 是使 $\mathcal{H}^s(A)=0$ 对一切 $s>s_0$ 都成立的最小 $s_0\geqslant0$，其中 $s_0$ 取遍 $[0,\infty)$。
+\end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch02-def-2-2-注记}
+设 $A\subseteq\mathbb{R}^n$，$s=\mathcal{H}_{\dim}(A)$。则 $\mathcal{H}_{\dim}(A)\leqslant n$。并且 $\mathcal{H}^t(A)=0$ 对一切 $t>s$ 成立，$\mathcal{H}^t(A)=+\infty$ 对一切 $t<s$ 成立；而 $\mathcal{H}^s(A)$ 可为 $0$ 与 $\infty$ 之间（含两端）的任意数。
+
+此外，$\mathcal{H}_{\dim}(A)$ 不必为整数。即使 $\mathcal{H}_{\dim}(A)=k$ 为整数且 $0<\mathcal{H}^k(A)<\infty$，$A$ 也不必在任何意义下是“$k$ 维曲面”：$\mathbb{R}^n$ 中存在构造极为复杂的 Cantor 型子集 $A$，满足 $0<\mathcal{H}^k(A)<\infty$，其例子见 Falconer [Fa1]、[Fa2] 或 Federer [F]。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch02-2-2; kind=motivation; 说明以下确界刻画维数的理由、临界值处的三种取值情形以及维数与整数维的关系
+\begin{remark}\phantomsection\label{remark:ch02-def-2-2-动机}
+由\cref{lemma:ch02-2-2}，集合 $D(A):=\{s\geqslant0\mid\mathcal{H}^s(A)=0\}$ 必为区间 $(d,\infty)$ 或 $[d,\infty)$ 之一，其下确界 $d$ 唯一决定 $s\mapsto\mathcal{H}^s(A)$ 的定性形状，故以 $d$ 作为维数是合理的。% XREF internal
+
+定义取下确界而不取“使测度取有限正值的 $s$”，原因是在临界值 $s=\mathcal{H}_{\dim}(A)$ 处测度可能为 $0$、有限正值或 $+\infty$；定义不对该处的取值提出任何要求，而 $D(A)$ 的下确界对任何集合都存在。因此维数刻画的是测度“由无穷跳为零”的位置，与临界值处的具体取值无关。
+
+由于 $\mathcal{H}^s$ 对任意非负实数 $s$ 都有定义，维数不被限制为整数；非整数维集合的存在性来自 Cantor 型构造，其讨论超出本节范围。维数在等距变换下不变、在相似变换下不变，这由\cref{theorem:ch02-2-2}的 (iv) 与 (v) 直接得到，因而是 $\mathbb{R}^n$ 的内蕴量。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch02-2-2; kind=hypotheses; 说明下确界的良定义性、上界 n、可达性问题以及维数的 sup 刻画
+\begin{remark}\phantomsection\label{remark:ch02-def-2-2-条件}
+\begin{enumerate}[(i)]
+\item 良定义性：由\cref{theorem:ch02-2-2}的 (iii)，对一切 $s>n$ 有 $\mathcal{H}^s(A)=0$，故 $D(A)$ 非空，其下确界是 $[0,n]$ 中的实数，从而 $\mathcal{H}_{\dim}(A)\leqslant n$。% XREF internal
+\item 下确界不必被达到：$\mathcal{H}^{\mathcal{H}_{\dim}(A)}(A)$ 可为 $0$、有限正值或 $+\infty$，定义本身不对临界值处的取值作任何限制。由\cref{lemma:ch02-2-2}只能得到 $t>\mathcal{H}_{\dim}(A)$ 时为 $0$、$t<\mathcal{H}_{\dim}(A)$ 时为 $+\infty$。% XREF internal
+\item 维数也可由左侧的无穷性刻画：由\cref{lemma:ch02-2-2}，$\mathcal{H}_{\dim}(A)=\sup\{s\geqslant0\mid\mathcal{H}^s(A)=+\infty\}$（约定 $\sup\varnothing=0$，此时 $A=\varnothing$）。% XREF internal
+\item $A$ 只需是 $\mathbb{R}^n$ 的任意子集，不需要可测、有界或闭；维数只依赖 $\mathcal{H}^s$ 的零性，不依赖各 $\mathcal{H}^s(A)$ 的具体数值。
+\item 维数一般不是拓扑不变量，也不等于线性代数意义下的维数：它由覆盖的直径幂次决定，因而是度量概念。
+\end{enumerate}
+\end{remark}
+
+\end{document}

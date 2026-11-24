@@ -1,0 +1,487 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{Sobolev 不等式}\label{section:ch04-05}
+
+\subsection{Gagliardo--Nirenberg--Sobolev 不等式}\label{subsection:ch04-05-1}
+
+下面证明：若 $f\in W^{1,p}(\mathbb{R}^n)$ 且 $1\leqslant p<n$，则 $f$ 实际上属于 $L^{p^*}(\mathbb{R}^n)$，其中 $p^*>p$。
+
+\begin{definition}[Sobolev 共轭指数]\label{definition:ch04-4-7}
+设 $n$ 为正整数，$p$ 为满足 $1\leqslant p<n$ 的实数。定义
+\begin{align*}
+p^*:=\frac{np}{n-p};
+\end{align*}
+则 $p^*$ 称为 $p$ 的\textbf{Sobolev 共轭指数}（Sobolev conjugate）。
+\end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch04-def-4-7-倒数}
+由\cref{definition:ch04-4-7}直接计算得% XREF internal
+\begin{align*}
+\frac{1}{p^*}=\frac{n-p}{np}=\frac{1}{p}-\frac{1}{n}.
+\end{align*}
+在 $p=1$ 的情形，上式给出 $1^*=\frac{n}{n-1}$ 与 $\frac{1}{1^*}=1-\frac{1}{n}$；下文在 $p=1$ 的论证中记 $1^*:=\frac{n}{n-1}$。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-7; kind=motivation; 用伸缩不变性说明 np/(n-p) 是唯一使 GNS 型估计在伸缩下保持形式的指数
+\begin{remark}\phantomsection\label{remark:ch04-def-4-7-动机}
+指数 $p^*$ 由伸缩不变性唯一确定。对 $\lambda>0$ 与 $f\in W^{1,p}(\mathbb{R}^n)$ 令 $f_\lambda(x):=f(\lambda x)$，则
+\begin{align*}
+\lVert f_\lambda\rVert_{L^{p^*}(\mathbb{R}^n)}=\lambda^{-\frac{n}{p^*}}\lVert f\rVert_{L^{p^*}(\mathbb{R}^n)},\qquad
+\lVert Df_\lambda\rVert_{L^p(\mathbb{R}^n)}=\lambda^{1-\frac{n}{p}}\lVert Df\rVert_{L^p(\mathbb{R}^n)} .
+\end{align*}
+若形如
+\begin{align*}
+\lVert f\rVert_{L^{q}(\mathbb{R}^n)}\leqslant C\lVert Df\rVert_{L^p(\mathbb{R}^n)}
+\end{align*}
+的估计对一切 $f\in W^{1,p}(\mathbb{R}^n)$ 成立，且常数 $C$ 与 $f$、$\lambda$ 无关，则把 $f$ 换为 $f_\lambda$ 后两端必须按同一个 $\lambda$ 的幂次伸缩，故 $-\frac{n}{q}=1-\frac{n}{p}$，即 $\frac{1}{q}=\frac{1}{p}-\frac{1}{n}$，亦即 $q=\frac{np}{n-p}$。因此 $p^*$ 是唯一使这类估计在伸缩下保持形式不变的指数，这也是\cref{theorem:ch04-4-8}中常数可取为与 $f$ 无关的原因。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-7; kind=hypotheses; 逐条分析 1<=p<n 的范围、n-p>0、p*>p、p 趋于 n 的临界性以及 p=1 的记号
+\begin{remark}\phantomsection\label{remark:ch04-def-4-7-条件}
+\begin{enumerate}[(i)]
+\item 条件 $1\leqslant p<n$ 的作用是保证 $n-p>0$，从而 $p^*=\frac{np}{n-p}$ 为有限正数；$p\geqslant n$ 时 $n-p\leqslant0$，$p^*$ 或为负或不存在，定义失效。
+\item 由 $p<n$ 得 $p^*>p$：不等式 $\frac{np}{n-p}>p$ 等价于 $n>n-p$，后者对一切 $p>0$ 成立。故 GNS 不等式把 $f$ 的可积性指数从 $p$ 提高到 $p^*$，这是 $W^{1,p}(\mathbb{R}^n)\subseteq L^{p^*}(\mathbb{R}^n)$ 的定量形式。
+\item 当 $p\to n^{-}$ 时 $p^*\to\infty$；$p=n$ 处 $p^*$ 无定义，该估计不给出统一的可积性指数。$p>n$ 的情形不提高可积性，而由\cref{theorem:ch04-4-10}给出 Hölder 连续性。% XREF internal
+\item $p=1$ 时 $1^*=\frac{n}{n-1}$，且 $\frac{1}{1^*}=1-\frac{1}{n}$；\cref{theorem:ch04-4-8}的证明先在 $p=1$ 时建立估计，再对一般的 $1<p<n$ 通过取 $g=\lvert f\rvert^{\gamma}$ 化归到这一情形。% XREF internal
+\item $p^*$ 只依赖于 $p$ 与 $n$，与 $f$ 无关；这是指数层面的依赖关系，$p^*$ 的取值不涉及任何函数。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Gagliardo--Nirenberg--Sobolev 不等式]\label{theorem:ch04-4-8}
+设 $n$ 为正整数，$p$ 为满足 $1\leqslant p<n$ 的实数，$p^*=\frac{np}{n-p}$ 为 $p$ 的 Sobolev 共轭指数。则存在常数 $C_1$，它只依赖于 $p$ 与 $n$，使得对每个 $f\in W^{1,p}(\mathbb{R}^n)$ 有
+\begin{align*}
+\Bigl(\int_{\mathbb{R}^n}\lvert f\rvert^{p^*}\diff x\Bigr)^{\frac{1}{p^*}}\leqslant C_1\Bigl(\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x\Bigr)^{\frac{1}{p}},
+\end{align*}
+其中 $Df=(f_{x_1},\cdots,f_{x_n})$ 为 $f$ 的弱梯度，$\lvert Df\rvert=\bigl(\sum_{i=1}^{n}\lvert f_{x_i}\rvert^{2}\bigr)^{1/2}$。
+\end{theorem}
+
+\begin{proof}
+（1）先设 $p=1$。由\cref{theorem:ch04-4-2}，可设 $f\in C_c^1(\mathbb{R}^n)$。% XREF p=162 "According to Theorem 4.2 , we may assume f ∈ C^1_c(R^n)."
+此时对 $i=1,\cdots,n$ 与 $x\in\mathbb{R}^n$ 有
+\begin{align*}
+f(x_1,\cdots,x_i,\cdots,x_n)=\int_{-\infty}^{x_i}f_{x_i}(x_1,\cdots,t_i,\cdots,x_n)\diff t_i,
+\end{align*}
+从而
+\begin{align*}
+\lvert f(x)\rvert\leqslant\int_{-\infty}^{\infty}\lvert Df\rvert(x_1,\cdots,t_i,\cdots,x_n)\diff t_i\qquad(i=1,\cdots,n).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-8; kind=proof; 说明为何可由 W^{1,p}(R^n) 化归到 C_c^1(R^n)：截断乘以光滑截断函数后用磨光核逼近，并说明微积分基本定理中 f 在无穷远处的取值为零
+上面第一个等式的依据是一元微积分基本定理：$f$ 具有紧支集，故 $f(x_1,\cdots,t_i,\cdots,x_n)$ 当 $t_i\to-\infty$ 时为零，于是
+\begin{align*}
+f(x_1,\cdots,x_i,\cdots,x_n)=\int_{-\infty}^{x_i}\frac{\partial f}{\partial t_i}(x_1,\cdots,t_i,\cdots,x_n)\diff t_i .
+\end{align*}
+化归到 $C_c^1(\mathbb{R}^n)$ 的依据如下：对 $f\in W^{1,p}(\mathbb{R}^n)$，取光滑截断函数 $\zeta_R\in C_c^\infty(\mathbb{R}^n)$ 使 $\zeta_R=1$ 于 $B(0,R)$、$\zeta_R=0$ 于 $\mathbb{R}^n\setminus B(0,2R)$ 且 $\lvert D\zeta_R\rvert\leqslant 2/R$，则 $\zeta_Rf\to f$ 于 $W^{1,p}(\mathbb{R}^n)$（$R\to\infty$），而每个 $\zeta_Rf$ 具有紧支集；再对其作磨光，由\cref{theorem:ch04-4-2}取到 $C_c^\infty(\mathbb{R}^n)$ 中的逼近列。对 $C_c^1(\mathbb{R}^n)$ 中函数成立的不等式在取极限后对 $W^{1,p}(\mathbb{R}^n)$ 中一切 $f$ 成立：右端由 $\lVert Df_k\rVert_{L^{p}}\to\lVert Df\rVert_{L^{p}}$ 而收敛，左端由 Fatou 引理处理（必要时取子列使 $f_k\to f$ 于 $\mathbb{R}^n$ 上几乎处处成立），于是% XREF internal
+\begin{align*}
+\lVert f\rVert_{L^{p^*}(\mathbb{R}^n)}\leqslant\liminf_{k\to\infty}\lVert f_k\rVert_{L^{p^*}(\mathbb{R}^n)}\leqslant C_1\lim_{k\to\infty}\lVert Df_k\rVert_{L^{p}(\mathbb{R}^n)}=C_1\lVert Df\rVert_{L^{p}(\mathbb{R}^n)} .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-8; kind=proof; 补出由 n 个单变量估计相乘得到 |f|^{n/(n-1)} 的估计这一步
+上面的不等式对每个 $i=1,\cdots,n$ 都成立，故 $\lvert f(x)\rvert$ 不超过右端 $n$ 个积分中的任何一个。将每个不等式取 $\frac{1}{n-1}$ 次幂后相乘，得
+\begin{align*}
+\lvert f(x)\rvert^{\frac{n}{n-1}}\leqslant\prod_{i=1}^{n}\Bigl(\int_{-\infty}^{\infty}\lvert Df\rvert(x_1,\cdots,t_i,\cdots,x_n)\diff t_i\Bigr)^{\frac{1}{n-1}}.
+\end{align*}
+
+对 $x_1$ 积分：
+\begin{align*}
+\int_{-\infty}^{\infty}\lvert f\rvert^{1^*}\diff x_1
+&\leqslant\Bigl(\int_{-\infty}^{\infty}\lvert Df\rvert\diff t_1\Bigr)^{\frac{1}{n-1}}\int_{-\infty}^{\infty}\prod_{i=2}^{n}\Bigl(\int_{-\infty}^{\infty}\lvert Df\rvert\diff t_i\Bigr)^{\frac{1}{n-1}}\diff x_1\\
+&\leqslant\Bigl(\int_{-\infty}^{\infty}\lvert Df\rvert\diff t_1\Bigr)^{\frac{1}{n-1}}\Bigl(\prod_{i=2}^{n}\int_{-\infty}^{\infty}\!\!\int_{-\infty}^{\infty}\lvert Df\rvert\diff x_1\diff t_i\Bigr)^{\frac{1}{n-1}}.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-8; kind=proof; 说明对 x_1 积分时用的是 n-1 个因子的广义 Hölder 不等式与 Fubini–Tonelli 定理
+上面第二个不等式的依据是对 $n-1$ 个因子用广义 Hölder 不等式：把被积函数写成 $\prod_{i=2}^{n}F_i(x_1)^{1/(n-1)}$，其中 $F_i(x_1):=\int_{-\infty}^{\infty}\lvert Df\rvert\diff t_i$，取 $n-1$ 个指数都为 $n-1$，得
+\begin{align*}
+\int_{-\infty}^{\infty}\prod_{i=2}^{n}F_i(x_1)^{\frac{1}{n-1}}\diff x_1\leqslant\prod_{i=2}^{n}\Bigl(\int_{-\infty}^{\infty}F_i(x_1)\diff x_1\Bigr)^{\frac{1}{n-1}},
+\end{align*}
+右端即所需；这里交换积分次序用的是 Fubini--Tonelli 定理，被积函数非负，故不要求可积性。
+
+再对 $x_2$ 积分得
+\begin{align*}
+\int_{-\infty}^{\infty}\!\!\int_{-\infty}^{\infty}\lvert f\rvert^{1^*}\diff x_1\diff x_2
+&\leqslant\Bigl(\int_{-\infty}^{\infty}\!\!\int_{-\infty}^{\infty}\lvert Df\rvert\diff x_1\diff t_2\Bigr)^{\frac{1}{n-1}}\\
+&\qquad\times\Bigl(\int_{-\infty}^{\infty}\!\!\int_{-\infty}^{\infty}\lvert Df\rvert\diff t_1\diff x_2\Bigr)^{\frac{1}{n-1}}\\
+&\qquad\times\prod_{i=3}^{n}\Bigl(\int_{-\infty}^{\infty}\!\!\int_{-\infty}^{\infty}\!\!\int_{-\infty}^{\infty}\lvert Df\rvert\diff x_1\diff x_2\diff t_i\Bigr)^{\frac{1}{n-1}}.
+\end{align*}
+如此继续，最终得到
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert f\rvert^{1^*}\diff x
+&\leqslant\prod_{i=1}^{n}\Bigl(\int_{-\infty}^{\infty}\cdots\int_{-\infty}^{\infty}\lvert Df\rvert\diff x_1\cdots\diff t_i\cdots\diff x_n\Bigr)^{\frac{1}{n-1}}\\
+&=\Bigl(\int_{\mathbb{R}^n}\lvert Df\rvert\diff x\Bigr)^{\frac{n}{n-1}}.
+\end{align*}
+由此得到
+\begin{align*}
+\Bigl(\int_{\mathbb{R}^n}\lvert f\rvert^{1^*}\diff x\Bigr)^{\frac{1}{1^*}}\leqslant\int_{\mathbb{R}^n}\lvert Df\rvert\diff x,\qquad(\star)
+\end{align*}
+这正是 $p=1$ 情形的结论。
+
+（2）设 $1<p<n$，置 $g:=\lvert f\rvert^{\gamma}$，其中 $\gamma>0$ 的取值在下文确定。对 $g$ 应用 $(\star)$ 得
+\begin{align*}
+\Bigl(\int_{\mathbb{R}^n}\lvert f\rvert^{\frac{\gamma n}{n-1}}\diff x\Bigr)^{\frac{n-1}{n}}
+&\leqslant\gamma\int_{\mathbb{R}^n}\lvert f\rvert^{\gamma-1}\lvert Df\rvert\diff x\\
+&\leqslant\gamma\Bigl(\int_{\mathbb{R}^n}\lvert f\rvert^{\frac{(\gamma-1)p}{p-1}}\diff x\Bigr)^{\frac{p-1}{p}}\Bigl(\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x\Bigr)^{\frac{1}{p}}.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-8; kind=proof; 补出 g=|f|^γ 属于 C_c^1 的条件、Dg 的计算以及第二个不等号所用 Hölder 不等式的指数
+第一个不等式中 $Dg=\gamma\lvert f\rvert^{\gamma-1}Df$，故 $\lvert Dg\rvert=\gamma\lvert f\rvert^{\gamma-1}\lvert Df\rvert$；又下文取定的 $\gamma=\frac{p(n-1)}{n-p}$ 满足 $\gamma>1$（因为 $p>1$ 时 $p(n-1)>n-p$），故 $g=\lvert f\rvert^{\gamma}\in C_c^1(\mathbb{R}^n)$，$(\star)$ 适用。第二个不等式是对 $\lvert f\rvert^{\gamma-1}\lvert Df\rvert$ 用 Hölder 不等式，指数取 $\frac{p}{p-1}$ 与 $p$。
+
+选取 $\gamma>0$ 使
+\begin{align*}
+\frac{\gamma n}{n-1}=(\gamma-1)\frac{p}{p-1}.
+\end{align*}
+此时
+\begin{align*}
+\frac{\gamma n}{n-1}=(\gamma-1)\frac{p}{p-1}=\frac{np}{n-p}=p^*.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-8; kind=proof; 解出 γ 的显式表达式并验证其唯一性与正性
+该方程即 $\gamma n(p-1)=(\gamma-1)p(n-1)$，亦即 $\gamma(p-n)=-p(n-1)$，故其唯一解为
+\begin{align*}
+\gamma=\frac{p(n-1)}{n-p}>0 .
+\end{align*}
+代入得 $\frac{\gamma n}{n-1}=\frac{pn}{n-p}=\frac{np}{n-p}=p^*$。
+
+于是
+\begin{align*}
+\Bigl(\int_{\mathbb{R}^n}\lvert f\rvert^{p^*}\diff x\Bigr)^{\frac{n-1}{n}}
+\leqslant C\Bigl(\int_{\mathbb{R}^n}\lvert f\rvert^{p^*}\diff x\Bigr)^{\frac{p-1}{p}}\Bigl(\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x\Bigr)^{\frac{1}{p}},
+\end{align*}
+从而
+\begin{align*}
+\Bigl(\int_{\mathbb{R}^n}\lvert f\rvert^{p^*}\diff x\Bigr)^{\frac{1}{p^*}}
+\leqslant C\Bigl(\int_{\mathbb{R}^n}\lvert Df\rvert^p\diff x\Bigr)^{\frac{1}{p}},
+\end{align*}
+其中 $C$ 只依赖于 $n$ 与 $p$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-8; kind=motivation; 说明 GNS 不等式的分析意义、p=1 的逐层积分思路与 1<p<n 时化归到 p=1 的技巧
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-8-动机}
+GNS 不等式是 Sobolev 嵌入 $W^{1,p}(\mathbb{R}^n)\subseteq L^{p^*}(\mathbb{R}^n)$ 的定量形式：它把 $f$ 的 $L^{p^*}$ 范数用弱梯度的 $L^p$ 范数控制，常数与 $f$ 无关。$p=1$ 的证明有清楚的几何含义：对每个方向 $i$，一元微积分给出 $\lvert f(x)\rvert\leqslant\int_{-\infty}^{\infty}\lvert Df\rvert\diff t_i$，即 $\lvert f\rvert$ 在任何一条平行于坐标轴的直线上都被 $\lvert Df\rvert$ 在该直线上的积分控制；把这 $n$ 个估计相乘并对各坐标逐次积分，每积分一次就把 $n$ 个因子中的一个从「沿直线的积分」变为「整个空间上的积分」，最终得到 $\lVert f\rVert_{L^{n/(n-1)}}$ 的估计。$1<p<n$ 的情形通过取 $g=\lvert f\rvert^{\gamma}$ 并选择 $\gamma$ 化归到 $p=1$：此时 $\lvert Dg\rvert=\gamma\lvert f\rvert^{\gamma-1}\lvert Df\rvert$，再用 Hölder 不等式把 $\lvert f\rvert^{\gamma-1}$ 的幂次与 $\lvert Df\rvert$ 分离，$\gamma$ 的方程正是使两个指数恰好都成为 $p^*$ 的平衡条件。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-8; kind=hypotheses; 逐条分析 1<=p<n、定义域为全空间、常数只依赖 p,n 以及结论的齐次性
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-8-条件}
+\begin{enumerate}[(i)]
+\item 条件 $1\leqslant p<n$ 同时保证 $p^*$ 有定义（$n-p>0$）与 $p^*>p$。$p=n$ 时结论失效：$p^*$ 为无穷，$W^{1,n}(\mathbb{R}^n)$ 不嵌入 $L^\infty(\mathbb{R}^n)$。$p>n$ 时由\cref{theorem:ch04-4-10}得到的是 Hölder 连续性而非更高的可积性。% XREF internal
+\item 定义域取为整个 $\mathbb{R}^n$，故结论中的常数与区域无关；若把 $\mathbb{R}^n$ 换为有界开集 $U$，相应的估计是\cref{theorem:ch04-4-9}的 Poincaré 型不等式，其右端还要加上 $\lVert f\rVert_{L^p}$ 型项或对 $f$ 的平均值作差。% XREF internal
+\item 不等式两端关于 $f$ 都是齐次的：把 $f$ 换为 $tf$（$t>0$）时两端同乘 $t$，故常数 $C_1$ 与 $f$ 的尺度无关。这也说明结论不可能对 $p=1$ 之外的任意指数成立：由第一条注记中的伸缩计算，$p^*$ 是唯一可行的指数。
+\item 常数 $C_1$ 只依赖于 $p$ 与 $n$，不依赖 $f$。证明中常数来自两个地方：逐次积分时的广义 Hölder 不等式（常数 $1$）与 $1<p<n$ 时的 Hölder 不等式（常数 $\gamma$），后者由 $\gamma=\frac{p(n-1)}{n-p}$ 只依赖 $p$ 与 $n$。
+\item 对 $f\in W^{1,p}(\mathbb{R}^n)$ 的陈述是完备的：弱梯度 $Df$ 存在且属于 $L^p(\mathbb{R}^n)$，故右端有限；左端由结论本身保证有限，即 $f\in L^{p^*}(\mathbb{R}^n)$。
+\end{enumerate}
+\end{remark}
+
+
+\subsection{球上的 Poincaré 不等式}\label{subsection:ch04-05-2}
+
+下面推导前述不等式的一个局部版本。为此需要如下技术性计算：
+
+\begin{lemma}\label{lemma:ch04-4-1}
+设 $n$ 为正整数，$p$ 为满足 $1\leqslant p<\infty$ 的实数，$x\in\mathbb{R}^n$，$r>0$，$B(x,r)\subseteq\mathbb{R}^n$ 为以 $x$ 为心、$r$ 为半径的闭球，$f:B(x,r)\to\mathbb{R}$ 为 $C^1$ 函数，$z\in B(x,r)$。则存在常数 $C$，它只依赖于 $n$ 与 $p$，使得
+\begin{align*}
+\int_{B(x,r)}\lvert f(y)-f(z)\rvert^{p}\diff y\leqslant C r^{n+p-1}\int_{B(x,r)}\lvert Df(y)\rvert^{p}\lvert y-z\rvert^{1-n}\diff y .
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+设 $y,z\in B(x,r)$。则
+\begin{align*}
+f(y)-f(z)&=\int_0^1\frac{\diff}{\diff t}f(z+t(y-z))\diff t\\
+&=\int_0^1Df(z+t(y-z))\diff t\cdot(y-z),
+\end{align*}
+从而
+\begin{align*}
+\lvert f(y)-f(z)\rvert^{p}\leqslant\lvert y-z\rvert^{p}\int_0^1\lvert Df\rvert^{p}(z+t(y-z))\diff t .
+\end{align*}
+于是对 $s>0$ 有
+\begin{align*}
+&\int_{B(x,r)\cap\partial B(z,s)}\lvert f(y)-f(z)\rvert^{p}\diff\mathcal{H}^{n-1}(y)\\
+&\leqslant s^{p}\int_0^1\int_{B(x,r)\cap\partial B(z,s)}\lvert Df\rvert^{p}(z+t(y-z))\diff\mathcal{H}^{n-1}(y)\diff t\\
+&\leqslant s^{p}\int_0^1\frac{1}{t^{n-1}}\int_{B(x,r)\cap\partial B(z,ts)}\lvert Df(w)\rvert^{p}\diff\mathcal{H}^{n-1}(w)\diff t\\
+&=s^{n+p-1}\int_0^1\int_{B(x,r)\cap\partial B(z,ts)}\lvert Df(w)\rvert^{p}\lvert w-z\rvert^{1-n}\diff\mathcal{H}^{n-1}(w)\diff t\\
+&=s^{n+p-2}\int_{B(x,r)\cap B(z,s)}\lvert Df(w)\rvert^{p}\lvert w-z\rvert^{1-n}\diff w .
+\end{align*}
+
+% SUPPLEMENT: parent=lemma:ch04-4-1; kind=proof; 补出换元 w=z+t(y-z) 的伸缩因子、由 |w-z|=ts 得到 s^{n+p-1} 的代数整理，以及最后一步用极坐标公式把 t 积分化为球上积分的细节
+含因子 $\frac{1}{t^{n-1}}$ 的那个不等号中的变换为 $w:=z+t(y-z)$（$t>0$）。此时 $w-z=t(y-z)$，故 $\lvert w-z\rvert=t\lvert y-z\rvert$，且 $\diff\mathcal{H}^{n-1}(w)=t^{n-1}\diff\mathcal{H}^{n-1}(y)$，于是
+\begin{align*}
+&\int_{B(x,r)\cap\partial B(z,s)}\lvert Df\rvert^{p}(z+t(y-z))\diff\mathcal{H}^{n-1}(y)\\
+&=\frac{1}{t^{n-1}}\int_{B(x,r)\cap\partial B(z,ts)}\lvert Df(w)\rvert^{p}\diff\mathcal{H}^{n-1}(w).
+\end{align*}
+出现 $s^{n+p-1}$ 的那一步是代数整理：在 $\partial B(z,ts)$ 上 $\lvert w-z\rvert=ts$，故 $\lvert w-z\rvert^{1-n}(ts)^{n-1}=1$，从而
+\begin{align*}
+s^{p}\frac{1}{t^{n-1}}\lvert Df(w)\rvert^{p}
+&=s^{p}\frac{1}{t^{n-1}}\lvert Df(w)\rvert^{p}\lvert w-z\rvert^{1-n}(ts)^{n-1}\\
+&=s^{n+p-1}\lvert Df(w)\rvert^{p}\lvert w-z\rvert^{1-n}.
+\end{align*}
+第五个等式中把对 $t\in(0,1)$ 的积分化为球上的积分。记 $G(w):=\lvert Df(w)\rvert^{p}\lvert w-z\rvert^{1-n}$，由\cref{theorem:ch03-3-12}（极坐标公式）有% XREF internal
+\begin{align*}
+\int_{B(z,s)}G\diff w=\int_0^{s}\int_{\partial B(z,\sigma)}G\diff\mathcal{H}^{n-1}\diff\sigma=s\int_0^1\int_{\partial B(z,ts)}G\diff\mathcal{H}^{n-1}\diff t,
+\end{align*}
+其中最后一步作代换 $\sigma:=ts$；把该等式用于 $G$ 在 $B(x,r)$ 上的限制即得第五个等式。
+
+把上式对 $s$ 从 $0$ 积分到 $2r$，并用\cref{theorem:ch03-3-12}得% XREF p=165 "We integrate in s from 0 to 2r and use Theorem 3.12 to deduce"
+\begin{align*}
+\int_{B(x,r)}\lvert f(y)-f(z)\rvert^{p}\diff y\leqslant C r^{n+p-1}\int_{B(x,r)}\lvert Df(w)\rvert^{p}\lvert w-z\rvert^{1-n}\diff w .
+\end{align*}
+
+% SUPPLEMENT: parent=lemma:ch04-4-1; kind=proof; 补出对 s 从 0 到 2r 积分时左端与右端各自的极坐标计算与常数估计
+左端的计算：由\cref{theorem:ch03-3-12}并利用 $y,z\in B(x,r)$ 给出 $\lvert y-z\rvert\leqslant 2r$，% XREF internal
+\begin{align*}
+&\int_0^{2r}\int_{B(x,r)\cap\partial B(z,s)}\lvert f(y)-f(z)\rvert^{p}\diff\mathcal{H}^{n-1}(y)\diff s\\
+&=\int_{B(x,r)\cap B(z,2r)}\lvert f(y)-f(z)\rvert^{p}\diff y
+=\int_{B(x,r)}\lvert f(y)-f(z)\rvert^{p}\diff y .
+\end{align*}
+右端的计算：记 $G(w):=\lvert Df(w)\rvert^{p}\lvert w-z\rvert^{1-n}\chi_{B(x,r)}(w)$，把 $\int_{B(z,s)}G\diff w=\int_0^{s}\int_{\partial B(z,\sigma)}G\diff\mathcal{H}^{n-1}\diff\sigma$ 代入并用 Fubini--Tonelli 定理交换次序，得
+\begin{align*}
+\int_0^{2r}s^{n+p-2}\int_{B(z,s)}G\diff w\diff s
+&=\int_{B(z,2r)}G(w)\int_{\lvert w-z\rvert}^{2r}s^{n+p-2}\diff s\diff w\\
+&\leqslant\frac{(2r)^{n+p-1}}{n+p-1}\int_{B(z,2r)}G(w)\diff w .
+\end{align*}
+由于 $B(x,r)\subseteq B(z,2r)$，即得所需的估计，其中常数 $C$ 只依赖于 $n$ 与 $p$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch04-4-1; kind=motivation; 说明该技术引理的作用：把 |f(y)-f(z)| 的 L^p 范数用 |Df| 的带权积分控制，权重 |y-z|^{1-n} 来自沿线段的积分平均
+\begin{remark}\phantomsection\label{remark:ch04-lem-4-1-动机}
+引理把 $f$ 在球内关于单点 $z$ 的偏差的 $L^{p}$ 范数用梯度的带权积分控制。权函数 $\lvert y-z\rvert^{1-n}$ 的奇性来自指数 $1-n\leqslant0$：它在 $n$ 维球上的积分恰好与半径同阶，因而可积。证明的起点是沿线段 $z+t(y-z)$ 的一元微积分：$f(y)-f(z)$ 等于 $Df$ 在该线段上的积分与 $y-z$ 的内积。为避免直接估计带权积分，证明先把 $y$ 限制在球面 $\partial B(z,s)$ 上、对 $s$ 用极坐标公式分层积分，再对 $s$ 积分一次，从而把权函数 $\lvert y-z\rvert^{1-n}$ 的奇性吸收到半径的幂次中。该引理是\cref{theorem:ch04-4-9}与\cref{theorem:ch04-4-10}的公共出发点。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch04-4-1; kind=hypotheses; 逐条分析 p 的范围、f 的 C^1 正则性、z 与球的位置关系以及 n+p-1 的幂次
+\begin{remark}\phantomsection\label{remark:ch04-lem-4-1-条件}
+\begin{enumerate}[(i)]
+\item 条件 $1\leqslant p<\infty$ 保证 $\lvert f(y)-f(z)\rvert^{p}$ 与 $\lvert Df\rvert^{p}$ 可积；$p=\infty$ 时左端为 $\lVert f-f(z)\rVert_{L^\infty}$，估计的形式随之改变，故引理只陈述有限 $p$。
+\item 正则性 $f\in C^1(B(x,r))$ 使微积分基本定理与 $Df$ 的连续性可用：沿线段 $z+t(y-z)$（$0\leqslant t\leqslant1$）的导数存在且连续，故可对 $t$ 积分。
+\item 条件 $z\in B(x,r)$ 只用于确定积分区域：对 $y,z\in B(x,r)$ 有 $\lvert y-z\rvert\leqslant 2r$，故球面 $\partial B(z,s)$ 当 $s>2r$ 时与 $B(x,r)$ 不相交，对 $s$ 的积分只需到 $2r$；同时 $\lvert y-z\rvert$ 在 $B(x,r)$ 上可能为零（$y=z$），此时权 $\lvert y-z\rvert^{1-n}$ 的奇性由 $n$ 维积分的可积性吸收。
+\item 幂次 $r^{n+p-1}$ 由两部分组成：$r^{n}$ 来自球 $B(x,r)$ 的体积，$r^{p-1}$ 来自权函数 $\lvert y-z\rvert^{1-n}$ 在球上的积分（它与半径同阶）以及 $\lvert y-z\rvert^{p}$ 的 $r^{p}$ 因子；常数 $C$ 只依赖于 $n$ 与 $p$，与 $x$、$r$、$f$ 无关。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[球上的 Poincaré 不等式]\label{theorem:ch04-4-9}
+设 $n$ 为正整数，$p$ 为满足 $1\leqslant p<n$ 的实数，$p^*=\frac{np}{n-p}$ 为 $p$ 的 Sobolev 共轭指数。则存在常数 $C_2$，它只依赖于 $p$ 与 $n$，使得对每个 $x\in\mathbb{R}^n$、每个 $r>0$ 与每个 $f\in W^{1,p}(B^{0}(x,r))$ 有
+\begin{align*}
+\Bigl(\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}\leqslant C_2r\Bigl(\fint_{B(x,r)}\lvert Df\rvert^{p}\diff y\Bigr)^{\frac{1}{p}},
+\end{align*}
+其中 $B(x,r)$ 为以 $x$ 为心、$r$ 为半径的闭球，$B^{0}(x,r)$ 为对应的开球，$(f)_{x,r}:=\fint_{B(x,r)}f\diff y$ 为 $f$ 在 $B(x,r)$ 上关于 Lebesgue 测度的平均值。
+\end{theorem}
+
+\begin{proof}
+（1）由\cref{theorem:ch04-4-2}，可设 $f\in C^1(B(x,r))$。% XREF p=166 "Approximating if necessary, we may assume that f ∈ C1(B(x,r))."
+对 $y\in B(x,r)$ 有
+\begin{align*}
+f(y)-(f)_{x,r}=f(y)-\fint_{B(x,r)}f(z)\diff z=\fint_{B(x,r)}\bigl(f(y)-f(z)\bigr)\diff z,
+\end{align*}
+故由 Jensen 不等式与\cref{lemma:ch04-4-1}得% XREF p=166 "We recall Lemma 4.1 to compute"
+\begin{align*}
+\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p}\diff y
+&=\fint_{B(x,r)}\Bigl\lvert\fint_{B(x,r)}\bigl(f(y)-f(z)\bigr)\diff z\Bigr\rvert^{p}\diff y\\
+&\leqslant\fint_{B(x,r)}\fint_{B(x,r)}\lvert f(y)-f(z)\rvert^{p}\diff z\diff y\\
+&\leqslant C\fint_{B(x,r)}r^{p-1}\int_{B(x,r)}\lvert Df(z)\rvert^{p}\lvert y-z\rvert^{1-n}\diff z\diff y\\
+&\leqslant C r^{p}\fint_{B(x,r)}\lvert Df\rvert^{p}\diff z .\qquad(\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-9; kind=proof; 补出第 (1) 步开头 "可设 f 为 C^1" 的依据：C^1(B(x,r)) 在 W^{1,p}(B^0(x,r)) 中稠密，且 (★) 两端关于 W^{1,p} 范数连续
+第 (1) 步开头的化归依据如下。由\cref{theorem:ch04-4-2}，取 $f_k\in C^1(B(x,r))$ 使 $f_k\to f$ 于 $W^{1,p}(B^{0}(x,r))$。$(\star)$ 的两端都关于 $f$ 连续：左端 $\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p}\diff y$ 只涉及 $f$ 在 $L^{p}$ 中的等价类，且 $f\mapsto(f)_{x,r}$ 是 $L^{p}(B(x,r))$ 上的有界线性泛函（其范数为 $1$），故 $f_k\to f$ 于 $L^{p}$ 蕴含左端收敛；右端由 $\lVert Df_k\rVert_{L^{p}}\to\lVert Df\rVert_{L^{p}}$ 而收敛。于是对每个 $k$ 有 $(\star)$，令 $k\to\infty$ 即得 $f\in W^{1,p}(B^{0}(x,r))$ 情形的 $(\star)$。% XREF internal
+
+% SUPPLEMENT: parent=theorem:ch04-4-9; kind=proof; 补出第一个不等号的 Jensen 依据、由引理的 r^{n+p-1} 与平均值的体积因子化为 r^{p-1} 的计算，以及最后一个不等号中 ∫|y-z|^{1-n}dy ≤ Cr 的估计
+第一个不等号是 Jensen 不等式：由 $\fint_{B(x,r)}\diff z$ 为概率测度与 $t\mapsto\lvert t\rvert^{p}$（$p\geqslant1$）的凸性，
+\begin{align*}
+\Bigl\lvert\fint_{B(x,r)}\bigl(f(y)-f(z)\bigr)\diff z\Bigr\rvert^{p}\leqslant\fint_{B(x,r)}\lvert f(y)-f(z)\rvert^{p}\diff z .
+\end{align*}
+第二个不等号中，引理给出的是 $r^{n+p-1}\int_{B(x,r)}\lvert Df(z)\rvert^{p}\lvert y-z\rvert^{1-n}\diff z$，而平均值 $\fint_{B(x,r)}\diff y$ 含因子 $\mathcal{L}^{n}(B(x,r))^{-1}=(\alpha(n)r^{n})^{-1}$，故 $r^{n+p-1}$ 化为 $r^{p-1}/\alpha(n)$，常数并入 $C$。最后一个不等号中，对 $z\in B(x,r)$ 有
+\begin{align*}
+\int_{B(x,r)}\lvert y-z\rvert^{1-n}\diff y\leqslant\int_{B(z,2r)}\lvert y-z\rvert^{1-n}\diff y=2n\alpha(n)r,
+\end{align*}
+于是
+\begin{align*}
+\fint_{B(x,r)}\int_{B(x,r)}\lvert Df(z)\rvert^{p}\lvert y-z\rvert^{1-n}\diff z\diff y\leqslant 2n\alpha(n)r\fint_{B(x,r)}\lvert Df\rvert^{p}\diff z,
+\end{align*}
+再乘 $r^{p-1}$ 并合并常数即得 $(\star)$。
+
+（2）断言：存在常数 $C=C(n,p)$，使得对每个 $g\in W^{1,p}(B^{0}(x,r))$ 有
+\begin{align*}
+\Bigl(\fint_{B(x,r)}\lvert g\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}\leqslant C\Bigl(r^{p}\fint_{B(x,r)}\lvert Dg\rvert^{p}\diff y+\fint_{B(x,r)}\lvert g\rvert^{p}\diff y\Bigr)^{\frac{1}{p}}.
+\end{align*}
+断言的证明：首先，若用 $\frac{1}{r}g(ry)$ 代替 $g(y)$，则可设 $r=1$；同法可设 $x=0$。再由\cref{theorem:ch04-4-7}把 $g$ 延拓为 $\bar g\in W^{1,p}(\mathbb{R}^n)$，使得% XREF p=166 "We next employ Theorem 4.7 to extend g to ḡ ∈ W1,p(Rn) satisfying"
+\begin{align*}
+\lVert\bar g\rVert_{W^{1,p}(\mathbb{R}^n)}\leqslant C\lVert g\rVert_{W^{1,p}(B^{0}(0,1))}.
+\end{align*}
+于是由\cref{theorem:ch04-4-8}得% XREF p=166 "Then Theorem 4.8 implies"
+\begin{align*}
+\Bigl(\int_{B(1)}\lvert g\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}
+&\leqslant\Bigl(\int_{\mathbb{R}^n}\lvert\bar g\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}\\
+&\leqslant C_1\Bigl(\int_{\mathbb{R}^n}\lvert D\bar g\rvert^{p}\diff y\Bigr)^{\frac{1}{p}}\\
+&\leqslant C\Bigl(\int_{B(1)}\bigl(\lvert Dg\rvert^{p}+\lvert g\rvert^{p}\bigr)\diff y\Bigr)^{\frac{1}{p}}.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-9; kind=proof; 逐步核对断言证明中的三个不等号：延拓后的积分区域、GNS 不等式的应用以及范数控制 ∫_{R^n}|Dḡ|^p ≤ C∫_{B(1)}(|Dg|^p+|g|^p)
+第一个不等号成立是因为 $\bar g=g$ 于 $B^{0}(0,1)$ 上，故 $B(1)$ 上的积分不超过 $\mathbb{R}^n$ 上的积分。延拓定理要求预先取定有界开集 $V$ 使 $B^{0}(0,1)\subset\subset V$（如 $V:=B^{0}(0,2)$），此处只用到该定理的存在性与范数估计，延拓在 $V$ 之外取零不影响断言。第二个不等号即\cref{theorem:ch04-4-8}，其中 $p^*$ 为 $p$ 的 Sobolev 共轭指数，其前提 $1\leqslant p<n$ 已由本定理的陈述给出。第三个不等号由范数控制 $\lVert\bar g\rVert_{W^{1,p}(\mathbb{R}^n)}\leqslant C\lVert g\rVert_{W^{1,p}(B^{0}(0,1))}$ 得到：% XREF internal
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert D\bar g\rvert^{p}\diff y\leqslant\lVert\bar g\rVert_{W^{1,p}(\mathbb{R}^n)}^{p}\leqslant C^{p}\lVert g\rVert_{W^{1,p}(B^{0}(0,1))}^{p}=C^{p}\int_{B(1)}\bigl(\lvert Dg\rvert^{p}+\lvert g\rvert^{p}\bigr)\diff y,
+\end{align*}
+其中最后一步用到 $B^{0}(0,1)$ 与 $B(1)$ 只差一个零测集。常数 $C_1$ 与 $C$ 都只依赖于 $n$ 与 $p$，故合并后仍记为 $C$。
+
+% SUPPLEMENT: parent=theorem:ch04-4-9; kind=proof; 验证用 (1/r)g(ry) 代替 g 可把断言化归到 r=1、以及平移可化归到 x=0
+化归的依据是齐次性与伸缩计算。设 $\tilde g(y):=\frac{1}{r}g(ry)$，则 $D\tilde g(y)=Dg(ry)$，故
+\begin{align*}
+\fint_{B(1)}\lvert\tilde g\rvert^{p^*}\diff y&=r^{-p^*}\fint_{B(r)}\lvert g\rvert^{p^*}\diff y,\\
+\fint_{B(1)}\lvert D\tilde g\rvert^{p}\diff y&=\fint_{B(r)}\lvert Dg\rvert^{p}\diff y,\\
+\fint_{B(1)}\lvert\tilde g\rvert^{p}\diff y&=r^{-p}\fint_{B(r)}\lvert g\rvert^{p}\diff y .
+\end{align*}
+代入 $r=1$ 情形的断言并对两端同乘 $r$，即得 $B(0,r)$ 上的断言；再用平移 $y\mapsto y+x$（它把 $B^{0}(0,r)$ 等距地映为 $B^{0}(x,r)$，且不改变 $L^{p}$ 范数与梯度范数）即得一般情形。
+
+（3）在 $(\star)$ 与断言中取 $g:=f-(f)_{x,r}$，结合两步即得结论。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-9; kind=proof; 补出第 (3) 步的完整推导：Dg=Df、断言右端的 (g)_{x,r}=0 与用 (★) 控制 ⨍|g|^p，最终得到 C_2 r (⨍|Df|^p)^{1/p}
+第 (3) 步的具体计算如下。取 $g:=f-(f)_{x,r}$，则 $g\in W^{1,p}(B^{0}(x,r))$，$Dg=Df$ 且 $(g)_{x,r}=0$。由断言，
+\begin{align*}
+\Bigl(\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p^*}\diff y\Bigr)^{\frac{1}{p^*}}
+&\leqslant C\Bigl(r^{p}\fint_{B(x,r)}\lvert Df\rvert^{p}\diff y\\
+&\qquad+\fint_{B(x,r)}\lvert f-(f)_{x,r}\rvert^{p}\diff y\Bigr)^{\frac{1}{p}}\\
+&\leqslant C\Bigl(2r^{p}\fint_{B(x,r)}\lvert Df\rvert^{p}\diff y\Bigr)^{\frac{1}{p}}\\
+&=C\,2^{\frac{1}{p}}r\Bigl(\fint_{B(x,r)}\lvert Df\rvert^{p}\diff y\Bigr)^{\frac{1}{p}},
+\end{align*}
+其中第二个不等号用了 $(\star)$。取 $C_2:=C\,2^{1/p}$ 即得结论；$C_2$ 只依赖于 $p$ 与 $n$。
+
+% SUPPLEMENT: parent=theorem:ch04-4-9; kind=motivation; 说明 Poincaré 不等式的意义：控制 f 与其平均值的偏差、局部化与尺度因子 r 的来源
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-9-动机}
+GNS 不等式要求 $f$ 在全空间 $\mathbb{R}^n$ 上定义且梯度属于 $L^{p}$，而球上不能直接使用它：常数函数 $f\equiv c$（$c\neq0$）满足 $Df\equiv0$，但 $\lVert f\rVert_{L^{p^*}(B(x,r))}>0$，故结论中必须减去平均值。减去平均值后，$f-(f)_{x,r}$ 的 $L^{p^*}$ 范数由梯度控制，估计的右端只含 $\lvert Df\rvert$，这正是 Poincaré 型不等式的特征：它控制函数在其平均值附近的涨落。右端的因子 $r$ 是尺度：把球放大为 $r$ 倍时梯度范数缩小 $r$ 倍，而 $L^{p^*}$ 范数的伸缩指数与 $r$ 的幂次恰好匹配，使不等式在伸缩下保持形式。证明的路线是先用\cref{lemma:ch04-4-1}把偏差的 $L^{p}$ 范数用梯度的带权积分控制（即 $(\star)$），再对一个辅助函数用 GNS 不等式（即断言），最后把两者组合。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-9; kind=hypotheses; 逐条分析 1<=p<n、球的闭开之分、f 的定义域为开球以及常数 C_2 的依赖
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-9-条件}
+\begin{enumerate}[(i)]
+\item 条件 $1\leqslant p<n$ 使 Sobolev 共轭指数 $p^*$ 有定义（见\cref{definition:ch04-4-7}），并使断言中的 GNS 不等式可用。% XREF internal
+\item $f$ 定义在开球 $B^{0}(x,r)$ 上、而积分与平均值取在闭球 $B(x,r)$ 上：弱梯度只需在开球上存在，而闭球与开球只差一个球面，其 $\mathcal{L}^{n}$ 测度为零，故积分值不受影响。这一区分在\cref{theorem:ch04-4-10}中同样出现。% XREF internal
+\item 减去平均值不可省略：若 $f\equiv c$（$c\neq0$），则 $Df\equiv0$，而不减去平均值时左端为 $\lvert c\rvert\mathcal{L}^{n}(B(x,r))^{1/p^*}>0$，与右端为零矛盾。
+\item 常数 $C_2$ 只依赖于 $p$ 与 $n$，与球 $B(x,r)$ 的位置和半径无关；证明中它由\cref{theorem:ch04-4-8}的常数 $C_1$、\cref{lemma:ch04-4-1}的常数以及伸缩计算中的因子合并而成。% XREF internal
+\item 结论对每个 $f\in W^{1,p}(B^{0}(x,r))$ 成立，无需 $f$ 在球外有定义；断言中借助延拓定理把 $g$ 延拓到 $\mathbb{R}^n$，这是使用 GNS 不等式的必经步骤。% XREF internal
+\end{enumerate}
+\end{remark}
+
+
+\subsection{Morrey 不等式}\label{subsection:ch04-05-3}
+
+\begin{definition}[Hölder 连续性]\label{definition:ch04-4-8}
+设 $n$ 为正整数，$\alpha$ 为满足 $0<\alpha<1$ 的实数，$f:\mathbb{R}^n\to\mathbb{R}$ 为实值函数。若
+\begin{align*}
+\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\frac{\lvert f(x)-f(y)\rvert}{\lvert x-y\rvert^{\alpha}}<\infty,
+\end{align*}
+则 $f$ 称为以 $\alpha$ 为指数的\textbf{Hölder 连续}函数（Hölder continuous with exponent $\alpha$）。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch04-4-8; kind=motivation; 说明 Hölder 连续性介于连续与 Lipschitz 连续之间、指数的含义以及它与梯度可积性的联系
+\begin{remark}\phantomsection\label{remark:ch04-def-4-8-动机}
+Hölder 连续性用幂函数 $\lvert x-y\rvert^{\alpha}$ 度量函数值的偏差，指数 $\alpha$ 越大要求越强：$\alpha=1$ 即 Lipschitz 连续性，$\alpha<1$ 允许函数在局部比 Lipschitz 函数更粗糙（如 $\lvert x\rvert^{\alpha}$ 在原点附近的性态）。\cref{theorem:ch04-4-10}表明 Sobolev 函数在 $p>n$ 时恰好具有这种正则性，指数由 $\alpha=1-\frac{n}{p}$ 给出：梯度可积指数 $p$ 越大，$\alpha$ 越接近 $1$；$p\to\infty$ 时 $\alpha\to1$，与 $W^{1,\infty}$ 对应 Lipschitz 函数（见\cref{theorem:ch04-4-5}）一致。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-8; kind=hypotheses; 逐条分析 0<α<1 的范围、上确界的全局性以及 α≥1 时的退化
+\begin{remark}\phantomsection\label{remark:ch04-def-4-8-条件}
+\begin{enumerate}[(i)]
+\item 条件 $0<\alpha<1$ 排除两个端点。$\alpha=1$ 时定义给出的是 Lipschitz 连续性，属于另一类空间；$\alpha>1$ 时条件过强：若 $\lvert f(x)-f(y)\rvert\leqslant C\lvert x-y\rvert^{\alpha}$ 对一切 $x,y\in\mathbb{R}^n$ 成立且 $\alpha>1$，则沿任一线段把区间 $m$ 等分并求和得 $\lvert f(x)-f(y)\rvert\leqslant Cm^{1-\alpha}\lvert x-y\rvert^{\alpha}\to0$（$m\to\infty$），故 $f$ 为常数。
+\item 上确界取于整个 $\mathbb{R}^n\times\mathbb{R}^n$ 上，故该定义刻画的是\textbf{全局} Hölder 连续性；相应的局部版本只需对每个紧集 $K$ 要求在 $K\times K$ 上取上确界。
+\item 上确界的有限性同时蕴含 $f$ 有界：固定 $x_0\in\mathbb{R}^n$，则 $\lvert f(x)\rvert\leqslant\lvert f(x_0)\rvert+C\lvert x-x_0\rvert^{\alpha}$，右端当 $\lvert x\rvert\to\infty$ 时以 $\lvert x\rvert^{\alpha}$ 的阶增长。
+\item 定义中的分母 $\lvert x-y\rvert^{\alpha}$ 要求 $x\neq y$；$x=y$ 时分子为零，条件自动成立，故上确界只在 $x\neq y$ 上取。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Morrey 不等式]\label{theorem:ch04-4-10}
+设 $n$ 为正整数。
+\begin{enumerate}[(i)]
+\item 对每个满足 $n<p<\infty$ 的实数 $p$，存在常数 $C_3$，它只依赖于 $p$ 与 $n$，使得对每个闭球 $B(x,r)\subset\mathbb{R}^n$、每个 $f\in W^{1,p}(B^{0}(x,r))$ 以及 $\mathcal{L}^{n}$-a.e. 的 $y,z\in B(x,r)$ 有
+\begin{align*}
+\lvert f(y)-f(z)\rvert\leqslant C_3r\Bigl(\fint_{B(x,r)}\lvert Df\rvert^{p}\diff w\Bigr)^{\frac{1}{p}}.
+\end{align*}
+\item 特别地，设 $n<p<\infty$ 且 $f\in W^{1,p}(\mathbb{R}^n)$，则极限
+\begin{align*}
+\lim_{r\to0}(f)_{x,r}=:f^*(x)
+\end{align*}
+对一切 $x\in\mathbb{R}^n$ 存在，且 $f^*$ 是以 $\alpha=1-\frac{n}{p}$ 为指数的 Hölder 连续函数。
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-10-p无穷}
+关于 $p=\infty$ 的情形，见\cref{theorem:ch04-4-5}。% XREF p=182 "See Theorem 4.5 for the case p = ∞."
+\end{remark}
+
+\begin{proof}
+（1）先设 $f$ 为 $C^1$ 函数。由\cref{lemma:ch04-4-1}（取 $p=1$）计算% XREF p=167 "use Lemma 4.1 with p = 1 to calculate"
+\begin{align*}
+\lvert f(y)-f(z)\rvert
+&\leqslant\fint_{B(x,r)}\bigl(\lvert f(y)-f(w)\rvert+\lvert f(w)-f(z)\rvert\bigr)\diff w\\
+&\leqslant C\int_{B(x,r)}\lvert Df(w)\rvert\bigl(\lvert y-w\rvert^{1-n}+\lvert z-w\rvert^{1-n}\bigr)\diff w\\
+&\leqslant C\Bigl(\int_{B(x,r)}\bigl(\lvert y-w\rvert^{1-n}+\lvert z-w\rvert^{1-n}\bigr)^{\frac{p}{p-1}}\diff w\Bigr)^{\frac{p-1}{p}}\\
+&\qquad\times\Bigl(\int_{B(x,r)}\lvert Df\rvert^{p}\diff w\Bigr)^{\frac{1}{p}}\\
+&\leqslant C r^{\bigl(n-(n-1)\frac{p}{p-1}\bigr)\frac{p-1}{p}}\Bigl(\int_{B(x,r)}\lvert Df\rvert^{p}\diff w\Bigr)^{\frac{1}{p}}\\
+&=C r^{1-\frac{n}{p}}\Bigl(\int_{B(x,r)}\lvert Df\rvert^{p}\diff w\Bigr)^{\frac{1}{p}}.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch04-4-10; kind=proof; 补出第一个不等号的三角不等式、第二个不等号中技术引理取 p=1 后的常数 r^n 与平均值的体积因子相消，以及第三、第四个不等号的 Hölder 不等式与幂次计算
+第一个不等号来自三角不等式与平均值：$\lvert f(y)-f(z)\rvert\leqslant\fint_{B(x,r)}\lvert f(y)-f(w)\rvert\diff w+\fint_{B(x,r)}\lvert f(w)-f(z)\rvert\diff w$。第二个不等号中，把\cref{lemma:ch04-4-1}分别用于 $z$ 与 $y$（取 $p=1$，此时 $r^{n+p-1}=r^{n}$），% XREF internal
+\begin{align*}
+\int_{B(x,r)}\lvert f(y)-f(w)\rvert\diff w\leqslant C r^{n}\int_{B(x,r)}\lvert Df(w)\rvert\lvert y-w\rvert^{1-n}\diff w,
+\end{align*}
+再除以 $\mathcal{L}^{n}(B(x,r))=\alpha(n)r^{n}$，$r^{n}$ 与体积因子相消，常数并入 $C$。第三个不等号是对 $\lvert Df\rvert\cdot(\lvert y-w\rvert^{1-n}+\lvert z-w\rvert^{1-n})$ 用 Hölder 不等式，指数取 $p$ 与 $\frac{p}{p-1}$。第四个不等号中，由 $(a+b)^{p/(p-1)}\leqslant2^{p/(p-1)-1}\bigl(a^{p/(p-1)}+b^{p/(p-1)}\bigr)$、$y,z\in B(x,r)$ 与 $p>n$，把两项分别放到 $B(y,2r)$ 与 $B(z,2r)$ 上积分得
+\begin{align*}
+&\int_{B(x,r)}\bigl(\lvert y-w\rvert^{1-n}+\lvert z-w\rvert^{1-n}\bigr)^{\frac{p}{p-1}}\diff w\\
+&\leqslant C\int_{B(y,2r)}\lvert y-w\rvert^{\frac{(1-n)p}{p-1}}\diff w+C\int_{B(z,2r)}\lvert z-w\rvert^{\frac{(1-n)p}{p-1}}\diff w\\
+&\leqslant C r^{n-\frac{(n-1)p}{p-1}},
+\end{align*}
+这里用到了指数条件 $\frac{(1-n)p}{p-1}>-n$，它等价于 $p>n$，故球上的积分收敛并等于 $\frac{n\alpha(n)}{n-(n-1)p/(p-1)}(2r)^{n-(n-1)p/(p-1)}$。最后一个等号是指数计算：
+\begin{align*}
+\Bigl(n-(n-1)\frac{p}{p-1}\Bigr)\frac{p-1}{p}=n\frac{p-1}{p}-(n-1)=n-\frac{n}{p}-n+1=1-\frac{n}{p}.
+\end{align*}
+
+（2）由逼近，若 $f\in W^{1,p}(B^{0}(x,r))$，则同样的估计对 $\mathcal{L}^{n}$-a.e. 的 $y,z\in B(x,r)$ 成立。故 (i) 成立。
+
+% SUPPLEMENT: parent=theorem:ch04-4-10; kind=proof; 补出第 (2) 步的逼近论证：C^1(B(x,r)) 在 W^{1,p} 中稠密、取子列得到几乎处处收敛、并对例外零测集作可数并
+第 (2) 步的依据如下。由\cref{theorem:ch04-4-2}，存在 $f_k\in C^1(B(x,r))$ 使 $f_k\to f$ 于 $W^{1,p}(B^{0}(x,r))$；必要时取子列，可设 $f_k\to f$ 于 $B(x,r)$ 上 $\mathcal{L}^{n}$-a.e.，且 $Df_k\to Df$ 于 $L^{p}(B(x,r))$ 中。对每个 $k$，第 (1) 步给出 $\mathcal{L}^{n}$-a.e. 的 $(y,z)$ 满足估计；把这些例外集合并，得到测度为零的集合 $N$，使得对 $y,z\in B(x,r)\setminus N$ 与一切 $k$ 有% XREF internal
+\begin{align*}
+\lvert f_k(y)-f_k(z)\rvert\leqslant C_3r\Bigl(\fint_{B(x,r)}\lvert Df_k\rvert^{p}\diff w\Bigr)^{\frac{1}{p}} .
+\end{align*}
+令 $k\to\infty$：左端趋于 $\lvert f(y)-f(z)\rvert$，右端由 $\lVert Df_k\rVert_{L^{p}}\to\lVert Df\rVert_{L^{p}}$ 而收敛，故估计对 $y,z\in B(x,r)\setminus N$ 成立，即对 $\mathcal{L}^{n}$-a.e. 的 $y,z\in B(x,r)$ 成立。
+
+（3）现设 $f\in W^{1,p}(\mathbb{R}^n)$。则对 $\mathcal{L}^{n}$-a.e. 的 $x,y$ 可在 (i) 的估计中取 $r=\lvert x-y\rvert$ 而得
+\begin{align*}
+\lvert f(y)-f(x)\rvert
+&\leqslant C\lvert x-y\rvert^{1-\frac{n}{p}}\Bigl(\int_{B(x,\lvert x-y\rvert)}\lvert Df\rvert^{p}\diff w\Bigr)^{\frac{1}{p}}\\
+&\leqslant C\lVert Df\rVert_{L^{p}(\mathbb{R}^n)}\lvert x-y\rvert^{1-\frac{n}{p}}.
+\end{align*}
+故 $f$ 在 $\mathcal{L}^{n}$-a.e. 意义下等于一个 Hölder 连续函数 $\bar f$；并且 $f^*=\bar f$ 在 $\mathbb{R}^n$ 上处处成立。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch04-4-10; kind=proof; 补出第 (3) 步两个不等号的依据：由 (i) 取 r=|x-y| 并除以平均值因子、以及把球上积分换成全空间范数
+第 (3) 步的第一个不等号由 (i) 在 $r=\lvert x-y\rvert$ 处的形式得到：此时 $y\in B(x,r)$，且
+\begin{align*}
+C_3r\Bigl(\fint_{B(x,r)}\lvert Df\rvert^{p}\diff w\Bigr)^{\frac{1}{p}}
+&=C_3r\Bigl(\frac{1}{\alpha(n)r^{n}}\int_{B(x,r)}\lvert Df\rvert^{p}\diff w\Bigr)^{\frac{1}{p}}\\
+&=C\Bigl(\int_{B(x,r)}\lvert Df\rvert^{p}\diff w\Bigr)^{\frac{1}{p}}r^{1-\frac{n}{p}} .
+\end{align*}
+第二个不等号是把球上的积分放大为全空间上的积分，并用 $\lVert Df\rVert_{L^{p}(\mathbb{R}^n)}$ 控制，常数并入 $C$。
+
+% SUPPLEMENT: parent=theorem:ch04-4-10; kind=proof; 补出 "f 几乎处处等于 Hölder 函数" 与 "f*=f̄ 处处成立" 两步：在稠密集上取极限得一致 Hölder 估计、连续延拓，以及平均值极限由 f̄ 的连续性给出
+由第二个不等式，存在零测集 $N\subseteq\mathbb{R}^n$ 使对 $x,y\notin N$ 有 $\lvert f(x)-f(y)\rvert\leqslant C\lVert Df\rVert_{L^{p}}\lvert x-y\rvert^{1-n/p}$。于是 $f|_{N^{c}}$ 在 $N^{c}$ 上是 $\alpha=1-\frac{n}{p}$ 阶 Hölder 连续的，从而是连续函数；由于 $\mathbb{R}^n\setminus N$ 稠密于 $\mathbb{R}^n$，$f|_{N^{c}}$ 唯一地连续延拓为 $\mathbb{R}^n$ 上的 Hölder 连续函数 $\bar f$，且 $\bar f=f$ 于 $N^{c}$ 上，即 $f=\bar f$ 于 $\mathbb{R}^n$ 上 $\mathcal{L}^{n}$-a.e.。对 $x\in\mathbb{R}^n$ 与 $r>0$，由 $f=\bar f$ $\mathcal{L}^{n}$-a.e. 与 $B^{0}(x,r)$ 上 $\mathcal{L}^{n}$ 的绝对连续性，
+\begin{align*}
+(f)_{x,r}=\fint_{B(x,r)}f\diff y=\fint_{B(x,r)}\bar f\diff y,
+\end{align*}
+而 $\bar f$ 在 $x$ 处连续，故右端当 $r\to0$ 时收敛到 $\bar f(x)$；因此 $f^*(x)=\lim_{r\to0}(f)_{x,r}$ 对一切 $x\in\mathbb{R}^n$ 存在且等于 $\bar f(x)$，于是 $f^*=\bar f$ 于 $\mathbb{R}^n$ 上处处成立，$f^*$ 也就是以 $\alpha=1-\frac{n}{p}$ 为指数的 Hölder 连续函数。
+
+% SUPPLEMENT: parent=theorem:ch04-4-10; kind=motivation; 说明 Morrey 不等式的意义：p>n 时 Sobolev 函数有连续代表元、以平均值代替点值、以及指数 1-n/p 的来源
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-10-动机}
+当 $p>n$ 时 Sobolev 函数不再获得更高的可积性，而获得连续性：Morrey 不等式断言 $\lvert f(y)-f(z)\rvert$ 被 $\lvert y-z\rvert$ 的 $1-\frac{n}{p}$ 次幂控制，即 $W^{1,p}$ 函数几乎处处等于一个 Hölder 连续函数。这一步把\cref{theorem:ch04-4-8}的嵌入 $W^{1,p}\subseteq L^{p^*}$（$p<n$）在 $p>n$ 时的对应结论补全为 $W^{1,p}\subseteq C^{0,1-n/p}$。证明的核心是把点值 $f(y)$ 换成 $y$ 处球上的平均值：由\cref{lemma:ch04-4-1}，$\lvert f(y)-f(w)\rvert$ 的球上平均被 $\lvert Df\rvert$ 的带权积分控制，对 $\lvert Df\rvert$ 用 Hölder 不等式后，权函数 $\lvert y-w\rvert^{1-n}$ 的 $L^{p/(p-1)}$ 范数恰好是半径的 $n-\frac{(n-1)p}{p-1}$ 次幂，与 $r$ 相乘后给出 $r^{1-n/p}$。指数 $1-\frac{n}{p}$ 由 $p>n$ 保证为正，这是 $p<n$ 情形所没有的正则性。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch04-4-10; kind=hypotheses; 逐条分析 n<p<∞、球的闭开之分、L^n-a.e. 的限定、常数 C_3 的依赖以及 (ii) 中极限存在的意义
+\begin{remark}\phantomsection\label{remark:ch04-thm-4-10-条件}
+\begin{enumerate}[(i)]
+\item 条件 $n<p<\infty$ 不可削弱为 $p=n$ 或 $p<n$：证明中球上积分 $\int_{B(x,r)}\lvert y-w\rvert^{(1-n)p/(p-1)}\diff w$ 的收敛性等价于 $\frac{(n-1)p}{p-1}<n$，后者等价于 $p>n$；$p\leqslant n$ 时该积分发散，Morrey 型估计不成立。% XREF internal
+\item 限定 $\mathcal{L}^{n}$-a.e. 的 $y,z\in B(x,r)$ 是必要的：$f\in W^{1,p}$ 只是 $\mathcal{L}^{n}$ 的等价类，点值本身没有定义；结论的正确含义是存在零测集 $N$ 使估计对 $y,z\in B(x,r)\setminus N$ 成立。第 (3) 步正是据此得到连续代表元。
+\item $f$ 定义在开球 $B^{0}(x,r)$ 上而估计中的积分取在闭球 $B(x,r)$ 上：两者只差球面，其 $\mathcal{L}^{n}$ 测度为零，故积分值相同；弱梯度只需在开球上存在。
+\item 常数 $C_3$ 只依赖于 $p$ 与 $n$，与球的位置、半径以及 $f$ 无关。证明中的常数来自 Hölder 不等式、\cref{lemma:ch04-4-1}的常数与权函数积分的显式值，三者都只依赖 $n$ 与 $p$。% XREF internal
+\item (ii) 中极限的存在性是对\textbf{一切} $x\in\mathbb{R}^n$ 断言的，而 (i) 的估计只对几乎处处的点对成立；两者的桥梁是 $f$ 的连续代表元 $\bar f$：平均值 $\fint_{B(x,r)}f$ 只依赖 $f$ 的等价类，故等于 $\fint_{B(x,r)}\bar f$，其极限由 $\bar f$ 在 $x$ 处的连续性给出。取极限后 $f^*$ 与 $\bar f$ 处处相等，从而 $f^*$ 具有相同的 Hölder 指数 $\alpha=1-\frac{n}{p}\in(0,1)$。
+\end{enumerate}
+\end{remark}
+
+\end{document}

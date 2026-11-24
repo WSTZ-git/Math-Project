@@ -15,45 +15,53 @@
 
 \section{持续性}\label{section:ch06-持续性}
 
-(P) 的极弱解一个值得注意的性质是其 $2$-集中部分（见\cref{definition:ch01-集中弥散}与\cref{subsection:ch03-集中分解}）在时间上持续：
-
+(P) 的极弱解的一个值得注意的性质是其 $2$-集中部分（见\cref{definition:ch01-集中弥散}与\cref{subsection:ch03-集中分解}）在时间上持续。
 \begin{theorem}\label{theorem:ch06-6.2.1}
-设 (A0)--(A1) 成立，$u$ 为问题 (P) 的极弱解。则对每个 $t\in(0,T)$，有
+设 $\Omega\subseteq\mathbb{R}^N$（$N\geqslant3$）为具有光滑边界的有界开集，$T>0$，并设 (A0)--(A1) 成立。设 $u\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 为问题 (P) 的极弱解。则对每个 $t\in(0,T)$，$u(\cdot,t)$ 的 $2$-集中部分与 $u_0$ 的 $2$-集中部分相同，即
 \begin{align}
-[u(\cdot,t)]_{c,2}=[u_0]_{c,2} \quad\text{在 }\mathscr{R}_f(\Omega). \label{align:ch6-6.12}
+[u(\cdot,t)]_{c,2}=[u_0]_{c,2} \quad\text{于 }\mathscr{R}_f(\Omega), \label{align:ch6-6.12}
 \end{align}
+其中 $[\cdot]_{c,2}$ 表示关于 $2$-容量的集中部分。
 \end{theorem}
 
-\begin{remark}\label{remark:ch06-6.2.1}
+\begin{remark}\phantomsection\label{remark:ch06-6.2.1}
 设 $u$ 为 (P) 的极弱解。由\cref{theorem:ch06-6.2.1}，对所有 $t\in(0,T)$，$u(\cdot,t)$ 是 $2$-弥散的当且仅当 $u_0$ 亦然。
 \end{remark}
 
-\begin{proof}[证明\cref{theorem:ch06-6.2.1}]
-设 $K\subseteq\Omega$ 为任意紧集且 $C_2(K)=0$。由\cref{proposition:ch03-零容量逼近}存在序列 $\{f_n\}\subseteq C^\infty_c(\Omega)$，满足：(i) $f_n(\Omega)\subseteq[0,1]$，$f_n|_K=1$；(ii) $\|\Delta f_n\|_{L^1(\Omega)}\to0$（$n\to\infty$）。特别，因
-\begin{align*}
-\int_\Omega|\nabla f_n|^2\,\mathrm{d}x=-\int_\Omega f_n\Delta f_n\,\mathrm{d}x\leqslant\int_\Omega|\Delta f_n|\,\mathrm{d}x,
-\end{align*}
-有 $\lim_{n\to\infty}\|f_n\|_{H^1_0(\Omega)}=0$。
+% SUPPLEMENT: parent=theorem:ch06-6.2.1; kind=motivation; location=定理 6.2.1 后的注记; basis=原书定理 6.2.1、注记 6.2.1 及其证明结构分析（零容量逼近、2-弥散部分的对偶配对）
+\begin{remark}\phantomsection\label{remark:ch06-持续动机}
+(i) 动机与内容。由分解\eqref{align:ch03-3.82}，$u(\cdot,t)=[u(\cdot,t)]_{d,2}+[u(\cdot,t)]_{c,2}$，其中 $[u(\cdot,t)]_{d,2}\in L^1(\Omega)+H^{-1}(\Omega)$（\cref{proposition:ch03-W-1q刻画}），而 $[u(\cdot,t)]_{c,2}$ 集中于某个 $2$-零容集。定理断言：集中于 $2$-零容集的那一部分与时间无关，且恰等于初值的相应部分。换言之，(P) 的极弱解既不能产生也不能消灭 $2$-集中型奇点；在 (P) 中唯一可能随时间演化的奇性完全落在 $2$-弥散部分。这正是\cref{section:ch06-唯一性}能把弱解的不唯一性完全归结为 $2$-弥散奇异部分的原因。
 
-设 $U\subseteq\Omega$ 为开集且 $U\supseteq K$。由\cref{lemma:appA-光滑截断}与标准正则化论证，存在 $\rho_U\in C^\infty_c(U)$，$\rho_U(U)\subseteq[0,1]$，$\rho_U|_K=1$。对所有 $t\in(0,T]$ 及 $n\in\mathbb{N}$，由等式\eqref{align:ch6-6.4}得（见\eqref{align:ch03-3.82}）
+(ii) 各假设的作用。(A0) 使 $u_0\in\mathscr{R}_f(\Omega)$ 及其 $2$-集中部分 $[u_0]_{c,2}$ 有定义；(A1) 中 $\phi\in C_b(\mathbb{R})$ 给出 $\phi(u_r)\in L^\infty(Q)$，这是\eqref{align:ch6-6.15}中 $\phi(u_r)\Delta(f_n\rho_U)$ 可积并由 $\|\Delta f_n\|_{L^1}\to0$ 控制的前提。极弱解的定义（\eqref{align:ch6-6.3}）通过\cref{proposition:ch06-6.1.1}提供\eqref{align:ch6-6.4}，使 $u(\cdot,t)$ 与 $u_0$ 之差可由 $\int_0^t\Delta\phi(u_r)$ 表示；这一步把关于 $2$-集中部分的陈述转化为对 $2$-弥散部分的配对，而后者属于 $L^1+H^{-1}$，在 $H^1_0$ 中弱收敛于零的测试函数下消失。关键工具是\cref{proposition:ch03-零容量逼近}给出的序列 $\{f_n\}$：它在 $2$-零容紧集 $K$ 上等于 $1$、在 $\Omega$ 中取值于 $[0,1]$，且 $\|\Delta f_n\|_{L^1}\to0$，从而 $\|f_n\|_{H^1_0}\to0$。$u\in L^\infty_{w^*}(0,T;\mathscr{R}_f(\Omega))$ 的一致有界性保证各配对关于 $n$ 一致有界。
+
+(iii) 边界与反例。\eqref{align:ch6-6.12}只控制 $2$-集中部分，$2$-弥散部分可以随时间任意变化：\cref{remark:ch06-6.3.2}的构造 $u(\cdot,t)=w(\cdot,t)+u_{0s}$ 取 $u_s$ 不随时间变化，但对一般极弱解，$[u_s(\cdot,t)]_{d,2}$ 不受任何限制。等式\eqref{align:ch6-6.12}中的容量指数 $2$ 不能随意提高：当 $\phi$ 无界（或 $\phi$ 在无穷远次线性）时，结论须换成关于更强容量 $C_{2,1/(1-\alpha)}$ 的陈述（见\cref{theorem:ch6-正则化}与\cref{section:ch06-无界phi}），此时\eqref{align:ch6-6.12}可以不成立。若 $\phi$ 为常数（去掉 (A1) 的非常数性），则\eqref{align:ch6-6.2}迫使 $u(\cdot,t)$ 在时间上恒定，\eqref{align:ch6-6.12}成为平凡等式。
+\end{remark}
+\begin{proof}[证明\cref{theorem:ch06-6.2.1}]
+设 $K\subseteq\Omega$ 为紧集且 $C_2(K)=0$。由\cref{proposition:ch03-零容量逼近}存在序列 $\{f_n\}\subseteq C^\infty_c(\Omega)$，使：(i) $f_n(\Omega)\subseteq[0,1]$，$f_n|_K=1$；(ii) $\|\Delta f_n\|_{L^1(\Omega)}\to0$（$n\to\infty$）。特别，由
+\begin{align*}
+\int_\Omega|\nabla f_n|^2\,\mathrm{d}x=-\int_\Omega f_n\Delta f_n\,\mathrm{d}x\leqslant\int_\Omega|\Delta f_n|\,\mathrm{d}x
+\end{align*}
+（分部积分并利用 $0\leqslant f_n\leqslant1$）得 $\lim_{n\to\infty}\|f_n\|_{H^1_0(\Omega)}=0$。
+设 $U\subseteq\Omega$ 为开集且 $U\supseteq K$。由\cref{lemma:appA-光滑截断}与正则化论证，存在 $\rho_U\in C^\infty_c(U)$，使 $\rho_U(U)\subseteq[0,1]$、$\rho_U|_K=1$。对一切 $t\in(0,T]$ 与 $n\in\mathbb{N}$，由等式\eqref{align:ch6-6.4}（取 $\rho=f_n\rho_U\in C^2_c(\Omega)$）得（见\eqref{align:ch03-3.80}--\eqref{align:ch03-3.82}）
 \begin{align}
 \begin{aligned}
 &\langle[u(\cdot,t)]_{c,2},f_n\rho_U\rangle-\langle[u_0]_{c,2},f_n\rho_U\rangle\\
-&= \int_0^t\mathrm{d}s\int_\Omega\phi(u_r(x,s))\Delta(f_n\rho_U)(x)\,\mathrm{d}x\\
-&\quad+\langle[u_0]_{d,2},f_n\rho_U\rangle-\langle[u(\cdot,t)]_{d,2},f_n\rho_U\rangle.
-\end{aligned} \label{align:ch6-6.13}
+&= \int_0^t\mathrm{d}s\int_\Omega\phi(u_r(x,s))\Delta(f_n\rho_U)(x)\,\mathrm{d}x
++\langle[u_0]_{d,2},f_n\rho_U\rangle-\langle[u(\cdot,t)]_{d,2},f_n\rho_U\rangle .
+\end{aligned}
+\label{align:ch6-6.13}
 \end{align}
-因 $\|f_n\|_{H^1_0(\Omega)}\to0$，有 $f_n\rho_U\stackrel{*}{\rightharpoonup}0$ 在 $L^\infty(\Omega)$，$f_n\rho_U\to0$ 在 $H^1_0(\Omega)$。又由\cref{theorem:ch03-扩散部分H负1}，$[u_0]_{d,2}$ 与 $[u(\cdot,t)]_{d,2}$（$t\in(0,T)$）均属于 $L^1(\Omega)+H^{-1}(\Omega)$。故
+因 $\|f_n\|_{H^1_0(\Omega)}\to0$，有 $f_n\rho_U\stackrel{*}{\rightharpoonup}0$ 于 $L^\infty(\Omega)$，$f_n\rho_U\to0$ 于 $H^1_0(\Omega)$。又由\cref{proposition:ch03-W-1q刻画}，$[u_0]_{d,2}$ 与 $[u(\cdot,t)]_{d,2}$（$t\in(0,T)$）均属于 $L^1(\Omega)+H^{-1}(\Omega)$。故
 \begin{align}
 \lim_{n\to\infty}\langle[u(\cdot,t)]_{d,2},f_n\rho_U\rangle
 =\lim_{n\to\infty}\langle[u_0]_{d,2},f_n\rho_U\rangle=0
 \quad(t\in(0,T)). \label{align:ch6-6.14}
 \end{align}
-另一方面，因 $\phi(u_r)\in L^\infty(Q)$，$\|\Delta f_n\|_{L^1(\Omega)}\to0$，$\|f_n\|_{H^1_0(\Omega)}\to0$，得
+另一方面，因 $\phi(u_r)\in L^\infty(Q)$、$\|\Delta f_n\|_{L^1(\Omega)}\to0$ 且 $\|f_n\|_{H^1_0(\Omega)}\to0$，得
 \begin{align}
 \lim_{n\to\infty}\int_0^t\int_\Omega\phi(u_r)\Delta(f_n\rho_U)\,\mathrm{d}x\,\mathrm{d}s=0. \label{align:ch6-6.15}
 \end{align}
-注意因对所有 $n\in\mathbb{N}$ 有 $\chi_K\leqslant f_n\rho_U\leqslant\chi_U$，故对所有 $n\in\mathbb{N}$，
+因对所有 $n\in\mathbb{N}$ 有 $\chi_K\leqslant f_n\rho_U\leqslant\chi_U$，故对所有 $n\in\mathbb{N}$，
 \begin{align}
 [u_0]^\pm_{c,2}(K)\leqslant\langle[u_0]^\pm_{c,2},f_n\rho_U\rangle\leqslant[u_0]^\pm_{c,2}(U), \label{align:ch6-6.16a}\\
 [u(\cdot,t)]^\pm_{c,2}(K)\leqslant\langle[u(\cdot,t)]^\pm_{c,2},f_n\rho_U\rangle\leqslant[u(\cdot,t)]^\pm_{c,2}(U)
@@ -74,9 +82,10 @@
 &\quad\leqslant\limsup_{n\to\infty}\langle[u_0]^+_{c,2},f_n\rho_U\rangle
 -\liminf_{n\to\infty}\langle[u_0]^-_{c,2},f_n\rho_U\rangle
 \leqslant[u_0]^+_{c,2}(U)-[u_0]^-_{c,2}(K).
-\end{aligned} \label{align:ch6-6.18}
+\end{aligned}
+\label{align:ch6-6.18}
 \end{align}
-类似地，
+同法可证
 \begin{align}
 [u_0]^+_{c,2}(K)-[u_0]^-_{c,2}(U)
 \leqslant[u(\cdot,t)]^+_{c,2}(U)-[u(\cdot,t)]^-_{c,2}(K)
@@ -102,14 +111,14 @@
 [u(\cdot,t)]_{c,2}(E)=[u_0]_{c,2}(E)
 \quad\text{对每个 }2\text{-零容集 }E\in\mathscr{B}(\Omega). \label{align:ch6-6.20}
 \end{align}
-另一方面，由 $2$-集中测度的定义，对每个 $t\in(0,T)$，存在 $2$-零容集 $E_1(t)\in\mathscr{B}(\Omega)$，使 $[u(\cdot,t)]_{c,2}=[u(\cdot,t)]_{c,2}\llcorner E_1(t)$。类似地，存在 $2$-零容集 $E_2\in\mathscr{B}(\Omega)$，使 $[u_0]_{c,2}=[u_0]_{c,2}\llcorner E_2$。由等式\eqref{align:ch6-6.20}，
+另一方面，由 $2$-集中测度的定义，对每个 $t\in(0,T)$，存在 $2$-零容集 $E_1(t)\in\mathscr{B}(\Omega)$，使 $[u(\cdot,t)]_{c,2}=[u(\cdot,t)]_{c,2}\llcorner E_1(t)$。同法，存在 $2$-零容集 $E_2\in\mathscr{B}(\Omega)$，使 $[u_0]_{c,2}=[u_0]_{c,2}\llcorner E_2$。由等式\eqref{align:ch6-6.20}，
 \begin{align*}
 [u(\cdot,t)]_{c,2}(E_1(t)\setminus E_2)=[u_0]_{c,2}(E_1(t)\setminus E_2)=0,
 \end{align*}
 \begin{align*}
 [u_0]_{c,2}(E_2\setminus E_1(t))=[u(\cdot,t)]_{c,2}(E_2\setminus E_1(t))=0.
 \end{align*}
-因此 $[u(\cdot,t)]_{c,2}$ 与 $[u_0]_{c,2}$ 均集中于集 $F(t)\triangleq E_1(t)\cap E_2$。显然，对任意 $E\in\mathscr{B}(\Omega)$，有 $C_2(E\cap F(t))=C_2(F(t))=0$。由\eqref{align:ch6-6.20}，
+因此 $[u(\cdot,t)]_{c,2}$ 与 $[u_0]_{c,2}$ 均集中于集 $F(t)\triangleq E_1(t)\cap E_2$。对任意 $E\in\mathscr{B}(\Omega)$，由 $F(t)\subseteq E_1(t)$ 及 $C_2$ 的单调性得 $C_2(E\cap F(t))\leqslant C_2(F(t))\leqslant C_2(E_1(t))=0$。于是由\eqref{align:ch6-6.20}，
 \begin{align*}
 [u(\cdot,t)]_{c,2}(E)=[u(\cdot,t)]_{c,2}(E\cap F(t))
 =[u_0]_{c,2}(E\cap F(t))=[u_0]_{c,2}(E)
@@ -117,7 +126,63 @@
 对每个 $E\in\mathscr{B}(\Omega)$ 成立。结论随之成立。
 \end{proof}
 
+% SUPPLEMENT: parent=theorem:ch06-6.2.1; kind=proof; location=定理 6.2.1 原证明后的补写证明; basis=原书证明中被压缩的四处（(6.13) 的推导、(6.14) 与 (6.15) 的估计、(6.19) 的“同法”、由紧集到 Borel 集的过渡）
+\begin{proof}
+补出原证明中被压缩的论证。
+(1) \eqref{align:ch6-6.13}的推导。由\eqref{align:ch6-6.4}对 $\rho=f_n\rho_U\in C^2_c(\Omega)$ 与每个 $t\in(0,T]$ 成立（$t=T$ 时用\cref{remark:ch06-6.1.2}的连续代表元），得
+\begin{align*}
+\langle u(\cdot,t),f_n\rho_U\rangle-\langle u_0,f_n\rho_U\rangle
+=\int_0^t\mathrm{d}s\int_\Omega\phi(u_r)\Delta(f_n\rho_U)\,\mathrm{d}x .
+\end{align*}
+由分解\eqref{align:ch03-3.82}有 $\langle u(\cdot,t),f_n\rho_U\rangle=\langle[u(\cdot,t)]_{c,2},f_n\rho_U\rangle+\langle[u(\cdot,t)]_{d,2},f_n\rho_U\rangle$，对 $u_0$ 有同样的分解；代入上式并移项即得\eqref{align:ch6-6.13}。
+(2) \eqref{align:ch6-6.14}的估计。设 $g=g_1+g_2$，$g_1\in L^1(\Omega)$，$g_2\in H^{-1}(\Omega)$，置 $M_U\triangleq\|\rho_U\|_{W^{1,\infty}(\Omega)}$。由
+\begin{align*}
+\|f_n\rho_U\|_{L^1(\Omega)}\leqslant M_U\|f_n\|_{L^1(\Omega)}
+\leqslant M_U|\Omega|^{1/2}\|f_n\|_{L^2(\Omega)}\to0
+\end{align*}
+知 $f_n\rho_U\to0$ 于测度，且 $|f_n\rho_U|\leqslant1$ 于 $\Omega$；由 $g_1\in L^1(\Omega)$ 的一致可积性与 Vitali 收敛定理得 $\int_\Omega g_1f_n\rho_U\,\mathrm{d}x\to0$。又
+\begin{align*}
+\left|\langle g_2,f_n\rho_U\rangle_{H^{-1},H^1_0}\right|
+\leqslant\|g_2\|_{H^{-1}(\Omega)}\|f_n\rho_U\|_{H^1_0(\Omega)}
+\leqslant M_U\|g_2\|_{H^{-1}(\Omega)}\|f_n\|_{H^1_0(\Omega)}\to0 .
+\end{align*}
+故\eqref{align:ch6-6.14}成立。
+(3) \eqref{align:ch6-6.15}的估计。由乘积求导公式 $\Delta(f_n\rho_U)=\rho_U\Delta f_n+2\nabla f_n\cdot\nabla\rho_U+f_n\Delta\rho_U$ 得
+\begin{align*}
+&\left|\int_0^t\int_\Omega\phi(u_r)\Delta(f_n\rho_U)\,\mathrm{d}x\,\mathrm{d}s\right|\\
+&\quad\leqslant\|\phi\|_{L^\infty(\mathbb{R})}\Big(T\|\rho_U\|_{L^\infty(\Omega)}\|\Delta f_n\|_{L^1(\Omega)}
++2T\|\nabla f_n\|_{L^2(\Omega)}\|\nabla\rho_U\|_{L^2(\Omega)}
++T\|f_n\|_{L^1(\Omega)}\|\Delta\rho_U\|_{L^\infty(\Omega)}\Big),
+\end{align*}
+右端三项分别由 $\|\Delta f_n\|_{L^1}\to0$、$\|\nabla f_n\|_{L^2}\leqslant\|f_n\|_{H^1_0}\to0$、$\|f_n\|_{L^1}\to0$ 趋于零。故\eqref{align:ch6-6.15}成立。
+(4) \eqref{align:ch6-6.19}的推导。对任意 $n\in\mathbb{N}$，由\eqref{align:ch6-6.16a}得 $[u_0]^+_{c,2}(K)-[u_0]^-_{c,2}(U)\leqslant\langle[u_0]_{c,2},f_n\rho_U\rangle$；而由\eqref{align:ch6-6.13}，
+\begin{align*}
+\langle[u_0]_{c,2},f_n\rho_U\rangle
+=\langle[u]_{c,2},f_n\rho_U\rangle
+-\int_0^t\int_\Omega\phi(u_r)\Delta(f_n\rho_U)\,\mathrm{d}x\,\mathrm{d}s
+-\langle[u_0]_{d,2},f_n\rho_U\rangle+\langle[u(\cdot,t)]_{d,2},f_n\rho_U\rangle .
+\end{align*}
+右端三个余项当 $n\to\infty$ 时趋于零（\eqref{align:ch6-6.14}--\eqref{align:ch6-6.15}），而由\eqref{align:ch6-6.16b}有 $\langle[u]_{c,2},f_n\rho_U\rangle\leqslant[u(\cdot,t)]^+_{c,2}(U)-[u(\cdot,t)]^-_{c,2}(K)$。令 $n\to\infty$ 即得\eqref{align:ch6-6.19}。
+(5) 由紧集到 Borel 集。固定 $t\in(0,T)$ 与 $2$-零容紧集 $K\subseteq\Omega$，置 $U_j\triangleq\{x\in\Omega\mid\operatorname{dist}(x,K)<1/j\}$（$j\in\mathbb{N}$）。则每个 $U_j$ 为开集，$U_j\supseteq K$ 且 $U_j\downarrow K$。由\eqref{align:ch6-6.18}，
+\begin{align*}
+[u(\cdot,t)]^+_{c,2}(K)-[u(\cdot,t)]^-_{c,2}(U_j)
+\leqslant[u_0]^+_{c,2}(U_j)-[u_0]^-_{c,2}(K).
+\end{align*}
+由有限测度的上连续性（$[u(\cdot,t)]^-_{c,2}(U_1)<\infty$）得 $[u(\cdot,t)]^-_{c,2}(U_j)\to[u(\cdot,t)]^-_{c,2}(K)$、$[u_0]^+_{c,2}(U_j)\to[u_0]^+_{c,2}(K)$。令 $j\to\infty$ 得
+\begin{align*}
+[u(\cdot,t)]^+_{c,2}(K)-[u(\cdot,t)]^-_{c,2}(K)\leqslant[u_0]^+_{c,2}(K)-[u_0]^-_{c,2}(K);
+\end{align*}
+对\eqref{align:ch6-6.19}作同样处理得反向不等式。于是
+\begin{align*}
+[u(\cdot,t)]_{c,2}(K)=[u_0]_{c,2}(K),
+\end{align*}
+因为\eqref{align:ch03-3.83}--\eqref{align:ch03-3.84}给出 $[\mu]_{c,2}=[\mu]^+_{c,2}-[\mu]^-_{c,2}$。再设 $E\in\mathscr{B}(\Omega)$ 满足 $C_2(E)=0$。由 $[u_0]_{c,2}$、$[u(\cdot,t)]_{c,2}$ 的有限性与内正则性，
+\begin{align*}
+[\mu]_{c,2}(E)=\sup\{[\mu]_{c,2}(K)\mid K\subseteq E,\ K\ \text{紧}\},
+\end{align*}
+而每个这样的 $K$ 满足 $C_2(K)\leqslant C_2(E)=0$，故 $[u(\cdot,t)]_{c,2}(K)=[u_0]_{c,2}(K)$；取上确界即得\eqref{align:ch6-6.20}。
 
-
+(6) 最后的分解论证。由 $[u(\cdot,t)]_{c,2}=[u(\cdot,t)]_{c,2}\llcorner E_1(t)$ 得 $[u(\cdot,t)]_{c,2}(E)=[u(\cdot,t)]_{c,2}(E\cap E_1(t))$；又 $E\cap E_1(t)\subseteq(E\cap F(t))\cup(E_1(t)\setminus E_2)$，其中第二项为 $[u(\cdot,t)]_{c,2}$-零测集，故 $[u(\cdot,t)]_{c,2}(E)=[u(\cdot,t)]_{c,2}(E\cap F(t))$。同法 $[u_0]_{c,2}(E)=[u_0]_{c,2}(E\cap F(t))$。最后由 $C_2(E\cap F(t))=0$ 与\eqref{align:ch6-6.20}连接两式。
+\end{proof}
 
 \end{document}

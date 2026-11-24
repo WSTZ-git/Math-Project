@@ -58,7 +58,8 @@
 \IfFileExists{../Harmonic Analysis/main.aux}{\externaldocument[Harmonic Analysis/-]{../Harmonic Analysis/main}}{}
 % 本工程自身的 main.aux 不在此重复引入：原先误将其作为 externaldocument 读取，会二次导入 6700 余条 label，
 % 既加倍内存占用，也使 latexmk 认为 main.aux 既是输入又是输出而反复重跑。
-% \IfFileExists{../Measure Theory and Nonlinear Evolution Equations/main.aux}{\externaldocument[Measure Theory and Nonlinear Evolution Equations/-]{../Measure Theory and Nonlinear Evolution Equations/main}}{}
+% \IfFileExists{../Measure Theory and Fine Properties of Functions(Evans, Gariepy)/main.aux}{\externaldocument[Measure Theory and Fine Properties of Functions(Evans, Gariepy)/-]{../Measure Theory and Fine Properties of Functions(Evans, Gariepy)/main}}{}
+\IfFileExists{../Measure Theory and Nonlinear Evolution Equations/main.aux}{\externaldocument[Measure Theory and Nonlinear Evolution Equations/-]{../Measure Theory and Nonlinear Evolution Equations/main}}{}
 \IfFileExists{../Number Theory/main.aux}{\externaldocument[Number Theory-]{../Number Theory/main}}{}
 \IfFileExists{../Numerical Analysis/main.aux}{\externaldocument[Numerical Analysis-]{../Numerical Analysis/main}}{}
 \IfFileExists{../Partial Differential Equations/main.aux}{\externaldocument[Partial Differential Equations-]{../Partial Differential Equations/main}}{}

@@ -1,0 +1,445 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{Whitney 延拓定理}\label{section:ch06-05}
+
+下面确定使定义在闭子集 $C\subseteq\mathbb{R}^n$ 上的给定函数 $f$ 存在 $C^1$ 延拓 $\bar f$ 的条件。
+
+设 $C\subset\mathbb{R}^n$ 为闭集，并设给定函数 $f:C\to\mathbb{R}$ 与 $d:C\to\mathbb{R}^n$。
+
+\begin{definition*}[Whitney 差商的记号]
+\phantomsection\label{definition:ch06-def-6-10-记号}
+设 $n$ 为正整数，$C\subseteq\mathbb{R}^n$ 为闭集，$f:C\to\mathbb{R}$ 与 $d:C\to\mathbb{R}^n$ 为给定函数；以下 $d(x)\cdot(y-x)$ 表示 $d(x)\in\mathbb{R}^n$ 与 $y-x\in\mathbb{R}^n$ 的 Euclid 内积。
+\begin{enumerate}[(i)]
+\item 对 $x,y\in C$，$x\neq y$，把
+\begin{align*}
+R(y,x):=\frac{f(y)-f(x)-d(x)\cdot(y-x)}{\lvert x-y\rvert}
+\end{align*}
+定义为 $f$ 与 $d$ 在点对 $(y,x)$ 处的 Whitney 差商。
+\item 设 $K\subseteq C$ 为紧集。对 $\delta>0$，把
+\begin{align*}
+\rho_K(\delta):=\sup\bigl\{\lvert R(y,x)\rvert\bigm|0<\lvert x-y\rvert\leqslant\delta,\ x,y\in K\bigr\}
+\end{align*}
+定义为差商 $R$ 在 $K$ 上关于尺度 $\delta$ 的上确界；当 $K$ 中不存在满足 $0<\lvert x-y\rvert\leqslant\delta$ 的点对时，约定该上确界为 $0$。
+\end{enumerate}
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch06-def-6-10-记号; kind=motivation; 说明差商是一阶 Taylor 余项除以距离、d 作为待定梯度的角色，以及把逐点条件升级为紧集上一致条件的作用
+\begin{remark}\phantomsection\label{remark:ch06-def-6-10-记号-动机}
+差商 $R(y,x)$ 是 $f(y)$ 与其一阶 Taylor 多项式 $f(x)+d(x)\cdot(y-x)$ 之差再除以 $\lvert x-y\rvert$，即归一化后的 Taylor 余项。若 $f$ 在含 $x$ 的开集上 $C^1$ 且 $d$ 就是它的梯度，则由微积分基本定理
+\begin{align*}
+R(y,x)=\frac{1}{\lvert x-y\rvert}\int_0^1\bigl[Df(x+t(y-x))-d(x)\bigr]\cdot(y-x)\diff t,
+\end{align*}
+其绝对值不大于 $Df$ 在线段 $[x,y]$ 上的振幅。因此 $R$ 度量的是 $f$ 在 $x$ 处、以 $d(x)$ 为梯度的可微性；$d$ 在此扮演待定梯度的角色，\cref{theorem:ch06-6-10}的结论正是所构造延拓在 $C$ 上的梯度等于 $d$。% XREF internal
+
+$\rho_K(\delta)$ 把上述逐点的量沿紧集 $K$ 取上确界，并把点对的距离限制在 $\delta$ 之内。它是 $\delta$ 的单调不减函数，故 $\delta\to0^{+}$ 时的极限存在（取值于 $[0,+\infty]$）；条件 $(\star)$ 断言该极限为 $0$，即差商在 $K$ 上随 $\lvert x-y\rvert\to0$ 一致地趋于 $0$。这种「紧集上一致」的形式是必需的：延拓要在全空间上 $C^1$，而 $C^1$ 是局部性质，误差控制必须在每个紧集上一致成立，才能过渡到全空间。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch06-def-6-10-记号; kind=hypotheses; 逐条核对 x≠y、内积的类型、K 取紧集与上确界有限性、空集约定，以及条件对每个紧集提出的量词结构
+\begin{remark}\phantomsection\label{remark:ch06-def-6-10-记号-条件}
+\begin{enumerate}[(i)]
+\item 条件 $x\neq y$ 是 $R(y,x)$ 有定义的必要条件：分母 $\lvert x-y\rvert$ 必须非零。内积 $d(x)\cdot(y-x)$ 为实数，故 $R(y,x)\in\mathbb{R}$。
+\item $d$ 的陪域取 $\mathbb{R}^n$，与 $\mathbb{R}^n$ 中向量的内积相容，这正是 $d$ 作为纯量函数 $f$ 的梯度所要求的类型；若 $f$ 取 $\mathbb{R}^m$ 值，则 $d$ 应取 $m\times n$ 矩阵值，本节只讨论纯量值情形。
+\item $K$ 取紧集而非一般子集：紧性保证 $f$ 与 $d$ 在 $K$ 上有界且一致连续，从而 $\lvert R\rvert$ 在 $\{(x,y)\in K\times K\mid 0<\lvert x-y\rvert\leqslant\delta\}$ 上有界，故 $\rho_K(\delta)<+\infty$ 对每个 $\delta>0$ 成立。
+\item 上确界取在空集上的情形只出现在 $K$ 至多含一个点、或 $\delta$ 小于 $K$ 中任意两点距离之时；此时约定 $\rho_K(\delta)=0$，条件 $(\star)$ 自动成立。这一约定不影响实质结论：$K$ 含多个点且 $\delta$ 充分小时该集合非空，估计由非空情形的上确界给出。
+\item $(\star)$ 对每个紧集 $K\subseteq C$ 提出，量词顺序为「对每个 $K$，再取极限 $\delta\to0^{+}$」，故收敛速度允许依赖 $K$，但不能依赖 $K$ 中的点对；这正是「紧集上一致」的确切含义。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Whitney 延拓定理]\label{theorem:ch06-6-10}
+设 $n$ 为正整数，$C\subseteq\mathbb{R}^n$ 为闭集，$f:C\to\mathbb{R}$ 与 $d:C\to\mathbb{R}^n$ 为连续函数，且 $d(x)\cdot(y-x)$ 表示 $d(x)\in\mathbb{R}^n$ 与 $y-x\in\mathbb{R}^n$ 的 Euclid 内积。对 $x,y\in C$，$x\neq y$，令
+\begin{align*}
+R(y,x):=\frac{f(y)-f(x)-d(x)\cdot(y-x)}{\lvert x-y\rvert},
+\end{align*}
+并对紧集 $K\subseteq C$ 与 $\delta>0$ 令
+\begin{align*}
+\rho_K(\delta):=\sup\bigl\{\lvert R(y,x)\rvert\bigm|0<\lvert x-y\rvert\leqslant\delta,\ x,y\in K\bigr\},
+\end{align*}
+且假设对每个紧集 $K\subseteq C$，
+\begin{align*}
+\rho_K(\delta)\to0\quad\text{当}\ \delta\to0^{+}. \qquad(\star)
+\end{align*}
+则存在函数 $\bar f:\mathbb{R}^n\to\mathbb{R}$，使得
+\begin{enumerate}[(i)]
+\item $\bar f\in C^1(\mathbb{R}^n)$，即 $\bar f$ 在 $\mathbb{R}^n$ 上处处可微，且其梯度 $D\bar f:\mathbb{R}^n\to\mathbb{R}^n$ 连续；
+\item $\bar f=f$ 于 $C$ 上，且 $D\bar f=d$ 于 $C$ 上。
+\end{enumerate}
+\end{theorem}
+
+本定理的证明在结构上是\cref{section:ch01-02}中\cref{theorem:ch01-1-13}证明的 $C^1$ 版本。% XREF p=292 "The proof is a sort of C^1-version of the proof of the extension Theorem 1.13 in Section 1.2." | p=292 "Theorem 1.13 in Section 1.2"
+
+% SUPPLEMENT: parent=theorem:ch06-6-10; kind=motivation; 说明 Whitney 条件作为必要条件与充分条件的双重身份、延拓构造的两个层次（Vitali 覆盖与一阶 Taylor 多项式的加权平均），以及条件 (★) 承担的误差控制
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-10-动机}
+本定理回答的问题是：给定闭集 $C$ 上的函数 $f:C\to\mathbb{R}$ 与候选梯度 $d:C\to\mathbb{R}^n$，何时存在全空间上的 $C^1$ 函数 $\bar f$，使 $\bar f=f$、$D\bar f=d$ 于 $C$ 上。在差商的语言中，必要条件就是 $(\star)$：若这样的 $\bar f$ 已经存在，则对 $x,y\in C$，$x\neq y$，
+\begin{align*}
+R(y,x)=\frac{1}{\lvert x-y\rvert}\int_0^1\bigl[D\bar f(x+t(y-x))-D\bar f(x)\bigr]\cdot(y-x)\diff t,
+\end{align*}
+其绝对值不大于 $D\bar f$ 在 $x$ 附近的振幅，由 $D\bar f$ 的一致连续性即得 $(\star)$。本定理断言 $(\star)$ 同时也是充分条件，因此 $(\star)$ 完整刻画了 $C^1$ 延拓的存在性。
+
+构造与\cref{theorem:ch01-1-13}的证明平行：在 $C$ 的补集 $U$ 上取 Vitali 覆盖所得的球族，用权函数 $\mu(\lvert x-x_j\rvert/5r(x_j))$ 归一化后作单位分解，再把 $f$ 在最近点 $s_j\in C$ 处的一阶 Taylor 多项式 $f(s_j)+d(s_j)\cdot(x-s_j)$ 作加权平均。两个证明的差别在误差控制的层次：连续延拓只需 $\lvert f(s_j)-f(a)\rvert$ 小，而 $C^1$ 延拓需要差商 $R$ 与 $\lvert d(s_j)-d(a)\rvert$ 同时小；后者由 $d$ 的连续性提供，前者正是 $(\star)$ 所给的一致估计。证明的第 (5)(6) 步把两者合并为一个趋于零的模 $\phi$，由此同时得到 $\bar f$ 在 $C$ 上可微与 $D\bar f$ 在 $C$ 上连续。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-10; kind=hypotheses; 逐条分析 C 的闭性、f 与 d 的连续性、紧集上一致条件 (★) 的必要性与量词顺序，以及结论 (i)(ii) 的准确含义
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-10-条件}
+\begin{enumerate}[(i)]
+\item $C$ 的闭性在两个位置使用。其一，$x\notin C$ 时 $\operatorname{dist}(x,C)>0$，故 $r(x)>0$，证明中的球族非退化；其二，对每个 $x_j\notin C$，$\operatorname{dist}(x_j,C)$ 在 $C$ 上取到，故最近点 $s_j\in C$ 存在。闭性还保证 $U=\mathbb{R}^n-C$ 为开集，使 $C^{\infty}(U)$ 与 $B(x_j,5r(x_j))\subseteq U$ 的论证成立。
+\item $f$ 的连续性是显式假设，但不是独立信息：由 $(\star)$ 与 $d$ 在有界集上的有界性可推出 $f$ 在 $C$ 的每个紧子集上一致连续。事实上，设 $K\subseteq C$ 紧、$M:=\sup_K\lvert d\rvert<+\infty$，取 $\delta_0>0$ 使 $\rho_K(\delta_0)<+\infty$；则对 $x,y\in K$，$0<\lvert x-y\rvert\leqslant\delta_0$，有
+\begin{align*}
+\lvert f(y)-f(x)\rvert\leqslant\bigl(\rho_K(\delta_0)+M\bigr)\lvert x-y\rvert,
+\end{align*}
+即 $f$ 在 $K$ 上满足小尺度 Lipschitz 估计，从而一致连续。
+\item $d$ 的连续性在断言 \#2 与 \#3 中通过 $\phi$ 的收敛 $(\star\star\star)$ 使用，是实质假设：$\phi$ 的第二项是 $\lvert d(x)-d(y)\rvert$ 在 $K$ 上的上确界，它趋于零等价于 $d$ 在 $K$ 上一致连续。
+\item 条件 $(\star)$ 不能削弱为逐点条件。逐点条件「对每个固定的 $x$，$\lvert R(y,x)\rvert\to0$（当 $y\to x$）」只断言 $f$ 在 $C$ 的每一点处可微且 $d$ 是它的导数，不含任何一致性。取 $C=\mathbb{R}$，
+\begin{align*}
+f(x):=
+\begin{cases}
+x^2\sin\dfrac{1}{x^2}, & x\neq0,\\
+0, & x=0,
+\end{cases}
+\end{align*}
+则 $f$ 在 $\mathbb{R}$ 上处处可微，$f'(0)=0$，且当 $x\neq0$ 时 $f'(x)=2x\sin(1/x^2)-\dfrac{2}{x}\cos(1/x^2)$，故 $f'$ 在 $0$ 的任意邻域内无界。令 $d:=f'$，则逐点条件成立，然而满足 $D\bar f=d$ 于 $C$ 上的 $C^1$ 函数 $\bar f$ 不存在：这样的 $\bar f$ 使 $D\bar f=f'$ 在 $\mathbb{R}$ 上处处成立，而 $C^1$ 函数的梯度在紧集上有界，与 $f'$ 在 $[-1,1]$ 上无界矛盾。第 (5) 步中由 $\phi(\delta)\to0$ 把逐点条件升级为一致估计，此例对该步的 $K$ 恰好失效。
+\item 结论 (ii) 中的 $D\bar f=d$ 于 $C$ 上要求梯度在 $C$ 上的限制恰好等于 $d$，而非仅在某种测度意义下相等；结论 (i) 只要求一阶连续可微，不要求 $C^2$，因为假设只提供一阶数据 $f$ 与 $d$，没有二阶信息可用。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-10; kind=proof; 说明证明的六个步骤与三个断言的对应关系，并补足 Vitali 覆盖的适用性、μ 的存在性、σ 与 v_j 的逐项验证、φ 的一致收敛性以及各常数估计中的细节
+\begin{proof}
+若 $C=\emptyset$，则条件 $(\star)$ 不含任何内容，取 $\bar f\equiv0$ 即满足结论。以下设 $C$ 非空。
+
+（1）令 $U:=\mathbb{R}^n-C$。由于 $C$ 为闭集，$U$ 为开集。定义
+\begin{align*}
+r(x):=\frac{1}{20}\min\{1,\operatorname{dist}(x,C)\},\qquad x\in U.
+\end{align*}
+对 $x\in U$ 有 $\operatorname{dist}(x,C)>0$，故 $0<r(x)\leqslant\frac{1}{20}$。函数 $\operatorname{dist}(\cdot,C)$ 与 $t\mapsto\min\{1,t\}$ 都是 Lipschitz 常数为 $1$ 的 Lipschitz 连续函数，故 $r$ 在 $U$ 上满足
+\begin{align*}
+\lvert r(x)-r(y)\rvert\leqslant\frac{1}{20}\lvert x-y\rvert,\qquad x,y\in U.
+\end{align*}
+此外，对 $x\in U$ 与 $s\in C$ 有
+\begin{align*}
+20r(x)\leqslant\operatorname{dist}(x,C)\leqslant\lvert x-s\rvert.
+\end{align*}
+
+由\cref{theorem:ch01-1-24}，对闭球族 $\{\overline{B(x,r(x))}\mid x\in U\}$（其半径一致地不大于 $\frac{1}{20}$，从而直径一致有界）存在可数不交子族，其膨胀球覆盖该族的并，即存在可数集 $\{x_j\}_{j=1}^{\infty}\subset U$，使得球 $\{B(x_j,r(x_j))\}_{j=1}^{\infty}$ 两两不相交，且% XREF p=292 "By Vitali's Covering Theorem, there exists a countable set"
+\begin{align*}
+U=\bigcup_{j=1}^{\infty}B(x_j,5r(x_j)).
+\end{align*}
+这里球按该定理的约定取为闭球；由于 $5r(x_j)\leqslant\frac{1}{4}\operatorname{dist}(x_j,C)$，每个球都含于 $U$，故上述包含关系为等式。
+
+对每个 $x\in U$，定义
+\begin{align*}
+S_x:=\{x_j\mid B(x,10r(x))\cap B(x_j,10r(x_j))\neq\emptyset\}.
+\end{align*}
+
+（2）\textbf{断言 \#1.} $\operatorname{Card}(S_x)\leqslant(129)^n$；并且当 $x_j\in S_x$ 时，
+\begin{align*}
+\frac{1}{3}\leqslant\frac{r(x)}{r(x_j)}\leqslant3.
+\end{align*}
+
+\textbf{断言之证明.} 设 $x_j\in S_x$。两球相交，故
+\begin{align*}
+\lvert x-x_j\rvert\leqslant10\bigl(r(x)+r(x_j)\bigr)
+\end{align*}
+（若相交点为 $z$，则 $\lvert x-x_j\rvert\leqslant\lvert x-z\rvert+\lvert z-x_j\rvert\leqslant10r(x)+10r(x_j)$）。结合 $r$ 的 Lipschitz 估计，
+\begin{align*}
+\lvert r(x)-r(x_j)\rvert\leqslant\frac{1}{20}\lvert x-x_j\rvert\leqslant\frac{1}{2}\bigl(r(x)+r(x_j)\bigr).
+\end{align*}
+于是 $r(x)-r(x_j)\leqslant\frac{1}{2}(r(x)+r(x_j))$，即 $\frac{1}{2}r(x)\leqslant\frac{3}{2}r(x_j)$，故 $r(x)\leqslant3r(x_j)$；把 $x$ 与 $x_j$ 互换即得 $r(x_j)\leqslant3r(x)$。
+
+此外，
+\begin{align*}
+\lvert x-x_j\rvert+r(x_j)\leqslant10\bigl(r(x)+r(x_j)\bigr)+r(x_j)=10r(x)+11r(x_j)\leqslant43r(x),
+\end{align*}
+其中末步用了 $r(x_j)\leqslant3r(x)$。于是对 $z\in B(x_j,r(x_j))$ 有
+\begin{align*}
+\lvert z-x\rvert\leqslant\lvert z-x_j\rvert+\lvert x_j-x\rvert\leqslant r(x_j)+\lvert x_j-x\rvert\leqslant43r(x),
+\end{align*}
+即
+\begin{align*}
+B(x_j,r(x_j))\subseteq B(x,43r(x)).
+\end{align*}
+
+取 $S_x$ 的任意有限子集 $F$。诸球 $B(x_j,r(x_j))$（$x_j\in F$）两两不相交、都含于 $B(x,43r(x))$，且其半径满足 $r(x_j)\geqslant\frac{1}{3}r(x)$，故
+\begin{align*}
+\operatorname{Card}(F)\,\alpha(n)\Bigl(\frac{r(x)}{3}\Bigr)^n\leqslant\sum_{x_j\in F}\alpha(n)r(x_j)^n\leqslant\alpha(n)\bigl(43r(x)\bigr)^n,
+\end{align*}
+其中 $\alpha(n)$ 表示 $\mathbb{R}^n$ 中单位球的体积。因此
+\begin{align*}
+\operatorname{Card}(F)\leqslant(3\cdot43)^n=(129)^n.
+\end{align*}
+由于 $F$ 是 $S_x$ 的任意有限子集，$S_x$ 为有限集，且 $\operatorname{Card}(S_x)\leqslant(129)^n$。断言 \#1 得证。
+
+（3）取函数 $\mu\in C^{\infty}(\mathbb{R})$，使得
+\begin{align*}
+0\leqslant\mu\leqslant1,\qquad \mu(t)\equiv1\ (t\leqslant1),\qquad \mu(t)\equiv0\ (t\geqslant2).
+\end{align*}
+这样的 $\mu$ 存在：取非负函数 $\theta\in C_c^{\infty}(\mathbb{R})$ 使 $\int_{\mathbb{R}}\theta=1$ 且 $\spt\theta\subseteq[0,1]$，令
+\begin{align*}
+\eta(t):=\int_t^{+\infty}\theta(s)\diff s,\qquad \mu(t):=\eta(t-1),
+\end{align*}
+则 $\eta\in C^{\infty}(\mathbb{R})$、$0\leqslant\eta\leqslant1$、$\eta\equiv1$ 于 $(-\infty,0]$、$\eta\equiv0$ 于 $[1,+\infty)$，故 $\mu$ 具有所需性质。
+
+对每个 $j=1,2,\cdots$ 定义
+\begin{align*}
+u_j(x):=\mu\Bigl(\frac{\lvert x-x_j\rvert}{5r(x_j)}\Bigr),\qquad x\in\mathbb{R}^n.
+\end{align*}
+则
+\begin{align*}
+\begin{cases}
+u_j\in C^{\infty}(\mathbb{R}^n),\quad 0\leqslant u_j\leqslant1,\\
+u_j\equiv1\ \text{于}\ B(x_j,5r(x_j))\ \text{上},\\
+u_j\equiv0\ \text{于}\ \mathbb{R}^n-B(x_j,10r(x_j))\ \text{上}.
+\end{cases}
+\end{align*}
+（第一行中，$x\mapsto\lvert x-x_j\rvert$ 在 $x\neq x_j$ 处光滑，而在 $x=x_j$ 的邻域内 $\mu$ 恒等于 $1$，故复合仍光滑；第二行由 $\lvert x-x_j\rvert\leqslant5r(x_j)$ 时自变量不大于 $1$；第三行由 $\lvert x-x_j\rvert\geqslant10r(x_j)$ 时自变量不小于 $2$。）
+
+还有：当 $x_j\in S_x$ 时，
+\begin{align*}
+\lvert Du_j(x)\rvert\leqslant\frac{c}{r(x_j)}\leqslant\frac{c_1}{r(x)},\qquad(\star\star)
+\end{align*}
+其中
+\begin{align*}
+c:=\frac{1}{5}\lVert\mu'\rVert_{L^{\infty}(\mathbb{R})},\qquad c_1:=3c.
+\end{align*}
+事实上，对 $x\neq x_j$，由链式法则
+\begin{align*}
+Du_j(x)=\mu'\Bigl(\frac{\lvert x-x_j\rvert}{5r(x_j)}\Bigr)\frac{1}{5r(x_j)}\frac{x-x_j}{\lvert x-x_j\rvert},
+\end{align*}
+故 $\lvert Du_j(x)\rvert\leqslant c/r(x_j)$；在 $x=x_j$ 处 $\mu$ 在 $0$ 的邻域内恒等于 $1$，故 $Du_j(x_j)=0$；再结合断言 \#1 中的 $r(x_j)\geqslant\frac{1}{3}r(x)$ 即得 $(\star\star)$。
+
+若 $x_j\notin S_x$，则
+\begin{align*}
+u_j=0\ \text{于}\ B(x,10r(x))\ \text{上},
+\end{align*}
+因为此时两个球 $B(x,10r(x))$ 与 $B(x_j,10r(x_j))$ 不相交，而 $u_j$ 在 $\mathbb{R}^n-B(x_j,10r(x_j))$ 上恒等于 $0$。
+
+定义
+\begin{align*}
+\sigma(x):=\sum_{j=1}^{\infty}u_j(x),\qquad x\in\mathbb{R}^n.
+\end{align*}
+对固定的 $x$，由 $u_j(x)\neq0$ 蕴含 $x\in B(x_j,10r(x_j))$、即 $x_j\in S_x$，而 $S_x$ 为有限集，故右端在每点处只有有限多项非零，$\sigma$ 有定义。又对 $x\in C$ 与一切 $j$ 有 $20r(x_j)\leqslant\operatorname{dist}(x_j,C)\leqslant\lvert x-x_j\rvert$，故 $u_j(x)=0$，即 $\sigma=0$ 于 $C$ 上；以下只在 $U$ 上使用 $\sigma$。
+
+由 $u_j\equiv0$ 于 $B(x,10r(x))$ 上（当 $x_j\notin S_x$），对 $x\in U$ 与 $y\in B(x,10r(x))$ 有
+\begin{align*}
+\sigma(y)=\sum_{x_j\in S_x}u_j(y).
+\end{align*}
+由断言 \#1 与 $(\star\star)$ 得
+\begin{align*}
+\sigma\in C^{\infty}(U),\qquad \sigma\geqslant1\ \text{于}\ U\ \text{上},\qquad \lvert D\sigma(x)\rvert\leqslant\frac{c_2}{r(x)}\quad(x\in U),
+\end{align*}
+其中 $c_2:=(129)^nc_1$。光滑性：对每个 $x\in U$，$\sigma$ 在 $B(x,10r(x))$ 上等于有限和 $\sum_{x_j\in S_x}u_j$，故在 $x$ 处光滑。下界：由 $U=\bigcup_{j=1}^{\infty}B(x_j,5r(x_j))$，每个 $x\in U$ 落在某个 $B(x_j,5r(x_j))$ 中，该处 $u_j(x)=1$（边界点 $\lvert x-x_j\rvert=5r(x_j)$ 亦如此，因为 $\mu$ 在 $t\leqslant1$ 上恒等于 $1$），故 $\sigma(x)\geqslant1$。导数估计：在 $B(x,10r(x))$ 上逐项求导，并用 $(\star\star)$ 与 $\operatorname{Card}(S_x)\leqslant(129)^n$，得 $\lvert D\sigma(x)\rvert\leqslant\operatorname{Card}(S_x)c_1/r(x)\leqslant c_2/r(x)$。
+
+对每个 $j=1,2,\cdots$ 定义
+\begin{align*}
+v_j(x):=\frac{u_j(x)}{\sigma(x)},\qquad x\in U.
+\end{align*}
+由商法则，
+\begin{align*}
+Dv_j=\frac{Du_j}{\sigma}-\frac{u_jD\sigma}{\sigma^2}\qquad\text{于}\ U\ \text{上}.
+\end{align*}
+于是
+\begin{align*}
+\begin{cases}
+\displaystyle\sum_{j=1}^{\infty}v_j(x)=1,\\[6pt]
+\displaystyle\sum_{j=1}^{\infty}Dv_j(x)=0,\\[6pt]
+\lvert Dv_j(x)\rvert\leqslant\dfrac{c_3}{r(x)},
+\end{cases}\qquad x\in U,
+\end{align*}
+其中 $c_3:=c_1+c_2$。第一式由 $\sum_{j=1}^{\infty}u_j=\sigma$；第二式由 $\sum_{j=1}^{\infty}Du_j=D\sigma$ 与 $\sum_{j=1}^{\infty}u_j=\sigma$；第三式由 $\sigma\geqslant1$、$0\leqslant u_j\leqslant1$ 与上述两个导数估计。因此 $\{v_j\}_{j=1}^{\infty}$ 是 $U$ 上的光滑单位分解。
+
+（4）对每个 $j=1,2,\cdots$，取 $s_j\in C$ 使得
+\begin{align*}
+\lvert x_j-s_j\rvert=\operatorname{dist}(x_j,C).
+\end{align*}
+这样的 $s_j$ 存在：$C$ 为非空闭集且 $x_j\notin C$，故 $\operatorname{dist}(x_j,C)>0$ 且该距离在 $C$ 上取到。最后定义 $\bar f:\mathbb{R}^n\to\mathbb{R}$ 为
+\begin{align*}
+\bar f(x):=
+\begin{cases}
+f(x), & x\in C,\\[4pt]
+\displaystyle\sum_{j=1}^{\infty}v_j(x)\bigl[f(s_j)+d(s_j)\cdot(x-s_j)\bigr], & x\in U.
+\end{cases}
+\end{align*}
+对 $x\in U$ 与 $y\in B(x,10r(x))$ 有
+\begin{align*}
+\bar f(y)=\sum_{x_j\in S_x}v_j(y)\bigl[f(s_j)+d(s_j)\cdot(y-s_j)\bigr],
+\end{align*}
+这是有限个 $C^{\infty}$ 函数之和，故 $\bar f\in C^{\infty}(U)$，且对 $x\in U$
+\begin{align*}
+D\bar f(x)=\sum_{x_j\in S_x}\bigl\{\bigl[f(s_j)+d(s_j)\cdot(x-s_j)\bigr]Dv_j(x)+v_j(x)d(s_j)\bigr\}.
+\end{align*}
+
+（5）\textbf{断言 \#2.} 对每个 $a\in C$，$\bar f$ 在 $a$ 处可微，且 $D\bar f(a)=d(a)$。
+
+\textbf{断言之证明.} 固定 $a\in C$，令 $K:=C\cap B(a,1)$；由于 $C$ 为闭集，$K$ 为紧集。定义
+\begin{align*}
+\phi(\delta):={}&\sup\bigl\{\lvert R(x,y)\rvert\bigm|x,y\in K,\ 0<\lvert x-y\rvert\leqslant\delta\bigr\}\\
+&+\sup\bigl\{\lvert d(x)-d(y)\rvert\bigm|x,y\in K,\ \lvert x-y\rvert\leqslant\delta\bigr\},\qquad\delta>0.
+\end{align*}
+由于 $d:C\to\mathbb{R}^n$ 连续，它在紧集 $K$ 上一致连续；又 $(\star)$ 对紧集 $K$ 成立，故
+\begin{align*}
+\phi(\delta)\to0\quad\text{当}\ \delta\to0^{+}.\qquad(\star\star\star)
+\end{align*}
+这里 $\phi$ 依赖于 $a$，且关于 $\delta$ 单调不减。
+
+设 $x\in C$ 且 $\lvert x-a\rvert<1$，则 $x\in K$。当 $x\neq a$ 时
+\begin{align*}
+\bigl\lvert\bar f(x)-\bar f(a)-d(a)\cdot(x-a)\bigr\rvert
+&=\bigl\lvert f(x)-f(a)-d(a)\cdot(x-a)\bigr\rvert\\
+&=\lvert R(x,a)\rvert\,\lvert x-a\rvert\\
+&\leqslant\phi(\lvert x-a\rvert)\,\lvert x-a\rvert,
+\end{align*}
+而当 $x=a$ 时两端均为 $0$。同时
+\begin{align*}
+\lvert d(x)-d(a)\rvert\leqslant\phi(\lvert x-a\rvert).
+\end{align*}
+
+现设 $x\in U$ 且 $\lvert x-a\rvert<\frac{1}{6}$。由 $\bar f$ 在 $U$ 上的定义、$\sum_{x_j\in S_x}v_j(x)=1$ 以及 $\bar f(a)=f(a)$（因 $a\in C$）得
+\begin{align*}
+\bar f(x)-\bar f(a)-d(a)\cdot(x-a)=\sum_{x_j\in S_x}v_j(x)\bigl[f(s_j)+d(s_j)\cdot(x-s_j)-f(a)-d(a)\cdot(x-a)\bigr].
+\end{align*}
+对每个 $j$，由 $d(s_j)\cdot(x-s_j)=d(s_j)\cdot(x-a)+d(s_j)\cdot(a-s_j)$ 得
+\begin{align*}
+f(s_j)-f(a)+d(s_j)\cdot(x-s_j)-d(a)\cdot(x-a)
+={}&\bigl[f(s_j)-f(a)+d(s_j)\cdot(a-s_j)\bigr]\\
+&+\bigl[(d(s_j)-d(a))\cdot(x-a)\bigr].
+\end{align*}
+于是
+\begin{align*}
+\bigl\lvert\bar f(x)-\bar f(a)-d(a)\cdot(x-a)\bigr\rvert
+&\leqslant\sum_{x_j\in S_x}v_j(x)\bigl\lvert f(s_j)-f(a)+d(s_j)\cdot(a-s_j)\bigr\rvert\\
+&\qquad+\sum_{x_j\in S_x}v_j(x)\bigl\lvert(d(s_j)-d(a))\cdot(x-a)\bigr\rvert,
+\end{align*}
+其中用了 $v_j(x)\geqslant0$ 与三角不等式。
+
+由 $\lvert x-a\rvert<\frac{1}{6}$ 得
+\begin{align*}
+r(x)\leqslant\frac{1}{20}\lvert x-a\rvert.
+\end{align*}
+于是对 $x_j\in S_x$，
+\begin{align*}
+\lvert a-s_j\rvert&\leqslant\lvert a-x_j\rvert+\lvert x_j-s_j\rvert\\
+&\leqslant2\lvert a-x_j\rvert\\
+&\leqslant2\bigl(\lvert x-a\rvert+\lvert x-x_j\rvert\bigr)\\
+&\leqslant2\bigl(\lvert x-a\rvert+10(r(x)+r(x_j))\bigr)\\
+&\leqslant2\bigl(\lvert x-a\rvert+40r(x)\bigr)\\
+&\leqslant6\lvert x-a\rvert,
+\end{align*}
+其中第二步用了 $\lvert x_j-s_j\rvert=\operatorname{dist}(x_j,C)\leqslant\lvert x_j-a\rvert$，第四步用了 $x_j\in S_x$ 时 $\lvert x-x_j\rvert\leqslant10(r(x)+r(x_j))$，第五步用了断言 \#1 中的 $r(x_j)\leqslant3r(x)$，末步用了 $40r(x)\leqslant2\lvert x-a\rvert$。特别地 $s_j\in K$。
+
+合并上面的估计得
+\begin{align*}
+\bigl\lvert\bar f(x)-\bar f(a)-d(a)\cdot(x-a)\bigr\rvert<\kappa\,\phi\bigl(6\lvert x-a\rvert\bigr)\lvert x-a\rvert,
+\end{align*}
+其中 $\kappa=8$ 是绝对常数。事实上，第一个和式中的被加项等于 $\lvert R(a,s_j)\rvert\,\lvert a-s_j\rvert$，由 $\lvert a-s_j\rvert\leqslant6\lvert x-a\rvert$ 及 $R$ 的定义不大于 $6\lvert x-a\rvert\phi(6\lvert x-a\rvert)$；第二个和式中的被加项不大于 $\lvert d(s_j)-d(a)\rvert\,\lvert x-a\rvert\leqslant\phi(6\lvert x-a\rvert)\lvert x-a\rvert$；再用 $\sum_{x_j\in S_x}v_j(x)=1$ 即得所断，而 $x\in C$ 的情形已由上面的估计与 $\phi$ 的单调性给出同样的界。
+
+由 $(\star\star\star)$，上述两种情形的估计蕴含对每个 $a\in C$，
+\begin{align*}
+\bigl\lvert\bar f(x)-\bar f(a)-d(a)\cdot(x-a)\bigr\rvert=o\bigl(\lvert x-a\rvert\bigr)\qquad\text{当}\ x\to a.
+\end{align*}
+因此 $\bar f$ 在 $a$ 处可微，且 $D\bar f(a)=d(a)$。断言 \#2 得证。
+
+（6）\textbf{断言 \#3.} $\bar f\in C^1(\mathbb{R}^n)$。
+
+\textbf{断言之证明.} 固定 $a\in C$ 与 $x\in\mathbb{R}^n$，$\lvert x-a\rvert<\frac{1}{6}$。若 $x\in C$，则 $x\in K$，且
+\begin{align*}
+\lvert D\bar f(x)-D\bar f(a)\rvert=\lvert d(x)-d(a)\rvert\leqslant\phi(\lvert x-a\rvert).
+\end{align*}
+若 $x\in U$，取 $b\in C$ 使得
+\begin{align*}
+\lvert x-b\rvert=\operatorname{dist}(x,C).
+\end{align*}
+则
+\begin{align*}
+\lvert D\bar f(x)-D\bar f(a)\rvert=\lvert D\bar f(x)-d(a)\rvert\leqslant\lvert D\bar f(x)-d(b)\rvert+\lvert d(b)-d(a)\rvert.
+\end{align*}
+由
+\begin{align*}
+\lvert b-a\rvert\leqslant\lvert b-x\rvert+\lvert x-a\rvert\leqslant2\lvert x-a\rvert
+\end{align*}
+及 $\phi$ 的定义得
+\begin{align*}
+\lvert d(b)-d(a)\rvert\leqslant\phi(2\lvert x-a\rvert).
+\end{align*}
+下面估计 $\lvert D\bar f(x)-d(b)\rvert$。由 $\sum_{x_j\in S_x}Dv_j(x)=0$ 与 $\sum_{x_j\in S_x}v_j(x)=1$，有
+\begin{align*}
+D\bar f(x)-d(b)=\sum_{x_j\in S_x}\bigl[f(s_j)+d(s_j)\cdot(x-s_j)\bigr]Dv_j(x)+\sum_{x_j\in S_x}v_j(x)\bigl[d(s_j)-d(b)\bigr].
+\end{align*}
+再把第一个和式方括号内的量拆开：
+\begin{align*}
+f(s_j)+d(s_j)\cdot(x-s_j)=\bigl[-f(b)+f(s_j)+d(s_j)\cdot(b-s_j)\bigr]+\bigl[f(b)+d(s_j)\cdot(x-b)\bigr],
+\end{align*}
+而 $\sum_{x_j\in S_x}Dv_j(x)=0$ 使常数项 $f(b)$ 消失，并使 $d(s_j)\cdot(x-b)$ 中的 $d(b)\cdot(x-b)$ 消失，即
+\begin{align*}
+\sum_{x_j\in S_x}\bigl[f(b)+d(s_j)\cdot(x-b)\bigr]Dv_j(x)=\sum_{x_j\in S_x}\bigl[(d(s_j)-d(b))\cdot(x-b)\bigr]Dv_j(x).
+\end{align*}
+于是
+\begin{align*}
+\bigl\lvert D\bar f(x)-d(b)\bigr\rvert
+&\leqslant\Bigl\lvert\sum_{x_j\in S_x}\bigl[-f(b)+f(s_j)+d(s_j)\cdot(b-s_j)\bigr]Dv_j(x)\Bigr\rvert\\
+&\qquad+\Bigl\lvert\sum_{x_j\in S_x}\bigl[(d(s_j)-d(b))\cdot(x-b)\bigr]Dv_j(x)\Bigr\rvert\\
+&\qquad+\Bigl\lvert\sum_{x_j\in S_x}v_j(x)\bigl[d(s_j)-d(b)\bigr]\Bigr\rvert\qquad(\star\star\star\star)\\
+&\leqslant\frac{\kappa}{r(x)}\sum_{x_j\in S_x}\phi(\lvert b-s_j\rvert)\lvert b-s_j\rvert+\frac{\kappa}{r(x)}\sum_{x_j\in S_x}\phi(\lvert b-s_j\rvert)\lvert x-b\rvert\\
+&\qquad+\sum_{x_j\in S_x}\phi(\lvert b-s_j\rvert),
+\end{align*}
+其中第一项用了 $\bigl[-f(b)+f(s_j)+d(s_j)\cdot(b-s_j)\bigr]=-R(b,s_j)\lvert b-s_j\rvert$ 与 $\lvert Dv_j(x)\rvert\leqslant c_3/r(x)$，第二项用了 $\lvert(d(s_j)-d(b))\cdot(x-b)\rvert\leqslant\phi(\lvert b-s_j\rvert)\lvert x-b\rvert$，第三项用了 $0\leqslant v_j\leqslant1$；常数 $\kappa$ 吸收 $c_3$ 与 $\operatorname{Card}(S_x)\leqslant(129)^n$，只依赖 $n$ 与 $\mu$。
+
+现
+\begin{align*}
+\lvert x-b\rvert\leqslant\lvert x-a\rvert<\frac{1}{6},
+\end{align*}
+且 $\operatorname{dist}(x,C)=\lvert x-b\rvert<1$，故
+\begin{align*}
+r(x)=\frac{1}{20}\lvert x-b\rvert\leqslant\frac{1}{120}.
+\end{align*}
+当 $x_j\in S_x$ 时，
+\begin{align*}
+r(x_j)\leqslant3r(x)\leqslant\frac{1}{40}<\frac{1}{20},
+\end{align*}
+故 $\operatorname{dist}(x_j,C)<1$，从而
+\begin{align*}
+r(x_j)=\frac{1}{20}\lvert x_j-s_j\rvert\qquad(x_j\in S_x).
+\end{align*}
+于是当 $x_j\in S_x$ 时，
+\begin{align*}
+\lvert b-s_j\rvert&\leqslant\lvert b-x\rvert+\lvert x-x_j\rvert+\lvert x_j-s_j\rvert\\
+&\leqslant20r(x)+10\bigl(r(x)+r(x_j)\bigr)+20r(x_j)\\
+&\leqslant120r(x)=6\lvert x-b\rvert\leqslant6\lvert x-a\rvert,
+\end{align*}
+其中第二步用了 $\lvert b-x\rvert=20r(x)$、$\lvert x-x_j\rvert\leqslant10(r(x)+r(x_j))$ 与 $\lvert x_j-s_j\rvert=20r(x_j)$，第三步用了 $r(x_j)\leqslant3r(x)$。
+
+由 $(\star\star\star\star)$ 与上面三式，第一项不大于
+\begin{align*}
+\frac{\kappa}{r(x)}\sum_{x_j\in S_x}\phi(\lvert b-s_j\rvert)\lvert b-s_j\rvert\leqslant\frac{\kappa}{r(x)}\,(129)^n\,120r(x)\,\phi\bigl(6\lvert x-a\rvert\bigr),
+\end{align*}
+第二项不大于
+\begin{align*}
+\frac{\kappa}{r(x)}\sum_{x_j\in S_x}\phi(\lvert b-s_j\rvert)\lvert x-b\rvert\leqslant\frac{\kappa}{r(x)}\,(129)^n\,20r(x)\,\phi\bigl(6\lvert x-a\rvert\bigr),
+\end{align*}
+第三项不大于
+\begin{align*}
+\sum_{x_j\in S_x}\phi(\lvert b-s_j\rvert)\leqslant(129)^n\phi\bigl(6\lvert x-a\rvert\bigr),
+\end{align*}
+这里用了 $\lvert b-s_j\rvert\leqslant6\lvert x-a\rvert$、$\lvert x-b\rvert=20r(x)$ 与 $\phi$ 的单调性。三式相加并把常数重新记为 $\kappa$，得
+\begin{align*}
+\lvert D\bar f(x)-d(b)\rvert\leqslant\kappa\,\phi\bigl(6\lvert x-a\rvert\bigr).
+\end{align*}
+结合前述估计与 $\phi$ 的单调性，
+\begin{align*}
+\lvert D\bar f(x)-D\bar f(a)\rvert\leqslant\kappa\,\phi\bigl(6\lvert x-a\rvert\bigr).
+\end{align*}
+由 $(\star\star\star)$ 与 $\phi$ 的单调性，对每个 $a\in C$ 有
+\begin{align*}
+\lim_{x\to a}\lvert D\bar f(x)-D\bar f(a)\rvert=0.
+\end{align*}
+故 $D\bar f$ 在 $C$ 的每一点处连续。另一方面 $U$ 为开集且 $\bar f\in C^{\infty}(U)$，故 $D\bar f$ 在 $U$ 上连续。由 $\mathbb{R}^n=C\cup U$，$D\bar f$ 在 $\mathbb{R}^n$ 上处处连续；又由断言 \#2，$\bar f$ 在 $\mathbb{R}^n$ 上处处可微。故 $\bar f\in C^1(\mathbb{R}^n)$。断言 \#3 得证。
+
+最后，由 $\bar f$ 的定义，$\bar f=f$ 于 $C$ 上；由断言 \#2，$D\bar f=d$ 于 $C$ 上。定理得证。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-10; kind=correction; 说明第 (5) 步处理 x∈U 时的被估计量应取 $\bar f(x)$ 与 $\bar f(a)$ 之差，并核验该步估计不受影响
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-10-左端}
+第 (5) 步处理 $x\in U$ 的情形时，被估计的量是 $\bar f(x)$ 与 $\bar f(a)$ 之差：$x\in U$ 时 $\bar f(x)$ 为加权平均值，与 $f(x)$ 一般不相等，故该步的陈列式以 $\bigl\lvert\bar f(x)-\bar f(a)-d(a)\cdot(x-a)\bigr\rvert$ 为左端。由 $a\in C$ 得 $\bar f(a)=f(a)$，再由 $\bar f$ 在 $U$ 上的定义与 $\sum_{x_j\in S_x}v_j(x)=1$ 即得右端的加权形式。该步其余估计只用到这个加权形式，与左端写作哪个函数无关。
+\end{remark}
+
+\end{document}

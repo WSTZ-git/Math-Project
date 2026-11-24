@@ -1,0 +1,241 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{凸函数的几乎处处二阶导数}\label{section:ch06-04}
+
+下面证明：凸函数在 $\mathcal{L}^{n}$-a.e. 的每一点处二阶可微。这一断言与\cref{theorem:ch03-3-2}（Rademacher 定理）的精神相同，但或许更值得注意，因为对二阶导数只有「单侧控制」。% XREF p=273 "This assertion is in the same spirit as Rademacher's Theorem, but is perhaps even more remarkable in that we have only “one-sided control” on the second derivatives."
+
+\begin{theorem}[Aleksandrov 定理]\label{theorem:ch06-6-9}
+设 $n$ 为正整数，$f:\mathbb{R}^{n}\to\mathbb{R}$ 为凸函数，$\mathcal{L}^{n}$ 为 $\mathbb{R}^{n}$ 上的 Lebesgue 测度，$\mathbb{M}^{n\times n}$ 为实 $n\times n$ 矩阵空间；$[D^{2}f]$ 为\cref{theorem:ch06-6-8}所给的矩阵值符号 Radon 测度，$D^{2}f\in L^{1}_{\loc}(\mathbb{R}^{n};\mathbb{M}^{n\times n})$ 为 $[D^{2}f]$ 的绝对连续部分 $[D^{2}f]_{\mathrm{ac}}$ 关于 $\mathcal{L}^{n}$ 的密度，$[D^{2}f]_{\mathrm{s}}$ 为 $[D^{2}f]$ 的奇异部分，其记法见\hyperref[definition:ch06-def-6-8-记号]{二阶导数的测度记号}。% XREF p=273 "Thus [D^2f] = [D^2f]_ac + [D^2f]_s = L^n ⌊ D^2f + [D^2f]_s" | p=273 "Therefore D^2f ∈ L^1_loc(R^n; M^{n×n}) is the density of the absolutely continuous part [D^2f]_ac of [D^2f]"
+则对 $\mathcal{L}^{n}$-a.e. 的每一点 $x\in\mathbb{R}^{n}$，$f$ 在 $x$ 处的二阶偏导数 $f_{x_{i}x_{j}}(x)$（$i,j=1,\cdots,n$）存在，$f_{x_{i}x_{j}}(x)$ 等于对称矩阵 $D^{2}f(x)$ 的 $(i,j)$ 元，并且
+\begin{align*}
+&\left|f(y)-f(x)-Df(x)\cdot(y-x)-\frac{1}{2}(y-x)^{T}\cdot D^{2}f(x)\cdot(y-x)\right|\\
+&\qquad=o(\lvert y-x\rvert^{2})\qquad(y\to x),\qquad(\star)
+\end{align*}
+其中 $Df(x)$ 为 $f$ 在 $x$ 处的梯度（由\cref{theorem:ch06-6-7}(i) 与\cref{theorem:ch03-3-2}，它在 $\mathcal{L}^{n}$-a.e. 处存在），$(y-x)^{T}\cdot D^{2}f(x)\cdot(y-x)=\sum_{i,j=1}^{n}(y_{i}-x_{i})(y_{j}-x_{j})f_{x_{i}x_{j}}(x)$，而 $o(\lvert y-x\rvert^{2})$ 指 $\lvert y-x\rvert\to0$ 时左端与 $\lvert y-x\rvert^{2}$ 之比趋于 $0$。% XREF internal
+\end{theorem}
+
+\begin{proof}
+第 1 步：$\mathcal{L}^{n}$-a.e. 的点 $x$ 满足以下三个条件：
+\begin{enumerate}[(a)]
+\item $Df(x)$ 存在，且 $\lim_{r\to0}\fint_{B(x,r)}\lvert Df(y)-Df(x)\rvert\diff y=0$；
+\item
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert D^{2}f(y)-D^{2}f(x)\rvert\diff y=0;\qquad(\star\star)
+\end{align*}
+\item $\lim_{r\to0}\dfrac{\lVert[D^{2}f]_{\mathrm{s}}\rVert(B(x,r))}{r^{n}}=0$。
+\end{enumerate}
+
+% SUPPLEMENT: parent=theorem:ch06-6-9; kind=proof; 补出第 1 步三个几乎处处条件的来源：凸函数的局部 Lipschitz 性、Rademacher 定理、Lebesgue 微分定理，以及奇异测度关于 Lebesgue 测度的密度为零
+第 1 步中三个条件的来源如下。
+
+（1）条件 (a)。由\cref{theorem:ch06-6-7}(i)，$f$ 在 $\mathbb{R}^{n}$ 上局部 Lipschitz 连续；由\cref{theorem:ch03-3-2}，$f$ 在 $\mathcal{L}^{n}$-a.e. 的每一点处可微。于是 $Df$ 在 $\mathcal{L}^{n}$-a.e. 处存在，且在 $\mathbb{R}^{n}$ 的每个紧集上有界，故 $Df\in L^{\infty}_{\loc}(\mathbb{R}^{n};\mathbb{R}^{n})\subseteq L^{1}_{\loc}(\mathbb{R}^{n};\mathbb{R}^{n})$。在\cref{theorem:ch01-1-33}中取 $\mu=\mathcal{L}^{n}$ 与 $p=1$，并逐个用于 $Df$ 的 $n$ 个分量，即得 $\mathcal{L}^{n}$-a.e. 的 $x$ 满足 (a)。% XREF internal
+
+（2）条件 (b)。由\cref{definition:ch06-def-6-8-记号}，$D^{2}f$ 是 $[D^{2}f]$ 的绝对连续部分关于 $\mathcal{L}^{n}$ 的密度，故 $D^{2}f\in L^{1}_{\loc}(\mathbb{R}^{n};\mathbb{M}^{n\times n})$。在\cref{theorem:ch01-1-33}中取 $\mu=\mathcal{L}^{n}$ 与 $p=1$，逐个用于 $D^{2}f$ 的 $n^{2}$ 个分量，即得 $\mathcal{L}^{n}$-a.e. 的 $x$ 满足 (b)。% XREF internal
+
+（3）条件 (c)。令 $\nu:=\lVert[D^{2}f]_{\mathrm{s}}\rVert$ 与 $\mu:=\mathcal{L}^{n}+\nu$。则 $\nu$ 与 $\mu$ 都是正 Radon 测度，$\nu\ll\mu$，且 $D_{\mu}\nu\in L^{1}_{\loc}(\mathbb{R}^{n},\mu)$。对 $D_{\mu}\nu$ 使用\cref{theorem:ch01-1-32}，并用\cref{theorem:ch01-1-30}把平均值写成 $\fint_{B(x,r)}D_{\mu}\nu\diff\mu=\nu(B(x,r))/\mu(B(x,r))$，得% XREF internal
+\begin{align*}
+\lim_{r\to0}\frac{\nu(B(x,r))}{\mu(B(x,r))}=D_{\mu}\nu(x)
+\end{align*}
+对 $\mu$-a.e. 的 $x$ 成立。由 $\nu\perp\mathcal{L}^{n}$，存在 Borel 集 $A$ 使 $\mathcal{L}^{n}(A)=0$ 且 $\nu(\mathbb{R}^{n}\setminus A)=0$；又 $\nu\ll\mu$，故 $D_{\mu}\nu=0$ 于 $\mathbb{R}^{n}\setminus A$ 上 $\mu$-a.e.，即 $D_{\mu}\nu=0$ 于 $\mathcal{L}^{n}$-a.e. 处。由于 $\mathcal{L}^{n}\ll\mu$，上式于是对 $\mathcal{L}^{n}$-a.e. 的 $x$ 成立。固定这样的 $x$；对每个 $\varepsilon\in(0,1)$，当 $r>0$ 充分小时 $\nu(B(x,r))\leqslant\varepsilon\mu(B(x,r))=\varepsilon\bigl(\mathcal{L}^{n}(B(x,r))+\nu(B(x,r))\bigr)$，故
+\begin{align*}
+\nu(B(x,r))\leqslant\frac{\varepsilon}{1-\varepsilon}\mathcal{L}^{n}(B(x,r))=\frac{\varepsilon}{1-\varepsilon}\alpha(n)r^{n},
+\end{align*}
+其中 $\alpha(n):=\mathcal{L}^{n}(B(0,1))$。令 $\varepsilon\to0$ 即得 (c)。% XREF internal
+
+
+第 2 步：固定满足上述条件的点 $x$，不妨设 $x=0$。取 $r>0$，并令 $f^{\varepsilon}:=\eta_{\varepsilon}*f$，其中 $\eta_{\varepsilon}$ 为标准磨光核。固定 $y\in B(r)$。由 Taylor 定理，
+\begin{align*}
+f^{\varepsilon}(y)=f^{\varepsilon}(0)+Df^{\varepsilon}(0)\cdot y+\int_{0}^{1}(1-s)y^{T}\cdot D^{2}f^{\varepsilon}(sy)\cdot y\diff s.
+\end{align*}
+于是
+\begin{align*}
+f^{\varepsilon}(y)&=f^{\varepsilon}(0)+Df^{\varepsilon}(0)\cdot y+\frac{1}{2}y^{T}\cdot D^{2}f(0)\cdot y\\
+&\qquad+\int_{0}^{1}(1-s)y^{T}\cdot\bigl[D^{2}f^{\varepsilon}(sy)-D^{2}f(0)\bigr]\cdot y\diff s,
+\end{align*}
+其中用到 $\int_{0}^{1}(1-s)\diff s=\frac{1}{2}$。
+
+第 3 步：固定任一 $\phi\in C_{c}^{2}(B(r))$ 且 $\lvert\phi\rvert\leqslant1$，把上式乘以 $\phi$ 并在 $B(r)$ 上取平均：
+\begin{align*}
+&\fint_{B(r)}\phi(y)\left(f^{\varepsilon}(y)-f^{\varepsilon}(0)-Df^{\varepsilon}(0)\cdot y-\frac{1}{2}y^{T}\cdot D^{2}f(0)\cdot y\right)\diff y\\
+&\qquad=\int_{0}^{1}(1-s)\left(\fint_{B(r)}\phi(y)y^{T}\cdot\bigl[D^{2}f^{\varepsilon}(sy)-D^{2}f(0)\bigr]\cdot y\diff y\right)\diff s\qquad(\star\star\star)\\
+&\qquad=\int_{0}^{1}\frac{1-s}{s^{2}}\left(\fint_{B(rs)}\phi\left(\frac{z}{s}\right)z^{T}\cdot\bigl[D^{2}f^{\varepsilon}(z)-D^{2}f(0)\bigr]\cdot z\diff z\right)\diff s.
+\end{align*}
+现在
+\begin{align*}
+g_{\varepsilon}(s)&:=\int_{B(rs)}\phi\left(\frac{z}{s}\right)z^{T}\cdot D^{2}f^{\varepsilon}(z)\cdot z\diff z\\
+&=\int_{B(rs)}f^{\varepsilon}(z)\sum_{i,j=1}^{n}\left(\phi\left(\frac{z}{s}\right)z_{i}z_{j}\right)_{z_{i}z_{j}}\diff z\\
+&\to\int_{B(rs)}f(z)\sum_{i,j=1}^{n}\left(\phi\left(\frac{z}{s}\right)z_{i}z_{j}\right)_{z_{i}z_{j}}\diff z\qquad(\varepsilon\to0)\\
+&=\sum_{i,j=1}^{n}\int_{B(rs)}\phi\left(\frac{z}{s}\right)z_{i}z_{j}\diff\mu^{ij}\\
+&=\int_{B(rs)}\phi\left(\frac{z}{s}\right)z^{T}\cdot D^{2}f(z)\cdot z\diff z+\sum_{i,j=1}^{n}\int_{B(rs)}\phi\left(\frac{z}{s}\right)z_{i}z_{j}\diff\mu_{\mathrm{s}}^{ij}.
+\end{align*}
+进一步，可以算出
+\begin{align*}
+\frac{\lvert g_{\varepsilon}(s)\rvert}{s^{n+2}}&\leqslant\frac{r^{2}}{s^{n}}\int_{B(rs)}\lvert D^{2}f^{\varepsilon}(z)\rvert\diff z\\
+&=\frac{r^{2}}{s^{n}}\int_{B(rs)}\left|\int_{\mathbb{R}^{n}}D^{2}\eta_{\varepsilon}(z-y)f(y)\diff y\right|\diff z\\
+&\leqslant\frac{r^{2}}{s^{n}}\int_{B(rs)}\left|\int_{\mathbb{R}^{n}}\eta_{\varepsilon}(z-y)\diff[D^{2}f]\right|\diff z\\
+&\leqslant\frac{C}{s^{n}\varepsilon^{n}}\int_{B(rs+\varepsilon)}\left(\int_{B(rs)\cap B(y,\varepsilon)}\diff z\right)\diff\lVert D^{2}f\rVert\\
+&\leqslant C\frac{\min\{(rs)^{n},\varepsilon^{n}\}}{s^{n}\varepsilon^{n}}\lVert D^{2}f\rVert(B(rs+\varepsilon))\\
+&\leqslant C\frac{\min\{(rs)^{n},\varepsilon^{n}\}(rs+\varepsilon)^{n}}{s^{n}\varepsilon^{n}}\\
+&\leqslant C
+\end{align*}
+对 $0<\varepsilon,s\leqslant1$ 成立，依据 $(\star\star)$。
+
+第 4 步：因此可对 $(\star\star\star)$ 应用控制收敛定理，令 $\varepsilon\to0$：
+\begin{align*}
+&\left|\fint_{B(r)}\phi(y)\left[f(y)-f(0)-Df(0)\cdot y-\frac{1}{2}y^{T}\cdot D^{2}f(0)\cdot y\right]\diff y\right|\\
+&\qquad\leqslant Cr^{2}\int_{0}^{1}\fint_{B(rs)}\lvert D^{2}f(z)-D^{2}f(0)\rvert\diff z\diff s\\
+&\qquad\qquad+Cr^{2}\int_{0}^{1}\frac{\lVert[D^{2}f]_{\mathrm{s}}\rVert(B(rs))}{(sr)^{n}}\diff s\\
+&\qquad=o(r^{2})\qquad(r\to0),
+\end{align*}
+依据 $(\star\star)$ 中 $x=0$ 的情形。对上述所有 $\phi$ 取上确界，得
+\begin{align*}
+\fint_{B(r)}\lvert h(y)\rvert\diff y=o(r^{2})\qquad(r\to0),\qquad(\star\star\star\star)
+\end{align*}
+其中
+\begin{align*}
+h(y):=f(y)-f(0)-Df(0)\cdot y-\frac{1}{2}y^{T}\cdot D^{2}f(0)\cdot y.
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch06-6-9; kind=proof; 补出第 3 步估计链与第 4 步取极限的细节：变量替换、两次分部积分、卷积核的一致界、控制收敛定理、试验函数取上确界
+下面对第 3 步与第 4 步中的估计补出细节。
+
+（1）$(\star\star\star)$ 的第二个等号是变量替换 $z=sy$。由 $\lvert B(r)\rvert=s^{-n}\lvert B(rs)\rvert$ 与 $\diff y=s^{-n}\diff z$，并注意 $(z/s)^{T}\cdot A\cdot(z/s)=s^{-2}z^{T}\cdot A\cdot z$，得
+\begin{align*}
+\fint_{B(r)}\phi(y)y^{T}\cdot\bigl[D^{2}f^{\varepsilon}(sy)-D^{2}f(0)\bigr]\cdot y\diff y
+=\frac{1}{s^{2}}\fint_{B(rs)}\phi\left(\frac{z}{s}\right)z^{T}\cdot\bigl[D^{2}f^{\varepsilon}(z)-D^{2}f(0)\bigr]\cdot z\diff z.
+\end{align*}
+
+（2）$g_{\varepsilon}(s)$ 的第二个等号是两次分部积分。由于 $\phi(\cdot/s)z_{i}z_{j}\in C_{c}^{2}(B(rs))$，对 $z_{i}$ 与 $z_{j}$ 各作一次分部积分时边界项为零，故
+\begin{align*}
+\int_{B(rs)}\phi\left(\frac{z}{s}\right)z^{T}\cdot D^{2}f^{\varepsilon}(z)\cdot z\diff z
+=\int_{B(rs)}f^{\varepsilon}(z)\sum_{i,j=1}^{n}\left(\phi\left(\frac{z}{s}\right)z_{i}z_{j}\right)_{z_{i}z_{j}}\diff z.
+\end{align*}
+第三个关系式是 $\varepsilon\to0$ 的极限：$f^{\varepsilon}\to f$ 于 $L^{1}_{\loc}(\mathbb{R}^{n})$，而 $\sum_{i,j}\bigl(\phi(z/s)z_{i}z_{j}\bigr)_{z_{i}z_{j}}$ 是紧支集连续函数。第四个等号是\cref{theorem:ch06-6-8}(i) 中 $\mu^{ij}$ 的定义，取试验函数 $\varphi(z):=\phi(z/s)z_{i}z_{j}$；第五个等号是 Lebesgue 分解 $\mu^{ij}=\mu^{ij}_{\mathrm{ac}}+\mu^{ij}_{\mathrm{s}}$ 与 $\mu^{ij}_{\mathrm{ac}}=\mathcal{L}^{n}\llcorner f_{x_{i}x_{j}}$（见\cref{definition:ch06-def-6-8-记号}）。% XREF internal
+
+（3）$\lvert g_{\varepsilon}(s)\rvert/s^{n+2}$ 的估计链。由 $\lvert\phi\rvert\leqslant1$ 与 $\lvert z\rvert\leqslant rs$（$z\in B(rs)$）得
+\begin{align*}
+\lvert g_{\varepsilon}(s)\rvert\leqslant\int_{B(rs)}\lvert z\rvert^{2}\lvert D^{2}f^{\varepsilon}(z)\rvert\diff z\leqslant(rs)^{2}\int_{B(rs)}\lvert D^{2}f^{\varepsilon}(z)\rvert\diff z,
+\end{align*}
+除以 $s^{n+2}$ 即得第一行。第二行是 $D^{2}f^{\varepsilon}(z)=\int_{\mathbb{R}^{n}}D^{2}\eta_{\varepsilon}(z-y)f(y)\diff y$。第三行是两次分部积分，把 $D^{2}$ 从 $f$ 转移到 $\eta_{\varepsilon}$，得 $D^{2}f^{\varepsilon}(z)=\int_{\mathbb{R}^{n}}\eta_{\varepsilon}(z-y)\diff[D^{2}f]$。第四行用 $\lvert\eta_{\varepsilon}\rvert\leqslant C\varepsilon^{-n}$、Fubini 定理与
+\begin{align*}
+\int_{B(rs)}\eta_{\varepsilon}(z-y)\diff z\leqslant C\varepsilon^{-n}\mathcal{L}^{n}\bigl(B(rs)\cap B(y,\varepsilon)\bigr).
+\end{align*}
+第五行用 $\mathcal{L}^{n}\bigl(B(rs)\cap B(y,\varepsilon)\bigr)\leqslant\min\{\mathcal{L}^{n}(B(rs)),\mathcal{L}^{n}(B(y,\varepsilon))\}=\alpha(n)\min\{(rs)^{n},\varepsilon^{n}\}$。第六行用第（4）段的估计 $\lVert D^{2}f\rVert(B(0,\rho))\leqslant C\rho^{n}$（$0<\rho\leqslant1$）。最后一行分两种情形：若 $rs\leqslant\varepsilon$，则 $\min\{(rs)^{n},\varepsilon^{n}\}=(rs)^{n}$，右端不超过 $C(2r)^{n}$；若 $rs>\varepsilon$，则 $\min\{(rs)^{n},\varepsilon^{n}\}=\varepsilon^{n}$，右端不超过 $C(2r)^{n}$。因此该上界关于 $\varepsilon\in(0,1]$ 与 $s\in(0,1]$ 一致，只依赖于固定的 $r$。
+
+（4）$\lVert D^{2}f\rVert(B(0,\rho))\leqslant C\rho^{n}$。由 $[D^{2}f]=[D^{2}f]_{\mathrm{ac}}+[D^{2}f]_{\mathrm{s}}$ 与三角不等式，
+\begin{align*}
+\lVert D^{2}f\rVert(B(0,\rho))\leqslant\int_{B(0,\rho)}\lvert D^{2}f\rvert\diff z+\lVert[D^{2}f]_{\mathrm{s}}\rVert(B(0,\rho)).
+\end{align*}
+第一项由 $\lvert D^{2}f(z)\rvert\leqslant\lvert D^{2}f(0)\rvert+\lvert D^{2}f(z)-D^{2}f(0)\rvert$ 与 $(\star\star)$ 控制为 $\lvert D^{2}f(0)\rvert\alpha(n)\rho^{n}+o(\rho^{n})$，第二项由 (c) 控制为 $o(\rho^{n})$。
+
+（5）第 4 步中令 $\varepsilon\to0$。$(\star\star\star)$ 右端的被积函数等于 $\frac{1-s}{\alpha(n)r^{n}}\cdot\frac{1}{s^{n+2}}\int_{B(rs)}\phi(z/s)z^{T}\cdot[D^{2}f^{\varepsilon}(z)-D^{2}f(0)]\cdot z\diff z$。由（3），其中的积分除以 $s^{n+2}$ 后关于 $\varepsilon\in(0,1]$ 一致有界；对 $D^{2}f(0)$ 项，变量替换 $z=sw$ 给出
+\begin{align*}
+\frac{1}{s^{n+2}}\left|\int_{B(rs)}\phi\left(\frac{z}{s}\right)z^{T}\cdot D^{2}f(0)\cdot z\diff z\right|
+=\left|\int_{B(r)}\phi(w)w^{T}\cdot D^{2}f(0)\cdot w\diff w\right|,
+\end{align*}
+它也有与 $\varepsilon$ 无关的界。故由 $\int_{0}^{1}(1-s)\diff s=\frac{1}{2}<\infty$ 与控制收敛定理，可令 $\varepsilon\to0$。左端的极限用 $f^{\varepsilon}(0)\to f(0)$（$f$ 连续）与 $Df^{\varepsilon}(0)\to Df(0)$（条件 (a)），右端的极限用（2）中的最后一式。
+
+（6）第 4 步的 $o(r^{2})$。由 $(\star\star)$ 中 $x=0$ 的条件，$\fint_{B(0,\rho)}\lvert D^{2}f(z)-D^{2}f(0)\rvert\diff z\to0$（$\rho\to0$）；由于 $rs\leqslant r$，该平均值关于 $s\in(0,1]$ 一致地趋于 $0$，故第一个积分是 $o(1)$，乘以 $Cr^{2}$ 得 $o(r^{2})$。由 (c)，$\lVert[D^{2}f]_{\mathrm{s}}\rVert(B(0,rs))/(rs)^{n}\to0$ 关于 $s\in(0,1]$ 一致，故第二个积分也是 $o(1)$。于是右端为 $o(r^{2})$。
+
+（7）对上确界。对每个 $\phi\in C_{c}^{2}(B(r))$、$\lvert\phi\rvert\leqslant1$，已证 $\left|\fint_{B(r)}\phi h\diff y\right|=o(r^{2})$，其中绝对值由把 $\phi$ 换成 $-\phi$ 得到。函数 $\operatorname{sgn}h$ 属于 $L^{1}(B(r))$，而 $C_{c}^{2}(B(r))$ 在 $L^{1}(B(r))$ 中稠密，故存在 $\phi_{k}\in C_{c}^{2}(B(r))$ 使 $\lvert\phi_{k}\rvert\leqslant1$ 且 $\phi_{k}\to\operatorname{sgn}h$ 于 $L^{1}(B(r))$；于是 $\fint_{B(r)}\phi_{k}h\diff y\to\fint_{B(r)}\lvert h\rvert\diff y$，取上确界即得 $(\star\star\star\star)$。
+
+
+第 5 步：断言 1：存在常数 $C$，使得
+\begin{align*}
+\operatorname*{ess\,sup}_{B(r/2)}\lvert Dh\rvert\leqslant\frac{C}{r}\fint_{B(r)}\lvert h\rvert\diff y+Cr\qquad(r>0).
+\end{align*}
+断言 1 的证明：令 $\Lambda:=\lvert D^{2}f(0)\rvert$。则 $g:=h+\frac{\Lambda}{2}\lvert y\rvert^{2}$ 是凸函数。应用\cref{theorem:ch06-6-7}。% XREF p=275 "Proof of claim: Let Λ := |D^2f(0)|. Then g := h + Λ/2 |y|^2 is convex. Apply Theorem 6.7."
+
+第 6 步：断言 2：$\sup_{B(r/2)}\lvert h\rvert=o(r^{2})$（$r\to0$）。
+
+断言 2 的证明：固定 $0<\varepsilon,\eta<1$，$\eta^{1/n}\leqslant\frac{1}{2}$。则 $(\star\star\star\star)$ 蕴含
+\begin{align*}
+\mathcal{L}^{n}\{z\in B(r):\lvert h(z)\rvert\geqslant\varepsilon r^{2}\}&\leqslant\frac{1}{\varepsilon r^{2}}\int_{B(r)}\lvert h\rvert\diff z\\
+&=o(r^{n})\\
+&<\eta\mathcal{L}^{n}(B(r))
+\end{align*}
+对 $0<r<r_{0}:=r_{0}(\varepsilon,\eta)$ 成立。于是对每个 $y\in B(r/2)$，存在 $z\in B(r)$ 使得
+\begin{align*}
+\lvert h(z)\rvert\leqslant\varepsilon r^{2}
+\end{align*}
+且
+\begin{align*}
+\lvert y-z\rvert\leqslant\sigma:=\eta^{1/n}r.
+\end{align*}
+要看出这一点，注意若不然，则
+\begin{align*}
+\mathcal{L}^{n}\{z\in B(r):\lvert h(z)\rvert\geqslant\varepsilon r^{2}\}&\geqslant\mathcal{L}^{n}(B(y,\sigma))\\
+&=\alpha(n)\eta r^{n}=\eta\mathcal{L}^{n}(B(r)).
+\end{align*}
+从而
+\begin{align*}
+\lvert h(y)\rvert&\leqslant\lvert h(z)\rvert+\lvert h(y)-h(z)\rvert\\
+&\leqslant\varepsilon r^{2}+\sigma\operatorname*{ess\,sup}_{B(r)}\lvert Dh\rvert\\
+&\leqslant\varepsilon r^{2}+C\eta^{1/n}r^{2}
+\end{align*}
+依据断言 1 与 $(\star\star\star\star)$，只要取 $\eta$ 使 $C\eta^{1/n}=\varepsilon$，再取 $0<r<r_{0}$。
+
+第 7 步：由断言 2，
+\begin{align*}
+\sup_{B(r/2)}\left|f(y)-f(0)-Df(0)\cdot y-\frac{1}{2}y^{T}\cdot D^{2}f(0)\cdot y\right|=o(r^{2})
+\end{align*}
+当 $r\to0$。这证明了 $x=0$ 时的 $(\star)$。
+
+% SUPPLEMENT: parent=theorem:ch06-6-9; kind=proof; 补出断言 1、断言 2 的完整论证：g 的凸性、6.7(ii) 的适用、Chebyshev不等式、密度论证与平移化归
+下面对两条断言与平移化归补出细节。
+
+（1）断言 1。记 $L(y):=f(0)+Df(0)\cdot y$，它是线性函数，故 $h=f-L-\frac{1}{2}y^{T}\cdot D^{2}f(0)\cdot y$，于是
+\begin{align*}
+g=h+\frac{\Lambda}{2}\lvert y\rvert^{2}=f-L+\frac{1}{2}y^{T}\cdot\bigl(\Lambda I-D^{2}f(0)\bigr)\cdot y.
+\end{align*}
+由于 $\Lambda=\lvert D^{2}f(0)\rvert$ 是 $D^{2}f(0)$ 的算子范数，矩阵 $\Lambda I-D^{2}f(0)$ 对称且非负定，故 $\frac{1}{2}y^{T}(\Lambda I-D^{2}f(0))y$ 是凸函数；$f$ 凸，$-L$ 不改变凸性，故 $g$ 凸。对 $g$ 在球 $B(r)$ 上使用\cref{theorem:ch06-6-7}(ii) 的第二式（取球心 $0$），得% XREF internal
+\begin{align*}
+\operatorname*{ess\,sup}_{B(r/2)}\lvert Dg\rvert\leqslant\frac{C}{r}\fint_{B(r)}\lvert g\rvert\diff y,
+\end{align*}
+其中 $C$ 只依赖于 $n$。由 $Dg=Dh+\Lambda y$ 得 $\lvert Dh\rvert\leqslant\lvert Dg\rvert+\Lambda r/2$ 于 $B(r/2)$ 上；又 $\lvert g\rvert\leqslant\lvert h\rvert+\frac{\Lambda}{2}r^{2}$ 于 $B(r)$ 上。代入并合并常数即得断言 1。由于 $h$ 只局部 Lipschitz，$Dh$ 只在 $\mathcal{L}^{n}$-a.e. 处存在，故其中的上确界取本质上确界；对 $y,z\in B(r)$，沿连接 $y$ 与 $z$ 的线段用绝对连续性得 $\lvert h(y)-h(z)\rvert\leqslant\lvert y-z\rvert\operatorname*{ess\,sup}_{B(r)}\lvert Dh\rvert$。
+
+（2）断言 2 的第一个不等号是Chebyshev不等式：
+\begin{align*}
+\varepsilon r^{2}\mathcal{L}^{n}\{z\in B(r):\lvert h(z)\rvert\geqslant\varepsilon r^{2}\}\leqslant\int_{B(r)}\lvert h\rvert\diff z.
+\end{align*}
+第二个关系式由 $(\star\star\star\star)$ 得到。第三个不等号由 $\mathcal{L}^{n}(B(r))=\alpha(n)r^{n}$ 与 $o(r^{n})<\eta\alpha(n)r^{n}$ 对充分小的 $r$ 成立得到。若不存在所述的 $z$，则 $B(y,\sigma)\subseteq B(r)$（因为 $\lvert y\rvert<r/2$ 且 $\sigma\leqslant r/2$），且 $B(y,\sigma)$ 中每一点都满足 $\lvert h\rvert\geqslant\varepsilon r^{2}$，于是所考察的集合的测度不小于 $\mathcal{L}^{n}(B(y,\sigma))=\alpha(n)\sigma^{n}=\alpha(n)\eta r^{n}=\eta\mathcal{L}^{n}(B(r))$，与上面的严格不等式矛盾。
+
+（3）断言 2 的最后一步。对 $y\in B(r/2)$ 与相应的 $z$，由 $y$ 与 $z$ 的连线含于 $B(r)$ 得
+\begin{align*}
+\lvert h(y)-h(z)\rvert\leqslant\sigma\operatorname*{ess\,sup}_{B(r)}\lvert Dh\rvert\leqslant\sigma\left(\frac{C}{r}\fint_{B(r)}\lvert h\rvert\diff y+Cr\right).
+\end{align*}
+由 $(\star\star\star\star)$，$\frac{C}{r}\fint_{B(r)}\lvert h\rvert\diff y=o(r)$，故存在 $r_{1}>0$ 使 $0<r<r_{1}$ 时该量不超过 $Cr$；于是 $\lvert h(y)-h(z)\rvert\leqslant2C\eta^{1/n}r^{2}$。取 $\varepsilon\in(0,\min\{1,C/2\})$ 与 $\eta:=(\varepsilon/(2C))^{n}$，则 $\eta<1$ 且 $\eta^{1/n}=\varepsilon/(2C)\leqslant1/2$，从而 $\sup_{B(r/2)}\lvert h\rvert\leqslant2\varepsilon r^{2}$ 对 $0<r<\min\{r_{0},r_{1}\}$ 成立。由于 $\varepsilon>0$ 任意小，断言 2 得证。
+
+（4）由 $x=0$ 到一般的 $x$。对每个满足第 1 步条件的 $x$，令 $f_{x}(y):=f(x+y)$。则 $f_{x}$ 仍为凸函数，$Df_{x}(0)=Df(x)$，$D^{2}f_{x}(0)=D^{2}f(x)$，且球的平均在平移下不变，故第 2 步至第 7 步的论证逐字适用于 $f_{x}$，给出 $x$ 处的 $(\star)$。由第 1 步，这样的 $x$ 构成 $\mathcal{L}^{n}$-满测度集，结论成立。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch06-6-9; kind=motivation; 说明定理的实质：把凸性提供的单侧控制转化为几乎处处的二阶 Taylor 展开，并概述七步证明的路线与 Hessian 测度的分解所起的作用
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-9-动机}
+本定理把凸性所允许的单侧控制转化为几乎处处的二阶展开。对 $C^{2}$ 的凸函数有 $[D^{2}f]=\mathcal{L}^{n}\llcorner D^{2}f$，$(\star)$ 就是带积分余项的 Taylor 公式；凸函数可以在一稠密零测集上不可微，此时 $[D^{2}f]$ 的奇异部分非零，而 $(\star)$ 断言奇异部分对二阶展开的贡献在几乎每一点处可以忽略。与\cref{theorem:ch03-3-2}的相似之处在于两者都把逐点结论归结为某个 $L^{1}_{\loc}$ 密度的 Lebesgue 点性质；不同之处在于二阶导数没有双侧差商可用，论证必须借助矩阵值测度 $[D^{2}f]$ 及其 Lebesgue 分解。% XREF internal
+
+证明分七步。第 1 步选取一个几乎处处点，使 $Df$ 与 $D^{2}f$ 都是 Lebesgue 点，且奇异部分 $[D^{2}f]_{\mathrm{s}}$ 的 $n$ 维密度为零。第 2 步把点平移到原点，用磨光把凸函数换成光滑凸函数，并对磨光函数写带积分余项的 Taylor 公式。第 3 步用检验函数 $\phi$ 乘该式、在球上取平均，再作两次分部积分：一次把二阶导数从 $f^{\varepsilon}$ 转移到 $\phi(\cdot/s)z_{i}z_{j}$ 上，一次把 $D^{2}f^{\varepsilon}$ 写成磨光核关于测度 $[D^{2}f]$ 的积分，从而把 $f^{\varepsilon}$ 换成 $f$、把 $D^{2}f^{\varepsilon}$ 换成 $[D^{2}f]$。这一步把待估计的量与 $(\star\star)$ 和条件 (c) 联系起来。第 4 步由控制收敛定理令 $\varepsilon\to0$，得到 $h$ 在 $B(r)$ 上的平均是 $o(r^{2})$。第 5、6 步是两条断言：断言 1 用\cref{theorem:ch06-6-7}(ii) 的凸函数估计把 $\lvert Dh\rvert$ 用 $h$ 的平均控制；断言 2 用 Chebyshev 不等式与一个密度论证把平均估计提升为 $B(r/2)$ 上的一致估计。第 7 步合并两条断言即得 $(\star)$。% XREF internal
+
+因此定理的实质可以概括为：$[D^{2}f]$ 的绝对连续部分在几乎每一点处给出经典 Hessian，而奇异部分在 $n$ 维尺度下密度为零，不破坏二阶展开。这也解释了为何结论只能是几乎处处的：条件 (c) 的例外集虽然 $\mathcal{L}^{n}$-零测，却可以非空，而 $[D^{2}f]_{\mathrm{s}}$ 的质量正可以集中在这样的集合上；取 $n=1$ 与 $f(x)=\lvert x\rvert$，则 $[D^{2}f]_{\mathrm{s}}=2\delta_{0}$，而 $x=0$ 正是二阶展开不成立的点。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch06-6-9; kind=hypotheses; 逐条分析凸性、三个几乎处处条件、矩阵范数与几乎处处的必要性，并给出非凸函数使 Hessian 测度不存在的反例与破坏二阶展开的反例
+\begin{remark}\phantomsection\label{remark:ch06-thm-6-9-条件}
+\begin{enumerate}[(i)]
+\item 凸性是本定理唯一的假设，它有三项作用。其一，由\cref{theorem:ch06-6-7}(i) 得 $f$ 局部 Lipschitz 连续，于是 $Df$ 在 $\mathcal{L}^{n}$-a.e. 处存在并属于 $L^{\infty}_{\loc}$，第 1 步的条件 (a) 才有意义。其二，由\cref{theorem:ch06-6-8}，凸性保证二阶分布导数实现为矩阵值符号 Radon 测度 $[D^{2}f]$，从而有 Lebesgue 分解与密度 $D^{2}f\in L^{1}_{\loc}$，第 1 步的条件 (b)、断言 1 与第 3 步的分部积分都以 $[D^{2}f]$ 为对象。其三，断言 1 中 $g=h+\frac{\Lambda}{2}\lvert y\rvert^{2}$ 的凸性直接来自 $f$ 的凸性，这是把 $\lvert Dh\rvert$ 用 $h$ 的平均控制的依据。% XREF internal
+\item 去掉凸性后本定理失去对象：$C^{1}$ 函数的二阶分布导数未必是测度。取 $g(t):=t\sin(1/t)$（$t\neq0$）、$g(0):=0$ 与 $f(x):=\int_{0}^{x}g(t)\diff t$，则 $f\in C^{1}(\mathbb{R})$。$g$ 在 $[0,1]$ 上的变差满足
+\begin{align*}
+\int_{0}^{1}\left|\sin\frac{1}{t}-\frac{1}{t}\cos\frac{1}{t}\right|\diff t\geqslant\int_{1}^{\infty}\frac{\lvert\cos u\rvert}{u}\diff u-1=+\infty,
+\end{align*}
+故 $g\notin\BV_{\loc}(\mathbb{R})$。若 $f''=Dg$ 是 Radon 测度 $\mu$，则对一切 $\phi\in C_{c}^{1}(\mathbb{R})$ 有 $\int g\phi'\diff t=-\int\phi\diff\mu$，从而 $\left|\int g\phi'\diff t\right|\leqslant\lvert\mu\rvert(\spt\phi)$，即 $g\in\BV_{\loc}(\mathbb{R})$，矛盾；因此 $f''$ 不是 Radon 测度，$[D^{2}f]$ 不存在。% XREF internal
+\item 条件 (a) 是 $Df$ 在 $x$ 处的 Lebesgue 点条件。它在第 4 步中用于把 $Df^{\varepsilon}(0)=\int_{\mathbb{R}^{n}}Df(-z)\eta_{\varepsilon}(z)\diff z$ 的极限识别为 $Df(0)$。$Df$ 的局部有界性由凸性给出，故 $Df\in L^{1}_{\loc}$，\cref{theorem:ch01-1-33}适用。% XREF internal
+\item 条件 (b) 是 $D^{2}f$ 的 Lebesgue 点条件。它保证第 4 步中第一个积分是 $o(1)$（关于 $s\in(0,1]$ 一致），并在第 3 步的估计中给出 $\lVert D^{2}f\rVert(B(0,\rho))$ 的绝对连续部分估计。
+\item 条件 (c) 说明奇异部分 $[D^{2}f]_{\mathrm{s}}$ 的 $n$ 维密度在 $x$ 处为零。它使第 4 步中第二个积分是 $o(1)$，并在第 3 步的估计中控制 $\lVert D^{2}f\rVert(B(0,\rho))$ 的奇异部分。条件 (c) 不是 (b) 的推论：$[D^{2}f]_{\mathrm{s}}$ 与 $\mathcal{L}^{n}$ 相互奇异，它在几乎每一点处的 $n$ 维密度为零，但可以集中在下维集上，例如 $n=1$ 与 $f(x)=\lvert x\rvert$ 时 $[D^{2}f]_{\mathrm{s}}=2\delta_{0}$。
+\item 结论中的 $\mathcal{L}^{n}$-a.e. 不能改进为处处成立。取 $n=1$ 与 $f(x):=\frac{1}{2}x\lvert x\rvert$，则 $f$ 凸且 $f\in C^{1}(\mathbb{R})$，$f'(0)=0$；而在 $x=0$ 处不存在二阶导数：$f(y)-f(0)-f'(0)y=\frac{1}{2}y\lvert y\rvert$，它与 $y^{2}$ 之比当 $y\to0$ 时趋于 $\pm\frac{1}{2}$ 而不趋于 $0$，故 $(\star)$ 在 $x=0$ 处不成立。该例外集是单点集，$\mathcal{L}^{1}$-零测。
+\item 矩阵范数 $\lvert\cdot\rvert$ 在 $\mathbb{M}^{n\times n}$ 上可任取（例如 Frobenius 范数或算子范数）；有限维空间上的范数等价，结论与常数的存在性不受影响。陈述中的 $D^{2}f(x)$ 是对称矩阵：$[D^{2}f]$ 的对称性 $\mu^{ij}=\mu^{ji}$ 给出 $f_{x_{i}x_{j}}=f_{x_{j}x_{i}}$ 于 $\mathcal{L}^{n}$-a.e. 处成立。
+\end{enumerate}
+\end{remark}
+
+\end{document}

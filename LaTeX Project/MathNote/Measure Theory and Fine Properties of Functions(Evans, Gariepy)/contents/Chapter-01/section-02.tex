@@ -1,0 +1,224 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{Lusin 定理与 Egoroff 定理}\label{section:ch01-02}
+
+\begin{theorem}[连续函数的延拓]\label{theorem:ch01-1-13}
+设 $n,m$ 为正整数，$K\subseteq\mathbb{R}^n$ 为紧集，$f:K\to\mathbb{R}^m$ 为连续映射。则存在连续映射 $\bar f:\mathbb{R}^n\to\mathbb{R}^m$，使得
+\begin{align*}
+\bar f=f\quad\text{在 }K\text{ 上}.
+\end{align*}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-13-结构}
+保持 $f$ 更多结构的延拓定理将在\cref{section:ch03-01}、\cref{section:ch04-04}、\cref{section:ch05-04}与\cref{section:ch06-05}中给出。% XREF p=35 "Extension theorems preserving more of the structure of f will be presented in Sections 3.1, 4.4, 5.4, and 6.5." | p=35 "Sections 3.1, 4.4, 5.4, and 6.5" | p=35 "Sections 3.1, 4.4, 5.4, and 6.5" | p=35 "Sections 3.1, 4.4, 5.4, and 6.5"
+\end{remark}
+
+\begin{proof}
+（1）若 $m>1$，则写 $f=(f^1,\cdots,f^m)$，对每个分量 $f^l:K\to\mathbb{R}$ 应用 $m=1$ 的结论得到连续延拓 $\bar f^l$，再令 $\bar f:=(\bar f^1,\cdots,\bar f^m)$。因此只需讨论 $f:K\to\mathbb{R}$ 的情形。
+
+令 $U:=\mathbb{R}^n\setminus K$。对 $x\in U$ 与 $s\in K$，令
+\begin{align*}
+u_s(x):=\max\left\{2-\frac{\lvert x-s\rvert}{\operatorname{dist}(x,K)},0\right\}.
+\end{align*}
+由 $x\notin K$ 知 $\operatorname{dist}(x,K)>0$，故 $u_s$ 在 $U$ 上有定义且连续；又由 $\lvert x-s\rvert\geqslant\operatorname{dist}(x,K)$ 知 $0\leqslant u_s(x)\leqslant 1$，且当 $\lvert x-s\rvert\geqslant 2\operatorname{dist}(x,K)$ 时 $u_s(x)=0$。
+
+现取 $K$ 的可数稠密子集 $\{s_j\}_{j=1}^{\infty}$，并对 $x\in U$ 定义
+\begin{align*}
+\sigma(x):=\sum_{j=1}^{\infty}2^{-j}u_{s_j}(x).
+\end{align*}
+由于 $K$ 稠密于 $K$ 中且 $\operatorname{dist}(x,K)>0$，存在 $s_j$ 使 $\lvert x-s_j\rvert<2\operatorname{dist}(x,K)$，从而 $u_{s_j}(x)>0$，故 $0<\sigma(x)\leqslant 1$（$x\in U$）。再令
+\begin{align*}
+v_k(x):=\frac{2^{-k}u_{s_k}(x)}{\sigma(x)},\qquad x\in U,\ k=1,2,\cdots.
+\end{align*}
+则 $v_k\geqslant0$、$v_k$ 在 $U$ 上连续、且 $\sum_{k=1}^{\infty}v_k(x)=1$（$x\in U$），即 $\{v_k\}_{k=1}^{\infty}$ 是 $U$ 上的一从属于覆盖的单位分解。定义
+\begin{align*}
+\bar f(x):=
+\begin{cases}
+f(x), & x\in K,\\[2pt]
+\displaystyle\sum_{k=1}^{\infty}v_k(x)f(s_k), & x\in U.
+\end{cases}
+\end{align*}
+由于 $\lvert v_k(x)f(s_k)\rvert\leqslant 2^{-k}\lVert f\rVert_{L^{\infty}(K)}$，由 Weierstrass $M$-判别法，右端级数在 $U$ 上一致收敛，故 $\bar f$ 在 $U$ 上连续。
+
+（2）下面证明对每个 $a\in K$ 有
+\begin{align*}
+\lim_{x\to a,\ x\in U}\bar f(x)=f(a).
+\end{align*}
+固定 $\varepsilon>0$。由 $f$ 在 $a$ 处连续，存在 $\delta>0$，使得对一切 $s_k\in K$ 满足 $\lvert a-s_k\rvert<\delta$ 者都有
+\begin{align*}
+\lvert f(a)-f(s_k)\rvert<\varepsilon.
+\end{align*}
+设 $x\in U$ 且 $\lvert x-a\rvert<\delta/4$。若某个 $k$ 满足 $\lvert a-s_k\rvert\geqslant\delta$，则
+\begin{align*}
+\delta\leqslant\lvert a-s_k\rvert\leqslant\lvert a-x\rvert+\lvert x-s_k\rvert<\frac{\delta}{4}+\lvert x-s_k\rvert,
+\end{align*}
+故 $\lvert x-s_k\rvert\geqslant\frac{3}{4}\delta>2\lvert x-a\rvert\geqslant2\operatorname{dist}(x,K)$，于是 $v_k(x)=0$。既然 $\sum_{k=1}^{\infty}v_k(x)=1$，便有
+\begin{align*}
+\lvert\bar f(x)-f(a)\rvert
+=\Bigl\lvert\sum_{k=1}^{\infty}v_k(x)\bigl(f(s_k)-f(a)\bigr)\Bigr\rvert
+\leqslant\sum_{k=1}^{\infty}v_k(x)\lvert f(s_k)-f(a)\rvert<\varepsilon.
+\end{align*}
+因此 $\bar f$ 在 $K$ 的每一点处连续；结合 $\bar f$ 在 $U$ 上连续以及 $U\cup K=\mathbb{R}^n$，$\bar f$ 在 $\mathbb{R}^n$ 上连续；再由定义 $\bar f|_K=f$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-13; kind=motivation; 说明延拓定理的动机、紧性条件与距离权函数的构造思路
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-13-动机}
+本定理断言：定义在紧集上的连续向量值函数必可延拓为全空间上的连续函数，即定义域的限制不损失连续性这一拓扑信息。证明的构造分两层：先用距离函数在 $K$ 的补集上构造一族以 $K$ 中可数稠密点为中心的权函数 $u_{s_j}$，归一化后得到单位分解 $v_k$；再用 $f(s_k)$ 在补集上作加权平均。权函数 $u_s$ 的形状保证：当 $x$ 靠近某点 $a\in K$ 时，只有那些 $s_k$ 与 $a$ 足够接近的项才可能非零，故加权平均值逼近 $f(a)$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-13; kind=hypotheses; 逐条分析紧性与连续性假设的作用与可削弱性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-13-条件}
+\begin{enumerate}[(i)]
+\item 假设 $K$ 紧蕴含 $K$ 闭且有界。$K$ 闭保证 $x\notin K$ 时 $\operatorname{dist}(x,K)>0$，从而 $u_s$ 在 $U$ 上有定义；$K$ 有界不参与构造，而 $K$ 可分（$\mathbb{R}^n$ 的任意子集均可分）保证可数稠密子集 $\{s_j\}$ 存在。
+\item 假设 $f$ 连续在证明中有两处作用：其一，保证 $\lVert f\rVert_{L^{\infty}(K)}<\infty$（$K$ 紧、$f$ 连续），从而使 Weierstrass $M$-判别法可用；其二，第（2）步中用于选取 $\delta$，使 $\lvert a-s_k\rvert<\delta$ 时 $\lvert f(a)-f(s_k)\rvert<\varepsilon$。
+\item 上述论证只用到 $K$ 闭与可分，因此结论对闭集 $K\subseteq\mathbb{R}^n$ 同样成立；紧性在本证明中是便于陈述的充分条件，而非结论成立的必要条件。
+\item 值域 $\mathbb{R}^m$ 可换为任意 Banach 空间：加权平均与该空间的线性结构相容，而 $M$-判别法只用到范数的完备性。
+\end{enumerate}
+\end{remark}
+
+现在证明：可测函数可以用连续函数在测度意义下逼近。
+
+\begin{theorem}[Lusin 定理]\label{theorem:ch01-1-14}
+设 $\mu$ 为 $\mathbb{R}^n$ 上的 Borel 正则测度，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为 $\mu$-可测映射，$A\subseteq\mathbb{R}^n$ 为 $\mu$-可测集且 $\mu(A)<\infty$，$\varepsilon>0$ 给定。则存在紧集 $K\subseteq A$，使得
+\begin{enumerate}[(i)]
+\item $\mu(A-K)<\varepsilon$，且
+\item $f|_K$ 连续。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+（1）对每个正整数 $i$，取 $\mathbb{R}^m$ 的一列互不相交的 Borel 集 $\{B_{ij}\}_{j=1}^{\infty}$，使得 $\mathbb{R}^m=\bigcup_{j=1}^{\infty}B_{ij}$ 且 $\operatorname{diam}B_{ij}<1/i$（例如取边长为 $1/(2i)$ 的半开立方体）。令 $A_{ij}:=A\cap f^{-1}(B_{ij})$。由 $f$ 的 $\mu$-可测性与 $B_{ij}$ 的 Borel 性，$A_{ij}$ 是 $\mu$-可测集，且 $A=\bigcup_{j=1}^{\infty}A_{ij}$ 为互不相交的并。
+
+（2）记 $\nu:=\mu\llcorner A$；由 $\mu$ 的 Borel 正则性与 $\mu(A)<\infty$ 知 $\nu$ 是 Radon 测度。由\cref{theorem:ch01-1-8}，存在紧集 $K_{ij}\subseteq A_{ij}$，使得% XREF p=36 "Theorem 1.8 implies the existence of a compact set"
+\begin{align*}
+\nu(A_{ij}-K_{ij})<\frac{\varepsilon}{2^{i+j}}.
+\end{align*}
+于是
+\begin{align*}
+\mu\Bigl(A-\bigcup_{j=1}^{\infty}K_{ij}\Bigr)
+&=\nu\Bigl(A-\bigcup_{j=1}^{\infty}K_{ij}\Bigr)
+=\nu\Bigl(\bigcup_{j=1}^{\infty}A_{ij}-\bigcup_{j=1}^{\infty}K_{ij}\Bigr)\\
+&\leqslant\nu\Bigl(\bigcup_{j=1}^{\infty}(A_{ij}-K_{ij})\Bigr)
+\leqslant\sum_{j=1}^{\infty}\nu(A_{ij}-K_{ij})<\frac{\varepsilon}{2^{i}}.
+\end{align*}
+由于 $\mu(A-\bigcup_{j=1}^{N}K_{ij})$ 随 $N$ 递减趋于 $\mu(A-\bigcup_{j=1}^{\infty}K_{ij})$，存在正整数 $N(i)$，使得
+\begin{align*}
+\mu\Bigl(A-\bigcup_{j=1}^{N(i)}K_{ij}\Bigr)<\frac{\varepsilon}{2^{i}}.
+\end{align*}
+
+（3）令 $D_i:=\bigcup_{j=1}^{N(i)}K_{ij}$，则 $D_i$ 是有限个紧集之并，故为紧集。对每个 $i$ 与每个 $j\leqslant N(i)$，固定 $b_{ij}\in B_{ij}$，并定义 $g_i:D_i\to\mathbb{R}^m$ 为
+\begin{align*}
+g_i(x):=b_{ij},\qquad x\in K_{ij},\ j\leqslant N(i).
+\end{align*}
+由于 $K_{i1},\cdots,K_{iN(i)}$ 是两两不相交的紧集，任意两个不同者之间有正距离，故 $g_i$ 在 $D_i$ 上连续。又当 $x\in K_{ij}$ 时 $f(x)\in B_{ij}$，而 $b_{ij}\in B_{ij}$，故 $\lvert f(x)-g_i(x)\rvert\leqslant\operatorname{diam}B_{ij}<1/i$（$x\in D_i$）。
+
+令 $K:=\bigcap_{i=1}^{\infty}D_i$。则 $K$ 是紧集且 $K\subseteq A$，并且
+\begin{align*}
+\mu(A-K)\leqslant\sum_{i=1}^{\infty}\mu(A-D_i)<\sum_{i=1}^{\infty}\frac{\varepsilon}{2^{i}}=\varepsilon.
+\end{align*}
+最后，对每个 $x\in K$ 与每个 $i$ 有 $x\in D_i$，故 $\lvert f(x)-g_i(x)\rvert<1/i$；这说明 $g_i\to f$ 在 $K$ 上一致收敛。由 $g_i$ 在 $K$ 上连续及一致收敛保持连续性，$f|_K$ 连续。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-14; kind=motivation; 说明 Lusin 定理的逼近思想与三个条件的作用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-14-动机}
+Lusin 定理刻画了可测函数与连续函数之间的差距：可测函数在一个测度任意接近全集的紧集上与某个连续函数一致。这里的紧集 $K$ 同时承担两种角色：一方面 $A-K$ 的测度可以任意小，另一方面在 $K$ 上 $f$ 的取值被限制在直径很小的 Borel 块中，从而可以用分片常值函数逼近。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-14; kind=hypotheses; 逐条分析 Borel 正则性、有限测度与紧集的作用及必要性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-14-条件}
+\begin{enumerate}[(i)]
+\item Borel 正则性在证明中通过\cref{theorem:ch01-1-8}使用： 它保证每个 $\mu$-可测集在测度意义下可由内部紧集逼近，从而得到 $K_{ij}$ 与 $N(i)$。若只假设 $\mu$ 为一般测度而无正则性，内逼近紧集不存在，结论一般不成立。 % XREF internal
+\item 条件 $\mu(A)<\infty$ 在两个位置使用：其一，它使 $\nu=\mu\llcorner A$ 为 Radon 测度，从而可对内逼近使用\cref{theorem:ch01-1-8}；其二 ，它保证 $\mu(A-\bigcup_{j=1}^{N}K_{ij})$ 关于 $N$ 的极限等于 $\mu(A-\bigcup_{j=1}^{\infty}K_{ij})$，从而可取到有限的 $N(i)$。 % XREF internal
+\item 条件 $\mu(A)<\infty$ 不可删除。取 $\mu=\mathcal{L}^1$、$A=\mathbb{R}$、$f(x)=0$。若紧集 $K\subseteq\mathbb{R}$，则 $\mathcal{L}^1(\mathbb{R}-K)=\infty$，故不存在满足结论 (i) 的紧集 $K$。
+\item 结论中的紧集 $K$ 依赖于 $\varepsilon$，不能取为与 $\varepsilon$ 无关的固定集合；这一点与下面\cref{theorem:ch01-1-15}中连续函数 $\bar f$ 的构造方式一致。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[连续函数逼近]\label{theorem:ch01-1-15}
+设 $\mu$ 为 $\mathbb{R}^n$ 上的 Borel 正则测度，$f:\mathbb{R}^n\to\mathbb{R}^m$ 为 $\mu$-可测映射，$A\subseteq\mathbb{R}^n$ 为 $\mu$-可测集且 $\mu(A)<\infty$，$\varepsilon>0$ 给定。则存在连续函数 $\bar f:\mathbb{R}^n\to\mathbb{R}^m$，使得
+\begin{align*}
+\mu\bigl(\{x\in A\mid\bar f(x)\neq f(x)\}\bigr)<\varepsilon.
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+由\cref{theorem:ch01-1-14}，存在紧集 $K\subseteq A$，使得 $\mu(A-K)<\varepsilon$ 且 $f|_K$ 连续。由\cref{theorem:ch01-1-13}，存在连续函数 $\bar f:\mathbb{R}^n\to\mathbb{R}^m$，使得 $\bar f|_K=f|_K$。于是 % XREF p=37 "According to Lusin's Theorem" | p=37 "Then by Theorem 1.13"
+\begin{align*}
+\mu\bigl\{x\in A\mid\bar f(x)\neq f(x)\bigr\}\leqslant\mu(A-K)<\varepsilon.
+\end{align*}
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-15; kind=motivation; 说明连续逼近与 Whitney 延拓的关系及误差集的测度意义
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-15-比较}
+可将本定理与 Whitney 延拓定理（\cref{theorem:ch06-6-10}）比较： 后者刻画了存在 $C^1$ 延拓 $\bar f$ 的充要条件，而本定理只要求 $\bar f$ 连续，且允许在一个测度小于 $\varepsilon$ 的集合上修正 $f$。 % XREF p=38 "Compare this with Whitney's Extension Theorem 6.10"
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-15; kind=hypotheses; 说明与 Lusin 定理条件的异同
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-15-条件}
+本定理的假设与\cref{theorem:ch01-1-14}完全相同， 结论则把「在紧集上一致」换成「在测度意义下几乎处处相等」。条件 $\mu(A)<\infty$ 仍不可删除：取 $\mu=\mathcal{L}^1$、$A=\mathbb{R}$、$f=0$，若 $\bar f$ 连续，则 $\{x\in\mathbb{R}\mid\bar f(x)\neq0\}$ 是开集，其 Lebesgue 测度或为 $0$ 或为 $\infty$，不可能属于 $(0,\varepsilon)$。 % XREF internal
+\end{remark}
+
+\begin{definition*}[几乎处处]\phantomsection\label{definition:ch01-1-a-e}
+设 $\mu$ 为集合 $X$ 上的测度。称性质 $P$ 关于 $\mu$ 几乎处处成立，是指存在 $\mu$-可测集 $A\subseteq X$ 满足 $\mu(A)=0$，使得 $P$ 在 $X\setminus A$ 上处处成立；此时记作 $\mu$-a.e.。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch01-1-a-e; kind=motivation; 说明几乎处处这一约定在测度论中的作用
+% SUPPLEMENT: parent=definition:ch01-1-a-e; kind=hypotheses; 说明该约定依赖已给定的测度与零测集，并解释其可检验性
+\begin{remark}\phantomsection\label{remark:ch01-1-a-e-条件}
+零测集上的取值不影响积分、可测性与几乎处处收敛等结论，因此把「除去一个零测集后成立」单独命名可以避免在每次陈述中重复该例外集。约定 $\mu$-a.e. 只在 $X$ 上给定测度 $\mu$ 时才有意义；当 $\mu$ 为 Lebesgue 测度时通常简写为 a.e.。
+\end{remark}
+
+\begin{theorem}[Egoroff 定理]\label{theorem:ch01-1-16}
+设 $\mu$ 为 $\mathbb{R}^n$ 上的测度，$f_k:\mathbb{R}^n\to\mathbb{R}^m$（$k=1,2,\cdots$）为 $\mu$-可测映射，$A\subseteq\mathbb{R}^n$ 为 $\mu$-可测集且 $\mu(A)<\infty$，并设
+\begin{align*}
+f_k\to f\quad \mu\text{-a.e. 于 }A.
+\end{align*}
+则对每个 $\varepsilon>0$，存在 $\mu$-可测集 $B\subseteq A$，使得
+\begin{enumerate}[(i)]
+\item $\mu(A-B)<\varepsilon$，且
+\item $f_k\to f$ 在 $B$ 上一致收敛。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+对 $i,j=1,2,\cdots$ 定义
+\begin{align*}
+C_{ij}:=\bigcup_{k=j}^{\infty}\bigl\{x\mid\lvert f_k(x)-f(x)\rvert>2^{-i}\bigr\}.
+\end{align*}
+由 $f_k$ 与 $f$ 的 $\mu$-可测性，$C_{ij}$ 是 $\mu$-可测集；又 $C_{i,j+1}\subseteq C_{ij}$ 对一切 $i,j$ 成立。由于 $f_k\to f$ $\mu$-a.e. 于 $A$，集 $\bigcap_{j=1}^{\infty}C_{ij}$ 与 $A$ 的交集是零测集。由 $\mu(A)<\infty$ 及测度的上连续性，
+\begin{align*}
+\lim_{j\to\infty}\mu(A\cap C_{ij})=\mu\Bigl(A\cap\bigcap_{j=1}^{\infty}C_{ij}\Bigr)=0.
+\end{align*}
+故存在正整数 $N(i)$，使得
+\begin{align*}
+\mu\bigl(A\cap C_{i,N(i)}\bigr)<\varepsilon\,2^{-i}.
+\end{align*}
+令 $B:=A-\bigcup_{i=1}^{\infty}C_{i,N(i)}$，则 $B$ 是 $\mu$-可测集且 $B\subseteq A$，并且
+\begin{align*}
+\mu(A-B)\leqslant\sum_{i=1}^{\infty}\mu\bigl(A\cap C_{i,N(i)}\bigr)<\sum_{i=1}^{\infty}\varepsilon\,2^{-i}=\varepsilon.
+\end{align*}
+另一方面，对每个 $i$、每个 $x\in B$ 与每个 $n\geqslant N(i)$，由 $x\notin C_{i,N(i)}$ 得
+\begin{align*}
+\lvert f_n(x)-f(x)\rvert\leqslant2^{-i}.
+\end{align*}
+于是对每个 $i$ 与每个 $n\geqslant N(i)$ 都有 $\sup_{x\in B}\lvert f_n(x)-f(x)\rvert\leqslant2^{-i}$，即 $f_n\to f$ 在 $B$ 上一致收敛。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-16; kind=motivation; 说明 Egoroff 定理与测度收敛、一致收敛之间的关系
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-16-动机}
+在有限测度集上，几乎处处收敛蕴含「几乎一致收敛」：除去一个测度任意小的集合之后，收敛是一致的。这一结论使几乎处处收敛的逐点信息可以转化为一致收敛的估计，是后续证明中把逐点收敛提升为整体估计的常用手段。构造中的 $C_{ij}$ 刻画了「从第 $j$ 项起仍有 $\lvert f_k-f\rvert>2^{-i}$ 的点」，其测度随 $j$ 递减趋于零。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-16; kind=hypotheses; 说明有限测度条件的作用并给出反例
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-16-条件}
+\begin{enumerate}[(i)]
+\item 条件 $\mu(A)<\infty$ 只用于由 $\mu(A\cap C_{ij})$ 的单调递减性与 $\mu(A\cap\bigcap_jC_{ij})=0$ 推出 $\lim_{j}\mu(A\cap C_{ij})=0$。若无有限性，上连续性失效。
+\item 条件 $\mu(A)<\infty$ 不可删除。取 $\mu=\mathcal{L}^1$、$A=\mathbb{R}$、$f_k=\chi_{[k,k+1]}$、$f=0$，则 $f_k\to f$ 处处成立。设 $B\subseteq\mathbb{R}$ 可测且 $\mathcal{L}^1(\mathbb{R}-B)<\varepsilon<\infty$，则 $B$ 必无界，于是对每个 $k$ 存在 $x\in B\cap[k,k+1]$，在该点处 $\lvert f_k(x)-f(x)\rvert=1$，故 $f_k$ 在 $B$ 上不一致收敛于 $f$。
+\item 结论中的集合 $B$ 依赖于 $\varepsilon$，且一般不能取 $B=A$：即使 $f_k\to f$ 处处成立，收敛也未必一致（如 $f_k=\chi_{[0,1/k]}$ 于 $A=[0,1]$）。
+\end{enumerate}
+\end{remark}
+
+\end{document}

@@ -1,0 +1,38 @@
+% !TEX program = xelatex
+% Scratch 测试文件：随便改，不参与任何正式文档
+\documentclass[UTF8]{ctexart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\newtheorem{theorem}{定理}[section]
+
+\title{Scratch 测试}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{中文测试}
+这是一段中文测试。行内公式 $a^2+b^2=c^2$，行间公式：
+\[
+  \int_0^1 x^2 \, dx = \frac{1}{3}.
+\]
+
+\section{环境测试}
+\begin{theorem}[勾股定理]
+若 $a,b,c$ 为直角三角形的三边，且 $c$ 为斜边，则 $a^2+b^2=c^2$。
+\end{theorem}
+
+\begin{proof}
+略。
+\end{proof}
+
+\begin{itemize}
+  \item 列表项一
+  \item 列表项二
+\end{itemize}
+
+\end{document}

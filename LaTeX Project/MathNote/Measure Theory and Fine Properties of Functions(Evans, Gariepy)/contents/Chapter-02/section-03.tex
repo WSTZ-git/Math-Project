@@ -1,0 +1,262 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{密度}\label{section:ch02-03}
+
+在\cref{section:ch01-07}中已经证明：若 $E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^n$-可测集，则% XREF p=107 "We proved in Section 1.7 that"
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^n(B(x,r)\cap E)}{\alpha(n)r^n}=
+\begin{cases}
+1, & \text{对 } \mathcal{L}^n\text{-a.e. } x\in E,\\
+0, & \text{对 } \mathcal{L}^n\text{-a.e. } x\in\mathbb{R}^n\setminus E .
+\end{cases}
+\end{align*}
+本节对低维 Hausdorff 测度建立若干类似的结论。以下始终假设
+\begin{align*}
+0<s<n .
+\end{align*}
+
+\begin{theorem}[$E$ 之外的点的密度]\label{theorem:ch02-2-6}
+设 $n$ 为正整数，$0<s<n$，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{H}^s$-可测集且 $\mathcal{H}^s(E)<\infty$。对 $x\in\mathbb{R}^n$ 与 $r>0$，记 $B(x,r)$ 为以 $x$ 为球心、$r$ 为半径的闭球，并记
+\begin{align*}
+\alpha(s):=\frac{\pi^{s/2}}{\Gamma\bigl(\frac{s}{2}+1\bigr)} ,
+\end{align*}
+即 $\mathbb{R}^s$ 中单位球的体积。则
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{H}^s(B(x,r)\cap E)}{\alpha(s)r^s}=0
+\end{align*}
+对 $\mathcal{H}^s$-a.e. $x\in\mathbb{R}^n\setminus E$ 成立。
+\end{theorem}
+
+\begin{proof}
+固定 $t>0$，并令
+\begin{align*}
+A_t:=\Bigl\{x\in\mathbb{R}^n\setminus E\Bigm|\limsup_{r\to0}\frac{\mathcal{H}^s(B(x,r)\cap E)}{\alpha(s)r^s}>t\Bigr\} .
+\end{align*}
+由于 $\mathcal{H}^s\llcorner E$ 是 Radon 测度，给定 $\varepsilon>0$ 后存在紧集 $K\subseteq E$，使得
+\begin{align*}
+\mathcal{H}^s(E\setminus K)\leqslant\varepsilon . \qquad(\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch02-2-6; kind=proof; 补出紧集 K 的存在性（定理 1.8 的紧集内逼近断言）以及 H^s(E)<∞ 在此处的作用
+紧集 $K$ 的存在性来自\cref{theorem:ch01-1-8}中的紧集内逼近断言。取 $\nu:=\mathcal{H}^s\llcorner E$：由\cref{theorem:ch01-1-7}与 $\mathcal{H}^s(E)<\infty$，$\nu$ 是 Radon 测度，且 $\nu(E)=\mathcal{H}^s(E)<\infty$；于是存在紧集 $K\subseteq E$ 使 $\nu(E\setminus K)\leqslant\varepsilon$，而 $\nu(E\setminus K)=\mathcal{H}^s(E\setminus K)$。% XREF internal
+
+令 $U:=\mathbb{R}^n\setminus K$；则 $U$ 为开集且 $A_t\subseteq U$。固定 $\delta>0$，并考虑球族
+\begin{align*}
+\mathcal{F}:=\Bigl\{B(x,r)\Bigm|B(x,r)\subseteq U,\ 0<r<\delta,\ \frac{\mathcal{H}^s(B(x,r)\cap E)}{\alpha(s)r^s}>t\Bigr\} .
+\end{align*}
+由\cref{theorem:ch01-1-24}（Vitali 覆盖定理），存在 $\mathcal{F}$ 中的可数不交球族 $\{B_i\}_{i=1}^{\infty}$，使得% XREF p=108 "By the Vitali Covering Theorem, there exists a countable disjoint family of balls"
+\begin{align*}
+A_t\subseteq\bigcup_{i=1}^{\infty}\hat B_i .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch02-2-6; kind=proof; 补出 A_t⊆U、F 为 A_t 的细覆盖与直径一致有界，从而 Vitali 覆盖定理的条件全部满足
+先核验 Vitali 覆盖定理的适用条件。若 $x\in A_t$，则 $x\notin E$，故 $x\notin K$，即 $x\in U$，因此 $A_t\subseteq U$。对每个 $x\in A_t$，由 $\limsup_{r\to0}\mathcal{H}^s(B(x,r)\cap E)/(\alpha(s)r^s)>t$ 知存在任意小的 $r>0$ 使该比值大于 $t$；又 $K$ 是紧集而 $x\notin K$，故 $\operatorname{dist}(x,K)>0$，从而当 $r<\operatorname{dist}(x,K)$ 时 $B(x,r)\subseteq U$。满足这两个条件的球因而构成 $A_t$ 的细覆盖。另一方面，$\mathcal{F}$ 中每个球的直径小于 $2\delta$，故 $\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}\leqslant2\delta<\infty$。\cref{theorem:ch01-1-24}的条件全部满足，上述可数不交球族存在。% XREF internal
+
+记 $B_i=B(x_i,r_i)$，则
+\begin{align*}
+\mathcal{H}^s_{10\delta}(A_t)
+&\leqslant\sum_{i=1}^{\infty}\alpha(s)(5r_i)^s
+\leqslant\frac{5^s}{t}\sum_{i=1}^{\infty}\mathcal{H}^s(B_i\cap E)\\
+&\leqslant\frac{5^s}{t}\mathcal{H}^s(U\cap E)
+=\frac{5^s}{t}\mathcal{H}^s(E\setminus K)
+\leqslant\frac{5^s}{t}\varepsilon ,
+\end{align*}
+其中最后一步用到 $(\star)$。
+
+% SUPPLEMENT: parent=theorem:ch02-2-6; kind=proof; 补出上式中第一个不等号（膨胀球作覆盖）、第三个不等号（球族不交且含于 U）与等式 U∩E=E∖K
+上式各项的来源如下。其一，因 $A_t\subseteq\bigcup_{i=1}^{\infty}\hat B_i$ 且 $\operatorname{diam}\hat B_i=10r_i<10\delta$，按\cref{definition:ch02-2-1}中 $\mathcal{H}^s_{10\delta}$ 的定义，$\mathcal{H}^s_{10\delta}(A_t)$ 不超过覆盖 $\{\hat B_i\}$ 的各项 $\alpha(s)(\operatorname{diam}\hat B_i/2)^s$ 之和，即 $\sum_{i=1}^{\infty}\alpha(s)(5r_i)^s$。其二，球族 $\{B_i\}$ 两两不交且每个 $B_i\subseteq U$，故 $\bigcup_{i=1}^{\infty}(B_i\cap E)\subseteq U\cap E$，于是由 $\mathcal{H}^s$ 在 Borel 集上的可加性得 $\sum_{i=1}^{\infty}\mathcal{H}^s(B_i\cap E)=\mathcal{H}^s\bigl(\bigcup_{i=1}^{\infty}(B_i\cap E)\bigr)\leqslant\mathcal{H}^s(U\cap E)$。其三，由 $K\subseteq E$ 得 $U\cap E=(\mathbb{R}^n\setminus K)\cap E=E\setminus K$。% XREF internal
+
+令 $\delta\to0$ 得 $\mathcal{H}^s(A_t)\leqslant5^st^{-1}\varepsilon$。因此对每个 $t>0$ 有 $\mathcal{H}^s(A_t)=0$，定理得证。
+
+% SUPPLEMENT: parent=theorem:ch02-2-6; kind=proof; 补出令 δ→0 的依据（H^s_δ 随 δ↓0 递增趋于 H^s）以及由各 A_t 为零测集推出整个结论
+最后两步的论证如下。由 $\mathcal{H}^s_\delta$ 的定义，$\mathcal{H}^s_{10\delta}(A_t)$ 随 $\delta\downarrow0$ 单调递增并趋于 $\mathcal{H}^s(A_t)$；故在 $\mathcal{H}^s_{10\delta}(A_t)\leqslant5^st^{-1}\varepsilon$（对一切 $\delta>0$ 成立）中令 $\delta\to0$ 得 $\mathcal{H}^s(A_t)\leqslant5^st^{-1}\varepsilon$，再由 $\varepsilon>0$ 的任意性得 $\mathcal{H}^s(A_t)=0$。最后，集合
+\begin{align*}
+\Bigl\{x\in\mathbb{R}^n\setminus E\Bigm|\limsup_{r\to0}\frac{\mathcal{H}^s(B(x,r)\cap E)}{\alpha(s)r^s}>0\Bigr\}=\bigcup_{k=1}^{\infty}A_{1/k}
+\end{align*}
+是 $\mathcal{H}^s$-零测集；在其外比值非负且上极限为 $0$，故极限存在且等于 $0$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-2-6; kind=motivation; 说明 $s$-密度的记号、与 Lebesgue 情形的类比，以及水平集加 Vitali 覆盖的证明结构
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-6-动机}
+本节的研究对象是低维 Hausdorff 测度下的密度。对 Radon 测度 $\mu$、点 $x\in\mathbb{R}^n$ 与 $0<s<n$，记
+\begin{align*}
+\Theta^{s*}(\mu,x):=\limsup_{r\to0}\frac{\mu(B(x,r))}{\alpha(s)r^s},\qquad
+\Theta^{s}_{*}(\mu,x):=\liminf_{r\to0}\frac{\mu(B(x,r))}{\alpha(s)r^s},
+\end{align*}
+并称二者相等时的公共值为 $\mu$ 在 $x$ 处的 $s$-密度，记作 $\Theta^s(\mu,x)$。\cref{theorem:ch02-2-6}与\cref{theorem:ch02-2-7}都取 $\mu=\mathcal{H}^s\llcorner E$，此时 $\mu(B(x,r))=\mathcal{H}^s(B(x,r)\cap E)$。% XREF internal
+
+由\cref{definition:ch02-2-1}，常数 $\alpha(s)$ 的取法使 $s$ 维单位球的 $\mathcal{H}^s$ 测度恰为 $\alpha(s)$，从而 $s$ 维半径 $r$ 的球的 $\mathcal{H}^s$ 测度为 $\alpha(s)r^s$。当 $s=n$ 时 $\mathcal{H}^n=\mathcal{L}^n$ 且 $\mathcal{L}^n(B(x,r))=\alpha(n)r^n$，分母就是球的测度，本节开头的结论给出密度在 $E$ 内为 $1$、在 $E$ 外为 $0$。当 $s<n$ 时球本身是 $n$ 维集合，其 $\mathcal{H}^s$ 测度为 $+\infty$，分母只能取归一化常数 $\alpha(s)r^s$；于是密度既不自动等于 $1$，也不自动存在。\cref{theorem:ch02-2-6}断言上密度在 $E$ 之外为 $0$：在 $E$ 之外的点，$E$ 的 $\mathcal{H}^s$ 质量相对于半径 $r$ 的球所能容纳的 $s$ 维容量在 $r\to0$ 时可忽略。% XREF internal
+
+证明的结构是水平集加 Vitali 覆盖：对 $t>0$ 取上密度大于 $t$ 的点集 $A_t$，用 $\mathcal{H}^s\llcorner E$ 的 Radon 性在 $E$ 内取紧集 $K$ 使 $\mathcal{H}^s(E\setminus K)\leqslant\varepsilon$，再在开集 $\mathbb{R}^n\setminus K$ 中用 Vitali 覆盖定理选出不交球族，把 $\mathcal{H}^s_{10\delta}(A_t)$ 用 $\sum_i\mathcal{H}^s(B_i\cap E)$ 控制，得到水平集估计 $\mathcal{H}^s(A_t)\leqslant5^st^{-1}\varepsilon$。其中因子 $5^s$ 来自膨胀球 $\hat B=B(x,5r)$ 的半径放大，因子 $t^{-1}$ 来自密度条件 $\mathcal{H}^s(B_i\cap E)>t\alpha(s)r_i^s$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-6; kind=hypotheses; 逐条分析 H^s-可测性、H^s(E)<∞、0<s<n 与结论中「E 之外」的作用，并给出有限性不可删除的反例
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-6-条件}
+\begin{enumerate}[(i)]
+\item $\mathcal{H}^s$-可测性是\cref{theorem:ch01-1-7}的前提，它保证 $\mathcal{H}^s\llcorner E$ 有定义且为 Radon 测度，从而可用紧集从 $E$ 内部逼近。由于 $\mathcal{H}^s$ 是 Borel 正则测度，每个 $\mathcal{H}^s$-可测集都有测度相同的 Borel 外包，故把 $E$ 换成 Borel 集不改变结论。% XREF internal
+\item 条件 $\mathcal{H}^s(E)<\infty$ 在证明中有两处作用：其一，\cref{theorem:ch01-1-7}要求所限制的集合测度有限，否则 $\mathcal{H}^s\llcorner E$ 未必是 Radon 测度；其二，紧集内逼近给出 $\mathcal{H}^s(E\setminus K)\leqslant\varepsilon$ 之后，才能把 $\mathcal{H}^s(U\cap E)$ 压到任意小。% XREF internal
+\item 条件 $\mathcal{H}^s(E)<\infty$ 不可删除。取 $n=2$、$s=1$ 与
+\begin{align*}
+E:=\bigcup_{k=1}^{\infty}\bigl([0,1]\times\{1/k\}\bigr),
+\end{align*}
+则 $E$ 是 $F_\sigma$ 集，其各条线段两两不交，故 $\mathcal{H}^1(E)=\sum_{k=1}^{\infty}1=\infty$。令 $x_0:=(1/2,0)$，则 $x_0\notin E$。对 $r\in(0,1)$ 与每个满足 $k\geqslant\lceil2/r\rceil$ 的正整数 $k$ 有 $1/k\leqslant r/2<r$，故线段 $[0,1]\times\{1/k\}$ 与闭球 $B(x_0,r)$ 的交集是一条长度不小于 $2\sqrt{r^2-(1/k)^2}\geqslant\sqrt3\,r$ 的线段；这些线段两两不交，因此
+\begin{align*}
+\mathcal{H}^1(B(x_0,r)\cap E)\geqslant\sum_{k=\lceil2/r\rceil}^{\infty}\sqrt3\,r=+\infty .
+\end{align*}
+同样的论证对每个 $a\in[0,1]$ 与点 $(a,0)\in[0,1]\times\{0\}\subseteq\mathbb{R}^2\setminus E$ 成立，而 $\mathcal{H}^1\bigl([0,1]\times\{0\}\bigr)=1$；故结论的例外集有正 $\mathcal{H}^1$ 测度，条件 $\mathcal{H}^s(E)<\infty$ 不可删除。
+\item 条件 $0<s<n$ 使 $\alpha(s)$ 与 $r^s$ 有意义，并使分母 $\alpha(s)r^s$ 不可能取成球的测度（后者为 $+\infty$），密度因而成为真正的估计问题；证明只用到 $s>0$、$\alpha(s)>0$ 与 $\mathcal{H}^s$ 为 Radon 测度。
+\item 结论中的 $\lim$ 与 $\limsup$ 等价：证明给出的是上密度除零测集外为 $0$，而比值非负，上极限为 $0$ 即极限存在且等于 $0$，故陈述用 $\lim$ 不损失信息。
+\item 结论只对 $E$ 之外的点作断言。与\cref{theorem:ch02-2-7}合并可得：对 $\mathcal{H}^s$-a.e. $x\in\mathbb{R}^n$，上密度 $\Theta^{s*}(\mathcal{H}^s\llcorner E,x)$ 存在且属于 $\{0\}\cup[2^{-s},1]$。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[$E$ 中的点的密度界]\label{theorem:ch02-2-7}
+设 $n$ 为正整数，$0<s<n$，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{H}^s$-可测集且 $\mathcal{H}^s(E)<\infty$。对 $x\in\mathbb{R}^n$ 与 $r>0$，记 $B(x,r)$ 为以 $x$ 为球心、$r$ 为半径的闭球，并记 $\alpha(s):=\pi^{s/2}\big/\Gamma\bigl(\frac{s}{2}+1\bigr)$，即 $\mathbb{R}^s$ 中单位球的体积。则
+\begin{align*}
+\frac{1}{2^s}\leqslant\limsup_{r\to0}\frac{\mathcal{H}^s(B(x,r)\cap E)}{\alpha(s)r^s}\leqslant1
+\end{align*}
+对 $\mathcal{H}^s$-a.e. $x\in E$ 成立。
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-7-边界}
+设 $n$ 为正整数，$0<s<n$，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{H}^s$-可测集。即使 $0<\mathcal{H}^s(E)<\infty$，也可能有
+\begin{align*}
+\limsup_{r\to0}\frac{\mathcal{H}^s(B(x,r)\cap E)}{\alpha(s)r^s}<1
+\end{align*}
+以及
+\begin{align*}
+\liminf_{r\to0}\frac{\mathcal{H}^s(B(x,r)\cap E)}{\alpha(s)r^s}=0
+\end{align*}
+对 $\mathcal{H}^s$-a.e. $x\in E$ 成立。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch02-thm-2-7-边界; kind=hypotheses; 说明该注记与定理 2.7 的关系：两个界只是单边的，不能合并为密度存在
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-7-密度存在性}
+该注记说明\cref{theorem:ch02-2-7}的两个估计都只是单边的，不能合并成密度的存在性：上密度的上界可以严格小于 $1$，同时下密度可以等于 $0$。若上密度对 $\mathcal{H}^s$-a.e. 点被某个 $c<1$ 控制，则对这些点与每个充分小的 $r$ 有 $\mathcal{H}^s(B(x,r)\cap E)<c\,\alpha(s)r^s$，即球内质量相对于 $s$ 维容量有一致比例的亏损；若下密度为 $0$，则存在趋于零的半径序列 $r_j$ 使 $\mathcal{H}^s(B(x,r_j)\cap E)/(\alpha(s)r_j^s)\to0$，即在这些尺度上球内几乎没有质量。两种现象同时出现，要求 $E$ 在无穷多个尺度上同时具有“处处有空洞”与“局部质量稀薄”的性质。该注记不给出这样的构造，也不声称\cref{theorem:ch02-2-7}中的常数 $1$ 与 $2^{-s}$ 是最优的。% XREF internal
+\end{remark}
+
+\begin{proof}
+\textbf{1. 断言 \#1：}$\limsup_{r\to0}\frac{\mathcal{H}^s(B(x,r)\cap E)}{\alpha(s)r^s}\leqslant1$ 对 $\mathcal{H}^s$-a.e. $x\in E$ 成立。
+
+\textbf{断言之证明：}固定 $\varepsilon>0$ 与 $t>1$，并令
+\begin{align*}
+B_t:=\Bigl\{x\in E\Bigm|\limsup_{r\to0}\frac{\mathcal{H}^s(B(x,r)\cap E)}{\alpha(s)r^s}>t\Bigr\} .
+\end{align*}
+由于 $\mathcal{H}^s\llcorner E$ 是 Radon 测度（见\cref{theorem:ch01-1-7}），存在包含 $B_t$ 的开集 $U$，使得% XREF p=109 "Since H^s ⌞ E is a Radon measure according to Theorem 1.7, there exists an open set U containing B_t"
+\begin{align*}
+\mathcal{H}^s(U\cap E)\leqslant\mathcal{H}^s(B_t)+\varepsilon . \qquad(\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch02-2-7; kind=proof; 补出开集 U 的存在性（定理 1.8 的开集外逼近断言）
+开集 $U$ 的存在性来自\cref{theorem:ch01-1-8}中的开集外逼近断言：把它用于 Radon 测度 $\nu:=\mathcal{H}^s\llcorner E$ 与集合 $B_t$，得开集 $U\supseteq B_t$ 使 $\nu(U)\leqslant\nu(B_t)+\varepsilon$；而 $\nu(U)=\mathcal{H}^s(U\cap E)$，$\nu(B_t)=\mathcal{H}^s(B_t)$。% XREF internal
+
+定义
+\begin{align*}
+\mathcal{F}:=\Bigl\{B(x,r)\Bigm|B(x,r)\subseteq U,\ 0<r<\delta,\ \frac{\mathcal{H}^s(B(x,r)\cap E)}{\alpha(s)r^s}>t\Bigr\} .
+\end{align*}
+由\cref{theorem:ch01-1-25}，存在 $\mathcal{F}$ 中的可数不交球族 $\{B_i\}_{i=1}^{\infty}$，使得% XREF p=109 "According to Theorem 1.25, there exists a countable disjoint family of balls"
+\begin{align*}
+B_t\subseteq\bigcup_{i=1}^{m}B_i\cup\bigcup_{i=m+1}^{\infty}\hat B_i
+\end{align*}
+对每个 $m=1,2,\cdots$ 成立。记 $B_i=B(x_i,r_i)$，则
+\begin{align*}
+\mathcal{H}^s_{10\delta}(B_t)
+&\leqslant\sum_{i=1}^{m}\alpha(s)r_i^s+\sum_{i=m+1}^{\infty}\alpha(s)(5r_i)^s\\
+&\leqslant\frac{1}{t}\sum_{i=1}^{m}\mathcal{H}^s(B_i\cap E)+\frac{5^s}{t}\sum_{i=m+1}^{\infty}\mathcal{H}^s(B_i\cap E)\\
+&\leqslant\frac{1}{t}\mathcal{H}^s(U\cap E)+\frac{5^s}{t}\mathcal{H}^s\Bigl(\bigcup_{i=m+1}^{\infty}B_i\cap E\Bigr) .
+\end{align*}
+该估计对 $m=1,2,\cdots$ 均成立；令 $m\to\infty$ 即得估计
+\begin{align*}
+\mathcal{H}^s_{10\delta}(B_t)\leqslant t^{-1}\mathcal{H}^s(U\cap E)\leqslant t^{-1}\bigl(\mathcal{H}^s(B_t)+\varepsilon\bigr),
+\end{align*}
+其中最后一步用到 $(\star)$。令 $\delta\to0$，再令 $\varepsilon\to0$：
+\begin{align*}
+\mathcal{H}^s(B_t)\leqslant t^{-1}\mathcal{H}^s(B_t) .
+\end{align*}
+由于 $\mathcal{H}^s(B_t)\leqslant\mathcal{H}^s(E)<\infty$，这说明对每个 $t>1$ 有 $\mathcal{H}^s(B_t)=0$。
+
+% SUPPLEMENT: parent=theorem:ch02-2-7; kind=proof; 补出令 m→∞ 的依据（级数收敛且尾项趋于零）与 F 为 B_t 的细覆盖、δ 为任意固定正参数
+令 $m\to\infty$ 的依据是级数的收敛性：球族 $\{B_i\}$ 两两不交且每个 $B_i\subseteq U$，故 $\sum_{i=1}^{\infty}\mathcal{H}^s(B_i\cap E)=\mathcal{H}^s\bigl(\bigcup_{i=1}^{\infty}(B_i\cap E)\bigr)\leqslant\mathcal{H}^s(U\cap E)\leqslant\mathcal{H}^s(E)<\infty$，因此尾项 $\mathcal{H}^s\bigl(\bigcup_{i=m+1}^{\infty}B_i\cap E\bigr)\to0$（$m\to\infty$）。此外，定义中的 $\delta>0$ 是任意固定的参数，而 $\mathcal{F}$ 是 $B_t$ 的细覆盖：对 $x\in B_t\subseteq U$（$U$ 为开集）与任意小的 $r>0$ 有 $B(x,r)\subseteq U$ 且比值大于 $t$；又 $\sup\{\operatorname{diam}B\mid B\in\mathcal{F}\}\leqslant2\delta<\infty$，故\cref{theorem:ch01-1-25}的条件全部满足。% XREF internal
+
+\textbf{2. 断言 \#2：}$\limsup_{r\to0}\frac{\mathcal{H}^s_\infty(B(x,r)\cap E)}{\alpha(s)r^s}\geqslant\frac{1}{2^s}$ 对 $\mathcal{H}^s$-a.e. $x\in E$ 成立。
+
+\textbf{断言之证明：}对 $\delta>0$ 与 $1>\tau>0$，用 $E(\delta,\tau)$ 表示满足以下条件的点 $x\in E$ 的集合：只要 $C\subseteq\mathbb{R}^n$、$x\in C$、$\operatorname{diam}C\leqslant\delta$，就有
+\begin{align*}
+\mathcal{H}^s_\delta(C\cap E)\leqslant\tau\alpha(s)\Bigl(\frac{\operatorname{diam}C}{2}\Bigr)^s .
+\end{align*}
+于是若 $\{C_i\}_{i=1}^{\infty}$ 是 $\mathbb{R}^n$ 的一族子集，满足 $\operatorname{diam}C_i\leqslant\delta$、$E(\delta,\tau)\subseteq\bigcup_{i=1}^{\infty}C_i$ 与 $C_i\cap E(\delta,\tau)\neq\emptyset$，则
+\begin{align*}
+\mathcal{H}^s_\delta\bigl(E(\delta,\tau)\bigr)
+&\leqslant\sum_{i=1}^{\infty}\mathcal{H}^s_\delta\bigl(C_i\cap E(\delta,\tau)\bigr)\\
+&\leqslant\sum_{i=1}^{\infty}\mathcal{H}^s_\delta(C_i\cap E)\\
+&\leqslant\tau\sum_{i=1}^{\infty}\alpha(s)\Bigl(\frac{\operatorname{diam}C_i}{2}\Bigr)^s .
+\end{align*}
+于是 $\mathcal{H}^s_\delta(E(\delta,\tau))\leqslant\tau\mathcal{H}^s_\delta(E(\delta,\tau))$。既然 $0<\tau<1$ 且 $\mathcal{H}^s_\delta(E(\delta,\tau))\leqslant\mathcal{H}^s_\delta(E)\leqslant\mathcal{H}^s(E)<\infty$，便得 $\mathcal{H}^s_\delta(E(\delta,\tau))=0$。特别地，
+\begin{align*}
+\mathcal{H}^s\bigl(E(\delta,1-\delta)\bigr)=0 . \qquad(\star)
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch02-2-7; kind=proof; 补出覆盖求和、对覆盖取下确界得 τH^s_δ(E(δ,τ))、以及由 H^s_δ=0 推出 H^s=0 三处细节
+上述推导的细节如下。其一，由 $\operatorname{diam}C_i\leqslant\delta$ 与 $E(\delta,\tau)\subseteq\bigcup_iC_i$，以 $C_i\cap E(\delta,\tau)$ 作为 $E(\delta,\tau)$ 的覆盖，按 $\mathcal{H}^s_\delta$ 的定义得第一个不等号；由 $C_i\cap E(\delta,\tau)\subseteq C_i\cap E$ 得第二个不等号；最后，因 $C_i\cap E(\delta,\tau)\neq\emptyset$，取 $x_i\in C_i\cap E(\delta,\tau)$，由 $E(\delta,\tau)$ 的定义得 $\mathcal{H}^s_\delta(C_i\cap E)\leqslant\tau\alpha(s)(\operatorname{diam}C_i/2)^s$，即第三个不等号。其二，对 $E(\delta,\tau)$ 的一切满足 $\operatorname{diam}C_i\leqslant\delta$ 的覆盖取下确界，右端趋于 $\tau\mathcal{H}^s_\delta(E(\delta,\tau))$，即得 $\mathcal{H}^s_\delta(E(\delta,\tau))\leqslant\tau\mathcal{H}^s_\delta(E(\delta,\tau))$。其三，由 $\mathcal{H}^s_\delta(E(\delta,\tau))\leqslant\mathcal{H}^s(E)<\infty$ 与 $0<\tau<1$ 可移项得 $(1-\tau)\mathcal{H}^s_\delta(E(\delta,\tau))\leqslant0$，故 $\mathcal{H}^s_\delta(E(\delta,\tau))=0$；再由 $\mathcal{H}^s\leqslant\mathcal{H}^s_\delta$ 得 $\mathcal{H}^s(E(\delta,1-\delta))=0$。
+
+现设 $x\in E$ 且
+\begin{align*}
+\limsup_{r\to0}\frac{\mathcal{H}^s_\infty(B(x,r)\cap E)}{\alpha(s)r^s}<\frac{1}{2^s},
+\end{align*}
+则存在 $\delta>0$，使得
+\begin{align*}
+\frac{\mathcal{H}^s_\infty(B(x,r)\cap E)}{\alpha(s)r^s}\leqslant\frac{1-\delta}{2^s} \qquad(\star\star)
+\end{align*}
+对一切 $0<r\leqslant\delta$ 成立。于是若 $x\in C$ 且 $\operatorname{diam}C\leqslant\delta$，便有
+\begin{align*}
+\mathcal{H}^s_\infty(C\cap E)&=\mathcal{H}^s_\infty(C\cap E)\\
+&\leqslant\mathcal{H}^s_\infty\bigl(B(x,\operatorname{diam}C)\cap E\bigr)\\
+&\leqslant(1-\delta)\alpha(s)\Bigl(\frac{\operatorname{diam}C}{2}\Bigr)^s ,
+\end{align*}
+从而 $x\in E(\delta,1-\delta)$。
+
+% SUPPLEMENT: parent=theorem:ch02-2-7; kind=proof; 更正被重复的第一行为 H^s_δ(C∩E)，并补出 H^s_δ=H^s_∞（diam C≤δ）与 C⊆B(x,diam C) 两步
+上式第一行的左右两端相同，该行不提供信息；论证实际用到的是：当 $\operatorname{diam}C\leqslant\delta$ 时 $\mathcal{H}^s_\delta(C\cap E)=\mathcal{H}^s_\infty(C\cap E)$。事实上，按\cref{definition:ch02-2-1}中 $\mathcal{H}^s_\delta$ 与 $\mathcal{H}^s_\infty$ 的定义，前者允许的覆盖族小于后者，故恒有 $\mathcal{H}^s_\delta\geqslant\mathcal{H}^s_\infty$；反过来，对 $C\cap E$ 的任一覆盖 $\{D_j\}$，把每个 $D_j$ 换成 $D_j\cap C\cap E$（其直径不超过 $\operatorname{diam}C\leqslant\delta$）后仍为 $C\cap E$ 的覆盖，且各项 $\alpha(s)(\operatorname{diam}/2)^s$ 不增，故 $\mathcal{H}^s_\delta(C\cap E)\leqslant\mathcal{H}^s_\infty(C\cap E)$。第二个不等号用到 $C\subseteq B(x,\operatorname{diam}C)$：由 $x\in C$ 知对每个 $y\in C$ 有 $\lvert y-x\rvert\leqslant\operatorname{diam}C$。第三个不等号即 $(\star\star)$（取 $r=\operatorname{diam}C\leqslant\delta$），其中用到 $\frac{1-\delta}{2^s}\alpha(s)(\operatorname{diam}C)^s=(1-\delta)\alpha(s)\bigl(\frac{\operatorname{diam}C}{2}\bigr)^s$。% XREF internal
+
+但此时
+\begin{align*}
+\Bigl\{x\in E\Bigm|\limsup_{r\to0}\frac{\mathcal{H}^s_\infty(B(x,r)\cap E)}{\alpha(s)r^s}<\frac{1}{2^s}\Bigr\}\subseteq\bigcup_{k=1}^{\infty}E\Bigl(\frac{1}{k},1-\frac{1}{k}\Bigr),
+\end{align*}
+故 $(\star)$ 完成了断言 \#2 的证明。
+
+\textbf{3.}由于 $\mathcal{H}^s(B(x,r)\cap E)\geqslant\mathcal{H}^s_\infty(B(x,r)\cap E)$，断言 \#2 立即给出定理陈述中的下界。
+
+% SUPPLEMENT: parent=theorem:ch02-2-7; kind=proof; 补出上述包含关系的理由（对每个足够小的 δ 同一推导都成立）以及由 H^s_∞ 的估计过渡到 H^s 的估计
+上述包含关系的理由如下：若 $(\star\star)$ 对某个 $\delta_0>0$ 与一切 $0<r\leqslant\delta_0$ 成立，则对每个 $0<\delta\leqslant\delta_0$，同一推导（其中常数满足 $\frac{1-\delta_0}{2^s}\leqslant\frac{1-\delta}{2^s}$）给出 $x\in E(\delta,1-\delta)$；取 $k$ 使 $1/k\leqslant\delta_0$ 即得 $x\in E(1/k,1-1/k)$。最后一步的依据是 $\mathcal{H}^s\geqslant\mathcal{H}^s_\infty$，故对每个 $x$ 与 $r$ 有 $\mathcal{H}^s(B(x,r)\cap E)/(\alpha(s)r^s)\geqslant\mathcal{H}^s_\infty(B(x,r)\cap E)/(\alpha(s)r^s)$，从而 $\mathcal{H}^s$ 的上密度不小于 $\mathcal{H}^s_\infty$ 的上密度，而后者除零测集外不小于 $2^{-s}$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-2-7; kind=motivation; 说明两个断言的分工、常数 2^{-s} 的来源，以及为何只得到 limsup 的单边界
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-7-动机}
+本定理给出 $E$ 内点的上密度的双向界：
+\begin{align*}
+\frac{1}{2^s}\leqslant\Theta^{s*}(\mathcal{H}^s\llcorner E,x)\leqslant1\qquad\text{对 }\mathcal{H}^s\text{-a.e. }x\in E .
+\end{align*}
+上界 $1$ 由断言 \#1 给出，其证明与\cref{theorem:ch02-2-6}同型：把 $E$ 换成水平集 $B_t$，在 $B_t$ 的开集外包中取不交球族；与\cref{theorem:ch02-2-6}相比，新的输入是用 $\mathcal{H}^s(B_t)\leqslant\mathcal{H}^s(E)<\infty$ 完成移项。% XREF internal
+
+下界 $2^{-s}$ 由断言 \#2 给出，其证明分两层。第一层对辅助量 $\mathcal{H}^s_\infty$ 作水平集估计：对 $\delta>0$ 与 $1>\tau>0$，在集合 $E(\delta,\tau)$ 上把 $\mathcal{H}^s_\delta$ 与 $s$ 维容量 $\alpha(s)(\operatorname{diam}/2)^s$ 作比较，用一次覆盖求和得 $\mathcal{H}^s_\delta(E(\delta,\tau))\leqslant\tau\mathcal{H}^s_\delta(E(\delta,\tau))$，再由 $\tau<1$ 与有限性得 $\mathcal{H}^s_\delta(E(\delta,\tau))=0$。第二层把上密度小于 $2^{-s}$ 的点纳入某个 $E(\delta,1-\delta)$：这一步用 $C\subseteq B(x,\operatorname{diam}C)$ 与 $(\star\star)$，而 $\mathcal{H}^s_\infty$ 与 $\mathcal{H}^s_\delta$ 在直径不超过 $\delta$ 的集合上相等，正好使 $\mathcal{H}^s_\infty$ 的估计转化为 $E(\delta,1-\delta)$ 的定义要求。常数 $2^{-s}$ 来自球的半径与一般集合的直径之间的因子 $2$：当 $r=\operatorname{diam}C$ 时 $r^s=2^s(\operatorname{diam}C/2)^s$，故取常数 $(1-\delta)/2^s$ 时论证闭合。
+
+两个界都只涉及 $\limsup$。定理不断言 $s$-密度存在，也不断言它等于 $1$；紧随定理的注记（\hyperref[remark:ch02-thm-2-7-边界]{关于密度不存在性的注记}）说明上密度可以严格小于 $1$，且下密度可以为 $0$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-7; kind=hypotheses; 逐条列出有限性与可测性的使用位置、t>1 与 τ<1 的作用，并说明两个常数与 limsup 的可改进性
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-7-条件}
+\begin{enumerate}[(i)]
+\item $\mathcal{H}^s$-可测性与 $\mathcal{H}^s(E)<\infty$ 在证明中多处使用：其一，\cref{theorem:ch01-1-7}以所限制集合的测度有限为前提，由此得 $\mathcal{H}^s\llcorner E$ 是 Radon 测度；其二，断言 \#1 由 $\mathcal{H}^s(B_t)\leqslant t^{-1}\mathcal{H}^s(B_t)$ 推出 $\mathcal{H}^s(B_t)=0$ 时需 $\mathcal{H}^s(B_t)<\infty$；其三，断言 \#2 由 $\mathcal{H}^s_\delta(E(\delta,\tau))\leqslant\tau\mathcal{H}^s_\delta(E(\delta,\tau))$ 推出零时需 $\mathcal{H}^s_\delta(E(\delta,\tau))\leqslant\mathcal{H}^s(E)<\infty$；其四，$B_t\subseteq E$ 与 $E(\delta,\tau)\subseteq E$ 使上述有限性自动成立。% XREF internal
+\item 断言 \#1 的论证在 $\mathcal{H}^s(E)=\infty$ 时失效，因为此时无法从 $\mathcal{H}^s(B_t)\leqslant t^{-1}\mathcal{H}^s(B_t)$ 移项；本节不就此断言该条件对结论本身必要。
+\item 参数 $t>1$ 在断言 \#1 中保证 $1-t^{-1}>0$，从而得出 $\mathcal{H}^s(B_t)=0$；结论所需的零测集可取为 $\bigcup_{k=1}^{\infty}B_{1+1/k}$ 型可数并，故只需对每个 $t>1$ 证明 $B_t$ 为零测集。
+\item 参数 $1>\tau>0$ 与 $\delta>0$ 在断言 \#2 中的作用是：先对一般的 $(\delta,\tau)$ 证明 $\mathcal{H}^s_\delta(E(\delta,\tau))=0$，再取 $\tau=1-\delta$ 得 $(\star)$，最后用 $\bigcup_kE(1/k,1-1/k)$ 覆盖使上密度小于 $2^{-s}$ 的点集。
+\item 结论中的上界 $1$ 不能加强为等式：紧随定理的注记（\hyperref[remark:ch02-thm-2-7-边界]{关于密度不存在性的注记}）给出上密度在 $\mathcal{H}^s$-a.e. 点严格小于 $1$ 的集合，因此本定理不能用来证明 $s$-密度的存在性或 $\Theta^s(\mathcal{H}^s\llcorner E,x)=1$。
+\item 结论中的下界 $\frac{1}{2^s}$ 是断言 \#2 中由 $\mathcal{H}^s_\infty$ 过渡到 $\mathcal{H}^s$ 时产生的常数；本节不声称它是最优常数，只声称它是可用的下界。
+\item 定理对 $x\in E$ 给出估计；对 $x\in\mathbb{R}^n\setminus E$，\cref{theorem:ch02-2-6}给出上密度为 $0$。两定理合并：对 $\mathcal{H}^s$-a.e. $x\in\mathbb{R}^n$，$\Theta^{s*}(\mathcal{H}^s\llcorner E,x)$ 存在且属于 $\{0\}\cup[2^{-s},1]$。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\end{document}

@@ -2,63 +2,95 @@
 \begin{document}
 \chapter{拓扑空间}\label{chapter:appA-拓扑空间}
 
-为读者方便，此处收集若干拓扑学概念与结果（例如见文献~\cite{ref60}）。
+为方便读者，此处汇集若干拓扑学概念与结果（例如见文献~\cite{ref60}）。
 
 \section{拓扑与距离空间}\label{section:appA-拓扑定义}
 
 \begin{definition}[拓扑与拓扑空间]\label{definition:appA-拓扑}
-设 $X$ 为集合，$\mathscr{T}\subseteq\mathcal{P}(X)$。称 $\mathscr{T}$ 为 $X$ 上的一个拓扑，若：
+设 $X$ 为集合，$\mathcal{P}(X)$ 为其幂集，$\mathscr{T}\subseteq\mathcal{P}(X)$。称 $\mathscr{T}$ 为 $X$ 上的一个拓扑，若：
 \begin{enumerate}[(i)]
-\item $\varnothing \in\mathscr{T}$，$X\in\mathscr{T}$；
-\item 对任意族 $\{A_i\}_{i\in I}\subseteq\mathscr{T}$，有 $\bigcup_{i\in I}A_i\in\mathscr{T}$；
-\item 对任意有限族 $\{A_1,\cdots ,A_n\}\subseteq\mathscr{T}$，有 $\bigcap_{k=1}^n A_k\in\mathscr{T}$。
+\item $\varnothing\in\mathscr{T}$ 且 $X\in\mathscr{T}$；
+\item 对任意指标集 $I$ 与任意族 $\{A_i\}_{i\in I}\subseteq\mathscr{T}$，有 $\bigcup_{i\in I}A_i\in\mathscr{T}$；
+\item 对任意 $n\in\mathbb{N}$ 与任意 $A_1,\cdots ,A_n\in\mathscr{T}$，有 $\bigcap_{k=1}^nA_k\in\mathscr{T}$。
 \end{enumerate}
-偶 $(X,\mathscr{T})$ 称为拓扑空间。集合 $A\in\mathscr{T}$ 称为开集；若 $C^c\in\mathscr{T}$，则称 $C\subseteq X$ 为闭集。
+偶 $(X,\mathscr{T})$ 称为拓扑空间。集合 $A\in\mathscr{T}$ 称为开集；集合 $C\subseteq X$ 称为闭集，若其补集 $C^c\triangleq X\setminus C$ 属于 $\mathscr{T}$。
 \end{definition}
 
 \begin{definition}[强弱拓扑、生成拓扑与相对拓扑]\label{definition:appA-拓扑关系}
-若 $\mathscr{T}_1,\mathscr{T}_2$ 均为 $X$ 上的拓扑且 $\mathscr{T}_1\subseteq\mathscr{T}_2$，则称 $\mathscr{T}_1$ 弱于 $\mathscr{T}_2$，或称 $\mathscr{T}_2$ 强于 $\mathscr{T}_1$。拓扑 $\mathcal{P}(X)$ 称为离散拓扑。对任意族 $\mathscr{G}\subseteq\mathcal{P}(X)$，交
+设 $X$ 为集合，$\mathscr{T},\mathscr{T}_1,\mathscr{T}_2$ 为 $X$ 上的拓扑。
+\begin{enumerate}[(i)]
+\item 若 $\mathscr{T}_1\subseteq\mathscr{T}_2$，则称 $\mathscr{T}_1$ 弱于 $\mathscr{T}_2$，而 $\mathscr{T}_2$ 强于 $\mathscr{T}_1$。
+\item $\mathcal{P}(X)$ 是 $X$ 上的拓扑，称为离散拓扑；关于它每个子集既开又闭。
+\item 对任意族 $\mathscr{G}\subseteq\mathcal{P}(X)$，交
 \begin{align*}
-\mathscr{T}_0(\mathscr{G})\triangleq \bigcap\{\mathscr{T}\text{ 为 }X\text{ 上的拓扑}\mid\mathscr{G}\subseteq\mathscr{T}\}
+\mathscr{T}_0(\mathscr{G})\triangleq\bigcap\{\mathscr{T}'\subseteq\mathcal{P}(X)\mid \mathscr{T}'\text{ 为 }X\text{ 上的拓扑且 }\mathscr{G}\subseteq\mathscr{T}'\}
 \end{align*}
-是一个拓扑，称为由 $\mathscr{G}$ 生成的拓扑，或称包含 $\mathscr{G}$ 的最小拓扑。对任意 $F\subseteq X$，族
-\begin{align*}
-\mathscr{T}|_F\triangleq \{A\cap F\mid A\in\mathscr{T}\}
-\end{align*}
-是 $F$ 上的拓扑，称为 $\mathscr{T}$ 在 $F$ 上的相对拓扑或迹；拓扑空间 $(F,\mathscr{T}|_F)$ 称为 $(X,\mathscr{T})$ 的拓扑子空间。
+是 $X$ 上的拓扑，称为由 $\mathscr{G}$ 生成的拓扑，或包含 $\mathscr{G}$ 的最小拓扑。
+\item 对任意 $F\subseteq X$，族 $\mathscr{T}\cap F\triangleq\{A\cap F\mid A\in\mathscr{T}\}$ 是 $F$ 上的拓扑，称为 $\mathscr{T}$ 在 $F$ 上的相对拓扑或迹；$(F,\mathscr{T}\cap F)$ 称为 $(X,\mathscr{T})$ 的拓扑子空间。
+\end{enumerate}
 \end{definition}
 
 \begin{definition}[距离拓扑]\label{definition:appA-距离拓扑}
-设 $(X,d)$ 为距离空间，$d$ 为其上的距离。考虑开球族
+设 $(X,d)$ 为距离空间。对 $x_0\in X$ 与 $r>0$，记以 $x_0$ 为心、$r$ 为半径的开球
 \begin{align*}
-B(x_0,r)\triangleq \{x\in X\mid d(x_0,x)<r\}\qquad(x_0\in X,\ r>0),
+B(x_0,r)\triangleq\{x\in X\mid d(x_0,x)<r\}.
 \end{align*}
-集合族
+则
 \begin{align*}
-\{E\subseteq X\mid \forall x_0\in E,\ \exists r>0\text{ 使得 }B(x_0,r)\subseteq E\}
+\mathscr{T}_d\triangleq\{E\subseteq X\mid \forall x_0\in E\ \exists r>0\text{ 使 }B(x_0,r)\subseteq E\}
 \end{align*}
-是 $X$ 上的一个拓扑，称为距离拓扑（因而每个距离空间都是拓扑空间）。
+是 $X$ 上的拓扑，称为由 $d$ 诱导的距离拓扑；因此每个距离空间都是拓扑空间，且其开集恰为可表为若干开球之并的集合。
 \end{definition}
 
-\begin{definition}[可度量化]\label{definition:appA-可度量化}\label{proposition:appA-可度量化}
-拓扑空间 $(X,\mathscr{T})$ 称为：
+\begin{definition}[可度量化与完全可度量化]\label{definition:appA-可度量化}
+设 $(X,\mathscr{T})$ 为拓扑空间。
 \begin{enumerate}[(i)]
-\item 可度量化的，若存在 $X$ 上的距离 $d$，使相应距离拓扑与 $\mathscr{T}$ 一致；
-\item 完全可度量化的，若存在 $X$ 上的距离 $d$，使相应距离拓扑与 $\mathscr{T}$ 一致，且 $(X,d)$ 为完备距离空间。
+\item $(X,\mathscr{T})$ 称为可度量化的，若存在 $X$ 上的距离 $d$，使相应的距离拓扑与 $\mathscr{T}$ 一致，即 $\mathscr{T}_d=\mathscr{T}$；
+\item $(X,\mathscr{T})$ 称为完全可度量化的，若存在 $X$ 上的距离 $d$，使 $\mathscr{T}_d=\mathscr{T}$ 且 $(X,d)$ 为完备距离空间。
 \end{enumerate}
 \end{definition}
 
 \begin{definition}[点集间距离、直径与有界集]\label{definition:appA-距离直径}
-设 $(X,d)$ 为距离空间。对任意非空 $E,F\subseteq X$，$E$ 与 $F$ 之间的距离定义为
-\begin{align*}
-d(E,F)\triangleq \inf_{x\in E,\,y\in F}d(x,y),
-\end{align*}
-点 $x\in X$ 到非空集 $E\subseteq X$ 的距离为 $d(x,E)\triangleq d(\{x\},E)$。按约定，对所有 $x\in X$ 有 $d(x,\varnothing )\triangleq \infty$。非空集 $E\subseteq X$ 的直径为
-\begin{align*}
-\operatorname{diam}(E)\triangleq \sup_{x,y\in E}d(x,y)\in[0,\infty],
-\end{align*}
-并约定 $\operatorname{diam}(\varnothing )\triangleq -\infty$。若 $\operatorname{diam}(E)<\infty$，则称 $E\subseteq X$ 为有界集。
+设 $(X,d)$ 为距离空间。
+\begin{enumerate}[(i)]
+\item 对非空 $E,F\subseteq X$，$E$ 与 $F$ 之间的距离为 $d(E,F)\triangleq\inf\{d(x,y)\mid x\in E,\ y\in F\}$；
+\item 对 $x\in X$ 与非空 $E\subseteq X$，$x$ 到 $E$ 的距离为 $d(x,E)\triangleq d(\{x\},E)$；约定 $d(x,\varnothing)\triangleq\infty$ 对一切 $x\in X$ 成立；
+\item 非空 $E\subseteq X$ 的直径为 $\operatorname{diam}(E)\triangleq\sup\{d(x,y)\mid x,y\in E\}\in[0,\infty]$；约定 $\operatorname{diam}(\varnothing)\triangleq-\infty$。若 $\operatorname{diam}(E)<\infty$，则称 $E\subseteq X$ 为有界集。
+\end{enumerate}
 \end{definition}
+
+% SUPPLEMENT: parent=definition:appA-拓扑; kind=motivation; 说明开集公理的抽象动机、三条公理各自的作用，并给出"无限交不封闭"的反例
+% SUPPLEMENT: parent=definition:appA-拓扑关系; kind=motivation; 说明生成拓扑的交表示为何良定义、相对拓扑的传递性及子空间开集不必开于全空间
+\begin{remark}\phantomsection\label{remark:appA-拓扑基础}
+\begin{enumerate}[(i)]
+\item 引入动机。拓扑把"开集"取作原始概念，用对并与交的封闭性抽象出"邻近"与"连续性"，从而把距离空间中依赖数值的距离结构剔除。凡只用到开集的语言（连续、收敛、紧、连通）都在这一层面上陈述。
+\item 各条公理的作用。第 (i) 条使空集与全空间可作开集使用，从而补集运算、内部与闭包的定义不为空；第 (ii) 条允许任意并，这是构造开集的主要手段，例如开球族之并表示开集；第 (iii) 条只要求有限交。有限性不可换成任意性：在 $\mathbb{R}$ 的通常拓扑中，$A_n\triangleq(-1/n,1/n)$（$n\in\mathbb{N}$）皆为开集，而 $\bigcap_{n=1}^\infty A_n=\{0\}$ 不是开集。若进一步要求对任意交封闭，则得到的是 Alexandrov 拓扑这一特殊类，而非通常意义下的拓扑空间。
+\item 生成拓扑的良定义。定义中的交族非空，因为它含 $\mathcal{P}(X)$；任意多个拓扑之交仍是拓扑（空集与全空间属于每个成员，并与有限交逐成员验证），故 $\mathscr{T}_0(\mathscr{G})$ 是拓扑，且由构造成员关系知它是包含 $\mathscr{G}$ 的最小拓扑：任何包含 $\mathscr{G}$ 的拓扑都含 $\mathscr{T}_0(\mathscr{G})$。
+\item 相对拓扑的继承性。若 $E\subseteq F\subseteq X$，则 $(\mathscr{T}\cap F)\cap E=\mathscr{T}\cap E$，故"取子空间"可逐次进行。子空间的开集不必开于全空间：取 $X=\mathbb{R}$、$F=[0,1]$，则 $[0,1/2)=(-1,1/2)\cap F$ 开于 $F$ 而不开于 $\mathbb{R}$。相对拓扑的作用正在于使紧性、连续性等性质能对子集本身陈述。
+\item 强弱的比较。拓扑越弱，开集越少，收敛的序列（网）越多，连续映射越少；离散拓扑最强，$\{\varnothing ,X\}$ 最弱。同一个集合上的两个拓扑一般不可比较。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=definition:appA-距离拓扑; kind=motivation; 说明开球族生成拓扑时三角不等式的作用，以及同一拓扑可由不同（有界）距离诱导
+% SUPPLEMENT: parent=definition:appA-可度量化; kind=motivation; 说明完备性依赖度量而非拓扑，故须以"存在相容完备距离"表述；并给出非 Hausdorff 反例
+\begin{remark}\phantomsection\label{remark:appA-距离与可度量化}
+\begin{enumerate}[(i)]
+\item 引入动机。距离给出定量的邻近关系，$\mathscr{T}_d$ 是使所有开球成为开集的最弱拓扑的显式描述。三角不等式在此的作用是保证开球是"开"的：若 $y\in B(x_0,r)$，则 $B(y,r-d(x_0,y))\subseteq B(x_0,r)$，故开球族满足基的条件（见\cref{definition:appA-基}）。
+\item 可度量化的含义。诱导同一拓扑的距离一般不唯一：$d$、$\min\{d,1\}$ 与 $d/(1+d)$ 都诱导 $\mathscr{T}_d$，其中后两者有界。因此可度量化是关于拓扑的性质，只问相容距离是否存在，不问其具体形式；也正因如此，有界性不是拓扑性质（见\hyperref[remark:appA-距离直径]{注记}）。
+\item 完全可度量化的表述。完备性依赖度量而不依赖拓扑：$(0,1)$ 与 $\mathbb{R}$ 同胚，在通常度量下 $(0,1)$ 不完备，但它有相容的完备度量（例如 $x\mapsto\tan\bigl(\pi(x-1/2)\bigr)$ 把 $(0,1)$ 等距同构于 $\mathbb{R}$）。故"完全可度量化"只能按 (ii) 的方式、以"存在相容的完备距离"陈述，而不能说"在任一相容度量下完备"。
+\item 边界与反例。离散拓扑可度量化（取离散距离 $d(x,y)=1$ 对 $x\neq y$）。非 Hausdorff 空间不可度量化，因为距离空间必为 Hausdorff 空间（见\cref{definition:appA-Hausdorff}）；例如多于一点的集合上的余有限拓扑不是 Hausdorff 的，因而不可度量化。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=definition:appA-距离直径; kind=motivation; 说明 inf/sup 约定与两个空集约定的作用，并给出"集合间距离为正定性的失效"及"有界性非拓扑性质"的边界
+\begin{remark}\phantomsection\label{remark:appA-距离直径}
+\begin{enumerate}[(i)]
+\item 引入动机。$d$ 只对点定义，对集合须以 $\inf$ 与 $\sup$ 扩充；$d(E,F)$ 度量两集合的"最近接近程度"，$\operatorname{diam}(E)$ 度量其"大小"，二者是覆盖论证与一致连续性论证的基本量。
+\item 空集约定的作用。$d(x,\varnothing)\triangleq\infty$ 使"$d(x,E)<\infty$ 当且仅当 $E\neq\varnothing$"成立，从而关于距离有限的命题无须排除空集；$\operatorname{diam}(\varnothing)\triangleq-\infty$ 使 $\varnothing$ 成为有界集（因 $-\infty<\infty$），并使 $\operatorname{diam}$ 关于包含关系的单调性对空集也成立。两处约定也保证了诸如下确界与上确界的运算在空族上有一致的行为。
+\item 边界与反例。$d(E,F)=0$ 不蕴含 $E\cap F\neq\varnothing$：取 $X=\mathbb{R}$、$E=\{1/n\mid n\in\mathbb{N}\}$、$F=\{0\}$，则 $d(E,F)=0$ 而 $E\cap F=\varnothing$；同理 $d(x,E)=0$ 不蕴含 $x\in E$。故 $d$ 扩充到子集上后不满足正定性，也不满足三角不等式：取 $E=\{0\}$、$F=\{1/n\mid n\in\mathbb{N}\}$、$G=\{1\}$，则 $d(E,G)=1$ 而 $d(E,F)=d(F,G)=0$。因此 $d(\cdot,\cdot)$ 只是集合间的"距离函数"，不构成子集空间上的距离。
+\item 适用边界。有界性依赖度量：以 $\min\{d,1\}$ 替换 $d$ 不改变拓扑，却使一切子集有界。故"有界"不能作为拓扑性质使用；紧性（见\cref{definition:appA-紧性}）才是它的拓扑替代。
+\end{enumerate}
+\end{remark}
 
 \section{乘积拓扑}\label{section:appA-乘积拓扑}
 
@@ -67,204 +99,794 @@ d(E,F)\triangleq \inf_{x\in E,\,y\in F}d(x,y),
 \begin{align*}
 \{A_1\times A_2\mid A_1\in\mathscr{T}_1,\ A_2\in\mathscr{T}_2\}\subseteq\mathcal{P}(X_1\times X_2)
 \end{align*}
-生成的拓扑称为乘积拓扑，记作 $\mathscr{T}_1\times\mathscr{T}_2$。拓扑空间 $(X_1\times X_2,\mathscr{T}_1\times\mathscr{T}_2)$ 称为 $X_1$ 与 $X_2$ 的拓扑乘积。
+生成的拓扑称为乘积拓扑，记作 $\mathscr{T}_1\times\mathscr{T}_2$；拓扑空间 $(X_1\times X_2,\mathscr{T}_1\times\mathscr{T}_2)$ 称为 $X_1$ 与 $X_2$ 的拓扑乘积。
 \end{definition}
+
+% SUPPLEMENT: parent=definition:appA-乘积拓扑; kind=motivation; 说明乘积拓扑是使两个投影连续的最弱拓扑、矩形族本身已是基，并指出无限乘积时"盒拓扑"与乘积拓扑的差别
+\begin{remark}\phantomsection\label{remark:appA-乘积拓扑}
+\begin{enumerate}[(i)]
+\item 引入动机。乘积拓扑是使两个投影 $p_j:X_1\times X_2\to X_j$（$j=1,2$）都连续的最弱拓扑；等价地，映射 $f:Z\to X_1\times X_2$ 连续当且仅当两个分量 $p_1\circ f$、$p_2\circ f$ 连续。这一泛性质是乘积拓扑在分析中反复使用的原因。
+\item 假设的作用。定义只要求 $(X_1,\mathscr{T}_1)$、$(X_2,\mathscr{T}_2)$ 为拓扑空间，无须 Hausdorff 或紧；矩形族 $\{A_1\times A_2\}$ 对有限交封闭（$(A_1\times A_2)\cap(A_1'\times A_2')=(A_1\cap A_1')\times(A_2\cap A_2')$），故它本身已是 $\mathscr{T}_1\times\mathscr{T}_2$ 的基，而不只是子基，从而乘积空间的开集恰为若干矩形之并。
+\item 边界。对无限族拓扑空间，"由全部矩形 $\prod_iA_i$（$A_i$ 开）生成的拓扑"（盒拓扑）严格强于乘积拓扑；后者只允许除有限多个指标外 $A_i=X_i$ 的矩形。有限乘积时二者一致，本书只用到两个因子的情形，故定义中不出现这一区别。
+\end{enumerate}
+\end{remark}
 
 \section{邻域与 Hausdorff 空间}\label{section:appA-邻域Hausdorff}
 
 \begin{definition}[邻域]\label{definition:appA-邻域}
-设 $(X,\mathscr{T})$ 为拓扑空间。集合 $E\subseteq X$ 的邻域是指任意满足"存在 $A\in\mathscr{T}$ 使 $E\subseteq A\subseteq F$"的集合 $F\subseteq X$。单点集 $\{x\}$ 的邻域称为点 $x$ 的邻域。
+设 $(X,\mathscr{T})$ 为拓扑空间。集合 $E\subseteq X$ 的邻域是指满足"存在 $A\in\mathscr{T}$ 使 $E\subseteq A\subseteq F$"的集合 $F\subseteq X$。单点集 $\{x\}$ 的邻域称为点 $x$ 的邻域。
 \end{definition}
 
 \begin{definition}[Hausdorff 空间]\label{definition:appA-Hausdorff}
-拓扑空间 $X$ 称为 Hausdorff 空间，若对任意 $x_1,x_2\in X$，$x_1\neq x_2$，存在 $x_1$ 的邻域 $E_1$ 与 $x_2$ 的邻域 $E_2$，使 $E_1\cap E_2=\varnothing $。每个距离空间都是 Hausdorff 空间。
+拓扑空间 $X$ 称为 Hausdorff 空间，若对任意 $x_1,x_2\in X$，$x_1\neq x_2$，存在 $x_1$ 的邻域 $E_1$ 与 $x_2$ 的邻域 $E_2$，使 $E_1\cap E_2=\varnothing$。每个距离空间都是 Hausdorff 空间。
 \end{definition}
+
+% SUPPLEMENT: parent=definition:appA-邻域; kind=motivation; 说明邻域不必为开集、开邻域族刻画拓扑，以及邻域语言下收敛与连续的等价表述
+% SUPPLEMENT: parent=definition:appA-Hausdorff; kind=motivation; 说明 Hausdorff 性的作用（极限唯一、紧集闭）与反例（余有限拓扑）
+\begin{remark}\phantomsection\label{remark:appA-邻域Hausdorff}
+\begin{enumerate}[(i)]
+\item 邻域的用法。邻域不必是开集：$[0,1]$ 是 $0$ 在 $\mathbb{R}$ 中的邻域。但每点的小邻域可取自开集，故拓扑完全由各点的开邻域族决定：$A\subseteq X$ 开当且仅当它是其中每点的邻域。序列收敛（见\cref{definition:appA-收敛聚点}）与连续性的 $\varepsilon$-$\delta$ 型定义都以邻域表述，这是定义中采用"含开集"而非"开集本身"的原因。
+\item Hausdorff 性的作用。它保证极限唯一：若 $\{x_n\}$ 既收敛于 $x$ 又收敛于 $y\neq x$，取不交邻域 $E_x,E_y$，则 $x_n$ 最终同时属于二者，矛盾。它还保证紧集闭（见\cref{definition:appA-紧性}）与紧集上的连续函数取到最值。距离空间是 Hausdorff 的：取 $E_j\triangleq B(x_j,r)$，$r<d(x_1,x_2)/2$ 即不交。
+\item 边界与反例。余有限拓扑（开集为 $\varnothing$ 与补集有限的集合）不是 Hausdorff 的：任意两个非空开集必相交。故其上紧集不必闭、序列可收敛于多个点；这类空间因此在测度论中被排除。Hausdorff 性弱于可度量化：Sorgenfrey 直线（见\hyperref[remark:appA-可分]{注记}）是 Hausdorff 而不可度量化的。
+\end{enumerate}
+\end{remark}
 
 \section{基、内部、闭包与可分性}\label{section:appA-基闭包可分}
 
 \begin{definition}[拓扑的基]\label{definition:appA-基}
-设 $(X,\mathscr{T})$ 为拓扑空间。族 $\{A_i\}_{i\in I}\subseteq\mathscr{T}$ 称为 $\mathscr{T}$ 的一个基，若对每个 $A\in\mathscr{T}$，存在 $I_0\subseteq I$ 使 $A=\bigcup_{i\in I_0}A_i$。若 $X$ 为距离空间，则开球族 $\{B(x_0,r)\mid x_0\in X,\ r>0\}$ 是距离拓扑的一个基。
+设 $(X,\mathscr{T})$ 为拓扑空间。族 $\{A_i\}_{i\in I}\subseteq\mathscr{T}$ 称为 $\mathscr{T}$ 的一个基，若对每个 $A\in\mathscr{T}$ 存在 $I_0\subseteq I$ 使 $A=\bigcup_{i\in I_0}A_i$。若 $X$ 为距离空间，则开球族 $\{B(x_0,r)\mid x_0\in X,\ r>0\}$ 是距离拓扑的一个基。
 \end{definition}
 
 \begin{definition}[内部、闭包与边界]\label{definition:appA-内部闭包边界}
-设 $E\subseteq X$。集合
+设 $(X,\mathscr{T})$ 为拓扑空间，$E\subseteq X$。集合
 \begin{align*}
-E^\circ\triangleq \bigcup\{A\in\mathscr{T}\mid A\subseteq E\}
+E^\circ\triangleq\bigcup\{A\in\mathscr{T}\mid A\subseteq E\}
 \end{align*}
-称为 $E$ 的内部。$E$ 的闭包定义为
+称为 $E$ 的内部；$E$ 的闭包为
 \begin{align*}
-\overline{E}\triangleq \bigcap\{C\supseteq E\mid C^c\in\mathscr{T}\}.
+\overline{E}\triangleq\bigcap\{C\supseteq E\mid C^c\in\mathscr{T}\}.
 \end{align*}
-$E$ 的边界定义为 $\partial E\triangleq \overline{E}\setminus E^\circ$。
+$E$ 的边界定义为 $\partial E\triangleq\overline{E}\setminus E^\circ$。
 \end{definition}
 
 \begin{definition}[稠密与可分]\label{definition:appA-稠密可分}
-设 $E,F\subseteq X$。若 $F\subseteq\overline{E}$，则称 $E$ 在 $F$ 中稠密；特别地，若 $\overline{E}=X$，则称 $E$ 在 $X$ 中稠密。若存在可数稠密集 $E\subseteq X$，则称空间 $X$ 为可分的。
+设 $(X,\mathscr{T})$ 为拓扑空间，$E,F\subseteq X$。若 $F\subseteq\overline{E}$，则称 $E$ 在 $F$ 中稠密；特别地，若 $\overline{E}=X$，则称 $E$ 在 $X$ 中稠密。若存在可数稠密集 $E\subseteq X$，则称空间 $X$ 为可分的。
 \end{definition}
 
-\begin{proposition}\label{proposition:appA-基可分}\label{proposition:appA-紧可分}
+\begin{proposition}\label{proposition:appA-基可分}
+设 $(X,\mathscr{T})$ 为拓扑空间。
 \begin{enumerate}[(i)]
-\item 具有可数基的拓扑空间是可分的；
-\item 可分距离空间具有可数基。
+\item 若 $\mathscr{T}$ 具有可数基，则 $X$ 是可分的；
+\item 若 $X$ 为可分距离空间，则其距离拓扑具有可数基。
 \end{enumerate}
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:appA-基可分; kind=proof; 原书未给证明；补出两个方向的显式构造（从可数基取代表点；以可数稠密集与有理半径为基），并核验稠密性与基条件
+\begin{proof}
+(i) 设 $\{A_n\}_{n\in\mathbb{N}}$ 为 $\mathscr{T}$ 的可数基。对每个 $n$，若 $A_n\neq\varnothing$，取一点 $x_n\in A_n$；否则不取。令 $D\triangleq\{x_n\mid A_n\neq\varnothing\}$，则 $D$ 可数。设 $A\in\mathscr{T}$ 非空、$x\in A$。由基的定义存在 $I_0\subseteq\mathbb{N}$ 使 $A=\bigcup_{n\in I_0}A_n$，故存在 $n\in I_0$ 使 $x\in A_n$，从而 $x_n\in A_n\subseteq A$，即 $D\cap A\neq\varnothing$。于是 $D$ 与每个非空开集相交。若 $x\notin\overline{D}$，则 $X\setminus\overline{D}$ 是含 $x$ 的非空开集且与 $D$ 不交，矛盾；故 $\overline{D}=X$，即 $D$ 可数稠密，$X$ 可分。
+
+(ii) 设 $D\subseteq X$ 可数且稠密，令
+\begin{align*}
+\mathscr{B}\triangleq\{B(d_0,r)\mid d_0\in D,\ r\in\mathbb{Q},\ r>0\}.
+\end{align*}
+$\mathscr{B}$ 是可数族。设 $A\in\mathscr{T}$ 非空、$x\in A$。由 $\mathscr{T}$ 为距离拓扑，存在 $\varepsilon>0$ 使 $B(x,\varepsilon)\subseteq A$。由 $D$ 稠密，存在 $d_0\in D$ 使 $d(x,d_0)<\varepsilon/2$；取有理数 $r$ 使 $d(x,d_0)<r<\varepsilon/2$。则 $x\in B(d_0,r)$，且对 $y\in B(d_0,r)$ 有 $d(x,y)\leqslant d(x,d_0)+d(d_0,y)<\varepsilon/2+\varepsilon/2=\varepsilon$，故 $B(d_0,r)\subseteq B(x,\varepsilon)\subseteq A$。于是 $A=\bigcup\{B\in\mathscr{B}\mid B\subseteq A\}$，即 $\mathscr{B}$ 是基，从而 $\mathscr{T}$ 具有可数基。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:appA-基; kind=motivation; 说明基与子基之别、距离空间中开球族为基的理由，以及"可数基"在测度论中的作用
+% SUPPLEMENT: parent=definition:appA-内部闭包边界; kind=motivation; 说明内部为最大开子集、闭包为最小闭集及其对偶关系，并给出边界不等于边界的例子
+% SUPPLEMENT: parent=definition:appA-稠密可分; kind=motivation; 说明可分性的含义与不可分空间之例，并指出可分性不是拓扑遗传性质
+% SUPPLEMENT: parent=proposition:appA-基可分; kind=motivation; 说明两款的动机、度量假设在 (ii) 中的必要性（Sorgenfrey 直线），以及可数基在生成 Borel $\sigma$-代数中的作用
+\begin{remark}\phantomsection\label{remark:appA-可分}
+\begin{enumerate}[(i)]
+\item 基与子基。基把"开集"约化为"基元之并"，从而连续性与收敛性只需对基元验证；子基则只要求有限交生成基。距离空间中开球族是基：对开集 $A\ni x$ 取 $\varepsilon>0$ 使 $B(x,\varepsilon)\subseteq A$，则 $x\in B(x,\varepsilon)\subseteq A$，故 $A$ 是含于其中的开球之并。可数基的意义在于使"每个开集由可数个基元生成"，这是 Borel $\sigma$-代数可由可数族生成、从而可测性可数化验证的前提。
+\item 内部与闭包。$E^\circ$ 是含于 $E$ 的最大开集（开集之并为开集），$\overline{E}$ 是包含 $E$ 的最小闭集（闭集之交为闭集）；二者对偶：$(E^\circ)^c=\overline{E^c}$，$(\overline{E})^c=(E^c)^\circ$。$x\in\overline{E}$ 当且仅当 $x$ 的每个邻域与 $E$ 相交。边界可以很大：$\mathbb{Q}$ 在 $\mathbb{R}$ 中的内部为空、闭包为 $\mathbb{R}$，故 $\partial\mathbb{Q}=\mathbb{R}$；一般地 $\partial E$ 不必是"曲线"。
+\item 可分性。可分性是可数性假设，使可数逼近论证（可数稠密子集上的上确界、可数生成）可行。$\mathbb{R}^n$ 可分（$\mathbb{Q}^n$ 稠密）；有界序列空间 $\ell^\infty$ 不可分：集合 $\{0,1\}^{\mathbb{N}}\subseteq\ell^\infty$ 中不同点的距离为 $1$，故以其中每点为中心、半径 $1/2$ 的球两两不交；任一稠密集须在每个这样的球中取点，故此稠密集不可数。
+\item 命题两款的边界。款 (ii) 的度量假设不可去：Sorgenfrey 直线（$\mathbb{R}$ 上以 $\{[a,b)\mid a<b\}$ 为基的拓扑）是可分的（$\mathbb{Q}$ 稠密，因每个 $[x,x+\varepsilon)$ 含有理点），但无可数基——若 $\mathscr{B}$ 为基，对每个 $x$ 取 $B_x\in\mathscr{B}$ 使 $x\in B_x\subseteq[x,x+1)$，则 $\inf B_x=x$，故 $x\mapsto B_x$ 是单射，$\mathscr{B}$ 不可数。它也因此不可度量化（否则由款 (ii) 将有可数基）。款 (i) 的逆亦不成立，同一例即反例。
+\end{enumerate}
+\end{remark}
 
 \section{紧性}\label{section:appA-紧性}
 
 \begin{definition}[开覆盖与紧集]\label{definition:appA-紧性}
-设 $(X,\mathscr{T})$ 为拓扑空间。族 $\{A_i\}_{i\in I}\subseteq\mathscr{T}$ 称为集合 $E\subseteq X$ 的开覆盖，若 $E\subseteq\bigcup_{i\in I}A_i$。若 $X$ 的每个开覆盖都含有限子覆盖，则称 $X$ 为紧空间。子集 $K\subseteq X$ 称为紧集，若拓扑空间 $(K,\mathscr{T}|_K)$ 是紧的；若闭包 $\overline{K}$ 是紧的，则称 $K$ 为相对紧集。
+设 $(X,\mathscr{T})$ 为拓扑空间，$E\subseteq X$。族 $\{A_i\}_{i\in I}\subseteq\mathscr{T}$ 称为 $E$ 的开覆盖，若 $E\subseteq\bigcup_{i\in I}A_i$。空间 $X$ 称为紧的，若 $X$ 的每个开覆盖都含有限子覆盖，即存在 $i_1,\cdots ,i_n\in I$ 使 $X=\bigcup_{k=1}^nA_{i_k}$。子集 $K\subseteq X$ 称为紧集，若拓扑子空间 $(K,\mathscr{T}\cap K)$ 是紧的；若闭包 $\overline{K}$ 是紧集，则称 $K$ 为相对紧集。记 $\mathcal{K}(X)$ 为 $X$ 的全部紧子集之族。
 \end{definition}
 
-紧空间的每个闭子集是紧的；Hausdorff 空间 $X$ 的每个紧子集是闭的。若 $X_1$ 与 $X_2$ 为紧空间，则拓扑乘积 $X_1\times X_2$ 是紧的。
+紧空间的每个闭子集是紧的；Hausdorff 空间 $X$ 的每个紧子集是闭的；若 $X_1$ 与 $X_2$ 为紧空间，则拓扑乘积 $X_1\times X_2$ 是紧的。
 
-关于 $\mathbb{R}^n$ 中闭球对集合的覆盖，有如下定义。
+% SUPPLEMENT: parent=definition:appA-紧性; kind=proof; 原书未证上述三条断言；补出闭子集、紧子集、乘积的紧性证明（含覆盖由基元组成之归约与"管状"论证）
+\begin{proof}
+先设 $X$ 紧，$C\subseteq X$ 闭，$\{A_i\}_{i\in I}$ 为 $C$ 的开覆盖，其中 $A_i=U_i\cap C$、$U_i\in\mathscr{T}$。则 $\{U_i\}_{i\in I}\cup\{X\setminus C\}$ 是 $X$ 的开覆盖，故有有限子覆盖；去掉其中可能出现的 $X\setminus C$，其余有限个 $U_{i_1},\cdots ,U_{i_n}$ 满足 $C\subseteq\bigcup_{k=1}^nU_{i_k}$，于是 $C=\bigcup_{k=1}^n(U_{i_k}\cap C)=\bigcup_{k=1}^nA_{i_k}$。故 $C$ 紧。
+
+设 $X$ 为 Hausdorff 空间，$K\subseteq X$ 紧，$x\in X\setminus K$。对每个 $y\in K$，由 Hausdorff 性存在不交开集 $U_y\ni x$、$V_y\ni y$。族 $\{V_y\}_{y\in K}$ 覆盖紧集 $K$，故存在 $y_1,\cdots ,y_n\in K$ 使 $K\subseteq V\triangleq\bigcup_{j=1}^nV_{y_j}$。令 $U\triangleq\bigcap_{j=1}^nU_{y_j}$，则 $U$ 是 $x$ 的开邻域且 $U\cap V=\varnothing$，故 $U\subseteq X\setminus K$。于是 $X\setminus K$ 为开集，$K$ 为闭集。
+
+设 $X_1,X_2$ 紧，$\{W_i\}_{i\in I}$ 为 $X_1\times X_2$ 的开覆盖。因乘积拓扑以矩形 $A_1\times A_2$（$A_j$ 开于 $X_j$）为基，可设每个 $W_i=A_i\times B_i$ 为矩形（否则用含于 $W_i$ 的矩形替换之，覆盖仍成立）。固定 $x\in X_1$。子空间 $\{x\}\times X_2$ 同胚于紧空间 $X_2$，故紧；于是存在有限个矩形 $A_1^x\times B_1^x,\cdots ,A_{n_x}^x\times B_{n_x}^x$ 覆盖 $\{x\}\times X_2$。令 $A^x\triangleq\bigcap_{k=1}^{n_x}A_k^x$，则 $A^x$ 是 $x$ 的开邻域，且对任意 $(y,z)\in A^x\times X_2$，由 $(x,z)\in\{x\}\times X_2$ 知 $z\in B_k^x$ 对某个 $k$ 成立，从而 $(y,z)\in A_k^x\times B_k^x$；故 $A^x\times X_2\subseteq\bigcup_{k=1}^{n_x}(A_k^x\times B_k^x)$。族 $\{A^x\}_{x\in X_1}$ 覆盖紧空间 $X_1$，取有限子覆盖 $A^{x_1},\cdots ,A^{x_m}$，则有限族 $\{A_k^{x_j}\times B_k^{x_j}\mid 1\leqslant j\leqslant m,\ 1\leqslant k\leqslant n_{x_j}\}$ 覆盖 $X_1\times X_2$，故 $X_1\times X_2$ 紧。
+\end{proof}
+
+关于 $\mathbb{R}^n$ 中以闭球覆盖集合，有如下定义。
 
 \begin{definition}[细覆盖]\label{definition:appA-细覆盖}
-闭球族 $\mathscr{G}\triangleq \{B_r(x_0)\mid x_0\in\mathbb{R}^n,\ r>0\}$ 称为集合 $U\subseteq\mathbb{R}^n$ 的细覆盖，若对所有 $x_0\in U$ 有
+设 $U\subseteq\mathbb{R}^n$，记 $B_r(x_0)$ 为 $\mathbb{R}^n$ 中以 $x_0$ 为心、$r$ 为半径的闭球。闭球族 $\mathscr{G}\subseteq\{B_r(x_0)\mid x_0\in\mathbb{R}^n,\ r>0\}$ 称为 $U$ 的细覆盖，若对每个 $x_0\in U$ 有
 \begin{align*}
 \inf\{r\mid B_r(x_0)\in\mathscr{G}\}=0.
 \end{align*}
 \end{definition}
 
 \begin{definition}[收敛、聚点与完备距离空间]\label{definition:appA-收敛聚点}
-设 $(X,\mathscr{T})$ 为拓扑空间。序列 $\{x_n\}\subseteq X$ 收敛于 $x_0\in X$，若对 $x_0$ 的每个邻域 $F$，存在 $\bar n\in\mathbb{N}$，使当 $n>\bar n$ 时 $x_n\in F$；若 $x_0$ 的每个邻域都含有 $\{x_n\}$ 中无穷多个元素，则称 $x_0$ 为 $\{x_n\}$ 的聚点。若距离空间中每个 Cauchy 序列 $\{x_n\}\subseteq X$ 都收敛于某个 $x\in X$，则称该距离空间是完备的。
+设 $(X,\mathscr{T})$ 为拓扑空间。
+\begin{enumerate}[(i)]
+\item 序列 $\{x_n\}\subseteq X$ 收敛于 $x_0\in X$，若对 $x_0$ 的每个邻域 $F$，存在 $\bar n\in\mathbb{N}$，使当 $n>\bar n$ 时 $x_n\in F$；
+\item $x_0$ 称为 $\{x_n\}$ 的聚点，若 $x_0$ 的每个邻域都含 $\{x_n\}$ 中无穷多个元素，即对 $x_0$ 的每个邻域 $F$ 与每个 $m\in\mathbb{N}$，存在 $n>m$ 使 $x_n\in F$；
+\item 设 $(X,d)$ 为距离空间。序列 $\{x_n\}\subseteq X$ 称为 Cauchy 序列，若对每个 $\varepsilon>0$ 存在 $\bar n\in\mathbb{N}$，使当 $m,n>\bar n$ 时 $d(x_m,x_n)<\varepsilon$；若每个 Cauchy 序列都收敛于某个 $x\in X$，则称 $(X,d)$ 为完备的。
+\end{enumerate}
 \end{definition}
 
 \begin{definition}[可数紧与序列紧]\label{definition:appA-可数序列紧}
-拓扑空间 $(X,\mathscr{T})$ 称为可数紧的，若 $X$ 的每个可数开覆盖都含有限子覆盖；$X$ 称为序列紧的，若每个序列 $\{x_n\}\subseteq X$ 都含收敛子列。子集 $F\subseteq X$ 称为序列紧的，若拓扑空间 $(F,\mathscr{T}|_F)$ 是序列紧的；若闭包 $\overline{F}$ 是序列紧的，则称 $F$ 为相对序列紧的。空间 $X$ 为可数紧当且仅当每个 $\{x_n\}\subseteq X$ 都有聚点。
+设 $(X,\mathscr{T})$ 为拓扑空间。
+\begin{enumerate}[(i)]
+\item $X$ 称为可数紧的，若 $X$ 的每个可数开覆盖都含有限子覆盖；
+\item $X$ 称为序列紧的，若每个序列 $\{x_n\}\subseteq X$ 都含收敛子列；
+\item 子集 $F\subseteq X$ 称为序列紧的，若拓扑子空间 $(F,\mathscr{T}\cap F)$ 是序列紧的；若闭包 $\overline{F}$ 是序列紧的，则称 $F$ 为相对序列紧的。
+\end{enumerate}
 \end{definition}
 
-若 $X$ 为距离空间，则下述陈述等价：(i) $X$ 紧；(ii) $X$ 可数紧；(iii) $X$ 序列紧。距离空间的每个相对序列紧子集是有界的。
+空间 $X$ 可数紧当且仅当每个序列 $\{x_n\}\subseteq X$ 都有聚点。若 $X$ 为距离空间，则下述陈述等价：(i) $X$ 紧；(ii) $X$ 可数紧；(iii) $X$ 序列紧。距离空间的每个相对序列紧子集是有界的。
 
-\section{局部紧与 Polish 空间}\label{section:appA-局部紧Polish}\label{subsection:appA-Polish}
-
-\begin{definition}[局部紧与 $\sigma$-紧]\label{definition:appA-局部紧}
-拓扑空间 $X$ 称为局部紧的，若每个 $x\in X$ 都有一个紧邻域。局部紧 Hausdorff 空间若为可数个紧集之并，则称为 $\sigma$-紧的。
-\end{definition}
-
-\begin{remark}\label{remark:appA-可数基局部紧}
-每个具有可数基的局部紧 Hausdorff 空间 $X$ 的所有开子集都是 $\sigma$-紧的。事实上，设 $\{A_n\}\subseteq\mathscr{T}$ 为可数基，$A\in\mathscr{T}$。对每个 $x\in A$，存在 $x$ 的紧邻域 $K_x\subset A$，因而对某个 $k\in\mathbb{N}$ 有
+% SUPPLEMENT: parent=definition:appA-可数序列紧; kind=proof; 补出"可数紧当且仅当每个序列有聚点"的两个方向（含由无有限子覆盖的可数开覆盖构造序列、以及由闭包递增覆盖构造可数开覆盖）
+\begin{proof}
+设 $X$ 可数紧，$\{x_n\}\subseteq X$。若 $\{x_n\}$ 无聚点，则对每个 $x\in X$ 存在 $x$ 的开邻域 $U_x$ 与 $m_x\in\mathbb{N}$，使 $x_n\notin U_x$ 对一切 $n>m_x$ 成立。令
 \begin{align*}
-x\in\bigcup_{n=1}^k A_n\subset\overline{\bigcup_{n=1}^k A_n}\subset K_x.
+V_m\triangleq X\setminus\overline{\{x_n\mid n>m\}}\qquad(m\in\mathbb{N}),
 \end{align*}
-显然每个集合 $\overline{\bigcup_{n=1}^k A_n}$ 是紧的；此外这些集合构成的族是可数的，且 $A$ 等于它们的并。
+则 $\{V_m\}$ 是递增的开覆盖：$x\in U_x$ 且 $U_x\cap\{x_n\mid n>m_x\}=\varnothing$ 给出 $U_x\subseteq V_{m_x}$。由可数紧性存在 $M$ 使 $V_M=X$，即 $\overline{\{x_n\mid n>M\}}=\varnothing$，与 $x_{M+1}$ 属于该集合矛盾。故 $\{x_n\}$ 有聚点。
+
+反之设每个序列都有聚点，$\{A_n\}$ 为 $X$ 的可数开覆盖且无有限子覆盖。对每个 $n$ 取 $x_n\in X\setminus\bigcup_{k=1}^nA_k$（非空）。设 $x$ 为 $\{x_n\}$ 的聚点。取 $N$ 使 $x\in A_N$。因 $A_N$ 是 $x$ 的邻域，存在 $n>N$ 使 $x_n\in A_N$；但由构造 $x_n\notin A_N$ 对一切 $n\geqslant N$ 成立，矛盾。故 $\{A_n\}$ 有有限子覆盖，$X$ 可数紧。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:appA-可数序列紧; kind=proof; 补出度量空间中紧、可数紧、序列紧的等价（含完全有界与完备性的刻画、Lebesgue 数论证），以及相对序列紧子集有界
+\begin{proof}
+设 $(X,d)$ 为距离空间。紧蕴含可数紧由定义直接得到。设 $X$ 可数紧，$\{x_n\}\subseteq X$，由前段 $\{x_n\}$ 有聚点 $x$；对每个 $k$ 取 $n_k>n_{k-1}$ 使 $x_{n_k}\in B(x,1/k)$（由聚点定义，$B(x,1/k)$ 含无穷多个元素），则 $x_{n_k}\to x$，故 $X$ 序列紧。
+
+设 $X$ 序列紧。若存在 $\varepsilon>0$ 使 $X$ 无有限 $\varepsilon$-网，则归纳取 $x_n$ 使 $d(x_n,x_m)\geqslant\varepsilon$ 对一切 $m<n$ 成立；该序列无收敛子列（任意两项距离不小于 $\varepsilon$），矛盾。故 $X$ 完全有界。又若 $\{x_n\}$ 为 Cauchy 序列，取其收敛子列 $x_{n_k}\to x$，则对 $\varepsilon>0$ 取 $k$ 使 $d(x_{n_k},x)<\varepsilon/2$ 且 $n_k$ 超过 Cauchy 性的指标，得 $d(x_n,x)<\varepsilon$ 对充分大的 $n$ 成立，故 $\{x_n\}$ 收敛，$X$ 完备。
+
+设 $X$ 完全有界且完备，$\{A_i\}_{i\in I}$ 为开覆盖。先证存在 $\varepsilon>0$ 使每个半径 $\varepsilon$ 的球含于某个 $A_i$：否则对每个 $n$ 取 $x_n$ 使 $B(x_n,1/n)$ 不含于任何 $A_i$；由完全有界性存在子列 $x_{n_k}\to x$，取 $i_0$ 与 $r>0$ 使 $B(x,r)\subseteq A_{i_0}$，则对充分大的 $k$ 有 $B(x_{n_k},1/n_k)\subseteq B(x,r)\subseteq A_{i_0}$，矛盾。取定该 $\varepsilon$ 与有限 $\varepsilon$-网 $y_1,\cdots ,y_m$，并对每个 $j$ 取 $i_j$ 使 $B(y_j,\varepsilon)\subseteq A_{i_j}$；由 $X=\bigcup_{j=1}^mB(y_j,\varepsilon)$ 得 $X=\bigcup_{j=1}^mA_{i_j}$。故 $X$ 紧。
+
+最后设 $F\subseteq X$ 相对序列紧。若 $F$ 无界，则对任意 $x_0\in X$ 有 $\sup_{y\in F}d(x_0,y)=\infty$（否则由三角不等式 $d(y,z)\leqslant d(y,x_0)+d(x_0,z)$ 将得 $\operatorname{diam}(F)<\infty$），故可取 $\{y_n\}\subseteq F$ 使 $d(x_0,y_n)>n$；因 $\overline{F}$ 序列紧，$\{y_n\}$ 有子列收敛于某 $y\in\overline{F}$，该子列有界，与 $d(x_0,y_n)>n$ 矛盾。故 $F$ 有界。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:appA-紧性; kind=motivation; 说明紧性的动机（有限子覆盖原理）、三条继承性结论各自的作用，以及紧性不可由"有界闭"替代的边界
+% SUPPLEMENT: parent=definition:appA-细覆盖; kind=motivation; 说明细覆盖的动机（覆盖引理中球半径可任意小）、定义中 inf 条件的含义与反例
+% SUPPLEMENT: parent=definition:appA-收敛聚点; kind=motivation; 说明以邻域定义收敛与聚点的原因、极限唯一性所需假设，以及完备性依赖度量的边界
+% SUPPLEMENT: parent=definition:appA-可数序列紧; kind=motivation; 说明可数紧与序列紧的关系、度量空间三款等价的用途，以及一般拓扑空间中二者不等的边界
+\begin{remark}\phantomsection\label{remark:appA-紧性}
+\begin{enumerate}[(i)]
+\item 紧性的动机。紧性把有限性原理移植到无限情形：任何开覆盖都可约化为有限个成员，从而"逐点成立的局部性质"可升级为"一致的全局性质"。$\mathbb{R}^n$ 中有界闭集紧（Heine--Borel 定理），这是本书使用紧性的主要来源。
+\item 三条继承性的作用。闭子集紧使"紧集之闭子集"可再次使用紧性；Hausdorff 空间中紧集闭使紧集可作闭集使用（例如在正则性论证中）；两个紧空间之积紧是 Tychonoff 定理的有限情形，用于把分别紧的因子合并为乘积紧，从而在乘积空间上使用紧性。三条的证明分别用到：覆盖中补入 $X\setminus C$、Hausdorff 性对每点作不交邻域、以及"管状"论证（固定一个因子后另一半的紧性给出有限覆盖）。
+\item 边界。紧性不能由"有界且闭"替代：在一般距离空间中这不再成立（例如 $\ell^2$ 的闭单位球有界闭而不紧，因标准正交基无收敛子列）；它只在 $\mathbb{R}^n$ 中与"有界闭"等价。紧性也不是拓扑遗传性质：开区间 $(0,1)$ 不紧而其闭包紧。
+\item 细覆盖的含义。条件 $\inf\{r\mid B_r(x_0)\in\mathscr{G}\}=0$ 要求覆盖在每点处含半径任意小的球，这是 Vitali 型覆盖引理中"可挑出互不相交子族"的关键。若某点 $x_0\in U$ 处该下确界为正，则 $\mathscr{G}$ 不是细覆盖；反之条件是逐点的，不要求半径一致地小。
+\item 收敛、聚点与完备。以邻域定义收敛，使定义不依赖度量；在 Hausdorff 空间中极限唯一（见\hyperref[remark:appA-邻域Hausdorff]{注记}）。聚点与极限的差别在于不要求"最终进入"而只要求"反复进入"：$\{0,1,0,1,\cdots\}$ 有两个聚点而无极限。完备性依赖度量：$(0,1)$ 与 $\mathbb{R}$ 同胚，前者在通常度量下不完备。
+\item 可数紧与序列紧。可数紧只要求可数开覆盖可约化，弱于紧性；序列紧要求每个序列有收敛子列。二者在距离空间中等价于紧性，故距离空间中三种紧性可互换使用；在一般拓扑空间中则不等价（可数紧不必序列紧，序列紧不必紧）。相对序列紧子集有界这一结论在距离空间中成立，本书用于从紧性推出有界性。
+\end{enumerate}
 \end{remark}
 
-与\cref{remark:appA-可数基局部紧}相一致，可证明如下结果。
+\section{局部紧与 Polish 空间}\label{section:appA-局部紧Polish}\label{section:appA-Polish}
 
-\begin{proposition}\label{proposition:appA-局部紧基}\label{proposition:appA-σ紧}\label{proposition:appA-紧生成}
-设 $X$ 为局部紧 Hausdorff 空间。则下述陈述等价：(i) $X$ 具有可数基；(ii) $X$ 可度量化且为 $\sigma$-紧。
+\begin{definition}[局部紧与 $\sigma$-紧]\label{definition:appA-局部紧}
+拓扑空间 $X$ 称为局部紧的，若每个 $x\in X$ 都有紧邻域，即存在紧集 $K\subseteq X$ 与开集 $A\subseteq X$ 使 $x\in A\subseteq K$。局部紧 Hausdorff 空间 $X$ 称为 $\sigma$-紧的，若 $X$ 是可数个紧集之并。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:appA-局部紧; kind=motivation; 说明局部紧性的动机与 $\sigma$-紧性的作用，并给出反例（$\mathbb{Q}$ 非局部紧、$\ell^2$ 非 $\sigma$-紧）
+\begin{remark}\phantomsection\label{remark:appA-局部紧}
+\begin{enumerate}[(i)]
+\item 引入动机。局部紧性把紧性局部化：空间整体可以很大，但每点附近仍紧，故"局部--紧"论证可逐点进行后再由紧性取有限子覆盖。$\sigma$-紧性进一步要求全空间可由一列紧集穷竭，这是可数覆盖论证与胎紧性判据的前提。
+\item 假设的作用。局部紧性使每点有紧邻域，从而可在该紧邻域内使用紧 Hausdorff 空间的分离性与 Urysohn 引理（\cref{corollary:appA-局部紧完全正则}）；Hausdorff 性使紧集与紧邻域为闭集；$\sigma$-紧性与可数基一起给出\cref{proposition:appA-紧生成}的等价刻画，并使每个开子集仍为 $\sigma$-紧（\hyperref[remark:appA-可数基局部紧]{注记}）。
+\item 边界。$\mathbb{Q}$（作为 $\mathbb{R}$ 的子空间）不是局部紧的：它在 $\mathbb{R}$ 中的紧子集内部为空，故不含 $\mathbb{Q}$ 中任何点的邻域。$\ell^2$ 是完备可分距离空间而非 $\sigma$-紧的：无限维赋范空间中的紧集内部为空，故 $\sigma$-紧性使 $\ell^2$ 成为可数个无处稠密集之并，与 Baire 纲定理矛盾。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=remark:appA-可数基局部紧; kind=proof; 原书论证中"显然每个并是紧的"与"$A$ 等于这些集合之并"两处为跳跃；此处以 $A$ 内的紧子集统制基元、并以递增有限并构造可数紧覆盖
+\begin{remark}\phantomsection\label{remark:appA-可数基局部紧}
+设 $X$ 为具有可数基的局部紧 Hausdorff 空间，则 $X$ 的每个开子集（特别地 $X$ 本身）都是 $\sigma$-紧的。
+
+事实上，设 $\{A_n\}_{n\in\mathbb{N}}\subseteq\mathscr{T}$ 为可数基，$A\in\mathscr{T}$。对每个 $x\in A$，由局部紧性存在紧邻域 $K$ 使 $x\in K^\circ$，令 $K_x\triangleq K\cap A$；则 $K_x$ 是紧集（紧集的闭子集，因 Hausdorff 空间中紧集闭），且 $x\in K^\circ\cap A\subseteq K_x\subseteq A$，即 $K_x$ 是 $x$ 的含于 $A$ 的紧邻域。因 $\{A_n\}$ 为基而 $K_x^\circ$ 是含 $x$ 的开集，存在 $n$ 使 $x\in A_n\subseteq K_x^\circ$；于是
+\begin{align*}
+x\in A_n\subseteq\overline{A_n}\subseteq K_x\subseteq A,
+\end{align*}
+其中 $\overline{A_n}\subseteq K_x$ 由 $A_n\subseteq K_x^\circ\subseteq K_x$ 与 $K_x$ 闭得到。对每个 $k\in\mathbb{N}$ 令
+\begin{align*}
+D_k\triangleq\bigcup\{\overline{A_n}\mid 1\leqslant n\leqslant k,\ \overline{A_n}\subseteq A,\ \overline{A_n}\ \text{紧}\},
+\end{align*}
+则 $D_k$ 是有限个紧集之并，故紧，且 $D_k\subseteq A$；又对每个 $x\in A$，取上述 $n$ 得 $x\in\overline{A_n}\subseteq D_n$。因此 $A=\bigcup_{k=1}^\infty D_k$ 是可数个紧集之并，即 $A$ 为 $\sigma$-紧的。
+\end{remark}
+
+\begin{theorem}[Urysohn 度量化定理]\label{theorem:appA-Urysohn度量化}
+设 $X$ 为 $T_1$ 空间（单点集为闭集）、正则（对每个 $x\in X$ 与每个含 $x$ 的开集 $A$，存在开集 $V$ 使 $x\in V\subseteq\overline{V}\subseteq A$）且具有可数基。则 $X$ 可度量化。确切地说，存在从 $X$ 到 Hilbert 方体 $[0,1]^{\mathbb{N}}$ 的拓扑嵌入，故 $X$ 同胚于 $[0,1]^{\mathbb{N}}$ 的一个子空间。
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:appA-Urysohn度量化; kind=proof; 原书未列入该定理；补出完整证明：由正则性与可数基得正规性、用 Urysohn 引理构造可数分离族、以坐标映射嵌入 Hilbert 方体、并验证嵌入性
+\begin{proof}
+第一步：$X$ 正规。设 $E,F\subseteq X$ 为不交闭集。对每个 $x\in E$，$X\setminus F$ 是含 $x$ 的开集，由正则性存在开集 $V_x$ 使 $x\in V_x\subseteq\overline{V_x}\subseteq X\setminus F$；由基性存在基元 $B_{n(x)}$ 使 $x\in B_{n(x)}\subseteq V_x$，于是 $\overline{B_{n(x)}}\subseteq X\setminus F$。令 $I\triangleq\{n(x)\mid x\in E\}\subseteq\mathbb{N}$，并把 $I$ 枚举为 $\{n_j\}$；令 $U_j\triangleq B_{n_1}\cup\cdots\cup B_{n_j}$，$U\triangleq\bigcup_{j=1}^\infty U_j=\bigcup_{n\in I}B_n$。则 $E\subseteq U$，且由 $\{U_j\}$ 递增得
+\begin{align*}
+\overline{U}=\bigcup_{j=1}^\infty\overline{U_j}=\bigcup_{j=1}^\infty\bigcup_{i=1}^j\overline{B_{n_i}}\subseteq X\setminus F,
+\end{align*}
+故 $\overline{U}\cap F=\varnothing$，$X$ 正规。
+
+第二步：可数分离族。设 $\{B_n\}_{n\in\mathbb{N}}$ 为可数基，令
+\begin{align*}
+\Lambda\triangleq\{(m,n)\in\mathbb{N}^2\mid \overline{B_m}\subseteq B_n\},
+\end{align*}
+则 $\Lambda$ 可数。对每个 $(m,n)\in\Lambda$，$\overline{B_m}$ 与 $X\setminus B_n$ 是不交闭集，故由第一步与\cref{proposition:appA-Urysohn}存在 $f_{mn}\in C(X)$ 使 $f_{mn}(X)\subseteq[0,1]$、$f_{mn}|_{\overline{B_m}}=1$、$f_{mn}|_{X\setminus B_n}=0$。把 $\{f_{mn}\}_{(m,n)\in\Lambda}$ 枚举为 $\{g_j\}_{j\in\mathbb{N}}$。
+
+第三步：分离点与闭集。设 $F\subseteq X$ 闭，$x\in X\setminus F$。对开集 $X\setminus F\ni x$ 用两次正则性：取开集 $V_1,V_2$ 使
+\begin{align*}
+x\in V_2\subseteq\overline{V_2}\subseteq V_1\subseteq\overline{V_1}\subseteq X\setminus F.
+\end{align*}
+由基性取 $n$ 使 $x\in B_n\subseteq V_2$，再取 $m$ 使 $x\in B_m\subseteq\overline{B_m}\subseteq B_n$；则 $(m,n)\in\Lambda$，且 $f_{mn}(x)=1$（因 $x\in B_m\subseteq\overline{B_m}$）、$f_{mn}|_F=0$（因 $F\subseteq X\setminus V_1\subseteq X\setminus B_n$）。
+
+第四步：嵌入。定义 $j:X\to[0,1]^{\mathbb{N}}$，$j(x)\triangleq(g_j(x))_{j\in\mathbb{N}}$。各分量连续，故 $j$ 连续。若 $x\neq y$，由 $T_1$ 性 $\{y\}$ 为闭集且 $x\notin\{y\}$，第三步给出 $g_j$ 使 $g_j(x)=1$、$g_j(y)=0$，故 $j(x)\neq j(y)$，$j$ 为单射。设 $A\subseteq X$ 闭、$x\notin A$，取 $g_j$ 使 $g_j(x)=1$、$g_j|_A=0$；则 $O\triangleq\{z\in j(X)\mid z_j>1/2\}$ 是 $j(X)$ 中含 $j(x)$ 的开集且与 $j(A)$ 不交，故 $j(A)$ 闭于 $j(X)$。于是 $j$ 把闭集映为像中的闭集，从而 $j$ 是 $X$ 到 $j(X)$ 的同胚。
+
+最后，$[0,1]^{\mathbb{N}}$ 上的 $\rho(s,t)\triangleq\sum_{j=1}^\infty2^{-j}|s_j-t_j|$ 是度量且诱导乘积拓扑：给定 $\varepsilon>0$ 取 $J$ 使 $2^{-J}<\varepsilon/2$，则有限多个坐标条件 $|t_j-s_j|<\varepsilon/(2J)$（$j\leqslant J$）蕴含 $\rho(s,t)<\varepsilon$，反之 $\rho(s,t)<2^{-J-1}$ 蕴含 $|t_j-s_j|<1/2$（$j\leqslant J$）。故 $j(X)$ 可度量化，$X$ 亦然。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:appA-Urysohn度量化; kind=motivation; 说明该定理为何在此出现（命题 A.2 的 (i)$\Rightarrow$(ii) 需要它）、三组假设各自的作用，以及缺少第二可数性时不可度量化的反例
+\begin{remark}\phantomsection\label{remark:appA-Urysohn度量化}
+\begin{enumerate}[(i)]
+\item 引入动机。可度量化把拓扑问题化为距离问题，从而可使用 $\varepsilon$-$\delta$ 论证、完备化、可分性等工具。定理给出一个只依赖拓扑的充分条件：$T_1$、正则、具有可数基。本书在\cref{proposition:appA-紧生成}中用它把"局部紧 Hausdorff 且具可数基"的空间化为距离空间，\cref{chapter:ch05}关于窄收敛与胎紧性的论证都以此为前提。
+\item 各假设的作用。$T_1$ 性使单点集闭，从而第三步能在 $x\neq y$ 时把 $\{y\}$ 当作闭集分离，保证 $j$ 单射；正则性提供正规性（第一步）并使"基元夹在点与闭集之间"可实现，是构造分离函数的关键；可数基使分离族 $\{f_{mn}\}$ 可数，从而目标空间可取 $[0,1]^{\mathbb{N}}$ 而非不可数幂。三者在证明中的作用互不相同，缺一不可（见 (iii)）。
+\item 边界与反例。第二可数性不可去：Sorgenfrey 直线（$\mathbb{R}$ 上以 $\{[a,b)\mid a<b\}$ 为基的拓扑）是 $T_1$、正则且可分的，但无可数基（\hyperref[remark:appA-可分]{注记}(iv)）；若它可度量化，则由\cref{proposition:appA-基可分}(ii) 可分的距离空间具有可数基，矛盾，故它不可度量化。这说明仅有 $T_1$ 性与正则性不足以保证可度量化。定理给出的是充分条件而非必要条件：可度量化空间未必具有可数基（不可数离散空间可度量化，而其中每个单点集既开又闭，可数基不存在），故定理不能反向使用。
+\end{enumerate}
+\end{remark}
+
+\begin{proposition}\label{proposition:appA-紧生成}\label{proposition:appA-局部紧基}\label{proposition:appA-σ紧}\label{proposition:appA-可度量化}
+设 $X$ 为局部紧 Hausdorff 空间。则下述陈述等价：
+\begin{enumerate}[(i)]
+\item $X$ 具有可数基；
+\item $X$ 可度量化且为 $\sigma$-紧。
+\end{enumerate}
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:appA-紧生成; kind=proof; 原书未给证明；补出两个方向：由可数基经可数基局部紧性得 $\sigma$-紧、由局部紧性得正则性再经度量化定理得可度量化；反向由紧度量空间可分与命题 A.1 得可数基
+\begin{proof}
+(i)$\Rightarrow$(ii)。由\hyperref[remark:appA-可数基局部紧]{注记}（取 $A=X$），$X$ 是可数个紧集之并，即为 $\sigma$-紧的。其次证 $X$ 正则：设 $x\in X$，$A\ni x$ 为开集。取 $x$ 的紧邻域 $K$（$x\in K^\circ\subseteq K$）。$K$ 为紧 Hausdorff 空间；令 $F\triangleq K\setminus(K\cap A)$，它是 $K$ 的闭子集，故紧，且 $x\notin F$。对每个 $y\in F$，由 Hausdorff 性取开于 $K$ 的不交集合 $U_y\ni x$、$V_y\ni y$；由 $F$ 紧，存在 $y_1,\cdots ,y_n$ 使 $F\subseteq V\triangleq\bigcup_{j=1}^nV_{y_j}$。令 $U\triangleq\bigcap_{j=1}^nU_{y_j}$，则 $x\in U$、$U\cap V=\varnothing$，且 $K\setminus V$ 闭于 $K$，故 $\overline{U}^K\subseteq K\setminus V\subseteq K\cap A$。取开集 $W\subseteq X$ 使 $U=W\cap K$，并令 $V_0\triangleq W\cap K^\circ$；则 $x\in V_0$ 且
+\begin{align*}
+\overline{V_0}\subseteq\overline{W}\cap K=\overline{U}^K\subseteq K\cap A\subseteq A,
+\end{align*}
+其中 $\overline{U}^K=K\cap\overline{W}$ 由 $K$ 闭得到。故 $X$ 正则。于是 $X$ 为 $T_1$、正则且具可数基，由\cref{theorem:appA-Urysohn度量化}可度量化。
+
+(ii)$\Rightarrow$(i)。设 $d$ 为 $X$ 的相容度量，$X=\bigcup_{n=1}^\infty K_n$，$K_n$ 紧。对每个 $n$，$K_n$ 是紧距离空间，故可分：对每个 $m\in\mathbb{N}$，球族 $\{B(x,1/m)\mid x\in K_n\}$ 覆盖 $K_n$，取有限子覆盖，其中心构成有限 $1/m$-网；全部 $m$ 与 $n$ 对应的中心合起来是可数集 $D$，且 $D\cap K_n$ 在 $K_n$ 中稠密。于是对任意 $x\in X$ 与 $\varepsilon>0$，取 $n$ 使 $x\in K_n$，再取 $y\in D\cap K_n$ 使 $d(x,y)<\varepsilon$，故 $D$ 在 $X$ 中稠密，$X$ 可分。由\cref{proposition:appA-基可分}(ii)，可分距离空间的距离拓扑具有可数基，即 $X$ 具有可数基。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:appA-局部紧基; kind=motivation; 说明该等价刻画的内容与用途、局部紧性与 $\sigma$-紧性各自只在一个方向使用，并给出两个方向的反例
+% SUPPLEMENT: parent=proposition:appA-σ紧; kind=motivation; 说明 $\sigma$-紧性的作用（可数紧穷竭、胎紧性判据、正则性传递），以及去掉可数基时的反例
+% SUPPLEMENT: parent=proposition:appA-紧生成; kind=motivation; 说明"局部紧 + 可数基"为何是本书的标准假设，并指出缺少局部紧性时 $\sigma$-紧不能由可数基推出
+% SUPPLEMENT: parent=proposition:appA-可度量化; kind=motivation; 说明可度量化结论在本书中的用法（取相容度量作距离论证）以及不能由 $\sigma$-紧单独推出的原因
+\begin{remark}\phantomsection\label{remark:appA-局部紧基}
+\begin{enumerate}[(i)]
+\item 内容与用途。命题把"具有可数基"这一拓扑假设翻译为"可度量化且 $\sigma$-紧"这一度量假设，使\hyperref[remark:appA-可数基局部紧]{注记}的结论与距离空间中的论证可以并用。本书把它用作标准假设的等价形式：局部紧 Hausdorff 且具可数基的空间上，Radon 测度正则、胎紧性可由紧集穷竭刻画、窄收敛可由 $\sigma$-紧性处理。
+\item 两个方向各自的假设。在 (i)$\Rightarrow$(ii) 中，局部紧性只用于得到 $\sigma$-紧性（经\hyperref[remark:appA-可数基局部紧]{注记}）与正则性（从而可用度量化定理）；在 (ii)$\Rightarrow$(i) 中，局部紧性完全未用，只需"$\sigma$-紧 + 度量"，因为紧度量空间可分、可数个可分集之并仍可分。
+\item 边界与反例。方向 (i)$\Rightarrow$(ii) 中局部紧性不可去：$\mathbb{N}^{\mathbb{N}}$（可数离散空间之可数积）具有可数基且可度量化，但它的紧子集内部为空，故不是 $\sigma$-紧的（它是 Baire 空间，不能是可数个无处稠密集之并）。方向 (ii)$\Rightarrow$(i) 中 $\sigma$-紧性不可去：不可数离散空间是局部紧 Hausdorff 且可度量化的，但其紧子集只有有限集，故非 $\sigma$-紧，且其可数基不存在（可数基要求空间可数）。可见两个方向各需一项假设，命题不能拆成单向的充分条件。
+\end{enumerate}
+\end{remark}
+
 \begin{definition}[Polish 空间]\label{definition:appA-Polish}
-具有可数基的完全可度量化拓扑空间称为 Polish 空间。可分 Banach 空间以及具有可数基的局部紧 Hausdorff 空间都是 Polish 空间的例子。
+具有可数基的完全可度量化拓扑空间称为 Polish 空间。
 \end{definition}
+
+可分 Banach 空间与具有可数基的局部紧 Hausdorff 空间都是 Polish 空间的例子。
+
+% SUPPLEMENT: parent=definition:appA-Polish; kind=proof; 原书仅断言两族例子；补出（a）可分 Banach 空间与（b）具可数基的局部紧 Hausdorff 空间为 Polish 的验证（后者经单点紧化，并含"完全可度量化空间的开子集"的度量构造）
+\begin{proof}
+(a) 设 $Y$ 为可分 Banach 空间，$\|\cdot\|$ 为其范数，$d(x,y)\triangleq\|x-y\|$。$(Y,d)$ 完备，且 $d$ 诱导的拓扑与范数拓扑一致；由\cref{proposition:appA-基可分}(ii)，可分距离空间具可数基。故 $Y$ 为 Polish。
+
+(b) 设 $X$ 为具有可数基的局部紧 Hausdorff 空间。由\cref{proposition:appA-紧生成}，$X$ 可度量化且 $\sigma$-紧：设 $d$ 为相容度量，$X=\bigcup_{n=1}^\infty K_n$ 且可设 $K_n$ 递增。取 $X$ 的单点紧化 $\alpha X\triangleq X\cup\{\infty\}$，其开集为 $X$ 的开集与形如 $(X\setminus K)\cup\{\infty\}$（$K\subseteq X$ 紧）的集合。$\alpha X$ 是紧 Hausdorff 空间；又 $\{A_n\}\cup\{(X\setminus K_n)\cup\{\infty\}\}$ 是 $\alpha X$ 的可数基（任一含 $\infty$ 的开集含 $(X\setminus K)\cup\{\infty\}$，而 $K\subseteq K_N$ 对某个 $N$ 成立），故 $\alpha X$ 为紧 Hausdorff 且具可数基的空间，由\cref{theorem:appA-Urysohn度量化}可度量化。于是 $X$ 是紧距离空间 $\alpha X$ 的开子集。
+
+今证完全可度量化空间的开子集完全可度量。设 $(Z,\rho)$ 完备，$U\subseteq Z$ 开，令
+\begin{align*}
+\rho_U(x,y)\triangleq\rho(x,y)+\left|\frac{1}{\rho(x,Z\setminus U)}-\frac{1}{\rho(y,Z\setminus U)}\right|\qquad(x,y\in U),
+\end{align*}
+其中 $\rho(x,Z\setminus U)>0$ 对 $x\in U$ 成立（$U=Z$ 时约定 $\rho_U\triangleq\rho$）。$\rho_U$ 是 $U$ 上的度量且 $\rho_U\geqslant\rho$，故 $\rho_U$-收敛蕴含 $\rho$-收敛；反之若 $\rho(x_n,x)\to0$（$x\in U$），则 $\rho(x_n,Z\setminus U)\to\rho(x,Z\setminus U)>0$，故 $\rho_U(x_n,x)\to0$，即 $\rho_U$ 与 $\rho$ 等价。若 $\{x_n\}$ 为 $\rho_U$-Cauchy，则它是 $\rho$-Cauchy，故 $\rho$-收敛于某 $z\in Z$；若 $z\notin U$，则 $\rho(x_n,Z\setminus U)\to0$，与 $\rho_U$-Cauchy 性（它使 $1/\rho(x_n,Z\setminus U)$ 为 Cauchy 列，从而有界）矛盾；故 $z\in U$，且 $\rho_U(x_n,z)\to0$。于是 $(U,\rho_U)$ 完备。
+
+取 $Z=\alpha X$、$U=X$，得 $X$ 完全可度量化；结合可数基得 $X$ 为 Polish。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:appA-Polish; kind=motivation; 说明 Polish 空间的定义动机（Baire 纲、可数生成、测度论中的胎紧性）、各假设的作用，并给出非 Polish 的典型反例
+\begin{remark}\phantomsection\label{remark:appA-Polish}
+\begin{enumerate}[(i)]
+\item 引入动机。Polish 空间是"可数信息 + 完备性"兼备的空间类：可数基使 Borel 结构可数生成，完备性使 Baire 纲定理与紧集逼近可用。本书\cref{chapter:ch05}把 Prokhorov 型紧性判据与 Ulam 定理推广到 Polish 空间，正是同时使用这两点。
+\item 各假设的作用。可数基给出可数稠密集与可数开基，从而使可测性、可分性论证可数化；完全可度量化（而非仅仅可度量化）保证 Baire 纲定理可用，并使"紧集从内逼近"的论证中的完备化步骤可行。
+\item 例子与非例。$\mathbb{R}^n$、可分 Banach 空间、具有可数基的局部紧 Hausdorff 空间都是 Polish 空间（见上方证明）。$\mathbb{Q}$ 不是 Polish 空间：它可数且无孤立点，若完全可度量化则为 Baire 空间，但它是可数个单点（无处稠密集）之并，与 Baire 纲定理矛盾。不可数离散空间虽完全可度量化，却无可数基，故也不是 Polish 空间。可见定义中的两项假设互不包含。
+\end{enumerate}
+\end{remark}
 
 \section{连续函数空间}\label{section:appA-连续函数空间}
 
 \begin{definition}[连续函数空间 $C$ 与 $C_b$]\label{definition:appA-C与Cb}
-设 $X$ 为拓扑空间，$Y$ 为距离空间。记 $C(X;Y)$ 为连续映射 $f:X\to Y$ 构成的空间，$C_b(X;Y)\subseteq C(X;Y)$ 为有界连续函数构成的子空间。简记 $C(X)\equiv C(X;\mathbb{R})$，$C_b(X)\equiv C_b(X;\mathbb{R})$。若 $Y$ 为 Banach 空间，则 $C_b(X;Y)$ 赋以范数
+设 $X$ 为拓扑空间，$Y$ 为距离空间，$d_Y$ 为 $Y$ 上的距离。以 $C(X;Y)$ 记连续映射 $f:X\to Y$ 构成的空间；以 $C_b(X;Y)\subseteq C(X;Y)$ 记其中有界映射构成的空间，即有某个 $y_0\in Y$ 使 $\sup_{x\in X}d_Y(f(x),y_0)<\infty$ 的 $f$（由三角不等式，此性质与 $y_0$ 的选取无关）。简记 $C(X)\triangleq C(X;\mathbb{R})$，$C_b(X)\triangleq C_b(X;\mathbb{R})$。若 $Y$ 为 Banach 空间，则 $C_b(X;Y)$ 赋以范数
 \begin{align*}
-f\mapsto\|f\|_\infty\triangleq \sup_{x\in X}\|f(x)\|_Y
+f\mapsto\|f\|_\infty\triangleq\sup_{x\in X}\|f(x)\|_Y
 \end{align*}
 后是 Banach 空间。
 \end{definition}
 
-回顾如下结果（例如见文献~\cite{ref107} 定理 I.5.1）。
+% SUPPLEMENT: parent=definition:appA-C与Cb; kind=proof; 原书仅断言 $C_b(X;Y)$ 为 Banach 空间；补出上确界范数的完备性（逐点极限、有界性与一致极限的连续性）
+\begin{proof}
+设 $\{f_n\}\subseteq C_b(X;Y)$ 关于 $\|\cdot\|_\infty$ 为 Cauchy 序列。对每个 $x\in X$，$\|f_m(x)-f_n(x)\|_Y\leqslant\|f_m-f_n\|_\infty$，故 $\{f_n(x)\}$ 是 $Y$ 中的 Cauchy 序列；由 $Y$ 完备，存在 $f(x)\triangleq\lim_{n\to\infty}f_n(x)\in Y$，由此定义 $f:X\to Y$。
 
-\begin{proposition}\label{proposition:appA-Cb可分}\label{proposition:chA-C0可分}
-\label{subsection:appA-可分}
-\label{paragraph:appA-可分}
-设 $X$ 为紧距离空间，$Y$ 为完备可分距离空间。则 $C_b(X;Y)$ 赋以范数 $\|\cdot\|_\infty$ 后是可分的。
+$f$ 有界：取 $N$ 使 $\|f_m-f_n\|_\infty<1$ 对 $m,n\geqslant N$ 成立，则对一切 $x$ 有 $\|f(x)\|_Y\leqslant\|f(x)-f_N(x)\|_Y+\|f_N(x)\|_Y\leqslant1+\|f_N\|_\infty$。
+
+$f$ 连续：设 $x_0\in X$，$\varepsilon>0$。取 $N$ 使 $\|f_m-f_n\|_\infty<\varepsilon/3$ 对 $m,n\geqslant N$ 成立，再取 $n\geqslant N$；由 $f_n$ 连续存在 $x_0$ 的邻域 $U$ 使 $\|f_n(x)-f_n(x_0)\|_Y<\varepsilon/3$ 对 $x\in U$ 成立。于是对 $x\in U$，
+\begin{align*}
+\|f(x)-f(x_0)\|_Y\leqslant\|f(x)-f_n(x)\|_Y+\|f_n(x)-f_n(x_0)\|_Y+\|f_n(x_0)-f(x_0)\|_Y<\varepsilon,
+\end{align*}
+其中两端项由 $f_m\to f$ 逐点及 $\|f_m-f_n\|_\infty<\varepsilon/3$ 控制（先令 $m\to\infty$ 得 $\|f-f_n\|_\infty\leqslant\varepsilon/3$）。故 $f\in C_b(X;Y)$。
+
+最后 $\|f-f_n\|_\infty\leqslant\limsup_{m\to\infty}\|f_m-f_n\|_\infty\to0$（$n\to\infty$），故 $f_n\to f$ 于 $C_b(X;Y)$，即 $C_b(X;Y)$ 完备；范数空间的完备性给出 Banach 空间。
+\end{proof}
+
+\begin{proposition}\label{proposition:appA-Cb可分}\label{proposition:appA-紧可分}
+设 $X$ 为紧距离空间，$Y$ 为完备可分距离空间。则 $C_b(X;Y)$ 赋以上确界距离
+\begin{align*}
+(f,g)\mapsto\sup_{x\in X}d_Y(f(x),g(x))
+\end{align*}
+后是可分的。
 \end{proposition}
 
+% SUPPLEMENT: parent=proposition:appA-紧可分; kind=proof; 原书仅引文献；补出证明：以 $X$ 的可数稠密集作坐标映射把 $C_b(X;Y)$ 等距嵌入 $Y^{\mathbb{N}}$，再证可数积可分与可分空间的子空间可分
+\begin{proof}
+因 $X$ 紧，对每个 $m\in\mathbb{N}$，球族 $\{B(x,1/m)\mid x\in X\}$ 有有限子覆盖，其中心构成有限 $1/m$-网；取全部 $m$ 对应的中心，得可数集 $D_X\equiv\{x_i\}_{i\in\mathbb{N}}$，它在 $X$ 中稠密。
+
+令 $\rho_Y\triangleq\min\{d_Y,1\}$，在 $Y^{\mathbb{N}}$ 上定义
+\begin{align*}
+\rho(s,t)\triangleq\sup_{i\in\mathbb{N}}2^{-i}\rho_Y(s_i,t_i),
+\end{align*}
+则 $\rho$ 是 $Y^{\mathbb{N}}$ 上的距离（每项不超过 $2^{-i}$，故上确界有限且满足距离公理）。定义
+\begin{align*}
+\Phi:C_b(X;Y)\to Y^{\mathbb{N}},\qquad \Phi(f)\triangleq(f(x_i))_{i\in\mathbb{N}}.
+\end{align*}
+因 $x\mapsto d_Y(f(x),g(x))$ 连续而 $D_X$ 稠密，有 $\sup_{i}d_Y(f(x_i),g(x_i))=\sup_{x\in X}d_Y(f(x),g(x))$；又 $\sup_i\min\{a_i,1\}=\min\{\sup_i a_i,1\}$，故
+\begin{align*}
+\rho(\Phi(f),\Phi(g))=\min\bigl\{\|f-g\|_\infty,1\bigr\}.
+\end{align*}
+于是 $\Phi$ 是 $C_b(X;Y)$ 到其像上的等距映射（相对于与上确界距离诱导同一拓扑的 $\min\{\|\cdot\|_\infty,1\}$），特别地 $\Phi$ 是拓扑嵌入。
+
+$Y^{\mathbb{N}}$ 可分：取 $Y$ 的可数稠密子集 $D$，固定 $y_0\in Y$，令
+\begin{align*}
+E\triangleq\{(s_i)\in Y^{\mathbb{N}}\mid \exists N\in\mathbb{N}:\ s_i=y_0\ (i>N),\ s_i\in D\ (i\leqslant N)\},
+\end{align*}
+则 $E$ 是可数集（可数个 $D^N$ 之并）。设 $s\in Y^{\mathbb{N}}$，$\varepsilon>0$，取 $N$ 使 $2^{-N}<\varepsilon/2$，并对 $i\leqslant N$ 取 $s_i'\in D$ 使 $d_Y(s_i,s_i')<\varepsilon/2$，令 $s_i'\triangleq y_0$（$i>N$）。则 $s'\in E$ 且 $\rho(s,s')<\varepsilon$，故 $E$ 稠密，$Y^{\mathbb{N}}$ 可分。
+
+可分距离空间的子空间可分：若 $E$ 在 $Z$ 中稠密，则对每个 $n\in\mathbb{N}$ 与每个 $e\in E$ 满足 $B(e,1/n)\cap Z\neq\varnothing$ 者取一点 $z_{e,n}\in B(e,1/n)\cap Z$，所得可数集在 $Z$ 中稠密。取 $Z=\Phi(C_b(X;Y))$ 即知 $\Phi(C_b(X;Y))$ 可分，再由 $\Phi$ 为同胚得 $C_b(X;Y)$ 可分。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:appA-C与Cb; kind=motivation; 说明 $C_b$ 的定义动机、有界性假设的作用（否则上确界范数无意义）、以及 $X$ 非紧时 $C_b\neq C$ 的边界
+% SUPPLEMENT: parent=proposition:appA-Cb可分; kind=motivation; 说明可分性的用途（可数生成 Borel 结构）、$Y$ 完备性在可分性证明中并不使用（它用于 $C_b$ 的完备性），以及 $X$ 紧性不可去的反例
+% SUPPLEMENT: parent=proposition:appA-紧可分; kind=motivation; 说明"紧距离空间上连续函数空间可分"这一特例的内容，并指出原文以"范数"表述时须假定 $Y$ 为赋范空间
+\begin{remark}\phantomsection\label{remark:appA-连续函数空间}
+\begin{enumerate}[(i)]
+\item 引入动机。$C(X;Y)$ 与 $C_b(X;Y)$ 是分析中承载收敛性的基本空间：上确界范数把"一致收敛"度量化，从而使 $C_b$ 成为 Banach 空间，可直接使用泛函分析工具（Riesz 表示、对偶、可分性）。
+\item 有界性假设的作用。若 $Y$ 为赋范空间而 $f$ 无界，则 $\sup_x\|f(x)\|_Y=\infty$，$\|\cdot\|_\infty$ 不是实值范数；故 $C_b$ 只取有界函数。$\mathbb{R}$ 上 $f(x)=x$ 连续但无界，属于 $C(\mathbb{R})\setminus C_b(\mathbb{R})$，说明 $X$ 非紧时 $C_b(X)\neq C(X)$；反之 $X$ 紧时连续函数必有界（见\cref{definition:appA-一致连续}），故 $C_b(X;Y)=C(X;Y)$。
+\item 边界。$Y$ 必须是赋范空间才能谈范数；对一般距离空间 $Y$，$C_b(X;Y)$ 只有上确界距离，此时"Banach 空间"应换为"完备距离空间"（由上方证明的同一论证给出）。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:appA-Cb可分; kind=motivation; 说明可分性结论的用途与假设分工：$X$ 紧性给出可数稠密集，$Y$ 可分给出坐标空间的稠密性，$Y$ 完备性只用于 $C_b$ 的完备性
+% SUPPLEMENT: parent=proposition:appA-紧可分; kind=motivation; 说明该款是 $Y=\mathbb{R}$ 的特例、可分性在 $\mathbb{R}$ 值情形的直接推论，并给出 $X$ 不紧时的反例 $C_b(\mathbb{N})=\ell^\infty$
+\begin{remark}\phantomsection\label{remark:appA-Cb可分}
+\begin{enumerate}[(i)]
+\item 用途。可分性使 $C_b(X;Y)$ 的 Borel $\sigma$-代数由可数族生成，从而"$x\mapsto f(x,\cdot)$ 可测"只需对可数个测试函数验证；本书\cref{chapter:ch05}关于 Carathéodory 函数与 Young 测度可测性的论证即依赖于此。
+\item 假设的分工。$X$ 的紧性只用于得到 $X$ 的可数稠密集 $D_X$（紧距离空间完全有界），从而使 $\Phi$ 的坐标可数；$Y$ 的可分性用于使 $Y^{\mathbb{N}}$ 可分；$Y$ 的完备性在可分性的证明中并未使用，它保证的是 $C_b(X;Y)$ 本身完备（见\cref{definition:appA-C与Cb} 后的证明），二者不可混淆。
+\item 边界。$X$ 的紧性不可去：取 $X=\mathbb{N}$（离散距离），则 $C_b(\mathbb{N})$ 与 $\ell^\infty$ 等距同构，而 $\ell^\infty$ 不可分（见\hyperref[remark:appA-可分]{注记}），故 $C_b(\mathbb{N})$ 不可分。原文以"范数 $\|\cdot\|_\infty$"表述，当 $Y$ 仅为距离空间时应理解为上确界距离 $\sup_xd_Y(f(x),g(x))$；当 $Y$ 为赋范空间时二者一致。
+\end{enumerate}
+\end{remark}
+
 \begin{definition}[上、下半连续]\label{definition:appA-半连续}
-设 $X$ 为拓扑空间。函数 $f:X\to\mathbb{R}$ 称为上半连续（相应地，下半连续）的，若对每个 $\alpha\in\mathbb{R}$，集合 $\{f<\alpha\}$（相应地，$\{f>\alpha\}$）是开集。
+设 $X$ 为拓扑空间，$f:X\to\mathbb{R}$。函数 $f$ 称为上半连续的，若对每个 $\alpha\in\mathbb{R}$，集合
+\begin{align*}
+\{f<\alpha\}\triangleq\{x\in X\mid f(x)<\alpha\}
+\end{align*}
+是开集；$f$ 称为下半连续的，若对每个 $\alpha\in\mathbb{R}$，集合 $\{f>\alpha\}$ 是开集。
 \end{definition}
 
 \begin{proposition}\label{proposition:appA-上半连续最大值}
-设 $X$ 为可数紧拓扑空间，$f:X\to\mathbb{R}$ 为上半连续函数。则 $f$ 有上界且达到最大值。
+设 $X$ 为可数紧拓扑空间，$f:X\to\mathbb{R}$ 为上半连续函数。则 $f$ 上有界且取到最大值，即存在 $x_0\in X$ 使
+\begin{align*}
+f(x_0)=\sup_{x\in X}f(x).
+\end{align*}
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:appA-上半连续最大值; kind=proof; 原书未给证明；补出由 $\{f<n\}$ 的可数开覆盖得上有界、再由 $\{f<M-1/n\}$ 的可数开覆盖得最大值可取
+\begin{proof}
+对每个 $n\in\mathbb{N}$，$A_n\triangleq\{f<n\}$ 是开集，且因 $f$ 实值有 $X=\bigcup_{n=1}^\infty A_n$。由可数紧性存在 $N$ 使 $X=\bigcup_{n=1}^NA_n=A_N$，故 $f(x)<N$ 对一切 $x\in X$ 成立，$f$ 上有界。
+
+令 $M\triangleq\sup_{x\in X}f(x)\in\mathbb{R}$。若 $f(x)<M$ 对一切 $x\in X$ 成立，则对每个 $x$ 存在 $n$ 使 $f(x)<M-1/n$，即 $X=\bigcup_{n=1}^\infty\{f<M-1/n\}$；由可数紧性存在 $N$ 使 $X=\{f<M-1/N\}$，于是 $M\leqslant M-1/N$，矛盾。故存在 $x_0\in X$ 使 $f(x_0)=M$。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:appA-半连续; kind=motivation; 说明上半连续的三条等价刻画、与连续性的关系，以及半连续函数在取最值与积分号下取极限中的作用
+% SUPPLEMENT: parent=proposition:appA-上半连续最大值; kind=motivation; 说明可数紧性为何足够（有限子覆盖）、上半连续为何不能换成下半连续，并给出反例
+% SUPPLEMENT: parent=proposition:appA-Dini; kind=motivation; 说明单调性、可数紧性与上半连续性各自的作用，并给出两条假设不可去的反例
+\begin{remark}\phantomsection\label{remark:appA-半连续}
+\begin{enumerate}[(i)]
+\item 三条等价刻画。$f$ 上半连续当且仅当对每个 $\alpha$，$\{f\geqslant\alpha\}$ 是闭集；当且仅当对每个 $x$，$\varlimsup_{y\to x}f(y)\leqslant f(x)$。上半连续与下半连续同时成立当且仅当 $f$ 连续。上半连续函数关于有限和与有限上确界封闭（因 $\{\max_if_i<\alpha\}=\bigcap_i\{f_i<\alpha\}$），而无限上确界与逐点下确界一般不保持上半连续性。
+\item 可数紧性的作用。证明只用两点：可数开覆盖 $\{f<n\}$ 与 $\{f<M-1/n\}$ 有有限子覆盖。这解释了假设为"可数紧"而非"紧"：只需可数族，故结论对可数紧空间成立。
+\item 上下半连续不可互换。对下半连续的 $f$，结论应改为"下有界且取到最小值"。上半连续函数不必下有界，例如 $f(x)\triangleq-x$ 在 $\mathbb{R}$ 上上半连续（线性函数连续）而下无界；此时最大值同样不存在，说明"取到最大值"只对上方。
+\item Dini 定理中的假设。$\{f_n\}$ 的非增性保证 $f_n\geqslant0$ 且 $f_n\leqslant f_N$（$n\geqslant N$），从而 $\|f_n\|_\infty=\sup f_n$ 有限；上半连续性保证 $\{f_n<\varepsilon\}$ 开；可数紧性给出有限子覆盖。非增性不可去：$f_n(x)\triangleq nx(1-x)^n$ 在 $[0,1]$ 上连续且对每个 $x\in[0,1]$ 有 $f_n(x)\to0$，但在 $x=1/(n+1)$ 处 $f_n(x)=(n/(n+1))^{n+1}\to\mathrm{e}^{-1}$，故 $\|f_n\|_\infty\not\to0$；可数紧性不可去：$f_n\triangleq\chi_{[n,\infty)}$ 在 $\mathbb{R}$ 上非增、上半连续（$\{f_n<\alpha\}$ 为 $\varnothing$ 或 $[n,\infty)^c$）、逐点趋于 $0$，但 $\|f_n\|_\infty=1$。
+\end{enumerate}
+\end{remark}
 
 \begin{definition}[一致连续]\label{definition:appA-一致连续}
-设 $(X,d_X)$ 与 $(Y,d_Y)$ 为距离空间。映射 $f:X\to Y$ 称为一致连续的，若对每个 $\epsilon>0$，存在 $\delta>0$，使得对所有满足 $d_X(x,x')<\delta$ 的 $x,x'\in X$，都有 $d_Y(f(x),f(x'))<\epsilon$。若 $X$ 为紧空间，则每个 $f\in C(X;Y)$ 都有界且一致连续。
+设 $(X,d_X)$ 与 $(Y,d_Y)$ 为距离空间。映射 $f:X\to Y$ 称为一致连续的，若对每个 $\varepsilon>0$ 存在 $\delta>0$，使对一切 $x,x'\in X$ 满足 $d_X(x,x')<\delta$ 者都有
+\begin{align*}
+d_Y(f(x),f(x'))<\varepsilon.
+\end{align*}
+若 $X$ 为紧空间，则每个 $f\in C(X;Y)$ 有界且一致连续。
 \end{definition}
+
+% SUPPLEMENT: parent=definition:appA-一致连续; kind=proof; 原书"若 $X$ 紧则连续函数有界且一致连续"未证；补出以逐点 $\delta_x$ 的有限子覆盖取统一 $\delta$ 的论证，以及像集紧故有界
+\begin{proof}
+设 $X$ 紧，$f\in C(X;Y)$。有界性：$f$ 连续，故 $f(X)$ 是紧空间 $Y$ 的紧子集；$Y$ 中紧集有界（用半径 $1$ 的球覆盖 $f(X)$，取有限子覆盖，中心的最大距离给出界）。
+
+一致连续性：设 $\varepsilon>0$。对每个 $x\in X$，由 $f$ 在 $x$ 连续存在 $\delta_x>0$ 使 $f(B(x,\delta_x))\subseteq B(f(x),\varepsilon/2)$。族 $\{B(x,\delta_x/2)\}_{x\in X}$ 覆盖紧空间 $X$，取有限子覆盖 $B(x_1,\delta_{x_1}/2),\cdots ,B(x_n,\delta_{x_n}/2)$，令 $\delta\triangleq\min\{\delta_{x_1},\cdots ,\delta_{x_n}\}/3>0$。若 $d_X(x,x')<\delta$，取 $j$ 使 $x\in B(x_j,\delta_{x_j}/2)$，则
+\begin{align*}
+d_X(x',x_j)\leqslant d_X(x',x)+d_X(x,x_j)<\delta+\delta_{x_j}/2<\delta_{x_j},
+\end{align*}
+故 $f(x),f(x')\in B(f(x_j),\varepsilon/2)$，从而 $d_Y(f(x),f(x'))<\varepsilon$。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:appA-一致连续; kind=motivation; 说明一致连续与连续的区别、紧性假设的作用，并给出连续但非一致连续的反例
+\begin{remark}\phantomsection\label{remark:appA-一致连续}
+\begin{enumerate}[(i)]
+\item 区别。连续性中的 $\delta$ 依赖点 $x$，一致连续性要求 $\delta$ 只依赖 $\varepsilon$；等价地，$f$ 把一致接近的点映为一致接近的点，即 $f$ 在度量意义下"整体"连续。一致连续映射把 Cauchy 序列映为 Cauchy 序列，故可用于延拓到完备化。
+\item 紧性的作用。紧性把逐点选取的 $\delta_x$ 通过有限子覆盖压缩为统一的 $\delta$；证明中 $\delta_{x_j}/2$ 的球覆盖与 $\min\delta_{x_j}/3$ 的取法是关键。$X$ 不紧时结论失效：$f(x)\triangleq x^2$ 在 $\mathbb{R}$ 上连续，但取 $x_n=\sqrt{n}$、$x_n'=\sqrt{n+1}$ 得 $|x_n-x_n'|\to0$ 而 $|f(x_n)-f(x_n')|\to1$；$g(x)\triangleq1/x$ 在 $(0,1)$ 上连续而非一致连续。
+\item 适用边界。一致连续性依赖两个度量而非仅拓扑：同一拓扑下的不同相容度量可给出不同的一致连续函数类（例如 $\mathbb{R}$ 上 $d$ 与 $\min\{d,1\}$）。
+\end{enumerate}
+\end{remark}
 
 \begin{definition}[紧支连续函数与 $C_0$]\label{definition:appA-Cc与C0}
-记 $C_c(X)\subseteq C(X)$ 为紧支连续实值函数构成的子空间（回忆 $\operatorname{supp}f\triangleq \{f\neq 0\}$）。记 $C_0(X)\subseteq C(X)$ 为具有如下性质的连续函数构成的子空间：对每个 $\epsilon>0$，存在紧集 $K\subseteq X$，使 $|f|$ 在 $K^c$ 上的限制小于 $\epsilon$。显然 $C_c(X)\subseteq C_0(X)$。$C_0(X)$ 赋以范数
+设 $X$ 为拓扑空间。以 $C_c(X)\subseteq C(X)$ 记具紧支撑的连续实值函数构成的空间，其中支撑定义为 $\operatorname{supp}f\triangleq\overline{\{f\neq0\}}$。以 $C_0(X)\subseteq C(X)$ 记具如下性质的连续函数 $f$ 构成的空间：对每个 $\varepsilon>0$，存在紧集 $K\subseteq X$，使
 \begin{align*}
-f\mapsto\|f\|_\infty\triangleq \sup_{x\in X}|f(x)|
+|f(x)|<\varepsilon\qquad(x\in X\setminus K).
 \end{align*}
-后是 Banach 空间。若 $X$ 为具有可数基的局部紧 Hausdorff 空间，则 $C_0(X)$ 赋以范数 $\|\cdot\|_\infty$ 后是可分 Banach 空间。
+则 $C_c(X)\subseteq C_0(X)$，且 $C_0(X)$ 赋以范数
+\begin{align*}
+f\mapsto\|f\|_\infty\triangleq\sup_{x\in X}|f(x)|
+\end{align*}
+后是 Banach 空间。
 \end{definition}
 
-\begin{proposition}[Dini 定理]\label{proposition:appA-Dini}
-设 $X$ 为可数紧拓扑空间，$\{f_n\}$ 为一列非增的上半连续函数，且对所有 $x\in X$ 有 $\lim_{n\to\infty}f_n(x)=0$。则
+% SUPPLEMENT: parent=definition:appA-Cc与C0; kind=proof; 原书"显然 $C_c\subseteq C_0$""显然 $C_0$ 为 Banach 空间"未证；补出包含关系与完备性（闭子空间论证）
+\begin{proof}
+包含关系：设 $f\in C_c(X)$，$K\triangleq\operatorname{supp}f$ 紧。对 $\varepsilon>0$，在 $X\setminus K$ 上 $f=0$，故 $|f(x)|=0<\varepsilon$ 对一切 $x\in X\setminus K$ 成立，即 $f\in C_0(X)$。
+
+完备性：$C_b(X)$ 为 Banach 空间（\cref{definition:appA-C与Cb}）。$C_0(X)$ 是 $C_b(X)$ 的线性子空间，且关于 $\|\cdot\|_\infty$ 闭：若 $\{f_n\}\subseteq C_0(X)$，$\|f_n-f\|_\infty\to0$，则对 $\varepsilon>0$ 取 $n$ 使 $\|f_n-f\|_\infty<\varepsilon/2$，并取紧集 $K$ 使 $|f_n|<\varepsilon/2$ 于 $X\setminus K$；于是 $|f(x)|\leqslant|f(x)-f_n(x)|+|f_n(x)|<\varepsilon$ 对 $x\in X\setminus K$ 成立，故 $f\in C_0(X)$。Banach 空间的闭子空间是 Banach 空间，故 $C_0(X)$ 为 Banach 空间。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:appA-C0可分; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+% SUPPLEMENT: parent=proposition:chA-C0可分; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+% SUPPLEMENT: parent=proposition:appA-C0可分; kind=motivation; 该对象的动机与条件作用见紧随其后的注记
+\begin{proposition}\label{proposition:appA-C0可分}\label{proposition:chA-C0可分}
+设 $X$ 为 $\sigma$-紧距离空间，$X=\bigcup_{n=1}^\infty K_n$ 且 $K_n$ 紧、递增。则 $C_0(X)$ 赋以范数 $\|\cdot\|_\infty$ 后是可分的 Banach 空间。特别地，具有可数基的局部紧 Hausdorff 空间满足本命题的假设。
+\end{proposition}
+
+% SUPPLEMENT: parent=proposition:appA-C0可分; kind=proof; 原书仅在 A.7 段末断言；补出证明：$C_c$ 是递增的紧支撑子空间之并、每个子空间经限制等距嵌入可分空间 $C(K_n)$，再取可数稠密子集之并
+\begin{proof}
+由\cref{definition:appA-Cc与C0}，$C_0(X)$ 是 Banach 空间。令
 \begin{align*}
-\lim_{n\to\infty}\|f_n\|_\infty=0.
+C_n\triangleq\{f\in C_c(X)\mid \operatorname{supp}f\subseteq K_n\}\qquad(n\in\mathbb{N}),
+\end{align*}
+则 $C_1\subseteq C_2\subseteq\cdots$ 且 $C_c(X)=\bigcup_{n=1}^\infty C_n$：若 $f\in C_c(X)$，则 $\operatorname{supp}f$ 紧，由 $K_n$ 递增且并为 $X$ 得 $\operatorname{supp}f\subseteq K_N$ 对某个 $N$ 成立。
+
+固定 $n$。限制映射 $R_n:C_n\to C(K_n)$，$R_n(f)\triangleq f|_{K_n}$，是等距的：对 $f\in C_n$，$f$ 在 $X\setminus K_n$ 上为零，故 $\|f\|_{\infty,X}=\|f|_{K_n}\|_{\infty,K_n}$。由\cref{proposition:appA-紧可分}（取 $Y=\mathbb{R}$），$C_b(K_n)=C(K_n)$ 可分；可分距离空间的子空间可分，故 $R_n(C_n)$ 可分，从而 $C_n$ 可分。取 $C_n$ 的可数稠密子集 $D_n$，则 $D\triangleq\bigcup_nD_n$ 可数。
+
+$D$ 在 $C_c(X)$ 中稠密：设 $f\in C_c(X)$，$\varepsilon>0$。$\operatorname{supp}f$ 紧，而 $K_n$ 递增且并为 $X$，故存在 $N$ 使 $\operatorname{supp}f\subseteq K_N$，即 $f\in C_N$。取 $g\in D_N$ 使 $\|f-g\|_\infty<\varepsilon$，则 $g\in D$。故 $D$ 在 $C_c(X)$ 中稠密，$C_c(X)$ 可分。因 $C_0(X)$ 是 $C_c(X)$ 在 $\|\cdot\|_\infty$ 下的闭包（\cref{lemma:appA-Urysohn} 前的说明），而可分的距离空间的闭包仍可分，故 $C_0(X)$ 可分。
+
+最后，若 $X$ 为具有可数基的局部紧 Hausdorff 空间，则由\cref{proposition:appA-紧生成}，$X$ 可度量化且 $\sigma$-紧，且紧集可取自\hyperref[remark:appA-可数基局部紧]{注记}的构造并使之递增。
+\end{proof}
+
+% SUPPLEMENT: parent=definition:appA-Cc与C0; kind=motivation; 说明支撑取闭包的理由、$C_c$ 与 $C_0$ 的关系（稠密性）、范数的作用，以及 $C_c\neq C_0$ 的例子
+% SUPPLEMENT: parent=proposition:appA-C0可分; kind=motivation; 说明该命题把原文 A.7 段末的断言列为独立结论的动机、$\sigma$-紧假设与递增紧穷竭的作用，并给出非 $\sigma$-紧时的反例
+\begin{remark}\phantomsection\label{remark:appA-Cc与C0}
+\begin{enumerate}[(i)]
+\item 支撑与包含。$\operatorname{supp}f$ 取 $\{f\neq0\}$ 的闭包，才能保证"$f$ 在 $\operatorname{supp}f$ 外为零"且 $\operatorname{supp}f$ 为闭集；若只取 $\{f\neq0\}$，其闭包才具紧性，而 $\{f\neq0\}$ 本身未必闭。由定义 $C_c(X)\subseteq C_0(X)$：紧支撑函数在支撑外恒为零，故满足无穷远处为零的条件。反之 $C_0(X)\subseteq C_c(X)$ 一般不成立：$\mathbb{R}$ 上 $f(x)\triangleq\mathrm{e}^{-x^2}$ 属于 $C_0(\mathbb{R})$ 而其支撑为 $\mathbb{R}$，不紧。
+\item 范数与稠密性。$C_0(X)$ 按 $\|\cdot\|_\infty$ 是 $C_c(X)$ 的闭包（\cref{lemma:appA-Urysohn} 前的说明给出 $C_c$ 在 $C_0$ 中稠密），因此 $C_0(X)$ 上的连续线性泛函由其在 $C_c(X)$ 上的值决定；这正是\cref{chapter:ch02}把 $C_c(X)$ 上的 Riesz 泛函延拓到 $C_0(X)$ 的依据。
+\item $\sigma$-紧假设的作用。证明中 $\sigma$-紧性用于把 $C_c(X)$ 写成递增的 $C_n$ 之并，从而把"可数并"化为"可数稠密集之并"；递增性保证任一紧支撑函数落在某个 $C_N$ 中，使逼近可在单个 $C_N$ 内完成。若 $X$ 非 $\sigma$-紧（如不可数离散空间），则 $C_0(X)=C_c(X)$ 仍成立，但其可分性失效：不可数离散空间上 $C_0(X)$ 由全体在无穷远为零的函数组成，含不可数个两两距离为 $1$ 的元素，故不可分。
+\end{enumerate}
+\end{remark}
+
+\begin{proposition}[Dini 定理]\label{proposition:appA-Dini}
+设 $X$ 为可数紧拓扑空间，$\{f_n\}$ 为 $X$ 上上半连续实值函数的非增序列（即 $f_{n+1}(x)\leqslant f_n(x)$ 对一切 $n$ 与 $x$ 成立），且
+\begin{align*}
+\lim_{n\to\infty}f_n(x)=0\qquad(x\in X).
+\end{align*}
+则
+\begin{align*}
+\lim_{n\to\infty}\|f_n\|_\infty=0,\qquad \|f_n\|_\infty\triangleq\sup_{x\in X}|f_n(x)|.
 \end{align*}
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:appA-Dini; kind=proof; 原书未给证明；补出非增性给出 $f_n\geqslant0$ 与一致性控制、再由 $\{f_n<\varepsilon\}$ 的可数开覆盖取 $N$
+\begin{proof}
+由非增性与 $f_n(x)\to0$ 得 $f_n(x)\geqslant0$ 对一切 $n,x$ 成立，故 $\|f_n\|_\infty=\sup_{x\in X}f_n(x)$，且 $f_n\leqslant f_N$ 对 $n\geqslant N$ 成立。
+
+设 $\varepsilon>0$。对每个 $n$，$U_n\triangleq\{f_n<\varepsilon\}$ 是开集；由 $f_n(x)\to0$ 知对每个 $x$ 存在 $n$ 使 $x\in U_n$，故 $\{U_n\}$ 是 $X$ 的可数开覆盖。由可数紧性存在 $N$ 使 $X=\bigcup_{n=1}^NU_n=U_N$（$\{U_n\}$ 递增）。于是 $0\leqslant f_n(x)\leqslant f_N(x)<\varepsilon$ 对一切 $n\geqslant N$ 与 $x\in X$ 成立，即 $\|f_n\|_\infty\leqslant\varepsilon$。故 $\|f_n\|_\infty\to0$。
+\end{proof}
 
 \section{完全正则、正规与扩张定理}\label{section:appA-正则正规}
 
 \begin{definition}[完全正则与正规]\label{definition:appA-完全正则正规}
-拓扑空间 $X$ 称为完全正则的，若对所有 $x\in X$ 以及所有满足 $x\notin C$ 的闭集 $C\subseteq X$，存在 $f\in C(X)$ 使 $f(X)\subseteq[0,1]$，$f(x)=0$，且 $f|_C=1$。空间 $X$ 称为正规的，若对任意满足 $E\cap F=\varnothing $ 的闭集 $E,F\subset X$，存在 $E$ 的邻域 $U$ 与 $F$ 的邻域 $V$，使 $U\cap V=\varnothing $。每个距离空间都是完全正则且正规的。
+设 $X$ 为拓扑空间。$X$ 称为完全正则的，若对每个 $x\in X$ 与每个闭集 $C\subseteq X$ 满足 $x\notin C$，存在 $f\in C(X)$ 使
+\begin{align*}
+f(X)\subseteq[0,1],\qquad f(x)=0,\qquad f|_C=1.
+\end{align*}
+$X$ 称为正规的，若对任意闭集 $E,F\subseteq X$ 满足 $E\cap F=\varnothing$，存在 $E$ 的邻域 $U$ 与 $F$ 的邻域 $V$ 使 $U\cap V=\varnothing$。每个距离空间都是完全正则且正规的。
 \end{definition}
 
+% SUPPLEMENT: parent=definition:appA-完全正则正规; kind=motivation; 说明完全正则与正规的动机、二者的关系（正规 $+T_1$ 蕴含完全正则）、以及互不蕴含的边界
+\begin{remark}\phantomsection\label{remark:appA-完全正则正规}
+\begin{enumerate}[(i)]
+\item 引入动机。正规性用开集分离不交闭集，是完全分离性的集论形式；完全正则性用连续函数分离点与闭集，是它的函数形式。后者把分离问题化为构造连续函数的问题，\cref{theorem:appA-Urysohn度量化} 的证明即反复使用这一手段。
+\item 二者关系。正规 $+$ $T_1$ 蕴含完全正则（由\cref{proposition:appA-Urysohn}，分离函数即 Urysohn 函数）；完全正则性本身不蕴含正规性，故 Urysohn 引理不能由完全正则性直接使用。距离空间既是正规的也是完全正则的：对不交的非空闭集 $E,F$，$f(x)\triangleq d(x,E)/(d(x,E)+d(x,F))$ 给出分离函数，分母不为零由 $E,F$ 不交闭且 $d(x,E)=0$ 当且仅当 $x\in E$ 保证。
+\item 边界。正规性不蕴含完全正则性：取 $X=\{0,1\}$ 赋拓扑 $\{\varnothing,\{0\},X\}$（Sierpiński 空间），其闭集为 $\varnothing,\{1\},X$，故任意两个不交闭集中必有一个为空，$X$ 正规。但闭集 $\{1\}$ 与点 $0\notin\{1\}$ 不可用连续函数分离：若 $f\in C(X)$ 满足 $f(0)=0$、$f(1)=1$，则开集 $(1/2,1]$ 的原像为 $\{1\}$，而 $\{1\}$ 不是开集，矛盾。此外正规性不是遗传性质：Sorgenfrey 平面不是正规空间，而其反对角线子空间是离散空间。
+\end{enumerate}
+\end{remark}
+
 \begin{proposition}[Urysohn 引理]\label{proposition:appA-Urysohn}
-拓扑空间 $X$ 是正规的，当且仅当对任意不相交的闭集 $E,F\subset X$，存在 $f\in C(X)$ 使 $f(X)\subseteq[0,1]$，$f|_E=0$，$f|_F=1$。
+拓扑空间 $X$ 正规，当且仅当对任意不交闭集 $E,F\subseteq X$，存在 $f\in C(X)$ 使
+\begin{align*}
+f(X)\subseteq[0,1],\qquad f|_E=0,\qquad f|_F=1.
+\end{align*}
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:appA-Urysohn; kind=proof; 原书未给证明；补出必要性方向（二分有理数构造开集族、由 $\inf$ 定义函数并验证两个水平集开）与充分性方向（由分离函数构造不交邻域）
+\begin{proof}
+设 $X$ 正规，$E,F$ 为不交闭集。令 $D\triangleq\{k/2^n\mid n\in\mathbb{N},\ 0\leqslant k\leqslant2^n\}\subseteq[0,1]$ 为二进有理数集。先作准备：若 $A\subseteq X$ 闭、$B\subseteq X$ 开且 $A\subseteq B$，则存在开集 $C$ 使
+\begin{align*}
+A\subseteq C\subseteq\overline{C}\subseteq B.
+\end{align*}
+事实上 $A$ 与 $X\setminus B$ 是不交闭集，由正规性存在不交开集 $C\ni A$ 与 $W\supseteq X\setminus B$，于是 $\overline{C}\subseteq X\setminus W\subseteq B$。
+
+第一步：构造开集族 $\{U_d\}_{d\in D}$，使
+\begin{align*}
+E\subseteq U_0,\qquad \overline{U_d}\subseteq U_{d'}\ \ (d<d',\ d,d'\in D),\qquad U_1=X\setminus F.
+\end{align*}
+取 $U_1\triangleq X\setminus F$（它含 $E$），再由准备事实取 $U_0$ 使 $E\subseteq U_0\subseteq\overline{U_0}\subseteq U_1$。设已取定 $U_{k/2^n}$（$0\leqslant k\leqslant2^n$）且对同层指标 $k<l$ 有 $\overline{U_{k/2^n}}\subseteq U_{l/2^n}$；对每个 $k=0,\cdots ,2^n-1$，以 $A=\overline{U_{k/2^n}}$、$B=U_{(k+1)/2^n}$ 用准备事实取开集 $U_{(2k+1)/2^{n+1}}$，得
+\begin{align*}
+\overline{U_{k/2^n}}\subseteq U_{(2k+1)/2^{n+1}}\subseteq\overline{U_{(2k+1)/2^{n+1}}}\subseteq U_{(k+1)/2^n}.
+\end{align*}
+新旧指标间的包含关系由同层的假设与 $U_d\subseteq\overline{U_d}$ 传递得到，故归纳完成。
+
+第二步：定义
+\begin{align*}
+f(x)\triangleq\inf\{d\in D\mid x\in U_d\},
+\end{align*}
+并约定当上述集合为空时 $f(x)\triangleq1$。则 $f(X)\subseteq[0,1]$；$x\in E\subseteq U_0$ 给出 $f(x)=0$；$x\in F$ 时 $x\notin U_1$，而对 $d<1$ 有 $U_d\subseteq U_1$，故 $f(x)=1$。
+
+第三步：$f$ 连续。设 $\alpha\in\mathbb{R}$。若 $\alpha\leqslant0$，则 $\{f<\alpha\}=\varnothing$；若 $\alpha>1$，则 $\{f<\alpha\}=X$。设 $0<\alpha\leqslant1$，则
+\begin{align*}
+\{f<\alpha\}=\bigcup_{d\in D,\,d<\alpha}U_d,
+\end{align*}
+因为 $y\in U_d$ 给出 $f(y)\leqslant d$，反之 $f(x)<\alpha$ 时取 $d\in D$ 使 $f(x)<d<\alpha$，并取 $d'\in D$ 使 $f(x)\leqslant d'<d$ 且 $x\in U_{d'}$，则 $x\in U_{d'}\subseteq U_d$。故 $\{f<\alpha\}$ 开。同理，若 $\alpha\geqslant1$ 则 $\{f>\alpha\}=\varnothing$，若 $\alpha<0$ 则 $\{f>\alpha\}=X$；设 $0\leqslant\alpha<1$，则
+\begin{align*}
+\{f>\alpha\}=\bigcup_{d\in D,\,d>\alpha}(X\setminus\overline{U_d}),
+\end{align*}
+因为 $y\notin\overline{U_d}$ 时对一切 $d'<d$ 有 $U_{d'}\subseteq\overline{U_{d'}}\subseteq U_d$，故 $y\notin U_{d'}$，得 $f(y)\geqslant d>\alpha$；反之若 $f(y)>\alpha$，取 $d\in D$ 使 $\alpha<d<f(y)$，并取 $d''\in D$ 使 $d<d''<f(y)$，则 $y\in\overline{U_d}$ 将给出 $y\in U_{d''}$、从而 $f(y)\leqslant d''<f(y)$，矛盾，故 $y\notin\overline{U_d}$。于是两个水平集族都是开集之并，$f$ 连续。
+
+反之，设对任意不交闭集存在这样的 $f$。取
+\begin{align*}
+U\triangleq\{f<1/2\},\qquad V\triangleq\{f>1/2\},
+\end{align*}
+则 $U,V$ 是不交开集，$E\subseteq U$、$F\subseteq V$，故 $X$ 正规。
+\end{proof}
 
 \begin{corollary}\label{corollary:appA-局部紧完全正则}
 每个局部紧 Hausdorff 空间都是完全正则的。
 \end{corollary}
 
+% SUPPLEMENT: parent=corollary:appA-局部紧完全正则; kind=proof; 原书未给证明；补出以紧邻域 $\overline U$ 为工作空间、用紧 Hausdorff 空间的正规性与 Urysohn 引理构造分离函数，并按闭覆盖拼贴延拓
+\begin{proof}
+设 $X$ 为局部紧 Hausdorff 空间，$x_0\in X$，$C\subseteq X$ 闭且 $x_0\notin C$。先说明存在开集 $U$ 使
+\begin{align*}
+x_0\in U\subseteq\overline{U}\subseteq X\setminus C,\qquad \overline{U}\ \text{紧}.
+\end{align*}
+取 $x_0$ 的紧邻域 $K_0$，并令 $K\triangleq K_0\cap(X\setminus C)$；因 $X\setminus C$ 闭，$K$ 是紧集，且 $K_0^\circ\cap(X\setminus C)$ 是含 $x_0$ 的开集，故 $K$ 是 $x_0$ 的紧邻域且 $K\subseteq X\setminus C$。$K$ 是紧 Hausdorff 空间，故正规：若 $E,F\subseteq K$ 为不交闭集，则对每对 $(z,y)\in E\times F$ 取开于 $K$ 的不交邻域 $O_{zy}\ni z$、$P_{zy}\ni y$；固定 $z\in E$，由 $F$ 紧取 $y_1,\cdots ,y_m\in F$ 使 $F\subseteq P_z\triangleq\bigcup_{j=1}^mP_{zy_j}$，令 $O_z\triangleq\bigcap_{j=1}^mO_{zy_j}$，则 $z\in O_z$ 且 $O_z\cap P_z=\varnothing$；再对紧集 $E$ 取 $z_1,\cdots ,z_n\in E$ 使 $E\subseteq\bigcup_{i=1}^nO_{z_i}$，并令 $P\triangleq\bigcap_{i=1}^nP_{z_i}$，则 $F\subseteq P$ 且 $\bigl(\bigcup_{i=1}^nO_{z_i}\bigr)\cap P=\varnothing$。故 $K$ 正规。在 $K$ 中对闭集 $\{x_0\}$ 与 $K\setminus K^\circ$ 用正规性，得开于 $K$ 的集合 $O$ 使 $x_0\in O\subseteq\overline{O}^K\subseteq K^\circ$；取开集 $W\subseteq X$ 使 $O=W\cap K$，令 $U\triangleq W\cap K^\circ$，则 $x_0\in U\subseteq\overline{U}\subseteq\overline{O}^K\subseteq K\subseteq X\setminus C$，且 $\overline{U}\subseteq K$ 紧。
+
+令 $\partial U\triangleq\overline{U}\setminus U$，它是 $\overline U$ 的闭子集且 $x_0\notin\partial U$。$\overline U$ 作为紧 Hausdorff 空间正规，故由\cref{proposition:appA-Urysohn}存在 $g\in C(\overline U)$ 使
+\begin{align*}
+g(\overline U)\subseteq[0,1],\qquad g(x_0)=0,\qquad g|_{\partial U}=1.
+\end{align*}
+定义 $f:X\to[0,1]$ 为 $f\triangleq g$ 于 $\overline U$、$f\triangleq1$ 于 $X\setminus\overline U$。则 $f$ 连续：对闭集 $D\subseteq[0,1]$，若 $1\in D$，则 $f^{-1}(D)=g^{-1}(D)\cup(X\setminus\overline U)$；若 $1\notin D$，则 $f^{-1}(D)=g^{-1}(D)$。两种情形下 $f^{-1}(D)$ 都闭（$g^{-1}(D)$ 闭于紧集 $\overline U$，故闭于 $X$；$X\setminus\overline U$ 闭），故 $f\in C(X)$。又 $f(x_0)=0$，且由 $C\subseteq X\setminus U\subseteq X\setminus\overline U$ 得 $f|_C=1$。故 $X$ 完全正则。
+\end{proof}
+
 \begin{proposition}[Tietze 扩张定理]\label{proposition:appA-Tietze}
-设 $X$ 为正规拓扑空间，$F$ 为 $X$ 的闭子集，$f\in C(F)$。则存在 $g\in C(X)$ 使 $g|_F=f$。
+设 $X$ 为正规拓扑空间，$F\subseteq X$ 为闭集，$f\in C(F)$。则存在 $g\in C(X)$ 使
+\begin{align*}
+g|_F=f.
+\end{align*}
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:appA-Tietze; kind=proof; 原书未给证明；补出有界情形的级数构造（Urysohn 引理逐次逼近、几何级数一致收敛）与无界情形经 $t/(1+|t|)$ 化归有界情形（含以 Urysohn 函数修正取值）
+\begin{proof}
+先设有界情形：$f\in C(F)$ 且 $f(F)\subseteq[-1,1]$。令
+\begin{align*}
+A_0\triangleq\{x\in F\mid f(x)\leqslant-1/3\},\qquad B_0\triangleq\{x\in F\mid f(x)\geqslant1/3\},
+\end{align*}
+它们是不交闭集（在 $F$ 中闭，$F$ 闭故在 $X$ 中闭）。由\cref{proposition:appA-Urysohn}存在 $\psi_0\in C(X)$ 使 $\psi_0(X)\subseteq[0,1]$、$\psi_0|_{A_0}=0$、$\psi_0|_{B_0}=1$；令 $g_0\triangleq\frac23\psi_0-\frac13$，则 $g_0(X)\subseteq[-1/3,1/3]$、$g_0|_{A_0}=-1/3$、$g_0|_{B_0}=1/3$。令 $f_1\triangleq f-g_0$（在 $F$ 上）。在 $A_0$ 上 $f_1=f+1/3\in[-2/3,0]$，在 $B_0$ 上 $f_1=f-1/3\in[0,2/3]$，在 $F\setminus(A_0\cup B_0)$ 上 $|f|<1/3$ 且 $|g_0|\leqslant1/3$，故 $\|f_1\|_{\infty,F}\leqslant2/3$。
+
+归纳：若 $f_k\in C(F)$ 且 $\|f_k\|_{\infty,F}\leqslant(2/3)^k$，同样构造 $g_k\in C(X)$ 使
+\begin{align*}
+g_k(X)\subseteq\bigl[-(1/3)(2/3)^k,(1/3)(2/3)^k\bigr],\qquad \|f_k-g_k\|_{\infty,F}\leqslant(2/3)^{k+1},
+\end{align*}
+并令 $f_{k+1}\triangleq f_k-g_k$。则 $\sum_{k=0}^\infty\|g_k\|_\infty\leqslant\frac13\sum_{k=0}^\infty(2/3)^k=1$，故 $g\triangleq\sum_{k=0}^\infty g_k$ 在 $C_b(X)$ 中一致收敛，$g\in C(X)$、$g(X)\subseteq[-1,1]$。在 $F$ 上 $\sum_{k=0}^{n-1}g_k=f-f_n$ 且 $\|f_n\|_{\infty,F}\leqslant(2/3)^n\to0$，故 $g|_F=f$。
+
+一般情形：设 $f\in C(F)$ 无界。令 $\varphi(t)\triangleq t/(1+|t|)$，则 $\varphi:\mathbb{R}\to(-1,1)$ 是同胚，$h\triangleq\varphi\circ f\in C(F)$ 且 $h(F)\subseteq(-1,1)$。由有界情形（必要时平移缩放）存在 $H\in C(X)$ 使 $H|_F=h$、$H(X)\subseteq[-1,1]$。令
+\begin{align*}
+Z\triangleq H^{-1}(\{-1,1\}),
+\end{align*}
+则 $Z$ 为闭集且 $Z\cap F=\varnothing$。由\cref{proposition:appA-Urysohn}存在 $u\in C(X)$ 使 $u(X)\subseteq[0,1]$、$u|_F=1$、$u|_Z=0$。令 $H'\triangleq uH$。若 $|H(x)|=1$，则 $x\in Z$、$u(x)=0$，故 $H'(x)=0$；若 $|H(x)|<1$，则 $|H'(x)|=u(x)|H(x)|\leqslant|H(x)|<1$。故 $H'(X)\subseteq(-1,1)$ 且 $H'|_F=H|_F=h$。于是 $g\triangleq\varphi^{-1}\circ H'\in C(X)$ 满足 $g|_F=\varphi^{-1}\circ h=f$。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:appA-Urysohn; kind=motivation; 说明二分构造的直观含义（用二进有理数把"函数值"离散化）、正规性在构造中的唯一作用，以及去掉正规性时的反例
+% SUPPLEMENT: parent=corollary:appA-局部紧完全正则; kind=motivation; 说明该推论如何由紧邻域把问题局部化、Hausdorff 假设的作用，以及局部紧不可去（Sierpiński 空间）的反例
+% SUPPLEMENT: parent=proposition:appA-Tietze; kind=motivation; 说明扩张定理的动机与用途、$F$ 必闭的必要性（$1/x$ 反例）、正规性不可去，以及无界情形需额外处理的理由
+\begin{remark}\phantomsection\label{remark:appA-Urysohn引理}
+\begin{enumerate}[(i)]
+\item 二分构造的含义。Urysohn 引理的证明把"$f$ 取值于 $[0,1]$"翻译为一族嵌套开集 $\{U_d\}$：$f(x)$ 是 $x$ 首次进入 $U_d$ 的二进指标的下确界。正规性只用于"闭集夹在开集之间时能把开集再收紧一层"（准备事实），逐步插入二进点时正需要这一操作，故正规性在构造中不可替代。
+\item 逆命题的作用。逆命题说明正规性与"存在 Urysohn 分离函数"等价，从而在正规空间中可随意使用函数分离，而不必每次重作构造。本书用它把紧集与开集之间的"截断"化为连续函数（\cref{lemma:appA-Urysohn}）。
+\item 边界。正规性不可去：Sorgenfrey 平面不是正规空间，其中存在不能由连续函数分离的不交闭集（否则由已证的逆命题它将正规）；Sierpiński 空间 $\{0,1\}$（开集为 $\varnothing,\{0\},\{0,1\}$）正规但不完全正则，故 Urysohn 式分离函数不存在：闭集 $\{1\}$ 与点 $0$ 无法分离。这说明"正规"这一集论条件与"完全正则"这一函数条件互不包含。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=corollary:appA-局部紧完全正则; kind=motivation; 说明完全正则性在局部紧 Hausdorff 情形为何成立（紧邻域内用正规性）、Hausdorff 假设与局部紧性各自的作用，并给出反例
+\begin{remark}\phantomsection\label{remark:appA-局部紧完全正则}
+\begin{enumerate}[(i)]
+\item 证明结构。要点是把问题"局部化"到紧邻域 $\overline U$ 上：$\overline U$ 是紧 Hausdorff 空间，故正规，可在其中用 Urysohn 引理分离 $\{x_0\}$ 与 $\partial U$；所得函数在 $\partial U$ 上等于 $1$，故可按闭覆盖 $\{\overline U,X\setminus\overline U\}$ 拼贴为 $X$ 上的连续函数，且在 $X\setminus\overline U$ 上取常值 $1$ 不影响 $C$ 上的值。这也解释了为什么结论对局部紧空间成立而对一般 Hausdorff 空间不成立。
+\item 假设的作用。局部紧性提供紧邻域，使"局部"与"紧"同时可用；Hausdorff 性使紧邻域正规（紧 Hausdorff 空间正规），从而 Urysohn 引理可用。二者缺一：Sierpiński 空间 $\{0,1\}$ 是紧的（从而局部紧）而非 Hausdorff，它不完全正则（见\hyperref[remark:appA-完全正则正规]{注记}）；而仅有 Hausdorff 性也不够：$\mathbb{R}_K$（开集为通常开集与形如 $(a,b)\setminus K$ 的集合，$K\triangleq\{1/n\mid n\in\mathbb{N}\}$）是 Hausdorff 空间，但闭集 $K$ 与点 $0$ 不能由开集分离（$0$ 的每个邻域与 $K$ 相交），故它不正则，从而也不完全正则。
+\item 用途。完全正则性使\cref{lemma:appA-Urysohn}中的截断函数存在，这是本书构造紧支撑函数、证明 Riesz 表示定理与 $C_0$ 稠密性的基础。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:appA-Tietze; kind=motivation; 说明级数构造的动机（逐次消去误差的 $1/3$）、闭性假设的必要性与正规性的作用，并给出无界情形与反例
+\begin{remark}\phantomsection\label{remark:appA-Tietze}
+\begin{enumerate}[(i)]
+\item 构造动机。有界情形用"每次消去剩余误差的 $2/3$"的逐次逼近：每步用 Urysohn 引理把"偏离超过 $1/3$"的部分压回 $[-1/3,1/3]$，几何级数保证一致收敛且总振幅不超过 $1$。这与 Urysohn 引理的二分构造同源（都用正规性把闭集夹入开集）。
+\item 假设的作用。$F$ 的闭性不可去：取 $X=[0,1]$、$F=(0,1]$（非闭）、$f(x)\triangleq1/x$，则 $f$ 在 $F$ 上连续但无界，不能连续延拓到 $X$；若 $F$ 闭而 $f$ 无界，则须先经 $\varphi(t)=t/(1+|t|)$ 化归有界情形（此时扩张函数可能取到 $\pm1$，故再用 Urysohn 函数把 $H$ 在 $\{H=\pm1\}$ 上压回内部）。正规性不可去：Sorgenfrey 平面非正规，其中存在闭集上的连续函数不可扩张。
+\item 边界。结论中的 $g$ 不必唯一；有界情形可取 $g(X)\subseteq[-1,1]$ 且 $\|g\|_\infty\leqslant\|f\|_{\infty,F}$，这一"不放大上确界"的性质在应用中常被使用。
+\end{enumerate}
+\end{remark}
 
 如下引理表明：当 $X$ 局部紧时，$C_c(X)$ 在范数 $\|\cdot\|_\infty$ 下在 $C_0(X)$ 中稠密。
 
-\begin{lemma}\label{lemma:appA-Urysohn}
-\label{lemma:appA-光滑截断}
-设 $X$ 为局部紧 Hausdorff 空间，$K\in\mathcal{K}(X)$，$A\in\mathscr{T}$ 且 $A\supset K$。则存在 $f\in C_c(X)$ 使 $f(X)\subseteq[0,1]$，$f|_K=1$，且 $\operatorname{supp}f\subseteq A$。
+\begin{lemma}\label{lemma:appA-Urysohn}\label{lemma:appA-光滑截断}
+设 $X$ 为局部紧 Hausdorff 空间，$K\in\mathcal{K}(X)$，$A\in\mathscr{T}$ 且 $A\supset K$。则存在 $f\in C_c(X)$ 使
+\begin{align*}
+f(X)\subseteq[0,1],\qquad f|_K=1,\qquad \operatorname{supp}f\subseteq A.
+\end{align*}
 \end{lemma}
 
+% SUPPLEMENT: parent=lemma:appA-Urysohn; kind=proof; 原书证明只取 $B$ 使 $A\supseteq B\supseteq K$，而结论需要 $\overline B\subseteq A$；此处补出由局部紧性与正则性取 $B$ 使 $\overline B$ 紧且 $\overline B\subseteq A$，并补出 $\operatorname{supp}f\subseteq\overline B$ 的验证
 \begin{proof}
-由于 $X$ 局部紧，存在 $B\in\mathscr{T}$ 使 $A\supseteq B\supseteq K$。由\cref{corollary:appA-局部紧完全正则}，$X$ 完全正则，因而对每个 $x\in K$，存在 $f_x\in C_c(X)$ 使 $f_x(X)\subseteq[0,1]$，$f_x(x)=1$，且 $f_x|_{B^c}=0$。由于 $K$ 紧，且每个集合 $\{f_x>1/2\}$（$x\in K$）是开集，故存在 $x_1,\cdots ,x_p$ 使
+先取开集 $B$ 使
+\begin{align*}
+K\subseteq B\subseteq\overline B\subseteq A,\qquad \overline B\ \text{紧}.
+\end{align*}
+事实上，对每个 $x\in K$，由局部紧性取紧邻域 $N_x$（$x\in N_x^\circ\subseteq N_x$）；令 $O_x\triangleq N_x^\circ\cap A$，它是含 $x$ 的开集，且 $\overline{O_x}\subseteq N_x\subseteq A$，故 $\overline{O_x}$ 紧。由 $K$ 紧，存在 $x_1,\cdots ,x_m\in K$ 使 $K\subseteq B\triangleq\bigcup_{j=1}^mO_{x_j}$，则 $\overline B=\bigcup_{j=1}^m\overline{O_{x_j}}$ 紧且含于 $A$。
+
+由\cref{corollary:appA-局部紧完全正则}，$X$ 完全正则。对每个 $x\in K$，由 $K\subseteq B$ 与 $x\notin B^c$（$B^c$ 闭）存在 $f_x\in C(X)$ 使
+\begin{align*}
+f_x(X)\subseteq[0,1],\qquad f_x(x)=1,\qquad f_x|_{B^c}=0.
+\end{align*}
+因 $f_x$ 在 $B^c$ 上为零，$\operatorname{supp}f_x\subseteq\overline B$，而 $\overline B$ 紧，故 $f_x\in C_c(X)$。集合 $\{f_x>1/2\}$ 是含 $x$ 的开集，故 $\{\{f_x>1/2\}\}_{x\in K}$ 是紧集 $K$ 的开覆盖；取 $x_1,\cdots ,x_p\in K$ 使
 \begin{align*}
 K\subseteq\bigcup_{k=1}^p\{f_{x_k}>1/2\}.
 \end{align*}
-对每个 $x\in X$，令
+令
 \begin{align*}
-g(x)\triangleq 2\max\{f_{x_1}(x),\cdots ,f_{x_p}(x)\},
+g(x)\triangleq2\max\{f_{x_1}(x),\cdots ,f_{x_p}(x)\}\qquad(x\in X),
 \end{align*}
-则 $g\in C_c(X)$，$g|_K>1$，且 $g|_{B^c}=0$。于是 $f\triangleq \min\{1,g\}$ 即具有所述性质。
+则 $g\in C_c(X)$（有限个 $C_c(X)$ 中函数的最大值属于 $C_c(X)$），$g|_K>1$，且 $g|_{B^c}=0$。于是 $f\triangleq\min\{1,g\}$ 满足 $f\in C_c(X)$、$f(X)\subseteq[0,1]$、$f|_K=1$；又 $\{f\neq0\}=\{g>0\}\subseteq B$，故 $\operatorname{supp}f\subseteq\overline B\subseteq A$。
 \end{proof}
+
+% SUPPLEMENT: parent=lemma:appA-Urysohn; kind=proof; 补出"本引理蕴含 $C_c(X)$ 在 $C_0(X)$ 中稠密"的论证（在 $K$ 上 $1-\varphi=0$、在 $K^c$ 上 $|f|<\varepsilon$）
+\begin{proof}
+设 $f\in C_0(X)$，$\varepsilon>0$。由 $C_0(X)$ 的定义存在紧集 $K\subseteq X$ 使 $|f(x)|<\varepsilon$ 对 $x\in X\setminus K$ 成立。取开集 $A\supseteq K$（例如 $A=X$）与引理给出的 $\varphi\in C_c(X)$，使 $\varphi(X)\subseteq[0,1]$、$\varphi|_K=1$、$\operatorname{supp}\varphi\subseteq A$。则 $\varphi f\in C_c(X)$，且
+\begin{align*}
+|f(x)-\varphi(x)f(x)|=|f(x)|\,|1-\varphi(x)|\leqslant|f(x)|\qquad(x\in X),
+\end{align*}
+其中在 $K$ 上 $1-\varphi=0$，在 $X\setminus K$ 上 $|f|<\varepsilon$ 且 $|1-\varphi|\leqslant1$；故 $\|f-\varphi f\|_\infty<\varepsilon$。于是 $C_c(X)$ 在 $C_0(X)$ 中稠密。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:appA-Urysohn; kind=motivation; 说明截断函数的动机（局部化与单位分解）、各假设的作用（局部紧给出紧支撑、Hausdorff 给出分离、$A\supset K$ 开保证支撑可含于 $A$），以及去掉局部紧性时的边界
+% SUPPLEMENT: parent=lemma:appA-光滑截断; kind=motivation; 说明"光滑截断"标签所指的正则化用法（与磨光核卷积得到 $C_c^\infty$ 截断函数）、为何本书第 6 章可以直接引用，以及不能要求 $\operatorname{supp}f\subseteq K$ 的理由
+\begin{remark}\phantomsection\label{remark:appA-光滑截断}
+\begin{enumerate}[(i)]
+\item 动机。引理把"紧集可用开集从外逼近"这一集论事实升级为函数事实：存在连续的紧支撑函数在 $K$ 上取 $1$ 而在 $A$ 外为零。它是局部化的基本工具：把定义在整个空间上的对象乘以 $f$ 即可得到紧支撑对象，而不改变其在 $K$ 上的值；有限个这样的函数归一化即得单位分解。
+\item 各假设的作用。局部紧 Hausdorff 保证每个点有紧邻域（从而支撑可紧）且空间完全正则（从而存在分离函数，\cref{corollary:appA-局部紧完全正则}）；$K$ 紧使有限个 $\{f_{x_k}>1/2\}$ 覆盖 $K$；$A$ 开且 $A\supset K$ 保证存在中间开集 $B$ 使 $\overline B\subseteq A$，这是"$\operatorname{supp}f\subseteq A$"而非仅"$f$ 在 $A^c$ 上为零"的关键。若只要求 $f|_{A^c}=0$，则 $\operatorname{supp}f\subseteq\overline{A^c}$ 可能越出 $A$。
+\item 边界。支撑不能改进为 $\operatorname{supp}f\subseteq K$：取 $K$ 为单点、$A$ 为其开邻域，若 $\operatorname{supp}f\subseteq K$ 则 $f$ 在 $X\setminus K$ 上为零而在 $K$ 上为 $1$，此函数在 $K$ 的边界点不连续。局部紧性不可去：取 $X=\mathbb{Q}$、$K=\{0\}$、$A=\mathbb{Q}\cap(-1,1)$，则不存在满足要求的 $f$。事实上 $f(0)=1$ 与 $f$ 的连续性给出 $0$ 的某个开邻域 $V$ 使 $f|_V=1$，于是 $V\subseteq\operatorname{supp}f$；而 $\mathbb{Q}$ 中紧集的内部为空（紧集在 $\mathbb{R}$ 中紧，故在 $\mathbb{R}$ 中无处稠密），故 $\operatorname{supp}f$ 不可能既紧又含开集 $V$，矛盾。
+\end{enumerate}
+\end{remark}
 
 \section{对偶空间上的弱$^*$拓扑}\label{section:appA-对偶弱星}
 
 \begin{lemma}\label{lemma:appA-Ystar范数}
-设 $Y$ 为可分赋范向量空间，$D\equiv\{y_k\mid k\in\mathbb{N}\}\subseteq Y$ 为可数稠密集。则由
+设 $Y$ 为可分赋范向量空间，$D\equiv\{y_k\mid k\in\mathbb{N}\}\subseteq Y$ 为可数稠密子集。则由
 \begin{align}
-Y^*\ni y^*\mapsto |||y^*|||\triangleq \sum_{k=1}^\infty\frac{|\langle y^*,y_k\rangle_{Y^*,Y}|}{2^k(1+\|y_k\|_Y)} \label{align:appA-Ystar范数}
+Y^*\ni y^*\mapsto|||y^*|||\triangleq\sum_{k=1}^\infty\frac{|\langle y^*,y_k\rangle_{Y^*,Y}|}{2^k\bigl(1+\|y_k\|_Y\bigr)} \label{align:appA-Ystar范数}
 \end{align}
-定义的从 $Y^*$ 到 $[0,\infty)$ 的映射是 $Y^*$ 上的一个范数。
+定义的映射 $|||\cdot|||:Y^*\to[0,\infty)$ 是 $Y^*$ 上的一个范数。
 \end{lemma}
 
-\begin{proposition}\label{proposition:appA-弱星拓扑}\label{proposition:appA-弱星可度量化}
-设 $Y$ 为可分赋范向量空间，令
-\begin{align}
-V\triangleq \{y^*\in Y^*\mid\|y^*\|_{Y^*}\leqslant 1\}. \label{align:appA-V单位球}
-\end{align}
-记 $\mathscr{T}_{w^*}$ 为 $Y^*$ 上的弱$^*$拓扑，$\widetilde{\mathscr{T}}$ 为 $Y^*$ 上由\eqref{align:appA-Ystar范数}中的范数 $|||\cdot|||$ 诱导的距离拓扑。则相对拓扑 $\mathscr{T}_{w^*}|_V$ 与 $\widetilde{\mathscr{T}}|_V$ 一致。
+% SUPPLEMENT: parent=lemma:appA-Ystar范数; kind=proof; 原书未给证明；补出级数收敛与上界估计、齐次性与三角不等式、以及由稠密性得正定性
+\begin{proof}
+记 $c_k\triangleq\bigl(2^k(1+\|y_k\|_Y)\bigr)^{-1}>0$。由 $|\langle y^*,y_k\rangle_{Y^*,Y}|\leqslant\|y^*\|_{Y^*}\|y_k\|_Y$ 得第 $k$ 项不超过 $2^{-k}\|y^*\|_{Y^*}$，故级数绝对收敛，且
+\begin{align*}
+|||y^*|||\leqslant\|y^*\|_{Y^*}\sum_{k=1}^\infty2^{-k}=\|y^*\|_{Y^*}<\infty.
+\end{align*}
+齐次性与三角不等式由绝对值的相应性质逐项得到（级数绝对收敛保证逐项运算合法）。
 
-因而，对每个 $y\in Y$，
+正定性：设 $|||y^*|||=0$，则 $\langle y^*,y_k\rangle_{Y^*,Y}=0$ 对一切 $k$ 成立。设 $y\in Y$、$\varepsilon>0$，取 $k$ 使 $\|y-y_k\|_Y<\varepsilon$；则
+\begin{align*}
+|\langle y^*,y\rangle_{Y^*,Y}|\leqslant|\langle y^*,y_k\rangle_{Y^*,Y}|+\|y^*\|_{Y^*}\|y-y_k\|_Y<\|y^*\|_{Y^*}\varepsilon .
+\end{align*}
+由 $\varepsilon>0$ 任意得 $\langle y^*,y\rangle_{Y^*,Y}=0$ 对一切 $y\in Y$ 成立，故 $y^*=0$。于是 $|||\cdot|||$ 是范数。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:appA-Ystar范数; kind=motivation; 说明该范数的构造动机（用可数稠密集把弱$^*$拓扑度量化）、权重与分母的作用，以及 $D$ 不稠密时只得到半范数的边界
+\begin{remark}\phantomsection\label{remark:appA-Ystar范数}
+\begin{enumerate}[(i)]
+\item 构造动机。弱$^*$拓扑由不可数族 $\{\langle\cdot,y\rangle\}_{y\in Y}$ 生成，一般不可度量化；但若 $Y$ 可分，则可数稠密集 $\{y_k\}$ 已足以控制弱$^*$收敛，于是用加权和把可数个半范数合成一个范数，得到与弱$^*$拓扑在单位球上一致的度量拓扑。
+\item 权重的作用。因子 $2^{-k}$ 保证级数无条件收敛且使上界 $|||y^*|||\leqslant\|y^*\|_{Y^*}$ 成立；因子 $(1+\|y_k\|_Y)^{-1}$ 使每一项关于 $y^*$ 有界（避免 $\|y_k\|_Y$ 过大或过小导致的不一致），并把量纲归一。二者共同保证 $|||\cdot|||$ 是范数且其诱导拓扑弱于范数拓扑。
+\item 边界。稠密性不可去：若 $D=\{y_k\}$ 不稠密，则存在非零 $y^*$ 使 $\langle y^*,y_k\rangle=0$ 对一切 $k$ 成立（例如 $Y=\ell^2$、$D=\{e_1\}$、$y^*$ 为 $e_1$ 的正交补中的非零泛函），此时 $|||y^*|||=0$，$|||\cdot|||$ 只是半范数。又 $|||\cdot|||$ 比原范数严格弱：$|||y^*|||\leqslant\|y^*\|_{Y^*}$，反向不等式一般不成立。
+\end{enumerate}
+\end{remark}
+
+\begin{proposition}\label{proposition:appA-弱星可度量化}\label{proposition:appA-弱星拓扑}
+设 $Y$ 为可分赋范向量空间，$D\equiv\{y_k\mid k\in\mathbb{N}\}\subseteq Y$ 为可数稠密子集，令
+\begin{align}
+V\triangleq\{y^*\in Y^*\mid\|y^*\|_{Y^*}\leqslant1\}. \label{align:appA-V单位球}
+\end{align}
+记 $\mathscr{T}_{w^*}$ 为 $Y^*$ 上的弱$^*$拓扑，即由半范族 $y^*\mapsto|\langle y^*,y\rangle_{Y^*,Y}|$（$y\in Y$）生成的最弱拓扑；记 $\widetilde{\mathscr{T}}$ 为 $Y^*$ 上由\eqref{align:appA-Ystar范数}中范数 $|||\cdot|||$ 诱导的距离拓扑。则
+\begin{enumerate}[(i)]
+\item 相对拓扑 $\mathscr{T}_{w^*}\cap V$ 与 $\widetilde{\mathscr{T}}\cap V$ 一致；
+\item 若 $\{y_n^*\}\subseteq Y^*$ 有界（特别地，若 $y_n^*,y^*\in V$ 对一切 $n\in\mathbb{N}$ 成立），则对每个 $y\in Y$，
 \begin{align*}
 \lim_{n\to\infty}\langle y_n^*,y\rangle_{Y^*,Y}=\langle y^*,y\rangle_{Y^*,Y}
 \quad\Longleftrightarrow\quad
 \lim_{n\to\infty}|||y_n^*-y^*|||=0.
 \end{align*}
+\end{enumerate}
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:appA-弱星可度量化; kind=proof; 原书未给证明；补出两个方向的包含：以尾部估计把 $|||\cdot|||$ 用有限个弱$^*$连续函数控制，再以稠密性把每个弱$^*$半范数用 $|||\cdot|||$ 与一致有界性控制；并补出 (ii) 在序列有界时的两个方向
+\begin{proof}
+(i) 设 $y_0^*\in V$，$\varepsilon>0$。
+
+先证 $\widetilde{\mathscr{T}}\cap V\subseteq\mathscr{T}_{w^*}\cap V$。取 $K$ 使 $2\sum_{k>K}2^{-k}<\varepsilon/2$。对 $y^*\in V$，由 $\|y^*-y_0^*\|_{Y^*}\leqslant2$ 得
+\begin{align*}
+|||y^*-y_0^*|||\leqslant\sum_{k=1}^K2^{-k}\frac{|\langle y^*-y_0^*,y_k\rangle_{Y^*,Y}|}{1+\|y_k\|_Y}+2\sum_{k>K}2^{-k},
+\end{align*}
+其中右端第一项是有限个弱$^*$连续函数之和，故关于 $y^*$ 在弱$^*$拓扑下连续。于是存在 $y_0^*$ 的弱$^*$邻域 $W$，使 $y^*\in W\cap V$ 时 $|||y^*-y_0^*|||<\varepsilon$；即每个 $\widetilde{\mathscr{T}}$-球在 $V$ 中含有弱$^*$邻域，故 $\widetilde{\mathscr{T}}\cap V\subseteq\mathscr{T}_{w^*}\cap V$。
+
+反之设 $y\in Y$、$\varepsilon>0$，取 $k$ 使 $\|y-y_k\|_Y<\varepsilon/4$。对 $y^*\in V$ 有 $\|y^*-y_0^*\|_{Y^*}\leqslant2$，故
+\begin{align*}
+|\langle y^*-y_0^*,y\rangle_{Y^*,Y}|\leqslant|\langle y^*-y_0^*,y_k\rangle_{Y^*,Y}|+2\cdot\frac{\varepsilon}{4}
+\leqslant2^k\bigl(1+\|y_k\|_Y\bigr)|||y^*-y_0^*|||+\frac{\varepsilon}{2}.
+\end{align*}
+于是当 $|||y^*-y_0^*|||<\varepsilon\bigl(2\cdot2^k(1+\|y_k\|_Y)\bigr)^{-1}$ 且 $y^*\in V$ 时 $|\langle y^*-y_0^*,y\rangle_{Y^*,Y}|<\varepsilon$。由于 $\mathscr{T}_{w^*}$ 由形如 $\{y^*\in V:|\langle y^*-y_0^*,y\rangle_{Y^*,Y}|<\varepsilon\}$ 的集合生成，得 $\mathscr{T}_{w^*}\cap V\subseteq\widetilde{\mathscr{T}}\cap V$。两向包含给出 (i)。
+
+(ii) 设 $\{y_n^*\}$ 有界，$M\triangleq\sup_n\|y_n^*-y^*\|_{Y^*}<\infty$。
+
+$(\Rightarrow)$ 对每个 $k$ 有 $\langle y_n^*-y^*,y_k\rangle_{Y^*,Y}\to0$，且第 $k$ 项不超过 $M2^{-k}$，而 $\sum_kM2^{-k}=M<\infty$，故由控制收敛定理（对级数）得 $|||y_n^*-y^*|||\to0$。
+
+$(\Leftarrow)$ 若 $M=0$ 则结论平凡；设 $M>0$。则 $y_n^*/M\in V$、$y^*/M\in V$，且 $|||y_n^*/M-y^*/M|||=M^{-1}|||y_n^*-y^*|||\to0$。由 (i)，在 $V$ 上 $\widetilde{\mathscr{T}}$ 与 $\mathscr{T}_{w^*}$ 一致，故 $y_n^*/M\to y^*/M$ 于弱$^*$拓扑，即 $\langle y_n^*-y^*,y\rangle_{Y^*,Y}/M\to0$ 对每个 $y\in Y$ 成立，得 $\langle y_n^*,y\rangle_{Y^*,Y}\to\langle y^*,y\rangle_{Y^*,Y}$。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:appA-弱星拓扑; kind=motivation; 说明为何只在单位球上断言拓扑一致（弱$^*$拓扑不可度量化）、(i) 的证明策略，以及 $V$ 的凸性与有界性在应用中的作用
+% SUPPLEMENT: parent=proposition:appA-弱星可度量化; kind=motivation; 说明该命题的内容（单位球上弱$^*$拓扑可度量化）、(i) 的两向证明策略与 (ii) 中有界性限制的作用
+% SUPPLEMENT: parent=proposition:appA-弱星可度量化; kind=correction; 指出原文"因而对每个 $y\in Y$"的等价性须加 $\{y_n^*\}$ 有界的限制，并给出 $\ell^1$ 上的反例说明该限制不可去
+\begin{remark}\phantomsection\label{remark:appA-弱星可度量化}
+\begin{enumerate}[(i)]
+\item 内容与策略。命题断言：在单位球上，弱$^*$拓扑与 $|||\cdot|||$ 诱导的距离拓扑相同。两个方向的证明策略不同：$\widetilde{\mathscr{T}}\subseteq\mathscr{T}_{w^*}$ 用"截断级数"（尾部由一致有界性控制，头部是有限个弱$^*$连续函数）；反向包含用"稠密性"（每个弱$^*$半范数被 $|||\cdot|||$ 与 $\|y^*-y_0^*\|_{Y^*}\leqslant2$ 控制）。单位球的有界性在两处都用到，这正是拓扑一致的实质。
+\item 为何只在 $V$ 上。整个 $Y^*$ 上的弱$^*$拓扑一般不可度量化（当 $Y$ 不可分时它甚至不是第一可数的）；即便 $Y$ 可分，$\widetilde{\mathscr{T}}$ 也在 $Y^*$ 上严格细于弱$^*$拓扑，故只能在有界集（特别地 $V$）上断言一致。本书的应用只需 $V$ 或一般有界集上的结论。
+\item 关于 (ii) 的修正。原文把等价性写作"对每个 $y\in Y$"而无有界性限制，这不成立。反例：取 $Y=\ell^1$、$Y^*=\ell^\infty$，把 $Y$ 的可数稠密子集 $D$ 如此枚举，使第 $n$ 个坐标非零的向量都排在第 $2^n$ 项之后；则 $z_n\triangleq n\mathrm{e}_n\in\ell^\infty$ 满足 $|||z_n|||\leqslant n2^{1-2^n}\to0$，但取 $y\triangleq(n^{-3/4})_{n}\in\ell^1$ 得 $\langle z_n,y\rangle=n^{1/4}\to\infty$，故 $z_n$ 不弱$^*$收敛于 $0$。因此 $(\Leftarrow)$ 需要 $\{y_n^*\}$ 有界；有界性恰好使 $y_n^*/M\in V$，从而可把 (i) 用于缩放后的序列。本书使用时序列都落在 $V$ 或某个有界集中，故结论仍可直接使用。
+\end{enumerate}
+\end{remark}
 
 \end{document}

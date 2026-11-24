@@ -15,13 +15,37 @@
 
 \section{预备知识}\label{section:ch01-预备知识}
 
-我们将使用集合论的通常记号。如通常，$\mathbb{N}$、$\mathbb{Z}$、$\mathbb{Q}$、$\mathbb{R}$ 和 $\mathbb{R}^N$（$N\in\mathbb{N}$；$\mathbb{R}^1\equiv\mathbb{R}$）分别表示自然数集、整数集、有理数集、实数集以及 $N$ 元实数组的集合。区间的熟知记号 $(a,b)$、$[a,b]$、$(a,b]$、$[a,b)$ 也将用于扩充实直线 $\overline{\mathbb{R}}\triangleq \mathbb{R}\cup\{\pm\infty\}$ 的子区间。偶尔我们使用符号 $[-\infty,+\infty]$ 表示 $\overline{\mathbb{R}}$；我们也用 $\infty$ 代替 $+\infty$。
+全书使用集合论的通常记号。如通常，$\mathbb{N}$、$\mathbb{Z}$、$\mathbb{Q}$、$\mathbb{R}$ 与 $\mathbb{R}^N$（$N\in\mathbb{N}$；$\mathbb{R}^1\equiv\mathbb{R}$）分别表示自然数集、整数集、有理数集、实数集与 $N$ 元实数组之集。区间的通常记号 $(a,b)$、$[a,b]$、$(a,b]$、$[a,b)$ 也用于扩充实直线 $\overline{\mathbb{R}}\triangleq\mathbb{R}\cup\{\pm\infty\}$ 的子区间。偶尔以 $[-\infty,+\infty]$ 表示 $\overline{\mathbb{R}}$，并以 $\infty$ 代替 $+\infty$。
 
-\begin{definition}
-设 $X$ 为一集合，定义其\textbf{幂集}为$\mathcal{P}(X)\triangleq \{E\mid E\subseteq X\}$。
+设 $X$ 为一集合，其幂集记为 $\mathcal{P}(X)\triangleq\{E\mid E\subseteq X\}$。对任意 $E\subseteq X$，$E$ 在 $X$ 中的补集记为 $E^c\triangleq\{x\in X\mid x\notin E\}$，空集记为 $\varnothing\triangleq X^c$，$E$ 的特征函数记为 $\chi_E:X\to[0,\infty)$：
+\begin{align*}
+\chi_E(x)\triangleq
+\begin{cases}
+1, & \text{若 }x\in E,\\
+0, & \text{若 }x\notin E.
+\end{cases}
+\end{align*}
 
-若对所有 $i,j\in I$、$i\neq j$ 有 $F_i\cap F_j=\varnothing $。一个有限不交集族 $\{F_1,\cdots,F_n\}\subseteq\mathcal{P}(X)$ 若满足 $X=\bigcup_{i=1}^n F_i$，则称为 $X$ 的一个\textbf{划分}。
-\end{definition}
+对任意 $E,F\subseteq X$，$E$ 与 $F$ 的差集记为 $E\setminus F\triangleq E\cap F^c$，对称差记为 $E\triangle F\triangleq(E\setminus F)\cup(F\setminus E)$。若 $\mathcal{F}_1\subseteq\mathcal{F}_2\subseteq\mathcal{P}(X)$ 且 $f:\mathcal{F}_2\to[-\infty,\infty]$ 为任一集合函数，则 $f$ 在 $\mathcal{F}_1$ 上的限制记为 $f|_{\mathcal{F}_1}$。对任意 $x\in X$，集合 $\{x\}\in\mathcal{P}(X)$ 称为单点集。$E\subseteq X$ 的覆盖指任一满足 $E\subseteq\bigcup_{i\in I}F_i$ 的非空族 $\{F_i\}_{i\in I}\subseteq\mathcal{P}(X)$。族 $\{F_i\}_{i\in I}\subseteq\mathcal{P}(X)$ 称为不交的，若对任意 $i,j\in I$、$i\neq j$ 有 $F_i\cap F_j=\varnothing$。满足 $X=\bigcup_{i=1}^nF_i$ 的有限不交族 $\{F_1,\cdots,F_n\}\subseteq\mathcal{P}(X)$ 称为 $X$ 的一个划分。序列 $\{E_n\}\subseteq\mathcal{P}(X)$ 称为非减的（相应地，非增的），若对任意 $n\in\mathbb{N}$ 有 $E_n\subseteq E_{n+1}$（相应地，$E_n\supseteq E_{n+1}$）；非减序列与非增序列统称为单调序列。
 
+% SUPPLEMENT: parent=section:ch01-预备知识; kind=motivation; 对扩充实数的运算边界、特征函数与集合运算的对应、以及划分在子集上的相对含义作统一说明
+\begin{remark}\phantomsection\label{remark:ch01-集合记号}
+\begin{enumerate}[(i)]
+\item 扩充实直线上的运算按吸收律延拓：对 $a\in\mathbb{R}$ 有 $a+\infty=\infty$、$a-\infty=-\infty$，对 $a>0$ 有 $a\cdot\infty=\infty$、$a\cdot(-\infty)=-\infty$；而 $\infty-\infty$、$0\cdot\infty$、$\infty/\infty$ 无定义。由于测度取值于 $[0,\infty]$，下文采用约定 $0\cdot\infty\triangleq0$。区间 $(a,b)$ 等记号在 $a,b\in\overline{\mathbb{R}}$ 时按 $\{x\in\mathbb{R}\mid a<x<b\}$ 理解，其长度 $b-a$ 允许为 $\infty$；按此理解，$\pm\infty$ 本身不是任何区间的元素。
+\item 特征函数把集合运算化为逐点运算：对任意 $E,F\subseteq X$，
+\begin{align*}
+\chi_{E\cap F}=\chi_E\chi_F,\qquad
+\chi_{E\cup F}=\chi_E+\chi_F-\chi_E\chi_F,\qquad
+\chi_{E^c}=1-\chi_E,
+\end{align*}
+\begin{align*}
+\chi_{E\setminus F}=\chi_E(1-\chi_F),\qquad
+\chi_{E\triangle F}=\lvert\chi_E-\chi_F\rvert.
+\end{align*}
+此外 $E\subseteq F$ 当且仅当 $\chi_E\leqslant\chi_F$；对非减序列 $\{E_n\}$ 有 $\chi_{\bigcup_nE_n}=\sup_n\chi_{E_n}$，对非增序列有 $\chi_{\bigcap_nE_n}=\inf_n\chi_{E_n}$。
+\item 划分按定义只在 $X$ 上陈述。对 $E\subseteq X$，$E$ 的划分指满足 $E=\bigcup_{j=1}^nF_j$ 的有限不交族 $\{F_1,\cdots,F_n\}\subseteq\mathcal{P}(E)$，并允许 $n=0$（此时 $E=\varnothing$）。\cref{definition:ch01-半代数代数}(ii) 中“$E^c$ 的划分”即按此相对意义理解，并附加要求 $F_j\in\mathcal{S}$。
+\item 序列的非减性与非增性按包含关系陈述，与实值序列的单调性不同：非减集合序列的极限是并，非增集合序列的极限是交。覆盖定义中的非空性用于排除空指标集，使覆盖不成为与 $E$ 无关的空洞概念。
+\end{enumerate}
+\end{remark}
 
 \end{document}

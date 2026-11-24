@@ -2,46 +2,46 @@
 \graphicspath{{\subfix{./image/}}{\subfix{../../image/}}} % 指定图片引用路径,后续可以直接使用图片文件名
 % 如果图片存放在上级目录,则使用 ../../image/ 作为备用路径
 
-% 例如:
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.3\textwidth]{图.png}
-% \caption{}
-% \label{figure:图}
-% \end{figure}
-% 注意:上述\label{}一定要放在\caption{}之后,否则引用图片序号会只会显示??.
-
 \begin{document}
 
 \section{渐近性态}\label{section:ch08-渐近性态}
 
-现考察\cref{theorem:ch08-存在性} 给出的 (P) 的整体 Young 测度值解 $(u,\nu)$ 当 $t\to\infty$ 时的渐近性态。令
+现考察\cref{theorem:ch08-存在性} 给出的 (P) 的整体 Young 测度值解 $(u,\nu)$ 当 $t\to\infty$ 时的渐近性态。设 $Q_T\triangleq \Omega\times(0,T)$（$T\in(0,\infty)$），$Q_\infty\triangleq \Omega\times(0,\infty)$，$X_p\equiv W^{1,p}_0(\Omega)$（$N=1$ 时 $p\in(1,\infty)$，$N\geqslant2$ 时 $p\in(1,2]$）。设 $\{t_m\}\subseteq(0,\infty)$ 为任一发散序列，即 $t_m\to\infty$，并对几乎所有 $(x,t)\in Q_T$（$T\in(0,\infty)$ 任意）令
 \begin{align}
 u_m(x,t)\triangleq u(x,t+t_m),\qquad
-\nu_{m\,(x,t)}\triangleq \nu_{(x,t+t_m)} \label{align:ch08-8.68}
+\nu_{m\,(x,t)}\triangleq \nu_{(x,t+t_m)}. \label{align:ch08-8.68}
 \end{align}
-对几乎所有 $(x,t)\in Q_T$，其中 $\{t_m\}$ 为任意发散序列，并记 $X_p\equiv W^{1,p}_0(\Omega)$（$N=1$ 时 $p\in(1,\infty)$，$N\geqslant2$ 时 $p\in(1,2]$）。
 
 \begin{definition}[$\omega$--极限点]\label{definition:ch08-omega极限点}
-设 $\tilde u\in L^\infty(0,\infty;X_p)\cap C([0,\infty);L^p(\Omega))$（$N=1$ 时 $p=2$，$N\geqslant2$ 时 $p\in(1,2]$），$\tilde\nu\in\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$。偶 $(\tilde u,\tilde\nu)$ 称为问题 (P) 的整体 Young 测度值解 $(u,\nu)$ 的 $\omega$--极限点，若：
+设 $\Omega\subseteq\mathbb{R}^N$ 为有界区域（$N\geqslant2$ 时 $\partial\Omega$ 光滑），$Q_\infty\triangleq\Omega\times(0,\infty)$，$X_p\equiv W^{1,p}_0(\Omega)$（$N=1$ 时 $p=2$，$N\geqslant2$ 时 $p\in(1,2]$）。设 $\tilde u\in L^\infty(0,\infty;X_p)\cap C([0,\infty);L^p(\Omega))$，$\tilde\nu\in\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$，并设 $(u,\nu)\in L^\infty(0,\infty;X_p)\times\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$ 为问题 (P) 的整体 Young 测度值解。偶 $(\tilde u,\tilde\nu)$ 称为 $(u,\nu)$ 的 $\omega$--极限点，若：
 \begin{enumerate}[(i)]
-\item\label{item:ch08-omega-i} 存在发散序列 $\{t_m\}\subseteq(0,\infty)$，使
+\item\label{item:ch08-omega-i} 存在发散序列 $\{t_m\}\subseteq(0,\infty)$，使对由\eqref{align:ch08-8.68} 定义的 $u_m$ 与 $\nu_m$ 有
 \begin{enumerate}[a)]
-\item\label{item:ch08-omega-i-a} $u_m\rightharpoonup\tilde u$ 在 $L^r(0,T;X_p)$（对所有 $T\in(0,\infty)$ 与 $r\in[1,\infty)$），
-\item\label{item:ch08-omega-i-b} $\nu_m\stackrel{*}{\rightharpoonup}\tilde\nu$ 在 $\mathcal{Y}^+(Q_T;\mathbb{R}^N)$（对所有 $T\in(0,\infty)$）；
+\item\label{item:ch08-omega-i-a} $u_m\rightharpoonup\tilde u$ 在 $L^r(0,T;X_p)$ 中，对所有 $T\in(0,\infty)$ 与 $r\in[1,\infty)$，
+\item\label{item:ch08-omega-i-b} $\nu_m\stackrel{n}{\rightharpoonup}\tilde\nu$ 在 $\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 中，对所有 $T\in(0,\infty)$；
 \end{enumerate}
-\item\label{item:ch08-omega-ii} $(\tilde u,\tilde\nu)$ 是问题 (P) 以函数 $\tilde u(\cdot,0)$ 为初值的整体 Young 测度值解。
+\item\label{item:ch08-omega-ii} $(\tilde u,\tilde\nu)$ 是问题 (P) 以函数 $\tilde u(\cdot,0)$ 为初值的整体 Young 测度值解，即\cref{definition:ch08-Young测度值解} 的条件 (i)--(iv) 对所有 $T\in(0,\infty)$ 成立，其中\eqref{align:ch08-8.5} 中的初值 $u_0$ 取为 $\tilde u(\cdot,0)$。
 \end{enumerate}
 $(u,\nu)$ 的 $\omega$--极限点的集合称为 $(u,\nu)$ 的 $\omega$--极限集。
 \end{definition}
 
-我们证明如下结果。
+% SUPPLEMENT: parent=definition:ch08-omega极限点; kind=motivation; location=定义 8.4.1 后的注记; basis=定义 8.4.1 与 (8.68) + 沿时间平移取子列极限的动机、$\tilde u\in C([0,\infty);L^p)$ 使 $\tilde u(\cdot,0)$ 有定义这一作用、弱收敛取全部 $r\in[1,\infty)$ 与窄收敛（而非弱*收敛）的理由、$\{t_m\}$ 必须发散的边界
+\begin{remark}\phantomsection\label{remark:ch08-omega极限点}
+\begin{enumerate}[(i)]
+\item 引入动机。(P) 的整体解只在 $(0,\infty)$ 上有定义，故考察 $t\to\infty$ 的性态只能沿发散序列取极限。$\phi$ 非单调时 (P) 的解仅以 Young 测度值解的形式存在，而 $L^\infty(0,\infty;X_p)$ 的弱*拓扑与 $\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$ 的窄拓扑都不使解集成为紧空间，因此只能记录“子列极限”而非极限：定义把 $\{u_m\}$ 与 $\{\nu_m\}$ 的收敛子列极限一并记作 $(\tilde u,\tilde\nu)$。条件 (ii) 是定义的实质部分：它要求极限本身仍是 (P) 的整体解，故 $\omega$--极限集由解组成，“渐近状态”因此具有方程论意义，而不只是一个拓扑对象。
+\item 各项假设的作用。$\tilde u\in L^\infty(0,\infty;X_p)$ 与 $\tilde\nu\in\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$ 正是\cref{definition:ch08-Young测度值解} 要求于整体解的两类对象，缺一则 $(\tilde u,\tilde\nu)$ 不可能满足条件 (ii)。$\tilde u\in C([0,\infty);L^p(\Omega))$ 的作用是使 $\tilde u(\cdot,0)$ 成为 $L^p(\Omega)$ 中逐点取定的元素：条件 (ii) 的初值是单个函数，若只有 $\tilde u\in L^\infty(0,\infty;X_p)$ 与 $L^r(0,T;X_p)$ 中的弱收敛，则 $\tilde u$ 只在几乎所有时刻有定义，$\tilde u(\cdot,0)$ 无意义，条件 (ii) 无从陈述。这正是\cref{lemma:ch08-u_m收敛} 需要强收敛\eqref{align:ch08-8.70a}、而非只需弱收敛的原因。
+\item 收敛方式的选择。(i)a) 对全部 $r\in[1,\infty)$ 提出要求：$r\in(1,\infty)$ 时 $L^r(0,T;X_p)$ 自反，弱收敛由\eqref{align:ch08-8.71} 与 Banach--Alaoglu 定理得到；$r=1$ 时空间不自反，需一致可积性（Dunford--Pettis 判据）；$r=\infty$ 的弱*收敛另由\eqref{align:ch08-8.70d} 给出。(i)b) 中的收敛必须是窄收敛，即对 $C_b(Q_T\times\mathbb{R}^N)$ 中的检验函数取极限，不能减弱为 Radon 测度的弱*收敛（后者只允许 $C_0$ 检验函数）：\cref{theorem:ch08-omega极限非空} 的证明要在\eqref{align:ch08-8.85} 中对 $h_j(x,t,y)=f_j(|y|)y\,\zeta(x,t)$（$\zeta\in L^\infty(Q_T)$）取极限，而 $h_j$ 一般不属于 $C_0(Q_T\times\mathbb{R}^N)$。
+\item 边界。(a) 定义不要求 $\omega$--极限点唯一，也不要求 $(u,\nu)$ 自身收敛：$\omega$--极限集可以含多个元素。由于\cref{theorem:ch08-存在性} 给出的 $(u,\nu)$ 本身是沿某子列 $\varepsilon_k\to0$ 取极限的结果，不同的子列可以给出不同的 $(u,\nu)$，从而给出不同的 $\omega$--极限集。(b) 序列 $\{t_m\}$ 必须发散：若 $t_m\to t_*\in(0,\infty)$，则由 $u\in C([0,\infty);L^p(\Omega))$ 得 $u_m\to u(\cdot,\cdot+t_*)$，且 $\nu_m$ 窄收敛于 $\nu$ 的相应平移，$\omega$--极限集与 $(u,\nu)$ 的平移族重合，不含关于 $t\to\infty$ 的信息。(c) 条件 (ii) 中的初值是 $\tilde u(\cdot,0)$ 而非 $u_0$，故 $\omega$--极限点是把渐近状态重新当作初始时刻的状态所得的 (P) 的解，它一般不是以 $u_0$ 为初值的解；\cref{theorem:ch08-平衡解} 正利用这一结构把渐近状态识别为平衡解。
+\end{enumerate}
+\end{remark}
+
+本节证明如下结果。
 
 \begin{theorem}[$\omega$--极限集的存在性与支撑]\label{theorem:ch08-omega极限非空}
-设或 $N=1$ 且\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立，或 $N\geqslant2$ 且\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2f} 成立。设 $(u,\nu)\in L^\infty(0,\infty;X_p)\times\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$ 为问题 (P) 的整体 Young 测度值解（其存在性由\cref{theorem:ch08-存在性} 保证）。则：
+设 $\Omega\subseteq\mathbb{R}^N$ 为有界区域（$N\geqslant2$ 时 $\partial\Omega$ 光滑），且或 $N=1$ 而\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立，或 $N\geqslant2$ 而\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2f} 成立。设 $(u,\nu)\in L^\infty(0,\infty;X_p)\times\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$ 为问题 (P) 的整体 Young 测度值解，其存在性由\cref{theorem:ch08-存在性} 保证。则：
 \begin{enumerate}[(i)]
 \item\label{item:ch08-omega-thm-i} $(u,\nu)$ 的 $\omega$--极限集非空；
-\item\label{item:ch08-omega-thm-ii} 若 $u_0\in H^1_0(\Omega)$，且 $N\geqslant2$ 时\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2f} 取 $p=2$ 成立，则对每个 $\omega$--极限点 $(\tilde u,\tilde\nu)$，
+\item\label{item:ch08-omega-thm-ii} 若 $u_0\in H^1_0(\Omega)$，且 $N\geqslant2$ 时\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2f} 取 $p=2$ 成立，则对每个 $\omega$--极限点 $(\tilde u,\tilde\nu)$ 有
 \begin{align}
 \operatorname{supp}\tilde\nu_{(x,t)}\subseteq S\triangleq \{y\in\mathbb{R}^N\mid\phi(y)\cdot y=0\} \label{align:ch08-8.69}
 \end{align}
@@ -49,14 +49,48 @@ $(u,\nu)$ 的 $\omega$--极限点的集合称为 $(u,\nu)$ 的 $\omega$--极限�
 \end{enumerate}
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch08-omega极限非空; kind=motivation; location=定理 8.4.1 后的注记; basis=定理 8.4.1 与 (8.69) + 能量恒等式给出支撑限制的机制、结论 (i) 与 (ii) 各自所需的假设、$u_0\in H^1_0$ 与 $p=2$ 只用于 (ii) 的说明、以及 $S$ 与 $\{\phi=0\}$ 不同时结论 (ii) 不能加强的边界
+\begin{remark}\phantomsection\label{remark:ch08-omega极限非空}
+\begin{enumerate}[(i)]
+\item 引入动机。本定理把 $t\to\infty$ 的渐近分析化为两个可检验的断言：(i) 紧性——沿某发散序列确实能取到 $\omega$--极限点；(ii) 耗散——渐近状态不再耗散能量。(ii) 的机制是 $(P_\varepsilon)$ 的能量恒等式：由\eqref{align:ch08-8.2f}（或\eqref{align:ch08-8.1d}）有
+\begin{align*}
+\frac{\mathrm{d}}{\mathrm{d}t}\Big(\|u_\varepsilon(\cdot,t)\|^2_{L^2(\Omega)}+\varepsilon\|\nabla u_\varepsilon(\cdot,t)\|^2_{L^2(\Omega)}\Big)
+=-2\int_\Omega[\phi(\nabla u_\varepsilon)\cdot\nabla u_\varepsilon](x,t)\,\mathrm{d}x\leqslant0,
+\end{align*}
+把该式在 $(t_m,t_m+T)$ 上积分并令 $k\to\infty$、$m\to\infty$，左端的增量趋于零（$L^2$ 范数有极限，见\hyperref[remark:ch08-能量衰减]{注记}），故 $\iint_{Q_T}\int_{\mathbb{R}^N}\phi(y)\cdot y\,\mathrm{d}\tilde\nu_{(x,t)}(y)\,\mathrm{d}x\,\mathrm{d}t=0$；由 $\phi(y)\cdot y\geqslant0$ 的连续性与\cref{proposition:ch05-弱收敛} 即得\eqref{align:ch08-8.69}。换言之，渐近 Young 测度只把质量放在耗散率为零的方向上。
+\item 两项结论的假设分工。结论 (i) 只用\cref{theorem:ch08-存在性} 的假设：\cref{lemma:ch08-u_m收敛} 与\cref{lemma:ch08-ν_m收敛} 给出子列与极限，\cref{theorem:ch08-omega极限非空} 证明中的极限识别说明该极限仍满足\eqref{align:ch08-8.4}--\eqref{align:ch08-8.5}。结论 (ii) 额外要求 $u_0\in H^1_0(\Omega)$ 与（$N\geqslant2$ 时）$p=2$：这两条正是\hyperref[remark:ch08-能量衰减]{注记} 的假设，用于保证 $\Phi(\nabla u_{0\varepsilon})\in L^1(\Omega)$、能量恒等式成立，且含 $\varepsilon_k$ 的梯度项在 $k\to\infty$ 时消失（估计\eqref{align:ch08-8.29} 取 $p=2$）。因此 (ii) 的假设不能减弱为 (i) 的假设；反过来，结论 (i) 不需要能量结构。
+\item 边界。(a) 结论 (ii) 只给出支撑包含关系，不断言 $\tilde\nu$ 是 Dirac 测度，也不断言 $\tilde u$ 与 $t$ 无关：支撑可以是 $S$ 中的整个闭集。(b) 若 $S\supsetneq\{y\in\mathbb{R}^N\mid\phi(y)=0\}$，即存在 $y^*\neq0$ 使 $\phi(y^*)\perp y^*$ 而 $\phi(y^*)\neq0$，则\eqref{align:ch08-8.69} 不能推出平衡条件\eqref{align:ch08-8.7}；\cref{theorem:ch08-平衡解} 之所以另加假设 $S=\{\phi=0\}$，原因即在此。(c) 结论 (i) 只断言 $\omega$--极限集非空，不含收敛性：$\{u_m\}$ 不必在 $t\to\infty$ 时收敛，$\omega$--极限集可以是多点集。
+\end{enumerate}
+\end{remark}
+
 \begin{theorem}[$\omega$--极限为平衡解]\label{theorem:ch08-平衡解}
-设\cref{theorem:ch08-omega极限非空} 的假设满足，$u_0\in H^1_0(\Omega)$，且 $N\geqslant2$ 时\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2f} 取 $p=2$ 成立。若 $S=\{y\in\mathbb{R}^N\mid\phi(y)=0\}$，则 $(u,\nu)$ 的每个 $\omega$--极限点 $(\tilde u,\tilde\nu)$ 都是问题 (P) 的 Young 测度平衡解。
+设\cref{theorem:ch08-omega极限非空} 的假设满足，$u_0\in H^1_0(\Omega)$，且 $N\geqslant2$ 时\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2f} 取 $p=2$ 成立。设 $S=\{y\in\mathbb{R}^N\mid\phi(y)=0\}$。则 $(u,\nu)$ 的每个 $\omega$--极限点 $(\tilde u,\tilde\nu)$ 都是问题 (P) 的 Young 测度平衡解，即 $(\tilde u,\tilde\nu)$ 满足\cref{definition:ch08-Young平衡解} 的\eqref{align:ch08-8.7}--\eqref{align:ch08-8.8}，其中 $\tilde u$ 不依赖于 $t$。
 \end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch08-平衡解; kind=motivation; location=定理 8.4.2 后的注记; basis=定理 8.4.2 与 (8.7)--(8.8) + 由 (8.69) 过渡到平衡条件所需的 $S=\{\phi=0\}$、该假设在 $N=1$ 时自动成立（由 (8.1b)--(8.1d) 得 $\phi(0)=0$）而在 $N\geqslant2$ 时为实质限制、以及去掉该假设时的失效方式
+\begin{remark}\phantomsection\label{remark:ch08-平衡解}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{theorem:ch08-omega极限非空}(ii) 只把渐近 Young 测度的质量限制在 $S$ 上。若 $\phi$ 在 $S$ 上恒为零，则该信息恰好等于平衡条件\eqref{align:ch08-8.7}：$\operatorname{supp}\tilde\nu_{(x,t)}\subseteq\{\phi=0\}$ 蕴含 $\int_{\mathbb{R}^N}\phi_i\,\mathrm{d}\tilde\nu_{(x,t)}=0$（$i=1,\cdots ,N$）。此时弱形式\eqref{align:ch08-8.87} 中的 $\phi^*$ 项消失，剩下
+\begin{align*}
+\int_0^t\int_\Omega\tilde u\,\partial_s\zeta(x,s)\,\mathrm{d}x\,\mathrm{d}s
+=\int_\Omega\tilde u(x,t)\zeta(x,t)\,\mathrm{d}x-\int_\Omega\tilde u(x,0)\zeta(x,0)\,\mathrm{d}x,
+\end{align*}
+对 $t$ 求导即知 $\tilde u$ 与 $t$ 无关；于是 $(\tilde u,\tilde\nu)$ 满足稳态的\eqref{align:ch08-8.7}--\eqref{align:ch08-8.8}，即它是 Young 测度平衡解。
+\item 各项假设的作用。$u_0\in H^1_0(\Omega)$ 与 $p=2$（$N\geqslant2$ 时）是\cref{theorem:ch08-omega极限非空}(ii) 的假设，用于支撑包含关系\eqref{align:ch08-8.69}，本定理完全继承。唯一的附加假设 $S=\{\phi=0\}$ 只用于把\eqref{align:ch08-8.69} 转成\eqref{align:ch08-8.7}，它不含正则性或非退化要求。平衡解定义还要求 $\bar u\in W^{1,p}_0(\Omega)$：这一条由\eqref{align:ch08-8.4} 给出，因 $\tilde u$ 不依赖 $t$ 且 $\nabla\tilde u=\int_{\mathbb{R}^N}y\,\mathrm{d}\tilde\nu_{(x,t)}(y)$ 属于 $L^p(\Omega)$。
+\item 该假设何时自动成立。设 $N=1$ 且\eqref{align:ch08-8.1d} 成立。由\eqref{align:ch08-8.1b} 的局部 Lipschitz 性，$\phi$ 在 $y=0$ 连续：对 $y>0$ 由 $\phi(y)y\geqslant0$ 得 $\phi(y)\geqslant0$，令 $y\downarrow0$ 得 $\phi(0)\geqslant0$；对 $y<0$ 由同一条件得 $\phi(y)\leqslant0$，令 $y\uparrow0$ 得 $\phi(0)\leqslant0$；故 $\phi(0)=0$。又若 $y\neq0$ 且 $\phi(y)y=0$，则 $\phi(y)=0$。于是 $S=\{y\in\mathbb{R}\mid\phi(y)y=0\}\subseteq\{\phi=0\}\cup\{0\}=\{\phi=0\}$，反向包含由定义直接得到，故 $N=1$ 时 $S=\{\phi=0\}$ 恒成立，本定理的附加假设自动满足。$N\geqslant2$ 时正交弱于消失：例如 $\phi(y)\triangleq(y_1,-y_2)$ 给出 $\{\phi\cdot y=0\}=\{y_1^2=y_2^2\}\supsetneq\{0\}=\{\phi=0\}$；该 $\phi$ 不满足\eqref{align:ch08-8.2e}--\eqref{align:ch08-8.2f}，故此例只说明两个集合在定义上不同，不说明本定理的假设可以减弱。
+\item 边界。若 $S\supsetneq\{\phi=0\}$ 且 $\tilde\nu_{(x,t)}$ 在 $\{\phi\neq0\}\cap S$ 上带质量，则 $\int_{\mathbb{R}^N}\phi\,\mathrm{d}\tilde\nu_{(x,t)}\neq0$，\eqref{align:ch08-8.7} 失效，$(\tilde u,\tilde\nu)$ 只是 Young 测度值解而非平衡解。此时\cref{theorem:ch08-omega极限非空} 证明中关于 $\tilde u$ 与 $t$ 无关的论证仍可用（它只用\eqref{align:ch08-8.4} 与\eqref{align:ch08-8.87}），但 $\phi^*\neq0$，$\tilde u$ 因而不再满足平衡方程。
+\end{enumerate}
+\end{remark}
 
 为证\cref{theorem:ch08-omega极限非空}，需要一些预备结果。
 
+
 \begin{lemma}[平移序列 $u_m$ 的收敛]\label{lemma:ch08-u_m收敛}
-设\cref{theorem:ch08-omega极限非空} 的假设满足。则存在\eqref{align:ch08-8.68} 中序列 $\{u_m\}$ 的子列（为简便不重新标号）与 $\tilde u\in L^\infty(0,\infty;X_p)\cap C([0,\infty);L^p(\Omega))\cap W^{1,p}(Q_T)$（$p\in(1,2]$），$\partial_t\tilde u\in L^2(Q_\infty)$，使对所有 $T\in(0,\infty)$，
+设\cref{theorem:ch08-omega极限非空} 的假设满足，即或 $N=1$ 而\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立，或 $N\geqslant2$ 而\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2f} 成立，且 $(u,\nu)$ 为 (P) 的整体 Young 测度值解。则存在\eqref{align:ch08-8.68} 中序列 $\{u_m\}$ 的子列（为简便不重新标号）与函数
+\begin{align*}
+\tilde u\in L^\infty(0,\infty;X_p)\cap C([0,\infty);L^p(\Omega))\cap W^{1,p}(Q_T)
+\end{align*}
+（其中 $p\in(1,2]$，$T\in(0,\infty)$ 任意），$\partial_t\tilde u\in L^2(Q_\infty)$，使对所有 $T\in(0,\infty)$ 有
 \begin{align}
 &u_m\to\tilde u\ \text{在 }C([0,T);L^p(\Omega))\ (p\in(1,2]); \label{align:ch08-8.70a}\\
 &u_m\rightharpoonup\tilde u\ \text{在 }H^1(Q_T)\ (N=1),\quad
@@ -72,28 +106,86 @@ u_m\rightharpoonup\tilde u\ \text{在 }W^{1,p}(Q_T)\ (N\geqslant2); \label{align
 \end{lemma}
 
 \begin{proof}
-回忆 $u\in L^\infty(0,\infty;X_p)$、$\partial_t u\in L^2(Q_\infty)$；且对所有 $T\in(0,\infty)$ 有 $u\in W^{1,p}(Q_T)\cap C([0,\infty);L^p(\Omega))$（$p\in(1,2]$；见\cref{proposition:ch08-收敛N2} 与\cref{proposition:ch08-收敛N1} 及\cref{theorem:ch08-存在性}）。显然，对所有 $n\in\mathbb{N}$，
+回忆 $u\in L^\infty(0,\infty;X_p)$、$\partial_t u\in L^2(Q_\infty)$；且对所有 $T\in(0,\infty)$ 有 $u\in W^{1,p}(Q_T)\cap C([0,\infty);L^p(\Omega))$（$p\in(1,2]$；见\cref{proposition:ch08-收敛N2} 与\cref{proposition:ch08-收敛N1} 及\cref{theorem:ch08-存在性}）。由\eqref{align:ch08-8.68}，对所有 $m\in\mathbb{N}$ 有
 \begin{align}
 \|u_m\|_{L^\infty(0,\infty;X_p)}+\|\partial_t u_m\|_{L^2(Q_\infty)}
 \leqslant\|u\|_{L^\infty(0,\infty;X_p)}+\|\partial_t u\|_{L^2(Q_\infty)}, \label{align:ch08-8.71}\\
 \|u_m\|_{H^1(Q_T)}\leqslant\{T\|u\|^2_{L^\infty(\mathbb{R}^+;X_p)}+\|u_t\|^2_{L^2(Q_\infty)}\}^{1/2}\quad(N=1), \label{align:ch08-8.72}\\
-\|u_m\|_{W^{1,p}(Q_T)}\leqslant\{T\|u\|^p_{L^\infty(\mathbb{R}^+;X_p)}+(\lambda(\Omega)T)^{1-p/2}\|u_t\|^p_{L^2(Q_\infty)}\}^{1/p}\quad(N\geqslant2,\ p\in(1,2]) \label{align:ch08-8.73}
+\|u_m\|_{W^{1,p}(Q_T)}\leqslant\{T\|u\|^p_{L^\infty(\mathbb{R}^+,X_p)}+(\lambda(\Omega)T)^{1-p/2}\|u_t\|^p_{L^2(Q_\infty)}\}^{1/p}\quad(N\geqslant2,\ p\in(1,2]) \label{align:ch08-8.73}
 \end{align}
-对所有 $T\in(0,\infty)$。如\cref{proposition:ch08-收敛N2} 证明那样，\eqref{align:ch08-8.70a}--\eqref{align:ch08-8.70b} 中的收敛由不等式\eqref{align:ch08-8.72}--\eqref{align:ch08-8.73} 得到，而\eqref{align:ch08-8.70c}--\eqref{align:ch08-8.70f} 中的收敛由不等式\eqref{align:ch08-8.71} 得到。结论即得。
+对所有 $T\in(0,\infty)$。按\cref{proposition:ch08-收敛N2} 证明中的论证，\eqref{align:ch08-8.70a}--\eqref{align:ch08-8.70b} 中的收敛由不等式\eqref{align:ch08-8.72}--\eqref{align:ch08-8.73} 得到，而\eqref{align:ch08-8.70c}--\eqref{align:ch08-8.70f} 中的收敛由不等式\eqref{align:ch08-8.71} 得到。结论即得。
 \end{proof}
 
-\begin{lemma}[平移 Young 测度列的紧性]\label{lemma:ch08-紧性}
-设\cref{theorem:ch08-omega极限非空} 的假设满足。则\eqref{align:ch08-8.68} 定义的平移 Young 测度序列 $\{\nu_m\}\subseteq\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$ 在 $\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 中对所有 $T\in(0,\infty)$ 紧。
+% SUPPLEMENT: parent=lemma:ch08-u_m收敛; kind=proof; location=引理 8.4.3 的原证明后; basis=原证明以“Clearly”“As in the proof of Proposition 8.2.8”带过三处：由 (8.68) 推出 (8.71)--(8.73)、由 (8.72)--(8.73) 推出 (8.70a)--(8.70b) 中的强收敛、由 (8.71) 推出 (8.70c)--(8.70f)；此处补出平移不变性的逐项核对、Hölder 指数 $(\lambda(\Omega)T)^{1-p/2}$ 的来源、初始值序列的抽取与时间差分估计、以及各弱极限的识别
+\begin{proof}[补证：\cref{lemma:ch08-u_m收敛} 原证明中省略的细节]
+\begin{enumerate}[(i)]
+\item 关于\eqref{align:ch08-8.71}。对几乎所有 $(x,t)\in Q_\infty$ 有 $u_m(x,t)=u(x,t+t_m)$、$\nabla u_m(x,t)=\nabla u(x,t+t_m)$、$\partial_t u_m(x,t)=\partial_t u(x,t+t_m)$，而 $(x,t)\mapsto(x,t+t_m)$ 是 $Q_\infty$ 到 $\Omega\times(t_m,\infty)$ 的保测变换。故
+\begin{align*}
+\|u_m\|_{L^\infty(0,\infty;X_p)}\leqslant\|u\|_{L^\infty(0,\infty;X_p)},\qquad
+\|\partial_t u_m\|_{L^2(Q_\infty)}\leqslant\|\partial_t u\|_{L^2(Q_\infty)},
+\end{align*}
+两式相加即得\eqref{align:ch08-8.71}；右端与 $m$ 无关。
+\item 关于\eqref{align:ch08-8.72}。设 $N=1$，则 $p=2$、$X_p=H^1_0(\Omega)$。取 $H^1_0(\Omega)$ 的等价范数 $\|\nabla\cdot\|_{L^2(\Omega)}$（Poincaré 不等式），则对几乎所有 $t\in(0,\infty)$ 有 $\|\nabla u_m(\cdot,t)\|_{L^2(\Omega)}\leqslant\|u\|_{L^\infty(0,\infty;X_p)}$。于是
+\begin{align*}
+\|u_m\|^2_{H^1(Q_T)}=\int_0^T\|\nabla u_m(\cdot,t)\|^2_{L^2(\Omega)}\,\mathrm{d}t+\|\partial_t u_m\|^2_{L^2(Q_T)}
+\leqslant T\|u\|^2_{L^\infty(0,\infty;X_p)}+\|\partial_t u\|^2_{L^2(Q_\infty)},
+\end{align*}
+此即\eqref{align:ch08-8.72}。
+\item 关于\eqref{align:ch08-8.73}。设 $N\geqslant2$、$p\in(1,2]$。由 $X_p$ 范数的定义，
+\begin{align*}
+\iint_{Q_T}(|u_m|^p+|\nabla u_m|^p)\,\mathrm{d}x\,\mathrm{d}t\leqslant T\|u\|^p_{L^\infty(0,\infty;X_p)}.
+\end{align*}
+对时间导数项用 Hölder 不等式（指数 $2/p$ 与 $2/(2-p)$，$p\leqslant2$ 保证 $2/(2-p)<\infty$）：
+\begin{align*}
+\iint_{Q_T}|\partial_t u_m|^p\,\mathrm{d}x\,\mathrm{d}t
+\leqslant[\lambda_{N+1}(Q_T)]^{1-p/2}\|\partial_t u_m\|^p_{L^2(Q_T)}
+=(\lambda(\Omega)T)^{1-p/2}\|\partial_t u_m\|^p_{L^2(Q_T)},
+\end{align*}
+其中 $\lambda_{N+1}(Q_T)=\lambda(\Omega)T$。把两式相加并用\eqref{align:ch08-8.71} 的控制即得\eqref{align:ch08-8.73}。指数 $1-p/2$ 与条件 $p\leqslant2$ 的组合是关键：$p>2$ 时 $L^2(Q_T)$ 不嵌入 $L^p(Q_T)$，该估计不成立。
+\item 关于\eqref{align:ch08-8.70a}。固定 $T\in(0,\infty)$。由\eqref{align:ch08-8.73}（$N\geqslant2$）或\eqref{align:ch08-8.72}（$N=1$），序列 $\{u_m\}$ 在 $W^{1,p}(Q_T)$ 中有界；因 $Q_T$ 为有界区域而 $p<\infty$，Rellich--Kondrachov 定理给出 $W^{1,p}(Q_T)\hookrightarrow\hookrightarrow L^p(Q_T)$，故存在子列在 $L^p(Q_T)$ 中强收敛。对时间差分用与\eqref{align:ch08-8.37} 相同的估计：对每个 $t\in[0,T]$，
+\begin{align*}
+\left|\int_\Omega|u_{m_k}-u_{m_l}|^p(x,t)\,\mathrm{d}x-\int_\Omega|u_{m_k}-u_{m_l}|^p(x,0)\,\mathrm{d}x\right|
+\leqslant p|Q_T|^{\frac{2-p}{2p}}\|u_{m_k}-u_{m_l}\|^{p-1}_{L^p(Q_T)}
+\|\partial_t u_{m_k}-\partial_t u_{m_l}\|_{L^2(Q_T)}.
+\end{align*}
+右端第二个因子有界（由\eqref{align:ch08-8.71}），第一个因子随 $k,l\to\infty$ 趋于零。余下只需使初值项
+\begin{align*}
+\|u_{m_k}(\cdot,0)-u_{m_l}(\cdot,0)\|_{L^p(\Omega)}=\|u(\cdot,t_{m_k})-u(\cdot,t_{m_l})\|_{L^p(\Omega)}
+\end{align*}
+趋于零：由\eqref{align:ch08-8.71} 有 $\|u(\cdot,t)\|_{X_p}\leqslant\|u\|_{L^\infty(0,\infty;X_p)}$ 对几乎所有 $t$ 成立，而 $X_p\hookrightarrow\hookrightarrow L^p(\Omega)$，故可再抽子列使 $\{u(\cdot,t_{m_k})\}$ 在 $L^p(\Omega)$ 中强收敛。于是该子列在 $C([0,T];L^p(\Omega))$ 中是 Cauchy 列，\eqref{align:ch08-8.70a} 得证（原文写半开区间 $[0,T)$，与问题 (P) 的试验函数空间 $C^1([0,T);C^1_c(\Omega))$ 相配合；上述估计对 $t\in[0,T]$ 一致成立）。对 $T=n\in\mathbb{N}$ 逐次抽取子列并取对角线，即得对所有 $T\in(0,\infty)$ 成立的单一子列。
+\item 关于\eqref{align:ch08-8.70b}。由\eqref{align:ch08-8.72} 与\eqref{align:ch08-8.73}，同一子列在 $H^1(Q_T)$（$N=1$）或 $W^{1,p}(Q_T)$（$N\geqslant2$）中有界，故由 Banach--Alaoglu 定理可再抽子列弱收敛于某 $\hat u$。由\eqref{align:ch08-8.70a} 有 $u_m\to\tilde u$ 在 $L^p(Q_T)$ 中，而弱极限与强极限在分布意义下必一致，故 $\hat u=\tilde u$，即\eqref{align:ch08-8.70b}。$\tilde u\in C([0,\infty);L^p(\Omega))$ 由\eqref{align:ch08-8.70a} 的极限在 $C([0,T];L^p(\Omega))$ 中取得；$\partial_t\tilde u\in L^2(Q_\infty)$ 与 $\tilde u\in L^\infty(0,\infty;X_p)$ 由范数的弱下半连续性得到。
+\item 关于\eqref{align:ch08-8.70c}--\eqref{align:ch08-8.70f}。它们都只由\eqref{align:ch08-8.71} 与 Banach--Alaoglu 定理得到。$r\in(1,\infty)$ 时 $L^r(0,T;X_p)$ 自反（$X_p$ 自反，$p\in(1,\infty)$）；$r=1$ 时 $L^1(0,T;X_p)$ 不自反，但 $\{u_m\}$ 在 $L^\infty(0,T;X_p)$ 中有界，故对每个可测集 $E\subseteq(0,T)$ 有 $\int_E\|u_m\|_{X_p}\,\mathrm{d}t\leqslant T\|u\|_{L^\infty(0,\infty;X_p)}\lambda(E)$，一致可积性成立，由 Dunford--Pettis 判据仍得弱相对紧性。\eqref{align:ch08-8.70d} 是 $L^\infty(0,T;X_p)=(L^1(0,T;X_p^*))^*$ 中的弱*紧性；\eqref{align:ch08-8.70e} 是 $L^\infty(0,T;L^p(\Omega))$ 中的弱*紧性，其弱*极限必为 $\nabla\tilde u$，因\eqref{align:ch08-8.70b} 已给出 $\nabla u_m\rightharpoonup\nabla\tilde u$ 在 $L^p(Q_T)$ 中。\eqref{align:ch08-8.70f} 的极限识别如下：对 $\varphi\in C_c^\infty(Q_\infty)$，由\eqref{align:ch08-8.70a} 有 $u_m\to\tilde u$ 在 $L^1_{\mathrm{loc}}(Q_\infty)$ 中，故
+\begin{align*}
+\iint_{Q_\infty}\partial_t u_m\,\varphi\,\mathrm{d}x\,\mathrm{d}t
+=-\iint_{Q_\infty}u_m\,\partial_t\varphi\,\mathrm{d}x\,\mathrm{d}t
+\to-\iint_{Q_\infty}\tilde u\,\partial_t\varphi\,\mathrm{d}x\,\mathrm{d}t
+=\iint_{Q_\infty}\partial_t\tilde u\,\varphi\,\mathrm{d}x\,\mathrm{d}t,
+\end{align*}
+而 $C_c^\infty(Q_\infty)$ 在 $L^2(Q_\infty)$ 中稠密。各弱极限与\eqref{align:ch08-8.70a} 给出的强极限 $\tilde u$ 一致。
+\end{enumerate}
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch08-u_m收敛; kind=motivation; location=引理 8.4.3 的补证后（含原证明的注记）; basis=引理 8.4.3 与 (8.71)--(8.73) + 三条估计各自的平移不变性来源、$p\leqslant2$ 在 (8.73) 中的实质作用、$\partial_tu\in L^2$ 对时间连续性的必要性，以及缺少一致 $L^p$ 界或把模换成 $X_p$ 时结论失效的说明
+\begin{remark}\phantomsection\label{remark:ch08-u_m收敛}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{definition:ch08-omega极限点} 要在时间平移下取极限，而 $u$ 本身只在 $(0,\infty)$ 上有定义，故必须以关于 $m$ 一致的估计取代 $t\to\infty$ 时的极限。\eqref{align:ch08-8.71}--\eqref{align:ch08-8.73} 正是这类估计：它们把 $u$ 在 $L^\infty(0,\infty;X_p)$ 与 $L^2(Q_\infty)$ 中的界原封不动地传给每个 $u_m$，因而与 $m$ 无关。
+\item 三条估计的分工。\eqref{align:ch08-8.71} 只含 $L^\infty$ 与 $L^2$ 界，给出\eqref{align:ch08-8.70c}--\eqref{align:ch08-8.70f} 的弱（弱*）收敛；\eqref{align:ch08-8.72} 与\eqref{align:ch08-8.73} 把空间正则性与时间导数合并为 $W^{1,p}(Q_T)$ 中的界，配合 $X_p\hookrightarrow\hookrightarrow L^p(Q_T)$ 与时间差分估计给出强收敛\eqref{align:ch08-8.70a} 与弱收敛\eqref{align:ch08-8.70b}。\eqref{align:ch08-8.73} 中 $p\leqslant2$ 不可省：时间导数只属于 $L^2$，而 $L^2(Q_T)\subseteq L^p(Q_T)$ 当且仅当 $p\leqslant2$；$p>2$ 时\eqref{align:ch08-8.73} 失效，\eqref{align:ch08-8.70a} 的强收敛也就无从得到。$(\lambda(\Omega)T)^{1-p/2}$ 正是 $L^2\hookrightarrow L^p$ 的 Hölder 常数在 $Q_T$ 上的显式形式。
+\item 边界。(a) 时间连续性需要 $\partial_t u\in L^2(Q_\infty)$：若只有 $u\in L^\infty(0,\infty;X_p)$，则只能得到\eqref{align:ch08-8.70d} 的弱*收敛，$\tilde u$ 没有逐点取值，\eqref{align:ch08-8.70a} 与 $\tilde u(\cdot,0)$ 都无从谈起。(b) \eqref{align:ch08-8.70a} 中的模是 $L^p$ 而非 $X_p$：$\{u_m\}$ 在 $X_p$ 中只弱收敛，强收敛只在紧嵌入的靶空间 $L^p(\Omega)$ 中成立；若把 $L^p(\Omega)$ 换成 $X_p$，结论错误。(c) 引理只断言存在子列，而\cref{lemma:ch08-ν_m收敛} 也取子列；两者可以取公共子列，因为二者的假设对任意子列仍成立（见\hyperref[remark:ch08-ν_m收敛]{注记}(iii)）。
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}[平移 Young 测度列的胎紧性]\label{lemma:ch08-紧性}
+设\cref{theorem:ch08-omega极限非空} 的假设满足，即或 $N=1$ 而\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立，或 $N\geqslant2$ 而\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2f} 成立，且 $(u,\nu)$ 为 (P) 的整体 Young 测度值解。则\eqref{align:ch08-8.68} 定义的平移 Young 测度序列 $\{\nu_m\}\subseteq\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$ 在 $\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 中对所有 $T\in(0,\infty)$ 胎紧。
 \end{lemma}
 
 \begin{proof}
-固定 $T\in(0,\infty)$。由估计\eqref{align:ch08-8.21} 与\eqref{align:ch08-8.29}，序列 $\{|\nabla u_{\epsilon_k}|\}$ 在 $L^p(Q_\infty)$ 中有界（$N=1$ 时 $p\in(1,\infty)$，$N\geqslant2$ 时 $p\in(1,2]$），因而由\cref{lemma:ch02-有界一致可积} 在每个 $Q_\tau=\Omega\times(0,\tau)$（$\tau>0$）中对每个 $q\in(1,p)$ 为 $q$--一致可积。于是由\cref{proposition:ch05-弱收敛}，对每个 $m\in\mathbb{N}$，
+固定 $T\in(0,\infty)$，并记 $Q_{m,T}\triangleq \Omega\times(t_m,t_m+T)$。由估计\eqref{align:ch08-8.21} 与\eqref{align:ch08-8.29}，序列 $\{|\nabla u_{\varepsilon_k}|\}$ 在 $L^p(Q_\infty)$ 中有界（$N=1$ 时 $p\in(1,\infty)$，$N\geqslant2$ 时 $p\in(1,2]$），因而由\cref{lemma:ch02-有界一致可积} 在每个 $Q_\tau=\Omega\times(0,\tau)$（$\tau>0$）中对每个 $q\in(1,p)$ 为 $q$--一致可积。于是由\cref{proposition:ch05-弱收敛}，存在常数 $C>0$，使对每个 $m\in\mathbb{N}$ 有
 \begin{align}
-C\geqslant\lim_{k\to\infty}\iint_{Q_{m,T}}|\nabla u_{\epsilon_k}|^q\,\mathrm{d}x\,\mathrm{d}t
+C\geqslant\lim_{k\to\infty}\iint_{Q_{m,T}}|\nabla u_{\varepsilon_k}|^q\,\mathrm{d}x\,\mathrm{d}t
 &=\iint_{Q_{m,T}}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}|y|^q\,\mathrm{d}\nu_{(x,t)}(y)\nonumber\\
-&=\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}|y|^q\,\mathrm{d}\nu_{m\,(x,t)}(y) \label{align:ch08-8.74}
+&=\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}|y|^q\,\mathrm{d}\nu_{m\,(x,t)}(y). \label{align:ch08-8.74}
 \end{align}
-其中常数 $C>0$，$Q_{m,T}\triangleq \Omega\times(t_m,t_m+T)$。令 $K_j\triangleq \{y\in\mathbb{R}^N\mid|y|\leqslant j\}$，它紧；在余集 $K_j^c$ 上有 $|y|>j$（$j\in\mathbb{N}$）。由 Chebyshev 不等式与\eqref{align:ch08-8.74} 有
+令 $K_j\triangleq \{y\in\mathbb{R}^N\mid|y|\leqslant j\}$，它紧；在余集 $K_j^c$ 上有 $|y|>j$（$j\in\mathbb{N}$）。由 Chebyshev 不等式与\eqref{align:ch08-8.74} 有
 \begin{align*}
 j^q\nu_m(Q_T\times K_j^c)\leqslant\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}|y|^q\,\mathrm{d}\nu_{m\,(x,t)}(y)\leqslant C,
 \end{align*}
@@ -101,86 +193,177 @@ j^q\nu_m(Q_T\times K_j^c)\leqslant\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\math
 \begin{align}
 \nu_m(Q_T\times K_j^c)\leqslant\frac{C}{j^q}\quad\text{对所有 }j,m\in\mathbb{N}. \label{align:ch08-8.75}
 \end{align}
-任取 $\epsilon>0$，选 $j_0>(C/\epsilon)^{1/q}$。由\eqref{align:ch08-8.75} 有 $\nu_m(Q_T\times K_{j_0}^c)<\epsilon$ 对所有 $m\in\mathbb{N}$，结论即得。
+任取 $\varepsilon>0$，选 $j_0>(C/\varepsilon)^{1/q}$。由\eqref{align:ch08-8.75} 有 $\nu_m(Q_T\times K_{j_0}^c)<\varepsilon$ 对所有 $m\in\mathbb{N}$。按\cref{definition:ch05-Young胎紧}，$\{\nu_m\}$ 在 $\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 中胎紧，结论即得。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch08-紧性; kind=proof; location=引理 8.4.4 的原证明后; basis=原证明以“By estimates (8.21) and (8.29) ... is bounded ... and thus by Lemma 2.8.12 is q-uniformly integrable”带过 (8.74) 第一等式的来源与常数 $C$ 关于 $m$ 的一致性的来源；此处补出 Hölder 估计给出的一致常数、弱收敛的适用条件、变量替换的核对，以及 $j_0$ 的取法
+\begin{proof}[补证：\cref{lemma:ch08-紧性} 原证明中省略的细节]
+\begin{enumerate}[(i)]
+\item 关于 $q$--一致可积性。由\eqref{align:ch08-8.29}（$N\geqslant2$）或\eqref{align:ch08-8.21}（$N=1$）有 $\sup_k\|\nabla u_{\varepsilon_k}\|_{L^p(Q_\infty)}\leqslant\widetilde C$，其中 $\widetilde C>0$ 只依赖于 $u_0$ 与 $\lambda(\Omega)$。因 $\lambda_{N+1}(Q_\tau)<\infty$ 与 $p>1$，由\cref{lemma:ch02-有界一致可积} 得：对每个 $q<p$，序列 $\{|\nabla u_{\varepsilon_k}|^q\}$ 在每个 $L^1(Q_\tau)$ 中有界且一致可积。
+\item 关于\eqref{align:ch08-8.74} 中第一个等式的适用条件。\cref{proposition:ch05-弱收敛} 要求 $\{|\nabla u_{\varepsilon_k}|^q\}$ 在 $L^1(Q_{m,T})$ 中有界且一致可积，且 $h(x,t,y)\triangleq|y|^q$ 为 Carathéodory 函数；$|y|^q$ 关于 $y$ 连续且不依赖于 $(x,t)$，这两条均已满足。于是一方面存在 $\nu$ 使 $|\nabla u_{\varepsilon_k}|^q\rightharpoonup\int_{\mathbb{R}^N}|y|^q\,\mathrm{d}\nu_{(x,t)}(y)$ 在 $L^1(Q_{m,T})$ 中，另一方面 $\nu$ 在 $Q_{m,T}$ 上的限制正是 (P) 的整体 Young 测度值解 $\nu$ 的限制，故极限函数为 $(x,t)\mapsto\int_{\mathbb{R}^N}|y|^q\,\mathrm{d}\nu_{(x,t)}(y)$。
+\item 关于常数 $C$ 与 $m$ 无关。对每个 $k$ 与每个 $m$，
+\begin{align*}
+\iint_{Q_{m,T}}|\nabla u_{\varepsilon_k}|^q\,\mathrm{d}x\,\mathrm{d}t
+\leqslant\|\nabla u_{\varepsilon_k}\|^q_{L^p(Q_{m,T})}\,\lambda_{N+1}(Q_{m,T})^{1-q/p}
+\leqslant\widetilde C^{\,q}\,(\lambda(\Omega)T)^{1-q/p},
+\end{align*}
+其中用到 $p>q$ 与 $\lambda_{N+1}(Q_{m,T})=\lambda(\Omega)T$。故\eqref{align:ch08-8.74} 中的 $C$ 可取为 $\widetilde C^{\,q}(\lambda(\Omega)T)^{1-q/p}$，它与 $m$（也与 $k$）无关；这一点正是胎紧性所要求的一致性的来源。
+\item 关于\eqref{align:ch08-8.74} 中后两个等式。第二个等式是变量替换 $(x,t)\mapsto(x,t+t_m)$：该映射把 $Q_T$ 双射到 $Q_{m,T}$ 并保持 Lebesgue 测度。第三个等式是\eqref{align:ch08-8.68} 中 $\nu_{m\,(x,t)}=\nu_{(x,t+t_m)}$ 的定义。
+\item 关于结论。Chebyshev 不等式给出 $j^q\nu_m(Q_T\times K_j^c)\leqslant\iint_{Q_T}\int_{K_j^c}|y|^q\,\mathrm{d}\nu_m\leqslant C$，即\eqref{align:ch08-8.75}；取 $j_0>(C/\varepsilon)^{1/q}$ 使 $C/j_0^q<\varepsilon$，则紧集 $K_{j_0}\subseteq\mathbb{R}^N$ 满足 $\nu_m(Q_T\times K_{j_0}^c)<\varepsilon$ 对所有 $m$ 成立，而 $K_{j_0}$ 与 $m$ 无关。
+\end{enumerate}
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch08-紧性; kind=motivation; location=引理 8.4.4 的补证后（含原证明的注记）; basis=引理 8.4.4 与 (8.74)--(8.75) + 胎紧性作为窄紧性判据的动机、$q<p$ 与常数 $C$ 关于 $m$ 一致的作用、去掉一致 $L^p$ 界后质量沿 $y$ 逃逸的反例
+\begin{remark}\phantomsection\label{remark:ch08-紧性}
+\begin{enumerate}[(i)]
+\item 引入动机。$\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 中的窄相对序列紧性由胎紧性刻画（\cref{theorem:ch05-弱紧Young}，即 Prokhorov 型定理）。对 Young 测度而言，总质量固定为 $\lambda_{N+1}(Q_T)$，唯一的紧性障碍是质量沿 $y$ 方向逃向无穷，故本引理正是为\cref{lemma:ch08-ν_m收敛} 提供窄紧性的前提。
+\item 假设的作用。胎紧性来自 $|\nabla u_{\varepsilon_k}|$ 的一致 $L^p$ 界：$p>1$ 使 $L^p$ 有界蕴含 $q$-一致可积（每个 $q<p$），从而\eqref{align:ch08-8.74} 给出 $q$ 阶矩的一致界 $C$；由 Chebyshev 不等式，$q$ 阶矩界等价于 $|y|>j$ 上的质量界 $C/j^q$。$q<p$ 的严格性是实质的：$q=p$ 时\eqref{align:ch08-8.80} 中的因子 $j^{-(p-q)}$ 退化为 $1$，\cref{lemma:ch08-积分收敛} 的证明失效。$C$ 与 $m$ 无关是胎紧性定义的要求（$\varepsilon$ 与 $K$ 必须对整族一致），而\eqref{align:ch08-8.74} 右端的界只依赖 $\lambda(\Omega)T$ 与 $u_0$。
+\item 边界：去掉一致 $L^p$ 界即失去胎紧性。取 $\psi\in C^1_c(\Omega)$、$\psi\not\equiv0$，令 $u_m\triangleq m\psi$（不依赖 $t$）并令 $\nu_m$ 为 $\nabla u_m=m\nabla\psi$ 的 Young 测度（即像测度）。则 $\nu_m(Q_T\times\mathbb{R}^N)=\lambda_{N+1}(Q_T)$ 而
+\begin{align*}
+\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}|y|^q\,\mathrm{d}\nu_{m\,(x,t)}(y)
+=m^q\iint_{Q_T}|\nabla\psi|^q\,\mathrm{d}x\,\mathrm{d}t\to\infty;
+\end{align*}
+对任意紧集 $K\subseteq\mathbb{R}^N$，当 $m$ 充分大时 $\{|\nabla u_m|>0\}$ 上 $\nabla u_m$ 的象全部落在 $K^c$ 中，故 $\nu_m(Q_T\times K^c)\geqslant c_0>0$，$\{\nu_m\}$ 不胎紧。该序列满足 $u_m\in L^\infty(0,\infty;W^{1,p}_0(\Omega))$ 与 $\partial_t u_m=0$，仅不满足关于 $m$ 一致的 $L^p$ 界，故\eqref{align:ch08-8.21}--\eqref{align:ch08-8.29} 中的一致性不可省。
+\end{enumerate}
+\end{remark}
+
 \begin{lemma}[平移 Young 测度列的收敛]\label{lemma:ch08-ν_m收敛}
-设\cref{theorem:ch08-omega极限非空} 的假设满足。则存在\eqref{align:ch08-8.68} 中序列 $\{\nu_m\}$ 的子列（为简便不重新标号）与 $\tilde\nu\in\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$，使 $\nu_m\stackrel{*}{\rightharpoonup}\tilde\nu$ 在 $\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 对所有 $T\in(0,\infty)$。
+设\cref{theorem:ch08-omega极限非空} 的假设满足，即或 $N=1$ 而\eqref{align:ch08-8.1a}--\eqref{align:ch08-8.1d} 成立，或 $N\geqslant2$ 而\eqref{align:ch08-8.2a}--\eqref{align:ch08-8.2f} 成立，且 $(u,\nu)$ 为 (P) 的整体 Young 测度值解。则存在\eqref{align:ch08-8.68} 中序列 $\{\nu_m\}$ 的子列（为简便不重新标号）与 $\tilde\nu\in\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$，使对所有 $T\in(0,\infty)$ 有 $\nu_m\stackrel{n}{\rightharpoonup}\tilde\nu$ 在 $\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 中。
 \end{lemma}
 
 \begin{proof}
-由\cref{lemma:ch08-紧性} 与\cref{theorem:ch05-弱紧Young} 经标准对角论证即得。
+由\cref{lemma:ch08-紧性} 与\cref{theorem:ch05-弱紧Young} 经对角论证即得。
 \end{proof}
 
-\begin{lemma}[平移测度的积分收敛]\label{lemma:ch08-积分收敛}
-设\cref{theorem:ch08-omega极限非空} 的假设满足。设 $\{\nu_m\}\subseteq\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$ 为\eqref{align:ch08-8.68} 定义的序列，$\rho\in C(\mathbb{R}^N)$ 满足 $|\rho(y)|\leqslant M(1+|y|^q)$（对某个 $M>0$ 与 $q\in(0,p)$，其中 $N=1$ 时 $p\in(1,\infty)$，$N\geqslant2$ 时 $p\in(1,2]$）。则对每个 $T\in(0,\infty)$：
+% SUPPLEMENT: parent=lemma:ch08-ν_m收敛; kind=proof; location=引理 8.4.5 的原证明后; basis=原证明只有“by a standard diagonal argument”一句；此处补出逐 $T=n$ 抽取子列的对角构造、$\nu_m$ 总质量固定为 $\lambda_{N+1}$ 因而不损失质量、各层限制的相容性（窄极限唯一）、由 $Q_n$ 上的测度拼接出 $Q_\infty$ 上的 $\tilde\nu$ 并验证其边缘为 $\lambda_{N+1}$、以及由 $Q_n$ 过渡到任意 $Q_T$ 的截断论证
+\begin{proof}[补证：\cref{lemma:ch08-ν_m收敛} 原证明中省略的细节]
 \begin{enumerate}[(i)]
-\item\label{item:ch08-intconv-i} 映射 $(x,t)\mapsto\int_{\mathbb{R}^N}\rho(y)\,\mathrm{d}\nu_{m\,(x,t)}(y)$ 属于 $L^1(Q_T)$；
-\item\label{item:ch08-intconv-ii} 对所有 $\zeta\in L^\infty(Q_T)$，
+\item 逐层抽取子列。对每个 $n\in\mathbb{N}$，\cref{lemma:ch08-紧性}（取 $T=n$）给出 $\{\nu_m\}$ 在 $\mathcal{Y}^+(Q_n;\mathbb{R}^N)$ 中胎紧，故由\cref{theorem:ch05-弱紧Young} 存在子列与 $\nu^{(n)}\in\mathcal{Y}^+(Q_n;\mathbb{R}^N)$，使该子列在 $\mathcal{Y}^+(Q_n;\mathbb{R}^N)$ 中窄收敛于 $\nu^{(n)}$。按 $n=1,2,\cdots$ 逐次抽取：令 $\{m^{(1)}_j\}$ 为 $n=1$ 所用的指标列，$\{m^{(n)}_j\}$ 为 $\{m^{(n-1)}_j\}$ 的、对层 $Q_n$ 抽取的子列。取对角线 $m_j\triangleq m^{(j)}_j$。对固定的 $n$，$\{m_j\}_{j\geqslant n}$ 是 $\{m^{(n)}_j\}_{j}$ 的子列，故
+\begin{align*}
+\nu_{m_j}\stackrel{n}{\rightharpoonup}\nu^{(n)}\quad\text{在 }\mathcal{Y}^+(Q_n;\mathbb{R}^N)\text{ 中，当 }j\to\infty.
+\end{align*}
+\item 各层之间的相容性。设 $n'<n$。$\{\nu_{m_j}\}$ 在 $\mathcal{Y}^+(Q_n)$ 中窄收敛于 $\nu^{(n)}$，故其限制在 $\mathcal{Y}^+(Q_{n'})$ 中窄收敛于 $\nu^{(n)}|_{Q_{n'}}$；另一方面同一序列在 $\mathcal{Y}^+(Q_{n'})$ 中窄收敛于 $\nu^{(n')}$。由窄极限的唯一性得 $\nu^{(n)}|_{Q_{n'}}=\nu^{(n')}$。故存在 $Q_\infty\times\mathbb{R}^N$ 上的 Radon 测度 $\tilde\nu$，使 $\tilde\nu$ 在 $Q_n\times\mathbb{R}^N$ 上的限制等于 $\nu^{(n)}$：对 Borel 集 $E\subseteq Q_\infty\times\mathbb{R}^N$ 令
+\begin{align*}
+\tilde\nu(E)\triangleq\lim_{n\to\infty}\nu^{(n)}(E\cap(Q_n\times\mathbb{R}^N)),
+\end{align*}
+右端的极限由 $E\cap(Q_n\times\mathbb{R}^N)$ 关于 $n$ 单调递增与测度的单调收敛性存在，且由相容性该定义不依赖于取极限的方式。
+\item 边缘与概率性质。对 Borel 集 $E\subseteq Q_\infty$，由 $\nu^{(n)}\in\mathcal{Y}^+(Q_n;\mathbb{R}^N)$ 得 $\nu^{(n)}((E\cap Q_n)\times\mathbb{R}^N)=\lambda_{N+1}(E\cap Q_n)$，故
+\begin{align*}
+\tilde\nu(E\times\mathbb{R}^N)=\lim_{n\to\infty}\lambda_{N+1}(E\cap Q_n)=\lambda_{N+1}(E),
+\end{align*}
+即 $\tilde\nu$ 在 $Q_\infty$ 上的边缘为 $\lambda_{N+1}$；又每个 $\nu^{(n)}$ 的离散分解几乎处处取值于概率测度，故 $\tilde\nu$ 的离散分解亦然（逐层取 $n$ 充分大并对零测集取并）。于是 $\tilde\nu\in\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$。
+\item 由 $Q_n$ 过渡到任意 $Q_T$。设 $T\in(0,\infty)$，取 $n>T$。对 $h\in C_b(Q_T\times\mathbb{R}^N)$ 与 $\varepsilon>0$，取 $\chi\in C_c(Q_T)$、$0\leqslant\chi\leqslant1$，使 $\chi=1$ 在 $Q_T$ 的一个子集上、且该子集关于 $\lambda_{N+1}$ 的余测度小于 $\varepsilon$（例如取 $\chi=\chi_1(x)\chi_2(t)$，其中 $\chi_1\in C_c(\Omega)$、$\chi_2\in C_c((0,T))$ 且二者在除去测度小于 $\varepsilon$ 的集合上等于 $1$）。由于 $\chi h$ 的零延拓属于 $C_c(Q_T\times\mathbb{R}^N)\subseteq C_b(Q_n\times\mathbb{R}^N)$，由第 (i) 步得 $\int\chi h\,\mathrm{d}\nu_{m_j}\to\int\chi h\,\mathrm{d}\tilde\nu$；又 $\int(1-\chi)|h|\,\mathrm{d}\nu_{m_j}\leqslant\|h\|_\infty\,\lambda_{N+1}(\{\chi<1\})<\varepsilon\|h\|_\infty$ 对一切 $m_j$ 与对 $\tilde\nu$ 同样成立（因二者的边缘都是 $\lambda_{N+1}$）。由 $\varepsilon$ 的任意性得 $\int h\,\mathrm{d}\nu_{m_j}\to\int h\,\mathrm{d}\tilde\nu$，即 $\nu_m\stackrel{n}{\rightharpoonup}\tilde\nu$ 在 $\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 中。
+\end{enumerate}
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch08-ν_m收敛; kind=motivation; location=引理 8.4.5 的补证后（含原证明的注记）; basis=引理 8.4.5 与第 5 章定理 5.3.11 + 窄紧性升级为收敛子列的动机、对角论证为何只得到逐 $T$ 的收敛、质量不逃逸（边缘固定）使极限仍属 $\mathcal{Y}^+$ 的说明、以及可以取公共子列的说明
+\begin{remark}\phantomsection\label{remark:ch08-ν_m收敛}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{lemma:ch08-紧性} 只给出相对窄紧性（质量不向无穷远逃逸），本引理把它兑现为具体的收敛子列与极限 $\tilde\nu$。这一步与\cref{lemma:ch08-u_m收敛} 合起来构成\cref{definition:ch08-omega极限点} 条件 (i) 的两个分量，因此\cref{theorem:ch08-omega极限非空}(i) 的“非空性”实际上全部来自这两条紧性引理。
+\item 假设的作用。本引理除\cref{theorem:ch08-omega极限非空} 的假设外不含新假设：窄紧性由\cref{lemma:ch08-紧性} 提供，而\cref{theorem:ch05-弱紧Young} 只要求胎紧性。关键在于 Young 测度的总质量恒为 $\lambda_{N+1}$（即边缘固定），故窄极限不会丢失质量，极限仍属于 $\mathcal{Y}^+(Q_T;\mathbb{R}^N)$ 而非仅为带号或 Radon 测度。若换成一般的 Radon 测度列，胎紧性不足以保证极限的质量守恒，可能漏掉“逃逸的质量”。
+\item 边界与推理的次序。(a) 对角论证只能给出对每个固定 $T$ 的窄收敛子列；序列本身依赖于层 $Q_n$ 的抽取次序，故不能断言在 $Q_\infty$ 上整体窄收敛。要得到后者需额外的一致胎紧性（即\eqref{align:ch08-8.74} 中的 $C$ 关于 $T$ 一致），本节的论证不需要它。(b) 抽取顺序有影响：本引理与\cref{lemma:ch08-u_m收敛} 都要取子列，而两条引理的假设对任意子列仍成立，故可取先按\cref{lemma:ch08-u_m收敛} 抽取、再在其子列上按本引理抽取的公共子列；\cref{theorem:ch08-omega极限非空} 的证明正是这样使用两者的。(c) 窄收敛不能减弱为弱*收敛：见\hyperref[remark:ch08-omega极限点]{注记}(iii)。
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}[平移测度的积分收敛]\label{lemma:ch08-积分收敛}
+设\cref{theorem:ch08-omega极限非空} 的假设满足，$\{\nu_m\}\subseteq\mathcal{Y}^+(Q_\infty;\mathbb{R}^N)$ 为\eqref{align:ch08-8.68} 定义的平移 Young 测度序列。设 $\rho\in C(\mathbb{R}^N)$ 满足
+\begin{align*}
+|\rho(y)|\leqslant M(1+|y|^q)\quad\text{对所有 }y\in\mathbb{R}^N
+\end{align*}
+其中 $M>0$，$q\in(0,p)$（$N=1$ 时 $p\in(1,\infty)$，$N\geqslant2$ 时 $p\in(1,2]$）。则对每个 $T\in(0,\infty)$：
+\begin{enumerate}[(i)]
+\item\label{item:ch08-intconv-i} 对每个 $m\in\mathbb{N}$，映射 $(x,t)\mapsto\int_{\mathbb{R}^N}\rho(y)\,\mathrm{d}\nu_{m\,(x,t)}(y)$ 属于 $L^1(Q_T)$；
+\item\label{item:ch08-intconv-ii} 对所有 $\zeta\in L^\infty(Q_T)$ 与所有满足\eqref{align:ch08-8.56} 的 $f_j\in C_c([0,\infty))$（$j\in\mathbb{N}$）有
 \begin{align}
 \lim_{j\to\infty}\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}f_j(|y|)\rho(y)\,\mathrm{d}\nu_{m\,(x,t)}(y)
 =\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}\rho(y)\,\mathrm{d}\nu_{m\,(x,t)}(y) \label{align:ch08-8.76}
 \end{align}
-其中 $f_j\in C_c([0,\infty))$ 如\eqref{align:ch08-8.56}，且该收敛关于 $m\in\mathbb{N}$ 一致。
+且该收敛关于 $m\in\mathbb{N}$ 一致。
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-(i) 由不等式\eqref{align:ch08-8.21} 与\eqref{align:ch08-8.29}，经\cref{lemma:ch02-有界一致可积}，对每个 $q\in(0,p)$，序列 $\{|\nabla u_{\epsilon_k}|^q\}\subseteq L^1(Q_{m,T})$ 有界且一致可积。由 $\rho$ 的增长假设与\cref{proposition:ch05-弱收敛} 有
+(i) 由不等式\eqref{align:ch08-8.21} 与\eqref{align:ch08-8.29}，经\cref{lemma:ch02-有界一致可积}，对每个 $q\in(0,p)$，序列 $\{|\nabla u_{\varepsilon_k}|^q\}\subseteq L^1(Q_{m,T})$ 有界且一致可积。由 $\rho$ 的增长假设与\cref{proposition:ch05-弱收敛} 有
 \begin{align*}
 \iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\left|\int_{\mathbb{R}^N}\rho(y)\,\mathrm{d}\nu_{m\,(x,t)}(y)\right|
 &\leqslant M\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}(1+|y|^q)\,\mathrm{d}\nu_{m\,(x,t)}(y)\\
 &=M\iint_{Q_{m,T}}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}(1+|y|^q)\,\mathrm{d}\nu_{(x,t)}(y)\\
-&=M\lim_{k\to\infty}\iint_{Q_{m,T}}(1+|\nabla u_{\epsilon_k}|^q)\,\mathrm{d}x\,\mathrm{d}t<\infty
+&=M\lim_{k\to\infty}\iint_{Q_{m,T}}(1+|\nabla u_{\varepsilon_k}|^q)\,\mathrm{d}x\,\mathrm{d}t<\infty
 \end{align*}
-（可能抽 $\{u_{\epsilon_k}\}$ 的子列，不重新标号）。结论即得。
+（可能抽 $\{u_{\varepsilon_k}\}$ 的子列，不重新标号）。结论即得。
 
-(ii) 令 $g_j\triangleq 1-f_j$；则 $0\leqslant g_j\leqslant1$ 在 $[0,\infty)$ 上且 $g_j=0$ 在 $[0,j]$ 上（$j\in\mathbb{N}$）。由于序列 $\{|\nabla u_{\epsilon_k}|^q\}\subseteq L^1(Q_{m,T})$ 有界且一致可积（见 (i)），由 $\rho$ 的增长假设，每个序列 $\{g_j(|\nabla u_{\epsilon_k}|)|\rho(\nabla u_{\epsilon_k})|\}$（$j\in\mathbb{N}$）亦然。于是由\cref{proposition:ch05-弱收敛}，存在 $\{g_j(|\nabla u_{\epsilon_k}|)|\rho(\nabla u_{\epsilon_k})|\}$ 的子列（不重新标号，可依赖于 $j,m$），使对所有 $\zeta\in L^\infty(Q_T)$，
+(ii) 令 $g_j\triangleq 1-f_j$；则 $0\leqslant g_j\leqslant1$ 在 $[0,\infty)$ 上且 $g_j=0$ 在 $[0,j]$ 上（$j\in\mathbb{N}$）。由于序列 $\{|\nabla u_{\varepsilon_k}|^q\}\subseteq L^1(Q_{m,T})$ 有界且一致可积（见 (i)），由 $\rho$ 的增长假设，每个序列 $\{g_j(|\nabla u_{\varepsilon_k}|)|\rho(\nabla u_{\varepsilon_k})|\}$（$j\in\mathbb{N}$）亦然。于是由\cref{proposition:ch05-弱收敛}，存在 $\{g_j(|\nabla u_{\varepsilon_k}|)|\rho(\nabla u_{\varepsilon_k})|\}$ 的子列（不重新标号，可依赖于 $j,m$），使对所有 $\zeta\in L^\infty(Q_T)$，
 \begin{align}
-\iint_{Q_{m,T}}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}g_j(|y|)|\rho(y)|\,\mathrm{d}\nu_{(x,t)}(y)
-=\lim_{k\to\infty}\iint_{Q_{m,T}}[g_j(|\nabla u_{\epsilon_k|})|\rho(\nabla u_{\epsilon_k})|](x,t)\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t \label{align:ch08-8.77}
+\iint_{Q_{m,T}}\zeta_m(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}g_j(|y|)|\rho(y)|\,\mathrm{d}\nu_{(x,t)}(y)
+=\lim_{k\to\infty}\iint_{Q_{m,T}}[g_j(|\nabla u_{\varepsilon_k}|)|\rho(\nabla u_{\varepsilon_k})|](x,t)\zeta_m(x,t)\,\mathrm{d}x\,\mathrm{d}t \label{align:ch08-8.77}
 \end{align}
-（$j,m\in\mathbb{N}$）。于是对所有 $\zeta\in L^\infty(Q_T)$ 与 $j,m\in\mathbb{N}$，
+（$j,m\in\mathbb{N}$），其中 $\zeta_m(x,t)\triangleq\zeta(x,t-t_m)$ 定义在 $Q_{m,T}$ 上且 $\|\zeta_m\|_{L^\infty(Q_{m,T})}=\|\zeta\|_{L^\infty(Q_T)}$。于是对所有 $\zeta\in L^\infty(Q_T)$ 与 $j,m\in\mathbb{N}$，
 \begin{align}
-\left|\iint_{Q_{m,T}}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}g_j(|y|)\rho(y)\,\mathrm{d}\nu_{(x,t)}(y)\right|
-\leqslant\|\zeta\|_{L^\infty(Q_T)}\sup_{k\in\mathbb{N}}\iint_{Q_{m,T}}[g_j(|\nabla u_{\epsilon_k|})|\rho(\nabla u_{\epsilon_k})|](x,t)\,\mathrm{d}x\,\mathrm{d}t. \label{align:ch08-8.78}
+\left|\iint_{Q_{m,T}}\zeta_m(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}g_j(|y|)\rho(y)\,\mathrm{d}\nu_{(x,t)}(y)\right|
+\leqslant\|\zeta\|_{L^\infty(Q_T)}\sup_{k\in\mathbb{N}}\iint_{Q_{m,T}}[g_j(|\nabla u_{\varepsilon_k}|)|\rho(\nabla u_{\varepsilon_k})|](x,t)\,\mathrm{d}x\,\mathrm{d}t. \label{align:ch08-8.78}
 \end{align}
-由 $\rho$ 的增长条件存在 $M_0>0$，使对所有 $|y|\geqslant1$ 有 $|\rho(y)|\leqslant M_0|y|^q$。令 $E_{j,k,m}\triangleq \{(x,t)\in Q_{m,T}\mid|\nabla u_{\epsilon_k}|(x,t)\geqslant j\}$；于是 $g_j(|\nabla u_{\epsilon_k}|)=0$ 在 $(E_{j,k,m})^c$ 上，$g_j(|\nabla u_{\epsilon_k}|)\leqslant1$ 在 $E_{j,k,m}$ 上。对任意固定的 $j,k,m\in\mathbb{N}$，有
+由 $\rho$ 的增长条件存在 $M_0>0$，使对所有 $y\in\mathbb{R}^N$、$|y|\geqslant1$ 有 $|\rho(y)|\leqslant M_0|y|^q$。令 $E_{j,k,m}\triangleq \{(x,t)\in Q_{m,T}\mid|\nabla u_{\varepsilon_k}|(x,t)\geqslant j\}$；于是 $g_j(|\nabla u_{\varepsilon_k}|)=0$ 在 $(E_{j,k,m})^c$ 上，$g_j(|\nabla u_{\varepsilon_k}|)\leqslant1$ 在 $E_{j,k,m}$ 上。对任意固定的 $j,k,m\in\mathbb{N}$，有
 \begin{align}
-&\iint_{Q_{m,T}}[g_j(|\nabla u_{\epsilon_k|})|\rho(\nabla u_{\epsilon_k})|](x,t)\,\mathrm{d}x\,\mathrm{d}t\nonumber\\
-&\quad=\iint_{E_{j,k,m}}[g_j(|\nabla u_{\epsilon_k|})|\rho(\nabla u_{\epsilon_k})|](x,t)\,\mathrm{d}x\,\mathrm{d}t\nonumber\\
-&\quad\leqslant M_0\iint_{E_{j,k,m}}|\nabla u_{\epsilon_k}|^q(x,t)\,\mathrm{d}x\,\mathrm{d}t\nonumber\\
-&\quad\leqslant M_0\left(\iint_{E_{j,k,m}}|\nabla u_{\epsilon_k}|^p(x,t)\,\mathrm{d}x\,\mathrm{d}t\right)^{q/p}
+&\iint_{Q_{m,T}}[g_j(|\nabla u_{\varepsilon_k}|)|\rho(\nabla u_{\varepsilon_k})|](x,t)\,\mathrm{d}x\,\mathrm{d}t\nonumber\\
+&\quad=\iint_{E_{j,k,m}}[g_j(|\nabla u_{\varepsilon_k}|)|\rho(\nabla u_{\varepsilon_k})|](x,t)\,\mathrm{d}x\,\mathrm{d}t\nonumber\\
+&\quad\leqslant M_0\iint_{E_{j,k,m}}|\nabla u_{\varepsilon_k}|^q(x,t)\,\mathrm{d}x\,\mathrm{d}t\nonumber\\
+&\quad\leqslant M_0\left(\iint_{E_{j,k,m}}|\nabla u_{\varepsilon_k}|^p(x,t)\,\mathrm{d}x\,\mathrm{d}t\right)^{q/p}
 [\lambda_{N+1}(E_{j,k,m})]^{1-q/p}. \label{align:ch08-8.79}
 \end{align}
 另一方面，由 Chebyshev 不等式有
 \begin{align*}
-\lambda_{N+1}(E_{j,k,m})\leqslant\left(\iint_{E_{j,k,m}}|\nabla u_{\epsilon_k}|^p(x,t)\,\mathrm{d}x\,\mathrm{d}t\right)j^{-p}.
+\lambda_{N+1}(E_{j,k,m})\leqslant\left(\iint_{E_{j,k,m}}|\nabla u_{\varepsilon_k}|^p(x,t)\,\mathrm{d}x\,\mathrm{d}t\right)j^{-p}.
 \end{align*}
 由\eqref{align:ch08-8.79} 有
 \begin{align}
-&\iint_{Q_{m,T}}[g_j(|\nabla u_{\epsilon_k|})|\rho(\nabla u_{\epsilon_k})|](x,t)\,\mathrm{d}x\,\mathrm{d}t\nonumber\\
-&\quad\leqslant M_0\left(\iint_{E_{j,k,m}}|\nabla u_{\epsilon_k}|^p(x,t)\,\mathrm{d}x\,\mathrm{d}t\right)j^{-(p-q)}
+&\iint_{Q_{m,T}}[g_j(|\nabla u_{\varepsilon_k}|)|\rho(\nabla u_{\varepsilon_k})|](x,t)\,\mathrm{d}x\,\mathrm{d}t\nonumber\\
+&\quad\leqslant M_0\left(\iint_{E_{j,k,m}}|\nabla u_{\varepsilon_k}|^p(x,t)\,\mathrm{d}x\,\mathrm{d}t\right)j^{-(p-q)}\nonumber\\
+&\quad\leqslant M_0T\sup_{t\in(0,\infty)}\left(\int_\Omega|\nabla u_{\varepsilon_k}|^p(x,t)\,\mathrm{d}x\right)j^{-(p-q)}
 \leqslant KM_0T\,j^{-(p-q)} \label{align:ch08-8.80}
 \end{align}
 其中常数 $K>0$ 仅依赖于 $u_0$ 与 $\lambda_N(\Omega)$（见不等式\eqref{align:ch08-8.21} 与\eqref{align:ch08-8.29} 的证明）。由\eqref{align:ch08-8.78} 与\eqref{align:ch08-8.80} 得
 \begin{align*}
-\left|
-\begin{aligned}
-&\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}\rho(y)\,\mathrm{d}\nu_{m\,(x,t)}(y)
--\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}f_j(|y|)\rho(y)\,\mathrm{d}\nu_{m\,(x,t)}(y)\\
-&=\left|\iint_{Q_{m,T}}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}g_j(|y|)\rho(y)\,\mathrm{d}\nu_{(x,t)}(y)\right|
+&\left|\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}\rho(y)\,\mathrm{d}\nu_{m\,(x,t)}(y)\right.\\
+&\qquad\left.-\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}f_j(|y|)\rho(y)\,\mathrm{d}\nu_{m\,(x,t)}(y)\right|\\
+&\qquad=\left|\iint_{Q_{m,T}}\zeta_m(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}g_j(|y|)\rho(y)\,\mathrm{d}\nu_{(x,t)}(y)\right|
 \leqslant KM_0T\,j^{-(p-q)}\|\zeta\|_\infty,
-\end{aligned}
-\right.
 \end{align*}
 故断言 (ii) 得证。证毕。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch08-积分收敛; kind=proof; location=引理 8.4.6 的原证明后; basis=原证明中“by the growth assumption on ρ and Remark 2.8.3 the same holds”一句未给出 $g_j|\rho|$ 的一致可积性的来源，(8.80) 的中间一步 sup 估计被略去，且 (8.74) 型的变量替换未说明；此处补出 $g_j|\rho|\leqslant M_0|\nabla u_{\varepsilon_k}|^q$ 的逐点估计、sup 步的来源、以及平移 $\zeta_m$ 的处理
+\begin{proof}[补证：\cref{lemma:ch08-积分收敛} 原证明中省略的细节]
+\begin{enumerate}[(i)]
+\item 关于 $\{g_j(|\nabla u_{\varepsilon_k}|)|\rho(\nabla u_{\varepsilon_k})|\}$ 的一致可积性。取 $j\geqslant1$。由 $g_j=0$ 于 $[0,j]$ 与 $|\rho(y)|\leqslant M(1+|y|^q)$，在 $|\nabla u_{\varepsilon_k}|\leqslant j$ 处该乘积为零；在 $|\nabla u_{\varepsilon_k}|>j\geqslant1$ 处有 $|\rho(\nabla u_{\varepsilon_k})|\leqslant M_0|\nabla u_{\varepsilon_k}|^q$，其中 $M_0\triangleq M(1+1)$ 可取为 $2M$（因 $1+|y|^q\leqslant2|y|^q$ 当 $|y|\geqslant1$）。故
+\begin{align*}
+0\leqslant g_j(|\nabla u_{\varepsilon_k}|)|\rho(\nabla u_{\varepsilon_k})|\leqslant M_0|\nabla u_{\varepsilon_k}|^q\quad\text{在 }Q_{m,T}\text{ 上}.
+\end{align*}
+由于 $\{|\nabla u_{\varepsilon_k}|^q\}$ 在 $L^1(Q_{m,T})$ 中有界且一致可积（见原证明 (i)），由\cref{lemma:ch02-有界一致可积} 与一致可积性的单调性得 $\{g_j(|\nabla u_{\varepsilon_k}|)|\rho(\nabla u_{\varepsilon_k})|\}$ 亦然。同样，$g_j(|\nabla u_{\varepsilon_k}|)|\rho(\nabla u_{\varepsilon_k})|\leqslant\sup_{|y|\leqslant j}|\rho(y)|$ 给出 $L^\infty$ 界。这两个性质正是\cref{proposition:ch05-弱收敛} 的前提。
+\item 关于\eqref{align:ch08-8.80} 中略去的 sup 步。由 $E_{j,k,m}\subseteq Q_{m,T}=\Omega\times(t_m,t_m+T)$，
+\begin{align*}
+\iint_{E_{j,k,m}}|\nabla u_{\varepsilon_k}|^p\,\mathrm{d}x\,\mathrm{d}t
+\leqslant\int_{t_m}^{t_m+T}\left(\int_\Omega|\nabla u_{\varepsilon_k}|^p(x,t)\,\mathrm{d}x\right)\mathrm{d}t
+\leqslant T\sup_{t\in(0,\infty)}\int_\Omega|\nabla u_{\varepsilon_k}|^p(x,t)\,\mathrm{d}x,
+\end{align*}
+而右端的 sup 由\eqref{align:ch08-8.29}（$N\geqslant2$）或\eqref{align:ch08-8.21}（$N=1$）不超过 $K$，其中 $K$ 只依赖于 $u_0$ 与 $\lambda_N(\Omega)$。这一步同时说明\eqref{align:ch08-8.80} 的界关于 $m$ 与 $k$ 一致，从而\eqref{align:ch08-8.76} 中的收敛关于 $m$ 一致。
+\item 关于平移 $\zeta_m$。\eqref{align:ch08-8.77} 与\eqref{align:ch08-8.78} 中的检验函数是 $\zeta_m(x,t)=\zeta(x,t-t_m)$：因 $(x,t)\in Q_{m,T}$ 时 $t-t_m\in(0,T)$，$\zeta_m$ 在 $Q_{m,T}$ 上有定义且 $\|\zeta_m\|_\infty=\|\zeta\|_\infty$；\cref{proposition:ch05-弱收敛} 中的 $L^\infty$ 检验函数可以取 $\zeta_m$。最后的等式由变量替换 $(x,t)\mapsto(x,t+t_m)$ 得到：它把 $Q_{m,T}$ 与 $Q_T$ 互换，并把 $\mathrm{d}\nu_{m\,(x,t)}$ 换成 $\mathrm{d}\nu_{(x,t+t_m)}$。
+\item 关于 $j\to\infty$ 的一致收敛。估界 $KM_0Tj^{-(p-q)}\|\zeta\|_\infty$ 不含 $m$，故对每个 $\zeta\in L^\infty(Q_T)$ 与 $j$，上式给出关于 $m\in\mathbb{N}$ 一致的误差；而\eqref{align:ch08-8.76} 左端的极限只对固定的 $m$ 取 $j\to\infty$，故对 $\varepsilon>0$ 取 $j$ 使 $KM_0Tj^{-(p-q)}\|\zeta\|_\infty<\varepsilon$，即得关于 $m$ 一致的收敛。
+\end{enumerate}
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch08-积分收敛; kind=motivation; location=引理 8.4.6 的补证后（含原证明的注记）; basis=引理 8.4.6 与 (8.56)、(8.76) + 以 $f_j$ 截断以便把 $\rho$ 换成紧支集函数（从而可用 $C_b$ 检验函数）的动机、$q<p$ 的作用、关于 $m$ 一致的作用，以及去掉增长条件或去掉一致性时的反例
+\begin{remark}\phantomsection\label{remark:ch08-积分收敛}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{lemma:ch08-ν_m收敛} 给出的是窄收敛，其检验函数必须属于 $C_b(Q_T\times\mathbb{R}^N)$；而 $\rho$ 只有 $q$ 阶增长，$y\mapsto\rho(y)$ 一般不在 $C_b$ 中，故不能直接把 $\nu_m$ 换成 $\tilde\nu$。\cref{lemma:ch08-积分收敛} 的作用是两步逼近：先用\eqref{align:ch08-8.56} 中的 $f_j$ 把 $\rho$ 截断成 $f_j\rho\in C_c(\mathbb{R}^N)\subseteq C_b$，再用 $\nu_m$ 的窄收敛取极限，最后由 $j\to\infty$ 回到 $\rho$。\cref{theorem:ch08-omega极限非空} 的证明对 $\rho(y)=y_i$、$\rho(y)=\phi_i(y)$ 反复使用这一格式（见\eqref{align:ch08-8.84} 与\eqref{align:ch08-8.90}）。
+\item 假设的作用。增长条件 $|\rho(y)|\leqslant M(1+|y|^q)$ 与 $q<p$ 配合\eqref{align:ch08-8.74} 给出 $L^1(Q_T)$ 界，这是 (i) 的全部内容；同时它使截断误差可估：$g_j\rho$ 只在 $\{|\nabla u_{\varepsilon_k}|\geqslant j\}$ 上非零，由 Hölder 与 Chebyshev 得 $j^{-(p-q)}$ 的衰减\eqref{align:ch08-8.80}。$q<p$ 严格必要：$q=p$ 时该衰减消失，\eqref{align:ch08-8.80} 不再趋于零，截断与极限不能交换。关于 $m$ 的一致性同样是必要的：\cref{theorem:ch08-omega极限非空} 的证明要对 $m$ 与 $j$ 交换两个极限（见\eqref{align:ch08-8.86}），若\eqref{align:ch08-8.76} 只对每个 $m$ 成立而不一致，则 $\lim_m\lim_j$ 与 $\lim_j\lim_m$ 未必相等。
+\item 边界。(a) 若 $\rho$ 的增长阶 $q\geqslant p$，则 (i) 可失效：$\int|\rho|\,\mathrm{d}\nu_m$ 可能为无穷。(b) 若 $f_j$ 不满足 $f_j=0$ 于 $[j+1,\infty)$（即截断不是紧支的），则 $f_j\rho$ 不再属于 $C_0$，窄收敛不能用于它。(c) 结论 (ii) 只涉及 $\nu_m$（未取 $m\to\infty$），故它本身不含\cref{lemma:ch08-ν_m收敛} 的信息；把 (ii) 与窄收敛\cref{lemma:ch08-ν_m收敛} 结合，才能把 $\int\rho\,\mathrm{d}\nu_m$ 的极限识别为 $\int\rho\,\mathrm{d}\tilde\nu$。
+\end{enumerate}
+\end{remark}
+
 现可证\cref{theorem:ch08-omega极限非空}。
 
 \begin{proof}[\cref{theorem:ch08-omega极限非空} 的证明]
-(i) 设 $(\tilde u,\tilde\nu)$ 为\cref{lemma:ch08-u_m收敛} 与\cref{lemma:ch08-ν_m收敛} 中相应分量的偶。由这些引理，$(\tilde u,\tilde\nu)$ 满足\cref{definition:ch08-omega极限点} 的要求 (i)。于是若证明了 $(\tilde u,\tilde\nu)$ 还满足\cref{definition:ch08-Young测度值解} 的等式\eqref{align:ch08-8.4} 与\eqref{align:ch08-8.5}（Cauchy 数据为 $\tilde u(\cdot,0)$），断言 (i) 即得。
+(i) 设 $(\tilde u,\tilde\nu)$ 为\cref{lemma:ch08-u_m收敛} 与\cref{lemma:ch08-ν_m收敛} 中相应分量的偶（两者取公共子列，见\hyperref[remark:ch08-ν_m收敛]{注记}(iii)）。由这两条引理，$(\tilde u,\tilde\nu)$ 满足\cref{definition:ch08-omega极限点} 的要求 (i)。于是若证明了 $(\tilde u,\tilde\nu)$ 还满足\cref{definition:ch08-Young测度值解} 的等式\eqref{align:ch08-8.4} 与\eqref{align:ch08-8.5}（Cauchy 数据为 $\tilde u(\cdot,0)$），断言 (i) 即得。
 
 先证 $(\tilde u,\tilde\nu)$ 满足等式\eqref{align:ch08-8.4}，即
 \begin{align}
@@ -196,12 +379,12 @@ j^q\nu_m(Q_T\times K_j^c)\leqslant\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\math
 \lim_{m\to\infty}\iint_{Q_T}\nabla u_m(x,t)\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t
 =\iint_{Q_T}\nabla\tilde u(x,t)\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t. \label{align:ch08-8.83}
 \end{align}
-设 $\{f_j\}\subseteq C_c([0,\infty))$（$j\in\mathbb{N}$）满足\eqref{align:ch08-8.56}，$\zeta\in L^\infty(Q_T)$ 任意取定。由\cref{lemma:ch08-积分收敛}(ii) 有
+设 $\{f_j\}\subseteq C_c([0,\infty))$（$j\in\mathbb{N}$）满足\eqref{align:ch08-8.56}，$\zeta\in L^\infty(Q_T)$ 任意取定。由\cref{lemma:ch08-积分收敛}(ii)（取 $\rho(y)=y$，其增长阶为 $1<p$）有
 \begin{align}
 \lim_{j\to\infty}\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}f_j(|y|)y\,\mathrm{d}\nu_{m\,(x,t)}(y)
 =\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}y\,\mathrm{d}\nu_{m\,(x,t)}(y) \label{align:ch08-8.84}
 \end{align}
-关于 $m\in\mathbb{N}$ 一致。另一方面，由于函数 $h_j(x,t,y)\triangleq f_j(|y|)y\,\zeta(x,t)\in C_b(Q_T\times\mathbb{R}^N)$，由\cref{lemma:ch08-紧性} 得
+关于 $m\in\mathbb{N}$ 一致。另一方面，由于函数 $h_j(x,t,y)\triangleq f_j(|y|)y\,\zeta(x,t)\in C_b(Q_T\times\mathbb{R}^N)$（见\cref{definition:ch05-Caratheodory}），由\cref{lemma:ch08-ν_m收敛} 得
 \begin{align}
 \lim_{m\to\infty}\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}f_j(|y|)y\,\mathrm{d}\nu_{m\,(x,t)}(y)
 =\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}f_j(|y|)y\,\mathrm{d}\tilde\nu_{(x,t)}(y). \label{align:ch08-8.85}
@@ -215,19 +398,21 @@ j^q\nu_m(Q_T\times K_j^c)\leqslant\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\math
 &=\lim_{j\to\infty}\lim_{m\to\infty}\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}f_j(|y|)y\,\mathrm{d}\nu_{m\,(x,t)}(y)\\
 &=\lim_{j\to\infty}\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}f_j(|y|)y\,\mathrm{d}\tilde\nu_{(x,t)}(y)\\
 &=\iint_{Q_T}\zeta(x,t)\,\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}y\,\mathrm{d}\tilde\nu_{(x,t)}(y),
-\end{aligned} \label{align:ch08-8.86}
+\end{aligned} 
+\label{align:ch08-8.86}
 \end{align}
-其中最后一等式由控制收敛定理得到，因 $\tilde\nu_{(x,t)}(\mathbb{R}^N)=1$ 对几乎所有 $(x,t)\in Q_T$，且 $\tilde\nu$ 的重心属于 $L^1(Q_T)$。由 $\zeta$ 的任意性，从\eqref{align:ch08-8.83}--\eqref{align:ch08-8.86} 得\eqref{align:ch08-8.81}。
+其中最后一等式由控制收敛定理得到，因 $\tilde\nu_{(x,t)}(\mathbb{R}^N)=1$ 对几乎所有 $(x,t)\in Q_T$，且 $\tilde\nu$ 的重心属于 $L^1(Q_T)$（见\hyperref[remark:ch05-一致可积加强]{注记}(ii)）。由 $\zeta$ 的任意性，从\eqref{align:ch08-8.83}--\eqref{align:ch08-8.86} 得\eqref{align:ch08-8.81}。
 
-类似地可证 $(\tilde u,\tilde\nu)$ 以初值 $\tilde u(\cdot,0)$ 满足\eqref{align:ch08-8.5}，即
+按相同的推理可证 $(\tilde u,\tilde\nu)$ 以初值 $\tilde u(\cdot,0)$ 满足\eqref{align:ch08-8.5}，即
 \begin{align}
 &\int_0^t\int_\Omega\left\{\tilde u(x,s)\partial_s\zeta(x,s)-\sum_{i=1}^N\int_{\mathbb{R}^N}\phi_i(y)\,\mathrm{d}\tilde\nu_{(x,s)}(y)\,\partial_{x_i}\zeta(x,s)\right\}\mathrm{d}x\,\mathrm{d}s\nonumber\\
 &\qquad=\int_\Omega\tilde u(x,t)\zeta(x,t)\,\mathrm{d}x-\int_\Omega\tilde u(x,0)\zeta(x,0)\,\mathrm{d}x \label{align:ch08-8.87}
 \end{align}
 对所有 $\zeta\in C^1([0,T);C^1_c(\Omega))$ 与 $t\in(0,T)$（$T\in(0,\infty)$）。按记号滥用，仍记 $\zeta$ 的任一延拓 $\zeta\in C^1((-\infty,T);C^1_c(\Omega))$；于是对任意序列 $\{t_m\}\subseteq(0,\infty)$ 与 $(x,t)\in Q_T$，平移 $\zeta_m(x,t)\triangleq \zeta(x,t-t_m)$ 有定义且 $\zeta_m\in C^1([0,T);C^1_c(\Omega))$。由\eqref{align:ch08-8.5} 得
 \begin{align*}
-\int_{t_m}^{t+t_m}\int_\Omega\left\{u(x,s)\partial_s\zeta(x,s-t_m)-\sum_{i=1}^N\int_{\mathbb{R}^N}\phi_i(y)\,\mathrm{d}\nu_{(x,s)}(y)\,\partial_{x_i}\zeta(x,s-t_m)\right\}\mathrm{d}x\,\mathrm{d}s
-=\int_\Omega u(x,t+t_m)\zeta(x,t)\,\mathrm{d}x-\int_\Omega u(x,t_m)\zeta(x,0)\,\mathrm{d}x
+&\int_{t_m}^{t+t_m}\int_\Omega\Big\{u(x,s)\partial_s\zeta(x,s-t_m)
+-\sum_{i=1}^N\int_{\mathbb{R}^N}\phi_i(y)\,\mathrm{d}\nu_{(x,s)}(y)\,\partial_{x_i}\zeta(x,s-t_m)\Big\}\mathrm{d}x\,\mathrm{d}s\\
+&\qquad=\int_\Omega u(x,t+t_m)\zeta(x,t)\,\mathrm{d}x-\int_\Omega u(x,t_m)\zeta(x,0)\,\mathrm{d}x
 \end{align*}
 对每个 $\{t_m\}\subseteq(0,\infty)$ 与所有 $t\in(0,T)$、$T\in(0,\infty)$（$0<t_m<t+t_m<T$）。上式写为
 \begin{align}
@@ -243,12 +428,12 @@ j^q\nu_m(Q_T\times K_j^c)\leqslant\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\math
 \lim_{m\to\infty}\int_\Omega u_m(x,0)\zeta(x,0)\,\mathrm{d}x
 =\int_\Omega\tilde u(x,0)\zeta(x,0)\,\mathrm{d}x. \label{align:ch08-8.89c}
 \end{align}
-如前，设 $\{f_j\}\subseteq C_c([0,\infty))$ 满足\eqref{align:ch08-8.56}。由\cref{lemma:ch08-积分收敛} 有
+如前，设 $\{f_j\}\subseteq C_c([0,\infty))$ 满足\eqref{align:ch08-8.56}。由\cref{lemma:ch08-积分收敛}（取 $\rho=\phi_i$）有
 \begin{align}
 \lim_{j\to\infty}\int_0^t\int_\Omega\partial_{x_i}\zeta(x,s)\,\mathrm{d}x\,\mathrm{d}s\int_{\mathbb{R}^N}f_j(|y|)\phi_i(y)\,\mathrm{d}\nu_{m\,(x,s)}(y)
 =\int_0^t\int_\Omega\partial_{x_i}\zeta(x,s)\,\mathrm{d}x\,\mathrm{d}s\int_{\mathbb{R}^N}\phi_i(y)\,\mathrm{d}\nu_{m\,(x,s)}(y) \label{align:ch08-8.90}
 \end{align}
-关于 $m\in\mathbb{N}$ 一致。仿\eqref{align:ch08-8.86} 的论证显然给出
+关于 $m\in\mathbb{N}$ 一致。按与\eqref{align:ch08-8.86} 相同的论证可得
 \begin{align}
 \lim_{m\to\infty}\int_0^t\int_\Omega\partial_{x_i}\zeta(x,s)\,\mathrm{d}x\,\mathrm{d}s\int_{\mathbb{R}^N}\phi_i(y)\,\mathrm{d}\nu_{m\,(x,s)}(y)
 =\int_0^t\int_\Omega\partial_{x_i}\zeta(x,s)\,\mathrm{d}x\,\mathrm{d}s\int_{\mathbb{R}^N}\phi_i(y)\,\mathrm{d}\tilde\nu_{(x,s)}(y) \label{align:ch08-8.91}
@@ -265,47 +450,77 @@ S\triangleq \{y\in\mathbb{R}^N\mid\phi(y)\cdot y=0\}=\{y\in\mathbb{R}^N\mid h(y)
 \end{align}
 结论即得（见不等式\eqref{align:ch08-8.1d} 与\eqref{align:ch08-8.2f}）。
 
-为此，注意 $h\in C_0(\mathbb{R}^N)\subseteq C_b(Q_T\times\mathbb{R}^N)$，由\cref{lemma:ch08-紧性} 有
+为此，因 $h\in C_0(\mathbb{R}^N)\subseteq C_b(Q_T\times\mathbb{R}^N)$，由\cref{lemma:ch08-ν_m收敛} 有
 \begin{align}
 \iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}h(y)\,\mathrm{d}\tilde\nu_{(x,t)}(y)
 =\lim_{m\to\infty}\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}h(y)\,\mathrm{d}\nu_{m\,(x,t)}(y). \label{align:ch08-8.93}
 \end{align}
-又因 $h$ 在 $\mathbb{R}^N$ 上有界，由\cref{lemma:ch02-有界一致可积} 序列 $\{h(\nabla u_{\epsilon_k})\}\subseteq L^1(Q_T)$（$T\in(0,\infty)$）有界且一致可积。由\cref{proposition:ch05-弱收敛}，对每个 $m\in\mathbb{N}$，
+又因 $h$ 在 $\mathbb{R}^N$ 上有界，由\cref{lemma:ch02-有界一致可积} 序列 $\{h(\nabla u_{\varepsilon_k})\}\subseteq L^1(Q_T)$（$T\in(0,\infty)$）有界且一致可积。由\cref{proposition:ch05-弱收敛}，对每个 $m\in\mathbb{N}$，
 \begin{align}
 \iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}h(y)\,\mathrm{d}\nu_{m\,(x,t)}(y)
-=\lim_{k\to\infty}\iint_{Q_{m,T}}h(\nabla u_{\epsilon_k})(x,t)\,\mathrm{d}x\,\mathrm{d}t. \label{align:ch08-8.94}
+=\lim_{k\to\infty}\iint_{Q_{m,T}}h(\nabla u_{\varepsilon_k})(x,t)\,\mathrm{d}x\,\mathrm{d}t. \label{align:ch08-8.94}
 \end{align}
 由\eqref{align:ch08-8.93}--\eqref{align:ch08-8.94} 得
 \begin{align}
 \iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}h(y)\,\mathrm{d}\tilde\nu_{(x,t)}(y)
-=\lim_{m\to\infty}\lim_{k\to\infty}\iint_{Q_{m,T}}h(\nabla u_{\epsilon_k})(x,t)\,\mathrm{d}x\,\mathrm{d}t. \label{align:ch08-8.95}
+=\lim_{m\to\infty}\lim_{k\to\infty}\iint_{Q_{m,T}}h(\nabla u_{\varepsilon_k})(x,t)\,\mathrm{d}x\,\mathrm{d}t. \label{align:ch08-8.95}
 \end{align}
-现由\cref{remark:ch08-能量衰减} 注意
+现由\hyperref[remark:ch08-能量衰减]{注记} 及\eqref{align:ch08-8.1d}、\eqref{align:ch08-8.2f} 得
 \begin{align*}
-0&\leqslant\iint_{Q_{m,T}}h(\nabla u_{\epsilon_k})(x,t)\,\mathrm{d}x\,\mathrm{d}t
-\leqslant\iint_{Q_{m,T}}[\phi(\nabla u_{\epsilon_k})\cdot\nabla u_{\epsilon_k}](x,t)\,\mathrm{d}x\,\mathrm{d}t\\
+0&\leqslant\iint_{Q_{m,T}}h(\nabla u_{\varepsilon_k})(x,t)\,\mathrm{d}x\,\mathrm{d}t
+\leqslant\iint_{Q_{m,T}}[\phi(\nabla u_{\varepsilon_k})\cdot\nabla u_{\varepsilon_k}](x,t)\,\mathrm{d}x\,\mathrm{d}t\\
 &=-\frac12\Big\{
-\|u_{\epsilon_k}(\cdot,T+t_m)\|^2_{L^2(\Omega)}-\|u_{\epsilon_k}(\cdot,t_m)\|^2_{L^2(\Omega)}
-+\epsilon_k\big(\|\nabla u_{\epsilon_k}(\cdot,T+t_m)\|^2_{L^2(\Omega)}-\|\nabla u_{\epsilon_k}(\cdot,t_m)\|^2_{L^2(\Omega)}\big)
+\|u_{\varepsilon_k}(\cdot,T+t_m)\|^2_{L^2(\Omega)}-\|u_{\varepsilon_k}(\cdot,t_m)\|^2_{L^2(\Omega)}
++\varepsilon_k\big(\|\nabla u_{\varepsilon_k}(\cdot,T+t_m)\|^2_{L^2(\Omega)}-\|\nabla u_{\varepsilon_k}(\cdot,t_m)\|^2_{L^2(\Omega)}\big)
 \Big\}.
 \end{align*}
-在上述不等式中令 $k\to\infty$，用\eqref{align:ch08-8.36a} 中的收敛与 $N\geqslant2$ 时取 $p=2$ 的估计\eqref{align:ch08-8.29}，或 $N=1$ 时分别用\eqref{align:ch08-8.42a} 与估计\eqref{align:ch08-8.21}（见\cref{remark:ch08-能量衰减}），由等式\eqref{align:ch08-8.94} 得
+在上述不等式中令 $k\to\infty$，用\eqref{align:ch08-8.36a} 中的收敛与 $N\geqslant2$ 时取 $p=2$ 的估计\eqref{align:ch08-8.29}，或 $N=1$ 时分别用\eqref{align:ch08-8.42a} 与估计\eqref{align:ch08-8.21}（见\hyperref[remark:ch08-能量衰减]{注记}），由等式\eqref{align:ch08-8.94} 得
 \begin{align*}
 0\leqslant\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}h(y)\,\mathrm{d}\nu_{m\,(x,t)}(y)
 \leqslant-\frac12\big[\|u(\cdot,T+t_m)\|^2_{L^2(\Omega)}-\|u(\cdot,t_m)\|^2_{L^2(\Omega)}\big]
 \end{align*}
-对每个 $m\in\mathbb{N}$。由于映射 $t\mapsto\|u(\cdot,t)\|^2_{L^2(\Omega)}$ 在 $(0,\infty)$ 上非增（见\cref{remark:ch08-能量衰减}），极限 $\lim_{t\to\infty}\|u(\cdot,t)\|^2_{L^2(\Omega)}\in\mathbb{R}$ 存在。在上式中令 $m\to\infty$ 并用\eqref{align:ch08-8.93}，即得\eqref{align:ch08-8.92}。证毕。
+对每个 $m\in\mathbb{N}$。由于映射 $t\mapsto\|u(\cdot,t)\|^2_{L^2(\Omega)}$ 在 $(0,\infty)$ 上非增（见\hyperref[remark:ch08-能量衰减]{注记}），极限 $\lim_{t\to\infty}\|u(\cdot,t)\|^2_{L^2(\Omega)}\in\mathbb{R}$ 存在。在上式中令 $m\to\infty$ 并用\eqref{align:ch08-8.93}，即得\eqref{align:ch08-8.92}。证毕。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch08-omega极限非空; kind=proof; location=定理 8.4.1 的原证明后; basis=原证明中“It is similarly seen”“arguing as for (8.86) plainly shows”以及 (8.86) 中两个极限交换、(8.88) 中条件 $0<t_m<t+t_m<T$ 的含义、$\tilde\nu$ 重心属于 $L^1(Q_T)$、$N=1$ 时对 $\rho=\phi$ 的增长假设并不成立等处均未展开；此处逐处补出
+\begin{proof}[补证：\cref{theorem:ch08-omega极限非空} 原证明中省略的细节]
+\begin{enumerate}[(i)]
+\item 关于\eqref{align:ch08-8.82}。因 $(u,\nu)$ 在 $Q_\infty$ 中是问题 (P) 的 Young 测度值解，\eqref{align:ch08-8.4} 对几乎所有 $(x,t)\in Q_\infty$ 成立；把 $(x,t)$ 换成 $(x,t+t_m)$ 得 $\nabla u(x,t+t_m)=\int_{\mathbb{R}^N}y\,\mathrm{d}\nu_{(x,t+t_m)}(y)$，再用\eqref{align:ch08-8.68} 即得\eqref{align:ch08-8.82}。
+\item 关于\eqref{align:ch08-8.84} 的一致性与\eqref{align:ch08-8.86} 中的极限交换。\cref{lemma:ch08-积分收敛}(ii) 的收敛关于 $m$ 一致，故序列 $F_j(m)\triangleq\iint_{Q_T}\zeta\int f_jy\,\mathrm{d}\nu_m$ 关于 $m$ 一致收敛（$j\to\infty$）于 $F(m)\triangleq\iint_{Q_T}\zeta\int y\,\mathrm{d}\nu_m$；由一致收敛的极限交换定理（Moore--Osgood），若 $\lim_mF(m)$ 存在，则 $\lim_j\lim_mF_j(m)$ 存在且 $\lim_m\lim_jF_j(m)=\lim_j\lim_mF_j(m)$。这正是\eqref{align:ch08-8.86} 的第三、四行。若缺一致性，两个累次极限可以不等。
+\item 关于\eqref{align:ch08-8.86} 的最后一等式。先验证加项可积：由\eqref{align:ch08-8.74} 与\cref{lemma:ch08-ν_m收敛} 的窄收敛，取 $\rho_j(y)\triangleq f_j(|y|)|y|^q\in C_c(\mathbb{R}^N)$ 得
+\begin{align*}
+\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}f_j(|y|)|y|^q\,\mathrm{d}\tilde\nu_{(x,t)}(y)
+=\lim_{m\to\infty}\iint_{Q_T}\mathrm{d}x\,\mathrm{d}t\int_{\mathbb{R}^N}f_j(|y|)|y|^q\,\mathrm{d}\nu_{m\,(x,t)}(y)\leqslant C,
+\end{align*}
+再令 $j\to\infty$ 并用单调收敛定理得 $\iint_{Q_T}\int_{\mathbb{R}^N}|y|^q\,\mathrm{d}\tilde\nu_{(x,t)}(y)\leqslant C$。于是 $(x,t)\mapsto\int_{\mathbb{R}^N}|y|\,\mathrm{d}\tilde\nu_{(x,t)}(y)$ 属于 $L^1(Q_T)$（因 $q>1$ 且边缘为 $\lambda_{N+1}$），它可作为控制函数；由 $f_j(|y|)y\to y$ 逐点成立与 $|f_j(|y|)y|\leqslant|y|$，控制收敛定理给出最后一等式，且右端积分有限。
+\item 关于\eqref{align:ch08-8.88} 的条件 $0<t_m<t+t_m<T$。\eqref{align:ch08-8.5} 对每个 $T\in(0,\infty)$、每个 $\zeta\in C^1([0,T);C^1_c(\Omega))$ 与每个 $t\in(0,T)$ 成立；对给定的 $m$ 与 $t$，只需取 $T>t+t_m$ 即可使 $[t_m,t+t_m]\subseteq(0,T)$。因 $T$ 任意，这不是限制。把\eqref{align:ch08-8.5} 用于平移后的试验函数 $\zeta_m(x,s)=\zeta(x,s-t_m)$ 与时刻 $t+t_m$，并把积分变量平移 $s\mapsto s-t_m$，即得\eqref{align:ch08-8.88}。
+\item 关于\eqref{align:ch08-8.89c}。\eqref{align:ch08-8.70a} 给出 $u_m\to\tilde u$ 在 $C([0,T];L^p(\Omega))$ 中，特别地在 $t=0$ 处 $u_m(\cdot,0)=u(\cdot,t_m)\to\tilde u(\cdot,0)$ 在 $L^p(\Omega)$ 中；乘上 $\zeta(\cdot,0)\in C^1_c(\Omega)\subseteq L^{p'}(\Omega)$ 后积分即得\eqref{align:ch08-8.89c}。
+\item 关于\eqref{align:ch08-8.90}--\eqref{align:ch08-8.91} 在 $N\geqslant2$ 与 $N=1$ 两种情形下的来源。$N\geqslant2$ 时取 $\rho=\phi_i$：由\eqref{align:ch08-8.2c} 有 $|\phi_i(y)|\leqslant C_0(1+|y|^{p-1})$（$|y|>y_0$），而在 $|y|\leqslant y_0$ 上 $\phi_i$ 有界（由\eqref{align:ch08-8.2b} 的 Lipschitz 性），故 $\rho$ 满足\cref{lemma:ch08-积分收敛} 的增长假设，其中 $q=p-1\in(0,p)$；再由\eqref{align:ch08-8.68} 的变量替换把 $\partial_{x_i}\zeta$ 换成其平移（$L^\infty$ 范数不变），即得\eqref{align:ch08-8.90}，而\eqref{align:ch08-8.91} 按\eqref{align:ch08-8.86} 的推理（用\cref{lemma:ch08-ν_m收敛} 与 $\phi_i$ 的增长阶 $p-1<p$）得到。$N=1$ 时\eqref{align:ch08-8.1c} 只给出 $|\phi|$ 的下界，不能推出增长假设；但由\eqref{align:ch08-8.44} 与\eqref{align:ch08-8.26} 有 $\sup_k\|\nabla u_{\varepsilon_k}\|_{L^\infty(Q_\infty)}\leqslant C$ 与 $\sup_k\|\phi(\nabla u_{\varepsilon_k})\|_{L^\infty(Q_\infty)}\leqslant\widetilde C$，故当 $j>C$ 时 $f_j(|\nabla u_{\varepsilon_k}|)=1$ 处处成立，\eqref{align:ch08-8.90} 的左右两端对 $j>C$ 相同，而\eqref{align:ch08-8.91} 由 $\phi$ 在 $[-C,C]$ 上的有界性与 $\nu_m$ 的窄收敛（用 $\phi$ 乘以在 $[-C,C]$ 上等于 $1$ 的截断函数，使其成为 $C_b$ 检验函数）直接得到。
+\item 关于 (ii) 中 $f$ 的存在性。$N\geqslant2$ 时由\eqref{align:ch08-8.2c} 有 $|\phi(y)\cdot y|\leqslant C(1+|y|^p)$，故取 $f(z)\leqslant z^{-(p+1)}$（$z$ 充分大）即使 $f(|y|)\phi(y)\cdot y\to0$，从而 $h\in C_0(\mathbb{R}^N)$。$N=1$ 时由\eqref{align:ch08-8.44} 有 $|\nabla u_{\varepsilon_k}|\leqslant C$，取 $f$ 在 $[0,C]$ 上等于 $1$、在 $[C+1,\infty)$ 上等于 $0$，则 $h$ 有紧支集，亦满足要求。
+\item 关于 (ii) 的收尾。由\eqref{align:ch08-8.92} 与 $h\geqslant0$，得 $\int_{\mathbb{R}^N}h\,\mathrm{d}\tilde\nu_{(x,t)}=0$ 对几乎所有 $(x,t)\in Q_T$；而 $h(y)=0$ 当且仅当 $\phi(y)\cdot y=0$（因 $f(|y|)>0$），故 $\tilde\nu_{(x,t)}$ 在 $\{\phi\cdot y\neq0\}$ 上无质量，即\eqref{align:ch08-8.69}。这里\eqref{align:ch08-8.1d} 与\eqref{align:ch08-8.2f} 被用了两次：一次给出 $0\leqslant h\leqslant\phi\cdot y$（从而可把 $h$ 的积分夹在能量等式的增量之间），一次用于把 $\int h\,\mathrm{d}\tilde\nu=0$ 解释为支撑限制。
+\end{enumerate}
 \end{proof}
 
 \begin{proof}[\cref{theorem:ch08-平衡解} 的证明]
-由\cref{theorem:ch08-omega极限非空}(ii)，在当前假设下对几乎所有 $(x,t)\in Q_T$ 有 $\operatorname{supp}\tilde\nu_{(x,t)}\subseteq\{\phi=0\}$，因而等式\eqref{align:ch08-8.7} 满足。于是对所有 $\rho\in C^1_c(\Omega)$，由\eqref{align:ch08-8.87} 得
+由\cref{theorem:ch08-omega极限非空}(ii)，在当前假设下对几乎所有 $(x,t)\in Q_T$ 有 $\operatorname{supp}\tilde\nu_{(x,t)}\subseteq\{\phi=0\}$，因而 $\int_{\mathbb{R}^N}\phi_i\,\mathrm{d}\tilde\nu_{(x,t)}=0$（$i=1,\cdots ,N$），即\eqref{align:ch08-8.7} 满足。于是对所有 $\zeta\in C^1([0,T);C^1_c(\Omega))$，等式\eqref{align:ch08-8.87} 中的 $\phi^*$ 项消失，而取 $\zeta(x,s)\triangleq\rho(x)$（$\rho\in C^1_c(\Omega)$，不依赖于 $s$）得
 \begin{align*}
 \int_\Omega\tilde u(x,t)\rho(x)\,\mathrm{d}x=\int_\Omega\tilde u(x,0)\rho(x)\,\mathrm{d}x
 \end{align*}
-对所有 $t\in(0,\infty)$，由 $\rho$ 的任意性得 $\tilde u(x,t)=\tilde u(x,0)$。故 $\tilde u$ 不依赖于 $t$；由等式\eqref{align:ch08-8.4} 得\eqref{align:ch08-8.8}。结论即得。
+对所有 $t\in(0,\infty)$。由 $\rho$ 的任意性得 $\tilde u(\cdot,t)=\tilde u(\cdot,0)$ 于 $L^1_{\mathrm{loc}}(\Omega)$，再由 $\tilde u\in C([0,\infty);L^p(\Omega))$ 得 $\tilde u(x,t)=\tilde u(x,0)$ 对每个 $t\in(0,\infty)$ 与几乎所有 $x\in\Omega$。故 $\tilde u$ 不依赖于 $t$，从而 $\tilde u\in W^{1,p}_0(\Omega)$；由等式\eqref{align:ch08-8.4} 得\eqref{align:ch08-8.8}。结论即得。
 \end{proof}
 
-
-
+% SUPPLEMENT: parent=theorem:ch08-平衡解; kind=proof; location=定理 8.4.2 的原证明后; basis=原证明只用一句“由 (8.87) 得”带过 $\tilde u$ 与 $t$ 无关的论证；此处补出试验函数 $\zeta=\rho(x)$ 的取法、$\phi^*$ 项消失的依据（(8.69) 与 $S=\{\phi=0\}$）、$L^1_{\mathrm{loc}}$ 到逐点的提升，以及 $\tilde u\in W^{1,p}_0(\Omega)$ 与 (8.8) 的来源
+\begin{proof}[补证：\cref{theorem:ch08-平衡解} 原证明中省略的细节]
+\begin{enumerate}[(i)]
+\item 关于\eqref{align:ch08-8.7}。由 $S=\{\phi=0\}$ 与\eqref{align:ch08-8.69} 得 $\operatorname{supp}\tilde\nu_{(x,t)}\subseteq\{\phi=0\}$；因 $\phi$ 连续（由\eqref{align:ch08-8.1b} 或\eqref{align:ch08-8.2b} 的 Lipschitz 性），$\{\phi=0\}$ 闭而 $\phi$ 在其上恒为零，故 $\int_{\mathbb{R}^N}|\phi_i|\,\mathrm{d}\tilde\nu_{(x,t)}=0$，特别地 $\phi_i$ 关于 $\tilde\nu_{(x,t)}$ 可积且\eqref{align:ch08-8.7} 成立。
+\item 关于 $\tilde u$ 与 $t$ 无关。取 $\zeta(x,s)\triangleq\rho(x)$，其中 $\rho\in C^1_c(\Omega)$；它属于 $C^1([0,T);C^1_c(\Omega))$ 且 $\partial_s\zeta=0$。此时\eqref{align:ch08-8.87} 的左端只剩 $\phi^*$ 项，而该项已消失，故
+\begin{align*}
+0=\int_\Omega\tilde u(x,t)\rho(x)\,\mathrm{d}x-\int_\Omega\tilde u(x,0)\rho(x)\,\mathrm{d}x\quad\text{对所有 }t\in(0,T).
+\end{align*}
+由 $T\in(0,\infty)$ 任意与 $\rho\in C^1_c(\Omega)$ 任意，得 $\tilde u(\cdot,t)=\tilde u(\cdot,0)$ 于 $\mathcal{D}'(\Omega)$，从而于 $L^1_{\mathrm{loc}}(\Omega)$，即对几乎所有 $x\in\Omega$ 成立。
+\item 关于逐点提升与正则性。$\tilde u\in C([0,\infty);L^p(\Omega))$ 使 $t\mapsto\tilde u(\cdot,t)$ 连续取值于 $L^p(\Omega)$；两个几乎处处相等的 $L^p$ 函数相等，故 $\tilde u(\cdot,t)=\tilde u(\cdot,0)$ 于 $L^p(\Omega)$ 对每个 $t$ 成立。又 $\tilde u\in L^\infty(0,\infty;X_p)$ 给出 $\tilde u(\cdot,0)\in X_p=W^{1,p}_0(\Omega)$，这正是\cref{definition:ch08-Young平衡解} 对 $\bar u$ 的要求。
+\item 关于\eqref{align:ch08-8.8}。既然 $\tilde u$ 不依赖于 $t$，\eqref{align:ch08-8.81}（即 $\tilde u$ 作为 Young 测度值解所满足的\eqref{align:ch08-8.4}）左端与 $t$ 无关，故 $\int_{\mathbb{R}^N}y\,\mathrm{d}\tilde\nu_{(x,t)}(y)=\nabla\tilde u(x)$ 对几乎所有 $(x,t)$ 成立，即\eqref{align:ch08-8.8}。于是 $(\tilde u,\tilde\nu)$ 满足\cref{definition:ch08-Young平衡解} 的全部要求，是问题 (P) 的 Young 测度平衡解。
+\end{enumerate}
+\end{proof}
 
 \end{document}

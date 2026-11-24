@@ -1,0 +1,189 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+本章研究 $\mathbb{R}^{n}$ 上的 \emph{Sobolev 函数}，即弱一阶偏导数属于某个 $L^{p}$ 空间的函数。各种 Sobolev 空间具有良好的完备性与紧性，因此在把泛函分析应用于诸如线性与非线性 PDE 理论时，它们常常是恰当的框架。
+
+由定义，分部积分对 Sobolev 函数成立。然而，微积分的其他法则在多大程度上成立，则远不明显。本章将研究这一一般性问题，并特别着重于 Sobolev 函数的逐点性质。
+
+\cref{section:ch04-01}给出基本定义。% XREF p=158 "Section 4.1 provides basic definitions."
+在\cref{section:ch04-02}中导出用光滑函数逼近 Sobolev 函数的各种方式。% XREF p=158 "In Section 4.2 we derive various ways of approximating Sobolev functions by smooth functions."
+\cref{section:ch04-03}用迹解释 Sobolev 函数的边值，\cref{section:ch04-04}讨论把这类函数从 Lipschitz 连续区域延拓出去。% XREF p=158 "Section 4.3 interprets boundary values of Sobolev functions using traces" | p=158 "Section 4.4 discusses extending such functions off Lipschitz continuous domains"
+\cref{section:ch04-05}证明基本的 Sobolev 型不等式，其直接应用是\cref{section:ch04-06}中的紧性定理。% XREF p=158 "We prove the fundamental Sobolev-type inequalities in Section 4.5" | p=158 "an immediate application of which is the compactness theorem in Section 4.6"
+理解 Sobolev 函数精细性质的关键是容量，它在\cref{section:ch04-07}中引入，并在\cref{section:ch04-08}与\cref{section:ch04-09}中使用。% XREF p=158 "The key to understanding the fine properties of Sobolev functions is capacity, introduced in Section 4.7" | p=158 "utilized in Sections 4.8 and 4.9" | p=158 "utilized in Sections 4.8 and 4.9"
+
+\section{定义与基本性质}\label{section:ch04-01}
+
+本章中，$U$ 始终表示 $\mathbb{R}^{n}$ 的开子集。
+
+\begin{definition}[弱偏导数]\label{definition:ch04-4-1}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^{n}$ 为开集，$f$ 为 $U$ 上的局部可和实值函数，即 $f:U\to\mathbb{R}$ 可测，且对 $U$ 的每个紧子集 $K$ 有 $\int_{K}\lvert f\rvert\diff x<\infty$，此性质记作 $f\in L^{1}_{\mathrm{loc}}(U)$；并设 $i\in\{1,\cdots,n\}$。设 $g_i\in L^{1}_{\mathrm{loc}}(U)$ 满足：对一切 $\varphi\in C_c^{1}(U)$ 成立
+\begin{align*}
+\int_{U}f\varphi_{x_i}\diff x=-\int_{U}g_i\varphi\diff x ,\qquad(\star)
+\end{align*}
+其中 $C_c^{1}(U)$ 表示支集 $\operatorname{spt}\varphi:=\overline{\{x\in U\mid\varphi(x)\neq0\}}$ 为 $U$ 的紧子集的 $C^{1}$ 函数 $\varphi:U\to\mathbb{R}$ 的全体，$\varphi_{x_i}$ 表示 $\varphi$ 关于第 $i$ 个坐标 $x_i$ 的偏导数。则把 $g_i$ 称作 $f$ 关于 $x_i$ 在 $U$ 中的\textbf{弱偏导数}。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch04-4-1; kind=motivation; 说明以分部积分刻画导数的动机、与古典偏导数的一致性，以及弱导数可以存在于不可微函数上
+\begin{remark}\phantomsection\label{remark:ch04-def-4-1-动机}
+弱偏导数把求导运算转移到试验函数上。古典导数由差商定义，要求函数在每一点附近有定义并具有线性逼近；$L^{1}_{\mathrm{loc}}(U)$ 中的元素只在 $\mathcal{L}^{n}$-a.e. 意义下取值，差商无从定义。式 $(\star)$ 的做法是把一阶偏导数改写成一个积分恒等式：只要 $g_i$ 使该恒等式对一切紧支集试验函数成立，$g_i$ 就承担了 $f$ 关于 $x_i$ 的导数这一角色。
+这一改写与古典情形相容。若 $f\in C^{1}(U)$，取 $g_i$ 为古典偏导数 $f_{x_i}$，则对每个 $\varphi\in C_c^{1}(U)$，把 $\mathbb{R}^{n}$ 视为 $\mathbb{R}^{n-1}\times\mathbb{R}$ 并沿第 $i$ 个坐标作一元分部积分：$\varphi$ 的支集是 $U$ 的紧子集，分部积分不产生边界项；再对余下的 $n-1$ 个坐标用 Fubini 定理，即得式 $(\star)$。故古典偏导数都是弱偏导数。
+弱偏导数的存在范围比古典偏导数大得多。取 $U=\mathbb{R}$ 与 $f(x):=\lvert x\rvert$，$f$ 在 $x=0$ 处不可微，但 $g_1:=\operatorname{sgn}x$（在 $x=0$ 处取 $0$）属于 $L^{1}_{\mathrm{loc}}(\mathbb{R})$ 且满足式 $(\star)$：对 $\varphi\in C_c^{1}(\mathbb{R})$，把积分拆成 $(-\infty,0)$ 与 $(0,\infty)$ 两段分别分部积分，并用 $\varphi$ 在 $\pm\infty$ 处为零，得
+\begin{align*}
+\int_{\mathbb{R}}\lvert x\rvert\varphi'\diff x=-\int_{\mathbb{R}}\operatorname{sgn}x\,\varphi\diff x .
+\end{align*}
+弱导数只要求局部可和，因此 $W^{1,p}(U)$ 可以在 $L^{p}$ 范数下取极限，从而为微分方程的弱解与变分问题提供合适的函数类。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-1; kind=hypotheses; 逐条分析开集、f 与 g_i 的局部可和性、坐标指标、试验函数类与唯一性约定在定义中的作用
+\begin{remark}\phantomsection\label{remark:ch04-def-4-1-条件}
+\begin{enumerate}[(i)]
+\item 条件“$U$ 为开集”有两项作用。其一，它保证 $C_c^{1}(U)$ 含有非零元素：对每个 $x\in U$ 存在 $\varepsilon>0$ 使 $B(x,\varepsilon)\subseteq U$，故可以在 $U$ 内构造紧支集的非零试验函数；若 $U$ 不含内点，则 $C_c^{1}(U)$ 只含零函数，式 $(\star)$ 对 $g_i$ 没有约束。其二，它使“支集是 $U$ 的紧子集”与 $L^{1}_{\mathrm{loc}}(U)$ 都有确切含义。定义对 $U=\emptyset$ 也成立，此时 $C_c^{1}(U)=\{0\}$。
+\item 条件 $f\in L^{1}_{\mathrm{loc}}(U)$ 保证式 $(\star)$ 左端的积分绝对收敛。对 $\varphi\in C_c^{1}(U)$，$\varphi_{x_i}$ 连续且支集为紧集，故
+\begin{align*}
+\Bigl\lvert\int_{U}f\varphi_{x_i}\diff x\Bigr\rvert\leqslant\lVert\varphi_{x_i}\rVert_{L^{\infty}(U)}\int_{\operatorname{spt}\varphi}\lvert f\rvert\diff x<\infty .
+\end{align*}
+这里不要求 $f\in L^{1}(U)$，因为试验函数只与 $f$ 在 $\operatorname{spt}\varphi$ 上的取值有关。若 $f$ 连局部可和都不是，则左端积分可能不存在，定义失去意义。
+\item 条件 $g_i\in L^{1}_{\mathrm{loc}}(U)$ 保证式 $(\star)$ 右端的积分绝对收敛，理由与 (ii) 相同。该条件只确定 $g_i$ 的 $L^{1}_{\mathrm{loc}}$ 等价类：若 $g_i$ 在某个 $\mathcal{L}^{n}$-零集上被改动，式 $(\star)$ 仍然成立。
+\item 指标条件 $i\in\{1,\cdots,n\}$ 使弱偏导数逐坐标定义：$Df=(f_{x_1},\cdots,f_{x_n})$ 的每个分量都由式 $(\star)$ 单独刻画，某个坐标的弱偏导数是否存在不影响其他坐标的定义方式。
+\item 试验函数类取 $C_c^{1}(U)$ 而非 $C_c^{\infty}(U)$：一阶弱导数只需要一阶连续可微的试验函数，紧支集则使分部积分不产生边界项。记 $C_c^{\infty}(U)$ 为 $U$ 内支集是紧子集的无穷次可微函数全体，则 $C_c^{\infty}(U)\subseteq C_c^{1}(U)$，故“对一切 $C_c^{1}(U)$ 中的 $\varphi$ 成立”强于“对一切 $C_c^{\infty}(U)$ 中的 $\varphi$ 成立”。
+\item 唯一性不属于定义的内容，而由式 $(\star)$ 推出：两个满足式 $(\star)$ 的函数之差与一切试验函数的积分都为零，故只能在一个 $\mathcal{L}^{n}$-零集上非零。这一点在下面关于记号的注记中连同证明一并给出。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch04-def-4-1-弱导数}
+容易验证：关于 $x_i$ 的弱偏导数若存在，则在 $\mathcal{L}^{n}$-a.e. 意义下唯一确定。准确地说，若 $g_i,h_i\in L^{1}_{\mathrm{loc}}(U)$ 都是 $f$ 关于 $x_i$ 的弱偏导数，则 $g_i=h_i$ 于 $U$ 中 $\mathcal{L}^{n}$-a.e. 成立。当弱偏导数存在时，记
+\begin{align*}
+f_{x_i}:=g_i\qquad(i=1,\cdots,n),
+\end{align*}
+并记
+\begin{align*}
+Df:=(f_{x_1},\cdots,f_{x_n}),
+\end{align*}
+其前提是弱导数 $f_{x_1},\cdots,f_{x_n}$ 都存在。
+\end{remark}
+
+% SUPPLEMENT: parent=remark:ch04-def-4-1-弱导数; kind=proof; 补出弱偏导数在 L^n-a.e. 意义下唯一的完整论证
+\begin{proof}
+设 $g_i,h_i\in L^{1}_{\mathrm{loc}}(U)$ 都是 $f$ 关于 $x_i$ 的弱偏导数，并令 $w:=g_i-h_i\in L^{1}_{\mathrm{loc}}(U)$。把式 $(\star)$ 分别用于 $g_i$ 与 $h_i$ 并相减，得
+\begin{align*}
+\int_{U}w\varphi\diff x=0
+\end{align*}
+对一切 $\varphi\in C_c^{1}(U)$ 成立。
+
+（1）构造试验函数。取 $\phi\in C_c^{1}(\mathbb{R}^{n})$，使 $\phi\geqslant0$、$\operatorname{spt}\phi\subseteq B(0,1)$ 且 $\int_{\mathbb{R}^{n}}\phi\diff y=1$。具体可取 $\phi(y):=c\bigl(1-\lvert y\rvert^{2}\bigr)^{2}$（$\lvert y\rvert<1$）与 $\phi(y):=0$（$\lvert y\rvert\geqslant1$），其中常数 $c>0$ 由规范化条件确定；在 $\lvert y\rvert=1$ 处 $\phi=0$ 且 $\nabla\phi=0$，故 $\phi\in C^{1}(\mathbb{R}^{n})$。对 $x\in U$ 与 $\varepsilon>0$ 置
+\begin{align*}
+\phi_\varepsilon(y):=\varepsilon^{-n}\phi\Bigl(\frac{y-x}{\varepsilon}\Bigr).
+\end{align*}
+若 $0<\varepsilon<\operatorname{dist}(x,\partial U)$，则 $\operatorname{spt}\phi_\varepsilon\subseteq B(x,\varepsilon)\subseteq U$，故 $\phi_\varepsilon\in C_c^{1}(U)$，从而
+\begin{align*}
+\int_{U}w(y)\phi_\varepsilon(y)\diff y=0 .
+\end{align*}
+
+（2）用 Lebesgue 点的结论。把 $w$ 在 $U$ 之外补充定义为 $0$，则 $w\in L^{1}_{\mathrm{loc}}(\mathbb{R}^{n})$。由\cref{theorem:ch01-1-33}（取 $\mu=\mathcal{L}^{n}$ 与 $p=1$），存在 $\mathcal{L}^{n}$-零集 $N\subseteq\mathbb{R}^{n}$，使得对每个 $x\in\mathbb{R}^{n}-N$ 有 $\lvert w(x)\rvert<\infty$ 且% XREF internal
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert w-w(x)\rvert\diff y=0 .
+\end{align*}
+
+（3）由试验函数上的积分推出逐点消失。固定 $x\in U-N$ 与 $0<\varepsilon<\operatorname{dist}(x,\partial U)$。由 $\int_{\mathbb{R}^{n}}\phi_\varepsilon\diff y=1$ 与第（1）段的等式，
+\begin{align*}
+\lvert w(x)\rvert
+&=\Bigl\lvert\int_{U}w(y)\phi_\varepsilon(y)\diff y-w(x)\int_{\mathbb{R}^{n}}\phi_\varepsilon(y)\diff y\Bigr\rvert\\
+&=\Bigl\lvert\int_{B(x,\varepsilon)}\bigl(w(y)-w(x)\bigr)\phi_\varepsilon(y)\diff y\Bigr\rvert\\
+&\leqslant\lVert\phi\rVert_{L^{\infty}(\mathbb{R}^{n})}\,\varepsilon^{-n}\int_{B(x,\varepsilon)}\lvert w-w(x)\rvert\diff y\\
+&=\lVert\phi\rVert_{L^{\infty}(\mathbb{R}^{n})}\,\mathcal{L}^{n}\bigl(B(0,1)\bigr)\fint_{B(x,\varepsilon)}\lvert w-w(x)\rvert\diff y .
+\end{align*}
+令 $\varepsilon\to0$，由第（2）段的极限得 $\lvert w(x)\rvert=0$。因此 $w=0$ 于 $U$ 中 $\mathcal{L}^{n}$-a.e. 成立，即 $g_i=h_i$ 于 $U$ 中 $\mathcal{L}^{n}$-a.e. 成立。
+\end{proof}
+
+\begin{definition}[Sobolev 空间]\label{definition:ch04-4-2}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^{n}$ 为开集，$1\leqslant p\leqslant\infty$，$f:U\to\mathbb{R}$ 为可测函数。
+\begin{enumerate}[(i)]
+\item 若 $f\in L^{p}(U)$，且对每个 $i=1,\cdots,n$ 弱偏导数 $f_{x_i}$ 存在并属于 $L^{p}(U)$，则称 $f$ 属于 \textbf{Sobolev 空间} $W^{1,p}(U)$，并记作 $f\in W^{1,p}(U)$。
+\item 若对每个满足 $V\subset\subset U$ 的开集 $V$ 都有 $f\in W^{1,p}(V)$，则称 $f$ 属于 $W^{1,p}_{\mathrm{loc}}(U)$，并记作 $f\in W^{1,p}_{\mathrm{loc}}(U)$；其中 $V\subset\subset U$ 表示 $\overline{V}$ 是 $U$ 的紧子集。
+\item 若存在 $p\in[1,\infty]$ 使 $f\in W^{1,p}_{\mathrm{loc}}(U)$，则称 $f$ 为 \textbf{Sobolev 函数}。
+\item 在 $\mathcal{L}^{n}$-a.e. 意义下相等的两个 Sobolev 函数不加以等同。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch04-4-2; kind=motivation; 说明 W^{1,p} 把函数与其弱导数置于同一 L^p 要求之下的理由、局部化与等同 a.e. 的作用，以及向 k 阶的推广
+\begin{remark}\phantomsection\label{remark:ch04-def-4-2-动机}
+Sobolev 空间把两项可积性要求并列：函数本身属于 $L^{p}(U)$，它的每个一阶弱偏导数也属于 $L^{p}(U)$。并列的目的是使
+\begin{align*}
+\Bigl(\int_{U}\lvert f\rvert^{p}+\lvert Df\rvert^{p}\diff x\Bigr)^{\frac{1}{p}}
+\end{align*}
+有限，从而可以用它同时度量 $f$ 与其弱偏导数的大小；这正是下文范数的来源（$p=\infty$ 的情形改用本质上确界）。单看 $L^{p}(U)$ 无法控制导数，单看导数的可积性也无法控制函数本身，两项要求缺一不可，反例见下一条注记。
+这一空间之所以必要，是因为微分方程的弱解与变分问题的最小化子通常只具有 $L^{p}$ 可积的导数，而不属于 $C^{1}$；只在古典可微函数的范围内讨论，许多存在性结论无从陈述。
+第 (ii) 条把要求局部化。全局条件 $f\in L^{p}(U)$ 在讨论局部性质时过强：局部结论只依赖于函数在紧集上的行为，而 $W^{1,p}_{\mathrm{loc}}(U)$ 恰好去掉了“整体可积”这一与局部无关的要求。第 (iii) 条允许指数 $p$ 随函数改变，使“Sobolev 函数”成为不指定指数的统一对象类。第 (iv) 条把 $\mathcal{L}^{n}$-a.e. 相等的函数视为同一元素，这与 $L^{p}$ 空间的处理一致，也是范数正定性的来源。
+把一阶弱偏导数换成一切满足 $\lvert\alpha\rvert\leqslant k$ 的弱导数 $D^{\alpha}f$（其中 $\alpha=(\alpha_{1},\cdots,\alpha_{n})$ 为多重指标，$\lvert\alpha\rvert=\alpha_{1}+\cdots+\alpha_{n}$，$k$ 为正整数），即得 $k$ 阶 Sobolev 空间 $W^{k,p}(U)$；本节的讨论对应 $k=1$ 的情形。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-2; kind=hypotheses; 逐条分析指数范围、两项可积性要求的必要性、局部化、p 对 f 的依赖与等同 a.e. 的作用，并给出反例
+\begin{remark}\phantomsection\label{remark:ch04-def-4-2-条件}
+\begin{enumerate}[(i)]
+\item 指数范围 $1\leqslant p\leqslant\infty$ 与范数的定义方式对应：$1\leqslant p<\infty$ 时用 $\bigl(\int_{U}\lvert f\rvert^{p}+\lvert Df\rvert^{p}\diff x\bigr)^{1/p}$，$p=\infty$ 时用 $\operatorname*{ess\,sup}_{U}(\lvert f\rvert+\lvert Df\rvert)$。$0<p<1$ 的情形被排除，因为此时 $\lVert\cdot\rVert_{W^{1,p}}$ 不满足三角不等式：取两个非零函数 $f,g\in C_c^{1}((0,2))$，其支集分别含于 $(0,1)$ 与 $(1,2)$，则 $\lvert f\rvert,\lvert g\rvert,\lvert Df\rvert,\lvert Dg\rvert$ 的支集两两不交，故
+\begin{align*}
+\lVert f+g\rVert_{W^{1,p}}^{p}=\lVert f\rVert_{W^{1,p}}^{p}+\lVert g\rVert_{W^{1,p}}^{p}>\bigl(\lVert f\rVert_{W^{1,p}}+\lVert g\rVert_{W^{1,p}}\bigr)^{p},
+\end{align*}
+最后一步用到 $0<p<1$ 时 $(a+b)^{1/p}>a^{1/p}+b^{1/p}$ 对 $a,b>0$ 成立。因此三角不等式不成立，$\lVert\cdot\rVert_{W^{1,p}}$ 不是范数。
+\item 两项可积性要求都不可删除。若去掉 $f_{x_i}\in L^{p}(U)$，则 $W^{1,p}$ 将退化为 $L^{p}$，导数得不到控制。取 $U=(0,1)$、$p=1$ 与 $f(x):=x^{-1/2}$：$f\in L^{1}(U)$，而 $f$ 在 $U$ 上属于 $C^{1}$，其弱导数等于古典导数 $-\frac{1}{2}x^{-3/2}$，后者不属于 $L^{1}(U)$，故 $f\notin W^{1,1}(U)$。若去掉 $f\in L^{p}(U)$，则取 $U=\mathbb{R}$、$p=1$ 与 $f\equiv1$：$f_{x_1}=0\in L^{1}(\mathbb{R})$，但 $f\notin L^{1}(\mathbb{R})$，故 $f\notin W^{1,1}(\mathbb{R})$。
+\item 第 (ii) 条的局部化不可省略。取 $U=\mathbb{R}$ 与 $f(x)=x$：$f\in W^{1,p}_{\mathrm{loc}}(\mathbb{R})$ 对一切 $p\in[1,\infty]$ 成立（$f_{x_1}=1$），但 $f\notin L^{1}(\mathbb{R})$ 且 $f\notin L^{\infty}(\mathbb{R})$，故 $f\notin W^{1,1}(\mathbb{R})$ 且 $f\notin W^{1,\infty}(\mathbb{R})$。
+\item 条件 $V\subset\subset U$ 的准确含义是：$V$ 为开集且 $\overline{V}$ 是 $U$ 的紧子集；当 $U$ 为开集时，这等价于 $\overline{V}$ 紧且 $\operatorname{dist}(\overline{V},\partial U)>0$。每个紧集 $K\subseteq U$ 都被某个这样的 $V$ 包含：取 $0<\varepsilon<\operatorname{dist}(K,\partial U)$ 与 $V:=\{x\mid\operatorname{dist}(x,K)<\varepsilon/2\}$，则 $V$ 为开集、$K\subseteq V$ 且 $\overline{V}$ 是 $U$ 的紧子集。因此第 (ii) 条的要求只依赖于 $f$ 在 $U$ 的紧子集附近的行为。
+\item 第 (iii) 条中的 $p$ 确实依赖于 $f$。对 $q\leqslant p$ 有 $W^{1,p}_{\mathrm{loc}}(U)\subseteq W^{1,q}_{\mathrm{loc}}(U)$：在每个 $V\subset\subset U$ 上 $V$ 有界，由 Hölder 不等式得 $L^{p}(V)\subseteq L^{q}(V)$。故这些空间随 $p$ 增大而缩小，“某个 $p$”给出更大的一类函数。例如取 $U=B(0,1)\subseteq\mathbb{R}^{2}$ 与 $f(x):=\lvert x\rvert^{-1/2}$：由极坐标计算，$f\in L^{p}(U)$ 当且仅当 $p<4$，而 $\lvert\nabla f\rvert=\frac{1}{2}\lvert x\rvert^{-3/2}\in L^{p}(U)$ 当且仅当 $p<4/3$；在 $\{0\}$ 之外 $f$ 光滑而 $\{0\}$ 是 $\mathcal{L}^{2}$-零集，弱梯度等于古典梯度，故 $f\in W^{1,p}(U)$ 当且仅当 $p<4/3$。于是 $f$ 是 Sobolev 函数，却不属于任何 $p\geqslant4/3$ 的 $W^{1,p}(U)$。
+\item 第 (iv) 条使 $\lVert\cdot\rVert_{W^{1,p}}$ 成为范数而非半范数。若把 $\mathcal{L}^{n}$-a.e. 相等的函数视为不同，则取 $f:=\chi_{\mathbb{Q}}$ 于 $U=\mathbb{R}$，有 $f=0$ $\mathcal{L}^{1}$-a.e.，从而 $f_{x_1}=0$、$\lVert f\rVert_{W^{1,p}}=0$，而 $f\neq0$。等同之后正定性成立，这与 $L^{p}$ 空间把 a.e. 相等的函数视为同一元素的做法一致。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch04-def-4-2-分部积分}
+因此，若 $f$ 是 Sobolev 函数，则按定义，分部积分公式
+\begin{align*}
+\int_{U}f\varphi_{x_i}\diff x=-\int_{U}f_{x_i}\varphi\diff x
+\end{align*}
+对一切 $\varphi\in C_c^{1}(U)$ 与 $i=1,\cdots,n$ 成立。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch04-def-4-2-范数}
+设 $1\leqslant p\leqslant\infty$。若 $f\in W^{1,p}(U)$，定义
+\begin{align*}
+\lVert f\rVert_{W^{1,p}(U)}:=\Bigl(\int_{U}\bigl(\lvert f\rvert^{p}+\lvert Df\rvert^{p}\bigr)\diff x\Bigr)^{\frac{1}{p}}\qquad(1\leqslant p<\infty),
+\end{align*}
+以及
+\begin{align*}
+\lVert f\rVert_{W^{1,\infty}(U)}:=\operatorname*{ess\,sup}_{U}\bigl(\lvert f\rvert+\lvert Df\rvert\bigr),
+\end{align*}
+其中 $\lvert Df\rvert:=\Bigl(\sum_{i=1}^{n}\lvert f_{x_i}\rvert^{2}\Bigr)^{1/2}$ 表示向量 $Df(x)\in\mathbb{R}^{n}$ 的 Euclid 范数，而 $\operatorname*{ess\,sup}_{U}$ 表示 $U$ 上的本质上确界。
+\end{remark}
+
+\begin{definition}[Sobolev 空间中的收敛]\label{definition:ch04-4-3}
+设 $n$ 为正整数，$U\subseteq\mathbb{R}^{n}$ 为开集，$1\leqslant p\leqslant\infty$，$f_k,f\in W^{1,p}_{\mathrm{loc}}(U)$（$k=1,2,\cdots$）。
+\begin{enumerate}[(i)]
+\item 设 $f_k,f\in W^{1,p}(U)$。称 $f_k$ 在 $W^{1,p}(U)$ 中收敛于 $f$，是指 $\lVert f_k-f\rVert_{W^{1,p}(U)}\to0$，并记作 $f_k\to f$ 于 $W^{1,p}(U)$。
+\item 类似地，称 $f_k$ 在 $W^{1,p}_{\mathrm{loc}}(U)$ 中收敛于 $f$，是指对每个开集 $V\subset\subset U$ 有 $\lVert f_k-f\rVert_{W^{1,p}(V)}\to0$，并记作 $f_k\to f$ 于 $W^{1,p}_{\mathrm{loc}}(U)$。
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch04-4-3; kind=motivation; 说明引入 W^{1,p} 与 W^{1,p}_{loc} 两种收敛的必要性、它们与 L^p 收敛的区别以及在后文的用途
+\begin{remark}\phantomsection\label{remark:ch04-def-4-3-动机}
+逼近定理与紧性定理的陈述都需要一种“Sobolev 函数列收敛到某函数”的语言：\cref{section:ch04-02}研究用光滑函数逼近 Sobolev 函数，\cref{section:ch04-06}讨论 Sobolev 空间的紧性，两者都要指明逼近或收敛是在哪个意义下发生的。本定义提供这一语言。% XREF internal
+按第 (i) 条，$f_k\to f$ 于 $W^{1,p}(U)$ 意味着范数差趋于零。当 $1\leqslant p<\infty$ 时，
+\begin{align*}
+\lVert f_k-f\rVert_{W^{1,p}(U)}^{p}=\lVert f_k-f\rVert_{L^{p}(U)}^{p}+\lVert Df_k-Df\rVert_{L^{p}(U)}^{p},
+\end{align*}
+故这种收敛等价于函数列与每个弱偏导数同时在 $L^{p}$ 中收敛；它比单纯的 $L^{p}$ 收敛强，因为后者不控制导数。
+第 (ii) 条给出局部化的收敛。$W^{1,p}_{\mathrm{loc}}(U)$ 上并没有一个预先给定的整体范数，故不能用范数差陈述收敛；改为要求在每个相对紧的开子集上范数差趋于零，这与局部化定义 $W^{1,p}_{\mathrm{loc}}(U)$ 的方式相对应。局部收敛不蕴含整体收敛：整体范数可能对每个 $k$ 都是无穷的。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch04-4-3; kind=hypotheses; 逐条分析指数范围、成员资格前提、V⊂⊂U 的含义与两种收敛的强弱关系，并给出反例
+\begin{remark}\phantomsection\label{remark:ch04-def-4-3-条件}
+\begin{enumerate}[(i)]
+\item 指数范围 $1\leqslant p\leqslant\infty$ 使第 (i) 条中的范数 $\lVert\cdot\rVert_{W^{1,p}(U)}$ 有定义且有限：$1\leqslant p<\infty$ 时为积分之商的 $1/p$ 次幂，$p=\infty$ 时为本质上确界。
+\item 前提 $f_k,f\in W^{1,p}_{\mathrm{loc}}(U)$ 保证第 (ii) 条中每个 $\lVert f_k-f\rVert_{W^{1,p}(V)}$ 有限：由 $W^{1,p}(V)$ 对减法封闭，$f_k-f\in W^{1,p}(V)$。第 (i) 条另有前提 $f_k,f\in W^{1,p}(U)$，否则整体范数可能为无穷，范数差没有意义。
+\item 第 (ii) 条中的 $V\subset\subset U$ 表示 $\overline{V}$ 是 $U$ 的紧子集。由于每个紧集 $K\subseteq U$ 都含于某个开集 $V\subset\subset U$，该条件等价于：对每个紧集 $K\subseteq U$，$f_k-f$ 在含 $K$ 的某个相对紧开集上的 $W^{1,p}$ 范数趋于零。
+\item 第 (i) 条的收敛强于第 (ii) 条的收敛。若 $\lVert f_k-f\rVert_{W^{1,p}(U)}\to0$，则对每个 $V\subset\subset U$ 有 $\lVert f_k-f\rVert_{W^{1,p}(V)}\leqslant\lVert f_k-f\rVert_{W^{1,p}(U)}\to0$。反向蕴含不成立：取非零的 $\psi\in C_c^{\infty}((-1,1))$ 与 $f_k(x):=\psi(x-k)$ 于 $U=\mathbb{R}$，则对每个有界开集 $V$ 与充分大的 $k$ 有 $f_k=0$ 于 $V$ 上，故 $f_k\to0$ 于 $W^{1,p}_{\mathrm{loc}}(\mathbb{R})$；但 $\lVert f_k\rVert_{W^{1,p}(\mathbb{R})}=\lVert\psi\rVert_{W^{1,p}(\mathbb{R})}$ 不趋于零。
+\item 第 (i) 条的收敛强于 $L^{p}$ 收敛。取 $U=(0,2\pi)$、$p=2$ 与 $f_k(x):=k^{-1}\sin(kx)$：$\lVert f_k\rVert_{L^{2}(U)}\leqslant\sqrt{2\pi}/k\to0$，而弱偏导数 $f_k'=k^{-1}\cdot k\cos(kx)=\cos(kx)$ 满足 $\lVert f_k'\rVert_{L^{2}(U)}^{2}=\int_{0}^{2\pi}\cos^{2}(kx)\diff x=\pi$，故 $f_k$ 在 $W^{1,2}(U)$ 中不收敛于零。
+\item 极限在等同 $\mathcal{L}^{n}$-a.e. 相等的函数之后唯一。若 $f_k\to f$ 且 $f_k\to g$ 于 $W^{1,p}(U)$，则由三角不等式 $\lVert f-g\rVert_{W^{1,p}(U)}\leqslant\lVert f-f_k\rVert_{W^{1,p}(U)}+\lVert f_k-g\rVert_{W^{1,p}(U)}\to0$，故 $\lVert f-g\rVert_{L^{p}(U)}=0$，即 $f=g$ $\mathcal{L}^{n}$-a.e.；第 (ii) 条的情形在每个 $V\subset\subset U$ 上作同样论证。
+\end{enumerate}
+\end{remark}
+
+\end{document}

@@ -18,10 +18,10 @@
 这对应于一个有向图，其中每个节点都从序列中的每个前一节点接收一个连接，如\cref{figure:ch11-自回归模型}中的4个节点所示。
 
 \begin{definition}[自回归模型]\label{definition:ch11-自回归}
-设序列 $x_1,\dots,x_N$ 的每个元素取值于 $\mathbb{R}^{D}$，$N\geqslant1$，
-$D\geqslant1$，联合分布为 $p(x_1,\dots,x_N)$。若对 $n=2,\dots,N$ 的每个条件分布都
+设序列 $x_1,\cdots,x_N$ 的每个元素取值于 $\mathbb{R}^{D}$，$N\geqslant1$，
+$D\geqslant1$，联合分布为 $p(x_1,\cdots,x_N)$。若对 $n=2,\cdots,N$ 的每个条件分布都
 以序列中它之前的全部变量为条件，即联合分布可写成
-$p(x_1,\dots,x_N)=\prod_{n=1}^{N}p(x_n\mid x_1,\dots,x_{n-1})$，其中 $n=1$ 时
+$p(x_1,\cdots,x_N)=\prod_{n=1}^{N}p(x_n\mid x_1,\cdots,x_{n-1})$，其中 $n=1$ 时
 条件集为空，则该模型称为\textbf{自回归}（autoregressive）模型。由
 \cref{proposition:ch11-有向图分解}，上式右端每个因子都是归一化的条件分布，因此该分解
 对任意序列分布都成立。
@@ -65,8 +65,8 @@ $p(x_1,\dots,x_N)=\prod_{n=1}^{N}p(x_n\mid x_1,\dots,x_{n-1})$，其中 $n=1$ �
 请注意，序列中第一个变量的处理方式略有不同，因为它没有条件变量。\cref{figure:ch11-一阶Markov链}所示图模型的函数形式[\eqref{align:ch11-一阶Markov}]称为Markov模型或Markov链，其可用简单节点链组成的图来表示。
 
 \begin{definition}[$M$阶 Markov 模型]\label{definition:ch11-Markov模型}
-设 $N\geqslant2$，$1\leqslant M\leqslant N-1$，序列 $x_1,\dots,x_N$ 的联合分布为
-$p(x_1,\dots,x_N)$。若该联合分布可写成
+设 $N\geqslant2$，$1\leqslant M\leqslant N-1$，序列 $x_1,\cdots,x_N$ 的联合分布为
+$p(x_1,\cdots,x_N)$。若该联合分布可写成
 \begin{align}
   p(x_1,\cdots,x_N) = p(x_1,\cdots,x_M)\prod_{n=M+1}^{N}p(x_n\mid x_{n-M},\cdots,x_{n-1}),
   \label{align:ch11-M阶Markov}
@@ -163,8 +163,8 @@ $p(x_1,\dots,x_N)$。若该联合分布可写成
 \end{align}
 
 \begin{definition}[状态空间模型]\label{definition:ch11-状态空间模型}
-设 $N\geqslant1$，潜变量 $z_1,\dots,z_N$ 与观测变量 $x_1,\dots,x_N$ 的联合分布为
-$p(x_1,\dots,x_N,z_1,\dots,z_N)$，并设它按有向图
+设 $N\geqslant1$，潜变量 $z_1,\cdots,z_N$ 与观测变量 $x_1,\cdots,x_N$ 的联合分布为
+$p(x_1,\cdots,x_N,z_1,\cdots,z_N)$，并设它按有向图
 \cref{figure:ch11-状态空间模型}的分解具有形式
 \begin{align}
   p(x_1,\cdots,x_N,z_1,\cdots,z_N) = p(z_1)\left[\prod_{n=2}^{N}p(z_n\mid z_{n-1})\right]\left[\prod_{n=1}^{N}p(x_n\mid z_n)\right],
@@ -192,8 +192,8 @@ $p(z_n\mid z_{n-1})$ 是转移分布，$p(x_n\mid z_n)$ 是发射分布。
 
 \begin{definition}[隐 Markov 模型]\label{definition:ch11-隐Markov模型}
 在\cref{definition:ch11-状态空间模型}中，设潜变量 $z_n$ 取值于有限状态集
-$\{1,\dots,K\}$，$K\geqslant2$，转移分布与发射分布都是离散分布，初始分布
-$p(z_1)$ 是 $\{1,\dots,K\}$ 上的概率向量。则相应的模型称为\textbf{隐 Markov 模型}
+$\{1,\cdots,K\}$，$K\geqslant2$，转移分布与发射分布都是离散分布，初始分布
+$p(z_1)$ 是 $\{1,\cdots,K\}$ 上的概率向量。则相应的模型称为\textbf{隐 Markov 模型}
 （hidden Markov model, HMM）。若 $z_n$ 与 $x_n$ 都是 Gauss 变量且条件分布是线性
 Gauss 的，则相应的模型称为\textbf{线性动态系统}（linear dynamical system），也称
 \textbf{Kalman 滤波器}。

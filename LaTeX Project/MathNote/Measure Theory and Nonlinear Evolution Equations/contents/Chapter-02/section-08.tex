@@ -35,61 +35,139 @@ L^p(X)\triangleq \{f:X\to\mathbb R\ \mathscr A\text{-可测}\mid\|f\|_p<\infty\}
 
 于是 $L^p(X)$ 为赋范向量空间（实为 Banach 空间），其范数为 $f\mapsto\|f\|_{L^p(X)}\triangleq \|f\|_p$（$p\in[1,\infty]$）。
 
-\begin{remark}\label{remark:ch02-Lploc}
-\label{remark:ch02-Lp局部}
-对任意开集 $U\subseteq\mathbb R^N$，令 $L^p(U)\equiv L^p(U,\mathscr B_N\cap U,\lambda_N|_{\mathscr B_N\cap U})$，其中 $\mathscr B_N\cap U$ 为 Borel $\sigma$-代数 $\mathscr B_N$ 在 $U$ 上的迹，$\lambda_N|_{\mathscr B_N\cap U}$ 为 Lebesgue 测度 $\lambda_N$ 的限制。称 $f\in L^p_{\mathrm{loc}}(U)$，若对每个开子集 $V\subset\subset X$（即闭包 $\bar V$ 紧且 $V\subset U$），有 $f\in L^p(V,\mathscr B_N\cap V,\lambda_N|_{\mathscr B_N\cap V})$。
+下列约定在全书反复使用。
+
+\begin{remark}\phantomsection\label{remark:ch02-Lploc}
+\phantomsection\label{remark:ch02-Lp局部}
+对任意开集 $U\subseteq\mathbb R^N$，令 $L^p(U)\equiv L^p(U,\mathscr B_N\cap U,\lambda_N|_{\mathscr B_N\cap U})$，其中 $\mathscr B_N\cap U$ 为 Borel $\sigma$-代数 $\mathscr B_N$ 在 $U$ 上的迹，$\lambda_N|_{\mathscr B_N\cap U}$ 为 Lebesgue 测度 $\lambda_N$ 的限制。称 $f\in L^p_{\mathrm{loc}}(U)$，若对每个开子集 $V\subset\subset U$（即闭包 $\bar V$ 紧且 $V\subset U$），有 $f\in L^p(V,\mathscr B_N\cap V,\lambda_N|_{\mathscr B_N\cap V})$。
 \end{remark}
 
 控制收敛定理的一个简单应用给出下列结果。
 
 \begin{lemma}\label{lemma:ch02-有理简单函数稠密}
 \label{lemma:ch02-简单函数}
-设 $(X,\mathscr A,\mu)$ 为测度空间。则对任意 $p\in[1,\infty)$，有理系数简单函数集合 $\mathscr S_{\mathbb Q}(X)$ 在 $L^p(X)$ 中稠密。
+设 $(X,\mathscr A,\mu)$ 为测度空间，$p\in[1,\infty)$。则有理系数简单函数集合
+\begin{align*}
+\mathscr S_{\mathbb Q}(X)\triangleq \left\{\sum_{k=1}^n c_k\chi_{E_k}\ \middle|\ n\in\mathbb N,\ c_1,\cdots ,c_n\in\mathbb Q,\ E_1,\cdots ,E_n\in\mathscr A\right\}
+\end{align*}
+在 $L^p(X)$ 中稠密。
 \end{lemma}
 
+% SUPPLEMENT: parent=lemma:ch02-有理简单函数稠密; kind=proof; 原书未给证明（仅称"控制收敛定理的一个简单应用"），补出非负情形由简单函数逼近与单调收敛得到、系数有理化由 $\mathbb{Q}$ 在 $\mathbb{R}$ 中稠密得到、变号情形由 $f=f^+-f^-$ 分解得到的完整论证
+\begin{proof}
+先设 $f\geqslant0$。由\cref{theorem:ch02-简单逼近}，存在非降简单函数列 $\{s_n\}$ 使 $0\leqslant s_n\leqslant f$ 且 $s_n\to f$ 在 $X$ 上逐点成立。于是 $(f-s_n)^p\to0$ 在 $X$ 上逐点成立，且 $0\leqslant(f-s_n)^p\leqslant f^p\in L^1(X)$。由控制收敛定理（\cref{theorem:ch02-Lebesgue控制收敛}）得 $\lim_{n\to\infty}\|f-s_n\|_p^p=0$。固定 $\varepsilon>0$，取 $n$ 使 $\|f-s_n\|_p<\varepsilon/2$。
+
+现将 $s_n$ 的系数有理化。写 $s_n=\sum_{k=1}^m c_k\chi_{E_k}$，其中 $c_k\geqslant0$，$\{E_1,\cdots ,E_m\}\subseteq\mathscr A$ 两两不交。因 $s_n\in L^p(X)$，对每个 $k$，或 $c_k=0$，或 $\mu(E_k)<\infty$。对每个 $k$ 取 $c_k'\in\mathbb Q$，$c_k'\geqslant0$，使 $c_k'=0$（当 $c_k=0$）且
+\begin{align*}
+|c_k-c_k'|\,\mu(E_k)^{1/p}<\frac{\varepsilon}{2m}\quad\text{（当 }c_k>0\text{，此时 }\mu(E_k)<\infty\text{）},
+\end{align*}
+并令 $t\triangleq\sum_{k=1}^m c_k'\chi_{E_k}\in\mathscr S_{\mathbb Q}(X)$。由诸 $E_k$ 两两不交，
+\begin{align*}
+\|s_n-t\|_p^p=\int_X\left|\sum_{k=1}^m(c_k-c_k')\chi_{E_k}\right|^p\mathrm{d}\mu
+=\sum_{k=1}^m|c_k-c_k'|^p\mu(E_k)<\left(\frac{\varepsilon}{2}\right)^p,
+\end{align*}
+故 $\|s_n-t\|_p<\varepsilon/2$，从而 $\|f-t\|_p<\varepsilon$。
+
+再设 $f$ 变号。写 $f=f^+-f^-$，其中 $f^\pm\triangleq\max\{\pm f,0\}$ 非负且属于 $L^p(X)$。由上述非负情形，存在 $t^+,t^-\in\mathscr S_{\mathbb Q}(X)$ 使 $\|f^\pm-t^\pm\|_p<\varepsilon/2$。令 $t\triangleq t^+-t^-\in\mathscr S_{\mathbb Q}(X)$。则 $f-t=(f^+-t^+)-(f^--t^-)$，故由 Minkowski 不等式得
+\begin{align*}
+\|f-t\|_p\leqslant\|f^+-t^+\|_p+\|f^--t^-\|_p<\varepsilon.
+\end{align*}
+由 $\varepsilon>0$ 的任意性，$\mathscr S_{\mathbb Q}(X)$ 在 $L^p(X)$ 中稠密。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch02-有理简单函数稠密; kind=motivation; 说明有理系数简单函数族作为可数逼近族的动机、系数有理化与 $p<\infty$ 的作用、$s_n\in L^p$ 对有限测度支撑的含义以及 $p=\infty$ 的边界
+% SUPPLEMENT: parent=lemma:ch02-简单函数; kind=motivation; 别名标签，与 lemma:ch02-有理简单函数稠密 共用下一条注记
+\begin{remark}\phantomsection\label{remark:ch02-有理简单函数稠密}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{theorem:ch02-Lp可分}要求给出 $L^p(X)$ 中的可数稠密子集，而由可数族生成的 $\sigma$-代数所对应的有理系数简单函数恰为可数族。本引理说明这种可数族在全空间中稠密，从而把可分性化归为可测空间的可分性。
+\item 系数有理化的作用。由 $\mathbb Q$ 在 $\mathbb R$ 中稠密，实数系数可按 $L^p$ 范数用有理系数替换，误差由 $\sum_{k=1}^m|c_k-c_k'|\mu(E_k)^{1/p}$ 控制。此步要求 $c_k\neq0$ 时 $\mu(E_k)<\infty$：否则 $s_n$ 的 $L^p$ 范数为无穷，与 $s_n\in L^p(X)$ 矛盾。
+\item $p<\infty$ 的作用。控制收敛的可用性来自 $(f-s_n)^p\leqslant f^p$ 与 $f\in L^p(X)$；当 $p=\infty$ 时 $\mathscr S_{\mathbb Q}(X)$ 在 $L^\infty(X)$ 中仍稠密，但须以一致逼近代替控制收敛。
+\item 适用边界。结论对任意测度空间成立，不要求 $\sigma$-有限。稠密性只是抽象存在性：逼近函数 $t$ 依赖于 $f$ 与 $\varepsilon$，且一般不能取为分段常值以外的形式。
+\end{enumerate}
+\end{remark}
+
 \begin{theorem}\label{theorem:ch02-Lp可分}
-设 $(X,\mathscr A)$ 为可分可测空间，$\mu:\mathscr A\to[0,\infty]$ 为 $\sigma$-有限。则对任意 $p\in[1,\infty)$，空间 $L^p(X)\equiv L^p(X,\mathscr A,\mu)$ 可分。
+设 $(X,\mathscr A)$ 为可分可测空间（即存在可数族 $\mathscr C\subseteq\mathscr P(X)$ 使 $\sigma_0(\mathscr C)=\mathscr A$），$\mu:\mathscr A\to[0,\infty]$ 为 $\sigma$-有限测度。则对任意 $p\in[1,\infty)$，空间 $L^p(X)\equiv L^p(X,\mathscr A,\mu)$ 可分。
 \end{theorem}
 
 \begin{proof}
-固定 $f\in L^p(X)$ 与 $\epsilon>0$。则存在 $t\in\mathscr S_{\mathbb Q}$ 使 $\mu(\{t\neq0\})<\infty$ 且 $\|f-t\|_p<\epsilon$。事实上，设 $\{E_n\}\subseteq\mathscr A$ 为非增序列，使 $X=\bigcup_{n=1}^\infty E_n$，对所有 $n\in\mathbb N$ 有 $\mu(E_n)<\infty$。由\cref{lemma:ch02-有理简单函数稠密}，存在 $s\in\mathscr S_{\mathbb Q}$ 使 $\|f-s\|_p<\epsilon/2$。令 $t_n\triangleq s\chi_{E_n}$（$n\in\mathbb N$）。则 $\{t_n\}\subseteq\mathscr S_{\mathbb Q}$，且
+固定 $f\in L^p(X)$ 与 $\varepsilon>0$。先证存在 $t\in\mathscr S_{\mathbb Q}(X)$ 使 $\mu(\{t\neq0\})<\infty$ 且 $\|f-t\|_p<\varepsilon$。事实上，由 $\mu$ 的 $\sigma$-有限性，存在非降序列 $\{E_n\}\subseteq\mathscr A$ 使 $X=\bigcup_{n=1}^\infty E_n$，且 $\mu(E_n)<\infty$ 对一切 $n\in\mathbb N$ 成立。由\cref{lemma:ch02-有理简单函数稠密}，存在 $s\in\mathscr S_{\mathbb Q}(X)$ 使 $\|f-s\|_p<\varepsilon/2$。令 $t_n\triangleq s\chi_{E_n}$（$n\in\mathbb N$）。则 $\{t_n\}\subseteq\mathscr S_{\mathbb Q}(X)$，$\mu(\{t_n\neq0\})\leqslant\mu(E_n)<\infty$，且
 \begin{align*}
-\|t_n-s\|_p^p=\int_{E_n^c}|s|^p\,\mathrm{d}\mu\to0\quad(n\to\infty).
+\|t_n-s\|_p^p=\int_{E_n^c}|s|^p\,\mathrm{d}\mu\to0\quad(n\to\infty),
 \end{align*}
-结论成立。
+这里控制函数 $|s|^p\in L^1(X)$，故可用控制收敛定理。取 $n$ 使 $\|t_n-s\|_p<\varepsilon/2$ 并令 $t\triangleq t_n$，即得所述。
 
-故不妨设 $\mu(X)<\infty$。因 $(X,\mathscr A)$ 可分，存在可数族 $\mathscr C\subseteq\mathscr P(X)$ 使 $\sigma_0(\mathscr C)=\mathscr A$。显然，由 $\mathscr C$ 生成的代数 $\mathscr A_0\equiv\mathscr A_0(\mathscr C)$ 与集合
+上述构造把对 $f$ 的逼近化归到有限测度集 $E_n$ 上，故以下设 $\mu(X)<\infty$，并在 $(X,\mathscr A,\mu)$ 上论证。因 $(X,\mathscr A)$ 可分，存在可数族 $\mathscr C\subseteq\mathscr P(X)$ 使 $\sigma_0(\mathscr C)=\mathscr A$。由 $\mathscr C$ 生成的代数 $\mathscr A_0\equiv\mathscr A_0(\mathscr C)$ 由 $\mathscr C$ 中有限多个集合的有限交、有限并与补构成，故 $\mathscr A_0$ 可数；又 $\mathbb Q$ 可数，故集合
 \begin{align*}
 \mathscr S_{\mathbb Q,\mathscr A_0}\triangleq \left\{\sum_{k=1}^n c_k\chi_{G_k}\ \middle|\ G_k\in\mathscr A_0,\ c_k\in\mathbb Q,\ n\in\mathbb N\right\}
 \end{align*}
-均可数。易证 $\mathscr S_{\mathbb Q,\mathscr A_0}$ 在 $\mathscr S_{\mathbb Q}$ 中稠密，从而结论成立。
+可数。
+
+再证 $\mathscr S_{\mathbb Q,\mathscr A_0}$ 在 $\mathscr S_{\mathbb Q}$ 中依 $L^p$ 范数稠密。因 $\mathscr A_0$ 为代数且 $\sigma_0(\mathscr A_0)=\mathscr A$，由单调类定理，对每个 $G\in\mathscr A$ 与 $\delta>0$，存在 $G'\in\mathscr A_0$ 使 $\mu(G\triangle G')<\delta$：使上述逼近成立的集合全体构成含 $\mathscr A_0$ 的单调类，而 $\mu(X)<\infty$ 保证测度对上极限连续，故该类包含 $\sigma_0(\mathscr A_0)=\mathscr A$。现取 $s=\sum_{k=1}^n c_k\chi_{G_k}\in\mathscr S_{\mathbb Q}$ 与 $\delta>0$，对每个 $k$ 取 $G_k'\in\mathscr A_0$ 使 $\mu(G_k\triangle G_k')<\delta$，并令 $s'\triangleq\sum_{k=1}^n c_k\chi_{G_k'}\in\mathscr S_{\mathbb Q,\mathscr A_0}$。则
+\begin{align*}
+\|s-s'\|_p\leqslant\sum_{k=1}^n|c_k|\,\mu(G_k\triangle G_k')^{1/p}<\delta^{1/p}\sum_{k=1}^n|c_k|,
+\end{align*}
+故 $s'$ 可任意接近 $s$。结合第一步，对任意 $f\in L^p(X)$ 与 $\varepsilon>0$ 存在 $s'\in\mathscr S_{\mathbb Q,\mathscr A_0}$ 使 $\|f-s'\|_p<\varepsilon$。故 $\mathscr S_{\mathbb Q,\mathscr A_0}$ 为 $L^p(X)$ 的可数稠密子集，$L^p(X)$ 可分。
 \end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-Lp可分; kind=motivation; 说明可分性在弱紧性与 Young 测度理论中的用途、$\sigma$-有限与可测空间可分两项假设的逐处作用、不可分反例（$\mathbb{R}$ 上计数测度）以及 $p=\infty$ 的边界
+\begin{remark}\phantomsection\label{remark:ch02-Lp可分}
+\begin{enumerate}[(i)]
+\item 引入动机。可分性使 $L^p(X)$ 中的有界集可用可数稠密子集作对角论证提取弱收敛子列，因而是\cref{theorem:ch02-Lp弱紧}与\cref{theorem:ch02-dunfordpettis}中序列紧性论证的前提；在 Young 测度理论中，试验函数族的可分性同样是窄收敛序列紧性的来源。
+\item $\sigma$-有限的作用。证明第一步用 $\{E_n\}$ 把 $f$ 截断到有限测度集上，使逼近函数具有有限测度支撑；若 $\mu$ 非 $\sigma$-有限，$L^p(X)$ 的可分性一般不成立。
+\item 可测空间可分的作用。可数族 $\mathscr C$ 使代数 $\mathscr A_0$ 与 $\mathscr S_{\mathbb Q,\mathscr A_0}$ 可数；$\sigma_0(\mathscr A_0)=\mathscr A$ 使 $\mathscr A$ 中每个集合可由 $\mathscr A_0$ 中集合逼近，这一步用单调类定理与 $\mu(X)<\infty$ 决定的测度连续性。
+\item 反例。取 $X=\mathbb R$、$\mathscr A=\mathscr P(\mathbb R)$、$\mu$ 为计数测度。则 $\mathscr A$ 不能由可数族生成，且 $\{\chi_{\{x\}}\mid x\in\mathbb R\}\subseteq L^p(X)$ 中任意两元素的距离为 $2^{1/p}$，故 $L^p(X)$ 不含可数稠密子集，不可分。
+\item 适用边界。$p=\infty$ 时结论不成立：$L^\infty([0,1])$ 不可分，例如 $\{\chi_{[0,t]}\mid t\in[0,1]\}$ 中不同元素的距离为 $1$。
+\end{enumerate}
+\end{remark}
 
 再证下列结果。
 
 \begin{lemma}\label{lemma:ch02-Cc稠密}
 \label{lemma:ch02-稠密逼近}
-设 $X$ 为局部紧 Hausdorff 空间，$\mu\in\mathscr R^+(X)$ 为 $\sigma$-有限。则对任意 $p\in[1,\infty)$，空间 $C_c(X)$ 在 $L^p(X)$ 中稠密。
+设 $X$ 为局部紧 Hausdorff 空间，$\mu\in\mathscr R^+(X)$ 为 $\sigma$-有限。则对任意 $p\in[1,\infty)$，空间 $C_c(X)$ 在 $L^p(X)\equiv L^p(X,\mathscr B(X),\mu)$ 中稠密。
 \end{lemma}
 
 \begin{proof}
-不妨设 $\mu(X)<\infty$，由\cref{lemma:ch01-紧外正则}(i)，$\mu$ 正则。固定 $E\in\mathscr B(X)$。由\cref{lemma:ch02-有理简单函数稠密}，只需证存在 $\{g_n\}\subseteq C_c(X)$ 使 $g_n\to g\triangleq \chi_E$ 在 $L^p(X)$ 中。为此，由 $\mu$ 的正则性，对任意 $\delta>0$，存在紧集 $K$ 与开集 $A$，使 $K\subseteq E\subseteq A$ 且 $\mu(A\setminus K)<\delta$。如\cref{proposition:ch02-Tietze逼近}证明中论证，可得函数 $\zeta\in C_c(X)$，$\operatorname{supp}\zeta\subseteq A$，使 $\mu(\{g\neq\zeta\})<\delta$ 且 $\|\zeta\|_\infty=1$。取 $\delta=1/n$（$n\in\mathbb N$）。则存在序列 $\{g_n\}\subseteq C_c(X)$ 使 $g_n\to g$ 依测度，从而对任意 $p\in[1,\infty)$ 在 $L^p(X)$ 中（见\cref{proposition:ch02-强收敛性质}(i)）。结论成立。
+不妨设 $\mu(X)<\infty$，此时由\cref{lemma:ch01-紧外正则}(i)，$\mu$ 正则。固定 $E\in\mathscr B(X)$。由\cref{lemma:ch02-有理简单函数稠密}，只需证存在 $\{g_n\}\subseteq C_c(X)$ 使 $g_n\to g\triangleq\chi_E$ 在 $L^p(X)$ 中。为此，由 $\mu$ 的正则性，对任意 $\delta>0$，存在紧集 $K$ 与开集 $A$，使 $K\subseteq E\subseteq A$ 且 $\mu(A\setminus K)<\delta$。如\cref{proposition:ch02-Tietze逼近}证明中论证，可得函数 $\zeta\in C_c(X)$，$\operatorname{supp}\zeta\subseteq A$，使 $\mu(\{g\neq\zeta\})<\delta$ 且 $\|\zeta\|_\infty=1$。取 $\delta=1/n$（$n\in\mathbb N$）。则存在序列 $\{g_n\}\subseteq C_c(X)$ 使 $g_n\to g$ 依测度，从而对任意 $p\in[1,\infty)$ 在 $L^p(X)$ 中（见\cref{proposition:ch02-强收敛性质}(i)）。结论成立。
 \end{proof}
+
+% SUPPLEMENT: parent=lemma:ch02-Cc稠密; kind=motivation; 说明 $C_c$ 稠密在 $L^p$ 与 Radon 测度弱$^*$收敛之间的桥梁作用、$\sigma$-有限与正则性的逐处用途、以及 $X$ 非局部紧时结论失效的边界
+% SUPPLEMENT: parent=lemma:ch02-稠密逼近; kind=motivation; 别名标签，与 lemma:ch02-Cc稠密 共用下一条注记
+\begin{remark}\phantomsection\label{remark:ch02-Cc稠密}
+\begin{enumerate}[(i)]
+\item 引入动机。$L^p(X)$ 中的弱收敛由对 $L^q(X)$ 中试验函数的积分刻画，而 $C_c(X)$ 在 $L^p(X)$ 中稠密使"对 $C_c(X)$ 检验"足以确定弱极限；这正是把 $L^1(X)$ 的弱收敛与 $\mathscr R_f(X)$ 的弱$^*$收敛相衔接的依据（见\cref{theorem:ch02-dunfordpettis}的证明）。
+\item $\sigma$-有限的作用。它把一般情形化归为 $\mu(X)<\infty$：对测度空间作截断后，$C_c(X)$ 中的逼近函数仍可延拓为零。
+\item 正则性的作用。正则性给出紧集 $K\subseteq E\subseteq$ 开集 $A$ 的夹逼与 $\mu(A\setminus K)<\delta$，而局部紧 Hausdorff 空间上的 Tietze 型延拓给出 $\zeta\in C_c(X)$ 使 $\zeta=1$ 于 $K$、$\operatorname{supp}\zeta\subseteq A$，从而 $\mu(\{\zeta\neq\chi_E\})<\delta$。依测度收敛再经\cref{proposition:ch02-强收敛性质}(i)升级为 $L^p$ 收敛，此处用到 $|\zeta-\chi_E|\leqslant1$ 给出的控制。
+\item 适用边界。$X$ 非局部紧时结论失效：若 $X$ 为无限维 Banach 空间（赋 Borel $\sigma$-代数与局部有限非零测度），其紧集内部为空，$C_c(X)$ 过小，不能在 $L^p(X)$ 中稠密。
+\end{enumerate}
+\end{remark}
 
 \subsection{一致可积性}\label{subsection:ch02-一致可积}
 
 先给出下列定义。
 
 \begin{definition}\label{definition:ch02-p一致可积}\label{definition:ch02-一致可积}
-设 $p\in[1,\infty)$。称子集 $\mathscr F\subseteq L^p(X)$ 为 $p$-一致可积的，若对任意 $\epsilon>0$：
+设 $p\in[1,\infty)$。称子集 $\mathscr F\subseteq L^p(X)$ 为 $p$-一致可积的，若对任意 $\varepsilon>0$：
 \begin{enumerate}[(i)]
-\item 存在 $E\in\mathscr A$（$\mu(E)<\infty$），使 $\sup_{f\in\mathscr F}\int_{E^c}|f|^p\,\mathrm{d}\mu<\epsilon$；
-\item 存在 $\delta>0$，使对所有 $F\in\mathscr A$（$\mu(F)<\delta$）有 $\sup_{f\in\mathscr F}\int_F|f|^p\,\mathrm{d}\mu<\epsilon$。
+\item 存在 $E\in\mathscr A$（$\mu(E)<\infty$），使 $\sup_{f\in\mathscr F}\int_{E^c}|f|^p\,\mathrm{d}\mu<\varepsilon$；
+\item 存在 $\delta>0$，使对所有 $F\in\mathscr A$（$\mu(F)<\delta$）有 $\sup_{f\in\mathscr F}\int_F|f|^p\,\mathrm{d}\mu<\varepsilon$。
 \end{enumerate}
 称 $\mathscr F\subseteq L^1(X)$ 一致可积，若它为 $1$-一致可积。
 \end{definition}
 
-\begin{remark}\label{remark:ch02-单点一致可积}
+% SUPPLEMENT: parent=definition:ch02-p一致可积; kind=motivation; 说明一致可积性作为 $L^1$ 弱紧性条件的动机、(i)(ii) 两项各自控制的质量、两项均不可省的两个反例、$p>1$ 与 $\mu$ 有限的边界
+% SUPPLEMENT: parent=definition:ch02-一致可积; kind=motivation; 别名标签，与 definition:ch02-p一致可积 共用下一条注记
+\begin{remark}\phantomsection\label{remark:ch02-一致可积动机}
+\begin{enumerate}[(i)]
+\item 引入动机。$L^1(X)$ 中有界序列不必具有弱收敛子列：在 $(0,1)$ 上取 $f_n\triangleq n\chi_{(0,1/n)}$，则 $\|f_n\|_1=1$ 而 $f_n\to0$ $\lambda$-a.e.，其质量集中于一点。一致可积性正是排除这类质量集中与质量逃逸的定量条件：\cref{theorem:ch02-dunfordpettis}证明它在 $L^1(X)$ 中恰刻画弱相对序列紧性。
+\item 条件 (i) 的作用。该项控制"无穷远处"的质量，即把 $\mathscr F$ 的质量一致地限制在某个有限测度集上。当 $\mu(X)<\infty$ 时取 $E=X$ 即平凡满足；当 $\mu(X)=\infty$ 时不可省：取 $X=\mathbb R$、$\mu=\lambda$、$f_n\triangleq\chi_{[n,n+1]}$，则对任意 $F\in\mathscr B(\mathbb R)$ 有 $\int_F|f_n|\,\mathrm{d}\lambda\leqslant\lambda(F)$，故 (ii) 成立；但对 $\varepsilon=1$ 与任意有限测度集 $E$，当 $n$ 充分大时 $E\cap[n,n+1]=\varnothing$，故 $\int_{E^c}|f_n|\,\mathrm{d}\lambda=1$，(i) 不成立。
+\item 条件 (ii) 的作用。该项控制"小测度集上"的质量，即积分关于测度的绝对连续性对 $\mathscr F$ 一致成立。它不能由 $L^p$ 有界性推出：在 $(0,1)$ 上取 $f_n\triangleq n\chi_{(0,1/n)}$，则 $\|f_n\|_1=1$，且因 $\lambda((0,1))<\infty$ 而 (i) 平凡成立，但 $\int_{(0,1/n)}|f_n|\,\mathrm{d}\lambda=1$，故对 $\varepsilon=1$ 与任意 $\delta>0$，取 $n>1/\delta$ 得 $\lambda((0,1/n))<\delta$ 而积分不小于 $1$，(ii) 不成立。
+\item $p>1$ 与 $\mu$ 有限的边界。当 $\mu(X)<\infty$ 时，$p$-一致可积蕴含 $1$-一致可积：由\cref{definition:ch02-p一致可积}(ii) 与 $\mu(X)<\infty$ 可得 $\sup_{f\in\mathscr F}\|f\|_p<\infty$，再由 Hölder 不等式 $\int_F|f|\leqslant\mu(F)^{(p-1)/p}\|f\|_p$ 即得。故 $p=1$ 的情形是最强者，$p>1$ 的一致可积性不能由 $1$-一致可积性得到。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch02-单点一致可积}
 (i) 设 $f\in L^p(X)$。映射 $\sigma:\mathscr A\to[0,\infty)$，$\sigma(E)\triangleq \int_E|f|^p\,\mathrm{d}\mu$（$E\in\mathscr A$），为 $(X,\mathscr A)$ 上有限测度；且 $\sigma\ll\mu$。故每个单点集 $\mathscr F=\{f\}$（$f\in L^p(X)$；更一般地，每个有限集 $\mathscr F=\{f_1,\cdots ,f_n\}\subseteq L^p(X)$）为 $p$-一致可积。
 (ii) 若 $\mu$ 有限，\cref{definition:ch02-p一致可积}(i) 取 $E=X$ 即平凡满足。
 \end{remark}
@@ -108,7 +186,7 @@ L^p(X)\triangleq \{f:X\to\mathbb R\ \mathscr A\text{-可测}\mid\|f\|_p<\infty\}
 \end{proposition}
 
 \begin{proof}
-(i)$\Rightarrow$(ii)。固定 $\epsilon>0$，设 $\delta>0$ 如\cref{definition:ch02-p一致可积}(ii)。因 $\lim_{n\to\infty}\mu(E_n)=0$，存在 $\bar n\in\mathbb N$，使对所有 $n\geqslant\bar n$ 有 $\mu(E_n)<\delta$，从而 $\sup_{f\in\mathscr F}\int_{E_n}|f|\,\mathrm{d}\mu<\epsilon$。结论成立。
+(i)$\Rightarrow$(ii)。固定 $\varepsilon>0$，设 $\delta>0$ 如\cref{definition:ch02-p一致可积}(ii)。因 $\mu(E_1)<\infty$，由测度的上连续性得 $\lim_{n\to\infty}\mu(E_n)=\mu\bigl(\bigcap_{n=1}^\infty E_n\bigr)=0$，故存在 $\bar n\in\mathbb N$，使对所有 $n\geqslant\bar n$ 有 $\mu(E_n)<\delta$，从而 $\sup_{f\in\mathscr F}\int_{E_n}|f|\,\mathrm{d}\mu<\varepsilon$。结论成立。
 
 (ii)$\Rightarrow$(i)。现证\cref{definition:ch02-p一致可积}两条件均满足。
 
@@ -116,18 +194,18 @@ L^p(X)\triangleq \{f:X\to\mathbb R\ \mathscr A\text{-可测}\mid\|f\|_p<\infty\}
 \begin{align*}
 \int_{F_2\setminus F_1}|f_1|\,\mathrm{d}\mu=\int_{F_1^c}|f_1|\,\mathrm{d}\mu-\int_{F_2^c}|f_1|\,\mathrm{d}\mu\geqslant\frac k2.
 \end{align*}
-递归论证，得非增序列 $\{F_n\}\subseteq\mathscr A$ 与序列 $\{f_n\}\subseteq\mathscr F$，使对任意 $n$ 有 $\int_{F_{n+1}\setminus F_n}|f_n|\,\mathrm{d}\mu\geqslant k/2$。令 $F\triangleq \bigcup_{n=1}^\infty F_n$，$E_n\triangleq F\setminus F_n$（$n\in\mathbb N$）。则序列 $\{E_n\}$ 非增，$\bigcap_{n=1}^\infty E_n=\varnothing $，且对所有 $n$，
+递归论证，得非降序列 $\{F_n\}\subseteq\mathscr A$ 与序列 $\{f_n\}\subseteq\mathscr F$，使对任意 $n$ 有 $\int_{F_{n+1}\setminus F_n}|f_n|\,\mathrm{d}\mu\geqslant k/2$。令 $F\triangleq \bigcup_{n=1}^\infty F_n$，$E_n\triangleq F\setminus F_n$（$n\in\mathbb N$）。则序列 $\{E_n\}$ 非增，$\bigcap_{n=1}^\infty E_n=\varnothing $，且对所有 $n$，
 \begin{align*}
 \sup_{f\in\mathscr F}\int_{E_n}|f|\,\mathrm{d}\mu\geqslant\int_{E_n}|f_n|\,\mathrm{d}\mu
 \geqslant\int_{F_{n+1}\setminus F_n}|f_n|\,\mathrm{d}\mu\geqslant\frac k2,
 \end{align*}
 矛盾。
 
-再反证\cref{definition:ch02-p一致可积}(ii)不成立。则存在 $k>0$，使对任意 $n\in\mathbb N$，存在 $F_n\in\mathscr A$（$\mu(F_n)<1/2^n$）与 $f_n\in\mathscr F$，使 $\int_{F_n}|f_n|\,\mathrm{d}\mu\geqslant k$。令 $F_\infty\triangleq \bigcap_{m=1}^\infty\bigcup_{n=m}^\infty F_n$，$E_n\triangleq \bigcup_{m=n}^\infty(F_m\setminus F_\infty)$（$n\in\mathbb N$）。易见
+再反证\cref{definition:ch02-p一致可积}(ii)不成立。则存在 $k>0$，使对任意 $n\in\mathbb N$，存在 $F_n\in\mathscr A$（$\mu(F_n)<1/2^n$）与 $f_n\in\mathscr F$，使 $\int_{F_n}|f_n|\,\mathrm{d}\mu\geqslant k$。令 $F_\infty\triangleq \bigcap_{m=1}^\infty\bigcup_{n=m}^\infty F_n$，$E_n\triangleq \bigcup_{m=n}^\infty(F_m\setminus F_\infty)$（$n\in\mathbb N$）。由可数次可加性，
 \begin{align*}
 \mu(F_\infty)\leqslant\lim_{m\to\infty}\sum_{n=m}^\infty\frac1{2^n}=0.
 \end{align*}
-序列 $\{E_n\}$ 非增，$\bigcap_{n=1}^\infty E_n=\varnothing $，且对所有 $n$，
+序列 $\{E_n\}$ 非增，$\bigcap_{n=1}^\infty E_n=\varnothing $，且由 $F_n\setminus F_\infty\subseteq E_n$，对所有 $n$ 有
 \begin{align*}
 \sup_{f\in\mathscr F}\int_{E_n}|f|\,\mathrm{d}\mu
 \geqslant\sup_{f\in\mathscr F}\int_{F_n}|f|\,\mathrm{d}\mu
@@ -136,8 +214,21 @@ L^p(X)\triangleq \{f:X\to\mathbb R\ \mathscr A\text{-可测}\mid\|f\|_p<\infty\}
 又一矛盾。结论成立。
 \end{proof}
 
-\begin{remark}\label{remark:ch02-正负一致可积}
-若 $\mathscr F\subseteq L^1(X)$，令 $\mathscr F^\pm\triangleq \{f^\pm\mid f\in\mathscr F\}$，$\mathscr F_h\triangleq \{f-h\mid f\in\mathscr F\}$（$h\in L^1(X)$）。易见 $\mathscr F$ 一致可积当且仅当 $\mathscr F^\pm$ 与 $\mathscr F_h$ 一致可积。
+% SUPPLEMENT: parent=proposition:ch02-一致可积刻画; kind=motivation; 说明把"每个小测度集"的量词换成"每个非增序列"的动机、两个反证中序列构造的作用、以及结论不依赖 $\sigma$-有限性的边界
+% SUPPLEMENT: parent=proposition:ch02-一致可积判据; kind=motivation; 别名标签，与 proposition:ch02-一致可积刻画 共用下一条注记
+\begin{remark}\phantomsection\label{remark:ch02-一致可积刻画}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{definition:ch02-p一致可积}(ii) 对"所有小测度集"提出要求，不便检验；本命题把它换成一个序列条件：沿任意非增趋于空集的序列 $\{E_n\}$，$\mathscr F$ 上的积分一致趋于零。这一形式正是\cref{lemma:ch02-非一致可积}中构造"坏序列"的依据。
+\item (i)$\Rightarrow$(ii) 的机制。$\mu(E_n)\to0$ 由测度上连续性得到（$\mu(E_1)<\infty$），随后直接引用 (ii) 中的 $\delta$；此方向只用到 $\delta$ 的存在性。
+\item (ii)$\Rightarrow$(i) 的构造。若 (i) 失败，则递归构造非增序列 $\{F_n\}$ 与 $\{f_n\}\subseteq\mathscr F$，使 $\int_{F_{n+1}\setminus F_n}|f_n|\geqslant k/2$，再令 $E_n\triangleq F\setminus F_n$（$F\triangleq\bigcup_nF_n$），则 $E_n$ 非增、交为空集而积分不小于 $k/2$，与 (ii) 矛盾。若 (ii) 失败，则取 $\mu(F_n)<2^{-n}$ 并用可数次可加性使 $\mu(F_\infty)=0$，再令 $E_n\triangleq\bigcup_{m\geqslant n}(F_m\setminus F_\infty)$，同样与 (ii) 矛盾。
+\item 适用边界。结论对任意测度空间成立，不需要 $\sigma$-有限；证明只用到 $|f|\geqslant0$ 与积分的可加性，故对带号函数须先取绝对值。当 $p>1$ 时，把 $|f|$ 换成 $|f|^p$ 后同一论证仍然成立。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch02-正负一致可积}
+若 $\mathscr F\subseteq L^1(X)$，令 $\mathscr F^\pm\triangleq \{f^\pm\mid f\in\mathscr F\}$，$\mathscr F_h\triangleq \{f-h\mid f\in\mathscr F\}$（$h\in L^1(X)$）。则 $\mathscr F$ 一致可积当且仅当 $\mathscr F^\pm$ 与 $\mathscr F_h$ 一致可积。
+
+事实上，若 $\mathscr F$ 一致可积，则由 $0\leqslant f^\pm\leqslant|f|$ 知 $\mathscr F^\pm$ 满足\cref{definition:ch02-p一致可积}两条件；又由 $|f-h|\leqslant|f|+|h|$ 与\cref{remark:ch02-单点一致可积}(i)（单点集 $\{h\}$ 一致可积）知 $\mathscr F_h$ 一致可积。反之，若 $\mathscr F^\pm$ 一致可积，则由 $|f|=f^++f^-$ 及两集合各自满足的 (i)(ii)（把 $E$ 与 $\delta$ 取为两者中较小者）知 $\mathscr F$ 一致可积，从而由已证部分 $\mathscr F_h$ 一致可积；若 $\mathscr F_h$ 一致可积，则 $\mathscr F=\{(f-h)+h\mid f\in\mathscr F\}$ 是把一致可积族 $\mathscr F_h$ 平移 $h$ 所得，重复上述平移论证知 $\mathscr F$ 一致可积。
 \end{remark}
 
 将使用下列引理。
@@ -185,6 +276,16 @@ k\triangleq \min\left\{m,\ \min_{j=1,\cdots ,\bar n}\left\{\left|\int_{E_j}(f_j-
 即得\eqref{align:ch02-2.58}。证毕。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch02-非一致可积; kind=motivation; 说明该引理把非一致可积性翻译为可与弱收敛直接冲突的积分估计、$\{E_n\}$ 与 $\{f_n\}$ 同时选取的量词结构、以及 $h\in L^1$ 与 $\mu(\bigcup_{n\geqslant p}E_n)\to0$ 的作用
+\begin{remark}\phantomsection\label{remark:ch02-非一致可积}
+\begin{enumerate}[(i)]
+\item 引入动机。该引理把"非一致可积"翻译成一个可与弱收敛直接冲突的估计：沿某个趋于空集的序列 $\{E_n\}$，积分 $\int_{E_n}(f_n-h)$ 对一切 $n$ 有正下界，故不趋于零。它是\cref{theorem:ch02-dunfordpettis}(ii)$\Rightarrow$(i) 中反证法的起点。
+\item 量词结构。$\{E_n\}$ 与 $\{f_n\}$ 同时选取，而不是对每个 $f$ 单独选 $E$；下界 $k=k_h$ 依赖于 $h$ 但不依赖于 $n$。若交换这两层量词，结论不成立。
+\item 条件的作用。$h\in L^1(X)$ 使 $\int_{E_n}|h|\to0$（由 $\mu(E_n)\to0$ 与单点一致可积性），故减去 $h$ 只改变小量；$\mu(\bigcup_{n\geqslant p}E_n)\to0$ 保证 $E_n$ 一致地趋于空集，从而使上述估计对 $h$ 一致可用。
+\item 适用边界。结论只断言存在这样的序列，不给出 $\{E_n\}$ 的显式构造；当 $\mathscr F$ 一致可积时结论不成立（否则与\cref{proposition:ch02-一致可积刻画}矛盾）。
+\end{enumerate}
+\end{remark}
+
 \begin{proposition}\label{proposition:ch02-有界一致可积等价}
 设 $(X,\mathscr A,\mu)$ 为有限测度空间，$\mathscr F\subseteq L^1(X)$。则下列命题等价：
 \begin{enumerate}[(i)]
@@ -199,50 +300,64 @@ k\triangleq \min\left\{m,\ \min_{j=1,\cdots ,\bar n}\left\{\left|\int_{E_j}(f_j-
 \begin{align}
 \sup_{f\in\mathscr F}\mu(\{|f|\geqslant t\})\leqslant\frac1t\sup_{f\in\mathscr F}\int_{\{|f|\geqslant t\}}|f|\,\mathrm{d}\mu\leqslant\frac Ct\quad(t>0). \label{align:ch02-2.60}
 \end{align}
-固定 $\epsilon>0$，令 $t_0\triangleq C/\delta$，其中 $\delta$ 由\cref{definition:ch02-p一致可积}(ii)给出。则对任意 $t>t_0$，由\eqref{align:ch02-2.60}得 $\sup_{f\in\mathscr F}\mu(\{|f|\geqslant t\})<\delta$，由 $\mathscr F$ 的一致可积性得 $\sup_{f\in\mathscr F}\int_{\{|f|\geqslant t\}}|f|\,\mathrm{d}\mu\leqslant\epsilon$。结论成立。
+固定 $\varepsilon>0$，令 $t_0\triangleq C/\delta$，其中 $\delta$ 由\cref{definition:ch02-p一致可积}(ii)给出。则对任意 $t>t_0$，由\eqref{align:ch02-2.60}得 $\sup_{f\in\mathscr F}\mu(\{|f|\geqslant t\})<\delta$，由 $\mathscr F$ 的一致可积性得 $\sup_{f\in\mathscr F}\int_{\{|f|\geqslant t\}}|f|\,\mathrm{d}\mu\leqslant\varepsilon$。结论成立。
 
-(ii)$\Rightarrow$(i)。对任意 $\epsilon>0$，存在 $t_0>0$，使对所有 $t\geqslant t_0$ 有 $\sup_{f\in\mathscr F}\int_{\{|f|\geqslant t\}}|f|\,\mathrm{d}\mu<\epsilon/(2t)$。则对所有 $F\in\mathscr A$，
+(ii)$\Rightarrow$(i)。对任意 $\varepsilon>0$，由 (ii) 存在 $t_0>0$，使对所有 $t\geqslant t_0$ 有 $\sup_{f\in\mathscr F}\int_{\{|f|>t\}}|f|\,\mathrm{d}\mu<\varepsilon/2$。则对所有 $F\in\mathscr A$，
 \begin{align}
 \sup_{f\in\mathscr F}\int_F|f|\,\mathrm{d}\mu
-\leqslant\sup_{f\in\mathscr F}\int_{F\cap\{|f|\leqslant t_0\}}|f|\,\mathrm{d}\mu
-+\sup_{f\in\mathscr F}\int_{F\cap\{|f|>t_0\}}|f|\,\mathrm{d}\mu
-\leqslant t_0\mu(F)+\frac\epsilon2. \label{align:ch02-2.61}
+&\leqslant\sup_{f\in\mathscr F}\int_{F\cap\{|f|\leqslant t_0\}}|f|\,\mathrm{d}\mu
++\sup_{f\in\mathscr F}\int_{F\cap\{|f|>t_0\}}|f|\,\mathrm{d}\mu \notag\\
+&\leqslant t_0\mu(F)+\frac\varepsilon2. \label{align:ch02-2.61}
 \end{align}
 若 $F=X$，由\eqref{align:ch02-2.61}得
 \begin{align*}
-\sup_{f\in\mathscr F}\|f\|_1\leqslant t_0\mu(X)+\frac\epsilon2<\infty,
+\sup_{f\in\mathscr F}\|f\|_1\leqslant t_0\mu(X)+\frac\varepsilon2<\infty,
 \end{align*}
-故 $\mathscr F$ 有界。此外令 $\delta\triangleq \epsilon/(2t_0)$。则对任意 $F\in\mathscr A$（$\mu(F)<\delta$），不等式\eqref{align:ch02-2.61}给出
+故 $\mathscr F$ 有界。此外令 $\delta\triangleq \varepsilon/(2t_0)$。则对任意 $F\in\mathscr A$（$\mu(F)<\delta$），不等式\eqref{align:ch02-2.61}给出
 \begin{align*}
-\sup_{f\in\mathscr F}\int_F|f|\,\mathrm{d}\mu\leqslant t_0\mu(F)+\frac\epsilon2=\epsilon.
+\sup_{f\in\mathscr F}\int_F|f|\,\mathrm{d}\mu\leqslant t_0\mu(F)+\frac\varepsilon2=\varepsilon.
 \end{align*}
 结论成立。
 
-(iii)$\Rightarrow$(ii)。令 $D\triangleq \sup_{f\in\mathscr F}\int_X\psi(|f|)\,\mathrm{d}\mu$。因 $\psi(t)/t\to\infty$（$t\to\infty$），对任意 $\epsilon>0$，存在 $t_0>0$，使对所有 $t>t_0$ 有 $t/\epsilon\leqslant\psi(t)$，从而
+(iii)$\Rightarrow$(ii)。令 $D\triangleq \sup_{f\in\mathscr F}\int_X\psi(|f|)\,\mathrm{d}\mu$。因 $\psi(t)/t\to\infty$（$t\to\infty$），对任意 $\varepsilon>0$，存在 $t_0>0$，使对所有 $t>t_0$ 有 $t/\varepsilon\leqslant\psi(t)$，从而
 \begin{align*}
 \sup_{f\in\mathscr F}\int_{\{|f|\geqslant t\}}|f|\,\mathrm{d}\mu
-\leqslant\epsilon\sup_{f\in\mathscr F}\int_{\{|f|\geqslant t\}}\psi(|f|)\,\mathrm{d}\mu\leqslant D\epsilon.
+\leqslant\varepsilon\sup_{f\in\mathscr F}\int_{\{|f|\geqslant t\}}\psi(|f|)\,\mathrm{d}\mu\leqslant D\varepsilon.
 \end{align*}
 结论成立。
 
-(ii)$\Rightarrow$(iii)。由假设存在发散序列 $\{t_k\}\subseteq\mathbb N$，使
+(ii)$\Rightarrow$(iii)。由假设存在发散序列 $\{t_k\}\subseteq\mathbb N$（$t_k\to\infty$），使
 \begin{align*}
 \sup_{f\in\mathscr F}\int_{\{|f|\geqslant t_k\}}|f|\,\mathrm{d}\mu\leqslant\frac1{2^{k+1}}.
 \end{align*}
-对任意 $t>0$，令 $E_t\triangleq \{n\in\{t_k\}\mid n<t\}$，并令
+对任意 $t>0$，令 $E_t\triangleq \{k\in\mathbb N\mid t_k<t\}$，并令
 \begin{align*}
-\psi(t)\triangleq t\,\operatorname{card}E_t=t\int_{\mathbb N}\chi_{E_t}(n)\,\mathrm{d}\mu_\#(n)\quad(t>0),
+\psi(t)\triangleq t\,\operatorname{card}E_t=t\int_{\mathbb N}\chi_{E_t}(k)\,\mathrm{d}\mu_\#(k)\quad(t>0),\qquad\psi(0)\triangleq0,
 \end{align*}
-其中 $\mu_\#:\mathscr P(\mathbb N)\to[0,\infty]$ 为计数测度。显然 $\psi:[0,\infty)\to[0,\infty]$ 为增函数，且 $\psi(t)/t\to\infty$（$t\to\infty$）。此外对任意 $f\in\mathscr F$，由 Tonelli 定理，
+其中 $\mu_\#:\mathscr P(\mathbb N)\to[0,\infty]$ 为计数测度。函数 $\psi:[0,\infty)\to[0,\infty)$ 增，且 $\psi(t)/t=\operatorname{card}E_t\to\infty$（$t\to\infty$）。此外对任意 $f\in\mathscr F$，由 Tonelli 定理，
 \begin{align*}
 \int_X\psi(|f|)\,\mathrm{d}\mu
-&=\int_X\mathrm{d}\mu(t)\,|f(t)|\int_{\mathbb N}\chi_{E_{|f(t)|}}(n)\,\mathrm{d}\mu_\#(n)\\
+&=\int_X\mathrm{d}\mu(x)\,|f(x)|\int_{\mathbb N}\chi_{E_{|f(x)|}}(k)\,\mathrm{d}\mu_\#(k)\\
 &=\int_{\mathbb N}\mathrm{d}\mu_\#(k)\int_{\{|f|\geqslant t_k\}}|f|\,\mathrm{d}\mu
 =\sum_{k=1}^\infty\int_{\{|f|\geqslant t_k\}}|f|\,\mathrm{d}\mu
 \leqslant\sum_{k=1}^\infty\frac1{2^{k+1}}\leqslant1.
 \end{align*}
-故 $\sup_{f\in\mathscr F}\int_X\psi(|f|)\,\mathrm{d}\mu<\infty$，由对 $\psi$ 的标准正则化即得结论。
+故 $\sup_{f\in\mathscr F}\int_X\psi(|f|)\,\mathrm{d}\mu<\infty$。最后把 $\psi$ 正则化：令
+\begin{align*}
+\varphi(t)\triangleq\inf_{s\geqslant t}\{\psi(s)+(s-t)\}\quad(t\geqslant0).
+\end{align*}
+则 $\varphi\leqslant\psi$，$\varphi$ 增且 $1$-Lipschitz，故连续；又对任意 $m\in\mathbb N$，取 $T_m$ 使 $t\geqslant T_m$ 时 $\psi(t)\geqslant mt$，则当 $t\geqslant T_m$ 时 $\varphi(t)=\inf_{s\geqslant t}\{\psi(s)+(s-t)\}\geqslant\inf_{s\geqslant t}\psi(s)\geqslant mt$，故 $\varphi(t)/t\to\infty$（$t\to\infty$）。以 $\varphi$ 代替 $\psi$ 即得 (iii)。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch02-有界一致可积等价; kind=motivation; 说明 (ii) 的"截断"含义、de la Vallée-Poussin 判别法中增长条件 $\psi(t)/t\to\infty$ 的必要性、$\mu$ 有限在 (ii)$\Rightarrow$(i) 中的作用以及 $\mu$ 无限时反例
+\begin{remark}\phantomsection\label{remark:ch02-有界一致可积等价}
+\begin{enumerate}[(i)]
+\item 引入动机。(ii) 把一致可积性化归为"截断尾部质量一致趋于零"：对 $L^1$ 中的函数，只需控制 $|f|$ 的大值部分。(iii) 则把这一控制写成对某个增长速度低于线性的函数 $\psi$ 的一致可积性，是应用中检验一致可积性的主要工具（取 $\psi(t)=t^q$，$q>1$，即得 $L^q$ 有界蕴含一致可积）。
+\item 增长条件的作用。$\psi(t)/t\to\infty$ 是 (iii)$\Rightarrow$(ii) 的关键：它保证对任意 $\varepsilon>0$ 与充分大的 $t$ 有 $t\leqslant\varepsilon\psi(t)$，从而 $\int_{\{|f|\geqslant t\}}|f|\leqslant\varepsilon\int\psi(|f|)$。若仅设 $\psi$ 增且 $\psi(t)/t$ 有正下界（例如 $\psi(t)=t$），则 (iii) 退化为 $L^1$ 有界，不能推出 (ii)。
+\item $\mu$ 有限的作用。(ii)$\Rightarrow$(i) 中条件 (i) 平凡满足（取 $E=X$），故只需证 (ii)。若 $\mu(X)=\infty$，则 (ii) 不能推出条件 (i)：取 $X=\mathbb R$、$f_n\triangleq\chi_{[n,n+1]}$，则对 $t>1$ 有 $\int_{\{|f_n|\geqslant t\}}|f_n|=0$，故 (ii) 成立，但 $\{f_n\}$ 非一致可积（见\cref{remark:ch02-一致可积动机}(ii)）。
+\item 适用边界。(ii) 中的量 $t\mapsto\sup_{f\in\mathscr F}\int_{\{|f|\geqslant t\}}|f|$ 非增，故其极限存在。$\mathscr F$ 的有界性在 (i) 中是独立假设：$L^1$ 有界本身不蕴含 (ii)。
+\end{enumerate}
+\end{remark}
 
 \begin{definition}\label{definition:ch02-一致可积模}
 设 $\mathscr F\subseteq L^1(X)$ 有界。量
@@ -252,8 +367,18 @@ k\triangleq \min\left\{m,\ \min_{j=1,\cdots ,\bar n}\left\{\left|\int_{E_j}(f_j-
 称为 $\mathscr F$ 的一致可积模。
 \end{definition}
 
-\begin{remark}\label{remark:ch02-模零一致可积}
-由\cref{proposition:ch02-有界一致可积等价}，有界子集 $\mathscr F\subseteq L^1(X)$ 一致可积当且仅当 $\eta(\mathscr F)=0$。
+% SUPPLEMENT: parent=definition:ch02-一致可积模; kind=motivation; 说明极限的良定义性（非增性）、有界性假设对有限性的作用、$\eta=0$ 与一致可积性的等价、以及 $\eta$ 的单调性与平移不变性
+\begin{remark}\phantomsection\label{remark:ch02-一致可积模}
+\begin{enumerate}[(i)]
+\item 良定义性。对每个 $f\in L^1(X)$，$t\mapsto\int_{\{|f|\geqslant t\}}|f|\,\mathrm{d}\mu$ 非增，故上确界 $t\mapsto\sup_{f\in\mathscr F}\int_{\{|f|\geqslant t\}}|f|\,\mathrm{d}\mu$ 也非增，其 $t\to\infty$ 的极限存在（可能为 $+\infty$）；\eqref{align:ch02-2.62}中的量因而良定义。$\mathscr F$ 有界保证该极限有限：$\int_{\{|f|\geqslant t\}}|f|\leqslant\|f\|_1\leqslant\sup_{g\in\mathscr F}\|g\|_1$。
+\item 含义。$\eta(\mathscr F)$ 度量 $\mathscr F$ 中函数"大值部分"的质量在无穷远处的残余，是一致可积性的定量刻画：由\cref{proposition:ch02-有界一致可积等价}，在 $\mu(X)<\infty$ 时 $\eta(\mathscr F)=0$ 当且仅当 $\mathscr F$ 一致可积。
+\item 基本性质。$\eta$ 单调（$\mathscr F\subseteq\mathscr G$ 蕴含 $\eta(\mathscr F)\leqslant\eta(\mathscr G)$）且正齐次（$\eta(c\mathscr F)=|c|\eta(\mathscr F)$，$c\in\mathbb R$）；平移一般改变 $\eta$，故 $\eta$ 只对同一族的一致可积性作定量比较。
+\item 适用边界。$\eta(\mathscr F)>0$ 对应质量集中现象（见\cref{example:ch02-弱收敛振荡}(ii) 中 $\eta=1$ 的计算）；$\eta$ 只反映"大值"部分，不反映"小测度集上"的质量，故单独 $\eta(\mathscr F)=0$ 在 $\mu(X)=\infty$ 时不足以保证一致可积。
+\end{enumerate}
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch02-模零一致可积}
+由\cref{proposition:ch02-有界一致可积等价}，有界子集 $\mathscr F\subseteq L^1(X)$ 一致可积当且仅当 $\eta(\mathscr F)=0$。事实上，\cref{proposition:ch02-有界一致可积等价}(ii) 正是 $\eta(\mathscr F)=0$ 的展开；该等价在 $\mu(X)<\infty$ 时成立，其中条件 (i) 自动满足。
 \end{remark}
 
 为后续参考，证明下列结果。
@@ -286,53 +411,109 @@ H_\delta\geqslant\int_{\{|\bar f|\geqslant t\}}|\bar f|\,\mathrm{d}\mu\geqslant\
 \end{align*}
 令 $\delta\to0^+$ 得 $\eta_1\geqslant\eta$。
 
-为证反向不等式，固定任意 $\epsilon>0$ 与 $t>0$。由 $\eta_1$ 的定义，存在 $\delta_0\in(0,\epsilon/t)$，使对所有 $\delta\in(0,\delta_0)$，存在 $\bar f\in\mathscr F$ 与 $E\in\mathscr B$（$\mu(E)<\delta$），使
+为证反向不等式，固定任意 $\varepsilon>0$ 与 $t>0$。由 $\eta_1$ 的定义，存在 $\delta_0\in(0,\varepsilon/t)$，使对所有 $\delta\in(0,\delta_0)$，存在 $\bar f\in\mathscr F$ 与 $E\in\mathscr B$（$\mu(E)<\delta$），使
 \begin{align}
-\int_E|\bar f|\,\mathrm{d}\mu\geqslant\eta_1-\epsilon. \label{align:ch02-2.66}
+\int_E|\bar f|\,\mathrm{d}\mu\geqslant\eta_1-\varepsilon. \label{align:ch02-2.66}
 \end{align}
-因 $t\mu(E)<t\delta<t\delta_0<\epsilon$，由\eqref{align:ch02-2.66}得
+因 $t\mu(E)<t\delta<t\delta_0<\varepsilon$，由\eqref{align:ch02-2.66}得
 \begin{align*}
 \int_{\{|\bar f|\geqslant t\}}|\bar f|\,\mathrm{d}\mu
 &\geqslant\int_{E\cap\{|\bar f|\geqslant t\}}|\bar f|\,\mathrm{d}\mu
 =\int_E|\bar f|\,\mathrm{d}\mu-\int_{E\cap\{|\bar f|<t\}}|\bar f|\,\mathrm{d}\mu\\
-&\geqslant\eta_1-\epsilon-t\mu(E)>\eta_1-2\epsilon.
+&\geqslant\eta_1-\varepsilon-t\mu(E)>\eta_1-2\varepsilon.
 \end{align*}
-由定义\eqref{align:ch02-2.62}，上述不等式给出 $\eta\geqslant\eta_1-2\epsilon$，由 $\epsilon$ 的任意性得 $\eta\geqslant\eta_1$。证毕。
+由定义\eqref{align:ch02-2.62}，上述不等式给出 $\eta\geqslant\eta_1-2\varepsilon$，由 $\varepsilon$ 的任意性得 $\eta\geqslant\eta_1$。证毕。
 \end{proof}
+
+% SUPPLEMENT: parent=lemma:ch02-一致可积模等价; kind=motivation; 说明以"小测度集上的积分"刻画一致可积模的动机、两个不等式各自的构造、$\mathscr F$ 有界性在 Chebyshev 估计中的用途以及该式在本节算例中的应用
+\begin{remark}\phantomsection\label{remark:ch02-一致可积模等价}
+\begin{enumerate}[(i)]
+\item 引入动机。\eqref{align:ch02-2.62} 用"大值集"定义 $\eta$，而一致可积性的原始定义用"小测度集"。\eqref{align:ch02-2.63} 说明两种刻画给出同一量，因而 $\eta$ 可从任一侧计算；在\cref{example:ch02-弱收敛振荡}(ii) 中即用\eqref{align:ch02-2.63}直接算得 $\eta=1$。
+\item 证明结构。$\eta_1\geqslant\eta$：取 $t$ 充分大使 $\{|f|\geqslant t\}$ 的测度小于 $\delta$，则以它为测试集得 $H_\delta\geqslant\eta-\delta$。$\eta_1\leqslant\eta$：在小测度集 $E$ 上把积分拆成 $\{|f|\geqslant t\}$ 与 $\{|f|<t\}$ 两部分，后者由 $t\mu(E)<\varepsilon$ 控制，前者给出 $\eta\geqslant\eta_1-2\varepsilon$。
+\item 有界性的作用。两处 Chebyshev 估计都用到 $\sup_{f\in\mathscr F}\|f\|_1<\infty$：它给出 $\mu(\{|f|\geqslant t\})\leqslant C/t$，从而把 $t$ 取得足够大即可使测度任意小。若无界，则 $\eta_1$ 与 $\eta$ 可以同时为 $+\infty$，等式失去意义。
+\item 适用边界。等式中的 $E$ 取遍 $\mathscr B$（Borel 集）；若取遍 $\mathscr A$，相应量可能更小，但由 $f$ 的 $\mathscr A$-可测性与绝对连续性，两种取法给出同一极限。
+\end{enumerate}
+\end{remark}
 
 \subsection{强收敛}\label{subsection:ch02-强收敛}
 
 若 $f,f_n\in L^p(X)$（$n\in\mathbb N$，$p\in[1,\infty]$），称 $f_n$ 在 $L^p(X)$ 中强收敛于 $f$（记 $f_n\to f$），若 $\lim_{n\to\infty}\|f_n-f\|_p=0$。
 
 \begin{proposition}\label{proposition:ch02-强收敛性质}
-设 $(X,\mathscr A,\mu)$ 为测度空间，$p\in[1,\infty)$。
+设 $(X,\mathscr A,\mu)$ 为测度空间，$p\in[1,\infty)$，$f,f_n\in L^p(X)$（$n\in\mathbb N$）。
 \begin{enumerate}[(i)]
-\item 若 $f_n\to f$ 依测度且条件\eqref{align:ch02-2.12}满足，则 $f_n\to f$ 在 $L^p(X)$ 中强收敛。
-\item 若 $f_n\to f$ 在 $L^p(X)$ 中强收敛，则存在 $\{f_{n_k}\}\subseteq\{f_n\}$ 使 $f_{n_k}\to f$ $\mu$-a.e.
+\item 设 $f_n\to f$ 依测度，且存在 $g\in L^1(X)$、$g\geqslant0$ 使 $\sup_{n\in\mathbb N}|f_n|\leqslant g$ 在 $X$ 上 $\mu$-a.e. 成立（即\eqref{align:ch02-2.12}）。则 $f_n\to f$ 在 $L^p(X)$ 中强收敛。
+\item 若 $f_n\to f$ 在 $L^p(X)$ 中强收敛，则存在 $\{f_{n_k}\}\subseteq\{f_n\}$ 使 $f_{n_k}\to f$ 在 $X$ 上 $\mu$-a.e.。
 \item 若 $f_n\to f$ 在 $L^p(X)$ 中强收敛，则 $f_n\to f$ 依测度。
-\item 若 $f,f_n\in L^p(X)$，$f_n\to f$ $\mu$-a.e.，且 $\|f_n\|_p\to\|f\|_p$，则 $f_n\to f$ 在 $L^p(X)$ 中强收敛。
+\item 若 $f_n\to f$ 在 $X$ 上 $\mu$-a.e.，且 $\|f_n\|_p\to\|f\|_p$，则 $f_n\to f$ 在 $L^p(X)$ 中强收敛。
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 仅证 (iv)。由 Fatou 引理，
 \begin{align*}
-2^p\|f\|_p^p\leqslant\liminf_{n\to\infty}\int_X[2^{p-1}(|f|^p+|f_n|^p)-|f-f_n|^p]\,\mathrm{d}\mu
-=2^p\|f\|_p^p-\limsup_{n\to\infty}\|f-f_n\|_p^p,
+2^p\|f\|_p^p&\leqslant\liminf_{n\to\infty}\int_X[2^{p-1}(|f|^p+|f_n|^p)-|f-f_n|^p]\,\mathrm{d}\mu\\
+&=2^p\|f\|_p^p-\limsup_{n\to\infty}\|f-f_n\|_p^p,
 \end{align*}
 结论成立。
 \end{proof}
 
+% SUPPLEMENT: parent=proposition:ch02-强收敛性质; kind=proof; 原书仅证 (iv)，补出 (i) 的子列原理加控制收敛、(ii) 由 Chebyshev 不等式化为依测度收敛再取 $\mu$-a.e. 子列、(iii) 由 Chebyshev 不等式直接得到的完整论证
+\begin{proof}[补充证明：(i)--(iii)]
+(i) 由\eqref{align:ch02-2.12}，$|f_n|\leqslant g$ 对一切 $n$ 在 $X$ 上 $\mu$-a.e. 成立；又 $f_n\to f$ 依测度，故由\cref{proposition:ch02-收敛关系}(ii) 可取子列使 $f_{n_k}\to f$ $\mu$-a.e.，从而 $|f|\leqslant g$ $\mu$-a.e.，于是 $|f_n-f|^p\leqslant(2g)^p\in L^1(X)$。反设 $f_n\not\to f$ 在 $L^p(X)$ 中，则存在 $\varepsilon>0$ 与子列 $\{f_{n_k}\}$ 使 $\|f_{n_k}-f\|_p\geqslant\varepsilon$ 对一切 $k$ 成立。该子列仍依测度收敛于 $f$，故其上可取更小的子列（不重新标号）使 $f_{n_k}\to f$ $\mu$-a.e.；由控制收敛定理（控制函数 $(2g)^p$）得 $\|f_{n_k}-f\|_p\to0$，矛盾。
+
+(ii) 由 Chebyshev 不等式，
+\begin{align*}
+\mu(\{|f_n-f|>\varepsilon\})\leqslant\varepsilon^{-p}\|f_n-f\|_p^p\to0\quad(\varepsilon>0),
+\end{align*}
+故 $f_n\to f$ 依测度；再由\cref{proposition:ch02-收敛关系}(ii) 得子列 $\{f_{n_k}\}$ 使 $f_{n_k}\to f$ $\mu$-a.e.。
+
+(iii) 由上述 Chebyshev 不等式，$\mu(\{|f_n-f|>\varepsilon\})\to0$ 对每个 $\varepsilon>0$ 成立，即 $f_n\to f$ 依测度。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch02-强收敛性质; kind=motivation; 说明四种收敛方式的强弱关系、(i) 中控制函数与 (iv) 中范数收敛条件的必要性（同一反例）、$L^p$ 收敛只保证几乎处处收敛子列的边界
+\begin{remark}\phantomsection\label{remark:ch02-强收敛性质}
+\begin{enumerate}[(i)]
+\item 引入动机。本命题把 $L^p$ 强收敛与依测度收敛、$\mu$-a.e. 收敛联系起来：(ii)(iii) 说明强收敛强于依测度收敛（从而强于"存在 $\mu$-a.e. 收敛子列"），(iv) 则在 $\mu$-a.e. 收敛之外补充范数收敛，给出强收敛的判据。四款的组合是 $L^p$ 收敛论证的基本工具箱。
+\item 控制函数的作用。(i) 中 $(2g)^p\in L^1(X)$ 使控制收敛定理可用；若只假设 $f_n\to f$ 依测度，则结论不成立：在 $(0,1)$ 上取 $f_n\triangleq n^{1/p}\chi_{(0,1/n)}$，则 $f_n\to0$ 依测度且 $\mu$-a.e.，但 $\|f_n\|_p=1$，故不强收敛。此例同时说明 (iv) 中 $\|f_n\|_p\to\|f\|_p$ 不可省。
+\item 子列的作用。(ii) 只断言存在子列 $\mu$-a.e. 收敛，不能加强为全序列：在 $(0,1)$ 上按二进区间排布指示函数 $f_n\triangleq\chi_{I_n}$，则 $f_n\to0$ 在 $L^1$ 中而 $\{f_n(x)\}$ 对每个 $x\in(0,1)$ 都不收敛。
+\item 适用边界。(i) 的证明用子列原理，故结论对全序列成立；(ii)(iii) 中 $p<\infty$ 保证 Chebyshev 不等式给出依测度收敛，$p=\infty$ 时须改用本质上确界估计（见\cref{proposition:ch02-Linfty强收敛}）。
+\end{enumerate}
+\end{remark}
+
 关于 $L^\infty(X)$ 中的强收敛，有下列结果。
 
 \begin{proposition}\label{proposition:ch02-Linfty强收敛}
-设 $f_n\to f$ 在 $L^\infty(X)$ 中强收敛。则：
+设 $(X,\mathscr A,\mu)$ 为测度空间，$f,f_n\in L^\infty(X)$（$n\in\mathbb N$），$f_n\to f$ 在 $L^\infty(X)$ 中强收敛。则：
 \begin{enumerate}[(i)]
-\item $f_n\to f$ $\mu$-a.e.、依测度且几乎一致；
+\item $f_n\to f$ 在 $X$ 上 $\mu$-a.e.、依测度且几乎一致；
 \item 若 $\mu(X)<\infty$，则存在 $\{f_{n_k}\}\subseteq\{f_n\}$，使对所有 $p\in[1,\infty)$ 有 $f_{n_k}\to f$ 在 $L^p(X)$ 中强收敛；
-\item 若条件\eqref{align:ch02-2.12}满足，则存在 $\{f_{n_k}\}\subseteq\{f_n\}$，使 $f_{n_k}\to f$ 在 $L^1(X)$ 中强收敛。
+\item 若存在 $g\in L^1(X)$、$g\geqslant0$ 使 $\sup_{n\in\mathbb N}|f_n|\leqslant g$ 在 $X$ 上 $\mu$-a.e. 成立（即\eqref{align:ch02-2.12}），则存在 $\{f_{n_k}\}\subseteq\{f_n\}$ 使 $f_{n_k}\to f$ 在 $L^1(X)$ 中强收敛。
 \end{enumerate}
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:ch02-Linfty强收敛; kind=proof; 原书未给证明，补出 (i) 由本质上确界给出零测集上的均匀估计、(ii) 取 $\|f_{n_k}-f\|_\infty\leqslant2^{-k}$ 后用 $\mu(X)<\infty$ 估计 $L^p$ 范数、(iii) 由 (i) 的 $\mu$-a.e. 收敛与控制收敛定理得到的完整论证
+\begin{proof}
+(i) 由 $\|f_n-f\|_\infty\to0$，可取零测集 $N\in\mathscr A$ 使 $|f_n(x)-f(x)|\leqslant\|f_n-f\|_\infty$ 对一切 $n$ 与 $x\in N^c$ 成立。故 $f_n\to f$ 在 $N^c$ 上一致，特别地在 $X$ 上 $\mu$-a.e.；进而对 $\varepsilon>0$，当 $n$ 充分大时 $\{|f_n-f|>\varepsilon\}\subseteq N$，故 $\mu(\{|f_n-f|>\varepsilon\})=0$，即 $f_n\to f$ 依测度；最后取 $E\triangleq N^c$，则 $\mu(E^c)=0$ 且 $f_n\to f$ 在 $E$ 上一致，即几乎一致收敛。
+
+(ii) 取子列 $\{f_{n_k}\}$ 使 $\|f_{n_k}-f\|_\infty\leqslant2^{-k}$（$k\in\mathbb N$）。由 (i) 的论证，存在零测集 $N$ 使 $|f_{n_k}(x)-f(x)|\leqslant2^{-k}$ 对一切 $k$ 与 $x\in N^c$ 成立。于是对任意 $p\in[1,\infty)$，
+\begin{align*}
+\|f_{n_k}-f\|_p^p=\int_{N^c}|f_{n_k}-f|^p\,\mathrm{d}\mu\leqslant2^{-kp}\mu(X)\to0\quad(k\to\infty),
+\end{align*}
+故 $f_{n_k}\to f$ 在 $L^p(X)$ 中。
+
+(iii) 由 (i)，$f_n\to f$ 在 $X$ 上 $\mu$-a.e.；又 $|f_n-f|\leqslant2g\in L^1(X)$ $\mu$-a.e.。由控制收敛定理（\cref{theorem:ch02-Lebesgue控制收敛}）得 $\|f_n-f\|_1\to0$，故全序列本身在 $L^1(X)$ 中强收敛。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch02-Linfty强收敛; kind=motivation; 说明 $L^\infty$ 强收敛是最强的收敛方式、(ii) 中 $\mu$ 有限不可省（$f_n=n^{-1}\chi_{[0,n]}$ 在 $\mathbb{R}$ 上的反例）、(ii) 与 (iii) 的差别以及各款量词的作用
+\begin{remark}\phantomsection\label{remark:ch02-Linfty强收敛}
+\begin{enumerate}[(i)]
+\item 引入动机。$L^\infty$ 强收敛等价于"除去零测集后一致收敛"，故它蕴含依测度、$\mu$-a.e. 与几乎一致收敛；本命题说明它还能在适当附加条件下"降级"为 $L^p$ 强收敛，这是把一致估计转化为积分估计的常用途径。
+\item (ii) 中 $\mu(X)<\infty$ 不可省。取 $X=\mathbb R$、$\mu=\lambda$、$f_n\triangleq n^{-1}\chi_{[0,n]}$、$f\equiv0$。则 $\|f_n\|_\infty=n^{-1}\to0$，但 $\|f_n\|_1=1$ 对一切 $n$ 成立，故不存在在 $L^1(\mathbb R)$ 中强收敛的子列；此时 $\mu(X)=\infty$，而不等式 $\|f_{n_k}-f\|_p^p\leqslant2^{-kp}\mu(X)$ 右端为无穷。
+\item (ii) 与 (iii) 的差别。(ii) 用测度的有限性控制 $L^p$ 范数，(iii) 用控制函数 $g\in L^1(X)$ 控制；后者不要求 $\mu(X)<\infty$，但只给出 $p=1$ 的结论。两者都只断言子列。
+\item 适用边界。(i) 的三项结论来自同一个零测集 $N$，故同时成立；几乎一致收敛的"几乎"不能去掉：取 $X=(0,1)$、$f_n\triangleq\chi_{(0,1/n)}$，则 $\|f_n\|_\infty=1$，故 $f_n$ 不在 $L^\infty$ 中收敛，说明 $L^\infty$ 收敛是实质性的假设。
+\end{enumerate}
+\end{remark}
 
 下列结果依赖 $p$-一致可积概念。
 
@@ -345,25 +526,25 @@ H_\delta\geqslant\int_{\{|\bar f|\geqslant t\}}|\bar f|\,\mathrm{d}\mu\geqslant\
 \end{theorem}
 
 \begin{proof}
-(i)$\Rightarrow$(ii)。固定 $\epsilon>0$。因 $f_n\to f$ 在 $L^p(X)$ 中，存在 $\bar n\in\mathbb N$，使对所有 $n>\bar n$ 有 $\|f_n-f\|_p^p<\epsilon/2^p$。则对每个 $F\in\mathscr A$，
+(i)$\Rightarrow$(ii)。固定 $\varepsilon>0$。因 $f_n\to f$ 在 $L^p(X)$ 中，存在 $\bar n\in\mathbb N$，使对所有 $n>\bar n$ 有 $\|f_n-f\|_p^p<\varepsilon/2^p$。则对每个 $F\in\mathscr A$，
 \begin{align}
 \sup_{n>\bar n}\left(\int_F|f_n|^p\,\mathrm{d}\mu\right)^{1/p}
 \leqslant\sup_{n>\bar n}\|f_n-f\|_p+\left(\int_F|f|^p\,\mathrm{d}\mu\right)^{1/p}
-\leqslant\frac{\epsilon^{1/p}}2+\left(\int_F|f|^p\,\mathrm{d}\mu\right)^{1/p}. \label{align:ch02-2.67}
+\leqslant\frac{\varepsilon^{1/p}}2+\left(\int_F|f|^p\,\mathrm{d}\mu\right)^{1/p}. \label{align:ch02-2.67}
 \end{align}
 此外（见\cref{remark:ch02-单点一致可积}(i)）：
-(a) 存在 $E\in\mathscr A$（$\mu(E)<\infty$），使 $\int_{E^c}|f|^p\,\mathrm{d}\mu<\epsilon/2^p$；
-(b) 存在 $\delta>0$，使对所有 $F\in\mathscr A$（$\mu(F)<\delta$）有 $\int_F|f|^p\,\mathrm{d}\mu<\epsilon/2^p$。
-由\eqref{align:ch02-2.67}即得结论。
+(a) 存在 $E\in\mathscr A$（$\mu(E)<\infty$），使 $\int_{E^c}|f|^p\,\mathrm{d}\mu<\varepsilon/2^p$；
+(b) 存在 $\delta>0$，使对所有 $F\in\mathscr A$（$\mu(F)<\delta$）有 $\int_F|f|^p\,\mathrm{d}\mu<\varepsilon/2^p$。
+由\eqref{align:ch02-2.67}即得结论（有限多个 $n\leqslant\bar n$ 的情形由 (a)(b) 与\cref{remark:ch02-单点一致可积}(i) 关于有限集 $\{f_1,\cdots ,f_{\bar n}\}$ 的结论处理）。
 
-(ii)$\Rightarrow$(i)。由\cref{remark:ch02-a.e.极限可测}，函数 $f$ 为 $\mathscr A$-可测。固定任意 $\epsilon>0$，设 $E\in\mathscr A$、$\delta>0$ 如\cref{definition:ch02-p一致可积}。先证 $f\in L^p(X)$。因 $\mu(E)<\infty$，由 Egorov 定理，存在可测集 $F_\delta\subseteq E$，使 $\mu(F_\delta)<\delta$ 且
+(ii)$\Rightarrow$(i)。由\cref{remark:ch02-a.e.极限可测}，函数 $f$ 为 $\mathscr A$-可测。固定任意 $\varepsilon>0$，设 $E\in\mathscr A$、$\delta>0$ 如\cref{definition:ch02-p一致可积}。先证 $f\in L^p(X)$。因 $\mu(E)<\infty$，由 Egorov 定理，存在可测集 $F_\delta\subseteq E$，使 $\mu(F_\delta)<\delta$ 且
 \begin{align}
 \lim_{n\to\infty}\sup_{x\in E\setminus F_\delta}|f_n(x)-f(x)|=0. \label{align:ch02-2.68}
 \end{align}
 另一方面：
 (a) 对 $G=E^c$ 与 $G=F_\delta$，由 Fatou 引理，
 \begin{align*}
-\int_G|f|^p\,\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_G|f_n|^p\,\mathrm{d}\mu\leqslant\epsilon;
+\int_G|f|^p\,\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_G|f_n|^p\,\mathrm{d}\mu\leqslant\varepsilon;
 \end{align*}
 (b) 序列 $\{\int_{E\setminus F_\delta}|f_n(x)-f(x)|^p\,\mathrm{d}\mu\}$ 有界，因由\eqref{align:ch02-2.68}，
 \begin{align*}
@@ -381,8 +562,18 @@ H_\delta\geqslant\int_{\{|\bar f|\geqslant t\}}|\bar f|\,\mathrm{d}\mu\geqslant\
 \|f_n-f\|_p^p=\int_{E^c}|f_n-f|^p\,\mathrm{d}\mu+\int_{E\setminus F_\delta}|f_n-f|^p\,\mathrm{d}\mu+\int_{F_\delta}|f_n-f|^p\,\mathrm{d}\mu
 =:I_{n,1}+I_{n,2}+I_{n,3}. \label{align:ch02-2.69}
 \end{align}
-如 (a) 论证，由 Fatou 引理得 $I_{n,k}\leqslant 2^p\epsilon$（$k=1,3$）。由\eqref{align:ch02-2.68}，$\lim_{n\to\infty}I_{n,2}=0$，故 $\limsup_{n\to\infty}\|f_n-f\|_p^p\leqslant 2^{p+1}\epsilon$。由 $\epsilon$ 的任意性即得结论。证毕。
+如 (a) 论证，由 Fatou 引理得 $I_{n,k}\leqslant 2^p\varepsilon$（$k=1,3$）。由\eqref{align:ch02-2.68}，$\lim_{n\to\infty}I_{n,2}=0$，故 $\limsup_{n\to\infty}\|f_n-f\|_p^p\leqslant 2^{p+1}\varepsilon$。由 $\varepsilon$ 的任意性即得结论。证毕。
 \end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-Vitali; kind=motivation; 说明 Vitali 定理作为"几乎处处收敛加一致可积推出 $L^p$ 收敛"的完整判据的地位、$p$-一致可积两项条件与 Egorov 定理在证明中的逐处用途、去掉一致可积或去掉几乎处处收敛的两个反例以及 $p<\infty$ 的边界
+\begin{remark}\phantomsection\label{remark:ch02-Vitali}
+\begin{enumerate}[(i)]
+\item 引入动机。$L^p$ 中的收敛不能由 $\mu$-a.e. 收敛单独保证：在 $(0,1)$ 上取 $f_n\triangleq n^{1/p}\chi_{(0,1/n)}$，则 $f_n\to0$ $\lambda$-a.e. 而 $\|f_n\|_p=1$。Vitali 定理给出精确的补充条件：$\mu$-a.e. 收敛加 $p$-一致可积等价于 $L^p$ 收敛。它把\cref{definition:ch02-p一致可积}的两项条件与收敛性完全对应起来，是 $L^p$ 理论中使用最频繁的收敛判据。
+\item 两项条件的作用。(ii)$\Rightarrow$(i) 中，条件 (i) 用于控制 $E^c$ 上的积分并证明 $f\in L^p(X)$；条件 (ii) 用于控制 $F_\delta$ 上的积分（$\mu(F_\delta)<\delta$）。Egorov 定理给出 $E\setminus F_\delta$ 上的一致收敛，故 $I_{n,2}\to0$；$\mu(E)<\infty$ 正是 Egorov 定理的适用范围。
+\item 条件不可省。去掉 $p$-一致可积：上述 $f_n=n^{1/p}\chi_{(0,1/n)}$ 即 $\mu$-a.e. 收敛而不 $L^p$ 收敛。去掉 $\mu$-a.e. 收敛：取 $f_n\triangleq\sin(2n\pi x)$ 于 $(0,1)$，则 $\{f_n\}$ 有界故 $p$-一致可积（\cref{lemma:ch02-有界一致可积}），但 $f_n$ 在 $L^p(I)$ 中不强收敛（见\cref{example:ch02-弱收敛振荡}(i)）。
+\item 适用边界。$p=\infty$ 时结论不成立：$p$-一致可积条件在 $\mu$ 无限时仍非平凡，而 $L^\infty$ 收敛强于 $\mu$-a.e. 收敛。另一方面，(i)$\Rightarrow$(ii) 不需要 $\mu(X)<\infty$，故定理对任意测度空间成立。
+\end{enumerate}
+\end{remark}
 
 由 Vitali 定理得 Lebesgue 定理（见\cref{theorem:ch02-Lebesgue控制收敛}）的下列推广。
 
@@ -395,8 +586,30 @@ H_\delta\geqslant\int_{\{|\bar f|\geqslant t\}}|\bar f|\,\mathrm{d}\mu\geqslant\
 \end{theorem}
 
 \begin{proof}
-由\cref{remark:ch02-单点一致可积}(i) 与条件\eqref{align:ch02-2.70}，序列 $\{f_n\}$ 为 $p$-一致可积。由\cref{theorem:ch02-Vitali}得结论。
+由\eqref{align:ch02-2.70}，$|f_n|^p\leqslant g^p\in L^1(X)$ $\mu$-a.e. 对一切 $n$ 成立，故对任意 $t>0$ 与 $n\in\mathbb N$，
+\begin{align*}
+\int_{\{|f_n|\geqslant t\}}|f_n|^p\,\mathrm{d}\mu\leqslant\int_{\{g\geqslant t\}}g^p\,\mathrm{d}\mu.
+\end{align*}
+因 $g^p\in L^1(X)$，由控制收敛定理得
+\begin{align*}
+\lim_{t\to\infty}\sup_{n\in\mathbb N}\int_{\{|f_n|\geqslant t\}}|f_n|^p\,\mathrm{d}\mu\leqslant\lim_{t\to\infty}\int_{\{g\geqslant t\}}g^p\,\mathrm{d}\mu=0.
+\end{align*}
+现验证 $\{f_n\}$ 为 $p$-一致可积。关于\cref{definition:ch02-p一致可积}(i)：取 $E\triangleq\{g>1\}$，由 $g\in L^p(X)$ 得 $\mu(E)\leqslant\|g\|_p^p<\infty$，且 $\int_{E^c}|f_n|^p\leqslant\int_{\{g\leqslant1\}}g^p\,\mathrm{d}\mu$，右端当 $E$ 换成 $\{g>\eta\}$ 时可任意小。关于\cref{definition:ch02-p一致可积}(ii)：对任意 $F\in\mathscr A$ 与 $t>0$，
+\begin{align*}
+\int_F|f_n|^p\,\mathrm{d}\mu\leqslant t^p\mu(F)+\int_{\{|f_n|\geqslant t\}}|f_n|^p\,\mathrm{d}\mu\leqslant t^p\mu(F)+\sup_{m\in\mathbb N}\int_{\{|f_m|\geqslant t\}}|f_m|^p\,\mathrm{d}\mu,
+\end{align*}
+故取 $t$ 充分大使第二项小于 $\varepsilon/2$，再取 $\delta\triangleq\varepsilon/(2t^p)$ 即可。由\cref{theorem:ch02-Vitali}得结论。
 \end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-Vitali推广; kind=motivation; 说明该定理把控制收敛定理的控制函数由 $L^1$ 换成 $L^p$、控制对象取 $\sup_n|f_n|$ 的意义、(2.70) 的两项作用、以及去掉 (2.70) 时的反例
+\begin{remark}\phantomsection\label{remark:ch02-Vitali推广}
+\begin{enumerate}[(i)]
+\item 引入动机。\cref{theorem:ch02-Lebesgue控制收敛}要求 $g\in L^1(X)$ 并给出 $L^1$ 收敛；本定理把控制函数换成 $g\in L^p(X)$，结论相应地改为 $L^p$ 收敛。对 $p=1$ 两者一致，故本定理可视为控制收敛定理的 $L^p$ 版本。
+\item (2.70) 的作用。$g\in L^p(X)$ 使 $g^p\in L^1(X)$，从而尾部质量一致趋于零（这正是\cref{proposition:ch02-有界一致可积等价}(ii) 的内容）；对 $\sup_n|f_n|$（而不是每个 $|f_n|$）作控制，使估计对 $n$ 一致，故直接得到 $p$-一致可积性。
+\item 条件不可省。去掉 (2.70)：在 $(0,1)$ 上取 $f_n\triangleq n^{1/p}\chi_{(0,1/n)}$，则 $f_n\to0$ $\lambda$-a.e. 且 $f_n\in L^p$，但 $\|f_n\|_p=1$，故 $L^p$ 收敛不成立；此时不存在控制函数 $g\in L^p$，因为 $\sup_n|f_n|$ 的 $L^p$ 范数为无穷。
+\item 适用边界。把 (2.70) 化归为\cref{proposition:ch02-有界一致可积等价}(ii) 时用到 $g^p\in L^1(X)$；若 $g$ 只属于 $L^r$（$r<p$），则 $\{f_n\}$ 未必 $p$-一致可积，结论失效。
+\end{enumerate}
+\end{remark}
 
 提及下列结果。
 
@@ -405,7 +618,7 @@ H_\delta\geqslant\int_{\{|\bar f|\geqslant t\}}|\bar f|\,\mathrm{d}\mu\geqslant\
 \end{lemma}
 
 \begin{proof}
-\cref{definition:ch02-p一致可积}(i) 显然满足，因 $\mu(X)<\infty$。关于 (ii)，令 $C_q\triangleq \sup_{f\in\mathscr F}\|f\|_q<\infty$。对任意 $F\in\mathscr A$（$\mu(F)<\delta$），由 H\"older 不等式，若 $q<\infty$，
+\cref{definition:ch02-p一致可积}(i) 取 $E=X$ 即满足，因 $\mu(X)<\infty$。关于 (ii)，令 $C_q\triangleq \sup_{f\in\mathscr F}\|f\|_q<\infty$。对任意 $F\in\mathscr A$（$\mu(F)<\delta$），由 H\"older 不等式，若 $q<\infty$，
 \begin{align*}
 \sup_{f\in\mathscr F}\int_F|f|^p\,\mathrm{d}\mu
 \leqslant\mu(F)^{\frac{q-p}{q}}\sup_{f\in\mathscr F}\|f\|_q^p
@@ -417,14 +630,43 @@ H_\delta\geqslant\int_{\{|\bar f|\geqslant t\}}|\bar f|\,\mathrm{d}\mu\geqslant\
 \leqslant\mu(F)\sup_{f\in\mathscr F}\|f\|_\infty^p
 \leqslant C_\infty^p\,\delta.
 \end{align*}
-由这些不等式，当 $q<\infty$ 时取 $\delta\triangleq \left(\epsilon/C_q^p\right)^{\frac{q}{q-p}}$，当 $q=\infty$ 时取 $\delta\triangleq \epsilon/C_\infty^p$，\cref{definition:ch02-p一致可积}(ii) 成立。证毕。
+由这些不等式，当 $q<\infty$ 时取 $\delta\triangleq \left(\varepsilon/C_q^p\right)^{\frac{q}{q-p}}$，当 $q=\infty$ 时取 $\delta\triangleq \varepsilon/C_\infty^p$，\cref{definition:ch02-p一致可积}(ii) 成立。证毕。
 \end{proof}
+
+% SUPPLEMENT: parent=lemma:ch02-有界一致可积; kind=motivation; 说明 $L^q$ 有界作为最常用的一致可积判别、$\mu$ 有限与 $p<q$ 两项假设的必要性（两个反例）、以及 $q$ 与 $p$ 的差距对 $\delta$ 的影响
+\begin{remark}\phantomsection\label{remark:ch02-有界一致可积}
+\begin{enumerate}[(i)]
+\item 引入动机。应用中的一致可积性通常不直接验证，而由某个 $L^q$（$q>p$）范数的有界性推出：本引理说明在有限测度空间上 $L^q$ 有界蕴含 $p$-一致可积。它是\cref{proposition:ch02-高Lp强收敛}与后续章节序列紧性论证的第一步。
+\item $\mu(X)<\infty$ 不可省。取 $X=\mathbb R$、$\mu=\lambda$、$f_n\triangleq\chi_{[n,n+1]}$。则 $\{f_n\}$ 在 $L^\infty(\mathbb R)$ 中有界，但不满足\cref{definition:ch02-p一致可积}(i)：对任意有限测度集 $E$，当 $n$ 充分大时 $\int_{E^c}|f_n|^p=1$。
+\item $p<q$ 不可省。在 $(0,1)$ 上取 $f_n\triangleq n^{1/p}\chi_{(0,1/n)}$。则 $\|f_n\|_p=1$，故 $\{f_n\}$ 在 $L^p$ 中有界，但它不是 $p$-一致可积的：对 $\varepsilon=1$ 与任意 $\delta>0$，取 $n>1/\delta$ 得 $\int_{(0,1/n)}|f_n|^p=1$。
+\item 指数的作用。$\delta=\left(\varepsilon/C_q^p\right)^{q/(q-p)}$ 随 $q\downarrow p$ 而趋于无穷，反映 $q$ 与 $p$ 越接近，$L^q$ 有界所给的一致可积性越弱；$q=\infty$ 时 $\delta=\varepsilon/C_\infty^p$ 为线性关系。
+\end{enumerate}
+\end{remark}
 
 下列结果是 Vitali 定理与\cref{lemma:ch02-有界一致可积}的直接推论。
 
 \begin{proposition}\label{proposition:ch02-高Lp强收敛}
 设 $\mu(X)<\infty$，$1\leqslant p<q\leqslant\infty$。设 $\{f_n\}\subseteq L^q(X)$ 为有界序列，在 $X$ 上 $\mu$-a.e. 收敛于某函数 $f:X\to\mathbb R$。则 $f_n\to f$ 在 $L^p(X)$ 中强收敛。
 \end{proposition}
+
+% SUPPLEMENT: parent=proposition:ch02-高Lp强收敛; kind=proof; 原书未给证明（仅称"直接推论"），补出由 Fatou 引理得 $f\in L^p$、由\cref{lemma:ch02-有界一致可积}得 $p$-一致可积、再由 Vitali 定理得强收敛的完整推理
+\begin{proof}
+由 $\{f_n\}$ 在 $L^q(X)$ 中有界与 $f_n\to f$ $\mu$-a.e.，Fatou 引理给出 $f\in L^p(X)$ 且
+\begin{align*}
+\|f\|_p\leqslant\liminf_{n\to\infty}\|f_n\|_p\leqslant\sup_{n\in\mathbb N}\|f_n\|_q\,\mu(X)^{\frac1p-\frac1q}<\infty.
+\end{align*}
+由\cref{lemma:ch02-有界一致可积}，$\{f_n\}$ 为 $p$-一致可积。于是\cref{theorem:ch02-Vitali}的 (ii) 成立，从而其 (i) 成立，即 $f_n\to f$ 在 $L^p(X)$ 中强收敛。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch02-高Lp强收敛; kind=motivation; 说明"较高指数有界加几乎处处收敛蕴含较低指数强收敛"的用途、$\mu$ 有限与 $q>p$ 的作用、以及 $q=p$ 或 $\mu$ 无限时结论失效的反例
+\begin{remark}\phantomsection\label{remark:ch02-高Lp强收敛}
+\begin{enumerate}[(i)]
+\item 引入动机。该结论使 $L^q$（$q>p$）中的先验估计与 $\mu$-a.e. 收敛结合即可获得 $L^p$ 强收敛，避免直接验证一致可积性。它是椭圆与抛物方程紧性论证中"先验估计升级为强收敛"的标准手段。
+\item 假设的作用。$\mu(X)<\infty$ 使 Hölder 不等式给出 $\|f\|_p\leqslant\|f\|_q\mu(X)^{1/p-1/q}$，并使\cref{lemma:ch02-有界一致可积}可用；$q>p$ 使 $L^q$ 有界成为比 $L^p$ 有界更强的条件。两者缺一不可。
+\item 反例。$q=p$：取 $f_n\triangleq n^{1/p}\chi_{(0,1/n)}$ 于 $(0,1)$，则 $\{f_n\}$ 在 $L^p$ 中有界且 $\mu$-a.e. 收敛于 $0$，但 $\|f_n\|_p=1$，故不强收敛。$\mu(X)=\infty$：取 $f_n\triangleq\chi_{[n,n+1]}$ 于 $\mathbb R$，则 $\{f_n\}$ 在 $L^\infty$ 中有界且处处收敛于 $0$，但 $\|f_n\|_p=1$。
+\item 适用边界。结论只给出 $L^p$ 强收敛，不给出 $L^q$ 强收敛；$f$ 的可测性由 $\mu$-a.e. 极限得到（\cref{remark:ch02-a.e.极限可测}）。
+\end{enumerate}
+\end{remark}
 
 \subsection{弱收敛与弱$^*$收敛}\label{subsection:ch02-弱收敛}
 
@@ -435,7 +677,8 @@ q\triangleq
 1, & p=\infty,\\
 \dfrac{p}{p-1}, & p\in(1,\infty),\\
 \infty, & p=1.
-\end{cases} \label{align:ch02-2.71}
+\end{cases} 
+\label{align:ch02-2.71}
 \end{align}
 
 关于 Lebesgue 空间的对偶，下列结果是熟知的。
@@ -452,21 +695,67 @@ q\triangleq
 为等距同构。
 \end{theorem}
 
+% SUPPLEMENT: parent=theorem:ch02-Lp对偶; kind=proof; 原书仅称"熟知"而未给证明，补出由 Hölder 不等式与其极值函数给出等距性、以 $\nu(E)\triangleq T(\chi_E)$ 构造带号测度并用 Radon--Nikodým 定理取得密度、用 $L^q$ 中的截断与单调收敛证明 $g\in L^q$ 且 $\|g\|_q=\|T\|$ 的完整论证
+\begin{proof}
+第一步：$\Theta$ 取值于 $(L^p(X))^*$ 且为等距。对 $g\in L^q(X)$ 与 $f\in L^p(X)$，Hölder 不等式给出 $|\langle T_g,f\rangle|\leqslant\|f\|_p\|g\|_q$，故 $T_g$ 为有界线性泛函且 $\|T_g\|\leqslant\|g\|_q$。反向不等式：若 $p\in(1,\infty)$，取 $f\triangleq|g|^{q-1}\operatorname{sgn}g$，则 $|f|^p=|g|^q$，故 $f\in L^p(X)$，$\|f\|_p=\|g\|_q^{q/p}$，而 $\langle T_g,f\rangle=\|g\|_q^q$，于是 $\|T_g\|\geqslant\|g\|_q^{q-q/p}=\|g\|_q$。若 $p=1$（此时 $q=\infty$），对 $\varepsilon>0$，由 $\mu$ 的 $\sigma$-有限性可取有限测度集 $E\subseteq\{|g|>\|g\|_\infty-\varepsilon\}$ 且 $\mu(E)>0$，令 $f\triangleq\chi_E\operatorname{sgn}g$，则 $\|f\|_1=\mu(E)$ 且 $\langle T_g,f\rangle=\int_E|g|\,\mathrm{d}\mu\geqslant(\|g\|_\infty-\varepsilon)\mu(E)$，故 $\|T_g\|\geqslant\|g\|_\infty-\varepsilon$。由 $\varepsilon$ 的任意性得 $\|T_g\|=\|g\|_q$。
+
+第二步：构造密度。设 $T\in(L^p(X))^*$ 且 $T\neq0$。对 $E\in\mathscr A$（$\mu(E)<\infty$）令 $\nu(E)\triangleq T(\chi_E)$。若 $E,F\in\mathscr A$ 不交且测度有限，则 $\chi_{E\cup F}=\chi_E+\chi_F$，故 $\nu(E\cup F)=\nu(E)+\nu(F)$，即 $\nu$ 有限可加；又 $|\nu(E)|\leqslant\|T\|\mu(E)^{1/p}$，故 $\nu\ll\mu$。若 $\{E_n\}\subseteq\mathscr A$ 两两不交且 $\mu(E)=\mu\bigl(\bigcup_nE_n\bigr)<\infty$，则 $\chi_{\bigcup_{n\leqslant k}E_n}\to\chi_E$ 在 $L^p(X)$ 中（控制函数 $\chi_E$），故 $\nu(E)=\sum_{n=1}^\infty\nu(E_n)$，即 $\nu$ 为可数可加带号测度。由 Radon--Nikodým 定理（\cref{theorem:ch02-RadonNikodym}，对带号测度 $\nu$ 的正负变差分别应用）与 $\mu$ 的 $\sigma$-有限性，存在 $\mathscr A$-可测函数 $g$ 使
+\begin{align*}
+\nu(E)=\int_Eg\,\mathrm{d}\mu\quad\text{对一切 }E\in\mathscr A\text{ 且 }\mu(E)<\infty.
+\end{align*}
+特别地 $g\in L^1_{\mathrm{loc}}(X)$。
+
+第三步：$T$ 与 $T_g$ 在有限测度支撑的简单函数上一致。设 $s=\sum_{k=1}^nc_k\chi_{E_k}$ 为简单函数，$\mu(\{s\neq0\})<\infty$。则 $T(s)=\sum_{k=1}^nc_k\nu(E_k)=\int_Xsg\,\mathrm{d}\mu$。
+
+第四步：$g\in L^q(X)$ 且 $\|g\|_q\leqslant\|T\|$。先设 $p\in(1,\infty)$。取 $X_m\in\mathscr A$ 使 $\mu(X_m)<\infty$ 且 $X_m\uparrow X$，并对 $n,m\in\mathbb N$ 令
+\begin{align*}
+h_{n,m}\triangleq|g|^{q-1}\operatorname{sgn}g\cdot\chi_{\{|g|\leqslant n\}}\chi_{X_m}.
+\end{align*}
+则 $h_{n,m}\in L^p(X)$。由第三步与\cref{lemma:ch02-有理简单函数稠密}（配以\cref{theorem:ch02-Lp可分}证明第一步的截断论证），存在简单函数列 $\{s_k\}$，$\mu(\{s_k\neq0\})<\infty$，使 $|s_k|\leqslant|h_{n,m}|$ 且 $s_k\to h_{n,m}$ 在 $L^p(X)$ 中，故 $T(h_{n,m})=\lim_kT(s_k)=\lim_k\int_Xs_kg\,\mathrm{d}\mu=\int_Xh_{n,m}g\,\mathrm{d}\mu$（末步由控制收敛定理，控制函数 $|h_{n,m}g|\leqslant n|g|\chi_{X_m}\in L^1(X)$）。于是
+\begin{align*}
+\int_{X_m\cap\{|g|\leqslant n\}}|g|^q\,\mathrm{d}\mu=\int_Xh_{n,m}g\,\mathrm{d}\mu=T(h_{n,m})\leqslant\|T\|\|h_{n,m}\|_p=\|T\|\Bigl(\int_{X_m\cap\{|g|\leqslant n\}}|g|^q\,\mathrm{d}\mu\Bigr)^{1/p},
+\end{align*}
+故 $\Bigl(\int_{X_m\cap\{|g|\leqslant n\}}|g|^q\,\mathrm{d}\mu\Bigr)^{1/q}\leqslant\|T\|$；由单调收敛定理（先 $n\to\infty$ 再 $m\to\infty$）得 $\|g\|_q\leqslant\|T\|$。若 $p=1$（$q=\infty$），由 $|\nu(E)|\leqslant\|T\|\mu(E)$ 得 $\bigl|\int_Eg\,\mathrm{d}\mu\bigr|\leqslant\|T\|\mu(E)$ 对一切有限测度 $E$ 成立，故 $|g|\leqslant\|T\|$ $\mu$-a.e.，即 $\|g\|_\infty\leqslant\|T\|$。
+
+第五步：$T=T_g$。有限测度支撑的简单函数在 $L^p(X)$ 中稠密（\cref{theorem:ch02-Lp可分}证明第一步）；$T$ 与 $T_g$ 在该稠密子集上一致，且二者均为 $L^p(X)$ 上的有界线性泛函（$T_g$ 的有界性由第四步与第一步），故 $T=T_g$。结合第一步得 $\|T\|=\|g\|_q$，即 $\Theta$ 为满的等距同构。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-Lp对偶; kind=motivation; 说明该表示定理使弱收敛与弱$^*$收敛有确切含义的动机、$p=1$ 时 $\sigma$-有限性不可省的原因、$p=\infty$ 时 $(L^\infty)^*\neq L^1$ 的边界以及等距性的用途
+\begin{remark}\phantomsection\label{remark:ch02-Lp对偶}
+\begin{enumerate}[(i)]
+\item 引入动机。$L^p(X)$ 的弱收敛按定义是对 $L^q(X)$ 中每个试验函数检验积分收敛；只有把 $(L^p(X))^*$ 与 $L^q(X)$ 等同，该"弱拓扑"才是通常的 $\sigma(L^p,L^q)$ 拓扑，\cref{definition:ch02-弱弱星收敛}与\cref{theorem:ch02-Lp弱紧}才有确切含义。等距性还给出弱极限的唯一性与范数的下半连续性。
+\item $p=1$ 时 $\sigma$-有限性的作用。构造 $\nu(E)=T(\chi_E)$ 后须用 Radon--Nikodým 定理取得密度，而 $L^1(X)$ 中有限测度支撑的简单函数的稠密性依赖 $\mu$ 的 $\sigma$-有限性；若 $\mu$ 非 $\sigma$-有限，$(L^1(X))^*$ 一般严格大于 $L^\infty(X)$。
+\item $p=\infty$ 的边界。$(L^\infty(X))^*$ 严格包含 $L^1(X)$（例如 $C([0,1])$ 上的 Dirac 测度延拓所得泛函不对应 $L^1$ 函数），故本定理不能推广到 $p=\infty$；这正是 $L^\infty$ 中弱收敛与弱$^*$收敛不同的原因。
+\item 等距性的用途。第一步中的极值函数 $f=|g|^{q-1}\operatorname{sgn}g$ 给出 $\|T_g\|=\|g\|_q$，从而 $\Theta$ 是等距同构而非单纯同构；第四步中的截断 $h_{n,m}$ 说明该极值函数须用截断逼近，因 $|g|^{q-1}\operatorname{sgn}g$ 可能不属于 $L^p(X)$。
+\end{enumerate}
+\end{remark}
+
 相应地，$L^p(X)$ 中的弱收敛与弱$^*$收敛如下。
 
 \begin{definition}\label{definition:ch02-弱弱星收敛}
+设 $p\in[1,\infty]$，$q$ 为\eqref{align:ch02-2.71}中的共轭指数，$f,f_n\in L^p(X)$（$n\in\mathbb N$）。
 \begin{enumerate}[(i)]
-\item 对任意 $p\in[1,\infty)$，称 $f_n$ 在 $L^p(X)$ 中弱收敛于 $f$（记 $f_n\rightharpoonup f$），若
+\item 若 $p\in[1,\infty)$，称 $f_n$ 在 $L^p(X)$ 中弱收敛于 $f$（记 $f_n\rightharpoonup f$），若
 \begin{align*}
 \lim_{n\to\infty}\int_X f_ng\,\mathrm{d}\mu=\int_X fg\,\mathrm{d}\mu\quad\text{对所有 }g\in L^q(X).
 \end{align*}
-\item 对任意 $p\in(1,\infty]$，称 $f_n$ 在 $L^p(X)$ 中弱$^*$收敛于 $f$（记 $f_n\stackrel{*}{\rightharpoonup}f$），若
+\item 若 $p\in(1,\infty]$，称 $f_n$ 在 $L^p(X)$ 中弱$^*$收敛于 $f$（记 $f_n\stackrel{*}{\rightharpoonup}f$），若
 \begin{align*}
 \lim_{n\to\infty}\int_X f_ng\,\mathrm{d}\mu=\int_X fg\,\mathrm{d}\mu\quad\text{对所有 }g\in L^q(X).
 \end{align*}
 \end{enumerate}
 \end{definition}
 当 $p\in(1,\infty)$ 时弱收敛与弱$^*$收敛一致，因为在此 $p$ 范围内 $L^p(X)$ 一致凸，从而自反（见文献\cite{ref25,ref58}）。
+
+% SUPPLEMENT: parent=definition:ch02-弱弱星收敛; kind=motivation; 说明两款定义分别对应 $\sigma(L^p,L^q)$ 与 $\sigma(L^p,(L^p)^*)$ 拓扑、$p=1$ 与 $p=\infty$ 时适用范围不同的原因、$p\in(1,\infty)$ 时二者一致的自反性依据以及弱极限的唯一性
+\begin{remark}\phantomsection\label{remark:ch02-弱弱星收敛}
+\begin{enumerate}[(i)]
+\item 引入动机。弱收敛把"按范数接近"换成"按每个试验函数的积分接近"，使有界集可能具有收敛子列（\cref{theorem:ch02-Lp弱紧}）；弱$^*$收敛只用 $L^q(X)$ 中的试验函数，故在 $p=\infty$ 时弱于弱收敛。两者的差别决定紧性定理的适用范围。
+\item 两款的适用范围。(i) 只对 $p<\infty$ 陈述：$p=\infty$ 时 $L^q=L^1$ 中的试验函数不足以刻画 $(L^\infty)^*$，此时弱收敛应按 $(L^\infty)^*$ 定义。(ii) 对 $p\in(1,\infty]$ 陈述：$p=1$ 时 $q=\infty$，弱$^*$收敛即对 $L^\infty$ 检验，与 (i) 相同，故只列 (i)。
+\item 一致性的依据。$p\in(1,\infty)$ 时 $L^p(X)$ 一致凸（Clarkson 不等式），从而自反，即 $(L^p)^{**}=L^p$，于是 $\sigma(L^p,L^q)=\sigma(L^p,(L^p)^*)$，两款定义重合。
+\item 适用边界。弱极限若存在则唯一（由 $L^q$ 试验函数的分离性）；但弱收敛不保持乘积：$f_n\rightharpoonup f$ 一般不蕴含 $f_n^2\rightharpoonup f^2$（见\cref{example:ch02-弱收敛振荡}(i)）。
+\end{enumerate}
+\end{remark}
 
 \begin{example}\label{example:ch02-非线性弱星}
 \label{example:ch02-弱收敛振荡}
@@ -499,31 +788,40 @@ n\int_E\chi_{(0,1/n)}\,\mathrm{d}\lambda=1,
 \end{align*}
 （类似情形将在\cref{example:ch05-振荡集中}中讨论）。
 
-最后注意：若 $1\leqslant p<q$，则对所有 $n\in\mathbb N$ 有 $\|f_n\|_{L^p(I)}=n^{p/q-1}$（即在 $p<q$ 的 $L^p(I)$ 中无质量集中）。故 $f_n\to0$ 在 $L^p(I)$ 中强收敛，与\cref{proposition:ch02-高Lp强收敛}一致。
+最后注意：若 $1\leqslant p<q$，则对所有 $n\in\mathbb N$ 有 $\|f_n\|_{L^p(I)}=n^{1/q-1/p}$（即在 $p<q$ 的 $L^p(I)$ 中无质量集中），故 $f_n\to0$ 在 $L^p(I)$ 中强收敛，与\cref{proposition:ch02-高Lp强收敛}一致。
 \end{example}
 
 下列结果涉及弱收敛与其他类型收敛的关系。
 
 \begin{proposition}\label{proposition:ch02-有界a.e.弱收敛}
-设 $p\in(1,\infty)$。设 $\{f_n\}\subseteq L^p(X)$ 使 $\{\|f_n\|_p\}$ 有界，且 $f_n\to f$ 在 $X$ 上 $\mu$-a.e.。则 $f\in L^p(X)$ 且 $f_n\rightharpoonup f$ 在 $L^p(X)$ 中。
+设 $p\in(1,\infty)$，$f,f_n\in L^p(X)$（$n\in\mathbb N$）。设 $\{\|f_n\|_p\}$ 有界，且 $f_n\to f$ 在 $X$ 上 $\mu$-a.e.。则 $f\in L^p(X)$ 且 $f_n\rightharpoonup f$ 在 $L^p(X)$ 中。
 \end{proposition}
 
 \begin{proof}
-$f\in L^p(X)$ 由 Fatou 引理得到，因序列 $\{\|f_n\|_p\}$ 有界。此外，对任意固定 $\epsilon>0$ 与 $g\in L^q(X)$，存在 $\delta>0$ 使 $\mu(E)<\delta$ 时 $\int_E|g|^q\,\mathrm{d}\mu<\epsilon^q$；又存在 $F\in\mathscr A$（$\mu(F)<\infty$）使 $\int_{F^c}|g|^q\,\mathrm{d}\mu<\epsilon^q$。由 Egorov 定理，存在 $F_\delta\subseteq F$ 使 $\mu(F\setminus F_\delta)<\delta$ 且 $\lim_{n\to\infty}\sup_{x\in F_\delta}|f_n(x)-f(x)|=0$。写 $X=F^c\cup(F\setminus F_\delta)\cup F_\delta$，由积分可加性与 H\"older 不等式得
+$f\in L^p(X)$ 由 Fatou 引理得到，因序列 $\{\|f_n\|_p\}$ 有界。此外，对任意固定 $\varepsilon>0$ 与 $g\in L^q(X)$，存在 $\delta>0$ 使 $\mu(E)<\delta$ 时 $\int_E|g|^q\,\mathrm{d}\mu<\varepsilon^q$；又存在 $F\in\mathscr A$（$\mu(F)<\infty$）使 $\int_{F^c}|g|^q\,\mathrm{d}\mu<\varepsilon^q$。由 Egorov 定理，存在 $F_\delta\subseteq F$ 使 $\mu(F\setminus F_\delta)<\delta$ 且 $\lim_{n\to\infty}\sup_{x\in F_\delta}|f_n(x)-f(x)|=0$。写 $X=F^c\cup(F\setminus F_\delta)\cup F_\delta$，由积分可加性与 H\"older 不等式得
 \begin{align*}
 \limsup_{n\to\infty}\left|\int_X(f_n-f)g\,\mathrm{d}\mu\right|
 \leqslant 2C\left\{\left(\int_{F^c}|g|^q\,\mathrm{d}\mu\right)^{1/q}
-+\left(\int_{F\setminus F_\delta}|g|^q\,\mathrm{d}\mu\right)^{1/q}\right\}<4C\epsilon,
++\left(\int_{F\setminus F_\delta}|g|^q\,\mathrm{d}\mu\right)^{1/q}\right\}<4C\varepsilon,
 \end{align*}
-其中 $C\triangleq \sup_n\|f_n\|_p<\infty$。由 $\epsilon$ 的任意性即得结论。
+其中 $C\triangleq \sup_n\|f_n\|_p<\infty$。由 $\varepsilon$ 的任意性即得结论。
 \end{proof}
 
-\begin{remark}\label{remark:ch02-依测度弱收敛}
-易见若 $\mu$-a.e. 收敛替换为依测度收敛，同一结论仍成立。
+% SUPPLEMENT: parent=proposition:ch02-有界a.e.弱收敛; kind=motivation; 说明"几乎处处收敛加 $L^p$ 有界"给出弱收敛这一充分条件的用途、$L^p$ 有界与 Egorov 分割的逐处作用、$p=1$ 时结论失效的反例、以及与依测度收敛版本的衔接
+\begin{remark}\phantomsection\label{remark:ch02-有界a.e.弱收敛}
+\begin{enumerate}[(i)]
+\item 引入动机。弱收敛的定义要求对每个 $g\in L^q(X)$ 检验积分；本命题把这一检验化归为 $\mu$-a.e. 收敛与 $L^p$ 有界的组合，因而是验证弱收敛最常用的充分条件，也是\cref{theorem:ch02-Lp弱紧}中"有界即弱相对序列紧"的具体化。
+\item 假设的作用。$L^p$ 范数的有界性有两处用途：由 Fatou 引理得 $f\in L^p(X)$ 且 $\|f\|_p\leqslant C$；由 Hölder 不等式得 $\int_{F^c}|(f_n-f)g|\leqslant2C\bigl(\int_{F^c}|g|^q\bigr)^{1/q}$ 的一致估计。$\mu$-a.e. 收敛则经 Egorov 定理给出 $F_\delta$ 上的一致收敛，使 $F_\delta$ 上的积分可估计。
+\item $p=1$ 时结论失效。取 $f_n\triangleq n\chi_{(0,1/n)}$ 于 $(0,1)$。则 $\{f_n\}$ 在 $L^1$ 中有界且 $f_n\to0$ 处处成立，但 $f_n$ 在 $L^1(I)$ 中不弱收敛于 $0$（见\cref{example:ch02-弱收敛振荡}(ii)），故 $p>1$ 的假设不可省；$L^1$ 的情形须补上一致可积性（\cref{theorem:ch02-dunfordpettis}）。
+\item 适用边界。结论断言 $L^p$ 中的弱收敛，不蕴含强收敛（\cref{example:ch02-弱收敛振荡}(i)）；若把 $\mu$-a.e. 收敛换成依测度收敛，结论仍成立，见下一条注记。
+\end{enumerate}
+\end{remark}
+\begin{remark}\phantomsection\label{remark:ch02-依测度弱收敛}
+若把 $\mu$-a.e. 收敛替换为依测度收敛，同一结论仍成立。事实上，设 $f_n\to f$ 依测度且 $\{\|f_n\|_p\}$ 有界。若结论不成立，则存在 $g\in L^q(X)$ 与子列 $\{f_{n_k}\}$ 及 $\varepsilon>0$ 使 $\bigl|\int_X(f_{n_k}-f)g\,\mathrm{d}\mu\bigr|\geqslant\varepsilon$ 对一切 $k$ 成立。由\cref{proposition:ch02-收敛关系}(ii)，该子列有更小的子列（不重新标号）使 $f_{n_k}\to f$ $\mu$-a.e.；对后者应用已证的 $\mu$-a.e. 情形得积分趋于零，矛盾。
 \end{remark}
 
 \begin{proposition}[Radon--Riesz]\label{proposition:ch02-RadonRiesz}
-设 $p\in(1,\infty)$。设 $f_n\rightharpoonup f$ 在 $L^p(X)$ 中，且 $\|f_n\|_p\to\|f\|_p$。则 $f_n\to f$ 在 $L^p(X)$ 中。
+设 $p\in(1,\infty)$，$f,f_n\in L^p(X)$（$n\in\mathbb N$）。设 $f_n\rightharpoonup f$ 在 $L^p(X)$ 中，且 $\|f_n\|_p\to\|f\|_p$。则 $f_n\to f$ 在 $L^p(X)$ 中。
 \end{proposition}
 
 \begin{proof}
@@ -531,8 +829,47 @@ $f\in L^p(X)$ 由 Fatou 引理得到，因序列 $\{\|f_n\|_p\}$ 有界。此外
 \begin{align*}
 \|f_n-f\|_2^2=\|f_n\|_2^2+\|f\|_2^2-2\int_X f_nf\,\mathrm{d}\mu
 \end{align*}
-得到。一般情形见文献\cite{ref40} Proposition V.11.1。
+得到（右端第三项由 $f_n\rightharpoonup f$ 与 $f\in L^2(X)$ 收敛于 $2\|f\|_2^2$）。一般情形见文献\cite{ref40} Proposition V.11.1。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch02-RadonRiesz; kind=proof; 原书对 $p\neq2$ 仅引用文献，补出利用 $p\geqslant2$ 时的标量不等式 $|a+b|^p+|a-b|^p\geqslant2(|a|^p+|b|^p)$、弱下半连续性与极值函数 $|f|^{q-2}f$ 的完整论证，并说明 $1<p<2$ 情形由共轭指数的一致凸性得到
+\begin{proof}[补充证明：$p\neq2$ 的情形]
+先设 $p\geqslant2$。若 $f=0$，则由 $\|f_n\|_p\to0$ 立得结论。故设 $\|f\|_p>0$，并对 $n$ 充分大置 $g_n\triangleq f_n/\|f_n\|_p$、$g\triangleq f/\|f\|_p$。则 $\|g_n\|_p=\|g\|_p=1$，且由 $f_n\rightharpoonup f$ 与 $\|f_n\|_p\to\|f\|_p>0$ 得 $g_n\rightharpoonup g$。取 $h\triangleq|g|^{p-2}g$，因 $|h|^q=|g|^p$ 得 $h\in L^q(X)$ 且 $\|h\|_q=1$。由 Hölder 不等式与 $g_n\rightharpoonup g$，
+\begin{align*}
+1=\|g\|_p^p=\int_Xgh\,\mathrm{d}\mu=\lim_{n\to\infty}\int_Xg_nh\,\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\|g_n\|_p\|h\|_q=1,
+\end{align*}
+故 $\int_Xg_nh\,\mathrm{d}\mu\to1$，即 $\int_X(g_n+g)h\,\mathrm{d}\mu\to2$。再由 Hölder 不等式与 $\|h\|_q=1$ 得
+\begin{align*}
+\left\|\frac{g_n+g}{2}\right\|_p\geqslant\frac12\int_X(g_n+g)h\,\mathrm{d}\mu\to1,
+\end{align*}
+又由 $t\mapsto t^p$ 的凸性有 $\left\|(g_n+g)/2\right\|_p^p\leqslant(\|g_n\|_p^p+\|g\|_p^p)/2=1$，故 $\left\|(g_n+g)/2\right\|_p\to1$。
+
+现用标量不等式：对 $a,b\in\mathbb R$ 与 $p\geqslant2$，
+\begin{align*}
+|a+b|^p+|a-b|^p\geqslant2(|a|^p+|b|^p).
+\end{align*}
+事实上，设 $a\geqslant|b|$、$t\triangleq|b|/a\in[0,1]$，则左端等于 $a^p[(1+t)^p+(1-t)^p]$；由 $s\mapsto s^{p-1}$ 的超加性得 $(1+t)^{p-1}=(1-t+2t)^{p-1}\geqslant(1-t)^{p-1}+2t^{p-1}$，故 $(1+t)^p+(1-t)^p-2t^p$ 在 $[0,1]$ 上增且其值在 $t=0$ 处为 $2$，从而左端不小于 $a^p\cdot2(1+t^p)=2(|a|^p+|b|^p)$。以 $a=(g_n+g)/2$、$b=(g_n-g)/2$ 代入并对 $X$ 积分得
+\begin{align*}
+\int_X|g_n|^p\,\mathrm{d}\mu+\int_X|g|^p\,\mathrm{d}\mu\geqslant2\int_X\left|\frac{g_n+g}{2}\right|^p\mathrm{d}\mu+2^{1-p}\int_X|g_n-g|^p\,\mathrm{d}\mu,
+\end{align*}
+即 $2\geqslant2\int_X\left|(g_n+g)/2\right|^p\mathrm{d}\mu+2^{1-p}\|g_n-g\|_p^p$。由 $\left\|(g_n+g)/2\right\|_p\to1$ 得 $\|g_n-g\|_p\to0$，从而 $\|f_n-f\|_p\to0$。
+
+当 $1<p<2$ 时，把上述标量不等式换成共轭形式，即指数为 $q=p/(p-1)\geqslant2$ 的 Clarkson 不等式：对 $x,y\in\mathbb R$，
+\begin{align*}
+|x+y|^q+|x-y|^q\leqslant2(|x|^p+|y|^p)^{q-1},
+\end{align*}
+它对 $x,y$ 积分后给出 $L^p(X)$ 的一致凸性，重复上面的归一化与极值函数论证即得 $\|f_n-f\|_p\to0$（细节见文献\cite{ref40} Proposition V.11.1）。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch02-RadonRiesz; kind=motivation; 说明该命题是"弱收敛加范数收敛推出强收敛"的 Radon--Riesz 性质、$p\in(1,\infty)$ 不可省的反例、范数收敛条件在证明中的作用以及归一化与极值函数的作用
+\begin{remark}\phantomsection\label{remark:ch02-RadonRiesz}
+\begin{enumerate}[(i)]
+\item 引入动机。弱收敛只控制与试验函数的内积，一般不能得到强收敛；本命题说明再补充范数收敛即可。它使"范数下半连续性不等式是否严格"成为判断强收敛的准则，并给出\cref{example:ch02-弱收敛振荡}(i) 中"质量损失"的精确含义。
+\item $p\in(1,\infty)$ 不可省。$p=1$：在 $(0,1)$ 上取 $g_n\triangleq\chi_{(0,1/n)}/\lambda((0,1/n))$，则 $g_n\rightharpoonup0$ 在 $L^1$ 中不成立（见\cref{example:ch02-弱收敛振荡}(ii) 的同类计算），且 $\|g_n\|_1=1$，而 $f=0$ 时 $\|f\|_1=0$，范数收敛条件无法满足；这说明 $L^1$ 中弱收敛与范数收敛不能共存于非平凡情形。$p=\infty$：取 $f_n\triangleq(-1)^n$ 于 $(0,1)$，则 $f_n\stackrel{*}{\rightharpoonup}0$ 而 $\|f_n\|_\infty=1$，范数不收敛。
+\item 范数收敛的作用。证明中 $\|g_n\|_p=\|g\|_p=1$ 使凸性不等式右端恰为 $1$，从而 $\left\|(g_n+g)/2\right\|_p\to1$ 与标量不等式共同给出 $\|g_n-g\|_p\to0$；若范数严格下降，结论一般不成立。
+\item 适用边界。结论对任意测度空间成立，不需要 $\sigma$-有限；$p=2$ 时的恒等式证明只用到内积结构，故 Hilbert 空间中同一结论对内积收敛的序列成立。
+\end{enumerate}
+\end{remark}
 
 关于 $L^p(X)$ 的弱紧性，对任意 $p\in(1,\infty)$ 有下列结果。
 
@@ -545,18 +882,28 @@ $f\in L^p(X)$ 由 Fatou 引理得到，因序列 $\{\|f_n\|_p\}$ 有界。此外
 \end{theorem}
 
 \begin{proof}
-(i)$\Rightarrow$(ii)。因 $L^p(X)$ 可分且自反，由 Banach--Alaoglu 定理即得。
+(i)$\Rightarrow$(ii)。因 $L^p(X)$ 可分（\cref{theorem:ch02-Lp可分}）且自反，由 Banach--Alaoglu 定理，$\mathscr F$ 的弱闭包弱紧；再由 Eberlein--Šmulian 定理，弱紧集的闭子集相对序列紧，故 $\mathscr F$ 在弱拓扑中相对序列紧。
 
-(ii)$\Rightarrow$(i)。若 $\mathscr F$ 无界，则存在 $\{f_n\}\subseteq L^p(X)$ 使 $\|f_n\|_p\to\infty$，从而对每个 $\{f_{n_k}\}\subseteq\{f_n\}$ 有 $\|f_{n_k}\|_p\to\infty$。另一方面，由假设对任意 $\{f_n\}\subseteq\mathscr F$，存在 $\{f_{n_k}\}\subseteq\{f_n\}$ 弱收敛，从而有界。矛盾。证毕。
+(ii)$\Rightarrow$(i)。若 $\mathscr F$ 无界，则存在 $\{f_n\}\subseteq\mathscr F$ 使 $\|f_n\|_p\to\infty$，从而对每个 $\{f_{n_k}\}\subseteq\{f_n\}$ 有 $\|f_{n_k}\|_p\to\infty$。另一方面，由假设对任意 $\{f_n\}\subseteq\mathscr F$，存在 $\{f_{n_k}\}\subseteq\{f_n\}$ 弱收敛，而弱收敛序列必有界（由一致有界原理与 $\|f_{n_k}\|_p=\sup\{|\langle T,f_{n_k}\rangle|\mid T\in(L^p(X))^*,\ \|T\|\leqslant1\}$ 的逐点有界性）。矛盾。证毕。
 \end{proof}
+
+% SUPPLEMENT: parent=theorem:ch02-Lp弱紧; kind=motivation; 说明有界性与弱相对序列紧的等价性（Banach--Alaoglu 加自反性加 Eberlein--Šmulian）、可分性与 $\sigma$-有限性的作用、以及 $p=1$ 时结论失效的边界
+\begin{remark}\phantomsection\label{remark:ch02-Lp弱紧}
+\begin{enumerate}[(i)]
+\item 引入动机。本定理是 $L^p$（$p>1$）中紧性论证的出发点：有界性即等价于弱相对序列紧，故先验估计直接给出弱收敛子列。\cref{theorem:ch02-dunfordpettis}处理 $p=1$ 的情形，那里有界性不够，须补上一致可积性。
+\item 证明的三要素。(i)$\Rightarrow$(ii) 依次用：$L^p$ 自反（单位球弱紧，Banach--Alaoglu）、弱紧集相对序列紧（Eberlein--Šmulian，序列化步骤不可省）、可分性（使弱拓扑在单位球上可度量化）。(ii)$\Rightarrow$(i) 用弱收敛序列的有界性。
+\item $\sigma$-有限的作用。它保证 $L^p(X)$ 的对偶为 $L^q(X)$（\cref{theorem:ch02-Lp对偶}；$p>1$ 时此结论实际不需要 $\sigma$-有限性），从而使弱拓扑有具体刻画。
+\item 反例。$p=1$：取 $f_n\triangleq n\chi_{(0,1/n)}$ 于 $(0,1)$，则 $\|f_n\|_1=1$ 有界，但 $\{f_n\}$ 无弱收敛子列（见\cref{example:ch02-弱收敛振荡}(ii)），故 (i)$\Rightarrow$(ii) 失效。
+\end{enumerate}
+\end{remark}
 
 当 $p=1$ 时情形如下。
 
 \begin{theorem}[Dunford--Pettis]\label{theorem:ch02-dunfordpettis}
-设 $X$ 为 $\sigma$-紧 Hausdorff 空间，$\mu\in\mathscr R^+_f(X)$。则下列命题等价：
+设 $X$ 为 $\sigma$-紧 Hausdorff 空间，$\mu\in\mathscr R^+_f(X)$。设 $\mathscr F\subseteq L^1(X)$。则下列命题等价：
 \begin{enumerate}[(i)]
 \item $\mathscr F$ 在 $L^1(X)$ 中有界且一致可积；
-\item $\mathscr F\subseteq L^1(X)$ 在弱拓扑中相对序列紧。
+\item $\mathscr F$ 在弱拓扑中相对序列紧。
 \end{enumerate}
 \end{theorem}
 
@@ -574,33 +921,42 @@ $f\in L^p(X)$ 由 Fatou 引理得到，因序列 $\{\|f_n\|_p\}$ 有界。此外
 若 $Y$ 为度量空间，$\{y_n\}\subseteq Y$，则 $y_n$ 弱收敛当且仅当它有界，且对任意 $y^*\in Y^*$ 的子集 $Y'\subseteq Y^*$（$Y'$ 的线性张在 $Y^*$ 中稠密），序列 $\langle y^*,y_n\rangle_{Y^*,Y}$ 收敛（见文献\cite{ref66} Theorem IV.15.1）。因 $\int_E f_n\,\mathrm{d}\mu=\int_X f_n\chi_E\,\mathrm{d}\mu$ 且 $\mathscr S(X)$ 在 $L^\infty(X)$ 中稠密，结论成立。
 \end{proof}
 
-\begin{proof}[\cref{theorem:ch02-dunfordpettis}的证明]
-(i)$\Rightarrow$(ii)。因 $L^1(X)$ 典范嵌入 Banach 空间 $\mathscr R_f(X)$，由假设 $\mathscr F$ 为 $\mathscr R_f(X)$ 中有界子集（见\cref{remark:ch02-测度密度}与\cref{section:ch05-收敛}）。又注意 $C_0(X)$ 可分。由 Banach--Alaoglu 定理与\cref{theorem:ch02-Riesz对偶}，对任意 $\{f_n\}\subseteq\mathscr F$，存在 $\{f_{n_k}\}\subseteq\{f_n\}$ 与 $\nu\in\mathscr R_f(X)$，使 $f_{n_k}\stackrel{*}{\rightharpoonup}\nu$ 在 $\mathscr R_f(X)$ 中。由\cref{lemma:ch02-弱收敛判据}，若证得对任意 $E\in\mathscr A$，序列 $\{\int_E f_{n_k}\,\mathrm{d}\mu\}\subseteq\mathbb R$ 为 Cauchy 列，则 $\nu$ 可等同于函数 $f\in L^1(X)$（即存在 $f\in L^1(X)$ 使 $\nu(X)=\int_X f\,\mathrm{d}\mu$）。
+% SUPPLEMENT: parent=lemma:ch02-弱收敛判据; kind=motivation; 说明以"可数族上的收敛加有界"替代"对每个对偶元素收敛"的动机、$\mathscr S(X)$ 在 $L^\infty$ 中稠密的作用、以及该判据在 Dunford--Pettis 定理证明中的地位
+\begin{remark}\phantomsection\label{remark:ch02-弱收敛判据}
+\begin{enumerate}[(i)]
+\item 引入动机。$L^1(X)$ 的弱收敛按定义须对每个 $g\in L^\infty(X)$ 检验；本引理把它化归为对族 $\{\chi_E\mid E\in\mathscr A\}$ 的检验加有界性，因 $\mathscr S(X)$ 的线性张在 $L^\infty(X)$ 中稠密。\cref{theorem:ch02-dunfordpettis}的证明正需要这一化归：那里只验证了 $\{\int_Ef_{n_k}\,\mathrm{d}\mu\}$ 为 Cauchy 列。
+\item 有界性的作用。所引一般结论中"有界"不可省：逐点收敛（对稠密子集）而无界时，线性泛函的极限不必有界；有界性由一致有界原理保证。
+\item 适用边界。条件 (ii) 要求每个 $E\in\mathscr A$ 上的积分收敛，而不只在某个稠密族上收敛；对 $L^1(X)$ 而言 $\mathscr A$ 中集合的指示函数族已足够，因 $\mathscr S(X)$ 稠密。
+\end{enumerate}
+\end{remark}
 
-为此，固定 $E\in\mathscr A$。由\cref{proposition:ch02-Tietze逼近}与\cref{remark:ch02-Lusin对可测函数}，存在序列 $\{\zeta_m\}\subseteq C_c(X)$，使 $\zeta_m\to\chi_E$ 在 $X$ 上 $\mu$-a.e.，且对所有 $m\in\mathbb N$ 有 $\|\zeta_m\|_\infty=1$。固定 $\epsilon>0$，设 $\delta=\delta(\epsilon)>0$ 由\cref{definition:ch02-p一致可积}(ii)给出。因 $\mu$ 有限，由 Egorov 定理，存在 $E_\delta\in\mathscr A$，使 $\mu(E_\delta^c)<\epsilon$ 且 $\lim_{m\to\infty}\sup_{x\in E_\delta}|\zeta_m(x)-\chi_E(x)|=0$。故存在 $m_0\in\mathbb N$，使对所有 $m\geqslant m_0$ 有 $\sup_{x\in E_\delta}|\zeta_m(x)-\chi_E(x)|<\epsilon$。
+\begin{proof}[\cref{theorem:ch02-dunfordpettis}的证明]
+(i)$\Rightarrow$(ii)。因 $L^1(X)$ 典范嵌入 Banach 空间 $\mathscr R_f(X)$（见\cref{remark:ch02-测度密度}与\cref{section:ch05-收敛}），由假设 $\mathscr F$ 为 $\mathscr R_f(X)$ 中有界子集。又注意 $C_0(X)$ 可分。由 Banach--Alaoglu 定理与\cref{theorem:ch02-Riesz对偶}，对任意 $\{f_n\}\subseteq\mathscr F$，存在 $\{f_{n_k}\}\subseteq\{f_n\}$ 与 $\nu\in\mathscr R_f(X)$，使 $f_{n_k}\stackrel{*}{\rightharpoonup}\nu$ 在 $\mathscr R_f(X)$ 中。由\cref{lemma:ch02-弱收敛判据}，若证得对任意 $E\in\mathscr A$，序列 $\{\int_E f_{n_k}\,\mathrm{d}\mu\}\subseteq\mathbb R$ 为 Cauchy 列，则 $\nu$ 可等同于函数 $f\in L^1(X)$（即存在 $f\in L^1(X)$ 使 $\nu(E)=\int_E f\,\mathrm{d}\mu$ 对一切 $E\in\mathscr A$ 成立）。
+
+为此，固定 $E\in\mathscr A$。由\cref{proposition:ch02-Tietze逼近}与\cref{remark:ch02-Lusin对可测函数}，存在序列 $\{\zeta_m\}\subseteq C_c(X)$，使 $\zeta_m\to\chi_E$ 在 $X$ 上 $\mu$-a.e.，且对所有 $m\in\mathbb N$ 有 $\|\zeta_m\|_\infty=1$。固定 $\varepsilon>0$，设 $\delta=\delta(\varepsilon)>0$ 由\cref{definition:ch02-p一致可积}(ii)给出。因 $\mu$ 有限，由 Egorov 定理，存在 $E_\delta\in\mathscr A$，使 $\mu(E_\delta^c)<\varepsilon$ 且 $\lim_{m\to\infty}\sup_{x\in E_\delta}|\zeta_m(x)-\chi_E(x)|=0$。故存在 $m_0\in\mathbb N$，使对所有 $m\geqslant m_0$ 有 $\sup_{x\in E_\delta}|\zeta_m(x)-\chi_E(x)|<\varepsilon$。
 
 现注意对任意 $k,l\in\mathbb N$，
 \begin{align*}
 \left|\int_E(f_{n_k}-f_{n_l})\,\mathrm{d}\mu\right|
 &=\left|\int_X(f_{n_k}-f_{n_l})\chi_E\,\mathrm{d}\mu\right|\\
 &\leqslant\left|\int_{E_\delta^c}(f_{n_k}-f_{n_l})(\chi_E-\zeta_{m_0})\,\mathrm{d}\mu\right|
-+\left|\int_{E_\delta}(f_{n_k}-f_{n_l})(\chi_E-\zeta_{m_0})\,\mathrm{d}\mu\right|
-+\left|\int_X(f_{n_k}-f_{n_l})\zeta_{m_0}\,\mathrm{d}\mu\right|\\
-&=:I_1+I_2+I_3.
++\left|\int_{E_\delta}(f_{n_k}-f_{n_l})(\chi_E-\zeta_{m_0})\,\mathrm{d}\mu\right|\\
+&\quad+\left|\int_X(f_{n_k}-f_{n_l})\zeta_{m_0}\,\mathrm{d}\mu\right|
+=:I_1+I_2+I_3.
 \end{align*}
 由上述考虑，
 \begin{align*}
-I_1\leqslant 2\int_{E_\delta^c}(|f_{n_k}|+|f_{n_l}|)\,\mathrm{d}\mu<4\epsilon,
+I_1\leqslant 2\int_{E_\delta^c}(|f_{n_k}|+|f_{n_l}|)\,\mathrm{d}\mu<4\varepsilon,
 \end{align*}
-因 $\mu(E_\delta^c)<\epsilon$ 且 $\mathscr F$ 一致可积；
+因 $\mu(E_\delta^c)<\varepsilon$ 且 $\mathscr F$ 一致可积；
 \begin{align*}
-I_2\leqslant\sup_{x\in E_\delta}|\zeta_{m_0}(x)-\chi_E(x)|\int_{E_\delta}(|f_{n_k}|+|f_{n_l}|)\,\mathrm{d}\mu<2\epsilon M,
+I_2\leqslant\sup_{x\in E_\delta}|\zeta_{m_0}(x)-\chi_E(x)|\int_{E_\delta}(|f_{n_k}|+|f_{n_l}|)\,\mathrm{d}\mu<2\varepsilon M,
 \end{align*}
-其中 $M\triangleq \sup_{f\in\mathscr F}\|f\|_1$。此外，因 $\{f_{n_k}\}$ 在 $\mathscr R_f(X)$ 中弱$^*$收敛，且 $\zeta_{m_0}\in C_0(X)$，序列 $\{\int_X f_{n_k}\zeta_{m_0}\,\mathrm{d}\mu\}\subseteq\mathbb R$ 收敛，故对任意充分大的 $k,l\in\mathbb N$ 有 $I_3<\epsilon$。
+其中 $M\triangleq \sup_{f\in\mathscr F}\|f\|_1$。此外，因 $\{f_{n_k}\}$ 在 $\mathscr R_f(X)$ 中弱$^*$收敛，且 $\zeta_{m_0}\in C_0(X)$，序列 $\{\int_X f_{n_k}\zeta_{m_0}\,\mathrm{d}\mu\}\subseteq\mathbb R$ 收敛，故对任意充分大的 $k,l\in\mathbb N$ 有 $I_3<\varepsilon$。
 
-综上，已证：对任意 $E\in\mathscr A$ 与 $\epsilon>0$，存在 $k_0\in\mathbb N$，使对所有 $k,l\geqslant k_0$ 有
+综上，已证：对任意 $E\in\mathscr A$ 与 $\varepsilon>0$，存在 $k_0\in\mathbb N$，使对所有 $k,l\geqslant k_0$ 有
 \begin{align*}
-\left|\int_E(f_{n_k}-f_{n_l})\,\mathrm{d}\mu\right|<(2M+5)\epsilon,
+\left|\int_E(f_{n_k}-f_{n_l})\,\mathrm{d}\mu\right|<(2M+5)\varepsilon,
 \end{align*}
 即对任意 $E\in\mathscr A$，$\{\int_E f_{n_k}\,\mathrm{d}\mu\}\subseteq\mathbb R$ 为 Cauchy 列。结论成立。
 
@@ -614,16 +970,16 @@ I_2\leqslant\sup_{x\in E_\delta}|\zeta_{m_0}(x)-\chi_E(x)|\int_{E_\delta}(|f_{n_
 \end{align}
 矛盾，结论成立。
 
-事实上，令 $F_1\triangleq E_1$，$n_1\triangleq 1$，取 $\epsilon_1>0$ 使对所有 $E\in\mathscr A$（$\mu(E)<\epsilon_1$）有
+事实上，令 $F_1\triangleq E_1$，$n_1\triangleq 1$，取 $\varepsilon_1>0$ 使对所有 $E\in\mathscr A$（$\mu(E)<\varepsilon_1$）有
 \begin{align*}
 \int_E|f_{n_1}-f|\,\mathrm{d}\mu<\frac k3.
 \end{align*}
 令 $n_2\in\mathbb N$ 为大于 $n_1$ 的最小整数，使
 \begin{align*}
-\mu\left(\bigcup_{n=n_2}^\infty E_n\right)<\epsilon_1,\qquad
+\mu\left(\bigcup_{n=n_2}^\infty E_n\right)<\varepsilon_1,\qquad
 \left|\int_{F_1}(f_{n_2}-f)\,\mathrm{d}\mu\right|<\frac k3.
 \end{align*}
-注意这样的 $n_2$ 存在，因 $\lim_{p\to\infty}\mu(\bigcup_{n=p}^\infty E_n)=0$，且
+这样的 $n_2$ 存在，因 $\lim_{p\to\infty}\mu(\bigcup_{n=p}^\infty E_n)=0$，且
 \begin{align*}
 \lim_{n\to\infty}\int_{F_1}(f_n-f)\,\mathrm{d}\mu=\lim_{n\to\infty}\int_X(f_n-f)\chi_{F_1}\,\mathrm{d}\mu=0,
 \end{align*}
@@ -633,22 +989,22 @@ I_2\leqslant\sup_{x\in E_\delta}|\zeta_{m_0}(x)-\chi_E(x)|\int_{E_\delta}(|f_{n_
 \begin{align*}
 \int_{\bigcup_{n=n_2}^\infty E_n}|f_{n_1}-f|\,\mathrm{d}\mu<k/3,
 \end{align*}
-因 $\mu(\bigcup_{n=n_2}^\infty E_n)<\epsilon_1$。再取 $\epsilon_2>0$ 使对所有 $E\in\mathscr A$（$\mu(E)<\epsilon_2$）有
+因 $\mu(\bigcup_{n=n_2}^\infty E_n)<\varepsilon_1$。再取 $\varepsilon_2>0$ 使对所有 $E\in\mathscr A$（$\mu(E)<\varepsilon_2$）有
 \begin{align*}
 \int_E|f_{n_2}-f|\,\mathrm{d}\mu<\frac k3,
 \end{align*}
 令 $n_3\in\mathbb N$ 为大于 $n_2$ 的最小整数，使
 \begin{align*}
-\mu\left(\bigcup_{n=n_3}^\infty E_n\right)<\epsilon_2,\qquad
+\mu\left(\bigcup_{n=n_3}^\infty E_n\right)<\varepsilon_2,\qquad
 \left|\int_{F_1\cup F_2}(f_{n_3}-f)\,\mathrm{d}\mu\right|<\frac k3
 \end{align*}
-（同上易见这样的 $n_3$ 存在）。令 $F_3\triangleq E_{n_3}$，注意
+（同上，这样的 $n_3$ 存在）。令 $F_3\triangleq E_{n_3}$，注意
 \begin{align*}
 \int_{\bigcup_{n=n_3}^\infty E_n}|f_{n_2}-f|\,\mathrm{d}\mu<k/3,
 \end{align*}
-因 $\mu(\bigcup_{n=n_3}^\infty E_n)<\epsilon_2$。迭代该论证，可构造两个子列 $\{F_p\}\equiv\{E_{n_p}\}\subseteq\{E_n\}$ 与 $\{f_p\}\equiv\{f_{n_p}\}\subseteq\{f_n\}$，以及序列 $\{\epsilon_p\}\subseteq(0,\infty)$，使
+因 $\mu(\bigcup_{n=n_3}^\infty E_n)<\varepsilon_2$。迭代该论证，可构造两个子列 $\{F_p\}\equiv\{E_{n_p}\}\subseteq\{E_n\}$ 与 $\{f_p\}\equiv\{f_{n_p}\}\subseteq\{f_n\}$，以及序列 $\{\varepsilon_p\}\subseteq(0,\infty)$，使
 \begin{align}
-\mu\left(\bigcup_{q\geqslant p+1}F_q\right)\leqslant\mu\left(\bigcup_{n=n_{p+1}}^\infty E_n\right)<\epsilon_p
+\mu\left(\bigcup_{q\geqslant p+1}F_q\right)\leqslant\mu\left(\bigcup_{n=n_{p+1}}^\infty E_n\right)<\varepsilon_p
 \Rightarrow\left|\int_{\bigcup_{q>p}F_q}(f_p-f)\,\mathrm{d}\mu\right|<\frac k3 \label{align:ch02-2.74a}
 \end{align}
 （由构造，因 $\bigcup_{q\geqslant p+1}F_q\subseteq\bigcup_{n=n_{p+1}}^\infty E_n$），
@@ -662,10 +1018,17 @@ I_2\leqslant\sup_{x\in E_\delta}|\zeta_{m_0}(x)-\chi_E(x)|\int_{E_\delta}(|f_{n_
 =\left|\int_{\bigcup_{q<p}F_q}(f_p-f)\,\mathrm{d}\mu+\int_{F_p}(f_p-f)\,\mathrm{d}\mu+\int_{\bigcup_{q>p}F_q}(f_p-f)\,\mathrm{d}\mu\right|
 \geqslant\frac k3>0.
 \end{align*}
-这就证明了\eqref{align:ch02-2.73}，结论成立。
+至此已证得\eqref{align:ch02-2.73}，结论成立。
 \end{proof}
 
-
-
+% SUPPLEMENT: parent=theorem:ch02-dunfordpettis; kind=motivation; 说明 Dunford--Pettis 定理作为 $L^1$ 弱紧性判据的地位、$\sigma$-紧与 $\mu$ 有限两项假设在证明中的用途（$C_0(X)$ 可分、$\mathscr R_f(X)$ 为对偶空间、Egorov 定理）、以及其他条件的必要性
+\begin{remark}\phantomsection\label{remark:ch02-dunfordpettis}
+\begin{enumerate}[(i)]
+\item 引入动机。$p=1$ 时 $L^1(X)$ 非自反，有界集不必弱相对序列紧；Dunford--Pettis 定理指出此时正确的紧性条件是"有界加一致可积"。它是\cref{example:ch02-弱收敛振荡}(ii) 中集中现象不可弱收敛的定量根源，也是测度值解理论中紧性论证的核心工具（见\cref{section:ch05-收敛}）。
+\item $\sigma$-紧与 $\mu$ 有限的作用。$\mu\in\mathscr R^+_f(X)$ 使典范嵌入 $L^1(X)\hookrightarrow\mathscr R_f(X)=(C_0(X))^*$ 有意义，且 Egorov 定理可用于有限测度空间；$X$ 的 $\sigma$-紧性与 $C_0(X)$ 的可分性使 Banach--Alaoglu 定理给出弱$^*$收敛子列。若 $\mu$ 非有限，须先在 $\sigma$-紧子集上截断并作对角论证。
+\item 必要性的两个方向。(i)$\Rightarrow$(ii) 用 $C_c(X)$ 中序列逼近 $\chi_E$ 与一致可积性估计 $I_1,I_2$；(ii)$\Rightarrow$(i) 用\cref{lemma:ch02-非一致可积}构造与弱收敛冲突的试验函数 $g=\chi_{\bigcup_qF_q}$，其中 $\{F_q\}$ 的选取使 $g$ 同时与 $F_p$ 及 $\bigcup_{q>p}F_q$ 相关。
+\item 适用边界。结论只给出相对序列紧，不给弱紧；对非 $\sigma$-紧空间须改用网的语言。定理对 $p>1$ 不需要一致可积性（\cref{theorem:ch02-Lp弱紧}），故 $p=1$ 是本质特殊的。
+\end{enumerate}
+\end{remark}
 
 \end{document}

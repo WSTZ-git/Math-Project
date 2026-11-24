@@ -1,0 +1,348 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{等周不等式与 $\mathcal{H}^n=\mathcal{L}^n$}\label{section:ch02-02}
+
+本节的目的是在 $\mathbb{R}^n$ 上证明等式 $\mathcal{H}^n=\mathcal{L}^n$。这一等式并不自明：$\mathcal{L}^n$ 被定义为一维 Lebesgue 测度 $\mathcal{L}^1$ 的 $n$ 重乘积，因而
+\begin{align*}
+\mathcal{L}^n(A)=\inf\Bigl\{\sum_{i=1}^{\infty}\mathcal{L}^n(Q_i)\Bigm| Q_i\ \text{为立方体},\ A\subseteq\bigcup_{i=1}^{\infty}Q_i\Bigr\}.
+\end{align*}
+另一方面，$\mathcal{H}^n(A)$ 由 $\mathbb{R}^n$ 中任意直径充分小的覆盖来计算。
+
+\begin{lemma}\label{lemma:ch02-2-3}
+设 $n$ 为正整数，$f:\mathbb{R}^n\to[0,\infty]$ 为 $\mathcal{L}^n$-可测函数，并置
+\begin{align*}
+A:=\bigl\{(x,y)\bigm| x\in\mathbb{R}^n,\ y\in\mathbb{R},\ 0\leqslant y\leqslant f(x)\bigr\}.
+\end{align*}
+则 $A$ 是 $\mathbb{R}^{n+1}$ 中的 $\mathcal{L}^{n+1}$-可测集。
+\end{lemma}
+
+\begin{proof}
+在 $\mathbb{R}^{n+1}=\mathbb{R}^n\times\mathbb{R}$ 上定义
+\begin{align*}
+g(x,y):=f(x)-y,\qquad x\in\mathbb{R}^n,\ y\in\mathbb{R}.
+\end{align*}
+函数 $(x,y)\mapsto f(x)$ 与 $(x,y)\mapsto y$ 都是 $\mathcal{L}^{n+1}$-可测的（前者由 $f$ 的 $\mathcal{L}^n$-可测性与 $\mathcal{L}^{n+1}=\mathcal{L}^n\times\mathcal{L}^1$ 得到），故 $g$ 是 $\mathcal{L}^{n+1}$-可测函数。于是
+\begin{align*}
+A=\{(x,y)\mid y\geqslant0\}\cap\{(x,y)\mid g(x,y)\geqslant0\}
+\end{align*}
+作为两个 $\mathcal{L}^{n+1}$-可测集之交，是 $\mathcal{L}^{n+1}$-可测集。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch02-2-3; kind=motivation; 说明该引理在度量可测性方面的作用及其与 Steiner 对称化的联系
+\begin{remark}\phantomsection\label{remark:ch02-lem-2-3-动机}
+本引理把「图下方的区域」归入可测集，从而使一系列由不等式描述的区域可以逐块处理。它的用途在\cref{theorem:ch02-2-3}的证明中体现出来：Steiner 对称化 $S_a(A)$ 在适当的坐标下写成两块「图与图之间」的区域之差，其中每一块的边界都是某个函数的图像，故区域的可测性由本引理给出，而被减去的部分则是一个零测集。若没有这条引理，$S_a(A)$ 的可测性只能由更复杂的投影论证得到。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch02-2-3; kind=hypotheses; 逐条说明 f 非负、可取无穷值、L^n-可测性以及维数提升的作用
+\begin{remark}\phantomsection\label{remark:ch02-lem-2-3-条件}
+\begin{enumerate}[(i)]
+\item 条件 $f\geqslant0$ 是区域 $\{0\leqslant y\leqslant f(x)\}$ 有意义的前提：若 $f$ 可取负值，则对 $f(x)<0$ 的点 $(x,y)$ 集合 $\{0\leqslant y\leqslant f(x)\}$ 为空，区域与「图像下方」的直观不再一致。
+\item 允许 $f$ 取值 $+\infty$ 不改变结论：此时对使 $f(x)=\infty$ 的 $x$，集合 $\{0\leqslant y\leqslant\infty\}$ 是半直线 $[0,\infty)$，而 $\{g\geqslant0\}$ 仍由同一个不等式刻画。
+\item $f$ 的 $\mathcal{L}^n$-可测性是实质条件。若取 $f:=\chi_V$，其中 $V\subseteq\mathbb{R}^n$ 不是 $\mathcal{L}^n$-可测集，则 $A\cap(\mathbb{R}^n\times[0,1])=V\times[0,1]$，而 $V\times[0,1]$ 不是 $\mathcal{L}^{n+1}$-可测集，故结论失效。
+\item 结论中的维数由 $n$ 提升为 $n+1$，这与区域所在的空间一致；$f$ 的有限性与可积性不参与论证。
+\end{enumerate}
+\end{remark}
+
+\begin{definition*}[直线与平面]\phantomsection\label{definition:ch02-2-3-记号}
+设 $n$ 为正整数，$a,b\in\mathbb{R}^n$ 满足 $|a|=1$。定义
+\begin{align*}
+L_b^a&:=\{b+ta\mid t\in\mathbb{R}\},\\
+P_a&:=\{x\in\mathbb{R}^n\mid x\cdot a=0\},
+\end{align*}
+并称 $L_b^a$ 为过 $b$ 且方向为 $a$ 的直线，称 $P_a$ 为过原点且垂直于 $a$ 的平面。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch02-2-3-记号; kind=motivation; 说明以 a 方向作正交分解是定义 Steiner 对称化的坐标基础
+% SUPPLEMENT: parent=definition:ch02-2-3-记号; kind=hypotheses; 说明 |a|=1 与 b 限制在 P_a 上的作用
+\begin{remark}\phantomsection\label{remark:ch02-def-2-3-记号-条件}
+每个点 $x\in\mathbb{R}^n$ 有唯一的正交分解 $x=b+ta$，其中 $b\in P_a$、$t=x\cdot a\in\mathbb{R}$。因此 $\mathbb{R}^n$ 被直线族 $\{L_b^a\}_{b\in P_a}$ 分成两两不交的一维纤维，而 $L_b^a$ 正是过 $b$ 的那条纤维。按纤维分解集合是把高维问题化为一维问题的常用手段：对每个 $b$，切片 $A\cap L_b^a$ 是一维集合，其一维 Hausdorff 测度就是它在该直线上的长度，Steiner 对称化的定义就用这些长度逐纤维地重建集合。
+
+条件 $|a|=1$ 使 $t\mapsto b+ta$ 成为等距参数化，因而 $\mathcal{H}^1(A\cap L_b^a)$ 等于切片在通常意义下的长度，同时 $t=x\cdot a$。把 $b$ 限制在 $P_a$ 上则使上述参数化唯一：若 $b-b'\in\mathbb{R}a$，则 $L_b^a=L_{b'}^a$，故不在 $P_a$ 中取值会重复同一条直线。$P_a$ 是 $n-1$ 维线性子空间，与 $\mathbb{R}a$ 正交且 $\mathbb{R}^n=P_a\oplus\mathbb{R}a$。
+\end{remark}
+
+\begin{definition}[Steiner 对称化]\label{definition:ch02-2-3}
+设 $n$ 为正整数，$a\in\mathbb{R}^n$ 满足 $|a|=1$，$A\subseteq\mathbb{R}^n$；设 $L_b^a$ 与 $P_a$（$b\in P_a$）为\cref{definition:ch02-2-3-记号}所定义的直线与平面，$\mathcal{H}^1$ 为 $\mathbb{R}^n$ 上的一维 Hausdorff 测度。集合 % XREF internal
+\begin{align*}
+S_a(A):=\bigcup_{\substack{b\in P_a\\ A\cap L_b^a\neq\emptyset}}\Bigl\{b+ta\Bigm| |t|\leqslant\frac{1}{2}\mathcal{H}^1\bigl(A\cap L_b^a\bigr)\Bigr\}
+\end{align*}
+称为 $A$ 关于平面 $P_a$ 的 Steiner 对称化。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch02-2-3; kind=motivation; 说明逐纤维保长重建的构造动机与它在等直径不等式中的作用
+\begin{remark}\phantomsection\label{remark:ch02-def-2-3-动机}
+Steiner 对称化逐条纤维地重建集合：对每个 $b\in P_a$，它把切片 $A\cap L_b^a$ 换成以 $b$ 为中心、长度等于该切片一维 Hausdorff 测度的线段。这样得到的集合关于 $P_a$ 对称，因为每条线段的两端到 $P_a$ 的距离相等。构造中有两个要点。其一是保长：线段的长度取为 $\mathcal{H}^1(A\cap L_b^a)$，于是由 Fubini 定理，对称化前后集合的 $n$ 维测度相同。其二是居中：线段的中点放在 $P_a$ 上，于是沿 $a$ 方向的分布被压成最紧凑的对称形状，任意两点之间的最大距离不因这项操作而增大。这两个要点分别对应\cref{theorem:ch02-2-3}的 (ii) 与 (i)，也正是证明等直径不等式所需要的两条信息。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch02-2-3; kind=hypotheses; 逐条说明 |a|=1、A 的任意性、切片的非空条件与空集情形的作用
+\begin{remark}\phantomsection\label{remark:ch02-def-2-3-条件}
+\begin{enumerate}[(i)]
+\item 条件 $|a|=1$ 使 $t$ 成为弧长参数，$\{b+ta\mid |t|\leqslant h\}$ 的长度恰为 $2h$；这里取 $h=\frac12\mathcal{H}^1(A\cap L_b^a)$，故所得线段的长度等于切片的一维测度。
+\item $A$ 是 $\mathbb{R}^n$ 的任意子集，定义本身不要求 $A$ 可测：每个切片的 $\mathcal{H}^1$ 测度总有定义。$A$ 的可测性在讨论 $S_a(A)$ 的测度时才进入，见\cref{theorem:ch02-2-3}。% XREF internal
+\item 并集只对满足 $A\cap L_b^a\neq\emptyset$ 的 $b$ 求取。若对一切 $b\in P_a$ 不加限制地取 $\{b+ta\mid |t|\leqslant\mathcal{H}^1(A\cap L_b^a)/2\}$，则当切片为空时该集合为单点集 $\{b\}$，会添入不属于对称化的点；保留非空条件的作用正在于此。
+\item 若 $A=\emptyset$，则对每个 $b\in P_a$ 切片为空，故 $S_a(A)=\emptyset$。
+\end{enumerate}
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\textwidth]{ch02-2-2-steiner.png}
+\end{figure}
+
+\begin{theorem}[Steiner 对称化的性质]\label{theorem:ch02-2-3}
+设 $n$ 为正整数，$a\in\mathbb{R}^n$ 满足 $|a|=1$，$A\subseteq\mathbb{R}^n$。记 $S_a(A)$ 为 $A$ 关于平面 $P_a$ 的 Steiner 对称化，并对 $E\subseteq\mathbb{R}^n$ 记
+\begin{align*}
+\operatorname{diam}E:=\sup\{|x-y|\mid x,y\in E\},
+\end{align*}
+约定 $\operatorname{diam}\emptyset:=0$。则
+\begin{enumerate}[(i)]
+\item $\operatorname{diam}S_a(A)\leqslant\operatorname{diam}A$；
+\item 若 $A$ 是 $\mathcal{L}^n$-可测集，则 $S_a(A)$ 也是 $\mathcal{L}^n$-可测集，且
+\begin{align*}
+\mathcal{L}^n(S_a(A))=\mathcal{L}^n(A).
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch02-2-3; kind=proof; 补出 A 非闭时的归约、平方比较对 ε 的限制，以及切片上下确界为有限实数并被取到的理由
+\begin{proof}
+（1）若 $\operatorname{diam}A=\infty$，则 (i) 成立。以下设 $\operatorname{diam}A<\infty$，并先设 $A$ 为闭集。若 $A$ 不是闭集，则由 $A\subseteq\overline A$ 与对称化的定义得 $S_a(A)\subseteq S_a(\overline A)$，又 $\operatorname{diam}\overline A=\operatorname{diam}A$，故对 $\overline A$ 证明 (i) 即给出一般情形：$\operatorname{diam}S_a(A)\leqslant\operatorname{diam}S_a(\overline A)\leqslant\operatorname{diam}\overline A=\operatorname{diam}A$。
+
+若 $S_a(A)=\emptyset$，则 $\operatorname{diam}S_a(A)=0\leqslant\operatorname{diam}A$，故以下设 $S_a(A)\neq\emptyset$ 且 $\operatorname{diam}S_a(A)>\operatorname{diam}A$。取 $\varepsilon$ 满足
+\begin{align*}
+0<\varepsilon<\operatorname{diam}S_a(A)-\operatorname{diam}A,
+\end{align*}
+并按直径的定义取 $x,y\in S_a(A)$ 使得
+\begin{align*}
+\operatorname{diam}S_a(A)\leqslant|x-y|+\varepsilon .
+\end{align*}
+令 $b:=x-(x\cdot a)a$ 与 $c:=y-(y\cdot a)a$，则 $b,c\in P_a$。置
+\begin{align*}
+r&:=\inf\{t\mid b+ta\in A\}, & s&:=\sup\{t\mid b+ta\in A\},\\
+u&:=\inf\{t\mid c+ta\in A\}, & v&:=\sup\{t\mid c+ta\in A\}.
+\end{align*}
+由 $x,y\in S_a(A)$ 知切片 $A\cap L_b^a$ 与 $A\cap L_c^a$ 非空；由 $\operatorname{diam}A<\infty$ 知 $A$ 有界，故这两个切片是有界闭集，于是 $r,s,u,v$ 都是有限实数，且 $b+ra,b+sa,c+ua,c+va\in A$。不失一般性，设 $v-r\geqslant s-u$。于是
+\begin{align*}
+v-r\geqslant\frac{1}{2}(v-r)+\frac{1}{2}(s-u)
+\geqslant\frac{1}{2}\mathcal{H}^1\bigl(A\cap L_b^a\bigr)+\frac{1}{2}\mathcal{H}^1\bigl(A\cap L_c^a\bigr),
+\end{align*}
+其中第二处不等号由 $A\cap L_b^a\subseteq\{b+ta\mid r\leqslant t\leqslant s\}$、$A\cap L_c^a\subseteq\{c+ta\mid u\leqslant t\leqslant v\}$ 与 $\mathcal{H}^1$ 的单调性得到。又由 $x,y\in S_a(A)$ 与 $S_a(A)$ 的定义得
+\begin{align*}
+|x\cdot a|\leqslant\frac{1}{2}\mathcal{H}^1\bigl(A\cap L_b^a\bigr),\qquad
+|y\cdot a|\leqslant\frac{1}{2}\mathcal{H}^1\bigl(A\cap L_c^a\bigr),
+\end{align*}
+从而
+\begin{align*}
+v-r\geqslant|x\cdot a|+|y\cdot a|\geqslant|x\cdot a-y\cdot a| .
+\end{align*}
+因此
+\begin{align*}
+\bigl(\operatorname{diam}S_a(A)-\varepsilon\bigr)^2
+&\leqslant|x-y|^2\\
+&=|b-c|^2+|x\cdot a-y\cdot a|^2\\
+&\leqslant|b-c|^2+(v-r)^2\\
+&=\bigl|(b+ra)-(c+va)\bigr|^2\\
+&\leqslant(\operatorname{diam}A)^2,
+\end{align*}
+其中第一行由 $\operatorname{diam}S_a(A)-\varepsilon\leqslant|x-y|$ 与 $\operatorname{diam}S_a(A)-\varepsilon\geqslant\operatorname{diam}A\geqslant0$ 得到，第二行由 $x-y=(b-c)+(x\cdot a-y\cdot a)a$ 与 $(b-c)\cdot a=0$ 得到，第四行由 $(b+ra)-(c+va)=(b-c)+(r-v)a$ 得到，末行由 $b+ra,c+va\in A$ 得到。于是 $\operatorname{diam}S_a(A)-\varepsilon\leqslant\operatorname{diam}A$ 对一切 $\varepsilon\in\bigl(0,\operatorname{diam}S_a(A)-\operatorname{diam}A\bigr)$ 成立；令 $\varepsilon\to0$ 即得 $\operatorname{diam}S_a(A)\leqslant\operatorname{diam}A$，故 (i) 成立。
+
+（2）由于 $\mathcal{L}^n$ 在旋转下不变，可设 $a=e_n=(0,\cdots,0,1)$。此时 $P_a=P_{e_n}=\mathbb{R}^{n-1}$。由于 $\mathcal{L}^1=\mathcal{H}^1$ 于 $\mathbb{R}^1$ 上成立，\cref{theorem:ch01-1-22}给出：映射 $f:\mathbb{R}^{n-1}\to\mathbb{R}$，% XREF p=104 "Fubini's Theorem implies the map"
+\begin{align*}
+f(b):=\mathcal{H}^1\bigl(A\cap L_b^a\bigr),\qquad b\in\mathbb{R}^{n-1},
+\end{align*}
+是 $\mathcal{L}^{n-1}$-可测的，且
+\begin{align*}
+\mathcal{L}^n(A)=\int_{\mathbb{R}^{n-1}}f(b)\,\diff b .
+\end{align*}
+于是
+\begin{align*}
+S_a(A)=\Bigl\{(b,y)\Bigm|-\frac{f(b)}{2}\leqslant y\leqslant\frac{f(b)}{2}\Bigr\}-\bigl\{(b,0)\bigm| L_b^a\cap A=\emptyset\bigr\}.
+\end{align*}
+由\cref{lemma:ch02-2-3}，上式右端是 $\mathcal{L}^n$-可测集，故 $S_a(A)$ 是 $\mathcal{L}^n$-可测集，并且% XREF p=104 "is L^n-measurable by Lemma 1, and"
+\begin{align*}
+\mathcal{L}^n(S_a(A))=\int_{\mathbb{R}^{n-1}}f(b)\,\diff b=\mathcal{L}^n(A).
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch02-2-3; kind=proof; 补出右端可测性的两步依据（两块之并与被减集合的零测性）以及测度等式的来历
+右端可测性的依据如下。集合 $\{(b,y)\mid |y|\leqslant f(b)/2\}$ 等于
+\begin{align*}
+\{(b,y)\mid 0\leqslant y\leqslant f(b)/2\}\cup\{(b,y)\mid 0\leqslant-y\leqslant f(b)/2\},
+\end{align*}
+其中第一个集合由\cref{lemma:ch02-2-3}（以 $f/2$ 代替 $f$）是 $\mathcal{L}^n$-可测集，第二个集合是第一个集合在映射 $(b,y)\mapsto(b,-y)$ 下的像，而该映射是线性同构，故第二个集合也是 $\mathcal{L}^n$-可测集。被减集合 $\{(b,0)\mid L_b^a\cap A=\emptyset\}$ 含于 $\mathcal{L}^n$-零测集 $\mathbb{R}^{n-1}\times\{0\}$，故是 $\mathcal{L}^n$-零测集。于是 $S_a(A)$ 是 $\mathcal{L}^n$-可测集，且它与 $\{(b,y)\mid |y|\leqslant f(b)/2\}$ 只相差一个零测集；由 Fubini 定理与 $f$ 的非负性，% XREF internal
+\begin{align*}
+\mathcal{L}^n(S_a(A))=\int_{\mathbb{R}^{n-1}}f(b)\,\diff b .
+\end{align*}
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-3-旋转不变性}
+在下面证明 $\mathcal{H}^n=\mathcal{L}^n$ 时，上述结论的 (ii) 只在 $a$ 为标准坐标向量的特殊情形下被使用。由于 $\mathcal{H}^n$ 具有旋转不变性，上述论证实际上给出了 $\mathcal{L}^n$ 的旋转不变性。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-3; kind=motivation; 说明两条性质各自的用途与它们在等直径不等式证明中的合成方式
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-3-动机}
+本定理的两条性质分别承担等直径不等式证明中的一个环节。性质 (ii) 说明对称化不改变 $n$ 维测度，因而可以反复施行而不损失体积；性质 (i) 说明对称化不增大直径，因而反复施行不放大集合的尺寸。沿 $n$ 个坐标方向依次施行对称化，得到关于原点对称的集合 $A^*$，它满足 $\mathcal{L}^n(A^*)=\mathcal{L}^n(A)$ 与 $\operatorname{diam}A^*\leqslant\operatorname{diam}A$；而关于原点对称的集合必含于以原点为心、半径为 $\operatorname{diam}A^*/2$ 的球中，于是 $\mathcal{L}^n(A)\leqslant\alpha(n)(\operatorname{diam}A/2)^n$。若只有 (ii) 而没有 (i)，则无法把 $A$ 换成尺寸受控的集合；若只有 (i) 而没有 (ii)，则对称化之后的测度无法与原来的测度比较。性质 (i) 的证明把 $x,y$ 写成 $b+(x\cdot a)a$ 与 $c+(y\cdot a)a$，用切片长度控制 $|x\cdot a|$ 与 $|y\cdot a|$，从而把两点距离的比较化为两条一维不等式；性质 (ii) 的证明把集合写成图与图之间的区域，再由 Fubini 定理读出测度。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-3; kind=hypotheses; 逐条说明 |a|=1、A 的任意性、(ii) 中 L^n-可测性与直径有限性的作用与必要性
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-3-条件}
+\begin{enumerate}[(i)]
+\item 条件 $|a|=1$ 保证 $t\mapsto b+ta$ 为等距参数化，故 $\mathcal{H}^1(A\cap L_b^a)$ 是切片的长度，$\{b+ta\mid |t|\leqslant\mathcal{H}^1(A\cap L_b^a)/2\}$ 的长度与之相等。若 $|a|\neq1$，同一集合的参数区间须按 $|a|$ 缩放，(ii) 中的测度等式不再成立。
+\item 性质 (i) 对一切 $A\subseteq\mathbb{R}^n$ 成立，不要求 $A$ 可测；证明只用到对称化的定义与直径的定义。当 $\operatorname{diam}A=\infty$ 时 (i) 自动成立，故可设 $\operatorname{diam}A<\infty$；此时 $A$ 有界，切片 $A\cap L_b^a$ 的上下确界才成为有限实数。若 $A$ 无界，(i) 仍成立，但证明中的 $r,s,u,v$ 可能取 $\pm\infty$。
+\item 性质 (ii) 中 $A$ 的 $\mathcal{L}^n$-可测性是实质条件：$f(b)=\mathcal{H}^1(A\cap L_b^a)$ 的 $\mathcal{L}^{n-1}$-可测性与 $\mathcal{L}^n(A)=\int f\,\diff b$ 都来自 Fubini 定理，而该定理要求 $A$ 可测。若 $A$ 不可测，则 $\int f\,\diff b$ 与 $A$ 的外测度可能不同，(ii) 的等式失去意义。
+\item 性质 (ii) 不要求 $\mathcal{L}^n(A)<\infty$：等式两端允许同时为 $+\infty$，此时 $f$ 的积分发散。
+\item 约定 $\operatorname{diam}\emptyset:=0$ 使 (i) 在 $A=\emptyset$ 时也有意义，此时 $S_a(A)=\emptyset$，两端均为 $0$。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[等直径不等式]\label{theorem:ch02-2-4}
+设 $n$ 为正整数，$A\subseteq\mathbb{R}^n$，记 $\operatorname{diam}A:=\sup\{|x-y|\mid x,y\in A\}$ 并约定 $\operatorname{diam}\emptyset:=0$，又记 $\alpha(n):=\mathcal{L}^n(B(0,1))$ 为 $\mathbb{R}^n$ 中单位球的体积。则
+\begin{align*}
+\mathcal{L}^n(A)\leqslant\alpha(n)\Bigl(\frac{\operatorname{diam}A}{2}\Bigr)^n .
+\end{align*}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-4-球包含}
+上述估计的意义在于：$A$ 未必包含于直径等于 $\operatorname{diam}A$ 的球中，而右端却是半径为 $\operatorname{diam}A/2$ 的球的体积。以 $n=2$ 与边长为 $1$ 的正三角形为例：它的直径为 $1$，外接圆半径为 $1/\sqrt3>1/2$，故不含于任何直径为 $1$ 的圆盘中；而上述估计仍给出它的面积不超过 $\alpha(2)/4$。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-4; kind=motivation; 说明用直径控制测度的思路、对不可测集成立的意义以及与 Brunn--Minkowski 型不等式的类比
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-4-动机}
+等直径不等式用直径控制 Lebesgue 测度：直径给定时，体积最大的集合是球。它的证明不要求 $A$ 可测，这一点在比较 $\mathcal{H}^n$ 与 $\mathcal{L}^n$ 时至关重要，因为 Hausdorff 测度由任意小直径的覆盖定义，覆盖元素未必可测。证明分三步：先沿 $n$ 个坐标方向依次作 Steiner 对称化，把 $A$ 换成关于原点对称的集合 $A^*$，由\cref{theorem:ch02-2-3}知 $\mathcal{L}^n(A^*)=\mathcal{L}^n(A)$ 且 $\operatorname{diam}A^*\leqslant\operatorname{diam}A$；再利用关于原点对称的集合含于以原点为心、半径为 $\operatorname{diam}A^*/2$ 的球中这一几何事实估计 $A^*$ 的体积；最后用 $\operatorname{diam}\overline A=\operatorname{diam}A$ 与 $\mathcal{L}^n(A)\leqslant\mathcal{L}^n(\overline A)$ 把结论移回 $A$ 本身。与 Brunn--Minkowski 型不等式一样，本定理把测度与几何尺寸联系起来，区别在于这里受控的尺寸是单个集合的直径，而不是两个集合的 Minkowski 和。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-4; kind=hypotheses; 逐条说明 A 的任意性、diam A 可无穷、常数 α(n) 的精确性与等号情形
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-4-条件}
+\begin{enumerate}[(i)]
+\item $A$ 是 $\mathbb{R}^n$ 的任意子集，结论不要求 $A$ 可测。证明中对 $\overline A$ 施行对称化，正是为了在不可测的情形下也能应用\cref{theorem:ch02-2-3}：闭包总可测，而 $\mathcal{L}^n(\overline A)$ 与 $\operatorname{diam}\overline A$ 分别控制 $\mathcal{L}^n(A)$ 与 $\operatorname{diam}A$。% XREF internal
+\item 当 $\operatorname{diam}A=\infty$ 时右端为 $+\infty$，不等式自动成立；故证明可设 $\operatorname{diam}A<\infty$。
+\item 常数 $\alpha(n)$ 是使不等式对一切集合成立的精确常数：取 $A=B(0,r)$，则两端都等于 $\alpha(n)r^n$。若把 $\alpha(n)$ 换成更小的数，结论对球失效，故该常数不能改进。
+\item 右端只依赖直径，因而对平移不变，并对 $A$ 关于直径单调：$\operatorname{diam}A$ 越小，估计越强。该不等式只控制体积的上界，不反映 $A$ 的位置与形状。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）若 $\operatorname{diam}A=\infty$，则结论成立；以下设 $\operatorname{diam}A<\infty$。取 $\mathbb{R}^n$ 的标准基 $\{e_1,\cdots,e_n\}$，并定义
+\begin{align*}
+A_1:=S_{e_1}(A),\quad A_2:=S_{e_2}(A_1),\quad \cdots,\quad A_n:=S_{e_n}(A_{n-1}),
+\end{align*}
+记 $A^*:=A_n$。
+
+（2）断言 \#1：$A^*$ 关于原点对称。
+
+断言之证明：$A_1=S_{e_1}(A)$ 关于 $P_{e_1}$ 对称，因为它的每个与 $P_{e_1}$ 垂直的切片都是以 $P_{e_1}$ 上的点为中心、向两侧等长的线段。设 $1\leqslant k<n$ 且 $A_k$ 关于 $P_{e_1},\cdots,P_{e_k}$ 对称，则 $A_{k+1}=S_{e_{k+1}}(A_k)$ 关于 $P_{e_{k+1}}$ 对称，理由同上。固定 $1\leqslant j\leqslant k$，并记 $S_j:\mathbb{R}^n\to\mathbb{R}^n$ 为关于 $P_{e_j}$ 的反射，则 $S_j(A_k)=A_k$。设 $b\in P_{e_{k+1}}$。反射 $S_j$ 把直线 $L_b^{e_{k+1}}$ 映为直线 $L_{S_jb}^{e_{k+1}}$（这里 $S_je_{k+1}=e_{k+1}$，因为 $j\leqslant k<k+1$），并保持 $\mathcal{H}^1$，故由 $S_j(A_k)=A_k$ 得
+\begin{align*}
+\mathcal{H}^1\bigl(A_k\cap L_b^{e_{k+1}}\bigr)=\mathcal{H}^1\bigl(A_k\cap L_{S_jb}^{e_{k+1}}\bigr),
+\end{align*}
+从而以 $b$ 与 $S_jb$ 为中心、半长分别等于上述两个测度的线段相同，即
+\begin{align*}
+\bigl\{t\mid b+te_{k+1}\in A_{k+1}\bigr\}=\bigl\{t\mid S_jb+te_{k+1}\in A_{k+1}\bigr\}.
+\end{align*}
+于是 $S_j(A_{k+1})=A_{k+1}$，即 $A_{k+1}$ 关于 $P_{e_j}$ 对称。因此 $A^*=A_n$ 关于 $P_{e_1},\cdots,P_{e_n}$ 对称；对 $x\in A^*$ 依次用这 $n$ 个反射即得 $-x\in A^*$，故 $A^*$ 关于原点对称。断言 \#1 得证。
+
+（3）断言 \#2：$\mathcal{L}^n(A^*)\leqslant\alpha(n)\Bigl(\dfrac{\operatorname{diam}A^*}{2}\Bigr)^n$。
+
+断言之证明：取 $x\in A^*$。由断言 \#1 得 $-x\in A^*$，故 $\operatorname{diam}A^*\geqslant|x-(-x)|=2|x|$。于是 $A^*\subseteq B\bigl(0,\operatorname{diam}A^*/2\bigr)$，从而
+\begin{align*}
+\mathcal{L}^n(A^*)\leqslant\mathcal{L}^n\Bigl(B\bigl(0,\tfrac{\operatorname{diam}A^*}{2}\bigr)\Bigr)=\alpha(n)\Bigl(\frac{\operatorname{diam}A^*}{2}\Bigr)^n .
+\end{align*}
+断言 \#2 得证。
+
+（4）断言 \#3：$\mathcal{L}^n(A)\leqslant\alpha(n)\Bigl(\dfrac{\operatorname{diam}A}{2}\Bigr)^n$。
+
+断言之证明：$\overline A$ 是 $\mathcal{L}^n$-可测集，故由\cref{theorem:ch02-2-3}得% XREF p=105 "and thus Lemma 2 implies"
+\begin{align*}
+\mathcal{L}^n\bigl((\overline A)^{*}\bigr)=\mathcal{L}^n(\overline A),\qquad
+\operatorname{diam}(\overline A)^{*}\leqslant\operatorname{diam}\overline A .
+\end{align*}
+再由断言 \#2 计算
+\begin{align*}
+\mathcal{L}^n(A)\leqslant\mathcal{L}^n(\overline A)
+&=\mathcal{L}^n\bigl((\overline A)^{*}\bigr)
+\leqslant\alpha(n)\Bigl(\frac{\operatorname{diam}(\overline A)^{*}}{2}\Bigr)^n\\
+&\leqslant\alpha(n)\Bigl(\frac{\operatorname{diam}\overline A}{2}\Bigr)^n
+=\alpha(n)\Bigl(\frac{\operatorname{diam}A}{2}\Bigr)^n ,
+\end{align*}
+其中末处等号用到 $\operatorname{diam}\overline A=\operatorname{diam}A$。断言 \#3 得证，即得结论。
+\end{proof}
+
+\begin{theorem}[$n$ 维 Hausdorff 测度与 Lebesgue 测度]\label{theorem:ch02-2-5}
+设 $n$ 为正整数，$\mathcal{H}^n$ 为 $\mathbb{R}^n$ 上的 $n$ 维 Hausdorff 测度（$\mathcal{H}^n_\delta$ 为直径不超过 $\delta$ 的可数覆盖所给的下确界，$\mathcal{H}^n$ 为 $\delta\to0$ 时的极限），$\mathcal{L}^n$ 为 $\mathbb{R}^n$ 上的 $n$ 维 Lebesgue 测度（见\cref{definition:ch01-1-18}）。则对每个 $A\subseteq\mathbb{R}^n$ 有 % XREF internal
+\begin{align*}
+\mathcal{H}^n(A)=\mathcal{L}^n(A).
+\end{align*}
+\end{theorem}
+
+% SUPPLEMENT: parent=theorem:ch02-2-5; kind=motivation; 说明两种覆盖刻画如何经等直径不等式衔接，以及该等式的意义
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-5-动机}
+两个测度的定义差别在于允许的覆盖：$\mathcal{L}^n$ 用与坐标轴平行的立方体覆盖，$\mathcal{H}^n$ 用任意小直径的集合覆盖。对立方体而言，直径与体积由同一个边长控制，故 $\alpha(n)(\operatorname{diam}Q/2)^n$ 与 $\mathcal{L}^n(Q)$ 只相差常数因子 $C_n=\alpha(n)(\sqrt n/2)^n$，由此得到 $\mathcal{H}^n\leqslant C_n\mathcal{L}^n$，即 $\mathcal{H}^n$ 关于 $\mathcal{L}^n$ 绝对连续。反方向的不等式则需要用立方体覆盖来计算 $\mathcal{L}^n$，并把每个立方体的内部用两两不交的小球填满：由等直径不等式，每个小球的 $\mathcal{H}^n$ 测度不超过其 $\mathcal{L}^n$ 测度，而余下的零测集不影响 $\mathcal{H}^n$ 的估计。两个方向合起来给出 $\mathcal{H}^n=\mathcal{L}^n$。这个等式的意义是把抽象的 Hausdorff 测度与具体的 Lebesgue 测度在整数维上等同起来：$\mathcal{H}^n$ 的旋转不变性、平移不变性与可加性都可以由 $\mathcal{L}^n$ 的性质读出；而对 $0<s<n$，$\mathcal{H}^s$ 与 $\mathcal{L}^n$ 有本质差别，因为 $\mathcal{H}^s$ 在光滑 $s$ 维流形上有限而 $\mathcal{L}^n$ 在其上为零。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch02-2-5; kind=hypotheses; 逐条说明 n 为整数、两个测度定义在全部子集上，以及等式不要求可测性的作用
+\begin{remark}\phantomsection\label{remark:ch02-thm-2-5-条件}
+\begin{enumerate}[(i)]
+\item 结论只对整数维 $n$ 成立，且左右两侧是同一个 $n$。对非整数 $s$，$\mathcal{H}^s$ 与 $\mathcal{L}^n$ 不可比：$\mathcal{L}^n$ 在光滑 $s$ 维流形上为零，而 $\mathcal{H}^s$ 在其上为正且有限。
+\item $\mathcal{H}^n$ 与 $\mathcal{L}^n$ 都定义在 $\mathbb{R}^n$ 的全部子集上，故等式对一切 $A\subseteq\mathbb{R}^n$ 成立，不要求 $A$ 可测。证明的两个方向分别对任意集合给出不等式，正因如此才得到逐集合的等式而不只是几乎处处的等式。
+\item 该等式依赖 $\mathcal{L}^n$ 取 $n$ 重乘积这一具体定义：若把 $\mathcal{L}^n$ 换成其他测度，例如乘以常数因子的测度，等式不再成立。常数 $C_n=\alpha(n)(\sqrt n/2)^n$ 只用于证明绝对连续性，不进入最终结论。
+\item 结论是逐集合的等式，可以直接用于 Borel 集与不可测集上的测度计算，无须先验证可测性。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）断言 \#1：对一切 $A\subseteq\mathbb{R}^n$ 有 $\mathcal{L}^n(A)\leqslant\mathcal{H}^n(A)$。
+
+断言之证明：固定 $\delta>0$，取集合 $\{C_j\}_{j=1}^{\infty}$ 使得 $A\subseteq\bigcup_{j=1}^{\infty}C_j$ 且 $\operatorname{diam}C_j\leqslant\delta$。由\cref{theorem:ch02-2-4}，% XREF p=106 "Then by the isodiametric inequality"
+\begin{align*}
+\mathcal{L}^n(A)\leqslant\sum_{j=1}^{\infty}\mathcal{L}^n(C_j)\leqslant\sum_{j=1}^{\infty}\alpha(n)\Bigl(\frac{\operatorname{diam}C_j}{2}\Bigr)^n .
+\end{align*}
+对一切这样的覆盖取下确界，得 $\mathcal{L}^n(A)\leqslant\mathcal{H}^n_\delta(A)$，再令 $\delta\to0$ 即得 $\mathcal{L}^n(A)\leqslant\mathcal{H}^n(A)$。断言 \#1 得证。
+
+（2）由 $\mathcal{L}^n$ 作为 $\mathcal{L}^1\times\cdots\times\mathcal{L}^1$ 的定义，对一切 $A\subseteq\mathbb{R}^n$ 与 $\delta>0$ 有
+\begin{align*}
+\mathcal{L}^n(A)=\inf\Bigl\{\sum_{i=1}^{\infty}\mathcal{L}^n(Q_i)\Bigm| Q_i\ \text{为立方体},\ A\subseteq\bigcup_{i=1}^{\infty}Q_i,\ \operatorname{diam}Q_i\leqslant\delta\Bigr\},
+\end{align*}
+因为任一立方体覆盖都可用直径充分小的立方体覆盖细分而不增大右端的和。以下只考虑与 $\mathbb{R}^n$ 的坐标轴平行的立方体。
+
+（3）断言 \#2：$\mathcal{H}^n$ 关于 $\mathcal{L}^n$ 绝对连续。
+
+断言之证明：置 $C_n:=\alpha(n)\bigl(\frac{\sqrt n}{2}\bigr)^n$。则对每个立方体 $Q\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\alpha(n)\Bigl(\frac{\operatorname{diam}Q}{2}\Bigr)^n=C_n\mathcal{L}^n(Q),
+\end{align*}
+因为边长为 $l$ 的立方体满足 $\operatorname{diam}Q=\sqrt n\,l$ 与 $\mathcal{L}^n(Q)=l^n$。于是
+\begin{align*}
+\mathcal{H}^n_\delta(A)
+&\leqslant\inf\Bigl\{\sum_{i=1}^{\infty}\alpha(n)\Bigl(\frac{\operatorname{diam}Q_i}{2}\Bigr)^n\Bigm| A\subseteq\bigcup_{i=1}^{\infty}Q_i,\ \operatorname{diam}Q_i\leqslant\delta\Bigr\}\\
+&=C_n\mathcal{L}^n(A),
+\end{align*}
+其中下确界沿立方体覆盖取，末端等号由 (2) 与 $C_n$ 的定义得到。令 $\delta\to0$ 得 $\mathcal{H}^n(A)\leqslant C_n\mathcal{L}^n(A)$，故 $\mathcal{L}^n(A)=0$ 蕴含 $\mathcal{H}^n(A)=0$。断言 \#2 得证。
+
+（4）断言 \#3：对一切 $A\subseteq\mathbb{R}^n$ 有 $\mathcal{H}^n(A)\leqslant\mathcal{L}^n(A)$。
+
+断言之证明：固定 $\delta>0$ 与 $\varepsilon>0$。由 (2) 可取立方体 $\{Q_i\}_{i=1}^{\infty}$，使得 $A\subseteq\bigcup_{i=1}^{\infty}Q_i$、$\operatorname{diam}Q_i<\delta$ 且
+\begin{align*}
+\sum_{i=1}^{\infty}\mathcal{L}^n(Q_i)\leqslant\mathcal{L}^n(A)+\varepsilon .
+\end{align*}
+由\cref{theorem:ch01-1-26}，对每个 $i$ 存在两两不交的闭球 $\{B_k^i\}_{k=1}^{\infty}$，满足 $B_k^i\subseteq Q_i^{\circ}$（$Q_i^{\circ}$ 表示 $Q_i$ 的内部）、$\operatorname{diam}B_k^i<\delta$ 且% XREF p=107 "According to Theorem 1.26, for each i there exist disjoint closed balls"
+\begin{align*}
+\mathcal{L}^n\Bigl(Q_i-\bigcup_{k=1}^{\infty}B_k^i\Bigr)=\mathcal{L}^n\Bigl(Q_i^{\circ}-\bigcup_{k=1}^{\infty}B_k^i\Bigr)=0 .
+\end{align*}
+由断言 \#2 得 $\mathcal{H}^n\bigl(Q_i-\bigcup_{k=1}^{\infty}B_k^i\bigr)=0$，从而 $\mathcal{H}^n_\delta\bigl(Q_i-\bigcup_{k=1}^{\infty}B_k^i\bigr)=0$，故
+\begin{align*}
+\mathcal{H}^n_\delta(A)
+&\leqslant\sum_{i=1}^{\infty}\mathcal{H}^n_\delta(Q_i)
+=\sum_{i=1}^{\infty}\mathcal{H}^n_\delta\Bigl(\bigcup_{k=1}^{\infty}B_k^i\Bigr)
+\leqslant\sum_{i=1}^{\infty}\sum_{k=1}^{\infty}\mathcal{H}^n_\delta(B_k^i)\\
+&\leqslant\sum_{i=1}^{\infty}\sum_{k=1}^{\infty}\alpha(n)\Bigl(\frac{\operatorname{diam}B_k^i}{2}\Bigr)^n
+=\sum_{i=1}^{\infty}\sum_{k=1}^{\infty}\mathcal{L}^n(B_k^i)\\
+&=\sum_{i=1}^{\infty}\mathcal{L}^n\Bigl(\bigcup_{k=1}^{\infty}B_k^i\Bigr)
+=\sum_{i=1}^{\infty}\mathcal{L}^n(Q_i)
+\leqslant\mathcal{L}^n(A)+\varepsilon ,
+\end{align*}
+其中第一行由 $\mathcal{H}^n_\delta$ 的可数次可加性与 $A\subseteq\bigcup_i Q_i$ 得到，第二行由 $\mathcal{H}^n_\delta\bigl(Q_i-\bigcup_k B_k^i\bigr)=0$ 得到，第四行由球的体积公式 $\mathcal{L}^n(B)=\alpha(n)(\operatorname{diam}B/2)^n$ 与等直径不等式给出，第七行由 $\bigcup_k B_k^i\subseteq Q_i$ 与 $\mathcal{L}^n\bigl(Q_i-\bigcup_k B_k^i\bigr)=0$ 得到。令 $\delta\to0$、$\varepsilon\to0$，得 $\mathcal{H}^n(A)\leqslant\mathcal{L}^n(A)$。断言 \#3 得证。
+
+结合断言 \#1 与断言 \#3，即得 $\mathcal{H}^n(A)=\mathcal{L}^n(A)$ 对一切 $A\subseteq\mathbb{R}^n$ 成立。
+\end{proof}
+
+\end{document}

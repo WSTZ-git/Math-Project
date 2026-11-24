@@ -1,0 +1,66 @@
+% 由 texbook init 生成：elegantbook v4.5 主文件骨架。
+% Template/ 与 Styles/ 是外部只读资源，不复制进本工程；路径须按真实目录核实。
+\documentclass[lang=cn,newtx,10pt,scheme=chinese,citestyle=gb7714-2015,bibstyle=gb7714-2015]{../../Template/elegantbook}
+
+\title{测度论与函数的精细性质}
+\subtitle{修订版}
+\author{Lawrence C. Evans \quad Ronald F. Gariepy}
+\institute{}
+\date{}
+\version{ElegantBook-4.5}
+\extrainfo{}
+
+\logo{blank-photo.png}
+\cover{cover.png}
+
+% 证明/解答/注记的显示开关：验收时必须为 false（内容全部可见）。
+\newif\ifHideEnvContent
+\HideEnvContentfalse
+
+\usepackage{../../Styles/mystyle-elegantbook}
+
+% 跨书引用：仅在真实 aux 存在时条件加载，不要凭空添加。
+% \IfFileExists{../另书/main.aux}{\externaldocument[另书-]{../另书/main}}{}
+
+\usepackage{subfiles}
+
+% cleveref 中文类型名补充（模板未定义 chapter 类型）
+\crefname{chapter}{章}{章}
+\Crefname{chapter}{章}{章}
+
+% 全书统一记号（只新增，不改变模板已有命令）
+\providecommand{\diff}{\mathrm{d}}
+\providecommand{\aplim}{\operatorname*{ap\,lim}}
+\providecommand{\ap}{\operatorname{ap}}
+\providecommand{\diver}{\operatorname{div}}
+\providecommand{\spt}{\operatorname{spt}}
+\providecommand{\osc}{\operatorname{osc}}
+\providecommand{\Lip}{\operatorname{Lip}}
+\renewcommand{\Cap}{\operatorname{Cap}}
+\providecommand{\Var}{\operatorname{Var}}
+\providecommand{\BV}{\mathrm{BV}}
+\providecommand{\loc}{\mathrm{loc}}
+\providecommand{\weakto}{\rightharpoonup}
+\providecommand{\weakstar}{\overset{\ast}{\rightharpoonup}}
+\providecommand{\der}[2]{\frac{\diff #1}{\diff #2}}
+
+\begin{document}
+\maketitle
+\frontmatter
+\tableofcontents
+\mainmatter
+
+\subfile{contents/chapter-01.tex}
+\subfile{contents/chapter-02.tex}
+\subfile{contents/chapter-03.tex}
+\subfile{contents/chapter-04.tex}
+\subfile{contents/chapter-05.tex}
+\subfile{contents/chapter-06.tex}
+
+\backmatter
+\subfile{contents/notation.tex}
+
+% 原书确有参考文献时才启用（reference.bib 必须有真实条目）：
+\printbibliography[heading=bibintoc, title=\ebibname]
+
+\end{document}

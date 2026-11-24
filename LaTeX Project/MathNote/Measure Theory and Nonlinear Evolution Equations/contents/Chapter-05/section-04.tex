@@ -2,353 +2,411 @@
 \graphicspath{{\subfix{./image/}}{\subfix{../../image/}}} % 指定图片引用路径,后续可以直接使用图片文件名
 % 如果图片存放在上级目录,则使用 ../../image/ 作为备用路径
 
-% 例如:
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.3\textwidth]{图.png}
-% \caption{}
-% \label{figure:图}
-% \end{figure}
-% 注意:上述\label{}一定要放在\caption{}之后,否则引用图片序号会只会显示??.
-
 \begin{document}
 
 \section{与函数相伴的 Young 测度序列}\label{section:ch05-收敛}
 
-设 $U\subseteq\mathbb{R}^N$ 为有界开集，$\mu\triangleq \lambda_N|_{\mathscr{B}(U)}$，$\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$（我们回忆 $L^1(U;\mathbb{R}^d)\equiv L^1(U,\mathscr{B}(U),\lambda_N|_{\mathscr{B}(U)};\mathbb{R}^d)$）。在\cref{definition:ch02-Young测度}中，我们定义 $\nu_{u_j}\in\mathcal{Y}^+(U;\mathbb{R}^d)$ 为满足
-\begin{align*}
-\nu_{u_j}(E\times F)\triangleq \mu\big(E\cap u_j^{-1}(F)\big)
-\quad\text{对所有 }E\in\mathscr{B}(U),\ F\in\mathscr{B}(\mathbb{R}^d)
-\end{align*}
-的 Young 测度。换言之，$\nu_{u_j}$ 是与 $u_j$ 相伴的参数化概率测度（见\cref{corollary:ch05-Young一一对应}）。由\cref{proposition:ch05-Dirac测度}，
-\begin{align}
-(\nu_{u_j})_x=\delta_{u_j(x)}
-\quad\text{对 }\mu\text{-几乎所有 }x\in U\ (j\in\mathbb{N}).\label{align:ch05-5.66}
-\end{align}
+设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$，$u_j:X\to Y$ 为 $(\mathscr{B}(X),\mathscr{B}(Y))$-可测（$j\in\mathbb{N}$），$\nu_{u_j}\in\mathcal{Y}^+(X;Y)$ 为与 $u_j$ 相伴的 Young 测度（见\cref{definition:ch02-Young测度}）。把\cref{subsection:ch05-Young弱星}与\cref{subsection:ch05-Young窄}中关于 $\mathcal{Y}^+(X;Y)$ 的一般结果应用于序列 $\{\nu_{u_j}\}$，可获得关于序列 $\{u_j\}$ 本身收敛性的信息。以下沿用前文的记号：$\mathcal{C}(X\times Y)$、$\mathcal{C}_b(X\times Y)$ 与 $\mathcal{C}_0(X\times Y)$ 分别记 Carathéodory 函数、有界 Carathéodory 被积函数与 $C_0$-Carathéodory 被积函数所成的空间（见\cref{definition:ch05-Caratheodory}）。此方向的第一个结果如下。
 
-本节中我们要确定的序列 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 的性质，可由相应 Young 测度序列 $\{\nu_{u_j}\}$ 的弱$^*$或窄收敛导出。这两种收敛在\cref{subsection:ch05-Young弱星}与\cref{subsection:ch05-Young窄}中已为一般 Young 测度引入。我们首先将弱$^*$收敛联系到 $u_j$ 的几乎处处收敛（Biting 引理将在\cref{subsection:ch05-Biting}中处理其窄对应）。
-
-\subsection{$\{\nu_{u_j}\}$ 的弱$^*$收敛}
-
-作为热身，我们证明如下结果。
-
-\begin{proposition}\label{proposition:ch05-几乎处处收敛}
-设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$。则下列命题等价：
+\begin{proposition}\label{proposition:ch05-几乎处处收敛}\label{proposition:ch05-5.4.1}
+设 $X$ 与 $Y$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。设 $u_j,u:X\to Y$ 为 $(\mathscr{B}(X),\mathscr{B}(Y))$-可测（$j\in\mathbb{N}$），$\nu_{u_j},\nu_u\in\mathcal{Y}^+(X;Y)$ 分别为与 $u_j$ 及 $u$ 相伴的 Young 测度。则：
 \begin{enumerate}[(i)]
-\item\label{item:ch05-ae-i} 对 $\mu$-几乎所有 $x\in U$，$u_j(x)\to u(x)$ 对某个 $u:U\to\mathbb{R}^d$；
-\item\label{item:ch05-ae-ii} 存在 Young 测度 $\nu\in\mathcal{Y}^+(U;\mathbb{R}^d)$ 使 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu$，且对 $\mu$-几乎所有 $x\in U$ 有 $\nu_x=\delta_{u(x)}$。
+\item\label{item:ch05-ae-i} 若 $u_j\to u$ 在 $X$ 中 $\mu$-几乎处处成立，则 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu_u$ 在 $\mathcal{Y}^+(X;Y)$ 中；
+\item\label{item:ch05-ae-ii} 若 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu_u$ 在 $\mathcal{Y}^+(X;Y)$ 中，则存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 使 $u_{j_k}\to u$ 在 $X$ 中 $\mu$-几乎处处成立。
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-(i)$\Rightarrow$(ii)。设 $h\in\mathcal{C}_b(U\times\mathbb{R}^d)$。则对 $\mu$-几乎所有 $x\in U$，
-\begin{align*}
-h(x,u_j(x))\to h(x,u(x))
-\end{align*}
-（由\cref{definition:ch05-Caratheodory}(ii)，$h(x,\cdot)\in C_b(\mathbb{R}^d)$）。此外，
-\begin{align*}
-|h(x,u_j(x))|\leqslant\|h(x,\cdot)\|_\infty,
-\end{align*}
-且由\cref{definition:ch05-Caratheodory}(ii)，$x\mapsto\|h(x,\cdot)\|_\infty$ 属于 $L^1(U)$。故由控制收敛定理、\eqref{align:ch05-5.66}与\cref{corollary:ch05-Young积分}，
-\begin{align*}
-\lim_{j\to\infty}\int_{U\times\mathbb{R}^d}h\,\mathrm{d}\nu_{u_j}
-=\lim_{j\to\infty}\int_U h(x,u_j(x))\,\mathrm{d}\mu(x)
-=\int_U h(x,u(x))\,\mathrm{d}\mu(x).
-\end{align*}
-由\eqref{align:ch05-5.66}（其中 $u_j$ 换为 $u$）、\cref{corollary:ch05-Young积分}与\eqref{align:ch05-5.53}，
-\begin{align*}
-\int_U h(x,u(x))\,\mathrm{d}\mu(x)
-=\int_{U\times\mathbb{R}^d}h\,\mathrm{d}\nu_u
-=\int_U\mathrm{d}\mu(x)\int_{\mathbb{R}^d}h(x,y)\,\mathrm{d}(\nu_u)_x(y)
-=\int_U\mathrm{d}\mu(x)\int_{\mathbb{R}^d}h(x,y)\,\mathrm{d}\delta_{u(x)}(y).
-\end{align*}
-于是对任意 $h\in\mathcal{C}_b(U\times\mathbb{R}^d)$，
-\begin{align*}
-\lim_{j\to\infty}\int_{U\times\mathbb{R}^d}h\,\mathrm{d}\nu_{u_j}
-=\int_U\mathrm{d}\mu(x)\int_{\mathbb{R}^d}h(x,y)\,\mathrm{d}\delta_{u(x)}(y)
-=\int_{U\times\mathbb{R}^d}h\,\mathrm{d}\nu
-\end{align*}
-其中 $\nu$ 为满足 $\nu_x=\delta_{u(x)}$（对 $\mu$-几乎所有 $x\in U$）的 Young 测度。由\cref{definition:ch05-Young窄}，$\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu$，断言得证。
+先作准备：由\cref{proposition:appA-局部紧基}，具可数基的局部紧 Hausdorff 空间可度量化，故 $Y$ 上存在与拓扑相容的度量 $d$。
 
-(ii)$\Rightarrow$(i)。由\cref{definition:ch05-Young窄}，对任意 $h\in\mathcal{C}_b(U\times\mathbb{R}^d)$，
+(i) 由\eqref{align:ch05-5.53}，对每个 $j\in\mathbb{N}$ 有 $(\nu_{u_j})_x=\delta_{u_j(x)}$ 对 $\mu$-几乎所有 $x\in X$，且 $(\nu_u)_x=\delta_{u(x)}$ 对 $\mu$-几乎所有 $x\in X$。由于 $\mu$ 有限，可数多个零测集之并仍为零测集，故存在 $\mu$-零测集 $N\subseteq X$ 使对所有 $x\in N^c$ 与所有 $j\in\mathbb{N}$ 同时成立上述两式。对这样的 $x$，由\eqref{align:ch05-5.15}得
 \begin{align*}
-\lim_{j\to\infty}\int_{U\times\mathbb{R}^d}h\,\mathrm{d}\nu_{u_j}
-=\int_{U\times\mathbb{R}^d}h\,\mathrm{d}\nu.
+d_P\big((\nu_{u_j})_x,(\nu_u)_x\big)=d_P\big(\delta_{u_j(x)},\delta_{u(x)}\big)=\min\{1,d(u_j(x),u(x))\},
 \end{align*}
-特别地，取 $h(x,y)=g(\zeta)\langle y-x,\zeta\rangle$（$g\in C_c(U)$，$\zeta\in\mathbb{R}^d$），由\eqref{align:ch05-5.66}与\cref{corollary:ch05-Young积分}，对任意 $j\in\mathbb{N}$，
-\begin{align*}
-\int_{U\times\mathbb{R}^d}h\,\mathrm{d}\nu_{u_j}
-=\int_U g(x)\langle u_j(x)-x,\zeta\rangle\,\mathrm{d}\mu(x).
-\end{align*}
-由于 $\nu_x=\delta_{u(x)}$ 对 $\mu$-几乎所有 $x\in U$，对右端有
-\begin{align*}
-\int_{U\times\mathbb{R}^d}h\,\mathrm{d}\nu
-=\int_U\mathrm{d}\mu(x)\int_{\mathbb{R}^d}h(x,y)\,\mathrm{d}\delta_{u(x)}(y)
-=\int_U g(x)\langle u(x)-x,\zeta\rangle\,\mathrm{d}\mu(x).
-\end{align*}
-于是对任意 $g\in C_c(U)$ 与 $\zeta\in\mathbb{R}^d$，
-\begin{align}
-\lim_{j\to\infty}\int_U g(x)\langle u_j(x),\zeta\rangle\,\mathrm{d}\mu(x)
-=\int_U g(x)\langle u(x),\zeta\rangle\,\mathrm{d}\mu(x).\label{align:ch05-5.67}
-\end{align}
-由 $g$ 与 $\zeta$ 的任意性，由\eqref{align:ch05-5.67}得 $u_j\stackrel{*}{\rightharpoonup}u$ 在 $(L^\infty(U))^*$ 中（用 $\mathbb{R}^d$-向量记号）。另一方面，由\eqref{align:ch05-5.66}，对任意 $j\in\mathbb{N}$，
-\begin{align*}
-\int_{U\times\mathbb{R}^d}|y|\,\mathrm{d}\nu_{u_j}
-=\int_U|u_j(x)|\,\mathrm{d}\mu(x)
-=\|u_j\|_{L^1(U;\mathbb{R}^d)}.
-\end{align*}
-由于对每个 $j\in\mathbb{N}$ 有 $\nu_{u_j}\in\mathcal{Y}^+(U;\mathbb{R}^d)$，映射 $\nu\mapsto\int_{U\times\mathbb{R}^d}|y|\,\mathrm{d}\nu$ 由\cref{proposition:ch05-Caratheodory下半连续}为下半连续。故
-\begin{align*}
-\int_U|u(x)|\,\mathrm{d}\mu(x)
-=\int_{U\times\mathbb{R}^d}|y|\,\mathrm{d}\nu
-\leqslant\liminf_{j\to\infty}\int_{U\times\mathbb{R}^d}|y|\,\mathrm{d}\nu_{u_j}
-=\liminf_{j\to\infty}\|u_j\|_{L^1(U;\mathbb{R}^d)}<\infty.
-\end{align*}
-由此 $u\in L^1(U;\mathbb{R}^d)$，故 $u_j\stackrel{*}{\rightharpoonup}u$ 在 $(L^\infty(U;\mathbb{R}^d))^*$ 中。于是由\cref{theorem:ch02-dunfordpettis}(ii)，$\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 有界且一致可积。
+其中 $d_P$ 为 $\mathscr{R}^+_f(Y)$ 上的 Prokhorov 度量（见\cref{definition:ch05-Prokhorov}）。由假设 $u_j(x)\to u(x)$，故 $\min\{1,d(u_j(x),u(x))\}\to0$，即 $d_P\big((\nu_{u_j})_x,(\nu_u)_x\big)\to0$。于是由\cref{lemma:ch05-Prokhorov到窄}，对每个 $x\in N^c$ 有 $(\nu_{u_j})_x\stackrel{n}{\rightharpoonup}(\nu_u)_x$ 在 $\mathscr{R}^+_f(Y)$ 中。再由\cref{proposition:ch05-逐点窄收敛}得 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu_u$ 在 $\mathcal{Y}^+(X;Y)$ 中。
 
-综上，在假设 (i) 下，$\{u_j\}$ 弱*收敛于 $u\in L^1(U;\mathbb{R}^d)$ 且一致可积。由于 $u_j\stackrel{*}{\rightharpoonup}u$，由此标准论证（例如见\cite[Theorem 3.10 and Corollary 3.11]{ref14}）得：存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 使 $u_{j_k}(x)\to u(x)$ 对 $\mu$-几乎所有 $x\in U$。
-
-于是对任意序列 $\{u_j\}$ 满足 (ii)，存在子列在 $\mu$-几乎处处收敛于 $u$。假设 (i) 不成立，则存在 $\{u_j\}$ 满足 (ii) 但无任何子列 $\mu$-几乎处处收敛于 $u$。由此可构造子列 $\{u_{j_k}\}$（仍满足 (ii)）使对 $\mu$-几乎所有 $x\in U$，$\{u_{j_k}(x)\}\subseteq\mathbb{R}^d$ 不收敛于 $u(x)$。但这与上段应用于 $\{u_{j_k}\}$ 矛盾。故 (i) 成立，证明完成。
+(ii) 映射 $h:X\times Y\to\mathbb{R}$，$h(x,y)\triangleq\min\{1,d(y,u(x))\}$，属于 $\mathcal{C}_b(X\times Y)$：对每个 $x\in X$，$h(x,\cdot)=\min\{1,d(\cdot,u(x))\}$ 连续且取值于 $[0,1]$；对每个 $y\in Y$，映射 $x\mapsto d(y,u(x))$ 为 $\mathscr{B}(X)$-可测，因为它是 $(\mathscr{B}(X),\mathscr{B}(Y))$-可测映射 $u$ 与连续函数 $d(y,\cdot)$ 的复合；且 $\|h(x,\cdot)\|_\infty\leqslant1\in L^1(X)$。由假设 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu_u$ 与\cref{definition:ch05-Young窄}，
+\begin{align*}
+\lim_{j\to\infty}\int_X\mathrm{d}\mu(x)\int_Y\min\{1,d(y,u(x))\}\,\mathrm{d}(\nu_{u_j})_x(y)
+=\int_X\mathrm{d}\mu(x)\int_Y\min\{1,d(y,u(x))\}\,\mathrm{d}(\nu_u)_x(y),
+\end{align*}
+而由\eqref{align:ch05-5.54}（分别用于 $u_j$ 与 $u$）上式即
+\begin{align*}
+\lim_{j\to\infty}\int_X\min\{1,d(u_j(x),u(x))\}\,\mathrm{d}\mu(x)
+=\int_X\min\{1,d(u(x),u(x))\}\,\mathrm{d}\mu(x)=0.
+\end{align*}
+被积函数非负且不超过 $1$，故由 Chebyshev 不等式，对每个 $\varepsilon\in(0,1)$，
+\begin{align*}
+\mu\big(\{\min\{1,d(u_j,u)\}\geqslant\varepsilon\}\big)
+\leqslant\frac{1}{\varepsilon}\int_X\min\{1,d(u_j(x),u(x))\}\,\mathrm{d}\mu(x)\to0,
+\end{align*}
+即 $\min\{1,d(u_j,u)\}\to0$ 依测度。于是由\cref{proposition:ch02-收敛关系}(ii)，存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 使 $\min\{1,d(u_{j_k}(x),u(x))\}\to0$ 对 $\mu$-几乎所有 $x\in X$。对这样的 $x$，当 $k$ 充分大时 $\min\{1,d(u_{j_k}(x),u(x))\}<1$，故它等于 $d(u_{j_k}(x),u(x))$；因此 $d(u_{j_k}(x),u(x))\to0$，即 $u_{j_k}(x)\to u(x)$。结论得证。
 \end{proof}
 
-\cref{proposition:ch05-几乎处处收敛}(ii)的如下推论有用。
+% SUPPLEMENT: parent=proposition:ch05-几乎处处收敛; kind=motivation; 动机（几乎处处收敛与窄收敛的桥梁）、(i) 与 (ii) 关于子列的不对称性、集中现象与一致可积模、有限测度与可数基假设的作用、反例说明 (ii) 不能加强为全序列
+% SUPPLEMENT: parent=proposition:ch05-5.4.1; kind=motivation; 别名 label（供后文引用其 (ii)），动机、条件作用与反例见下一条注记
+\begin{remark}\phantomsection\label{remark:ch05-收敛注}
+\cref{proposition:ch05-几乎处处收敛}把序列 $\{u_j\}$ 的几乎处处收敛与其 Young 测度序列的窄收敛联系起来，两个方向有本质差别。
 
-\begin{remark}\label{remark:ch05-收敛注}
-设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$。
-\begin{enumerate}[(i)]
-\item 若 $\{u_j\}$ 一致有界，且 $u_j(x)\to u(x)$ 对 $\mu$-几乎所有 $x\in U$，则存在 Young 测度 $\nu\in\mathcal{Y}^+(U;\mathbb{R}^d)$ 使 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu$，且对 $\mu$-几乎所有 $x\in U$ 有 $\nu_x=\delta_{u(x)}$（见\cref{proposition:ch05-几乎处处收敛}）；
-\item 若 $\{u_j\}$ 有界且一致可积，则应用 (i) 于 $h(y)=y$ 表明：对某个子列，$u_{j_k}\rightharpoonup u_*$ 在 $L^1(U;\mathbb{R}^d)$ 中，其中 $u_*(x)\triangleq \int_{\mathbb{R}^d}y\,\mathrm{d}\nu_x(y)$。元素 $u_*$ 称为 Young 测度 $\nu$ 的\textbf{重心}。
-\end{enumerate}
+(i) 方向 (i) 无需取子列：若 $u_j\to u$ 在 $X$ 中 $\mu$-几乎处处成立，则 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu_u$。其含义是，窄收敛只检验有界 Carathéodory 被积函数 $h$ 的积分，而 $u_j\to u$ 几乎处处与 $h$ 关于 $y$ 的连续性结合即可用控制收敛定理取极限。
+
+(ii) 方向 (ii) 只能对子列成立：窄收敛只控制积分 $\int_Xh(x,u_j(x))\,\mathrm{d}\mu(x)$，不控制 $u_j$ 的逐点值。证明表明，由 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu_u$ 只能推出 $\min\{1,d(u_j,u)\}\to0$ 依测度，而依测度收敛只保证存在几乎处处收敛的子列（见\cref{proposition:ch02-收敛关系}(ii)）。
+
+(iii) 集中现象。若极限 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 不与任何 $\mathscr{B}(X)$-可测函数相伴（这样的 $\nu$ 存在，见\cref{proposition:ch05-非相伴}），则 $\{u_j\}$ 不可能既在 $L^1(X)$ 中有界又一致可积：此时其一致可积模 $\eta(\{u_j\})$ 为正（见\cref{definition:ch02-一致可积模}），质量沿 $u_j$ 的振幅方向集中，而窄极限把这份集中质量保留为 $\nu_x$ 的非原子部分。
+
+(iv) 反例（(ii) 不能加强为全序列收敛）。取 $X=(0,1)$，$\mu=\lambda|_{(0,1)}$，$u\equiv0$，并置 $E_j\triangleq\big(\tfrac{k}{2^m},\tfrac{k+1}{2^m}\big)$，$u_j\triangleq\chi_{E_j}$，其中 $j=2^m+k$，$0\leqslant k<2^m$。则 $\mu(\{u_j\neq u\})=2^{-m}\to0$，故对每个 $h\in\mathcal{C}_b((0,1)\times\mathbb{R})$，
+\begin{align*}
+\left|\int_0^1h(x,u_j(x))\,\mathrm{d}x-\int_0^1h(x,0)\,\mathrm{d}x\right|\leqslant2\|h\|_\infty2^{-m}\to0,
+\end{align*}
+即 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu_0=\delta_0$；然而对每个 $x\in(0,1)$，点 $x$ 属于无穷多个 $E_j$ 且不属于无穷多个 $E_j$，故 $\{u_j(x)\}$ 不收敛。因此取子列是必要的；在此例中 $j_k=2^k$ 给出 $u_{j_k}\to0$ 在 $(0,1)$ 中 $\mu$-几乎处处。
+
+(v) 假设的作用与边界：$\mu$ 的有限性用于把可数多个例外零测集并为零测集，并保证 $\|h(x,\cdot)\|_\infty\in L^1(X)$；$X$ 与 $Y$ 的可数基假设保证 $Y$ 可度量化，从而 Prokhorov 度量 $d_P$ 与\eqref{align:ch05-5.15}可用，且 $\mathcal{Y}^+(X;Y)$ 上的窄收敛可由序列刻画。若无可数基假设，$Y$ 未必可度量化，$d_P$ 论证失效，须改以紧集上的一致结构替代。
 \end{remark}
 
-结合\cref{theorem:ch05-弱星紧}，\cref{proposition:ch05-几乎处处收敛}给出如下著名结果（见\cite[Theorem 2.1]{ref08}）。
+\subsection{$\{\nu_{u_j}\}$ 的弱$^*$收敛}\label{subsection:ch05-函数弱星}
+
+以下处理 $Y=\mathbb{R}$ 的情形；对 $Y=\mathbb{R}^d$（$d\in\mathbb{N}$，$d\geqslant2$）类似结果成立。设 $F$ 为 $X$ 到 $\mathbb{R}$ 的 $\mathscr{B}(X)$-可测函数族，并置
+\begin{align*}
+N_F\triangleq\{\nu_u\mid u\in F\}\subseteq\mathcal{Y}^+(X;\mathbb{R}).
+\end{align*}
+由\cref{corollary:ch05-Young一一对应}与\cref{proposition:ch05-Dirac测度}，每个 $\nu_u\in N_F$ 满足 $\|(\nu_u)_x\|_{\mathscr{R}_f(\mathbb{R})}=1$ 对 $\mu$-几乎所有 $x\in X$，故 $N_F$ 含于空间 $L^\infty_{w^*}(X;\mathscr{R}_f(\mathbb{R}))$ 的单位球
+\begin{align*}
+U\triangleq\left\{\nu\in L^\infty_{w^*}(X;\mathscr{R}_f(\mathbb{R}))\ \middle|\
+\operatorname*{ess\,sup}_{x\in X}\|\nu_x\|_{\mathscr{R}_f(\mathbb{R})}\leqslant1\right\}
+\end{align*}
+之中（见\eqref{align:ch05-5.55}）。此外，由\cref{theorem:ch04-可分Y对偶}（取 $Y=C_0(\mathbb{R})$，此时 $Y^*=\mathscr{R}_f(\mathbb{R})$，见\cref{theorem:ch02-Riesz表示}）与\cref{proposition:ch05-Caratheodory同构}，
+\begin{align*}
+L^\infty_{w^*}(X;\mathscr{R}_f(\mathbb{R}))=\big(L^1(X;C_0(\mathbb{R}))\big)^*=\big(\mathcal{C}_0(X\times\mathbb{R})\big)^*,
+\end{align*}
+且由\cref{theorem:ch04-Lp可分}，空间 $L^1(X;C_0(\mathbb{R}))$ 可分，故 Banach–Alaoglu 定理可用于 $U$。于是有如下结果（见\cite{ref08}）。
 
 \begin{theorem}[Ball]\label{theorem:ch05-ball}
-设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 有界。则存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 Young 测度 $\nu\in\mathcal{Y}^+(U;\mathbb{R}^d)$ 使 $\nu_{u_{j_k}}\stackrel{*}{\rightharpoonup}\nu$。
-\end{theorem}
-
-\begin{remark}\label{remark:ch05-ball注}
-\cref{theorem:ch05-ball}的假设可如下放松。设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 使 $\{F(u_j)\}$ 在 $L^1(U)$ 中有界，其中 $F:\mathbb{R}^d\to[0,\infty]$ 为可测下紧函数（见\cref{definition:ch05-下紧}）。则对某个 $\nu\in\mathcal{Y}^+(U;\mathbb{R}^d)$，$\nu_{u_{j_k}}\stackrel{*}{\rightharpoonup}\nu$。事实上，由\cref{proposition:ch05-弱星紧}存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 $\nu\in U\subseteq L^\infty_{w^*}(U;\mathscr{R}_f(\mathbb{R}^d))$ 使 $\nu_{u_{j_k}}\stackrel{*}{\rightharpoonup}\nu$。此外，由\cref{proposition:ch05-Caratheodory下半连续}、$F$ 的下紧性与假设，
-\begin{align*}
-\int_{U\times\mathbb{R}^d}F(y)\,\mathrm{d}\nu
-\leqslant\liminf_{k\to\infty}\int_{U\times\mathbb{R}^d}F(y)\,\mathrm{d}\nu_{u_{j_k}}
-=\liminf_{k\to\infty}\int_U F(u_{j_k}(x))\,\mathrm{d}\mu(x)<\infty
-\end{align*}
-（见\cref{corollary:ch05-Young积分}）。由此 $\nu_{p_{\mathbb{R}^d}}(\{\infty\})=0$，故 $\nu\in\mathcal{Y}^+(U;\mathbb{R}^d)$（因为 $\nu\in L^\infty_{w^*}(U;\mathscr{R}^+_f(\mathbb{R}^d))$）。
-\end{remark}
-
-\subsection{$\{\nu_{u_j}\}$ 的窄收敛}
-
-在\cref{subsection:ch05-Young窄}中已观察到，窄拓扑在紧子集上与弱$^*$拓扑一致，因为 $\mathcal{Y}^+(U;\mathbb{R}^d)$ 的紧子集在弱$^*$拓扑中闭（见\cref{proposition:ch05-Young胎紧一致}）。由此与\cref{theorem:ch05-ball}相同的论证给出如下结果。
-
-\begin{theorem}\label{theorem:ch05-函数窄收敛}\label{proposition:ch05-5.4.1}\label{proposition:ch05-弱收敛}
-设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 使 $\{F(u_j)\}$ 在 $L^1(U)$ 中有界，其中 $F:\mathbb{R}^d\to[0,\infty]$ 为下紧函数。则存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 $\nu\in\mathcal{Y}^+(U;\mathbb{R}^d)$ 使 $\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\nu$。
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。设 $F$ 为 $X$ 到 $\mathbb{R}$ 的 $\mathscr{B}(X)$-可测函数族。则对任意序列 $\{u_j\}\subseteq F$：
+\begin{enumerate}[(i)]
+\item\label{item:ch05-ball-i} 存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 $\nu\in U$（记 $\nu\equiv\{\nu_x\}_{x\in X}$）使
+\begin{align}
+g\circ u_{j_k}\stackrel{*}{\rightharpoonup}g_*\quad\text{在 }L^\infty(X)\text{ 中，对所有 }g\in C_0(\mathbb{R}),\label{align:ch05-5.66}
+\end{align}
+其中
+\begin{align}
+g_*(x)\triangleq\int_{\mathbb{R}}g(y)\,\mathrm{d}\nu_x(y)\quad\text{对 }\mu\text{-几乎所有 }x\in X;\label{align:ch05-5.67}
+\end{align}
+\item\label{item:ch05-ball-ii} 若对某个闭子集 $K\subseteq\mathbb{R}$ 有
+\begin{align}
+\lim_{j\to\infty}\mu\big(u_j^{-1}(A^c)\big)=0\quad\text{对 }K\text{ 的任意开邻域 }A,\label{align:ch05-5.68}
+\end{align}
+则 $\operatorname{supp}\nu_x\subseteq K$ 对 $\mu$-几乎所有 $x\in X$。
+\end{enumerate}
 \end{theorem}
 
 \begin{proof}
-由\cref{remark:ch05-ball注}存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 $\nu\in\mathcal{Y}^+(U;\mathbb{R}^d)$ 使 $\nu_{u_{j_k}}\stackrel{*}{\rightharpoonup}\nu$。此外，对任意紧子集 $K\subseteq\mathbb{R}^d$，我们有
+(i) 由 Banach–Alaoglu 定理，对任意 $\{\nu_{u_j}\}\subseteq N_F\subseteq U$，存在 $\{\nu_{u_{j_k}}\}\subseteq\{\nu_{u_j}\}$ 与 $\nu\in U$ 使 $\nu_{u_{j_k}}\stackrel{*}{\rightharpoonup}\nu$ 在 $L^\infty_{w^*}(X;\mathscr{R}_f(\mathbb{R}))$ 中，即
+\begin{align}
+\lim_{k\to\infty}\int_X\mathrm{d}\mu(x)\int_{\mathbb{R}}h(x,y)\,\mathrm{d}(\nu_{u_{j_k}})_x(y)
+=\int_X\mathrm{d}\mu(x)\int_{\mathbb{R}}h(x,y)\,\mathrm{d}\nu_x(y)\label{align:ch05-5.69}
+\end{align}
+对所有 $h\in L^1(X;C_0(\mathbb{R}))$ 成立。在\eqref{align:ch05-5.69}中取 $h(x,y)=f(x)g(y)$，其中 $f\in L^1(X)$，$g\in C_0(\mathbb{R})$，得
 \begin{align*}
-\sup_{k\in\mathbb{N}}\nu_{u_{j_k}}(U\times K^c)
-=\sup_{k\in\mathbb{N}}\int_U\chi_{K^c}(u_{j_k}(x))\,\mathrm{d}\mu(x)
-=\sup_{k\in\mathbb{N}}\mu(\{u_{j_k}\in K^c\})
-\leqslant\sup_{k\in\mathbb{N}}\frac{\|F(u_{j_k})\|_{L^1(U)}}{\inf_{K^c}F}<\infty
+\lim_{k\to\infty}\int_X\mathrm{d}\mu(x)f(x)\int_{\mathbb{R}}g(y)\,\mathrm{d}(\nu_{u_{j_k}})_x(y)
+=\int_X\mathrm{d}\mu(x)f(x)\int_{\mathbb{R}}g(y)\,\mathrm{d}\nu_x(y),
 \end{align*}
-（回忆 $F$ 下紧，故对某个 $R>0$ 有 $\inf_{K^c}F>R$）。由此由\cref{proposition:ch05-Young胎紧判据}，集合 $\{\nu_{u_{j_k}}\mid k\in\mathbb{N}\}\subseteq\mathcal{Y}^+(U;\mathbb{R}^d)$ 胎紧。于是由\cref{proposition:ch05-Young胎紧一致}得 $\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\nu$。结论得证。
+故由\eqref{align:ch05-5.54}
+\begin{align*}
+\lim_{k\to\infty}\int_Xf(x)g(u_{j_k}(x))\,\mathrm{d}\mu(x)
+=\int_X\mathrm{d}\mu(x)f(x)\int_{\mathbb{R}}g(y)\,\mathrm{d}\nu_x(y)
+\end{align*}
+对所有 $f\in L^1(X)$ 成立。由\eqref{align:ch05-5.49}，映射 $x\mapsto\int_{\mathbb{R}}g(y)\,\mathrm{d}\nu_x(y)$ 为 $\mathscr{B}(X)$-可测；此外
+\begin{align*}
+\operatorname*{ess\,sup}_{x\in X}\left|\int_{\mathbb{R}}g(y)\,\mathrm{d}\nu_x(y)\right|\leqslant\|g\|_\infty,
+\end{align*}
+故由\eqref{align:ch05-5.67}定义的函数 $g_*$ 属于 $L^\infty(X)$。断言得证。
+
+(ii) 若 $K=\mathbb{R}$，则断言成立。设 $K\subset\mathbb{R}$ 满足\eqref{align:ch05-5.68}，$g\in C_0(\mathbb{R})$ 且 $g|_K=0$。对任意 $\varepsilon>0$，集合 $A_\varepsilon\triangleq\{y\in\mathbb{R}\mid|g(y)|<\varepsilon\}$ 为开集且 $A_\varepsilon\supset K$。于是由假设
+\begin{align*}
+\lim_{j\to\infty}\mu\big(u_j^{-1}((A_\varepsilon)^c)\big)
+=\lim_{j\to\infty}\mu\big(\{x\in X\mid|g(u_j(x))|\geqslant\varepsilon\}\big)=0,
+\end{align*}
+故 $g(u_j)\to0$ 依测度。由于 $\{g(u_j)\}$ 在 $L^\infty(X)$ 中有界且 $\mu$ 有限，由控制收敛定理（见\cref{proposition:ch02-强收敛性质}(i)）得
+\begin{align*}
+\lim_{j\to\infty}\int_Xf(x)g(u_j(x))\,\mathrm{d}\mu(x)=0\quad\text{对所有 }f\in L^1(X).
+\end{align*}
+由该等式与\eqref{align:ch05-5.66}–\eqref{align:ch05-5.67}得 $\int_{\mathbb{R}}g(y)\,\mathrm{d}\nu_x(y)=0$ 对 $\mu$-几乎所有 $x\in X$。由于 $g|_K=0$，结论成立。
 \end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-ball; kind=proof; 原证明末句“由于 g|_K=0，结论成立”省略了从 ∫g dν_x=0（对所有在 K 上为零的 g∈C_0(ℝ)）到 supp ν_x ⊆ K 的推理；补出 Urysohn 截断、紧集覆盖与可数并的完整论证
+\begin{proof}[补充证明：\cref{theorem:ch05-ball}(ii) 的最后一步]
+由于 $\nu$ 是正测度序列 $\{\nu_{u_{j_k}}\}\subseteq\mathcal{Y}^+(X;\mathbb{R})$ 的弱$^*$极限，有 $\nu_x\in\mathscr{R}^+_f(\mathbb{R})$ 对 $\mu$-几乎所有 $x\in X$。已证：对每个满足 $g|_K=0$ 的 $g\in C_0(\mathbb{R})$，
+\begin{align*}
+\int_{\mathbb{R}}g(y)\,\mathrm{d}\nu_x(y)=0\quad\text{对 }\mu\text{-几乎所有 }x\in X.
+\end{align*}
+固定 $l\in\mathbb{N}$，置 $C_l\triangleq K^c\cap[-l,l]$。由于 $K$ 闭，$C_l$ 为紧集。对每个 $y\in C_l$，由\cref{proposition:appA-Urysohn}存在 $g_y\in C_c(\mathbb{R})$ 使 $0\leqslant g_y\leqslant1$，$g_y|_K=0$，$g_y(y)=1$；于是 $A_y\triangleq\{g_y>\tfrac12\}$ 为 $y$ 的开邻域。由 $C_l$ 的紧性，存在 $y_1,\cdots,y_m\in C_l$ 使 $C_l\subseteq\bigcup_{i=1}^mA_{y_i}$。对 $\mu$-几乎所有 $x\in X$，由 $g_{y_i}\geqslant\tfrac12$ 在 $A_{y_i}$ 上得 $\nu_x(A_{y_i})\leqslant2\int_{\mathbb{R}}g_{y_i}\,\mathrm{d}\nu_x=0$，于是
+\begin{align*}
+\nu_x(C_l)\leqslant\sum_{i=1}^m\nu_x(A_{y_i})=0.
+\end{align*}
+由于上述论证只涉及可数多个函数 $g_y$，对应的例外零测集之并仍为零测集；又 $K^c=\bigcup_{l=1}^\infty C_l$，故 $\nu_x(K^c)=0$ 对 $\mu$-几乎所有 $x\in X$。因此 $\operatorname{supp}\nu_x\subseteq K$ 对 $\mu$-几乎所有 $x\in X$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-ball; kind=motivation; 动机（只要求可测性、不要求 L^1 有界）、极限落在单位球 U 与质量损失的含义、条件 (5.68) 的必要性反例、K=ℝ 的平凡情形、与 Thm 5.4.5 的分工
+\begin{remark}\phantomsection\label{remark:ch05-ball注}
+\cref{theorem:ch05-ball}是本分节的基本紧性结果：对 $X$ 到 $\mathbb{R}$ 的任意 $\mathscr{B}(X)$-可测函数列 $\{u_j\}$（不要求 $\{u_j\}$ 在 $L^1(X)$ 中有界，甚至不要求 $u_j$ 可积），相应的 Young 测度序列总有弱$^*$收敛的子列。代价是极限 $\nu$ 只属于单位球 $U$：可能发生质量损失，即 $\|\nu_x\|_{\mathscr{R}_f(\mathbb{R})}<1$，从而 $\nu$ 不必属于 $\mathcal{Y}^+(X;\mathbb{R})$。
+
+关于 (i)：\eqref{align:ch05-5.66}断言对每个 $g\in C_0(\mathbb{R})$，复合函数 $g\circ u_{j_k}$ 在 $L^\infty(X)$ 中弱$^*$收敛于 $g_*(x)=\int_{\mathbb{R}}g\,\mathrm{d}\nu_x$，即所有在无穷远消失的非线性复合函数的弱$^*$极限都可由极限测度 $\nu$ 表示。取 $g\in C_c(\mathbb{R})$ 逼近 $\chi_F$（$F\in\mathscr{B}(\mathbb{R})$ 且 $\nu_x(\partial F)=0$）可读出 $\nu_x(F)$。
+
+关于 (ii)：\eqref{align:ch05-5.68}是质量不沿 $y$ 方向逃向无穷的精确条件：它要求对 $K$ 的每个开邻域 $A$，$\{u_j\}$ 最终 $\mu$-几乎全部落入 $u_j^{-1}(A)$。若去掉该条件，结论不成立：取 $X=\{x_0\}$，$\mu=\delta_{x_0}$，$K=\{0\}$，$u_j\equiv1$，则 $\nu_{x_0}=\delta_1$，$\operatorname{supp}\nu_{x_0}=\{1\}\not\subseteq K$；而此时 $A=(-\tfrac12,\tfrac12)$ 是 $K$ 的开邻域且 $\mu(u_j^{-1}(A^c))=\mu(X)=1$ 不趋于 $0$，故\eqref{align:ch05-5.68}确实失效。
+
+当 $K=\mathbb{R}$ 时\eqref{align:ch05-5.68}自动成立，结论 (ii) 平凡。若进一步假设 $\{u_j\}$ 在 $L^1(X)$ 中有界，则极限不损失质量，并可得到窄收敛的结论与\eqref{align:ch05-5.74}（见\cref{theorem:ch05-函数窄收敛}）；因此\cref{theorem:ch05-ball}与\cref{theorem:ch05-函数窄收敛}的分工是：前者只要可测性、极限在 $U$ 中，后者要 $L^1$ 有界、极限在 $\mathcal{Y}^+(X;\mathbb{R})$ 中。
+\end{remark}
+
+\subsection{$\{\nu_{u_j}\}$ 的窄收敛}\label{subsection:ch05-函数窄}
+
+现将\cref{subsection:ch05-Young窄}的结果应用于与函数相伴的 Young 测度序列。此方向的一个预备步骤是如下结果。
 
 \begin{proposition}\label{proposition:ch05-有界紧}\label{proposition:ch05-弱星紧}
-设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 使 $\{F(u_j)\}$ 在 $L^1(U)$ 中有界，$F:\mathbb{R}^d\to[0,\infty]$ 下紧。则集族 $\{\nu_{u_j}\mid j\in\mathbb{N}\}\subseteq\mathcal{Y}^+(U;\mathbb{R}^d)$ 胎紧。
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。设 $F\subseteq L^1(X)$ 满足 $\sup_{u\in F}\|u\|_{L^1(X)}<\infty$（即 $F$ 在 $L^1(X)$ 中有界）。则与 $F$ 相伴的 Young 测度集合 $N_F\triangleq\{\nu_u\in\mathcal{Y}^+(X;\mathbb{R})\mid u\in F\}$ 在 $\mathcal{Y}^+(X;\mathbb{R})$ 中胎紧（见\cref{definition:ch05-Young胎紧}）。
 \end{proposition}
 
-\begin{remark}\label{remark:ch05-周期}
-设 $u\in L^1_\mathrm{loc}(\mathbb{R}^d;\mathbb{R}^d)$ 为 $\mathbb{Z}^d$-周期函数。对每个 $j\in\mathbb{N}$，置 $u_j(x)\triangleq u(jx)$（$x\in U$）。则 $\{u_j\}$ 在 $L^1(U;\mathbb{R}^d)$ 中有界。由\cref{theorem:ch05-函数窄收敛}，存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 $\nu\in\mathcal{Y}^+(U;\mathbb{R}^d)$ 使 $\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\nu$。此外，对任意 $h\in\mathcal{C}_b(U\times\mathbb{R}^d)$ 与 $\mathbb{Z}^d$-胞腔 $Q$，
-\begin{align*}
-\int_U h(x,u_{j_k}(x))\,\mathrm{d}\mu(x)
-=\int_U h(x,u(j_kx))\,\mathrm{d}\mu(x)
-=\sum_{z\in\mathbb{Z}^d}\int_{j_k^{-1}Q+z/j_k}h(x,u(j_kx))\,\mathrm{d}\mu(x)\\
-=\sum_{z\in\mathbb{Z}^d}\int_{Q+z}h(j_k^{-1}(y+z),u(y))\,\mathrm{d}\mu(y)\to\int_U\mathrm{d}\mu(x)\int_Q h(x,u(y))\,\mathrm{d}\mu(y).
-\end{align*}
-故在此情形，对 $\mu$-几乎所有 $x\in U$ 有 $\nu_x=\nu_u\in\mathcal{Y}^+(Q;\mathbb{R}^d)$。
-\end{remark}
+\cref{proposition:ch05-有界紧}是如下引理的直接推论。
 
-如下例子展示与无界序列 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 相伴的 Young 测度（见\cite[Example 1.1]{ref92}）。
-
-\begin{proposition}\label{proposition:ch05-非相伴}
-存在序列 $\{u_j\}\subseteq L^1(0,1;\mathbb{R})$ 与 Young 测度 $\nu\in\mathcal{Y}^+(0,1;\mathbb{R})$ 使 $u_j\rightharpoonup u$ 在 $L^1(0,1)$ 中且 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu$，但 $\nu$ 不与任何 $v\in L^1(0,1;\mathbb{R})$ 相伴。
-\end{proposition}
-
-\begin{proof}
-对每个 $j\in\mathbb{N}$，置
-\begin{align*}
-u_j(x)\triangleq \sin(2\pi jx)\qquad(x\in(0,1)).
-\end{align*}
-由于 $\{u_j\}$ 在 $L^1(0,1;\mathbb{R})$ 中弱收敛于 $u=0$（例如由 Riemann–Lebesgue 引理）。此外，$\{u_j\}$ 在 $L^\infty(0,1;\mathbb{R})$ 中有界，故由\cref{remark:ch05-收敛注}(i)–(ii)，存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 Young 测度 $\nu\in\mathcal{Y}^+(0,1;\mathbb{R})$ 使 $\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\nu$，且
-\begin{align*}
-u_*(x)\triangleq \int_{\mathbb{R}}y\,\mathrm{d}\nu_x(y)=0
-\quad\text{对 }\mu\text{-几乎所有 }x\in(0,1).
-\end{align*}
-设 $h\in\mathcal{C}_b((0,1)\times\mathbb{R})$，则
-\begin{align*}
-\int_0^1 h(x,u_j(x))\,\mathrm{d}x=\int_0^1 h(x,\sin(2\pi jx))\,\mathrm{d}x\to\int_0^1\mathrm{d}x\int_0^1 h(x,\sin(2\pi y))\,\mathrm{d}y
-\end{align*}
-（用\cite[Lemma 2.37]{ref45}的标准论证）。于是对 $\mu$-几乎所有 $x\in(0,1)$，$\nu_x$ 为分布于 $[-1,1]$ 上的概率测度，其密度 $f(y)\triangleq (\pi\sqrt{1-y^2})^{-1}$（$y\in(-1,1)$）。若 $\nu$ 与某个 $v\in L^1(0,1;\mathbb{R})$ 相伴，则由\cref{proposition:ch05-Dirac测度}，对 $\mu$-几乎所有 $x\in(0,1)$ 有 $\nu_x=\delta_{v(x)}$。但 $\nu_x$ 对 $\mu$-几乎所有 $x$ 为非原子的，故矛盾。证明完成。
-\end{proof}
-
-\subsection{$\{u_j\}$ 的一致可积性}
-
-我们证明 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 的一致可积性可由相应 Young 测度序列的窄收敛导出。回忆一致可积性模
+\begin{lemma}\label{lemma:ch05-胎紧等价}
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$，$F\subseteq L^1(X)$。则下列命题等价：
+\begin{enumerate}[(i)]
+\item\label{item:ch05-tightfun-i} 集合 $N_F\triangleq\{\nu_u\in\mathcal{Y}^+(X;\mathbb{R})\mid u\in F\}$ 在 $\mathcal{Y}^+(X;\mathbb{R})$ 中胎紧；
+\item\label{item:ch05-tightfun-ii} 存在下紧函数 $\psi:[0,\infty)\to[0,\infty)$（见\cref{definition:ch05-下紧}）使
 \begin{align}
-\eta(\{u_j\})(t)\triangleq \sup_{j\in\mathbb{N}}\int_{\{|u_j|>t\}}|u_j(x)|\,\mathrm{d}\mu(x)
-\qquad(t>0)\label{align:ch05-5.68}
+\sup_{u\in F}\int_X\psi(|u(x)|)\,\mathrm{d}\mu(x)<\infty;\label{align:ch05-5.70}
 \end{align}
-（见\cref{definition:ch02-一致可积}）。
-
-\begin{lemma}\label{lemma:ch05-一致可积}
-设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$，$\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu$。则对任意 $t>0$，
-\begin{align}
-\lim_{j\to\infty}\int_{\{|u_j|>t\}}|u_j(x)|\,\mathrm{d}\mu(x)
-=\int_U\mathrm{d}\mu(x)\int_{\{|y|>t\}}|y|\,\mathrm{d}\nu_x(y).\label{align:ch05-5.69}
-\end{align}
+\item\label{item:ch05-tightfun-iii} $\lim\limits_{k\to\infty}\Big(\sup\limits_{u\in F}\mu(\{|u|\geqslant k\})\Big)=0$，其中 $\{|u|\geqslant k\}\triangleq\{x\in X\mid|u(x)|\geqslant k\}$。
+\end{enumerate}
 \end{lemma}
 
 \begin{proof}
-设 $\psi_t:\mathbb{R}^d\to\mathbb{R}$，$\psi_t(y)\triangleq |y|\chi_{\{|y|>t\}}$。映射 $(x,y)\mapsto\psi_t(y)$ 不是连续的，但 $\psi_t$ 可用连续函数一致逼近，因为由假设 $\{\nu_{u_j}\}$ 窄收敛。更确切地，对任意 $\epsilon>0$，存在 $\varphi_t\in C(\mathbb{R}^d)$ 使
-\begin{align*}
-\sup_{y\in\mathbb{R}^d}|\psi_t(y)-\varphi_t(y)|<\epsilon.
-\end{align*}
-于是由\cref{definition:ch05-Young窄}，
-\begin{align*}
-\lim_{j\to\infty}\int_U\varphi_t(u_j(x))\,\mathrm{d}\mu(x)
-=\lim_{j\to\infty}\int_{U\times\mathbb{R}^d}\varphi_t(y)\,\mathrm{d}\nu_{u_j}
-=\int_U\mathrm{d}\mu(x)\int_{\mathbb{R}^d}\varphi_t(y)\,\mathrm{d}\nu_x(y),
-\end{align*}
-且
-\begin{align*}
-\int_U\varphi_t(u_j(x))\,\mathrm{d}\mu(x)
--\epsilon\mu(U)
-\leqslant\int_{\{|u_j|>t\}}|u_j(x)|\,\mathrm{d}\mu(x)
-\leqslant\int_U\varphi_t(u_j(x))\,\mathrm{d}\mu(x)
-+\epsilon\mu(U).
-\end{align*}
-令 $j\to\infty$ 与 $\epsilon\to0$ 即得\eqref{align:ch05-5.69}。
-\end{proof}
-
-\begin{proposition}\label{proposition:ch05-biting}\label{proposition:ch05-5.4.10}
-设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$，$\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu$。假设对每个 $h\in C(\mathbb{R}^d)$ 满足 $h(y)/(1+|y|)\to0$ 当 $|y|\to\infty$，序列 $\{h\circ u_j\}$ 在 $L^1(U)$ 中有界且一致可积。则 $h\circ u_{j_k}\rightharpoonup h_*$ 在 $L^1(U)$ 中，其中子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 使 $\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\nu$，且
+(i)$\Rightarrow$(ii)。由\cref{proposition:ch05-Young胎紧判据}，存在下紧函数 $\varphi:\mathbb{R}\to[0,\infty)$ 使
 \begin{align}
-h_*(x)\triangleq \int_{\mathbb{R}^d}h(y)\,\mathrm{d}\nu_x(y)
-\quad\text{对 }\mu\text{-几乎所有 }x\in U.\label{align:ch05-5.70}
+\sup_{\nu_u\in N_F}\int_{\mathbb{R}}\varphi(y)\,\mathrm{d}(\nu_u)_{p_{\mathbb{R}}}(y)<\infty,\label{align:ch05-5.71}
 \end{align}
-\end{proposition}
-
-\begin{proof}
-设 $g\in L^\infty(U;\mathbb{R}^d)$。固定任意 $h$ 如上，对任意 $\epsilon>0$，存在 $r>0$ 使
-\begin{align*}
-\sup_{j\in\mathbb{N}}\int_{\{|u_j|>r\}}|h(u_j(x))|\,\mathrm{d}\mu(x)
-=\eta(\{h\circ u_j\})(r)<\epsilon.
-\end{align*}
-取 $\chi_r\in C_c(\mathbb{R}^d)$ 使 $\chi_r=1$ 在 $\{|y|\leqslant r\}$ 上。则
-\begin{align*}
-\left|\int_U g[h\circ u_j-h_*]\,\mathrm{d}\mu\right|
-\leqslant\left|\int_U g\,[h\chi_r]\circ u_j\,\mathrm{d}\mu-\int_U g h_*\chi_r\,\mathrm{d}\mu\right|
-+\left|\int_U g[h(1-\chi_r)]\circ u_j\,\mathrm{d}\mu\right|
-+\left|\int_U g h_*(1-\chi_r)\,\mathrm{d}\mu\right|\\
-=:I_1+I_2+I_3.
-\end{align*}
-由\cref{definition:ch05-Young窄}、\eqref{align:ch05-5.66}与\cref{corollary:ch05-Young积分}，
-\begin{align*}
-I_1=\left|\int_U g(x)\int_{\mathbb{R}^d}h(y)\chi_r(y)\,\mathrm{d}\nu_{u_j}(x,y)
--\int_U g(x)\int_{\mathbb{R}^d}h(y)\chi_r(y)\,\mathrm{d}\nu_x(y)\right|.
-\end{align*}
-于是由 $\nu_{u_j}\stackrel{n}{\rightharpoonup}\nu$，$I_1\to0$。此外，
-\begin{align*}
-I_2\leqslant\|g\|_\infty\int_{\{|u_j|>r\}}|h(u_j(x))|\,\mathrm{d}\mu(x)
-\leqslant\|g\|_\infty\epsilon,
-\end{align*}
-且由\cref{lemma:ch05-一致可积}，
-\begin{align*}
-I_3\leqslant\|g\|_\infty\int_{\{|y|>r\}}|h(y)|\,\mathrm{d}\nu_x(y)
-\leqslant\|g\|_\infty\liminf_{j\to\infty}\int_{\{|u_j|>r\}}|h(u_j(x))|\,\mathrm{d}\mu(x)
-\leqslant\|g\|_\infty\epsilon.
-\end{align*}
-综上，
-\begin{align*}
-\limsup_{j\to\infty}\left|\int_U g[h\circ u_j-h_*]\,\mathrm{d}\mu\right|
-\leqslant2\|g\|_\infty\epsilon.
-\end{align*}
-令 $\epsilon\to0$ 即得结论。
-\end{proof}
-
-\begin{remark}\label{remark:ch05-biting注}
-\label{remark:ch05-5.4.4}
-在\cref{proposition:ch05-biting}的相同假设下，若 $h$ 还满足 $|h(y)|\leqslant C(1+|y|)$（对某个 $C>0$），则 $\{h\circ u_j\}$ 在 $L^1(U)$ 中有界。
-\end{remark}
-
-\subsection{Biting 引理}\label{subsection:ch05-Biting}
-
-我们证明如下结果（见\cite[Theorem 2.1]{ref92}）。
-
-\begin{theorem}[Biting 引理]\label{theorem:ch05-biting定理}\label{proposition:ch05-5.4.13}
-设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 有界。则存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$、递减可测集序列 $\{E_m\}\subseteq\mathscr{B}(U)$（$\mu(\bigcap_{m=1}^\infty E_m)=0$）与 Young 测度 $\nu\in\mathcal{Y}^+(U;\mathbb{R}^d)$ 使对每个固定的 $m\in\mathbb{N}$，序列 $\{u_{j_k}\chi_{E_m^c}\}_{k\in\mathbb{N}}$ 一致可积。
-\end{theorem}
-
-\begin{proof}
-对任意 $j\in\mathbb{N}$，置 $F_j(t)\triangleq \int_{\{|u_j|>t\}}|u_j(x)|\,\mathrm{d}\mu(x)$（$t>0$）。显然对所有 $j$ 与 $t$ 有 $F_j(t)\to0$ 当 $t\to\infty$。由于 $\{u_j\}$ 在 $L^1(U;\mathbb{R}^d)$ 中有界，定义\eqref{align:ch05-5.68}中的一致可积性模 $\eta(\{u_j\})(t)$ 满足 $\eta(\{u_j\})(t)\to0$ 当 $t\to\infty$（见\cite[Theorem 1.29]{ref42}）。于是存在递增序列 $t_m\to\infty$（$m\in\mathbb{N}$）使对所有 $m$，
+其中 $(\nu_u)_{p_{\mathbb{R}}}$ 为 $\nu_u$ 在 $\mathbb{R}$ 上的投影（见\eqref{align:ch05-5.33}）。由\cref{remark:ch05-径向下紧}，在\cref{proposition:ch05-Young胎紧判据}的证明中可取 $\varphi(y)=\psi(|y|)$，其中 $\psi(t)\triangleq\sum_{n=0}^\infty n\,\chi_{(n,n+1]}(t)$（$t\in[0,\infty)$）。函数 $\psi$ 下紧，且由\eqref{align:ch05-5.71}
 \begin{align}
-\eta(\{u_j\})(t_m)\to0\qquad(m\to\infty).\label{align:ch05-5.71}
+\sup_{\nu_u\in N_F}\int_{\mathbb{R}}\psi(|y|)\,\mathrm{d}(\nu_u)_{p_{\mathbb{R}}}(y)<\infty.\label{align:ch05-5.72}
 \end{align}
-对任意固定的 $m$，置 $E_{j,m}\triangleq \{|u_j|>t_m\}$。则由\eqref{align:ch05-5.71}，存在子列 $\{u_{j_k}\}$（由对角论证选取，独立于 $m$）使对每个固定的 $m$，
+另一方面，由\eqref{align:ch05-5.53}与\eqref{align:ch05-5.36}，对任意 $u\in F$，
+\begin{align}
+\int_X\psi(|u(x)|)\,\mathrm{d}\mu(x)
+&=\int_X\mathrm{d}\mu(x)\int_{\mathbb{R}}\psi(|y|)\,\mathrm{d}(\nu_u)_x(y)\notag\\
+&=\int_{X\times\mathbb{R}}\psi(|y|)\,\mathrm{d}\nu_u(x,y)
+=\int_{\mathbb{R}}\psi(|y|)\,\mathrm{d}(\nu_u)_{p_{\mathbb{R}}}(y).\label{align:ch05-5.73}
+\end{align}
+由\eqref{align:ch05-5.72}–\eqref{align:ch05-5.73}得\eqref{align:ch05-5.70}，断言得证。
+
+(ii)$\Rightarrow$(i)。设 $\psi:[0,\infty)\to[0,\infty)$ 下紧。则映射 $\varphi:\mathbb{R}\to[0,\infty)$，$\varphi(y)\triangleq\psi(|y|)$，亦下紧：对每个 $r\in\mathbb{R}$，集合 $S_r\triangleq\{t\in[0,\infty)\mid\psi(t)\leqslant r\}$ 紧，而 $\{\varphi\leqslant r\}=\{y\in\mathbb{R}\mid|y|\in S_r\}=S_r\cup(-S_r)$ 为紧集。于是由\eqref{align:ch05-5.70}与\eqref{align:ch05-5.73}得\eqref{align:ch05-5.72}，从而得\eqref{align:ch05-5.71}。由\cref{proposition:ch05-Young胎紧判据}，断言得证。
+
+(ii)$\Rightarrow$(iii)。不妨设 $\psi$ 非减：否则以 $\psi_*(t)\triangleq\inf_{s\geqslant t}\psi(s)$ 代替 $\psi$，它非减、满足 $\psi_*\leqslant\psi$、下紧，且由 $\psi$ 的下紧性得 $\psi(t)\to\infty$（$t\to\infty$），故\eqref{align:ch05-5.70}对 $\psi_*$ 仍成立。由 Chebyshev 不等式，对任意 $k>0$ 与 $u\in F$，
 \begin{align*}
-\sup_{k\in\mathbb{N}}\int_{E_{j_k,m}}|u_{j_k}(x)|\,\mathrm{d}\mu(x)\to0.
+\mu(\{|u|\geqslant k\})\leqslant\frac{1}{\psi(k)}\int_{\{|u|\geqslant k\}}\psi(|u(x)|)\,\mathrm{d}\mu(x)
+\leqslant\frac{1}{\psi(k)}\int_X\psi(|u(x)|)\,\mathrm{d}\mu(x),
 \end{align*}
-由\cref{theorem:ch05-ball}，可进一步选取子列使 $\nu_{u_{j_k}}\stackrel{*}{\rightharpoonup}\nu$。对每个 $m$，置 $E_m\triangleq \limsup_{k\to\infty}E_{j_k,m}$。则 $\{E_m\}$ 递减且 $\mu(\bigcap_m E_m)=0$。对固定 $m$，序列 $\{u_{j_k}\chi_{E_m^c}\}$ 一致可积，因为 $|u_{j_k}|\leqslant t_m$ 在 $E_m^c\setminus E_{j_k,m}$ 上，而在 $E_{j_k,m}^c$ 上 $|u_{j_k}|\leqslant t_m$。证明完成。
-\end{proof}
-
-由 Biting 引理与 Young 测度方法，我们得到有界序列 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 的如下分解。
-
-\begin{theorem}\label{theorem:ch05-分解}\label{proposition:ch05-集中测度极限}
-设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 有界，$\nu_{u_{j_k}}\stackrel{*}{\rightharpoonup}\nu$。则存在子列 $\{u_{j_k}\}$、递减集序列 $\{E_m\}\subseteq\mathscr{B}(U)$（$\mu(\bigcap_m E_m)=0$）与 $u_*\in L^1(U;\mathbb{R}^d)$ 使
-\begin{enumerate}[(i)]
-\item $u_{j_k}\chi_{E_m^c}\rightharpoonup u_*\chi_{E_m^c}$ 在 $L^1(U;\mathbb{R}^d)$ 中对每个 $m$；
-\item $u_{j_k}\chi_{E_k^c}\rightharpoonup u_*$ 在 $L^1(U;\mathbb{R}^d)$ 中；
-\item 存在正 Radon 测度 $\sigma\in\mathscr{R}^+(U;\mathbb{R}^d)$ 使 $u_{j_k}\stackrel{*}{\rightharpoonup}u_*+\sigma$ 在 $(L^\infty(U;\mathbb{R}^d))^*$ 中，且 $\sigma\perp\mu$。
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-由\cref{theorem:ch05-biting定理}，存在子列 $\{u_{j_k}\}$、递减集序列 $\{E_m\}$（$\mu(\bigcap_m E_m)=0$）使对每个 $m$，$\{u_{j_k}\chi_{E_m^c}\}$ 一致可积。则由\cref{proposition:ch05-biting}（取 $h(y)=y$），$u_{j_k}\chi_{E_m^c}\rightharpoonup u_*\chi_{E_m^c}$ 在 $L^1(U;\mathbb{R}^d)$ 中，其中 $u_*(x)\triangleq \int_{\mathbb{R}^d}y\,\mathrm{d}\nu_x(y)$。这证明了 (i)。
-
-(ii) 由 (i) 与对角论证得到。(iii) 由 (ii) 与测度分解得到：弱*极限 $u_{j_k}\stackrel{*}{\rightharpoonup}u_*+\sigma$ 中的奇异部分 $\sigma$ 集中在 $\bigcap_m E_m$ 上，故 $\sigma\perp\mu$。证明完成。
-\end{proof}
-
-作为 Biting 引理的推论，我们还得到如下结果。
-
-\begin{proposition}\label{proposition:ch05-函数弱星}
-设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 有界，$\nu_{u_{j_k}}\stackrel{*}{\rightharpoonup}\nu$。设 $f:\mathbb{R}^d\to\mathbb{R}$ 连续且 $|f(y)|\leqslant C(1+|y|)$。则存在 $\sigma_f\in\mathscr{R}^+(U)$ 使 $f\circ u_{j_k}\stackrel{*}{\rightharpoonup}f_*+\sigma_f$ 在 $(L^\infty(U))^*$ 中，其中
+于是由\eqref{align:ch05-5.70}，对每个 $u\in F$ 有
 \begin{align*}
-f_*(x)\triangleq \int_{\mathbb{R}^d}f(y)\,\mathrm{d}\nu_x(y).
+\mu(\{|u|\geqslant k\})\leqslant\frac{1}{\psi(k)}\,\sup_{v\in F}\int_X\psi(|v(x)|)\,\mathrm{d}\mu(x);
 \end{align*}
-\end{proposition}
+由于 $\psi(k)\to\infty$，令 $k\to\infty$ 得 (iii)。
 
-\begin{proof}
-由\cref{theorem:ch05-分解}，$u_{j_k}=u_*\chi_{E_k^c}+$ 集中在 $E_k$ 上的部分。对 $f\circ u_{j_k}$ 应用相同分解，其绝对连续部分极限为 $f_*$，奇异部分记为 $\sigma_f$。结论得证。
-\end{proof}
-
-最后，我们证明强收敛的如下刻画。
-
-\begin{proposition}\label{proposition:ch05-强收敛}
-设 $\{u_j\}\subseteq L^1(U;\mathbb{R}^d)$ 有界，$u_j\to u$ 对 $\mu$-几乎所有 $x\in U$，且 $\|u_j\|_{L^1(U)}\to\|u\|_{L^1(U)}$。则 $u_j\to u$ 在 $L^1(U;\mathbb{R}^d)$ 中强收敛。
-\end{proposition}
-
-\begin{proof}
-由假设，$u_j(x)\to u(x)$ 对 $\mu$-几乎所有 $x$，故 $|u_j(x)|\to|u(x)|$ 且 $|u_j(x)|-|u(x)|\to0$。由于 $\|u_j\|_{L^1}\to\|u\|_{L^1}$，映射 $x\mapsto||u_j(x)|-|u(x)||$ 一致可积（例如见\cite[Theorem 1.29]{ref42}）。于是由控制收敛定理，
+(iii)$\Rightarrow$(ii)。由假设存在非减发散序列 $\{k_l\}\subseteq[0,\infty)$ 使
 \begin{align*}
-\|u_j-u\|_{L^1(U)}=\int_U|u_j(x)-u(x)|\,\mathrm{d}\mu(x)\to0.
+\sup_{u\in F}\mu(\{|u|\geqslant k_l\})\leqslant\frac{1}{l^3}\quad\text{对所有 }l\in\mathbb{N}.
+\end{align*}
+置 $k_0\triangleq0$ 与 $\psi(t)\triangleq\sum_{l=0}^\infty l\,\chi_{(k_l,k_{l+1}]}(t)$（$t\in[0,\infty)$）。对 $r\geqslant0$，取 $n\triangleq[r]$，则 $t>k_{n+1}$ 蕴含 $\psi(t)\geqslant n+1>r$，故 $\{\psi\leqslant r\}\subseteq[0,k_{n+1}]$ 为紧集，即 $\psi$ 下紧。此外，对所有 $u\in F$，
+\begin{align*}
+\int_X\psi(|u(x)|)\,\mathrm{d}\mu(x)
+=\sum_{l=0}^\infty l\,\mu(\{k_l\leqslant|u|<k_{l+1}\})
+\leqslant\sum_{l=1}^\infty l\,\mu(\{|u|\geqslant k_l\})
+\leqslant\sum_{l=1}^\infty\frac{1}{l^2}<\infty.
 \end{align*}
 证明完成。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch05-胎紧等价; kind=proof; 原证明 (i)=>(ii) 直接断言“由 Remark 5.1.10 可取 φ(y)=ψ(|y|)”而未说明该径向函数的来源；此处补出由任一下紧 φ 构造非减下紧径向权并保持 (5.71) 的严格论证
+\begin{proof}[补充证明：\cref{lemma:ch05-胎紧等价}(i)$\Rightarrow$(ii) 中径向权函数的构造]
+设 $\varphi:\mathbb{R}\to[0,\infty)$ 下紧且满足\eqref{align:ch05-5.71}。置 $\tilde\psi(t)\triangleq\inf_{|y|\geqslant t}\varphi(y)$（$t\in[0,\infty)$）。则 $\tilde\psi$ 非负、非减，且 $\tilde\psi(|y|)\leqslant\varphi(y)$ 对每个 $y\in\mathbb{R}$ 成立。由于 $\varphi$ 下紧，对每个 $r\geqslant0$ 存在 $\rho_r>0$ 使 $\{\varphi\leqslant r\}\subseteq[-\rho_r,\rho_r]$；于是 $t>\rho_r$ 蕴含 $\tilde\psi(t)>r$，即 $\{\tilde\psi\leqslant r\}\subseteq[0,\rho_r]$ 为紧集，故 $\tilde\psi$ 下紧，且 $\tilde\psi(t)\to\infty$（$t\to\infty$）。由 $\tilde\psi(|y|)\leqslant\varphi(y)$ 得
+\begin{align*}
+\sup_{\nu_u\in N_F}\int_{\mathbb{R}}\tilde\psi(|y|)\,\mathrm{d}(\nu_u)_{p_{\mathbb{R}}}(y)
+\leqslant\sup_{\nu_u\in N_F}\int_{\mathbb{R}}\varphi(y)\,\mathrm{d}(\nu_u)_{p_{\mathbb{R}}}(y)<\infty,
+\end{align*}
+即\eqref{align:ch05-5.72}对 $\tilde\psi$ 成立。以 $\tilde\psi$ 代替阶梯函数 $\psi$，\eqref{align:ch05-5.73}与\eqref{align:ch05-5.70}的推导不变。
+\end{proof}
 
+\begin{proof}[证明\cref{proposition:ch05-有界紧}]
+由假设 $\sup_{u\in F}\|u\|_{L^1(X)}=\sup_{u\in F}\int_X|u|\,\mathrm{d}\mu<\infty$，故在\eqref{align:ch05-5.70}中可取 $\psi:[0,\infty)\to[0,\infty)$，$\psi(y)=y$；该函数下紧，因为 $\{\psi\leqslant r\}=[0,r]$ 对每个 $r\geqslant0$ 为紧集。于是由\cref{lemma:ch05-胎紧等价}(ii)$\Rightarrow$(i)，$N_F$ 胎紧。
+\end{proof}
 
+\begin{remark}\phantomsection\label{remark:ch05-vallee比较}
+\cref{lemma:ch05-胎紧等价}(ii) 比 de la Vallée-Poussin 判别法（见\cref{proposition:ch02-有界一致可积等价}(iii)）弱。这与\cref{proposition:ch02-有界一致可积等价}和\cref{proposition:ch05-有界紧}一致：$F$ 的有界性蕴含\cref{lemma:ch05-胎紧等价}(ii)（取 $\psi(y)=y$），而 de la Vallée-Poussin 判别法等价于 $F$ 的有界性与一致可积性二者。
+\end{remark}
+
+% SUPPLEMENT: parent=proposition:ch05-有界紧; kind=motivation; 动机（把 L^1 有界性翻译为胎紧性，从而接上定理 5.3.11）、假设的作用、与定理 5.4.2 的分工、去掉有界性的反例
+% SUPPLEMENT: parent=proposition:ch05-弱星紧; kind=motivation; 别名 label（沿用旧译名），动机与各项条件的作用见下一条注记
+% SUPPLEMENT: parent=lemma:ch05-胎紧等价; kind=motivation; 动机（三条判据的含义与相互翻译）、非退化条件、反例说明 (iii) 严格弱于一致可积
+\begin{remark}\phantomsection\label{remark:ch05-胎紧判据函数}
+\cref{proposition:ch05-有界紧}与\cref{lemma:ch05-胎紧等价}的作用是把函数序列的紧性问题化为测度序列的紧性问题。
+
+(i) \cref{proposition:ch05-有界紧}的假设只有一条：$F$ 在 $L^1(X)$ 中有界；结论 $N_F$ 胎紧正是\cref{theorem:ch05-弱紧Young}的假设，故二者结合给出窄拓扑中的相对序列紧性（\cref{theorem:ch05-函数窄收敛}）。若去掉有界性，结论可为假：取 $X=(0,1)$，$\mu=\lambda|_{(0,1)}$，$u_j\equiv j$，则 $\nu_{u_j}=\mu\otimes\delta_j$ 不胎紧（对任意紧集 $K\subseteq\mathbb{R}$ 与 $j\notin K$ 有 $\nu_{u_j}((0,1)\times K^c)=1$），其弱$^*$极限为 $0$（见\cref{remark:ch05-ball注}）。
+
+(ii) \cref{lemma:ch05-胎紧等价}的三条判据分别刻画：胎紧性 (i) 即 $\mathcal{Y}^+(X;\mathbb{R})$ 中的胎紧（\cref{definition:ch05-Young胎紧}）；(ii) 是“存在在无穷远增长的下紧权 $\psi$，使 $\psi(|u|)$ 的积分关于 $u\in F$ 一致有界”，即矩条件；(iii) 是“尾部集合 $\{|u|\geqslant k\}$ 的测度关于 $u\in F$ 一致地趋于 $0$”。证明给出三者之间的显式转换，权函数形如 $\psi(t)=\sum_nn\chi_{(n,n+1]}(t)$ 或 $\psi(t)=\sum_ll\chi_{(k_l,k_{l+1}]}(t)$。
+
+(iii) 条件 (iii) 严格弱于一致可积性：取 $X=(0,1)$，$\mu=\lambda|_{(0,1)}$，$u_j\triangleq j\chi_{(0,1/j)}$（$j\in\mathbb{N}$）。则 $\|u_j\|_{L^1(X)}=1$；对 $k>0$，当 $j\geqslant k$ 时 $\mu(\{|u_j|\geqslant k\})=1/j$，当 $j<k$ 时该测度为 $0$，故 $\sup_{j}\mu(\{|u_j|\geqslant k\})=1/k\to0$，即 (iii) 成立。然而 $\int_{\{|u_j|\geqslant t\}}|u_j|\,\mathrm{d}\mu=1$ 对一切 $j\geqslant t$ 成立，故 $\{u_j\}$ 不一致可积。这与\cref{remark:ch05-vallee比较}一致：胎紧性只对应 de la Vallée-Poussin 判别法中较弱的一侧。
+
+(iv) 非退化条件与边界：$\psi$ 只要求下紧，不要求连续、凸或满足 $\psi(t)/t\to\infty$；(iii) 中的极限自动为 $0$，无需对 $\{u_j\}$ 附加逐点假设。$\mu$ 的有限性不可去：若 $\mu(X)=\infty$，则\eqref{align:ch05-5.70}与 (iii) 的等价性失效，须先对 $\mu$ 作 $\sigma$-有限的局部化。
+\end{remark}
+
+由\cref{proposition:ch05-有界紧}与\cref{theorem:ch05-弱紧Young}，若 $F\subseteq L^1(X)$ 有界，则相应的 Young 测度集合 $N_F$ 在窄拓扑中相对序列紧。于是有如下结果。
+
+\begin{theorem}\label{theorem:ch05-函数窄收敛}
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。设 $F\subseteq L^1(X)$ 满足 $\sup_{u\in F}\|u\|_{L^1(X)}<\infty$（即 $F$ 在 $L^1(X)$ 中有界）。则对任意序列 $\{u_j\}\subseteq F$，存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 使对所有有界 Carathéodory 被积函数 $h\in\mathcal{C}_b(X\times\mathbb{R})$ 成立如下积分等式：
+\begin{align}
+\lim_{k\to\infty}\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x)
+=\int_X\mathrm{d}\mu(x)\int_{\mathbb{R}}h(x,y)\,\mathrm{d}\nu_x(y).\label{align:ch05-5.74}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+固定任意 $\{u_j\}\subseteq F$。由\cref{proposition:ch05-有界紧}，相应的 Young 测度集合 $N_F$ 胎紧，故由\cref{theorem:ch05-弱紧Young}存在子列 $\{\nu_{u_{j_k}}\}\subseteq\{\nu_{u_j}\}$ 与 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 使 $\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\nu$，即对所有 $h\in\mathcal{C}_b(X\times\mathbb{R})$，
+\begin{align*}
+\lim_{k\to\infty}\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu_{u_{j_k}}(x,y)
+=\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu(x,y).
+\end{align*}
+由\eqref{align:ch05-5.54}，
+\begin{align*}
+\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu_{u_{j_k}}(x,y)
+=\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x),
+\end{align*}
+而由\eqref{align:ch05-5.36}，
+\begin{align*}
+\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu(x,y)
+=\int_X\mathrm{d}\mu(x)\int_{\mathbb{R}}h(x,y)\,\mathrm{d}\nu_x(y).
+\end{align*}
+故等式\eqref{align:ch05-5.74}成立。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-函数窄收敛; kind=motivation; 动机（有界性保证极限不损失质量）、假设的作用、(5.74) 的含义、与定理 5.4.2 的区别、极限不必与函数相伴
+\begin{remark}\phantomsection\label{remark:ch05-窄紧性}
+\cref{theorem:ch05-函数窄收敛}是\cref{theorem:ch05-ball}在 $L^1$ 有界情形下的加强：$F$ 的 $L^1$ 有界性经\cref{proposition:ch05-有界紧}给出 $N_F$ 的胎紧性，再经\cref{theorem:ch05-弱紧Young}给出窄收敛的子列，因此极限不损失质量，即 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 而非仅 $\nu\in U$（比较\cref{theorem:ch05-ball}）。
+
+关于假设：$\sup_{u\in F}\|u\|_{L^1(X)}<\infty$ 只用于胎紧性；若去掉它而保留 $u_j$ 的可测性，则只得到\cref{theorem:ch05-ball}的弱$^*$结论，极限可能为 $0$。$\mu$ 的有限性用于胎紧判据（\cref{lemma:ch05-胎紧等价}）。
+
+关于\eqref{align:ch05-5.74}：该式说明 $\nu$ 与子列 $\{u_{j_k}\}$ 相伴，即子列的所有有界 Carathéodory 复合函数的积分极限都由 $\nu$ 的离散分解给出，这与\cref{proposition:ch05-Dirac测度}中 $\nu_u$ 的形式一致。但 $\nu$ 不必与任何 $\mathscr{B}(X)$-可测函数相伴（见\cref{proposition:ch05-非相伴}与\cref{example:ch05-周期Young测度}），故\eqref{align:ch05-5.74}不能反过来给出 $u_{j_k}$ 的几乎处处收敛。
+
+边界情形：若 $\{u_j\}$ 在 $L^1(X)$ 中有界且弱收敛，则\eqref{align:ch05-5.74}的右端仍由 $\nu$ 给出，但 $u_{j_k}$ 不必强收敛；此时重心 $u_*(x)=\int_{\mathbb{R}}y\,\mathrm{d}\nu_x(y)$ 是弱极限的候选（见\cref{remark:ch05-biting注}）。
+\end{remark}
+
+\cref{theorem:ch05-函数窄收敛}的如下推论只需非负的 Carathéodory 被积函数。
+
+\begin{corollary}\label{corollary:ch05-下半连续}
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。设 $F\subseteq L^1(X)$ 满足 $\sup_{u\in F}\|u\|_{L^1(X)}<\infty$。则对任意 $\{u_j\}\subseteq F$，存在子列 $\{u_{j_k}\}\subseteq\{u_j\}$ 与 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 使对任意 Carathéodory 函数 $h:X\times\mathbb{R}\to[0,\infty)$（见\cref{definition:ch05-Caratheodory}(i)），
+\begin{align}
+\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu(x,y)
+\leqslant\liminf_{k\to\infty}\int_Xh(x,u_{j_k}(x))\,\mathrm{d}\mu(x).\label{align:ch05-5.75}
+\end{align}
+\end{corollary}
+
+\begin{proof}
+对任意 $\{u_j\}\subseteq F$，由\cref{theorem:ch05-函数窄收敛}存在子列 $\{\nu_{u_{j_k}}\}\subseteq\{\nu_{u_j}\}$ 与 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 使 $\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\nu$。于是由\eqref{align:ch05-5.62}（用于非负 Carathéodory 函数 $h$）得
+\begin{align*}
+\int_{X\times\mathbb{R}}h(x,y)\,\mathrm{d}\nu(x,y)
+\leqslant\liminf_{k\to\infty}\int_X\mathrm{d}\mu(x)\int_{\mathbb{R}}h(x,y)\,\mathrm{d}(\nu_{u_{j_k}})_x(y),
+\end{align*}
+而由\eqref{align:ch05-5.54}，上式右端的内部积分等于 $h(x,u_{j_k}(x))$。故\eqref{align:ch05-5.75}成立。
+\end{proof}
+
+% SUPPLEMENT: parent=corollary:ch05-下半连续; kind=motivation; 动机（无界非负 Carathéodory 检验函数的下半连续性）、非负性假设的必要性、与 Thm 5.4.5 的分工、变号时的反例线索
+\begin{remark}\phantomsection\label{remark:ch05-下半连续估计}
+\cref{corollary:ch05-下半连续}是\cref{proposition:ch05-Caratheodory下半连续}与\cref{theorem:ch05-函数窄收敛}的结合：它把窄收敛的检验函数类从有界的 $\mathcal{C}_b(X\times\mathbb{R})$ 扩大到无界但非负的 Carathéodory 函数，代价是把等式减弱为\eqref{align:ch05-5.75}中的不等式。
+
+关于假设：$h\geqslant0$ 不可去。\eqref{align:ch05-5.62}的证明只对非负 $h$ 成立（它对 $h$ 作截断 $h_n=\min\{\inf_\zeta[h+n\,d(\zeta,\cdot)],n\}$ 并用单调收敛定理），若 $h$ 变号，$\int h\,\mathrm{d}\nu$ 可能严格大于 $\liminf$：取 $X=(0,1)$，$\mu=\lambda$，$u_j\triangleq j\chi_{(0,1/j)}$，$h(y)\triangleq-y$，则 $u_j\to0$ 依测度，$\nu_x=\delta_0$，故 $\int_{X\times\mathbb{R}}h\,\mathrm{d}\nu=0$，而 $\int_Xh(x,u_j(x))\,\mathrm{d}x=-1$ 对一切 $j$，故 $0=\int_{X\times\mathbb{R}}h\,\mathrm{d}\nu>-1=\liminf_{j\to\infty}\int_Xh(x,u_j(x))\,\mathrm{d}x$，即\eqref{align:ch05-5.75}对变号的 $h$ 失效。
+
+关于结论的形式：\eqref{align:ch05-5.75}中的 $\liminf$ 不能换为极限（同上例，取 $h(y)=|y|$ 时 $\int_Xh(x,u_j(x))\,\mathrm{d}x\equiv1$ 而 $\int h\,\mathrm{d}\nu=0$，极限存在但与左端不等）。该不等式在下一小节用于去掉\cref{corollary:ch05-下半连续}中 $h$ 的非负性限制（见\cref{proposition:ch05-5.4.10}）。
+\end{remark}
+
+把\cref{theorem:ch05-函数窄收敛}（或\cref{theorem:ch05-ball}，因为窄收敛蕴含弱$^*$收敛）给出的极限测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 视为与该定理所述子列 $\{u_{j_k}\}$ 相伴是自然的。有时可以显式算出这一测度，如下结果所示。
+
+\begin{proposition}\label{proposition:ch05-周期平均}
+设 $I\subseteq\mathbb{R}$ 为长度为 $1$ 的区间，$K\subseteq\mathbb{R}$ 为非空紧集，$u:\mathbb{R}\to K$ 为 $\mathscr{B}(\mathbb{R})$-可测且以 $1$ 为周期。置 $u_k(x)\triangleq u(kx)$（$k\in\mathbb{N}$，$x\in I$），$\{\nu_{u_k}\}\subseteq\mathcal{Y}^+(I;K)$ 为相应的 Young 测度序列，其中测度空间取为 $(I,\mathscr{B}(I),\lambda|_I)$。则 $\nu_{u_k}$ 在 $\mathcal{Y}^+(I;K)$ 中窄收敛于乘积测度 $\nu=\lambda|_I\times\lambda_u$，其中 $\lambda_u\triangleq u_*(\lambda|_I)$ 为 $\lambda|_I$ 在 $u$ 下的像测度，即
+\begin{align*}
+\int_Ig\circ u\,\mathrm{d}\lambda=\int_{\mathbb{R}}g\,\mathrm{d}\lambda_u
+\quad\text{对所有 }g\in L^1(\mathbb{R},\mathscr{B}(\mathbb{R}),\lambda_u).
+\end{align*}
+\end{proposition}
+
+\begin{proof}
+为简便，设 $I=(0,1)$。由于 $K\subseteq\mathbb{R}$ 紧，$C_b(K)$ 可分，且由\cref{remark:ch05-紧空间同构}，$\mathcal{C}_b(I\times K)=L^1(I;C_b(K))$。于是由\cref{proposition:ch04-简单函数稠密}(ii)（取 $D\subseteq C_b(K)$ 为可数稠密子集），只需证明对所有 $f\in C_c(I)$ 与 $g\in C_b(K)$ 有
+\begin{align}
+\lim_{k\to\infty}\int_If(x)g(u_k(x))\,\mathrm{d}\lambda(x)
+=\int_If(x)\,\mathrm{d}\lambda(x)\int_Ig(u(x))\,\mathrm{d}\lambda(x).\label{align:ch05-5.76}
+\end{align}
+固定 $k\in\mathbb{N}$，设 $\{I_1,\cdots,I_k\}$ 为 $I$ 的分割，其中 $I_m$ 为以 $\frac{m-1}{k}$ 与 $\frac mk$ 为端点的区间（$m=1,\cdots,k$）。作变量替换 $x=\frac{\xi+m-1}{k}$（$\xi\in I$）并用 $u$ 的 $1$-周期性得
+\begin{align}
+\int_If(x)g(u_k(x))\,\mathrm{d}\lambda(x)
+&=\int_If(x)g(u(kx))\,\mathrm{d}\lambda(x)\notag\\
+&=\frac1k\sum_{m=1}^k\int_If\Big(\frac{\xi+m-1}{k}\Big)g(u(\xi))\,\mathrm{d}\lambda(\xi).\label{align:ch05-5.77}
+\end{align}
+由于对每个 $\xi\in I$，
+\begin{align*}
+\lim_{k\to\infty}\frac1k\sum_{m=1}^kf\Big(\frac{\xi+m-1}{k}\Big)=\int_If(x)\,\mathrm{d}\lambda(x),
+\end{align*}
+且上式左端的绝对值不超过 $\|f\|_\infty$，由控制收敛定理（对 $\xi$ 积分）在\eqref{align:ch05-5.77}中令 $k\to\infty$ 得\eqref{align:ch05-5.76}。结论得证。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-周期平均; kind=motivation; 动机（周期震荡的显式极限）、假设的作用（周期 1、I 长为 1、K 紧、u 只可测）、边界（非周期或区间长度不为 1 时极限依赖于 x）、与 Example 5.4.5 的联系
+\begin{remark}\phantomsection\label{remark:ch05-周期}
+\cref{proposition:ch05-周期平均}说明周期震荡序列 $\{u(kx)\}$ 的 Young 测度极限与 $x$ 无关，等于“一个周期上的分布”$\lambda_u$ 与“位置测度”$\lambda|_I$ 的乘积。这正是周期 homogenization 中“局部极限是周期分布的混合”这一现象的概率表述。
+
+关于假设：$I$ 的长度为 $1$ 保证 $\lambda_u$ 是概率测度，且分割 $\{I_m\}$ 的每个小区间经 $x\mapsto kx$ 恰好覆盖一个完整周期；$u$ 的 $1$-周期性保证 $u(kx)$ 在每个 $I_m$ 上取遍 $u$ 在一个周期上的全部值；$K$ 紧（从而 $C_b(K)$ 可分）保证可用\cref{remark:ch05-紧空间同构}把 $\mathcal{C}_b(I\times K)$ 与 $L^1(I;C_b(K))$ 等同，并使用\cref{proposition:ch04-简单函数稠密}(ii) 作乘积型检验。$u$ 只要求 $\mathscr{B}(\mathbb{R})$-可测，无需连续。
+
+关于结论：$\nu=\lambda|_I\times\lambda_u$ 的离散分解为 $\nu_x=\lambda_u$ 对 $\lambda$-几乎每个 $x\in I$，它与 $x$ 无关；若 $u$ 非常数，则 $\lambda_u$ 非原子（当 $u$ 的分布函数连续时），此时 $\nu$ 不与任何 $\mathscr{B}(I)$-可测函数相伴，见\cref{example:ch05-周期Young测度}。
+
+边界情形：若 $I$ 的长度 $L\neq1$，则极限为 $\lambda|_I\times\lambda_{u,L}$，其中 $\lambda_{u,L}$ 是 $\lambda|_{(0,L)}$ 在 $u$ 下的像，一般不再是概率测度；若 $u$ 不周期，则极限一般依赖于 $x$。
+\end{remark}
+
+如下例子给出\cref{proposition:ch05-周期平均}的两个显式计算。
+
+\begin{example}\label{example:ch05-周期Young测度}
+(i) 设 $I=(-\tfrac12,\tfrac12)$，$K=[-1,1]$，$u(x)=\sin(\pi x)$（$x\in I$）。由 Riemann 积分的初等结果，
+\begin{align*}
+\int_I(g\circ u)(x)\,\mathrm{d}\lambda(x)=\int_{-\frac12}^{\frac12}g(u(x))\,\mathrm{d}x
+=\frac{1}{\pi}\int_{-1}^1\frac{g(y)}{\sqrt{1-y^2}}\,\mathrm{d}y.
+\end{align*}
+故对 $\lambda$-几乎每个 $x\in I$ 与所有 $F\in\mathscr{B}(\mathbb{R})\cap[-1,1]$，
+\begin{align*}
+\nu_x(F)=\frac{1}{\pi}\int_F\frac{\mathrm{d}y}{\sqrt{1-y^2}}=\text{常数}.
+\end{align*}
+
+(ii) 设 $I=(0,1)$，$K=\{-1,1\}$，$u(x)=\operatorname{sgn}[\sin(2\pi x)]$（$x\in I$）。则
+\begin{align*}
+\int_I(g\circ u)(x)\,\mathrm{d}\lambda(x)=\int_0^{\frac12}g(u(x))\,\mathrm{d}x+\int_{\frac12}^1g(u(x))\,\mathrm{d}x,
+\end{align*}
+故 $\lambda_u=\frac{\delta_1+\delta_{-1}}{2}$。于是对 $\lambda$-几乎每个 $x\in I$ 有
+\begin{align*}
+\nu_x=\frac12(\delta_1+\delta_{-1})=\text{常数}.
+\end{align*}
+\end{example}
+
+须指出：由\cref{theorem:ch05-函数窄收敛}或\cref{theorem:ch05-ball}给出的极限测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 不必与任何 $\mathscr{B}(X)$-可测函数相伴（\cref{example:ch05-周期Young测度}(ii) 即如此）。下述命题说明这一点，其证明留到下一小节。
+
+\begin{proposition}\label{proposition:ch05-非相伴}
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。设 $\{u_j\}\subseteq L^1(X)$，$u\in L^1(X)$ 满足 $u_j\rightharpoonup u$ 在 $L^1(X)$ 中但 $u_j\not\to u$ 在 $L^1(X)$ 中强收敛。设 $\{\nu_{u_j}\}$ 为相应的 Young 测度序列。则存在子列 $\{\nu_{u_{j_k}}\}\subseteq\{\nu_{u_j}\}$ 与 Young 测度 $\nu\in\mathcal{Y}^+(X;\mathbb{R})$ 使：
+\begin{enumerate}[(i)]
+\item\label{item:ch05-nonassoc-i} $\nu_{u_{j_k}}\stackrel{n}{\rightharpoonup}\nu$；
+\item\label{item:ch05-nonassoc-ii} $\nu$ 不与任何 $\mathscr{B}(X)$-可测函数相伴。
+\end{enumerate}
+\end{proposition}
+
+% SUPPLEMENT: parent=proposition:ch05-非相伴; kind=motivation; 动机（窄极限一般不是 Dirac 型）、假设 u_j⇀u 但非强收敛的作用、与 Example 5.4.5(ii) 的关系、边界（强收敛时必为 Dirac 型）
+\begin{remark}\phantomsection\label{remark:ch05-非相伴注}
+\cref{proposition:ch05-非相伴}说明\cref{theorem:ch05-函数窄收敛}的极限一般只是 Young 测度，不能写成 $\nu_f$ 的形式：弱收敛而非强收敛的序列会把“振荡”记录为极限测度的非原子部分。
+
+关于假设：$u_j\rightharpoonup u$ 且 $u_j\not\to u$ 强收敛是本质的。若 $u_j\to u$ 强收敛于 $L^1(X)$，则由\cref{proposition:ch05-几乎处处收敛}(i)（沿几乎处处收敛的子列）与极限唯一性得 $\nu=\nu_u$，即 $\nu$ 与 $u$ 相伴，结论 (ii) 不成立。若去掉 $\{u_j\}$ 的 $L^1$ 有界性，则\cref{theorem:ch05-ball}的极限还可能为 $0$，此时 $\nu$ 同样不与任何函数相伴，但结论 (i) 中的窄收敛不再成立。
+
+与\cref{example:ch05-周期Young测度}(ii) 的关系：该例中 $u$ 取两值、$\nu_x=\frac12(\delta_1+\delta_{-1})$ 非 Dirac 型，正是\cref{proposition:ch05-非相伴}的典型情形；而\cref{proposition:ch05-非相伴}指出这一现象在“弱收敛但非强收敛”的假设下是普遍存在的。
+
+适用边界：结论 (ii) 中的“不相伴”是指不存在 $\mathscr{B}(X)$-可测函数 $f$ 使 $\nu=\nu_f$；由\cref{proposition:ch05-Dirac测度}，这等价于 $\nu_x$ 对 $\mu$-正测度集上的 $x$ 不是 Dirac 测度。
+\end{remark}
 
 \end{document}

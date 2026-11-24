@@ -1,0 +1,684 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{Lebesgue 点与近似连续}\label{section:ch01-07}
+
+\subsection{微分定理}\label{subsection:ch01-07-1}
+
+\begin{definition*}[平均值]\phantomsection\label{definition:ch01-07-平均}
+设 $n$ 为正整数，$\mu$ 为 $\mathbb{R}^n$ 上的 Radon 测度，$E\subseteq\mathbb{R}^n$ 为 $\mu$-可测集且 $0<\mu(E)<\infty$，$f:E\to\mathbb{R}$ 关于 $\mu$ 可积。称
+\begin{align*}
+\fint_E f\diff\mu:=\frac{1}{\mu(E)}\int_E f\diff\mu
+\end{align*}
+为 $f$ 在 $E$ 上关于 $\mu$ 的平均值，并记作 $\fint_E f\diff\mu$。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch01-07-平均; kind=motivation; 说明为何引入按测度归一化的平均值，以及它在微分定理陈述中的作用
+\begin{remark}\phantomsection\label{remark:ch01-07-平均-动机}
+平均值把积分按集合的测度归一化，使 $\fint_E f\diff\mu$ 与 $f$ 取相同的量纲，并且常数函数 $f\equiv c$ 满足 $\fint_E f\diff\mu=c$。本节的第一个主定理正是以这一记号为载体：取 $E$ 为以 $x$ 为球心、半径 $r$ 的球并令 $r\to0$，断言平均值收敛于 $f(x)$，即无穷小邻域上的平均还原为该点处的函数值。若不作归一化，则 $\int_{B(x,r)}f\diff\mu$ 本身在 $r\to0$ 时总趋于 $0$，无法刻画 $f$ 的逐点取值。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-07-平均; kind=hypotheses; 逐条分析 0<μ(E)<∞、可积性与「积分存在」的作用，并说明为何分母非零自动成立
+\begin{remark}\phantomsection\label{remark:ch01-07-平均-条件}
+\begin{enumerate}[(i)]
+\item 条件 $\mu(E)>0$ 保证分母 $\mu(E)$ 非零，平均值因而有定义。若允许 $\mu(E)=0$，则右端成为 $0/0$，记号失去意义；此时把 $E$ 上的平均值约定为任意值都会破坏紧随其后的极限陈述。
+\item 条件 $\mu(E)<\infty$ 保证归一化因子有限。若 $\mu(E)=\infty$，则对非负且积分无穷的 $f$，右端成为 $\infty/\infty$，须另行规定；本节的球 $B(x,r)$ 因 $\mu$ 为 Radon 测度而总满足 $\mu(B(x,r))<\infty$，故该条件在实际使用中自动成立。
+\item 要求 $f$ 关于 $\mu$ 可积（至少 $\mu$-可测且 $\int_E f\diff\mu$ 存在）是为了使右端的积分有意义。若 $f$ 在 $E$ 上不可积，则 $\fint_E f\diff\mu$ 无从定义。
+\item 对 $\mu$-a.e. $x\in\mathbb{R}^n$ 与一切 $r>0$ 有 $\mu(B(x,r))>0$：由 $\mu$ 的支集定义，使某个球满足 $\mu(B(x,r))=0$ 的点 $x$ 必落在 $\mathbb{R}^n-\operatorname{spt}\mu$ 中，而 $\mu(\mathbb{R}^n-\operatorname{spt}\mu)=0$。故在\cref{theorem:ch01-1-32}的几乎处处结论中，被积函数处的平均值确实有意义。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Lebesgue--Besicovitch 微分定理]\label{theorem:ch01-1-32}
+设 $n$ 为正整数，$\mu$ 为 $\mathbb{R}^n$ 上的 Radon 测度，$f\in L^1_{\mathrm{loc}}(\mathbb{R}^n,\mu)$，即 $f:\mathbb{R}^n\to\mathbb{R}$ 关于 $\mu$ 可测且在 $\mathbb{R}^n$ 的每个紧子集上关于 $\mu$ 可和。对 $x\in\mathbb{R}^n$ 与 $r>0$，记 $B(x,r)$ 为以 $x$ 为球心、$r$ 为半径的闭球。则对 $\mu$-a.e. $x\in\mathbb{R}^n$ 有
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}f\diff\mu=f(x) .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+对 Borel 集 $B\subseteq\mathbb{R}^n$，定义
+\begin{align*}
+\nu^{\pm}(B):=\int_B f^{\pm}\diff\mu ,
+\end{align*}
+其中 $f^{+}:=\max(f,0)$ 与 $f^{-}:=\max(-f,0)$ 分别是 $f$ 的正部与负部；对任意集合 $A\subseteq\mathbb{R}^n$，再令
+\begin{align*}
+\nu^{\pm}(A):=\inf\bigl\{\nu^{\pm}(B)\bigm|A\subseteq B,\ B\ \text{为 Borel 集}\bigr\} .
+\end{align*}
+则 $\nu^{+}$ 与 $\nu^{-}$ 都是 Radon 测度，于是由\cref{theorem:ch01-1-30}，对一切 $\mu$-可测集 $A\subseteq\mathbb{R}^n$ 有% XREF p=68 "according to Theorem 1.30"
+\begin{align*}
+\nu^{+}(A)=\int_A D_{\mu}\nu^{+}\diff\mu=\int_A f^{+}\diff\mu
+\end{align*}
+以及
+\begin{align*}
+\nu^{-}(A)=\int_A D_{\mu}\nu^{-}\diff\mu=\int_A f^{-}\diff\mu .
+\end{align*}
+从而 $D_{\mu}\nu^{\pm}=f^{\pm}$ $\mu$-a.e.。于是
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}f\diff\mu
+&=\lim_{r\to0}\frac{1}{\mu(B(x,r))}\bigl[\nu^{+}(B(x,r))-\nu^{-}(B(x,r))\bigr]\\
+&=D_{\mu}\nu^{+}(x)-D_{\mu}\nu^{-}(x)\\
+&=f^{+}(x)-f^{-}(x)=f(x)
+\end{align*}
+对 $\mu$-a.e. 的点 $x$ 成立。
+
+% SUPPLEMENT: parent=theorem:ch01-1-32; kind=proof; 补出 ν± 为 Radon 测度、ν±≪μ、以及由积分相等推出 D_μν±=f± μ-a.e. 的三步论证
+下面对上述论证中使用的三个事实逐项给出论证。
+
+（1）$\nu^{\pm}$ 是 Radon 测度。以 $\nu^{+}$ 为例。由 $f^{+}\geqslant0$ 及积分的单调收敛定理，$\nu^{+}$ 在 Borel 集上是测度；又对每个紧集 $K\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\nu^{+}(K)=\int_K f^{+}\diff\mu\leqslant\int_K\lvert f\rvert\diff\mu<\infty ,
+\end{align*}
+其中有限性来自 $f\in L^1_{\mathrm{loc}}(\mathbb{R}^n,\mu)$。按上式用下确界把 $\nu^{+}$ 扩充到 $\mathbb{R}^n$ 的一切子集：所得集函数在 Borel 集上与原有定义一致，且每个集合都含于测度相同的 Borel 集之中，故为 Borel 正则测度；它在紧集上有限，因此是 Radon 测度。对 $\nu^{-}$ 的论证相同。
+
+（2）$\nu^{\pm}\ll\mu$。设 $A\subseteq\mathbb{R}^n$ 满足 $\mu(A)=0$。由 $\mu$ 的 Borel 正则性，存在 Borel 集 $B\supseteq A$ 使 $\mu(B)=0$。于是
+\begin{align*}
+\nu^{\pm}(A)\leqslant\nu^{\pm}(B)=\int_B f^{\pm}\diff\mu=0 ,
+\end{align*}
+即 $\nu^{\pm}(A)=0$。
+
+（3）由 $\int_A D_{\mu}\nu^{+}\diff\mu=\int_A f^{+}\diff\mu$ 对一切 $\mu$-可测集 $A$ 成立，推出 $D_{\mu}\nu^{+}=f^{+}$ $\mu$-a.e.。令 $g:=D_{\mu}\nu^{+}-f^{+}$。对每个正整数 $k$，集合 $A_k:=\{g>1/k\}$ 是 $\mu$-可测集，且
+\begin{align*}
+\frac{1}{k}\mu(A_k)\leqslant\int_{A_k}g\diff\mu=0 ,
+\end{align*}
+故 $\mu(A_k)=0$。由 $\{g>0\}=\bigcup_{k=1}^{\infty}A_k$ 得 $\mu(\{g>0\})=0$；对 $-g$ 作同样的论证得 $\mu(\{g<0\})=0$。因此 $g=0$ $\mu$-a.e.，即 $D_{\mu}\nu^{+}=f^{+}$ $\mu$-a.e.。把 $f^{+}$ 换为 $f^{-}$ 即得 $D_{\mu}\nu^{-}=f^{-}$ $\mu$-a.e.。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-32; kind=motivation; 说明微分定理在全书中的作用：由平均值恢复函数值与密度、以及 Lebesgue 点的来源
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-32-动机}
+本定理是 Radon 测度上的微积分基本定理的定量形式：函数的平均值在球半径趋于零时还原为函数值。它的证明把微分问题化为 Radon--Nikodym 型问题，即先用\cref{theorem:ch01-1-30}把测度 $\nu^{\pm}$ 由其密度 $D_{\mu}\nu^{\pm}$ 还原，再把结论翻译回 $f$ 的平均值。% XREF internal
+定理给出两个后续工具。其一，它说明对 $\mu$-a.e. 的点，函数值可由无穷小邻域上的平均值逼近，这正是\cref{definition:ch01-1-24}中 Lebesgue 点的来源；其二，取 $f=\chi_E$ 即得集合密度定理（\cref{theorem:ch01-1-35}），它把可测集的内点概念推广为测度论意义下的密度点。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-32; kind=hypotheses; 逐条分析 Radon 测度与局部可和性两个条件，并给出反例说明 a.e. 不可改进
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-32-条件}
+\begin{enumerate}[(i)]
+\item $\mu$ 为 Radon 测度这一条件在证明中有三处作用：其一，$\mu$ 在紧集上有限，故 $B(x,r)$ 的测度有限，平均值有定义；其二，$\mu$ 为 Borel 正则，故测度为零的集合含于测度为零的 Borel 集之中，这是第（2）步验证 $\nu^{\pm}\ll\mu$ 的关键；其三，\cref{theorem:ch01-1-30} 的陈述只对 Radon 测度建立，$\mu$ 与 $\nu^{\pm}$ 都须满足该条件。% XREF internal
+\item $f\in L^{1}_{\mathrm{loc}}(\mathbb{R}^n,\mu)$ 保证 $\nu^{\pm}$ 在紧集上有限，从而使 $\nu^{\pm}$ 是 Radon 测度，并使 $f$ 在 $\mu$-a.e. 点取有限值。若只设 $f$ 关于 $\mu$ 可测，则对 $f(x)=1/\lvert x\rvert^{n}$、$\mu=\mathcal{L}^{n}$、$x=0$，有 $\fint_{B(0,r)}f\diff y=\infty$ 对一切 $r>0$ 成立，结论的极限不存在。
+\item 结论中的「$\mu$-a.e.」不能改进为处处成立。取 $\mu=\mathcal{L}^{1}$、$f=\chi_{[0,1]}$。在 $x=0$ 处，对每个 $r>0$ 有 $\mathcal{L}^{1}(B(0,r)\cap[0,1])=\min\{r,1\}$ 与 $\mathcal{L}^{1}(B(0,r))=2r$，故
+\begin{align*}
+\fint_{B(0,r)}f\diff y=\frac{\min\{r,1\}}{2r}\longrightarrow\frac{1}{2}\neq f(0)=1 ,
+\end{align*}
+即 $x=0$ 不是使结论成立的点。该例外集是零测集，与结论一致。
+\item 结论中的球必须取为以 $x$ 为球心。\cref{theorem:ch01-1-34}将说明：当 $\mu=\mathcal{L}^{n}$ 时，即使球心不是 $x$、只要球含 $x$ 且直径趋于零，相应的平均值仍收敛于 $f(x)$；对一般 Radon 测度并无此加强。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Radon 测度的 Lebesgue 点]\label{theorem:ch01-1-33}
+设 $n$ 为正整数，$\mu$ 为 $\mathbb{R}^n$ 上的 Radon 测度，$1\leqslant p<\infty$，$f\in L^{p}_{\mathrm{loc}}(\mathbb{R}^n,\mu)$，即 $f:\mathbb{R}^n\to\mathbb{R}$ 关于 $\mu$ 可测且 $\lvert f\rvert^{p}$ 在 $\mathbb{R}^n$ 的每个紧子集上关于 $\mu$ 可和。则对 $\mu$-a.e. 点 $x\in\mathbb{R}^n$ 有
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert f-f(x)\rvert^{p}\diff\mu=0 .
+\end{align*}
+\end{theorem}
+
+\begin{definition}[Lebesgue 点]\label{definition:ch01-1-24}
+设 $n$ 为正整数，$\mu$ 为 $\mathbb{R}^n$ 上的 Radon 测度，$1\leqslant p<\infty$，$f\in L^{p}_{\mathrm{loc}}(\mathbb{R}^n,\mu)$，$x\in\mathbb{R}^n$。若
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert f-f(x)\rvert^{p}\diff\mu=0 ,
+\end{align*}
+则称 $x$ 为 $f$ 关于 $\mu$ 的 Lebesgue 点。
+\end{definition}
+
+\begin{proof}
+设 $\{r_i\}_{i=1}^{\infty}$ 为 $\mathbb{R}$ 的可数稠密子集。由\cref{theorem:ch01-1-32}，% XREF p=69 "By the Lebesgue–Besicovitch Differentiation Theorem 1.32"
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert f-r_i\rvert^{p}\diff\mu=\lvert f(x)-r_i\rvert^{p}
+\end{align*}
+对 $\mu$-a.e. 的 $x$ 与 $i=1,2,\cdots$ 成立。于是存在集合 $A\subseteq\mathbb{R}^n$ 使 $\mu(A)=0$，且当 $x\in\mathbb{R}^n-A$ 时，对一切 $i$ 有
+\begin{align*}
+\lim_{r\to0}\fint_{B(x,r)}\lvert f-r_i\rvert^{p}\diff\mu=\lvert f(x)-r_i\rvert^{p} .
+\end{align*}
+固定 $x\in\mathbb{R}^n-A$ 与 $\varepsilon>0$。取 $r_i$ 使 $\lvert f(x)-r_i\rvert^{p}<\frac{\varepsilon}{2^{p}}$。则
+\begin{align*}
+\limsup_{r\to0}\fint_{B(x,r)}\lvert f-f(x)\rvert^{p}\diff\mu
+&\leqslant 2^{p-1}\Bigl[\limsup_{r\to0}\fint_{B(x,r)}\lvert f-r_i\rvert^{p}\diff\mu\\
+&\qquad+\fint_{B(x,r)}\lvert f(x)-r_i\rvert^{p}\diff\mu\Bigr]\\
+&=2^{p-1}\bigl[\lvert f(x)-r_i\rvert^{p}+\lvert f(x)-r_i\rvert^{p}\bigr]<\varepsilon .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-33; kind=proof; 补出定理 1.32 的适用性、例外集的来源、逐点不等式与最后的极限论证
+下面对上述论证补出细节。
+
+（1）\cref{theorem:ch01-1-32}可应用于 $g_i:=\lvert f-r_i\rvert^{p}$。 由 $1\leqslant p<\infty$ 及初等不等式 % XREF internal
+\begin{align*}
+(a+b)^{p}\leqslant2^{p-1}(a^{p}+b^{p}),\qquad a,b\geqslant0 ,
+\end{align*}
+得 $\lvert f-r_i\rvert^{p}\leqslant2^{p-1}\bigl(\lvert f\rvert^{p}+\lvert r_i\rvert^{p}\bigr)$。由于 $f\in L^{p}_{\mathrm{loc}}(\mathbb{R}^n,\mu)$ 而 $r_i$ 为常数，$g_i$ 在每个紧集上关于 $\mu$ 可和，即 $g_i\in L^{1}_{\mathrm{loc}}(\mathbb{R}^n,\mu)$。
+
+（2）例外集 $A$ 的存在性。对每个 $i$，使上述极限不成立的 $x$ 构成 $\mu$-零集；这些零集的可数并仍是 $\mu$-零集。又由 $f\in L^{p}_{\mathrm{loc}}(\mathbb{R}^n,\mu)$ 得 $\mu(\{\lvert f\rvert=\infty\})=0$，故把该集合并入例外集之后，可设 $f$ 在 $\mathbb{R}^n-A$ 上取有限值。这正是下一步能按稠密性选取 $r_i$ 的前提。
+
+（3）逐点不等式。对 $y\in\mathbb{R}^n$ 与每个 $i$，把 $a=\lvert f(y)-r_i\rvert$、$b=\lvert r_i-f(x)\rvert$ 代入上式得
+\begin{align*}
+\lvert f(y)-f(x)\rvert^{p}\leqslant2^{p-1}\bigl(\lvert f(y)-r_i\rvert^{p}+\lvert r_i-f(x)\rvert^{p}\bigr).
+\end{align*}
+对 $y$ 在 $B(x,r)$ 上取平均，并注意第二项为常数，得到
+\begin{align*}
+\fint_{B(x,r)}\lvert f-f(x)\rvert^{p}\diff\mu
+\leqslant2^{p-1}\Bigl[\fint_{B(x,r)}\lvert f-r_i\rvert^{p}\diff\mu+\lvert f(x)-r_i\rvert^{p}\Bigr].
+\end{align*}
+对 $r\to0$ 取上极限，并用第（1）段与 $x\in\mathbb{R}^n-A$ 的取法，即得证明中的不等式。
+
+（4）最后的极限。对每个 $\varepsilon>0$ 已证 $\limsup_{r\to0}\fint_{B(x,r)}\lvert f-f(x)\rvert^{p}\diff\mu<\varepsilon$，故该上极限不超过 $0$。另一方面被积函数非负，平均值非负，故下极限不小于 $0$。因此极限存在且等于 $0$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-33; kind=motivation; 说明为何把微分定理加强为 |f−f(x)|^p 的平均趋于零，以及 Lebesgue 点在后续论证中的用途
+\begin{remark}\phantomsection\label{remark:ch01-def-1-24-动机}
+\cref{theorem:ch01-1-32}只断言 $f$ 的平均值收敛于 $f(x)$；本定理把结论加强为：$f$ 与常数 $f(x)$ 的 $p$ 次偏差的平均值收敛于零。这一加强是必要的：前一结论允许正负偏差相互抵消，因而不控制 $f$ 在 $x$ 附近的振幅；后者则给出可以相加的误差估计，使「$f$ 在 $x$ 的无穷小邻域上几乎等于常数」这一直观获得定量形式。% XREF internal
+证明手法是本节反复使用的模式：先在可数稠密子集中取常数 $r_i$，对每个 $r_i$ 使用微分定理，再把一般情形与 $r_i$ 的偏差分成两部分估计。所得概念即\cref{definition:ch01-1-24}的 Lebesgue 点，它是后续讨论函数逐点性质的基本工具。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-33; kind=hypotheses; 逐条分析 p 的范围、局部 L^p 可和性、例外集与 p 的单调性
+\begin{remark}\phantomsection\label{remark:ch01-def-1-24-条件}
+\begin{enumerate}[(i)]
+\item 指数范围 $1\leqslant p<\infty$ 有实质作用。$p<\infty$ 使 $\lvert f-r_i\rvert^{p}$ 仍为局部可和函数，从而\cref{theorem:ch01-1-32}适用 ；若取 $p=\infty$，则 $\fint_{B(x,r)}\lvert f-f(x)\rvert^{\infty}\diff\mu$ 没有意义。$p\geqslant1$ 使初等不等式 $(a+b)^{p}\leqslant2^{p-1}(a^{p}+b^{p})$ 成立；对 $0<p<1$ 该不等式反向，证明中的估计须改写。 % XREF internal
+\item 条件 $f\in L^{p}_{\mathrm{loc}}(\mathbb{R}^n,\mu)$ 在两处使用：其一，保证 $\lvert f-r_i\rvert^{p}\in L^{1}_{\mathrm{loc}}(\mathbb{R}^n,\mu)$；其二，保证 $f$ 在 $\mu$-a.e. 点取有限值，从而使 $\mathbb{R}$ 的稠密子集可以逼近 $f(x)$。若 $f$ 仅在 $\mu$-a.e. 点有定义，须先把 $f$ 任意延拓到全空间，这不影响 $\mu$-a.e. 的结论。
+\item 例外集一般非空。取 $\mu=\mathcal{L}^{1}$、$p=1$、$f=\chi_{[0,1]}$。在 $x=0$ 处，对 $r\in(0,1)$ 有
+\begin{align*}
+\fint_{B(0,r)}\lvert f-f(0)\rvert\diff y=\frac{\mathcal{L}^{1}\bigl(B(0,r)\setminus[0,1]\bigr)}{2r}=\frac{r}{2r}=\frac{1}{2},
+\end{align*}
+故 $x=0$ 不是 $f$ 的 Lebesgue 点。
+\item 若 $1\leqslant q\leqslant p$，则 $p$ 次意义下的 Lebesgue 点必是 $q$ 次意义下的 Lebesgue 点：由 Hölder 不等式，
+\begin{align*}
+\fint_{B(x,r)}\lvert f-f(x)\rvert^{q}\diff\mu
+\leqslant\Bigl(\fint_{B(x,r)}\lvert f-f(x)\rvert^{p}\diff\mu\Bigr)^{q/p},
+\end{align*}
+右端当 $r\to0$ 时趋于零。故 $p$ 增大时 Lebesgue 点之集单调缩小。
+\end{enumerate}
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-24; kind=motivation; 说明 Lebesgue 点所指的「平均意义下接近函数值」的直观，以及它比连续性弱在何处
+\begin{remark}\phantomsection\label{remark:ch01-def-1-24-b}
+Lebesgue 点刻画的是「$f$ 在 $x$ 的无穷小邻域上平均地接近 $f(x)$」。它比连续性弱得多：$f$ 可以在 $x$ 处不连续，只要偏离 $f(x)$ 的集合在 $x$ 附近所占的比例随半径趋于零。\cref{theorem:ch01-1-33}说明这种点是典型的：除一个 $\mu$-零集外，每一点都是 Lebesgue 点。% XREF internal
+这一概念使「改变函数在零测集上的取值不影响其积分」这一事实获得逐点形式：在 Lebesgue 点处，函数值由函数在任意小邻域上的平均值决定，因此同一 $L^{p}$ 等价类的不同代表元在 Lebesgue 点处取相同的值。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-24; kind=hypotheses; 说明 p、μ、f(x) 取值与「极限存在」几项在该定义中的作用与依赖
+\begin{remark}\phantomsection\label{remark:ch01-def-1-24-b-b}
+\begin{enumerate}[(i)]
+\item 定义中的 $p$ 与 $\mu$ 是概念的组成部分：同一点对某个 $p$ 是 Lebesgue 点，对更大的 $p$ 未必是；「关于 $\mu$ 的 Lebesgue 点」与「关于 $\mathcal{L}^{n}$ 的 Lebesgue 点」一般也不同，因为平均所依据的测度改变了。故定义中须同时指明 $\mu$ 与 $p$。
+\item 定义要求 $\mu(B(x,r))>0$ 对充分小的 $r$ 成立，否则商没有意义。由 $\mu(\mathbb{R}^n-\operatorname{spt}\mu)=0$，这对 $\mu$-a.e. 的 $x$ 自动成立。
+\item 定义中的 $f(x)$ 须取有限实数值，否则右端没有意义。\cref{theorem:ch01-1-33}的例外集已包含 $\lvert f\rvert=\infty$ 的点。% XREF internal
+\item 定义只要求极限存在且等于零，不要求 $f$ 在 $x$ 处连续，也不要求该极限关于 $x$ 一致。使结论成立的点集可以是零测集：对 $\mu=\mathcal{L}^{1}$ 与 $E=[0,1]$，$f=\chi_{E}$ 的 Lebesgue 点恰为 $(0,1)$ 中几乎所有的点，而端点 $0,1$ 不是 Lebesgue 点。
+\end{enumerate}
+\end{remark}
+
+对于 $\mu=\mathcal{L}^{n}$ 的情形，有下述更强的结论：
+
+\begin{theorem}[非中心球的微分]\label{theorem:ch01-1-34}
+设 $n$ 为正整数，$1\leqslant p<\infty$，$f\in L^{p}_{\mathrm{loc}}(\mathbb{R}^n)$，即 $f:\mathbb{R}^n\to\mathbb{R}$ 关于 $\mathcal{L}^{n}$ 可测且 $\lvert f\rvert^{p}$ 在 $\mathbb{R}^n$ 的每个紧子集上关于 $\mathcal{L}^{n}$ 可和。则对 $\mathcal{L}^{n}$-a.e. $x\in\mathbb{R}^n$ 有
+\begin{align*}
+\lim_{B\to\{x\}}\fint_B\lvert f-f(x)\rvert^{p}\diff y=0 ,
+\end{align*}
+其中极限取遍一切包含 $x$ 的闭球 $B$，并令 $\operatorname{diam}B\to0$。
+\end{theorem}
+
+要点在于：球心不必是 $x$。
+
+\begin{proof}
+只需证明：对每个满足 $x\in B_k$ 与 $d_k:=\operatorname{diam}B_k\to0$ 的闭球列 $\{B_k\}_{k=1}^{\infty}$，在 $f$ 的每个 Lebesgue 点处有
+\begin{align*}
+\fint_{B_k}\lvert f-f(x)\rvert^{p}\diff y\to0
+\end{align*}
+当 $k\to\infty$。
+
+取如上所述的球列 $\{B_k\}_{k=1}^{\infty}$。则 $B_k\subseteq B(x,d_k)$，从而
+\begin{align*}
+\fint_{B_k}\lvert f-f(x)\rvert^{p}\diff y\leqslant2^{n}\fint_{B(x,d_k)}\lvert f-f(x)\rvert^{p}\diff y .
+\end{align*}
+若 $x$ 是 $f$ 的 Lebesgue 点，则右端趋于零。
+
+% SUPPLEMENT: parent=theorem:ch01-1-34; kind=proof; 补出包含关系 B_k ⊆ B(x,d_k)、常数 2^n 的来源与最后的极限论证
+下面对上述两个断言补出细节。
+
+（1）包含关系。写 $B_k=B(x_k,r_k)$，则 $d_k=2r_k$。对 $y\in B_k$，由 $x\in B_k$ 得 $\lvert x-x_k\rvert\leqslant r_k$，于是
+\begin{align*}
+\lvert y-x\rvert\leqslant\lvert y-x_k\rvert+\lvert x_k-x\rvert\leqslant r_k+r_k=d_k ,
+\end{align*}
+即 $B_k\subseteq B(x,d_k)$。
+
+（2）常数 $2^{n}$。记 $\omega_n:=\mathcal{L}^{n}(B(0,1))$。由 Lebesgue 测度的伸缩性，$\mathcal{L}^{n}(B(x,\rho))=\omega_n\rho^{n}$ 对一切 $x\in\mathbb{R}^n$ 与 $\rho>0$ 成立。取 $g:=\lvert f-f(x)\rvert^{p}\geqslant0$，由 $B_k\subseteq B(x,d_k)$ 与 $g\geqslant0$ 得
+\begin{align*}
+\fint_{B_k}g\diff y=\frac{1}{\mathcal{L}^{n}(B_k)}\int_{B_k}g\diff y
+\leqslant\frac{1}{\mathcal{L}^{n}(B_k)}\int_{B(x,d_k)}g\diff y
+=\frac{\mathcal{L}^{n}(B(x,d_k))}{\mathcal{L}^{n}(B_k)}\fint_{B(x,d_k)}g\diff y ,
+\end{align*}
+而 $\mathcal{L}^{n}(B(x,d_k))=\omega_nd_k^{n}=2^{n}\omega_nr_k^{n}=2^{n}\mathcal{L}^{n}(B_k)$，故上式右端的系数为 $2^{n}$。
+
+（3）最后的极限。若 $x$ 是 $f$ 的 Lebesgue 点，则按\cref{definition:ch01-1-24}，$\fint_{B(x,r)}\lvert f-f(x)\rvert^{p}\diff y\to0$ 当 $r\to0$。由 $d_k\to0$ 与第（2）段的估计得 $\fint_{B_k}\lvert f-f(x)\rvert^{p}\diff y\to0$。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-34; kind=motivation; 说明球心为何可以移开：Lebesgue 测度的齐次性给出可比性，以及该加强在何处使用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-34-动机}
+本定理说明：对 $\mathcal{L}^{n}$ 而言，只要球包含 $x$ 且直径趋于零，其上的平均值仍收敛于 $f(x)$，无须以 $x$ 为球心。这一加强之所以成立，是因为 Lebesgue 测度是齐次的：半径为 $d$ 的球与半径为 $r$ 的球之测度之比只依赖于 $d/r$，与球心位置无关。于是任何包含 $x$、直径为 $d$ 的球都与同心球 $B(x,d)$ 只相差一个通用常数 $2^{n}$，而乘以正常数不改变极限是否为零。
+这一形式在应用上更为方便：许多论证只能保证所取的球经过给定点，而无法保证以该点为球心，例如覆盖论证中选出的球。它也说明 Lebesgue 点的定义可以等价地写成对一切含 $x$ 的球取极限，从而不依赖球心这一人为选择。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-34; kind=hypotheses; 说明 μ=L^n 不可替换、p 的范围与「直径趋于零」的必要性
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-34-条件}
+\begin{enumerate}[(i)]
+\item 结论只对 $\mu=\mathcal{L}^{n}$ 成立。证明中的常数 $2^{n}$ 来自 $\mathcal{L}^{n}(B(x,2r))=2^{n}\mathcal{L}^{n}(B(x,r))$ 这一齐次性；对一般 Radon 测度，$\mu(B_k)$ 与 $\mu(B(x,d_k))$ 之间没有这种与球心、半径无关的比较，故不能把\cref{theorem:ch01-1-33}的结论换成非中心球。% XREF internal
+\item 条件 $1\leqslant p<\infty$ 与 $f\in L^{p}_{\mathrm{loc}}(\mathbb{R}^n)$ 的作用与\cref{theorem:ch01-1-33}相同：保证\cref{theorem:ch01-1-33}可用 ，从而 Lebesgue 点集是 $\mathcal{L}^{n}$-满测度的。% XREF internal % XREF internal
+\item 极限沿「直径趋于零」的球族取，不能只沿某一列球取。若只对一列 $B_k$ 验证，结论依赖于该列的选取；本定理断言的是：对一切满足 $x\in B_k$、$\operatorname{diam}B_k\to0$ 的球列，相应的平均值都趋于零，这等价于定理中按球族陈述的极限存在且为零。
+\item 结论中「$\mathcal{L}^{n}$-a.e. $x$」不能改进为处处成立：取 $f=\chi_{[0,1]}$、$x=0$、$B_k=[-1/k,1/k]$，则 $\operatorname{diam}B_k\to0$、$0\in B_k$，而
+\begin{align*}
+\fint_{B_k}\lvert f-f(0)\rvert\diff y=\frac{\mathcal{L}^{1}\bigl([-1/k,1/k]\setminus[0,1]\bigr)}{2/k}=\frac{1}{2}\neq0 .
+\end{align*}
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[密度 1 点与密度 0 点]\label{theorem:ch01-1-35}
+设 $n$ 为正整数，$E\subseteq\mathbb{R}^n$ 为 $\mathcal{L}^{n}$-可测集，$B(x,r)$ 为以 $x$ 为球心、$r>0$ 为半径的闭球。则
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^{n}(B(x,r)\cap E)}{\mathcal{L}^{n}(B(x,r))}=1
+\end{align*}
+对 $\mathcal{L}^{n}$-a.e. $x\in E$ 成立，并且
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^{n}(B(x,r)\cap E)}{\mathcal{L}^{n}(B(x,r))}=0
+\end{align*}
+对 $\mathcal{L}^{n}$-a.e. $x\in\mathbb{R}^n-E$ 成立。
+\end{theorem}
+
+\begin{proof}
+在 Lebesgue--Besicovitch 微分定理中取 $f=\chi_{E}$ 与 $\mu=\mathcal{L}^{n}$。
+
+% SUPPLEMENT: parent=theorem:ch01-1-35; kind=proof; 补出 χ_E 的局部可和性、平均值与密度之商的一致性，以及由定理 1.32 推出两条结论的完整推导
+下面对这一步补出细节。
+
+（1）前提成立。对每个紧集 $K\subseteq\mathbb{R}^n$ 有
+\begin{align*}
+\int_K\lvert\chi_{E}\rvert\diff y=\mathcal{L}^{n}(K\cap E)\leqslant\mathcal{L}^{n}(K)<\infty ,
+\end{align*}
+其中有限性来自紧集有界，故 $\chi_{E}\in L^{1}_{\mathrm{loc}}(\mathbb{R}^n)$。又 $\mathcal{L}^{n}$ 是 $\mathbb{R}^n$ 上的 Radon 测度：它是 Borel 正则测度，且在紧集上取有限值。
+
+（2）平均值即密度之商。对 $x\in\mathbb{R}^n$ 与 $r>0$，由 $0<\mathcal{L}^{n}(B(x,r))<\infty$ 得
+\begin{align*}
+\fint_{B(x,r)}\chi_{E}\diff y=\frac{1}{\mathcal{L}^{n}(B(x,r))}\int_{B(x,r)}\chi_{E}\diff y=\frac{\mathcal{L}^{n}(B(x,r)\cap E)}{\mathcal{L}^{n}(B(x,r))} .
+\end{align*}
+
+（3）两条结论。由\cref{theorem:ch01-1-32}，存在 $\mathcal{L}^{n}$-零集 $N\subseteq\mathbb{R}^n$，使得当 $x\in\mathbb{R}^n-N$ 时% XREF internal
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^{n}(B(x,r)\cap E)}{\mathcal{L}^{n}(B(x,r))}=\chi_{E}(x) .
+\end{align*}
+若 $x\in E-N$，则 $\chi_{E}(x)=1$，得第一式；若 $x\in(\mathbb{R}^n-E)-N$，则 $\chi_{E}(x)=0$，得第二式。由于 $\mathcal{L}^{n}(N)=0$，这两个几乎处处结论正是定理所断言的。% XREF internal
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-35; kind=motivation; 说明密度定理与微分定理的关系，以及密度概念如何把「内点」推广到测度论意义
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-35-动机}
+本定理是微分定理在特征函数上的特例，却给出独立而有用的几何信息：$\mathcal{L}^{n}$-可测集 $E$ 在自身几乎每一点处的局部测度占比趋于 $1$，而在补集几乎每一点处趋于 $0$。换言之，可测集在几乎每一点处都局部地「几乎填满」或「几乎不占」其邻域，不存在既占有正比例又留下正比例空隙的典型点。% XREF internal
+密度概念把开集的内点、外点推广到任意可测集：内点要求某个整球含于 $E$，而密度 1 点只要求球内 $E$ 所占比例趋于 $1$。这一放宽是必要的，因为一般可测集没有内点（例如 $E$ 为稠密开集的补集与有理点集之并），而其密度点集仍几乎填满 $E$。后续定义测度论边界时使用的正是这两个概念。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-35; kind=hypotheses; 说明可测性、球心位置与「a.e.」三项的作用
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-35-条件}
+\begin{enumerate}[(i)]
+\item 条件「$E$ 为 $\mathcal{L}^{n}$-可测」使 $\chi_{E}$ 为可测函数，从而可以谈论其可积性与积分；若 $E$ 不可测，则 $\mathcal{L}^{n}(B(x,r)\cap E)$ 中的集合不是 Lebesgue 可测集，比式没有定义。
+\item 结论中的两个极限都是对以 $x$ 为球心的球取的。由\cref{theorem:ch01-1-34}，对 $\mathcal{L}^{n}$ 可以把球心移开：只要球包含 $x$ 且直径趋于零，同一比式仍有相同的极限。% XREF internal
+\item 「$\mathcal{L}^{n}$-a.e.」不可改进为处处成立。取 $E=[0,1]\subseteq\mathbb{R}$ 与 $x=0$，则对 $r\in(0,1)$，
+\begin{align*}
+\frac{\mathcal{L}^{1}(B(0,r)\cap E)}{\mathcal{L}^{1}(B(0,r))}=\frac{r}{2r}=\frac{1}{2} ,
+\end{align*}
+比式的极限为 $\frac{1}{2}$，而 $0\in E$，故 $0$ 既不是 $E$ 的密度 1 点也不是 $E$ 的密度 0 点。
+\item 结论的两条互相独立，不能由一条推出另一条：第一条只涉及 $E$ 内部的点，第二条只涉及 $E$ 外部的点；对 $E$ 的边界点，两者都不成立是可能的，如上一款所示。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[密度 1 点与密度 0 点]\label{definition:ch01-1-25}
+设 $n$ 为正整数，$E\subseteq\mathbb{R}^n$，$\mathcal{L}^{n}$ 为 $\mathbb{R}^n$ 上的 $n$ 维 Lebesgue 测度，$B(x,r)$ 为以 $x$ 为球心、$r>0$ 为半径的闭球。
+\begin{enumerate}[(i)]
+\item 若 $x\in\mathbb{R}^n$ 满足
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^{n}(B(x,r)\cap E)}{\mathcal{L}^{n}(B(x,r))}=1 ,
+\end{align*}
+则称 $x$ 为 $E$ 的密度 $1$ 点。
+\item 若 $x\in\mathbb{R}^n$ 满足
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^{n}(B(x,r)\cap E)}{\mathcal{L}^{n}(B(x,r))}=0 ,
+\end{align*}
+则称 $x$ 为 $E$ 的密度 $0$ 点。
+\end{enumerate}
+\end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch01-def-1-25-测度内外}
+把 $E$ 的密度 $1$ 点之集视为 $E$ 的测度论内部；由\cref{theorem:ch01-1-35}，$\mathcal{L}^{n}$-可测集 $E$ 中 $\mathcal{L}^{n}$-a.e. 的点属于其测度论内部。类似地，$E$ 的密度 $0$ 点构成 $E$ 的测度论外部。% XREF p=71 "according to Theorem 1.35"
+在\cref{section:ch05-08}中将定义并研究某些集合 $E$ 的测度论边界。% XREF p=71 "In Section 5.8 we will define and investigate the measure theoretic boundary"
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-25; kind=motivation; 说明为何用密度而非内点来刻画集合的「内部」，以及这一概念在测度论边界中的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-25-动机}
+对一般 $\mathcal{L}^{n}$-可测集，拓扑内部可能为空，因而不能用来度量集合「在何处属于自身」。密度 $1$ 点给出替代：它只要求 $E$ 在 $x$ 的邻域内占满几乎全部测度，允许邻域中存在不属于 $E$ 的零星部分。\cref{theorem:ch01-1-35}保证这一替代不会丢失测度：$E$ 的几乎每个点都是密度 $1$ 点，故测度论内部与 $E$ 只相差一个零测集。% XREF internal
+同理，密度 $0$ 点给出测度论外部，两者都不属于的点则构成测度论边界。这一分解使「边界」在只相差零测集的意义下有意义，而不依赖集合的拓扑性质。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-25; kind=hypotheses; 说明定义中未要求 E 可测、闭球的取法以及两个概念的对称性
+\begin{remark}\phantomsection\label{remark:ch01-def-1-25-条件}
+\begin{enumerate}[(i)]
+\item 定义本身只要求 $E\subseteq\mathbb{R}^n$ 为集合，未要求其可测；此时比式中的 $\mathcal{L}^{n}(B(x,r)\cap E)$ 须理解为外测度。\cref{theorem:ch01-1-35}则额外要求 $E$ 可测，因为其证明把密度写成 $\chi_{E}$ 的平均值，需要 $\chi_{E}$ 可测。% XREF internal
+\item 密度 $1$ 与密度 $0$ 是互补的表述：若 $x$ 是 $E$ 的密度 $1$ 点，则 $x$ 是 $\mathbb{R}^n-E$ 的密度 $0$ 点，因为
+\begin{align*}
+\frac{\mathcal{L}^{n}(B(x,r)\cap(\mathbb{R}^n-E))}{\mathcal{L}^{n}(B(x,r))}
+=1-\frac{\mathcal{L}^{n}(B(x,r)\cap E)}{\mathcal{L}^{n}(B(x,r))} .
+\end{align*}
+\item 定义中的球取闭球或开球不影响结论：对固定的 $x$ 与 $r$，开球与闭球只相差一个球面，而球面的 $\mathcal{L}^{n}$ 测度为零，故两种取法给出相同的比式。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[精确代表元]\label{definition:ch01-1-26}
+设 $n$ 为正整数，$f\in L^{1}_{\mathrm{loc}}(\mathbb{R}^n)$，即 $f:\mathbb{R}^n\to\mathbb{R}$ 关于 $\mathcal{L}^{n}$ 可测且在 $\mathbb{R}^n$ 的每个紧子集上关于 $\mathcal{L}^{n}$ 可和。对 $x\in\mathbb{R}^n$ 定义
+\begin{align*}
+f^{*}(x):=
+\begin{cases}
+\displaystyle\lim_{r\to0}\fint_{B(x,r)}f\diff y, & \text{若该极限存在},\\[4pt]
+0, & \text{否则},
+\end{cases}
+\end{align*}
+并称 $f^{*}$ 为 $f$ 的精确代表元。
+\end{definition}
+
+\begin{remark}\phantomsection\label{remark:ch01-def-1-26-精确代表}
+若 $f,g\in L^{1}_{\mathrm{loc}}(\mathbb{R}^n)$ 且 $f=g$ $\mathcal{L}^{n}$-a.e.，则对一切点 $x\in\mathbb{R}^n$ 有 $f^{*}(x)=g^{*}(x)$：两者的平均值对每个 $x$ 与 $r$ 都相等，故极限同时存在或同时不存在且取值相同。由\cref{theorem:ch01-1-32}（取 $\mu=\mathcal{L}^{n}$），极限 $\lim_{r\to0}\fint_{B(x,r)}f\diff y$ 对 $\mathcal{L}^{n}$-a.e. 的 $x$ 存在。% XREF p=71 "In view of the Lebesgue–Besicovitch Differentiation Theorem with μ = L^n"
+在\cref{chapter:ch04,chapter:ch05}中将证明：若 $f$ 是 Sobolev 函数或 $\BV$ 函数，则 $f^{*}=f$，至多在一个具有适当容量为零或 Hausdorff 测度为零的「很小」集合上例外。% XREF p=71 "In Chapters 4 and 5" | p=71 "Chapters 4 and 5"
+又，即使 $x$ 不是 $f$ 的 Lebesgue 点，上述极限也可能存在；参见\cref{theorem:ch05-5-19}（位于\cref{section:ch05-09}）。% XREF p=71 "cf. Theorem 5.19 in Section 5.9" | p=71 "Theorem 5.19 in Section 5.9"
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-26; kind=motivation; 说明为何要从 L^1_loc 等价类中选出一个「好」的代表元，以及取 0 的约定的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-26-动机}
+$L^{1}_{\mathrm{loc}}$ 的元素是函数而非等价类，但把函数在一个零测集上改动不影响其积分与可和性。精确代表元给出一个与等价类相配的规范代表：由\cref{theorem:ch01-1-32}，对几乎每个 $x$，极限 $\lim_{r\to0}\fint_{B(x,r)}f\diff y$ 存在且等于 $f(x)$；在极限不存在的零测集上任意补值（这里约定为 $0$）不改变 $f^{*}$ 的几乎处处取值。% XREF internal
+因此 $f^{*}$ 满足：同一等价类的任何代表元给出同一个 $f^{*}$。这使「几乎处处相等」的函数在逐点陈述中可以由同一个函数 $f^{*}$ 代表，从而可以在每一点处谈论其取值而不必每次声明「除去一个零测集」。后续关于 Sobolev 函数与 $\BV$ 函数的精细性质正是以 $f^{*}$ 为对象陈述的。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-26; kind=hypotheses; 说明局部可和性的作用、约定取 0 的理由以及对极限不存在点集的刻画
+\begin{remark}\phantomsection\label{remark:ch01-def-1-26-条件}
+\begin{enumerate}[(i)]
+\item 条件 $f\in L^{1}_{\mathrm{loc}}(\mathbb{R}^n)$ 保证平均值对一切 $x$ 与 $r>0$ 有定义：$\mathcal{L}^{n}(B(x,r))<\infty$，且 $\int_{B(x,r)}\lvert f\rvert\diff y<\infty$，故比式的分子分母都为有限实数。
+\item 在极限不存在的点约定 $f^{*}(x)=0$，只是为使 $f^{*}$ 在全空间有定义；这些点构成零测集（见\cref{theorem:ch01-1-32}），故约定值不影响任何几乎处处命题。若改用其他约定值，$f^{*}$ 只在零测集上改变。% XREF internal
+\item 定义中的极限是对以 $x$ 为球心的球取的。由\cref{theorem:ch01-1-34}，对 $\mathcal{L}^{n}$ 也可等价地用含 $x$ 的球取极限，所得 $f^{*}$ 在 $\mathcal{L}^{n}$-a.e. 点相同。% XREF internal
+\item $f^{*}$ 只依赖 $f$ 的等价类，但对不同的 $f$ 可以相同：若 $f=g$ $\mathcal{L}^{n}$-a.e.，则 $f^{*}=g^{*}$ 处处成立。因此映射 $f\mapsto f^{*}$ 在 $L^{1}_{\mathrm{loc}}$ 的等价类上良定义。
+\end{enumerate}
+\end{remark}
+
+\subsection{近似极限与近似连续}\label{subsection:ch01-07-2}
+
+\begin{definition}[近似极限]\label{definition:ch01-1-27}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$，$x\in\mathbb{R}^n$，$l\in\mathbb{R}^m$，$\mathcal{L}^{n}$ 为 $\mathbb{R}^n$ 上的 $n$ 维 Lebesgue 测度，$B(x,r)$ 为以 $x$ 为球心、$r>0$ 为半径的闭球。若对每个 $\varepsilon>0$ 有
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^{n}\bigl(B(x,r)\cap\{\lvert f-l\rvert\geqslant\varepsilon\}\bigr)}{\mathcal{L}^{n}(B(x,r))}=0 ,
+\end{align*}
+则称 $l$ 为 $f$ 当 $y\to x$ 时的近似极限，并记作
+\begin{align*}
+\aplim_{y\to x}f(y)=l .
+\end{align*}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-27; kind=motivation; 说明近似极限把「极限」削弱为「除一个密度为零的集合之外」，并解释它与 Lebesgue 点的关系
+\begin{remark}\phantomsection\label{remark:ch01-def-1-27-动机}
+通常的极限要求 $f$ 在 $x$ 的整个邻域上接近 $l$；近似极限只要求偏离超过 $\varepsilon$ 的点集在邻域中所占比例趋于零，即这些点集在 $x$ 处的密度为 $0$。这一削弱使极限概念适用于只在测度意义下有规律的无序函数：$f$ 可以在 $x$ 的任一邻域内取到远离 $l$ 的值，只要这些点的总体测度可忽略。
+与 Lebesgue 点的关系如下：$\fint_{B(x,r)}\lvert f-l\rvert^{p}\diff\mu\to0$ 是用积分控制偏差，而近似极限是用偏差集的比例控制偏差；后者更弱，但不需要可积性，因此适用于任意（例如无界的）可测函数。由\cref{theorem:ch01-1-37}，$\mathcal{L}^{n}$-可测函数在几乎每一点处都有近似极限 $f(x)$。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-27; kind=hypotheses; 逐条分析量词顺序、ε 的作用、球心位置与 m>1 的情形
+\begin{remark}\phantomsection\label{remark:ch01-def-1-27-条件}
+\begin{enumerate}[(i)]
+\item 量词顺序是：对每个 $\varepsilon>0$，相应的比式当 $r\to0$ 时趋于零。$\varepsilon$ 在极限之前给定，故允许趋于零的速率随 $\varepsilon$ 而变；若要求对一切 $\varepsilon>0$ 一致地成立，则得到强得多的条件。
+\item 条件 $\lvert f-l\rvert\geqslant\varepsilon$ 中的 $\varepsilon$ 不能删去：集合 $\{f\neq l\}$ 在 $x$ 处的密度可以不为零而近似极限仍为 $l$，例如 $f=\chi_{\mathbb{Q}}$ 与 $l=0$ 时该集合为全集。
+\item 定义中的球以 $x$ 为球心。由\cref{theorem:ch01-1-34}，对 $\mathcal{L}^{n}$ 也可用含 $x$ 的球代替，所得概念相同。% XREF internal
+\item 值域为 $\mathbb{R}^m$（$m\geqslant1$）时，$\lvert f-l\rvert$ 取 Euclid 范数；对不同的等价范数，条件 $\lvert f-l\rvert\geqslant\varepsilon$ 所定义的集合随之改变，但在有限维空间中范数等价，故近似极限的概念与范数选取无关。
+\end{enumerate}
+\end{remark}
+
+所以，若 $l$ 是 $f$ 在 $x$ 处的近似极限，则对每个 $\varepsilon>0$，集合 $\{\lvert f-l\rvert\geqslant\varepsilon\}$ 在 $x$ 处的密度为 $0$（\cref{definition:ch01-1-25}）。% XREF p=72 "the set {|f − l| ≥ ε} has density 0 at x"
+
+\begin{theorem}[近似极限的唯一性]\label{theorem:ch01-1-36}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$，$x\in\mathbb{R}^n$。若 $l,l'\in\mathbb{R}^m$ 都是 $f$ 当 $y\to x$ 时的近似极限，则 $l=l'$。
+\end{theorem}
+
+\begin{proof}
+设对每个 $\varepsilon>0$，当 $r\to0$ 时
+\begin{align*}
+\frac{\mathcal{L}^{n}\bigl(B(x,r)\cap\{\lvert f-l\rvert\geqslant\varepsilon\}\bigr)}{\mathcal{L}^{n}(B(x,r))}\to0
+\end{align*}
+并且
+\begin{align*}
+\frac{\mathcal{L}^{n}\bigl(B(x,r)\cap\{\lvert f-l'\rvert\geqslant\varepsilon\}\bigr)}{\mathcal{L}^{n}(B(x,r))}\to0 .
+\end{align*}
+若 $l\neq l'$，取 $\varepsilon:=\frac{\lvert l-l'\rvert}{3}$，则对每个 $y\in B(x,r)$ 有
+\begin{align*}
+3\varepsilon=\lvert l-l'\rvert\leqslant\lvert f(y)-l\rvert+\lvert f(y)-l'\rvert .
+\end{align*}
+于是
+\begin{align*}
+B(x,r)\subseteq\{\lvert f-l\rvert\geqslant\varepsilon\}\cup\{\lvert f-l'\rvert\geqslant\varepsilon\} .
+\end{align*}
+因此
+\begin{align*}
+\mathcal{L}^{n}(B(x,r))&\leqslant\mathcal{L}^{n}\bigl(B(x,r)\cap\{\lvert f-l\rvert\geqslant\varepsilon\}\bigr)\\
+&\qquad+\mathcal{L}^{n}\bigl(B(x,r)\cap\{\lvert f-l'\rvert\geqslant\varepsilon\}\bigr),
+\end{align*}
+与上述两个极限为零矛盾。
+
+% SUPPLEMENT: parent=theorem:ch01-1-36; kind=proof; 补出集合包含关系的验证与把测度不等式化为矛盾的具体步骤
+下面对上述两个步骤补出细节。
+
+（1）包含关系。设 $y\in B(x,r)$ 且 $y\notin\{\lvert f-l\rvert\geqslant\varepsilon\}\cup\{\lvert f-l'\rvert\geqslant\varepsilon\}$，则 $\lvert f(y)-l\rvert<\varepsilon$ 且 $\lvert f(y)-l'\rvert<\varepsilon$，于是
+\begin{align*}
+3\varepsilon=\lvert l-l'\rvert=\lvert(f(y)-l)-(f(y)-l')\rvert\leqslant\lvert f(y)-l\rvert+\lvert f(y)-l'\rvert<2\varepsilon ,
+\end{align*}
+矛盾。故这样的 $y$ 不存在，即 $B(x,r)\subseteq\{\lvert f-l\rvert\geqslant\varepsilon\}\cup\{\lvert f-l'\rvert\geqslant\varepsilon\}$。
+
+（2）化矛盾。对 $r>0$ 有 $\mathcal{L}^{n}(B(x,r))>0$，把上面的测度不等式两端同除以 $\mathcal{L}^{n}(B(x,r))$ 得
+\begin{align*}
+1\leqslant\frac{\mathcal{L}^{n}\bigl(B(x,r)\cap\{\lvert f-l\rvert\geqslant\varepsilon\}\bigr)}{\mathcal{L}^{n}(B(x,r))}
++\frac{\mathcal{L}^{n}\bigl(B(x,r)\cap\{\lvert f-l'\rvert\geqslant\varepsilon\}\bigr)}{\mathcal{L}^{n}(B(x,r))} .
+\end{align*}
+令 $r\to0$，右端两个比式都趋于零，故 $1\leqslant0$，矛盾。因此 $l=l'$。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch01-1-36; kind=motivation; 说明唯一性为何不是自动的：集合的密度条件只控制偏差集的测度，须排除两个不同极限并存
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-36-动机}
+近似极限的定义只约束偏差集的密度，而不要求 $f$ 在 $x$ 附近取值集中，故其唯一性不能由定义直接看出。本定理说明：若两个候选值 $l,l'$ 都满足定义，则它们必须相等。证明的关键是把 $\lvert l-l'\rvert$ 分成三段，使「同时偏离两个候选值」在几何上不可能：若 $f(y)$ 与两者的距离都小于 $\lvert l-l'\rvert/3$，则三角不等式给出 $\lvert l-l'\rvert<2\lvert l-l'\rvert/3$，矛盾。于是整个球被两个偏差集覆盖，而这两个集合的密度都为零，故球的测度为零，与 $\mathcal{L}^{n}(B(x,r))>0$ 矛盾。
+唯一性使「近似极限」可以作为确定的对象来谈论，从而可以定义近似连续（\cref{definition:ch01-1-29}）而不产生歧义。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-36; kind=hypotheses; 说明两个候选极限共存时的条件、ε 取 |l−l'|/3 的理由与 m=1 之外的情形
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-36-条件}
+\begin{enumerate}[(i)]
+\item 定理的前提是 $l$ 与 $l'$ 都满足\cref{definition:ch01-1-27}中对每个 $\varepsilon>0$ 的极限条件。只需其中一者满足，唯一性便无从谈起，故两个条件必须同时使用。% XREF internal
+\item 取 $\varepsilon=\lvert l-l'\rvert/3$ 而不是 $\lvert l-l'\rvert/2$ 是为了在三角不等式中留出余量：$2\varepsilon=\frac{2}{3}\lvert l-l'\rvert<3\varepsilon$，从而「同时偏离两者」蕴含矛盾。若取 $\varepsilon=\lvert l-l'\rvert/2$，则只能得到 $\lvert l-l'\rvert<2\varepsilon=\lvert l-l'\rvert$，仍成立但不等号变为严格比较的边界情形，论证须另行处理。
+\item 结论对任意 $m\geqslant1$ 成立，证明只用到 $\mathbb{R}^m$ 中范数的三角不等式，与维数无关。若把值域换为一般的赋范线性空间，同一论证仍成立，只需该空间中的三角不等式。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[近似上极限与近似下极限]\label{definition:ch01-1-28}
+设 $n$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}$，$x\in\mathbb{R}^n$，$\mathcal{L}^{n}$ 为 $\mathbb{R}^n$ 上的 $n$ 维 Lebesgue 测度。
+\begin{enumerate}[(i)]
+\item 若实数 $l$ 是集合
+\begin{align*}
+\Bigl\{t\in\mathbb{R}\Bigm|\lim_{r\to0}\frac{\mathcal{L}^{n}(B(x,r)\cap\{f>t\})}{\mathcal{L}^{n}(B(x,r))}=0\Bigr\}
+\end{align*}
+的下确界，则称 $l$ 为 $f$ 当 $y\to x$ 时的近似上极限，并记作
+\begin{align*}
+\operatorname*{ap\,lim\,sup}_{y\to x}f(y)=l .
+\end{align*}
+\item 若实数 $l$ 是集合
+\begin{align*}
+\Bigl\{t\in\mathbb{R}\Bigm|\lim_{r\to0}\frac{\mathcal{L}^{n}(B(x,r)\cap\{f<t\})}{\mathcal{L}^{n}(B(x,r))}=0\Bigr\}
+\end{align*}
+的上确界，则称 $l$ 为 $f$ 当 $y\to x$ 时的近似下极限，并记作
+\begin{align*}
+\operatorname*{ap\,lim\,inf}_{y\to x}f(y)=l .
+\end{align*}
+\end{enumerate}
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-28; kind=motivation; 说明为何要用水平集 f>t 的密度来定义近似上极限，以及它与近似极限的配合
+\begin{remark}\phantomsection\label{remark:ch01-def-1-28-动机}
+对仅在测度意义下有规律的无序函数，通常的上极限可能在任何点都不存在；本定义改用水平集 $\{f>t\}$ 的密度来描述 $f$ 在 $x$ 附近的「渐近最大值」。条件「$\{f>t\}$ 在 $x$ 处的密度为 $0$」表示 $f$ 在 $x$ 附近几乎处处不超过 $t$：超过 $t$ 的点只占可忽略的比例。于是所有这样的 $t$ 的下确界恰是 $f$ 在 $x$ 附近的近似上确界的极限值。% XREF internal
+逐点上极限与近似上极限的关系是：若 $f$ 在 $x$ 处有通常的上极限，则近似上极限存在且相等；反之不然。这使近似上极限成为对无序函数也可用的替代量，并用于刻画 $\BV$ 函数的跳跃部分。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-28; kind=hypotheses; 说明 t 的取值范围、非严格与严格不等号、上下确界的取法以及 f 的有限性
+\begin{remark}\phantomsection\label{remark:ch01-def-1-28-条件}
+\begin{enumerate}[(i)]
+\item 定义中 $t$ 取遍全体实数，而所论集合是实数集的子集。若该集合为空集，则其下确界为 $+\infty$；若该集合为全体实数，则下确界为 $-\infty$。这两种退化情形在函数局部有界时不会出现：若 $\lvert f\rvert\leqslant M$ 于 $B(x,r_0)$，则 $t\geqslant M$ 时 $\{f>t\}$ 为空集，从而属于该集合。
+\item 第 (i) 款用 $\{f>t\}$，第 (ii) 款用 $\{f<t\}$，两者的不等号方向相反，这是上下极限的对称性所致。把 $f$ 换成 $-f$ 时，近似上极限与近似下极限互换：
+\begin{align*}
+\operatorname*{ap\,lim\,sup}_{y\to x}(-f)(y)=-\operatorname*{ap\,lim\,inf}_{y\to x}f(y) .
+\end{align*}
+\item 定义只要求 $f$ 取值于 $\mathbb{R}$，不要求可测；但要使所述的极限与密度有意义，须 $\{f>t\}$ 与 $\{f<t\}$ 为 Lebesgue 可测集，即 $f$ 可测。$f$ 可测时，$\{f>t\}$ 与 $\{f<t\}$ 都是 Borel 集的原像，故可测。
+\item 近似上极限与近似下极限一般不必相等。若两者相等且有限，则其公共值就是近似极限；反之，近似极限存在时两者相等。这一等价关系使近似极限可以只用水平集的密度来刻画。
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[近似连续]\label{definition:ch01-1-29}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$，$x\in\mathbb{R}^n$，$\mathcal{L}^{n}$ 为 $\mathbb{R}^n$ 上的 $n$ 维 Lebesgue 测度，$B(x,r)$ 为以 $x$ 为球心、$r>0$ 为半径的闭球。若
+\begin{align*}
+\aplim_{y\to x}f(y)=f(x) ,
+\end{align*}
+即对每个 $\varepsilon>0$ 有
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^{n}\bigl(B(x,r)\cap\{\lvert f-f(x)\rvert\geqslant\varepsilon\}\bigr)}{\mathcal{L}^{n}(B(x,r))}=0 ,
+\end{align*}
+则称 $f$ 在 $x$ 处近似连续。
+\end{definition}
+
+% SUPPLEMENT: parent=definition:ch01-1-29; kind=motivation; 说明近似连续相对连续弱在何处，以及它为何是可测函数的「逐点正则性」的正确提法
+\begin{remark}\phantomsection\label{remark:ch01-def-1-29-动机}
+连续要求 $f$ 在 $x$ 的每个充分小的邻域上取值都接近 $f(x)$；近似连续只要求不接近 $f(x)$ 的点在邻域中所占比例趋于零。因此 $f$ 可以在 $x$ 的任一邻域内取到任意大的值，只要这些点构成测度可忽略的集合。\cref{theorem:ch01-1-37}说明这种削弱是恰当的：每个 $\mathcal{L}^{n}$-可测函数都在几乎每一点处近似连续，而连续函数之集在可测函数中只是很小的子集。% XREF internal
+这一概念给出可测函数逐点行为的完整描述：可测性在逐点层面表现为「几乎处处近似连续」，正如 Lusin 定理把它表现为「在一个测度任意接近全集的紧集上连续」。两者从不同角度刻画同一事实。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch01-1-29; kind=hypotheses; 说明 f(x) 的有限性、ε 的量词、与 Lebesgue 点的强弱比较以及可测性的作用
+\begin{remark}\phantomsection\label{remark:ch01-def-1-29-条件}
+\begin{enumerate}[(i)]
+\item 定义要求 $f(x)\in\mathbb{R}^m$ 为有限向量，故须 $f$ 在 $x$ 处有定义且取有限值。若 $f(x)$ 为无穷，则 $\lvert f-f(x)\rvert$ 无意义。
+\item 量词顺序为：对每个 $\varepsilon>0$ 存在极限 $\lim_{r\to0}$ 等于零。允许趋于零的速率依赖 $\varepsilon$；若要求速率一致，则所得条件强于近似连续。
+\item 近似连续弱于 Lebesgue 点所对应的条件。若 $f\in L^{1}_{\mathrm{loc}}(\mathbb{R}^n)$ 且 $x$ 是 $f$ 的 Lebesgue 点，则由 Markov 不等式
+\begin{align*}
+\frac{\mathcal{L}^{n}\bigl(B(x,r)\cap\{\lvert f-f(x)\rvert\geqslant\varepsilon\}\bigr)}{\mathcal{L}^{n}(B(x,r))}
+\leqslant\frac{1}{\varepsilon}\fint_{B(x,r)}\lvert f-f(x)\rvert\diff y ,
+\end{align*}
+右端趋于零，故 $f$ 在 $x$ 处近似连续。反之不成立：近似连续只控制偏差集的比例，不控制偏差的大小。
+\item 定义本身不要求 $f$ 可测，但定理（\cref{theorem:ch01-1-37}）以可测性为前提；其逆命题（近似连续蕴含可测）亦成立，因此近似连续性可以作为可测性的等价刻画。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[可测性与近似连续]\label{theorem:ch01-1-37}
+设 $n,m$ 为正整数，$f:\mathbb{R}^n\to\mathbb{R}^m$ 关于 $\mathcal{L}^{n}$ 可测。则 $f$ 在 $\mathcal{L}^{n}$-a.e. 点 $x\in\mathbb{R}^n$ 处近似连续。
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-37-实用连续}
+于是可测函数「在几乎每一点处都近似连续」。其逆命题也成立；见 Federer [F, 2.9.13 节]。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-37; kind=motivation; 说明证明的两层结构：先用 Lusin 定理把可测函数分解到可数多个紧集上连续，再用密度定理把紧集的边界排除
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-37-动机}
+证明分两层。第一层用 Lusin 定理（\cref{theorem:ch01-1-14}）把 $\mathbb{R}^n$ 分解为可数多个两两不交的紧集与一个零测集之并，使 $f$ 在每个紧集上连续；这一步是可测函数的结构性刻画，但每个紧集 $K_i$ 的边界点仍可能无法控制。第二层用密度定理（\cref{theorem:ch01-1-35}）排除这些边界点：在 $K_i$ 的几乎每一点处，$K_i$ 在球 $B(x,r)$ 中的占比较快趋于 $1$，故落在外面的点只占可忽略的比例，而在 $K_i$ 内部 $f$ 的连续性给出所需的 $\varepsilon$ 估计。% XREF internal
+两层合起来给出：几乎每一点都落在某个 $K_i$ 的「密度内部」，因而在该点处近似连续。这一结构也说明为何近似连续是可测函数的正确逐点概念：它恰好只需要紧集上的连续性与紧集的密度性质。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch01-1-37; kind=hypotheses; 说明可测性的作用、对 m 的要求、ε 与 s 的依赖关系以及结论中 a.e. 的含义
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-37-条件}
+\begin{enumerate}[(i)]
+\item 可测性只在第一步使用：Lusin 定理要求 $f$ 为 $\mathcal{L}^{n}$-可测，才能在每个 $B_m$ 上找到测度接近的紧集使 $f$ 在此紧集上连续。若无此假设，紧集上连续的函数列之并的极限未必可测。
+\item 维数 $n$ 与目标维数 $m$ 任意，只要 $m\geqslant1$ 使 $\mathbb{R}^m$ 中有范数。结论对向量值函数成立，因为 Lusin 定理与密度定理都不依赖值域的维数。
+\item 结论中的 $\varepsilon$ 与 $s$ 的依赖关系为：先固定 $x$ 与 $\varepsilon$，由 $f|_{K_i}$ 在 $x$ 处连续得到 $s>0$；再取 $r<s$。故 $s$ 依赖于 $\varepsilon$ 与 $x$，但不依赖于 $r$。
+\item 结论不能改进为处处近似连续：取 $f=\chi_{\{0\}}$ 于 $\mathbb{R}$。在 $x=0$ 处，对每个 $r>0$ 有 $\mathcal{L}^{1}(B(0,r)\cap\{\lvert f-f(0)\rvert\geqslant\varepsilon\})=2r$（当 $0<\varepsilon\leqslant1$），比例为 $1$，故 $f$ 在 $0$ 处不近似连续；而 $f$ 在其余各点处近似连续。
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+（1）断言：存在两两不交的紧集 $\{K_i\}_{i=1}^{\infty}\subseteq\mathbb{R}^n$，使得
+\begin{align*}
+\mathcal{L}^{n}\Bigl(\mathbb{R}^n-\bigcup_{i=1}^{\infty}K_i\Bigr)=0 ,
+\end{align*}
+且对每个 $i=1,2,\cdots$，$f|_{K_i}$ 连续。
+
+断言之证明：对每个正整数 $m$，令 $B_m:=B(0,m)$。由 Lusin 定理（\cref{theorem:ch01-1-14}），存在紧集 $K_1\subseteq B_1$，使得 $\mathcal{L}^{n}(B_1-K_1)\leqslant1$ 且 $f|_{K_1}$ 连续。% XREF p=73 "By Lusin's Theorem"
+现设 $K_1,\cdots,K_m$ 已作出，则存在紧集
+\begin{align*}
+K_{m+1}\subseteq B_{m+1}-\bigcup_{i=1}^{m}K_i
+\end{align*}
+使得
+\begin{align*}
+\mathcal{L}^{n}\Bigl(B_{m+1}-\bigcup_{i=1}^{m+1}K_i\Bigr)\leqslant\frac{1}{m+1} ,
+\end{align*}
+且 $f|_{K_{m+1}}$ 连续。
+
+（2）对 $\mathcal{L}^{n}$-a.e. $x\in K_i$ 有
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^{n}(B(x,r)-K_i)}{\mathcal{L}^{n}(B(x,r))}=0 .
+\end{align*}
+定义
+\begin{align*}
+A:=\{x\mid x\in K_i\ \text{对某个}\ i\ \text{成立，且上式成立}\},
+\end{align*}
+则 $\mathcal{L}^{n}(\mathbb{R}^n-A)=0$。设 $x\in A$，即 $x\in K_i$ 且上式对某个固定的 $i$ 成立。固定 $\varepsilon>0$。存在 $s>0$，使得 $y\in K_i$ 与 $\lvert x-y\rvert<s$ 蕴含 $\lvert f(x)-f(y)\rvert<\varepsilon$。
+于是当 $0<r<s$ 时，
+\begin{align*}
+B(x,r)\cap\{y\mid\lvert f(y)-f(x)\rvert\geqslant\varepsilon\}\subseteq B(x,r)-K_i .
+\end{align*}
+由此可见
+\begin{align*}
+\aplim_{y\to x}f(y)=f(x) .
+\end{align*}
+
+% SUPPLEMENT: parent=theorem:ch01-1-37; kind=proof; 补出 Lusin 定理的逐次应用、并集为零测集的证明、第二步中密度定理的引用、包含关系与近似极限的结论
+下面对上述论证补出细节。
+
+（3）第（1）步中紧集的构造。对 $K_1$：取 $A=B_1$ 与 $\varepsilon=1$，由\cref{theorem:ch01-1-14}存在紧集 $K_1\subseteq B_1$ 使 $\mathcal{L}^{n}(B_1-K_1)<1$，且 $f|_{K_1}$ 连续。% XREF internal
+对 $K_{m+1}$：设 $K_1,\cdots,K_m$ 已作出。集合
+\begin{align*}
+A_m:=B_{m+1}-\bigcup_{i=1}^{m}K_i
+\end{align*}
+是可测集：$B_{m+1}$ 为闭球，有限并 $\bigcup_{i=1}^{m}K_i$ 为闭集。又 $A_m\subseteq B_{m+1}$ 故 $\mathcal{L}^{n}(A_m)<\infty$。对 $A_m$ 与 $\varepsilon=\frac{1}{m+1}$ 应用\cref{theorem:ch01-1-14}，得紧集 $K_{m+1}\subseteq A_m$ 使 $\mathcal{L}^{n}(A_m-K_{m+1})<\frac{1}{m+1}$，且 $f|_{K_{m+1}}$ 连续。由 $K_{m+1}\subseteq A_m$ 知 $K_{m+1}$ 与 $K_1,\cdots,K_m$ 都不相交，故所得紧集两两不交；并且% XREF internal
+\begin{align*}
+\mathcal{L}^{n}\Bigl(B_{m+1}-\bigcup_{i=1}^{m+1}K_i\Bigr)\leqslant\mathcal{L}^{n}(A_m-K_{m+1})<\frac{1}{m+1} .
+\end{align*}
+
+（4）并集的补集为零测集。由 $B_m=B(0,m)$ 得 $B_m\subseteq B_{m+1}$ 与 $\bigcup_{m=1}^{\infty}B_m=\mathbb{R}^n$。又 $\bigcup_{i=1}^{m}K_i\subseteq B_m$，故
+\begin{align*}
+\mathbb{R}^n-\bigcup_{i=1}^{\infty}K_i=\bigcup_{m=1}^{\infty}\Bigl(B_m-\bigcup_{i=1}^{m}K_i\Bigr).
+\end{align*}
+右端的集合列关于 $m$ 递增，故由测度的下连续性
+\begin{align*}
+\mathcal{L}^{n}\Bigl(\mathbb{R}^n-\bigcup_{i=1}^{\infty}K_i\Bigr)
+=\lim_{m\to\infty}\mathcal{L}^{n}\Bigl(B_m-\bigcup_{i=1}^{m}K_i\Bigr)
+\leqslant\lim_{m\to\infty}\frac{1}{m}=0 .
+\end{align*}
+
+（5）第（2）步中的极限。$K_i$ 是紧集，故为 $\mathcal{L}^{n}$-可测集。对 $E=K_i$ 应用\cref{theorem:ch01-1-35}：对 $\mathcal{L}^{n}$-a.e. $x\in K_i$ 有% XREF internal
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^{n}(B(x,r)\cap K_i)}{\mathcal{L}^{n}(B(x,r))}=1 ,
+\end{align*}
+而
+\begin{align*}
+\frac{\mathcal{L}^{n}(B(x,r)-K_i)}{\mathcal{L}^{n}(B(x,r))}
+=1-\frac{\mathcal{L}^{n}(B(x,r)\cap K_i)}{\mathcal{L}^{n}(B(x,r))} ,
+\end{align*}
+故该比式趋于 $0$。% XREF internal
+
+（6）$A$ 是满测度集。集合 $\mathbb{R}^n-A$ 等于 $\mathbb{R}^n-\bigcup_{i}K_i$ 与各 $\{x\in K_i\mid\text{第（2）步的极限不成立}\}$ 之并；前者由（4）为零测集，后者由（5）为零测集，可数并仍为零测集。故 $\mathcal{L}^{n}(\mathbb{R}^n-A)=0$。
+
+（7）包含关系与结论。设 $0<r<s$ 且 $y\in B(x,r)$ 满足 $\lvert f(y)-f(x)\rvert\geqslant\varepsilon$。若 $y\in K_i$，则由 $\lvert x-y\rvert\leqslant r<s$ 与 $s$ 的取法得 $\lvert f(y)-f(x)\rvert<\varepsilon$，与假设矛盾。故 $y\notin K_i$，即
+\begin{align*}
+B(x,r)\cap\{y\mid\lvert f(y)-f(x)\rvert\geqslant\varepsilon\}\subseteq B(x,r)-K_i .
+\end{align*}
+两边除以 $\mathcal{L}^{n}(B(x,r))$ 并令 $r\to0$，由（2）得
+\begin{align*}
+\lim_{r\to0}\frac{\mathcal{L}^{n}\bigl(B(x,r)\cap\{y\mid\lvert f(y)-f(x)\rvert\geqslant\varepsilon\}\bigr)}{\mathcal{L}^{n}(B(x,r))}=0 .
+\end{align*}
+由于 $\varepsilon>0$ 任意，按\cref{definition:ch01-1-29}得 $\aplim_{y\to x}f(y)=f(x)$。% XREF internal
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch01-thm-1-37-局部可和情形}
+若 $f\in L^{1}_{\mathrm{loc}}(\mathbb{R}^n)$，则其证明要简单得多。事实上，对每个 $\varepsilon>0$ 有
+\begin{align*}
+\frac{\mathcal{L}^{n}\bigl(B(x,r)\cap\{\lvert f-f(x)\rvert>\varepsilon\}\bigr)}{\mathcal{L}^{n}(B(x,r))}
+\leqslant\frac{1}{\varepsilon}\fint_{B(x,r)}\lvert f-f(x)\rvert\diff y ,
+\end{align*}
+而右端对 $\mathcal{L}^{n}$-a.e. 的 $x$ 趋于零。特别地，Lebesgue 点是近似连续点。
+\end{remark}
+
+在\cref{section:ch05-09}中将定义并讨论与之相关的近似可微性概念。% XREF p=74 "In Section 5.9 we will define and discuss the related notion of approximate differentiability"
+
+\end{document}

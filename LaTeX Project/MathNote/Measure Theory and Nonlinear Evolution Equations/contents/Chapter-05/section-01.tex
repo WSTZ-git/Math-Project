@@ -1,148 +1,256 @@
-\documentclass[../../main.tex]{subfiles}% 注意这里的文件路径不能用 ./main.tex ,否则用latexmk编译子文件会报错
-\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}} % 指定图片引用路径,后续可以直接使用图片文件名
-% 如果图片存放在上级目录,则使用 ../../image/ 作为备用路径
-
-% 例如:
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.3\textwidth]{图.png}
-% \caption{}
-% \label{figure:图}
-% \end{figure}
-% 注意:上述\label{}一定要放在\caption{}之后,否则引用图片序号会只会显示??.
+\documentclass[../../main.tex]{subfiles}% 子文件入口；路径相对 main.tex，不能写成 ./main.tex
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}} % 图片搜索路径
 
 \begin{document}
 
 \section{收敛的概念}\label{section:ch05-Radon弱星}
 
-\subsection{强收敛}
+设 $X$ 为局部紧 Hausdorff 空间。$X$ 上有限带号 Radon 测度的向量空间 $\mathscr{R}_f(X)$ 赋以范数 $\|\mu\|\triangleq|\mu|(X)$（其中 $|\mu|$ 为测度 $\mu$ 的变差）后为 Banach 空间；事实上，它是 $X$ 上有限带号测度的 Banach 空间 $(\mathcal{M}_f(X),\|\cdot\|)$ 的闭子空间。本章先讨论该空间中的不同类型收敛，随后建立它们与 Young 测度相应收敛概念之间的关系；完成这一步后，对 $L^1(X)$ 中有界序列的收敛性作出结论。
 
-\cref{proposition:ch02-强收敛性质}启发我们给出以下定义，特别地，当 $X$ 为赋 Borel $\sigma$-代数的局部紧 Hausdorff 空间时，该定义适用于 $\mathscr{R}_f(X)$。
+\subsection{强收敛}\label{subsection:ch05-强收敛}
+
+\cref{proposition:ch02-强收敛性质}启发以下定义；特别地，当 $X$ 为赋 Borel $\sigma$-代数的局部紧 Hausdorff 空间时，该定义适用于 $\mathscr{R}_f(X)$。
 
 \begin{definition}\label{definition:ch05-强收敛}
-设 $(X,\mathcal{A})$ 为可测空间。序列 $\{\mu_k\}\subseteq\mathcal{M}_f(X)$ \textbf{强收敛}于 $\mu\in\mathcal{M}_f(X)$（记作 $\mu_k\to\mu$），若
+设 $(X,\mathscr{A})$ 为可测空间，$\mathcal{M}_f(X)$ 为 $(X,\mathscr{A})$ 上有限带号测度全体，$\|\mu\|\triangleq|\mu|(X)$ 为全变差范数。称序列 $\{\mu_k\}_{k\in\mathbb{N}}\subseteq\mathcal{M}_f(X)$ \textbf{强收敛}于 $\mu\in\mathcal{M}_f(X)$（记作 $\mu_k\to\mu$），若
 \begin{align*}
-\lim_{k\to\infty}\|\mu_k-\mu\|
-=\lim_{k\to\infty}|\mu_k-\mu|(X)=0.
+\lim_{k\to\infty}\|\mu_k-\mu\|=\lim_{k\to\infty}|\mu_k-\mu|(X)=0 .
 \end{align*}
-$\mathcal{M}_f(X)$ 上的强拓扑为与范数 $\|\cdot\|$ 相伴的度量拓扑。为清楚起见，我们将上述范数在子空间 $\mathscr{R}_f(X)\subseteq\mathcal{M}_f(X)$ 上的限制记作 $\|\cdot\|_{\mathscr{R}_f(X)}$。
+$\mathcal{M}_f(X)$ 上的\textbf{强拓扑}是与范数 $\|\cdot\|$ 相伴的度量拓扑。为记号明确起见，将上述范数在子空间 $\mathscr{R}_f(X)\subseteq\mathcal{M}_f(X)$ 上的限制记作 $\|\cdot\|_{\mathscr{R}_f(X)}$。
 \end{definition}
 
-\subsection{弱$^*$收敛}
+% SUPPLEMENT: parent=definition:ch05-强收敛; kind=motivation; 依据：定义 5.1.1 与命题 1.8.4 的对照；说明全变差范数的积分表示、各假设的作用与强拓扑严格细于窄拓扑的反例
+\begin{remark}\phantomsection\label{remark:ch05-强收敛动机}
+强收敛即 Banach 空间 $(\mathcal{M}_f(X),\|\cdot\|)$ 中的范数收敛，因此它继承范数收敛的一切性质（线性运算连续、极限唯一、$\|\mu_k\|\to\|\mu\|$）。其测度论意义来自全变差范数的积分表示：对 $\mu\in\mathcal{M}_f(X)$，
+\begin{align*}
+\|\mu\|=|\mu|(X)=\sup\left\{\int_X h\,\mathrm{d}\mu\ \middle|\ h:X\to\mathbb{R}\ \text{有界可测},\ |h|\leqslant1\right\},
+\end{align*}
+故 $\mu_k\to\mu$ 当且仅当 $\int_X h\,\mathrm{d}\mu_k\to\int_X h\,\mathrm{d}\mu$ 对一切有界可测 $h$ 成立，且该收敛关于 $\|h\|_\infty\leqslant1$ 一致；等价地，$|\mu_k(E)-\mu(E)|\leqslant|\mu_k-\mu|(X)$ 表明 $\mu_k\to\mu$ 当且仅当 $\mu_k(E)\to\mu(E)$ 关于 $E\in\mathscr{A}$ 一致。这正是\cref{proposition:ch02-强收敛性质}所提供的 $L^1$ 强收敛的测度版本。
 
-\cref{theorem:ch02-Rf对偶}启发我们给出以下定义。
+各项假设的作用如下。$(X,\mathscr{A})$ 为可测空间，仅用于定义 $\mathcal{M}_f(X)$ 与测度的变差；有限性 $|\mu|(X)<\infty$ 保证 $\|\cdot\|$ 取值有限，从而 $(\mathcal{M}_f(X),\|\cdot\|)$ 完备，强极限不必在更大的空间（如局部有限测度空间）中寻找；限制在 $\mathscr{R}_f(X)$ 上时，因 $\mathscr{R}_f(X)$ 是 $\mathcal{M}_f(X)$ 的闭子空间，强极限仍为 Radon 测度，即 Radon 性质在范数极限下保持。
+
+边界情形：强拓扑严格细于窄拓扑。取 $X=[0,1]$、$\nu_k\triangleq\frac1k\sum_{j=1}^k\delta_{j/k}$、$\nu\triangleq\lambda\llcorner[0,1]$，由 Riemann 和的初等估计得 $\nu_k\stackrel{n}{\rightharpoonup}\nu$；然而 $\nu_k\perp\lambda$，故 $\|\nu_k-\nu\|=2$ 对一切 $k\in\mathbb{N}$ 成立，$\nu_k$ 不强收敛于 $\nu$。另一方面，\cref{definition:ch05-强收敛}要求 $\mu$ 与全部 $\mu_k$ 同属 $\mathcal{M}_f(X)$，若把极限测度换成无界测度，则 $\|\mu_k-\mu\|$ 可能恒为 $+\infty$，定义失去意义。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-强收敛; kind=proof; 依据：全变差范数对积分的控制，补出强收敛蕴含窄收敛、弱*收敛与模糊收敛的估计
+\begin{proof}[强收敛蕴含其余三种收敛]
+设 $\mu_k\to\mu$ 强收敛，$g\in C_b(X)$。函数 $g$ 关于 $|\mu_k|$ 与 $|\mu|$ 可积（见\cref{definition:ch02-Lebesgue}），且
+\begin{align*}
+\left|\int_X g\,\mathrm{d}\mu_k-\int_X g\,\mathrm{d}\mu\right|
+\leqslant\int_X|g|\,\mathrm{d}|\mu_k-\mu|
+\leqslant\|g\|_\infty\,|\mu_k-\mu|(X)\longrightarrow0
+\qquad(k\to\infty).
+\end{align*}
+因此 $\mu_k\stackrel{n}{\rightharpoonup}\mu$。由 $C_c(X)\subseteq C_0(X)\subseteq C_b(X)$，同一估计分别对 $g\in C_0(X)$ 与 $g\in C_c(X)$ 给出 $\mu_k\stackrel{*}{\rightharpoonup}\mu$ 与模糊收敛。
+\end{proof}
+
+\subsection{弱$^*$收敛}\label{subsection:ch05-弱星收敛}
+
+\cref{theorem:ch02-Rf对偶}启发以下定义。
 
 \begin{definition}\label{definition:ch05-弱星收敛}
-设 $X$ 为局部紧 Hausdorff 空间。序列 $\{\mu_k\}\subseteq\mathscr{R}_f(X)$ \textbf{弱$^*$收敛}于 $\mu\in\mathscr{R}_f(X)$（记作 $\mu_k\stackrel{*}{\rightharpoonup}\mu$），若
+设 $X$ 为局部紧 Hausdorff 空间，$\mathscr{R}_f(X)$ 为 $X$ 上有限带号 Radon 测度空间，$C_0(X)$ 为 $X$ 上无穷远处消失的实连续函数全体赋以 $\|\cdot\|_\infty$。称序列 $\{\mu_k\}_{k\in\mathbb{N}}\subseteq\mathscr{R}_f(X)$ \textbf{弱$^*$收敛}于 $\mu\in\mathscr{R}_f(X)$（记作 $\mu_k\stackrel{*}{\rightharpoonup}\mu$），若
 \begin{align}
 \lim_{k\to\infty}\int_X g\,\mathrm{d}\mu_k=\int_X g\,\mathrm{d}\mu
-\quad\text{对任意 }g\in C_0(X).\label{align:ch05-5.1}
+\quad\text{对每个 }g\in C_0(X).\label{align:ch05-5.1}
 \end{align}
-$\mathscr{R}_f(X)$ 上的弱$^*$拓扑，记作 $\mathcal{T}_{w^*}$，是使所有映射 $\mu\mapsto\int_X g\,\mathrm{d}\mu$（$g\in C_0(X)$）连续的最弱拓扑。
+$\mathscr{R}_f(X)$ 上的\textbf{弱$^*$拓扑}，记作 $\mathcal{T}_{w^*}$，是使所有映射 $\mu\mapsto\int_X g\,\mathrm{d}\mu$（$g\in C_0(X)$）连续的最弱拓扑。
 \end{definition}
 
-\begin{remark}\label{remark:ch05-弱星积分}
-由于 $C_0(X)\subseteq C_b(X)\subseteq L^1(X,\mathscr{B}(X),|\mu|)$ 且对任意 $k\in\mathbb{N}$ 有 $C_0(X)\subseteq C_b(X)\subseteq L^1(X,\mathscr{B}(X),|\mu_k|)$，故\eqref{align:ch05-5.1}与下文\eqref{align:ch05-5.3}中的积分是良定义的（见\cref{definition:ch02-Lebesgue}）。
+\begin{remark}\phantomsection\label{remark:ch05-弱星积分}
+由于 $C_0(X)\subseteq C_b(X)\subseteq L^1(X,\mathscr{B}(X),|\mu|)$ 且对每个 $k\in\mathbb{N}$ 有 $C_0(X)\subseteq C_b(X)\subseteq L^1(X,\mathscr{B}(X),|\mu_k|)$，\eqref{align:ch05-5.1}与下文\eqref{align:ch05-5.3}中的积分良定义（见\cref{definition:ch02-Lebesgue}）。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-弱星收敛; kind=motivation; 依据：定义 5.1.2 与定理 2.7.1（Riesz 表示）的对照；说明 $C_0$ 试验函数类、局部紧性、有限性的作用与质量逃逸现象
+\begin{remark}\phantomsection\label{remark:ch05-弱星动机}
+由\cref{theorem:ch02-Rf对偶}，$\mathscr{R}_f(X)$ 与 $C_0(X)$ 的对偶空间等距同构，故 $\mathcal{T}_{w^*}$ 正是对偶配对 $(C_0(X),\mathscr{R}_f(X))$ 决定的弱$^*$拓扑：它是使每个求值泛函 $\mu\mapsto\langle g,\mu\rangle$ 连续的最弱拓扑。因此 $\mu_k\stackrel{*}{\rightharpoonup}\mu$ 等价于 $\langle g,\mu_k\rangle\to\langle g,\mu\rangle$ 对一切 $g\in C_0(X)$ 成立，而极限唯一（$C_0(X)$ 分离 $\mathscr{R}_f(X)$ 中的点）。
+
+各项假设的作用：局部紧 Hausdorff 性保证 Riesz 表示定理可用，从而 $\mathscr{R}_f(X)=(C_0(X))^*$，弱$^*$拓扑才与被测度论定义的收敛一致；$C_0(X)$ 中的试验函数在无穷远处消失，故该拓扑不控制总质量——取 $X=\mathbb{R}$、$\mu_k\triangleq\delta_k$，则对每个 $g\in C_0(\mathbb{R})$ 有 $g(k)\to0$，即 $\delta_k\stackrel{*}{\rightharpoonup}0$，而 $\delta_k(\mathbb{R})=1$ 对一切 $k$ 成立，质量在无穷远处逃逸；有限性 $|\mu_k|(X)<\infty$ 保证\eqref{align:ch05-5.1}中的积分绝对收敛，若允许局部有限而非有限测度，则 $g\in C_0(X)$ 未必关于 $\mu_k$ 可积。
+
+边界情形：弱$^*$拓扑一般不能由单个度量给出（在无限维情形不存在与之等价的度量），但在有界集上可度量化，见\cref{proposition:ch05-弱星可度量化}；弱$^*$收敛不蕴含窄收敛（见\cref{remark:ch05-模糊收敛}）。
 \end{remark}
 
 $\mathcal{T}_{w^*}$ 的一组基为 $\mathscr{R}_f(X)$ 的如下子集族：
 \begin{align}
-B_{g_1,\cdots ,g_n;\epsilon}(\mu_0)
+B_{g_1,\cdots ,g_n;\varepsilon}(\mu_0)
 \triangleq \left\{\mu\in\mathscr{R}_f(X)\ \middle|\
-\left|\int_X g_j\,\mathrm{d}\mu-\int_X g_j\,\mathrm{d}\mu_0\right|<\epsilon
-\ \forall j=1,\cdots ,n\right\},\label{align:ch05-5.2}
+\left|\int_X g_j\,\mathrm{d}\mu-\int_X g_j\,\mathrm{d}\mu_0\right|<\varepsilon
+\ \ \forall j=1,\cdots ,n\right\},\label{align:ch05-5.2}
 \end{align}
-其中 $g_1,\cdots ,g_n\in C_0(X)$，$\mu_0\in\mathscr{R}_f(X)$，$n\in\mathbb{N}$，$\epsilon>0$。
+其中 $g_1,\cdots ,g_n\in C_0(X)$，$\mu_0\in\mathscr{R}_f(X)$，$n\in\mathbb{N}$，$\varepsilon>0$。
 
-在对 $X$ 的适当假设下，限制在 $\mathscr{R}_f(X)$ 有界子集上的弱$^*$拓扑 $\mathcal{T}_{w^*}$ 是可度量化的：
+在对 $X$ 的适当假设下，限制在 $\mathscr{R}_f(X)$ 的有界子集上的弱$^*$拓扑 $\mathcal{T}_{w^*}$ 可度量化：
 
 \begin{proposition}\label{proposition:ch05-弱星可度量化}
-\label{theorem:ch05-弱星可测}
-设 $X$ 为具可数基的局部紧 Hausdorff 空间，$M\subseteq\mathscr{R}_f(X)$ 有界。则相对弱$^*$拓扑 $\mathcal{T}_{w^*}\cap M$ 可度量化。
+
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$M\subseteq\mathscr{R}_f(X)$ 为有界子集，即 $\sup_{\mu\in M}\|\mu\|_{\mathscr{R}_f(X)}<\infty$。则相对弱$^*$拓扑 $\mathcal{T}_{w^*}\cap M$ 可度量化。
 \end{proposition}
 
 \begin{proof}
-空间 $C_0(X)$ 赋以 $\|\cdot\|_\infty$ 范数是可分的（见附录 A,\cref{subsection:appA-可分})。于是由\cref{theorem:ch02-Rf对偶}与\cref{proposition:appA-弱星可度量化}即得结论。
+赋以 $\|\cdot\|_\infty$ 范数的空间 $C_0(X)$ 可分（见附录 A，\cref{proposition:appA-Cb可分}）。于是由\cref{theorem:ch02-Rf对偶}与\cref{proposition:appA-弱星可度量化}即得结论。
 \end{proof}
 
-\subsection{窄收敛}
+% SUPPLEMENT: parent=proposition:ch05-弱星可度量化; kind=proof; 依据：$C_0(X)$ 可分与弱*拓扑由可数族半范数生成，补出显式度量并验证它与相对弱*拓扑等价
+\begin{proof}[相对弱$^*$拓扑的显式度量]
+取 $\{g_j\}_{j\in\mathbb{N}}\subseteq C_0(X)$ 在 $C_0(X)$ 的闭单位球中稠密（由 $C_0(X)$ 可分，闭单位球作为度量空间可分，故这样的序列存在）。对 $\mu,\nu\in\mathscr{R}_f(X)$ 置
+\begin{align*}
+d(\mu,\nu)\triangleq\sum_{j=1}^{\infty}2^{-j}\min\left\{1,\left|\int_X g_j\,\mathrm{d}\mu-\int_X g_j\,\mathrm{d}\nu\right|\right\}.
+\end{align*}
+该级数被 $\sum_{j}2^{-j}=1$ 控制，故 $d(\mu,\nu)\in[0,1]$，且 $d$ 对称并满足三角不等式。若 $d(\mu,\nu)=0$，则 $\int_X g_j\,\mathrm{d}(\mu-\nu)=0$ 对一切 $j\in\mathbb{N}$ 成立；对任意 $g\in C_0(X)$ 且 $\|g\|_\infty\leqslant1$ 及任意 $j\in\mathbb{N}$，
+\begin{align*}
+\left|\int_X g\,\mathrm{d}(\mu-\nu)\right|
+\leqslant\|g-g_j\|_\infty\,\|\mu-\nu\|_{\mathscr{R}_f(X)},
+\end{align*}
+令 $j\to\infty$ 得 $\int_X g\,\mathrm{d}(\mu-\nu)=0$；对 $\|g\|_\infty\leqslant1$ 取上确界得 $\|\mu-\nu\|_{\mathscr{R}_f(X)}=0$，即 $\mu=\nu$。故 $d$ 为 $\mathscr{R}_f(X)$ 上的度量。
+
+以下验证 $d$ 与 $\mathcal{T}_{w^*}$ 在有界集 $M$ 上等价。其一，每个 $\mu\mapsto\left|\int_X g_j\,\mathrm{d}(\mu-\nu)\right|$ 关于 $\mu\in\mathscr{R}_f(X)$ 弱$^*$连续，而级数一致收敛，故 $\mu\mapsto d(\mu,\nu)$ 弱$^*$连续，从而 $d$ 的度量拓扑含于 $\mathcal{T}_{w^*}$。其二，记 $C\triangleq1+\sup_{\mu\in M}\|\mu\|_{\mathscr{R}_f(X)}<\infty$；给定 $g\in C_0(X)$、$g\neq0$、$\varepsilon>0$，令 $h\triangleq g/\|g\|_\infty$，取 $j\in\mathbb{N}$ 使 $\|h-g_j\|_\infty<\varepsilon/(4C)$。则对 $\mu,\mu_0\in M$，
+\begin{align*}
+\left|\int_X g\,\mathrm{d}\mu-\int_X g\,\mathrm{d}\mu_0\right|
+\leqslant\|g\|_\infty\left(2C\|h-g_j\|_\infty+
+\left|\int_X g_j\,\mathrm{d}\mu-\int_X g_j\,\mathrm{d}\mu_0\right|\right).
+\end{align*}
+因此 $d$ 球 $\{\mu\in M\mid d(\mu,\mu_0)<2^{-j}\varepsilon/2\}$ 含于相应的弱$^*$基本邻域之内，故 $\mathcal{T}_{w^*}\cap M$ 含于 $d$ 的度量拓扑。两者相等，结论得证。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-弱星可度量化; kind=motivation; 同一 remark 覆盖该别名 label
+% SUPPLEMENT: parent=proposition:ch05-弱星可度量化; kind=motivation; 依据：命题 5.1.1 与 Banach–Alaoglu 定理、定理 5.1.7 的关系；说明可数基与有界性两项假设的作用
+\begin{remark}\phantomsection\label{remark:ch05-弱星可度量化动机}
+可度量化把弱$^*$拓扑中的紧性与列紧性等同起来，从而使 Banach–Alaoglu 定理的紧性结论可用于序列：这正是\cref{theorem:ch05-弱星紧性}中 (ii)$\Rightarrow$(i) 的关键。其证明只用两条信息：$C_0(X)$ 可分（等价于 $X$ 具可数基，见附录 A）与 $M$ 有界。
+
+两项假设均为必要。可数基（即 $C_0(X)$ 可分）用于取可数稠密试验函数族 $\{g_j\}$，使 $\mathcal{T}_{w^*}$ 在有界集上由可数族半范数 $\mu\mapsto\left|\int_X g_j\,\mathrm{d}\mu\right|$ 生成；若 $X$ 不具可数基（如离散不可数空间），$C_0(X)$ 不可分，$M$ 上的相对弱$^*$拓扑一般不可度量化。有界性用于第二段的估计：常数 $C$ 控制 $\|\mu-\mu_0\|_{\mathscr{R}_f(X)}$；在全空间上弱$^*$拓扑不存在与之等价的度量。
+
+适用边界：结论只涉及相对拓扑 $\mathcal{T}_{w^*}\cap M$，而非 $\mathscr{R}_f(X)$ 上的整体拓扑；有界集上的度量 $d$ 依赖 $\{g_j\}$ 的选取，不同选取给出同胚但不必等距的度量。
+\end{remark}
+
+\subsection{窄收敛}\label{subsection:ch05-窄收敛}
 
 在\cref{definition:ch05-弱星收敛}中选取不同的试验函数类，便得到 $\mathscr{R}_f(X)$ 上另一种收敛概念。
 
 \begin{definition}\label{definition:ch05-窄收敛}
-设 $X$ 为局部紧 Hausdorff 空间。序列 $\{\mu_k\}\subseteq\mathscr{R}_f(X)$ \textbf{窄收敛}于 $\mu\in\mathscr{R}_f(X)$（记作 $\mu_k\stackrel{n}{\rightharpoonup}\mu$），若
+设 $X$ 为局部紧 Hausdorff 空间，$\mathscr{R}_f(X)$ 为 $X$ 上有限带号 Radon 测度空间，$C_b(X)$ 为 $X$ 上有界实连续函数全体赋以 $\|\cdot\|_\infty$。称序列 $\{\mu_k\}_{k\in\mathbb{N}}\subseteq\mathscr{R}_f(X)$ \textbf{窄收敛}于 $\mu\in\mathscr{R}_f(X)$（记作 $\mu_k\stackrel{n}{\rightharpoonup}\mu$），若
 \begin{align}
 \lim_{k\to\infty}\int_X g\,\mathrm{d}\mu_k=\int_X g\,\mathrm{d}\mu
-\quad\text{对任意 }g\in C_b(X).\label{align:ch05-5.3}
+\quad\text{对每个 }g\in C_b(X).\label{align:ch05-5.3}
 \end{align}
-$\mathscr{R}_f(X)$ 上的窄拓扑，记作 $\mathcal{T}_n$，是使所有映射 $\mu\mapsto\int_X g\,\mathrm{d}\mu$（$g\in C_b(X)$）连续的最弱拓扑。
+$\mathscr{R}_f(X)$ 上的\textbf{窄拓扑}，记作 $\mathcal{T}_n$，是使所有映射 $\mu\mapsto\int_X g\,\mathrm{d}\mu$（$g\in C_b(X)$）连续的最弱拓扑。
 \end{definition}
 
-窄拓扑被某些作者称为“弱拓扑”（例如见文献~\cite{ref45}）。$\mathcal{T}_n$ 的一组基为\eqref{align:ch05-5.2}所定义的子集族 $B_{g_1,\cdots ,g_n;\epsilon}(\mu_0)\subseteq\mathscr{R}_f(X)$，只是其中 $g_1,\cdots ,g_n\in C_b(X)$。
+% SUPPLEMENT: parent=definition:ch05-窄收敛; kind=motivation; 依据：定义 5.1.3 与定义 5.1.2 的对照；说明 $C_b$ 试验函数类控制总质量、窄拓扑与弱*拓扑的粗细关系及可度量化条件
+\begin{remark}\phantomsection\label{remark:ch05-窄动机}
+把\eqref{align:ch05-5.1}中的 $C_0(X)$ 换成更大的类 $C_b(X)$，得到的拓扑更弱而收敛更强：因 $C_0(X)\subseteq C_b(X)$，有 $\mathcal{T}_n\subseteq\mathcal{T}_{w^*}$，即窄收敛蕴含弱$^*$收敛。试验函数类扩大到 $C_b(X)$ 的关键后果是常数函数 $g\equiv1$ 可用：取 $g=1$ 于\eqref{align:ch05-5.3}，得 $\lim_{k}\mu_k(X)=\mu(X)$，故对正测度序列而言窄收敛不丢失质量，而弱$^*$收敛可以丢失（见\cref{remark:ch05-范数下半连续}）。这也解释了术语：窄拓扑是概率论中"弱收敛"的测度论形式，某些作者直接称之为弱拓扑（见文献~\cite{ref45}）。
 
-\begin{remark}\label{remark:ch05-模糊收敛}
+假设的作用：局部紧 Hausdorff 性保证 $\mathscr{R}_f(X)$ 与 $C_b(X)$ 的连续函数空间结构相容，并使 $C_c(X)$ 在 $C_0(X)$ 中稠密（$X$ 为 $\sigma$-紧时），这是比较 $\mathcal{T}_n$ 与 $\mathcal{T}_{w^*}$ 的基础；有限性 $|\mu|(X)<\infty$ 使 $C_b(X)\subseteq L^1(X,\mathscr{B}(X),|\mu|)$，从而\eqref{align:ch05-5.3}中积分绝对收敛。若允许无限测度，则 $g\equiv1$ 不可用，$C_b$ 与 $C_0$ 试验函数类的差别将重新出现。
+
+适用边界：$\mathcal{T}_n$ 不是某个对偶配对的弱$^*$拓扑（$C_b(X)$ 一般不是 Banach 空间 $C_0(X)$ 的对偶），故不能直接引用 Banach–Alaoglu 定理；替代工具是\cref{theorem:ch05-prokhorov}的胎紧性判据与 Prokhorov 度量（见\cref{proposition:ch05-窄拓扑可度量化}）。当 $(X,d)$ 为可分度量空间时 $\mathcal{T}_n$ 可由 $d_P$ 度量；一般局部紧 Hausdorff 空间上它未必可度量化。
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-窄收敛; kind=proof; 依据：$C_0\subseteq C_b$，补出窄收敛蕴含弱*收敛的直接论证
+\begin{proof}[窄收敛蕴含弱$^*$收敛]
+设 $\mu_k\stackrel{n}{\rightharpoonup}\mu$。任取 $g\in C_0(X)$，则 $g\in C_b(X)$ 且 $\|g\|_\infty<\infty$，由\eqref{align:ch05-5.3}得 $\lim_{k}\int_X g\,\mathrm{d}\mu_k=\int_X g\,\mathrm{d}\mu$。因 $g\in C_0(X)$ 任意，按\cref{definition:ch05-弱星收敛}得 $\mu_k\stackrel{*}{\rightharpoonup}\mu$。
+\end{proof}
+
+窄拓扑被某些作者称为“弱拓扑”（例如见文献~\cite{ref45}）。$\mathcal{T}_n$ 的一组基是\eqref{align:ch05-5.2}所定义的子集族 $B_{g_1,\cdots ,g_n;\varepsilon}(\mu_0)\subseteq\mathscr{R}_f(X)$，只是其中 $g_1,\cdots ,g_n\in C_b(X)$。
+
+\begin{remark}\phantomsection\label{remark:ch05-模糊收敛}
 序列 $\{\mu_k\}\subseteq\mathscr{R}_f(X)$ \textbf{模糊收敛}于 $\mu\in\mathscr{R}_f(X)$，定义为
 \begin{align*}
 \lim_{k\to\infty}\int_X g\,\mathrm{d}\mu_k=\int_X g\,\mathrm{d}\mu
-\quad\text{对任意 }g\in C_c(X)
+\quad\text{对每个 }g\in C_c(X)
 \end{align*}
-（例如见文献~\cite{ref42}）。显然，在 $\mathscr{R}_f(X)$ 中，强收敛 $\Rightarrow$ 窄收敛 $\Rightarrow$ 弱$^*$收敛 $\Rightarrow$ 模糊收敛。
+（例如见文献~\cite{ref42}）。在 $\mathscr{R}_f(X)$ 中成立如下的蕴含关系：强收敛 $\Rightarrow$ 窄收敛 $\Rightarrow$ 弱$^*$收敛 $\Rightarrow$ 模糊收敛。
 \end{remark}
 
-\begin{remark}\label{remark:ch05-范数下半连续}
-\label{remark:ch05-5.1.3}
+% SUPPLEMENT: parent=remark:ch05-模糊收敛; kind=proof; 依据：$C_c\subseteq C_0\subseteq C_b$ 与全变差估计；补出三条蕴含的验证，并给出三条逆蕴含均不成立的反例
+\begin{proof}[蕴含关系的验证与严格性]
+三条蕴含的验证：设 $\mu_k\to\mu$ 强收敛，则由\cref{remark:ch05-强收敛动机}后的论证得 $\mu_k\stackrel{n}{\rightharpoonup}\mu$；设 $\mu_k\stackrel{n}{\rightharpoonup}\mu$，因 $C_0(X)\subseteq C_b(X)$，\eqref{align:ch05-5.1}由\eqref{align:ch05-5.3}限制试验函数类得到；设 $\mu_k\stackrel{*}{\rightharpoonup}\mu$，因 $C_c(X)\subseteq C_0(X)$，模糊收敛由\eqref{align:ch05-5.1}限制试验函数类得到。
+
+三条逆蕴含均不成立。(i) 窄收敛不蕴含强收敛：取 $X=[0,1]$，$\nu_k\triangleq\frac1k\sum_{j=1}^k\delta_{j/k}$，$\nu\triangleq\lambda\llcorner[0,1]$。对 $g\in C_b([0,1])$，$\int_{[0,1]}g\,\mathrm{d}\nu_k=\frac1k\sum_{j=1}^k g(j/k)$ 是 $g$ 的 Riemann 和，故收敛于 $\int_{[0,1]}g\,\mathrm{d}\lambda$，即 $\nu_k\stackrel{n}{\rightharpoonup}\nu$；但 $\nu_k$ 集中于有限集而 $\nu\ll\lambda$，故 $\nu_k\perp\lambda$，从而 $\|\nu_k-\nu\|=2$ 对一切 $k$，$\nu_k$ 不强收敛于 $\nu$。
+
+(ii) 弱$^*$收敛不蕴含窄收敛：取 $X=\mathbb{R}$，$\mu_k\triangleq\delta_k$。对 $g\in C_0(\mathbb{R})$ 有 $\int_{\mathbb{R}}g\,\mathrm{d}\mu_k=g(k)\to0$，故 $\mu_k\stackrel{*}{\rightharpoonup}0$；但取 $g\equiv1\in C_b(\mathbb{R})$ 得 $\int_{\mathbb{R}}g\,\mathrm{d}\mu_k=1$，而 $\int_{\mathbb{R}}g\,\mathrm{d}0=0$，故 $\mu_k$ 不窄收敛于 $0$。
+
+(iii) 模糊收敛不蕴含弱$^*$收敛：取 $X=\mathbb{R}$，$\mu_k\triangleq k\delta_k$。对 $g\in C_c(\mathbb{R})$，当 $k>\max\{|x|\mid x\in\operatorname{supp}g\}$ 时 $g(k)=0$，故 $\int_{\mathbb{R}}g\,\mathrm{d}\mu_k=0$ 对充分大的 $k$ 成立，即 $\mu_k$ 模糊收敛于 $0$。另一方面，函数 $g:\mathbb{R}\to\mathbb{R}$，$g(x)\triangleq\min\{1,|x|^{-1}\}$（$x\neq0$），$g(0)\triangleq1$，满足 $g\in C_0(\mathbb{R})$ 且 $\int_{\mathbb{R}}g\,\mathrm{d}\mu_k=k\min\{1,k^{-1}\}=1$ 对一切 $k\in\mathbb{N}$，故 $\int_{\mathbb{R}}g\,\mathrm{d}\mu_k$ 不收敛于 $0=\int_{\mathbb{R}}g\,\mathrm{d}0$。若 $\mu_k$ 弱$^*$收敛于某 $\nu\in\mathscr{R}_f(\mathbb{R})$，则对 $g\in C_c(\mathbb{R})$ 有 $\int g\,\mathrm{d}\nu=\lim_k\int g\,\mathrm{d}\mu_k=0$，由 $C_c(\mathbb{R})$ 分离 $\mathscr{R}_f(\mathbb{R})$ 中的点得 $\nu=0$，与上述矛盾。故 $\mu_k$ 不弱$^*$收敛。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch05-范数下半连续}
+\phantomsection\label{remark:ch05-5.1.3}
 由范数的下半连续性可知，若 $\mu_k\stackrel{*}{\rightharpoonup}\mu$（特别地，若 $\mu_k\stackrel{n}{\rightharpoonup}\mu$），则
 \begin{align}
 |\mu|(X)=\|\mu\|_{\mathscr{R}_f(X)}
 \leqslant\liminf_{k\to\infty}\|\mu_k\|_{\mathscr{R}_f(X)}
 =\liminf_{k\to\infty}|\mu_k|(X).\label{align:ch05-5.4}
 \end{align}
-特别地，若 $\{\mu_k\}\subseteq\mathscr{R}^+_f(X)$，则 $\mu(X)\leqslant\liminf_{k\to\infty}\mu_k(X)$。具体地，若 $\mu_k\stackrel{n}{\rightharpoonup}\mu$，则在\eqref{align:ch05-5.3}中取 $g=1$ 得 $\lim_{k\to\infty}\mu_k(X)=\mu(X)$，故“没有质量损失”。若 $\mu_k\stackrel{*}{\rightharpoonup}\mu$，则未必如此：取 $X=\mathbb{R}$，$\mu_k=\delta_k$（$k\in\mathbb{N}$），则 $\mu_k\stackrel{*}{\rightharpoonup}0$ 且对所有 $k$ 有 $\mu_k(\mathbb{R})=1$。故在此情形不等式\eqref{align:ch05-5.4}是严格的。类似现象在函数序列中已遇到过（见\cref{example:ch02-弱收敛振荡}(i)）。
+特别地，若 $\{\mu_k\}\subseteq\mathscr{R}^+_f(X)$，则 $\mu(X)\leqslant\liminf_{k\to\infty}\mu_k(X)$。具体地，若 $\mu_k\stackrel{n}{\rightharpoonup}\mu$，则在\eqref{align:ch05-5.3}中取 $g=1$ 得 $\lim_{k\to\infty}\mu_k(X)=\mu(X)$，故“没有质量损失”。若 $\mu_k\stackrel{*}{\rightharpoonup}\mu$，则未必如此：取 $X=\mathbb{R}$，$\mu_k=\delta_k$（$k\in\mathbb{N}$），则 $\mu_k\stackrel{*}{\rightharpoonup}0$ 且对一切 $k$ 有 $\mu_k(\mathbb{R})=1$。故在此情形不等式\eqref{align:ch05-5.4}是严格的。类似现象在函数序列中已遇到过（见\cref{example:ch02-弱收敛振荡}(i)）。
 \end{remark}
 
-\begin{remark}\label{remark:ch05-函数转测度}
-设 $X$ 为局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。设 $\{h_k\}\subseteq L^1(X,\mathscr{B}(X),\mu)$，对任意 $k\in\mathbb{N}$ 置
+% SUPPLEMENT: parent=remark:ch05-范数下半连续; kind=proof; 依据：全变差范数的上确界表示与弱*收敛；补出下半连续性的完整论证，并说明正性假设在取等号时的作用
+\begin{proof}[范数下半连续性的验证]
+对任意 $g\in C_0(X)$ 且 $\|g\|_\infty\leqslant1$，由 $\mu_k\stackrel{*}{\rightharpoonup}\mu$ 得
+\begin{align*}
+\int_X g\,\mathrm{d}\mu=\lim_{k\to\infty}\int_X g\,\mathrm{d}\mu_k
+\leqslant\liminf_{k\to\infty}\left|\int_X g\,\mathrm{d}\mu_k\right|
+\leqslant\liminf_{k\to\infty}\|\mu_k\|_{\mathscr{R}_f(X)} .
+\end{align*}
+因 $\{g\in C_0(X)\mid\|g\|_\infty\leqslant1\}$ 在 $C_0(X)$ 的单位球中稠密，对 $g$ 取上确界即得\eqref{align:ch05-5.4}。当 $\{\mu_k\}\subseteq\mathscr{R}^+_f(X)$ 时 $|\mu_k|(X)=\mu_k(X)$，故 $\mu(X)\leqslant\liminf_k\mu_k(X)$；若更有 $\mu_k\stackrel{n}{\rightharpoonup}\mu$，取 $g=1\in C_b(X)$ 于\eqref{align:ch05-5.3}得 $\lim_k\mu_k(X)=\mu(X)$，结合上式得 $\|\mu_k\|_{\mathscr{R}_f(X)}\to\|\mu\|_{\mathscr{R}_f(X)}$。
+
+$\delta_k\stackrel{*}{\rightharpoonup}0$ 使\eqref{align:ch05-5.4}严格，说明弱$^*$收敛只控制质量的下界。正性在取等号时不可去除：取 $X=[0,1]$、$\mu_k\triangleq\delta_0-\delta_{1/k}$，则对 $g\in C_b([0,1])$ 有 $\int g\,\mathrm{d}\mu_k=g(0)-g(1/k)\to0$，即 $\mu_k\stackrel{n}{\rightharpoonup}0$；而 $\|\mu_k\|_{\mathscr{R}_f(X)}=2$ 对 $k\geqslant2$，故 $\|\mu\|_{\mathscr{R}_f(X)}=0<2=\lim_k\|\mu_k\|_{\mathscr{R}_f(X)}$。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch05-函数转测度}
+设 $X$ 为局部紧 Hausdorff 空间，$\mu\in\mathscr{R}^+_f(X)$。设 $\{h_k\}\subseteq L^1(X,\mathscr{B}(X),\mu)$，对每个 $k\in\mathbb{N}$ 置
 \begin{align}
 \nu_k(E)\triangleq \int_E h_k\,\mathrm{d}\mu\qquad(E\in\mathscr{B}(X)).\label{align:ch05-5.5}
 \end{align}
-显然 $\{\nu_k\}\subseteq\mathscr{R}_f(X)$，且对所有 $k\in\mathbb{N}$ 有 $\nu_k\ll\mu$。$\{h_k\}$ 在 $L^1(X,\mathscr{B}(X),\mu)$ 中的收敛与 $\{\nu_k\}$ 在 $\mathscr{R}_f(X)$ 中的收敛之间存在明显联系：
+则 $\{\nu_k\}\subseteq\mathscr{R}_f(X)$，且对一切 $k\in\mathbb{N}$ 有 $\nu_k\ll\mu$。$\{h_k\}$ 在 $L^1(X,\mathscr{B}(X),\mu)$ 中的收敛与 $\{\nu_k\}$ 在 $\mathscr{R}_f(X)$ 中的收敛之间存在如下联系：
 \begin{itemize}
 \item 若 $h_k\to h$ 在 $L^1(X)$ 中强收敛，且 $\nu(E)\triangleq \int_E h\,\mathrm{d}\mu$（$E\in\mathscr{B}(X)$），则 $\|\nu_k-\nu\|_{\mathscr{R}_f(X)}=|\nu_k-\nu|(X)=\int_X|h_k-h|\,\mathrm{d}\mu\to0$，故 $\nu_k\to\nu$ 在 $\mathscr{R}_f(X)$ 中强收敛；
 \item 若 $h_k\to h$ 在 $L^1(X)$ 中弱收敛，则特别地
 \begin{align*}
 \lim_{k\to\infty}\int_X g h_k\,\mathrm{d}\mu=\int_X g h\,\mathrm{d}\mu
-\quad\text{对任意 }g\in C_b(X),
+\quad\text{对每个 }g\in C_b(X),
 \end{align*}
 从而
 \begin{align*}
 \lim_{k\to\infty}\int_X g\,\mathrm{d}\nu_k=\int_X g\,\mathrm{d}\nu
-\quad\text{对任意 }g\in C_b(X)
+\quad\text{对每个 }g\in C_b(X),
 \end{align*}
-其中 $\nu$ 同上。故 $\nu_k\stackrel{n}{\rightharpoonup}\nu$。
+其中 $\nu$ 同上；故 $\nu_k\stackrel{n}{\rightharpoonup}\nu$。
 \end{itemize}
-更一般地，即使序列 $\{h_k\}$ 在 $L^1(X)$ 中不收敛，由\eqref{align:ch05-5.5}定义的序列 $\{\nu_k\}$ 仍可（弱$^*$或窄）收敛于某个 $\nu\in\mathscr{R}_f(X)$（见\cref{example:ch05-测度逼近}(i)）。在此类情形中，按记号滥用，我们偶尔写作 $h_k\stackrel{*}{\rightharpoonup}\nu$ 或 $h_k\stackrel{n}{\rightharpoonup}\nu$。
+更一般地，即使 $\{h_k\}$ 在 $L^1(X)$ 中不收敛，由\eqref{align:ch05-5.5}定义的序列 $\{\nu_k\}$ 仍可弱$^*$或窄收敛于某 $\nu\in\mathscr{R}_f(X)$（见\cref{example:ch05-测度逼近}(i)）。在此类情形中，按记号滥用，偶尔写作 $h_k\stackrel{*}{\rightharpoonup}\nu$ 或 $h_k\stackrel{n}{\rightharpoonup}\nu$。
 \end{remark}
 
-牢记\cref{remark:ch05-函数转测度}，我们指出一些与 $\mathscr{R}_f(X)$ 中收敛相关的现象。
+% SUPPLEMENT: parent=remark:ch05-函数转测度; kind=proof; 依据：Radon–Nikodým 导数与 $L^1$ 对偶；补出两个断言的论证，并给出窄收敛不蕴含密度弱收敛的反例
+\begin{proof}[两个断言的验证与边界反例]
+设 $h_k\to h$ 在 $L^1(X,\mu)$ 中强收敛。测度 $\nu_k-\nu$ 以 $h_k-h$ 为关于 $\mu$ 的 Radon–Nikodým 导数，故其全变差为 $|\nu_k-\nu|(X)=\int_X|h_k-h|\,\mathrm{d}\mu$（见\cref{definition:ch02-Lebesgue}），于是 $\|\nu_k-\nu\|_{\mathscr{R}_f(X)}=\|h_k-h\|_{L^1(X,\mu)}\to0$。
+
+设 $h_k\to h$ 在 $L^1(X,\mu)$ 中弱收敛。对 $g\in C_b(X)$ 有 $g\in L^\infty(X,\mu)=(L^1(X,\mu))^*$（因 $\mu$ 有限，$C_b(X)\subseteq L^\infty(X,\mu)$），故 $\int_X gh_k\,\mathrm{d}\mu\to\int_X gh\,\mathrm{d}\mu$，此即 $\int_X g\,\mathrm{d}\nu_k\to\int_X g\,\mathrm{d}\nu$；由 $g\in C_b(X)$ 任意得 $\nu_k\stackrel{n}{\rightharpoonup}\nu$。
+
+逆命题不成立：窄收敛不蕴含密度的弱收敛。取 $X=[0,1]$、$\mu=\lambda$、$h_k\triangleq k\chi_{(0,1/k)}$。对 $g\in C_b([0,1])$，
+\begin{align*}
+\int_{[0,1]}g\,\mathrm{d}\nu_k=k\int_0^{1/k}g\,\mathrm{d}\lambda\longrightarrow g(0),
+\end{align*}
+故 $\nu_k\stackrel{n}{\rightharpoonup}\delta_0$；而 $\int_{[0,1]}h_k\,\mathrm{d}\lambda=1$ 对一切 $k$，若 $h_k$ 弱收敛于某 $h\in L^1([0,1])$，则对 $g\in C_c((0,1))$ 有 $\int_0^1gh\,\mathrm{d}\lambda=\lim_k\int_0^1gh_k\,\mathrm{d}\lambda=0$，得 $h=0$ 于 $(0,1)$，与 $\int_0^1h\,\mathrm{d}\lambda=1$ 矛盾。故 $\{h_k\}$ 在 $L^1$ 中无弱极限，而 $\{\nu_k\}$ 窄收敛，映射 $h\mapsto\nu$ 不弱连续。
+\end{proof}
+
+牢记\cref{remark:ch05-函数转测度}，以下指出一些与 $\mathscr{R}_f(X)$ 中收敛相关的现象。
 
 \begin{example}\label{example:ch05-测度逼近}
 \label{example:ch05-振荡集中}
-(i) 每个 $\nu\in\mathscr{R}^+_f(\mathbb{R})$ 都是序列 $\{h_k\}\subseteq C^\infty_c(\mathbb{R})$（在 $L^1(\mathbb{R})\equiv L^1(\mathbb{R},\mathscr{B},\lambda)$ 中有界）的弱$^*$极限（更确切地说，是\eqref{align:ch05-5.5}中定义的密度 $h_k$ 所对应的测度序列 $\nu_k$ 的弱$^*$极限）。事实上，设 $\rho_{1/k}$ 为磨光子，$\rho_{1/k}(x)\triangleq k\rho(kx)$，其中 $\rho\in C^\infty_c(\mathbb{R})$，$\rho\geqslant0$，$\int_\mathbb{R}\rho\,\mathrm{d}\lambda=1$（$k\in\mathbb{N}$）。对任意 $k\in\mathbb{N}$，考虑卷积 $\nu*\rho_{1/k}\in C^\infty_c(\mathbb{R})$，
+(i) 每个 $\nu\in\mathscr{R}^+_f(\mathbb{R})$ 都是序列 $\{h_k\}\subseteq C^\infty_c(\mathbb{R})$（在 $L^1(\mathbb{R})\equiv L^1(\mathbb{R},\mathscr{B},\lambda)$ 中有界）的弱$^*$极限，确切地说，是\eqref{align:ch05-5.5}中定义的密度 $h_k$ 所对应测度序列 $\nu_k$ 的弱$^*$极限。事实上，设 $\rho_{1/k}$ 为磨光子，$\rho_{1/k}(x)\triangleq k\rho(kx)$，其中 $\rho\in C^\infty_c(\mathbb{R})$，$\rho\geqslant0$，$\int_\mathbb{R}\rho\,\mathrm{d}\lambda=1$（$k\in\mathbb{N}$）。对每个 $k\in\mathbb{N}$，考虑卷积 $\nu*\rho_{1/k}\in C^\infty_c(\mathbb{R})$，
 \begin{align*}
 \int_\mathbb{R}g(x)(\nu*\rho_{1/k})(x)\,\mathrm{d}\lambda(x)
 \triangleq \int_\mathbb{R}\mathrm{d}\nu(x)\int_\mathbb{R}\rho_{1/k}(y-x)g(y)\,\mathrm{d}\lambda(y)
 \qquad(g\in C^\infty_c(\mathbb{R}))
 \end{align*}
-（见\cref{definition:ch03-磨光}(ii)与\cref{remark:ch03-磨光注}）。置 $h_k\triangleq \nu*\rho_{1/k}$，$\nu_k(E)\triangleq \int_E h_k\,\mathrm{d}\lambda$（$E\in\mathscr{B}$）。由\cref{proposition:ch03-磨光性质}(i)，
+（见\cref{definition:ch03-磨光}(ii)与\cref{remark:ch03-磨光注}）。置 $h_k\triangleq \nu*\rho_{1/k}$，$\nu_k(E)\triangleq \int_E h_k\,\mathrm{d}\lambda$（$E\in\mathscr{B}(\mathbb{R})$）。由\cref{proposition:ch03-磨光性质}(i)，
 \begin{align*}
 \lim_{k\to\infty}\int_\mathbb{R}g\,\mathrm{d}\nu_k
 =\lim_{k\to\infty}\int_\mathbb{R}g h_k\,\mathrm{d}\lambda
 =\int_\mathbb{R}g\,\mathrm{d}\nu
-\quad\text{对任意 }g\in C^\infty_c(\mathbb{R}).
+\quad\text{对每个 }g\in C^\infty_c(\mathbb{R}).
 \end{align*}
-易见 $\|h_k\|_{L^1(\mathbb{R})}\leqslant\|\nu\|=\nu(X)<\infty$，故由标准论证上述等式对任意 $g\in C_0(\mathbb{R})$ 成立。
+又 $\|h_k\|_{L^1(\mathbb{R})}\leqslant\|\nu\|=\nu(\mathbb{R})<\infty$，故上述等式对每个 $g\in C_0(\mathbb{R})$ 成立。
 
-(ii) 特别地，上述考虑适用于 $\nu$ 为原子测度的情形，例如 $\nu=\delta_0$。因此序列 $\{\nu_k\}\subseteq\mathscr{R}^+_f(\mathbb{R})$（对所有 $k\in\mathbb{N}$，$\nu_k\ll\lambda$）可弱$^*$收敛于测度 $\nu\perp\lambda$。在此情形我们也说发生了质量集中（见\cref{example:ch02-弱收敛振荡}）。反之，考虑测度空间 $(I,\mathscr{B}\cap I,\lambda|_{\mathscr{B}\cap I})$，其中 $I\equiv(0,1)$。对任意固定的 $h\in C_b(I)$，置 $\nu(E)\triangleq \int_E h\,\mathrm{d}\lambda$（$E\in\mathscr{B}\cap I$），并考虑原子测度序列
+(ii) 特别地，上述考虑适用于 $\nu$ 为原子测度的情形，例如 $\nu=\delta_0$。因此存在序列 $\{\nu_k\}\subseteq\mathscr{R}^+_f(\mathbb{R})$（对一切 $k\in\mathbb{N}$，$\nu_k\ll\lambda$）弱$^*$收敛于测度 $\nu\perp\lambda$。在此情形也称为发生质量集中（见\cref{example:ch02-弱收敛振荡}）。反之，考虑测度空间 $(I,\mathscr{B}\cap I,\lambda|_{\mathscr{B}\cap I})$，其中 $I\equiv(0,1)$。对任意固定的 $h\in C_b(I)$，置 $\nu(E)\triangleq \int_E h\,\mathrm{d}\lambda$（$E\in\mathscr{B}\cap I$），并考虑原子测度序列
 \begin{align*}
 \nu_k\triangleq \frac{1}{k}\sum_{j=1}^k h\!\left(\frac{j}{k}\right)\delta_{j/k}\qquad(k\in\mathbb{N}).
 \end{align*}
@@ -151,17 +259,28 @@ $\mathscr{R}_f(X)$ 上的窄拓扑，记作 $\mathcal{T}_n$，是使所有映射
 \lim_{k\to\infty}\int_I g\,\mathrm{d}\nu_k
 =\lim_{k\to\infty}\frac{1}{k}\sum_{j=1}^k g\!\left(\frac{j}{k}\right)h\!\left(\frac{j}{k}\right)
 =\int_I gh\,\mathrm{d}\lambda=\int_I g\,\mathrm{d}\nu
-\quad\text{对任意 }g\in C_b(I).
+\quad\text{对每个 }g\in C_b(I).
 \end{align*}
-故在此情形，对所有 $k\in\mathbb{N}$ 有 $\nu_k\perp\lambda$，$\nu\ll\lambda$，且 $\nu_k\stackrel{n}{\rightharpoonup}\nu$。
+故在此情形，对一切 $k\in\mathbb{N}$ 有 $\nu_k\perp\lambda$，$\nu\ll\lambda$，且 $\nu_k\stackrel{n}{\rightharpoonup}\nu$。
 \end{example}
 
-此后我们主要处理有限（正）Radon 测度序列。有限带号 Radon 测度序列的结果可由下文所证结果容易地得到（见\cref{remark:ch02-带号约化}）。
+% SUPPLEMENT: parent=example:ch05-测度逼近; kind=proof; 依据：$\|h_k\|_{L^1}\leqslant\|\nu\|$ 与 $C_c$ 在 $C_0$ 中的稠密性；补出“对 $C_0$ 中试验函数亦成立”的完整论证
+\begin{proof}[由 $C_c^\infty$ 过渡到 $C_0$ 的论证]
+设 $g\in C_0(\mathbb{R})$，$\varepsilon>0$。因 $\mathbb{R}$ 为 $\sigma$-紧局部紧 Hausdorff 空间，$C_c(\mathbb{R})$ 在 $C_0(\mathbb{R})$ 中关于 $\|\cdot\|_\infty$ 稠密（见附录 A）；取 $g'\in C_c(\mathbb{R})$ 使 $\|g-g'\|_\infty<\varepsilon/(4\|\nu\|)$（当 $\nu=0$ 时结论由 $\|h_k\|_{L^1}=0$ 直接得到）。由 $\|h_k\|_{L^1(\mathbb{R})}=\|\nu_k\|_{\mathscr{R}_f(\mathbb{R})}\leqslant\|\nu\|$，得
+\begin{align*}
+\left|\int_\mathbb{R}g\,\mathrm{d}\nu_k-\int_\mathbb{R}g\,\mathrm{d}\nu\right|
+\leqslant\|g-g'\|_\infty\left(\|\nu_k\|_{\mathscr{R}_f(\mathbb{R})}+\|\nu\|_{\mathscr{R}_f(\mathbb{R})}\right)
++\left|\int_\mathbb{R}g'\,\mathrm{d}\nu_k-\int_\mathbb{R}g'\,\mathrm{d}\nu\right|.
+\end{align*}
+第一项小于 $\varepsilon/2$，第二项当 $k\to\infty$ 时趋于 $0$（先以 $C_c^\infty$ 中函数按 $\|\cdot\|_\infty$ 逼近 $g'$，再用已证的对 $C_c^\infty$ 成立的等式与 $\|h_k\|_{L^1}\leqslant\|\nu\|$）。故 $\int_\mathbb{R}g\,\mathrm{d}\nu_k\to\int_\mathbb{R}g\,\mathrm{d}\nu$。
+\end{proof}
+
+此后主要处理有限（正）Radon 测度序列。有限带号 Radon 测度序列的结果可由下文所证结果容易地得到（见\cref{remark:ch02-带号约化}）。
 
 窄收敛可如下刻画。
 
 \begin{theorem}[Portmanteau 定理]\label{theorem:ch05-portmanteau}
-设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\{\mu_k\}\subseteq\mathscr{R}^+_f(X)$，$\mu\in\mathscr{R}^+_f(X)$。则下列命题等价：
+设 $X$ 为具可数基的局部紧 Hausdorff 空间，$\{\mu_k\}_{k\in\mathbb{N}}\subseteq\mathscr{R}^+_f(X)$，$\mu\in\mathscr{R}^+_f(X)$。则下列命题等价：
 \begin{enumerate}[(i)]
 \item\label{item:ch05-port-i} $\mu_k\stackrel{n}{\rightharpoonup}\mu$；
 \item\label{item:ch05-port-ii} 对每个一致连续的 $g\in C_b(X)$，
@@ -184,23 +303,23 @@ $\mathscr{R}_f(X)$ 上的窄拓扑，记作 $\mathcal{T}_n$，是使所有映射
 \end{theorem}
 
 \begin{proof}
-(i)$\Rightarrow$(ii)。由\cref{definition:ch05-窄收敛}显然。
+(i)$\Rightarrow$(ii)。\eqref{align:ch05-5.3}对一切 $g\in C_b(X)$ 成立，故对其中一致连续者亦成立，即得\eqref{align:ch05-5.6}。
 
-(ii)$\Rightarrow$(iii)。取 $g=1$ 表明 $\mu_k(X)\to\mu(X)$。设 $X$ 赋以与给定拓扑相容的度量 $d$。若 $C=\varnothing $，不等式\eqref{align:ch05-5.7}显然成立。否则，对任意 $n\in\mathbb{N}$，置 $C_{1/n}\triangleq \{x\in X\mid d(x,C)<1/n\}$。显然 $C_{1/n}$ 为开集，$C=\bigcap_{n=1}^\infty C_{1/n}$，故 $\mu(C)=\lim_{n\to\infty}\mu(C_{1/n})$。置 $f_n:X\to[0,\infty)$，$f_n(x)\triangleq \max\{1-nd(x,C),0\}$（$n\in\mathbb{N}$）。显然，对任意 $n\in\mathbb{N}$，函数 $f_n$ 在 $X$ 上一致连续，且 $\chi_C\leqslant f_n\leqslant\chi_{C_{1/n}}$。于是由\eqref{align:ch05-5.6}，对任意固定的 $n\in\mathbb{N}$，
+(ii)$\Rightarrow$(iii)。取 $g=1$ 表明 $\mu_k(X)\to\mu(X)$。设 $X$ 赋以与给定拓扑相容的度量 $d$（由 $X$ 具可数基且局部紧，$X$ 可度量化）。若 $C=\varnothing$，则 $\mu_k(C)=\mu(C)=0$，\eqref{align:ch05-5.7}取等号。否则，对任意 $n\in\mathbb{N}$，置 $C_{1/n}\triangleq \{x\in X\mid d(x,C)<1/n\}$。由 $d(\cdot,C)$ 的连续性，$C_{1/n}$ 为开集；由 $C$ 闭得 $C=\bigcap_{n=1}^\infty C_{1/n}$，故由 $\mu(X)<\infty$ 及测度的上连续性得 $\mu(C)=\lim_{n\to\infty}\mu(C_{1/n})$。置 $f_n:X\to[0,\infty)$，$f_n(x)\triangleq \max\{1-nd(x,C),0\}$（$n\in\mathbb{N}$）。因 $d(\cdot,C)$ 是 $1$-Lipschitz 的，$f_n$ 是 $n$-Lipschitz 的，故在 $X$ 上一致连续；又当 $x\in C$ 时 $d(x,C)=0$，得 $f_n(x)=1$，当 $x\notin C_{1/n}$ 时 $d(x,C)\geqslant1/n$，得 $f_n(x)=0$，故 $\chi_C\leqslant f_n\leqslant\chi_{C_{1/n}}$。于是由\eqref{align:ch05-5.6}，对任意固定的 $n\in\mathbb{N}$，
 \begin{align*}
 \limsup_{k\to\infty}\mu_k(C)
 \leqslant\lim_{k\to\infty}\int_X f_n\,\mathrm{d}\mu_k
 =\int_X f_n\,\mathrm{d}\mu\leqslant\mu(C_{1/n}).
 \end{align*}
-令 $n\to\infty$ 即得\eqref{align:ch05-5.7}，结论得证。
+在上述不等式右端令 $n\to\infty$（用 $\lim_n\mu(C_{1/n})=\mu(C)$），即得\eqref{align:ch05-5.7}。
 
-(iii)$\Leftrightarrow$(iv)。由\eqref{align:ch05-5.7}，对任意开集 $A\subseteq X$，
+(iii)$\Leftrightarrow$(iv)。由\eqref{align:ch05-5.7}，对任意开集 $A\subseteq X$，利用 $A^c$ 闭及 $\mu_k(X)\to\mu(X)$ 得
 \begin{align*}
 \liminf_{k\to\infty}\mu_k(A)
 =\lim_{k\to\infty}\mu_k(X)-\limsup_{k\to\infty}\mu_k(A^c)
 \geqslant\mu(X)-\mu(A^c)=\mu(A),
 \end{align*}
-故\eqref{align:ch05-5.8}成立。反转论证即得逆命题。
+故\eqref{align:ch05-5.8}成立。反转论证（以开集 $A$ 替换闭集 $C$，以 $\limsup$ 替换 $\liminf$）即得逆命题。
 
 (iv)$\Rightarrow$(v)。由假设 $\mu(\partial E)=\mu(\overline{E})-\mu(E^\circ)=0$，故 $\mu(E)=\mu(E^\circ)=\mu(\overline{E})$。于是由\eqref{align:ch05-5.7}–\eqref{align:ch05-5.8}，
 \begin{align*}
@@ -209,59 +328,80 @@ $\mathscr{R}_f(X)$ 上的窄拓扑，记作 $\mathcal{T}_n$，是使所有映射
 \leqslant\liminf_{k\to\infty}\mu_k(E)
 \leqslant\limsup_{k\to\infty}\mu_k(E)
 \leqslant\limsup_{k\to\infty}\mu_k(\overline{E})
-\leqslant\mu(\overline{E})=\mu(E).
+\leqslant\mu(\overline{E})=\mu(E),
 \end{align*}
 故\eqref{align:ch05-5.9}成立。
 
-(v)$\Rightarrow$(i)。对任意 $g\in C_b(X)$ 与 $t>0$，置 $E_t\triangleq \{g>t\}$。由于 $g$ 连续，对 $\lambda$-几乎所有 $t\in(0,\infty)$，有 $\mu(\partial E_t)\leqslant\mu(\{g=t\})=0$，故由\eqref{align:ch05-5.9}，
+(v)$\Rightarrow$(i)。对任意 $g\in C_b(X)$ 与 $t>0$，置 $E_t\triangleq \{g>t\}$。由于 $g$ 连续，$\partial E_t\subseteq\{g=t\}$，且使 $\mu(\{g=t\})>0$ 的 $t\in(0,\infty)$ 至多可数（对每个 $m\in\mathbb{N}$，集合 $\{t>0\mid\mu(\{g=t\})>1/m\}$ 的元素个数不超过 $m\mu(X)$），故对 $\lambda$-几乎所有 $t\in(0,\infty)$ 有 $\mu(\partial E_t)\leqslant\mu(\{g=t\})=0$，从而由\eqref{align:ch05-5.9}
 \begin{align}
 \lim_{k\to\infty}\mu_k(\{g>t\})=\mu(\{g>t\})
 \quad\text{对 }\lambda\text{-几乎所有 }t\in(0,\infty).\label{align:ch05-5.10}
 \end{align}
-于是由等式\eqref{align:ch02-2.19}（取 $\alpha=1$）、\eqref{align:ch05-5.10}及控制收敛定理，对任意 $g\in C_b(X)$ 有
+在\eqref{align:ch05-5.9}中取 $E=X$（$\partial X=\varnothing$）得 $\mu_k(X)\to\mu(X)$。由\eqref{align:ch05-5.10}经平移 $t\mapsto t-\|g\|_\infty$（$\lambda$ 的平移不变性）得 $\lim_k\mu_k(\{g+\|g\|_\infty>t\})=\mu(\{g+\|g\|_\infty>t\})$ 对 $\lambda$-几乎所有 $t\in(0,\infty)$ 成立。于是对 $g\in C_b(X)$，函数 $g+\|g\|_\infty\geqslant0$，由等式\eqref{align:ch02-2.19}（取 $\alpha=1$）、\eqref{align:ch05-5.10}及控制收敛定理（控制函数 $t\mapsto\mu_k(X)$ 关于 $k$ 有界）得
 \begin{align*}
 \lim_{k\to\infty}\int_X g\,\mathrm{d}\mu_k
-=\lim_{k\to\infty}\int_{[0,\infty)}\mu_k(\{g>t\})\,\mathrm{d}\lambda(t)
-=\int_{[0,\infty)}\mu(\{g>t\})\,\mathrm{d}\lambda(t)
+&=\lim_{k\to\infty}\int_{[0,\infty)}\mu_k(\{g+\|g\|_\infty>t\})\,\mathrm{d}\lambda(t)-\|g\|_\infty\lim_{k\to\infty}\mu_k(X)\\
+&=\int_{[0,\infty)}\mu(\{g+\|g\|_\infty>t\})\,\mathrm{d}\lambda(t)-\|g\|_\infty\mu(X)
 =\int_X g\,\mathrm{d}\mu.
 \end{align*}
 证明完成。
 \end{proof}
 
-\begin{remark}\label{remark:ch05-窄收敛范数}
-如\cref{remark:ch05-范数下半连续}已述，\cref{theorem:ch05-portmanteau}表明：若 $\{\mu_k\}\subseteq\mathscr{R}^+_f(X)$，$\mu\in\mathscr{R}^+_f(X)$，且 $\mu_k\stackrel{n}{\rightharpoonup}\mu$，则 $\|\mu_k\|_{\mathscr{R}_f(X)}\to\|\mu\|_{\mathscr{R}_f(X)}$。
+% SUPPLEMENT: parent=theorem:ch05-portmanteau; kind=proof; 依据：$\partial\{g>t\}\subseteq\{g=t\}$ 与有限测度的可数例外集论证、以及\eqref{align:ch02-2.19}的截层公式；补出证明中两处压缩步骤
+\begin{proof}[两处压缩步骤的补证]
+第一处：断言使 $\mu(\{g=t\})>0$ 的 $t>0$ 至多可数。对 $m\in\mathbb{N}$ 置 $T_m\triangleq\{t>0\mid\mu(\{g=t\})>1/m\}$；若 $T_m$ 含 $N$ 个互不相同的点，则 $\mu(X)\geqslant\sum_{t\in T_m}\mu(\{g=t\})>N/m$，故 $N<m\mu(X)$，即 $T_m$ 有限。于是 $\{t>0\mid\mu(\{g=t\})>0\}=\bigcup_{m=1}^\infty T_m$ 至多可数。又 $g$ 连续给出 $\partial\{g>t\}\subseteq\{g=t\}$：若 $x\notin\{g=t\}$ 且 $g(x)>t$，则由连续性 $x$ 是 $\{g>t\}$ 的内点；若 $g(x)<t$，则 $x$ 是 $\{g>t\}$ 的外点。
+
+第二处：对非负 $h\in L^1(X,\mathscr{B}(X),\mu)$，由\eqref{align:ch02-2.19}（取 $\alpha=1$）有 $\int_Xh\,\mathrm{d}\mu=\int_{[0,\infty)}\mu(\{h>t\})\,\mathrm{d}\lambda(t)$。将 $h=g+\|g\|_\infty$ 代入即得上述第一等号；由于 $0\leqslant\mu_k(\{g+\|g\|_\infty>t\})\leqslant\mu_k(X)$ 且 $\sup_k\mu_k(X)<\infty$（由 $\mu_k(X)\to\mu(X)$），控制收敛定理可用。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-portmanteau; kind=motivation; 依据：定理 5.1.2 五个命题的分工；说明可数基、正性、$\mu(\partial E)=0$ 与质量收敛条件的作用，并给出各项失效的反例
+\begin{remark}\phantomsection\label{remark:ch05-portmanteau动机}
+\cref{theorem:ch05-portmanteau}把窄收敛翻译为四种可检验的陈述，各有用途：(ii) 把收敛化归为一致连续试验函数，这正是用 Prokhorov 度量刻画窄拓扑（\cref{proposition:ch05-窄拓扑可度量化}）的入口；(iii)、(iv) 是单侧不等式，只要求闭集上的上极限或开集上的下极限，便于处理示性函数的半连续性；(v) 只对 $\mu$-边界为零的集合要求收敛，是概率论中 Portmanteau 定理的标准形式。
+
+各项假设的作用：可数基使 $X$ 可度量化，从而可用 $d(x,C)$ 构造与 $\chi_C$ 夹逼的一致连续函数 $f_n$，这是 (ii)$\Rightarrow$(iii) 的唯一工具；正性在 (iii)$\Leftrightarrow$(iv) 中用于把开集的测度写成全测度减去闭集的测度，在 (v)$\Rightarrow$(i) 中用于截层公式；质量收敛 $\mu_k(X)\to\mu(X)$ 不能由 (iii) 中的闭集不等式推出，必须单独列出，它排除了质量逃逸；$\mu(\partial E)=0$ 是非退化条件，缺它时 (v) 失败。
+
+边界与反例：取 $X=\mathbb{R}$、$\mu_k=\delta_k$、$\mu=0$，则对每个闭集 $C$ 有 $\limsup_k\mu_k(C)\leqslant\mu(C)$（因 $\delta_k$ 最终不击中固定闭集），但 $\mu_k(X)=1\neq0=\mu(X)$，故 (iii) 不成立，而 $\mu_k\stackrel{*}{\rightharpoonup}\mu$；这说明 (iii) 中的质量收敛不可省。又取 $X=[0,1]$、$\mu=\delta_0$、$\mu_k=\delta_{1/k}$、$E=\{0\}$：$\mu(\partial E)=\mu(\{0\})=1\neq0$，而 $\mu_k(E)=0\to0\neq1=\mu(E)$，故 (v) 中 $\mu(\partial E)=0$ 不可省。最后，若去掉正性而只设 $\mu_k,\mu$ 为带号测度，则 (iii)$\Leftrightarrow$(iv) 的论证须改用全变差，且 (v)$\Rightarrow$(i) 的截层公式只对非负函数成立，须先作正负分解（见\cref{remark:ch02-带号约化}）。
 \end{remark}
 
-\subsection{Prokhorov 距离}
+\begin{remark}\phantomsection\label{remark:ch05-窄收敛范数}
+如\cref{remark:ch05-范数下半连续}已述，\cref{theorem:ch05-portmanteau}表明：若 $\{\mu_k\}\subseteq\mathscr{R}^+_f(X)$、$\mu\in\mathscr{R}^+_f(X)$ 且 $\mu_k\stackrel{n}{\rightharpoonup}\mu$，则 $\|\mu_k\|_{\mathscr{R}_f(X)}\to\|\mu\|_{\mathscr{R}_f(X)}$，即窄收敛对正测度保持范数。
+\end{remark}
 
-本小节结果对度量空间 $(X,d)$ 表述。然而由\cref{proposition:appA-可度量化}，当 $X$ 为具可数基的局部紧 Hausdorff 空间且 $d$ 为与其拓扑相容的度量时，这些结果同样成立。
+% SUPPLEMENT: parent=remark:ch05-窄收敛范数; kind=proof; 依据：定理 5.1.2 (iii) 的质量收敛与正性；补出范数收敛的论证
+\begin{proof}[正测度窄收敛的范数收敛]
+因 $\mu_k,\mu\in\mathscr{R}^+_f(X)$，有 $\|\mu_k\|_{\mathscr{R}_f(X)}=\mu_k(X)$、$\|\mu\|_{\mathscr{R}_f(X)}=\mu(X)$；由\cref{theorem:ch05-portmanteau}中 (i)$\Rightarrow$(iii) 得 $\mu_k(X)\to\mu(X)$，故 $\|\mu_k\|_{\mathscr{R}_f(X)}\to\|\mu\|_{\mathscr{R}_f(X)}$。
+\end{proof}
+
+\subsection{Prokhorov 距离}\label{subsection:ch05-Prokhorov距离}
+
+本小节结果对度量空间 $(X,d)$ 表述。然而由\cref{definition:appA-可度量化}，当 $X$ 为具可数基的局部紧 Hausdorff 空间且 $d$ 为与其拓扑相容的度量时，这些结果同样成立。
 
 设 $(X,d)$ 为度量空间。对任意 $E\subseteq X$ 与 $r>0$，置 $E_r\triangleq \{x\in X\mid d(x,E)<r\}$。对任意 $\mu_1,\mu_2\in\mathscr{R}^+_f(X)$，定义
 \begin{align}
 d_P(\mu_1,\mu_2)\triangleq \inf\left\{r>0\ \middle|\
 \mu_1(E)\leqslant\mu_2(E_r)+r,\ \mu_2(E)\leqslant\mu_1(E_r)+r
-\ \forall E\in\mathscr{B}(X)\right\}.\label{align:ch05-5.11}
+\ \ \forall E\in\mathscr{B}(X)\right\}.\label{align:ch05-5.11}
 \end{align}
-注意每个 $r\geqslant\max\{\|\mu_1\|_{\mathscr{R}_f(X)},\|\mu_2\|_{\mathscr{R}_f(X)}\}$ 都属于右端集合，故 $d_P(\mu_1,\mu_2)<\infty$。
+注意每个 $r\geqslant\max\{\|\mu_1\|_{\mathscr{R}_f(X)},\|\mu_2\|_{\mathscr{R}_f(X)}\}$ 都属于右端集合（因 $\mu_1(E)\leqslant\mu_1(X)\leqslant r\leqslant\mu_2(E_r)+r$，反向同理），故 $d_P(\mu_1,\mu_2)<\infty$ 且 $d_P(\mu_1,\mu_2)\geqslant0$。
 
 \begin{proposition}\label{proposition:ch05-Prokhorov度量}
-$(\mathscr{R}^+_f(X),d_P)$ 为度量空间。
+设 $(X,d)$ 为度量空间。则 $(\mathscr{R}^+_f(X),d_P)$ 为度量空间，即由\eqref{align:ch05-5.11}定义的 $d_P:\mathscr{R}^+_f(X)\times\mathscr{R}^+_f(X)\to[0,\infty)$ 满足正定性、对称性与三角不等式。
 \end{proposition}
 
 \begin{proof}
-我们证明映射 $(\mu_1,\mu_2)\mapsto d_P(\mu_1,\mu_2)$ 是 $\mathscr{R}^+_f(X)$ 上的度量。显然 $d_P(\mu_1,\mu_2)=d_P(\mu_2,\mu_1)$。此外：
+证明映射 $(\mu_1,\mu_2)\mapsto d_P(\mu_1,\mu_2)$ 是 $\mathscr{R}^+_f(X)$ 上的度量。\eqref{align:ch05-5.11}右端关于 $\mu_1,\mu_2$ 对称，故 $d_P(\mu_1,\mu_2)=d_P(\mu_2,\mu_1)$。此外：
 \begin{enumerate}[(i)]
-\item 对所有 $E\in\mathscr{B}(X)$，有 $E\subseteq E_r$，故对所有 $\mu\in\mathscr{R}^+_f(X)$ 与 $r>0$ 有 $\mu(E)\leqslant\mu(E_r)$。因此
+\item 对一切 $E\in\mathscr{B}(X)$ 有 $E\subseteq E_r$，故对一切 $\mu\in\mathscr{R}^+_f(X)$ 与 $r>0$ 有 $\mu(E)\leqslant\mu(E_r)$。因此每个 $r>0$ 都满足 $(\mu,\mu)$ 的约束，故
 \begin{align*}
 d_P(\mu,\mu)\triangleq \inf\{r>0\mid\mu(E)\leqslant\mu(E_r)+r\ \forall E\in\mathscr{B}(X)\}=0;
 \end{align*}
-\item 若 $d_P(\mu_1,\mu_2)=0$，则存在序列 $r_n\to0^+$ 使对所有 $n$ 与 $E\in\mathscr{B}(X)$ 有 $\mu_1(E)\leqslant\mu_2(E_{r_n})+r_n$，$\mu_2(E)\leqslant\mu_1(E_{r_n})+r_n$。由于 $\bigcap_{n=1}^\infty\overline{E_{r_n}}=\overline{E}$，故对所有 $E\in\mathscr{B}(X)$ 有 $\mu_1(E)\leqslant\mu_2(E)$ 与 $\mu_2(E)\leqslant\mu_1(E)$，从而对所有闭集 $C\in\mathscr{B}(X)$ 有 $\mu_1(C)=\mu_2(C)$。特别地 $\mu_1(X)=\mu_2(X)$，故对任意开集 $A\in\mathscr{B}(X)$ 有 $\mu_1(A)=\mu_2(A)$。于是由 $\mu_1,\mu_2$ 的正则性（见\cref{lemma:ch01-正则性}(i)）得 $\mu_1=\mu_2$；
-\item 设 $\mu_1,\mu_2,\mu_3\in\mathscr{R}^+_f(X)$，$r,s>0$ 使 $d_P(\mu_1,\mu_2)<r$，$d_P(\mu_2,\mu_3)<s$。则对所有 $E\in\mathscr{B}(X)$，
+\item 若 $d_P(\mu_1,\mu_2)=0$，则存在序列 $r_n\to0^+$ 使对一切 $n\in\mathbb{N}$ 与 $E\in\mathscr{B}(X)$ 有 $\mu_1(E)\leqslant\mu_2(E_{r_n})+r_n$、$\mu_2(E)\leqslant\mu_1(E_{r_n})+r_n$。由于 $\bigcap_{n=1}^\infty E_{r_n}=\overline{E}$，对闭集 $C\in\mathscr{B}(X)$ 有 $\bigcap_{n=1}^\infty C_{r_n}=C$，故由测度的上连续性（$\mu_2(C_{r_n})<\infty$）得 $\mu_1(C)\leqslant\mu_2(C)$，对称地 $\mu_2(C)\leqslant\mu_1(C)$，即 $\mu_1(C)=\mu_2(C)$ 对一切闭集 $C$ 成立。特别地 $\mu_1(X)=\mu_2(X)$，故对任意开集 $A\in\mathscr{B}(X)$ 有 $\mu_1(A)=\mu_2(A)$。于是由 $\mu_1,\mu_2$ 的正则性（见\cref{lemma:ch01-正则性}(i)）得 $\mu_1=\mu_2$；
+\item 设 $\mu_1,\mu_2,\mu_3\in\mathscr{R}^+_f(X)$，$r,s>0$ 使 $d_P(\mu_1,\mu_2)<r$、$d_P(\mu_2,\mu_3)<s$。则对一切 $E\in\mathscr{B}(X)$，由 $(E_r)_s\subseteq E_{r+s}$ 得
 \begin{align*}
-\mu_1(E)\leqslant\mu_2(E_r)+r\leqslant\mu_3(E_{r+s})+r+s,\qquad
+\mu_1(E)\leqslant\mu_2(E_r)+r\leqslant\mu_3((E_r)_s)+r+s\leqslant\mu_3(E_{r+s})+r+s,\qquad
 \mu_3(E)\leqslant\mu_2(E_s)+s\leqslant\mu_1(E_{r+s})+r+s,
 \end{align*}
-故 $d_P(\mu_1,\mu_3)\leqslant r+s$。对 $r,s$ 取inf即得
+故 $d_P(\mu_1,\mu_3)\leqslant r+s$。对满足 $r>d_P(\mu_1,\mu_2)$、$s>d_P(\mu_2,\mu_3)$ 的 $r,s$ 取下确界即得
 \begin{align*}
 d_P(\mu_1,\mu_3)\leqslant d_P(\mu_1,\mu_2)+d_P(\mu_2,\mu_3),
 \end{align*}
@@ -269,24 +409,61 @@ d_P(\mu_1,\mu_3)\leqslant d_P(\mu_1,\mu_2)+d_P(\mu_2,\mu_3),
 \end{enumerate}
 \end{proof}
 
+% SUPPLEMENT: parent=proposition:ch05-Prokhorov度量; kind=proof; 依据：闭集的 $r$-邻域单调收缩与有限 Radon 测度的正则性；补出正定性证明中被压缩的极限步骤
+\begin{proof}[正定性证明的补证]
+设 $d_P(\mu_1,\mu_2)=0$，取 $r_n\downarrow0$ 使 $(\mu_1,\mu_2)$ 满足\eqref{align:ch05-5.11}中 $r=r_n$ 的约束。第一步，对闭集 $C$ 与每个 $n$ 有 $C\subseteq C_{r_n}$，故 $C_{r_n}\downarrow\bigcap_nC_{r_n}$；而 $\bigcap_nC_{r_n}=C$：由 $C\subseteq C_{r_n}$ 对一切 $n$ 成立得 $C\subseteq\bigcap_nC_{r_n}$，反之若 $x\notin C$，则 $d(x,C)>0$（$C$ 闭），取 $n$ 使 $r_n<d(x,C)$ 得 $x\notin C_{r_n}$。因 $\mu_2(X)<\infty$，上连续性给出 $\mu_2(C_{r_n})\to\mu_2(C)$，于是 $\mu_1(C)\leqslant\lim_n(\mu_2(C_{r_n})+r_n)=\mu_2(C)$。交换 $\mu_1,\mu_2$ 得反向不等式，故 $\mu_1(C)=\mu_2(C)$ 对一切闭集 $C$ 成立。
+
+第二步，设 $E\in\mathscr{B}(X)$。由 $\mu_1$ 的内正则性，$\mu_1(E)=\sup\{\mu_1(C)\mid C\subseteq E,\ C\ \text{闭}\}$；对每个这样的 $C$ 有 $\mu_1(C)=\mu_2(C)\leqslant\mu_2(E)$，故 $\mu_1(E)\leqslant\mu_2(E)$。交换下标得 $\mu_2(E)\leqslant\mu_1(E)$，即 $\mu_1=\mu_2$。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-Prokhorov度量; kind=motivation; 依据：定义\eqref{align:ch05-5.11}的结构与命题 5.1.3 的三条度量公理；说明为何以"邻域加 $r$"代替弱收敛、两族约束为何必须同时出现
+\begin{remark}\phantomsection\label{remark:ch05-Prokhorov度量动机}
+\eqref{align:ch05-5.11}的设计思想是：把"$\mu_1$ 的每个 Borel 集的质量不超过 $\mu_2$ 在其 $r$-邻域上的质量加 $r$"作为 $\mu_1$ 与 $\mu_2$ 相距不超过 $r$ 的定量判据，并对 $\mu_2$ 提出对称要求。邻域 $E_r$ 使比较在拓扑意义下"模糊化"，从而不受边界集影响；加项 $r$ 吸收模糊化带来的质量误差，二者共同保证三角不等式成立（$(E_r)_s\subseteq E_{r+s}$ 是全部关键）。两族约束必须同时出现：取 $X=\mathbb{R}$、$\mu_1=0$、$\mu_2=\delta_0$，则第一族约束 $0\leqslant\mu_2(E_r)+r$ 对一切 $r>0$ 成立，其单族下确界为 $0$，而 $\mu_1\neq\mu_2$；第二族约束却给出 $\mu_2(\{0\})=1\leqslant r$，迫使 $r\geqslant1$。故只有同时保留两族约束，$d_P$ 才正定。
+
+各项假设的作用：$(X,d)$ 为度量空间使 $E_r$ 与 $d(x,E)$ 有意义；$\mu_1,\mu_2$ 为正测度使 $E\subseteq E_r$ 直接给出 $\mu(E)\leqslant\mu(E_r)$（若为带号测度，此单调性失效，须改用全变差）；有限性使 $\mu_1(X),\mu_2(X)<\infty$，从而存在满足约束的 $r\geqslant\max\{\|\mu_1\|,\|\mu_2\|\}$、$d_P$ 取值有限，并使上连续性可用。正定性证明中正则性不可省：仅由闭集上相等推不出 Borel 集上相等，除非测度正则（\cref{lemma:ch01-正则性}）。
+
+适用边界：$d_P$ 依赖于度量 $d$，不同但等价的度量给出不同的 $d_P$，但当 $(X,d)$ 可分时它们诱导同一窄拓扑（见\cref{proposition:ch05-窄拓扑可度量化}）；$d_P$ 的取值被 $\max\{\|\mu_1\|,\|\mu_2\|\}$ 控制，故它不区分总质量相差很大的测度之外的信息，仅在质量相近时反映分布的接近程度。
+\end{remark}
+
 \begin{definition}\label{definition:ch05-Prokhorov}
-\eqref{align:ch05-5.11}中定义的 $\mathscr{R}^+_f(X)$ 上的度量 $d_P$ 称为 \textbf{Prokhorov 度量}。
+设 $(X,d)$ 为度量空间。\eqref{align:ch05-5.11}中定义的 $\mathscr{R}^+_f(X)$ 上的度量 $d_P$ 称为 \textbf{Prokhorov 度量}。
 \end{definition}
 
-我们现在证明如下结果。
+% SUPPLEMENT: parent=definition:ch05-Prokhorov; kind=motivation; 依据：定义 5.1.4 与命题 5.1.3、命题 5.1.5 的关系；说明命名的意义与度量的适用条件
+\begin{remark}\phantomsection\label{remark:ch05-Prokhorov距离命名}
+该度量以 Prokhorov 命名，因为它把\cref{theorem:ch05-prokhorov}所刻画的窄拓扑紧性定量化：$\mathscr{R}^+_f(X)$ 上由 $d_P$ 诱导的度量拓扑恰为窄拓扑（当 $(X,d)$ 可分时，见\cref{proposition:ch05-窄拓扑可度量化}），从而"胎紧且有界"这一判据成为度量空间 $(\mathscr{R}^+_f(X),d_P)$ 中的相对紧性判据（见\cref{remark:ch05-Prokhorov推论}）。
+
+定义只对正测度给出，且只依赖 $\mathscr{R}^+_f(X)$ 的凸结构与 $X$ 的度量，不依赖 $X$ 上的任何参考测度；这是它在概率论与变分法中通用的原因。边界情形：$d_P$ 不是平移不变的，也不与线性结构相容（$d_P(\alpha\mu_1,\alpha\mu_2)\neq\alpha d_P(\mu_1,\mu_2)$），故 $(\mathscr{R}^+_f(X),d_P)$ 只是度量空间而非赋范空间；在无界集上 $d_P$ 的拓扑仍与窄拓扑一致（当 $X$ 可分时），这与弱$^*$拓扑须限制在有界集上才可度量化形成对照。
+\end{remark}
+
+现在证明如下结果。
 
 \begin{lemma}\label{lemma:ch05-Prokhorov对称}
-设 $(X,d)$ 为度量空间，$\mu_1,\mu_2\in\mathscr{R}^+_f(X)$ 满足对所有 $E\in\mathscr{B}(X)$，
+设 $(X,d)$ 为度量空间，$\mu_1,\mu_2\in\mathscr{R}^+_f(X)$ 满足
 \begin{align}
-\mu_1(E)\leqslant\mu_2(E_r)+r\qquad(r>0).\label{align:ch05-5.12}
+\mu_1(E)\leqslant\mu_2(E_r)+r\qquad\text{对一切 }E\in\mathscr{B}(X)\ (r>0).\label{align:ch05-5.12}
 \end{align}
-则对所有 $F\in\mathscr{B}(X)$，
+则对一切 $F\in\mathscr{B}(X)$，
 \begin{align}
 \mu_2(F)\leqslant\mu_1(F_r)+r+\|\mu_2\|_{\mathscr{R}_f(X)}-\|\mu_1\|_{\mathscr{R}_f(X)}.\label{align:ch05-5.13}
 \end{align}
 \end{lemma}
 
-\begin{remark}\label{remark:ch05-Prokhorov等范数}
+\begin{proof}
+在\eqref{align:ch05-5.12}中取 $E=(F_r)^c$。因 $E\subseteq(F_r)^c\Leftrightarrow F\subseteq(E_r)^c$，得
+\begin{align*}
+\mu_1(F_r)&=\|\mu_1\|_{\mathscr{R}_f(X)}-\mu_1((F_r)^c)
+=\|\mu_1\|_{\mathscr{R}_f(X)}-\mu_1(E)\\
+&\geqslant\|\mu_1\|_{\mathscr{R}_f(X)}-\mu_2(E_r)-r\\
+&=\|\mu_1\|_{\mathscr{R}_f(X)}-\|\mu_2\|_{\mathscr{R}_f(X)}
++\mu_2((E_r)^c)-r
+\geqslant\|\mu_1\|_{\mathscr{R}_f(X)}-\|\mu_2\|_{\mathscr{R}_f(X)}
++\mu_2(F)-r,
+\end{align*}
+移项即得\eqref{align:ch05-5.13}。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch05-Prokhorov等范数}
 由\cref{lemma:ch05-Prokhorov对称}，若\eqref{align:ch05-5.12}成立且 $\|\mu_1\|_{\mathscr{R}_f(X)}=\|\mu_2\|_{\mathscr{R}_f(X)}$，则
 \begin{align}
 d_P(\mu_1,\mu_2)
@@ -295,50 +472,64 @@ d_P(\mu_1,\mu_2)
 \end{align}
 \end{remark}
 
-\begin{proof}[证明\cref{lemma:ch05-Prokhorov}]
-在\eqref{align:ch05-5.12}中取 $E=(F_r)^c$，立得
-\begin{align*}
-\mu_1(F_r)=\|\mu_1\|_{\mathscr{R}_f(X)}-\mu_1((F_r)^c)
-=\|\mu_1\|_{\mathscr{R}_f(X)}-\mu_1(E)
-\geqslant\|\mu_1\|_{\mathscr{R}_f(X)}-\mu_2(E_r)-r\\
-=\|\mu_1\|_{\mathscr{R}_f(X)}-\|\mu_2\|_{\mathscr{R}_f(X)}
-+\mu_2((E_r)^c)-r
-\geqslant\|\mu_1\|_{\mathscr{R}_f(X)}-\|\mu_2\|_{\mathscr{R}_f(X)}
-+\mu_2(F)-r.
-\end{align*}
-（注意 $E\subseteq(F_r)^c\Leftrightarrow F\subseteq(E_r)^c$。）
+% SUPPLEMENT: parent=lemma:ch05-Prokhorov对称; kind=proof; 依据：集合恒等式 $E\subseteq(F_r)^c\Leftrightarrow F\subseteq(E_r)^c$ 与\eqref{align:ch05-5.11}的对称结构；补出等价性论证与\eqref{align:ch05-5.14}的推导
+\begin{proof}[等价性的验证与\eqref{align:ch05-5.14}的推导]
+对 $E,F\subseteq X$ 与 $r>0$，条件 $E\subseteq(F_r)^c$ 等价于：对一切 $x\in E$、$y\in F$ 有 $d(x,y)\geqslant r$；条件 $F\subseteq(E_r)^c$ 等价于：对一切 $y\in F$、$x\in E$ 有 $d(x,y)\geqslant r$。两条陈述相同，故等价。
+
+若\eqref{align:ch05-5.12}成立，则由\cref{lemma:ch05-Prokhorov对称}，在 $\|\mu_1\|_{\mathscr{R}_f(X)}=\|\mu_2\|_{\mathscr{R}_f(X)}$ 时\eqref{align:ch05-5.13}给出 $\mu_2(F)\leqslant\mu_1(F_r)+r$ 对一切 $F\in\mathscr{B}(X)$ 成立，即第一族约束蕴含第二族约束；交换 $\mu_1,\mu_2$ 得反向蕴含。因此\eqref{align:ch05-5.11}右端两个不等式约束在范数相等时互为推论，$d_P(\mu_1,\mu_2)$ 等于任一单族约束所定义的下确界，即\eqref{align:ch05-5.14}。
 \end{proof}
 
+% SUPPLEMENT: parent=lemma:ch05-Prokhorov对称; kind=motivation; 依据：引理 5.1.4 的差项结构；说明范数相等条件的作用与差项不可去除的反例
+\begin{remark}\phantomsection\label{remark:ch05-Prokhorov对称动机}
+\cref{lemma:ch05-Prokhorov对称}说明\eqref{align:ch05-5.11}中两族约束并不独立：当总质量相等时，一族蕴含另一族，于是 $d_P$ 可只用一个下确界表示（\eqref{align:ch05-5.14}）。其证明是纯集合论的"补集对偶"：$E$ 与 $F$ 相距不小于 $r$ 这一条件关于 $E,F$ 对称，故把 $E$ 取为 $F$ 的 $r$-邻域的补集，即可把"$\mu_1$ 在 $E$ 上的质量"换成"$\mu_1$ 在 $F_r$ 上的质量"。
+
+差项 $\|\mu_2\|_{\mathscr{R}_f(X)}-\|\mu_1\|_{\mathscr{R}_f(X)}$ 不可去除：取 $X=\mathbb{R}$、$\mu_1=0$、$\mu_2=\delta_0$，则\eqref{align:ch05-5.12}对一切 $r>0$ 成立（左端为 $0$），而 $F=\{0\}$ 时 $\mu_2(F)=1$，$\mu_1(F_r)+r=r$，故\eqref{align:ch05-5.13}若无差项则要求 $1\leqslant r$ 对一切 $r>0$ 成立，矛盾；差项在此等于 $1$，恰好补偿质量差。
+
+适用边界：\eqref{align:ch05-5.13}的右端可以取负值以外的任意实数，故它只在 $r$ 充分大时给出有用信息；范数相等是\eqref{align:ch05-5.14}成立的关键，若两测度总质量不同，$d_P$ 不必等于单族下确界，甚至可能两者相差 $\bigl|\|\mu_1\|-\|\mu_2\|\bigr|$。
+\end{remark}
+
 \begin{example}\label{example:ch05-Delta距离}
-设 $(X,d)$ 为度量空间。则对所有 $x_1,x_2\in X$，
+设 $(X,d)$ 为度量空间。则对一切 $x_1,x_2\in X$，
 \begin{align}
 d_P(\delta_{x_1},\delta_{x_2})=\min\{1,d(x_1,x_2)\}.\label{align:ch05-5.15}
 \end{align}
-为证\eqref{align:ch05-5.15}，由\eqref{align:ch05-5.14}注意到
+为证\eqref{align:ch05-5.15}，由\eqref{align:ch05-5.14}（注意 $\|\delta_{x_1}\|_{\mathscr{R}_f(X)}=\|\delta_{x_2}\|_{\mathscr{R}_f(X)}=1$）注意到
 \begin{align*}
 d_P(\delta_{x_1},\delta_{x_2})
 =\inf\{r>0\mid\chi_E(x_1)\leqslant\chi_{E_r}(x_2)+r\ \forall E\in\mathscr{B}(X)\}.
 \end{align*}
-由于 $\chi_E(x_1)\leqslant1$，有 $d_P(\delta_{x_1},\delta_{x_2})\leqslant1$。此外，若 $r>d(x_1,x_2)$，则对所有 $E\in\mathscr{B}(X)$ 有 $\chi_E(x_1)\leqslant\chi_{E_r}(x_2)+r$：事实上，若 $x_1\in E$（否则不等式平凡）且 $r>d(x_1,x_2)$，则 $x_2\in E_r$，故 $\chi_{E_r}(x_2)=1$，不等式成立。综上 $d_P(\delta_{x_1},\delta_{x_2})\leqslant\min\{1,d(x_1,x_2)\}$。
+由于 $\chi_E(x_1)\leqslant1$，有 $d_P(\delta_{x_1},\delta_{x_2})\leqslant1$。此外，若 $r>d(x_1,x_2)$，则对一切 $E\in\mathscr{B}(X)$ 有 $\chi_E(x_1)\leqslant\chi_{E_r}(x_2)+r$：若 $x_1\notin E$，则左端为 $0$，不等式成立；若 $x_1\in E$ 且 $r>d(x_1,x_2)$，则 $x_2\in E_r$，故 $\chi_{E_r}(x_2)=1$，不等式成立。综上 $d_P(\delta_{x_1},\delta_{x_2})\leqslant\min\{1,d(x_1,x_2)\}$。
 
-为证反向不等式，取 $E=\{x_1\}$，故 $\chi_E(x_1)=1$。若 $d(x_1,x_2)\geqslant1$ 且 $r\in(0,1)$，则 $x_2\in(E_r)^c$，故 $\chi_{E_r}(x_2)=0$。于是
+为证反向不等式，取 $E=\{x_1\}$，故 $\chi_E(x_1)=1$。若 $d(x_1,x_2)\geqslant1$ 且 $r\in(0,1)$，则 $d(x_2,x_1)=d(x_1,x_2)\geqslant1>r$，故 $x_2\in(E_r)^c$，从而 $\chi_{E_r}(x_2)=0$。于是
 \begin{align}
 \chi_E(x_1)=1>r=\chi_{E_r}(x_2)+r,\label{align:ch05-5.16}
 \end{align}
-故 $d_P(\delta_{x_1},\delta_{x_2})\geqslant1=\min\{1,d(x_1,x_2)\}$。类似地，若 $d(x_1,x_2)<1$ 且 $r\in(0,d(x_1,x_2)]$，则 $x_2\in(E_r)^c$，不等式\eqref{align:ch05-5.16}再次成立。故 $d_P(\delta_{x_1},\delta_{x_2})\geqslant d(x_1,x_2)=\min\{1,d(x_1,x_2)\}$。于是等式\eqref{align:ch05-5.15}成立。
-\end{example}
+故 $d_P(\delta_{x_1},\delta_{x_2})\geqslant1=\min\{1,d(x_1,x_2)\}$。若 $d(x_1,x_2)<1$ 且 $r\in(0,d(x_1,x_2)]$，则由 $d(x_2,E)=d(x_1,x_2)\geqslant r$ 得 $x_2\in(E_r)^c$，不等式\eqref{align:ch05-5.16}再次成立。故 $d_P(\delta_{x_1},\delta_{x_2})\geqslant d(x_1,x_2)=\min\{1,d(x_1,x_2)\}$。于是等式\eqref{align:ch05-5.15}成立。\end{example}
 
-\begin{remark}\label{remark:ch05-Delta等距}
+% SUPPLEMENT: parent=example:ch05-Delta距离; kind=proof; 依据：\eqref{align:ch05-5.14}与 $\chi_{E_r}$ 的单调性；补出上界与被截断度量两种情形下界估计的完整论证
+\begin{proof}[上界与下界的补证]
+上界：对一切 $r>\max\{d(x_1,x_2),1\}$ 与一切 $E\in\mathscr{B}(X)$，若 $x_1\in E$，则 $x_2\in E_r$（因 $d(x_2,E)\leqslant d(x_2,x_1)<r$），故 $\chi_E(x_1)=1\leqslant1=\chi_{E_r}(x_2)\leqslant\chi_{E_r}(x_2)+r$；若 $x_1\notin E$，则 $\chi_E(x_1)=0\leqslant\chi_{E_r}(x_2)+r$。故这些 $r$ 属于\eqref{align:ch05-5.14}右端的集合，$d_P(\delta_{x_1},\delta_{x_2})\leqslant\inf\{r>\max\{d,1\}\}=\max\{d(x_1,x_2),1\}$，结合 $d_P\leqslant1$ 得 $d_P\leqslant\min\{1,d(x_1,x_2)\}$。
+
+下界分两种情形。若 $d(x_1,x_2)\geqslant1$，取 $E=\{x_1\}$ 与任意 $r\in(0,1)$：由 $d(x_2,E)=d(x_1,x_2)\geqslant1>r$ 得 $\chi_{E_r}(x_2)=0$，故 $r$ 不满足约束，从而 $d_P\geqslant1=\min\{1,d\}$。若 $d(x_1,x_2)<1$，取任意 $r\in(0,d(x_1,x_2)]$：由 $d(x_2,E)=d(x_1,x_2)\geqslant r$ 得 $\chi_{E_r}(x_2)=0$，故 $d_P\geqslant d(x_1,x_2)$。合并两种情形即得 $d_P\geqslant\min\{1,d(x_1,x_2)\}$。
+\end{proof}
+
+\begin{remark}\phantomsection\label{remark:ch05-Delta等距}
 由\cref{example:ch05-Delta距离}，映射 $X\to\mathscr{R}^+_f(X)$，$x\mapsto\delta_x$，是 $(X,\min\{1,d\})$ 到 $(\mathscr{R}^+_f(X),d_P)$ 的等距嵌入。注意 $\min\{1,d\}$ 是 $X$ 上与 $d$ 等价的度量。
 \end{remark}
 
-现在我们可以证明 $\mathscr{R}^+_f(X)$ 上的窄拓扑是可度量化的。
+% SUPPLEMENT: parent=remark:ch05-Delta等距; kind=motivation; 依据：例 5.1.2 的结论；说明等距嵌入的意义与"截断"度量的作用
+\begin{remark}\phantomsection\label{remark:ch05-Delta等距意义}
+\cref{example:ch05-Delta距离}表明 $X$ 通过 $x\mapsto\delta_x$ 等距地嵌入 $\mathscr{R}^+_f(X)$ 之中，且等距所对应的度量是截断度量 $\min\{1,d\}$ 而非 $d$ 本身；截断只改变大于 $1$ 的距离，故两种度量给出相同的拓扑与相同的 Cauchy 序列，从而 $(X,d)$ 的完备性、可分性等一致性质可由 $(\mathscr{R}^+_f(X),d_P)$ 的相应性质反映。等距嵌入使 $X$ 上的收敛（$d(x_k,x)\to0$）成为 $\mathscr{R}^+_f(X)$ 中窄收敛的特例（$\delta_{x_k}\stackrel{n}{\rightharpoonup}\delta_x$），从而 Prokhorov 度量的紧性判据涵盖 $X$ 自身的紧性：$F\subseteq X$ 相对紧当且仅当 $\{\delta_x\mid x\in F\}$ 在 $(\mathscr{R}^+_f(X),d_P)$ 中相对紧。
+
+边界：$x\mapsto\delta_x$ 的像不是凸集，也不是弱$^*$闭集（$\delta_{1/k}\stackrel{*}{\rightharpoonup}\delta_0$ 的极限仍在像中，但 $\frac12(\delta_0+\delta_1)$ 不在像中）；等距嵌入不保持线性结构，故不能把 $X$ 的几何问题线性化。
+\end{remark}
+现在可以证明 $\mathscr{R}^+_f(X)$ 上的窄拓扑可度量化。
 
 \begin{proposition}\label{proposition:ch05-窄拓扑可度量化}
-设 $(X,d)$ 为可分度量空间。则 $\mathscr{R}^+_f(X)$ 上的窄拓扑与 Prokhorov 度量相伴的度量拓扑一致。
+设 $(X,d)$ 为可分度量空间，$d_P$ 为\eqref{align:ch05-5.11}所定义的 Prokhorov 度量。则 $\mathscr{R}^+_f(X)$ 上的窄拓扑 $\mathcal{T}_n$ 与 $d_P$ 相伴的度量拓扑一致。
 \end{proposition}
 
-\begin{remark}\label{remark:ch05-Prokhorov推论}
+\begin{remark}\phantomsection\label{remark:ch05-Prokhorov推论}
 由\cref{proposition:ch05-窄拓扑可度量化}，若 $(X,d)$ 为可分度量空间，则：
 \begin{enumerate}[(i)]
 \item\label{item:ch05-prok-i} $\mu_k\stackrel{n}{\rightharpoonup}\mu$ 当且仅当 $d_P(\mu_k,\mu)\to0$；
@@ -346,158 +537,239 @@ d_P(\delta_{x_1},\delta_{x_2})
 \end{enumerate}
 \end{remark}
 
-为证\cref{proposition:ch05-窄拓扑可度量化}，我们先建立如下引理。
+为证\cref{proposition:ch05-窄拓扑可度量化}，先建立如下引理。
 
 \begin{lemma}\label{lemma:ch05-Prokhorov到窄}
-设 $(X,d)$ 为度量空间，$\{\mu_k\}\subseteq\mathscr{R}^+_f(X)$，$\mu\in\mathscr{R}^+_f(X)$ 满足 $d_P(\mu_k,\mu)\to0$。则 $\mu_k\stackrel{n}{\rightharpoonup}\mu$。
+设 $(X,d)$ 为度量空间，$\{\mu_k\}_{k\in\mathbb{N}}\subseteq\mathscr{R}^+_f(X)$，$\mu\in\mathscr{R}^+_f(X)$ 满足 $d_P(\mu_k,\mu)\to0$。则 $\mu_k\stackrel{n}{\rightharpoonup}\mu$。
 \end{lemma}
 
 \begin{proof}
-设 $\{\epsilon_k\}\subseteq(0,\infty)$ 满足当 $k\to\infty$ 时 $\epsilon_k\to0^+$，且对所有 $k\in\mathbb{N}$ 有 $d_P(\mu_k,\mu)<\epsilon_k$。对任意闭集 $C\subseteq X$，置 $C_k\equiv C_{\epsilon_k}\triangleq \{x\in X\mid d(x,C)<\epsilon_k\}$，故 $C=\bigcap_{k=1}^\infty C_k$ 且 $\mu(C)=\lim_{k\to\infty}\mu(C_k)$。由于 $d_P(\mu_k,\mu)<\epsilon_k$，由定义\eqref{align:ch05-5.11}，对任意 $k\in\mathbb{N}$ 有
+设 $\{\varepsilon_k\}\subseteq(0,\infty)$ 满足当 $k\to\infty$ 时 $\varepsilon_k\to0^+$，且对一切 $k\in\mathbb{N}$ 有 $d_P(\mu_k,\mu)<\varepsilon_k$。对任意闭集 $C\subseteq X$，置 $C_k\equiv C_{\varepsilon_k}\triangleq \{x\in X\mid d(x,C)<\varepsilon_k\}$，故 $C=\bigcap_{k=1}^\infty C_k$（因 $\varepsilon_k\to0$ 且 $C$ 闭）且由 $\mu(X)<\infty$ 与上连续性得 $\mu(C)=\lim_{k\to\infty}\mu(C_k)$。由于 $d_P(\mu_k,\mu)<\varepsilon_k$，由\eqref{align:ch05-5.11}，对任意 $k\in\mathbb{N}$ 有
 \begin{align}
-\mu_k(C)\leqslant\mu(C_k)+\epsilon_k,\qquad
-\mu(C)\leqslant\mu_k(C_k)+\epsilon_k.\label{align:ch05-5.17}
+\mu_k(C)\leqslant\mu(C_k)+\varepsilon_k,\qquad
+\mu(C)\leqslant\mu_k(C_k)+\varepsilon_k.\label{align:ch05-5.17}
 \end{align}
-由于 $\lim_{k\to\infty}\mu(C_k)=\mu(C)$ 且 $\lim_{k\to\infty}\epsilon_k=0$，在\eqref{align:ch05-5.17}第一式中令 $k\to\infty$ 得\eqref{align:ch05-5.7}。另一方面，在\eqref{align:ch05-5.17}第二式与\eqref{align:ch05-5.7}中均取 $C=X$，得
+由于 $\lim_{k\to\infty}\mu(C_k)=\mu(C)$ 且 $\lim_{k\to\infty}\varepsilon_k=0$，在\eqref{align:ch05-5.17}第一式中令 $k\to\infty$ 得\eqref{align:ch05-5.7}。另一方面，在\eqref{align:ch05-5.17}第二式中取 $C=X$（此时 $X_{\varepsilon_k}=X$）得 $\mu(X)\leqslant\mu_k(X)+\varepsilon_k$，结合\eqref{align:ch05-5.7}取 $C=X$ 所得 $\limsup_k\mu_k(X)\leqslant\mu(X)$，得
 \begin{align*}
 \mu(X)\leqslant\liminf_{k\to\infty}\mu_k(X)\leqslant\limsup_{k\to\infty}\mu_k(X)\leqslant\mu(X),
 \end{align*}
-故 $\lim_{k\to\infty}\mu_k(X)=\mu(X)$。于是由\cref{theorem:ch05-portmanteau}（见断言 (i) 与 (iii)）结论得证。
+故 $\lim_{k\to\infty}\mu_k(X)=\mu(X)$。于是由\cref{theorem:ch05-portmanteau}（命题 (i) 与 (iii) 的等价性）结论得证。
 \end{proof}
 
-\begin{proof}[证明\cref{proposition:ch05-窄拓扑可度量化}]
-由\cref{lemma:ch05-Prokhorov到窄}，我们只需证明 $\mu_k\stackrel{n}{\rightharpoonup}\mu$ 蕴含 $d_P(\mu_k,\mu)\to0$。为此，设 $D\equiv\{x_k\}$ 为 $X$ 的可数稠密子集。
+% SUPPLEMENT: parent=lemma:ch05-Prokhorov到窄; kind=proof; 依据：闭集的 $\varepsilon_k$-邻域单调收缩与 Portmanteau 定理；补出 $C=\bigcap_kC_k$ 与质量收敛两处细节
+\begin{proof}[两处细节的补证]
+其一，$C=\bigcap_kC_k$：由 $C\subseteq C_k$ 得 $C\subseteq\bigcap_kC_k$；反之设 $x\notin C$，则 $d(x,C)>0$，取 $k$ 使 $\varepsilon_k<d(x,C)$，得 $x\notin C_k$，故 $x\notin\bigcap_kC_k$。序列 $\{C_k\}$ 关于 $k$ 递减且 $\mu(C_1)<\infty$，故上连续性给出 $\mu(C)=\lim_k\mu(C_k)$。
 
-对任意固定的 $\epsilon>0$，置 $E_1\triangleq B_{\epsilon/2}(x_1)$，$E_{m+1}\triangleq B_{\epsilon/2}(x_{m+1})\setminus\bigcup_{k=1}^m E_k$（$m\in\mathbb{N}$）。显然，对所有 $m\in\mathbb{N}$ 有 $\operatorname{diam}(E_m)\leqslant\epsilon$，对所有 $l,m\in\mathbb{N}$，$l\neq m$ 有 $E_l\cap E_m=\varnothing $，且 $\bigcup_{m=1}^\infty E_m=X$。由于 $\mu(X)=\sum_{m=1}^\infty\mu(E_m)<\infty$，存在 $\bar{m}\in\mathbb{N}$ 使
+其二，质量收敛的推导只用\eqref{align:ch05-5.11}在 $E=X$ 处的约束。因 $X_{\varepsilon_k}=\{x\mid d(x,X)<\varepsilon_k\}=X$，\eqref{align:ch05-5.17}第二式给出 $\mu(X)\leqslant\mu_k(X)+\varepsilon_k$，即 $\mu(X)\leqslant\liminf_k\mu_k(X)$；而\eqref{align:ch05-5.7}取 $C=X$ 给出 $\limsup_k\mu_k(X)\leqslant\mu(X)$。两者合起来即 $\mu_k(X)\to\mu(X)$。于是\cref{theorem:ch05-portmanteau}中 (iii) 的两个条件（质量收敛与闭集不等式\eqref{align:ch05-5.7}）全部满足，故 $\mu_k\stackrel{n}{\rightharpoonup}\mu$。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-Prokhorov到窄; kind=motivation; 依据：引理 5.1.6 与命题 5.1.5 的分工；说明该引理证的是度量化的一半、以及为何只需闭集估计
+\begin{remark}\phantomsection\label{remark:ch05-Prokhorov到窄动机}
+\cref{proposition:ch05-窄拓扑可度量化}要求两个拓扑相等，\cref{lemma:ch05-Prokhorov到窄}只证了一半：$d_P$ 收敛蕴含窄收敛。证明的全部内容是：$d_P(\mu_k,\mu)<\varepsilon_k$ 把 $\mu_k$ 在任意闭集 $C$ 上的质量与 $\mu$ 在 $C_{\varepsilon_k}$ 上的质量相比较，而 $C_{\varepsilon_k}\downarrow C$ 使右端收敛到 $\mu(C)$；再补上 $C=X$ 处的质量收敛，即可引用\cref{theorem:ch05-portmanteau}。此处只需闭集而不必所有 Borel 集，是因为\eqref{align:ch05-5.11}的约束对一切 Borel 集成立，闭集是其特例。
+
+该蕴含不依赖 $X$ 的可分性，故对任意度量空间成立；反方向（窄收敛蕴含 $d_P$ 收敛）才需要可分性，其证明要把 $X$ 分解为可数多个直径 $\leqslant\varepsilon$ 的块。边界情形：该论证给出的是定性收敛，不含收敛速率；若已知 $\varepsilon_k$ 的具体数值，\eqref{align:ch05-5.17}可给出 $\mu_k(C)-\mu(C)$ 的显式上界。
+\end{remark}
+
+\begin{proof}[证明\cref{proposition:ch05-窄拓扑可度量化}]
+由\cref{lemma:ch05-Prokhorov到窄}，只需证明 $\mu_k\stackrel{n}{\rightharpoonup}\mu$ 蕴含 $d_P(\mu_k,\mu)\to0$。为此，设 $D\equiv\{x_k\}$ 为 $X$ 的可数稠密子集。
+
+对任意固定的 $\varepsilon>0$，置 $E_1\triangleq B_{\varepsilon/2}(x_1)$，$E_{m+1}\triangleq B_{\varepsilon/2}(x_{m+1})\setminus\bigcup_{k=1}^m E_k$（$m\in\mathbb{N}$），其中 $B_{\varepsilon/2}(x)\triangleq \{y\in X\mid d(x,y)<\varepsilon/2\}$。由构造，$E_m\subseteq B_{\varepsilon/2}(x_m)$ 故 $\operatorname{diam}(E_m)\leqslant\varepsilon$ 对一切 $m\in\mathbb{N}$ 成立；$E_l\cap E_m=\varnothing$ 对一切 $l,m\in\mathbb{N}$、$l\neq m$ 成立；且由 $D$ 稠密得 $\bigcup_{m=1}^\infty E_m=X$。由于 $\mu(X)=\sum_{m=1}^\infty\mu(E_m)<\infty$，存在 $\bar{m}\in\mathbb{N}$ 使
 \begin{align}
 \mu\!\left(\bigcup_{m=\bar{m}+1}^\infty E_m\right)
-=\sum_{m=\bar{m}+1}^\infty\mu(E_m)<\epsilon.\label{align:ch05-5.18}
+=\sum_{m=\bar{m}+1}^\infty\mu(E_m)<\varepsilon.\label{align:ch05-5.18}
 \end{align}
 考虑有限族
 \begin{align*}
 S\triangleq \left\{U=E_{m_1}\cup E_{m_2}\cup\cdots\cup E_{m_p}\ \middle|\
 1\leqslant m_1<m_2<\cdots<m_p\leqslant\bar{m}\right\}\subseteq\mathcal{P}(X),
 \end{align*}
-对任意 $U\in S$，置 $U_\epsilon\triangleq \{x\in X\mid d(x,U)<\epsilon\}$。由于 $U_\epsilon$ 为开集且由假设 $\mu_k\stackrel{n}{\rightharpoonup}\mu$，由 Portmanteau 定理 $\liminf_{k\to\infty}\mu_k(U_\epsilon)\geqslant\mu(U_\epsilon)$。因此，由于 $S$ 有限，存在 $\bar{k}\in\mathbb{N}$ 使
+对任意 $U\in S$，置 $U_\varepsilon\triangleq \{x\in X\mid d(x,U)<\varepsilon\}$。由于 $U_\varepsilon$ 为开集且由假设 $\mu_k\stackrel{n}{\rightharpoonup}\mu$，由\cref{theorem:ch05-portmanteau}（\eqref{align:ch05-5.8}）得 $\liminf_{k\to\infty}\mu_k(U_\varepsilon)\geqslant\mu(U_\varepsilon)$。因此，由于 $S$ 有限，存在 $\bar{k}\in\mathbb{N}$ 使
 \begin{align}
-\mu_k(U_\epsilon)\geqslant\mu(U_\epsilon)-\epsilon
-\quad\text{对所有 }k\geqslant\bar{k}\text{ 与 }U\in S.\label{align:ch05-5.19}
+\mu_k(U_\varepsilon)\geqslant\mu(U_\varepsilon)-\varepsilon
+\quad\text{对一切 }k\geqslant\bar{k}\text{ 与 }U\in S.\label{align:ch05-5.19}
 \end{align}
-现注意到对所有 $F\in\mathscr{B}(X)$，
+现注意到对一切 $F\in\mathscr{B}(X)$，
 \begin{align}
 F=\left[F\cap\bigcup_{m=1}^{\bar{m}}E_m\right]
 \cup\left[F\cap\bigcup_{m=\bar{m}+1}^\infty E_m\right]
-\subseteq[F\cap U_\epsilon]\cup\left[F\cap\bigcup_{m=\bar{m}+1}^\infty E_m\right]\label{align:ch05-5.20}
+\subseteq[F\cap U_\varepsilon]\cup\left[F\cap\bigcup_{m=\bar{m}+1}^\infty E_m\right]\label{align:ch05-5.20}
 \end{align}
-对某个 $U=E_{m_1}\cup E_{m_2}\cup\cdots\cup E_{m_p}\in S$（使对所有 $j=m_1,\cdots ,m_p$ 有 $E_{m_j}\cap F\neq\varnothing $）成立（注意这蕴含 $U_\epsilon\subseteq F_{2\epsilon}$，因为对任意 $m\in\mathbb{N}$ 有 $\operatorname{diam}(E_m)\leqslant\epsilon$）。由\eqref{align:ch05-5.18}–\eqref{align:ch05-5.20}得
+对某个 $U=E_{m_1}\cup E_{m_2}\cup\cdots\cup E_{m_p}\in S$ 成立，其中 $U$ 取为与 $F$ 相交的那些 $E_m$（$m\leqslant\bar{m}$）之并，即 $U$ 满足：$E_{m_j}\cap F\neq\varnothing$ 对 $j=m_1,\cdots ,m_p$，且 $F\cap\bigcup_{m\leqslant\bar{m}}E_m\subseteq U$；注意这蕴含 $U_\varepsilon\subseteq F_{2\varepsilon}$，因为若 $x\in U_\varepsilon$，取 $u\in U$ 使 $d(x,u)<\varepsilon$，再取 $m_j$ 与 $f\in E_{m_j}\cap F$，则 $d(x,f)\leqslant d(x,u)+\operatorname{diam}(E_{m_j})<\varepsilon+\varepsilon=2\varepsilon$。由\eqref{align:ch05-5.18}–\eqref{align:ch05-5.20}得
 \begin{align}
-\mu(F)\leqslant\mu(U_\epsilon)+\epsilon
-\leqslant\mu_k(U_\epsilon)+2\epsilon
-\leqslant\mu_k(F_{2\epsilon})+2\epsilon
-\quad\text{对所有 }k\geqslant\bar{k}.\label{align:ch05-5.21}
+\mu(F)\leqslant\mu(U_\varepsilon)+\varepsilon
+\leqslant\mu_k(U_\varepsilon)+2\varepsilon
+\leqslant\mu_k(F_{2\varepsilon})+2\varepsilon
+\quad\text{对一切 }k\geqslant\bar{k}.\label{align:ch05-5.21}
 \end{align}
-由 $F\in\mathscr{B}(X)$ 的任意性与\cref{lemma:ch05-Prokhorov对称}，从\eqref{align:ch05-5.21}得
+由 $F\in\mathscr{B}(X)$ 的任意性与\cref{lemma:ch05-Prokhorov对称}（取 $\mu_1=\mu$、$\mu_2=\mu_k$、$r=2\varepsilon$），从\eqref{align:ch05-5.21}得
 \begin{align}
-\mu_k(G)\leqslant\mu(G_{2\epsilon})+2\epsilon
+\mu_k(G)\leqslant\mu(G_{2\varepsilon})+2\varepsilon
 +\|\mu_k\|_{\mathscr{R}_f(X)}-\|\mu\|_{\mathscr{R}_f(X)}
-\leqslant\mu(G_{3\epsilon})+3\epsilon\label{align:ch05-5.22}
+\leqslant\mu(G_{3\varepsilon})+3\varepsilon\label{align:ch05-5.22}
 \end{align}
-对所有 $G\in\mathscr{B}(X)$ 与所有充分大的 $k\in\mathbb{N}$ 成立，因为 $\lim_{k\to\infty}\|\mu_k\|_{\mathscr{R}_f(X)}=\|\mu\|_{\mathscr{R}_f(X)}$（见\cref{remark:ch05-窄收敛范数}）。
+对一切 $G\in\mathscr{B}(X)$ 与一切充分大的 $k\in\mathbb{N}$ 成立，因为 $\lim_{k\to\infty}\|\mu_k\|_{\mathscr{R}_f(X)}=\|\mu\|_{\mathscr{R}_f(X)}$（见\cref{remark:ch05-窄收敛范数}）且 $G_{2\varepsilon}\subseteq G_{3\varepsilon}$。
 
-另一方面，由\eqref{align:ch05-5.21}，对所有充分大的 $k\in\mathbb{N}$ 与任意 $G\in\mathscr{B}(X)$，我们同样有
+另一方面，由\eqref{align:ch05-5.21}（取 $F=G$）得，对一切充分大的 $k\in\mathbb{N}$ 与任意 $G\in\mathscr{B}(X)$，
 \begin{align}
-\mu(G)\leqslant\mu_k(G_{3\epsilon})+3\epsilon.\label{align:ch05-5.23}
+\mu(G)\leqslant\mu_k(G_{2\varepsilon})+2\varepsilon\leqslant\mu_k(G_{3\varepsilon})+3\varepsilon.\label{align:ch05-5.23}
 \end{align}
-由定义\eqref{align:ch05-5.11}，从\eqref{align:ch05-5.22}–\eqref{align:ch05-5.23}可得：对所有 $\epsilon>0$ 与充分大的 $k\in\mathbb{N}$，$d_P(\mu_k,\mu)<\epsilon$。结论得证。
+由定义\eqref{align:ch05-5.11}，从\eqref{align:ch05-5.22}–\eqref{align:ch05-5.23}可得：对一切 $\varepsilon>0$ 与充分大的 $k\in\mathbb{N}$，$d_P(\mu_k,\mu)\leqslant3\varepsilon$。由 $\varepsilon>0$ 的任意性得 $d_P(\mu_k,\mu)\to0$，结论得证。
 \end{proof}
 
-\subsection{窄收敛与胎紧性}
+% SUPPLEMENT: parent=proposition:ch05-窄拓扑可度量化; kind=proof; 依据：\eqref{align:ch05-5.22}–\eqref{align:ch05-5.23}的两族约束；补出 $d_P(\mu_k,\mu)\leqslant3\varepsilon$ 的推导与常数 $3$ 的来源
+\begin{proof}[$d_P$ 估计的补证]
+\eqref{align:ch05-5.22}与\eqref{align:ch05-5.23}分别是\eqref{align:ch05-5.11}在 $r=3\varepsilon$ 处的第二、第一族约束（把 $G$ 换记为 $E$）：\eqref{align:ch05-5.23}给出 $\mu(E)\leqslant\mu_k(E_{3\varepsilon})+3\varepsilon$，\eqref{align:ch05-5.22}给出 $\mu_k(E)\leqslant\mu(E_{3\varepsilon})+3\varepsilon$，二者对一切 $E\in\mathscr{B}(X)$ 成立。因此 $3\varepsilon$ 属于\eqref{align:ch05-5.11}右端的集合，$d_P(\mu_k,\mu)\leqslant3\varepsilon$ 对充分大的 $k$ 成立。常数 $3$ 来自三处误差的叠加：\eqref{align:ch05-5.18}的尾部质量 $\varepsilon$、\eqref{align:ch05-5.19}的逼近误差 $\varepsilon$、以及\eqref{align:ch05-5.11}自身的加项；由于 $\varepsilon$ 任意，常数不影响结论。
+\end{proof}
 
-刻画 $\mathscr{R}_f(X)$ 在弱$^*$与窄两种拓扑下的相对序列紧子集是有趣的。关于弱$^*$收敛，我们有如下结果：
+% SUPPLEMENT: parent=proposition:ch05-窄拓扑可度量化; kind=motivation; 依据：命题 5.1.5 的证明结构；说明可分性假设的作用、与命题 5.1.1 的对照以及度量拓扑的含义
+\begin{remark}\phantomsection\label{remark:ch05-窄拓扑可度量化动机}
+\cref{proposition:ch05-窄拓扑可度量化}把窄拓扑这一"最弱拓扑"具体化为度量拓扑，其价值在于：窄收敛成为数值收敛 $d_P(\mu_k,\mu)\to0$，相对序列紧性与相对紧性等价（\cref{remark:ch05-Prokhorov推论}），从而\cref{theorem:ch05-prokhorov}的胎紧性判据可当作度量空间中的紧性判据使用。
+
+可分性是本质假设，它在证明中两处出现：给出可数稠密子集 $\{x_k\}$，从而把 $X$ 分解为可数多个直径 $\leqslant\varepsilon$ 的互不相交块 $\{E_m\}$，使质量集中在有限多个块上成为可能；以及使 $S$ 为有限族，从而 $\bar{k}$ 可关于 $U\in S$ 一致选取。若 $X$ 不可分（例如不可数集赋离散度量），$\mathscr{R}^+_f(X)$ 上的窄拓扑一般不可度量化，$d_P$ 的度量拓扑严格细于窄拓扑。
+
+与\cref{proposition:ch05-弱星可度量化}的对照：那里在有界集上、用 $C_0(X)$ 的可数稠密子集给出可度量化；这里在全空间 $\mathscr{R}^+_f(X)$ 上、用 $X$ 的可分性给出显式度量。两者都依赖"可数"信息，但目的不同：前者服务于弱$^*$列紧性，后者服务于窄列紧性。
+\end{remark}
+
+\subsection{窄收敛与胎紧性}\label{subsection:ch05-窄收敛与胎紧性}
+
+刻画 $\mathscr{R}_f(X)$ 在弱$^*$与窄两种拓扑下的相对序列紧子集是有意义的。关于弱$^*$收敛，有如下结果：
 
 \begin{theorem}\label{theorem:ch05-弱星紧性}
 \label{theorem:ch05-弱星紧}
 设 $X$ 为具可数基的局部紧 Hausdorff 空间，$M\subseteq\mathscr{R}_f(X)$。则下列命题等价：
 \begin{enumerate}[(i)]
-\item\label{item:ch05-wstar-i} $M$ 在弱$^*$拓扑中相对序列紧；
-\item\label{item:ch05-wstar-ii} $M$ 有界。
+\item\label{item:ch05-wstar-i} $M$ 在弱$^*$拓扑中相对序列紧，即 $M$ 中每个序列含有一个在 $\mathscr{R}_f(X)$ 中弱$^*$收敛的子列；
+\item\label{item:ch05-wstar-ii} $M$ 有界，即 $\sup_{\mu\in M}\|\mu\|_{\mathscr{R}_f(X)}<\infty$。
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-(i)$\Rightarrow$(ii)。由\cref{theorem:ch02-Rf对偶}，Banach 空间 $\mathscr{R}_f(X)$ 是 $C_0(X)$ 的对偶空间。若 $M$ 无界，则存在 $\{\mu_k\}\subseteq M$ 使 $\|\mu_k\|_{\mathscr{R}_f(X)}\to\infty$。另一方面，由假设，每个 $\{\mu_k\}\subseteq M$ 都含一个在 $\mathscr{R}_f(X)$ 中弱$^*$收敛的子列，因而由一致有界原理有界。矛盾证明了断言。
+(i)$\Rightarrow$(ii)。由\cref{theorem:ch02-Rf对偶}，Banach 空间 $\mathscr{R}_f(X)$ 是 $C_0(X)$ 的对偶空间。若 $M$ 无界，则存在 $\{\mu_k\}\subseteq M$ 使 $\|\mu_k\|_{\mathscr{R}_f(X)}\to\infty$。另一方面，由假设，$\{\mu_k\}$ 含一个在 $\mathscr{R}_f(X)$ 中弱$^*$收敛的子列 $\{\mu_{k_l}\}$；对每个 $g\in C_0(X)$，数列 $\int_X g\,\mathrm{d}\mu_{k_l}$ 收敛故有界，即 $\{\mu_{k_l}\}$ 逐点有界。由一致有界原理（$C_0(X)$ 为 Banach 空间），$\sup_l\|\mu_{k_l}\|_{\mathscr{R}_f(X)}<\infty$，与 $\|\mu_k\|_{\mathscr{R}_f(X)}\to\infty$ 矛盾。故 $M$ 有界。
 
-(ii)$\Rightarrow$(i) 由 Banach–Alaoglu 定理得到。
+(ii)$\Rightarrow$(i) 由 Banach–Alaoglu 定理得到：$M$ 含于 $\mathscr{R}_f(X)=(C_0(X))^*$ 的某闭球，而闭球在弱$^*$拓扑中紧；由\cref{proposition:ch05-弱星可度量化}，该闭球上的相对弱$^*$拓扑可度量化，故其紧性等价于列紧性，于是 $M$ 中每个序列含弱$^*$收敛子列。
 \end{proof}
 
-关于窄收敛，我们从如下定义开始：
+% SUPPLEMENT: parent=theorem:ch05-弱星紧性; kind=proof; 依据：Banach–Alaoglu 定理与命题 5.1.1 的可度量化；补出 (ii)$\Rightarrow$(i) 中紧性升级为列紧性、以及极限落在 $\mathscr{R}_f(X)$ 内的论证
+\begin{proof}[(ii)$\Rightarrow$(i) 的补证]
+设 $C\triangleq\sup_{\mu\in M}\|\mu\|_{\mathscr{R}_f(X)}<\infty$，则 $M\subseteq B\triangleq\{\mu\in\mathscr{R}_f(X)\mid\|\mu\|_{\mathscr{R}_f(X)}\leqslant C\}$。由 Banach–Alaoglu 定理，$B$ 在弱$^*$拓扑 $\mathcal{T}_{w^*}$ 中紧；由\cref{proposition:ch05-弱星可度量化}（$B$ 有界），相对拓扑 $\mathcal{T}_{w^*}\cap B$ 可度量化，于是紧空间 $B$ 的度量拓扑中紧性与列紧性一致。因此对任意序列 $\{\mu_k\}\subseteq M\subseteq B$，存在子列 $\{\mu_{k_l}\}$ 与 $\mu\in B$ 使 $\mu_{k_l}\stackrel{*}{\rightharpoonup}\mu$。因 $B\subseteq\mathscr{R}_f(X)$，极限 $\mu$ 仍为有限带号 Radon 测度，故 $M$ 相对序列紧。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-弱星紧; kind=motivation; 同一 remark 覆盖该别名 label
+% SUPPLEMENT: parent=theorem:ch05-弱星紧性; kind=motivation; 依据：Banach–Alaoglu 定理与定理 5.1.9 的对照；说明有界性为何在此充分、而在窄拓扑中须代之以胎紧性
+\begin{remark}\phantomsection\label{remark:ch05-弱星紧性动机}
+\cref{theorem:ch05-弱星紧性}是 Banach–Alaoglu 定理的序列化：$\mathscr{R}_f(X)$ 作为 $C_0(X)$ 的对偶，其闭球在弱$^*$拓扑中紧，而可数基保证该拓扑在有界集上可度量化（\cref{proposition:ch05-弱星可度量化}），于是紧性可用序列刻画。定理表明弱$^*$相对列紧性只有一个障碍——无界性。
+
+与窄拓扑对照，可见试验函数类的作用：弱$^*$拓扑的试验函数在无穷远处消失，故质量在无穷远处的逃逸不被察觉，$\{\delta_k\}$ 弱$^*$收敛于 $0$ 却有界；故弱$^*$列紧性不需要控制质量分布。窄拓扑以 $C_b(X)$ 为试验函数类，能察觉质量逃逸，因此窄列紧性除有界性外还须胎紧性（\cref{theorem:ch05-prokhorov}）。
+
+边界情形：定理要求 $M\subseteq\mathscr{R}_f(X)$ 而非更大的 $\mathcal{M}_f(X)$；若 $X$ 不具可数基，有界集上的弱$^*$拓扑未必可度量化，此时紧性不能直接升级为列紧性，定理须以网的形式陈述。此外 (i)$\Rightarrow$(ii) 用的是弱$^*$收敛序列的逐点有界性，故 (ii) 中"有界"不能减弱为"逐点有界"以外的条件。
+\end{remark}
+
+关于窄收敛，从如下定义开始：
 
 \begin{definition}\label{definition:ch05-胎紧}
-设 $X$ 为局部紧 Hausdorff 空间。子集 $M\subseteq\mathscr{R}_f(X)$ 称为\textbf{胎紧的}（tight），若对任意 $\epsilon>0$，存在紧子集 $K\subseteq X$ 使对所有 $\mu\in M$ 有 $|\mu|(K^c)<\epsilon$。
+设 $X$ 为局部紧 Hausdorff 空间，$\mathscr{R}_f(X)$ 为 $X$ 上有限带号 Radon 测度空间。子集 $M\subseteq\mathscr{R}_f(X)$ 称为\textbf{胎紧的}（tight），若对任意 $\varepsilon>0$，存在紧子集 $K\subseteq X$ 使对一切 $\mu\in M$ 有 $|\mu|(K^c)<\varepsilon$。
 \end{definition}
 
+% SUPPLEMENT: parent=definition:ch05-胎紧; kind=motivation; 依据：定义 5.1.5 与 Ulam 定理、定理 5.1.9 的关系；说明紧集须一致选取、全变差出现的原因与胎紧／有界的独立性
+\begin{remark}\phantomsection\label{remark:ch05-胎紧动机}
+胎紧性表达"质量一致地集中在紧集上"：紧集 $K$ 只依赖 $\varepsilon$ 而不依赖 $\mu\in M$，这正是"一致"的含义；若允许 $K$ 随 $\mu$ 变动，则每个有限 Radon 测度都满足该性质（Ulam 定理，见\cref{proposition:ch05-ulam}的证明思路），定义将失去内容。定义中用全变差 $|\mu|$ 而非 $\mu$，使带号测度与正测度得到统一处理：对 $\mu\in\mathscr{R}^+_f(X)$ 有 $|\mu|(K^c)=\mu(K^c)$。
+
+胎紧性与有界性相互独立。有界不蕴含胎紧：取 $X=\mathbb{R}$、$\mu_k=k^{-1}\delta_k$，则 $\|\mu_k\|=k^{-1}\leqslant1$，但对任意紧集 $K$ 与充分大的 $k$ 有 $\mu_k(K^c)=k^{-1}$，故 $\{\mu_k\}$ 不胎紧。胎紧不蕴含界：取 $X=\mathbb{R}$、$F=[0,1]$、$M=\{\alpha\delta_{\bar x}\mid\bar x\in F,\ \alpha>0\}$，则对任意 $\varepsilon>0$ 取 $K=F$ 即得 $|\mu|(K^c)=0$，而 $\sup_M\|\mu\|=\infty$。因此\cref{theorem:ch05-prokhorov}中的两个条件必须并列。
+
+适用边界：胎紧性依赖 $X$ 的拓扑；若 $X$ 紧，则每个有界族自动胎紧（取 $K=X$），此时\cref{theorem:ch05-prokhorov}退化为弱$^*$列紧性（\cref{theorem:ch05-弱星紧性}）。若 $M$ 只含单个测度，胎紧性即 Ulam 定理所断言的正则性。
+\end{remark}
+
 \begin{example}\label{example:ch05-胎紧}
-设 $X=\mathbb{R}$，$\mu=\delta_{\bar{x}}$（$\bar{x}\in\mathbb{R}$）。故对所有 $E\in\mathscr{B}(\mathbb{R})$ 有 $\mu(E)=\chi_E(\bar{x})$。显然，对任意 $F\subseteq\mathbb{R}$，集合 $M=\{\delta_{\bar{x}}\mid\bar{x}\in F\}$ 胎紧当且仅当 $F$ 有界。注意若 $F$ 有界，则集合 $\{\alpha\delta_{\bar{x}}\mid\bar{x}\in F,\ \alpha>0\}$ 胎紧但无界。
+设 $X=\mathbb{R}$，$\mu=\delta_{\bar x}$（$\bar x\in\mathbb{R}$）。则对一切 $E\in\mathscr{B}(\mathbb{R})$ 有 $\mu(E)=\chi_E(\bar x)$。对任意 $F\subseteq\mathbb{R}$，集合 $M=\{\delta_{\bar x}\mid\bar x\in F\}$ 胎紧当且仅当 $F$ 有界：若 $F$ 有界，取紧集 $K=\overline{F}$ 得 $\delta_{\bar x}(K^c)=0$ 对一切 $\bar x\in F$；若 $F$ 无界，则对任意紧集 $K\subseteq\mathbb{R}$ 存在 $\bar x\in F\setminus K$，此时 $\delta_{\bar x}(K^c)=1$，故取 $\varepsilon=1$ 即知 $M$ 不胎紧。又若 $F$ 有界，则集合 $\{\alpha\delta_{\bar x}\mid\bar x\in F,\ \alpha>0\}$ 胎紧但无界。
 \end{example}
 
-为后续参考，我们证明如下结果。
+为后续参考，证明如下结果。
 
 \begin{proposition}\label{proposition:ch05-胎紧拓扑一致}
 设 $X$ 为具可数基的局部紧 Hausdorff 空间，$M\subseteq\mathscr{R}^+_f(X)$ 胎紧。则 $M$ 上的窄拓扑与 $M$ 上的弱$^*$拓扑一致，即 $\mathcal{T}_n\cap M=\mathcal{T}_{w^*}\cap M$。
 \end{proposition}
 
 \begin{proof}
-只需证明：对任意序列 $\{\mu_k\}\subseteq M$，若 $\mu_k\stackrel{*}{\rightharpoonup}\mu$，则 $\mu_k\stackrel{n}{\rightharpoonup}\mu$。固定 $\epsilon>0$，由\cref{definition:ch05-胎紧}存在紧子集 $K\subseteq X$ 使对所有 $k\in\mathbb{N}$ 有 $\mu_k(K^c)<\epsilon$。另一方面，由\cref{proposition:appA-Urysohn}，对任意开集 $A\subseteq X$，$A\supseteq K$，存在 $f\in C_c(X)$ 使 $f(X)\subseteq[0,1]$，$f|_K=1$，且 $\operatorname{supp}f\subseteq A$。固定 $g\in C_b(X)$。则 $fg\in C_0(X)$，且
+由 $\mathcal{T}_n\subseteq\mathcal{T}_{w^*}$，只需证明：对任意序列 $\{\mu_k\}\subseteq M$，若 $\mu_k\stackrel{*}{\rightharpoonup}\mu$，则 $\mu_k\stackrel{n}{\rightharpoonup}\mu$。固定 $\varepsilon>0$，由\cref{definition:ch05-胎紧}存在紧子集 $K\subseteq X$ 使对一切 $k\in\mathbb{N}$ 有 $\mu_k(K^c)<\varepsilon$。另一方面，由\cref{proposition:appA-Urysohn}，对紧集 $K$ 与任意开集 $A\supseteq K$，存在 $f\in C_c(X)$ 使 $f(X)\subseteq[0,1]$、$f|_K=1$、$\operatorname{supp}f\subseteq A$。固定 $g\in C_b(X)$。则 $fg\in C_0(X)$，且
 \begin{align*}
 \left|\int_X g\,\mathrm{d}\mu_k-\int_X g\,\mathrm{d}\mu\right|
-\leqslant\left|\int_K g\,\mathrm{d}\mu_k-\int_K g\,\mathrm{d}\mu\right|
+&\leqslant\left|\int_K g\,\mathrm{d}\mu_k-\int_K g\,\mathrm{d}\mu\right|
 +\left|\int_{K^c}g\,\mathrm{d}\mu_k-\int_{K^c}g\,\mathrm{d}\mu\right|\\
-\leqslant\left|\int_X fg\,\mathrm{d}\mu_k-\int_X fg\,\mathrm{d}\mu\right|
+&\leqslant\left|\int_X fg\,\mathrm{d}\mu_k-\int_X fg\,\mathrm{d}\mu\right|
 +\left|\int_X[\chi_K-f]g\,\mathrm{d}\mu_k\right|
-+\left|\int_X[\chi_K-f]g\,\mathrm{d}\mu\right|
-+\left|\int_{K^c}g\,\mathrm{d}\mu_k\right|
++\left|\int_X[\chi_K-f]g\,\mathrm{d}\mu\right|\\
+&\qquad+\left|\int_{K^c}g\,\mathrm{d}\mu_k\right|
 +\left|\int_{K^c}g\,\mathrm{d}\mu\right|
-=:I_1+I_2+I_3+I_4+I_5.
+=:I_1+I_2+I_3+I_4+I_5 .
 \end{align*}
-由于由假设 $\mu_k\stackrel{*}{\rightharpoonup}\mu$，存在 $\bar{k}\in\mathbb{N}$ 使对所有 $k>\bar{k}$，
+由于 $\mu_k\stackrel{*}{\rightharpoonup}\mu$ 且 $fg\in C_0(X)$，存在 $\bar{k}\in\mathbb{N}$ 使对一切 $k>\bar{k}$，
 \begin{align*}
-I_1=\left|\int_X fg\,\mathrm{d}\mu_k-\int_X fg\,\mathrm{d}\mu\right|<\epsilon.
+I_1=\left|\int_X fg\,\mathrm{d}\mu_k-\int_X fg\,\mathrm{d}\mu\right|<\varepsilon.
 \end{align*}
-我们还有，对所有 $k\in\mathbb{N}$，
+因 $0\leqslant\chi_K-f\leqslant1$ 且 $f|_K=1$，对一切 $k\in\mathbb{N}$ 有
 \begin{align*}
 I_2+I_4
 =\left|\int_X[\chi_K-f]g\,\mathrm{d}\mu_k\right|
 +\left|\int_{K^c}g\,\mathrm{d}\mu_k\right|
-\leqslant 2\|g\|_\infty\mu_k(K^c)<2\|g\|_\infty\epsilon.
+\leqslant 2\|g\|_\infty\mu_k(K^c)<2\|g\|_\infty\varepsilon.
 \end{align*}
 此外，
 \begin{align*}
 I_3+I_5
 =\left|\int_X[\chi_K-f]g\,\mathrm{d}\mu\right|
 +\left|\int_{K^c}g\,\mathrm{d}\mu\right|
-\leqslant 2\|g\|_\infty\mu(K^c)\leqslant 2\|g\|_\infty\epsilon,
+\leqslant 2\|g\|_\infty\mu(K^c)\leqslant 2\|g\|_\infty\varepsilon,
 \end{align*}
-因为由范数的下半连续性（见\cref{remark:ch05-范数下半连续}），$\mu(K^c)\leqslant\liminf_{k\to\infty}\mu_k(K^c)$。
+因为由范数的下半连续性（见\cref{remark:ch05-范数下半连续}），$\mu(K^c)\leqslant\liminf_{k\to\infty}\mu_k(K^c)\leqslant\varepsilon$。
 
-综上，我们证明了：对任意固定的 $g\in C_b(X)$ 与任意 $\epsilon>0$，存在 $\bar{k}\in\mathbb{N}$ 使对所有 $k>\bar{k}$，
+综上，对任意固定的 $g\in C_b(X)$ 与任意 $\varepsilon>0$，存在 $\bar{k}\in\mathbb{N}$ 使对一切 $k>\bar{k}$，
 \begin{align*}
-\left|\int_X g\,\mathrm{d}\mu_k-\int_X g\,\mathrm{d}\mu\right|<(1+4\|g\|_\infty)\epsilon.
+\left|\int_X g\,\mathrm{d}\mu_k-\int_X g\,\mathrm{d}\mu\right|<(1+4\|g\|_\infty)\varepsilon.
 \end{align*}
 结论得证。
 \end{proof}
 
-如下结果是\cref{theorem:ch05-弱星紧性}在弱$^*$收敛方面的对应物，表明窄收敛与胎紧性紧密交织。
+% SUPPLEMENT: parent=proposition:ch05-胎紧拓扑一致; kind=proof; 依据：$K^c$ 上的限制测度模糊收敛与全变差的模糊下半连续性；补出 $\mu(K^c)\leqslant\liminf_k\mu_k(K^c)$ 的论证，并说明以网代替序列可得拓扑相等
+\begin{proof}[$\mu(K^c)\leqslant\liminf_k\mu_k(K^c)$ 与拓扑相等的补证]
+取 $\nu_k\triangleq\mu_k\llcorner K^c$、$\nu\triangleq\mu\llcorner K^c$，视为开集 $K^c$ 上的有限 Radon 测度。对任意 $h\in C_c(K^c)$，将 $h$ 在 $K$ 上取 $0$ 延拓为 $X$ 上的连续函数，则 $h\in C_c(X)$，且 $\int_{K^c}h\,\mathrm{d}\nu_k=\int_Xh\,\mathrm{d}\mu_k\to\int_Xh\,\mathrm{d}\mu=\int_{K^c}h\,\mathrm{d}\nu$，即 $\nu_k$ 模糊收敛于 $\nu$。全变差在模糊收敛下下半连续：对 $h\in C_c(K^c)$ 且 $|h|\leqslant1$，
+\begin{align*}
+\int_{K^c}h\,\mathrm{d}\nu=\lim_{k\to\infty}\int_{K^c}h\,\mathrm{d}\nu_k\leqslant\liminf_{k\to\infty}|\nu_k|(K^c),
+\end{align*}
+对 $h$ 取上确界得 $|\nu|(K^c)\leqslant\liminf_k|\nu_k|(K^c)$；由测度非负得 $\mu(K^c)=\nu(K^c)\leqslant\liminf_k\mu_k(K^c)$。
 
-\begin{theorem}[Prokhorov]\label{theorem:ch05-prokhorov}\label{lemma:ch05-Prokhorov}
+关于拓扑相等：上述估计对以有向集为指标的网 $\{\mu_\alpha\}\subseteq M$ 逐字成立（把 $k$ 换为 $\alpha$、$k>\bar{k}$ 换为"最终"），故 $M$ 中弱$^*$收敛的网必窄收敛。因 $\mathcal{T}_n\subseteq\mathcal{T}_{w^*}$，两个相对拓扑的收敛网类相同，故作为 $M$ 上的拓扑它们相等，即 $\mathcal{T}_n\cap M=\mathcal{T}_{w^*}\cap M$。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-胎紧拓扑一致; kind=motivation; 依据：命题 5.1.8 与定理 5.1.9、命题 5.1.10 的关系；说明胎紧性如何把弱*收敛升级为窄收敛、以及正性与可数基的作用
+\begin{remark}\phantomsection\label{remark:ch05-胎紧拓扑一致动机}
+\cref{proposition:ch05-胎紧拓扑一致}是\cref{theorem:ch05-prokhorov}的核心机制：胎紧性排除了质量逃逸，于是 $C_0(X)$ 试验函数足以控制 $C_b(X)$ 试验函数——用紧集 $K$ 上的截断函数 $f$ 把 $g\in C_b(X)$ 分解为 $fg\in C_0(X)$ 与 $K^c$ 上的小质量两部分。因此"胎紧 + 弱$^*$收敛 $\Rightarrow$ 窄收敛"，而窄收敛总蕴含弱$^*$收敛，两个拓扑在 $M$ 上于是相同。同样的分解是\cref{proposition:ch05-ulam}与\cref{proposition:ch05-有界胎紧紧}中一切估计的原型。
+
+各项假设的作用：胎紧性用于一致地取到 $K$，使 $\sup_k\mu_k(K^c)<\varepsilon$ 与 $\mu(K^c)<\varepsilon$ 同时成立；正性用于把 $|\int_{K^c}g\,\mathrm{d}\mu_k|$ 控制为 $\|g\|_\infty\mu_k(K^c)$，对带号测度须换成 $|\mu_k|(K^c)$；可数基经由\cref{proposition:appA-Urysohn} 提供截断函数 $f\in C_c(X)$。$\mu(K^c)\leqslant\liminf_k\mu_k(K^c)$ 不能由 $\mu_k\stackrel{*}{\rightharpoonup}\mu$ 直接对 $g=\chi_{K^c}$ 使用\eqref{align:ch05-5.1}（$\chi_{K^c}$ 不连续），须先限制到开集 $K^c$ 上化为模糊收敛，再用全变差的模糊下半连续性。
+
+边界情形：胎紧性不可去除。取 $X=\mathbb{R}$、$M=\{\delta_k\}$，则 $\delta_k\stackrel{*}{\rightharpoonup}0$ 但 $\delta_k$ 不窄收敛于 $0$（取 $g\equiv1$），而 $M$ 不胎紧。此外 $M$ 不必有界：\cref{example:ch05-胎紧}中的 $\{\alpha\delta_{\bar x}\}$ 胎紧而无界，命题仍适用——这是本命题与\cref{proposition:ch05-弱星可度量化}的差别所在。
+\end{remark}
+如下结果是\cref{theorem:ch05-弱星紧性}在窄收敛方面的对应物，表明窄收敛与胎紧性紧密交织。
+
+\begin{theorem}[Prokhorov]\label{theorem:ch05-prokhorov}
 设 $X$ 为具可数基的局部紧 Hausdorff 空间，$M\subseteq\mathscr{R}^+_f(X)$。则下列命题等价：
 \begin{enumerate}[(i)]
-\item\label{item:ch05-prokth-i} $M$ 在窄拓扑中相对序列紧；
+\item\label{item:ch05-prokth-i} $M$ 在窄拓扑中相对序列紧，即 $M$ 中每个序列含有一个在 $\mathscr{R}_f(X)$ 中窄收敛的子列；
 \item\label{item:ch05-prokth-ii} $M$ 有界且胎紧。
 \end{enumerate}
 \end{theorem}
 
-\begin{remark}\label{remark:ch05-polish}
-更一般地，若 $X$ 为 Polish 空间（见附录 A,\cref{subsection:appA-Polish}），\cref{theorem:ch05-prokhorov}仍成立。\cref{proposition:ch05-ulam}亦然。
+\begin{remark}\phantomsection\label{remark:ch05-polish}
+更一般地，若 $X$ 为 Polish 空间（见附录 A，\cref{section:appA-Polish}），\cref{theorem:ch05-prokhorov}仍成立。\cref{proposition:ch05-ulam}亦然。
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-prokhorov; kind=motivation; 依据：定理 5.1.9 与定理 5.1.7 的对照；说明有界性与胎紧性两项条件的分工、紧性判据的意义与反例
+% SUPPLEMENT: parent=theorem:ch05-prokhorov; kind=motivation; 同一 remark 覆盖该别名 label
+\begin{remark}\phantomsection\label{remark:ch05-prokhorov动机}
+\cref{theorem:ch05-prokhorov}是窄拓扑下的紧性判据：它把"相对序列紧"这一拓扑性质等价地写成"有界 + 胎紧"两条可验证的条件。与\cref{theorem:ch05-弱星紧性}对照可见试验函数类的作用：弱$^*$拓扑不控制无穷远处的质量，故只需有界；窄拓扑以 $C_b(X)$ 为试验函数类，能察觉质量逃逸，故须再加胎紧性。两者合起来也解释了名称：Prokhorov 定理是"弱$^*$列紧性 + 无质量逃逸 = 窄列紧性"。
+
+两项条件各司其职：有界性使\cref{proposition:ch05-有界胎紧紧}中的对角论证可运行，并保证极限测度的范数有限；胎紧性排除质量逃逸，使\cref{proposition:ch05-ulam}中的断言成立，并使\cref{proposition:ch05-胎紧拓扑一致}可用。缺一不可：$\{\delta_k\}\subseteq\mathscr{R}^+_f(\mathbb{R})$ 有界而不胎紧，无窄收敛子列（其弱$^*$极限为 $0$，但 $\delta_k(\mathbb{R})=1$ 不收敛于 $0$）；$\{\alpha\delta_0\mid\alpha>0\}$ 胎紧而无界，任何子列都不可能窄收敛（其总质量无界，与窄收敛蕴含范数收敛矛盾）。
+
+适用边界：$X$ 具可数基的局部紧 Hausdorff 空间可换为 Polish 空间（\cref{remark:ch05-polish}）；证明分两步的结构说明两个条件不可分离地使用。$M$ 限定为正测度序列，带号测度的情形须以全变差代替 $\mu(X)$，并由\cref{remark:ch02-带号约化}化归。
 \end{remark}
 
 \cref{theorem:ch05-prokhorov}的证明分两步给出，对应于\cref{proposition:ch05-ulam}与\cref{proposition:ch05-有界胎紧紧}。
@@ -507,30 +779,51 @@ I_3+I_5
 \end{proposition}
 
 \begin{proof}
-由假设，对任意序列 $\{\mu_k\}\subseteq M$，存在 $\{\mu_{k_l}\}\subseteq\{\mu_k\}$ 与 $\mu\in\mathscr{R}_f(X)$ 使 $\mu_{k_l}\stackrel{n}{\rightharpoonup}\mu$，因而 $\|\mu_{k_l}\|_{\mathscr{R}_f(X)}\to\|\mu\|_{\mathscr{R}_f(X)}$（见\cref{remark:ch05-窄收敛范数}）。显然这蕴含 $M$ 有界。
+由假设，对任意序列 $\{\mu_k\}\subseteq M$，存在 $\{\mu_{k_l}\}\subseteq\{\mu_k\}$ 与 $\mu\in\mathscr{R}_f(X)$ 使 $\mu_{k_l}\stackrel{n}{\rightharpoonup}\mu$，因而 $\|\mu_{k_l}\|_{\mathscr{R}_f(X)}\to\|\mu\|_{\mathscr{R}_f(X)}$（见\cref{remark:ch05-窄收敛范数}）。若 $M$ 无界，则可取 $\{\mu_k\}\subseteq M$ 使 $\|\mu_k\|_{\mathscr{R}_f(X)}\to\infty$；由上述结论其子列 $\{\mu_{k_l}\}$ 有 $\|\mu_{k_l}\|_{\mathscr{R}_f(X)}\to\|\mu\|_{\mathscr{R}_f(X)}<\infty$，矛盾。故 $M$ 有界。
 
-为证 $M$ 胎紧，初步注意 $X$ 为 Polish 空间，故存在相容度量 $d$ 使 $(X,d)$ 完备。固定 $\epsilon>0$，设 $D\equiv\{x_k\}$ 为 $X$ 的可数稠密子集。对任意固定的 $p\in\mathbb{N}$，置 $E_{n,p}\triangleq \bigcup_{k=1}^n B_{1/p}(x_k)$（其中 $B_{1/p}(x_k)\triangleq \{x\in X\mid d(x_k,x)<1/p\}$；$n\in\mathbb{N}$）。显然每个 $E_{n,p}$ 为开集，对所有 $n\in\mathbb{N}$ 有 $E_{n,p}\subseteq E_{n+1,p}$，且 $\bigcup_{n=1}^\infty E_{n,p}=X$。我们证明如下断言。
+为证 $M$ 胎紧，先说明 $X$ 为 Polish 空间，故存在相容度量 $d$ 使 $(X,d)$ 完备。固定 $\varepsilon>0$，设 $D\equiv\{x_k\}$ 为 $X$ 的可数稠密子集。对任意固定的 $p\in\mathbb{N}$，置 $E_{n,p}\triangleq \bigcup_{k=1}^n B_{1/p}(x_k)$（其中 $B_{1/p}(x_k)\triangleq \{x\in X\mid d(x_k,x)<1/p\}$；$n\in\mathbb{N}$）。每个 $E_{n,p}$ 为开集，且 $E_{n,p}\subseteq E_{n+1,p}$ 对一切 $n\in\mathbb{N}$ 成立、$\bigcup_{n=1}^\infty E_{n,p}=X$（由 $D$ 稠密）。证明如下断言。
 
-\textbf{断言。} 设 $\{A_n\}\subseteq\mathcal{P}(X)$ 为递增开集序列使 $\bigcup_{n=1}^\infty A_n=X$。则对每个 $\epsilon>0$，存在 $\bar{n}\in\mathbb{N}$ 使对所有 $\mu\in M$ 有 $\mu(A_{\bar{n}}^c)<\epsilon$。
+\textbf{断言。} 设 $\{A_n\}\subseteq\mathcal{P}(X)$ 为递增开集序列使 $\bigcup_{n=1}^\infty A_n=X$。则对每个 $\varepsilon>0$，存在 $\bar{n}\in\mathbb{N}$ 使对一切 $\mu\in M$ 有 $\mu(A_{\bar{n}}^c)<\varepsilon$。
 
-由断言，对任意 $p\in\mathbb{N}$，存在 $n_p\in\mathbb{N}$ 使对所有 $\mu\in M$ 有 $\mu((E_{n_p,p})^c)<\epsilon/2^p$，特别地
+由断言，对任意 $p\in\mathbb{N}$，存在 $n_p\in\mathbb{N}$ 使对一切 $\mu\in M$ 有 $\mu((E_{n_p,p})^c)<\varepsilon/2^p$，特别地
 \begin{align}
-\mu((E_{n_p,p})^c)<\frac{\epsilon}{2^p}
-\quad\text{对所有 }\mu\in M.\label{align:ch05-5.24}
+\mu((E_{n_p,p})^c)<\frac{\varepsilon}{2^p}
+\quad\text{对一切 }\mu\in M.\label{align:ch05-5.24}
 \end{align}
 置
 \begin{align*}
-K\triangleq \bigcap_{p=1}^\infty E_{n_p,p}\subseteq\bigcap_{p=1}^\infty\bigcup_{k=1}^{n_p}B_{1/p}(x_k).
+K\triangleq \overline{\bigcap_{p=1}^\infty E_{n_p,p}}
+\subseteq\bigcap_{p=1}^\infty\bigcap_{k=1}^{n_p}\overline{B_{1/p}(x_k)}.
 \end{align*}
-由\eqref{align:ch05-5.24}，对所有 $\mu\in M$ 有 $\mu(K^c)<\epsilon$，故若我们证明 $K$ 紧，结论即得。为此注意，对每个 $p\in\mathbb{N}$，集合 $K$ 包含在有限并 $\bigcup_{k=1}^{n_p}B_{1/p}(x_k)$ 中，且 $\operatorname{diam}B_{1/p}(x_k)=2/p$（$p\in\mathbb{N}$）。由对角论证，每个序列 $\{x'_j\}\subseteq K$ 含 Cauchy 子列 $\{x'_{j_l}\}\subseteq\{x'_j\}$。由于 $K$ 闭且 $X$ 完备，存在 $x'\in K$ 使当 $l\to\infty$ 时 $d(x'_{j_l},x')\to0$。故 $K$ 序列紧，从而紧。结论得证。
+由\eqref{align:ch05-5.24}，对一切 $\mu\in M$ 有 $\mu(K^c)\leqslant\mu\Bigl(\bigl(\bigcap_{p}E_{n_p,p}\bigr)^c\Bigr)<\varepsilon$。若 $K$ 紧，则取该 $K$ 即得 $M$ 的胎紧性。为此，对每个 $p\in\mathbb{N}$，集合 $K$ 含于有限并 $\bigcup_{k=1}^{n_p}B_{1/p}(x_k)$ 的闭包之中，故 $K$ 可被有限多个半径 $1/p$ 的球覆盖，即 $K$ 全有界。由对角论证，每个序列 $\{x_j'\}\subseteq K$ 含 Cauchy 子列 $\{x'_{j_l}\}\subseteq\{x_j'\}$：先取子列落入有限多个 $1/2$-球之一，再取子列落入其中有限多个 $1/4$-球之一，依此类推并对角选取。由于 $K$ 闭且 $X$ 完备，存在 $x'\in K$ 使当 $l\to\infty$ 时 $d(x'_{j_l},x')\to0$。故 $K$ 序列紧，从而紧。结论得证。
 
-尚需证明断言。反设存在递增开集序列 $\{A_n\}$ 使 $\bigcup_{n=1}^\infty A_n=X$，及 $\epsilon>0$ 具有如下性质：对所有 $n\in\mathbb{N}$，存在 $\mu_n\in M$ 使 $\mu_n(A_n^c)\geqslant\epsilon$。由于 $M$ 在窄拓扑中相对序列紧，存在 $\{\mu_{n_k}\}\subseteq\{\mu_n\}$ 与 $\mu\in\mathscr{R}_f(X)$ 使 $\mu_{n_k}\stackrel{n}{\rightharpoonup}\mu$。于是由\cref{theorem:ch05-portmanteau}与 $\{A_n\}$ 的单调性，对每个固定的 $n\in\mathbb{N}$，
+尚需证明断言。反设存在递增开集序列 $\{A_n\}$ 使 $\bigcup_{n=1}^\infty A_n=X$，及 $\varepsilon>0$ 具有如下性质：对一切 $n\in\mathbb{N}$，存在 $\mu_n\in M$ 使 $\mu_n(A_n^c)\geqslant\varepsilon$。由于 $M$ 在窄拓扑中相对序列紧，存在 $\{\mu_{n_k}\}\subseteq\{\mu_n\}$ 与 $\mu\in\mathscr{R}_f(X)$ 使 $\mu_{n_k}\stackrel{n}{\rightharpoonup}\mu$；注意 $n_k\to\infty$。于是由\cref{theorem:ch05-portmanteau}（\eqref{align:ch05-5.7}）与 $\{A_n\}$ 的单调性，对每个固定的 $n\in\mathbb{N}$ 与充分大的 $k$（使 $n_k\geqslant n$，从而 $A_n^c\supseteq A_{n_k}^c$），
 \begin{align*}
 \mu(A_n^c)\geqslant\limsup_{k\to\infty}\mu_{n_k}(A_n^c)
-\geqslant\limsup_{k\to\infty}\mu_{n_k}(A_{n_k}^c)\geqslant\epsilon.
+\geqslant\limsup_{k\to\infty}\mu_{n_k}(A_{n_k}^c)\geqslant\varepsilon.
 \end{align*}
-然而由于 $\mu$ 有限，我们得 $\lim_{n\to\infty}\mu(A_n^c)=0$，矛盾。故断言成立，证明完成。
+然而 $A_n^c\downarrow\varnothing$ 且 $\mu(A_1^c)\leqslant\mu(X)<\infty$，由测度的上连续性得 $\lim_{n\to\infty}\mu(A_n^c)=0$，矛盾。故断言成立，证明完成。
 \end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-ulam; kind=proof; 依据：$X$ 的可度量化与 $\sigma$-紧性、以及全有界闭集在完备度量空间中紧；补出 "Polish" 与 "$K$ 紧" 两处论断的细节
+\begin{proof}[两处论断的补证]
+其一，$X$ 为 Polish：由\cref{definition:appA-可度量化}，具可数基的局部紧 Hausdorff 空间可度量化，取相容度量 $d_0$；由\cref{proposition:appA-紧生成}，$X$ 为 $\sigma$-紧，即 $X=\bigcup_{l}K_l$，$K_l$ 递增紧。置
+\begin{align*}
+d(x,y)\triangleq d_0(x,y)+\sum_{l=1}^{\infty}2^{-l}\min\left\{1,\left|\frac{1}{1+d_0(x,K_l)}-\frac{1}{1+d_0(y,K_l)}\right|\right\}.
+\end{align*}
+则 $d$ 为与 $d_0$ 等价的度量（各项连续且级数一致收敛），且 $d$-Cauchy 列在 $d_0$ 下 Cauchy；由 $X=\bigcup_lK_l$，可仿照 $K$ 的全有界性论证取出收敛子列，故 $(X,d)$ 完备。
+
+其二，$K$ 紧：已证 $K$ 闭且对每个 $p$ 可被有限多个半径 $1/p$ 的球覆盖。设 $\{x_j'\}\subseteq K$，由 $K$ 的全有界性逐层取子列并对角选取，可得 $j_1<j_2<\cdots$ 使 $d(x'_{j_{l+1}},x'_{j_l})<2^{-l}$，则 $\{x'_{j_l}\}$ 为 Cauchy 列；由 $(X,d)$ 完备与 $K$ 闭得极限 $x'\in K$。故 $K$ 序列紧，在度量空间中序列紧等价于紧。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-ulam; kind=motivation; 依据：命题 5.1.10 证明中的断言；说明该断言即"紧集逼近的一致性"、以及胎紧性为何必须由这样的断言产生
+\begin{remark}\phantomsection\label{remark:ch05-ulam动机}
+\cref{proposition:ch05-ulam}的实质是：窄列紧性通过\cref{theorem:ch05-portmanteau}的闭集不等式，把"每个序列"的紧性转化为"紧集逼近关于 $\mu\in M$ 一致"这一断言；断言的对偶形式正是胎紧性。断言中 $\{A_n\}$ 取为递增开集覆盖，证明用反证：若一致性失败，则存在 $\mu_n$ 在 $A_n$ 外留有质量 $\geqslant\varepsilon$，其窄收敛子列的极限 $\mu$ 被迫在每个 $A_n^c$ 上质量 $\geqslant\varepsilon$，与 $\mu$ 有限且 $A_n^c\downarrow\varnothing$ 矛盾。
+
+各项假设的作用：$M\subseteq\mathscr{R}^+_f(X)$ 的正性使 $\|\mu\|=\mu(X)$，从而窄收敛给出范数收敛并立即得到有界性；可数基给出可数稠密子集 $\{x_k\}$ 与可数覆盖，使构造的 $K$ 全有界；$\sigma$-紧性（由可数基与局部紧性得到）给出完备度量，使全有界闭集紧；窄列紧性只用于在反证中抽取收敛子列。
+
+边界情形：命题只给出必要性；充分性由\cref{proposition:ch05-有界胎紧紧}给出，两者合起来才是\cref{theorem:ch05-prokhorov}。若把窄拓扑换成弱$^*$拓扑，胎紧性不再必要（\cref{theorem:ch05-弱星紧性}），断言中的闭集不等式也随之失效，因为弱$^*$收敛不能控制无穷远处的质量。
+\end{remark}
 
 \begin{proposition}\label{proposition:ch05-有界胎紧紧}
 设 $X$ 为具可数基的局部紧 Hausdorff 空间，$M\subseteq\mathscr{R}^+_f(X)$ 有界且胎紧。则 $M$ 在窄拓扑中相对序列紧。
@@ -542,7 +835,7 @@ K\triangleq \bigcap_{p=1}^\infty E_{n_p,p}\subseteq\bigcap_{p=1}^\infty\bigcup_{
 \sup_{\mu\in M}\|\mu\|_{\mathscr{R}_f(X)}
 =\sup_{\mu\in M}\mu(X)=:C<\infty.\label{align:ch05-5.25}
 \end{align}
-回忆由\cref{proposition:appA-紧生成}，空间 $X$ 为 $\sigma$-紧。我们先在 $X$ 紧的假设下证明结果。设 $D\equiv\{f_k\}$ 为 $C_b(X)$ 的可数稠密子集（由于 $X$ 紧，$C_b(X)$ 可分；见\cref{proposition:appA-紧可分}）。则
+由\cref{proposition:appA-紧生成}，$X$ 为 $\sigma$-紧。先在 $X$ 紧的假设下证明结论。设 $D\equiv\{f_k\}$ 为 $C_b(X)$ 的可数稠密子集（$X$ 紧时 $C_b(X)=C(X)$ 可分；见\cref{proposition:appA-紧可分}）。则
 \begin{align*}
 \sup_{\mu\in M}\left|\int_X f_1\,\mathrm{d}\mu\right|
 \leqslant\|f_1\|_\infty\sup_{\mu\in M}\|\mu\|_{\mathscr{R}_f(X)}
@@ -555,40 +848,40 @@ K\triangleq \bigcap_{p=1}^\infty E_{n_p,p}\subseteq\bigcap_{p=1}^\infty\bigcup_{
 由于
 \begin{align*}
 \sup_{j\in\mathbb{N}}\left|\int_X f_2\,\mathrm{d}\mu_j^1\right|
-\leqslant\|f_2\|_\infty\sup_{j\in\mathbb{N}}\|\mu_j^1\|
+\leqslant\|f_2\|_\infty\sup_{j\in\mathbb{N}}\|\mu_j^1\|_{\mathscr{R}_f(X)}
 \leqslant\|f_2\|_\infty C<\infty,
 \end{align*}
 集合 $\{\int_X f_2\,\mathrm{d}\mu_j^1\mid j\in\mathbb{N}\}\subseteq\mathbb{R}$ 也有界。于是存在子列 $\{\mu_j^2\}\subseteq\{\mu_j^1\}$ 与 $a_2\in\mathbb{R}$ 使
 \begin{align*}
-\lim_{j\to\infty}\int_X f_2\,\mathrm{d}\mu_j^2=a_2.
+\lim_{j\to\infty}\int_X f_2\,\mathrm{d}\mu_j^2=a_2,
 \end{align*}
-显然由\eqref{align:ch05-5.26}，我们也有 $\lim_{j\to\infty}\int_X f_1\,\mathrm{d}\mu_j^2=a_1$。迭代此论证，对每个 $k\in\mathbb{N}$，$k\geqslant3$，存在子列 $\{\mu_j^k\}\subseteq\{\mu_j^{k-1}\}$ 与 $a_k\in\mathbb{R}$ 使
+且由\eqref{align:ch05-5.26}仍有 $\lim_{j\to\infty}\int_X f_1\,\mathrm{d}\mu_j^2=a_1$。迭代此论证，对每个 $k\in\mathbb{N}$、$k\geqslant3$，存在子列 $\{\mu_j^k\}\subseteq\{\mu_j^{k-1}\}$ 与 $a_k\in\mathbb{R}$ 使
 \begin{align*}
 \lim_{j\to\infty}\int_X f_l\,\mathrm{d}\mu_j^k=a_l
-\quad\text{对所有 }l=1,\cdots ,k.
+\quad\text{对一切 }l=1,\cdots ,k.
 \end{align*}
 由对角论证，序列 $\{\mu_j\}\subseteq M$（其中 $\mu_j\triangleq \mu_j^j$，$j\in\mathbb{N}$）满足
 \begin{align}
 \lim_{j\to\infty}\int_X f_k\,\mathrm{d}\mu_j=a_k
-\quad\text{对所有 }k\in\mathbb{N}.\label{align:ch05-5.27}
+\quad\text{对一切 }k\in\mathbb{N}.\label{align:ch05-5.27}
 \end{align}
 现考虑映射 $F_0:D\to\mathbb{R}$，$F_0(f_k)\triangleq a_k$（$k\in\mathbb{N}$）。由\eqref{align:ch05-5.27}，$F_0$ 线性、正且连续，因为
 \begin{align*}
 |F_0(f_k)|=|a_k|
 \leqslant\lim_{j\to\infty}\left|\int_X f_k\,\mathrm{d}\mu_j\right|
 \leqslant\|f_k\|_\infty C
-\quad\text{对所有 }k\in\mathbb{N}.
+\quad\text{对一切 }k\in\mathbb{N}.
 \end{align*}
-由于 $D$ 在 $C_b(X)$ 中稠密，$F_0$ 可唯一延拓为 $(C_b(X))^*$ 上的泛函 $F$，它是正的且满足 $\|F\|\leqslant C$。我们证明如下断言。
+由于 $D$ 在 $C_b(X)$ 中稠密，$F_0$ 可唯一延拓为 $(C_b(X))^*$ 中的泛函 $F$，它正且满足 $\|F\|\leqslant C$。证明如下断言。
 
-\textbf{断言。} 对任意 $\epsilon>0$，存在紧子集 $K\subseteq X$ 使对所有 $f\in C_b(X)$ 满足 $f(X)\subseteq[0,1]$ 且 $f|_K=0$，有 $\langle F,f\rangle<\epsilon$。
+\textbf{断言。} 对任意 $\varepsilon>0$，存在紧子集 $K\subseteq X$ 使对一切 $f\in C_b(X)$ 满足 $f(X)\subseteq[0,1]$ 且 $f|_K=0$，有 $\langle F,f\rangle<\varepsilon$。
 
-依靠断言，我们可在 $X$ 紧时完成证明。事实上，由\cref{theorem:ch02-Riesz表示}，存在唯一 $\mu\in\mathscr{R}^+_f(X)$ 使
+依靠断言，可在 $X$ 紧时完成证明。事实上，由\cref{theorem:ch02-Riesz表示}，存在唯一 $\mu\in\mathscr{R}^+_f(X)$ 使
 \begin{align}
 \langle F,f\rangle=\int_X f\,\mathrm{d}\mu
-\quad\text{对所有 }f\in C_b(X)\label{align:ch05-5.28}
+\quad\text{对一切 }f\in C_b(X)\label{align:ch05-5.28}
 \end{align}
-（见\eqref{align:ch02-2.49}）；此外由\cref{theorem:ch02-Riesz范数}(ii)，$\|\mu\|_{\mathscr{R}_f(X)}=\|F\|\leqslant C$。设 $g\in C_b(X)$，$\{f_l\}\subseteq D$ 为使 $\lim_{l\to\infty}\|f_l-g\|_\infty=0$ 的序列。固定 $\epsilon>0$，取 $l_0\in\mathbb{N}$ 充分大使 $\|f_{l_0}-g\|_\infty<\epsilon/(4C)$。由\eqref{align:ch05-5.27}–\eqref{align:ch05-5.28}，
+（见\eqref{align:ch02-2.49}）；此外由\cref{theorem:ch02-Riesz范数}(ii)，$\|\mu\|_{\mathscr{R}_f(X)}=\|F\|\leqslant C$。设 $g\in C_b(X)$，$\{f_l\}\subseteq D$ 为使 $\lim_{l\to\infty}\|f_l-g\|_\infty=0$ 的序列。固定 $\varepsilon>0$，取 $l_0\in\mathbb{N}$ 充分大使 $\|f_{l_0}-g\|_\infty<\varepsilon/(4C)$。由\eqref{align:ch05-5.27}–\eqref{align:ch05-5.28}，
 \begin{align*}
 \langle F,f_{l_0}\rangle=F_0(f_{l_0})=a_{l_0}
 =\int_X f_{l_0}\,\mathrm{d}\mu
@@ -596,37 +889,37 @@ K\triangleq \bigcap_{p=1}^\infty E_{n_p,p}\subseteq\bigcap_{p=1}^\infty\bigcup_{
 \end{align*}
 故存在 $j_0\in\mathbb{N}$ 使
 \begin{align*}
-\left|\int_X f_{l_0}\,\mathrm{d}\mu_j-\int_X f_{l_0}\,\mathrm{d}\mu\right|<\frac{\epsilon}{2}
-\quad\text{对所有 }j>j_0.
+\left|\int_X f_{l_0}\,\mathrm{d}\mu_j-\int_X f_{l_0}\,\mathrm{d}\mu\right|<\frac{\varepsilon}{2}
+\quad\text{对一切 }j>j_0.
 \end{align*}
-则对所有 $j>j_0$，
+则对一切 $j>j_0$，
 \begin{align*}
 \left|\int_X g\,\mathrm{d}\mu_j-\int_X g\,\mathrm{d}\mu\right|
-\leqslant\left|\int_X(g-f_{l_0})\,\mathrm{d}\mu_j\right|
+&\leqslant\left|\int_X(g-f_{l_0})\,\mathrm{d}\mu_j\right|
 +\left|\int_X(g-f_{l_0})\,\mathrm{d}\mu\right|
 +\left|\int_X f_{l_0}\,\mathrm{d}\mu_j-\int_X f_{l_0}\,\mathrm{d}\mu\right|\\
-\leqslant\|f_{l_0}-g\|_\infty\left(\sup_{j\in\mathbb{N}}\|\mu_j\|+\|\mu\|_{\mathscr{R}_f(X)}\right)+\frac{\epsilon}{2}
-<2C\cdot\frac{\epsilon}{4C}+\frac{\epsilon}{2}=\epsilon.
+&\leqslant\|f_{l_0}-g\|_\infty\left(\sup_{j\in\mathbb{N}}\|\mu_j\|_{\mathscr{R}_f(X)}+\|\mu\|_{\mathscr{R}_f(X)}\right)+\frac{\varepsilon}{2}\\
+&<2C\cdot\frac{\varepsilon}{4C}+\frac{\varepsilon}{2}=\varepsilon.
 \end{align*}
-综上，我们证明了存在序列 $\{\mu_j\}\subseteq M$ 与 $\mu\in\mathscr{R}^+_f(X)$ 使 $\mu_j\stackrel{n}{\rightharpoonup}\mu$，结论得证。
+综上，存在序列 $\{\mu_j\}\subseteq M$ 与 $\mu\in\mathscr{R}^+_f(X)$ 使 $\mu_j\stackrel{n}{\rightharpoonup}\mu$，$X$ 紧时的结论得证。
 
-现证明上述断言。由于由假设 $M$ 胎紧，对任意 $\epsilon>0$，存在紧子集 $K\subseteq X$ 使 $\sup_{\mu\in M}\mu(K^c)<\epsilon/6$。设 $f\in C_b(X)$ 满足 $f(X)\subseteq[0,1]$ 且 $f|_K=0$。由于 $D$ 在 $C_b(X)$ 中稠密，存在序列 $\{f_l\}\subseteq D$（对所有 $l\in\mathbb{N}$，$f_l\geqslant0$）使 $\lim_{l\to\infty}\|f_l-f\|_\infty=0$；因而特别地，对所有充分大的 $l\in\mathbb{N}$，$\|f_l\|_\infty<1+\epsilon/6$，$\|f_l|_K\|_\infty<\epsilon/(6C)$。
+现证明上述断言。由于 $M$ 胎紧，对任意 $\varepsilon>0$，存在紧子集 $K\subseteq X$ 使 $\sup_{\mu\in M}\mu(K^c)<\varepsilon/6$。设 $f\in C_b(X)$ 满足 $f(X)\subseteq[0,1]$ 且 $f|_K=0$。由于 $D$ 在 $C_b(X)$ 中稠密，存在序列 $\{f_l\}\subseteq D$（对一切 $l\in\mathbb{N}$，$f_l\geqslant0$）使 $\lim_{l\to\infty}\|f_l-f\|_\infty=0$；因而特别地，对一切充分大的 $l\in\mathbb{N}$，$\|f_l\|_\infty<1+\varepsilon/6$、$\|f_l|_K\|_\infty<\varepsilon/(6C)$。
 
-则对任意充分大的 $l\in\mathbb{N}$，
+则对任意充分大的 $l\in\mathbb{N}$（可设 $\varepsilon\leqslant1$），
 \begin{align*}
 \langle F,f_l\rangle=a_l
 =\lim_{j\to\infty}\int_X f_l\,\mathrm{d}\mu_j
-\leqslant\limsup_{j\to\infty}\int_K f_l\,\mathrm{d}\mu_j
+&\leqslant\limsup_{j\to\infty}\int_K f_l\,\mathrm{d}\mu_j
 +\limsup_{j\to\infty}\int_{K^c}f_l\,\mathrm{d}\mu_j\\
-\leqslant\frac{\epsilon}{6C}\sup_{j\in\mathbb{N}}\mu_j(X)
-+\left(1+\frac{\epsilon}{6}\right)\sup_{j\in\mathbb{N}}\mu_j(K^c)
-<\frac{\epsilon}{6}+\left(1+\frac{\epsilon}{6}\right)\frac{\epsilon}{6}
-<\frac{\epsilon}{2}.
+&\leqslant\frac{\varepsilon}{6C}\sup_{j\in\mathbb{N}}\mu_j(X)
++\left(1+\frac{\varepsilon}{6}\right)\sup_{j\in\mathbb{N}}\mu_j(K^c)
+<\frac{\varepsilon}{6}+\left(1+\frac{\varepsilon}{6}\right)\frac{\varepsilon}{6}
+<\frac{\varepsilon}{2}.
 \end{align*}
 由于 $\|f_l-f\|_\infty\to0$ 且 $F$ 连续，由该不等式得
 \begin{align*}
 \langle F,f\rangle=\lim_{l\to\infty}\langle F,f_l\rangle
-\leqslant\frac{\epsilon}{2}<\epsilon,
+\leqslant\frac{\varepsilon}{2}<\varepsilon,
 \end{align*}
 故断言成立。$X$ 紧时的证明完成。
 
@@ -638,15 +931,62 @@ K\triangleq \bigcap_{p=1}^\infty E_{n_p,p}\subseteq\bigcap_{p=1}^\infty\bigcup_{
 由上述考虑，对每个 $l\in\mathbb{N}$，存在序列 $\{\mu_j^l\}\subseteq M$ 与 $\mu^l\in\mathscr{R}^+_f(X)$ 使当 $j\to\infty$ 时 $\mu_j^l\stackrel{n}{\rightharpoonup}\mu^l$。于是由对角论证结论得证。
 \end{proof}
 
-由\cref{theorem:ch05-prokhorov}，拥有胎紧性判据是有用的。我们给出如下定义。
+% SUPPLEMENT: parent=proposition:ch05-有界胎紧紧; kind=proof; 依据：$D$ 上的线性正泛函关于 $\|\cdot\|_\infty$ 的一致连续性；补出 $F_0$ 的延拓、$\|F\|\leqslant C$、以及断言的数值估计中常数 $\varepsilon/6$ 的来源
+\begin{proof}[延拓、范数估计与常数来源]
+延拓：$F_0$ 在 $D$ 上线性且 $|F_0(f_k)|\leqslant C\|f_k\|_\infty$，故 $F_0$ 关于 $\|\cdot\|_\infty$ 一致连续。设 $g\in C_b(X)$，取 $\{f_{k_m}\}\subseteq D$ 使 $\|f_{k_m}-g\|_\infty\to0$，定义 $F(g)\triangleq\lim_mF_0(f_{k_m})$。该极限存在（$\{F_0(f_{k_m})\}$ 为 Cauchy 列），且与所取序列无关（若 $\{f'_{m}\}$ 为另一序列，则 $\|f_{k_m}-f'_m\|_\infty\to0$，故两者极限相同）；由此 $F$ 在 $C_b(X)$ 上线性，$|F(g)|\leqslant C\|g\|_\infty$ 即 $\|F\|\leqslant C$；若 $g\geqslant0$ 且 $\{f_{k_m}\}\subseteq D$ 满足 $\|f_{k_m}-g\|_\infty\to0$，则 $f_{k_m}\geqslant-\|f_{k_m}-g\|_\infty$，故 $\int_Xf_{k_m}\,\mathrm{d}\mu_j\geqslant-\|f_{k_m}-g\|_\infty C$，令 $j\to\infty$ 得 $F(f_{k_m})\geqslant-\|f_{k_m}-g\|_\infty C$，再令 $m\to\infty$ 并由 $F$ 连续得 $F(g)\geqslant0$。断言中的 $K$ 由胎紧性给出，$\varepsilon/6$ 的选取使三项误差之和 $\varepsilon/6+(1+\varepsilon/6)\varepsilon/6<\varepsilon/2$，再经 $F$ 的连续性过渡到 $f$。
+
+关于 $f_l\geqslant0$：该限制只是简化记号。若不取正部而直接取 $\|f_l-f\|_\infty<\delta_l$、$\delta_l\to0$，则由 $f(X)\subseteq[0,1]$、$f|_K=0$ 得 $f_l\geqslant-\delta_l$ 于 $X$、$f_l|_K\leqslant\delta_l$、$f_l\leqslant1+\delta_l$ 于 $X$，同一估计给出 $\langle F,f_l\rangle\leqslant\delta_l C+(1+\delta_l)\varepsilon/6<\varepsilon/2$（$l$ 充分大），结论不变。
+
+关于断言的用法：它表明 $F$ 在"支集远离某紧集"的非负连续函数上取值任意小，即 $F$ 对应的 Radon 测度 $\mu$（\eqref{align:ch05-5.28}）满足 $\mu(K^c)\leqslant\varepsilon$：由 Riesz 表示与 $0\leqslant f\leqslant1$、$f|_K=0$ 的 $f$ 逼近 $\chi_{K^c}$ 即得。这一胎紧性正是\cref{proposition:ch05-ulam}的逆命题所需的"无质量逃逸"，在一般情形下保证各层限制 $\mu^l$ 相容。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-有界胎紧紧; kind=proof; 依据：命题 5.1.5 与 $d_P$ 的全有界性；补出一般（$X$ 非紧）情形下对角论证的完整替代论证
+\begin{proof}[一般情形的补证]
+$X$ 为 Polish，故由\cref{proposition:ch05-窄拓扑可度量化}，$\mathscr{R}^+_f(X)$ 上的窄拓扑由 $d_P$ 诱导，从而只需证 $M$ 在 $({\mathscr{R}^+_f}(X),d_P)$ 中全有界。给定 $\varepsilon>0$，由胎紧性取紧集 $K\subseteq X$ 使 $\mu(K^c)<\varepsilon/3$ 对一切 $\mu\in M$ 成立。对 $\mu\in M$ 置 $\nu^\mu\triangleq\mu\llcorner K\in\mathscr{R}^+_f(K)$；族 $\{\nu^\mu\}$ 在 $\mathscr{R}^+_f(K)$ 中有界（被 $C$ 控制），而 $K$ 紧故 $\mathscr{R}^+_f(K)$ 上的窄拓扑由 $d_P^K$ 诱导，且由已证的紧情形该族相对列紧，因而全有界：存在 $\mu_1,\cdots ,\mu_N\in M$ 使每个 $\nu^\mu$ 关于 $d_P^K$ 与某个 $\nu^{\mu_i}$ 相距 $\leqslant\varepsilon/3$。
+
+以下说明相应的 $\mu_i$ 关于 $d_P$ 的 $\varepsilon$-球覆盖 $M$。设 $\mu,\mu'\in\mathscr{R}^+_f(X)$ 满足 $\mu(K^c)\leqslant\varepsilon/3$、$\mu'(K^c)\leqslant\varepsilon/3$ 且 $d_P^K(\mu\llcorner K,\mu'\llcorner K)\leqslant\varepsilon/3$。对 $E\in\mathscr{B}(X)$，由 $(E\cap K)^K_{\varepsilon/3}\subseteq E_{\varepsilon/3}$ 得
+\begin{align*}
+\mu(E)\leqslant\mu(E\cap K)+\frac{\varepsilon}{3}
+\leqslant\mu'((E\cap K)^K_{\varepsilon/3})+\frac{\varepsilon}{3}+\frac{\varepsilon}{3}
+\leqslant\mu'(E_{\varepsilon/3})+\frac{2\varepsilon}{3},
+\end{align*}
+对称地 $\mu'(E)\leqslant\mu(E_{\varepsilon/3})+2\varepsilon/3$；故 $d_P(\mu,\mu')\leqslant\varepsilon$。于是 $M$ 被有限多个 $d_P$-$\varepsilon$-球覆盖，全有界。度量空间中全有界等价于相对紧，从而等价于相对序列紧，结论得证。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-有界胎紧紧; kind=motivation; 依据：命题 5.1.11 的证明结构；说明"有界"与"胎紧"分别在何处使用、紧情形与一般情形的差别
+\begin{remark}\phantomsection\label{remark:ch05-有界胎紧紧动机}
+\cref{proposition:ch05-有界胎紧紧}是\cref{theorem:ch05-prokhorov}的充分性一半。证明分两层：先用对角论证把稠密试验函数族上的收敛性提取为一个线性正泛函 $F$，再用 Riesz 表示定理把 $F$ 实现为测度 $\mu$，最后由范数估计把 $f_{l_0}$ 上的收敛过渡到任意 $g\in C_b(X)$ 上的收敛。有界性在两处使用：给出 $D$ 上泛函的界 $|F_0(f_k)|\leqslant C\|f_k\|_\infty$（从而 $F$ 可延拓且 $\|F\|\leqslant C$），以及在最后的 $\varepsilon$-估计中提供常数 $2C$。胎紧性只在断言中使用：它保证 $F$ 在远离紧集的非负函数上取值小，即极限测度不逃逸到无穷远。
+
+紧情形与一般情形的差别在于：紧时 $C_b(X)=C_0(X)$，Riesz 表示直接给出 $\mu$；一般情形下 $\mu^l$ 只是各紧层上的极限，需要胎紧性保证它们相互相容才能拼成 $X$ 上的测度。补证中给出了一条避免对角论证的路线：用 $d_P$ 的全有界性把一般情形化归为紧情形。
+
+边界情形：两个条件缺一不可。仅有界不充分：$\{\delta_k\}\subseteq\mathscr{R}^+_f(\mathbb{R})$ 有界但不胎紧，且无窄收敛子列（其弱$^*$极限 $0$ 不是窄极限）。仅胎紧不充分：$\{\alpha\delta_0\mid\alpha>0\}$ 胎紧但无界，其窄极限不存在。若 $X$ 不具可数基，$C_b(X)$ 未必可分，对角论证所用的可数稠密族 $D$ 不存在，证明须另作处理（此时\cref{theorem:ch05-prokhorov}的陈述也须以网或滤子表述）。
+\end{remark}
+
+由\cref{theorem:ch05-prokhorov}，拥有胎紧性判据是有用的。给出如下定义。
 
 \begin{definition}\label{definition:ch05-下紧}
 设 $X$ 为局部紧 Hausdorff 空间。函数 $\varphi:X\to(-\infty,\infty]$ 称为\textbf{下紧的}（inf-compact），若对每个 $r\in\mathbb{R}$，集合 $\{\varphi\leqslant r\}\triangleq \{x\in X\mid\varphi(x)\leqslant r\}$ 为紧集。
 \end{definition}
 
+% SUPPLEMENT: parent=definition:ch05-下紧; kind=motivation; 依据：定义 5.1.6 与命题 5.1.12 的配合；说明下紧性替代胎紧性的机制、$\pm\infty$ 取值的作用与连续性假设的缺席
+\begin{remark}\phantomsection\label{remark:ch05-下紧动机}
+下紧性把"质量集中在紧集上"转化为"一个函数的积分一致有界"：若 $\varphi$ 下紧且 $\sup_{\mu\in M}\int_X\varphi\,\mathrm{d}\mu<\infty$，则由 Chebyshev 不等式与 $\{\varphi\leqslant r\}$ 的紧性，$M$ 胎紧（\cref{proposition:ch05-胎紧判据}）。这是把\cref{theorem:ch05-prokhorov}的拓扑条件换作可计算的矩条件的标准手法，在变分法与概率论中常以强迫性（coercivity）或 Lyapunov 函数的形式出现。
+
+各项约定与假设的作用：值域取 $(-\infty,\infty]$ 使 $\varphi$ 可以取 $+\infty$（例如 $\varphi=\infty$ 于某非紧集之外），从而便于构造；下水平集 $\{\varphi\leqslant r\}$ 对有限 $r$ 必须紧，这比"有界"强，因为一般拓扑空间中紧性不等于有界闭性；$\varphi$ 不必连续，也不必下有界，只需下水平集紧。若 $\varphi$ 取 $-\infty$，则 $\{\varphi\leqslant r\}=X$ 迫使 $X$ 紧，故实践中通常要求 $\varphi\geqslant0$。
+
+适用边界：\cref{definition:ch05-下紧}只用下水平集的紧性，故 $\varphi$ 可以非常不连续；\cref{proposition:ch05-胎紧判据}中的 (i)$\Rightarrow$(ii) 说明对任意胎紧族都能构造这样的 $\varphi$，即该判据是充分的且本质上也是必要的。
+\end{remark}
+
 \begin{example}\label{example:ch05-下紧}
-若 $X=\mathbb{R}$，则每个连续函数 $\varphi:\mathbb{R}\to[0,\infty)$ 满足当 $|x|\to\infty$ 时 $\varphi(x)\to\infty$ 都是下紧的。事实上，对每个 $r\in\mathbb{R}$，集合 $\{\varphi\leqslant r\}$ 闭且有界，故紧。
+若 $X=\mathbb{R}$，则每个满足当 $|x|\to\infty$ 时 $\varphi(x)\to\infty$ 的连续函数 $\varphi:\mathbb{R}\to[0,\infty)$ 都是下紧的。事实上，对每个 $r\in\mathbb{R}$，集合 $\{\varphi\leqslant r\}$ 闭（$\varphi$ 连续）且有界（由强迫性：存在 $R>0$ 使 $|x|>R$ 时 $\varphi(x)>r$），故由 $\mathbb{R}$ 中的 Heine–Borel 定理紧。
 \end{example}
+
+% SUPPLEMENT: parent=example:ch05-下紧; kind=motivation; 依据：例 5.1.4；说明强迫性、连续性与非负性各自的作用，并给出反例
+\begin{remark}\phantomsection\label{remark:ch05-下紧例子}
+\cref{example:ch05-下紧}给出下紧函数最典型的来源：$\mathbb{R}$ 上的强迫连续函数。其中强迫性（$\varphi(x)\to\infty$）保证下水平集有界，连续性保证它闭，非负性只影响 $r<0$ 时的下水平集（此时为空集，仍紧）。若去掉强迫性，例如 $\varphi\equiv1$，则 $\{\varphi\leqslant1\}=\mathbb{R}$ 不紧，故 $\varphi$ 不下紧；若去掉连续性而保留强迫性，例如 $\varphi\triangleq\chi_{\mathbb{Q}}$ 的某个强制化版本，则下水平集可能不闭，故不紧。
+
+边界：在 $\mathbb{R}^n$（$n\geqslant1$）上同样的论断成立（有界闭集紧）；在无限维 Banach 空间中，闭球不紧，故强制连续函数一般不是下紧的，此时下紧性成为很强的要求——这正是无限维中胎紧性判据需要另行处理的原因。
+\end{remark}
 
 \cref{definition:ch05-下紧}导出 $\mathscr{R}^+_f(X)$ 胎紧子集的如下刻画。
 
@@ -662,38 +1002,44 @@ K\triangleq \bigcap_{p=1}^\infty E_{n_p,p}\subseteq\bigcap_{p=1}^\infty\bigcup_{
 \end{proposition}
 
 \begin{proof}
-(i)$\Rightarrow$(ii)。由\cref{proposition:appA-紧生成}，存在 $X$ 的递增紧子集序列 $\{K_n\}$ 使对所有 $\mu\in M$ 有 $\mu(K_n^c)<1/2^n$。置 $\varphi\triangleq \sum_{n=1}^\infty\chi_{K_n^c}$。则对每个 $\mu\in M$，
+(i)$\Rightarrow$(ii)。由\cref{proposition:appA-紧生成}，存在 $X$ 的递增紧子集序列 $\{K_n\}$ 使 $\bigcup_nK_n=X$。由胎紧性，对每个 $n\in\mathbb{N}$ 存在紧集 $\widehat K_n\subseteq X$ 使 $\sup_{\mu\in M}\mu(\widehat K_n^c)<1/2^n$；以 $\widehat K_1\cup\cdots\cup\widehat K_n$ 替换 $K_n$（仍为递增紧集且并集为 $X$），得 $\mu(K_n^c)<1/2^n$ 对一切 $\mu\in M$ 与 $n\in\mathbb{N}$ 成立。置 $\varphi\triangleq \sum_{n=1}^\infty\chi_{K_n^c}$，则对每个 $\mu\in M$，由单调收敛定理
 \begin{align*}
 \sup_{\mu\in M}\int_X\varphi\,\mathrm{d}\mu
-\leqslant\sum_{n=1}^\infty\frac{1}{2^n}<\infty,
+\leqslant\sum_{n=1}^\infty\frac{1}{2^n}\leqslant1<\infty,
 \end{align*}
-故不等式\eqref{align:ch05-5.29}成立。
+故\eqref{align:ch05-5.29}成立。
 
-为证 $\varphi$ 下紧，固定 $x\in X$。对每个 $n\in\mathbb{N}$，我们有 (a) $x\in K_n$ 或 (b) $x\in K_n^c$。由于每个 $n$ 有 $K_n^c\supseteq K_{n+1}^c$，
-\begin{itemize}
-\item 在情形 (a)，$\varphi(x)\leqslant n-1$；
-\item 在情形 (b)，若 $x\in K_n^c\setminus K_{n+1}^c=K_n^c\cap K_{n+1}$ 则 $\varphi(x)=n$，若 $x\in K_{n+1}^c$ 则 $\varphi(x)\geqslant n+1$。
-\end{itemize}
-由此 $\{\varphi\leqslant n\}=K_{n+1}$，故显然对所有 $r>0$ 有 $\{\varphi\leqslant r\}=K_{[r]+1}$，其中 $[r]$ 表示小于 $r$ 的最大整数。由于 $K_{[r]+1}$ 紧，断言得证。
+为证 $\varphi$ 下紧，因 $\{K_n\}$ 递增且 $\bigcup_nK_n=X$，每个 $x\in X$ 属于某个 $K_{n_0}$，从而当 $n\geqslant n_0$ 时 $x\notin K_n^c$，故 $\varphi(x)=\sum_{n<n_0}\chi_{K_n^c}(x)\leqslant n_0-1<\infty$，即 $\varphi:X\to[0,\infty)$。进而对每个 $n\in\mathbb{N}$：若 $x\in K_{n+1}$，则至多 $n$ 个下标 $j\in\{1,\cdots ,n\}$ 满足 $x\in K_j^c$，故 $\varphi(x)\leqslant n$；若 $x\notin K_{n+1}$，则由 $K_j\subseteq K_{n+1}$（$j\leqslant n+1$）得 $x\in K_j^c$ 对一切 $j\leqslant n+1$ 成立，故 $\varphi(x)\geqslant n+1$。于是 $\{\varphi\leqslant n\}=K_{n+1}$，从而对每个 $r\geqslant0$ 有 $\{\varphi\leqslant r\}=K_{[r]+1}$，其中 $[r]$ 表示不超过 $r$ 的最大整数；对 $r<0$ 有 $\{\varphi\leqslant r\}=\varnothing$。因 $K_{[r]+1}$ 紧，$\varphi$ 下紧。
 
-(ii)$\Rightarrow$(i)。由假设存在 $\varphi:X\to[0,\infty)$ 使对每个 $r>0$ 集合 $K_r\equiv\{\varphi\leqslant r\}$ 紧，且\eqref{align:ch05-5.29}成立。则由 Chebyshev 不等式，对每个 $\mu\in M$，
+(ii)$\Rightarrow$(i)。由假设存在下紧函数 $\varphi:X\to[0,\infty)$ 使\eqref{align:ch05-5.29}成立，且对每个 $r>0$ 集合 $K_r\equiv\{\varphi\leqslant r\}$ 紧。则由 Chebyshev 不等式，对每个 $\mu\in M$ 与每个 $r>0$，
 \begin{align*}
 r\mu(K_r^c)<\int_{K_r^c}\varphi\,\mathrm{d}\mu
 \leqslant\int_X\varphi\,\mathrm{d}\mu
-\leqslant\sup_{\mu\in M}\int_X\varphi\,\mathrm{d}\mu,
+\leqslant\sup_{\mu\in M}\int_X\varphi\,\mathrm{d}\mu=:C_\varphi<\infty,
 \end{align*}
-由 $r$ 的任意性结论得证。
+故 $\mu(K_r^c)<C_\varphi/r$。给定 $\varepsilon>0$ 取 $r>C_\varphi/\varepsilon$，则紧集 $K_r$ 满足 $\mu(K_r^c)<\varepsilon$ 对一切 $\mu\in M$ 成立，即 $M$ 胎紧。
 \end{proof}
 
-\begin{remark}\label{remark:ch05-径向下紧}
-由上述证明，若 $X=\mathbb{R}$，则可取 $K_n=B_n(0)$，即中心在 $0$、半径 $n\in\mathbb{N}$ 的闭球。在此情形，$\varphi$ 可写为
+% SUPPLEMENT: parent=proposition:ch05-胎紧判据; kind=proof; 依据：$K_n$ 的递增性与 $\varphi$ 的定义；补出 $\{\varphi\leqslant r\}=K_{[r]+1}$ 的完整验证与 $r<0$ 的情形
+\begin{proof}[下水平集恒等式的验证]
+设 $x\in K_{n+1}$。因 $K_j\subseteq K_{n+1}$ 对 $j\leqslant n+1$ 成立，若 $x\in K_j^c$ 则 $j>n+1$，故 $\varphi(x)=\sum_{j=1}^{n}\chi_{K_j^c}(x)\leqslant n$。反之设 $x\notin K_{n+1}$。因 $K_j\subseteq K_{n+1}$ 对一切 $j\leqslant n+1$ 成立，得 $x\in K_j^c$ 对一切 $j\leqslant n+1$ 成立，故 $\varphi(x)\geqslant n+1$。于是 $\{\varphi\leqslant n\}=K_{n+1}$ 对一切 $n\in\mathbb{N}$ 成立。对实数 $r\geqslant0$，取整数 $n=[r]$ 得 $n\leqslant r<n+1$，于是 $\{\varphi\leqslant n\}\subseteq\{\varphi\leqslant r\}\subseteq\{\varphi\leqslant n+1\}$，即 $K_{n+1}\subseteq\{\varphi\leqslant r\}\subseteq K_{n+2}$；又 $x\in K_{n+2}\setminus K_{n+1}$ 时 $\varphi(x)=n+1>r$，故 $\{\varphi\leqslant r\}=K_{n+1}=K_{[r]+1}$。对 $r<0$，由 $\varphi\geqslant0$ 得 $\{\varphi\leqslant r\}=\varnothing$，空集紧。
+\end{proof}
+
+% SUPPLEMENT: parent=proposition:ch05-胎紧判据; kind=motivation; 依据：命题 5.1.12 与定理 5.1.9 的配合；说明该判据把胎紧性化归为矩条件、$\varphi$ 的可构造性及其与 Chebyshev 不等式的关系
+\begin{remark}\phantomsection\label{remark:ch05-胎紧判据动机}
+\cref{proposition:ch05-胎紧判据}把\cref{theorem:ch05-prokhorov}中难以直接验证的胎紧性化归为一个矩条件：只要找到一个下紧的 $\varphi\geqslant0$ 使 $\int_X\varphi\,\mathrm{d}\mu$ 关于 $\mu\in M$ 一致有界，$M$ 就胎紧。充分性方向只用 Chebyshev 不等式与下水平集的紧性，构造是显式的；必要性方向用递增紧集穷竭 $X$ 并令 $\varphi$ 计算"逃出前 $n$ 个紧集的次数"，说明该判据在原理上也是必要的。
+
+各项假设的作用：可数基保证 $X$ 可被递增紧集穷竭（\cref{proposition:appA-紧生成}），从而使 $\varphi$ 的构造可行；$\varphi\geqslant0$ 使 $\{\varphi\leqslant r\}=\varnothing$ 对 $r<0$ 成立，并使 Chebyshev 不等式的右端非负；下紧性提供紧的 $K_r$，若 $\varphi$ 仅有界而不下紧，则 $K_r$ 只闭不紧，不能给出胎紧性；$\sup_\mu\int\varphi\,\mathrm{d}\mu<\infty$ 是唯一的定量条件，其为有限值而非具体数值不影响结论。
+
+边界情形：若 $M$ 无界，判据仍适用——胎紧性本身不含界性（\cref{remark:ch05-胎紧动机}），\cref{theorem:ch05-prokhorov}中另需界的假设。若 $X=\mathbb{R}$，可取 $\varphi(x)=\lfloor|x|\rfloor$（见\cref{remark:ch05-径向下紧}）；此时 $\int\varphi\,\mathrm{d}\mu<\infty$ 大致等价于 $\mu$ 的一阶矩有限，而一阶矩一致有界确实蕴含胎紧。
+\end{remark}
+
+\begin{remark}\phantomsection\label{remark:ch05-径向下紧}
+由上述证明，若 $X=\mathbb{R}$，则可取 $K_n=\overline{B_n(0)}$，即中心在 $0$、半径 $n\in\mathbb{N}$ 的闭球。在此情形，$\varphi$ 可写为
 \begin{align*}
 \varphi(x)\triangleq \sum_{n=0}^\infty n\,\chi_{(n,n+1]}(|x|)\qquad(x\in X);
 \end{align*}
-注意它径向、非减且在无穷远发散。
+它径向、非减且在无穷远发散。
 \end{remark}
-
-
-
 
 \end{document}

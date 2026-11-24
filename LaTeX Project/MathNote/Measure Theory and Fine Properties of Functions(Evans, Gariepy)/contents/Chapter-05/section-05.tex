@@ -1,0 +1,276 @@
+\documentclass[../../main.tex]{subfiles}%
+\graphicspath{{\subfix{./image/}}{\subfix{../../image/}}}
+
+\begin{document}
+
+\section{BV 函数的余面积公式}\label{section:ch05-05}
+
+下面把 $f$ 的变差测度与其水平集的周长联系起来。
+
+\begin{definition*}[水平集]\phantomsection\label{definition:ch05-def-5-9-水平集}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$f:U\to\mathbb{R}$ 为实值函数，$t\in\mathbb{R}$。称
+\begin{align*}
+E_t:=\{x\in U\mid f(x)>t\}
+\end{align*}
+为 $f$ 在水平 $t$ 处的\textbf{上水平集}。对 $s,t\in\mathbb{R}$，当 $s<t$ 时有 $E_t\subseteq E_s$。
+\end{definition*}
+
+% SUPPLEMENT: parent=definition:ch05-def-5-9-水平集; kind=motivation; 说明水平集如何把函数的值分布转化为嵌套集族，并引出层饼表示与余面积公式
+\begin{remark}\phantomsection\label{remark:ch05-def-5-9-动机}
+水平集把函数 $f$ 的取值分布转化为一族嵌套的集合：$t$ 增大时 $E_t$ 单调缩小，且 $f$ 在 $E_t$ 上处处大于 $t$。对非负函数，$f$ 可由水平集的指示函数按层积分恢复：
+\begin{align*}
+f(x)=\int_0^{\infty}\chi_{E_t}(x)\diff t\qquad(x\in U),
+\end{align*}
+右端对每个 $x$ 只在区间 $[0,f(x))$ 上取值为 $1$。这一层饼表示把关于 $f$ 的积分化为关于水平 $t$ 的积分，是\cref{theorem:ch05-5-9}的证明中第一个断言的出发点。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=definition:ch05-def-5-9-水平集; kind=hypotheses; 逐条分析实值性、严格不等号、可测性与单调性的作用
+\begin{remark}\phantomsection\label{remark:ch05-def-5-9-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f$ 取实值，使 $E_t$ 对每个 $t\in\mathbb{R}$ 都有定义。若 $f$ 可取 $\pm\infty$，则 $E_{+\infty}=\varnothing$、$E_{-\infty}=\{f>-\infty\}$，水平集族在端点处退化。
+\item 定义采用严格不等式 $f(x)>t$，故 $E_t$ 与 $\{f\geqslant t\}$ 相差集合 $\{f=t\}$。把 $f$ 换成与之 $\mathcal{L}^n$-a.e. 相等的函数时，每个 $E_t$ 只在一个 $\mathcal{L}^n$-零测集上改变；周长只依赖 $\chi_{E_t}$ 的积分，因而保持不变。公式中的积分关于 $t$ 进行，故水平集在个别 $t$ 处的改动不影响积分值。
+\item 水平集的可测性等价于 $f$ 的 $\mathcal{L}^n$-可测性：$f$ 可测时 $\{f>t\}$ 可测；反之，若一切 $\{f>t\}$ 可测，则由 $\{f\geqslant s\}=\bigcap_{j=1}^{\infty}\{f>s-1/j\}$ 的可测性得到 $f$ 可测。本节讨论的 $\BV(U)$ 函数属于 $L^1(U)$，均满足这一要求。
+\item 单调性 $s<t\Rightarrow E_t\subseteq E_s$ 是层饼表示与截断论证的基础；但 $t\mapsto\lVert\partial E_t\rVert(U)$ 本身不必单调。取 $U=\mathbb{R}^n$、$f=\chi_{B(0,1)}$，则 $E_t=B(0,1)$（$0\leqslant t<1$）、$E_t=\varnothing$（$t\geqslant1$）、$E_t=\mathbb{R}^n$（$t<0$），相应的周长在 $0\leqslant t<1$ 上等于 $\mathcal{H}^{n-1}(\partial B(0,1))$、在其余 $t$ 处等于 $0$。
+\end{enumerate}
+\end{remark}
+
+\begin{lemma}[水平集周长的可测性]\label{lemma:ch05-5-1}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$f\in\BV(U)$。对 $t\in\mathbb{R}$ 记 $E_t:=\{x\in U\mid f(x)>t\}$，并记
+\begin{align*}
+\lVert\partial E_t\rVert(U):=\sup\left\{\int_{E_t}\diver\phi\diff x\,\middle|\,\phi\in C_c^1(U;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\right\}
+\end{align*}
+为 $E_t$ 在 $U$ 中的周长，允许取值 $+\infty$。则映射
+\begin{align*}
+t\mapsto\lVert\partial E_t\rVert(U)\qquad(t\in\mathbb{R})
+\end{align*}
+是 $\mathcal{L}^1$-可测的。
+\end{lemma}
+
+\begin{proof}
+对 $(x,t)\in U\times\mathbb{R}$ 有 $\chi_{E_t}(x)=\chi_F(x,t)$，其中
+\begin{align*}
+F:=\{(x,t)\in U\times\mathbb{R}\mid f(x)>t\}.
+\end{align*}
+由于 $f$ 是 $\mathcal{L}^n$-可测函数，$(x,t)\mapsto f(x)-t$ 是 $\mathcal{L}^n\times\mathcal{L}^1$-可测函数，故 $F$ 是 $\mathcal{L}^n\times\mathcal{L}^1$-可测集，从而 $(x,t)\mapsto\chi_{E_t}(x)$ 是 $\mathcal{L}^n\times\mathcal{L}^1$-可测的。
+
+对每个 $\phi\in C_c^1(U;\mathbb{R}^n)$，函数 $(x,t)\mapsto\chi_{E_t}(x)\diver\phi(x)$ 是 $\mathcal{L}^n\times\mathcal{L}^1$-可测的，且其绝对值不超过 $\lvert\diver\phi(x)\rvert$；由 Fubini 定理，函数
+\begin{align*}
+t\mapsto\int_{E_t}\diver\phi\diff x=\int_U\chi_{E_t}(x)\diver\phi(x)\diff x
+\end{align*}
+是 $\mathcal{L}^1$-可测的。
+
+设 $D$ 为 $C_c^1(U;\mathbb{R}^n)$ 的任一可数稠密子集。积分 $\phi\mapsto\int_{E_t}\diver\phi\diff x$ 关于 $\phi$ 在 $C_c^1(U;\mathbb{R}^n)$ 中的收敛连续，故把上确界限制在 $D$ 上不改变其值：对每个 $t\in\mathbb{R}$ 有
+\begin{align*}
+\lVert\partial E_t\rVert(U)=\sup_{\phi\in D,\ \lvert\phi\rvert\leqslant1}\int_{E_t}\diver\phi\diff x,
+\end{align*}
+其中若逼近序列的成员不满足 $\lvert\phi\rvert\leqslant1$，乘以因子 $1/(1+\delta)$ 即可恢复该约束。右端是可数个 $\mathcal{L}^1$-可测函数的上确界，故仍为 $\mathcal{L}^1$-可测函数。
+\end{proof}
+
+% SUPPLEMENT: parent=lemma:ch05-5-1; kind=motivation; 说明可测性的用途、可数稠密子集的作用与层饼表示的转化
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-1-动机}
+本引理为\cref{theorem:ch05-5-9}右端的积分 $\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(U)\diff t$ 提供可测性基础：只有先确认 $t\mapsto\lVert\partial E_t\rVert(U)$ 关于 $\mathcal{L}^1$ 可测，该积分以及证明中使用的 Fatou 引理才有意义。% XREF internal
+证明的困难在于周长按定义是一族积分关于全部检验向量场的上确界，而不可数族的上确界未必可测。这里的处理是把检验向量场限制在 $C_c^1(U;\mathbb{R}^n)$ 的一个可数稠密子集 $D$ 上：积分关于检验向量场连续，故上确界不变，而可数族的上确界保持可测性。层饼表示则把 $(x,t)$ 的联合可测性转化为 $t$ 的一元可测性：$\chi_{E_t}(x)$ 是集合 $\{f>t\}$ 的指示函数，$f$ 的可测性保证该集合在乘积空间中可测，Fubini 定理再把它沿 $t$ 积分。
+\end{remark}
+
+% SUPPLEMENT: parent=lemma:ch05-5-1; kind=hypotheses; 逐条分析 BV 假设的实际用量、开集与可数稠密子集的存在性、取值为 +∞ 的约定
+\begin{remark}\phantomsection\label{remark:ch05-lem-5-1-条件}
+\begin{enumerate}[(i)]
+\item 假设 $f\in\BV(U)$ 保证 $f\in L^1(U)$，从而 $f$ 可测、每个 $E_t$ 可测；证明本身只用到 $f$ 的 $\mathcal{L}^n$-可测性，故结论对一切 $\mathcal{L}^n$-可测函数 $f:U\to\mathbb{R}$ 成立。
+\item 假设 $U$ 为非空开集，使 $C_c^1(U;\mathbb{R}^n)$ 含有非零向量场。该空间按 $C^1$ 范数是可分的，故可数稠密子集 $D$ 存在。
+\item $D$ 的可数性不可省去：对不可数族取上确界，所得函数未必可测。
+\item 结论只断言映射的可测性，不断言其有限。当 $E_t$ 的周长测度为 $+\infty$ 时映射取值 $+\infty$，按扩展实值函数的可测性理解；$E_t$ 不必具有有限周长，这正是\cref{theorem:ch05-5-9}只在 $\mathcal{L}^1$-a.e. 的水平上讨论周长的原因。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[$\BV$ 函数的余面积公式]\label{theorem:ch05-5-9}
+设 $n\geqslant1$ 为整数，$U\subseteq\mathbb{R}^n$ 为非空开集，$f:U\to\mathbb{R}$ 为实值函数；对 $t\in\mathbb{R}$ 记 $E_t:=\{x\in U\mid f(x)>t\}$，并记
+\begin{align*}
+\lVert\partial E_t\rVert(U):=\sup\left\{\int_{E_t}\diver\phi\diff x\,\middle|\,\phi\in C_c^1(U;\mathbb{R}^n),\ \lvert\phi\rvert\leqslant1\right\}
+\end{align*}
+为 $E_t$ 在 $U$ 中的周长，允许取值 $+\infty$。
+\begin{enumerate}[(i)]
+\item 若 $f\in\BV(U)$，则对 $\mathcal{L}^1$-a.e. $t\in\mathbb{R}$，$E_t$ 的周长有限，即 $\lVert\partial E_t\rVert(U)<\infty$，且
+\begin{align*}
+\lVert Df\rVert(U)=\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(U)\diff t,
+\end{align*}
+其中 $\lVert Df\rVert$ 为 $f$ 的变差测度，$\lVert Df\rVert(U)$ 为该测度在 $U$ 上的总质量。
+\item 反之，若 $f\in L^1(U)$ 且
+\begin{align*}
+\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(U)\diff t<\infty,
+\end{align*}
+则 $f\in\BV(U)$。
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-9-比较}
+把上述结论与\cref{theorem:ch03-3-13}作比较。% XREF p=212 "Compare this with Theorem 3.13 in Section 3.4."
+该定理对 Lipschitz 函数 $f:\mathbb{R}^n\to\mathbb{R}$ 给出
+\begin{align*}
+\int_{\mathbb{R}^n}\lvert Df\rvert\diff x=\int_{-\infty}^{\infty}\mathcal{H}^{n-1}\bigl(\{f=t\}\bigr)\diff t,
+\end{align*}
+其左端是 $\lvert\nabla f\rvert$ 在 $\mathbb{R}^n$ 上的积分，右端是水平集的 $(n-1)$ 维 Hausdorff 测度关于 $t$ 的积分。上述余面积公式把左端换成变差测度的总质量 $\lVert Df\rVert(U)$、把右端的 Hausdorff 测度换成周长测度 $\lVert\partial E_t\rVert(U)$，从而在 $\BV$ 函数这一更宽的类上重建同一分解。
+\end{remark}
+
+\begin{proof}
+（1）设 $f\in L^1(U)$，$\phi\in C_c^1(U;\mathbb{R}^n)$ 且 $\lvert\phi\rvert\leqslant1$。
+
+\textbf{断言 1.} 成立
+\begin{align*}
+\int_U f\diver\phi\diff x=\int_{-\infty}^{\infty}\left(\int_{E_t}\diver\phi\diff x\right)\diff t.
+\end{align*}
+
+断言的证明：先设 $f\geqslant0$。此时对每个 $x\in U$ 有 $\{t\geqslant0\mid f(x)>t\}=[0,f(x))$，故
+\begin{align*}
+f(x)=\int_0^{\infty}\chi_{E_t}(x)\diff t.
+\end{align*}
+由 Fubini 定理（由 $\int_U\lvert f\rvert\,\lvert\diver\phi\rvert\diff x<\infty$ 保证绝对可积性），
+\begin{align*}
+\int_U f\diver\phi\diff x
+&=\int_U\left(\int_0^{\infty}\chi_{E_t}(x)\diff t\right)\diver\phi(x)\diff x\\
+&=\int_0^{\infty}\left(\int_U\chi_{E_t}(x)\diver\phi(x)\diff x\right)\diff t\\
+&=\int_0^{\infty}\left(\int_{E_t}\diver\phi\diff x\right)\diff t.
+\end{align*}
+
+若 $f\leqslant0$，则对每个 $x\in U$ 有
+\begin{align*}
+f(x)=\int_{-\infty}^0\bigl(\chi_{E_t}(x)-1\bigr)\diff t,
+\end{align*}
+因为当 $t<f(x)$ 时被积函数等于 $0$，当 $f(x)\leqslant t\leqslant0$ 时被积函数等于 $-1$。于是
+\begin{align*}
+\int_U f\diver\phi\diff x
+&=\int_U\left(\int_{-\infty}^0\bigl(\chi_{E_t}(x)-1\bigr)\diff t\right)\diver\phi(x)\diff x\\
+&=\int_{-\infty}^0\left(\int_U\bigl(\chi_{E_t}(x)-1\bigr)\diver\phi(x)\diff x\right)\diff t\\
+&=\int_{-\infty}^0\left(\int_{E_t}\diver\phi\diff x\right)\diff t,
+\end{align*}
+最后一个等号用到 $\int_U\diver\phi\diff x=0$。
+
+一般情形写 $f=f^+-f^-$，其中 $f^+:=\max\{f,0\}$、$f^-:=\max\{-f,0\}$，对 $f^+$ 与 $f^-$ 分别应用上述两种情形并把所得等式相减，即得断言 1。
+
+（2）由断言 1，对一切满足 $\lvert\phi\rvert\leqslant1$ 的 $\phi\in C_c^1(U;\mathbb{R}^n)$ 有
+\begin{align*}
+\int_U f\diver\phi\diff x\leqslant\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(U)\diff t.
+\end{align*}
+对 $\phi$ 取上确界，并按\cref{definition:ch05-5-1}中 $\BV(U)$ 的定义得% XREF internal
+\begin{align}
+\lVert Df\rVert(U)\leqslant\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(U)\diff t. \label{align:ch05-5-9-估计}
+\end{align}
+结合 $f\in L^1(U)$，上式表明：当右端有限时 $\lVert Df\rVert(U)<\infty$，故 $f\in\BV(U)$。由此证明了 (ii)。
+
+（3）\textbf{断言 2.} 结论 (i) 对一切 $f\in\BV(U)\cap C^{\infty}(U)$ 成立。
+
+断言的证明：令
+\begin{align*}
+m(t):=\int_{U-E_t}\lvert Df\rvert\diff x=\int_{\{f\leqslant t\}}\lvert Df\rvert\diff x\qquad(t\in\mathbb{R}).
+\end{align*}
+由于 $f$ 光滑，$\lvert Df\rvert=\lvert\nabla f\rvert$，故 $m(t)=\int_{\{f\leqslant t\}}\lvert\nabla f\rvert\diff x$。函数 $m$ 单调不减，因此 $m'$ 对 $\mathcal{L}^1$-a.e. $t$ 存在；又 $m'\geqslant0$，且对每个 $N>0$ 有
+\begin{align*}
+\int_{-N}^{N}m'(t)\diff t\leqslant m(N)-m(-N)\leqslant\int_U\lvert Df\rvert\diff x,
+\end{align*}
+故
+\begin{align}
+\int_{-\infty}^{\infty}m'(t)\diff t\leqslant\int_U\lvert Df\rvert\diff x. \label{align:ch05-5-9-导数}
+\end{align}
+
+现在固定 $t\in\mathbb{R}$ 与 $r>0$，定义 $\eta:\mathbb{R}\to\mathbb{R}$ 为
+\begin{align*}
+\eta(s):=
+\begin{cases}
+0, & s\leqslant t,\\
+\dfrac{s-t}{r}, & t\leqslant s\leqslant t+r,\\
+1, & s\geqslant t+r.
+\end{cases}
+\end{align*}
+则
+\begin{align*}
+\eta'(s)=
+\begin{cases}
+\dfrac{1}{r}, & t<s<t+r,\\
+0, & s<t\text{ 或 }s>t+r.
+\end{cases}
+\end{align*}
+函数 $\eta$ 为 Lipschitz 函数，$\eta\circ f$ 的弱梯度为 $\eta'(f)\nabla f$。于是对一切 $\phi\in C_c^1(U;\mathbb{R}^n)$，分部积分给出
+\begin{align}
+-\int_U\eta(f(x))\diver\phi\diff x
+&=\int_U\eta'(f(x))\nabla f(x)\cdot\phi(x)\diff x\notag\\
+&=\frac{1}{r}\int_{E_t-E_{t+r}}Df\cdot\phi\diff x, \label{align:ch05-5-9-截断}
+\end{align}
+其中 $E_t-E_{t+r}=\{x\in U\mid t<f(x)\leqslant t+r\}$，且 $\eta'(f(x))=1/r$ 在该集合上成立、在其余点处等于 $0$。
+
+另一方面，
+\begin{align*}
+\frac{m(t+r)-m(t)}{r}
+&=\frac{1}{r}\left[\int_{U-E_{t+r}}\lvert Df\rvert\diff x-\int_{U-E_t}\lvert Df\rvert\diff x\right]\\
+&=\frac{1}{r}\int_{E_t-E_{t+r}}\lvert Df\rvert\diff x\\
+&\geqslant\frac{1}{r}\int_{E_t-E_{t+r}}Df\cdot\phi\diff x\\
+&=-\int_U\eta(f(x))\diver\phi\diff x,
+\end{align*}
+其中不等号用到 $\lvert\phi\rvert\leqslant1$ 与 $Df\cdot\phi\geqslant-\lvert Df\rvert\,\lvert\phi\rvert\geqslant-\lvert Df\rvert$，最后一个等号用到\eqref{align:ch05-5-9-截断}。% XREF internal
+
+对 $m'(t)$ 存在的那些 $t$，在上式中令 $r\to0$。左端趋于 $m'(t)$；由 $\eta(f(x))\to\chi_{E_t}(x)$（$x\in U$）与 $\lvert\eta(f)\diver\phi\rvert\leqslant\lvert\diver\phi\rvert\in L^1(U)$，控制收敛定理给出
+\begin{align*}
+m'(t)\geqslant-\int_{E_t}\diver\phi\diff x
+\end{align*}
+对 $\mathcal{L}^1$-a.e. $t$ 成立。对满足 $\lvert\phi\rvert\leqslant1$ 的 $\phi$ 取上确界，得
+\begin{align*}
+\lVert\partial E_t\rVert(U)\leqslant m'(t).
+\end{align*}
+结合\eqref{align:ch05-5-9-导数}得% XREF internal
+\begin{align*}
+\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(U)\diff t\leqslant\int_{-\infty}^{\infty}m'(t)\diff t\leqslant\int_U\lvert Df\rvert\diff x=\lVert Df\rVert(U).
+\end{align*}
+于是对 $\mathcal{L}^1$-a.e. $t$ 有 $\lVert\partial E_t\rVert(U)\leqslant m'(t)<\infty$，即 $E_t$ 的周长测度有限；又上式与\eqref{align:ch05-5-9-估计}给出两端相等。断言 2 得证。% XREF internal
+
+（4）\textbf{断言 3.} 结论 (i) 对每个 $f\in\BV(U)$ 成立。
+
+断言的证明：固定 $f\in\BV(U)$，并按\cref{theorem:ch05-5-3}选取函数列 $\{f_k\}_{k=1}^{\infty}\subseteq\BV(U)\cap C^{\infty}(U)$，使得 $f_k\to f$ 于 $L^1(U)$ 且 $\lVert Df_k\rVert(U)\to\lVert Df\rVert(U)$。% XREF p=215 "choose {fk} as in Theorem 5.3"
+定义
+\begin{align*}
+E_t^k:=\{x\in U\mid f_k(x)>t\}\qquad(t\in\mathbb{R},\ k=1,2,\cdots).
+\end{align*}
+对每个 $x\in U$，集合 $\{t\in\mathbb{R}\mid\chi_{E_t^k}(x)\neq\chi_{E_t}(x)\}$ 等于区间 $[\min\{f(x),f_k(x)\},\max\{f(x),f_k(x)\})$，故
+\begin{align*}
+\int_{-\infty}^{\infty}\bigl\lvert\chi_{E_t^k}(x)-\chi_{E_t}(x)\bigr\rvert\diff t=\lvert f_k(x)-f(x)\rvert.
+\end{align*}
+由 Tonelli 定理，
+\begin{align*}
+\int_U\lvert f_k(x)-f(x)\rvert\diff x=\int_{-\infty}^{\infty}\left(\int_U\bigl\lvert\chi_{E_t^k}(x)-\chi_{E_t}(x)\bigr\rvert\diff x\right)\diff t.
+\end{align*}
+由于 $f_k\to f$ 于 $L^1(U)$，左端趋于 $0$，故右端内层积分作为 $t$ 的函数在 $L^1(\mathbb{R})$ 中趋于 $0$；于是存在子列（必要时重新编号）使得
+\begin{align*}
+\chi_{E_t^k}\to\chi_{E_t}\qquad\text{于 }L^1(U)
+\end{align*}
+对 $\mathcal{L}^1$-a.e. $t$ 成立。
+
+把\cref{theorem:ch05-5-2}用于函数列 $\{\chi_{E_t^k}\}_{k=1}^{\infty}$ 与极限 $\chi_{E_t}$，得% XREF p=215 "Then the lower semicontinuity Theorem 5.2 implies"
+\begin{align*}
+\lVert\partial E_t\rVert(U)\leqslant\liminf_{k\to\infty}\lVert\partial E_t^k\rVert(U)
+\end{align*}
+对 $\mathcal{L}^1$-a.e. $t$ 成立。再由 Fatou 引理，并利用\cref{lemma:ch05-5-1}给出的关于 $t$ 的可测性，得% XREF internal
+\begin{align*}
+\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(U)\diff t
+&\leqslant\liminf_{k\to\infty}\int_{-\infty}^{\infty}\lVert\partial E_t^k\rVert(U)\diff t\\
+&=\lim_{k\to\infty}\lVert Df_k\rVert(U)=\lVert Df\rVert(U),
+\end{align*}
+其中等号用到断言 2 对光滑函数 $f_k$ 的结论。上述计算与\eqref{align:ch05-5-9-估计}给出 (i)：两端的量相等，并且 $\lVert\partial E_t\rVert(U)<\infty$ 对 $\mathcal{L}^1$-a.e. $t$ 成立。断言 3 得证，定理证毕。
+\end{proof}
+
+% SUPPLEMENT: parent=theorem:ch05-5-9; kind=motivation; 说明余面积公式的意义、两个方向各自的用途与证明三步的结构
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-9-动机}
+余面积公式把函数的总变差分解为各水平集周长的积分，是面积公式在 $\BV$ 情形的对应物。对光滑函数，左端是 $\int_U\lvert\nabla f\rvert\diff x$，右端按余面积公式等于 $\int_{-\infty}^{\infty}\mathcal{H}^{n-1}(\{f=t\})\diff t$；对 $\BV$ 函数，梯度只是向量值 Radon 测度，右端的 Hausdorff 测度必须换成周长测度，而等式仍然成立。公式的两个方向各有用途：(i) 把 $\BV$ 函数的总变差化为集合的周长，(ii) 反过来用一族水平集的周长控制函数的变差，从而给出 $\BV$ 的一个判据。证明分三步：第一步对检验向量场用层饼表示验证恒等式，得到方向 (ii)；第二步对光滑 $\BV$ 函数用单调函数 $m$ 的导数与截断函数 $\eta$ 证明等号；第三步用\cref{theorem:ch05-5-3}的光滑逼近与\cref{theorem:ch05-5-2}的下半连续性过渡到一般的 $\BV$ 函数。% XREF internal
+\end{remark}
+
+% SUPPLEMENT: parent=theorem:ch05-5-9; kind=hypotheses; 逐条分析两个方向的条件、L^1 假设的必要性、有限性条件的实质与几乎处处的含义
+\begin{remark}\phantomsection\label{remark:ch05-thm-5-9-条件}
+\begin{enumerate}[(i)]
+\item (i) 中假设 $f\in\BV(U)$ 保证 $\lVert Df\rVert(U)<\infty$，故等式两端有限；若只有 $f\in L^1(U)$，则只能得到\eqref{align:ch05-5-9-估计}的不等式。% XREF internal
+\item (ii) 中条件 $f\in L^1(U)$ 不可省去。取 $U=\mathbb{R}^n$ 与 $f\equiv1$，则 $E_t=\mathbb{R}^n$（$t<1$）、$E_t=\varnothing$（$t\geqslant1$），从而 $\lVert\partial E_t\rVert(\mathbb{R}^n)=0$ 对一切 $t$ 成立、$\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(\mathbb{R}^n)\diff t=0<\infty$，但 $f\notin\BV(\mathbb{R}^n)$，因为 $\BV(\mathbb{R}^n)\subseteq L^1(\mathbb{R}^n)$ 而 $1\notin L^1(\mathbb{R}^n)$。
+\item (ii) 中的有限性条件是实质的：由 (i) 与 (ii)，对 $f\in L^1(U)$ 有
+\begin{align*}
+f\in\BV(U)\iff\int_{-\infty}^{\infty}\lVert\partial E_t\rVert(U)\diff t<\infty,
+\end{align*}
+故右端的条件不能减弱为对每个 $t$ 的逐点有限性。
+\item (i) 中「周长有限」的断言只对 $\mathcal{L}^1$-a.e. $t$ 成立：证明只对 $m'(t)$ 存在的 $t$ 得到 $\lVert\partial E_t\rVert(U)\leqslant m'(t)$，而单调函数 $m$ 只在 $\mathcal{L}^1$-a.e. $t$ 处可导；积分不区分零测集，故几乎处处的结论足以支撑等式。此外，当 $U$ 无界时「周长测度有限」与「具有有限周长」需要区分：取 $U=\mathbb{R}^n$、$f\equiv0$，则 $f\in\BV(\mathbb{R}^n)$、$\lVert Df\rVert(\mathbb{R}^n)=0$，而对每个 $t<0$ 有 $E_t=\mathbb{R}^n$、$\lVert\partial E_t\rVert(\mathbb{R}^n)=0$；此时 $\chi_{E_t}\notin L^1(\mathbb{R}^n)$，按\cref{definition:ch05-5-1} $E_t$ 不具有有限周长。若补充假设 $\mathcal{L}^n(U)<\infty$，则 $\mathcal{L}^n(E_t)\leqslant\mathcal{L}^n(U)<\infty$，周长测度有限与 $\chi_{E_t}\in\BV(U)$ 等价，结论即为通常意义的有限周长。% XREF internal
+\end{enumerate}
+\end{remark}
+
+\end{document}
