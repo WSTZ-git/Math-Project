@@ -6,50 +6,94 @@ LaTeX 记录的数学笔记，以及对应的 Lean 4 形式化代码，放在同
 
 ```text
 Math Project/
-├── Code/                           代码
+├── Code/                                论文配套代码
 │   └── Python/
-│       └── Undergraduate Thesis Code/   本科毕业论文代码
-├── LaTeX Project/                  LaTeX 笔记工程
-│   ├── MathNote/                   笔记主体，一个学科一个目录
-│   ├── Paper/                      论文
-│   ├── PPT/                        演示文稿
-│   ├── Others/                     其他材料
-│   ├── Template/                   ElegantBook 模板
-│   ├── Styles/                     自定义样式
-│   ├── Sample Files/               subfiles 拆分示例
-│   ├── VScode Configuration Files/ LaTeX 编译配方
-│   ├── Code/                       辅助脚本
-│   ├── ElegantBook/                模板说明
-│   └── Scratch/                    临时试验
-└── Lean Project/                   Lean 4 形式化工程
-    ├── LeanProject/                库模块，目录结构即模块名
-    ├── LeanProject.lean            库入口，汇总 import
-    ├── lakefile.toml               工程定义
-    ├── lake-manifest.json          依赖版本锁定
-    ├── lean-toolchain              固定的 Lean 版本
-    └── Scratch/                    草稿，不参与构建
+│       └── Undergraduate Thesis Code/   本科毕业论文的代码、data/ 数据与 figures/ 插图
+├── LaTeX Project/                       LaTeX 笔记工程
+│   ├── MathNote/                        全部笔记，一个学科一个目录
+│   ├── Paper/                           论文
+│   ├── PPT/                             演示文稿
+│   ├── Others/                          其他材料
+│   ├── Template/                        ElegantBook 模板，笔记以 ../../Template/elegantbook 引用
+│   ├── Styles/                          自定义宏与样式
+│   ├── Sample Files/                    subfiles 拆分示例，新建笔记照此结构
+│   ├── VScode Configuration Files/      latexmk 配方，调用 XeLaTeX + Biber
+│   ├── ElegantBook/                     模板说明
+│   ├── Scratch/                         临时试验，不影响正式文档
+│   └── Latex常见问题.txt                编译问题记录
+├── Lean Project/                        Lean 4 形式化工程
+│   ├── LeanProject/                     库模块，路径即模块名（LeanProject/Basic.lean → LeanProject.Basic）
+│   ├── LeanProject.lean                 库入口，汇总 import，import LeanProject 可载入全部
+│   ├── lakefile.toml                    包名、构建目标与依赖
+│   ├── lake-manifest.json               依赖版本锁定，自动生成，勿手改
+│   ├── lean-toolchain                   固定的 Lean 版本，elan 据此选择编译器
+│   └── Scratch/                         草稿区，不参与 lake build
+├── .vscode/
+│   ├── settings.json                    隐藏 .lake，排除搜索与文件监视
+│   └── tasks.json                       批量清理与编译任务
+├── .gitignore                           忽略 .lake 与 LaTeX 中间文件
+└── README.md
 ```
 
-## 文件夹与文件作用
+## 本地环境
 
-| 路径 | 作用 |
-|---|---|
-| `Code/Python/` | 论文配套代码，`data/` 存数据、`figures/` 存图 |
-| `LaTeX Project/MathNote/` | 全部笔记，每篇一个目录 |
-| `LaTeX Project/Template/` | ElegantBook 模板，笔记用 `../../Template/elegantbook` 引用 |
-| `LaTeX Project/Styles/` | 自定义宏与样式 |
-| `LaTeX Project/Sample Files/` | `subfiles` 拆分示例，新建笔记照此结构 |
-| `LaTeX Project/VScode Configuration Files/` | `latexmk` 配方，调用 XeLaTeX + Biber |
-| `LaTeX Project/Scratch/` | 临时试验的 `.tex`，不影响正式文档 |
-| `Lean Project/LeanProject/` | Lean 源码，路径即模块名，如 `LeanProject/Basic.lean` 对应 `LeanProject.Basic` |
-| `Lean Project/LeanProject.lean` | 库入口，只写 import，`import LeanProject` 即可载入全部 |
-| `Lean Project/lakefile.toml` | 包名、构建目标与依赖 |
-| `Lean Project/lean-toolchain` | 固定 Lean 版本，elan 据此选择编译器 |
-| `Lean Project/lake-manifest.json` | 依赖版本锁定，自动生成，请勿手改 |
-| `Lean Project/Scratch/` | 草稿区，编辑器可检查，但不参与 `lake build` |
-| `.gitignore` | 忽略 `.lake` 与 LaTeX 中间文件 |
-| `.vscode/settings.json` | 隐藏 `.lake`，排除搜索与文件监视 |
-| `.vscode/tasks.json` | 批量清理与编译任务 |
+项目在 **WSL2 + Ubuntu** 下开发，Windows 侧的 VS Code 通过 **Remote-WSL** 连接，所有编译都在 Linux 侧完成。
+
+### 版本
+
+| 组件 | 当前版本 | 验证命令 |
+|---|---|---|
+| Ubuntu (WSL2) | 26.04 LTS | `lsb_release -d` |
+| TeX Live / XeLaTeX | 2025 | `xelatex --version` |
+| latexmk | 4.87 | `latexmk -v` |
+| Biber | 2.21 | `biber --version` |
+| Python | 3.14 | `python3 --version` |
+| elan | 4.4.0 | `elan --version` |
+| Lean | 4.36.0 | `lean --version` |
+| Lake | 5.0.0 | `lake --version` |
+
+### LaTeX
+
+需要 XeLaTeX、Biber、latexmk，以及中文支持（`ctex`）：
+
+```bash
+sudo apt install texlive-xetex texlive-lang-chinese texlive-bibtex-extra \
+                 texlive-latex-extra biber latexmk
+```
+
+完整安装可用 `texlive-full`（约 5 GB）。装完验证：
+
+```bash
+kpsewhich ctexart.cls      # 有输出即可
+```
+
+VS Code 需安装 **LaTeX Workshop** 扩展，并且必须装在 **WSL 侧**（扩展面板里点「Install in WSL: Ubuntu」）。
+
+### Lean 4
+
+需要 elan，由它按 `lean-toolchain` 自动匹配编译器版本。推荐用 GitHub 直链安装（官方一键脚本依赖 `elan.lean-lang.org`，国内常超时）：
+
+```bash
+cd /tmp
+curl -sSL -O https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz
+tar -xzf elan-x86_64-unknown-linux-gnu.tar.gz
+./elan-init -y --default-toolchain none
+```
+
+装好后 `~/.elan/bin` 会写入 `~/.profile`，重开终端生效。Lean 本身不用手动装——首次 `lake build` 会按 `Lean Project/lean-toolchain` 自动下载 4.36.0。
+
+VS Code 需安装 **Lean 4** 扩展，同样装在 **WSL 侧**。
+
+### Python
+
+论文配套代码要求 Python 3.10+，依赖见 `Code/Python/Undergraduate Thesis Code/requirements.txt`：
+
+```bash
+cd "Code/Python/Undergraduate Thesis Code"
+./setup.sh                     # 装到 ./.pylibs，不污染系统环境
+export PYTHONPATH=.:.pylibs
+export MPLCONFIGDIR=/tmp/mplconfig
+```
 
 ## 笔记内容
 
