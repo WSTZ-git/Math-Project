@@ -45,6 +45,7 @@ Math Project/
 | `Lean Project/Scratch/` | 草稿区，编辑器可检查，但不参与 `lake build` |
 | `.gitignore` | 忽略 `.lake` 与 LaTeX 中间文件 |
 | `.vscode/settings.json` | 隐藏 `.lake`，排除搜索与文件监视 |
+| `.vscode/tasks.json` | 批量清理与编译任务 |
 
 ## 笔记内容
 
@@ -96,6 +97,19 @@ lake build
 cd ~/"Math Project"
 git add -A && git commit -m "说明" && git push
 ```
+
+### 批量任务
+
+`终端 → 运行任务…` 中可执行：
+
+| 任务 | 作用 |
+|---|---|
+| `Clean Auxiliary Files` | 清理 `MathNote` 下全部笔记的中间文件 |
+| `Compile All Sub-documents` | 编译 `MathNote` 下所有 `main.tex` |
+| `Clean & Compile All Sub-documents` | 先清理，再全部编译 |
+| `Clean One Note's Aux Files` | 选择单篇笔记，只清理该文件夹的中间文件 |
+
+单篇清理运行时会弹出下拉列表选择文件夹。新增笔记后，把文件夹名补进 `.vscode/tasks.json` 的 `inputs.noteFolder.options`。
 
 新增笔记：复制 `Sample Files/` 的结构。新增 Lean 模块：在 `LeanProject/` 下建文件，写 `namespace`，再在 `LeanProject.lean` 里补一行 import。
 
