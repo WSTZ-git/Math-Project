@@ -21,13 +21,17 @@ Math Project/
 │   ├── ElegantBook/                     模板说明
 │   ├── Scratch/                         临时试验，不影响正式文档
 │   └── Latex常见问题.txt                编译问题记录
-├── Lean Project/                        Lean 4 形式化工程
-│   ├── LeanProject/                     库模块，路径即模块名（LeanProject/MathNote/PDE/Main.lean → LeanProject.MathNote.PDE.Main）
-│   ├── LeanProject.lean                 库入口，汇总 import，import LeanProject 可载入全部
+├── Lean Project/                        Lean 4 形式化工程（依赖 mathlib v4.36.0）
+│   ├── LeanProject/                     库模块，目录结构即模块名
+│   │   ├── MathNote/PDE/Main.lean       偏微分方程笔记
+│   │   └── Paper/UndergraduateThesis/   本科毕业论文
+│   │       └── Main.lean
+│   ├── LeanProject.lean                 库入口，汇总 import
 │   ├── lakefile.toml                    包名、构建目标与依赖
 │   ├── lake-manifest.json               依赖版本锁定，自动生成，勿手改
-│   ├── lean-toolchain                   固定的 Lean 版本，elan 据此选择编译器
-│   └── Scratch/                         草稿区，不参与 lake build
+│   ├── lean-toolchain                   固定的 Lean 版本
+│   └── Scratch/Test.lean                测试文件，测试 Lean 用的，不参与构建
+├── MIL/                                 Mathematics in Lean 教材，本地克隆，不纳入版本控制
 ├── .vscode/
 │   ├── settings.json                    隐藏 .lake，排除搜索与文件监视
 │   └── tasks.json                       批量清理与编译任务
