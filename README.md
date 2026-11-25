@@ -89,6 +89,8 @@ cd "Lean Project"
 lake exe cache get
 ```
 
+仓库根目录的 `MIL/` 是 [Mathematics in Lean](https://github.com/leanprover-community/mathematics_in_lean) 教材的本地克隆（独立 Lean 4.34.0 工程，约 8 GB，不纳入版本控制），只作查阅参考，与本工程不互相 import。
+
 VS Code 需安装 **Lean 4** 扩展，同样装在 **WSL 侧**。
 
 ### Python
