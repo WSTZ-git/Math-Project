@@ -41,9 +41,6 @@ Math Project/
 
 全仓库只在根目录保留一份 `.vscode`，各子目录不再单独配置。
 
-```text
-```
-
 ## 本地环境
 
 项目在 **WSL2 + Ubuntu** 下开发，Windows 侧的 VS Code 通过 **Remote-WSL** 连接，所有编译都在 Linux 侧完成。
