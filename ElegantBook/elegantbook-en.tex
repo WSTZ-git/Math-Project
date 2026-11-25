@@ -1,15 +1,15 @@
 \documentclass[11pt]{elegantbook}
 
-\title{An Elegant \LaTeX{} Template for Books}
-\subtitle{Classic Elegant\LaTeX{} Template}
+\title{An Elegant \LaTeX\ Template for Books}
+\subtitle{Classic Elegant\LaTeX\ Template}
 
 \author{Ethan Deng, Liam Huang, syvshc, sikouhjw \& Osbert Wang}
-\institute{Elegant\LaTeX{} Program}
-\date{Dec. 31, 2022}
-\version{4.5}
+\institute{Elegant\LaTeX\ Program}
+\date{May 1, 2026}
+\version{4.7}
 \bioinfo{Bio}{Information}
 
-\extrainfo{\textcolor{red}{\bfseries Caution: This template will no longer be maintained since January 1st, 2023.}}
+\extrainfo{\textcolor{red}{\bfseries Caution: This template will no longer be maintained since January 1st, 2023. However, due to its large user base, maintenance has resumed and the template has been re-released as of 2026.}}
 
 \logo{logo-blue.png}
 \cover{cover.jpg}
@@ -30,8 +30,8 @@
 
 \mainmatter
 
-\chapter{Elegant\LaTeX{} Templates}
-Elegant\LaTeX{} Program developers are intended to provide you beautiful, elegant, user-friendly templates. Currently, the Elegant\LaTeX{} is composed of \href{https://github.com/ElegantLaTeX/ElegantNote}{ElegantNote}, \href{https://github.com/ElegantLaTeX/ElegantBook}{ElegantBook}, \href{https://github.com/ElegantLaTeX/ElegantPaper}{ElegantPaper}, designed for typesetting notes, books, and working papers respectively. Latest releases are strongly recommended! This guide is aimed at briefly introducing the 101 of this template. For any other question, suggestion or comment, feel free to contact us on GitHub \href{https://github.com/ElegantLaTeX/ElegantBook/issues}{issues} or email us at \email{elegantlatex2e@gmail.com}.
+\chapter{Elegant\LaTeX\ Templates}
+Elegant\LaTeX\ Program developers are intended to provide you beautiful, elegant, user-friendly templates. Currently, the Elegant\LaTeX\ is composed of \href{https://github.com/ElegantLaTeX/ElegantNote}{ElegantNote}, \href{https://github.com/ElegantLaTeX/ElegantBook}{ElegantBook}, \href{https://github.com/ElegantLaTeX/ElegantPaper}{ElegantPaper}, designed for typesetting notes, books, and working papers respectively. Latest releases are strongly recommended! This guide is aimed at briefly introducing the 101 of this template. For any other question, suggestion or comment, feel free to contact us on GitHub \href{https://github.com/ElegantLaTeX/ElegantBook/issues}{issues} or email us at \email{elegantlatex2e@gmail.com}.
 
 Contact Infos:
 \begin{itemize}
@@ -56,13 +56,16 @@ tlmgr update --self
 tlmgr update --all
 \end{lstlisting}
 
-To learn more, please refer to \href{https://tex.stackexchange.com/questions/55437/how-do-i-update-my-tex-distribution}{How do I update my \TeX{} distribution?}
+To learn more, please refer to \href{https://tex.stackexchange.com/questions/55437/how-do-i-update-my-tex-distribution}{How do I update my \TeX\ distribution?}
 
 \section{Other Release Versions}
-If you are a \TeX{} Live 2018/2019/2020/2021 user and would like to update, the official solution is to uninstall the previous version. If you want to save the bother of uninstallation and re-installation, please copy \lstinline{elegantbook.cls} to the installation directory of \TeX{} Live 2022 (default: \lstinline|C:\texlive\2022\texmf-dist\tex\latex\elegantbook| ), run \lstinline{texhash} in cmd.
+
+If you are using a \TeX~Live version prior to 2025 and wish to update the template, the official solution is to uninstall the previous version.
+If you want to save the trouble of uninstallation and re-installation, please copy \lstinline{elegantbook.cls} to the installation directory of your \TeX~Live (default for \TeX~Live 2025: \lstinline|C:\texlive\2025\texmf-dist\tex\latex\elegantbook|; replace "2025" with your actual version), and then run \lstinline{texhash} in the command prompt.
 
 \chapter{ElegantBook Settings}
-This template is based on the Standard \LaTeX{} book class, so the options of book class work as well (Note that the option of papersize has no effect due to \lstinline{device} option). The default encoding is UTF-8 while \TeX{} Live is recommended. The test environments are Win10/Ubuntu 20.04/macOS + \TeX{} Live 2022/ Mac\TeX{} 2022, either \hologo{pdfLaTeX} or \hologo{XeLaTeX} works fine for \lstinline{lang=en}.
+
+This template is based on the Standard \LaTeX\ book class, so the options of book class work as well (Note that the option of papersize has no effect due to \lstinline{device} option). The default encoding is UTF-8 while \TeX~Live is recommended. The test environments are Windows 10/11, Ubuntu 24.04 LTS, and macOS with \TeX~Live 2025/ Mac\TeX\ 2025. Both \hologo{pdfLaTeX} or \hologo{XeLaTeX} works fine for \lstinline{lang=en}.
 
 \section{Languages}
 We defined one option named \lstinline{lang} which has two basic values, \lstinline{lang=en} (default) , \lstinline{lang=cn}. Different values will alter the captions of figure/table, abstract name, refname, etc. You can use this option as
@@ -127,7 +130,7 @@ main      & \makecell{{\color{main1}\rule{1cm}{1cm}}}
         & \makecell{{\color{main3}\rule{1cm}{1cm}}}
         & \makecell{{\color{main4}\rule{1cm}{1cm}}}
         & \makecell{{\color{main5}\rule{1cm}{1cm}}}
-        & definition  exercise  exercise  \\
+        & definition  exercise  problem  \\
 second    & \makecell{{\color{second1}\rule{1cm}{1cm}}}
         & \makecell{{\color{second2}\rule{1cm}{1cm}}}
         & \makecell{{\color{second3}\rule{1cm}{1cm}}}
@@ -214,7 +217,7 @@ In this template, we defined four different theorem class environments
       \item \textcolor{second}{\textbf{theorem, lemma, corollary, axiom, postulate}} environment, the color is \textcolor{second} {second};
       \item \textcolor{third}{\textbf{proposition}} environment, the color is \textcolor{third}{third}.
    \end{itemize}
-\item \textit{Example Environment}, including \textbf{example, exercise, exercise} environment, auto numbering according to chapter.
+\item \textit{Example Environment}, including \textbf{example, exercise, problem} environment, auto numbering according to chapter.
 \item \textit{Proof Environment}, including \textbf{proof, note} environment containing introductory symbol (\textbf{note} environment) or ending symbol (\textbf{proof} environment).
 \item \textit{Conclusion Environment}, including \textbf{conclusion, assumption, property, remark and solution}\footnote{We also define an option \lstinline{result}, which can hide the \lstinline{solution} and \lstinline{proof} environments. You can switch between \lstinline{result=answer} and \lstinline{result=noanswer}.} environments, all of which begin with boldfaced words, with format consistent with normal paragraphs.
 \end{itemize}
@@ -328,7 +331,7 @@ This is the content of example environment.
 These are all similar environments with slight differences lies in:
 
 \begin{itemize}
-   \item Example, exercise, exercise environments number within chapter;
+   \item Example, exercise, problem environments number within chapter;
    \item Note begins with introductory symbol and proof ends with ending symbol;
    \item Conclusion and other environments are normal paragraph environments with boldfaced introductory words.
 \end{itemize}
@@ -369,7 +372,7 @@ This template uses \lstinline{tikz} to customize the list environments, with \ls
 \section{Fonts}
 \textcolor{red}{\bfseries Alert} After v3.10, newtx is reset to cm, together with other two options, the \lstinline{math} font option offers:
 \begin{enumerate}
-  \item \lstinline{math=cm}(default), use \LaTeX{} default math font (recommended).
+  \item \lstinline{math=cm}(default), use \LaTeX\ default math font (recommended).
   \item \lstinline{math=newtx}, use \lstinline{newtxmath} math font (may bring about bugs).
   \item \lstinline{math=mtpro2}, use \lstinline{mtpro2} package to set math font.
 \end{enumerate}
@@ -468,7 +471,7 @@ We create a introduction environment to display the structure of chapter. The ba
 \begin{introduction}
   \item Definition of Theorem
   \item Ask for help
-  \item Optimization exercise
+  \item Optimization Problem
   \item Property of Cauchy Series
   \item Angle of Corner
 \end{introduction}
@@ -477,7 +480,7 @@ And you will get:
 \begin{introduction}
   \item Definition of Theorem
   \item Ask for help
-  \item Optimization exercise
+  \item Optimization Problem
   \item Property of Cauchy Series
   \item Angle of Corner
 \end{introduction}
@@ -489,17 +492,17 @@ You can change the title of this environment by modifying the optional argument 
 \end{introduction}
 \end{lstlisting}
 
-%\section{exercise Set}
-The environment \lstinline{exerciseset} is used at the end of each chapter to display corresponding exercises. Just type in the following sentences:
+%\section{Problem Set}
+The environment \lstinline{problemset} is used at the end of each chapter to display corresponding exercises. Just type in the following sentences:
 \begin{lstlisting}
-\begin{exerciseset}
+\begin{problemset}
   \item exercise 1
   \item exercise 2
   \item exercise 3
-\end{exerciseset}
+\end{problemset}
 \end{lstlisting}
 And you will get:
-\begin{exerciseset}
+\begin{problemset}
   \item exercise 1
   \item exercise 2
   \item exercise 3
@@ -507,12 +510,13 @@ And you will get:
   \begin{equation}
   a^2+b^2=c_{2_{i}} (1,2) [1,23]
   \end{equation}
-\end{exerciseset}
+\end{problemset}
 \begin{remark}
-If you want to customize the title of \lstinline{exerciseset}, please change the optional argument like in introduction environment. In this version the \lstinline{exerciseset} environment automatically appears in the table of contents but not in the header or footer(to be fixed).
+If you want to customize the title of \lstinline{problemset}, please change the optional argument like in introduction environment. In this version the \lstinline{problemset} environment automatically appears in the table of contents but not in the header or footer(to be fixed).
 \end{remark}
+
 \begin{solution}
-  If you want to customize the title of \lstinline{exerciseset}, please change the optional argument like in introduction environment. In this version the \lstinline{exerciseset} environment automatically appears in the table of contents but not in the header or footer(to be fixed).
+  If you want to customize the title of \lstinline{problemset}, please change the optional argument like in introduction environment. In this version the \lstinline{problemset} environment automatically appears in the table of contents but not in the header or footer(to be fixed).
 \end{solution}
 
 \section{Margin Notes}
@@ -606,7 +610,8 @@ Let $H$ be a finite subgroup of a group $G$.  Then each left coset of $H$ in $G$
 \end{proposition}
 
 \begin{proof}
-  Let $z$ be some element of $xH \cap yH$. Then $z = xa$ for some $a \in H$, and $z = yb$ for some $b \in H$. If $h$ is any element of $H$ then $ah \in H$ and $a^{-1}h \in H$, since $H$ is a subgroup of $G$. But $zh = x(ah)$ and $xh = z(a^{-1}h)$ for all $h \in H$. Therefore $zH \subset xH$ and $xH \subset zH$, and thus $xH = zH$.  Similarly $yH = zH$, and thus $xH = yH$, as required. \end{proof}
+  Let $z$ be some element of $xH \cap yH$. Then $z = xa$ for some $a \in H$, and $z = yb$ for some $b \in H$. If $h$ is any element of $H$ then $ah \in H$ and $a^{-1}h \in H$, since $H$ is a subgroup of $G$. But $zh = x(ah)$ and $xh = z(a^{-1}h)$ for all $h \in H$. Therefore $zH \subset xH$ and $xH \subset zH$, and thus $xH = zH$.  Similarly $yH = zH$, and thus $xH = yH$, as required. 
+\end{proof}
 
 \begin{figure}[htbp]
   \centering
@@ -657,12 +662,12 @@ and expand the ones already used\index{keywords!used}.
   \item Distributed storage and search.
 \end{itemize}
 
-%\exerciseset
-\begin{exerciseset}
+%\problemset
+\begin{problemset}
   \item Solve the equation $5(- 3x - 2) - (x - 3) = -4(4x + 5) + 13$.
   \item Find the distance between the points $(-4 , -5)$ and $(-1 , -1)$.
   \item Find the slope of the line $5x - 5y = 7$.
-\end{exerciseset}
+\end{problemset}
 
 
 \chapter{FAQ}
@@ -673,13 +678,13 @@ We list some FAQs for users to refer to:
   \item \question{I want to customize font and background color.}
   Please use \lstinline{pagecolor} to change background color, refer to \href{https://tex.stackexchange.com/questions/278544/xcolor-what-is-the-equivalent-of-default-text-color}{this} to customize font.
   \item \question{Which version should I choose?}
-  Please use \href{https://github.com/ElegantLaTeX/ElegantBook/releases}{Latest Release} via GitHub or \TeX{} Live 2022.
+  Please use \href{https://github.com/ElegantLaTeX/ElegantBook/releases}{Latest Release} via GitHub or \TeX~Live 2025.
   \item \question{Which editor should I choose?}
-  You can use \TeX{} Live 2022 built-in \TeX works or \TeX Studio. You may refer to \href{https://github.com/EthanDeng/texworks-autocomplete}{\TeX{}works autocomplete}. \TeX{} Live 2022 + \TeX{}studio is strongly recommended. Related configurations can be found at \href{https://github.com/EthanDeng/vscode-latex}{vscode-latex} and \href{https://github.com/EthanDeng/sublime-text-latex}{sublime-text-latex}.
+  You can use \TeX~Live 2025 built-in \TeX works or \TeX Studio. You may refer to \href{https://github.com/EthanDeng/texworks-autocomplete}{\TeX works autocomplete}. \TeX~Live 2025 + \TeX studio is strongly recommended. Related configurations can be found at \href{https://github.com/EthanDeng/vscode-latex}{vscode-latex} and \href{https://github.com/EthanDeng/sublime-text-latex}{sublime-text-latex}.
   \item \question{Hello, we want to use ElegantBook to write a book about machine learning and would like your authorization.}
   Feel free to use our templates by pointing out our copyright. For other issues, please refer to LPPL-1.3c. If you want to show us your work, you can share the URL with us afterwards.
   \item \question{What is cross reference?}
-  This template is aimed at who are not a complete beginner for \LaTeX{}. Please learn more about \LaTeX{} before using this template.
+  This template is aimed at who are not a complete beginner for \LaTeX. Please learn more about \LaTeX\ before using this template.
   \item \question{Is the language for code highlighting optional?}
   Yes, \lstinline{listings} package is used in ElegantBook, hence language is optional(e.g. \lstinline{language=Python}). For global setting, use \lstinline{lstset}. For more information, please refer to package documentations.
   \item \question{When will Beamer template (ElegantSlide or ElegantBeamer) forthcoming?}
@@ -689,6 +694,13 @@ We list some FAQs for users to refer to:
 \chapter{Version History}
 We revised our templates now and then. This section shows the version story of ElegantBook.
 
+\datechange{2026/02/27}{release of v4.6}  \textcolor{blue}{\bfseries Maintenance Resumed}
+
+\begin{change}
+  \item Maintenance resumed under new maintainer Osbert Wang.
+  \item Template re-released due to large user base.
+  \item Updated to support \TeX~Live 2025 and current operating systems (Windows 11, Ubuntu 24.04 LTS, macOS).
+\end{change}
 
 \datechange{2022/12/31}{release of v4.5.}  \textcolor{red}{\bfseries Stop Maintenance}
 
@@ -748,9 +760,9 @@ We revised our templates now and then. This section shows the version story of E
 
 
 \begin{change}
-  \item \textbf{! Fix}: Fix \lstinline{natbib option clash} exercises caused by \lstinline{gbt7714} updates.
-  \item Remove \lstinline{base} decorations and its options since \lstinline{pgfornament} package is not included in \TeX{} Live 2020.
-  \item Fix spacing exercise in some environments.
+  \item \textbf{! Fix}: Fix \lstinline{natbib option clash} problems caused by \lstinline{gbt7714} updates.
+  \item Remove \lstinline{base} decorations and its options since \lstinline{pgfornament} package is not included in \TeX~Live 2020.
+  \item Fix spacing problem in some environments.
   \item Introduce language option for Italian, \lstinline{lang=it}.
 \end{change}
 
@@ -759,7 +771,7 @@ We revised our templates now and then. This section shows the version story of E
 
 \begin{change}
   \item Introduce \lstinline{math} for math font, optional styles are \lstinline{newtx} and \lstinline{cm}.\\
-  \textbf{Notice}: The math font \lstinline{newtxmath} in previous versions is reset to default \LaTeX{} math font, to keep previous math font, please declare \lstinline{math=newtx}.
+  \textbf{Notice}: The math font \lstinline{newtxmath} in previous versions is reset to default \LaTeX\ math font, to keep previous math font, please declare \lstinline{math=newtx}.
   \item Introduce \lstinline{chinesefont} option, with \lstinline{founder}, \lstinline{ctexfont} and \lstinline{nofont} available.
   \item Turn author information on the cover optional and add customized command \lstinline{\bioinfo}.
   \item Add version history with command \lstinline{\datechange} and environment \lstinline{change}.
@@ -777,7 +789,7 @@ We revised our templates now and then. This section shows the version story of E
   \item Use \lstinline{esint} to display integral operator.
   \item Add new command \lstinline{toc}, with options  \lstinline{onecol} and \lstinline{twocol}.
   \item Add new option \lstinline{cite} \lstinline{super} for superscript-displayed citation.
-  \item Revise \lstinline{exerciseset}.
+  \item Revise \lstinline{problemset}.
 \end{change}
 
 
@@ -793,7 +805,7 @@ This appendix covers some of the basic mathematics used in econometrics. We brie
 
 \section{Summation Operator and Description Statistics}
 
-\textbf{Summation Operator} is an abbreviation used to express the summation of numbers, it plays an important role in statistics and econometrics analysis. If $\{x_i: i=1, 2, \cdots, n\}$ is a sequence of $n$ numbers, the summation of the $n$ numbers is:
+\textbf{Summation Operator} is an abbreviation used to express the summation of numbers, it plays an important role in statistics and econometrics analysis. If $\{x_i: i=1, 2, \ldots, n\}$ is a sequence of $n$ numbers, the summation of the $n$ numbers is:
 
 \begin{equation}
 \sum_{i=1}^n x_i \equiv x_1 + x_2 +\cdots + x_n

@@ -9,7 +9,7 @@ Math Project/
 ├── Code/                                论文配套代码
 │   └── Python/
 │       └── Undergraduate Thesis Code/   本科毕业论文的代码、data/ 数据与 figures/ 插图
-├── ElegantBook/                         ElegantBook 模板官方文档与示例
+├── ElegantBook/                         ElegantBook 模板官方文档（中英文说明 PDF 与示例源码）
 ├── LaTeX Project/                       LaTeX 笔记工程
 │   ├── MathNote/                        全部笔记，一个学科一个目录
 │   ├── Paper/                           论文

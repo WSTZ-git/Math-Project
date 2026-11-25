@@ -1,15 +1,13 @@
-%%%%%%%%%%%%%%%%%%%%%%
-%% start of file `elegantbook.cls'.
-%% Copyright 2013-2022 ElegantLaTeX (elegantlatex2e@gmail.com)
-%%
-%% This work may be distributed and/or modified freely
-%% available at https://github.com/ElegantLaTeX/ElegantBook
-% 
-%%%%%%%%%%%%%%%%%%%%%
-% % !Mode:: "TeX:UTF-8"
+% -----------------------------------------------------------------------------
+% Start of file `elegantbook.cls'.
+% Copyright 2013-2022 ElegantLaTeX (elegantlatex2e@gmail.com)
+% Copyright 2026-     ElegantLaTeX (maintained by ranwang.osbert@outlook.com)
+% This work may be distributed and/or modified under the conditions of the LaTeX Project Public License,
+% either version 1.3c of this license or (at your option) any later version.
+% It is available at https://github.com/ElegantLaTeX/ElegantBook
+% -----------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{elegantbook}[2022/12/31 v4.5 ElegantBook document class]
-
+\ProvidesClass{elegantbook}[2026/05/01 v4.7 ElegantBook document class]
 
 %%%
 \RequirePackage{kvoptions}
@@ -399,7 +397,7 @@
 
 
 %%   章节设置
-\RequirePackage[center,pagestyles]{titlesec}
+\RequirePackage[center]{titlesec}
 \RequirePackage[title,titletoc,header]{appendix}
 
 
@@ -439,7 +437,7 @@
   \newcommand{\corollaryname}{推论}
   \newcommand{\examplename}{例题} %
   \newcommand{\instancename}{示例} %
-  \newcommand{\exercisename}{问题} % 问题
+  \newcommand{\problemname}{问题} % 问题
   \newcommand{\exercisename}{练习} % 练习=习题
   \newcommand{\remarkname}{注}
   \newcommand{\assumptionname}{假设}
@@ -467,7 +465,7 @@
   \newcommand{\versionname}{\textbf{Version: }}
   \newcommand{\notename}{Note}
   \newcommand{\proofname}{Proof}
-  \newcommand{\exercisename}{exercise}
+  \newcommand{\problemname}{Problem}
   \newcommand{\definitionname}{Definition}
   \newcommand{\theoremname}{Theorem}
   \newcommand{\axiomname}{Axiom}
@@ -485,7 +483,7 @@
   \newcommand{\introductionname}{Introduction}
   \renewcommand{\appendixname}{Appendix}
   \newcommand{\ebibname}{Bibliography}
-  % \newcommand{\exercisesetname}{Exercise}
+  % \newcommand{\problemsetname}{Exercise}
   \newcommand\bioinfo[2]{\gdef\@bioinfo{\textbf{#1}: #2}}
   \newcommand{\updatename}{Updates:}
   \newcommand{\historyname}{Version History}
@@ -505,7 +503,7 @@
   \newcommand{\versionname}{\textbf{Versione: }}
   \newcommand{\notename}{Nota}
   \newcommand{\proofname}{Dimostrazione}
-  \newcommand{\exercisename}{exercisea}
+  \newcommand{\problemname}{Problema}
   \newcommand{\definitionname}{Definizione}
   \newcommand{\theoremname}{Teorema}
   \newcommand{\axiomname}{Assioma}
@@ -541,7 +539,7 @@
   \renewcommand{\versionname}{\textbf{Version: }}
   \renewcommand{\notename}{Note}
   \renewcommand{\proofname}{Démonstration}
-  \renewcommand{\exercisename}{Problème}
+  \renewcommand{\problemname}{Problème}
   \renewcommand{\definitionname}{Définition}
   \renewcommand{\theoremname}{Théorème}
   \renewcommand{\axiomname}{Axiôme}
@@ -557,7 +555,7 @@
   \renewcommand{\solutionname}{Solution}
   \renewcommand{\propertyname}{Propriété}
   \renewcommand{\introductionname}{Introduction}
-  \renewcommand{\exercisesetname}{Exercice}
+  \renewcommand{\problemsetname}{Exercice}
   \renewcommand{\updatename}{Mises à jour:}
   \newcommand{\ebibname}{Bibliographie}
   \renewcommand{\historyname}{Historique des versions}
@@ -576,7 +574,7 @@
   \newcommand{\versionname}{\textbf{Versie: }}
   \newcommand{\notename}{Opmerking}
   \newcommand{\proofname}{Bewijs}
-  \newcommand{\exercisename}{Probleem}
+  \newcommand{\problemname}{Probleem}
   \newcommand{\definitionname}{Definitie}
   \newcommand{\theoremname}{Stelling}
   \newcommand{\axiomname}{Uitgangspunt}
@@ -592,7 +590,7 @@
   \newcommand{\solutionname}{Oplossing}
   \newcommand{\propertyname}{Eigenschap}
   \newcommand{\introductionname}{Introductie}
-  \newcommand{\exercisesetname}{Probleemcomplex}
+  \newcommand{\problemsetname}{Probleemcomplex}
   \newcommand\bioinfo[2]{\gdef\@bioinfo{\textbf{#1}: #2}}
   \newcommand{\updatename}{Update:}
   \newcommand{\ebibname}{Bibliographie}
@@ -612,7 +610,7 @@
   \newcommand{\versionname}{\textbf{Verziószám: }}
   \newcommand{\notename}{Jegyzet}
   \newcommand{\proofname}{Bizonyítás}
-  \newcommand{\exercisename}{Probléma}
+  \newcommand{\problemname}{Probléma}
   \newcommand{\definitionname}{Definíció}
   \newcommand{\theoremname}{Tétel}
   \newcommand{\axiomname}{Axióma}
@@ -628,7 +626,7 @@
   \newcommand{\solutionname}{Megoldás}
   \newcommand{\propertyname}{Tulajdonság}
   \newcommand{\introductionname}{Bevezetés}
-  \newcommand{\exercisesetname}{Feladatok}
+  \newcommand{\problemsetname}{Feladatok}
   \newcommand\bioinfo[2]{\gdef\@bioinfo{\textbf{#1}: #2}}
   \newcommand{\updatename}{Frissítve:}
   \newcommand{\ebibname}{Bibliográfia}
@@ -652,7 +650,7 @@
   \newcommand{\versionname}{\textbf{Version: }}
   \newcommand{\notename}{Notiz}
   \newcommand{\proofname}{Beweis}
-  \newcommand{\exercisename}{exercise}
+  \newcommand{\problemname}{Problem}
   \newcommand{\definitionname}{Definition}
   \newcommand{\theoremname}{Theorem}
   \newcommand{\axiomname}{Axiom}
@@ -687,7 +685,7 @@
   \newcommand{\versionname}{\textbf{Versión: }}
   \newcommand{\notename}{Nota}
   \newcommand{\proofname}{Demostración}
-  \newcommand{\exercisename}{exercisea}
+  \newcommand{\problemname}{Problema}
   \newcommand{\definitionname}{Definición}
   \newcommand{\theoremname}{Teorema}
   \newcommand{\axiomname}{Axioma}
@@ -703,7 +701,7 @@
   \newcommand{\solutionname}{Solución}
   \newcommand{\propertyname}{Propiedad}
   \newcommand{\introductionname}{Introducción}
-  \newcommand{\exercisesetname}{Ejercicio}
+  \newcommand{\problemsetname}{Ejercicio}
   \newcommand\bioinfo[2]{\gdef\@bioinfo{\textbf{#1}: #2}}
   \newcommand{\updatename}{Actualización:}
   \newcommand{\ebibname}{Bibliografía}
@@ -724,7 +722,7 @@
   \newcommand{\versionname}{\textbf{Хувилбар: }}
   \newcommand{\notename}{Тэмдэглэл}
   \newcommand{\proofname}{Баталгаа}
-  \newcommand{\exercisename}{Бодлого}
+  \newcommand{\problemname}{Бодлого}
   \newcommand{\definitionname}{Тодорхойлолт}
   \newcommand{\theoremname}{Томьёо}
   \newcommand{\axiomname}{Аксиом}
@@ -740,7 +738,7 @@
   \newcommand{\solutionname}{Хариулт}
   \newcommand{\propertyname}{Шинж чанар}
   \newcommand{\introductionname}{Удиртгал}
-  \newcommand{\exercisesetname}{Бодлогууд}
+  \newcommand{\problemsetname}{Бодлогууд}
   \newcommand\bioinfo[2]{\gdef@bioinfo{\textbf{#1}: #2}}
   \newcommand{\updatename}{Шинэчлэлтүүд:}
   \newcommand{\ebibname}{Ном зүй}
@@ -760,7 +758,7 @@
   \newcommand{\versionname}{\textbf{Versão: }}
   \newcommand{\notename}{Observação}
   \newcommand{\proofname}{Demostração}
-  \newcommand{\exercisename}{exercisea}
+  \newcommand{\problemname}{Problema}
   \newcommand{\definitionname}{Definição}
   \newcommand{\theoremname}{Teorema}
   \newcommand{\axiomname}{Axioma}
@@ -776,7 +774,7 @@
   \newcommand{\solutionname}{Soluções}
   \newcommand{\propertyname}{Propiedade}
   \newcommand{\introductionname}{Introdução}
-  \newcommand{\exercisesetname}{Questão}
+  \newcommand{\problemsetname}{Questão}
   \newcommand\bioinfo[2]{\gdef\@bioinfo{\textbf{#1}: #2}}
   \newcommand{\updatename}{Atualização: }
   \newcommand{\ebibname}{Bibliografia}
@@ -802,7 +800,7 @@
   \newcommand{\versionname}{\textbf{\citshape バージョン：}}
   \newcommand{\notename}{ノート}
   \newcommand{\proofname}{証明}
-  \newcommand{\exercisename}{問題}
+  \newcommand{\problemname}{問題}
   \newcommand{\definitionname}{定義}
   \newcommand{\theoremname}{定理}
   \newcommand{\axiomname}{公理}
@@ -1151,7 +1149,7 @@
       }{\relax}
   }
 
-% main（green-def): example exercise exercise solution
+% main（green-def): example exercise problem solution
 % second（orange-thm）: proof note remark  
 % third（blue-prop):  assumptions property conclusion custom
 
@@ -1175,13 +1173,13 @@
     \textbf{\color{main}{\exercisename} \theexer #1 }\rmfamily}{
     \par\ignorespacesafterend}
 
-%% exercise with counter
+%% Problem with counter
 \newcounter{prob}[chapter]
 \setcounter{prob}{0}
 \renewcommand{\theprob}{\thechapter.\arabic{prob}}
-\newenvironment{exercise}[1][]{
+\newenvironment{problem}[1][]{
   \refstepcounter{prob}
-  \par\noindent\textbf{\color{main}{\exercisename} \theprob #1 }\rmfamily}{
+  \par\noindent\textbf{\color{main}{\problemname} \theprob #1 }\rmfamily}{
   \par\ignorespacesafterend}
 
 \newenvironment{note}{
@@ -1233,7 +1231,7 @@
 
 \RequirePackage{adforn}
 
-\newenvironment{exerciseset}[1][\xchaptertitle~\exercisename]{
+\newenvironment{problemset}[1][\xchaptertitle~\exercisename]{
   \vspace*{10pt}
   \begin{center}
     \phantomsection\addcontentsline{toc}{section}{\texorpdfstring{\xchaptertitle~\exercisename}{\exercisename}}
@@ -1275,7 +1273,7 @@
 % \renewcommand{\headrule}{}
 \fancypagestyle{plain}{\renewcommand{\headrulewidth}{0pt}\fancyhf{}\renewcommand{\headrule}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection\, #1}{}}
-\renewcommand{\chaptermark}[1]{\markboth{\xchaptertitle\, #1}{}}
+\renewcommand{\chaptermark}[1]{\markboth{\IfAppendix{\appendixname\;\thechapter\, #1}{\xchaptertitle\, #1}}{}}
 
 
 \renewcommand*{\maketitle}{%
@@ -1298,8 +1296,8 @@
       \includegraphics[trim=0 26bp 0 26bp,clip=true, width=\linewidth]{example-image}
     \fi
   }{\relax}
-  \setlength{\fboxsep}{0pt}
-  \colorbox{coverlinecolor}{\makebox[\linewidth][c]{\shortstack[c]{\vspace{0.5in}}}}
+  \vskip-\baselineskip
+  {\color{coverlinecolor}\hrule \@width \linewidth \@height .5in}
   \vfill
   \vskip-2ex
   \hspace{2em}
