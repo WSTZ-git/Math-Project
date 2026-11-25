@@ -160,7 +160,7 @@ git add -A && git commit -m "说明" && git push
 
 新增笔记：复制 `Sample Files/` 的结构。新增 Lean 模块：在 `LeanProject/` 下建文件，写 `namespace`，再在 `LeanProject.lean` 里补一行 import。
 
-Lean 文件引用 mathlib 定理有三种方式：`import Mathlib`（全部，最省事）、`import LeanProject.Common`（只含战术）、`import Mathlib.Analysis.Calculus.Deriv.Pow`（只引某个模块，编译最快）。示例见 `Lean Project/Scratch/mathlib_demo.lean`。
+Lean 文件引用 mathlib 定理有两种方式：`import Mathlib`（全部，最省事）、`import Mathlib.Analysis.Calculus.Deriv.Pow`（只引某个模块，编译最快）。示例见 `Lean Project/Scratch/mathlib_demo.lean`。
 
 ## 为什么创建
 
