@@ -1,5 +1,3 @@
-import LeanProject.Basic
-
 namespace LeanProject.Paper.UndergraduateThesis
 
 /-- 测试：simp 可用 -/

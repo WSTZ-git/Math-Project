@@ -1,5 +1,3 @@
-import LeanProject.Basic
-
 /-!
 # Undergraduate Thesis 论文形式化
 -/

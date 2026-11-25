@@ -22,7 +22,7 @@ Math Project/
 │   ├── Scratch/                         临时试验，不影响正式文档
 │   └── Latex常见问题.txt                编译问题记录
 ├── Lean Project/                        Lean 4 形式化工程
-│   ├── LeanProject/                     库模块，路径即模块名（LeanProject/Basic.lean → LeanProject.Basic）
+│   ├── LeanProject/                     库模块，路径即模块名（LeanProject/MathNote/PDE/Main.lean → LeanProject.MathNote.PDE.Main）
 │   ├── LeanProject.lean                 库入口，汇总 import，import LeanProject 可载入全部
 │   ├── lakefile.toml                    包名、构建目标与依赖
 │   ├── lake-manifest.json               依赖版本锁定，自动生成，勿手改
@@ -160,7 +160,7 @@ git add -A && git commit -m "说明" && git push
 
 新增笔记：复制 `Sample Files/` 的结构。新增 Lean 模块：在 `LeanProject/` 下建文件，写 `namespace`，再在 `LeanProject.lean` 里补一行 import。
 
-Lean 文件引用 mathlib 定理有两种方式：`import Mathlib`（全部，最省事）、`import Mathlib.Analysis.Calculus.Deriv.Pow`（只引某个模块，编译最快）。示例见 `Lean Project/Scratch/mathlib_demo.lean`。
+Lean 文件引用 mathlib 定理有两种方式：`import Mathlib`（全部，最省事）、`import Mathlib.Analysis.Calculus.Deriv.Pow`（只引某个模块，编译最快）。示例见 `Lean Project/Scratch/Test.lean`。
 
 ## 为什么创建
 
