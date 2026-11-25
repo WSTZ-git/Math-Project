@@ -31,7 +31,7 @@ Math Project/
 │   ├── lake-manifest.json               依赖版本锁定，自动生成，勿手改
 │   ├── lean-toolchain                   固定的 Lean 版本
 │   └── Scratch/Test.lean                测试文件，测试 Lean 用的，不参与构建
-├── MIL/                                 Mathematics in Lean 教材，本地克隆，不纳入版本控制
+├── MIL/                                 Mathematics in Lean 教材与习题（随仓库提供）
 ├── .vscode/
 │   ├── settings.json                    隐藏 .lake，排除搜索与文件监视
 │   └── tasks.json                       批量清理与编译任务
@@ -93,7 +93,13 @@ cd "Lean Project"
 lake exe cache get
 ```
 
-仓库根目录的 `MIL/` 是 [Mathematics in Lean](https://github.com/leanprover-community/mathematics_in_lean) 教材的本地克隆（独立 Lean 4.34.0 工程，约 8 GB，不纳入版本控制），只作查阅参考，与本工程不互相 import。
+仓库根目录的 `MIL/` 是 [Mathematics in Lean](https://github.com/leanprover-community/mathematics_in_lean) 教材工程（Lean 4.34.0，独立于 `Lean Project`，两者不互相 import），源码随仓库提供。克隆后需自行下载 mathlib 缓存（约 8 GB），否则 Lake 会本地编译 mathlib：
+
+```bash
+cd MIL
+lake exe cache get
+lake build
+```
 
 VS Code 需安装 **Lean 4** 扩展，同样装在 **WSL 侧**。
 
@@ -142,6 +148,11 @@ Ctrl+Alt+V     # 预览 PDF
 # 形式化
 cd "Lean Project"
 lake exe cache get     # 仅首次，下载 mathlib 缓存（约 7 GB）
+lake build
+
+# 教材（首次需要）
+cd MIL
+lake exe cache get     # 约 8 GB
 lake build
 
 # 提交
