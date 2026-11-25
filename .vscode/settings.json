@@ -5,7 +5,33 @@
     "**/*.ilean": true,
     "**/*.olean.hash": true,
     "**/*.ilean.hash": true,
-    "**/*.trace": true
+    "**/*.trace": true,
+
+    "**/*.aux": true,
+    "**/*.bbl": true,
+    "**/*.bbl-SAVE-ERROR": true,
+    "**/*.bcf": true,
+    "**/*.bcf-SAVE-ERROR": true,
+    "**/*.blg": true,
+    "**/*.fdb_latexmk": true,
+    "**/*.fdb-SAVE-ERROR": true,
+    "**/*.fls": true,
+    "**/*.Identifier": true,
+    "**/*.log": true,
+    "**/*.nav": true,
+    "**/*.out": true,
+    "**/*.pdf": true,
+    "**/*.snm": true,
+    "**/*.synctex.gz": true,
+    "**/*.synctex(busy)": true,
+    "**/*.toc": true,
+    "**/*.vrb": true,
+    "**/*.xdv": true,
+    "**/*.xml": true,
+    "**/*blx.bib": true,
+
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
   },
   "search.exclude": {
     "**/.lake": true,
@@ -13,5 +39,6 @@
   },
   "files.watcherExclude": {
     "**/.lake/**": true
-  }
+  },
+  "lean4.infoview.emphasizeFirstGoal": true
 }

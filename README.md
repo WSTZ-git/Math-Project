@@ -33,10 +33,15 @@ Math Project/
 │   └── Scratch/Test.lean                测试文件，测试 Lean 用的，不参与构建
 ├── MIL/                                 Mathematics in Lean 教材与习题（随仓库提供）
 ├── .vscode/
-│   ├── settings.json                    隐藏 .lake，排除搜索与文件监视
+│   ├── settings.json                    全仓库唯一配置：隐藏 .lake、LaTeX 中间文件与 PDF，排除搜索与监视
 │   └── tasks.json                       批量清理与编译任务
 ├── .gitignore                           忽略 .lake 与 LaTeX 中间文件
 └── README.md
+```
+
+全仓库只在根目录保留一份 `.vscode`，各子目录不再单独配置。
+
+```text
 ```
 
 ## 本地环境
@@ -137,28 +142,6 @@ MathNote/学科名/
   <tr><td>实分析</td><td>集合论</td><td>拓扑学</td></tr>
   <tr><td>深度学习</td><td>数值代数</td><td></td></tr>
 </table>
-
-## 使用
-
-```bash
-# 编译笔记：打开某篇的 main.tex 后
-Ctrl+Alt+B     # latexmk + XeLaTeX + Biber
-Ctrl+Alt+V     # 预览 PDF
-
-# 形式化
-cd "Lean Project"
-lake exe cache get     # 仅首次，下载 mathlib 缓存（约 7 GB）
-lake build
-
-# 教材（首次需要）
-cd MIL
-lake exe cache get     # 约 8 GB
-lake build
-
-# 提交
-cd ~/"Math Project"
-git add -A && git commit -m "说明" && git push
-```
 
 ### 批量任务
 
