@@ -82,6 +82,13 @@ tar -xzf elan-x86_64-unknown-linux-gnu.tar.gz
 
 装好后 `~/.elan/bin` 会写入 `~/.profile`，重开终端生效。Lean 本身不用手动装——首次 `lake build` 会按 `Lean Project/lean-toolchain` 自动下载 4.36.0。
 
+工程依赖 **mathlib v4.36.0**。首次构建前先下载预编译缓存（约 7 GB），否则 Lake 会本地编译 mathlib：
+
+```bash
+cd "Lean Project"
+lake exe cache get
+```
+
 VS Code 需安装 **Lean 4** 扩展，同样装在 **WSL 侧**。
 
 ### Python
@@ -128,6 +135,7 @@ Ctrl+Alt+V     # 预览 PDF
 
 # 形式化
 cd "Lean Project"
+lake exe cache get     # 仅首次，下载 mathlib 缓存（约 7 GB）
 lake build
 
 # 提交
@@ -149,6 +157,8 @@ git add -A && git commit -m "说明" && git push
 单篇清理运行时会弹出下拉列表选择文件夹。新增笔记后，把文件夹名补进 `.vscode/tasks.json` 的 `inputs.noteFolder.options`。
 
 新增笔记：复制 `Sample Files/` 的结构。新增 Lean 模块：在 `LeanProject/` 下建文件，写 `namespace`，再在 `LeanProject.lean` 里补一行 import。
+
+Lean 文件引用 mathlib 定理有三种方式：`import Mathlib`（全部，最省事）、`import LeanProject.Common`（只含战术）、`import Mathlib.Analysis.Calculus.Deriv.Pow`（只引某个模块，编译最快）。示例见 `Lean Project/Scratch/mathlib_demo.lean`。
 
 ## 为什么创建
 
