@@ -9,6 +9,7 @@ Math Project/
 ├── Code/                                论文配套代码
 │   └── Python/
 │       └── Undergraduate Thesis Code/   本科毕业论文的代码、data/ 数据与 figures/ 插图
+├── ElegantBook/                         ElegantBook 模板官方文档与示例
 ├── LaTeX Project/                       LaTeX 笔记工程
 │   ├── MathNote/                        全部笔记，一个学科一个目录
 │   ├── Paper/                           论文
@@ -18,7 +19,6 @@ Math Project/
 │   ├── Styles/                          自定义宏与样式
 │   ├── Sample Files/                    subfiles 拆分示例，新建笔记照此结构
 │   ├── VScode Configuration Files/      latexmk 配方，调用 XeLaTeX + Biber
-│   ├── ElegantBook/                     模板说明
 │   ├── Scratch/                         临时试验，不影响正式文档
 │   └── Latex常见问题.txt                编译问题记录
 ├── Lean Project/                        Lean 4 形式化工程（依赖 mathlib v4.36.0）
